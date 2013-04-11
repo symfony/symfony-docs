@@ -200,7 +200,7 @@ a Request::
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
 creates a request based on a path info, a method and some parameters (the
 query parameters or the request ones depending on the HTTP method); and of
-course, you an also override all other variables as well (by default, Symfony
+course, you can also override all other variables as well (by default, Symfony
 creates sensible defaults for all the PHP global variables).
 
 Based on such a request, you can override the PHP global variables via
