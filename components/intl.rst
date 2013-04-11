@@ -34,8 +34,20 @@ not loaded:
 * :phpfunction:`intl_get_error_code`
 * :phpfunction:`intl_get_error_message`
 
-If you don't use Composer but the Symfony ClassLoader component, you need to
-load them manually by adding the following lines to your autoload code::
+When the intl extension is not available, the following classes are used to
+replace the intl classes:
+
+* :class:`Symfony\\Component\\Intl\\Collator\\Collator`
+* :class:`Symfony\\Component\\Intl\\DateFormatter\\IntlDateFormatter`
+* :class:`Symfony\\Component\\Intl\\Locale\\Locale`
+* :class:`Symfony\\Component\\Intl\\NumberFormatter\\NumberFormatter`
+* :class:`Symfony\\Component\\Intl\\Globals\\IntlGlobals`
+
+Composer automatically exposes these classes in the global namespace.
+
+If you don't use Composer but the
+:doc:`Symfony ClassLoader component</components/class_loader>`, you need to
+expose them manually by adding the following lines to your autoload code::
 
     if (!function_exists('intl_is_failure')) {
         require '/path/to/Icu/Resources/stubs/functions.php';
@@ -43,229 +55,12 @@ load them manually by adding the following lines to your autoload code::
         $loader->registerPrefixFallback('/path/to/Icu/Resources/stubs');
     }
 
-The component provides replacements for the following functions and classes:
-
 .. note::
 
      The stub implementation only supports the locale ``en``.
 
-Stubbed Classes
----------------
-
-The stubbed classes of the intl extension are limited to the locale "en" and
-will throw an exception if you try to use a different locale. For using other
-locales, `install the intl extension`_ instead.
-
-Locale
-~~~~~~
-
-The only method supported in the :phpclass:`Locale` class is
-:phpmethod:`Locale::getDefault`. This method will always return "en". All other
-methods will throw an exception when used.
-
-NumberFormatter
-~~~~~~~~~~~~~~~
-
-Numbers can be formatted with the :phpclass:`NumberFormatter` class.
-The following methods are supported. All other methods are not supported and
-will throw an exception when used.
-
-.. _`NumberFormatter::__construct()`:
-
-\__construct($locale = $style = null, $pattern = null)
-......................................................
-
-The only supported locale is "en". The supported styles are
-``NumberFormatter::DECIMAL`` and ``NumberFormatter::CURRENCY``. The argument
-``$pattern`` may not be used.
-
-::create($locale = $style = null, $pattern = null)
-..................................................
-
-See `NumberFormatter::__construct()`_.
-
-formatCurrency($value, $currency)
-.................................
-
-Fully supported.
-
-format($value, $type = NumberFormatter::TYPE_DEFAULT)
-.....................................................
-
-Only type ``NumberFormatter::TYPE_DEFAULT`` is supported.
-
-getAttribute($attr)
-...................
-
-Fully supported.
-
-getErrorCode()
-..............
-
-Fully supported.
-
-getErrorMessage()
-.................
-
-Fully supported.
-
-getLocale($type = Locale::ACTUAL_LOCALE)
-........................................
-
-The parameter ``$type`` is ignored.
-
-parse($value, $type = NumberFormatter::TYPE_DOUBLE, &$position = null)
-......................................................................
-
-The supported types are ``NumberFormatter::TYPE_DOUBLE``,
-``NumberFormatter::TYPE_INT32`` and ``NumberFormatter::TYPE_INT64``. The
-parameter ``$position`` must always be ``null``.
-
-setAttribute($attr, $value)
-...........................
-
-The only supported attributes are ``NumberFormatter::FRACTION_DIGITS``,
-``NumberFormatter::GROUPING_USED`` and ``NumberFormatter::ROUNDING_MODE``.
-
-The only supported rounding modes are ``NumberFormatter::ROUND_HALFEVEN``,
-``NumberFormatter::ROUND_HALFDOWN`` and ``NumberFormatter::ROUND_HALFUP``.
-
-IntlDateFormatter
-~~~~~~~~~~~~~~~~~
-
-Dates can be formatted with the :phpclass:`IntlDateFormatter` class. The
-following methods are supported. All other methods are not supported and will
-throw an exception when used.
-
-.. _`IntlDateFormatter::__construct()`:
-
-\__construct($locale, $datetype, $timetype, $timezone = null, $calendar = IntlDateFormatter::GREGORIAN, $pattern = null)
-........................................................................................................................
-
-The only supported locale is "en". The parameter ``$calendar`` can only be
-``IntlDateFormatter::GREGORIAN``.
-
-::create($locale, $datetype, $timetype, $timezone = null, $calendar = IntlDateFormatter::GREGORIAN, $pattern = null)
-....................................................................................................................
-
-See `IntlDateFormatter::__construct()`_.
-
-format($timestamp)
-..................
-
-Fully supported.
-
-getCalendar()
-.............
-
-Fully supported.
-
-getDateType()
-.............
-
-Fully supported.
-
-getErrorCode()
-..............
-
-Fully supported.
-
-getErrorMessage()
-.................
-
-Fully supported.
-
-getLocale($type = Locale::ACTUAL_LOCALE)
-........................................
-
-The parameter ``$type`` is ignored.
-
-getPattern()
-............
-
-Fully supported.
-
-getTimeType()
-.............
-
-Fully supported.
-
-getTimeZoneId()
-...............
-
-Fully supported.
-
-isLenient()
-...........
-
-Always returns ``false``.
-
-parse($value, &$position = null)
-................................
-
-The parameter ``$position`` must always be ``null``.
-
-setLenient($lenient)
-....................
-
-Only accepts ``false``.
-
-setPattern($pattern)
-....................
-
-Fully supported.
-
-setTimeZoneId($timeZoneId)
-..........................
-
-Fully supported.
-
-setTimeZone($timeZone)
-......................
-
-Fully supported.
-
-Collator
-~~~~~~~~
-
-Localized strings can be sorted with the :phpclass:`\Collator` class. The
-following methods are supported. All other methods are not supported and will
-throw an exception when used.
-
-.. _`Collator::__construct()`:
-
-\__construct($locale)
-.....................
-
-The only supported locale is "en".
-
-create($locale)
-...............
-
-See `Collator::__construct()`_.
-
-asort(&$array, $sortFlag = Collator::SORT_REGULAR)
-..................................................
-
-Fully supported.
-
-getErrorCode()
-..............
-
-Fully supported.
-
-getErrorMessage()
-.................
-
-Fully supported.
-
-getLocale($type = Locale::ACTUAL_LOCALE)
-........................................
-
-The parameter ``$type`` is ignored.
-
-ResourceBundle
-~~~~~~~~~~~~~~
+Writing and Reading Resource Bundles
+------------------------------------
 
 The :phpclass:`ResourceBundle` class is not and will not be supported. Instead,
 this component ships a set of readers and writers for reading and writing arrays
@@ -273,7 +68,7 @@ this component ships a set of readers and writers for reading and writing arrays
 are supported:
 
 TextBundleWriter
-................
+~~~~~~~~~~~~~~~~
 
 Writes an array or an array-like object to a plain text resource bundle. The
 resulting .txt file can be converted to a binary .res file with the
@@ -397,7 +192,7 @@ locale will be merged. In order to suppress this behavior, the last parameter
 
     echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'), false);
 
-Included Resource Bundles
+Provided Resource Bundles
 -------------------------
 
 The ICU data is located in several "resource bundles". You can access a PHP
