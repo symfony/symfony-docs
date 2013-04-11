@@ -274,7 +274,7 @@ Allowing "new" tags with the "prototype"
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
-Now to let the user add as many tag forms as he needs directly in the browser.
+Now let the user add as many tag forms as he needs directly in the browser.
 This will be done through a bit of JavaScript.
 
 The first thing you need to do is to let the form collection know that it will
