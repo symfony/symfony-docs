@@ -156,7 +156,7 @@ your listener to be called just before any controller is executed.
         services:
             demo.tokens.action_listener:
                 class: Acme\DemoBundle\EventListener\TokenListener
-                arguments: [ %tokens% ]
+                arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
@@ -251,7 +251,7 @@ event:
         services:
             demo.tokens.action_listener:
                 class: Acme\DemoBundle\EventListener\TokenListener
-                arguments: [ %tokens% ]
+                arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
                     - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

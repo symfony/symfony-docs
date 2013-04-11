@@ -274,7 +274,7 @@ Allowing "new" tags with the "prototype"
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
-Now to let the user add as many tag forms as he needs directly in the browser.
+Now let the user add as many tag forms as he needs directly in the browser.
 This will be done through a bit of JavaScript.
 
 The first thing you need to do is to let the form collection know that it will
@@ -333,9 +333,9 @@ new "tag" forms. To render it, make the following change to your template:
 
 .. tip::
 
-    The ``form.tags.vars.prototype`` is form element that looks and feels just
+    The ``form.tags.vars.prototype`` is a form element that looks and feels just
     like the individual ``form_widget(tag)`` elements inside your ``for`` loop.
-    This means that you can call ``form_widget``, ``form_row``, or ``form_label``
+    This means that you can call ``form_widget``, ``form_row`` or ``form_label``
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
 

@@ -71,6 +71,10 @@
 
   * :doc:`/components/locale`
 
+* **Options Resolver**
+
+  * :doc:`/components/options_resolver`
+
 * **Process**
 
   * :doc:`/components/process`

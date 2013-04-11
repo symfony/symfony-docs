@@ -30,6 +30,8 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.fragment_renderer`_       | Add new HTTP content rendering strategies                                 |
++-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.logger`_                 | Logging with a custom logging channel                                     |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.processor`_              | Add a custom processor for logging                                        |
@@ -360,6 +362,16 @@ configuration, and tag it with ``kernel.event_subscriber``:
     If your service is created by a factory, you **MUST** correctly set the ``class``
     parameter for this tag to work correctly.
 
+kernel.fragment_renderer
+------------------------
+
+**Purpose**: Add a new HTTP content rendering strategy.
+
+To add a new rendering strategy - in addition to the core strategies like
+``EsiFragmentRenderer`` - create a class that implements
+:class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
+register it as a service, then tag it with ``kernel.fragment_renderer``.
+
 .. _dic_tags-monolog:
 
 monolog.logger
@@ -378,7 +390,7 @@ channel when injecting the logger in a service.
         services:
             my_service:
                 class: Fully\Qualified\Loader\Class\Name
-                arguments: [@logger]
+                arguments: ["@logger"]
                 tags:
                     - { name: monolog.logger, channel: acme }
 
@@ -530,6 +542,8 @@ of your configuration, and tag it with ``routing.loader``:
             ->register('routing.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
             ->addTag('routing.loader')
         ;
+
+For more information, see :doc:`/cookbook/routing/custom_route_loader`.
 
 security.listener.factory
 -------------------------

@@ -332,6 +332,14 @@ working with forms, for example::
 .. index::
    single: Controller; Base controller class
 
+Creating Static Pages
+---------------------
+
+You can create a static page without even creating a controller (only a route
+and template are needed).
+
+Use it! See :doc:`/cookbook/templating/render_without_controller`.
+
 The Base Controller Class
 -------------------------
 

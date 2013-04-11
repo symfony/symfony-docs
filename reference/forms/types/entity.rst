@@ -128,6 +128,13 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
+.. note::
+    
+    If you are working with a collection of Doctrine entities, it will be helpful
+    to read the documention for the :doc:`/reference/forms/types/collection`
+    as well. In addition, there is a complete example in the cookbook article
+    :doc:`/cookbook/form/form_collections`.
+    
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
