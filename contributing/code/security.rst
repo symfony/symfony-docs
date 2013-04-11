@@ -75,5 +75,5 @@ releases, starting from Symfony 1.0.0:
 * June 25, 2007: `symfony 1.0.5 released (security fix) <http://symfony.com/blog/symfony-1-0-5-released-security-fix>`_
 
 .. _Git repository:      https://github.com/symfony/symfony
-.. _blog:                https://symfony.com/blog/
+.. _blog:                http://symfony.com/blog/
 .. _Security Advisories: http://symfony.com/blog/category/security-advisories
