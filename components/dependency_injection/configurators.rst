@@ -78,7 +78,7 @@ in the application::
         public function loadFormatters()
         {
             // code to configure which formatters to use
-            $enabledFormatters = array();
+            $enabledFormatters = array(...);
             // ...
 
             $this->enabledFormatters = $enabledFormatters;
