@@ -32,6 +32,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `invalid_message_parameters`_                                                                                        |
 |                      | - `read_only`_                                                                                                         |
 |                      | - `disabled`_                                                                                                          |
+|                      | - `mapped`_                                                                                                            |
 |                      | - `virtual`_                                                                                                           |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
 | Parent type          | :doc:`date</reference/forms/types/date>`                                                                               |
@@ -80,5 +81,7 @@ These options inherit from the :doc:`date</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/virtual.rst.inc

@@ -28,6 +28,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 | options              | - `invalid_message_parameters`_                                             |
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
+|                      | - `mapped`_                                                                 |
 |                      | - `virtual`_                                                                |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
@@ -125,5 +126,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/virtual.rst.inc
