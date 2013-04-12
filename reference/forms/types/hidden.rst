@@ -11,6 +11,7 @@ The hidden type represents a hidden input field.
 +-------------+----------------------------------------------------------------------+
 | Inherited   | - ``data``                                                           |
 | options     | - ``property_path``                                                  |
+|             | - `mapped`_                                                          |
 +-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/field>`                           |
 +-------------+----------------------------------------------------------------------+
@@ -25,3 +26,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/property_path.rst.inc
+
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
