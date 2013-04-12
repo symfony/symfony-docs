@@ -148,7 +148,7 @@ Each part will be explained in the next section.
                         post_only:      true
                         remember_me:    false
 
-                        #by default, a session must exist before submitting an authentication request
+                        # by default, a session must exist before submitting an authentication request
                         require_previous_session: true
 
                     remember_me:
