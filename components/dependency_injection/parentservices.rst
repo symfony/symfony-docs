@@ -273,6 +273,10 @@ when the child services are instantiated.
    is that omitting the ``parent`` config key will mean that the ``calls``
    defined on the ``mail_manager`` service will not be executed when the
    child services are instantiated.
+   
+.. caution::
+
+    ``scope``, ``abstract``, ``abstract`` attributes are always taken from the child.
 
 The parent service is abstract as it should not be directly retrieved from the
 container or passed into another service. It exists merely as a "template" that
@@ -312,26 +316,15 @@ to the ``NewsletterManager`` class, the config would look like this:
             mail_manager:
                 abstract:  true
                 calls:
-<<<<<<< HEAD
-                    - [ setMailer, [ @my_mailer ] ]
-                    - [ setEmailFormatter, [ @my_email_formatter] ]
-
-=======
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]
-            
->>>>>>> e1ae126cb094754b7f4e72bbdb4388fed7f2d188
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
-<<<<<<< HEAD
-                    - [ setMailer, [ @my_alternative_mailer ] ]
-
-=======
                     - [setMailer, ["@my_alternative_mailer"]]
-            
->>>>>>> e1ae126cb094754b7f4e72bbdb4388fed7f2d188
+
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
                 parent: mail_manager
@@ -450,24 +443,14 @@ If you had the following config:
             mail_manager:
                 abstract:  true
                 calls:
-<<<<<<< HEAD
-                    - [ setFilter, [ @my_filter ] ]
-
-=======
                     - [setFilter, ["@my_filter"]]
-                    
->>>>>>> e1ae126cb094754b7f4e72bbdb4388fed7f2d188
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
-<<<<<<< HEAD
-                    - [ setFilter, [ @another_filter ] ]
-
-=======
                     - [setFilter, ["@another_filter"]]
-            
->>>>>>> e1ae126cb094754b7f4e72bbdb4388fed7f2d188
+
     .. code-block:: xml
 
         <parameters>
