@@ -14,7 +14,7 @@ superglobal. Additionally, it is mandatory for Symfony to start the session.
 
 However when there really are circumstances where this is not possible, it is possible
 to use a special storage bridge
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PhpSessionStorage`
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PhpBridgeSessionStorage`
 which is designed to allow Symfony to work with a session started outside of
 the Symfony Session framework. You are warned that things can interrupt this
 use case unless you are careful: for example legacy application erases ``$_SESSION``.
@@ -23,7 +23,7 @@ Typical use of this might look as follows::
 
     <?php
     use Symfony\Component\HttpFoundation\Session\Session;
-    use Symfony\Component\HttpFoundation\Session\Storage\PhpSessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 
     // legacy application configures session
     ini_set('session.save_handler', 'files');
@@ -31,7 +31,7 @@ Typical use of this might look as follows::
     session_start();
 
     // Get Symfony to interface with this existing session
-    $session = new Session(new PhpSessionStorage());
+    $session = new Session(new PhpBridgeSessionStorage());
 
     // symfony will now interface with the existing PHP session
     $session->start();
