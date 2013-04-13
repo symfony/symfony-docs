@@ -102,6 +102,10 @@
 
   * :doc:`/cookbook/request/mime_type`
 
+* :doc:`/cookbook/session/index`
+
+  * :doc:`/cookbook/session/php_bridge`
+
 * :doc:`/cookbook/routing/index`
 
   * :doc:`/cookbook/routing/scheme`

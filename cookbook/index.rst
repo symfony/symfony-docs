@@ -25,6 +25,7 @@ The Cookbook
     debugging
     event_dispatcher/index
     request/index
+    session/index
     profiler/index
     web_services/index
     symfony1
