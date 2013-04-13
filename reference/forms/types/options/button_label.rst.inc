@@ -5,7 +5,13 @@ label
 
 Sets the label that will be displayed on the button. The label can also be
 directly set inside the template:
-    
-.. code-block:: jinja
 
-    {{ form_widget(form.save, { 'label': 'Click me' }) }}
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {{ form_widget(form.save, { 'label': 'Click me' }) }}
+
+    .. code-block:: html+php
+
+        <?php echo $view['form']->widget($form['save'], array('label' => 'Click me')) ?>

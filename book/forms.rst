@@ -291,11 +291,11 @@ Let's add a second button with the caption "Save and add" to our form::
         ->getForm();
 
 In your controller, use the button's
-:method:`Symfony\\Component\\Form\\ClickableInterface\\isClicked` method for
+:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method for
 querying if the "Save and add" button was clicked::
 
     if ($form->isValid()) {
-        // perform some action, such as saving the task to the database
+        // ... perform some action, such as saving the task to the database
 
         $nextAction = $form->get('saveAndAdd')->isClicked()
             ? 'task_new'
@@ -454,8 +454,9 @@ Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false is new to version 2.3.
-    Setting it to an empty array was already supported before.
+    The ability to set ``validation_groups`` to false was added in Symfony 2.3,
+    although setting it to an empty array achieved the same result in previous
+    versions.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases, you can skip the call to :method:`Symfony\\Component\\Form\\FormInterface::isValid`
