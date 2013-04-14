@@ -30,17 +30,17 @@ multiple branches: ``2.0``, ``2.1``, ``2.2`` corresponding to the different
 versions of Symfony itself. The ``master`` branch holds the documentation
 for the development branch of the code.
 
-Unless you're documenting a feature that was introduced *after* Symfony 2.0
-(e.g. in Symfony 2.1), your changes should always be based on the 2.0 branch.
-To do this checkout the 2.0 branch before the next step:
+Unless you're documenting a feature that was introduced *after* Symfony 2.1
+(e.g. in Symfony 2.2), your changes should always be based on the 2.1 branch.
+To do this checkout the 2.1 branch before the next step:
 
 .. code-block:: bash
 
-    $ git checkout 2.0
+    $ git checkout 2.1
 
 .. tip::
 
-    Your base branch (e.g. 2.0) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
+    Your base branch (e.g. 2.1) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
     that you'll use later.
 
 Next, create a dedicated branch for your changes (for organization):
@@ -61,16 +61,16 @@ Following the example, the pull request will default to be between your
 .. image:: /images/docs-pull-request.png
    :align: center
 
-If you have made your changes based on the 2.0 branch then you need to change
-the base branch to be 2.0 on the preview page:
+If you have made your changes based on the 2.1 branch then you need to change
+the base branch to be 2.1 on the preview page:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center
 
 .. note::
 
-  All changes made to a branch (e.g. 2.0) will be merged up to each "newer"
-  branch (e.g. 2.1, master, etc) for the next release on a weekly basis.
+  All changes made to a branch (e.g. 2.1) will be merged up to each "newer"
+  branch (e.g. 2.2, master, etc) for the next release on a weekly basis.
 
 GitHub covers the topic of `pull requests`_ in detail.
 
