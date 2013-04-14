@@ -21,6 +21,8 @@ Usage
 The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
 a command in a sub-process::
 
+.. code-block:: php
+
     use Symfony\Component\Process\Process;
 
     $process = new Process('ls -lsa');
@@ -49,6 +51,8 @@ When executing a long running command (like rsync-ing files to a remote
 server), you can give feedback to the end user in real-time by passing an
 anonymous function to the
 :method:`Symfony\\Component\\Process\\Process::run` method::
+
+.. code-block:: php
 
     use Symfony\Component\Process\Process;
 
@@ -98,6 +102,8 @@ are done doing other stuff::
 
 If you want to execute some PHP code in isolation, use the ``PhpProcess``
 instead::
+
+.. code-block:: php
 
     use Symfony\Component\Process\PhpProcess;
 
