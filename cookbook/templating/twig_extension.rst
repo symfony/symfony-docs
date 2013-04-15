@@ -15,10 +15,17 @@ your code faster.
 
 .. tip::
 
-    Before writing your own extensions, have a look at the `Twig official extension repository`_.
+    Before writing your own extensions, have a look at the
+    `Twig official extension repository`_.
 
 Create the Extension Class
 --------------------------
+
+.. note::
+
+    This cookbook describes how to write a custom Twig extension as of
+    Twig 1.12. If you are using an older version, please read
+    `Twig extensions documentation legacy`_.
 
 To get your custom functionality you must first create a Twig Extension class.
 As an example you'll create a price filter to format a given number into price::
@@ -31,14 +38,14 @@ As an example you'll create a price filter to format a given number into price::
         public function getFilters()
         {
             return array(
-                'price' => new \Twig_Filter_Method($this, 'priceFilter'),
+                new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
             );
         }
 
         public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-            $price = '$' . $price;
+            $price = '$'.$price;
 
             return $price;
         }
@@ -51,7 +58,8 @@ As an example you'll create a price filter to format a given number into price::
 
 .. tip::
 
-    Along with custom filters, you can also add custom `functions` and register `global variables`.
+    Along with custom filters, you can also add custom `functions` and register
+    `global variables`.
 
 Register an Extension as a Service
 ----------------------------------
@@ -83,9 +91,9 @@ Now you must let the Service Container know about your newly created Twig Extens
         // src/Acme/DemoBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $acmeDefinition = new Definition('\Acme\DemoBundle\Twig\AcmeExtension');
-        $acmeDefinition->addTag('twig.extension');
-        $container->setDefinition('acme.twig.acme_extension', $acmeDefinition);
+        $container
+            ->register('acme.twig.acme_extension', '\Acme\DemoBundle\Twig\AcmeExtension')
+            ->addTag('twig.extension');
 
 .. note::
 
@@ -115,9 +123,11 @@ Passing other arguments to your filter:
 Learning further
 ----------------
 
-For a more in-depth look into Twig Extensions, please take a look at the `Twig extensions documentation`_.
+For a more in-depth look into Twig Extensions, please take a look at the
+`Twig extensions documentation`_.
 
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
 .. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
+.. _`Twig extensions documentation legacy`: http://twig.sensiolabs.org/doc/advanced_legacy.html#creating-an-extension
