@@ -5,8 +5,8 @@ Configuration
     :maxdepth: 2
 
     environments
-    front_controllers_and_kernel
     override_dir_structure
+    front_controllers_and_kernel
     external_parameters
     pdo_session_storage
     apache_router

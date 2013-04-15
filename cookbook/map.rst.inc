@@ -21,6 +21,7 @@
 
   * :doc:`/cookbook/configuration/environments`
   * :doc:`/cookbook/configuration/override_dir_structure`
+  * :doc:`/cookbook/configuration/front_controllers_and_kernel`
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
