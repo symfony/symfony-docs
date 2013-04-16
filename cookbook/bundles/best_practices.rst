@@ -137,7 +137,7 @@ The following classes and files have specific emplacements:
 .. note::
 
     When building a reusable bundle, model classes should be placed in the
-    ``Model`` namespace. See doc:`../doctrine/mapping_model_classes` for
+    ``Model`` namespace. See :doc:`/cookbook/doctrine/mapping_model_classes` for
     how to handle the mapping with a compiler pass.
 
 Classes

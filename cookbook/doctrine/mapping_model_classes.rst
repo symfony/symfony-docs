@@ -16,8 +16,13 @@ register the mappings for your model classes.
     of the ODMs. For reusable bundles, rather than duplicate model classes
     just to get the auto mapping, use the compiler pass.
 
+.. versionadded:: 2.3
+    The mapping compiler pass was added in  Symfony 2.3 and DoctrineBundle 1.2.1.
+
 
 In your bundle class, write the following code to register the compiler pass::
+
+    use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 
     class FOSUserBundle extends Bundle
     {
@@ -26,11 +31,17 @@ In your bundle class, write the following code to register the compiler pass::
             parent::build($container);
             $container->addCompilerPass(new ValidationPass());
 
-            if (class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
+            $compilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection'
+                . '\Compiler\DoctrineOrmMappingsPass';
+            if (class_exists($compilerClass)) {
+                $modelDir = realpath(__DIR__.'/Resources/config/doctrine/model');
                 $mappings = array(
-                    realpath(__DIR__.'/Resources/config/doctrine/model') => 'FOS\UserBundle\Model',
+                    $modelDir => 'FOS\UserBundle\Model',
                 );
-                $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings, 'fos_user.backend_type_orm'));
+                $container->addCompilerPass(
+                    DoctrineOrmMappingsPass::createXmlMappingDriver(
+                        $mappings, 'fos_user.backend_type_orm'
+                ));
             }
 
             // TODO: couch, mongo
