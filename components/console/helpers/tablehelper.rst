@@ -26,13 +26,13 @@ set headers, rows and render::
     ;
     $table->render($output);
 
-Table layout can be customized as well. There are two ways to customize table rendering:
-using named layouts or by customizing rendering options.
+The table layout can be customized as well. There are two ways to customize
+table rendering: using named layouts or by customizing rendering options.
 
 Customize Table Layout using Named Layouts
 ------------------------------------------
 
-Table helper is shipped with two preconfigured table layouts:
+The Table helper ships with two preconfigured table layouts:
 
 * ``TableHelper::LAYOUT_DEFAULT``
 
@@ -43,7 +43,7 @@ Layout can be set using :method:`Symfony\\Component\\Console\\Helper\\TableHelpe
 Customize Table Layout using Rendering Options
 ----------------------------------------------
 
-You can control table rendering by setting custom rendering option values:
+You can also control table rendering by setting custom rendering option values:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setPaddingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setHorizontalBorderChar`
