@@ -1,7 +1,7 @@
 .. index::
    single: Assetic; Introduction
 
-如何使用Assetic资产管理
+如何 使用Assetic资产 管理
 ========================
 
 
