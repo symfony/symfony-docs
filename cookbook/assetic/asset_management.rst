@@ -1,8 +1,8 @@
 .. index::
    single: Assetic; Introduction
 
-How to Use Assetic for Asset Management
-=======================================
+##如何使用Assetic资产管理
+
 
 Assetic combines two major ideas: :ref:`assets<cookbook-assetic-assets>` and
 :ref:`filters<cookbook-assetic-filters>`. The assets are files such as CSS,
