@@ -277,4 +277,4 @@ object:
 |                 | (for example, a ``choice`` field, which is actually a group of checkboxes               |
 +-----------------+-----------------------------------------------------------------------------------------+
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

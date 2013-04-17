@@ -16,11 +16,16 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/events`
   * :doc:`/components/console/helpers/index`
 
 * **CSS Selector**
 
   * :doc:`/components/css_selector`
+
+* **Debug**
+
+  * :doc:`/components/debug`
 
 * :doc:`/components/dependency_injection/index`
 
