@@ -152,6 +152,7 @@
 * :doc:`/cookbook/testing/index`
 
   * :doc:`/cookbook/testing/http_authentication`
+  * :doc:`/cookbook/testing/simulating_authentication`
   * :doc:`/cookbook/testing/insulating_clients`
   * :doc:`/cookbook/testing/profiling`
   * :doc:`/cookbook/testing/doctrine`
