@@ -101,6 +101,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
                 ->add('dueDate', 'date')
+                ->add('save', 'submit')
                 ->getForm();
 
             return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
@@ -125,6 +126,11 @@ In this example, you've added two fields to your form - ``task`` and ``dueDate``
 corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
 You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
 other things, determines which HTML form tag(s) is rendered for that field.
+At last, you added a submit button for submitting the form to the server.
+
+.. versionadded:: 2.3
+    Support for submit buttons was added in Symfony 2.3. Before that, you had
+    to add buttons to the form's HTML manually.
 
 Symfony2 comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
@@ -147,8 +153,6 @@ helper functions:
         {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
         <form action="{{ path('task_new') }}" method="post" {{ form_enctype(form) }}>
             {{ form_widget(form) }}
-
-            <input type="submit" />
         </form>
 
     .. code-block:: html+php
@@ -156,8 +160,6 @@ helper functions:
         <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
         <form action="<?php echo $view['router']->generate('task_new') ?>" method="post" <?php echo $view['form']->enctype($form) ?> >
             <?php echo $view['form']->widget($form) ?>
-
-            <input type="submit" />
         </form>
 
 .. image:: /images/book/form-simple.png
@@ -194,7 +196,7 @@ it into a format that's suitable for being rendered in an HTML form.
         Support for "hasser" methods was added in Symfony 2.1.
 
 .. index::
-  single: Forms; Handling form submission
+  single: Forms; Handling form submissions
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -215,6 +217,7 @@ controller::
         $form = $this->createFormBuilder($task)
             ->add('task', 'text')
             ->add('dueDate', 'date')
+            ->add('save', 'submit')
             ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -264,6 +267,42 @@ possible paths:
 
    Redirecting a user after a successful form submission prevents the user
    from being able to hit "refresh" and re-post the data.
+
+.. index::
+   single: Forms; Multiple Submit Buttons
+
+.. _book-form-submitting-multiple-buttons:
+
+Submitting Forms with Multiple Buttons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    Support for buttons in forms was added in Symfony 2.3.
+
+When your form contains more than one submit button, you will want to check
+which of the buttons was clicked to adapt the program flow in your controller.
+Let's add a second button with the caption "Save and add" to our form::
+
+    $form = $this->createFormBuilder($task)
+        ->add('task', 'text')
+        ->add('dueDate', 'date')
+        ->add('save', 'submit')
+        ->add('saveAndAdd', 'submit')
+        ->getForm();
+
+In your controller, use the button's
+:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method for
+querying if the "Save and add" button was clicked::
+
+    if ($form->isValid()) {
+        // ... perform some action, such as saving the task to the database
+
+        $nextAction = $form->get('saveAndAdd')->isClicked()
+            ? 'task_new'
+            : 'task_success';
+
+        return $this->redirect($this->generateUrl($nextAction));
+    }
 
 .. index::
    single: Forms; Validation
@@ -408,8 +447,42 @@ method::
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
 
-Groups based on Submitted Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. index::
+   single: Forms; Disabling validation
+
+Disabling Validation
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ability to set ``validation_groups`` to false was added in Symfony 2.3,
+    although setting it to an empty array achieved the same result in previous
+    versions.
+
+Sometimes it is useful to suppress the validation of a form altogether. For
+these cases, you can skip the call to :method:`Symfony\\Component\\Form\\FormInterface::isValid`
+in your controller. If this is not possible, you can alternatively set the
+``validation_groups`` option to ``false`` or an empty array::
+
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => false,
+        ));
+    }
+
+Note that when you do that, the form will still run basic integrity checks,
+for example whether an uploaded file was too large or whether non-existing
+fields were submitted. If you want to suppress validation completely, remove
+the :method:`Symfony\\Component\\Form\\FormInterface::isValid` call from your
+controller.
+
+.. index::
+   single: Forms; Validation groups based on submitted data
+
+Groups based on the Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
    The ability to specify a callback or Closure in ``validation_groups``
@@ -417,7 +490,7 @@ Groups based on Submitted Data
 
 If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
-to an array callback, or a ``Closure``::
+to an array callback::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -431,7 +504,7 @@ to an array callback, or a ``Closure``::
 This will call the static method ``determineValidationGroups()`` on the
 ``Client`` class after the form is bound, but before validation is executed.
 The Form object is passed as an argument to that method (see next example).
-You can also define whole logic inline by using a Closure::
+You can also define whole logic inline by using a ``Closure``::
 
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -449,6 +522,44 @@ You can also define whole logic inline by using a Closure::
             },
         ));
     }
+
+.. index::
+   single: Forms; Validation groups based on clicked button
+
+Groups based on the Clicked Button
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    Support for buttons in forms was added in Symfony 2.3.
+
+When your form contains multiple submit buttons, you can change the validation
+group depending on which button is used to submit the form. For example,
+consider a form in a wizard that lets you advance to the next step or go back
+to the previous step. Let's assume also that when returning to the previous
+step, the data of the form should be saved, but not validated.
+
+First, we need to add the two buttons to the form::
+
+    $form = $this->createFormBuilder($task)
+        // ...
+        ->add('nextStep', 'submit')
+        ->add('previousStep', 'submit')
+        ->getForm();
+
+Then, we configure the button for returning to the previous step to run
+specific validation groups. In this example, we want it to suppress validation,
+so we set its ``validation_groups`` options to false::
+
+    $form = $this->createFormBuilder($task)
+        // ...
+        ->add('previousStep', 'submit', array(
+            'validation_groups' => false,
+        ))
+        ->getForm();
+
+Now the form will skip your validation constraints. It will still validate
+basic integrity constraints, such as checking whether an uploaded file was too
+large or whether you tried to submit text in a number field.
 
 .. index::
    single: Forms; Built-in field types
