@@ -613,7 +613,6 @@ your form::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-        $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
         $builder->addEventSubscriber($this->registrationSportListener);
     }
 
