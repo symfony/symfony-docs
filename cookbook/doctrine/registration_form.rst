@@ -254,13 +254,13 @@ and its template:
 Finally, create the controller which handles the form submission.  This performs
 the validation and saves the data into the database::
 
-    public function createAction()
+    public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
-        $form->bind($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $registration = $form->getData();

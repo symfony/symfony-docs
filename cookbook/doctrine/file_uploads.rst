@@ -227,25 +227,23 @@ The following controller shows you how to handle the entire process::
     /**
      * @Template()
      */
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
         $document = new Document();
         $form = $this->createFormBuilder($document)
             ->add('name')
             ->add('file')
-            ->getForm()
-        ;
+            ->getForm();
 
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
 
-                $em->persist($document);
-                $em->flush();
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
 
-                return $this->redirect($this->generateUrl(...));
-            }
+            $em->persist($document);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl(...));
         }
 
         return array('form' => $form->createView());

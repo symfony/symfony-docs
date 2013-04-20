@@ -193,7 +193,7 @@ Handling Form Submissions
 
 The second job of a form is to translate user-submitted data back to the
 properties of an object. To make this happen, the submitted data from the
-user must be bound to the form. Add the following functionality to your
+user must be written into the form. Add the following functionality to your
 controller::
 
     // ...
@@ -209,53 +209,54 @@ controller::
             ->add('dueDate', 'date')
             ->getForm();
 
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                // perform some action, such as saving the task to the database
+        if ($form->isValid()) {
+            // perform some action, such as saving the task to the database
 
-                return $this->redirect($this->generateUrl('task_success'));
-            }
+            return $this->redirect($this->generateUrl('task_success'));
         }
 
         // ...
     }
 
-.. versionadded:: 2.1
-    The ``bind`` method was made more flexible in Symfony 2.1. It now accepts
-    the raw client data (same as before) or a Symfony Request object. This
-    is preferred over the deprecated ``bindRequest`` method.
-
-Now, when submitting the form, the controller binds the submitted data to the
-form, which translates that data back to the ``task`` and ``dueDate`` properties
-of the ``$task`` object. This all happens via the ``bind()`` method.
-
-.. note::
-
-    As soon as ``bind()`` is called, the submitted data is transferred
-    to the underlying object immediately. This happens regardless of whether
-    or not the underlying data is actually valid.
+.. versionadded:: 2.3
+    The :method:`Symfony\Component\Form\FormInterface::handleRequest` method was
+    added in Symfony 2.3. Before you had to do some manual work to achieve the
+    same result.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
 
-#. When initially loading the page in a browser, the request method is ``GET``
-   and the form is simply created and rendered;
+#. When initially loading the page in a browser, the form is simply created and
+   rendered. :method:`Symfony\Component\Form\FormInterface::handleRequest`
+   recognizes that the form was not submitted and does nothing.
+   :method:`Symfony\Component\Form\FormInterface::isValid` returns ``false``
+   if the form was not submitted.
 
-#. When the user submits the form (i.e. the method is ``POST``) with invalid
-   data (validation is covered in the next section), the form is bound and
-   then rendered, this time displaying all validation errors;
+#. When the user submits the form, :method:`Symfony\Component\Form\FormInterface::handleRequest`
+   recognizes this and immediately writes the submitted data back into the
+   ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
+   is validated. If it is invalid (validation is covered in the next section),
+   :method:`Symfony\Component\Form\FormInterface::isValid` returns ``false``
+   again, so the form is rendered together with all validation errors;
 
-#. When the user submits the form with valid data, the form is bound and
-   you have the opportunity to perform some actions using the ``$task``
-   object (e.g. persisting it to the database) before redirecting the user
-   to some other page (e.g. a "thank you" or "success" page).
+   .. note::
 
-.. note::
+       You can use the method :method:`Symfony\Component\Form\FormInterface::isBound`
+       to check whether a form was submitted, regardless of whether or not the
+       submitted data is actually valid.
 
-   Redirecting a user after a successful form submission prevents the user
-   from being able to hit "refresh" and re-post the data.
+#. When the user submits the form with valid data, the submitted data is again
+   written into the form, but this time :method:`Symfony\Component\Form\FormInterface::isValid`
+   returns ``true``. Now you have the opportunity to perform some actions using
+   the ``$task`` object (e.g. persisting it to the database) before redirecting
+   the user to some other page (e.g. a "thank you" or "success" page).
+
+   .. note::
+
+      Redirecting a user after a successful form submission prevents the user
+      from being able to hit "refresh" and re-post the data.
 
 .. index::
    single: Forms; Validation
@@ -421,7 +422,7 @@ to an array callback, or a ``Closure``::
     }
 
 This will call the static method ``determineValidationGroups()`` on the
-``Client`` class after the form is bound, but before validation is executed.
+``Client`` class after the form is submitted, but before validation is executed.
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a Closure::
 
@@ -966,7 +967,7 @@ you can fetch it from the form::
 
 For more information, see the :doc:`Doctrine ORM chapter</book/doctrine>`.
 
-The key thing to understand is that when the form is bound, the submitted
+The key thing to understand is that when the form is submitted, the submitted
 data is transferred to the underlying object immediately. If you want to
 persist that data, you simply need to persist the object itself (which already
 contains the submitted data).
@@ -1540,12 +1541,12 @@ an array of the submitted data. This is actually really easy::
             ->add('message', 'textarea')
             ->getForm();
 
-            if ($request->isMethod('POST')) {
-                $form->bind($request);
+        $form->handleRequest($request);
 
-                // data is an array with "name", "email", and "message" keys
-                $data = $form->getData();
-            }
+        if ($form->isBound()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+        }
 
         // ... render the form
     }
@@ -1580,15 +1581,15 @@ Adding Validation
 
 The only missing piece is validation. Usually, when you call ``$form->isValid()``,
 the object is validated by reading the constraints that you applied to that
-class. If your form is binding to an object (i.e. you're using the ``data_class``
+class. If your form is mapped to an object (i.e. you're using the ``data_class``
 option or passing an object to your form), this is almost always the approach
 you want to use. See :doc:`/book/validation` for more details.
 
 .. _form-option-constraints:
 
-But if you're not binding to an object and are instead retrieving a simple
-array of your submitted data, how can you add constraints to the data of your
-form?
+But if the form is not mapped to an object and you instead want to retrieve a
+simple array of your submitted data, how can you add constraints to the data of
+your form?
 
 The answer is to setup the constraints yourself, and attach them to the individual
 fields. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,

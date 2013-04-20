@@ -177,12 +177,10 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
 
             $form = $this->createForm(new TaskType(), $task);
 
-            // process the form on POST
-            if ($request->isMethod('POST')) {
-                $form->bind($request);
-                if ($form->isValid()) {
-                    // ... maybe do some form processing, like saving the Task and Tag objects
-                }
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
             return $this->render('AcmeTaskBundle:Task:new.html.twig', array(
@@ -642,40 +640,38 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
             $editForm = $this->createForm(new TaskType(), $task);
 
-            if ($request->isMethod('POST')) {
-                $editForm->bind($this->getRequest());
+            $editForm->handleRequest($request);
 
-                if ($editForm->isValid()) {
+            if ($editForm->isValid()) {
 
-                    // filter $originalTags to contain tags no longer present
-                    foreach ($task->getTags() as $tag) {
-                        foreach ($originalTags as $key => $toDel) {
-                            if ($toDel->getId() === $tag->getId()) {
-                                unset($originalTags[$key]);
-                            }
+                // filter $originalTags to contain tags no longer present
+                foreach ($task->getTags() as $tag) {
+                    foreach ($originalTags as $key => $toDel) {
+                        if ($toDel->getId() === $tag->getId()) {
+                            unset($originalTags[$key]);
                         }
                     }
-
-                    // remove the relationship between the tag and the Task
-                    foreach ($originalTags as $tag) {
-                        // remove the Task from the Tag
-                        $tag->getTasks()->removeElement($task);
-
-                        // if it were a ManyToOne relationship, remove the relationship like this
-                        // $tag->setTask(null);
-
-                        $em->persist($tag);
-
-                        // if you wanted to delete the Tag entirely, you can also do that
-                        // $em->remove($tag);
-                    }
-
-                    $em->persist($task);
-                    $em->flush();
-
-                    // redirect back to some edit page
-                    return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
                 }
+
+                // remove the relationship between the tag and the Task
+                foreach ($originalTags as $tag) {
+                    // remove the Task from the Tag
+                    $tag->getTasks()->removeElement($task);
+
+                    // if it were a ManyToOne relationship, remove the relationship like this
+                    // $tag->setTask(null);
+
+                    $em->persist($tag);
+
+                    // if you wanted to delete the Tag entirely, you can also do that
+                    // $em->remove($tag);
+                }
+
+                $em->persist($task);
+                $em->flush();
+
+                // redirect back to some edit page
+                return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
             }
 
             // render some form template
