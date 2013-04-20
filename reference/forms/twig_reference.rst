@@ -24,6 +24,75 @@ rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
 
+.. _reference-forms-twig-form:
+
+form(view, variables)
+---------------------
+
+Renders the HTML of a complete form.
+
+.. code-block:: jinja
+
+    {# render the form and change the submission method #}
+    {{ form(form, {'method': 'GET'}) }}
+
+You will mostly use this helper for prototyping and if you use custom form
+themes. If you need more flexibility in rendering the form, you should use
+the other helpers to render individual parts of the form instead:
+
+.. code-block:: jinja
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.dueDate) }}
+
+        <input type="submit" value="Submit me"/>
+    {{ form_end(form) }}
+
+See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
+argument.
+
+.. _reference-forms-twig-start:
+
+form_start(view, variables)
+---------------------------
+
+Renders the start tag of a form. This helper takes care of printing the
+configured method and target action of the form. It will also include the
+correct ``enctype`` property if the form contains upload fields.
+
+.. code-block:: jinja
+
+    {# render the start tag and change the submission method #}
+    {{ form_start(form, {'method': 'GET'}) }}
+
+See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
+argument.
+
+.. _reference-forms-twig-end:
+
+form_end(view, variables)
+-------------------------
+
+Renders the end tag of a form.
+
+.. code-block:: jinja
+
+    {{ form_end(form) }}
+
+This helper also outputs ``form_rest()`` unless you set ``render_rest`` to
+false:
+
+.. code-block:: jinja
+
+    {# don't render unrendered fields #}
+    {{ form_end(form, {'render_rest': false}) }}
+
+See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
+argument.
+
 .. _reference-forms-twig-label:
 
 form_label(view, label, variables)
@@ -118,6 +187,11 @@ obvious (since it'll render the field for you).
 
 form_enctype(view)
 ------------------
+
+.. note::
+
+    This helper was deprecated in Symfony 2.3 and will be removed in Symfony 3.0.
+    You should use ``form_start()`` instead.
 
 If the form contains at least one file upload field, this will render the
 required ``enctype="multipart/form-data"`` form attribute. It's always a
