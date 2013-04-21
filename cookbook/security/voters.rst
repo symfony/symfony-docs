@@ -102,11 +102,11 @@ the security layer. This can be done easily through the service container.
 
 .. tip::
 
-   The methods supportsAttribute() and supportsClass() are not being called
-   internally by the framework. Once you have registered your voter the vote()
-   method will always be called, not depending on your restrictions. Therefore
-   you need to call those methods in your implementation of the vote() method.
-   
+   Your implementation of the methods :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute` and `Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass` are 
+   not being called internally by the framework. Once you have registered your 
+   voter the ``vote()`` method will always be called, not depending on your 
+   restrictions. Therefore you need to call those methods in your implementation 
+   of the ``vote()`` method.   
 
 Declaring the Voter as a Service
 --------------------------------
