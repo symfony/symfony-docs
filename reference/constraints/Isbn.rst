@@ -28,8 +28,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\AcmeEntity:
+        # src/Acme/BookcaseBunlde/Resources/config/validation.yml
+        Acme\BookcaseBunlde\Entity\Book:
             properties:
                 isbn:
                     - Isbn:
@@ -39,8 +39,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
-        <class name="Acme\DemoBundle\Entity\AcmeEntity">
+        <!-- src/Acme/BookcaseBunlde/Resources/config/validation.xml -->
+        <class name="Acme\BookcaseBunlde\Entity\Book">
             <property name="isbn">
                 <constraint name="Isbn">
                     <option name="isbn10">true</option>
@@ -52,10 +52,10 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Entity/AcmeEntity.php
+        // src/Acme/BookcaseBunlde/Entity/Book.php
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class AcmeEntity
+        class Book
         {
             /**
              * @Assert\Isbn(
@@ -69,17 +69,19 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Entity/AcmeEntity.php
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Isbn;
+        // src/Acme/BookcaseBunlde/Entity/Book.php
+        namespace Acme\BookcaseBunlde\Entity;
 
-        class AcmeEntity
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Book
         {
             protected $isbn;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('isbn', new Isbn(array(
+                $metadata->addPropertyConstraint('isbn', new Assert\Isbn(array(
                     'isbn10'          => true,
                     'isbn13'          => true,
                     'bothIsbnMessage' => 'This value is neither a valid ISBN-10 nor a valid ISBN-13.'
