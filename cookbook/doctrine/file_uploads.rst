@@ -222,6 +222,7 @@ The following controller shows you how to handle the entire process::
     // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     /**

@@ -53,6 +53,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $object = new TestObject();
             $object->fromArray($formData);
 
+            // bind the data to the form directly
             $form->bind($formData);
 
             $this->assertTrue($form->isSynchronized());

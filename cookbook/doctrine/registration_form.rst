@@ -234,7 +234,7 @@ controller for displaying the registration form::
         {
             $registration = new Registration();
             $form = $this->createForm(new RegistrationType(), $registration, array(
-                'action' => $this->generateUrl('create'),
+                'action' => $this->generateUrl('account_create'),
             ));
 
             return $this->render(
@@ -251,8 +251,9 @@ and its template:
     {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
     {{ form(form) }}
 
-Finally, create the controller which handles the form submission.  This performs
-the validation and saves the data into the database::
+Finally, create the controller (and corresponding ``account_create``) which
+handles the form submission.  This performs the validation and saves the data
+into the database::
 
     public function createAction(Request $request)
     {

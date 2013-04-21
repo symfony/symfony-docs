@@ -36,7 +36,7 @@ Renders the HTML of a complete form.
     {# render the form and change the submission method #}
     {{ form(form, {'method': 'GET'}) }}
 
-You will mostly use this helper for prototyping and if you use custom form
+You will mostly use this helper for prototyping or if you use custom form
 themes. If you need more flexibility in rendering the form, you should use
 the other helpers to render individual parts of the form instead:
 
@@ -51,9 +51,6 @@ the other helpers to render individual parts of the form instead:
         <input type="submit" value="Submit me"/>
     {{ form_end(form) }}
 
-See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
-argument.
-
 .. _reference-forms-twig-start:
 
 form_start(view, variables)
@@ -67,9 +64,6 @@ correct ``enctype`` property if the form contains upload fields.
 
     {# render the start tag and change the submission method #}
     {{ form_start(form, {'method': 'GET'}) }}
-
-See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
-argument.
 
 .. _reference-forms-twig-end:
 
@@ -89,9 +83,6 @@ false:
 
     {# don't render unrendered fields #}
     {{ form_end(form, {'render_rest': false}) }}
-
-See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
-argument.
 
 .. _reference-forms-twig-label:
 

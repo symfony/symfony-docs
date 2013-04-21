@@ -87,6 +87,7 @@
   * :doc:`/cookbook/form/use_virtuals_forms`
   * :doc:`/cookbook/form/unit_testing`
   * :doc:`/cookbook/form/use_empty_data`
+  * :doc:`/cookbook/form/deprecated_bind`
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 

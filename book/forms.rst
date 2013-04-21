@@ -162,10 +162,11 @@ helper functions:
     change the request method and the target URL of the form.
 
 That's it! By printing ``form(form)``, each field in the form is rendered, along
-with a label and error message (if there is one). As easy as this is, it's not
-very flexible (yet). Usually, you'll want to render each form field individually
-so you can control how the form looks. You'll learn how to do that in the
-":ref:`form-rendering-template`" section.
+with a label and error message (if there is one). The ``form`` function also
+surrounds everything in the necessary HTML ``form`` tag. As easy as this is,
+it's not very flexible (yet). Usually, you'll want to render each form field
+individually so you can control how the form looks. You'll learn how to do
+that in the ":ref:`form-rendering-template`" section.
 
 Before moving on, notice how the rendered ``task`` input field has the value
 of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
@@ -187,6 +188,8 @@ it into a format that's suitable for being rendered in an HTML form.
 
 .. index::
   single: Forms; Handling form submission
+
+.. _book-form-handling-form-submissions:
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,8 +225,8 @@ controller::
 
 .. versionadded:: 2.3
     The :method:`Symfony\Component\Form\FormInterface::handleRequest` method was
-    added in Symfony 2.3. Before you had to do some manual work to achieve the
-    same result.
+    added in Symfony 2.3. Previously, the now-deprecated ``bind`` function
+    was used. For details on that method, see :doc:`/cookbook/form/deprecated_bind`.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
@@ -669,39 +672,46 @@ used the ``form_row`` helper:
 
     .. code-block:: html+jinja
 
-        {{ form_errors(form) }}
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
 
-        <div>
-            {{ form_label(form.task) }}
-            {{ form_errors(form.task) }}
-            {{ form_widget(form.task) }}
-        </div>
+            <div>
+                {{ form_label(form.task) }}
+                {{ form_errors(form.task) }}
+                {{ form_widget(form.task) }}
+            </div>
 
-        <div>
-            {{ form_label(form.dueDate) }}
-            {{ form_errors(form.dueDate) }}
-            {{ form_widget(form.dueDate) }}
-        </div>
+            <div>
+                {{ form_label(form.dueDate) }}
+                {{ form_errors(form.dueDate) }}
+                {{ form_widget(form.dueDate) }}
+            </div>
 
-        {{ form_rest(form) }}
+        <input type="submit" />
+
+        {{ form_end(form) }}
 
     .. code-block:: html+php
 
-        <?php echo $view['form']->errors($form) ?>
+        <?php echo $view['form']->start($form) ?>
 
-        <div>
-            <?php echo $view['form']->label($form['task']) ?>
-            <?php echo $view['form']->errors($form['task']) ?>
-            <?php echo $view['form']->widget($form['task']) ?>
-        </div>
+            <?php echo $view['form']->errors($form) ?>
 
-        <div>
-            <?php echo $view['form']->label($form['dueDate']) ?>
-            <?php echo $view['form']->errors($form['dueDate']) ?>
-            <?php echo $view['form']->widget($form['dueDate']) ?>
-        </div>
+            <div>
+                <?php echo $view['form']->label($form['task']) ?>
+                <?php echo $view['form']->errors($form['task']) ?>
+                <?php echo $view['form']->widget($form['task']) ?>
+            </div>
 
-        <?php echo $view['form']->rest($form) ?>
+            <div>
+                <?php echo $view['form']->label($form['dueDate']) ?>
+                <?php echo $view['form']->errors($form['dueDate']) ?>
+                <?php echo $view['form']->widget($form['dueDate']) ?>
+            </div>
+
+            <input type="submit" />
+
+        <?php echo $view['form']->end($form) ?>
 
 If the auto-generated label for a field isn't quite right, you can explicitly
 specify it:
@@ -777,8 +787,8 @@ that can be used with each.
 Changing the Action and Method of a Form
 ----------------------------------------
 
-So far, we have used the ``form_start()`` helper to render the form's start tag
-and assumed that each form is submitted to the same URL in a POST request.
+So far, the ``form_start()`` helper has been used to render the form's start
+tag and we assumed that each form is submitted to the same URL in a POST request.
 Sometimes you want to change these parameters. You can do so in a few different
 ways. If you build your form in the controller, you can use ``setAction()`` and
 ``setMethod()``::
@@ -795,16 +805,16 @@ ways. If you build your form in the controller, you can use ``setAction()`` and
     This example assumes that you've created a route called ``target_route``
     that points to the controller that processes the form.
 
-In :ref:`book-form-creating-form-classes` you will learn how to outsource the
-form building code into separate classes. When using such a form class in the
-controller, you can pass the action and method as form options::
+In :ref:`book-form-creating-form-classes` you will learn how to move the
+form building code into separate classes. When using an external form class
+in the controller, you can pass the action and method as form options::
 
     $form = $this->createForm(new TaskType(), $task, array(
         'action' => $this->generateUrl('target_route'),
         'method' => 'GET',
     ));
 
-At last, you can override the action and method in the template by passing them
+Finally, you can override the action and method in the template by passing them
 to the ``form()`` or the ``form_start()`` helper:
 
 .. configuration-block::
@@ -1100,7 +1110,6 @@ as the original ``Task`` fields:
             {{ form_row(form.category.name) }}
         </div>
 
-        {{ form_rest(form) }}
         {# ... #}
 
     .. code-block:: html+php
@@ -1112,7 +1121,6 @@ as the original ``Task`` fields:
             <?php echo $view['form']->row($form['category']['name']) ?>
         </div>
 
-        <?php echo $view['form']->rest($form) ?>
         <!-- ... -->
 
 When the user submits the form, the submitted data for the ``Category`` fields
@@ -1480,7 +1488,7 @@ ensures that the user - not some other entity - is submitting the given data.
 Symfony automatically validates the presence and accuracy of this token.
 
 The ``_token`` field is a hidden field and will be automatically rendered
-if you include the ``form_rest()`` function in your template, which ensures
+if you include the ``form_end()`` function in your template, which ensures
 that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
@@ -1543,7 +1551,7 @@ an array of the submitted data. This is actually really easy::
 
         $form->handleRequest($request);
 
-        if ($form->isBound()) {
+        if ($form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
         }
