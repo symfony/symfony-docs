@@ -48,6 +48,16 @@ Functions
 | ``asset_version(packageName = null)``              | Get the current version of the package, more information in                                |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form(view, variables = {})``                     | This will render the HTML of a complete form, more information in                          |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-form>`.                              |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_start(view, variables = {})``               | This will render the HTML start tag of a form, more information in                         |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-start>`.                             |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_end(view, variables = {})``                 | This will render the HTML end tag of a form together with all fields that                  |
+|                                                    | have not been rendered yet, more information                                               |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-end>`.                               |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_enctype(view)``                             | This will render the required ``enctype="multipart/form-data"`` attribute                  |
 |                                                    | if the form contains at least one file upload field, more information in                   |
 |                                                    | in :ref:`the Twig Form reference<reference-forms-twig-enctype>`.                           |

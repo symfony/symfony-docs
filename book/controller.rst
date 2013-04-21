@@ -325,7 +325,7 @@ working with forms, for example::
     {
         $form = $this->createForm(...);
 
-        $form->bind($request);
+        $form->handleRequest($request);
         // ...
     }
 
@@ -663,7 +663,8 @@ For example, imagine you're processing a form submit::
     {
         $form = $this->createForm(...);
 
-        $form->bind($this->getRequest());
+        $form->handleRequest($this->getRequest());
+
         if ($form->isValid()) {
             // do some sort of processing
 
