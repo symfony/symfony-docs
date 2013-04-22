@@ -1,6 +1,9 @@
 Isbn
 ====
 
+.. versionadded:: New in version 2.3:
+    The Isbn validation were added in Symfony 2.3.
+
 This constraint permits that a ISBN (International Standard Book Numbers)
 number is either a valid ISBN-10, a valid ISBN-13 code or both on a value.
 
