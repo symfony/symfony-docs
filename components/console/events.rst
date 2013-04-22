@@ -106,6 +106,8 @@ Listeners receive a
     $dispatcher->addListener(ConsoleEvents::EXCEPTION, function (ConsoleForExceptionEvent $event) {
         $output = $event->getOutput();
 
+        $command = $event->getCommand();
+
         $output->writeln(sprintf('Oops, exception thrown while running command <info>%s</info>', $command->getName()));
 
         // get the current exit code (the exception code or the exit code set by a ConsoleEvents::TERMINATE event)
