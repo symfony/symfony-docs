@@ -226,7 +226,7 @@ controller::
 .. versionadded:: 2.3
     The :method:`Symfony\Component\Form\FormInterface::handleRequest` method was
     added in Symfony 2.3. Previously, the now-deprecated ``bind`` function
-    was used. For details on that method, see :doc:`/cookbook/form/deprecated_bind`.
+    was used. For details on that method, see :doc:`/cookbook/form/direct_bind`.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
