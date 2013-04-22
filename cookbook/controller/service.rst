@@ -9,32 +9,6 @@ extends the base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class. While
 this works fine, controllers can also be specified as services.
 
-To refer to a controller that's defined as a service, use the single colon (:)
-notation. For example, suppose you've defined a service called
-``my_controller`` and you want to forward to a method called ``indexAction()``
-inside the service::
-
-    $this->forward('my_controller:indexAction', array('foo' => $bar));
-
-You need to use the same notation when defining the route ``_controller``
-value:
-
-.. code-block:: yaml
-
-    my_controller:
-        path:   /
-        defaults:  { _controller: my_controller:indexAction }
-
-To use a controller in this way, it must be defined in the service container
-configuration. For more information, see the :doc:`Service Container
-</book/service_container>` chapter.
-
-When using a controller defined as a service, it will most likely not extend
-the base ``Controller`` class. Instead of relying on its shortcut methods,
-you'll interact directly with the services that you need. Fortunately, this is
-usually pretty easy and the base ``Controller`` class itself is a great source
-on how to perform many common tasks.
-
 .. note::
 
     Specifying a controller as a service takes a little bit more work. The
@@ -45,21 +19,245 @@ on how to perform many common tasks.
     specify your controllers as services, you'll likely see this done in some
     open-source Symfony2 bundles.
 
-Using Annotation Routing
-------------------------
+Defining the Controller as a Service
+------------------------------------
 
-When using annotations to setup routing when using a controller defined as a
-service, you need to specify your service as follows::
+A controller can be defined as a service in the same way as any other class.
+For example, if you have the following simple controller::
 
-    /**
-     * @Route("/blog", service="my_bundle.annot_controller")
-     * @Cache(expires="tomorrow")
-     */
-    class AnnotController extends Controller
+    // src/Acme/HelloBundle/Controller/HelloController.php
+    namespace Acme\HelloBundle\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    class HelloController
     {
+        public function indexAction($name)
+        {
+            return new Response('<html><body>Hello '.$name.'!</body></html>');
+        }
     }
 
-In this example, ``my_bundle.annot_controller`` should be the id of the
-``AnnotController`` instance defined in the service container. This is
-documented in the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/routing`
+Then you can define it as a service as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        parameters:
+            # ...
+            acme.controller.hello.class: Acme\HelloBundle\Controller\HelloController
+
+        services:
+            acme.hello.controller:
+                class:     "%acme.controller.hello.class%"
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <parameters>
+            <!-- ... -->
+            <parameter key="acme.controller.hello.class">Acme\HelloBundle\Controller\HelloController</parameter>
+        </parameters>
+
+        <services>
+            <service id="acme.hello.controller" class="%acme.controller.hello.class%" />
+        </services>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // ...
+        $container->setParameter(
+            'acme.controller.hello.class',
+            'Acme\HelloBundle\Controller\HelloController'
+        );
+
+        $container->setDefinition('acme.hello.controller', new Definition(
+            '%acme.controller.hello.class%'
+        ));
+
+Referring to the service
+------------------------
+
+To refer to a controller that's defined as a service, use the single colon (:)
+notation. For example, to forward to the ``indexAction()`` method of the service
+defined above with the id ``acme.hello.controller``::
+
+    $this->forward('acme.hello.controller:indexAction');
+
+.. note::
+
+    You cannot drop the ``Action`` part of the method name when using this
+    syntax.
+
+You can also route to the service by using the same notation when defining
+the route ``_controller`` value:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        hello:
+            pattern:      /hello
+            defaults:     { _controller: acme.hello.controller:indexAction }
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <route id="hello" pattern="/hello">
+            <default key="_controller">acme.hello.controller:indexAction</default>
+        </route>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        $collection->add('hello', new Route('/hello', array(
+            '_controller' => 'acme.hello.controller:indexAction',
+        )));
+
+Using Annotation Routing
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using annotations to configure routing using a controller defined as a
+service, you need to specify the service id as follows::
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+    /**
+     * @Route("/hello", service="acme.hello.controller")
+     */
+    class HelloController extends Controller
+    {
+        // ...
+    }
+
+This is documented in the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/routing`
 chapter.
+
+Alternatives to Base Controller Methods
+---------------------------------------
+
+When using a controller defined as a service, it will most likely not extend
+the base ``Controller`` class. Instead of relying on its shortcut methods,
+you'll interact directly with the services that you need. Fortunately, this is
+usually pretty easy and the base ``Controller`` class itself is a great source
+on how to perform many common tasks.
+
+For example, if you want to use templates instead of creating the ``Response``
+object directly then if you were extending from the base controller you could
+use::
+
+    // src/Acme/HelloBundle/Controller/HelloController.php
+    namespace Acme\HelloBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class HelloController extends Controller
+    {
+        public function indexAction($name)
+        {
+            return $this->render(
+                'AcmeHelloBundle:Hello:index.html.twig',
+                array('name' => $name)
+            );
+        }
+    }
+
+This method actually uses the ``templating`` service::
+
+    public function render($view, array $parameters = array(), Response $response = null)
+    {
+        return $this->container->get('templating')->renderResponse($view, $parameters, $response);
+    }
+
+So in our controller as a service we can instead inject the ``templating``
+service and use it directly::
+
+    // src/Acme/HelloBundle/Controller/HelloController.php
+    namespace Acme\HelloBundle\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    class HelloController
+    {
+        private $templating;
+
+        public function __construct($templating)
+        {
+            $this->templating = $templating;
+        }
+
+        public function indexAction($name)
+        {
+            return $this->templating->renderResponse(
+                'AcmeHelloBundle:Hello:index.html.twig',
+                array('name' => $name)
+            );
+        }
+    }
+
+The service definition also needs modifying to specify the constructor
+argument:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        parameters:
+            # ...
+            acme.controller.hello.class: Acme\HelloBundle\Controller\HelloController
+
+        services:
+            acme.hello.controller:
+                class:     "%acme.controller.hello.class%"
+                arguments: ["@templating"]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <parameters>
+            <!-- ... -->
+            <parameter key="acme.controller.hello.class">Acme\HelloBundle\Controller\HelloController</parameter>
+        </parameters>
+
+        <services>
+            <service id="acme.hello.controller" class="%acme.controller.hello.class%">
+                <argument type="service" id="templating"/>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setParameter(
+            'acme.controller.hello.class',
+            'Acme\HelloBundle\Controller\HelloController'
+        );
+
+        $container->setDefinition('acme.hello.controller', new Definition(
+            '%acme.controller.hello.class%',
+            array(new Reference('templating'))
+        ));
+
+Rather than fetching the ``templating`` service from the container just the
+service required is being directly injected into the controller.
+
+.. note::
+
+   This does not mean that you cannot extend these controllers from a base
+   controller. The move away from the standard base controller is because
+   its helper method rely on having the container available which is not
+   the case for controllers defined as services. However, it is worth considering
+   extracting common code into a service to be injected in rather than a parent
+   class.
