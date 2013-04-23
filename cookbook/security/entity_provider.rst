@@ -592,13 +592,12 @@ The ``AcmeUserBundle:Group`` entity class defines three table fields (``id``,
 ``name`` and ``role``). The unique ``role`` field contains the role name used by
 the Symfony security layer to secure parts of the application. The most
 important thing to notice is that the ``AcmeUserBundle:Group`` entity class
-implements the :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`
-that forces it to have a ``getRole()`` method::
+extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
 
     // src/Acme/Bundle/UserBundle/Entity/Group.php
     namespace Acme\UserBundle\Entity;
 
-    use Symfony\Component\Security\Core\Role\RoleInterface;
+    use Symfony\Component\Security\Core\Role\Role;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
 
@@ -606,7 +605,7 @@ that forces it to have a ``getRole()`` method::
      * @ORM\Table(name="acme_groups")
      * @ORM\Entity()
      */
-    class Group implements RoleInterface
+    class Group extends Role
     {
         /**
          * @ORM\Column(name="id", type="integer")
