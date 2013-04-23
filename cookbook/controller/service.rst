@@ -120,24 +120,12 @@ the route ``_controller`` value:
             '_controller' => 'acme.hello.controller:indexAction',
         )));
 
-Using Annotation Routing
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. tip::
 
-When using annotations to configure routing using a controller defined as a
-service, you need to specify the service id as follows::
-
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-    /**
-     * @Route("/hello", service="acme.hello.controller")
-     */
-    class HelloController extends Controller
-    {
-        // ...
-    }
-
-This is documented in the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/routing`
-chapter.
+    You can also use annotations to configure routing using a controller
+    defined as a service. See the
+    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    for details.
 
 Alternatives to Base Controller Methods
 ---------------------------------------
@@ -224,7 +212,9 @@ argument:
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
-            <parameter key="acme.controller.hello.class">Acme\HelloBundle\Controller\HelloController</parameter>
+            <parameter
+                key="acme.controller.hello.class"
+            >Acme\HelloBundle\Controller\HelloController</parameter>
         </parameters>
 
         <services>
