@@ -13,7 +13,6 @@ Form Types Reference
    types/choice
    types/collection
    types/country
-   types/csrf
    types/date
    types/datetime
    types/email
