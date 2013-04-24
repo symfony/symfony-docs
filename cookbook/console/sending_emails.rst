@@ -20,9 +20,6 @@ and per Command.
 Configuring the Request Context globally
 ----------------------------------------
 
-.. versionadded:: 2.1
-    The ``host`` and ``scheme`` parameters are available since Symfony 2.1
-
 .. versionadded: 2.2
     The ``base_url`` parameter is available since Symfony 2.2
 

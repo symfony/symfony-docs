@@ -4,9 +4,6 @@ Count
 Validates that a given collection's (i.e. an array or an object that implements Countable)
 element count is *between* some minimum and maximum value.
 
-.. versionadded:: 2.1
-    The Count constraint was added in Symfony 2.1.
-
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`               |
 +----------------+---------------------------------------------------------------------+

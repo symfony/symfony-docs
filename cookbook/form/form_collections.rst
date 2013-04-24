@@ -390,9 +390,6 @@ HTML contains the tag ``text`` input element with a name of ``task[tags][__name_
 and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
 which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
 
-.. versionadded:: 2.1
-    The placeholder was changed from ``$$name$$`` to ``__name__`` in Symfony 2.1
-
 The actual code needed to make this all work can vary quite a bit, but here's
 one example:
 

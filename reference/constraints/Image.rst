@@ -156,9 +156,6 @@ mimeTypesMessage
 
 **type**: ``string`` **default**: ``This file is not a valid image``
 
-.. versionadded:: 2.1
-    All of the min/max width/height options are new to Symfony 2.1.
-
 minWidth
 ~~~~~~~~
 

@@ -177,11 +177,6 @@ its error message can be controlled with the ``invalid_message`` field option.
 Model and View Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    The names and method of the transformers were changed in Symfony 2.1.
-    ``prependNormTransformer`` became ``addModelTransformer`` and ``appendClientTransformer``
-    became ``addViewTransformer``.
-
 In the above example, the transformer was used as a "model" transformer.
 In fact, there are two different type of transformers and three different
 types of underlying data.

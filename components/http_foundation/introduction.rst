@@ -387,9 +387,6 @@ To redirect the client to another URL, you can use the
 Streaming a Response
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    Support for streamed responses was added in Symfony 2.1.
-
 The :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse` class allows
 you to stream the Response back to the client. The response content is
 represented by a PHP callable instead of a string::
@@ -420,9 +417,6 @@ represented by a PHP callable instead of a string::
 
 Serving Files
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-    The ``makeDisposition`` method was added in Symfony 2.1.
 
 When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
@@ -479,10 +473,6 @@ right content and headers. A JSON response might look like this::
         'data' => 123,
     )));
     $response->headers->set('Content-Type', 'application/json');
-
-.. versionadded:: 2.1
-    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
-    class was added in Symfony 2.1.
 
 There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
 class, which can make this even easier::
