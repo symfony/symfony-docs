@@ -47,11 +47,10 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: :method:`Symfony\\Component\\Locale\\Locale::getDisplayLanguages`
+**default**: ``Symfony\Component\Intl\Intl::getLanguageBundle()->getLanguageNames()``.
 
-The choices option defaults to all languages returned by
-:method:`Symfony\\Component\\Locale\\Locale::getDisplayLanguages`. It uses the
-default locale to specify the language.
+The choices option defaults to all languages. It uses the default locale to
+specify the language.
 
 Inherited Options
 -----------------

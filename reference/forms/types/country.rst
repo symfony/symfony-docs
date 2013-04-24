@@ -46,10 +46,9 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: :method:`Symfony\\Component\\Locale\\Locale::getDisplayCountries`
+**default**: ``Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()``
 
-The country type defaults the ``choices`` option to the all locales which are
-returned by :method:`Symfony\\Component\\Locale\\Locale::getDisplayCountries`.
+The country type defaults the ``choices`` option to the all locales.
 It uses the default locale to determine the language.
 
 Inherited options
