@@ -11,12 +11,25 @@ The ``csrf`` type is a hidden input field containing a CSRF token.
 +-------------+--------------------------------------------------------------------+
 | Options     | - ``csrf_provider``                                                |
 |             | - ``intention``                                                    |
-|             | - ``property_path``                                                |
++-------------+--------------------------------------------------------------------+
+| Overridden  | - ``property_path``                                                |
+| Options     |                                                                    |
+|             |                                                                    |
 +-------------+--------------------------------------------------------------------+
 | Parent type | ``hidden``                                                         |
 +-------------+--------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\CsrfType` |
 +-------------+--------------------------------------------------------------------+
+
+Overridden Options
+------------------
+
+property_path
+~~~~~~~~~~~~~
+
+**default**: ``false``
+
+A Csrf field must not be mapped to the object, so this option defaults to ``false``.
 
 Field Options
 -------------
