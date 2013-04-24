@@ -18,7 +18,7 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Overriden   | - `choice_list`_                                                       |
+| Overridden  | - `choice_list`_                                                       |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `multiple`_                                                          |
@@ -35,8 +35,8 @@ you should just use the ``choice`` type directly.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
 
-Overriden Options
------------------
+Overridden Options
+------------------
 
 choice_list
 ~~~~~~~~~~~

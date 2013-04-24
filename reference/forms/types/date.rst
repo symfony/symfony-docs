@@ -29,7 +29,7 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
-| Overriden Options    | - `by_reference`_                                                           |
+| Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |

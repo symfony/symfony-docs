@@ -24,7 +24,7 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Overriden   | - `choices`_                                                           |
+| Overridden  | - `choices`_                                                           |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `multiple`_                                                          |
@@ -41,8 +41,8 @@ you should just use the ``choice`` type directly.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType` |
 +-------------+------------------------------------------------------------------------+
 
-Overriden Options
------------------
+Overridden Options
+------------------
 
 choices
 ~~~~~~~

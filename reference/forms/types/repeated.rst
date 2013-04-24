@@ -17,7 +17,7 @@ accuracy.
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
-| Overriden   | - `error_bubbling`_                                                    |
+| Overridden  | - `error_bubbling`_                                                    |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `invalid_message`_                                                   |
@@ -139,8 +139,8 @@ second_name
 
 The same as ``first_name``, but for the second field.
 
-Overriden Options
------------------
+Overridden Options
+------------------
 
 error_bubbling
 ~~~~~~~~~~~~~~

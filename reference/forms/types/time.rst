@@ -24,7 +24,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
-| Overriden Options    | - `by_reference`_                                                           |
+| Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |

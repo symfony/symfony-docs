@@ -6,8 +6,8 @@ form Field Type
 
 See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`.
 
-Overriden Options
------------------
+Overridden Options
+------------------
 
 empty_data
 ~~~~~~~~~~

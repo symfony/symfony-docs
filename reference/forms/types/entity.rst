@@ -17,7 +17,7 @@ objects from the database.
 |             | - `query_builder`_                                               |
 |             | - `em`_                                                          |
 +-------------+------------------------------------------------------------------+
-| Overriden   | - `choices`                                                      |
+| Overridden  | - `choices`                                                      |
 | Options     | - `choice_list`                                                  |
 +-------------+------------------------------------------------------------------+
 | Inherited   | - `required`_                                                    |
@@ -111,8 +111,8 @@ em
 If specified, the specified entity manager will be used to load the choices
 instead of the default entity manager.
 
-Overriden Options
------------------
+Overridden Options
+------------------
 
 choices
 ~~~~~~~

@@ -9,7 +9,7 @@ The hidden type represents a hidden input field.
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``hidden`` field                                           |
 +-------------+----------------------------------------------------------------------+
-| Overriden   | - `required`_                                                        |
+| Overridden  | - `required`_                                                        |
 | Options     | - `error_bubbling`_                                                  |
 +-------------+----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                            |
@@ -20,8 +20,8 @@ The hidden type represents a hidden input field.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
 +-------------+----------------------------------------------------------------------+
 
-Overriden Options
------------------
+Overridden Options
+------------------
 
 required
 ~~~~~~~~
