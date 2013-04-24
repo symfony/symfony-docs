@@ -19,8 +19,6 @@ option.
 |             | - `expanded`_                                                               |
 |             | - `preferred_choices`_                                                      |
 |             | - `empty_value`_                                                            |
-|             | - `empty_data`_                                                             |
-|             | - `by_reference`_                                                           |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `required`_                                                               |
 | options     | - `label`_                                                                  |
@@ -28,6 +26,8 @@ option.
 |             | - `disabled`_                                                               |
 |             | - `error_bubbling`_                                                         |
 |             | - `virtual`_                                                                |
+|             | - `by_reference`_                                                           |
+|             | - `empty_data`_                                                             |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise |
 +-------------+-----------------------------------------------------------------------------+
@@ -105,10 +105,6 @@ can be created to supply the choices.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/by_reference.rst.inc
-
 Inherited options
 -----------------
 
@@ -127,3 +123,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/virtual.rst.inc
+
+.. include:: /reference/forms/types/options/by_reference.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
