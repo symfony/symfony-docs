@@ -192,9 +192,6 @@ through XSS attacks.
 gc_probability
 ..............
 
-.. versionadded:: 2.1
-    The ``gc_probability`` option is new in version 2.1
-
 **type**: ``integer`` **default**: ``1``
 
 This defines the probability that the garbage collector (GC) process is started
@@ -205,18 +202,12 @@ that the GC process will start on each request.
 gc_divisor
 ..........
 
-.. versionadded:: 2.1
-    The ``gc_divisor`` option is new in version 2.1
-
 **type**: ``integer`` **default**: ``100``
 
 See `gc_probability`_.
 
 gc_maxlifetime
 ..............
-
-.. versionadded:: 2.1
-    The ``gc_maxlifetime`` option is new in version 2.1
 
 **type**: ``integer`` **default**: ``14400``
 
@@ -292,15 +283,6 @@ URLs for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
 is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
 collections. URLs starting with ``http://`` will only be added to the
 ``http`` collection.
-
-.. versionadded:: 2.1
-    Unlike most configuration blocks, successive values for ``assets_base_urls``
-    will overwrite each other instead of being merged. This behavior was chosen
-    because developers will typically define base URL's for each environment.
-    Given that most projects tend to inherit configurations
-    (e.g. ``config_test.yml`` imports ``config_dev.yml``) and/or share a common
-    base configuration (i.e. ``config.yml``), merging could yield a set of base
-    URL's for multiple environments.
 
 .. _ref-framework-assets-version:
 

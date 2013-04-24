@@ -61,9 +61,6 @@ anonymous function to the
         }
     });
     
-.. versionadded:: 2.1
-    The non-blocking feature was added in 2.1.
-    
 You can also start the subprocess and then let it run asynchronously, retrieving
 output and the status in your main process whenever you need it. Use the 
 :method:`Symfony\\Component\\Process\\Process::start` method to start an asynchronous
@@ -106,9 +103,6 @@ instead::
     EOF
     );
     $process->run();
-
-.. versionadded:: 2.1
-    The ``ProcessBuilder`` class was added in Symfony 2.1.
 
 To make your code work better on all platforms, you might want to use the
 :class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
