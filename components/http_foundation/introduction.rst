@@ -507,11 +507,18 @@ the response content will look like this:
 
     handleResponse({'data': 123});
 
+.. caution::
+
+    Note that it is recommended to always return an object as a response to
+    protect yourself against XSSI and JSON-JavaScript Hijacking. Read the
+    `OWASP guidelines`_ for more information.
+
 Session
 -------
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
-.. _Packagist: https://packagist.org/packages/symfony/http-foundation
-.. _Nginx: http://wiki.nginx.org/XSendfile
-.. _Apache: https://tn123.org/mod_xsendfile/
+.. _Packagist:        https://packagist.org/packages/symfony/http-foundation
+.. _Nginx:            http://wiki.nginx.org/XSendfile
+.. _Apache:           https://tn123.org/mod_xsendfile/
+.. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside
