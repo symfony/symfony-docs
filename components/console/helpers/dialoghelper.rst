@@ -53,6 +53,24 @@ The user will be asked "Please enter the name of the bundle". She can type
 some name which will be returned by the ``ask`` method. If she leaves it empty,
 the default value (``AcmeDemoBundle`` here) is returned.
 
+Autocompletion
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    Autocompletion for questions was added in Symfony 2.2.
+
+You can also specify an array of potential answers for a given question. These
+will be autocompleted as the user types::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
+    $name = $dialog->ask(
+        $output,
+        'Please enter the name of a bundle',
+        'FooBundle',
+        $bundleNames
+    );
+
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
