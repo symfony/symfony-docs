@@ -20,3 +20,4 @@
 /components/routing /components/routing/introduction
 /cookbook/console/generating_urls /cookbook/console/sending_emails
 /components/yaml /components/yaml/introduction
+/cookbook/form/use_virtuals_forms /cookbook/form/inherit_data_option
