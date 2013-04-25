@@ -24,14 +24,18 @@ Usage
 -----
 
 The entry point of this component is the
-:method:`PropertyAccess::getPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::getPropertyAccessor>`
+:method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor>`
 factory. This factory will create a new instance of the
 :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` class with the
 default configuration::
 
     use Symfony\Component\PropertyAccess\PropertyAccess;
 
-    $accessor = PropertyAccess::getPropertyAccessor();
+    $accessor = PropertyAccess::createPropertyAccessor();
+
+.. versionadded:: 2.3
+    Before Symfony 2.3, the :method:`Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor`
+    was called ``getPropertyAccessor()``.
 
 Reading from Arrays
 -------------------
