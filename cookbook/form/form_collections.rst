@@ -347,7 +347,7 @@ On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" data-prototype-name="__name__">
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
@@ -390,7 +390,9 @@ The ``addTagForm`` function's job will be to use the ``data-prototype`` attribut
 to dynamically add a new form when this link is clicked. The ``data-prototype``
 HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
 and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
-which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
+which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``). 
+Since you can change this placeholder with the option "prototype_name" the actual name is 
+provided in the ``data-prototype-name`` attribute.
 
 .. versionadded:: 2.1
     The placeholder was changed from ``$$name$$`` to ``__name__`` in Symfony 2.1
@@ -403,13 +405,15 @@ one example:
     function addTagForm(collectionHolder, $newLinkLi) {
         // Get the data-prototype explained earlier
         var prototype = collectionHolder.data('prototype');
+        var prototypeName = collectionHolder.data('prototype-name');
 
         // get the new index
         var index = collectionHolder.data('index');
 
-        // Replace '__name__' in the prototype's HTML to
+        // Replace prototypeName in the prototype's HTML to
         // instead be a number based on how many items we have
-        var newForm = prototype.replace(/__name__/g, index);
+        var re = new RegExp(prototypeName, "g");
+        var newForm = prototype.replace(re, index);
 
         // increase the index with one for the next item
         collectionHolder.data('index', index + 1);

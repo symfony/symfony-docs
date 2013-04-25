@@ -334,6 +334,12 @@ If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are not
 replaced with the same value.
 
+.. tip::
+
+    If you're rendering the entire collection field at once, then the prototype_name
+    is available on the ``data-prototype-name`` attribute
+    of the element (e.g. ``div`` or ``table``) that surrounds your collection.
+
 Inherited options
 -----------------
 
