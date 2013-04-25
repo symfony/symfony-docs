@@ -38,6 +38,7 @@ Validation Constraints Reference
 
    constraints/CardScheme
    constraints/Luhn
+   constraints/Isbn
 
    constraints/Callback
    constraints/All
