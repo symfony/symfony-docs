@@ -1,8 +1,11 @@
 .. index::
    single: Form; The "inherit_data" option
 
-Reducing Code Duplication with "inherit_data"
-=============================================
+How to Reduce Code Duplication with "inherit_data"
+==================================================
+
+.. versionadded:: 2.3
+    This ``inherit_data`` option was known as ``virtual`` before Symfony 2.3.
 
 The ``inherit_data`` form field option can be very useful when you have some
 duplicated fields in different entities. For example, imagine you have two

@@ -33,7 +33,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 | options              | - `invalid_message_parameters`_                                             |
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
-|                      | - `virtual`_                                                                |
+|                      | - `inherit_data`_                                                           |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+
@@ -115,4 +115,4 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/virtual.rst.inc
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
