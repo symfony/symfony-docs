@@ -13,4 +13,4 @@ Form
     use_virtuals_forms
     unit_testing
     use_empty_data
-    direct_bind
+    direct_submit

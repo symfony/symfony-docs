@@ -226,8 +226,8 @@ controller::
 .. versionadded:: 2.3
     The :method:`Symfony\Component\Form\FormInterface::handleRequest` method was
     added in Symfony 2.3. Previously, the ``$request`` was passed to the
-    ``bind`` method - a strategy which is deprecated and will be removed
-    in Symfony 3.0. For details on that method, see :doc:`/cookbook/form/direct_bind`.
+    ``submit`` method - a strategy which is deprecated and will be removed
+    in Symfony 3.0. For details on that method, see :doc:`/cookbook/form/direct_submit`.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
@@ -247,7 +247,7 @@ possible paths:
 
    .. note::
 
-       You can use the method :method:`Symfony\Component\Form\FormInterface::isBound`
+       You can use the method :method:`Symfony\Component\Form\FormInterface::isSubmitted`
        to check whether a form was submitted, regardless of whether or not the
        submitted data is actually valid.
 

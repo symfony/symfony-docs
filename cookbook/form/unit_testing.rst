@@ -40,7 +40,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testBindValidData()
+        public function testSubmitValidData()
         {
             $formData = array(
                 'test' => 'test',
@@ -53,8 +53,8 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $object = new TestObject();
             $object->fromArray($formData);
 
-            // bind the data to the form directly
-            $form->bind($formData);
+            // submit the data to the form directly
+            $form->submit($formData);
 
             $this->assertTrue($form->isSynchronized());
             $this->assertEquals($object, $form->getData());
@@ -81,7 +81,7 @@ This test checks that none of your data transformers used by the form
 failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized``
 method is only set to ``false`` if a data transformer throws an exception::
 
-    $form->bind($formData);
+    $form->submit($formData);
     $this->assertTrue($form->isSynchronized());
 
 .. note::
@@ -90,7 +90,7 @@ method is only set to ``false`` if a data transformer throws an exception::
     active in the test case and it relies on validation configuration.
     Instead, unit test your custom constraints directly.
 
-Next, verify the binding and mapping of the form. The test below
+Next, verify the submission and mapping of the form. The test below
 checks if all the fields are correctly specified::
 
     $this->assertEquals($object, $form->getData());
@@ -129,7 +129,7 @@ before creating the parent form::
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testBindValidData()
+        public function testSubmitValidData()
         {
             $this->factory->addType(new TestChildType());
 

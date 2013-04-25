@@ -1,8 +1,8 @@
 .. index::
-   single: Form; Form::bind
+   single: Form; Form::submit()
 
-How to use the bind Function to handle Form Submissions
-=======================================================
+How to use the submit() Function to handle Form Submissions
+===========================================================
 
 In Symfony 2.3, a new :method:`Symfony\Component\Form\FormInterface::handleRequest`
 method was added, which makes handling form submissions easier than ever::
@@ -33,11 +33,14 @@ method was added, which makes handling form submissions easier than ever::
 
     To see more about this method, read :ref:`book-form-handling-form-submissions`.
 
-Using Form::bind() to handle a request (deprecated)
----------------------------------------------------
+Calling Form::submit() manually
+-------------------------------
 
-Prior to this, the :method:`Symfony\Component\Form\FormInterface::bind` method
-was used instead::
+In some cases, you want better control over when exactly your form is submitted
+and what data is passed to it. Instead of using the
+:method:`Symfony\Component\Form\FormInterface::handleRequest`
+method, pass the submitted data directly to
+:method:`Symfony\Component\Form\FormInterface::submit`::
 
     use Symfony\Component\HttpFoundation\Request;
     // ...
@@ -49,7 +52,47 @@ was used instead::
             ->getForm();
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request->request->get($form->getName()));
+
+            if ($form->isValid()) {
+                // perform some action...
+
+                return $this->redirect($this->generateUrl('task_success'));
+            }
+        }
+
+        return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+.. tip::
+
+    Forms consisting of nested fields expect an array in
+    :method:`Symfony\Component\Form\FormInterface::submit`. You can also submit
+    individual fields by calling :method:`Symfony\Component\Form\FormInterface::submit`
+    directly on the field::
+
+        $form->get('firstName')->submit('Fabien');
+
+Passing a Request to Form::submit() (deprecated)
+------------------------------------------------
+
+Before Symfony 2.3, the :method:`Symfony\Component\Form\FormInterface::submit`
+method accepted a :class:`Symfony\\Component\\HttpFoundation\\Reuqest` object as
+a convenient shortcut to the previous example::
+
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
+
+    public function newAction(Request $request)
+    {
+        $form = $this->createFormBuilder()
+            // ...
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
 
             if ($form->isValid()) {
                 // perform some action...
@@ -64,37 +107,6 @@ was used instead::
     }
 
 Passing the :class:`Symfony\\Component\HttpFoundation\\Request` directly to
-``bind`` still works, but is deprecated and will be removed in Symfony 3.0.
-However, you *can* safely pass array values directly to bind.
-
-Passing an Array directly to Form::bind
----------------------------------------
-
-In some cases, you may want to collect and pass an array of values directly
-to a Form, instead of using the ``handleRequest`` method. This is absolutely
-valid and not deprecated (passing a :class:`Symfony\\Component\HttpFoundation\\Request`
-object to ``Form::bind`` is deprecated, but passing an array of ok)::
-
-    use Symfony\Component\HttpFoundation\Request;
-    // ...
-
-    public function newAction(Request $request)
-    {
-        $form = $this->createFormBuilder()
-            // ...
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->bind($request->request->get($form->getName()));
-
-            if ($form->isValid()) {
-                // perform some action...
-
-                return $this->redirect($this->generateUrl('task_success'));
-            }
-        }
-
-        return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
+:method:`Symfony\\Component\\Form\\FormInterface::submit`` still works, but is
+deprecated and will be removed in Symfony 3.0. You should use the method
+:method:`Symfony\Component\Form\FormInterface::handleRequest` instead.
