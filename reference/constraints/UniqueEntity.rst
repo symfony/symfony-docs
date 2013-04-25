@@ -149,3 +149,15 @@ repositoryMethod
 The name of the repository method to use for making the query to determine the
 uniqueness. If it's left blank, the ``findBy`` method will be used. This
 method should return a countable result.
+
+ignoreNull
+~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+.. versionadded:: 2.1
+    The ``ignoreNull`` option was added in Symfony 2.1.
+
+If this option is set to ``true``, it allows having multiple ``null`` values for
+the field(s) without failing the unique constraint. If set to ``false``, only one
+``null`` value is allowed.
