@@ -362,6 +362,22 @@ The ``FrameworkBundle`` registers several listeners:
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
 .. index::
+   single: Event; kernel.terminate
+
+``kernel.terminate`` Event
+..........................
+
+.. versionadded:: 2.1
+    The ``kernel.terminate`` event is new since Symfony 2.1.
+
+The purpose of this event is to perform "heavier" tasks after the response
+was already served to the client.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
+
+.. index::
    single: Event; kernel.exception
 
 .. _kernel-kernel.exception:

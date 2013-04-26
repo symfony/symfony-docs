@@ -446,6 +446,8 @@ method, which sends the headers and prints the ``Response`` content.
     serializes the current user's information into the
     session so that it can be reloaded on the next request. 
 
+.. _component-http-kernel-kernel-terminate:
+
 8) The ``kernel.terminate`` event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
