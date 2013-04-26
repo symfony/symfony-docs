@@ -50,8 +50,8 @@ which Encoders and Normalizer are going to be available::
 
     $serializer = new Serializer($normalizers, $encoders);
 
-Serializing an object
-~~~~~~~~~~~~~~~~~~~~~
+Serializing an Object
+---------------------
 
 For the sake of this example, assume the following class already
 exists in your project::
@@ -103,10 +103,17 @@ The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::
 is the object to be serialized and the second is used to choose the proper encoder,
 in this case :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
 
-As an option, there's a way to ignore attributes from the origin object to be
-serialized, to remove those attributes use
+Ignoring Attributes when Serializing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The :method:`GetSetMethodNormalizer::setIgnoredAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes>`
+    method was added in Symfony 2.3.
+
+As an option, there's a way to ignore attributes from the origin object when
+serializing. To remove those attributes use the
 :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
-method on normalizer definition::
+method on the normalizer definition::
 
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -120,7 +127,7 @@ method on normalizer definition::
     $serializer->serialize($person, 'json'); // Output: {"name":"foo"}
 
 Deserializing an Object
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Let's see now how to do the exactly the opposite. This time, the information
 of the `People` class would be encoded in XML format::
@@ -141,31 +148,38 @@ needs three parameters:
 2. The name of the class this information will be decoded to
 3. The encoder used to convert that information into an array
 
-Sometimes property names from the serialized content are underscored, in a
-regular configuration those attributes will use get/set methods as
-``getCamel_case``, when ``getCamelCase`` method is preferable. To change that
-behavior use
+Using Camelized Method Names for Underscored Attributes
+-------------------------------------------------------
+
+.. versionadded:: 2.3
+    The :method:`GetSetMethodNormalizer::setCamelizedAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes>`
+    method was added in Symfony 2.3.
+
+Sometimes property names from the serialized content are underscored (e.g.
+``first_name``).  Normally, these attributes will use get/set methods like
+``getFirst_name``, when ``getFirstName`` method is what you really want. To
+change that behavior use the
 :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes`
-on normalizer definition::
+method on the normalizer definition::
 
-        $encoder = new JsonEncoder();
-        $normalizer = new GetSetMethodNormalizer();
-        $normalizer->setCamelizedAttributes(array('camel_case'));
+    $encoder = new JsonEncoder();
+    $normalizer = new GetSetMethodNormalizer();
+    $normalizer->setCamelizedAttributes(array('first_name'));
 
-        $serializer = new Serializer(array($normalizer), array($encoder));
+    $serializer = new Serializer(array($normalizer), array($encoder));
 
-        $json = <<<EOT
-        {
-            "name":       "foo",
-            "age":        "19",
-            "camel_case": "bar"
-        }
-        EOT;
+    $json = <<<EOT
+    {
+        "name":       "foo",
+        "age":        "19",
+        "first_name": "bar"
+    }
+    EOT;
 
-        $person = $serializer->deserialize($json, 'Acme\Person', 'json');
+    $person = $serializer->deserialize($json, 'Acme\Person', 'json');
 
-As a final result, Person object uses ``camelCase`` attribute for
-``camel_case`` json parameter, the same applies on getters and setters.
+As a final result, the deserializer uses the ``first_name`` attribute as if
+it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
 
 JMSSerializer
 -------------
