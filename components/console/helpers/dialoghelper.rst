@@ -98,3 +98,42 @@ If you reach this max number it will use the default value, which is given
 in the last argument. Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as he provides an invalid answer and will only
 be able to proceed if her input is valid.
+
+Testing a Command which expects input
+-------------------------------------
+
+If you want to write a unit test for a command which expects some kind of input
+from the command line, you need to overwrite the HelperSet used by the command::
+
+    use Symfony\Component\Console\Helper\DialogHelper;
+    use Symfony\Component\Console\Helper\HelperSet;
+    
+    // ...
+    public function testExecute()
+    {
+        // ...
+        $commandTester = new CommandTester($command);
+        
+        $dialog = $command->getHelper('dialog');
+        $dialog->setInputStream($this->getInputStream('Test\n')); 
+        // Equals to a user inputing "Test" and hitting ENTER
+        // If you need to enter a confirmation, "yes\n" will work
+        
+        $commandTester->execute(array('command' => $command->getName()));
+    
+        // $this->assertRegExp('/.../', $commandTester->getDisplay());
+    }
+    
+    protected function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fputs($stream, $input);
+        rewind($stream);
+
+        return $stream;
+    }
+    
+By setting the inputStream of the ``DialogHelper``, you imitate what the
+console would do internally with all user input through the cli. This way
+you can test any user interaction (even complex ones) by passing an appropriate
+input stream.
