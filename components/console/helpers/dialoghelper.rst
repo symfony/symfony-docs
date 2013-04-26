@@ -206,3 +206,42 @@ is asked to provide the answer another time, until she enters a valid string
 or the maximum attempts is reached (which you can define in the fifth
 parameter). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth parameter.
+
+Testing a Command which expects input
+-------------------------------------
+
+If you want to write a unit test for a command which expects some kind of input
+from the command line, you need to overwrite the HelperSet used by the command::
+
+    use Symfony\Component\Console\Helper\DialogHelper;
+    use Symfony\Component\Console\Helper\HelperSet;
+    
+    // ...
+    public function testExecute()
+    {
+        // ...
+        $commandTester = new CommandTester($command);
+        
+        $dialog = $command->getHelper('dialog');
+        $dialog->setInputStream($this->getInputStream('Test\n')); 
+        // Equals to a user inputing "Test" and hitting ENTER
+        // If you need to enter a confirmation, "yes\n" will work
+        
+        $commandTester->execute(array('command' => $command->getName()));
+    
+        // $this->assertRegExp('/.../', $commandTester->getDisplay());
+    }
+    
+    protected function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fputs($stream, $input);
+        rewind($stream);
+
+        return $stream;
+    }
+    
+By setting the inputStream of the ``DialogHelper``, you imitate what the
+console would do internally with all user input through the cli. This way
+you can test any user interaction (even complex ones) by passing an appropriate
+input stream.
