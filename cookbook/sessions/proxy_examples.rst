@@ -4,10 +4,10 @@
 Session Proxy Examples
 ----------------------
 
-The session proxy mechanism has a variety of uses, in this
-example we'll demonstrate two common uses. Rather than injecting
-the session handler as normal, you inject the handler into the proxy
-and regsiter the proxy with the session::
+The session proxy mechanism has a variety of uses, this
+example demonstrates two common uses. Rather than injecting
+the session handler as normal, a handler is injected into the proxy
+and regsitered the proxy with the session::
 
     <?php
     use Symfony\Component\HttpFoundation\Session\Session;
@@ -17,8 +17,7 @@ and regsiter the proxy with the session::
     $proxy = new YourProxy(new PdoSessionStorage());
     $session = new Session(new NativeSessionStorage($proxy));
 
-The example below show should give some ideas for ``YourProxy``.
-
+The examples below show elaborate on two use-cases.
 
 Encryption of Session Data
 --------------------------
