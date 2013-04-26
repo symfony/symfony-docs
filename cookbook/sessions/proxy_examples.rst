@@ -28,7 +28,7 @@ and decrypt the session as required::
     <?php
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
 
-    class NoGuestUserSessionProxy extends SessionHandlerProxy
+    class EncryptedSessionProxy extends SessionHandlerProxy
     {
         private $key;
 
