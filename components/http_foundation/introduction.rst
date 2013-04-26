@@ -507,6 +507,11 @@ the response content will look like this:
 
     handleResponse({'data': 123});
 
+.. versionadded:: 2.3
+    The :method:`Symfony\\Component\\HttpFoundation\\JsonResponse::prefixJson` has
+    been added to help mitigating CSRF attacks when sending a JSON response. The
+    prefix should be stripped on the client side before the JSON is parsed.
+
 Session
 -------
 
