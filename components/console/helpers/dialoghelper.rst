@@ -99,7 +99,7 @@ in the last argument. Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as he provides an invalid answer and will only
 be able to proceed if her input is valid.
 
-Testing a command which expects input
+Testing a Command which expects input
 -------------------------------------
 
 If you want to write a unit test for a command which expects some kind of input
@@ -133,7 +133,7 @@ from the command line, you need to overwrite the HelperSet used by the command::
         return $stream;
     }
     
-By setting the inputStream of the `DialogHelper`, you do the same the
+By setting the inputStream of the ``DialogHelper``, you imitate what the
 console would do internally with all user input through the cli. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
