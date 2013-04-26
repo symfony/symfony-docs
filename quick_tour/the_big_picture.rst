@@ -201,11 +201,22 @@ requested URL against some configured paths. By default, these paths
 file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
 indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
 configuration file is also loaded. In the Standard Edition, the routes to
-these "demo" pages are placed in that file:
+these "demo" pages are imported from this file:
 
 .. code-block:: yaml
 
     # app/config/routing_dev.yml
+    # ...
+
+    # AcmeDemoBundle routes (to be removed)
+    _acme_demo:
+        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+
+This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
+
+.. code-block:: yaml
+
+    # src/Acme/DemoBundle/Resources/config/routing.yml
     _welcome:
         path:  /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
@@ -318,7 +329,8 @@ key:
 
 .. code-block:: yaml
 
-    # app/config/routing_dev.yml
+    # src/Acme/DemoBundle/Resources/config/routing.yml
+    # ...
     _demo:
         resource: "@AcmeDemoBundle/Controller/DemoController.php"
         type:     annotation
