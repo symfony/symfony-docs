@@ -13,6 +13,4 @@ Form
     inherit_data_option
     unit_testing
     use_empty_data
-    direct_bind
-
-
+    direct_submit
