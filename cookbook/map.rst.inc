@@ -87,7 +87,7 @@
   * :doc:`/cookbook/form/inherit_data_option`
   * :doc:`/cookbook/form/unit_testing`
   * :doc:`/cookbook/form/use_empty_data`
-  * :doc:`/cookbook/form/direct_bind`
+  * :doc:`/cookbook/form/direct_submit`
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 

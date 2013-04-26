@@ -4,6 +4,9 @@
 How to use the submit() Function to handle Form Submissions
 ===========================================================
 
+.. versionadded::
+    Before Symfony 2.3, the ``submit`` method was known as ``bind``.
+
 In Symfony 2.3, a new :method:`Symfony\Component\Form\FormInterface::handleRequest`
 method was added, which makes handling form submissions easier than ever::
 
@@ -75,11 +78,16 @@ method, pass the submitted data directly to
 
         $form->get('firstName')->submit('Fabien');
 
+.. _cookbook-form-submit-request:
+
 Passing a Request to Form::submit() (deprecated)
 ------------------------------------------------
 
+.. versionadded::
+    Before Symfony 2.3, the ``submit`` method was known as ``bind``.
+
 Before Symfony 2.3, the :method:`Symfony\Component\Form\FormInterface::submit`
-method accepted a :class:`Symfony\\Component\\HttpFoundation\\Reuqest` object as
+method accepted a :class:`Symfony\\Component\\HttpFoundation\\Request` object as
 a convenient shortcut to the previous example::
 
     use Symfony\Component\HttpFoundation\Request;
