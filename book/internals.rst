@@ -44,6 +44,10 @@ variables:
   :class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface`
   interface abstract session management ``session_*()`` functions.
 
+.. note::
+
+    Read more about the :doc:`HttpFoundation Component </components/http_foudation/introduction>`.
+
 ``HttpKernel`` Component
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -58,7 +62,8 @@ Dependency Injection component and a powerful plugin system (bundles).
 
 .. seealso::
 
-    Read more about :doc:`Dependency Injection </book/service_container>` and
+    Read more about the :doc:`HttpKernel Component </components/http_kernel/introduction>`,
+    :doc:`Dependency Injection </book/service_container>` and
     :doc:`Bundles </cookbook/bundles/best_practices>`.
 
 ``FrameworkBundle`` Bundle
@@ -256,6 +261,10 @@ uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
 the ``Request`` and determine the Controller name (stored in the
 ``_controller`` ``Request`` attribute).
 
+.. seealso::
+
+    Read more on the :ref:`kernel.request event <component-http-kernel-kernel-request>`.
+
 .. index::
    single: Event; kernel.controller
 
@@ -277,6 +286,10 @@ to modify the controller that should be executed::
         // the controller can be changed to any PHP callable
         $event->setController($controller);
     }
+
+.. seealso::
+
+    Read more on the :ref:`kernel.controller event <component-http-kernel-kernel-controller>`.
 
 .. index::
    single: Event; kernel.view
@@ -306,6 +319,10 @@ The value returned by the Controller is accessible via the
 
         $event->setResponse($response);
     }
+
+.. seealso::
+
+    Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
 
 .. index::
    single: Event; kernel.response
@@ -339,6 +356,26 @@ The ``FrameworkBundle`` registers several listeners:
 * :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`: adds a
   ``Surrogate-Control`` HTTP header when the Response needs to be parsed for
   ESI tags.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
+
+.. index::
+   single: Event; kernel.terminate
+
+``kernel.terminate`` Event
+..........................
+
+.. versionadded:: 2.1
+    The ``kernel.terminate`` event is new since Symfony 2.1.
+
+The purpose of this event is to perform "heavier" tasks after the response
+was already served to the client.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
 
 .. index::
    single: Event; kernel.exception
@@ -392,6 +429,10 @@ The Event Dispatcher
 The event dispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
 see the :doc:`Event Dispatcher Component Documentation</components/event_dispatcher/introduction>`.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
 .. index::
    single: Profiler
