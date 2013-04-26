@@ -12,13 +12,19 @@ stored in a ``X-Forwarded-Host`` header.
 
 Since HTTP headers can be spoofed, Symfony2 does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
-your proxy::
+your proxy.
+
+.. versionadded:: 2.3
+    CIDR notation support was introduced, so you can whitelist whole
+    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Request;
 
     $request = Request::createFromGlobals();
-    // only trust proxy headers coming from this IP address
-    $request->setTrustedProxies(array(192.0.0.1));
+    // only trust proxy headers coming from this IP addresses
+    $request->setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
 
 Configuring Header Names
 ------------------------
