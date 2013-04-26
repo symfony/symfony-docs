@@ -1,22 +1,37 @@
 .. index::
    single: Tests; Database
 
-How to test code which interacts with the database
-==================================================
+How to test code that interacts with the Database
+=================================================
 
-If your code interacts with the database, e.g. reads data from or stores data into
-it, you need to adjust your tests to take this into account. There are many ways
-how to deal with this. In a unit test, you can create a mock for a ``Repository``
-and use it to return expected objects. In a functional test, you may need to
-prepare a test database with predefined values, so a test always has the same data
-to work with.
+If your code interacts with the database, e.g. reads data from or stores data
+into it, you need to adjust your tests to take this into account. There are
+many ways how to deal with this. In a unit test, you can create a mock for
+a ``Repository`` and use it to return expected objects. In a functional test,
+you may need to prepare a test database with predefined values to ensure that
+your test always has the same data to work with.
+
+.. note::
+
+    If you want to test your queries directly, see :doc:`/cookbook/testing/doctrine`.
 
 Mocking the ``Repository`` in a Unit Test
 -----------------------------------------
 
-If you want to test code which depends on a doctrine ``Repository`` in isolation, you
-need to mock the ``Repository``. Normally you get the ``Repository`` from the ``EntityManager``,
-so you would need to mock those as well. Suppose the class you want to test looks like this::
+If you want to test code which depends on a doctrine ``Repository`` in isolation,
+you need to mock the ``Repository``. Normally you inject the ``EntityManager``
+into your class and use it to get the repository. This makes things a little
+more difficult as you need to mock both the ``EntityManager`` and your repository
+class.
+
+.. tip::
+
+    It is possible (and a good idea) to inject your repository directly by
+    registering your repository as a :doc:`factory service</components/dependency_injection/factories>`
+    This is a little bit more work to setup, but makes testing easier as you
+    only need to mock the repository.
+
+Suppose the class you want to test looks like this::
 
     namespace Acme\DemoBundle\Salary;
     
@@ -40,8 +55,8 @@ so you would need to mock those as well. Suppose the class you want to test look
         }
     }
 
-As the ``ObjectManager`` gets injected into the class through the constructor, it's 
-easy to pass a mock object within a test::
+Since the ``ObjectManager`` gets injected into the class through the constructor,
+it's easy to pass a mock object within a test::
 
     use Acme\DemoBundle\Salary\SalaryCalculator;
 
@@ -80,11 +95,12 @@ easy to pass a mock object within a test::
         }
     }
     
-We are building our mocks from the inside out, first creating the employee which 
-gets returned by the ``Repository`` which itself gets returned by the ``EntityManager``.
-This way, no real class is involved in testing.
+In this example, you are building the mocks from the inside out, first creating
+the employee which gets returned by the ``Repository``, which itself gets
+returned by the ``EntityManager``. This way, no real class is involved in
+testing.
     
-Changing database settings for functional tests
+Changing database Settings for functional Tests
 -----------------------------------------------
 
 If you have functional tests, you want them to interact with a real database.
@@ -129,6 +145,6 @@ configuration:
             'password' => 'testdb',
         ),
     ));
-            
+
 Make sure that your database runs on localhost and has the defined database and
 user credentials set up.
