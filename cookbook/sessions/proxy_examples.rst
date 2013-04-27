@@ -7,7 +7,7 @@ Session Proxy Examples
 The session proxy mechanism has a variety of uses, this
 example demonstrates two common uses. Rather than injecting
 the session handler as normal, a handler is injected into the proxy
-and regsitered the proxy with the session::
+and registered with the session storage driver::
 
     <?php
     use Symfony\Component\HttpFoundation\Session\Session;
