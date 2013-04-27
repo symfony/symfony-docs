@@ -6,11 +6,11 @@ UserPassword
 
 .. note::
 
-    Since Symfony 2.2, the `UserPassword*` classes in the
-    `Symfony\Component\Security\Core\Validator\Constraint` namespace are
+    Since Symfony 2.2, the ``UserPassword*`` classes in the
+    ``Symfony\\Component\\Security\\Core\\Validator\\Constraint`` namespace are
     deprecated and will be removed in Symfony 2.3. Please use the
-    `UserPassword*` classes in the
-    `Symfony\Component\Security\Core\Validator\Constraints` namespace instead.
+    ``UserPassword*`` classes in the
+    ``Symfony\\Component\\Security\\Core\\Validator\\Constraints`` namespace instead.
 
 This validates that an input value is equal to the current authenticated
 user's password. This is useful in a form where a user can change his password,
