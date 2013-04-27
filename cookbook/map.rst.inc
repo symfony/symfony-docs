@@ -149,6 +149,7 @@
   * :doc:`/cookbook/testing/simulating_authentication`
   * :doc:`/cookbook/testing/insulating_clients`
   * :doc:`/cookbook/testing/profiling`
+  * :doc:`/cookbook/testing/database`
   * :doc:`/cookbook/testing/doctrine`
   * :doc:`/cookbook/testing/bootstrap`
   * (email) :doc:`/cookbook/email/testing`
