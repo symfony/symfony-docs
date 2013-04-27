@@ -495,8 +495,20 @@ class, which can make this even easier::
     ));
 
 This encodes your array of data to JSON and sets the ``Content-Type`` header
-to ``application/json``. If you're using JSONP, you can set the callback
-function that the data should be passed to::
+to ``application/json``.
+
+.. caution::
+
+    To avoid `JSON Hijacking`_, you should pass an associative array as the
+    outer-most array to ``JsonResponse`` and not an indexed array so that
+    the final result is an object (e.g. ``{"object": "not inside an array"}``)
+    instead of an array (e.g. ``[{"object": "inside an array"}]``).
+
+JSONP Callback
+~~~~~~~~~~~~~~
+
+If you're using JSONP, you can set the callback function that the data should
+be passed to::
 
     $response->setCallback('handleResponse');
 
@@ -515,3 +527,4 @@ The session information is in its own document: :doc:`/components/http_foundatio
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
 .. _Nginx: http://wiki.nginx.org/XSendfile
 .. _Apache: https://tn123.org/mod_xsendfile/
+.. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
