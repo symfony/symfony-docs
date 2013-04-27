@@ -163,6 +163,10 @@ You can also set these colors and options inside the tagname::
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+   The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
+   in version 2.3
+
 The console has 5 levels of verbosity. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
