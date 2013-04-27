@@ -36,15 +36,34 @@ entry point of the Translation component.
     
     echo $translator->trans('Hello World!');
 
-Message Catalogues
-------------------
+Constructing the Translator
+---------------------------
+
+Before you can use the Translator, you need to configure it and load the
+message catalogues.
+
+Configuration
+~~~~~~~~~~~~~
+
+The constructor of the ``Translator`` class needs to arguments: The locale and
+a :class:`Symfony\\Component\\Translation\\MessageSelector` to use when using
+pluralization (more about that later)::
+
+    use Symfony\Component\Translation\Translator;
+    use Symfony\Component\Translation\MessageSelector;
+    $translator = new Translator('fr_FR', new MessageSelector());
+
+.. note::
+
+    The locale set here is the default locale to use. You can override this
+    locale when translating strings.
+
+Loading Message Catalogues
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The messages are stored in message catalogues inside the ``Translator``
-class. A Message Catalogue is like a dictionary of translations for a specific 
+class. A message catalogue is like a dictionary of translations for a specific 
 locale.
-
-Loading catalogues
-~~~~~~~~~~~~~~~~~~
 
 The Translation component uses Loader classes to load catalogues. You can load
 multiple resources for the same locale, it will be combined into one
@@ -99,39 +118,5 @@ instead of an array::
     // ...
     $translator->addLoader('yaml', new YamlFileLoader());
     $translator->addResource('yaml', 'path/to/messages.fr.yml', 'fr_FR');
-
-Translate Strings
------------------
-
-After you have loaded your Message Catalogues, you can begin to translate your
-strings. This is done with the
-:method:`Symfony\\Component\\Translation\\Translator::trans` method::
-
-    // ...
-    $translator->addResource('array', array(
-        'Hello World!' => 'Bonjour',
-    ), 'fr_FR');
-    $translator->addResource('array', array(
-        'Hello World!' => 'Hello World',
-    ), 'en_GB');
-
-    echo $translator->trans('Hello World!');
-    // >> 'Bonjour'
-
-By default, the ``trans`` method uses the locale that is set in the
-constructor of the ``Translator``. If you want to translate another locale,
-you can change that by setting the fourth argument to the locale::
-
-    // ...
-    echo $translator->trans('Hello World!', array(), 'messages', 'en_GB');
-    // >> 'Hello World!'
-
-Learn More
-----------
-
-The Translation component can do a lot more things. Read more about the usage
-of this component in :ref:`the Translation book article <basic-translation>`.
-That article is specific about the Translation component in the Symfony2
-Framework, but most of the article is framework independent.
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
