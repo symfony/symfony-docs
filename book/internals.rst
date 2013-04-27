@@ -48,7 +48,7 @@ variables:
 
 .. note::
 
-    Read more about the :doc:`HttpFoundation Component </components/http_foudation/introduction>`.
+    Read more about the :doc:`HttpFoundation Component </components/http_foundation/introduction>`.
 
 ``HttpKernel`` Component
 ~~~~~~~~~~~~~~~~~~~~~~~~
