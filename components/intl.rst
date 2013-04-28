@@ -5,10 +5,15 @@
 The Intl Component
 ==================
 
-    A PHP replacement layer for the C `intl extension`_ that includes additional
-    data from the ICU library.
+    A PHP replacement layer for the C `intl extension`_ that also provides
+    access to the localization data of the `ICU library`_.
 
-.. note::
+.. versionadded:: 2.3
+
+    The Intl component was added in Symfony 2.3. In earlier versions of Symfony,
+    you should use the Locale component instead.
+
+.. caution::
 
     The replacement layer is limited to the locale "en". If you want to use
     other locales, you should `install the intl extension`_ instead.
@@ -55,17 +60,98 @@ expose them manually by adding the following lines to your autoload code::
         $loader->registerPrefixFallback('/path/to/Icu/Resources/stubs');
     }
 
-.. note::
+.. sidebar:: ICU and Deployment Problems
 
-     The stub implementation only supports the locale ``en``.
+    The intl extension internally uses the `ICU library`_ to obtain localization
+    data such as number formats in different languages, country names and more.
+    To make this data accessible to userland PHP libraries, Symfony2 ships a copy
+    in the `ICU component`_.
+
+    Depending on the ICU version compiled with your intl extension, a matching
+    version of that component needs to be installed. Sounds complicated, but usually
+    Composer does this for you automatically:
+
+    * 1.0.*: when the intl extension is not available
+    * 1.1.*: when intl is compiled with ICU 4.0 or higher
+    * 1.2.*: when intl is compiled with ICU 4.4 or higher
+
+    These versions are important when you deploy your application to a **server with
+    a lower ICU version** than your development machines, because deployment will
+    fail if
+
+    * the development machines are compiled with ICU 4.4 or higher, but the
+      server is compiled with a lower ICU version than 4.4;
+    * the intl extension is available on the development machines but not on
+      the server.
+
+    For example, consider that your development machines ship ICU 4.8 and the server
+    ICU 4.2. When you run ``php composer.phar update`` on the development machine, version
+    1.2.* of the ICU component will be installed. But after deploying the
+    application, ``php composer.phar install`` will fail with the following error:
+
+    .. code-block:: bash
+
+        $ php composer.phar install
+        Loading composer repositories with package information
+        Installing dependencies from lock file
+        Your requirements could not be resolved to an installable set of packages.
+
+          Problem 1
+            - symfony/icu 1.2.x requires lib-icu >=4.4 -> the requested linked
+              library icu has the wrong version installed or is missing from your
+              system, make sure to have the extension providing it.
+
+    The error tells you that the requested version of the ICU component, version
+    1.2, is not compatible with PHP's ICU version 4.2.
+
+    One solution to this problem is to run ``php composer.phar update`` instead of
+    ``php composer.phar install``. It is highly recommended **not** to do this. The
+    ``update`` command will install the latest versions of each Composer dependency
+    to your production server and potentially break the application.
+
+    A better solution is to fix your composer.json to the version required by the
+    production server. First, determine the ICU version on the server:
+
+    .. code-block:: bash
+
+        $ php -i | grep ICU
+        ICU version => 4.2.1
+
+    Then fix the ICU component in your composer.json file to a matching version:
+
+    .. code-block:: json
+
+        "require: {
+            "symfony/icu": "1.1.*"
+        }
+
+    Set the version to
+
+    * "1.0.*" if the server does not have the intl extension installed;
+    * "1.1.*" if the server is compiled with ICU 4.2 or lower.
+
+    Finally, run ``php composer.phar update symfony/icu`` on your development machine, test
+    extensively and deploy again. The installation of the dependencies will now
+    succeed.
+
 
 Writing and Reading Resource Bundles
 ------------------------------------
 
-The :phpclass:`ResourceBundle` class is not and will not be supported. Instead,
-this component ships a set of readers and writers for reading and writing arrays
-(or array-like objects) from/to resource bundle files. The following classes
-are supported:
+The :phpclass:`ResourceBundle` class is currently by this component. Instead,
+it includes a set of readers and writers for reading and writing arrays (or
+array-like objects) from/to resource bundle files. The following classes are
+supported:
+
+* `TextBundleWriter`_
+* `PhpBundleWriter`_
+* `BinaryBundleReader`_
+* `PhpBundleReader`_
+* `BufferedBundleReader`_
+* `StructuredBundleReader`_
+
+Continue reading if you are interested in how to use these classes. Otherwise
+skip this section and jump to `Accessing ICU Data`_.
 
 TextBundleWriter
 ~~~~~~~~~~~~~~~~
@@ -192,15 +278,21 @@ locale will be merged. In order to suppress this behavior, the last parameter
 
     echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'), false);
 
-Provided Resource Bundles
--------------------------
+Accessing ICU Data
+------------------
 
 The ICU data is located in several "resource bundles". You can access a PHP
 wrapper of these bundles through the static
-:class:`Symfony\\Component\\Intl\\Intl` class.
+:class:`Symfony\\Component\\Intl\\Intl` class. At the moment, the following
+data is supported:
 
-Languages and Scripts
-~~~~~~~~~~~~~~~~~~~~~
+* `Language and Script Names`_
+* `Country Names`_
+* `Locales`_
+* `Currencies`_
+
+Language and Script Names
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The translations of language and script names can be found in the language
 bundle::
@@ -230,8 +322,8 @@ defaults to the current default locale::
     $languages = Intl::getLanguageBundle()->getLanguageNames('de');
     // => array('ab' => 'Abchasisch', ...)
 
-Countries
-~~~~~~~~~
+Country Names
+~~~~~~~~~~~~~
 
 The translations of country names can be found in the region bundle::
 
@@ -300,13 +392,17 @@ be found in the currency bundle::
 All methods (except for
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getFractionDigits`
 and
-:method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getRoundingIncrement()`)
+:method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getRoundingIncrement`)
 accept the translation locale as last, optional parameter, which defaults to the
 current default locale::
 
     $currencies = Intl::getCurrencyBundle()->getCurrencyNames('de');
     // => array('AFN' => 'Afghanische Afghani', ...)
 
-.. _Packagist: https://packagist.org/packages/symfony/locale
+That's all you need to know for now. Have fun at coding!
+
+.. _Packagist: https://packagist.org/packages/symfony/intl
+.. _ICU component: https://packagist.org/packages/symfony/icu
 .. _intl extension: http://www.php.net/manual/en/book.intl.php
 .. _install the intl extension: http://www.php.net/manual/en/intl.setup.php
+.. _ICU library: http://site.icu-project.org/
