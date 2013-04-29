@@ -51,8 +51,8 @@ the following:
         {
             /**
              * @Assert\Range(
-             *      min = "120",
-             *      max = "180",
+             *      min = 120,
+             *      max = 180,
              *      minMessage = "You must be at least 120cm tall to enter",
              *      maxMessage = "You cannot be taller than 180cm to enter"
              * )
