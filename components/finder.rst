@@ -96,6 +96,13 @@ Exclude directories from matching with the
 
     $finder->in(__DIR__)->exclude('ruby');
 
+.. versionadded:: 2.3
+   Ignore unreadable dirs support was added in version 2.3.
+
+Ignore directories that you don't have permissions on::
+
+    $finder->ignoreUnreadableDirs()->in(__DIR__);
+
 As the Finder uses PHP iterators, you can pass any URL with a supported
 `protocol`_::
 
