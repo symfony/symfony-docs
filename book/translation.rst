@@ -83,6 +83,38 @@ not exist in the user's locale.
 
 The locale used in translations is the one stored in the user session.
 
+Fallback and Default Locale
+---------------------------
+
+If the locale hasn't been set explicitly in the session, the ``fallback_locale``
+configuration parameter will be used by the ``Translator``. The parameter
+defaults to ``en`` (see `Configuration`_).
+
+Alternatively, you can guarantee that a locale is set on the user's session
+by defining a ``default_locale`` for the session service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            session: { default_locale: en }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:session default-locale="en" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'session' => array('default_locale' => 'en'),
+        ));
+
 .. index::
    single: Translations; Translation resource locations
 
@@ -218,6 +250,11 @@ support for both Twig and PHP templates.
 
 Twig Templates
 ~~~~~~~~~~~~~~
+
+..
+    However, the ``%var%``
+    notation is required when translating in Twig templates, and is overall a
+    sensible convention to follow.
 
 Symfony2 provides specialized Twig tags (``trans`` and ``transchoice``) to
 help with message translation of *static blocks of text*:
@@ -413,6 +450,13 @@ Create a translation file under the ``validators`` catalog for the constraint me
         # validators.en.yml
         author.name.not_blank: Please enter an author name.
 
+Translating Database Content
+----------------------------
+
+The translation of database content should be handled by Doctrine through
+the `Translatable Extension`_. For more information, see the documentation
+for that library.
+
 Summary
 -------
 
@@ -433,3 +477,4 @@ steps:
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+.. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
