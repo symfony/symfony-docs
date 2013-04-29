@@ -26,11 +26,12 @@ the user::
     `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
     code (e.g. ``fr_FR`` for French/France) is recommended.
 
-In this chapter, you'll learn how to prepare an application to support multiple
-locales and then how to create translations for multiple locales. Overall,
-the process has several common steps:
+In this chapter, you'll learn how to use the Translation component in the
+Symfony2 framework. Read the
+:doc:`components documentation </components/translation>` to learn how to use
+the Translator. Overall, the process has several common steps:
 
-#. Enable and configure Symfony's ``Translation`` component;
+#. Enable and configure Symfony's Translation component;
 
 #. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
 
@@ -39,13 +40,10 @@ the process has several common steps:
 
 #. Determine, set and manage the user's locale in the session.
 
-.. index::
-   single: Translations; Configuration
-
 Configuration
 -------------
 
-Translations are handled by a ``Translator`` :term:`service` that uses the
+Translations are handled by a ``translator`` :term:`service` that uses the
 user's locale to lookup and return translated messages. Before using it,
 enable the ``Translator`` in your configuration:
 
@@ -74,17 +72,10 @@ enable the ``Translator`` in your configuration:
 The ``fallback`` option defines the fallback locale when a translation does
 not exist in the user's locale.
 
-.. tip::
-
-    When a translation does not exist for a locale, the translator first tries
-    to find the translation for the language (``fr`` if the locale is
-    ``fr_FR`` for instance). If this also fails, it looks for a translation
-    using the fallback locale.
-
 The locale used in translations is the one stored in the user session.
 
 Fallback and Default Locale
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the locale hasn't been set explicitly in the session, the ``fallback_locale``
 configuration parameter will be used by the ``Translator``. The parameter
@@ -115,11 +106,31 @@ by defining a ``default_locale`` for the session service:
             'session' => array('default_locale' => 'en'),
         ));
 
-.. index::
-   single: Translations; Translation resource locations
+Using the Translation inside Controllers
+----------------------------------------
+
+When you want to use translation inside controllers, you need to get the
+``translator`` service and use ``trans`` or ``transChoice``::
+
+    // src/Acme/DemoBundle/Controller/DemoController.php
+    namespace Amce\DemoBundle\Controller;
+
+    // ...
+
+    class DemoController extends Controller
+    {
+        public function indexAction()
+        {
+            $translator = $this->get('translator');
+
+            $translated = $translator->trans('Symfony2 is great!');
+
+            return new Response($translated);
+        }
+    }
 
 Translation Locations and Naming Conventions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 Symfony2 looks for message files (i.e. translations) in two locations:
 
@@ -134,7 +145,7 @@ to determine details about the translations. Each message file must be named
 according to the following pattern: ``domain.locale.loader``:
 
 * **domain**: An optional way to organize messages into groups (e.g. ``admin``,
-  ``navigation`` or the default ``messages``) - see `Using Message Domains`_;
+  ``navigation`` or the default ``messages``) - see ":ref:`using-message-domains`";
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
@@ -145,8 +156,8 @@ The loader can be the name of any registered loader. By default, Symfony
 provides the following loaders:
 
 * ``xliff``: XLIFF file;
-* ``php``:   PHP file;
-* ``yml``:  YAML file.
+* ``php``: PHP file;
+* ``yml``: YAML file.
 
 The choice of which loader to use is entirely up to you and is a matter of
 taste.
@@ -157,7 +168,7 @@ taste.
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
 
-.. tip::
+.. caution::
 
     Each time you create a *new* translation resource (or install a bundle
     that includes a translation resource), be sure to clear your cache so
@@ -166,9 +177,6 @@ taste.
     .. code-block:: bash
 
         $ php app/console cache:clear
-
-.. index::
-   single: Translations; User's locale
 
 Handling the User's Locale
 --------------------------
@@ -237,9 +245,6 @@ as the locale for the user's session.
 You can now use the user's locale to create routes to other translated pages
 in your application.
 
-.. index::
-   single: Translations; In templates
-
 Translations in Templates
 -------------------------
 
@@ -250,11 +255,6 @@ support for both Twig and PHP templates.
 
 Twig Templates
 ~~~~~~~~~~~~~~
-
-..
-    However, the ``%var%``
-    notation is required when translating in Twig templates, and is overall a
-    sensible convention to follow.
 
 Symfony2 provides specialized Twig tags (``trans`` and ``transchoice``) to
 help with message translation of *static blocks of text*:
@@ -270,6 +270,11 @@ help with message translation of *static blocks of text*:
 The ``transchoice`` tag automatically gets the ``%count%`` variable from
 the current context and passes it to the translator. This mechanism only
 works when you use a placeholder following the ``%var%`` pattern.
+
+.. caution::
+
+    The ``%var%`` notation of placeholders is required when translating in
+    Twig templates.
 
 .. tip::
 
@@ -419,7 +424,9 @@ empty, add the following:
             }
         }
 
-Create a translation file under the ``validators`` catalog for the constraint messages, typically in the ``Resources/translations/`` directory of the bundle. See `Message Catalogues`_ for more details.
+Create a translation file under the ``validators`` catalog for the constraint
+messages, typically in the ``Resources/translations/`` directory of the
+bundle.
 
 .. configuration-block::
 
