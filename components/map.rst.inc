@@ -84,6 +84,10 @@
 
   * :doc:`/components/templating`
 
+* **Translation**
+
+  * :doc:`/components/translation`
+
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`
