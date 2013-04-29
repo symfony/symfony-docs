@@ -140,6 +140,13 @@ You start this process by calling
 Translator looks for the exact string inside the appropriate message catalog
 and returns it (if it exists).
 
+.. tip::
+
+    When a translation does not exist for a locale, the translator first tries
+    to find the translation for the language (``fr`` if the locale is
+    ``fr_FR`` for instance). If this also fails, it looks for a translation
+    using the fallback locale.
+
 Fallback Locale
 ~~~~~~~~~~~~~~~
 
@@ -491,6 +498,8 @@ Or numbers between two other numbers:
 
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
 delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
+
+.. _using-message-domains:
 
 Using Message Domains
 ---------------------
