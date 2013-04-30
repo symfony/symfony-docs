@@ -35,7 +35,7 @@ on an  object that will contain a credit card number.
                 cardNumber:
                     - CardScheme:
                         schemes: [VISA]
-                        message: You credit card number is invalid.
+                        message: Your credit card number is invalid.
 
     .. code-block:: xml
 
@@ -46,7 +46,7 @@ on an  object that will contain a credit card number.
                     <option name="schemes">
                         <value>VISA</value>
                     </option>
-                    <option name="message">You credit card number is invalid.</option>
+                    <option name="message">Your credit card number is invalid.</option>
                 </constraint>
             </property>
         </class>
@@ -59,7 +59,7 @@ on an  object that will contain a credit card number.
         class Transaction
         {
             /**
-             * @Assert\CardScheme(schemes = {"VISA"}, message = "You credit card number is invalid.")
+             * @Assert\CardScheme(schemes = {"VISA"}, message = "Your credit card number is invalid.")
              */
             protected $cardNumber;
         }
@@ -80,7 +80,7 @@ on an  object that will contain a credit card number.
                     'schemes' => array(
                         'VISA'
                     ),
-                    'message' => 'You credit card number is invalid.',
+                    'message' => 'Your credit card number is invalid.',
                 )));
             }
         }
