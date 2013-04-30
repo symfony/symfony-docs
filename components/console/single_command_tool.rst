@@ -58,7 +58,7 @@ it is possible to remove this need by extending the application::
         }
     }
 
-When calling your console script, the command `MyCommand` will then always
+When calling your console script, the command ``MyCommand`` will then always
 be used, without having to pass its name.
 
 You can also simplify how you execute the application::
@@ -66,7 +66,6 @@ You can also simplify how you execute the application::
     #!/usr/bin/env php
     <?php
     // command.php
-
     use Acme\Tool\MyApplication;
 
     $application = new MyApplication();
