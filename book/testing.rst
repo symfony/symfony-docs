@@ -401,6 +401,10 @@ The Client supports many operations that can be done in a real browser::
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    The ``getInternalRequest()`` and ``getInternalResponse()`` method were
+    added in Symfony 2.3.
+
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
@@ -409,8 +413,18 @@ client's internal objects::
 
 You can also get the objects related to the latest request::
 
+    // the HttpKernel request instance
     $request  = $client->getRequest();
+
+    // the BrowserKit request instance
+    $request  = $client->getInternalRequest();
+
+    // the HttpKernel response instance
     $response = $client->getResponse();
+
+    // the BrowserKit response instance
+    $response = $client->getInternalResponse();
+
     $crawler  = $client->getCrawler();
 
 If your requests are not insulated, you can also access the ``Container`` and
