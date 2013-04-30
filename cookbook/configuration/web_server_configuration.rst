@@ -45,6 +45,8 @@ If you are using **php-cgi**, Apache does not pass HTTP basic username and
 password to PHP by default. To work around this limitation, you should use the
 following configuration snippet:
 
+.. code-block:: apache
+
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 Nginx
