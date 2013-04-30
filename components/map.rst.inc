@@ -72,9 +72,9 @@
 
   * :doc:`/components/http_kernel/introduction`
 
-* **Locale**
+* **Intl**
 
-  * :doc:`/components/locale`
+  * :doc:`/components/intl`
 
 * **Options Resolver**
 

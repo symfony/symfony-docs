@@ -17,7 +17,7 @@ The Components
     finder
     http_foundation/index
     http_kernel/index
-    locale
+    intl
     options_resolver
     process
     property_access/index
