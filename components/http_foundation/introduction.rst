@@ -450,10 +450,11 @@ to ``application/json``.
 
 .. caution::
 
-    To avoid `JSON Hijacking`_, you should pass an associative array as the
-    outer-most array to ``JsonResponse`` and not an indexed array so that
-    the final result is an object (e.g. ``{"object": "not inside an array"}``)
-    instead of an array (e.g. ``[{"object": "inside an array"}]``).
+    To avoid XSSI `JSON Hijacking`_, you should pass an associative array
+    as the outer-most array to ``JsonResponse`` and not an indexed array so
+    that the final result is an object (e.g. ``{"object": "not inside an array"}``)
+    instead of an array (e.g. ``[{"object": "inside an array"}]``). Read
+    the `OWASP guidelines`_ for more information.
 
 JSONP Callback
 ~~~~~~~~~~~~~~
@@ -477,3 +478,4 @@ The session information is in its own document: :doc:`/components/http_foundatio
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
+.. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside
