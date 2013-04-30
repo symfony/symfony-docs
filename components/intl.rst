@@ -68,8 +68,8 @@ expose them manually by adding the following lines to your autoload code::
     in the `ICU component`_.
 
     Depending on the ICU version compiled with your intl extension, a matching
-    version of that component needs to be installed. Sounds complicated, but usually
-    Composer does this for you automatically:
+    version of that component needs to be installed. It sounds complicated,
+    but usually Composer does this for you automatically:
 
     * 1.0.*: when the intl extension is not available
     * 1.1.*: when intl is compiled with ICU 4.0 or higher
@@ -134,14 +134,13 @@ expose them manually by adding the following lines to your autoload code::
     extensively and deploy again. The installation of the dependencies will now
     succeed.
 
-
 Writing and Reading Resource Bundles
 ------------------------------------
 
-The :phpclass:`ResourceBundle` class is currently by this component. Instead,
-it includes a set of readers and writers for reading and writing arrays (or
-array-like objects) from/to resource bundle files. The following classes are
-supported:
+The :phpclass:`ResourceBundle` class is not currently supporting by this component.
+Instead, it includes a set of readers and writers for reading and writing
+arrays (or array-like objects) from/to resource bundle files. The following
+classes are supported:
 
 * `TextBundleWriter`_
 * `PhpBundleWriter`_
@@ -156,7 +155,8 @@ skip this section and jump to `Accessing ICU Data`_.
 TextBundleWriter
 ~~~~~~~~~~~~~~~~
 
-Writes an array or an array-like object to a plain text resource bundle. The
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Writer\\TextBundleWriter`
+writes an array or an array-like object to a plain-text resource bundle. The
 resulting .txt file can be converted to a binary .res file with the
 :class:`Symfony\\Component\\Intl\\ResourceBundle\\Compiler\\BundleCompiler`
 class::
@@ -186,7 +186,8 @@ constructor.
 PhpBundleWriter
 ~~~~~~~~~~~~~~~
 
-Writes an array or an array-like object to a .php resource bundle::
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Writer\\PhpBundleWriter`
+writes an array or an array-like object to a .php resource bundle::
 
     use Symfony\Component\Intl\ResourceBundle\Writer\PhpBundleWriter;
 
@@ -202,7 +203,8 @@ Writes an array or an array-like object to a .php resource bundle::
 BinaryBundleReader
 ~~~~~~~~~~~~~~~~~~
 
-Reads binary resource bundle files and returns an array or an array-like object.
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\BinaryBundleReader`
+reads binary resource bundle files and returns an array or an array-like object.
 This class currently only works with the `intl extension`_ installed::
 
     use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
@@ -215,7 +217,8 @@ This class currently only works with the `intl extension`_ installed::
 PhpBundleReader
 ~~~~~~~~~~~~~~~
 
-Reads resource bundles from .php files and returns an array or an array-like
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\PhpBundleReader`
+reads resource bundles from .php files and returns an array or an array-like
 object::
 
     use Symfony\Component\Intl\ResourceBundle\Reader\PhpBundleReader;
@@ -228,7 +231,8 @@ object::
 BufferedBundleReader
 ~~~~~~~~~~~~~~~~~~~~
 
-Wraps another reader, but keeps the last N reads in a buffer, where N is a
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\BufferedBundleReader`
+wraps another reader, but keeps the last N reads in a buffer, where N is a
 buffer size passed to the constructor::
 
     use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
@@ -248,7 +252,8 @@ buffer size passed to the constructor::
 StructuredBundleReader
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Wraps another reader and offers a
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReader`
+wraps another reader and offers a
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReaderInterface::readEntry`
 method for reading an entry of the resource bundle without having to worry
 whether array keys are set or not. If a path cannot be resolved, ``null`` is
@@ -316,8 +321,8 @@ bundle::
     $script = Intl::getLanguageBundle()->getScriptName('Hans');
     // => 'Simplified'
 
-All methods accept the translation locale as last, optional parameter, which
-defaults to the current default locale::
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
 
     $languages = Intl::getLanguageBundle()->getLanguageNames('de');
     // => array('ab' => 'Abchasisch', ...)
@@ -337,8 +342,8 @@ The translations of country names can be found in the region bundle::
     $country = Intl::getRegionBundle()->getCountryName('GB');
     // => 'United Kingdom'
 
-All methods accept the translation locale as last, optional parameter, which
-defaults to the current default locale::
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
 
     $countries = Intl::getRegionBundle()->getCountryNames('de');
     // => array('AF' => 'Afghanistan', ...)
@@ -358,8 +363,8 @@ The translations of locale names can be found in the locale bundle::
     $locale = Intl::getLocaleBundle()->getLocaleName('zh_Hans_MO');
     // => 'Chinese (Simplified, Macau SAR China)'
 
-All methods accept the translation locale as last, optional parameter, which
-defaults to the current default locale::
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
 
     $locales = Intl::getLocaleBundle()->getLocaleNames('de');
     // => array('af' => 'Afrikaans', ...)
@@ -393,13 +398,13 @@ All methods (except for
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getFractionDigits`
 and
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getRoundingIncrement`)
-accept the translation locale as last, optional parameter, which defaults to the
-current default locale::
+accept the translation locale as the last, optional parameter, which defaults
+to the current default locale::
 
     $currencies = Intl::getCurrencyBundle()->getCurrencyNames('de');
     // => array('AFN' => 'Afghanische Afghani', ...)
 
-That's all you need to know for now. Have fun at coding!
+That's all you need to know for now. Have fun coding!
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _ICU component: https://packagist.org/packages/symfony/icu
