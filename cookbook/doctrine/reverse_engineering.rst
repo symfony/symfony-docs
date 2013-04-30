@@ -71,7 +71,7 @@ folder of your bundle.
     It's also possible to generate metadata class in YAML format by changing the
     first argument to `yml`.
 
-The generated ``BlogPost.dcm.xml`` metadata file looks as follows:
+The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 
 .. code-block:: xml
 
