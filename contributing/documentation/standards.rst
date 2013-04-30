@@ -21,7 +21,7 @@ Sphinx
 Example
 ~~~~~~~
 
-.. code-block:: ReST
+.. code-block:: text
 
     Example
     =======
@@ -105,3 +105,4 @@ Example
     but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
+.. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html

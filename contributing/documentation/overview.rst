@@ -184,4 +184,3 @@ Read the dedicated :doc:`document <translations>`.
 .. _`fork`: https://help.github.com/articles/fork-a-repo
 .. _`pull requests`: https://help.github.com/articles/using-pull-requests
 .. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
-.. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
