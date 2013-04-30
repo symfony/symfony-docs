@@ -105,16 +105,14 @@ Then you should insert proper namespace in ``name`` attribute of ``entity`` elem
     a section on the specific entities for ``oneToMany`` defining the
     ``inversedBy`` and the ``mappedBy`` pieces.
 
-Once the metadata files are generated, you can ask Doctrine to import the
-schema and build related entity classes by executing the following two commands.
+Once the metadata files are generated, you can ask Doctrine to build related entity classes by executing the following two commands.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mapping:import AcmeBlogBundle annotation
+    $ php app/console doctrine:mapping:convert annotation ./src
     $ php app/console doctrine:generate:entities AcmeBlogBundle
 
-The first command generates entity classes with an annotations mapping, but
-you can of course change the ``annotation`` argument to ``xml`` or ``yml``.
+The first command generates entity classes with an annotations mapping. But if you want to use yml or xml mapping instead of annotations, you should execute the second command only.
 The newly created ``BlogComment`` entity class looks as follow:
 
 .. code-block:: php
