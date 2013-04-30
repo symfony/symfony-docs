@@ -221,31 +221,30 @@ Session start-on-demand
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Control over session "start-on-demand" was added in Symfony 2.3.
+  Control over session "start-on-demand" was added in Symfony 2.3.
 
 In versions 2.1-2.2, Symfony Sessions automatically invoked ``$session->start()`` when
 any attempt was made to access session data (effectively 'start on demand').
-From Symfony 2.3 this behavior can be controlled.
+From Symfony 2.3 this behaviour can be controlled.
 
 There are three modes defined by
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`
 
 The settings are as follows:
 
-- ``SessionStorageInterface::NO_START_ON_DEMAND_STRICT`` - The session will
-  not be started on demand and any attempt to read or write session data will
-  result in a ``\RuntimeException``;
-- ``SessionStorageInterface::START_ON_DEMAND`` - The session will be started
-  if it hasn't already been when any attempt is made to read or write session
-  data. This setting reflects the default behavior since Symfony 2.1;
-- ``SessionStorageInterface::NO_START_ON_DEMAND_LAX`` - The sessions will
-  not be started on demand when session data is read or written to. It will
-  allow access to the uninitialized ``BagInterface``. If the session is subsequently
-  started manually after data is written to a ``BagInterface``, it will be overwritten
-  (by the session data read from persistence).
+  - ``SessionStorageInterface::NO_START_ON_DEMAND_STRICT`` - The session will not be started on demand
+    and any attempt to read or write session data will result in a ``\RuntimeException``
+  - ``SessionStorageInterface::START_ON_DEMAND`` - The session will be started if it hasn't already been
+    when any attempt is made to read or write session data. This setting reflects the default behaviour
+    since Symfony 2.1
+  - ``SessionStorageInterface::NO_START_ON_DEMAND_LAX`` - The sessions will not be started on demand
+    when session data is read or written to. It will allow access to the unitialized ``BagInterface``.
+    If this session is subsequently started manually after data is written to a ``BagInterface`` will
+    be overwritten (by the session data read from persistence).
 
 You can configure these by injecting a configured storage engine into the session::
 
+    <?php
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
@@ -255,6 +254,7 @@ You can configure these by injecting a configured storage engine into the sessio
                                         new PdoSessionHandler(),
                                         SessionStorageInterface::NO_START_ON_DEMAND_STRICT);
     $session = new Session($storage);
+
 
 PHP 5.4 compatibility
 ~~~~~~~~~~~~~~~~~~~~~
