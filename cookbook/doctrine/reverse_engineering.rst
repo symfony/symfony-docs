@@ -92,6 +92,12 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
       </entity>
     </doctrine-mapping>
 
+Then you should insert proper namespace in ``name`` attribute of ``entity`` element like this:
+
+.. code-block:: xml
+
+    <entity name="Acme\BlogBundle\BlogPost" table="blog_post">
+
 .. note::
 
     If you have ``oneToMany`` relationships between your entities,
