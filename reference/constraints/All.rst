@@ -82,7 +82,7 @@ entry in that array:
                 $metadata->addPropertyConstraint('favoriteColors', new Assert\All(array(
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Length(array('limit' => 5)),
+                        new Assert\Length(array('min' => 5)),
                     ),
                 )));
             }
