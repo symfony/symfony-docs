@@ -11,7 +11,7 @@ you form. For example::
 
     public function indexAction()
     {
-        $blog = // ...
+        $blog = ...;
 
         // $blog is passed in as the data, so the empty_data option is not needed
         $form = $this->createForm(new BlogType(), $blog);
@@ -35,8 +35,8 @@ that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
     // src/Acme/DemoBundle/Form/Type/BlogType.php
-    // ...
 
+    // ...
     use Symfony\Component\Form\AbstractType;
     use Acme\DemoBundle\Entity\Blog;
 
