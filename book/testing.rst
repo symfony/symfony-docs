@@ -279,7 +279,7 @@ document::
 
         // Assert that the "Content-Type" header is "application/json"
         $this->assertTrue(
-            $client->getResponse()->headers->contains(
+            $client->getResponse()->getHeaders()->contains(
                 'Content-Type',
                 'application/json'
             )
