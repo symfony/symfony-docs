@@ -63,3 +63,4 @@ Other Constraints
 * :doc:`All </reference/constraints/All>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`Valid </reference/constraints/Valid>`
+* :doc:`Issn </reference/constraints/Issn>`
