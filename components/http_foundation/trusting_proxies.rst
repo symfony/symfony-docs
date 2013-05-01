@@ -18,7 +18,7 @@ your proxy::
 
     $request = Request::createFromGlobals();
     // only trust proxy headers coming from this IP address
-    $request->setTrustedProxies(array(192.0.0.1));
+    $request->setTrustedProxies(array('192.0.0.1'));
 
 Configuring Header Names
 ------------------------
