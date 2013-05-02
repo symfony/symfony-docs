@@ -40,8 +40,6 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `security.listener.factory`_      | Necessary when creating a custom authentication system                    |
-+-----------------------------------+---------------------------------------------------------------------------+
 | `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
@@ -526,14 +524,6 @@ of your configuration, and tag it with ``routing.loader``:
         ;
 
 For more information, see :doc:`/cookbook/routing/custom_route_loader`.
-
-security.listener.factory
--------------------------
-
-**Purpose**: Necessary when creating a custom authentication system
-
-This tag is used when creating your own custom authentication system. For
-details, see :doc:`/cookbook/security/custom_authentication_provider`.
 
 security.remember_me_aware
 --------------------------
