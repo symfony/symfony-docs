@@ -30,6 +30,7 @@ Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
 
 * :doc:`EqualTo </reference/constraints/EqualTo>`
+* :doc:`NotEqualTo </reference/constraints/NotEqualTo>`
 
 Date Constraints
 ~~~~~~~~~~~~~~~~

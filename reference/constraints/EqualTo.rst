@@ -5,7 +5,7 @@ EqualTo
     This constraint is new in version 2.3.
 
 Validates that a value is equal to another value, defined in the options. To
-force that a value is *not* equal, see :doc:`/reference/constraints/NotEqual`.
+force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualTo`.
 
 .. caution::
     
@@ -90,13 +90,7 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
 Options
 -------
 
-value
-~~~~~
-
-**type**: ``mixed``
-
-This option is required. It defines the value to compare to. It can be a
-string, number or object.
+.. include:: /reference/constraints/_comparison-value-option.rst.inc
 
 message
 ~~~~~~~
