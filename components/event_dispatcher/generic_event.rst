@@ -54,7 +54,7 @@ Simply passing a subject::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
-    $event = GenericEvent($subject);
+    $event = new GenericEvent($subject);
     $dispatcher->dispatch('foo', $event);
 
     class FooListener
