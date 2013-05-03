@@ -1,6 +1,9 @@
 Iban
 ====
 
+.. versionadded:: 2.3
+    The Iban constraint was added in Symfony 2.3.
+
 This constraint is used to ensure that a bank account number has the proper format of
 an `International Bank Account Number (IBAN)`_. IBAN is an internationally agreed means
 of identifying bank accounts across national borders with a reduced risk of propagating
