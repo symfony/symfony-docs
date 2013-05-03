@@ -154,7 +154,8 @@ To make your code work better on all platforms, you might want to use the
     $builder->getProcess()->run();
 
 .. versionadded:: 2.3
-    The ``ProcessBuilder::setPrefix`` class was added in Symfony 2.3.
+    The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
+    method was added in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
