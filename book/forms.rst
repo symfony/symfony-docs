@@ -126,7 +126,7 @@ In this example, you've added two fields to your form - ``task`` and ``dueDate``
 corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
 You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
 other things, determines which HTML form tag(s) is rendered for that field.
-At last, you added a submit button for submitting the form to the server.
+At Finally, you added a submit button for submitting the form to the server.
 
 .. versionadded:: 2.3
     Support for submit buttons was added in Symfony 2.3. Before that, you had

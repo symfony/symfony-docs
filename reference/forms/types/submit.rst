@@ -22,9 +22,9 @@ A submit button.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType` |
 +----------------------+----------------------------------------------------------------------+
 
-Submit buttons feature an additional method
+The Submit button has an additional method
 :method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` that lets you
-check whether this button was used to submit the forms. This is especially
+check whether this button was used to submit the form. This is especially
 useful when :ref:`a form has multiple submit buttons <book-form-submitting-multiple-buttons>`::
 
     if ($form->get('save')->isClicked()) {
