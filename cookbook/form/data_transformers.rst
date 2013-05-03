@@ -152,7 +152,7 @@ when creating your form. Later, you'll learn how you could create a custom
 ``issue`` field type to avoid needing to do this in your controller::
 
     $taskForm = $this->createForm(new TaskType(), $task, array(
-        'em' => $this->getDoctrine()->getEntityManager(),
+        'em' => $this->getDoctrine()->getManager(),
     ));
 
 Cool, you're done! Your user will be able to enter an issue number into the
