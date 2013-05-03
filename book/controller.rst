@@ -476,7 +476,7 @@ value to each variable.
 
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service. A forward returns a ``Response``
+    directly via the ``http_kernel`` service and returns a ``Response``
     object::
 
         $httpKernel = $this->container->get('http_kernel');
