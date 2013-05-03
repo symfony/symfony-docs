@@ -207,28 +207,6 @@ Going to the ``http://localhost/app_dev.php/demo/secured/hello``
 URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 
-You can also force the action to require a given role by using the ``@Secure``
-annotation on the controller::
-
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-    use JMS\SecurityExtraBundle\Annotation\Secure;
-
-    /**
-     * @Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
-     * @Secure(roles="ROLE_ADMIN")
-     * @Template()
-     */
-    public function helloAdminAction($name)
-    {
-        return array('name' => $name);
-    }
-
-Now, log in as ``user`` (who does *not* have the ``ROLE_ADMIN`` role) and
-from the secured hello page, click on the "Hello resource secured" link.
-Symfony2 should return a 403 HTTP status code, indicating that the user
-is "forbidden" from accessing that resource.
-
 .. note::
 
     The Symfony2 security layer is very flexible and comes with many different
