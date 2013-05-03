@@ -194,18 +194,48 @@ from a predefined list::
         $colors, 
         0
     );
-    $output->writeln('You have just selected: ' . $colors[$color]);
+    $output->writeln('You have just selected: '.$colors[$color]);
     
     // ... do something with the color
     
 The option which should be selected by default is provided with the fourth
-parameter. The default is ``null``, which means that no option is the default one.
+argument. The default is ``null``, which means that no option is the default one.
 
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, until she enters a valid string
 or the maximum attempts is reached (which you can define in the fifth
-parameter). The default value for the attempts is ``false``, which means infinite
-attempts. You can define your own error message in the sixth parameter.
+argument). The default value for the attempts is ``false``, which means infinite
+attempts. You can define your own error message in the sixth argument.
+
+.. versionadded:: 2.3
+    Multiselect support was new in Symfony 2.3
+
+Multiple Choices
+................
+
+Sometimes, multiple answers can be given. The DialogHelper provides this
+feature using comma seperated values. This is disabled by default, to enable
+this set the seventh argument to ``true``::
+
+    // ...
+
+    $selected = $dialog->select(
+        $output,
+        'Please select your favorite color (default to red)',
+        $colors,
+        0,
+        false,
+        'Value "%s" is invalid',
+        true // enable multiselect
+    );
+
+    $selectedColors = array_map(funtion($c) use ($colors) {
+        return $colors[$c];
+    }, $selected)
+
+    $output->writeln('You have just selected: ' . implode(', ', $selectedColors));
+
+Now, when the user inputted ``1,2``, the result will be: ``You have just selected: blue, yellow``
 
 Testing a Command which expects input
 -------------------------------------
