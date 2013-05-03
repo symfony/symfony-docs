@@ -14,6 +14,7 @@ The ``file`` type represents a file input in your form.
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
+|             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>`                            |
 +-------------+---------------------------------------------------------------------+
@@ -93,3 +94,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
