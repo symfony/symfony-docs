@@ -53,11 +53,6 @@ objects. Start by creating a simple ``Task`` class::
         {
             return $this->tags;
         }
-
-        public function setTags(ArrayCollection $tags)
-        {
-            $this->tags = $tags;
-        }
     }
 
 .. note::
@@ -240,9 +235,9 @@ zero tags when first created).
 
         <!-- ... -->
 
-When the user submits the form, the submitted data for the ``Tags`` fields
-are used to construct an ArrayCollection of ``Tag`` objects, which is then
-set on the ``tag`` field of the ``Task`` instance.
+When the user submits the form, the submitted data for the ``Tags`` fields are
+used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
+on the ``tag`` field of the ``Task`` instance.
 
 The ``Tags`` collection is accessible naturally via ``$task->getTags()``
 and can be persisted to the database or used however you need.
@@ -286,7 +281,6 @@ add the ``allow_add`` option to your collection field::
     // src/Acme/TaskBundle/Form/Type/TaskType.php
 
     // ...
-    
     use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -296,18 +290,59 @@ add the ``allow_add`` option to your collection field::
         $builder->add('tags', 'collection', array(
             'type'         => new TagType(),
             'allow_add'    => true,
+        ));
+    }
+
+Now that the form type knows tags can be added, the ``Tasks`` class needs to
+add methods to make editing the tags possible. This is done by creating an
+"adder". In this case, the adder will be ``addTag``::
+
+    // src/Acme/TaskBundle/Entity/Task.php
+    namespace Acme\TaskBundle\Entity;
+
+    // ...
+    class Task
+    {
+        // ...
+
+        public function addTag($tag)
+        {
+            $this->tags->add($tag);
+        }
+
+        public function removeTag($tag)
+        {
+            // ...
+        }
+    }
+
+But, the form type will still use ``getTags`` now. You need to set the
+``by_reference`` option to ``false``, otherwise the form type will get the
+object by using the getter and change that object.
+
+.. caution::
+
+    If no ``addTag`` **and** ``removeTag`` method is found, the form will
+    still ``setTag`` when setting ``by_reference`` to ``false``. You'll learn
+    more about the ``removeTag`` method later in this article.
+
+.. code-block:: php
+
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
+
+    // ...
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        // ...
+
+        $builder->add('tags', 'collection', array(
+            // ...
             'by_reference' => false,
         ));
     }
 
-Note that ``'by_reference' => false`` was also added. Normally, the form
-framework would modify the tags on a `Task` object *without* actually
-ever calling `setTags`. By setting :ref:`by_reference<reference-form-types-by-reference>`
-to `false`, `setTags` will be called. This will be important later as you'll
-see.
-
 In addition to telling the field to accept any number of submitted objects, the
-``allow_add`` also makes a "prototype" variable available to you. This "prototype"
+``allow_add`` also makes a *"prototype"* variable available to you. This "prototype"
 is a little "template" that contains all the HTML to be able to render any
 new "tag" forms. To render it, make the following change to your template:
 
@@ -321,7 +356,9 @@ new "tag" forms. To render it, make the following change to your template:
 
     .. code-block:: html+php
 
-        <ul class="tags" data-prototype="<?php echo $view->escape($view['form']->row($form['tags']->vars['prototype'])) ?>">
+        <ul class="tags" data-prototype="<?php
+            echo $view->escape($view['form']->row($form['tags']->vars['prototype']))
+        ?>">
             ...
         </ul>
 
@@ -430,13 +467,14 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
-    To get the new tags to save in Doctrine, you need to consider a couple
-    more things. First, unless you iterate over all of the new ``Tag`` objects
-    and call ``$em->persist($tag)`` on each, you'll receive an error from
+    To save the new tags with Doctrine, you need to consider a couple more
+    things. First, unless you iterate over all of the new ``Tag`` objects and
+    call ``$em->persist($tag)`` on each, you'll receive an error from
     Doctrine:
 
-        A new entity was found through the relationship `Acme\TaskBundle\Entity\Task#tags`
-        that was not configured to cascade persist operations for entity...
+        A new entity was found through the relationship
+        ``Acme\TaskBundle\Entity\Task#tags`` that was not configured to
+        cascade persist operations for entity...
 
     To fix this, you may choose to "cascade" the persist operation automatically
     from the ``Task`` object to any related tags. To do this, add the ``cascade``
@@ -492,21 +530,18 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
     of the relationship is modified.
 
     The trick is to make sure that the single "Task" is set on each "Tag".
-    One easy way to do this is to add some extra logic to ``setTags()``,
-    which is called by the form framework since :ref:`by_reference<reference-form-types-by-reference>`
-    is set to ``false``::
+    One easy way to do this is to add some extra logic to ``addTag()``,
+    which is called by the form type since ``by_reference`` is set to
+    ``false``::
 
         // src/Acme/TaskBundle/Entity/Task.php
 
         // ...
-
-        public function setTags(ArrayCollection $tags)
+        public function addTag(ArrayCollection $tag)
         {
-            foreach ($tags as $tag) {
-                $tag->addTask($this);
-            }
+            $tag->addTask($this);
 
-            $this->tags = $tags;
+            $this->tags->add($tag);
         }
 
     Inside ``Tag``, just make sure you have an ``addTask`` method::
@@ -514,7 +549,6 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
         // src/Acme/TaskBundle/Entity/Tag.php
 
         // ...
-
         public function addTask(Task $task)
         {
             if (!$this->tasks->contains($task)) {
@@ -523,7 +557,7 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
         }
 
     If you have a ``OneToMany`` relationship, then the workaround is similar,
-    except that you can simply call ``setTask`` from inside ``setTags``.
+    except that you can simply call ``setTask`` from inside ``addTag``.
 
 .. _cookbook-form-collections-remove:
 
@@ -538,18 +572,29 @@ Start by adding the ``allow_delete`` option in the form Type::
     // src/Acme/TaskBundle/Form/Type/TaskType.php
 
     // ...
-    use Symfony\Component\Form\FormBuilderInterface;
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description');
+        // ...
 
         $builder->add('tags', 'collection', array(
-            'type'         => new TagType(),
-            'allow_add'    => true,
+            // ...
             'allow_delete' => true,
-            'by_reference' => false,
         ));
+    }
+
+Now, you need to put some code into the ``removeTag`` method of ``Task``::
+
+    // src/Acme/TaskBundle/Entity/Task.php
+
+    // ...
+    class Task
+    {
+        // ...
+
+        public function removeTag($tag)
+        {
+            $this->tags->removeElement($tag);
+        }
     }
 
 Templates Modifications
@@ -604,11 +649,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. sidebar:: Doctrine: Ensuring the database persistence
 
     When removing objects in this way, you may need to do a little bit more
-    work to ensure that the relationship between the Task and the removed Tag
-    is properly removed.
+    work to ensure that the relationship between the ``Task`` and the removed
+    ``Tag`` is properly removed.
 
     In Doctrine, you have two side of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a ManyToMany relation
+    inverse side. Normally in this case you'll have a ``ManyToMany`` relation
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
 
@@ -623,7 +668,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         // src/Acme/TaskBundle/Controller/TaskController.php
 
         // ...
-
         public function editAction($id, Request $request)
         {
             $em = $this->getDoctrine()->getManager();
