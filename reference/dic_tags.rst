@@ -218,7 +218,7 @@ The tagged service will be removed from the container if the
 ``framework.templating.engines`` config section does not contain php.
 
 assetic.templating.twig
-----------------------
+-----------------------
 
 **Purpose**: Remove this service if twig templating is disabled
 
