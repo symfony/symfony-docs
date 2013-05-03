@@ -17,14 +17,13 @@ is done in a real application. It is simple to bootstrap and you can trust
 the Symfony components enough to use them as a testing base.
 
 There is already a class that you can benefit from for simple FormTypes
-testing: :class:`Symfony\\Component\\Form\\Tests\\Extension\\Core\\Type\\TypeTestCase`.
-It is used to test the core types and you can use it to test your types too.
+testing: :class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to
+test the core types and you can use it to test your types too.
 
-.. note::
-
-    Depending on the way you installed your Symfony or Symfony Form Component
-    the tests may not be downloaded. Use the --prefer-source option with
-    composer if this is the case.
+.. versionadded:: 2.3
+    The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
+    namespace in 2.3. Previously, the class was located in
+    ``Symfony\Component\Form\Tests\Core\Extension\Type``.
 
 The Basics
 ----------
@@ -36,7 +35,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -125,7 +124,7 @@ before creating the parent form::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -161,7 +160,7 @@ on other extensions. You need add those extensions to the factory object::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -202,7 +201,7 @@ a good opportunity to use them::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {
