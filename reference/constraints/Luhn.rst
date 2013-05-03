@@ -1,5 +1,5 @@
 Luhn
-======
+====
 
 .. versionadded:: 2.2
     The Luhn validation is new in Symfony 2.2.
@@ -49,6 +49,8 @@ will contain a credit card number.
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -62,8 +64,10 @@ will contain a credit card number.
     .. code-block:: php
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Luhn;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
         {
@@ -71,7 +75,7 @@ will contain a credit card number.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('luhn', new Luhn(array(
+                $metadata->addPropertyConstraint('cardNumber', new Assert\Luhn(array(
                     'message' => 'Please check your credit card number',
                 )));
             }
