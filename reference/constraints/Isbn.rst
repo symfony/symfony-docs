@@ -1,20 +1,20 @@
 Isbn
 ====
 
-.. versionadded:: New in version 2.3:
-    The Isbn validation were added in Symfony 2.3.
+.. versionadded:: 2.3
+    The Isbn constraint was added in Symfony 2.3.
 
-This constraint permits that a ISBN (International Standard Book Numbers)
-number is either a valid ISBN-10, a valid ISBN-13 code or both on a value.
+This constraint validates that an ISBN (International Standard Book Numbers)
+number is either a valid ISBN-10, a valid ISBN-13 or both.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                |
 +----------------+----------------------------------------------------------------------+
-| Options        | - `isbn10Message`_                                                   |
+| Options        | - `isbn10`_                                                          |
+|                | - `isbn13`_                                                          |
+|                | - `isbn10Message`_                                                   |
 |                | - `isbn13Message`_                                                   |
 |                | - `bothIsbnMessage`_                                                 |
-|                | - `isbn10`_                                                          |
-|                | - `isbn13`_                                                          |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`            |
 +----------------+----------------------------------------------------------------------+
@@ -40,19 +40,6 @@ on an  object that will contain a ISBN number.
                         isbn13: true
                         bothIsbnMessage: This value is neither a valid ISBN-10 nor a valid ISBN-13.
 
-    .. code-block:: xml
-
-        <!-- src/Acme/BookcaseBunlde/Resources/config/validation.xml -->
-        <class name="Acme\BookcaseBunlde\Entity\Book">
-            <property name="isbn">
-                <constraint name="Isbn">
-                    <option name="isbn10">true</option>
-                    <option name="isbn13">true</option>
-                    <option name="bothIsbnMessage">This value is neither a valid ISBN-10 nor a valid ISBN-13.</option>
-                </constraint>
-            </property>
-        </class>
-
     .. code-block:: php-annotations
 
         // src/Acme/BookcaseBunlde/Entity/Book.php
@@ -69,6 +56,19 @@ on an  object that will contain a ISBN number.
              */
             protected $isbn;
         }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BookcaseBunlde/Resources/config/validation.xml -->
+        <class name="Acme\BookcaseBunlde\Entity\Book">
+            <property name="isbn">
+                <constraint name="Isbn">
+                    <option name="isbn10">true</option>
+                    <option name="isbn13">true</option>
+                    <option name="bothIsbnMessage">This value is neither a valid ISBN-10 nor a valid ISBN-13.</option>
+                </constraint>
+            </property>
+        </class>
 
     .. code-block:: php
 
@@ -95,42 +95,42 @@ on an  object that will contain a ISBN number.
 Available Options
 -----------------
 
-isbn10Message
-~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
-
-The message that will be shown if the option isbn10 is true
-and the given value does not pass the ISBN-10 check.
-
-isbn13Message
-~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
-
-The message that will be shown if the option isbn13 is true
-and the given value does not pass the ISBN-13 check.
-
-bothIsbnMessage
-~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
-
-The message that will be shown if the options (isbn10, isbn13) is true
-and the given value does not pass the ISBN-13 nor ISBN-13 check.
-
 isbn10
 ~~~~~~
 
 **type**: ``boolean`` [:ref:`default option<validation-default-option>`]
 
-If this required option is set to ``true`` the constraint will check
-if the code is a valid ISBN-10 code.
+If this required option is set to ``true`` the constraint will check if the
+code is a valid ISBN-10 code.
 
 isbn13
 ~~~~~~
 
 **type**: ``boolean`` [:ref:`default option<validation-default-option>`]
 
-If this required option is set to ``true`` the constraint will check
-if the code is a valid ISBN-13 code.
+If this required option is set to ``true`` the constraint will check if the
+code is a valid ISBN-13 code.
+
+isbn10Message
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
+
+The message that will be shown if the `isbn10`_ option is true and the given
+value does not pass the ISBN-10 check.
+
+isbn13Message
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
+
+The message that will be shown if the `isbn13`_ option is true and the given
+value does not pass the ISBN-13 check.
+
+bothIsbnMessage
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
+
+The message that will be shown if both the `isbn10`_ and `isbn13`_ options
+are true and the given value does not pass the ISBN-13 nor the ISBN-13 check.
