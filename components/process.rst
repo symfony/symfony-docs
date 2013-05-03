@@ -93,6 +93,20 @@ are done doing other stuff::
         }
     });
 
+Stopping a Process
+------------------
+
+Any asynchronous process can be stopped at any time with the
+:method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
+a timeout as its argument. Once the timeout is reached, the process is terminated.
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
+    // ... do other things
+
+    $process->stop(3);
+
 Executing PHP Code in Isolation
 -------------------------------
 
