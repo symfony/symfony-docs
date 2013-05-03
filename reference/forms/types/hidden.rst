@@ -16,7 +16,7 @@ The hidden type represents a hidden input field.
 | options     | - `property_path`_                                                   |
 |             | - `mapped`_                                                          |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                           |
+| Parent type | :doc:`field</reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
 +-------------+----------------------------------------------------------------------+

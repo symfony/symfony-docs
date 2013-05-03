@@ -71,7 +71,7 @@ These options inherit from the :doc:`date</reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
 
-These options inherit from the :doc:`date</reference/forms/types/field>` type:
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
@@ -80,8 +80,6 @@ These options inherit from the :doc:`date</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
-
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
