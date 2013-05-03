@@ -13,6 +13,7 @@
 
   * :doc:`Overview </contributing/documentation/overview>`
   * :doc:`Format </contributing/documentation/format>`
+  * :doc:`Documentation Standards </contributing/documentation/standards>`
   * :doc:`Translations </contributing/documentation/translations>`
   * :doc:`License </contributing/documentation/license>`
 

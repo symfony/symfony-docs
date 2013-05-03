@@ -18,6 +18,7 @@ The ``password`` field renders an input password text box.
 |             | - `read_only`_                                                         |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`text</reference/forms/types/text>`                               |
 +-------------+------------------------------------------------------------------------+
@@ -42,7 +43,7 @@ Put simply, if for some reason you want to render your password field
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
@@ -57,3 +58,5 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
