@@ -11,15 +11,14 @@ register the mappings for your model classes.
 
 .. note::
 
-    For non-reusable bundles, the easiest is to put your model classes in
-    the default locations. ``Entity`` for Doctrine ORM, ``Document`` for one
-    of the ODMs. For reusable bundles, rather than duplicate model classes
+    For non-reusable bundles, the easiest option is to put your model classes
+    in the default locations: ``Entity`` for the Doctrine ORM or ``Document``
+    for one of the ODMs. For reusable bundles, rather than duplicate model classes
     just to get the auto mapping, use the compiler pass.
 
 .. versionadded:: 2.3
-    The base mapping compiler pass was added in  Symfony 2.3, the doctrine bundles
+    The base mapping compiler pass was added in Symfony 2.3. The doctrine bundles
     support it from DoctrineBundle >= 1.2.1, MongoDBBundle >= 3.0.0
-
 
 In your bundle class, write the following code to register the compiler pass::
 
