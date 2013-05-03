@@ -85,9 +85,13 @@ are:
 .. tip::
 
     This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
-    the web directory. All other files will be served as text. If you have
-    other PHP files in your web directory, be sure to include them in the
-    ``location`` block above.
+    the web directory. All other files will be served as text. You **must**
+    also make sure that if you *do* deploy ``app_dev.php`` or ``config.php``
+    that these files are secured and not available to any outside user (the
+    IP checking code at the top of each file does this by default).
+    
+    If you have other PHP files in your web directory that need to be executed,
+    be sure to include them in the ``location`` block above.
 
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony
