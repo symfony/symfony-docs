@@ -21,6 +21,8 @@ Validation Constraints Reference
 
    constraints/Range
 
+   constraints/EqualTo
+
    constraints/Date
    constraints/DateTime
    constraints/Time

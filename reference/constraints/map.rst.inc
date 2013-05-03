@@ -26,6 +26,11 @@ Number Constraints
 
 * :doc:`Range </reference/constraints/Range>`
 
+Comparison Constraints
+~~~~~~~~~~~~~~~~~~~~~~
+
+* :doc:`EqualTo </reference/constraints/EqualTo>`
+
 Date Constraints
 ~~~~~~~~~~~~~~~~
 
