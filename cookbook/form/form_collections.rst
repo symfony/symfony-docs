@@ -235,7 +235,7 @@ zero tags when first created).
 
         <!-- ... -->
 
-When the user submits the form, the submitted data for the ``Tags`` fields are
+When the user submits the form, the submitted data for the ``tags`` field are
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
 on the ``tag`` field of the ``Task`` instance.
 
@@ -290,54 +290,6 @@ add the ``allow_add`` option to your collection field::
         $builder->add('tags', 'collection', array(
             'type'         => new TagType(),
             'allow_add'    => true,
-        ));
-    }
-
-Now that the form type knows tags can be added, the ``Tasks`` class needs to
-add methods to make editing the tags possible. This is done by creating an
-"adder". In this case, the adder will be ``addTag``::
-
-    // src/Acme/TaskBundle/Entity/Task.php
-    namespace Acme\TaskBundle\Entity;
-
-    // ...
-    class Task
-    {
-        // ...
-
-        public function addTag($tag)
-        {
-            $this->tags->add($tag);
-        }
-
-        public function removeTag($tag)
-        {
-            // ...
-        }
-    }
-
-But, the form type will still use ``getTags`` now. You need to set the
-``by_reference`` option to ``false``, otherwise the form type will get the
-object by using the getter and change that object.
-
-.. caution::
-
-    If no ``addTag`` **and** ``removeTag`` method is found, the form will
-    still ``setTag`` when setting ``by_reference`` to ``false``. You'll learn
-    more about the ``removeTag`` method later in this article.
-
-.. code-block:: php
-
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
-
-    // ...
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // ...
-
-        $builder->add('tags', 'collection', array(
-            // ...
-            'by_reference' => false,
         ));
     }
 
@@ -464,6 +416,56 @@ one example:
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
 into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
+
+To make handling these new tags easier, add an "adder" and a "remover" method
+for the tags in the ``Task`` class::
+
+    // src/Acme/TaskBundle/Entity/Task.php
+    namespace Acme\TaskBundle\Entity;
+
+    // ...
+    class Task
+    {
+        // ...
+
+        public function addTag($tag)
+        {
+            $this->tags->add($tag);
+        }
+
+        public function removeTag($tag)
+        {
+            // ...
+        }
+    }
+
+Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
+
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
+
+    // ...
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        // ...
+
+        $builder->add('tags', 'collection', array(
+            // ...
+            'by_reference' => false,
+        ));
+    }
+
+With these two changes, when the form is submitted, each new ``Tag`` object
+is added to the ``Task`` class by calling the ``addTag`` method. Before this
+change, they were added internally by the form by calling ``$task->getTags()->add($task)``.
+That was just fine, but forcing the use of the "adder" method makes handling
+these new ``Tag`` objects easier (especially if you're using Doctrine, which
+we talk about next!).
+
+.. caution::
+
+    If no ``addTag`` **and** ``removeTag`` method is found, the form will
+    still use ``setTag`` even if ``by_reference`` is ``false``. You'll learn
+    more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
