@@ -36,6 +36,9 @@ a command in a sub-process::
 The component takes care of the subtle differences between the different platforms
 when executing the command.
 
+Getting real-time Process Output
+--------------------------------
+
 When executing a long running command (like rsync-ing files to a remote
 server), you can give feedback to the end user in real-time by passing an
 anonymous function to the
@@ -54,7 +57,10 @@ anonymous function to the
     
 .. versionadded:: 2.1
     The non-blocking feature was added in 2.1.
-    
+
+Running Processes Asynchronously
+--------------------------------
+
 You can also start the subprocess and then let it run asynchronously, retrieving
 output and the status in your main process whenever you need it. Use the 
 :method:`Symfony\\Component\\Process\\Process::start` method to start an asynchronous
@@ -86,6 +92,9 @@ are done doing other stuff::
             echo 'OUT > '.$buffer;
         }
     });
+
+Executing PHP Code in Isolation
+-------------------------------
 
 If you want to execute some PHP code in isolation, use the ``PhpProcess``
 instead::
