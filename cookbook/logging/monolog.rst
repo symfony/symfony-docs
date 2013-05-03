@@ -301,7 +301,7 @@ using a processor.
 
             <services>
                 <service id="monolog.formatter.session_request" class="Monolog\Formatter\LineFormatter">
-                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n</argument>
+                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%&#xA;</argument>
                 </service>
 
                 <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
