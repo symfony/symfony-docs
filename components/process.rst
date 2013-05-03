@@ -48,7 +48,7 @@ anonymous function to the
 
     $process = new Process('ls -lsa');
     $process->run(function ($type, $buffer) {
-        if ('err' === $type) {
+        if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
             echo 'OUT > '.$buffer;
@@ -86,7 +86,7 @@ are done doing other stuff::
     // ... do other things
     
     $process->wait(function ($type, $buffer) {
-        if ('err' === $type) {
+        if (Process:ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
             echo 'OUT > '.$buffer;
