@@ -10,11 +10,24 @@ You can learn a little bit more about "tags" by reading the ":ref:`book-service-
 section of the Service Container chapter.
 
 Below is information about all of the tags available inside Symfony2. There
-may also be tags in other bundles you use that aren't listed here. For example,
-the AsseticBundle has several tags that aren't listed here.
+may also be tags in other bundles you use that aren't listed here.
 
 +-----------------------------------+---------------------------------------------------------------------------+
 | Tag Name                          | Usage                                                                     |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.asset`_                  | Register an asset to the current asset manager                            |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.factory_worker`_         | Add a factory worker                                                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.filter`_                 | Register a filter                                                         |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.formula_loader`_         | Add a formula loader to the current asset manager                         |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.formula_resource`_       | Adds a resource to the current asset manager                              |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.templating.php`_         | Remove this service if php templating is disabled                         |
++-----------------------------------+---------------------------------------------------------------------------+
+| `assetic.templating.twig`_        | Remove this service if twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -54,6 +67,163 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.initializer`_          | Register a service that initializes objects before validation             |
 +-----------------------------------+---------------------------------------------------------------------------+
+
+assetic.asset
+-------------
+
+**Purpose**: Register an asset with the current asset manager
+
+assetic.factory_worker
+----------------------
+
+**Purpose**: Add a factory worker
+
+A Factory worker is a class implementing ``Assetic\Factory\Worker\WorkerInterface``.
+Its ``process($asset)`` method is called for each asset after asset creation.
+You can modify an asset or even return a new one.
+
+In order to add a new worker, first create a class::
+
+    use Assetic\Asset\AssetInterface;
+    use Assetic\Factory\Worker\WorkerInterface;
+
+    class MyWorker implements WorkerInterface
+    {
+        public function process(AssetInterface $asset)
+        {
+            // ... change $asset or return a new one
+        }
+
+    }
+
+And then add register it as a tagged service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme.my_worker:
+                class: MyWorker
+                tags:
+                    - { name: assetic.factory_worker }
+
+    .. code-block:: xml
+
+        <service id="acme.my_worker" class="MyWorker>
+            <tag name="assetic.factory_worker" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.my_worker', 'MyWorker')
+            ->addTag('assetic.factory_worker')
+        ;
+
+assetic.filter
+--------------
+
+**Purpose**: Register a filter
+
+AsseticBundle uses this tag to register common filters. You can also use
+this tag to register your own filters.
+
+First, you need to create a filter::
+
+    use Assetic\Asset\AssetInterface;
+    use Assetic\Filter\FilterInterface;
+
+    class MyFilter implements FilterInterface
+    {
+        public function filterLoad(AssetInterface $asset)
+        {
+            $asset->setContent('alert("yo");' . $asset->getContent());
+        }
+
+        public function filterDump(AssetInterface $asset)
+        {
+            // ...
+        }
+    }
+
+Second, define a service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme.my_filter:
+                class: MyFilter
+                tags:
+                    - { name: assetic.filter, alias: my_filter }
+
+    .. code-block:: xml
+
+        <service id="acme.my_filter" class="MyFilter">
+            <tag name="assetic.filter" alias="my_filter" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.my_filter', 'MyFilter')
+            ->addTag('assetic.filter', array('alias' => 'my_filter'))
+        ;
+
+Finally, apply the filter:
+
+.. code-block:: jinja
+
+    {% javascripts
+        '@AcmeBaseBundle/Resources/public/js/global.js'
+        filter='my_filter'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+You can also apply your filter via the ``assetic.filters.my_filter.apply_to``
+config option as it's described here: :doc:`/cookbook/assetic/apply_to_option`.
+In order to do that, you must define your filter service in a separate xml
+config file and point to this file's via the ``assetic.filters.my_filter.resource``
+configuration key.
+
+assetic.formula_loader
+----------------------
+
+**Purpose**: Add a formula loader to the current asset manager
+
+A Formula loader is a class implementing
+``Assetic\\Factory\Loader\\FormulaLoaderInterface`` interface. This class
+is responsible for loading assets from a particular kind of resources (for
+instance, twig template). Assetic ships loaders for php and twig templates.
+
+An ``alias`` attribute defines the name of the loader.
+
+assetic.formula_resource
+------------------------
+
+**Purpose**: Adds a resource to the current asset manager
+
+A resource is something formulae can be loaded from. For instance, twig
+templates are resources.
+
+assetic.templating.php
+----------------------
+
+**Purpose**: Remove this service if php templating is disabled
+
+The tagged service will be removed from the container if the
+``framework.templating.engines`` config section does not contain php.
+
+assetic.templating.twig
+----------------------
+
+**Purpose**: Remove this service if twig templating is disabled
+
+The tagged service will be removed from the container if
+``framework.templating.engines`` config section does not contain twig.
 
 data_collector
 --------------
