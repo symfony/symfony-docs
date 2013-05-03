@@ -55,6 +55,7 @@ Financial Constraints
 
 * :doc:`CardScheme </reference/constraints/CardScheme>`
 * :doc:`Luhn </reference/constraints/Luhn>`
+* :doc:`Iban </reference/constraints/Iban>`
 
 Other Constraints
 ~~~~~~~~~~~~~~~~~
