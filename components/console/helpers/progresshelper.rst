@@ -56,18 +56,20 @@ To see other available options, check the API documentation for
 
 .. caution::
 
-    For performance reasons, be careful to not set the total number of steps
-    to a high number. For example, if you're iterating over a large number
-    of items, consider a smaller "step" number that updates on only some
-    iterations::
+    For performance reasons, be careful if you set the total number of steps
+    to a high number. For example, if you're iterating over a large number of
+    items, consider setting the redraw frequency to a higher value by calling
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressHelper::setRedrawFrequency`,
+    so it updates on only some iterations::
 
-        $progress->start($output, 500);
+        $progress->start($output, 50000);
+
+        // update every 100 iterations
+        $progress->setRedrawFrequency(100);
+
         $i = 0;
         while ($i++ < 50000) {
             // ... do some work
 
-            // advance every 100 iterations
-            if ($i % 100 == 0) {
-                $progress->advance();
-            }
+            $progress->advance();
         }
