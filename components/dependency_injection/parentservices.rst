@@ -273,6 +273,11 @@ when the child services are instantiated.
    is that omitting the ``parent`` config key will mean that the ``calls``
    defined on the ``mail_manager`` service will not be executed when the
    child services are instantiated.
+   
+.. caution::
+
+   The ``scope``, ``abstract`` and ``tags`` attributes are always taken from
+   the child service.
 
 The parent service is abstract as it should not be directly retrieved from the
 container or passed into another service. It exists merely as a "template" that
