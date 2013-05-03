@@ -24,6 +24,7 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `invalid_message`_                                                   |
 | options     | - `invalid_message_parameters`_                                        |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
@@ -181,8 +182,10 @@ error_bubbling
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

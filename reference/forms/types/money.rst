@@ -26,8 +26,9 @@ how the input and output of the data is handled.
 |             | - `error_bubbling`_                                                 |
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
+|             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                          |
+| Parent type | :doc:`field</reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -81,7 +82,7 @@ to ``0``).
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -96,5 +97,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217

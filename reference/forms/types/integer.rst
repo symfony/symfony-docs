@@ -25,8 +25,9 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 |             | - `error_bubbling`_                                                   |
 |             | - `invalid_message`_                                                  |
 |             | - `invalid_message_parameters`_                                       |
+|             | - `mapped`_                                                           |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                            |
+| Parent type | :doc:`field</reference/forms/types/form>`                             |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
@@ -60,7 +61,7 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -75,3 +76,5 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

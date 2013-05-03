@@ -161,55 +161,8 @@ tags would be removed from the new 2.5 branch.
 Standards
 ---------
 
-In order to help the reader as much as possible and to create code examples that
-look and feel familiar, you should follow these rules:
-
-* The code follows the :doc:`Symfony Coding Standards</contributing/code/standards>`
-  as well as the `Twig Coding Standards`_;
-* Each line should break approximately after the first word that crosses the
-  72nd character (so most lines end up being 72-78 characters);
-* To avoid horizontal scrolling on code blocks, we prefer to break a line
-  correctly if it crosses the 85th character;
-* When you fold one or more lines of code, place ``...`` in a comment at the point
-  of the fold. These comments are: ``// ...`` (php), ``# ...`` (yaml/bash), ``{# ... #}``
-  (twig), ``<!-- ... -->`` (xml/html), ``; ...`` (ini), ``...`` (text);
-* When you fold a part of a line, e.g. a variable value, put ``...`` (without comment)
-  at the place of the fold;
-* Description of the folded code: (optional)
-  If you fold several lines: the description of the fold can be placed after the ``...``
-  If you fold only part of a line: the description can be placed before the line;
-* If useful, a ``codeblock`` should begin with a comment containing the filename
-  of the file in the code block. Don't place a blank line after this comment,
-  unless the next line is also a comment;
-* You should put a ``$`` in front of every bash line;
-* The ``::`` shorthand is preferred over ``.. code-block:: php`` to begin a PHP
-  code block;
-* You should use a form of *you* instead of *we*.
-
-An example::
-
-    // src/Foo/Bar.php
-
-    // ...
-    class Bar
-    {
-        // ...
-
-        public function foo($bar)
-        {
-            // set foo with a value of bar
-            $foo = ...;
-
-            // ... check if $bar has the correct value
-
-            return $foo->baz($bar, ...);
-        }
-    }
-
-.. caution::
-
-    In Yaml you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
-    but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
+All documentation in the Symfony Documentation should follow
+:doc:`the documentation standards <standards>`.
 
 Reporting an Issue
 ------------------
@@ -231,4 +184,3 @@ Read the dedicated :doc:`document <translations>`.
 .. _`fork`: https://help.github.com/articles/fork-a-repo
 .. _`pull requests`: https://help.github.com/articles/using-pull-requests
 .. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
-.. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
