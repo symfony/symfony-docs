@@ -45,6 +45,9 @@ output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getInc
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
+Getting real-time Process Output
+--------------------------------
+
 When executing a long running command (like rsync-ing files to a remote
 server), you can give feedback to the end user in real-time by passing an
 anonymous function to the
@@ -63,6 +66,9 @@ anonymous function to the
 
 .. versionadded:: 2.1
     The non-blocking feature was added in 2.1.
+
+Running Processes Asynchronously
+--------------------------------
 
 You can also start the subprocess and then let it run asynchronously, retrieving
 output and the status in your main process whenever you need it. Use the
@@ -103,7 +109,7 @@ are done doing other stuff::
     process is completed.
 
 Stopping a Process
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. versionadded:: 2.3
     The ``signal`` parameter of the ``stop`` method was added in Symfony 2.3.
@@ -121,6 +127,9 @@ to find out more about signal handling in the Process component::
     // ... do other things
 
     $process->stop(3, SIGINT);
+
+Executing PHP Code in Isolation
+-------------------------------
 
 If you want to execute some PHP code in isolation, use the ``PhpProcess``
 instead::
