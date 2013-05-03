@@ -10,8 +10,7 @@ You can learn a little bit more about "tags" by reading the ":ref:`book-service-
 section of the Service Container chapter.
 
 Below is information about all of the tags available inside Symfony2. There
-may also be tags in other bundles you use that aren't listed here. For example,
-the AsseticBundle has several tags that aren't listed here.
+may also be tags in other bundles you use that aren't listed here.
 
 +-----------------------------------+---------------------------------------------------------------------------+
 | Tag Name                          | Usage                                                                     |
@@ -70,17 +69,16 @@ the AsseticBundle has several tags that aren't listed here.
 assetic.asset
 -------------
 
-**Purpose**: Register an asset to the current asset manager
+**Purpose**: Register an asset with the current asset manager
 
 assetic.factory_worker
 ----------------------
 
 **Purpose**: Add a factory worker
 
-Factory worker is a class implementing
-``Assetic\\Factory\\Worker\\WorkerInterface``. Its ``process($asset)``
-method is called for each asset after asset creation. You can modify an asset or
-even return a new one.
+A Factory worker is a class implementing ``Assetic\Factory\Worker\WorkerInterface``.
+Its ``process($asset)`` method is called for each asset after asset creation.
+You can modify an asset or even return a new one.
 
 In order to add a new worker, first create a class::
 
@@ -126,8 +124,8 @@ assetic.filter
 
 **Purpose**: Register a filter
 
-AsseticBundle uses this filter to register common filters. You can also use this
-tag to register your own filters.
+AsseticBundle uses this tag to register common filters. You can also use
+this tag to register your own filters.
 
 First, you need to create a filter::
 
@@ -183,22 +181,23 @@ Finally, apply the filter:
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-You can also apply your filter via ``assetic.filters.my_filter.apply_to`` config
-option as it's described here: :doc:`/cookbook/assetic/apply_to_option`. In
-order to do that, you must define your filter service in separate xml config
-file and put this file's path to ``assetic.filters.my_filter.resource``.
+You can also apply your filter via the ``assetic.filters.my_filter.apply_to``
+config option as it's described here: :doc:`/cookbook/assetic/apply_to_option`.
+In order to do that, you must define your filter service in a separate xml
+config file and point to this file's via the ``assetic.filters.my_filter.resource``
+configuration key.
 
 assetic.formula_loader
 ----------------------
 
 **Purpose**: Add a formula loader to the current asset manager
 
-Formula loader is a class implementing
+A Formula loader is a class implementing
 ``Assetic\\Factory\Loader\\FormulaLoaderInterface`` interface. This class
-is responsible in loading assets from a particular kind of resources (for
+is responsible for loading assets from a particular kind of resources (for
 instance, twig template). Assetic ships loaders for php and twig templates.
 
-An ``alias`` attribute defines a name of the loader.
+An ``alias`` attribute defines the name of the loader.
 
 assetic.formula_resource
 ------------------------
@@ -213,7 +212,7 @@ assetic.templating.php
 
 **Purpose**: Remove this service if php templating is disabled
 
-The tagged service will be removed from the container if
+The tagged service will be removed from the container if the
 ``framework.templating.engines`` config section does not contain php.
 
 assetic.templating.twig
