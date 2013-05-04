@@ -159,6 +159,7 @@ ignoreNull
 
 **type**: ``Boolean`` **default**: ``true``
 
-If this option is set to ``true``, it allows having multiple ``null`` values for
-the field(s) without failing the unique constraint. If set to ``false``, only one
-``null`` value is allowed.
+If this option is set to ``true``, then the constraint will allow multiple
+entities to have a ``null`` value for a field without failing validation.
+If set to ``false``, only one ``null`` value is allowed - if a second entity
+also has a ``null`` value, validation would fail.
