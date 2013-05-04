@@ -947,7 +947,7 @@ Using Form Variables
 --------------------
 
 Most of the functions available for rendering different parts of a form (e.g.
-the form widget, form label, form widget, etc) also allow you to make certain
+the form widget, form label, form errors, etc) also allow you to make certain
 customizations directly. Look at the following example:
 
 .. configuration-block::

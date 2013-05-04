@@ -21,7 +21,8 @@ are:
 .. code-block:: apache
 
     <VirtualHost *:80>
-        ServerName www.domain.tld
+        ServerName domain.tld
+        ServerAlias www.domain.tld
 
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
@@ -30,7 +31,7 @@ are:
             Order allow,deny
             Allow from All
         </Directory>
-        
+
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
@@ -59,7 +60,7 @@ are:
 .. code-block:: nginx
 
     server {
-        server_name www.domain.tld;
+        server_name domain.tld www.domain.tld;
         root /var/www/project/web;
 
         location / {
@@ -72,7 +73,7 @@ are:
             rewrite ^(.*)$ /app.php/$1 last;
         }
 
-        location ~ ^/(app|app_dev)\.php(/|$) {
+        location ~ ^/(app|app_dev|config)\.php(/|$) {
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
@@ -91,10 +92,14 @@ are:
 
 .. tip::
 
-    This executes **only** ``app.php`` and ``app_dev.php`` in the web directory.
-    All other files will be served as text. If you have other PHP files in
-    your web directory, be sure to include them in the ``location`` block
-    above.
+    This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
+    the web directory. All other files will be served as text. You **must**
+    also make sure that if you *do* deploy ``app_dev.php`` or ``config.php``
+    that these files are secured and not available to any outside user (the
+    IP checking code at the top of each file does this by default).
+    
+    If you have other PHP files in your web directory that need to be executed,
+    be sure to include them in the ``location`` block above.
 
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony

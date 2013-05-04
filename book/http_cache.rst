@@ -533,8 +533,8 @@ example).
 .. tip::
 
     The 304 status code means "Not Modified". It's important because with
-    this status code do *not* contain the actual content being requested.
-    Instead, the response is simply a light-weight set of directions that
+    this status code the response does *not* contain the actual content being
+    requested. Instead, the response is simply a light-weight set of directions that
     tell cache that it should use its stored version.
 
 Like with expiration, there are two different HTTP headers that can be used
