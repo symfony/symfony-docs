@@ -230,11 +230,4 @@ Whenever something wrong happens, an exception implementing
 :class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` is
 thrown.
 
-.. note::
-
-    Prior to version 2.1, :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`
-    returned a boolean and did not throw exceptions. As of 2.1, a
-    :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
-    thrown if a directory creation fails.
-
 .. _`Packagist`: https://packagist.org/packages/symfony/filesystem

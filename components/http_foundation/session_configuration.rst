@@ -221,7 +221,7 @@ PHP 5.4 compatibility
 ~~~~~~~~~~~~~~~~~~~~~
 
 Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface`
-are available. Symfony 2.1 provides forward compatibility for the :phpclass:`SessionHandlerInterface`
+are available. Symfony provides forward compatibility for the :phpclass:`SessionHandlerInterface`
 so it can be used under PHP 5.3. This greatly improves inter-operability with other
 libraries.
 
