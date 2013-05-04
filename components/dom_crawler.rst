@@ -160,6 +160,12 @@ The crawler supports multiple ways of adding the content::
     $crawler->add('<html><body /></html>');
     $crawler->add('<root><node /></root>');
 
+.. note::
+
+    When dealing with other character sets than ISO-8859-1, always add HTML content
+    using the addHTMLContent method where you can specify the second parameter
+    to be your target character set.
+
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
 and :phpclass:`DOMNode` objects:
