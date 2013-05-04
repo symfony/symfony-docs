@@ -24,6 +24,7 @@ String Constraints
 Number Constraints
 ~~~~~~~~~~~~~~~~~~
 
+* :doc:`Digit </reference/constraints/Digit>`
 * :doc:`Range </reference/constraints/Range>`
 
 Date Constraints
