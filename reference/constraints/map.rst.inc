@@ -35,6 +35,7 @@ Comparison Constraints
 * :doc:`NotIdenticalTo </reference/constraints/NotIdenticalTo>`
 * :doc:`LessThan </reference/constraints/LessThan>`
 * :doc:`LessThanOrEqual </reference/constraints/LessThanOrEqual>`
+* :doc:`GreaterThan </reference/constraints/GreaterThan>`
 
 Date Constraints
 ~~~~~~~~~~~~~~~~
