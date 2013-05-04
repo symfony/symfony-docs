@@ -100,9 +100,9 @@ for example, that you're translating a simple message from inside a controller::
 
     public function indexAction()
     {
-        $t = $this->get('translator')->trans('Symfony2 is great');
+        $translated = $this->get('translator')->trans('Symfony2 is great');
 
-        return new Response($t);
+        return new Response($translated);
     }
 
 When this code is executed, Symfony2 will attempt to translate the message
@@ -176,9 +176,9 @@ Sometimes, a message containing a variable needs to be translated::
 
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans('Hello '.$name);
+        $translated = $this->get('translator')->trans('Hello '.$name);
 
-        return new Response($t);
+        return new Response($translated);
     }
 
 However, creating a translation for this string is impossible since the translator
@@ -192,12 +192,12 @@ variable with a "placeholder"::
 
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans(
+        $translated = $this->get('translator')->trans(
             'Hello %name%',
             array('%name%' => $name)
         );
 
-        return new Response($t);
+        return new Response($translated);
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
@@ -380,9 +380,9 @@ Symfony2 will discover these files and use them when translating either
     This example illustrates the two different philosophies when creating
     messages to be translated::
 
-        $t = $translator->trans('Symfony2 is great');
+        $translated = $translator->trans('Symfony2 is great');
 
-        $t = $translator->trans('symfony2.great');
+        $translated = $translator->trans('symfony2.great');
 
     In the first method, messages are written in the language of the default
     locale (English in this case). That message is then used as the "id"
@@ -619,7 +619,7 @@ all the forms as a string separated by a pipe (``|``)::
 To translate pluralized messages, use the
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
 
-    $t = $this->get('translator')->transChoice(
+    $translated = $this->get('translator')->transChoice(
         'There is one apple|There are %count% apples',
         10,
         array('%count%' => 10)
@@ -767,7 +767,7 @@ texts* and complex expressions:
     Using the translation tags or filters have the same effect, but with
     one subtle difference: automatic output escaping is only applied to
     translations using a filter. In other words, if you need to be sure
-    that your translated is *not* output escaped, you must apply the 
+    that your translated is *not* output escaped, you must apply the
     ``raw`` filter after the translation filter:
 
     .. code-block:: jinja
