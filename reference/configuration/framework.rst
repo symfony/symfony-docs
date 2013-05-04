@@ -42,7 +42,11 @@ Configuration
     * `assets_version`_
     * `assets_version_format`_
 * `profiler`_
+<<<<<<< HEAD
     * `collect`_
+=======
+    * `enabled`_
+>>>>>>> 2.2
 
 secret
 ~~~~~~
@@ -388,6 +392,18 @@ would be ``/images/logo.png?version=5``.
 
 profiler
 ~~~~~~~~
+
+.. versionadded:: 2.2
+    The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
+    could only be disabled by omitting the ``framework.profiler`` configuration
+    entirely.
+
+enabled
+.......
+
+**default**: ``true`` in the ``dev`` and ``test`` environments
+
+The profiler can be disabled by setting this key to ``false``.
 
 .. versionadded:: 2.3
 
