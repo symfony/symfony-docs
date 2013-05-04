@@ -94,7 +94,11 @@ like adding a method call - you can only use the compiler pass method.
 Entities & Entity mapping
 -------------------------
 
-In progress...
+Due to the way Doctrine works, it is not possible to override entity mapping
+of a bundle. However, if a bundle provides a mapped superclass (such as the
+``User`` entity in the FOSUserBundle) one can override attributes and
+associations. Learn more about this feature and its limitations in
+`the Doctrine documentation`_.
 
 Forms
 -----
@@ -120,3 +124,5 @@ Translations
 ------------
 
 In progress...
+
+.. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
