@@ -11,6 +11,7 @@ Templates
 ---------
 
 For information on overriding templates, see
+
 * :ref:`overriding-bundle-templates`.
 * :doc:`/cookbook/bundles/inheritance`
 
@@ -120,9 +121,22 @@ Validation metadata
 
 In progress...
 
+.. _override-translations:
+
 Translations
 ------------
 
-In progress...
+Translations are not related to bundles, but to domains. That means that you
+can override the translations from any translation file, as long as it is in
+:ref:`the correct domain <translation-domains>`.
+
+.. caution::
+
+    The last translation file always wins. That mean that you need to make
+    sure to load the class which overrides the translation of another bundle
+    before that bundle in the ``AppKernel``.
+
+    The file that always wins is the one that is placed in
+    ``app/Resources/translations``, as those files are always loaded as last.
 
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
