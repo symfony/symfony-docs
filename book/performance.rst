@@ -67,7 +67,7 @@ Internally, this builds the big class map array in ``vendor/composer/autoload_cl
 Caching the Autoloader with APC
 -------------------------------
 
-Another solution is to to cache the location of each class after it's located
+Another solution is to cache the location of each class after it's located
 the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
 that does exactly this. To use it, just adapt your front controller file.
 If you're using the Standard Distribution, this code should already be available
