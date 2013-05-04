@@ -812,9 +812,6 @@ options of each feature.
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    The ``config:dump-reference`` command was added in Symfony 2.1
-
 You can dump the default configuration for a bundle in yaml to the console using
 the ``config:dump-reference`` command.  Here is an example of dumping the default
 FrameworkBundle configuration:

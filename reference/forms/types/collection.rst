@@ -326,9 +326,6 @@ as :ref:`cookbook-form-collections-new-prototype`.
 prototype_name
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    The ``prototype_name`` option was added in Symfony 2.1
-
 **type**: ``String`` **default**: ``__name__``
 
 If you have several collections in your form, or worse, nested collections

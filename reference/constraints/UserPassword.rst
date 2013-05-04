@@ -1,9 +1,6 @@
 UserPassword
 ============
 
-.. versionadded:: 2.1
-   This constraint is new in version 2.1.
-
 .. note::
 
     Since Symfony 2.2, the `UserPassword*` classes in the

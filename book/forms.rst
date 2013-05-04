@@ -191,9 +191,6 @@ it into a format that's suitable for being rendered in an HTML form.
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
 
-   .. versionadded:: 2.1
-        Support for "hasser" methods was added in Symfony 2.1.
-
 .. index::
   single: Forms; Handling form submissions
 
@@ -486,10 +483,6 @@ controller.
 
 Groups based on the Submitted Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-   The ability to specify a callback or Closure in ``validation_groups``
-   is new to version 2.1
 
 If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
@@ -1352,18 +1345,13 @@ To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
 
-.. versionadded:: 2.1
-   An alternate Twig syntax for ``form_theme`` has been introduced in 2.1. It accepts
-   any valid Twig expression (the most noticeable difference is using an array when
-   using multiple themes).
+.. code-block:: html+jinja
 
-   .. code-block:: html+jinja
+    {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
 
-       {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+    {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
 
-       {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
-
-       {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
+    {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
 
 For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 
@@ -1721,11 +1709,6 @@ The answer is to setup the constraints yourself, and attach them to the individu
 fields. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
 but here's a short example:
 
-.. versionadded:: 2.1
-   The ``constraints`` option, which accepts a single constraint or an array
-   of constraints (before 2.1, the option was called ``validation_constraint``,
-   and only accepted a single constraint) is new to Symfony 2.1.
-   
 .. code-block:: php
 
     use Symfony\Component\Validator\Constraints\Length;

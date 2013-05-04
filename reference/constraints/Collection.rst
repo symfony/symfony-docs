@@ -163,9 +163,6 @@ the above example, the ``allowMissingFields`` option was set to true, meaning
 that if either of the ``personal_email`` or ``short_bio`` elements were missing
 from the ``$personalData`` property, no validation error would occur.
 
-.. versionadded:: 2.1
-    The ``Required`` and ``Optional`` constraints are new to Symfony 2.1.
-
 .. versionadded:: 2.3
     The ``Required`` and ``Optional`` constraints were moved to the namespace
     ``Symfony\Component\Validator\Constraints\`` in Symfony 2.3.

@@ -410,11 +410,6 @@ submission (i.e.  ``/login_check``):
     URL as the firewall will automatically catch and process any form submitted
     to this URL.
 
-.. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
-    ``check_path`` ``logout`` keys. These keys can be route names (as shown
-    in this example) or URLs that have routes configured for them.
-
 Notice that the name of the ``login`` route matches the``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
@@ -1166,12 +1161,6 @@ As far as the security system is concerned, the only requirement for your
 custom user class is that it implements the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface.
 
 .. note::
 

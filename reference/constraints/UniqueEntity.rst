@@ -142,10 +142,6 @@ repositoryMethod
 
 **type**: ``string`` **default**: ``findBy``
 
-.. versionadded:: 2.1
-    The ``repositoryMethod`` option was added in Symfony 2.1. Before, it
-    always used the ``findBy`` method.
-
 The name of the repository method to use for making the query to determine the
 uniqueness. If it's left blank, the ``findBy`` method will be used. This
 method should return a countable result.
