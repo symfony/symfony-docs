@@ -423,7 +423,6 @@ global parameters available to use:
 * ``kernel.root_dir``
 * ``kernel.cache_dir``
 * ``kernel.logs_dir``
-* ``kernel.bundle_dirs``
 * ``kernel.bundles``
 * ``kernel.charset``
 

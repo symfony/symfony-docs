@@ -54,6 +54,8 @@ on an  object that will contain a credit card number.
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -67,8 +69,10 @@ on an  object that will contain a credit card number.
     .. code-block:: php
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\CardScheme;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
         {
@@ -76,7 +80,7 @@ on an  object that will contain a credit card number.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('cardSchema', new CardScheme(array(
+                $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme(array(
                     'schemes' => array(
                         'VISA'
                     ),
