@@ -23,6 +23,7 @@ your proxy.
     use Symfony\Component\HttpFoundation\Request;
 
     $request = Request::createFromGlobals();
+
     // only trust proxy headers coming from this IP addresses
     $request->setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
 

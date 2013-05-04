@@ -14,6 +14,7 @@ The Cookbook
     configuration/index
     serializer
     service_container/index
+    session/index
     bundles/index
     email/index
     testing/index

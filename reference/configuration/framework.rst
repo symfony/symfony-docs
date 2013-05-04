@@ -26,6 +26,7 @@ Configuration
     * enabled
     * field_name
 * `session`_
+    * `name`_
     * `cookie_lifetime`_
     * `cookie_path`_
     * `cookie_domain`_
@@ -157,6 +158,14 @@ csrf_protection
 
 session
 ~~~~~~~
+
+name
+....
+
+**type**: ``string`` **default**: ``null``
+
+This specifies the name of the session cookie. By default it will use the cookie
+name which is defined in the ``php.ini`` with the ``session.name`` directive.
 
 cookie_lifetime
 ...............

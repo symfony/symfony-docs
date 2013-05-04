@@ -55,8 +55,6 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `security.listener.factory`_      | Necessary when creating a custom authentication system                    |
-+-----------------------------------+---------------------------------------------------------------------------+
 | `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
@@ -711,14 +709,6 @@ of your configuration, and tag it with ``routing.loader``:
         ;
 
 For more information, see :doc:`/cookbook/routing/custom_route_loader`.
-
-security.listener.factory
--------------------------
-
-**Purpose**: Necessary when creating a custom authentication system
-
-This tag is used when creating your own custom authentication system. For
-details, see :doc:`/cookbook/security/custom_authentication_provider`.
 
 security.remember_me_aware
 --------------------------
