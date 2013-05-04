@@ -41,6 +41,8 @@ Configuration
     * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
+* `profiler`_
+    * `collect`_
 
 secret
 ~~~~~~
@@ -384,6 +386,21 @@ would be ``/images/logo.png?version=5``.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
+profiler
+~~~~~~~~
+
+collect
+.......
+
+**default**: ``true``
+
+This option configures the way the profiler behaves when it is enabled. If set
+to ``true``, the profiler collects data for all requests. If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false``
+and activate the data collects by hand::
+
+    $profiler->enable();
+
 Full Default Configuration
 --------------------------
 
@@ -418,6 +435,7 @@ Full Default Configuration
             # profiler configuration
             profiler:
                 enabled:              false
+                collect:              true
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
