@@ -132,6 +132,10 @@
   * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/service_container/compiler_passes`
 
+* :doc:`/cookbook/session/index`
+
+  * :doc:`/cookbook/session/proxy_examples`
+
 * **symfony1**
 
   * :doc:`/cookbook/symfony1`
