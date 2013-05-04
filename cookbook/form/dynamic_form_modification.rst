@@ -458,7 +458,7 @@ This can be used to get the ``SportMeetup`` id and retrieve it from the database
 given you have a reference to the object manager (if using doctrine). In
 the end, you have an event subscriber that listens to two different events,
 requires some external services and customizes the form. In such a situation,
-it's probably better to define this as a service rather than using an anonymouse
+it's probably better to define this as a service rather than using an anonymous
 function as the event listener callback.
 
 The subscriber would now look like::
