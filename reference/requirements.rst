@@ -40,7 +40,7 @@ Optional
   * ``short_open_tag = Off``
   * ``magic_quotes_gpc = Off``
   * ``register_globals = Off``
-  * ``session.autostart = Off``
+  * ``session.auto_start = Off``
 
 Doctrine
 --------

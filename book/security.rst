@@ -358,7 +358,7 @@ First, enable form login under your firewall:
 
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form (``/login`` by default). Implementing this
-login form visually is your job. First, the create two routes we used in the
+login form visually is your job. First, create the two routes you used in the
 security configuration: the ``login`` route will display the login form (i.e.
 ``/login``) and the ``login_check`` route will handle the login form
 submission (i.e.  ``/login_check``):
