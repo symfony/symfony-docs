@@ -39,6 +39,8 @@ Configuration
     * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
+* `profiler`_
+    * `enabled`_
 
 secret
 ~~~~~~
@@ -396,6 +398,22 @@ would be ``/images/logo.png?version=5``.
     version path as part of your deployment process and forgo any URL rewriting.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
+
+profiler
+~~~~~~~~
+
+.. versionadded:: 2.2
+    The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
+    could only be disabled by omitting the ``framework.profiler`` configuration
+    entirely.
+
+enabled
+.......
+
+**default**: ``true`` in the ``dev`` and ``test`` environments
+
+The profiler can be disabled by setting this key to ``false``. In reality,
+the profiler still exists, but the data collectors are not activated.
 
 Full Default Configuration
 --------------------------
