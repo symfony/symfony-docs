@@ -389,6 +389,12 @@ would be ``/images/logo.png?version=5``.
 profiler
 ~~~~~~~~
 
+.. versionadded:: 2.3
+
+    The ``collect`` option is new in Symfony 2.3. Previously, when ``profiler.enabled``
+    was false, the profiler *was* actually enabled, but the collectors were
+    disabled. Now the profiler and collectors can be controller independently.
+
 collect
 .......
 
@@ -397,7 +403,7 @@ collect
 This option configures the way the profiler behaves when it is enabled. If set
 to ``true``, the profiler collects data for all requests. If you want to only
 collect information on-demand, you can set the ``collect`` flag to ``false``
-and activate the data collects by hand::
+and activate the data collectors by hand::
 
     $profiler->enable();
 
