@@ -6,19 +6,19 @@ LessThan
 
 Validates that a value is less than another value, defined in the options. To
 force that a value is less than or equal to another value, see
-:doc:`/reference/constraints/LessThanOrLessThan`. To force a value is greater
+:doc:`/reference/constraints/LessThanOrEqual`. To force a value is greater
 than another value, see :doc:`/reference/constraints/GreaterThan`.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `value`_                                                            |
-|                | - `message`_                                                          |
-+----------------+-----------------------------------------------------------------------+
++----------------+------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                  |
++----------------+------------------------------------------------------------------------+
+| Options        | - `value`_                                                             |
+|                | - `message`_                                                           |
++----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\LessThan`          |
-+----------------+-----------------------------------------------------------------------+
++----------------+------------------------------------------------------------------------+
 | Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LessThanValidator` |
-+----------------+-----------------------------------------------------------------------+
++----------------+------------------------------------------------------------------------+
 
 Basic Usage
 -----------

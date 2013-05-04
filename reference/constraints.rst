@@ -26,6 +26,7 @@ Validation Constraints Reference
    constraints/IdenticalTo
    constraints/NotIdenticalTo
    constraints/LessThan
+   constraints/LessThanOrEqual
 
    constraints/Date
    constraints/DateTime
