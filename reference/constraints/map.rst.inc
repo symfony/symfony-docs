@@ -50,13 +50,14 @@ File Constraints
 * :doc:`File </reference/constraints/File>`
 * :doc:`Image </reference/constraints/Image>`
 
-Financial Constraints
-~~~~~~~~~~~~~~~~~~~~~
+Financial and other Number Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * :doc:`CardScheme </reference/constraints/CardScheme>`
 * :doc:`Luhn </reference/constraints/Luhn>`
 * :doc:`Iban </reference/constraints/Iban>`
 * :doc:`Isbn </reference/constraints/Isbn>`
+* :doc:`Issn </reference/constraints/Issn>`
 
 Other Constraints
 ~~~~~~~~~~~~~~~~~
@@ -65,4 +66,3 @@ Other Constraints
 * :doc:`All </reference/constraints/All>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`Valid </reference/constraints/Valid>`
-* :doc:`Issn </reference/constraints/Issn>`

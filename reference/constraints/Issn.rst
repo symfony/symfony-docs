@@ -95,7 +95,7 @@ requireHyphen
 **type**: ``Boolean`` default: ``false``
 
 The validator will allow non hyphenated ISSN values by default. When switching
-this to ``true``, the validator requires an hyphenathed ISSN value.
+this to ``true``, the validator requires a hyphenated ISSN value.
 
 .. _`ISSN`: http://en.wikipedia.org/wiki/Issn
 

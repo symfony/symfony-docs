@@ -40,6 +40,7 @@ Validation Constraints Reference
    constraints/Luhn
    constraints/Iban
    constraints/Isbn
+   constraints/Issn
 
    constraints/Callback
    constraints/All
