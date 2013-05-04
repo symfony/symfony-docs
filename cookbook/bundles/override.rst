@@ -32,6 +32,7 @@ Controllers
 Assuming the third-party bundle involved uses non-service controllers (which
 is almost always the case), you can easily override controllers via bundle
 inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
+If the controller is a service, see the next section on how to override it.
 
 Services & Configuration
 ------------------------
