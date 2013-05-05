@@ -223,6 +223,25 @@ isAbsolutePath returns true if the given path is absolute, false otherwise::
     // return false
     $fs->isAbsolutePath('../dir');
 
+.. versionadded:: 2.3
+    ``dumpFile`` is new in Symfony 2.3
+
+dumpFile
+~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
+dump contents in a file. It does it in a atomic manner, that means it writes a
+temporary file first and then moves that to the new place when it's finished.
+This means the user does see either the old or the new state
+
+.. code-block:: php
+
+    $fs->dumpFile('file.txt', 'Hello World');
+
+The ``file.txt`` file contains ``Hello World`` now.
+
+A desired file mode can be passed as third argument.
+
 Error Handling
 --------------
 
