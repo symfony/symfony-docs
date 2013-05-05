@@ -43,11 +43,8 @@ Configuration
     * `assets_version`_
     * `assets_version_format`_
 * `profiler`_
-<<<<<<< HEAD
     * `collect`_
-=======
     * `enabled`_
->>>>>>> 2.2
 
 secret
 ~~~~~~
