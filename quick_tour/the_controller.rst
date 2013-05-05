@@ -141,9 +141,11 @@ next request::
 
     // display any messages back in the next request (in a template)
 
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div>{{ flashMessage }}</div>
-    {% endfor %}
+    {% if app.session.started %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div>{{ flashMessage }}</div>
+        {% endfor %}
+    {% endif %}
 
 This is useful when you need to set a success message before redirecting
 the user to another page (which will then show the message). Please note that
