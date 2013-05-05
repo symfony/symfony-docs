@@ -208,13 +208,13 @@ argument). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth argument.
 
 .. versionadded:: 2.3
-    Multiselect support was new in Symfony 2.3
+    Multiselect support was added in Symfony 2.3.
 
 Multiple Choices
 ................
 
 Sometimes, multiple answers can be given. The DialogHelper provides this
-feature using comma seperated values. This is disabled by default, to enable
+feature using comma separated values. This is disabled by default, to enable
 this set the seventh argument to ``true``::
 
     // ...
@@ -229,13 +229,13 @@ this set the seventh argument to ``true``::
         true // enable multiselect
     );
 
-    $selectedColors = array_map(funtion($c) use ($colors) {
+    $selectedColors = array_map(function($c) use ($colors) {
         return $colors[$c];
     }, $selected)
 
     $output->writeln('You have just selected: ' . implode(', ', $selectedColors));
 
-Now, when the user inputted ``1,2``, the result will be: ``You have just selected: blue, yellow``
+Now, when the user enters ``1,2``, the result will be: ``You have just selected: blue, yellow``.
 
 Testing a Command which expects input
 -------------------------------------
