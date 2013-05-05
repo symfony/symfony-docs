@@ -177,10 +177,9 @@ environment by using this code and changing the environment string.
     not the application should run in "debug mode". Regardless of the environment,
     a Symfony2 application can be run with debug mode set to ``true`` or
     ``false``. This affects many things in the application, such as whether
-    or not errors should be displayed or if cache files are dynamically rebuilt
-    on each request. Though not a requirement, debug mode is generally set
-    to ``true`` for the ``dev`` and ``test`` environments and ``false`` for
-    the ``prod`` environment.
+    or not the cache files are dynamically rebuilt on each request. Though not
+    a requirement, debug mode is generally set to ``true`` for the ``dev`` and
+    ``test`` environments and ``false`` for the ``prod`` environment.
 
     Internally, the value of the debug mode becomes the ``kernel.debug``
     parameter used inside the :doc:`service container </book/service_container>`.
@@ -206,11 +205,14 @@ environment by using this code and changing the environment string.
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'logging'  => '%kernel.debug%',
-
                     // ...
                 ),
                 // ...
             ));
+
+    As of Symfony 2.3, showing errors or not no longer depends on the debug
+    mode. You'll need to enable that in your front controller by calling
+    :method:`Symfony\\Component\\Debug\\Debug::enable`.
 
 .. index::
    single: Environments; Creating a new environment
