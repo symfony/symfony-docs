@@ -200,6 +200,11 @@ and :phpclass:`DOMNode` objects:
             $html .= $domElement->ownerDocument->saveHTML($domElement);
         }
 
+    Or you can get the HTML of the first node using
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
+
+        $html = $crawler->html();
+
 Form and Link support
 ~~~~~~~~~~~~~~~~~~~~~
 
