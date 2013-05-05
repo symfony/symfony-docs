@@ -41,7 +41,7 @@ Configuration
     * `assets_version`_
     * `assets_version_format`_
 * `profiler`_
-    * `enabled`_
+    * :ref:`enabled<profiler.enabled>`
 
 secret
 ~~~~~~
@@ -415,6 +415,8 @@ profiler
     The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
     could only be disabled by omitting the ``framework.profiler`` configuration
     entirely.
+
+.. _profiler.enabled:
 
 enabled
 .......
