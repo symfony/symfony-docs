@@ -230,17 +230,16 @@ dumpFile
 ~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
-dump contents in a file. It does it in a atomic manner, that means it writes a
-temporary file first and then moves that to the new place when it's finished.
-This means the user does see either the old or the new state
-
-.. code-block:: php
+dump contents to a file. It does this in an atomic manner: it writes a temporary
+file first and then moves it to the new file location when it's finished.
+This means that the user will always see either the complete old file or
+complete new file (but never a partially-written file)::
 
     $fs->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
 
-A desired file mode can be passed as third argument.
+A desired file mode can be passed as the third argument.
 
 Error Handling
 --------------
