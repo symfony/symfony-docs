@@ -44,6 +44,20 @@ Collection Constraints
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
 
+.. versionadded:: 2.3
+    The comparison validators were added in Symfony 2.3
+
+Comparison Constraints
+~~~~~~~~~~~~~~~~~~~~~~
+* :doc:`EqualTo </reference/constraints/EqualTo>`
+* :doc:`NotEqualTo </reference/constraints/NotEqualTo>`
+* :doc:`IdenticalTo </reference/constraints/IdenticalTo>`
+* :doc:`NotIdenticalTo </reference/constraints/NotIdenticalTo>`
+* :doc:`LessThan </reference/constraints/LessThan>`
+* :doc:`LessThanOrEqual </reference/constraints/LessThanOrEqual>`
+* :doc:`GreaterThan </reference/constraints/GreaterThan>`
+* :doc:`GreaterThanOrEqual </reference/constraints/GreaterThanOrEqual>`
+
 File Constraints
 ~~~~~~~~~~~~~~~~
 
