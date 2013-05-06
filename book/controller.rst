@@ -476,7 +476,7 @@ value to each variable.
 
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service. A forward returns a ``Response``
+    directly via the ``http_kernel`` service and returns a ``Response``
     object::
 
         $httpKernel = $this->container->get('http_kernel');
@@ -687,19 +687,23 @@ the ``notice`` message:
 
     .. code-block:: html+jinja
 
-        {% for flashMessage in app.session.flashbag.get('notice') %}
-            <div class="flash-notice">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
+        {% if app.session.started %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
     .. code-block:: html+php
 
-        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
-            <div class="flash-notice">
-                <?php echo "<div class='flash-error'>$message</div>" ?>
-            </div>
-        <?php endforeach; ?>
+        <?php if ($view['session']->isStarted()): ?>
+            <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
+                <div class="flash-notice">
+                    <?php echo "<div class='flash-error'>$message</div>" ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
 By design, flash messages are meant to live for exactly one request (they're
 "gone in a flash"). They're designed to be used across redirects exactly as
