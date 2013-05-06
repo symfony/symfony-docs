@@ -37,7 +37,7 @@ Configuration
     * `gc_maxlifetime`_
     * `save_path`_
 * `serializer`_
-    * `enabled`_
+    * :ref:`enabled<serializer.enabled>`
 * `templating`_
     * `assets_base_urls`_
     * `assets_version`_
@@ -270,6 +270,8 @@ value to ``null``:
 
 serializer
 ~~~~~~~~~~
+
+.. _serializer.enabled:
 
 enabled
 .......
