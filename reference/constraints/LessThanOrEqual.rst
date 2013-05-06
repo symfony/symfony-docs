@@ -92,4 +92,5 @@ message
 
 **type**: ``string`` **default**: ``This value should be less than or equal to {{ compared_value }}``
 
-This is the message that will be shown if the value is not equal.
+This is the message that will be shown if the value is not less than or equal
+to the comparison value.

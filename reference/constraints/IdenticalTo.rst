@@ -5,7 +5,7 @@ IdenticalTo
     This constraint is new in version 2.3.
 
 Validates that a value is identical to another value, defined in the options.
-To force that a value is *not* equal, see
+To force that a value is *not* identical, see
 :doc:`/reference/constraints/NotIdenticalTo`.
 
 .. caution::
@@ -98,4 +98,4 @@ message
 
 **type**: ``string`` **default**: ``This value should be identical to {{ compared_value_type }} {{ compared_value }}``
 
-This is the message that will be shown if the value is not equal.
+This is the message that will be shown if the value is not identical.
