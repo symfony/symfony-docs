@@ -31,6 +31,10 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `doctrine.event_listener`_        | Add a Doctrine event listener                                             |
++-----------------------------------+---------------------------------------------------------------------------+
+| `doctrine.event_subscriber`_      | Add a Doctrine event subscriber                                           |
++-----------------------------------+---------------------------------------------------------------------------+
 | `form.type`_                      | Create a custom form field type                                           |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `form.type_extension`_            | Create a custom "form extension"                                          |
@@ -230,6 +234,22 @@ data_collector
 
 For details on creating your own custom data collection, read the cookbook
 article: :doc:`/cookbook/profiler/data_collector`.
+
+doctrine.event_listener
+--------------
+
+**Purpose**: Add a Doctrine event listener
+
+For details on creating Doctrine event listeners, read the cookbook article:
+:doc:`/cookbook/doctrine/event_listeners_subscribers`.
+
+doctrine.event_subscriber
+--------------
+
+**Purpose**: Add a Doctrine event subscriber
+
+For details on creating Doctrine event subscribers, read the cookbook article:
+:doc:`/cookbook/doctrine/event_listeners_subscribers`.
 
 .. _dic-tags-form-type:
 
