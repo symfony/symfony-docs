@@ -91,7 +91,7 @@ it's easy to pass a mock object within a test::
                 ->will($this->returnValue($employeeRepository));
             
             $salaryCalculator = new SalaryCalculator($entityManager);
-            $this->assertEquals(1100, $salaryCalculator->calculateTotalSalary(1));
+            $this->assertEquals(2100, $salaryCalculator->calculateTotalSalary(1));
         }
     }
     
