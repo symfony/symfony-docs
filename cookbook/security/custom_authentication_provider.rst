@@ -138,7 +138,7 @@ set an authenticated token in the security context if successful.
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
 
-                $this->securityContext->setToken($authToken);
+                return $this->securityContext->setToken($authToken);
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
 
@@ -152,6 +152,11 @@ set an authenticated token in the security context if successful.
                 $event->setResponse($response);
 
             }
+
+            // By default deny authorization
+            $response = new Response();
+            $response->setStatusCode(403);
+            $event->setResponse($response);
         }
     }
 
@@ -232,6 +237,10 @@ the ``PasswordDigest`` header value matches with the user's password.
             // Validate nonce is unique within 5 minutes
             if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 > time()) {
                 throw new NonceExpiredException('Previously used nonce detected');
+            }
+            // If cache directory does not exist we create it
+            if ( !is_dir($this->cacheDir) ) {
+                mkdir($this->cacheDir, 0777, true);
             }
             file_put_contents($this->cacheDir.'/'.$nonce, time());
 
