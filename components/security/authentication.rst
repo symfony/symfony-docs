@@ -119,7 +119,7 @@ from the user data storage, hash the password the user has just provided
 the given password is valid.
 
 This functionality is offered by the :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\DaoAuthenticationProvider`.
-It fetches the user's data from a :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface``,
+It fetches the user's data from a :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`,
 uses a :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
 to create a hash of the password and returns an authenticated token if the
 password was valid::

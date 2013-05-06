@@ -62,7 +62,7 @@ Next, create your own ``ExceptionListener``::
                 return;
             }
 
-            $request->getSession()->set('_security.main.target_path', $request->getUri());
+            parent::setTargetPath($request);
         }
     }
 

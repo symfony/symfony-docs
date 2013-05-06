@@ -614,7 +614,7 @@ a built-in ControllerResolver that can be used to create a working example::
             '_controller' => function (Request $request) {
                 return new Response(sprintf("Hello %s", $request->get('name')));
             }
-        ),
+        )
     ));
 
     $request = Request::createFromGlobals();
