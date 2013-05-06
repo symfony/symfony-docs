@@ -143,7 +143,7 @@ You can see an example in the previous section.
 .. caution::
 
     When using the ``cssrewrite`` filter, don't refer to your CSS files using
-    the ``@AcmeFooBundle``. See the note in the above section for details.
+    the ``@AcmeFooBundle`` syntax. See the note in the above section for details.
 
 Combining Assets
 ~~~~~~~~~~~~~~~~
