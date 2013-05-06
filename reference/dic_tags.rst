@@ -41,6 +41,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `form.type_guesser`_              | Add your own logic for "form type guessing"                               |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.cache_clearer`_           | Register your service to be called during the cache clearing process      |
++-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.cache_warmer`_            | Register your service to be called during the cache warming process       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_listener`_          | Listen to different events/hooks in Symfony                               |
@@ -333,6 +335,57 @@ tag its service definition with ``form.type_guesser`` (it has no options).
 
 To see an example of how this class might look, see the ``ValidatorTypeGuesser``
 class in the ``Form`` component.
+
+kernel.cache_clearer
+--------------------
+
+**Purpose**: Register your service to be called during the cache clearing process
+
+Cache clearing occurs whenever you call ``cache:clear`` command. If your
+bundle caches files, you should add custom cache clearer for clearing those
+files during the cache clearing process.
+
+In order to register your custom cache clearer, first you must create a
+service class::
+
+    // src/Acme/MainBundle/Cache/MyClearer.php
+    namespace Acme\MainBundle\Cache;
+
+    use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
+
+    class MyClearer implements CacheClearerInterface
+    {
+        public function clear($cacheDir)
+        {
+            // clear your cache
+        }
+
+    }
+
+Then register this class and tag it with ``kernel.cache:clearer``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_cache_clearer:
+                class: Acme\MainBundle\Cache\MyClearer
+                tags:
+                    - { name: kernel.cache_clearer }
+
+    .. code-block:: xml
+
+        <service id="my_cache_clearer" class="Acme\MainBundle\Cache\MyClearer">
+            <tag name="kernel.cache_clearer" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('my_cache_clearer', 'Acme\MainBundle\Cache\MyClearer')
+            ->addTag('kernel.cache_clearer')
+        ;
 
 kernel.cache_warmer
 -------------------
