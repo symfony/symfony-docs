@@ -48,7 +48,7 @@ You can also control table rendering by setting custom rendering option values:
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setPaddingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setHorizontalBorderChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setVerticalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setVrossingChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setCrossingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setVellHeaderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setVellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setBorderFormat`
