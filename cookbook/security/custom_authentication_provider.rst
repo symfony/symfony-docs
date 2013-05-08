@@ -239,7 +239,7 @@ the ``PasswordDigest`` header value matches with the user's password.
                 throw new NonceExpiredException('Previously used nonce detected');
             }
             // If cache directory does not exist we create it
-            if ( !is_dir($this->cacheDir) ) {
+            if (!is_dir($this->cacheDir)) {
                 mkdir($this->cacheDir, 0777, true);
             }
             file_put_contents($this->cacheDir.'/'.$nonce, time());
