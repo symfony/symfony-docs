@@ -16,4 +16,4 @@
 * :doc:`/book/service_container`
 * :doc:`/book/performance`
 * :doc:`/book/internals`
-* :doc:`/book/stable_api`
+* :doc:`/book/api`
