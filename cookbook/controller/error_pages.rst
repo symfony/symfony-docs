@@ -16,9 +16,11 @@ control you need:
 
 1. Customize the error templates of the different error pages (explained below);
 
-2. Replace the default exception controller ``TwigBundle::Exception:show``
+2. Replace the default exception controller ``twig.controller.exception:showAction``
    with your own controller and handle it however you want (see
-   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`);
+   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`).
+   The default exception controller is registered as a service - the actual
+   class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
 
 .. tip::
 
