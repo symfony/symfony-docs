@@ -137,8 +137,9 @@ set an authenticated token in the security context if successful.
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
-
-                return $this->securityContext->setToken($authToken);
+                $this->securityContext->setToken($authToken);
+                
+                return;
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
 
