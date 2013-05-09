@@ -22,6 +22,6 @@ The Book
     service_container
     performance
     internals
-    stable_api
+    api
 
 .. include:: /book/map.rst.inc

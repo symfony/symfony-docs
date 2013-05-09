@@ -1,8 +1,11 @@
 .. index::
-   single: Stable API
+   single: API
 
-The Symfony2 Stable API
-=======================
+The Symfony2 API
+================
+
+The Stable API
+--------------
 
 The Symfony2 stable API is a subset of all Symfony2 published public methods
 (components and core bundles) that share the following properties:
@@ -42,3 +45,11 @@ As of Symfony 2.0, the following components have a public tagged API:
 * Translation
 * Validator
 * Yaml
+
+The Experimental API
+--------------------
+
+Some Symfony features are marked as being experimental (tagged with
+``@experimental``). Experimental features are not stable yet and they might
+change **drastically** in subsequent versions. These features were added early
+to Symfony to gather feedback from Symfony developers.
