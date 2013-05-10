@@ -238,7 +238,7 @@ not to the property:
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\DemoBundle\Entity\AcmeEntity:
             constraints:
-                Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
+                - Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: php-annotations
 
