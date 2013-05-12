@@ -1,5 +1,5 @@
 Usage
------
+=====
 
 Imagine you want to translate the string *"Symfony2 is great"* into french::
 
@@ -20,7 +20,7 @@ the locale set in the constructor (``fr_FR``) if the message exists in one of
 the message catalogues.
 
 Message Placeholders
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Sometimes, a message containing a variable needs to be translated::
 
@@ -90,7 +90,7 @@ The second step is done by creating message catalogues that define the translati
 for any number of different locales.
 
 Creating Translations
----------------------
+=====================
 
 The act of creating translation files is an important part of "localization"
 (often abbreviated `L10n`_). Translation files consist of a series of
@@ -216,7 +216,7 @@ recommended format. These files are parsed by one of the loader classes.
             );
 
 Pluralization
-~~~~~~~~~~~~~
+-------------
 
 Message pluralization is a tough topic as the rules can be quite complex. For
 instance, here is the mathematic representation of the Russian pluralization
@@ -294,7 +294,7 @@ same in the original message as in the translated one.
     only get a string based on its position in the string).
 
 Explicit Interval Pluralization
-...............................
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The easiest way to pluralize a message is to let the Translator use internal
 logic to choose which string to use based on a given number. Sometimes, you'll
@@ -342,7 +342,7 @@ delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
 .. _using-message-domains:
 
 Using Message Domains
----------------------
+=====================
 
 As you've seen, message files are organized into the different locales that
 they translate. The message files can also be organized further into "domains".
@@ -369,7 +369,7 @@ specified locale.
 can use ``-Inf`` and ``+Inf`` for the infinite.
 
 Forcing the Translator Locale
------------------------------
+=============================
 
 When translating a message, the Translator uses the specified locale or the
 ``fallback`` locale if necessary. You can also manually specify the locale to
