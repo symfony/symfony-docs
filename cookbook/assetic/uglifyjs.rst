@@ -33,7 +33,7 @@ you need to `install node.js`_. Afterwards you can install UglifyJs using npm:
 .. tip::
     
     This cookbook uses UglifyJs 1 instead of the newer version 2 to be compatible
-    with old assetic versions. If you wantt to use UglifyJs version 2, make sure 
+    with old assetic versions. If you want to use UglifyJs version 2, make sure 
     to also use the assetic filter for this version and apply the correct configuration.
 
 Configure the UglifyJs Filter
