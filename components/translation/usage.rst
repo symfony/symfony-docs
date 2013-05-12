@@ -1,3 +1,6 @@
+.. index::
+    single: Translation; Usage
+
 Usage
 =====
 
