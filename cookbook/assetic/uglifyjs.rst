@@ -1,12 +1,16 @@
 .. index::
    single: Assetic; UglifyJs
 
-How to Minify JavaScripts with UglifyJs
-=======================================
+How to Minify CSS/JS Files (using UglifyJs and UglifyCss)
+=========================================================
 
 `UglifyJs`_ is a javascript parser/compressor/beautifier toolkit. It can be used
 to combine and minify javascript assets so they need less HTTP requests and makes
-the website load faster.
+the website load faster. `UglifyCss`_ is a css compressor/beautifier much like
+`UglifyJs`.
+
+In this cookbook, the installation, configuration and usage of `UglifyJs` is shown
+in detail. `UglifyCss` works pretty much the same way and is only talked about briefly.
 
 Install UglifyJs
 ----------------
@@ -123,13 +127,75 @@ your assets are a part of the view layer, this work is done in your templates:
 With the addition of the ``uglifyjs`` filter to the asset tags above, you should
 now see minified JavaScripts coming over the wire much faster. 
 
+Install, configure and use UglifyCss
+------------------------------------
+
+The usage of `UglifyCss` works the same way as `UglifyJs`. First, make sure
+the node package is installed:
+
+.. code-block:: bash
+    
+    $ npm install -g uglifycss
+    
+Next, add the configuration for this filter:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            filters:
+                uglifycss:
+                    bin: /usr/local/bin/uglifycss
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <assetic:config>
+            <assetic:filter
+                name="uglifycss"
+                bin="/usr/local/bin/uglifycss" />
+        </assetic:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'filters' => array(
+                'uglifycss' => array(
+                    'bin' => '/usr/local/bin/uglifycss',
+                ),
+            ),
+        ));
+        
+To use the filter for your css files, make sure to use the assetics helper in
+your template:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% javascripts '@AcmeFooBundle/Resources/public/css/*' filter='uglifycss' %}
+             <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endjavascripts %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->javascripts(
+            array('@AcmeFooBundle/Resources/public/css/*'),
+            array('uglifycss')
+        ) as $url): ?>
+            <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+        <?php endforeach; ?>
+
 Disable Minification in Debug Mode
 ----------------------------------
 
 Minified JavaScripts are very difficult to read, let alone
-debug. Because of this, Assetic lets you disable a certain filter when your
+debug. Because of this, Assetics lets you disable a certain filter when your
 application is in debug mode. You can do this by prefixing the filter name
-in your template with a question mark: ``?``. This tells Assetic to only
+in your template with a question mark: ``?``. This tells Assetics to only
 apply this filter when debug mode is off.
 
 .. configuration-block::
@@ -149,7 +215,6 @@ apply this filter when debug mode is off.
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
@@ -161,4 +226,5 @@ apply this filter when debug mode is off.
 
 
 .. _`UglifyJs`: https://github.com/mishoo/UglifyJS
+.. _`UglifyCss`: https://github.com/fmarcia/UglifyCSS
 .. _`install node.js`: http://nodejs.org/
