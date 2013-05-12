@@ -236,7 +236,7 @@ For details on creating your own custom data collection, read the cookbook
 article: :doc:`/cookbook/profiler/data_collector`.
 
 doctrine.event_listener
---------------
+-----------------------
 
 **Purpose**: Add a Doctrine event listener
 
@@ -244,7 +244,7 @@ For details on creating Doctrine event listeners, read the cookbook article:
 :doc:`/cookbook/doctrine/event_listeners_subscribers`.
 
 doctrine.event_subscriber
---------------
+-------------------------
 
 **Purpose**: Add a Doctrine event subscriber
 
