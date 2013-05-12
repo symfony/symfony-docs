@@ -110,6 +110,7 @@
 * :doc:`/components/translation/index`
 
   * :doc:`/components/translation/introduction`
+  * :doc:`/components/translation/usage`
 
 * :doc:`/components/yaml/index`
 
