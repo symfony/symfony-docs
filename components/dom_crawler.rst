@@ -138,7 +138,7 @@ Extract attribute and/or node values from the list of nodes::
 Call an anonymous function on each node of the list::
 
     $nodeValues = $crawler->filter('p')->each(function ($node, $i) {
-        return $node->nodeValue;
+        return $node->text();
     });
 
 The anonymous function receives the position and the node as arguments.
