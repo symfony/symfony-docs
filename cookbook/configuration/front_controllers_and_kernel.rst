@@ -46,7 +46,7 @@ to `decorate`_ the kernel with additional features. Examples include:
 * Adding HTTP level caching by wrapping the kernel with an instance of
   :ref:`AppCache<symfony-gateway-cache>`;
 * Enabling (or skipping) the :doc:`ClassCache </cookbook/debugging>`
-* Enabling the :doc:`/components/debug`.
+* Enabling the :doc:`debug component </components/debug>`.
 
 The front controller can be chosen by requesting URLs like:
 
