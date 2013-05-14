@@ -40,11 +40,12 @@ and return the resulting response to the browser.
 
 Because every request is routed through it, the front controller can be
 used to perform global initializations prior to setting up the kernel or
-to *`decorate`_* the kernel with additional features. Examples include:
+to `decorate`_ the kernel with additional features. Examples include:
 
 * Configuring the autoloader or adding additional autoloading mechanisms;
 * Adding HTTP level caching by wrapping the kernel with an instance of
   :ref:`AppCache<symfony-gateway-cache>`;
+* Enabling (or skipping) the :doc:`ClassCache </cookbook/debugging>`
 * Enabling the :doc:`/components/debug`.
 
 The front controller can be chosen by requesting URLs like:
