@@ -2,12 +2,12 @@ The HttpKernel Component: The HttpKernel Class
 ==============================================
 
 If you were to use our framework right now, you would probably have to add
-support for custom error messages. Right now, we have 404 and 500 error
-support but the responses are hardcoded in the framework itself. Making them
-customizable is easy enough though: dispatch a new event and listen to it.
-Doing it right means that the listener has to call a regular controller. But
-what if the error controller throws an exception? You will end up in an
-infinite loop. There should be an easier way, right?
+support for custom error messages. We do have 404 and 500 error support but
+the responses are hardcoded in the framework itself. Making them customizable
+is easy enough though: dispatch a new event and listen to it. Doing it right
+means that the listener has to call a regular controller. But what if the
+error controller throws an exception? You will end up in an infinite loop.
+There should be an easier way, right?
 
 Enter the ``HttpKernel`` class. Instead of solving the same problem over and
 over again and instead of reinventing the wheel each time, the ``HttpKernel``

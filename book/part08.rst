@@ -1,11 +1,11 @@
 Unit Testing
 ============
 
-Some watchful readers pointed out some subtle but nonetheless important bugs
-in the framework we have built yesterday. When creating a framework, you must
-be sure that it behaves as advertised. If not, all the applications based on
-it will exhibit the same bugs. The good news is that whenever you fix a bug,
-you are fixing a bunch of applications too.
+You might have noticed some subtle but nonetheless important bugs in the
+framework we built in the previous chapter. When creating a framework, you
+must be sure that it behaves as advertised. If not, all the applications based
+on it will exhibit the same bugs. The good news is that whenever you fix a
+bug, you are fixing a bunch of applications too.
 
 Today's mission is to write unit tests for the framework we have created by
 using `PHPUnit`_. Create a PHPUnit configuration file in
@@ -120,8 +120,8 @@ Executing this test is as simple as running ``phpunit`` from the
 .. note::
 
     I do not explain how the code works in details as this is not the goal of
-    this series, but if you don't understand what the hell is going on, I
-    highly recommend you to read PHPUnit documentation on `test doubles`_.
+    this book, but if you don't understand what the hell is going on, I highly
+    recommend you to read PHPUnit documentation on `test doubles`_.
 
 After the test ran, you should see a green bar. If not, you have a bug
 either in the test or in the framework code!

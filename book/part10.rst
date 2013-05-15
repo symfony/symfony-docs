@@ -1,7 +1,7 @@
 The HttpKernel Component: HttpKernelInterface
 =============================================
 
-In the conclusion of the second part of this series, I've talked about one
+In the conclusion of the second chapter of this book, I've talked about one
 great benefit of using the Symfony2 components: the *interoperability* between
 all frameworks and applications using them. Let's do a big step towards this
 goal by making our framework implement ``HttpKernelInterface``::

@@ -6,7 +6,7 @@ components that solve common web development problems.
 
 Instead of using these low-level components, you can use the ready-to-be-used
 Symfony2 full-stack web framework, which is based on these components... or
-you can create your very own framework. This series is about the latter.
+you can create your very own framework. This book is about the latter.
 
 .. note::
 
@@ -48,7 +48,7 @@ Symfony2 Components.
 
 .. tip::
 
-    If you don't have time to read the whole series, or if you want to get
+    If you don't have time to read the whole book, or if you want to get
     started fast, you can also have a look at `Silex`_, a micro-framework
     based on the Symfony2 Components. The code is rather slim and it leverages
     many aspects of the Symfony2 Components.
@@ -56,8 +56,8 @@ Symfony2 Components.
 Many modern web frameworks call themselves MVC frameworks. We won't talk about
 MVC here as the Symfony2 Components are able to create any type of frameworks,
 not just the ones that follow the MVC architecture. Anyway, if you have a look
-at the MVC semantics, this series is about how to create the Controller part
-of a framework. For the Model and the View, it really depends on your personal
+at the MVC semantics, this book is about how to create the Controller part of
+a framework. For the Model and the View, it really depends on your personal
 taste and I will let you use any existing third-party libraries (Doctrine,
 Propel, or plain-old PDO for the Model; PHP or Twig for the View).
 
@@ -147,8 +147,8 @@ start with the simplest web application we can think of in PHP::
 
     printf('Hello %s', $input);
 
-That's all for the first part of this series. Next time, we will introduce the
-HttpFoundation Component and see what it brings us.
+In the next chapter, we are going to introduce the HttpFoundation Component
+and see what it brings us.
 
 .. _`Symfony2`:      http://symfony.com/
 .. _`documentation`: http://symfony.com/doc

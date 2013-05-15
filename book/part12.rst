@@ -1,10 +1,10 @@
 The DependencyInjection Component
 =================================
 
-In the last installment of this series, we have emptied the
-``Simplex\Framework`` class by extending the ``HttpKernel`` class from
-the eponymous component. Seeing this empty class, you might be tempted to move
-some code from the front controller to it::
+In the previous chapter, we emptied the ``Simplex\Framework`` class by
+extending the ``HttpKernel`` class from the eponymous component. Seeing this
+empty class, you might be tempted to move some code from the front controller
+to it::
 
     <?php
 
@@ -248,10 +248,11 @@ Don't yell at me if you don't want to have a dependency injection container in
 your framework. If you don't like it, don't use it. It's your framework, not
 mine.
 
-This is (already) the last part of my series on creating a framework on top of
-the Symfony2 components. I'm aware that many topics have not been covered in
-great details, but hopefully it gives you enough information to get started on
-your own and to better understand how the Symfony2 framework works internally.
+This is (already) the last chapter of this book on creating a framework on top
+of the Symfony2 components. I'm aware that many topics have not been covered
+in great details, but hopefully it gives you enough information to get started
+on your own and to better understand how the Symfony2 framework works
+internally.
 
 If you want to learn more, I highly recommend you to read the source code of
 the `Silex`_ micro-framework, and especially its `Application`_ class.

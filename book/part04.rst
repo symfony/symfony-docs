@@ -1,8 +1,8 @@
 The Routing Component
 =====================
 
-Before we start with today's topic, let's refactor our current framework just
-a little to make templates even more readable::
+Before we start diving into the Routing component, let's refactor our current
+framework just a little to make templates even more readable::
 
     <?php
 

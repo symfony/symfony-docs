@@ -15,8 +15,8 @@ framework from scratch.
     developers; the Internet has already plenty of good resources on that
     topic.
 
-Even if the "application" we wrote yesterday was simple enough, it suffers
-from a few problems::
+Even if the "application" we wrote in the previous chapter was simple enough,
+it suffers from a few problems::
 
     <?php
 
@@ -93,8 +93,7 @@ unit test for the above code::
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
 instead (whatever adopting a framework means in this context), you can stop
-reading this series now and go back to whatever code you were working on
-before.
+reading this book now and go back to whatever code you were working on before.
 
 .. note::
 
@@ -310,7 +309,7 @@ probably work for you. Don't reinvent the wheel.
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
 applications using it (as of today `Symfony2`_, `Drupal 8`_, `phpBB 4`_,
-`Silex`_, `Midgard CMS`_, `Zikula`_ ...).
+`ezPublish 5`, `Silex`_, `Midgard CMS`_, `Zikula`_ ...).
 
 .. _`Twig`:                     http://twig.sensiolabs.com/
 .. _`Symfony2 versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html

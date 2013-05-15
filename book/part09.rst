@@ -322,7 +322,7 @@ And here is the new version of ``ContentLengthListener``::
     events as needed.
 
 To make your framework truly flexible, don't hesitate to add more events; and
-to make it more awesome out of the box, add more listeners. Again, this series
+to make it more awesome out of the box, add more listeners. Again, this book
 is not about creating a generic framework, but one that is tailored to your
 needs. Stop whenever you see fit, and further evolve the code from there.
 
