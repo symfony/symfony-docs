@@ -150,11 +150,9 @@ start with the simplest web application we can think of in PHP::
 That's all for the first part of this series. Next time, we will introduce the
 HttpFoundation Component and see what it brings us.
 
-.. _`Symfony2`:                  http://symfony.com/
-.. _`documentation`:             http://symfony.com/doc
-.. _`Silex`:                     http://silex.sensiolabs.org/
-.. _`autoload`:                  http://fr.php.net/autoload
-.. _`Composer`:                  http://packagist.org/about-composer
-.. _`PSR-0`:                     https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
-.. _`Symfony2 Coding Standards`: http://symfony.com/doc/current/contributing/code/standards.html
-.. _`ClassLoader`:               http://symfony.com/doc/current/components/class_loader.html
+.. _`Symfony2`:      http://symfony.com/
+.. _`documentation`: http://symfony.com/doc
+.. _`Silex`:         http://silex.sensiolabs.org/
+.. _`autoload`:      http://fr.php.net/autoload
+.. _`Composer`:      http://packagist.org/about-composer
+.. _`PSR-0`:         https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
