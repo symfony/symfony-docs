@@ -1,7 +1,7 @@
 Introduction
 ============
 
-Symfony2 is a reusable set of standalone, decoupled, and cohesive PHP
+`Symfony2`_ is a reusable set of standalone, decoupled, and cohesive PHP
 components that solve common web development problems.
 
 Instead of using these low-level components, you can use the ready-to-be-used
@@ -150,6 +150,7 @@ start with the simplest web application we can think of in PHP::
 That's all for the first part of this series. Next time, we will introduce the
 HttpFoundation Component and see what it brings us.
 
+.. _`Symfony2`:                  http://symfony.com/
 .. _`documentation`:             http://symfony.com/doc
 .. _`Silex`:                     http://silex.sensiolabs.org/
 .. _`autoload`:                  http://fr.php.net/autoload
