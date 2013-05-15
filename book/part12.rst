@@ -258,12 +258,5 @@ the Silex micro-framework, and especially its `Application`_ class.
 
 Have fun!
 
-~~ FIN ~~
-
-*P.S.:* If there is enough interest (leave a comment on this post), I might
-write some more articles on specific topics (using a configuration file for
-routing, using HttpKernel debugging tools, using the built-in client to
-simulate a browser are some of the topics that come to my mind for instance).
-
 .. _`Pimple`:      https://github.com/fabpot/Pimple
 .. _`Application`: https://github.com/fabpot/Silex/blob/master/src/Silex/Application.php
