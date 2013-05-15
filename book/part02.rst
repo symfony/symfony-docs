@@ -129,7 +129,7 @@ dependency for the project:
 
     {
         "require": {
-            "symfony/http-foundation": "2.1.*"
+            "symfony/http-foundation": "~2.3"
         }
     }
 
@@ -170,8 +170,8 @@ first outputs the HTTP headers followed by the content).
     Before the ``send()`` call, we should have added a call to the
     ``prepare()`` method (``$response->prepare($request);``) to ensure that
     our Response were compliant with the HTTP specification. For instance, if
-    we were to call the page with the ``HEAD`` method, it would have removed
-    the content of the Response.
+    we were to call the page with the ``HEAD`` method, it would remove the
+    content of the Response.
 
 The main difference with the previous code is that you have total control of
 the HTTP messages. You can create whatever request you want and you are in
@@ -275,11 +275,12 @@ secure? The ``$_SERVER['HTTP_X_FORWARDED_FOR']`` value cannot be trusted as it
 can be manipulated by the end user when there is no proxy. So, if you are
 using this code in production without a proxy, it becomes trivially easy to
 abuse your system. That's not the case with the ``getClientIp()`` method as
-you must explicitly trust this header by calling ``trustProxyData()``::
+you must explicitly trust your reverse proxies by calling
+``setTrustedProxies()``::
 
     <?php
 
-    Request::trustProxyData();
+    Request::setTrustedProxies(array('10.0.0.1'));
 
     if ($myIp == $request->getClientIp(true)) {
         // the client is a known one, so give it some more privilege
@@ -302,9 +303,9 @@ Using just the Symfony2 HttpFoundation component already allows you to write
 better and more testable code. It also allows you to write code faster as many
 day-to-day problems have already been solved for you.
 
-As a matter of fact, projects like Drupal have adopted (for the upcoming
-version 8) the HttpFoundation component; if it works for them, it will
-probably work for you. Don't reinvent the wheel.
+As a matter of fact, projects like Drupal have adopted the HttpFoundation
+component; if it works for them, it will probably work for you. Don't reinvent
+the wheel.
 
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and

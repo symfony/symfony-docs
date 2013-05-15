@@ -21,13 +21,13 @@ version of this pattern:
 
     {
         "require": {
-            "symfony/http-foundation": "2.1.*",
-            "symfony/routing": "2.1.*",
-            "symfony/http-kernel": "2.1.*",
-            "symfony/event-dispatcher": "2.1.*"
+            "symfony/http-foundation": "~2.3",
+            "symfony/routing": "~2.3",
+            "symfony/http-kernel": "~2.3",
+            "symfony/event-dispatcher": "~2.3"
         },
         "autoload": {
-            "psr-0": { "Simplex": "src/", "Calendar": "src/" }
+            "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
         }
     }
 

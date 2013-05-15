@@ -33,8 +33,8 @@ As the rendering is now done by an external function (``render_template()``
 here), we need to pass to it the attributes extracted from the URL. We could
 have passed them as an additional argument to ``render_template()``, but
 instead, let's use another feature of the ``Request`` class called
-*attributes*: Request attributes lets you attach additional information about
-the Request that is not directly related to the HTTP Request data.
+*attributes*: Request attributes is a way to attach additional information
+about the Request that is not directly related to the HTTP Request data.
 
 You can now create the ``render_template()`` function, a generic controller
 that renders a template when there is no specific logic. To keep the same
@@ -177,10 +177,10 @@ framework does not need to be modified in any way, just create a new
     return $routes;
 
 The ``is_leap_year()`` function returns ``true`` when the given year is a leap
-year, ``false`` otherwise. If the year is null, the current year is tested.
-The controller is simple: it gets the year from the request attributes, pass
-it to the `is_leap_year()`` function, and according to the return value it
-creates a new Response object.
+year, ``false`` otherwise. If the year is ``null``, the current year is
+tested. The controller is simple: it gets the year from the request
+attributes, pass it to the `is_leap_year()`` function, and according to the
+return value it creates a new Response object.
 
 As always, you can decide to stop here and use the framework as is; it's
 probably all you need to create simple websites like those fancy one-page

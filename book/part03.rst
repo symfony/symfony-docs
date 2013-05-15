@@ -65,8 +65,8 @@ And for the "Goodbye" page::
 
 We have indeed moved most of the shared code into a central place, but it does
 not feel like a good abstraction, doesn't it? First, we still have the
-``send()`` method in all pages, then our pages does not look like templates,
-and we are still not able to test this code properly.
+``send()`` method in all pages, then our pages do not look like templates, and
+we are still not able to test this code properly.
 
 Moreover, adding a new page means that we need to create a new PHP script,
 which name is exposed to the end user via the URL
@@ -140,9 +140,9 @@ To access a page, you must now use the ``front.php`` script:
     able to type ``http://example.com/hello?name=Fabien``, which looks much
     better.
 
-So, the trick is the usage of the ``Request::getPathInfo()`` method which
-returns the path of the Request by removing the front controller script name
-including its sub-directories (only if needed -- see above tip).
+The trick is the usage of the ``Request::getPathInfo()`` method which returns
+the path of the Request by removing the front controller script name including
+its sub-directories (only if needed -- see above tip).
 
 .. tip::
 
@@ -205,7 +205,7 @@ And the ``hello.php`` script can now be converted to a template::
 
     Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
-We have our framework for today::
+We have the first version of our framework::
 
     <?php
 

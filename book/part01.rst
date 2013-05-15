@@ -53,20 +53,21 @@ Symfony2 Components.
     based on the Symfony2 Components. The code is rather slim and it leverages
     many aspects of the Symfony2 Components.
 
-Many modern web frameworks call themselves MVC frameworks. We won't talk about
-MVC here as the Symfony2 Components are able to create any type of frameworks,
-not just the ones that follow the MVC architecture. Anyway, if you have a look
-at the MVC semantics, this book is about how to create the Controller part of
-a framework. For the Model and the View, it really depends on your personal
-taste and I will let you use any existing third-party libraries (Doctrine,
-Propel, or plain-old PDO for the Model; PHP or Twig for the View).
+Many modern web frameworks advertize themselves as being MVC frameworks. We
+won't talk about the MVC pattern as the Symfony2 Components are able to create
+any type of frameworks, not just the ones that follow the MVC architecture.
+Anyway, if you have a look at the MVC semantics, this book is about how to
+create the Controller part of a framework. For the Model and the View, it
+really depends on your personal taste and I will let you use any existing
+third-party libraries (Doctrine, Propel, or plain-old PDO for the Model; PHP
+or Twig for the View).
 
 When creating a framework, following the MVC pattern is not the right goal.
-The main goal should be the Separation of Concerns; I actually think that this
-is the only design pattern that you should really care about. The fundamental
-principles of the Symfony2 Components are focused on the HTTP specification.
-As such, the frameworks that we are going to create should be more accurately
-labelled as HTTP frameworks or Request/Response frameworks.
+The main goal should be the **Separation of Concerns**; I actually think that
+this is the only design pattern that you should really care about. The
+fundamental principles of the Symfony2 Components are focused on the HTTP
+specification. As such, the frameworks that we are going to create should be
+more accurately labelled as HTTP frameworks or Request/Response frameworks.
 
 Before we start
 ---------------

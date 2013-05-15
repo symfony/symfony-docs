@@ -61,8 +61,8 @@ update`` command to install it:
 
     {
         "require": {
-            "symfony/http-foundation": "2.1.*",
-            "symfony/routing": "2.1.*"
+            "symfony/http-foundation": "~2.3",
+            "symfony/routing": "~2.3"
         }
     }
 
@@ -181,7 +181,7 @@ There are a few new things in the code::
 
       Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
-* Routes configuration has been moved to its own file:
+* Route configuration has been moved to its own file:
 
   .. code-block:: php
 
@@ -229,13 +229,6 @@ generate absolute URLs::
     ``UrlMatcher``::
 
         $dumper = new Routing\Matcher\Dumper\PhpMatcherDumper($routes);
-
-        echo $dumper->dump();
-
-    Want even more performance? Dump your routes as a set of Apache rewrite
-    rules::
-
-        $dumper = new Routing\Matcher\Dumper\ApacheMatcherDumper($routes);
 
         echo $dumper->dump();
 

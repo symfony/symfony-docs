@@ -110,7 +110,7 @@ The error controller reads as follows::
 Voilà! Clean and customizable error management without efforts. And of course,
 if your controller throws an exception, HttpKernel will handle it nicely.
 
-In part 2, we have talked about the ``Response::prepare()`` method, which
+In chapter two, we talked about the ``Response::prepare()`` method, which
 ensures that a Response is compliant with the HTTP specification. It is
 probably a good idea to always call it just before sending the Response to the
 client; that's what the ``ResponseListener`` does::
