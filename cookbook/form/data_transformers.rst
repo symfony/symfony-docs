@@ -342,7 +342,7 @@ it's quite easy::
         {
             $builder
                 ->add('task')
-                ->add('dueDate', null, array('widget' => 'single_text'));
+                ->add('dueDate', null, array('widget' => 'single_text'))
                 ->add('issue', 'issue_selector');
         }
 
