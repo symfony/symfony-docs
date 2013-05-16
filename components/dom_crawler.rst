@@ -163,7 +163,7 @@ The crawler supports multiple ways of adding the content::
 .. note::
 
     When dealing with character sets other than ISO-8859-1, always add HTML
-    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHTMLContent``
+    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHTMLContent`
     method where you can specify the second parameter to be your target character
     set.
 

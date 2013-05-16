@@ -401,7 +401,8 @@ doesn't replace your existing methods).
     The ``doctrine:generate:entities`` command saves a backup of the original
     ``Product.php`` named ``Product.php~``. In some cases, the presence of
     this file can cause a "Cannot redeclare class" error. It can be safely
-    removed.
+    removed. You can also use the ``--no-backup`` option to prevent generating
+    these backup files.
 
     Note that you don't *need* to use this command. Doctrine doesn't rely
     on code generation. Like with normal PHP classes, you just need to make
