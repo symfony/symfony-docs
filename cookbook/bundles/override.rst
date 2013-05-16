@@ -11,6 +11,7 @@ Templates
 ---------
 
 For information on overriding templates, see
+
 * :ref:`overriding-bundle-templates`.
 * :doc:`/cookbook/bundles/inheritance`
 
@@ -31,6 +32,7 @@ Controllers
 Assuming the third-party bundle involved uses non-service controllers (which
 is almost always the case), you can easily override controllers via bundle
 inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
+If the controller is a service, see the next section on how to override it.
 
 Services & Configuration
 ------------------------
@@ -94,7 +96,11 @@ like adding a method call - you can only use the compiler pass method.
 Entities & Entity mapping
 -------------------------
 
-In progress...
+Due to the way Doctrine works, it is not possible to override entity mapping
+of a bundle. However, if a bundle provides a mapped superclass (such as the
+``User`` entity in the FOSUserBundle) one can override attributes and
+associations. Learn more about this feature and its limitations in
+`the Doctrine documentation`_.
 
 Forms
 -----
@@ -116,7 +122,22 @@ Validation metadata
 
 In progress...
 
+.. _override-translations:
+
 Translations
 ------------
 
-In progress...
+Translations are not related to bundles, but to domains. That means that you
+can override the translations from any translation file, as long as it is in
+:ref:`the correct domain <translation-domains>`.
+
+.. caution::
+
+    The last translation file always wins. That mean that you need to make
+    sure that the bundle containing *your* translations is loaded after any
+    bundle whose translations you're overriding. This is done in ``AppKernel``.
+
+    The file that always wins is the one that is placed in
+    ``app/Resources/translations``, as those files are always loaded last.
+
+.. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
