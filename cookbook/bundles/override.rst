@@ -134,10 +134,10 @@ can override the translations from any translation file, as long as it is in
 .. caution::
 
     The last translation file always wins. That mean that you need to make
-    sure to load the class which overrides the translation of another bundle
-    before that bundle in the ``AppKernel``.
+    sure that the bundle containing *your* translations is loaded after any
+    bundle whose translations you're overriding. This is done in ``AppKernel``.
 
     The file that always wins is the one that is placed in
-    ``app/Resources/translations``, as those files are always loaded as last.
+    ``app/Resources/translations``, as those files are always loaded last.
 
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
