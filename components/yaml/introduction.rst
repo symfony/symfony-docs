@@ -134,6 +134,12 @@ string or a file containing YAML. Internally, it calls the
 :method:`Symfony\\Component\\Yaml\\Parser::parse` method, but enhances the
 error if something goes wrong by adding the filename to the message.
 
+.. caution::
+
+    Because it is currently possible to pass a filename to this method, you
+    must validate the input first. Passing a filename is deprecated in
+    Symfony 2.2, and will be removed in Symfony 3.0.
+
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
