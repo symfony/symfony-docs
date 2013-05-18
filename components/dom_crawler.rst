@@ -138,7 +138,7 @@ Extract attribute and/or node values from the list of nodes::
 Call an anonymous function on each node of the list::
 
     $nodeValues = $crawler->filter('p')->each(function ($node, $i) {
-        return $node->nodeValue;
+        return $node->text();
     });
 
 The anonymous function receives the position and the node as arguments.
@@ -163,7 +163,7 @@ The crawler supports multiple ways of adding the content::
 .. note::
 
     When dealing with character sets other than ISO-8859-1, always add HTML
-    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHTMLContent``
+    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHTMLContent`
     method where you can specify the second parameter to be your target character
     set.
 
