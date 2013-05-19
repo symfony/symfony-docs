@@ -4,7 +4,7 @@
 Usage
 =====
 
-Imagine you want to translate the string *"Symfony2 is great"* into french::
+Imagine you want to translate the string *"Symfony2 is great"* into French::
 
     use Symfony\Component\Translation\Translator;
     use Symfony\Component\Translation\MessageSelector;
@@ -79,7 +79,8 @@ is done just as before:
 .. note::
 
     The placeholders can take on any form as the full message is reconstructed
-    using the PHP :phpfunction:`strtr function<strtr>`. 
+    using the PHP :phpfunction:`strtr function<strtr>`. But the ``%...%`` form
+    is recommend, to avoid problems when using Twig.
 
 As you've seen, creating a translation is a two-step process:
 
@@ -342,37 +343,8 @@ Or numbers between two other numbers:
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
 delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
 
-.. _using-message-domains:
-
-Using Message Domains
-=====================
-
-As you've seen, message files are organized into the different locales that
-they translate. The message files can also be organized further into "domains".
-
-The domain is specific in the fourth argument of the ``addResource()`` method.
-The default domain is ``messages``. For example, suppose that, for organization,
-translations were split into three different domains: ``messages``, ``admin``
-and ``navigation``. The French translation would be loaded like this::
-
-    // ...
-    $translator->addLoader('xliff', new XliffLoader());
-
-    $translator->addResource('xliff', 'messages.fr.xliff', 'fr_FR');
-    $translator->addResource('xliff', 'admin.fr.xliff', 'fr_FR', 'admin');
-    $translator->addResource('xliff', 'navigation.fr.xliff', 'fr_FR', 'navigation');
-
-When translating strings that are not in the default domain (``messages``),
-you must specify the domain as the third argument of ``trans()``::
-
-    $translator->trans('Symfony2 is great', array(), 'admin');
-
-Symfony2 will now look for the message in the ``admin`` domain of the
-specified locale.
-can use ``-Inf`` and ``+Inf`` for the infinite.
-
 Forcing the Translator Locale
-=============================
+-----------------------------
 
 When translating a message, the Translator uses the specified locale or the
 ``fallback`` locale if necessary. You can also manually specify the locale to
