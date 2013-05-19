@@ -1,8 +1,8 @@
 .. index::
     single: Translation; Usage
 
-Usage
-=====
+Using the Translator
+====================
 
 Imagine you want to translate the string *"Symfony2 is great"* into French::
 
