@@ -4,12 +4,12 @@
 Translations
 ============
 
-The term "internationalization" (often abbreviated `i18n`_) refers to the process
-of abstracting strings and other locale-specific pieces out of your application
-and into a layer where they can be translated and converted based on the user's
-locale (i.e. language and country). For text, this means wrapping each with a
-function capable of translating the text (or "message") into the language of
-the user::
+The term "internationalization" (often abbreviated `i18n`_) refers to the
+process of abstracting strings and other locale-specific pieces out of your
+application and into a layer where they can be translated and converted based
+on the user's locale (i.e. language and country). For text, this means
+wrapping each with a function capable of translating the text (or "message")
+into the language of the user::
 
     // text will *always* print out in English
     echo 'Hello World';
@@ -21,10 +21,10 @@ the user::
 .. note::
 
     The term *locale* refers roughly to the user's language and country. It
-    can be any string that your application uses to manage translations
-    and other format differences (e.g. currency format). The
-    `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
-    code (e.g. ``fr_FR`` for French/France) is recommended.
+    can be any string that your application uses to manage translations and
+    other format differences (e.g. currency format). The `ISO639-1`_
+    *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_
+    *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
 In this chapter, you'll learn how to use the Translation component in the
 Symfony2 framework. Read the
@@ -33,7 +33,8 @@ the Translator. Overall, the process has several common steps:
 
 #. Enable and configure Symfony's Translation component;
 
-#. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
+#. Abstract strings (i.e. "messages") by wrapping them in calls to the
+   ``Translator`` (learn about this in ":doc:`/components/translation/usage`");
 
 #. Create translation resources for each supported locale that translate
    each message in the application;
@@ -110,13 +111,14 @@ Using the Translation inside Controllers
 ----------------------------------------
 
 When you want to use translation inside controllers, you need to get the
-``translator`` service and use ``trans`` or ``transChoice``::
+``translator`` service and use
+:method:`Symfony\\Component\\Translation\\Translator::trans` or
+:method:`Symfony\\Component\\Translation\\Translator::transChoice`::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     namespace Amce\DemoBundle\Controller;
 
     // ...
-
     class DemoController extends Controller
     {
         public function indexAction()
@@ -473,7 +475,8 @@ steps:
 
 * Abstract messages in your application by wrapping each in either the
   :method:`Symfony\\Component\\Translation\\Translator::trans` or
-  :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods;
+  :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods
+  (learn about this in ":doc:`/components/translation/usage`");
 
 * Translate each message into multiple locales by creating translation message
   files. Symfony2 discovers and processes each file because its name follows

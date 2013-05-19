@@ -41,6 +41,14 @@ using pluralization (more about that later)::
     The locale set here is the default locale to use. You can override this
     locale when translating strings.
 
+.. note::
+
+    The term *locale* refers roughly to the user's language and country. It
+    can be any string that your application uses to manage translations and
+    other format differences (e.g. currency format). The `ISO639-1`_
+    *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_
+    *country* code (e.g. ``fr_FR`` for French/France) is recommended.
+
 Loading Message Catalogues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -175,3 +183,5 @@ Usage
 Read how to use the Translation components in ":doc:`/components/translation/usage`".
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
+.. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
