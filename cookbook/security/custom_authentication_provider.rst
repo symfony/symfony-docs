@@ -137,8 +137,9 @@ set an authenticated token in the security context if successful.
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
-
                 $this->securityContext->setToken($authToken);
+                
+                return;
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
 
@@ -152,6 +153,11 @@ set an authenticated token in the security context if successful.
                 $event->setResponse($response);
 
             }
+
+            // By default deny authorization
+            $response = new Response();
+            $response->setStatusCode(403);
+            $event->setResponse($response);
         }
     }
 
@@ -232,6 +238,10 @@ the ``PasswordDigest`` header value matches with the user's password.
             // Validate nonce is unique within 5 minutes
             if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 > time()) {
                 throw new NonceExpiredException('Previously used nonce detected');
+            }
+            // If cache directory does not exist we create it
+            if (!is_dir($this->cacheDir)) {
+                mkdir($this->cacheDir, 0777, true);
             }
             file_put_contents($this->cacheDir.'/'.$nonce, time());
 
@@ -415,79 +425,27 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         );
 
 Now that your services are defined, tell your security context about your
-factory. Factories must be included in an individual configuration file,
-at the time of this writing. So, start first by creating the file with the
-factory service, tagged as ``security.listener.factory``:
+factory in your bundle class:
 
-.. configuration-block::
+.. code-block:: php
 
-    .. code-block:: yaml
+    // src/Acme/DemoBundle/AcmeDemoBundle.php
+    namespace Acme\DemoBundle;
 
-        # src/Acme/DemoBundle/Resources/config/security_factories.yml
-        services:
-            security.authentication.factory.wsse:
-                class:  Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory
-                tags:
-                    - { name: security.listener.factory }
+    use Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory;
+    use Symfony\Component\HttpKernel\Bundle\Bundle;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    .. code-block:: xml
+    class AcmeDemoBundle extends Bundle
+    {
+        public function build(ContainerBuilder $container)
+        {
+            parent::build($container);
 
-        <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="security.authentication.factory.wsse"
-                  class="Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory" public="false">
-                    <tag name="security.listener.factory" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // src/Acme/DemoBundle/Resources/config/security_factories.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $definition = new Definition('Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory', array(
-            '',
-            '%kernel.cache_dir%/security/nonces',
-        ));
-        $definition->addTag('security.listener.factory');
-
-        $container->setDefinition('security.authentication.factory.wsse', $definition);
-
-Now, import the factory configuration via the the ``factories`` key in your
-security configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-          factories:
-            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.yml"
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <factories>
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
-            </factories>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'factories' => array(
-                "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php",
-            ),
-        ));
+            $extension = $container->getExtension('security');
+            $extension->addSecurityListenerFactory(new WsseFactory());
+        }
+    }
 
 You are finished! You can now define parts of your app as under WSSE protection.
 

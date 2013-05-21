@@ -5,7 +5,7 @@ How to configure Empty Data for a Form Class
 ============================================
 
 The ``empty_data`` option allows you to specify an empty data set for your
-form class. This empty data set would be used if you bind your form, but
+form class. This empty data set would be used if you submit your form, but
 haven't called ``setData()`` on your form or passed in data when you created
 you form. For example::
 
@@ -39,6 +39,7 @@ that constructor with no arguments::
     // ...
     use Symfony\Component\Form\AbstractType;
     use Acme\DemoBundle\Entity\Blog;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class BlogType extends AbstractType
     {
@@ -50,11 +51,11 @@ that constructor with no arguments::
         }
         // ...
 
-        public function getDefaultOptions()
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'empty_data' => new Blog($this->someDependency),
-            );
+            ));
         }
     }
 
@@ -71,14 +72,15 @@ if it is needed.
 
 The closure must accept a ``FormInterface`` instance as the first argument::
 
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Form\FormInterface;
     // ...
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'empty_data' => function (FormInterface $form) {
                 return new Blog($form->get('title')->getData());
             },
-        );
+        ));
     }

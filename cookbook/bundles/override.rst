@@ -71,7 +71,7 @@ Secondly, if the class is not available as a parameter, you want to make sure th
 class is always overridden when your bundle is used, or you need to modify
 something beyond just the class name, you should use a compiler pass::
 
-    // src/Acme/FooBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
+    // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
     namespace Acme\DemoBundle\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

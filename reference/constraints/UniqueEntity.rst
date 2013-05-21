@@ -11,6 +11,8 @@ using an email address that already exists in the system.
 | Options        | - `fields`_                                                                         |
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
+|                | - `repositoryMethod`_                                                               |
+|                | - `ignoreNull`_                                                                     |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
@@ -132,4 +134,25 @@ em
 **type**: ``string``
 
 The name of the entity manager to use for making the query to determine the
-uniqueness. If it's left blank, the default entity manager will be used.
+uniqueness. If it's left blank, the correct entity manager will determined for
+this class. For that reason, this option should probably not need to be
+used.
+
+repositoryMethod
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``findBy``
+
+The name of the repository method to use for making the query to determine the
+uniqueness. If it's left blank, the ``findBy`` method will be used. This
+method should return a countable result.
+
+ignoreNull
+~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+If this option is set to ``true``, then the constraint will allow multiple
+entities to have a ``null`` value for a field without failing validation.
+If set to ``false``, only one ``null`` value is allowed - if a second entity
+also has a ``null`` value, validation would fail.

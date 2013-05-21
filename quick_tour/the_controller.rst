@@ -41,7 +41,7 @@ automatically selects the right template, here ``hello.xml.twig``:
 That's all there is to it. For standard formats, Symfony2 will also
 automatically choose the best ``Content-Type`` header for the response. If
 you want to support different formats for a single action, use the ``{_format}``
-placeholder in the route pattern instead::
+placeholder in the route path instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -130,20 +130,27 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->set('filters', array());
 
 You can also store small messages that will only be available for the very
 next request::
 
     // store a message for the very next request (in a controller)
-    $session->setFlash('notice', 'Congratulations, your action succeeded!');
+    $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
-    // display the message back in the next request (in a template)
-    {{ app.session.flash('notice') }}
+    // display any messages back in the next request (in a template)
+
+    {% if app.session.started %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div>{{ flashMessage }}</div>
+        {% endfor %}
+    {% endif %}
 
 This is useful when you need to set a success message before redirecting
-the user to another page (which will then show the message).
+the user to another page (which will then show the message). Please note that
+when you use has() instead of get(), the flash message will not be cleared and
+thus remains available during the following requests.
 
 Securing Resources
 ------------------
@@ -164,9 +171,10 @@ fits most common needs:
 
         providers:
             in_memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                memory:
+                    users:
+                        user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                        admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         firewalls:
             dev:
@@ -197,31 +205,9 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
     configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
-Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
+Going to the ``http://localhost/app_dev.php/demo/secured/hello``
 URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
-
-You can also force the action to require a given role by using the ``@Secure``
-annotation on the controller::
-
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-    use JMS\SecurityExtraBundle\Annotation\Secure;
-
-    /**
-     * @Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
-     * @Secure(roles="ROLE_ADMIN")
-     * @Template()
-     */
-    public function helloAdminAction($name)
-    {
-        return array('name' => $name);
-    }
-
-Now, log in as ``user`` (who does *not* have the ``ROLE_ADMIN`` role) and
-from the secured hello page, click on the "Hello resource secured" link.
-Symfony2 should return a 403 HTTP status code, indicating that the user
-is "forbidden" from accessing that resource.
 
 .. note::
 

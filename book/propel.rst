@@ -29,20 +29,26 @@ Configuring the Database
 
 Before you can start, you'll need to configure your database connection
 information. By convention, this information is usually configured in an
-``app/config/parameters.ini`` file:
+``app/config/parameters.yml`` file:
 
-.. code-block:: ini
+.. code-block:: yaml
 
-    ; app/config/parameters.ini
-    [parameters]
-    database_driver   = mysql
-    database_host     = localhost
-    database_name     = test_project
-    database_user     = root
-    database_password = password
-    database_charset  = UTF8
+    # app/config/parameters.yml
+    parameters:
+        database_driver:   mysql
+        database_host:     localhost
+        database_name:     test_project
+        database_user:     root
+        database_password: password
+        database_charset:  UTF8
 
-These parameters defined in ``parameters.ini`` can now be included in the
+.. note::
+
+    Defining the configuration via ``parameters.yml`` is just a convention. The
+    parameters defined in that file are referenced by the main configuration
+    file when setting up Propel:
+
+These parameters defined in ``parameters.yml`` can now be included in the
 configuration file (``config.yml``):
 
 .. code-block:: yaml

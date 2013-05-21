@@ -10,7 +10,7 @@ The basic way in which this field should be rendered. Can be one of the followin
 
 * ``text``: renders a three field input of type text (month, day, year).
 
-* ``single_text``: renders a single input of type text. User's input is validated
-  based on the `format`_ option.
+* ``single_text``: renders a single input of type date (text in Symfony 2.0). User's 
+  input is validated based on the `format`_ option.
 
 .. include:: /reference/forms/types/options/_date_limitation.rst.inc

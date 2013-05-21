@@ -30,7 +30,8 @@ entry in that array:
                 favoriteColors:
                     - All:
                         - NotBlank:  ~
-                        - MinLength: 5
+                        - Length:
+                            min: 5
 
     .. code-block:: php-annotations
 
@@ -44,7 +45,7 @@ entry in that array:
             /**
              * @Assert\All({
              *     @Assert\NotBlank
-             *     @Assert\MinLength(5),
+             *     @Assert\Length(min = "5"),
              * })
              */
              protected $favoriteColors = array();
@@ -58,8 +59,8 @@ entry in that array:
                 <constraint name="All">
                     <option name="constraints">
                         <constraint name="NotBlank" />
-                        <constraint name="MinLength">
-                            <option name="limit">5</option>
+                        <constraint name="Length">
+                            <option name="min">5</option>
                         </constraint>
                     </option>
                 </constraint>
@@ -81,7 +82,7 @@ entry in that array:
                 $metadata->addPropertyConstraint('favoriteColors', new Assert\All(array(
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\MinLength(array('limit' => 5)),
+                        new Assert\Length(array('min' => 5)),
                     ),
                 )));
             }

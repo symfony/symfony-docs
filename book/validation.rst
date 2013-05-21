@@ -205,8 +205,8 @@ Validation and Forms
 The ``validator`` service can be used at any time to validate any object.
 In reality, however, you'll usually work with the ``validator`` indirectly
 when working with forms. Symfony's form library uses the ``validator`` service
-internally to validate the underlying object after values have been submitted
-and bound. The constraint violations on the object are converted into ``FieldError``
+internally to validate the underlying object after values have been submitted.
+The constraint violations on the object are converted into ``FieldError``
 objects that can easily be displayed with your form. The typical form submission
 workflow looks like the following from inside a controller::
 
@@ -220,14 +220,12 @@ workflow looks like the following from inside a controller::
         $author = new Author();
         $form = $this->createForm(new AuthorType(), $author);
 
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                // the validation passed, do something with the $author object
+        if ($form->isValid()) {
+            // the validation passed, do something with the $author object
 
-                return $this->redirect($this->generateUrl(...));
-            }
+            return $this->redirect($this->generateUrl(...));
         }
 
         return $this->render('BlogBundle:Author:form.html.twig', array(
@@ -504,7 +502,8 @@ class to have at least 3 characters.
             properties:
                 firstName:
                     - NotBlank: ~
-                    - MinLength: 3
+                    - Length:
+                        min: 3
 
     .. code-block:: php-annotations
 
@@ -517,7 +516,7 @@ class to have at least 3 characters.
         {
             /**
              * @Assert\NotBlank()
-             * @Assert\MinLength(3)
+             * @Assert\Length(min = "3")
              */
             private $firstName;
         }
@@ -528,7 +527,9 @@ class to have at least 3 characters.
         <class name="Acme\BlogBundle\Entity\Author">
             <property name="firstName">
                 <constraint name="NotBlank" />
-                <constraint name="MinLength">3</constraint>
+                <constraint name="Length">
+                    <option name="min">3</option>
+                </constraint>
             </property>
         </class>
 
@@ -539,7 +540,7 @@ class to have at least 3 characters.
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Constraints\Length;
 
         class Author
         {
@@ -548,7 +549,9 @@ class to have at least 3 characters.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new NotBlank());
-                $metadata->addPropertyConstraint('firstName', new MinLength(3));
+                $metadata->addPropertyConstraint(
+                    'firstName',
+                    new Length(array("min" => 3)));
             }
         }
 
@@ -677,9 +680,10 @@ user registers and when a user updates his/her contact information later:
                     - Email: { groups: [registration] }
                 password:
                     - NotBlank: { groups: [registration] }
-                    - MinLength: { limit: 7, groups: [registration] }
+                    - Length: { min: 7, groups: [registration] }
                 city:
-                    - MinLength: 2
+                    - Length:
+                        min: 2
 
     .. code-block:: php-annotations
 
@@ -698,12 +702,12 @@ user registers and when a user updates his/her contact information later:
 
             /**
             * @Assert\NotBlank(groups={"registration"})
-            * @Assert\MinLength(limit=7, groups={"registration"})
+            * @Assert\Length(min=7, groups={"registration"})
             */
             private $password;
 
             /**
-            * @Assert\MinLength(2)
+            * @Assert\Length(min = "2")
             */
             private $city;
         }
@@ -725,15 +729,17 @@ user registers and when a user updates his/her contact information later:
                         <value>registration</value>
                     </option>
                 </constraint>
-                <constraint name="MinLength">
-                    <option name="limit">7</option>
+                <constraint name="Length">
+                    <option name="min">7</option>
                     <option name="groups">
                         <value>registration</value>
                     </option>
                 </constraint>
             </property>
             <property name="city">
-                <constraint name="MinLength">7</constraint>
+                <constraint name="Length">
+                    <option name="min">7</option>
+                </constraint>
             </property>
         </class>
 
@@ -745,7 +751,7 @@ user registers and when a user updates his/her contact information later:
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Email;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Constraints\Length;
 
         class User
         {
@@ -758,12 +764,14 @@ user registers and when a user updates his/her contact information later:
                 $metadata->addPropertyConstraint('password', new NotBlank(array(
                     'groups' => array('registration'),
                 )));
-                $metadata->addPropertyConstraint('password', new MinLength(array(
-                    'limit'  => 7,
-                    'groups' => array('registration'),
+                $metadata->addPropertyConstraint('password', new Length(array(
+                    'min'  => 7,
+                    'groups' => array('registration')
                 )));
 
-                $metadata->addPropertyConstraint('city', new MinLength(3));
+                $metadata->addPropertyConstraint(
+                    'city',
+                    Length(array("min" => 3)));
             }
         }
 

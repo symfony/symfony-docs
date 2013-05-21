@@ -94,11 +94,12 @@ Next, create the form for the ``User`` model::
     namespace Acme\AccountBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class UserType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('email', 'email');
             $builder->add('plainPassword', 'repeated', array(
@@ -108,9 +109,11 @@ Next, create the form for the ``User`` model::
             ));
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array('data_class' => 'Acme\AccountBundle\Entity\User');
+            $resolver->setDefaults(array(
+                'data_class' => 'Acme\AccountBundle\Entity\User'
+            ));
         }
 
         public function getName()
@@ -148,6 +151,7 @@ Start by creating a simple class which represents the "registration"::
     {
         /**
          * @Assert\Type(type="Acme\AccountBundle\Entity\User")
+         * @Assert\Valid()
          */
         protected $user;
 
@@ -184,11 +188,11 @@ Next, create the form for this ``Registration`` model::
     namespace Acme\AccountBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class RegistrationType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('user', new UserType());
             $builder->add(
@@ -228,10 +232,10 @@ controller for displaying the registration form::
     {
         public function registerAction()
         {
-            $form = $this->createForm(
-                new RegistrationType(),
-                new Registration()
-            );
+            $registration = new Registration();
+            $form = $this->createForm(new RegistrationType(), $registration, array(
+                'action' => $this->generateUrl('account_create'),
+            ));
 
             return $this->render(
                 'AcmeAccountBundle:Account:register.html.twig',
@@ -245,22 +249,19 @@ and its template:
 .. code-block:: html+jinja
 
     {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
-    <form action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+    {{ form(form) }}
 
-        <input type="submit" />
-    </form>
+Finally, create the controller (and the corresponding route ``account_create``)
+which handles the form submission.  This performs the validation and saves
+the data into the database::
 
-Finally, create the controller which handles the form submission.  This performs
-the validation and saves the data into the database::
-
-    public function createAction()
+    public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
-        $form->bindRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $registration = $form->getData();

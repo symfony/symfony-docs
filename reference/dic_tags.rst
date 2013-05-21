@@ -41,9 +41,15 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `form.type_guesser`_              | Add your own logic for "form type guessing"                               |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.cache_clearer`_           | Register your service to be called during the cache clearing process      |
++-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.cache_warmer`_            | Register your service to be called during the cache warming process       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_listener`_          | Listen to different events/hooks in Symfony                               |
++-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
++-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.fragment_renderer`_       | Add new HTTP content rendering strategies                                 |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.logger`_                 | Logging with a custom logging channel                                     |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -55,7 +61,9 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `security.listener.factory`_      | Necessary when creating a custom authentication system                    |
+| `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -64,6 +72,8 @@ may also be tags in other bundles you use that aren't listed here.
 | `translation.loader`_             | Register a custom service that loads translations                         |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
++-----------------------------------+---------------------------------------------------------------------------+
+| `twig.loader`_                    | Register a custom service that loads Twig templates                       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -251,6 +261,8 @@ doctrine.event_subscriber
 For details on creating Doctrine event subscribers, read the cookbook article:
 :doc:`/cookbook/doctrine/event_listeners_subscribers`.
 
+.. _dic-tags-form-type:
+
 form.type
 ---------
 
@@ -283,7 +295,7 @@ the interface directly::
     class MyFormTypeExtension extends AbstractTypeExtension
     {
         // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), buildViewBottomUp(), getDefaultOptions() or getAllowedOptionValues()
+        // like buildForm(), buildView(), finishView(), setDefaultOptions()
     }
 
 In order for Symfony to know about your form extension and use it, give it
@@ -313,8 +325,8 @@ the `form.type_extension` tag:
         ;
 
 The ``alias`` key of the tag is the type of field that this extension should
-be applied to. For example, to apply the extension to any "field", use the
-"field" value.
+be applied to. For example, to apply the extension to any form/field, use the
+"form" value.
 
 form.type_guesser
 -----------------
@@ -331,6 +343,57 @@ tag its service definition with ``form.type_guesser`` (it has no options).
 
 To see an example of how this class might look, see the ``ValidatorTypeGuesser``
 class in the ``Form`` component.
+
+kernel.cache_clearer
+--------------------
+
+**Purpose**: Register your service to be called during the cache clearing process
+
+Cache clearing occurs whenever you call ``cache:clear`` command. If your
+bundle caches files, you should add custom cache clearer for clearing those
+files during the cache clearing process.
+
+In order to register your custom cache clearer, first you must create a
+service class::
+
+    // src/Acme/MainBundle/Cache/MyClearer.php
+    namespace Acme\MainBundle\Cache;
+
+    use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
+
+    class MyClearer implements CacheClearerInterface
+    {
+        public function clear($cacheDir)
+        {
+            // clear your cache
+        }
+
+    }
+
+Then register this class and tag it with ``kernel.cache:clearer``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_cache_clearer:
+                class: Acme\MainBundle\Cache\MyClearer
+                tags:
+                    - { name: kernel.cache_clearer }
+
+    .. code-block:: xml
+
+        <service id="my_cache_clearer" class="Acme\MainBundle\Cache\MyClearer">
+            <tag name="kernel.cache_clearer" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('my_cache_clearer', 'Acme\MainBundle\Cache\MyClearer')
+            ->addTag('kernel.cache_clearer')
+        ;
 
 kernel.cache_warmer
 -------------------
@@ -433,13 +496,15 @@ kernel.request
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 1024      |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`                  | 0 and 255 |
-+-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | 192       |
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`                 | 128       |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 64        |
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`                    | 32        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`                    | 16        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 8         |
 +-------------------------------------------------------------------------------------------+-----------+
 
 kernel.controller
@@ -469,6 +534,8 @@ kernel.response
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`       | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`          | -1024    |
++-------------------------------------------------------------------------------------------+----------+
 
 kernel.exception
 ................
@@ -480,6 +547,68 @@ kernel.exception
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+
+kernel.terminate
+................
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`           | 0        |
++-------------------------------------------------------------------------------------------+----------+
+
+.. _dic-tags-kernel-event-subscriber:
+
+kernel.event_subscriber
+-----------------------
+
+**Purpose**: To subscribe to a set of different events/hooks in Symfony
+
+To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with ``kernel.event_subscriber``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            kernel.subscriber.your_subscriber_name:
+                class: Fully\Qualified\Subscriber\Class\Name
+                tags:
+                    - { name: kernel.event_subscriber }
+
+    .. code-block:: xml
+
+        <service id="kernel.subscriber.your_subscriber_name" class="Fully\Qualified\Subscriber\Class\Name">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('kernel.subscriber.your_subscriber_name', 'Fully\Qualified\Subscriber\Class\Name')
+            ->addTag('kernel.event_subscriber')
+        ;
+
+.. note::
+
+    Your service must implement the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
+    interface.
+
+.. note::
+
+    If your service is created by a factory, you **MUST** correctly set the ``class``
+    parameter for this tag to work correctly.
+
+kernel.fragment_renderer
+------------------------
+
+**Purpose**: Add a new HTTP content rendering strategy.
+
+To add a new rendering strategy - in addition to the core strategies like
+``EsiFragmentRenderer`` - create a class that implements
+:class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
+register it as a service, then tag it with ``kernel.fragment_renderer``.
 
 .. _dic_tags-monolog:
 
@@ -654,14 +783,6 @@ of your configuration, and tag it with ``routing.loader``:
 
 For more information, see :doc:`/cookbook/routing/custom_route_loader`.
 
-security.listener.factory
--------------------------
-
-**Purpose**: Necessary when creating a custom authentication system
-
-This tag is used when creating your own custom authentication system. For
-details, see :doc:`/cookbook/security/custom_authentication_provider`.
-
 security.remember_me_aware
 --------------------------
 
@@ -688,6 +809,30 @@ is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
 For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
+
+.. _reference-dic-tags-serializer-encoder:
+
+serializer.encoder
+------------------
+
+**Purpose**: Register a new encoder in the ``serializer`` service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
+
+.. _reference-dic-tags-serializer-normalizer:
+
+serializer.normalizer
+---------------------
+
+**Purpose**: Register a new normalizer in the Serializer service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
 
 swiftmailer.plugin
 ------------------
@@ -876,6 +1021,39 @@ also have to be added as regular services:
             ->addTag('twig.extension')
         ;
 
+twig.loader
+-----------
+
+**Purpose**: Register a custom service that loads Twig templates
+
+By default, Symfony uses only one `Twig Loader`_ -
+:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+to load Twig templates from another resource, you can create a service for
+the new loader and tag it with ``twig.loader``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme.demo_bundle.loader.some_twig_loader:
+                class: Acme\DemoBundle\Loader\SomeTwigLoader
+                tags:
+                    - { name: twig.loader }
+
+    .. code-block:: xml
+
+        <service id="acme.demo_bundle.loader.some_twig_loader" class="Acme\DemoBundle\Loader\SomeTwigLoader">
+            <tag name="twig.loader" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
+            ->addTag('twig.loader')
+        ;
+
 validator.constraint_validator
 ------------------------------
 
@@ -904,5 +1082,6 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
+.. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders

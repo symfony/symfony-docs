@@ -141,7 +141,7 @@ Mapping a URL to a Controller
 -----------------------------
 
 The new controller returns a simple HTML page. To actually view this page
-in your browser, you need to create a route, which maps a specific URL pattern
+in your browser, you need to create a route, which maps a specific URL path
 to the controller:
 
 .. configuration-block::
@@ -150,13 +150,13 @@ to the controller:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index }
+            path:      /hello/{name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
+        <route id="hello" path="/hello/{name}">
             <default key="_controller">AcmeHelloBundle:Hello:index</default>
         </route>
 
@@ -229,13 +229,13 @@ example:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index, color: green }
+            path:      /hello/{first_name}/{last_name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{first_name}/{last_name}">
+        <route id="hello" path="/hello/{first_name}/{last_name}">
             <default key="_controller">AcmeHelloBundle:Hello:index</default>
             <default key="color">green</default>
         </route>
@@ -325,7 +325,7 @@ working with forms, for example::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
         // ...
     }
 
@@ -476,7 +476,7 @@ value to each variable.
 
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service. A forward returns a ``Response``
+    directly via the ``http_kernel`` service and returns a ``Response``
     object::
 
         $httpKernel = $this->container->get('http_kernel');
@@ -640,8 +640,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->get('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.
@@ -663,14 +663,12 @@ For example, imagine you're processing a form submit::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($this->getRequest());
+        $form->handleRequest($this->getRequest());
+
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->setFlash(
-                'notice',
-                'Your changes were saved!'
-            );
+            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
 
             return $this->redirect($this->generateUrl(...));
         }
@@ -689,18 +687,22 @@ the ``notice`` message:
 
     .. code-block:: html+jinja
 
-        {% if app.session.hasFlash('notice') %}
-            <div class="flash-notice">
-                {{ app.session.flash('notice') }}
-            </div>
+        {% if app.session.started %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
         {% endif %}
 
     .. code-block:: html+php
 
-        <?php if ($view['session']->hasFlash('notice')): ?>
-            <div class="flash-notice">
-                <?php echo $view['session']->getFlash('notice') ?>
-            </div>
+        <?php if ($view['session']->isStarted()): ?>
+            <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
+                <div class="flash-notice">
+                    <?php echo "<div class='flash-error'>$message</div>" ?>
+                </div>
+            <?php endforeach; ?>
         <?php endif; ?>
 
 By design, flash messages are meant to live for exactly one request (they're
@@ -734,6 +736,15 @@ headers and content that's sent back to the client::
     useful methods for reading and mutating the ``Response`` headers. The
     header names are normalized so that using ``Content-Type`` is equivalent
     to ``content-type`` or even ``content_type``.
+
+.. tip::
+
+    There are also special classes to make certain kinds of responses easier:
+
+    - For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+      See :ref:`component-http-foundation-json-response`.
+    - For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
+      See :ref:`component-http-foundation-serving-files`.
 
 .. index::
    single: Controller; Request object

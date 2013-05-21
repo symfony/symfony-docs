@@ -6,26 +6,27 @@ form Field Type
 
 See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`.
 
-Overridden Options
-------------------
+The ``form`` type predefines a couple of options that are then available
+on all fields.
 
-empty_data
-~~~~~~~~~~
+.. include:: /reference/forms/types/options/data.rst.inc
 
-**default**: ``array()`` / ``new $data_class()``
+.. include:: /reference/forms/types/options/required.rst.inc
 
-When no ``data_class`` option is specified, it will return an empty array.
-Otherwise, it will default to a new instance of the class defined in
-``data_class``.
+.. include:: /reference/forms/types/options/constraints.rst.inc
 
-virtual
-~~~~~~~
+.. include:: /reference/forms/types/options/cascade_validation.rst.inc
 
-**default**: ``false``
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
-error_bubbling
-~~~~~~~~~~~~~~
+.. include:: /reference/forms/types/options/disabled.rst.inc
 
-**default**: ``true``
+.. include:: /reference/forms/types/options/trim.rst.inc
 
-Errors of the form bubbles to the root form by default.
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/property_path.rst.inc
+
+.. include:: /reference/forms/types/options/attr.rst.inc
+
+.. include:: /reference/forms/types/options/translation_domain.rst.inc

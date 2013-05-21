@@ -24,6 +24,66 @@ rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
 
+.. _reference-forms-twig-form:
+
+form(view, variables)
+---------------------
+
+Renders the HTML of a complete form.
+
+.. code-block:: jinja
+
+    {# render the form and change the submission method #}
+    {{ form(form, {'method': 'GET'}) }}
+
+You will mostly use this helper for prototyping or if you use custom form
+themes. If you need more flexibility in rendering the form, you should use
+the other helpers to render individual parts of the form instead:
+
+.. code-block:: jinja
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.dueDate) }}
+
+        <input type="submit" value="Submit me"/>
+    {{ form_end(form) }}
+
+.. _reference-forms-twig-start:
+
+form_start(view, variables)
+---------------------------
+
+Renders the start tag of a form. This helper takes care of printing the
+configured method and target action of the form. It will also include the
+correct ``enctype`` property if the form contains upload fields.
+
+.. code-block:: jinja
+
+    {# render the start tag and change the submission method #}
+    {{ form_start(form, {'method': 'GET'}) }}
+
+.. _reference-forms-twig-end:
+
+form_end(view, variables)
+-------------------------
+
+Renders the end tag of a form.
+
+.. code-block:: jinja
+
+    {{ form_end(form) }}
+
+This helper also outputs ``form_rest()`` unless you set ``render_rest`` to
+false:
+
+.. code-block:: jinja
+
+    {# don't render unrendered fields #}
+    {{ form_end(form, {'render_rest': false}) }}
+
 .. _reference-forms-twig-label:
 
 form_label(view, label, variables)
@@ -37,8 +97,8 @@ label you want to display as the second argument.
     {{ form_label(form.name) }}
 
     {# The two following syntaxes are equivalent #}
-    {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
-    {{ form_label(form.name, null, { 'label': 'Your name', 'attr': {'class': 'foo'} }) }}
+    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
+    {{ form_label(form.name, null, {'label': 'Your name', 'label_attr': {'class': 'foo'}}) }}
 
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
 argument.
@@ -68,7 +128,7 @@ or collection of fields, each underlying form row will be rendered.
 .. code-block:: jinja
 
     {# render a widget, but add a "foo" class to it #}
-    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
 
 The second argument to ``form_widget`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
@@ -91,7 +151,7 @@ label, errors and widget.
 .. code-block:: jinja
 
     {# render a field row, but display a label with text "foo" #}
-    {{ form_row(form.name, { 'label': 'foo' }) }}
+    {{ form_row(form.name, {'label': 'foo'}) }}
 
 The second argument to ``form_row`` is an array of variables. The templates
 provided in Symfony only allow to override the label as shown in the example
@@ -118,6 +178,11 @@ obvious (since it'll render the field for you).
 
 form_enctype(view)
 ------------------
+
+.. note::
+
+    This helper was deprecated in Symfony 2.3 and will be removed in Symfony 3.0.
+    You should use ``form_start()`` instead.
 
 If the form contains at least one file upload field, this will render the
 required ``enctype="multipart/form-data"`` form attribute. It's always a
@@ -151,18 +216,25 @@ not be immediately clear, but they're incredibly powerful. Whenever you
 render any part of a form, the block that renders it makes use of a number
 of variables. By default, these blocks live inside `form_div_layout.html.twig`_.
 
-Look at the ``generic_label`` as an example:
+Look at the ``form_label`` as an example:
 
 .. code-block:: jinja
 
-    {% block generic_label %}
-        {% if required %}
-            {% set attr = attr|merge({'class': attr.class|default('') ~ ' required'}) %}
+    {% block form_label %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
-        <label{% for attrname,attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>{{ label|trans }}</label>
-    {% endblock %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endblock form_label %}
 
-This block makes use of 3 variables: ``required``, ``attr`` and ``label``.
+This block makes use of several variables: ``compound``, ``label_attr``, ``required``,
+``label``, ``name`` and ``translation_domain``.
 These variables are made available by the form rendering system. But more
 importantly, these are the variables that you can override when calling ``form_label``
 (since in this example, you're rendering the label).
@@ -236,10 +308,15 @@ object:
 | ``errors``      | An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).  |
 |                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
 |                 | since this only returns "global" errors: some individual fields may have errors         |
+|                 | Instead, use the ``valid`` option                                                       |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``valid``       | Returns ``true`` or ``false`` depending on whether the whole form is valid              |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``value``       | The value that will be used when rendering (commonly the ``value`` HTML attribute)      |
 +-----------------+-----------------------------------------------------------------------------------------+
-| ``read_only``   | If ``true``, ``disabled="disabled"`` is added to the field                              |
+| ``read_only``   | If ``true``, ``readonly="readonly"`` is added to the field                              |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``disabled``    | If ``true``, ``disabled="disabled"`` is added to the field                              |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``required``    | If ``true``, a ``required`` attribute is added to the field to activate HTML5           |
 |                 | validation. Additionally, a ``required`` class is added to the label.                   |
@@ -255,5 +332,10 @@ object:
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``attr``        | A key-value array that will be rendered as HTML attributes on the field                 |
 +-----------------+-----------------------------------------------------------------------------------------+
+| ``label_attr``  | A key-value array that will be rendered as HTML attributes on the label                 |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``compound``    | Whether or not a field is actually a holder for a group of children fields              |
+|                 | (for example, a ``choice`` field, which is actually a group of checkboxes               |
++-----------------+-----------------------------------------------------------------------------------------+
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

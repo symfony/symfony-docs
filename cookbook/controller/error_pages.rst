@@ -16,9 +16,11 @@ control you need:
 
 1. Customize the error templates of the different error pages (explained below);
 
-2. Replace the default exception controller ``TwigBundle:Exception:show``
+2. Replace the default exception controller ``twig.controller.exception:showAction``
    with your own controller and handle it however you want (see
-   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`);
+   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`).
+   The default exception controller is registered as a service - the actual
+   class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
 
 .. tip::
 
@@ -49,6 +51,14 @@ end-user, create a new template located at
         <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
     </body>
     </html>
+
+.. caution::
+
+    You **must not** use ``is_granted`` in your error pages (or layout used
+    by your error pages), because the router runs before the firewall. If
+    the router throws an exception (for instance, when the route does not
+    match), then using ``is_granted`` will throw a further exception. You
+    can use ``is_granted`` safely by saying ``{% if app.user and is_granted('...') %}``.
 
 .. tip::
 
@@ -90,7 +100,7 @@ Symfony uses the following algorithm to determine which template to use:
     To see the full list of default error templates, see the
     ``Resources/views/Exception`` directory of the ``TwigBundle``. In a
     standard Symfony2 installation, the ``TwigBundle`` can be found at
-    ``vendor/symfony/src/Symfony/Bundle/TwigBundle``. Often, the easiest way
+    ``vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle``. Often, the easiest way
     to customize an error page is to copy it from the ``TwigBundle`` into
     ``app/Resources/TwigBundle/views/Exception`` and then modify it.
 

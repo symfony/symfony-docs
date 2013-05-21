@@ -34,6 +34,8 @@ you should just use the ``choice`` type directly.
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `read_only`_                                                         |
+|             | - `disabled`_                                                          |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`choice</reference/forms/types/choice>`                           |
 +-------------+------------------------------------------------------------------------+
@@ -46,11 +48,10 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: :method:`Symfony\\Component\\Locale\\Locale::getDisplayLanguages`
+**default**: ``Symfony\Component\Intl\Intl::getLanguageBundle()->getLanguageNames()``.
 
-The choices option defaults to all languages returned by
-:method:`Symfony\\Component\\Locale\\Locale::getDisplayLanguages`. It uses the
-default locale to specify the language.
+The choices option defaults to all languages. It uses the default locale to
+specify the language.
 
 Inherited Options
 -----------------
@@ -67,10 +68,14 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

@@ -222,60 +222,33 @@ The following controller shows you how to handle the entire process::
     // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     /**
      * @Template()
      */
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
         $document = new Document();
         $form = $this->createFormBuilder($document)
             ->add('name')
             ->add('file')
-            ->getForm()
-        ;
+            ->getForm();
 
-        if ($this->getRequest()->getMethod() === 'POST') {
-            $form->bindRequest($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+        $form->handleRequest($request);
 
-                $em->persist($document);
-                $em->flush();
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
 
-                return $this->redirect($this->generateUrl(...));
-            }
+            $em->persist($document);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl(...));
         }
 
         return array('form' => $form->createView());
     }
-
-.. note::
-
-    When writing the template, don't forget to set the ``enctype`` attribute:
-
-    .. configuration-block::
-
-        .. code-block:: html+jinja
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
-
-                <input type="submit" value="Upload Document" />
-            </form>
-
-        .. code-block:: html+php
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" <?php echo $view['form']->enctype($form) ?>>
-                <?php echo $view['form']->widget($form) ?>
-
-                <input type="submit" value="Upload Document" />
-            </form>
 
 The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``
@@ -287,7 +260,7 @@ a new ``upload()`` method on the ``Document`` class, which you'll create
 in a moment to handle the file upload::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $document->upload();
 
@@ -436,7 +409,7 @@ Now that the moving of the file is handled atomically by the entity, the
 call to ``$document->upload()`` should be removed from the controller::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $em->persist($document);
         $em->flush();

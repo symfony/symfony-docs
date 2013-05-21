@@ -17,7 +17,8 @@ it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later.
+    Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
+    needed to test the Symfony core code itself.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the `Tests/` subdirectory of your bundles. If you follow
@@ -400,6 +401,10 @@ The Client supports many operations that can be done in a real browser::
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    The ``getInternalRequest()`` and ``getInternalResponse()`` method were
+    added in Symfony 2.3.
+
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
@@ -408,8 +413,18 @@ client's internal objects::
 
 You can also get the objects related to the latest request::
 
+    // the HttpKernel request instance
     $request  = $client->getRequest();
+
+    // the BrowserKit request instance
+    $request  = $client->getInternalRequest();
+
+    // the HttpKernel response instance
     $response = $client->getResponse();
+
+    // the BrowserKit response instance
+    $response = $client->getInternalResponse();
+
     $crawler  = $client->getCrawler();
 
 If your requests are not insulated, you can also access the ``Container`` and
@@ -440,13 +455,19 @@ HTTP layer. For a list of services available in your application, use the
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On each request, the Symfony profiler collects and stores a lot of data about
-the internal handling of that request. For example, the profiler could be
-used to verify that a given page executes less than a certain number of database
+On each request, you can enable the Symfony profiler to collect data about the
+internal handling of that request. For example, the profiler could be used to
+verify that a given page executes less than a certain number of database
 queries when loading.
 
 To get the Profiler for the last request, do the following::
 
+    // enable the profiler for the very next request
+    $client->enableProfiler();
+
+    $crawler = $client->request('GET', '/profiler');
+
+    // get the profile
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the

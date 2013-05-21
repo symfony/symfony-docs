@@ -10,7 +10,10 @@ The DomCrawler Component
 .. note::
 
     While possible, the DomCrawler component is not designed for manipulation
-    of the DOM or re-dumping HTML/XML.
+    of the DOM or re-dumping HTML/XML. However the DomCrawler will attempt to
+    automatically fix your HTML to match the official specification. Take note
+    about this behaviour as you could be working with a different DOM after it
+    has been parsed with the DomCrawler.
 
 Installation
 ------------
@@ -199,6 +202,13 @@ and :phpclass:`DOMNode` objects:
         foreach ($crawler as $domElement) {
             $html .= $domElement->ownerDocument->saveHTML($domElement);
         }
+
+    Or you can get the HTML of the first node using
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
+
+        $html = $crawler->html();
+
+    The ``html`` method is new in Symfony 2.3.
 
 Form and Link support
 ~~~~~~~~~~~~~~~~~~~~~

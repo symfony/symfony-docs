@@ -54,13 +54,15 @@ an ``Address`` instance in the ``$address`` property.
                     - NotBlank: ~
                 zipCode:
                     - NotBlank: ~
-                    - MaxLength: 5
+                    - Length:
+                        max: 5
 
         Acme\HelloBundle\Entity\Author:
             properties:
                 firstName:
                     - NotBlank: ~
-                    - MinLength: 4
+                    - Length:
+                        min: 4
                 lastName:
                     - NotBlank: ~
 
@@ -80,7 +82,7 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\MaxLength(5)
+             * @Assert\Length(max = "5")
              */
             protected $zipCode;
         }
@@ -92,7 +94,7 @@ an ``Address`` instance in the ``$address`` property.
         {
             /**
              * @Assert\NotBlank
-             * @Assert\MinLength(4)
+             * @Assert\Length(min = "4")
              */
             protected $firstName;
 
@@ -113,14 +115,18 @@ an ``Address`` instance in the ``$address`` property.
             </property>
             <property name="zipCode">
                 <constraint name="NotBlank" />
-                <constraint name="MaxLength">5</constraint>
+                <constraint name="Length">
+                    <option name="max">5</option>
+                </constraint>
             </property>
         </class>
 
         <class name="Acme\HelloBundle\Entity\Author">
             <property name="firstName">
                 <constraint name="NotBlank" />
-                <constraint name="MinLength">4</constraint>
+                <constraint name="Length">
+                    <option name="min">4</option>
+                </constraint>
             </property>
             <property name="lastName">
                 <constraint name="NotBlank" />
@@ -144,7 +150,9 @@ an ``Address`` instance in the ``$address`` property.
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('zipCode', new Assert\MaxLength(5));
+                $metadata->addPropertyConstraint(
+                    'zipCode',
+                    new Assert\Length(array("max" => 5)));
             }
         }
 
@@ -163,7 +171,7 @@ an ``Address`` instance in the ``$address`` property.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('firstName', new Assert\MinLength(4));
+                $metadata->addPropertyConstraint('firstName', new Assert\Length(array("min" => 4)));
                 $metadata->addPropertyConstraint('lastName', new Assert\NotBlank());
             }
         }

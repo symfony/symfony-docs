@@ -21,11 +21,9 @@ on top of the previous one.
 
 .. tip::
 
-    Autoloading is not managed by the framework directly; it's done
-    independently with the help of the
-    :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` class
-    and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
-    </components/class_loader>` for more information.
+    Autoloading is not managed by the framework directly; it's done by using
+    Composer's autoloader (``vendor/autoload.php``), which is included in
+    the ``app/autoload.php`` file.
 
 ``HttpFoundation`` Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -364,6 +362,19 @@ The ``FrameworkBundle`` registers several listeners:
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
 .. index::
+   single: Event; kernel.terminate
+
+``kernel.terminate`` Event
+..........................
+
+The purpose of this event is to perform "heavier" tasks after the response
+was already served to the client.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
+
+.. index::
    single: Event; kernel.exception
 
 .. _kernel-kernel.exception:
@@ -396,6 +407,15 @@ and set a new ``Exception`` object, or do nothing::
         // $exception = new \Exception('Some special exception');
         // $event->setException($exception);
     }
+
+.. note::
+
+    As Symfony ensures that the Response status code is set to the most
+    appropriate one depending on the exception, setting the status on the
+    response won't work. If you want to overwrite the status code (which you
+    should not without a good reason), set the ``X-Status-Code`` header::
+
+        return new Response('Error', 404 /* ignored */, array('X-Status-Code' => 200));
 
 .. index::
    single: Event Dispatcher
@@ -536,7 +556,6 @@ the configuration for the development environment:
         web_profiler:
             toolbar: true
             intercept_redirects: true
-            verbose: true
 
     .. code-block:: xml
 
@@ -575,10 +594,6 @@ when an exception is thrown by the application.
 When ``intercept-redirects`` is set to ``true``, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
-
-When ``verbose`` is set to ``true``, the Web Debug Toolbar displays a lot of
-information. Setting ``verbose`` to ``false`` hides some secondary information
-to make the toolbar shorter.
 
 If you enable the web profiler, you also need to mount the profiler routes:
 

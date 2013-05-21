@@ -5,7 +5,7 @@ This constraint is used when the underlying data is a collection (i.e. an
 array or an object that implements ``Traversable`` and ``ArrayAccess``),
 but you'd like to validate different keys of that collection in different
 ways. For example, you might validate the ``email`` key using the ``Email``
-constraint and the ``inventory`` key of the collection with the ``Min`` constraint.
+constraint and the ``inventory`` key of the collection with the ``Range`` constraint.
 
 This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
@@ -63,9 +63,9 @@ blank but is no longer than 100 characters in length, you would do the following
                             personal_email: Email
                             short_bio:
                                 - NotBlank
-                                - MaxLength:
-                                    limit:   100
-                                    message: Your short bio is too long!
+                                - Length:
+                                    max:   100
+                                    maxMessage: Your short bio is too long!
                         allowMissingFields: true
 
     .. code-block:: php-annotations
@@ -83,9 +83,9 @@ blank but is no longer than 100 characters in length, you would do the following
              *         "personal_email" = @Assert\Email,
              *         "short_bio" = {
              *             @Assert\NotBlank(),
-             *             @Assert\MaxLength(
-             *                 limit = 100,
-             *                 message = "Your bio is too long!"
+             *             @Assert\Length(
+             *                 max = 100,
+             *                 maxMessage = "Your bio is too long!"
              *             )
              *         }
              *     },
@@ -110,9 +110,9 @@ blank but is no longer than 100 characters in length, you would do the following
                         </value>
                         <value key="short_bio">
                             <constraint name="NotBlank" />
-                            <constraint name="MaxLength">
-                                <option name="limit">100</option>
-                                <option name="message">Your bio is too long!</option>
+                            <constraint name="Length">
+                                <option name="max">100</option>
+                                <option name="maxMessage">Your bio is too long!</option>
                             </constraint>
                         </value>
                     </option>
@@ -138,7 +138,10 @@ blank but is no longer than 100 characters in length, you would do the following
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
                         'personal_email' => new Assert\Email(),
-                        'lastName' => array(new Assert\NotBlank(), new Assert\MaxLength(100)),
+                        'lastName' => array(
+                            new Assert\NotBlank(),
+                            new Assert\Length(array("max" => 100)),
+                        ),
                     ),
                     'allowMissingFields' => true,
                 )));
@@ -159,6 +162,74 @@ the `allowMissingFields`_ and `allowExtraFields`_ options respectively. In
 the above example, the ``allowMissingFields`` option was set to true, meaning
 that if either of the ``personal_email`` or ``short_bio`` elements were missing
 from the ``$personalData`` property, no validation error would occur.
+
+.. versionadded:: 2.3
+    The ``Required`` and ``Optional`` constraints were moved to the namespace
+    ``Symfony\Component\Validator\Constraints\`` in Symfony 2.3.
+
+Required and Optional Field Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Constraints for fields within a collection can be wrapped in the ``Required`` or
+``Optional`` constraint to control whether they should always be applied (``Required``)
+or only applied when the field is present (``Optional``).
+
+For instance, if you want to require that the ``personal_email`` field of the
+``profileData`` array is not blank and is a valid email but the ``alternate_email``
+field is optional but must be a valid email if supplied, you can do the following:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Collection(
+             *     fields={
+             *         "personal_email"  = @Assert\Required({@Assert\NotBlank, @Assert\Email}),
+             *         "alternate_email" = @Assert\Optional(@Assert\Email),
+             *     }
+             * )
+             */
+             protected $profileData = array(
+                 'personal_email',
+             );
+        }
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            protected $profileData = array('personal_email');
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
+                    'fields' => array(
+                        'personal_email'  => new Assert\Required(array(new Assert\NotBlank(), new Assert\Email())),
+                        'alternate_email' => new Assert\Optional(new Assert\Email()),
+                    ),
+                )));
+            }
+        }
+
+Even without ``allowMissingFields`` set to true, you can now omit the ``alternate_email``
+property completely from the ``profileData`` array, since it is ``Optional``.
+However, if the the ``personal_email`` field does not exist in the array,
+the ``NotBlank`` constraint will still be applied (since it is wrapped in
+``Required``) and you will receive a constraint violation.
 
 Options
 -------

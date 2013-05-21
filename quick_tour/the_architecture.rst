@@ -58,46 +58,17 @@ This class must implement two methods:
 * ``registerContainerConfiguration()`` loads the application configuration
   (more on this later).
 
-PHP autoloading can be configured via ``app/autoload.php``::
-
-    // app/autoload.php
-    use Symfony\Component\ClassLoader\UniversalClassLoader;
-
-    $loader = new UniversalClassLoader();
-    $loader->registerNamespaces(array(
-        'Symfony'          => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
-        'Sensio'           => __DIR__.'/../vendor/bundles',
-        'JMS'              => __DIR__.'/../vendor/bundles',
-        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
-        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
-        'Doctrine'         => __DIR__.'/../vendor/doctrine/lib',
-        'Monolog'          => __DIR__.'/../vendor/monolog/src',
-        'Assetic'          => __DIR__.'/../vendor/assetic/src',
-        'Metadata'         => __DIR__.'/../vendor/metadata/src',
-    ));
-    $loader->registerPrefixes(array(
-        'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
-        'Twig_'            => __DIR__.'/../vendor/twig/lib',
-    ));
-
-    // ...
-
-    $loader->registerNamespaceFallbacks(array(
-        __DIR__.'/../src',
-    ));
-    $loader->register();
-
-The :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
-autoload files that respect either the technical interoperability `standards`_
-for PHP 5.3 namespaces or the PEAR naming `convention`_ for classes. As you
-can see here, all dependencies are stored under the ``vendor/`` directory, but
-this is just a convention. You can store them wherever you want, globally on
-your server or locally in your projects.
+Autoloading is handled automatically via `Composer`_, which means that you
+can use any PHP classes without doing anything at all! If you need more flexibility,
+you can extend the autoloader in the ``app/autoload.php`` file. All dependencies
+are stored under the ``vendor/`` directory, but this is just a convention.
+You can store them wherever you want, globally on your server or locally
+in your projects.
 
 .. note::
 
-    If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the ":doc:`/components/class_loader`" chapter.
+    If you want to learn more about Composer's autoloader, read `Composer-Autoloader`_.
+    Symfony also has an autoloading component - read ":doc:`/components/class_loader`".
 
 Understanding the Bundle System
 -------------------------------
@@ -134,7 +105,6 @@ a single ``Bundle`` class that describes it::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -162,20 +132,23 @@ PHP. Have a look at the default configuration:
 
     # app/config/config.yml
     imports:
-        - { resource: parameters.ini }
+        - { resource: parameters.yml }
         - { resource: security.yml }
 
     framework:
+        #esi:             ~
+        #translator:      { fallback: "%locale%" }
         secret:          "%secret%"
-        charset:         UTF-8
-        router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+        router:
+            resource: "%kernel.root_dir%/config/routing.yml"
+            strict_requirements: "%kernel.debug%"
         form:            true
         csrf_protection: true
         validation:      { enable_annotations: true }
         templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-        session:
-            default_locale: "%locale%"
-            auto_start:     true
+        default_locale:  "%locale%"
+        trusted_proxies: ~
+        session:         ~
 
     # Twig Configuration
     twig:
@@ -186,18 +159,21 @@ PHP. Have a look at the default configuration:
     assetic:
         debug:          "%kernel.debug%"
         use_controller: false
+        bundles:        [ ]
+        #java: /usr/bin/java
         filters:
             cssrewrite: ~
-            # closure:
-            #     jar: "%kernel.root_dir%/java/compiler.jar"
-            # yui_css:
-            #     jar: "%kernel.root_dir%/java/yuicompressor-2.4.2.jar"
+            #closure:
+            #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+            #yui_css:
+            #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
     # Doctrine Configuration
     doctrine:
         dbal:
             driver:   "%database_driver%"
             host:     "%database_host%"
+            port:     "%database_port%"
             dbname:   "%database_name%"
             user:     "%database_user%"
             password: "%database_password%"
@@ -213,10 +189,7 @@ PHP. Have a look at the default configuration:
         host:      "%mailer_host%"
         username:  "%mailer_user%"
         password:  "%mailer_password%"
-
-    jms_security_extra:
-        secure_controllers:  true
-        secure_all_services: false
+        spool:     { type: memory }
 
 Each entry like ``framework`` defines the configuration for a specific bundle.
 For example, ``framework`` configures the ``FrameworkBundle`` while ``swiftmailer``
@@ -364,3 +337,5 @@ any topic you want.
 
 .. _standards:  http://symfony.com/PSR0
 .. _convention: http://pear.php.net/
+.. _Composer:   http://getcomposer.org
+.. _`Composer-Autoloader`: http://getcomposer.org/doc/01-basic-usage.md#autoloading

@@ -15,11 +15,10 @@ routing and more.
 Configuration
 -------------
 
-* `charset`_
 * `secret`_
+* `http_method_override`_
 * `ide`_
 * `test`_
-* `trust_proxy_headers`_
 * `trusted_proxies`_
 * `form`_
     * enabled
@@ -28,19 +27,24 @@ Configuration
     * field_name
 * `session`_
     * `name`_
-    * `lifetime`_
+    * `cookie_lifetime`_
+    * `cookie_path`_
+    * `cookie_domain`_
+    * `cookie_secure`_
+    * `cookie_httponly`_
+    * `gc_divisor`_
+    * `gc_probability`_
+    * `gc_maxlifetime`_
+    * `save_path`_
+* `serializer`_
+    * :ref:`enabled<serializer.enabled>`
 * `templating`_
     * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
-
-charset
-~~~~~~~
-
-**type**: ``string`` **default**: ``UTF-8``
-
-The character set that's used throughout the framework. It becomes the service
-container parameter named ``kernel.charset``.
+* `profiler`_
+    * `collect`_
+    * :ref:`enabled<profiler.enabled>`
 
 secret
 ~~~~~~
@@ -51,6 +55,23 @@ This is a string that should be unique to your application. In practice,
 it's used for generating the CSRF tokens, but it could be used in any other
 context where having a unique string is useful. It becomes the service container
 parameter named ``kernel.secret``.
+
+.. _configuration-framework-http_method_override:
+
+http_method_override
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ``http_method_override`` option is new in Symfony 2.3.
+
+**type**: ``Boolean`` **default**: ``true``
+
+This determines whether the ``_method`` request parameter is used as the intended
+HTTP method on POST requests. If enabled, the
+:method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
+gets called automatically. It becomes the service container parameter named
+``kernel.http_method_override``. For more information, see
+:doc:`/cookbook/routing/method_parameters`.
 
 ide
 ~~~
@@ -101,41 +122,28 @@ trusted_proxies
 Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
+.. versionadded:: 2.3
+    CIDR notation support was introduced, so you can whitelist whole
+    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+
 .. configuration-block::
 
     .. code-block:: yaml
 
         framework:
-            trusted_proxies:  [192.0.0.1]
+            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
 
     .. code-block:: xml
 
-        <framework:config trusted-proxies="192.0.0.1">
+        <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
             <!-- ... -->
         </framework>
 
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1'),
+            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
         ));
-
-trust_proxy_headers
-~~~~~~~~~~~~~~~~~~~
-
-.. caution::
-
-    The ``trust_proxy_headers`` option is deprecated and will be removed in
-    Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
-    for details on how to properly trust proxy data.
-
-**type**: ``Boolean``
-
-Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as an indication for an SSL connection. By default, it is
-set to ``false`` and only SSL_HTTPS connections are indicated as secure.
-
-You should enable this setting if your application is behind a reverse proxy.
 
 .. _reference-framework-form:
 
@@ -156,13 +164,123 @@ name
 This specifies the name of the session cookie. By default it will use the cookie
 name which is defined in the ``php.ini`` with the ``session.name`` directive.
 
-lifetime
-........
+cookie_lifetime
+...............
 
 **type**: ``integer`` **default**: ``0``
 
 This determines the lifetime of the session - in seconds. By default it will use
 ``0``, which means the cookie is valid for the length of the browser session.
+
+cookie_path
+...........
+
+**type**: ``string`` **default**: ``/``
+
+This determines the path to set in the session cookie. By default it will use ``/``.
+
+cookie_domain
+.............
+
+**type**: ``string`` **default**: ``''``
+
+This determines the domain to set in the session cookie. By default it's blank,
+meaning the host name of the server which generated the cookie according
+to the cookie specification.
+
+cookie_secure
+.............
+
+**type**: ``Boolean`` **default**: ``false``
+
+This determines whether cookies should only be sent over secure connections.
+
+cookie_httponly
+...............
+
+**type**: ``Boolean`` **default**: ``false``
+
+This determines whether cookies should only accessible through the HTTP protocol.
+This means that the cookie won't be accessible by scripting languages, such
+as JavaScript. This setting can effectively help to reduce identity theft
+through XSS attacks.
+
+gc_probability
+..............
+
+**type**: ``integer`` **default**: ``1``
+
+This defines the probability that the garbage collector (GC) process is started
+on every session initialization. The probability is calculated by using
+``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1% chance
+that the GC process will start on each request.
+
+gc_divisor
+..........
+
+**type**: ``integer`` **default**: ``100``
+
+See `gc_probability`_.
+
+gc_maxlifetime
+..............
+
+**type**: ``integer`` **default**: ``14400``
+
+This determines the number of seconds after which data will be seen as "garbage"
+and potentially cleaned up. Garbage collection may occur during session start
+and depends on `gc_divisor`_ and `gc_probability`_.
+
+save_path
+.........
+
+**type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
+
+This determines the argument to be passed to the save handler. If you choose
+the default file handler, this is the path where the files are created. You can
+also set this value to the ``save_path`` of your ``php.ini`` by setting the
+value to ``null``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            session:
+                save_path: null
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:session save-path="null" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                'save_path' => null,
+            ),
+        ));
+
+.. _configuration-framework-serializer:
+
+serializer
+~~~~~~~~~~
+
+.. _serializer.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the ``serializer`` service or not in the service container.
+
+For more details, see :doc:`/cookbook/serializer`.
 
 templating
 ~~~~~~~~~~
@@ -280,6 +398,41 @@ would be ``/images/logo.png?version=5``.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
+profiler
+~~~~~~~~
+
+.. versionadded:: 2.2
+    The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
+    could only be disabled by omitting the ``framework.profiler`` configuration
+    entirely.
+
+.. _profiler.enabled:
+
+enabled
+.......
+
+**default**: ``true`` in the ``dev`` and ``test`` environments
+
+The profiler can be disabled by setting this key to ``false``.
+
+.. versionadded:: 2.3
+
+    The ``collect`` option is new in Symfony 2.3. Previously, when ``profiler.enabled``
+    was false, the profiler *was* actually enabled, but the collectors were
+    disabled. Now the profiler and collectors can be controller independently.
+
+collect
+.......
+
+**default**: ``true``
+
+This option configures the way the profiler behaves when it is enabled. If set
+to ``true``, the profiler collects data for all requests. If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false``
+and activate the data collectors by hand::
+
+    $profiler->enable();
+
 Full Default Configuration
 --------------------------
 
@@ -288,36 +441,44 @@ Full Default Configuration
     .. code-block:: yaml
 
         framework:
-
-            # general configuration
-            charset:              ~
-            secret:               ~ # Required
+            secret:               ~
+            http_method_override: true
+            trusted_proxies:      []
             ide:                  ~
             test:                 ~
-            trust_proxy_headers:  false
+            default_locale:       en
 
             # form configuration
             form:
-                enabled:              true
+                enabled:              false
             csrf_protection:
-                enabled:              true
+                enabled:              false
                 field_name:           _token
 
             # esi configuration
             esi:
-                enabled:              true
+                enabled:              false
+
+            # fragments configuration
+            fragments:
+                enabled:              false
+                path:                 /_fragment
 
             # profiler configuration
             profiler:
+                enabled:              false
+                collect:              true
                 only_exceptions:      false
-                only_master_requests:  false
-                dsn:                  "sqlite:%kernel.cache_dir%/profiler.db"
+                only_master_requests: false
+                dsn:                  file:%kernel.cache_dir%/profiler
                 username:
                 password:
                 lifetime:             86400
                 matcher:
                     ip:                   ~
-                    path:                 ~
+
+                    # use the urldecoded format
+                    path:                 ~ # Example: ^/path to resource/
                     service:              ~
 
             # router configuration
@@ -327,29 +488,46 @@ Full Default Configuration
                 http_port:            80
                 https_port:           443
 
+                # set to true to throw an exception when a parameter does not match the requirements
+                # set to false to disable exceptions when a parameter does not match the requirements (and return null instead)
+                # set to null to disable parameter checks against requirements
+                # 'true' is the preferred configuration in development mode, while 'false' or 'null' might be preferred in production
+                strict_requirements:  true
+
             # session configuration
             session:
-                auto_start:           ~
-                default_locale:       en
                 storage_id:           session.storage.native
+                handler_id:           session.handler.native_file
                 name:                 ~
-                lifetime:             0
-                path:                 ~
-                domain:               ~
-                secure:               ~
-                httponly:             ~
+                cookie_lifetime:      ~
+                cookie_path:          ~
+                cookie_domain:        ~
+                cookie_secure:        ~
+                cookie_httponly:      ~
+                gc_divisor:           ~
+                gc_probability:       ~
+                gc_maxlifetime:       ~
+                save_path:            %kernel.cache_dir%/sessions
+
+            # serializer configuration
+            serializer:
+               enabled: false
 
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  "%%s?%%s"
+                assets_version_format:  %%s?%%s
+                hinclude_default_template:  ~
+                form:
+                    resources:
+
+                        # Default:
+                        - FrameworkBundle:Form
                 assets_base_urls:
                     http:                 []
                     ssl:                  []
                 cache:                ~
                 engines:              # Required
-                form:
-                    resources:        [FrameworkBundle:Form]
 
                     # Example:
                     - twig
@@ -359,26 +537,27 @@ Full Default Configuration
                     # Prototype
                     name:
                         version:              ~
-                        version_format:       ~
+                        version_format:       %%s?%%s
                         base_urls:
                             http:                 []
                             ssl:                  []
 
             # translator configuration
             translator:
-                enabled:              true
+                enabled:              false
                 fallback:             en
 
             # validation configuration
             validation:
-                enabled:              true
+                enabled:              false
                 cache:                ~
                 enable_annotations:   false
+                translation_domain:   validators
 
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       "%kernel.cache_dir%/annotations"
-                debug:                true
+                file_cache_dir:       %kernel.cache_dir%/annotations
+                debug:                %kernel.debug%
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2

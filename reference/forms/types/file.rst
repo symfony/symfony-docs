@@ -12,7 +12,9 @@ The ``file`` type represents a file input in your form.
 | Inherited   | - `required`_                                                       |
 | options     | - `label`_                                                          |
 |             | - `read_only`_                                                      |
+|             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
+|             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>`                            |
 +-------------+---------------------------------------------------------------------+
@@ -27,11 +29,6 @@ Say you have this form definition:
 .. code-block:: php
 
     $builder->add('attachment', 'file');
-
-.. caution::
-
-    Don't forget to add the ``enctype`` attribute in the form tag: ``<form
-    action="#" method="post" {{ form_enctype(form) }}>``.
 
 When the form is submitted, the ``attachment`` field will be an instance of
 :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can be
@@ -81,7 +78,7 @@ how to manage a file upload associated with a Doctrine entity.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -89,4 +86,8 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

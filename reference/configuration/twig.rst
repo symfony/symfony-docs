@@ -9,11 +9,12 @@ TwigBundle Configuration Reference
     .. code-block:: yaml
 
         twig:
+            exception_controller:  twig.controller.exception:showAction
             form:
                 resources:
 
                     # Default:
-                    - div_layout.html.twig
+                    - form_div_layout.html.twig
 
                     # Example:
                     - MyBundle::form.html.twig
@@ -23,19 +24,26 @@ TwigBundle Configuration Reference
                 foo:                 "@bar"
                 pi:                  3.14
 
-                # Prototype
-                key:
+                # Example options, but the easiest use is as seen above
+                some_variable_name:
+                    # a service id that should be the value
                     id:                   ~
+                    # set to service or leave blank
                     type:                 ~
                     value:                ~
-            autoescape:           ~
-            base_template_class:  ~ # Example: Twig_Template
-            cache:                "%kernel.cache_dir%/twig"
-            charset:              "%kernel.charset%"
-            debug:                "%kernel.debug%"
-            strict_variables:     ~
-            auto_reload:          ~
-            exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
+            autoescape:                ~
+
+            # The following were added in Symfony 2.3.
+            # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
+            autoescape_service:        ~ # Example: @my_service
+            autoescape_service_method: ~ # use in combination with autoescape_service option
+            base_template_class:       ~ # Example: Twig_Template
+            cache:                     "%kernel.cache_dir%/twig"
+            charset:                   "%kernel.charset%"
+            debug:                     "%kernel.debug%"
+            strict_variables:          ~
+            auto_reload:               ~
+            optimizations:             ~
 
     .. code-block:: xml
 
@@ -83,7 +91,7 @@ Configuration
 exception_controller
 ....................
 
-**type**: ``string`` **default**: ``Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController::showAction``
+**type**: ``string`` **default**: ``twig.controller.exception:showAction``
 
 This is the controller that is activated after an exception is thrown anywhere
 in your application. The default controller

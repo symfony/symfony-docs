@@ -5,26 +5,55 @@ Symfony2 Twig Extensions
 ========================
 
 Twig is the default template engine for Symfony2. By itself, it already contains
-a lot of build-in functions, filters and tags (`http://twig.sensiolabs.org/documentation`_
+a lot of build-in functions, filters, tags and tests (`http://twig.sensiolabs.org/documentation`_
 then scroll to the bottom).
 
 Symfony2 adds more custom extension on top of Twig to integrate some components
 into the Twig templates. Below is information about all the custom functions,
-filters and tags that are added when using the Symfony2 Core Framework.
+filters, tags and tests that are added when using the Symfony2 Core Framework.
 
 There may also be tags in bundles you use that aren't listed here.
 
 Functions
 ---------
 
+.. versionadded:: 2.2
+    The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
+    the ``{% render %}`` tag was used and had a different signature.
+
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
+| ``render(uri, options = {})``                      | This will render the fragment for the given controller or URL                              |
+| ``render(controller('B:C:a', {params}))``          | For more information, see :ref:`templating-embedding-controller`.                          |
+| ``render(path('route', {params}))``                |                                                                                            |
+| ``render(url('route', {params}))``                 |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``render_esi(controller('B:C:a', {params}))``      | This will generates an ESI tag when possible or fallback to the ``render``                 |
+| ``render_esi(url('route', {params}))``             | behavior otherwise. For more information, see :ref:`templating-embedding-controller`.      |
+| ``render_esi(path('route', {params}))``            |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``render_hinclude(controller(...))``               | This will generates an Hinclude tag for the given controller or URL.                       |
+| ``render_hinclude(url('route', {params}))``        | For more information, see :ref:`templating-embedding-controller`.                          |
+| ``render_hinclude(path('route', {params}))``       |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``controller(attributes = {}, query = {})``        | Used along with the ``render`` tag to refer to the controller that you want to render.     |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset(path, packageName = null)``                | Get the public path of the asset, more information in                                      |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset_version(packageName = null)``              | Get the current version of the package, more information in                                |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form(view, variables = {})``                     | This will render the HTML of a complete form, more information in                          |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-form>`.                              |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_start(view, variables = {})``               | This will render the HTML start tag of a form, more information in                         |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-start>`.                             |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_end(view, variables = {})``                 | This will render the HTML end tag of a form together with all fields that                  |
+|                                                    | have not been rendered yet, more information                                               |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-end>`.                               |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_enctype(view)``                             | This will render the required ``enctype="multipart/form-data"`` attribute                  |
 |                                                    | if the form contains at least one file upload field, more information in                   |
@@ -45,12 +74,15 @@ Functions
 | ``form_rest(view, variables = {})``                | This will render all fields that have not yet been rendered, more                          |
 |                                                    | information in :ref:`the Twig Form reference<reference-forms-twig-rest>`.                  |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``_form_is_choice_group(label)``                   | This will return ``true`` if the label is a choice group.                                  |
-+----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``_form_is_choice_selected(view, choice)``         | This will return ``true`` if the given choice is selected.                                 |
+| ``csrf_token(intention)``                          | This will render a CSRF token. Use this function if you want CSRF protection without       |
+|                                                    | creating a form                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``is_granted(role, object = null, field = null)``  | This will return ``true`` if the current user has the required role, more                  |
 |                                                    | information in ":ref:`book-security-template`"                                             |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``logout_path(key)``                               | This will generate the relative logout URL for the given firewall                          |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``logout_url(key)``                                | Equal to ``logout_path(...)`` but this will generate an absolute url                       |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``path(name, parameters = {})``                    | Get a relative url for the given route, more information in                                |
 |                                                    | ":ref:`book-templating-pages`".                                                            |
@@ -64,11 +96,15 @@ Filters
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Filter Syntax                                                                   | Usage                                                             |
 +=================================================================================+===================================================================+
+| ``text|humanize``                                                               | Makes a technical name human readable (replaces underscores by    |
+|                                                                                 | spaces and capitalizes the string)                                |
++---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|trans(arguments = {}, domain = 'messages', locale = null)``              | This will translate the text into the current language, more      |
-|                                                                                 | information in :ref:`book-translation-twig`.                      |
+|                                                                                 | information in .                                                  |
+|                                                                                 | :ref:`Translation Filters<book-translation-filters>`.             |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|transchoice(count, arguments = {}, domain = 'messages', locale = null)`` | This will translate the text with pluralization, more information |
-|                                                                                 | in :ref:`book-translation-twig`.                                  |
+|                                                                                 | in :ref:`Translation Filters<book-translation-filters>`.          |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_encode(inline = 0)``                                            | This will transform the variable text into a YAML syntax.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
@@ -98,23 +134,31 @@ Filters
 Tags
 ----
 
-+---------------------------------------------------+-------------------------------------------------------------------+
-| Tag Syntax                                        | Usage                                                             |
-+===================================================+===================================================================+
-| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller    |
-|                                                   | that the URL points to. For more information,                     |
-|                                                   | see :ref:`templating-embedding-controller`.                       |
-+---------------------------------------------------+-------------------------------------------------------------------+
-| ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,  |
-|                                                   | more information in :doc:`/cookbook/form/form_customization`.     |
-+---------------------------------------------------+-------------------------------------------------------------------+
-| ``{% trans with {variables} %}...{% endtrans %}`` | This will translate and render the text, more information in      |
-|                                                   | :ref:`book-translation-twig`                                      |
-+---------------------------------------------------+-------------------------------------------------------------------+
-| ``{% transchoice count with {variables} %}``      | This will translate and render the text with pluralization, more  |
-| ...                                               | information in :ref:`book-translation-twig`                       |
-| ``{% endtranschoice %}``                          |                                                                   |
-+---------------------------------------------------+-------------------------------------------------------------------+
++---------------------------------------------------+--------------------------------------------------------------------+
+| Tag Syntax                                        | Usage                                                              |
++===================================================+====================================================================+
+| ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,   |
+|                                                   | more information in :doc:`/cookbook/form/form_customization`.      |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% trans with {variables} %}...{% endtrans %}`` | This will translate and render the text, more information in       |
+|                                                   | :ref:`book-translation-tags`                                       |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% transchoice count with {variables} %}``      | This will translate and render the text with pluralization, more   |
+| ...                                               | information in :ref:`book-translation-tags`                        |
+| ``{% endtranschoice %}``                          |                                                                    |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% trans_default_domain language %}``           | This will set the default domain for message catalogues in the     |
+|                                                   | current template                                                   |
++---------------------------------------------------+--------------------------------------------------------------------+
+
+Tests
+-----
+
++---------------------------------------------------+------------------------------------------------------------------------------+
+| Test Syntax                                       | Usage                                                                        |
++===================================================+==============================================================================+
+| ``selectedchoice(choice, selectedValue)``         | This will return ``true`` if the choice is selected for the given form value |
++---------------------------------------------------+------------------------------------------------------------------------------+
 
 Global Variables
 ----------------

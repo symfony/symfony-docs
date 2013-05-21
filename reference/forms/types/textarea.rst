@@ -14,9 +14,11 @@ Renders a ``textarea`` HTML element.
 |             | - `label`_                                                             |
 |             | - `trim`_                                                              |
 |             | - `read_only`_                                                         |
+|             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                             |
+| Parent type | :doc:`field</reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
@@ -24,7 +26,7 @@ Renders a ``textarea`` HTML element.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
@@ -36,5 +38,8 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
+.. include:: /reference/forms/types/options/mapped.rst.inc

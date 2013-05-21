@@ -18,7 +18,9 @@ have a protocol.
 |             | - `label`_                                                        |
 |             | - `trim`_                                                         |
 |             | - `read_only`_                                                    |
+|             | - `disabled`_                                                     |
 |             | - `error_bubbling`_                                               |
+|             | - `mapped`_                                                       |
 +-------------+-------------------------------------------------------------------+
 | Parent type | :doc:`text</reference/forms/types/text>`                          |
 +-------------+-------------------------------------------------------------------+
@@ -35,12 +37,12 @@ default_protocol
 
 If a value is submitted that doesn't begin with some protocol (e.g. ``http://``,
 ``ftp://``, etc), this protocol will be prepended to the string when
-the data is bound to the form.
+the data is submitted to the form.
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
@@ -52,4 +54,8 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

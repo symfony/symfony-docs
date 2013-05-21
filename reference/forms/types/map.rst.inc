@@ -47,7 +47,13 @@ Hidden Fields
 ~~~~~~~~~~~~~
 
 * :doc:`hidden</reference/forms/types/hidden>`
-* :doc:`csrf</reference/forms/types/csrf>`
+
+Buttons
+~~~~~~~
+
+* :doc:`button</reference/forms/types/button>`
+* :doc:`reset</reference/forms/types/reset>`
+* :doc:`submit</reference/forms/types/submit>`
 
 Base Fields
 ~~~~~~~~~~~

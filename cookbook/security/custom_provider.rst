@@ -22,8 +22,16 @@ create a ``User`` class that represents that data. The ``User`` can look
 however you want and contain any data. The only requirement is that the
 class implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 The methods in this interface should therefore be defined in the custom user
-class: ``getRoles()``, ``getPassword()``, ``getSalt()``, ``getUsername()``,
-``eraseCredentials()``, ``equals()``.
+class: :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getRoles`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getPassword`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getSalt`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredentials`.
+It may also be useful to implement the
+:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface` interface,
+which defines a method to check if the user is equal to the current user. This
+interface requires an :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo`
+method.
 
 Let's see this in action::
 
@@ -31,8 +39,9 @@ Let's see this in action::
     namespace Acme\WebserviceUserBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\User\EquatableInterface;
 
-    class WebserviceUser implements UserInterface
+    class WebserviceUser implements UserInterface, EquatableInterface
     {
         private $username;
         private $password;
@@ -71,7 +80,7 @@ Let's see this in action::
         {
         }
 
-        public function equals(UserInterface $user)
+        public function isEqualTo(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
                 return false;
@@ -95,8 +104,6 @@ Let's see this in action::
 
 If you have more information about your users - like a "first name" - then
 you can add a ``firstName`` field to hold that data.
-
-For more details on each of the methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 Create a User Provider
 ----------------------

@@ -14,6 +14,8 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `type`_                                                              |
 |             | - `options`_                                                           |
+|             | - `first_options`_                                                     |
+|             | - `second_options`_                                                    |
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
@@ -22,6 +24,7 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `invalid_message`_                                                   |
 | options     | - `invalid_message_parameters`_                                        |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
@@ -36,7 +39,10 @@ Example Usage
     $builder->add('password', 'repeated', array(
         'type' => 'password',
         'invalid_message' => 'The password fields must match.',
-        'options' => array('label' => 'Password'),
+        'options' => array('attr' => array('class' => 'password-field')),
+        'required' => true,
+        'first_options'  => array('label' => 'Password'),
+        'second_options' => array('label' => 'Repeat Password'),
     ));
 
 Upon a successful form submit, the value entered into both of the "password"
@@ -72,13 +78,11 @@ To render each field individually, use something like this:
 
     .. code-block:: jinja
 
-        {{ form_errors(form.password) }}
         {{ form_row(form.password.first) }}
         {{ form_row(form.password.second) }}
 
     .. code-block:: php
 
-        <?php echo $view['form']->errors($form['password']) ?>
         <?php echo $view['form']->row($form['password']['first']) ?>
         <?php echo $view['form']->row($form['password']['second']) ?>
 
@@ -120,6 +124,29 @@ For example, if the ``type`` option is set to ``password``, this array might
 contain the options ``always_empty`` or ``required`` - both options that are
 supported by the ``password`` field type.
 
+first_options
+~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+Additional options (will be merged into `options` above) that should be passed
+*only* to the first field. This is especially useful for customizing the
+label::
+
+    $builder->add('password', 'repeated', array(
+        'first_options'  => array('label' => 'Password'),
+        'second_options' => array('label' => 'Repeat Password'),
+    ));
+
+second_options
+~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+Additional options (will be merged into `options` above) that should be passed
+*only* to the second field. This is especially useful for customizing the
+label (see `first_options`_).
+
 first_name
 ~~~~~~~~~~
 
@@ -149,8 +176,10 @@ error_bubbling
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

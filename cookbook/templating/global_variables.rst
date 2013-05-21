@@ -44,10 +44,10 @@ Now, the variable ``ga_tracking`` is available in all Twig templates:
 It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
 system, which lets you isolate or reuse the value:
 
-.. code-block:: ini
+.. code-block:: yaml
 
-    ; app/config/parameters.ini
-    [parameters]
+    # app/config/parameters.yml
+    parameters:
         ga_tracking: UA-xxxxx-x
 
 .. configuration-block::

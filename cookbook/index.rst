@@ -12,7 +12,9 @@ The Cookbook
     form/index
     validation/index
     configuration/index
+    serializer
     service_container/index
+    session/index
     bundles/index
     email/index
     testing/index
@@ -24,6 +26,7 @@ The Cookbook
     debugging
     event_dispatcher/index
     request/index
+    session/index
     profiler/index
     web_services/index
     symfony1

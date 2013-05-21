@@ -120,26 +120,25 @@ error occurred:
     As the parser is re-entrant, you can use the same parser object to load
     different YAML strings.
 
-When loading a YAML file, it is sometimes better to use the
+It may also be convenient to use the
 :method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method:
 
 .. code-block:: php
 
     use Symfony\Component\Yaml\Yaml;
 
-    $yaml = Yaml::parse('/path/to/file.yml');
+    $yaml = Yaml::parse(file_get_contents('/path/to/file.yml'));
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` static method takes a YAML
 string or a file containing YAML. Internally, it calls the
-:method:`Symfony\\Component\\Yaml\\Parser::parse` method, but with some added
-bonuses:
+:method:`Symfony\\Component\\Yaml\\Parser::parse` method, but enhances the
+error if something goes wrong by adding the filename to the message.
 
-* It executes the YAML file as if it was a PHP file, so that you can embed PHP
-  commands in YAML files;
+.. caution::
 
-* When a file cannot be parsed, it automatically adds the file name to the
-  error message, simplifying debugging when your application is loading
-  several YAML files.
+    Because it is currently possible to pass a filename to this method, you
+    must validate the input first. Passing a filename is deprecated in
+    Symfony 2.2, and will be removed in Symfony 3.0.
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~

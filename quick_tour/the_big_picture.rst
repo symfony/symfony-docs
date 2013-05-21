@@ -17,7 +17,7 @@ Downloading Symfony2
 --------------------
 
 First, check that you have installed and configured a Web server (such as
-Apache) with PHP 5.3.2 or higher.
+Apache) with PHP 5.3.3 or higher.
 
 .. tip::
 
@@ -71,12 +71,35 @@ have a ``Symfony/`` directory that looks like this:
 
 .. note::
 
-    If you downloaded the Standard Edition *without vendors*, simply run the
-    following command to download all of the vendor libraries:
+    If you are familiar with Composer, you can run the following command
+    instead of downloading the archive:
 
     .. code-block:: bash
 
-        $ php bin/vendors install
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.2.0
+
+        # remove the Git history
+        $ rm -rf .git
+    
+    For an exact version, replace `2.2.0` with the latest Symfony version
+    (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
+
+.. tip::
+
+    If you have PHP 5.4, you can use the built-in web server:
+
+    .. code-block:: bash
+
+        # check your PHP CLI configuration
+        $ php ./app/check.php
+
+        # run the built-in web server
+        $ php ./app/console server:run
+
+    Then the URL to your application will be "http://localhost:8000/app_dev.php"
+
+    The built-in server should be used only for development purpose, but it
+    can help you to start your project quickly and easily.
 
 Checking the Configuration
 --------------------------
@@ -87,7 +110,18 @@ URL to see the diagnostics for your machine:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/config.php
+    http://localhost/config.php
+
+.. note::
+
+    All of the example URLs assume that you've downloaded and unzipped Symfony
+    directly into the web server web root. If you've followed the directions
+    above and unzipped the `Symfony` directory into your web root, then add
+    `/Symfony/web` after `localhost` for all the URLs you see:
+
+    .. code-block:: text
+
+        http://localhost/Symfony/web/config.php
 
 .. note::
 
@@ -113,11 +147,11 @@ your first "real" Symfony2 webpage:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/
+    http://localhost/app_dev.php/
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
-.. image:: /images/quick_tour/welcome.jpg
+.. image:: /images/quick_tour/welcome.png
    :align: center
 
 Understanding the Fundamentals
@@ -141,7 +175,7 @@ Symfony2 (replace *Fabien* with your first name):
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/demo/hello/Fabien
+    http://localhost/app_dev.php/demo/hello/Fabien
 
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
@@ -162,18 +196,29 @@ Routing
 ~~~~~~~
 
 Symfony2 routes the request to the code that handles it by trying to match the
-requested URL against some configured patterns. By default, these patterns
+requested URL against some configured paths. By default, these paths
 (called routes) are defined in the ``app/config/routing.yml`` configuration
 file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
 indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
 configuration file is also loaded. In the Standard Edition, the routes to
-these "demo" pages are placed in that file:
+these "demo" pages are imported from this file:
 
 .. code-block:: yaml
 
     # app/config/routing_dev.yml
+    # ...
+
+    # AcmeDemoBundle routes (to be removed)
+    _acme_demo:
+        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+
+This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
+
+.. code-block:: yaml
+
+    # src/Acme/DemoBundle/Resources/config/routing.yml
     _welcome:
-        pattern:  /
+        path:  /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     _demo:
@@ -284,7 +329,8 @@ key:
 
 .. code-block:: yaml
 
-    # app/config/routing_dev.yml
+    # src/Acme/DemoBundle/Resources/config/routing.yml
+    # ...
     _demo:
         resource: "@AcmeDemoBundle/Controller/DemoController.php"
         type:     annotation
@@ -314,7 +360,7 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@Route()`` annotation defines a new route with a pattern of
+The ``@Route()`` annotation defines a new route with a path of
 ``/hello/{name}`` that executes the ``helloAction`` method when matched. A
 string enclosed in curly brackets like ``{name}`` is called a placeholder. As
 you can see, its value can be retrieved through the ``$name`` method argument.
@@ -392,20 +438,25 @@ the profiler.
 .. image:: /images/quick_tour/profiler.png
    :align: center
 
+.. note::
+
+    You can get more information quickly by hovering over the items on the 
+    Web Debug Toolbar.
+
 Of course, you won't want to show these tools when you deploy your application
 to production. That's why you will find another front controller in the
 ``web/`` directory (``app.php``), which is optimized for the production environment:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app.php/demo/hello/Fabien
+    http://localhost/app.php/demo/hello/Fabien
 
 And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 ``app.php`` part of the URL:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/demo/hello/Fabien
+    http://localhost/demo/hello/Fabien
 
 Last but not least, on the production servers, you should point your web root
 directory to the ``web/`` directory to secure your installation and have an
@@ -464,3 +515,4 @@ are eager to learn more about Symfony2, dive into the next section:
 .. _YAML:                           http://www.yaml.org/
 .. _annotations in controllers:     http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
 .. _Twig:                           http://twig.sensiolabs.org/
+.. _`Symfony Installation Page`:    http://symfony.com/download
