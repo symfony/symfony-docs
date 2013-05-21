@@ -16,11 +16,16 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/events`
   * :doc:`/components/console/helpers/index`
 
 * **CSS Selector**
 
   * :doc:`/components/css_selector`
+
+* **Debug**
+
+  * :doc:`/components/debug`
 
 * :doc:`/components/dependency_injection/index`
 
@@ -34,6 +39,7 @@
   * :doc:`/components/dependency_injection/configurators`
   * :doc:`/components/dependency_injection/parentservices`
   * :doc:`/components/dependency_injection/advanced`
+  * :doc:`/components/dependency_injection/lazy_services`
   * :doc:`/components/dependency_injection/workflow`
 
 * **DOM Crawler**
@@ -60,15 +66,16 @@
   * :doc:`/components/http_foundation/sessions`
   * :doc:`/components/http_foundation/session_configuration`
   * :doc:`/components/http_foundation/session_testing`
+  * :doc:`/components/http_foundation/session_php_bridge`
   * :doc:`/components/http_foundation/trusting_proxies`
 
 * :doc:`/components/http_kernel/index`
 
   * :doc:`/components/http_kernel/introduction`
 
-* **Locale**
+* **Intl**
 
-  * :doc:`/components/locale`
+  * :doc:`/components/intl`
 
 * **Options Resolver**
 
@@ -78,13 +85,22 @@
 
   * :doc:`/components/process`
 
+* :doc:`/components/property_access/index`
+
+  * :doc:`/components/property_access/introduction`
+
 * :doc:`/components/routing/index`
 
   * :doc:`/components/routing/introduction`
+  * :doc:`/components/routing/hostname_pattern`
 
 * **Serializer**
 
   * :doc:`/components/serializer`
+
+* **Stopwatch**
+
+  * :doc:`/components/stopwatch`
 
 * :doc:`/components/security/index`
 

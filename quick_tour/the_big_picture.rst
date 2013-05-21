@@ -76,12 +76,12 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.1.x-dev
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.2.0
 
         # remove the Git history
         $ rm -rf .git
     
-    For an exact version, replace `2.1.x-dev` with the latest Symfony version
+    For an exact version, replace `2.2.0` with the latest Symfony version
     (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
 .. tip::
@@ -196,18 +196,29 @@ Routing
 ~~~~~~~
 
 Symfony2 routes the request to the code that handles it by trying to match the
-requested URL against some configured patterns. By default, these patterns
+requested URL against some configured paths. By default, these paths
 (called routes) are defined in the ``app/config/routing.yml`` configuration
 file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
 indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
 configuration file is also loaded. In the Standard Edition, the routes to
-these "demo" pages are placed in that file:
+these "demo" pages are imported from this file:
 
 .. code-block:: yaml
 
     # app/config/routing_dev.yml
+    # ...
+
+    # AcmeDemoBundle routes (to be removed)
+    _acme_demo:
+        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+
+This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
+
+.. code-block:: yaml
+
+    # src/Acme/DemoBundle/Resources/config/routing.yml
     _welcome:
-        pattern:  /
+        path:  /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     _demo:
@@ -318,7 +329,8 @@ key:
 
 .. code-block:: yaml
 
-    # app/config/routing_dev.yml
+    # src/Acme/DemoBundle/Resources/config/routing.yml
+    # ...
     _demo:
         resource: "@AcmeDemoBundle/Controller/DemoController.php"
         type:     annotation
@@ -348,7 +360,7 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@Route()`` annotation defines a new route with a pattern of
+The ``@Route()`` annotation defines a new route with a path of
 ``/hello/{name}`` that executes the ``helloAction`` method when matched. A
 string enclosed in curly brackets like ``{name}`` is called a placeholder. As
 you can see, its value can be retrieved through the ``$name`` method argument.

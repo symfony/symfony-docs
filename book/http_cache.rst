@@ -885,58 +885,38 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
-        {% render url('latest_news', { 'max': 5 }) with {}, {'standalone': true} %}
+        {# you can use a controller reference #}
+        {{ render_esi(controller('...:news', { 'max': 5 })) }}
+
+        {# ... or a URL #}
+        {{ render_esi(url('latest_news', { 'max': 5 })) }}
 
     .. code-block:: html+php
 
         <?php echo $view['actions']->render(
+            new ControllerReference('...:news', array('max' => 5)),
+            array('renderer' => 'esi'))
+        ?>
+
+        <?php echo $view['actions']->render(
             $view['router']->generate('latest_news', array('max' => 5), true),
-            array('standalone' => true)
-        ); ?>
+            array('renderer' => 'esi'),
+        ) ?>
 
-.. include:: /book/_security-2012-6431.rst.inc
+By using the ``esi`` renderer (via the ``render_esi`` Twig function), you
+tell Symfony2 that the action should be rendered as an ESI tag. You might be
+wondering why you would want to use a helper instead of just writing the ESI
+tag yourself. That's because using a helper makes your application work even
+if there is no gateway cache installed.
 
-The ``render`` tag takes the absolute url to the embedded action. This means
-that you need to define a new route to the controller that you're embedding:
-
-.. code-block:: yaml
-
-    # app/config/routing.yml
-    latest_news:
-        pattern:      /esi/latest-news/{max}
-        defaults:     { _controller: AcmeNewsBundle:News:news }
-        requirements: { max: \d+ }
-
-.. caution::
-
-    Unless you want this URL to be accessible to the outside world, you
-    should use Symfony's firewall to secure it (by allowing access to your
-    reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>`
-    section of the :doc:`Security Chapter </book/security>` for more information
-    on how to do this.
-
-.. tip::
-
-    The best practice is to mount all your ESI urls on a single prefix (e.g.
-    ``/esi``) of your choice. This has two main advantages. First, it eases
-    the management of ESI urls as you can easily identify the routes used for ESI.
-    Second, it eases security management since securing all urls starting
-    with the same prefix is easier than securing each individual url. See
-    the above note for more details on securing ESI URLs.
-
-By setting ``standalone`` to ``true`` in the ``render`` Twig tag, you tell
-Symfony2 that the action should be rendered as an ESI tag. You might be
-wondering why you would want to use a helper instead of just writing the ESI tag
-yourself. That's because using a helper makes your application work even if
-there is no gateway cache installed.
-
-When standalone is ``false`` (the default), Symfony2 merges the included page
-content within the main one before sending the response to the client. But
-when standalone is ``true``, *and* if Symfony2 detects that it's talking
-to a gateway cache that supports ESI, it generates an ESI include tag. But
-if there is no gateway cache or if it does not support ESI, Symfony2 will
-just merge the included page content within the main one as it would have
-done were standalone set to ``false``.
+When using the default ``render`` function (or setting the renderer to
+``inline``), Symfony2 merges the included page content into the main one
+before sending the response to the client. But if you use the ``esi`` renderer
+(i.e. call ``render_esi``), *and* if Symfony2 detects that it's talking to a
+gateway cache that supports ESI, it generates an ESI include tag. But if there
+is no gateway cache or if it does not support ESI, Symfony2 will just merge
+the included page content within the main one as it would have done if you had
+used ``render``.
 
 .. note::
 
@@ -951,17 +931,52 @@ of the master page.
 
     public function newsAction($max)
     {
-      // ...
+        // ...
 
-      $response->setSharedMaxAge(60);
+        $response->setSharedMaxAge(60);
     }
 
 With ESI, the full page cache will be valid for 600 seconds, but the news
 component cache will only last for 60 seconds.
 
-One great advantage of this caching strategy is that you can make your
-application as dynamic as needed and at the same time, hit the application as
-little as possible.
+When using a controller reference, the ESI tag should reference the embedded
+action as an accessible URL so the gateway cache can fetch it independently of
+the rest of the page. Symfony2 takes care of generating a unique URL for any
+controller reference and it is able to route them properly thanks to a
+listener that must be enabled in your configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            fragments: { path: /_fragment }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:fragments path="/_fragment" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'fragments' => array('path' => '/_fragment'),
+        ));
+
+One great advantage of the ESI renderer is that you can make your application
+as dynamic as needed and at the same time, hit the application as little as
+possible.
+
+.. tip::
+
+    The listener listener only responds to local IP addresses or trusted
+    proxies.
 
 .. note::
 
@@ -971,7 +986,7 @@ little as possible.
     obey the ``max-age`` directive and cache the entire page. And you don't
     want that.
 
-The ``render`` helper supports two other useful options:
+The ``render_esi`` helper supports two other useful options:
 
 * ``alt``: used as the ``alt`` attribute on the ESI tag, which allows you
   to specify an alternative URL to be used if the ``src`` cannot be found;

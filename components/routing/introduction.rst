@@ -70,9 +70,9 @@ which holds the name of the matched route.
 Defining routes
 ~~~~~~~~~~~~~~~
 
-A full route definition can contain up to four parts:
+A full route definition can contain up to seven parts:
 
-1. The URL pattern route. This is matched against the URL passed to the `RequestContext`,
+1. The URL path route. This is matched against the URL passed to the `RequestContext`,
 and can contain named wildcard placeholders (e.g. ``{placeholders}``)
 to match dynamic parts in the URL.
 
@@ -85,13 +85,27 @@ placeholders as regular expressions.
 4. An array of options. These contain internal settings for the route and
 are the least commonly needed.
 
+5. A host. This is matched against the host of the request.  See
+   :doc:`/components/routing/hostname_pattern` for more details.
+
+6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
+
+7. An array of methods. These enforce a certain HTTP request method (``HEAD``,
+   ``GET``, ``POST``, ...).
+
+.. versionadded:: 2.2
+    Host matching support was added in Symfony 2.2
+
 Take the following route, which combines several of these ideas::
 
    $route = new Route(
        '/archive/{month}', // path
        array('controller' => 'showArchive'), // default values
-       array('month' => '[0-9]{4}-[0-9]{2}'), // requirements
-       array() // options
+       array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
+       array(), // options
+       '{subdomain}.example.com', // host
+       array(), // schemes
+       array() // methods
    );
 
    // ...
@@ -99,8 +113,9 @@ Take the following route, which combines several of these ideas::
    $parameters = $matcher->match('/archive/2012-01');
    // array(
    //     'controller' => 'showArchive',
-   //     'month'      => '2012-01',
-   //     '_route'     => ...
+   //     'month' => '2012-01',
+   //     'subdomain' => 'www',
+   //     '_route' => ...
    //  )
 
    $parameters = $matcher->match('/archive/foo');
@@ -109,21 +124,6 @@ Take the following route, which combines several of these ideas::
 In this case, the route is matched by ``/archive/2012-01``, because the ``{month}``
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
-
-Besides the regular expression constraints there are two special requirements
-you can define:
-
-* ``_method`` enforces a certain HTTP request method (``HEAD``, ``GET``, ``POST``, ...)
-* ``_scheme`` enforces a certain HTTP scheme (``http``, ``https``)
-
-For example, the following route would only accept requests to /foo with
-the POST method and a secure connection::
-
-   $route = new Route(
-       '/foo',
-       array(),
-       array('_method' => 'post', '_scheme' => 'https' )
-   );
 
 .. tip::
 
@@ -142,19 +142,27 @@ Using Prefixes
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
 This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements and default options to all routes of a subtree::
+default requirements, default options and host to all routes of a subtree with
+the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
 
     $rootCollection = new RouteCollection();
 
     $subCollection = new RouteCollection();
     $subCollection->add(...);
     $subCollection->add(...);
-
-    $rootCollection->addCollection(
-        $subCollection,
-        '/prefix',
-        array('_scheme' => 'https')
+    $subCollection->addPrefix(
+        '/prefix', // prefix
+        array(), // requirements
+        array(), // options
+        'admin.example.com', // host
+        array('https') // schemes
     );
+
+    $rootCollection->addCollection($subCollection);
+
+.. versionadded:: 2.2
+    The ``addPrefix`` method is added in Symfony2.2. This was part of the
+    ``addCollection`` method in older versions.
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -208,9 +216,9 @@ a certain route::
 
 .. note::
 
-    If you have defined the ``_scheme`` requirement, an absolute URL is generated
-    if the scheme of the current :class:`Symfony\\Component\\Routing\\RequestContext`
-    does not match the requirement.
+    If you have defined a scheme, an absolute URL is generated if the scheme
+    of the current :class:`Symfony\\Component\\Routing\\RequestContext` does
+    not match the requirement.
 
 Load Routes from a File
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,11 +240,11 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
 
     # routes.yml
     route1:
-        pattern: /foo
+        path:     /foo
         defaults: { _controller: 'MyController::fooAction' }
 
     route2:
-        pattern: /foo/bar
+        path:     /foo/bar
         defaults: { _controller: 'MyController::foobarAction' }
 
 To load this file, you can use the following code. This assumes that your

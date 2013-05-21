@@ -141,7 +141,7 @@ Mapping a URL to a Controller
 -----------------------------
 
 The new controller returns a simple HTML page. To actually view this page
-in your browser, you need to create a route, which maps a specific URL pattern
+in your browser, you need to create a route, which maps a specific URL path
 to the controller:
 
 .. configuration-block::
@@ -150,13 +150,13 @@ to the controller:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index }
+            path:      /hello/{name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
+        <route id="hello" path="/hello/{name}">
             <default key="_controller">AcmeHelloBundle:Hello:index</default>
         </route>
 
@@ -229,13 +229,13 @@ example:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index, color: green }
+            path:      /hello/{first_name}/{last_name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{first_name}/{last_name}">
+        <route id="hello" path="/hello/{first_name}/{last_name}">
             <default key="_controller">AcmeHelloBundle:Hello:index</default>
             <default key="color">green</default>
         </route>
@@ -325,7 +325,7 @@ working with forms, for example::
     {
         $form = $this->createForm(...);
 
-        $form->bind($request);
+        $form->handleRequest($request);
         // ...
     }
 
@@ -663,7 +663,8 @@ For example, imagine you're processing a form submit::
     {
         $form = $this->createForm(...);
 
-        $form->bind($this->getRequest());
+        $form->handleRequest($this->getRequest());
+
         if ($form->isValid()) {
             // do some sort of processing
 
@@ -738,8 +739,12 @@ headers and content that's sent back to the client::
 
 .. tip::
 
-    There is also a special :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
-    class that helps return JSON responses. See :ref:`component-http-foundation-json-response`.
+    There are also special classes to make certain kinds of responses easier:
+
+    - For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+      See :ref:`component-http-foundation-json-response`.
+    - For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
+      See :ref:`component-http-foundation-serving-files`.
 
 .. index::
    single: Controller; Request object

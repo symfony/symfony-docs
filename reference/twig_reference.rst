@@ -17,17 +17,43 @@ There may also be tags in bundles you use that aren't listed here.
 Functions
 ---------
 
-.. versionadded:: 2.1
-    The ``csrf_token``, ``logout_path`` and ``logout_url`` functions were added in Symfony2.1
+.. versionadded:: 2.2
+    The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
+    the ``{% render %}`` tag was used and had a different signature.
 
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
+| ``render(uri, options = {})``                      | This will render the fragment for the given controller or URL                              |
+| ``render(controller('B:C:a', {params}))``          | For more information, see :ref:`templating-embedding-controller`.                          |
+| ``render(path('route', {params}))``                |                                                                                            |
+| ``render(url('route', {params}))``                 |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``render_esi(controller('B:C:a', {params}))``      | This will generates an ESI tag when possible or fallback to the ``render``                 |
+| ``render_esi(url('route', {params}))``             | behavior otherwise. For more information, see :ref:`templating-embedding-controller`.      |
+| ``render_esi(path('route', {params}))``            |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``render_hinclude(controller(...))``               | This will generates an Hinclude tag for the given controller or URL.                       |
+| ``render_hinclude(url('route', {params}))``        | For more information, see :ref:`templating-embedding-controller`.                          |
+| ``render_hinclude(path('route', {params}))``       |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``controller(attributes = {}, query = {})``        | Used along with the ``render`` tag to refer to the controller that you want to render.     |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset(path, packageName = null)``                | Get the public path of the asset, more information in                                      |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset_version(packageName = null)``              | Get the current version of the package, more information in                                |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form(view, variables = {})``                     | This will render the HTML of a complete form, more information in                          |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-form>`.                              |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_start(view, variables = {})``               | This will render the HTML start tag of a form, more information in                         |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-start>`.                             |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_end(view, variables = {})``                 | This will render the HTML end tag of a form together with all fields that                  |
+|                                                    | have not been rendered yet, more information                                               |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-end>`.                               |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_enctype(view)``                             | This will render the required ``enctype="multipart/form-data"`` attribute                  |
 |                                                    | if the form contains at least one file upload field, more information in                   |
@@ -66,9 +92,6 @@ Functions
 
 Filters
 -------
-
-.. versionadded:: 2.1
-    The ``humanize`` filter was added in Symfony2.1
 
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Filter Syntax                                                                   | Usage                                                             |
@@ -114,10 +137,6 @@ Tags
 +---------------------------------------------------+--------------------------------------------------------------------+
 | Tag Syntax                                        | Usage                                                              |
 +===================================================+====================================================================+
-| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller     |
-|                                                   | that the URL points to. For more information,                      |
-|                                                   | see :ref:`templating-embedding-controller`.                        |
-+---------------------------------------------------+--------------------------------------------------------------------+
 | ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,   |
 |                                                   | more information in :doc:`/cookbook/form/form_customization`.      |
 +---------------------------------------------------+--------------------------------------------------------------------+
@@ -134,9 +153,6 @@ Tags
 
 Tests
 -----
-
-.. versionadded:: 2.1
-    The ``selectedchoice`` test was added in Symfony2.1
 
 +---------------------------------------------------+------------------------------------------------------------------------------+
 | Test Syntax                                       | Usage                                                                        |

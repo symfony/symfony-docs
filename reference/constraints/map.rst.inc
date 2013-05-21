@@ -16,8 +16,6 @@ String Constraints
 ~~~~~~~~~~~~~~~~~~
 
 * :doc:`Email </reference/constraints/Email>`
-* :doc:`MinLength </reference/constraints/MinLength>`
-* :doc:`MaxLength </reference/constraints/MaxLength>`
 * :doc:`Length </reference/constraints/Length>`
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
@@ -26,9 +24,19 @@ String Constraints
 Number Constraints
 ~~~~~~~~~~~~~~~~~~
 
-* :doc:`Max </reference/constraints/Max>`
-* :doc:`Min </reference/constraints/Min>`
 * :doc:`Range </reference/constraints/Range>`
+
+Comparison Constraints
+~~~~~~~~~~~~~~~~~~~~~~
+
+* :doc:`EqualTo </reference/constraints/EqualTo>`
+* :doc:`NotEqualTo </reference/constraints/NotEqualTo>`
+* :doc:`IdenticalTo </reference/constraints/IdenticalTo>`
+* :doc:`NotIdenticalTo </reference/constraints/NotIdenticalTo>`
+* :doc:`LessThan </reference/constraints/LessThan>`
+* :doc:`LessThanOrEqual </reference/constraints/LessThanOrEqual>`
+* :doc:`GreaterThan </reference/constraints/GreaterThan>`
+* :doc:`GreaterThanOrEqual </reference/constraints/GreaterThanOrEqual>`
 
 Date Constraints
 ~~~~~~~~~~~~~~~~
@@ -53,6 +61,15 @@ File Constraints
 
 * :doc:`File </reference/constraints/File>`
 * :doc:`Image </reference/constraints/Image>`
+
+Financial and other Number Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* :doc:`CardScheme </reference/constraints/CardScheme>`
+* :doc:`Luhn </reference/constraints/Luhn>`
+* :doc:`Iban </reference/constraints/Iban>`
+* :doc:`Isbn </reference/constraints/Isbn>`
+* :doc:`Issn </reference/constraints/Issn>`
 
 Other Constraints
 ~~~~~~~~~~~~~~~~~

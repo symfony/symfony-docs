@@ -410,11 +410,6 @@ submission (i.e.  ``/login_check``):
     URL as the firewall will automatically catch and process any form submitted
     to this URL.
 
-.. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
-    ``check_path`` ``logout`` keys. These keys can be route names (as shown
-    in this example) or URLs that have routes configured for them.
-
 Notice that the name of the ``login`` route matches the``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
@@ -770,7 +765,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``
-* ``ip``
+* ``ip`` or ``ips``
 * ``host``
 * ``methods``
 
@@ -877,6 +872,11 @@ prevent any direct access to these resources from a web browser (by guessing the
 ESI URL pattern), the ESI route **must** be secured to be only visible from
 the trusted reverse proxy cache.
 
+.. versionadded:: 2.3
+    Version 2.3 allows multiple IP addresses in a single rule with the ``ips: [a, b]``
+    construct.  Prior to 2.3, users should create one rule per IP address to match and
+    use the ``ip`` key instead of ``ips``.
+
 Here is an example of how you might secure all ESI routes that start with a
 given prefix, ``/esi``, from outside access:
 
@@ -888,20 +888,20 @@ given prefix, ``/esi``, from outside access:
         security:
             # ...
             access_control:
-                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
                 - { path: ^/esi, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ips="127.0.0.1, ::1" />
                 <rule path="^/esi" role="ROLE_NO_ACCESS" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ips' => '127.0.0.1, ::1'),
                 array('path' => '^/esi', 'role' => 'ROLE_NO_ACCESS'),
             ),
 
@@ -909,7 +909,7 @@ Here is how it works when the path is ``/esi/something`` coming from the
 ``10.0.0.1`` IP:
 
 * The first access control rule is ignored as the ``path`` matches but the
-  ``ip`` does not;
+  ``ip`` does not match either of the IPs listed;
 
 * The second access control rule is enabled (the only restriction being the
   ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
@@ -917,15 +917,14 @@ Here is how it works when the path is ``/esi/something`` coming from the
   be anything that does not match an existing role, it just serves as a trick
   to always deny access).
 
-Now, if the same request comes from ``127.0.0.1``:
+Now, if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
+address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
   ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
 
 * The second access rule is not examined as the first rule matched.
-
-.. include:: /book/_security-2012-6431.rst.inc
 
 .. _book-security-securing-channel:
 
@@ -1163,12 +1162,6 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface.
-
 .. note::
 
     The user object will be serialized and saved in the session during requests,
@@ -1339,6 +1332,13 @@ will default to hashing your password 5000 times in a row and then encoding
 it as base64. In other words, the password has been greatly obfuscated so
 that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
+
+.. versionadded:: 2.2
+    As of Symfony 2.2 you can also use the :ref:`PBKDF2<reference-security-pbkdf2>`
+    and :ref:`BCrypt<reference-security-bcrypt>` password encoders.
+
+Determining the Hashed Password
+...............................
 
 If you have some sort of registration form for users, you'll need to be able
 to determine the hashed password so that you can set it on your user. No
@@ -1711,7 +1711,7 @@ a route so that you can use it to generate the URL:
 
         # app/config/routing.yml
         logout:
-            pattern:   /logout
+            path:   /logout
 
     .. code-block:: xml
 
@@ -1722,7 +1722,7 @@ a route so that you can use it to generate the URL:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="logout" pattern="/logout" />
+            <route id="logout" path="/logout" />
 
         </routes>
 
@@ -1952,6 +1952,61 @@ cookie will be ever created by Symfony2):
     If you use a form login, Symfony2 will create a cookie even if you set
     ``stateless`` to ``true``.
 
+Utilities
+---------
+
+.. versionadded:: 2.2
+    The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
+
+The Symfony Security Component comes with a collection of nice utilities related
+to security. These utilities are used by Symfony, but you should also use
+them if you want to solve the problem they address.
+
+Comparing Strings
+~~~~~~~~~~~~~~~~~
+
+The time it takes to compare two strings depends on their differences. This
+can be used by an attacker when the two strings represent a password for
+instance; it is known as a `Timing attack`_.
+
+Internally, when comparing two passwords, Symfony uses a constant-time
+algorithm; you can use the same strategy in your own code thanks to the
+:class:`Symfony\\Component\\Security\\Core\\Util\\StringUtils` class::
+
+    use Symfony\Component\Security\Core\Util\StringUtils;
+
+    // is password1 equals to password2?
+    $bool = StringUtils::equals($password1, $password2);
+
+Generating a secure Random Number
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whenever you need to generate a secure random number, you are highly
+encouraged to use the Symfony
+:class:`Symfony\\Component\\Security\\Core\\Util\\SecureRandom` class::
+
+    use Symfony\Component\Security\Core\Util\SecureRandom;
+
+    $generator = new SecureRandom();
+    $random = $generator->nextBytes(10);
+
+The
+:method:`Symfony\\Component\\Security\\Core\\Util\\SecureRandom::nextBytes`
+methods returns a random string composed of the number of characters passed as
+an argument (10 in the above example).
+
+The SecureRandom class works better when OpenSSL is installed but when it's
+not available, it falls back to an internal algorithm, which needs a seed file
+to work correctly. Just pass a file name to enable it::
+
+    $generator = new SecureRandom('/some/path/to/store/the/seed.txt');
+    $random = $generator->nextBytes(10);
+
+.. note::
+
+    You can also access a secure random instance directly from the Symfony
+    dependency injection container; its name is ``security.secure_random``.
+
 Final Words
 -----------
 
@@ -1985,3 +2040,4 @@ Learn more from the Cookbook
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
+.. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack

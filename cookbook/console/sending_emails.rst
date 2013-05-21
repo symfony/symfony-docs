@@ -20,13 +20,16 @@ and per Command.
 Configuring the Request Context globally
 ----------------------------------------
 
-.. versionadded:: 2.1
-    The ``host`` and ``scheme`` parameters are available since Symfony 2.1
+.. versionadded: 2.2
+    The ``base_url`` parameter is available since Symfony 2.2
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
-(localhost) and scheme (http). Note that this does not impact URLs generated
-via normal web requests, since those will override the defaults.
+(localhost) and scheme (http). Starting with Symfony 2.2 you can also configure
+the base path if Symfony is not running in the root directory.
+
+Note that this does not impact URLs generated via normal web requests, since those 
+will override the defaults.
 
 .. configuration-block::
 
@@ -36,6 +39,7 @@ via normal web requests, since those will override the defaults.
         parameters:
             router.request_context.host: example.org
             router.request_context.scheme: https
+            router.request_context.base_url: my/path
 
     .. code-block:: xml
 
@@ -48,6 +52,7 @@ via normal web requests, since those will override the defaults.
             <parameters>
                 <parameter key="router.request_context.host">example.org</parameter>
                 <parameter key="router.request_context.scheme">https</parameter>
+                <parameter key="router.request_context.base_url">my/path</parameter>
             </parameters>
         </container>
 
@@ -56,6 +61,7 @@ via normal web requests, since those will override the defaults.
         // app/config/config_test.php
         $container->setParameter('router.request_context.host', 'example.org');
         $container->setParameter('router.request_context.scheme', 'https');
+        $container->setParameter('router.request_context.base_url', 'my/path');
 
 Configuring the Request Context per Command
 -------------------------------------------
@@ -73,6 +79,7 @@ service and override its settings::
            $context = $this->getContainer()->get('router')->getContext();
            $context->setHost('example.com');
            $context->setScheme('https');
+           $context->setBaseUrl('my/path');
 
            // ... your code here
        }
@@ -105,3 +112,4 @@ commands and uses a different spooling method.
     Taking care of the spooling is only needed when memory spooling is used. 
     If you are using file spooling (or no spooling at all), there is no need
     to flush the queue manually within the command.
+

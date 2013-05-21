@@ -1,8 +1,13 @@
 UserPassword
 ============
 
-.. versionadded:: 2.1
-   This constraint is new in version 2.1.
+.. note::
+
+    Since Symfony 2.2, the ``UserPassword*`` classes in the
+    ``Symfony\\Component\\Security\\Core\\Validator\\Constraint`` namespace are
+    deprecated and will be removed in Symfony 2.3. Please use the
+    ``UserPassword*`` classes in the
+    ``Symfony\\Component\\Security\\Core\\Validator\\Constraints`` namespace instead.
 
 This validates that an input value is equal to the current authenticated
 user's password. This is useful in a form where a user can change his password,
@@ -13,15 +18,15 @@ but needs to enter his old password for security.
     This should **not** be used to validate a login form, since this is done
     automatically by the security system.
 
-+----------------+-------------------------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                                     |
-+----------------+-------------------------------------------------------------------------------------------+
-| Options        | - `message`_                                                                              |
-+----------------+-------------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPassword`          |
-+----------------+-------------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPasswordValidator` |
-+----------------+-------------------------------------------------------------------------------------------+
++----------------+--------------------------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                                      |
++----------------+--------------------------------------------------------------------------------------------+
+| Options        | - `message`_                                                                               |
++----------------+--------------------------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`          |
++----------------+--------------------------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator` |
++----------------+--------------------------------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -39,16 +44,16 @@ password:
         Acme\UserBundle\Form\Model\ChangePassword:
             properties:
                 oldPassword:
-                    - Symfony\Component\Security\Core\Validator\Constraint\UserPassword:
+                    - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
                         message: "Wrong value for your current password"
 
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Form/Model/ChangePassword.php
         namespace Acme\UserBundle\Form\Model;
-        
-        use Symfony\Component\Security\Core\Validator\Constraint as SecurityAssert;
-  
+
+        use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
         class ChangePassword
         {
             /**
@@ -63,7 +68,7 @@ password:
 
         <!-- src/UserBundle/Resources/config/validation.xml -->
         <class name="Acme\UserBundle\Form\Model\ChangePassword">
-            <property name="Symfony\Component\Security\Core\Validator\Constraint\UserPassword">
+            <property name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword">
                 <option name="message">Wrong value for your current password</option>
             </property>
         </class>
@@ -72,10 +77,10 @@ password:
 
         // src/Acme/UserBundle/Form/Model/ChangePassword.php
         namespace Acme\UserBundle\Form\Model;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Security\Core\Validator\Constraint as SecurityAssert;
-  
+        use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
         class ChangePassword
         {
             public static function loadValidatorData(ClassMetadata $metadata)

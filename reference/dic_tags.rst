@@ -49,6 +49,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.fragment_renderer`_       | Add new HTTP content rendering strategies                                 |
++-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.logger`_                 | Logging with a custom logging channel                                     |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.processor`_              | Add a custom processor for logging                                        |
@@ -59,6 +61,10 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
++-----------------------------------+---------------------------------------------------------------------------+
 | `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
@@ -66,6 +72,8 @@ may also be tags in other bundles you use that aren't listed here.
 | `translation.loader`_             | Register a custom service that loads translations                         |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
++-----------------------------------+---------------------------------------------------------------------------+
+| `twig.loader`_                    | Register a custom service that loads Twig templates                       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -556,9 +564,6 @@ kernel.event_subscriber
 
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
-.. versionadded:: 2.1
-   The ability to add kernel event subscribers is new to 2.1.
-
 To enable a custom subscriber, add it as a regular service in one of your
 configuration, and tag it with ``kernel.event_subscriber``:
 
@@ -594,6 +599,16 @@ configuration, and tag it with ``kernel.event_subscriber``:
 
     If your service is created by a factory, you **MUST** correctly set the ``class``
     parameter for this tag to work correctly.
+
+kernel.fragment_renderer
+------------------------
+
+**Purpose**: Add a new HTTP content rendering strategy.
+
+To add a new rendering strategy - in addition to the core strategies like
+``EsiFragmentRenderer`` - create a class that implements
+:class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
+register it as a service, then tag it with ``kernel.fragment_renderer``.
 
 .. _dic_tags-monolog:
 
@@ -795,6 +810,30 @@ is used behind the scenes to determine if the user should have access. The
 
 For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
 
+.. _reference-dic-tags-serializer-encoder:
+
+serializer.encoder
+------------------
+
+**Purpose**: Register a new encoder in the ``serializer`` service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
+
+.. _reference-dic-tags-serializer-normalizer:
+
+serializer.normalizer
+---------------------
+
+**Purpose**: Register a new normalizer in the Serializer service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
+
 swiftmailer.plugin
 ------------------
 
@@ -982,6 +1021,39 @@ also have to be added as regular services:
             ->addTag('twig.extension')
         ;
 
+twig.loader
+-----------
+
+**Purpose**: Register a custom service that loads Twig templates
+
+By default, Symfony uses only one `Twig Loader`_ -
+:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+to load Twig templates from another resource, you can create a service for
+the new loader and tag it with ``twig.loader``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme.demo_bundle.loader.some_twig_loader:
+                class: Acme\DemoBundle\Loader\SomeTwigLoader
+                tags:
+                    - { name: twig.loader }
+
+    .. code-block:: xml
+
+        <service id="acme.demo_bundle.loader.some_twig_loader" class="Acme\DemoBundle\Loader\SomeTwigLoader">
+            <tag name="twig.loader" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
+            ->addTag('twig.loader')
+        ;
+
 validator.constraint_validator
 ------------------------------
 
@@ -1010,5 +1082,6 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
+.. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders

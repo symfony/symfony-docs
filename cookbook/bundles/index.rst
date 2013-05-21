@@ -10,3 +10,4 @@ Bundles
     override
     remove
     extension
+    prepend_extension

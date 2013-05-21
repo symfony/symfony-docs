@@ -100,11 +100,38 @@ node definition. Node type are available for:
 * scalar
 * boolean
 * array
-* enum (new in 2.1)
+* enum
+* integer (new in 2.2)
+* float (new in 2.2)
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
+
+Numeric node constraints
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The numeric (float and integer) nodes are new in 2.2
+
+Numeric nodes (float and integer) provide two extra constraints -
+:method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder::max` -
+allowing to validate the value::
+
+    $rootNode
+        ->children()
+            ->integerNode('positive_value')
+                ->min(0)
+            ->end()
+            ->floatNode('big_value')
+                ->max(5E45)
+            ->end()
+            ->integerNode('value_inside_a_range')
+                ->min(-50)->max(50)
+            ->end()
+        ->end()
+    ;
 
 Array nodes
 ~~~~~~~~~~~
@@ -239,6 +266,35 @@ has a certain value:
             ->end()
         ->end()
     ;
+
+Optional Sections
+-----------------
+
+.. versionadded:: 2.2
+    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
+
+If you have entire sections which are optional and can be enabled/disabled,
+you can take advantage of the shortcut
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeDisabled` methods::
+
+    $arrayNode
+        ->canBeEnabled()
+    ;
+
+    // is equivalent to
+
+    $arrayNode
+        ->treatFalseLike(array('enabled' => false))
+        ->treatTrueLike(array('enabled' => true))
+        ->treatNullLike(array('enabled' => true))
+        ->children()
+            ->booleanNode('enabled')
+                ->defaultFalse()
+    ;
+
+The ``canBeDisabled`` method looks about the same except that the section 
+would be enabled by default.
 
 Merging options
 ---------------

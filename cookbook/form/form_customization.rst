@@ -718,13 +718,9 @@ and customize the ``form_errors`` fragment.
         {% block form_errors %}
             {% spaceless %}
                 {% if errors|length > 0 %}
-                <ul class="error_list">
+                <ul>
                     {% for error in errors %}
-                        <li>{{
-                            error.messagePluralization is null
-                                ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                                : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                        }}</li>
+                        <li>{{ error.message }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
@@ -735,27 +731,12 @@ and customize the ``form_errors`` fragment.
 
         <!-- form_errors.html.php -->
         <?php if ($errors): ?>
-            <ul class="error_list">
+            <ul>
                 <?php foreach ($errors as $error): ?>
-                    <li><?php
-                        if (null === $error->getMessagePluralization()) {
-                            echo $view['translator']->trans(
-                                $error->getMessageTemplate(),
-                                $error->getMessageParameters(),
-                                'validators'
-                            );
-                        } else {
-                            echo $view['translator']->transChoice(
-                                $error->getMessageTemplate(),
-                                $error->getMessagePluralization(),
-                                $error->getMessageParameters(),
-                                'validators'
-                            );
-                        }?></li>
+                    <li><?php echo $error->getMessage() ?></li>
                 <?php endforeach; ?>
             </ul>
         <?php endif ?>
-
 
 .. tip::
 
@@ -969,4 +950,4 @@ customizations directly. Look at the following example:
 The array passed as the second argument contains form "variables". For
 more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

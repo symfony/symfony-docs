@@ -240,6 +240,25 @@ by using the following methods:
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
   returns the list of accepted charsets ordered by descending quality;
 
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
+
+If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
+``Accept-Charset`` or ``Accept-Encoding``, you can use
+:class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` utility class::
+
+    use Symfony\Component\HttpFoundation\AcceptHeader;
+
+    $accept = AcceptHeader::fromString($request->headers->get('Accept'));
+    if ($accept->has('text/html')) {
+        $item = $accept->get('html');
+        $charset = $item->getAttribute('charset', 'utf-8');
+        $quality = $item->getQuality();
+    }
+
+    // accepts items are sorted by descending quality
+    $accepts = AcceptHeader::fromString($request->headers->get('Accept'))->all();
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -368,9 +387,6 @@ To redirect the client to another URL, you can use the
 Streaming a Response
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    Support for streamed responses was added in Symfony 2.1.
-
 The :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse` class allows
 you to stream the Response back to the client. The response content is
 represented by a PHP callable instead of a string::
@@ -397,13 +413,12 @@ represented by a PHP callable instead of a string::
     server might also buffer based on its configuration. Even more, if you
     use fastcgi, buffering can't be disabled at all.
 
-Downloading Files
-~~~~~~~~~~~~~~~~~
+.. _component-http-foundation-serving-files:
 
-.. versionadded:: 2.1
-    The ``makeDisposition`` method was added in Symfony 2.1.
+Serving Files
+~~~~~~~~~~~~~
 
-When uploading a file, you must add a ``Content-Disposition`` header to your
+When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
 :method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
@@ -414,6 +429,33 @@ abstracts the hard work behind a simple API::
     $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
 
     $response->headers->set('Content-Disposition', $d);
+
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
+    class was added in Symfony 2.2.
+
+Alternatively, if you are serving a static file, you can use a
+:class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse
+    
+    $file = 'path/to/file.txt';
+    $response = new BinaryFileResponse($file);
+
+The ``BinaryFileResponse`` will automatically handle ``Range`` and
+``If-Range`` headers from the request. It also supports ``X-Sendfile``
+(see for `Nginx`_ and `Apache`_). To make use of it, you need to determine
+whether or not the ``X-Sendfile-Type`` header should be trusted and call
+:method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
+if it should::
+
+    $response::trustXSendfileTypeHeader();
+
+You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
+
+    $response->headers->set('Content-Type', 'text/plain')
+    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
+    
 
 .. _component-http-foundation-json-response:
 
@@ -431,9 +473,6 @@ right content and headers. A JSON response might look like this::
         'data' => 123,
     )));
     $response->headers->set('Content-Type', 'application/json');
-
-.. versionadded:: 2.1
-    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse` class was added in Symfony 2.1.
 
 There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
 class, which can make this even easier::
@@ -477,5 +516,7 @@ Session
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
+.. _Nginx: http://wiki.nginx.org/XSendfile
+.. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
 .. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside

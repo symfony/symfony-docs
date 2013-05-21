@@ -97,17 +97,13 @@ to an Event Subscriber::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
-            $builder->addEventSubscriber($subscriber);
             $builder->add('price');
+
+            $builder->addEventSubscriber(new AddNameFieldSubscriber());
         }
 
         // ...
     }
-
-The event subscriber is passed the FormFactory object in its constructor so
-that your new subscriber is capable of creating the form widget once it is
-notified of the dispatched event during form creation.
 
 .. _`cookbook-forms-inside-subscriber-class`:
 
@@ -116,25 +112,23 @@ Inside the Event Subscriber Class
 
 The goal is to create a "name" field *only* if the underlying Product object
 is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
-might look like the following::
+might look like the following:
+
+.. versionadded:: 2.2
+    The ability to pass a string into :method:`FormInterface::add<Symfony\\Component\\Form\\FormInterface::add>`
+    was added in Symfony 2.2.
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace Acme\DemoBundle\Form\EventListener;
 
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
-    use Symfony\Component\Form\FormFactoryInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
-        private $factory;
-
-        public function __construct(FormFactoryInterface $factory)
-        {
-            $this->factory = $factory;
-        }
-
         public static function getSubscribedEvents()
         {
             // Tells the dispatcher that you want to listen on the form.pre_set_data
@@ -151,7 +145,7 @@ might look like the following::
             // If you didn't pass any data to the form, the data is "null".
             // This should be considered a new "Product"
             if (!$data || !$data->getId()) {
-                $form->add($this->factory->createNamed('name', 'text'));
+                $form->add('name', 'text');
             }
         }
     }
@@ -450,14 +444,18 @@ On a form, we can usually listen to the following events:
 
 * ``PRE_SET_DATA``
 * ``POST_SET_DATA``
-* ``PRE_BIND``
-* ``BIND``
-* ``POST_BIND``
+* ``PRE_SUBMIT``
+* ``SUBMIT``
+* ``POST_SUBMIT``
 
-When listening to ``BIND`` and ``POST_BIND``, it's already "too late" to make
-changes to the form. Fortunately, ``PRE_BIND`` is perfect for this. There
+.. versionadded:: 2.3
+    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
+    Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
+
+When listening to ``SUBMIT`` and ``POST_SUBMIT``, it's already "too late" to make
+changes to the form. Fortunately, ``PRE_SUBMIT`` is perfect for this. There
 is, however, a big difference in what ``$event->getData()`` returns for each
-of these events. Specifically, in ``PRE_BIND``, ``$event->getData()`` returns
+of these events. Specifically, in ``PRE_SUBMIT``, ``$event->getData()`` returns
 the raw data submitted by the user.
 
 This can be used to get the ``SportMeetup`` id and retrieve it from the database,
@@ -500,7 +498,7 @@ The subscriber would now look like::
         public static function getSubscribedEvents()
         {
             return array(
-                FormEvents::PRE_BIND => 'preBind',
+                FormEvents::PRE_SUBMIT => 'preSubmit',
                 FormEvents::PRE_SET_DATA => 'preSetData',
             );
         }
@@ -512,7 +510,7 @@ The subscriber would now look like::
         {
             $meetup = $event->getData()->getMeetup();
 
-            // Before binding the form, the "meetup" will be null
+            // Before SUBMITing the form, the "meetup" will be null
             if (null === $meetup) {
                 return;
             }
@@ -523,7 +521,7 @@ The subscriber would now look like::
             $this->customizeForm($form, $positions);
         }
 
-        public function preBind(FormEvent $event)
+        public function preSubmit(FormEvent $event)
         {
             $data = $event->getData();
             $id = $data['event'];
@@ -622,6 +620,6 @@ set for every possible kind of sport that our users are registering for.
 
 One piece that may still be missing is the client-side updating of your form
 after the sport is selected. This should be handled by making an AJAX call
-back to your application. In that controller, you can bind your form, but
-instead of processing it, simply use the bound form to render the updated
+back to your application. In that controller, you can submit your form, but
+instead of processing it, simply use the submitted form to render the updated
 fields. The response from the AJAX call can then be used to update the view.

@@ -11,15 +11,19 @@ various things and enforce some metrics.
 
 The Symfony2 :ref:`Profiler <internals-profiler>` gathers a lot of data for
 each request. Use this data to check the number of database calls, the time
-spent in the framework, ... But before writing assertions, always check that
-the profiler is indeed available (it is enabled by default in the ``test``
-environment)::
+spent in the framework, ... But before writing assertions, enable the profiler
+and check that the profiler is indeed available (it is enabled by default in
+the ``test`` environment)::
 
     class HelloControllerTest extends WebTestCase
     {
         public function testIndex()
         {
             $client = static::createClient();
+
+            // Enable the profiler for the next request (it does nothing if the profiler is not available)
+            $client->enableProfiler();
+
             $crawler = $client->request('GET', '/hello/Fabien');
 
             // ... write some assertions about the Response
@@ -35,7 +39,7 @@ environment)::
                 // check the time spent in the framework
                 $this->assertLessThan(
                     500,
-                    $profile->getCollector('time')->getTotalTime()
+                    $profile->getCollector('time')->getDuration()
                 );
             }
         }

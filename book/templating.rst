@@ -376,6 +376,11 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
+.. versionadded:: 2.2
+    Namespaced path support was added in 2.2, allowing for template names
+    like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
+    for more details.
+
 By default, templates can live in two different locations:
 
 * ``app/Resources/views/``: The applications ``views`` directory can contain
@@ -532,9 +537,7 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig'
-                       with {'article': article}
-                %}
+                {{ include('AcmeArticleBundle:Article:articleDetails.html.twig', {'article': article}) }}
             {% endfor %}
         {% endblock %}
 
@@ -554,7 +557,7 @@ Including this template from any other template is simple:
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
-The template is included using the ``{% include %}`` tag. Notice that the
+The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
 template uses an ``article`` variable. This is passed in by the ``list.html.twig``
 template using the ``with`` command.
@@ -564,6 +567,10 @@ template using the ``with`` command.
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
+
+.. versionadded:: 2.2
+    The ``include()`` function is a new Twig feature that's available in
+    Symfony 2.2. Prior, the ``{% include %}`` tag was used.
 
 .. index::
    single: Templating; Embedding action
@@ -626,43 +633,8 @@ The ``recentList`` template is perfectly straightforward:
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
     you'll learn how to do this correctly.
 
-Even though this controller will only be used internally, you'll need to
-create a route that points to the controller:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        latest_articles:
-            pattern:  /articles/latest/{max}
-            defaults: { _controller: AcmeArticleBundle:Article:recentArticles }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="latest_articles" pattern="/articles/latest/{max}">
-                <default key="_controller">AcmeArticleBundle:Article:recentArticles</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('latest_articles', new Route('/articles/latest/{max}', array(
-            '_controller' => 'AcmeArticleBundle:Article:recentArticles',
-        )));
-
-        return $collection;
-
-To include the controller, you'll need to refer to it using an absolute url:
+To include the controller, you'll need to refer to it using the standard
+string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
@@ -672,7 +644,7 @@ To include the controller, you'll need to refer to it using an absolute url:
 
         {# ... #}
         <div id="sidebar">
-            {% render url('latest_articles', { 'max': 3 }) %}
+            {{ render(controller('AcmeArticleBundle:Article:recentArticles', { 'max': 3 })) }}
         </div>
 
     .. code-block:: html+php
@@ -682,11 +654,9 @@ To include the controller, you'll need to refer to it using an absolute url:
         <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render(
-                $view['router']->generate('latest_articles', array('max' => 3), true)
+                new ControllerReference('AcmeArticleBundle:Article:recentArticles', array('max' => 3))
             ) ?>
         </div>
-
-.. include:: /book/_security-2012-6431.rst.inc
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
@@ -694,9 +664,6 @@ Controllers are fast to execute and promote good code organization and reuse.
 
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-    hinclude.js support was added in Symfony 2.1
 
 Controllers can be embedded asynchronously using the hinclude.js_ javascript library.
 As the embedded content comes from another page (or controller for that matter),
@@ -711,13 +678,47 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
     .. code-block:: php
 
         <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array('renderer' => 'hinclude')
+        ) ?>
+
+        <?php echo $view['actions']->render(
             $view['router']->generate('...'),
-            array('standalone' => 'js')
+            array('renderer' => 'hinclude')
         ) ?>
 
 .. note::
 
    hinclude.js_ needs to be included in your page to work.
+
+.. note::
+
+    When using a controller instead of a URL, you must enable the Symfony
+    ``fragments`` configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                # ...
+                fragments: { path: /_fragment }
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <framework:config>
+                <framework:fragments path="/_fragment" />
+            </framework:config>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                // ...
+                'fragments' => array('path' => '/_fragment'),
+            ));
 
 Default content (while loading or if javascript is disabled) can be set globally
 in your application configuration:
@@ -749,6 +750,46 @@ in your application configuration:
             ),
         ));
 
+.. versionadded:: 2.2
+    Default templates per render function was added in Symfony 2.2
+
+You can define default templates per ``render`` function (which will override
+any global default template that is defined):
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ render_hinclude(controller('...'),  {'default': 'AcmeDemoBundle:Default:content.html.twig'}) }}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array(
+                'renderer' => 'hinclude',
+                'default' => 'AcmeDemoBundle:Default:content.html.twig',
+            )
+        ) ?>
+
+Or you can also specify a string to display as the default content:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array(
+                'renderer' => 'hinclude',
+                'default' => 'Loading...',
+            )
+        ) ?>
+
 .. index::
    single: Templating; Linking to pages
 
@@ -772,12 +813,12 @@ configuration:
     .. code-block:: yaml
 
         _welcome:
-            pattern:  /
+            path:     /
             defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
-        <route id="_welcome" pattern="/">
+        <route id="_welcome" path="/">
             <default key="_controller">AcmeDemoBundle:Welcome:index</default>
         </route>
 
@@ -810,12 +851,12 @@ route:
     .. code-block:: yaml
 
         article_show:
-            pattern:  /article/{slug}
+            path:     /article/{slug}
             defaults: { _controller: AcmeArticleBundle:Article:show }
 
     .. code-block:: xml
 
-        <route id="article_show" pattern="/article/{slug}">
+        <route id="article_show" path="/article/{slug}">
             <default key="_controller">AcmeArticleBundle:Article:show</default>
         </route>
 
@@ -1398,9 +1439,6 @@ is ``true``. By default this means that the variables will be dumped in the
 
 Syntax Checking
 ---------------
-
-.. versionadded:: 2.1
-    The ``twig:lint`` command was added in Symfony 2.1
 
 You can check for syntax errors in Twig templates using the ``twig:lint``
 console command:

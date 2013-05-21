@@ -82,10 +82,27 @@ Search in several locations by chaining calls to
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
+.. versionadded:: 2.2
+   Wildcard support was added in version 2.2.
+
+Use wildcard characters to search in the directories matching a pattern::
+
+    $finder->in('src/Symfony/*/*/Resources');
+
+Each pattern has to resolve to at least one directory path.
+
 Exclude directories from matching with the
 :method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
     $finder->in(__DIR__)->exclude('ruby');
+
+.. versionadded:: 2.3
+   The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs``
+   method was added in Symfony 2.3.
+
+It's also possible to ignore directories that you don't have permission to read::
+
+    $finder->ignoreUnreadableDirs()->in(__DIR__);
 
 As the Finder uses PHP iterators, you can pass any URL with a supported
 `protocol`_::
@@ -173,9 +190,6 @@ The ``notName()`` method excludes files matching a pattern::
 File Contents
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-   The ``contains()`` and ``notContains()`` methods were added in version 2.1
-
 Restrict files by contents with the
 :method:`Symfony\\Component\\Finder\\Finder::contains` method::
 
@@ -188,6 +202,36 @@ The ``contains()`` method accepts strings or regexes::
 The ``notContains()`` method excludes files containing given pattern::
 
     $finder->files()->notContains('dolor sit amet');
+
+Path
+~~~~
+
+.. versionadded:: 2.2
+   The ``path()`` and ``notPath()`` methods were added in version 2.2.
+
+Restrict files and directories by path with the
+:method:`Symfony\\Component\\Finder\\Finder::path` method::
+
+    $finder->path('some/special/dir');
+
+On all platforms slash (i.e. ``/``) should be used as the directory separator.
+
+The ``path()`` method accepts a string or a regular expression::
+
+    $finder->path('foo/bar');
+    $finder->path('/^foo\/bar/');
+
+Internally, strings are converted into regular expressions by escaping slashes
+and adding delimiters:
+
+.. code-block:: text
+
+    dirname    ===>    /dirname/
+    a/b/c      ===>    /a\/b\/c/
+
+The :method:`Symfony\\Component\\Finder\\Finder::notPath` method excludes files by path::
+
+    $finder->notPath('other/dir');
 
 File Size
 ~~~~~~~~~
@@ -203,9 +247,6 @@ Restrict by a size range by chaining calls::
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``, ``!=``.
-
-.. versionadded:: 2.1
-   The operator ``!=`` was added in version 2.1.
 
 The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes
 (``m``, ``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use
@@ -256,9 +297,6 @@ instance. The file is excluded from the result set if the Closure returns
 
 Reading contents of returned files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-   Method ``getContents()`` have been introduced in version 2.1.
 
 The contents of returned files can be read with
 :method:`Symfony\\Component\\Finder\\SplFileInfo::getContents`::

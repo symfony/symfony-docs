@@ -163,8 +163,9 @@ the above example, the ``allowMissingFields`` option was set to true, meaning
 that if either of the ``personal_email`` or ``short_bio`` elements were missing
 from the ``$personalData`` property, no validation error would occur.
 
-.. versionadded:: 2.1
-    The ``Required`` and ``Optional`` constraints are new to Symfony 2.1.
+.. versionadded:: 2.3
+    The ``Required`` and ``Optional`` constraints were moved to the namespace
+    ``Symfony\Component\Validator\Constraints\`` in Symfony 2.3.
 
 Required and Optional Field Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -191,8 +192,8 @@ field is optional but must be a valid email if supplied, you can do the followin
             /**
              * @Assert\Collection(
              *     fields={
-             *         "personal_email"  = @Assert\Collection\Required({@Assert\NotBlank, @Assert\Email}),
-             *         "alternate_email" = @Assert\Collection\Optional({@Assert\Email}),
+             *         "personal_email"  = @Assert\Required({@Assert\NotBlank, @Assert\Email}),
+             *         "alternate_email" = @Assert\Optional(@Assert\Email),
              *     }
              * )
              */
@@ -217,8 +218,8 @@ field is optional but must be a valid email if supplied, you can do the followin
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
-                        'personal_email'  => new Assert\Collection\Required(array(new Assert\NotBlank(), new Assert\Email())),
-                        'alternate_email' => new Assert\Collection\Optional(array(new Assert\Email())),
+                        'personal_email'  => new Assert\Required(array(new Assert\NotBlank(), new Assert\Email())),
+                        'alternate_email' => new Assert\Optional(new Assert\Email()),
                     ),
                 )));
             }

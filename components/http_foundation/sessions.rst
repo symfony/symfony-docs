@@ -9,10 +9,6 @@ The Symfony2 HttpFoundation Component has a very powerful and flexible session
 subsystem which is designed to provide session management through a simple
 object-oriented interface using a variety of session storage drivers.
 
-.. versionadded:: 2.1
-    The :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface,
-    as well as a number of other changes, are new as of Symfony 2.1.
-
 Sessions are used via the simple :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`
 implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface.
 

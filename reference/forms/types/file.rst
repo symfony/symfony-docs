@@ -30,11 +30,6 @@ Say you have this form definition:
 
     $builder->add('attachment', 'file');
 
-.. caution::
-
-    Don't forget to add the ``enctype`` attribute in the form tag: ``<form
-    action="#" method="post" {{ form_enctype(form) }}>``.
-
 When the form is submitted, the ``attachment`` field will be an instance of
 :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can be
 used to move the ``attachment`` file to a permanent location:
