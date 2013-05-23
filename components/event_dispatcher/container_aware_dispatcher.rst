@@ -59,7 +59,7 @@ Adding Subscriber Services
 ``EventSubscribers`` can be added using the
 :method:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher::addSubscriberService`
 method where the first argument is the service ID of the subscriber service,
-and the second argument is the the service's class name (which must implement
+and the second argument is the service's class name (which must implement
 :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`) as follows::
 
     $dispatcher->addSubscriberService(
