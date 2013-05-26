@@ -6,7 +6,7 @@ How to generate URLs and send Emails from the Console
 =====================================================
 
 Unfortunately, the command line context does not know about your VirtualHost
-or domain name. This means that if if you generate absolute URLs within a
+or domain name. This means that if you generate absolute URLs within a
 Console Command you'll probably end up with something like ``http://localhost/foo/bar``
 which is not very useful.
 
