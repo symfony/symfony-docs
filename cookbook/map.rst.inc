@@ -102,6 +102,7 @@
 * :doc:`/cookbook/request/index`
 
   * :doc:`/cookbook/request/mime_type`
+  * (session) :doc:`/cookbook/session/simulate_locale_in_session`
 
 * :doc:`/cookbook/routing/index`
 
@@ -135,6 +136,7 @@
 * :doc:`/cookbook/session/index`
 
   * :doc:`/cookbook/session/proxy_examples`
+  * :doc:`/cookbook/session/simulate_locale_in_session`
 
 * **symfony1**
 
