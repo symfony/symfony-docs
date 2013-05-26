@@ -157,10 +157,10 @@ getters, this means that you can do something like this::
 
 This will produce: ``He is an author``
 
-Magic Methods
-~~~~~~~~~~~~~
+Magic ``__get()`` Method
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-At last, ``getValue`` can use the magic ``__get`` method too::
+The ``getValue`` method can also use the magic ``__get`` method::
 
     // ...
     class Person
@@ -178,6 +178,49 @@ At last, ``getValue`` can use the magic ``__get`` method too::
     $person = new Person();
 
     echo $accessor->getValue($person, 'Wouter'); // array(...)
+
+Magic ``__call()`` Method
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At last, ``getValue`` can use the magic ``__call`` method, but you need to
+enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
+
+    // ...
+    class Person
+    {
+        private $children = array(
+            'wouter' => array(...),
+        );
+
+        public function __call($name, $args)
+        {
+            $property = lcfirst(substr($name, 3));
+            if ('get' === substr($name, 0, 3)) {
+                return isset($this->children[$property]) ? $this->children[$property] : null;
+            } elseif ('set' === substr($name, 0, 3)) {
+                $value = 1 == count($args) ? $args[0] : null;
+                $this->children[$property] = $value;
+            }
+        }
+    }
+
+    $person = new Person();
+
+    // Enable magic __call
+    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+        ->enableMagicCall()
+        ->getPropertyAccessor();
+
+    echo $accessor->getValue($person, 'wouter'); // array(...)
+
+.. versionadded:: 2.3
+    The use of magic ``__call()`` method was added in Symfony 2.3.
+
+.. caution::
+
+    The ``__call`` feature is disabled by default, you can enable it by calling
+    :method:`PropertyAccessorBuilder::enableMagicCallEnabled<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCallEnabled>`
+    see `Enable other Features`_.
 
 Writing to Arrays
 -----------------
@@ -223,7 +266,7 @@ can use setters, the magic ``__set`` or properties to set values::
     }
 
     $person = new Person();
-    
+
     $accessor->setValue($person, 'firstName', 'Wouter');
     $accessor->setValue($person, 'lastName', 'de Jong');
     $accessor->setValue($person, 'children', array(new Person()));
@@ -231,6 +274,38 @@ can use setters, the magic ``__set`` or properties to set values::
     echo $person->firstName; // 'Wouter'
     echo $person->getLastName(); // 'de Jong'
     echo $person->children; // array(Person());
+
+You can also use ``__call`` to set values but you need to enable the feature,
+see `Enable other Features`_.
+
+    // ...
+    class Person
+    {
+        private $children = array();
+
+        public function __call($name, $args)
+        {
+            $property = lcfirst(substr($name, 3));
+            if ('get' === substr($name, 0, 3)) {
+                return isset($this->children[$property]) ? $this->children[$property] : null;
+            } elseif ('set' === substr($name, 0, 3)) {
+                $value = 1 == count($args) ? $args[0] : null;
+                $this->children[$property] = $value;
+            }
+        }
+
+    }
+
+    $person = new Person();
+
+    // Enable magic __call
+    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+        ->enableMagicCall()
+        ->getPropertyAccessor();
+
+    $accessor->setValue($person, 'wouter', array(...));
+
+    echo $person->getWouter() // array(...)
 
 Mixing Objects and Arrays
 -------------------------
@@ -264,5 +339,38 @@ You can also mix objects and arrays::
 
     echo 'Hello '.$accessor->getValue($person, 'children[0].firstName'); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
+
+Enable other Features
+~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` can be
+configured to enable extra features. To do that you could use the
+:class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
+
+    // ...
+    $accessorBuilder = PropertyAccess::getPropertyAccessorBuilder();
+
+    // Enable magic __call
+    $accessorBuilder->enableMagicCall();
+
+    // Disable magic __call
+    $accessorBuilder->disableMagicCall();
+
+    // Check if magic __call handling is enabled
+    $accessorBuilder->isMagicCallEnabled() // true or false
+
+    // At the end get the configured property accessor
+    $accessor = $accessorBuilder->getPropertyAccessor();
+
+    // Or all in one
+    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+        ->enableMagicCall()
+        ->getPropertyAccessor();
+
+Or you can pass parameters directly to the constructor (not the recommended way)::
+
+    // ...
+    $accessor = new PropertyAccessor(true) // this enable handling of magic __call
+
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access
