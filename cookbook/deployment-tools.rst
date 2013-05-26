@@ -23,7 +23,7 @@ The typical steps taken while deploying a Symfony2 application include:
 
 A deployment may also include other things, such as:
 
-* Tagging a particular version of of your code as a release in your source control repository;
+* Tagging a particular version of your code as a release in your source control repository;
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available to ensure code and/or server stability;
 * Removal of any unnecessary files from ``web`` to keep your production environment clean;
