@@ -1384,43 +1384,9 @@ in a JavaScript string, use the ``js`` context:
 Debugging
 ---------
 
-.. versionadded:: 2.0.9
-    This feature is available as of Twig ``1.5.x``, which was first shipped
-    with Symfony 2.0.9.
-
 When using PHP, you can use ``var_dump()`` if you need to quickly find the
 value of a variable passed. This is useful, for example, inside your controller.
-The same can be achieved when using Twig by using the debug extension. This
-needs to be enabled in the config:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            acme_hello.twig.extension.debug:
-                class:        Twig_Extension_Debug
-                tags:
-                     - { name: 'twig.extension' }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <services>
-            <service id="acme_hello.twig.extension.debug" class="Twig_Extension_Debug">
-                <tag name="twig.extension" />
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $definition = new Definition('Twig_Extension_Debug');
-        $definition->addTag('twig.extension');
-        $container->setDefinition('acme_hello.twig.extension.debug', $definition);
+The same can be achieved when using Twig thanks to the the debug extension.
 
 Template parameters can then be dumped using the ``dump`` function:
 

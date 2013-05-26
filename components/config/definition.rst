@@ -443,7 +443,7 @@ and sometimes only:
 
 By default ``connection`` would be an array in the first case and a string
 in the second making it difficult to validate. You can ensure it is always
-an array with with ``fixXmlConfig``.
+an array with ``fixXmlConfig``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or several

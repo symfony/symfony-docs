@@ -1462,7 +1462,7 @@ and ``nullable``. Take a few examples:
         <!--
             A string field length 255 that cannot be null
             (reflecting the default values for the "length" and *nullable* options)
-            type attribute is necessary in yaml definitions
+            type attribute is necessary in xml definitions
         -->
         <field name="name" type="string" />
         <field name="email"
