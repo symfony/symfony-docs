@@ -333,16 +333,3 @@ Compact method to process display all flashes at once::
             echo "<div class='flash-$type'>$message</div>\n";
         }
     }
-
-.. caution::
-
-    As flash messages use a session to store the messages from one request to
-    the next one, a session will be automatically started when you read the
-    flash messages even if none already exists. To avoid that default
-    behavior, test if there is an existing session first::
-
-        if ($session->isStarted()) {
-            foreach ($session->getFlashBag()->get('warning', array()) as $message) {
-                echo "<div class='flash-warning'>$message</div>";
-            }
-        }
