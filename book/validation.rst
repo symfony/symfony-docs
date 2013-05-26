@@ -772,7 +772,7 @@ With this configuration, there are two validation groups:
 * ``Default`` - contains the constraints not assigned to any other group;
 
 * ``User`` - contains the constraints that belongs to group ``Default``
-  (this group is usefull for :ref:`book-validation-group-sequence`);
+  (this group is useful for :ref:`book-validation-group-sequence`);
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
@@ -798,14 +798,16 @@ Group Sequence
 --------------
 
 In some cases, you want to validate your groups by steps. To do this, you can
-use the ``GroupSequence`` feature. In the case an object defines a group sequence,
-the groups in the group sequence will be validated in order.
+use the ``GroupSequence`` feature. In the case, an object defines a group sequence,
+and then the groups in the group sequence are validated in order.
 
-Group sequences cannot contain the group ``Default``, this would create a
-cycle, but need to contain the group ``{ClassName}`` instead.
+.. tip::
+
+    Group sequences cannot contain the group ``Default``, as this would create
+    a loop. Instead, use the group ``{ClassName}`` (e.g. ``User``) instead.
 
 For example, suppose you have a ``User`` class and want to validate that the
-username and the password are different only if all other validations passes
+username and the password are different only if all other validation passes
 (in order to avoid multiple error messages).
 
 .. configuration-block::
@@ -908,9 +910,9 @@ username and the password are different only if all other validations passes
             }
         }
 
-In this example, it will first validate all constraints in group ``User``
-(eg. ``Default``). Only if all constraints in that group are valid, the second
-group, ``Strict``, will be validated.
+In this example, it will first validate all constraints in the group ``User``
+(which is the same as the ``Default`` group). Only if all constraints in
+that group are valid, the second group, ``Strict``, will be validated.
 
 .. _book-validation-raw-values:
 
