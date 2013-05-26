@@ -12,5 +12,5 @@ name.
 
 If you wish the field to be ignored when reading or writing to the object 
 you can set the ``property_path`` option to ``false``, but using
-``property_path`` for this purpose is deprecated, you should do it the way
-described below:
+``property_path`` for this purpose is deprecated, you should use the
+``mapped`` option.
