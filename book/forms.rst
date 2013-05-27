@@ -835,8 +835,8 @@ form "type"). It can be used to quickly build a form object in the controller::
 
 .. tip::
 
-    Defining your form as a service is a good practice and make it easily usable in
-    your application. First, you must tag your form as a form type in the service container:
+    Defining your form type as a service is a good practice and make it easily usable in
+    your application :
 
         .. configuration-block::
 
@@ -870,7 +870,7 @@ form "type"). It can be used to quickly build a form object in the controller::
                     ))
                 ;
     
-    That's it! Now you can use your form directly in a controller::
+    That's it! Now you can use your form type directly in a controller::
 
         // src/Acme/TaskBundle/Controller/DefaultController.php
 
