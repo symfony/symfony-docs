@@ -17,13 +17,25 @@ register the mappings for your model classes.
     just to get the auto mapping, use the compiler pass.
 
 .. versionadded:: 2.3
+
     The base mapping compiler pass was added in Symfony 2.3. The doctrine bundles
-    support it from DoctrineBundle >= 1.2.1, MongoDBBundle >= 3.0.0
+    support it from DoctrineBundle >= 1.2.1, MongoDBBundle >= 3.0.0,
+    PHPCRBundle >= 1.0.0-alpha2 and the (unversioned) CouchDBBundle supports the
+    compiler pass since the `CouchDB Mapping Compiler Pass pull request`_
+    was merged.
+
+    If you want your bundle to support older versions of Symfony and
+    Doctrine, you can provide a copy of the compiler pass in your bundle.
+    See for example the `FOSUserBundle mapping configuration`_
+    ``addRegisterMappingsPass``.
+
 
 In your bundle class, write the following code to register the compiler pass::
 
     use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
     use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
+    use Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass;
+    use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
 
     class FOSUserBundle extends Bundle
     {
@@ -55,10 +67,64 @@ In your bundle class, write the following code to register the compiler pass::
                 ));
             }
 
-            // TODO: couch
+            $couchCompilerClass = 'Doctrine\Bundle\CouchDBBundle\DependencyInjection'
+                . '\Compiler\DoctrineCouchDBMappingsPass';
+            if (class_exists($couchCompilerClass)) {
+                $container->addCompilerPass(
+                    DoctrinCouchDBMappingsPass::createXmlMappingDriver(
+                        $mappings, 'fos_user.backend_type_couchdb'
+                ));
+            }
+
+            $phpcrCompilerClass = 'Doctrine\Bundle\PHPCRBundle\DependencyInjection'
+                . '\Compiler\DoctrinePhpcrMappingsPass';
+            if (class_exists($phpcrCompilerClass)) {
+                $container->addCompilerPass(
+                    DoctrinePhpcrMappingsPass::createXmlMappingDriver(
+                        $mappings, 'fos_user.backend_type_phpcr'
+                ));
+            }
         }
     }
 
-The compiler pass provides factory methods for all drivers provided by the
-bundle: Annotations, XML, Yaml, PHP and StaticPHP for Doctrine ORM, the ODM
-bundles sometimes do not have all of those drivers.
+Note the ``class_exists`` check. This is crucial, as you do not want your
+bundle to have a hard dependency on all doctrine bundles but let the user
+decide which to use.
+
+The compiler pass provides factory methods for all drivers provided by doctrine:
+Annotations, XML, Yaml, PHP and StaticPHP. The arguments are
+
+* a map of absolute directory path to namespace;
+* an array of container parameters that your bundle uses to specify the name of
+  the doctrine manager that it is using. The compiler pass will append the
+  parameter doctrine is using to specify the name of the default manager. The
+  first parameter found is used and the mappings are registered with that
+  manager;
+* an optional container parameter name that will be used by the compiler
+  pass to determine if this doctrine type is used at all (this is relevant if
+  your user has more than one type of doctrine bundle installed, but your
+  bundle is only used with one type of doctrine.
+
+.. note::
+
+    The factory method is using the ``SymfonyFileLocator`` of doctrine, meaning
+    it will only see XML and YML mapping files if they do not contain the
+    namespace. If you also need to map a base class, you can register a
+    compiler pass with the ``DefaultFileLocator`` like this::
+
+        private function buildMappingCompilerPass()
+        {
+            $arguments = array(array(realpath(__DIR__ . '/Resources/config/doctrine')), '.orm.xml');
+            $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator', $arguments);
+            $driver = new Definition('Doctrine\ORM\Mapping\Driver\XmlDriver', array($locator));
+
+            return new DoctrineOrmMappingsPass(
+                $driver,
+                array('Full\Namespace'),
+                array('your_bundle.manager_name'),
+                'your_bundle.orm_enabled'
+            );
+        }
+
+.. _`CouchDB Mapping Compiler Pass pull request`: https://github.com/doctrine/DoctrineCouchDBBundle/pull/27
+.. _`FOSUserBundle mapping configuration`: https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/FOSUserBundle.php
