@@ -835,7 +835,7 @@ form "type"). It can be used to quickly build a form object in the controller::
 
 .. tip::
 
-    Defining your form type as a service is a good practice and make it easily usable in
+    Defining your form type as a service is a good practice and makes it easily usable in
     your application :
 
         .. configuration-block::
