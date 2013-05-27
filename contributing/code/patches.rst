@@ -52,7 +52,7 @@ Set up your user information with your real name and a working email address:
 
         $ git config core.autocrlf
 
-    This will return either "false", "input", or "true"; "true" and "false" being
+    This will return either "false", "input" or "true"; "true" and "false" being
     the wrong values. Change it to "input" by typing:
 
     .. code-block:: bash
