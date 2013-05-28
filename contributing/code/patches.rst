@@ -34,7 +34,7 @@ Set up your user information with your real name and a working email address:
 
 .. tip::
 
-    If your IDE creates configuration files inside project's directory,
+    If your IDE creates configuration files inside the project's directory,
     you can use global ``.gitignore`` file (for all projects) or
     ``.git/info/exclude`` file (per project) to ignore them. See
     `Github's documentation`_.
@@ -42,7 +42,7 @@ Set up your user information with your real name and a working email address:
 .. tip::
 
     Windows users: when installing Git, the installer will ask what to do with
-    line endings and suggests to replace all Lf by CRLF. This is the wrong
+    line endings, and suggests replacing all LF with CRLF. This is the wrong
     setting if you wish to contribute to Symfony! Selecting the as-is method is
     your best choice, as git will convert your line feeds to the ones in the
     repository. If you have already installed Git, you can check the value of
@@ -52,8 +52,8 @@ Set up your user information with your real name and a working email address:
 
         $ git config core.autocrlf
 
-    This will return either "false", "input" or "true", "true" and "false" being
-    the wrong values. Set it to another value by typing:
+    This will return either "false", "input" or "true"; "true" and "false" being
+    the wrong values. Change it to "input" by typing:
 
     .. code-block:: bash
 
@@ -344,7 +344,7 @@ because you want early feedback on your work, add an item to todo-list:
 .. code-block:: text
 
     - [ ] finish the code
-    - [ ] gather feedback my changes
+    - [ ] gather feedback for my changes
 
 As long as you have items in the todo-list, please prefix the pull request
 title with "[WIP]".
