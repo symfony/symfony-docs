@@ -975,7 +975,7 @@ possible.
 
 .. tip::
 
-    The listener listener only responds to local IP addresses or trusted
+    The listener only responds to local IP addresses or trusted
     proxies.
 
 .. note::

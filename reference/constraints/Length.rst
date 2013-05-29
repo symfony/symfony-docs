@@ -36,7 +36,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
                         min: 2
                         max: 50
                         minMessage: "Your first name must be at least {{ limit }} characters length"
-                        maxMessage: "Your first name cannot be longer than than {{ limit }} characters length"
+                        maxMessage: "Your first name cannot be longer than {{ limit }} characters length"
 
     .. code-block:: php-annotations
 
@@ -52,7 +52,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
              *      min = "2",
              *      max = "50",
              *      minMessage = "Your first name must be at least {{ limit }} characters length",
-             *      maxMessage = "Your first name cannot be longer than than {{ limit }} characters length"
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters length"
              * )
              */
              protected $firstName;
@@ -67,7 +67,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     <option name="min">2</option>
                     <option name="max">50</option>
                     <option name="minMessage">Your first name must be at least {{ limit }} characters length</option>
-                    <option name="maxMessage">Your first name cannot be longer than than {{ limit }} characters length</option>
+                    <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters length</option>
                 </constraint>
             </property>
         </class>
@@ -88,7 +88,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     'min'        => 2,
                     'max'        => 50,
                     'minMessage' => 'Your first name must be at least {{ limit }} characters length',
-                    'maxMessage' => 'Your first name cannot be longer than than {{ limit }} characters length',
+                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters length',
                 )));
             }
         }
@@ -118,7 +118,7 @@ charset
 **type**: ``string``  **default**: ``UTF-8``
 
 The charset to be used when computing value's length. The :phpfunction:`grapheme_strlen` PHP
-function is used if available. If not, the the :phpfunction:`mb_strlen` PHP function
+function is used if available. If not, the :phpfunction:`mb_strlen` PHP function
 is used if available. If neither are available, the :phpfunction:`strlen` PHP function
 is used.
 

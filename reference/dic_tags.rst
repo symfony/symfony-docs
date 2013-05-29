@@ -198,7 +198,7 @@ Finally, apply the filter:
 You can also apply your filter via the ``assetic.filters.my_filter.apply_to``
 config option as it's described here: :doc:`/cookbook/assetic/apply_to_option`.
 In order to do that, you must define your filter service in a separate xml
-config file and point to this file's via the ``assetic.filters.my_filter.resource``
+config file and point to this file's path via the ``assetic.filters.my_filter.resource``
 configuration key.
 
 assetic.formula_loader

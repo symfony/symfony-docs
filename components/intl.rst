@@ -137,7 +137,7 @@ expose them manually by adding the following lines to your autoload code::
 Writing and Reading Resource Bundles
 ------------------------------------
 
-The :phpclass:`ResourceBundle` class is not currently supporting by this component.
+The :phpclass:`ResourceBundle` class is not currently supported by this component.
 Instead, it includes a set of readers and writers for reading and writing
 arrays (or array-like objects) from/to resource bundle files. The following
 classes are supported:
