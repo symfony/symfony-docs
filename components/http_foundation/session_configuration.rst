@@ -79,7 +79,7 @@ examples if you wish to write your own.
 Example usage::
 
     use Symfony\Component\HttpFoundation\Session\Session;
-    use Symfony\Component\HttpFoundation\Session\Storage\SessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $storage = new NativeSessionStorage(array(), new PdoSessionHandler());

@@ -227,7 +227,7 @@ field is optional but must be a valid email if supplied, you can do the followin
 
 Even without ``allowMissingFields`` set to true, you can now omit the ``alternate_email``
 property completely from the ``profileData`` array, since it is ``Optional``.
-However, if the the ``personal_email`` field does not exist in the array,
+However, if the ``personal_email`` field does not exist in the array,
 the ``NotBlank`` constraint will still be applied (since it is wrapped in
 ``Required``) and you will receive a constraint violation.
 
