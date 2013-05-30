@@ -255,7 +255,7 @@ and its template:
         <input type="submit" />
     </form>
 
-Finally, create the controller which handles the form submission.  This performs
+Next, create the controller which handles the form submission.  This performs
 the validation and saves the data into the database::
 
     public function createAction()
@@ -280,6 +280,31 @@ the validation and saves the data into the database::
             array('form' => $form->createView())
         );
     }
+
+Add New Routes
+--------------
+
+Next, update your routes
+
+.. code-block:: yml
+
+    register:
+       pattern:  /register
+       defaults: { _controller: AcmeAccountBundle:Account:register }
+   
+    create:
+       pattern:  /create
+       defaults: { _controller: AcmeAccountBundle:Account:create }
+
+Run Doctrine Commands
+---------------------
+
+Finally, generate your entities and schema
+
+.. code-block::
+
+   php app/console doctrine:database:create
+   php app/console doctrine:schema:update --force
 
 That's it! Your form now validates, and allows you to save the ``User``
 object to the database. The extra ``terms`` checkbox on the ``Registration``
