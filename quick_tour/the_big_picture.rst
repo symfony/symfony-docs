@@ -385,16 +385,19 @@ is the developer's best friend.
 .. image:: /images/quick_tour/web_debug_toolbar.png
    :align: center
 
-But what you see initially is only the tip of the iceberg; click on the weird
-hexadecimal number to reveal yet another very useful Symfony2 debugging tool:
-the profiler.
+But what you see initially is only the tip of the iceberg; click on the long
+hexadecimal number (the session token) to reveal yet another very useful
+Symfony2 debugging tool: the profiler.
 
 .. image:: /images/quick_tour/profiler.png
    :align: center
 
 Of course, you won't want to show these tools when you deploy your application
 to production. That's why you will find another front controller in the
-``web/`` directory (``app.php``), which is optimized for the production environment:
+``web/`` directory (``app.php``), which is optimized for the production environment.
+The ``AcmeDemoBundle`` is normally only available in the dev environment (see
+the note below), but if you were to add it to the production environment, you
+could go here:
 
 .. code-block:: text
 
@@ -407,7 +410,7 @@ And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 
     http://localhost/Symfony/web/demo/hello/Fabien
 
-Last but not least, on the production servers, you should point your web root
+Last but not least, on production servers, you should point your web root
 directory to the ``web/`` directory to secure your installation and have an
 even better looking URL:
 
