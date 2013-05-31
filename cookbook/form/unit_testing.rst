@@ -123,6 +123,7 @@ before creating the parent form::
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
+    use Acme\TestBundle\Form\Forms;
     use Acme\TestBundle\Model\TestObject;
     use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
 
@@ -130,10 +131,12 @@ before creating the parent form::
     {
         public function testBindValidData()
         {
-            $this->factory->addType(new TestChildType());
-
             $type = new TestedType();
-            $form = $this->factory->create($type);
+
+            $form = Forms::createFormFactoryBuilder()
+                ->addType(new TestChildType())
+                ->getFormFactory()
+                ->create($type);
 
             // ... your test
         }
