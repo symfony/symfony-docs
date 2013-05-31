@@ -230,7 +230,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 
     The Symfony Framework uses the built-in
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
-    class (actually, it uses a sub-class, which some extra functionality
+    class (actually, it uses a sub-class with some extra functionality
     mentioned below). This class leverages the information that was placed
     on the ``Request`` object's ``attributes`` property during the ``RouterListener``.
 
