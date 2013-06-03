@@ -257,7 +257,7 @@ InputArgument::OPTIONAL      The argument is optional and therefore can be omitt
 InputArgument::IS_ARRAY      Allows to specify an indefinite number of arguments, must be used at the end of the argument list
 ===========================  =================================================================================================
 
-You can combine IS_ARRAY with REQUIRED and OPTIONAL like this::
+You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
 
     $this
         // ...
@@ -335,7 +335,7 @@ InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), t
 InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
 ===========================  =====================================================================================
 
-You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
+You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:
 
 .. code-block:: php
 
