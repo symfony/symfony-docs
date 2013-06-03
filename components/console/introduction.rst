@@ -229,6 +229,44 @@ The command can now be used in either of the following ways:
     $ app/console demo:greet Fabien
     $ app/console demo:greet Fabien Potencier
 
+It is also possible to let an argument take a list of values (imagine you want
+to greet all your friends). For this it must be specified at the end of the
+argument list::
+
+    $this
+        // ...
+        ->addArgument(
+            'names',
+            InputArgument::IS_ARRAY,
+            'Who do you want to greet (separate multiple names with a space)?'
+        );
+
+You can now access the ``names`` argument as an array::
+
+    if ($names = $input->getArgument('names')) {
+        $text .= ''.implode(', ', $names);
+    }
+
+There are 3 argument variants you can use:
+
+===========================  =================================================================================================
+Option                       Value
+===========================  =================================================================================================
+InputArgument::REQUIRED      The argument is required
+InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
+InputArgument::IS_ARRAY      Allows to specify an indefinite number of arguments, must be used at the end of the argument list
+===========================  =================================================================================================
+
+You can combine IS_ARRAY with REQUIRED and OPTIONAL like this::
+
+    $this
+        // ...
+        ->addArgument(
+            'names',
+            InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+            'Who do you want to greet (separate multiple names with a space)?'
+        );
+
 Using Command Options
 ---------------------
 
