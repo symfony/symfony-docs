@@ -65,7 +65,7 @@ Below is the schedule for the first few versions that use this release model:
 
 This results in very predictable dates and maintenance periods.
 
-* *(special)* Symfony 2.2 will be released at the end of February 2013;
+* *(special)* Symfony 2.2 was released at the end of February 2013;
 * *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
    2013;
 * Symfony 2.4 will be released at the end of November 2013;
@@ -98,7 +98,7 @@ Rationale
 
 This release process was adopted to give more *predictability* and
 *transparency*. It was discussed based on the following goals:
-
+was 
 * Shorten the release cycle (allow developers to benefit from the new
   features faster);
 * Give more visibility to the developers using the framework and Open-Source
