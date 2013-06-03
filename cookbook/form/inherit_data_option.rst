@@ -84,7 +84,7 @@ Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
     }
 
 Instead of including the duplicated fields ``address``, ``zipcode``, ``city``
-and ``country``in both of these forms, we will create a third form for that.
+and ``country`` in both of these forms, we will create a third form for that.
 We will call this form simply ``LocationType``::
 
     // src/Acme/HelloBundle/Form/Type/LocationType.php
