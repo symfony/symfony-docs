@@ -244,7 +244,7 @@ argument list::
 You can now access the ``names`` argument as an array::
 
     if ($names = $input->getArgument('names')) {
-        $text .= ''.implode(', ', $names);
+        $text .= ' '.implode(', ', $names);
     }
 
 There are 3 argument variants you can use:
