@@ -377,7 +377,7 @@ Environments
 
 Every Symfony application runs within an :term:`environment`. An environment
 is a specific set of configuration and loaded bundles, represented by a string.
-The same application can be run using different configuration by running the
+The same application can be run with different configurations by running the
 application in different environments. Symfony2 comes with three environments
 defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
 
