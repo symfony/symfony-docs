@@ -101,8 +101,8 @@ node definition. Node type are available for:
 * boolean
 * array
 * enum
-* integer (new in 2.2)
-* float (new in 2.2)
+* integer
+* float
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut

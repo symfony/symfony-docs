@@ -68,8 +68,8 @@ the base branch to be 2.1 on the preview page:
 
 .. note::
 
-  All changes made to a branch (e.g. 2.1) will be merged up to each "newer"
-  branch (e.g. 2.2, master, etc) for the next release on a weekly basis.
+  All changes made to a branch (e.g. 2.2) will be merged up to each "newer"
+  branch (e.g. 2.3, master, etc) for the next release on a weekly basis.
 
 GitHub covers the topic of `pull requests`_ in detail.
 
