@@ -155,7 +155,7 @@ Whenever a new minor version of Symfony2 is released (e.g. 2.3, 2.4, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony2 versions that have
 reached end-of-life will be removed. For example, if Symfony 2.5 were released
-today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
+today, and 2.3 had recently reached its end-of-life, the 2.3 ``versionadded``
 tags would be removed from the new 2.5 branch.
 
 Standards

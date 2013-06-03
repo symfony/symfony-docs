@@ -950,4 +950,4 @@ customizations directly. Look at the following example:
 The array passed as the second argument contains form "variables". For
 more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/current/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
