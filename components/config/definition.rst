@@ -111,9 +111,6 @@ and are created with ``node($name, $type)`` or their associated shortcut
 Numeric node constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.2
-    The numeric (float and integer) nodes are new in 2.2
-
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
 :method:`Symfony\\Component\\Config\\Definition\\Builder::max` -
@@ -269,9 +266,6 @@ has a certain value:
 
 Optional Sections
 -----------------
-
-.. versionadded:: 2.2
-    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut

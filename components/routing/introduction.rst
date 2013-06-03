@@ -93,9 +93,6 @@ are the least commonly needed.
 7. An array of methods. These enforce a certain HTTP request method (``HEAD``,
    ``GET``, ``POST``, ...).
 
-.. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
-
 Take the following route, which combines several of these ideas::
 
    $route = new Route(
@@ -159,10 +156,6 @@ the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
     );
 
     $rootCollection->addCollection($subCollection);
-
-.. versionadded:: 2.2
-    The ``addPrefix`` method is added in Symfony2.2. This was part of the
-    ``addCollection`` method in older versions.
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

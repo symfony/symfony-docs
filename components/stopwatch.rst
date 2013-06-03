@@ -7,10 +7,6 @@ The Stopwatch Component
 
     Stopwatch component provides a way to profile code.
 
-.. versionadded:: 2.2
-    The Stopwatch Component is new to Symfony 2.2. Previously, the ``Stopwatch``
-    class was located in the ``HttpKernel`` component (and was new in 2.1).
-
 Installation
 ------------
 

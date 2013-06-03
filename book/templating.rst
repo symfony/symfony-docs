@@ -376,11 +376,6 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
-.. versionadded:: 2.2
-    Namespaced path support was added in 2.2, allowing for template names
-    like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
-    for more details.
-
 By default, templates can live in two different locations:
 
 * ``app/Resources/views/``: The applications ``views`` directory can contain
@@ -568,10 +563,6 @@ template using the ``with`` command.
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
-.. versionadded:: 2.2
-    The ``include()`` function is a new Twig feature that's available in
-    Symfony 2.2. Prior, the ``{% include %}`` tag was used.
-
 .. index::
    single: Templating; Embedding action
 
@@ -749,9 +740,6 @@ in your application configuration:
                 'hinclude_default_template' => array('AcmeDemoBundle::hinclude.html.twig'),
             ),
         ));
-
-.. versionadded:: 2.2
-    Default templates per render function was added in Symfony 2.2
 
 You can define default templates per ``render`` function (which will override
 any global default template that is defined):

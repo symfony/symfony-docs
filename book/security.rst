@@ -1333,10 +1333,6 @@ it as base64. In other words, the password has been greatly obfuscated so
 that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
 
-.. versionadded:: 2.2
-    As of Symfony 2.2 you can also use the :ref:`PBKDF2<reference-security-pbkdf2>`
-    and :ref:`BCrypt<reference-security-bcrypt>` password encoders.
-
 Determining the Hashed Password
 ...............................
 
@@ -1954,9 +1950,6 @@ cookie will be ever created by Symfony2):
 
 Utilities
 ---------
-
-.. versionadded:: 2.2
-    The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
 
 The Symfony Security Component comes with a collection of nice utilities related
 to security. These utilities are used by Symfony, but you should also use
