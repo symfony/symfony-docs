@@ -369,7 +369,7 @@ have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
-of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
+of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
 more about bundles in the last chapter of this tutorial.
 
 Environments
@@ -381,10 +381,10 @@ The same application can be run using different configuration by running the
 application in different environments. Symfony2 comes with three environments
 defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
 
-Enivonments are useful by allowing a single application to have a dev environment
+Environments are useful by allowing a single application to have a dev environment
 built for debugging and a production environment optimized for speed. You might
 also load specific bundles based on the selected environment. For example,
-Symfony2 comes with the `WebProfilerBundle` (described below), enabled only
+Symfony2 comes with the WebProfilerBundle (described below), enabled only
 in the ``dev`` and ``test`` environments.
 
 .. _quick-tour-big-picture-environments:
@@ -416,13 +416,14 @@ automatically whenever you make changes to any code or configuration. But that's
 not the case in the ``prod`` environment, where performance is key. That's why you
 should always use the development environment when developing your application.
 
-Symfony2 comes with two front controllers: ``app_dev.php`` provides the ``dev``
-environment, and ``app.php`` provides the ``prod`` environment. (The ``test``
-environment is normally only used when running unit tests, and so doesn't have
-a front controller.) All web accesses to Symfony2 normally go through one
-of these front controllers.
+Symfony2 comes with two web-accessible front controllers: ``app_dev.php`` 
+provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
+All web accesses to Symfony2 normally go through one of these front controllers.
+(The ``test`` environment is normally only used when running unit tests, and so 
+doesn't have a dedicated front controller. The console tool also provides a
+front controller that can be used with any environment.)
 
-The `AcmeDemoBundle` is normally only available in the dev environment, but
+The AcmeDemoBundle is normally only available in the dev environment, but
 if you were to add it (and its routes) to the production environment, you could
 go here:
 
