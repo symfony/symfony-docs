@@ -377,15 +377,15 @@ Environments
 
 Every Symfony application runs within an :term:`environment`. An environment
 is a specific set of configuration and loaded bundles, represented by a string.
-Thee same application can be run using different configuration by running the
+The same application can be run using different configuration by running the
 application in different environments. Symfony2 comes with three environments
-defined, `dev`, `test`, and `prod`, but you can create your own as well.
+defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
 
 Enivonments are useful by allowing a single application to have a dev environment
 built for debugging and a production environment optimized for speed. You might
 also load specific bundles based on the selected environment. For example,
-Symfony2 comes with the ``WebProfilerBundle`` (described below), enabled only
-in the `dev` and `test` environments.
+Symfony2 comes with the `WebProfilerBundle` (described below), enabled only
+in the ``dev`` and ``test`` environments.
 
 .. _quick-tour-big-picture-environments:
 
@@ -393,7 +393,7 @@ Working with Environments
 -------------------------
 
 Symfony2 loads configuration based on the name of the environment. Typically,
-you put your common configuration in ``config.yml``, and override where necessary
+you put your common configuration in ``config.yml`` and override where necessary
 in the configuration for each environment. For example:
 
 .. code-block:: yaml
@@ -422,7 +422,7 @@ environment is normally only used when running unit tests, and so doesn't have
 a front controller.) All web accesses to Symfony2 normally go through one
 of these front controllers.
 
-The ``AcmeDemoBundle`` is normally only available in the dev environment, but
+The `AcmeDemoBundle` is normally only available in the dev environment, but
 if you were to add it (and its routes) to the production environment, you could
 go here:
 
