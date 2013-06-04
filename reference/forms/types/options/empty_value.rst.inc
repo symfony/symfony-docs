@@ -3,9 +3,14 @@ empty_value
 
 **type**: ``string`` or ``Boolean``
 
+.. versionadded:: 2.3
+
+    Since Symfony 2.3, empty values are also supported if the ``expanded``
+    option is set to true.
+
 This option determines whether or not a special "empty" option (e.g. "Choose an option")
-will appear at the top of a select widget. This option only applies if both
-the ``expanded`` and ``multiple`` options are set to false.
+will appear at the top of a select widget. This option only applies if the
+the ``multiple`` option is set to false.
 
 * Add an empty value with "Choose an option" as the text::
 
