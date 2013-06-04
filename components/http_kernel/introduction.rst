@@ -14,10 +14,10 @@ The HttpKernel Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpKernel);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/http-kernel`` on Packagist_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_).
 
 The Workflow of a Request
 -------------------------
