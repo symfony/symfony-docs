@@ -50,19 +50,19 @@ confirmed, the core-team works on a solution following these steps:
 
 .. note::
 
-    The resolution takes anywhere between a couple of days to a month to solve
-    an issue depending on its complexity and the coordination with the
-    downstream projects (see next paragraph).
+    The resolution takes anywhere between a couple of days to a month depending
+    on its complexity and the coordination with the downstream projects (see
+    next paragraph).
 
 Collaborating with Downstream Open-Source Projects
 --------------------------------------------------
 
 As Symfony is used by many large Open-Source projects, we standardized the way
-the Symfony security team collaborate on security issues with downstream
+the Symfony security team collaborates on security issues with downstream
 projects. The process works as follows:
 
 1. After the Symfony security team has acknowledged a security issue, it
-immediately send an email to the downstream project security teams to inform
+immediately sends an email to the downstream project security teams to inform
 them of the issue;
 
 2. The Symfony security team creates a private Git repository to ease the
