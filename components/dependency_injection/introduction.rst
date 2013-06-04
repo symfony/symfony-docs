@@ -14,10 +14,10 @@ For an introduction to Dependency Injection and service containers see
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/DependencyInjection);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/dependency-injection`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_).
 
 Basic Usage
 -----------
