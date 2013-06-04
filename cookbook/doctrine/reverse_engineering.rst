@@ -60,10 +60,10 @@ tables fields.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mapping:convert xml ./src/Acme/BlogBundle/Resources/config/doctrine/metadata/orm --from-database --force
+    $ php app/console doctrine:mapping:convert xml ./src/Acme/BlogBundle/Resources/config/doctrine --from-database --force
 
 This command line tool asks Doctrine to introspect the database and generate
-the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine/metadata/orm``
+the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine``
 folder of your bundle.
 
 .. tip::
@@ -71,7 +71,7 @@ folder of your bundle.
     It's also possible to generate metadata class in YAML format by changing the
     first argument to `yml`.
 
-The generated ``BlogPost.dcm.xml`` metadata file looks as follows:
+The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 
 .. code-block:: xml
 
@@ -92,6 +92,12 @@ The generated ``BlogPost.dcm.xml`` metadata file looks as follows:
       </entity>
     </doctrine-mapping>
 
+Then you should insert proper namespace in ``name`` attribute of ``entity`` element like this:
+
+.. code-block:: xml
+
+    <entity name="Acme\BlogBundle\BlogPost" table="blog_post">
+
 .. note::
 
     If you have ``oneToMany`` relationships between your entities,
@@ -99,16 +105,14 @@ The generated ``BlogPost.dcm.xml`` metadata file looks as follows:
     a section on the specific entities for ``oneToMany`` defining the
     ``inversedBy`` and the ``mappedBy`` pieces.
 
-Once the metadata files are generated, you can ask Doctrine to import the
-schema and build related entity classes by executing the following two commands.
+Once the metadata files are generated, you can ask Doctrine to build related entity classes by executing the following two commands.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mapping:import AcmeBlogBundle annotation
+    $ php app/console doctrine:mapping:convert annotation ./src
     $ php app/console doctrine:generate:entities AcmeBlogBundle
 
-The first command generates entity classes with an annotations mapping, but
-you can of course change the ``annotation`` argument to ``xml`` or ``yml``.
+The first command generates entity classes with an annotations mapping. But if you want to use yml or xml mapping instead of annotations, you should execute the second command only.
 The newly created ``BlogComment`` entity class looks as follow:
 
 .. code-block:: php
