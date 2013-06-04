@@ -227,10 +227,6 @@ The end result is exactly the same as before - the difference is only in
 to look for parameters with those names. When the container is built, it
 looks up the value of each parameter and uses it in the service definition.
 
-.. versionadded:: 2.1
-    Escaping the ``@`` character in YAML parameter values is new in Symfony 2.1.9
-    and Symfony 2.2.1.
-
 .. note::
 
     If you want to use a string that starts with an ``@`` sign as a parameter

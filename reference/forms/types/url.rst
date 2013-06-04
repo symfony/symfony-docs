@@ -37,7 +37,7 @@ default_protocol
 
 If a value is submitted that doesn't begin with some protocol (e.g. ``http://``,
 ``ftp://``, etc), this protocol will be prepended to the string when
-the data is bound to the form.
+the data is submitted to the form.
 
 Inherited Options
 -----------------

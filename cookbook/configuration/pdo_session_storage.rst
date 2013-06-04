@@ -14,13 +14,6 @@ Symfony2 has a built-in solution for database session storage called
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
-.. versionadded:: 2.1
-    In Symfony2.1 the class and namespace are slightly modified. You can now 
-    find the session storage classes in the `Session\\Storage` namespace:
-    ``Symfony\Component\HttpFoundation\Session\Storage``. Also
-    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0. 
-    Below, you'll notice that ``%session.storage.options%`` is not used anymore.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -196,16 +189,16 @@ For MSSQL, the statement might look like the following:
 .. code-block:: sql
 
     CREATE TABLE [dbo].[session](
-	    [session_id] [nvarchar](255) NOT NULL,
-	    [session_value] [ntext] NOT NULL,
+        [session_id] [nvarchar](255) NOT NULL,
+        [session_value] [ntext] NOT NULL,
         [session_time] [int] NOT NULL,
-		PRIMARY KEY CLUSTERED(
-			[session_id] ASC
-		) WITH (
-		    PAD_INDEX  = OFF,
-		    STATISTICS_NORECOMPUTE  = OFF,
-		    IGNORE_DUP_KEY = OFF,
-		    ALLOW_ROW_LOCKS  = ON,
-		    ALLOW_PAGE_LOCKS  = ON
-		) ON [PRIMARY]
+        PRIMARY KEY CLUSTERED(
+            [session_id] ASC
+        ) WITH (
+            PAD_INDEX  = OFF,
+            STATISTICS_NORECOMPUTE  = OFF,
+            IGNORE_DUP_KEY = OFF,
+            ALLOW_ROW_LOCKS  = ON,
+            ALLOW_PAGE_LOCKS  = ON
+        ) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

@@ -427,9 +427,6 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
 
-.. versionadded:: 2.1
-    Before 2.1, the factory below was added via ``security.yml`` instead.
-
 .. code-block:: php
 
     // src/Acme/DemoBundle/AcmeDemoBundle.php

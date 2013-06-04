@@ -16,9 +16,9 @@ Configuration
 -------------
 
 * `secret`_
+* `http_method_override`_
 * `ide`_
 * `test`_
-* `trust_proxy_headers`_
 * `trusted_proxies`_
 * `form`_
     * enabled
@@ -36,11 +36,14 @@ Configuration
     * `gc_probability`_
     * `gc_maxlifetime`_
     * `save_path`_
+* `serializer`_
+    * :ref:`enabled<serializer.enabled>`
 * `templating`_
     * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
 * `profiler`_
+    * `collect`_
     * :ref:`enabled<profiler.enabled>`
 
 secret
@@ -52,6 +55,23 @@ This is a string that should be unique to your application. In practice,
 it's used for generating the CSRF tokens, but it could be used in any other
 context where having a unique string is useful. It becomes the service container
 parameter named ``kernel.secret``.
+
+.. _configuration-framework-http_method_override:
+
+http_method_override
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ``http_method_override`` option is new in Symfony 2.3.
+
+**type**: ``Boolean`` **default**: ``true``
+
+This determines whether the ``_method`` request parameter is used as the intended
+HTTP method on POST requests. If enabled, the
+:method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
+gets called automatically. It becomes the service container parameter named
+``kernel.http_method_override``. For more information, see
+:doc:`/cookbook/routing/method_parameters`.
 
 ide
 ~~~
@@ -102,41 +122,28 @@ trusted_proxies
 Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
+.. versionadded:: 2.3
+    CIDR notation support was introduced, so you can whitelist whole
+    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+
 .. configuration-block::
 
     .. code-block:: yaml
 
         framework:
-            trusted_proxies:  [192.0.0.1]
+            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
 
     .. code-block:: xml
 
-        <framework:config trusted-proxies="192.0.0.1">
+        <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
             <!-- ... -->
         </framework>
 
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1'),
+            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
         ));
-
-trust_proxy_headers
-~~~~~~~~~~~~~~~~~~~
-
-.. caution::
-
-    The ``trust_proxy_headers`` option is deprecated and will be removed in
-    Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
-    for details on how to properly trust proxy data.
-
-**type**: ``Boolean``
-
-Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as an indication for an SSL connection. By default, it is
-set to ``false`` and only SSL_HTTPS connections are indicated as secure.
-
-You should enable this setting if your application is behind a reverse proxy.
 
 .. _reference-framework-form:
 
@@ -160,9 +167,6 @@ name which is defined in the ``php.ini`` with the ``session.name`` directive.
 cookie_lifetime
 ...............
 
-.. versionadded:: 2.1
-    This option was formerly known as ``lifetime``
-
 **type**: ``integer`` **default**: ``0``
 
 This determines the lifetime of the session - in seconds. By default it will use
@@ -171,18 +175,12 @@ This determines the lifetime of the session - in seconds. By default it will use
 cookie_path
 ...........
 
-.. versionadded:: 2.1
-    This option was formerly known as ``path``
-
 **type**: ``string`` **default**: ``/``
 
 This determines the path to set in the session cookie. By default it will use ``/``.
 
 cookie_domain
 .............
-
-.. versionadded:: 2.1
-    This option was formerly known as ``domain``
 
 **type**: ``string`` **default**: ``''``
 
@@ -193,18 +191,12 @@ to the cookie specification.
 cookie_secure
 .............
 
-.. versionadded:: 2.1
-    This option was formerly known as ``secure``
-
 **type**: ``Boolean`` **default**: ``false``
 
 This determines whether cookies should only be sent over secure connections.
 
 cookie_httponly
 ...............
-
-.. versionadded:: 2.1
-    This option was formerly known as ``httponly``
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -216,9 +208,6 @@ through XSS attacks.
 gc_probability
 ..............
 
-.. versionadded:: 2.1
-    The ``gc_probability`` option is new in version 2.1
-
 **type**: ``integer`` **default**: ``1``
 
 This defines the probability that the garbage collector (GC) process is started
@@ -229,18 +218,12 @@ that the GC process will start on each request.
 gc_divisor
 ..........
 
-.. versionadded:: 2.1
-    The ``gc_divisor`` option is new in version 2.1
-
 **type**: ``integer`` **default**: ``100``
 
 See `gc_probability`_.
 
 gc_maxlifetime
 ..............
-
-.. versionadded:: 2.1
-    The ``gc_maxlifetime`` option is new in version 2.1
 
 **type**: ``integer`` **default**: ``14400``
 
@@ -283,6 +266,22 @@ value to ``null``:
             ),
         ));
 
+.. _configuration-framework-serializer:
+
+serializer
+~~~~~~~~~~
+
+.. _serializer.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the ``serializer`` service or not in the service container.
+
+For more details, see :doc:`/cookbook/serializer`.
+
 templating
 ~~~~~~~~~~
 
@@ -302,15 +301,6 @@ URLs for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
 is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
 collections. URLs starting with ``http://`` will only be added to the
 ``http`` collection.
-
-.. versionadded:: 2.1
-    Unlike most configuration blocks, successive values for ``assets_base_urls``
-    will overwrite each other instead of being merged. This behavior was chosen
-    because developers will typically define base URL's for each environment.
-    Given that most projects tend to inherit configurations
-    (e.g. ``config_test.yml`` imports ``config_dev.yml``) and/or share a common
-    base configuration (i.e. ``config.yml``), merging could yield a set of base
-    URL's for multiple environments.
 
 .. _ref-framework-assets-version:
 
@@ -423,8 +413,25 @@ enabled
 
 **default**: ``true`` in the ``dev`` and ``test`` environments
 
-The profiler can be disabled by setting this key to ``false``. In reality,
-the profiler still exists, but the data collectors are not activated.
+The profiler can be disabled by setting this key to ``false``.
+
+.. versionadded:: 2.3
+
+    The ``collect`` option is new in Symfony 2.3. Previously, when ``profiler.enabled``
+    was false, the profiler *was* actually enabled, but the collectors were
+    disabled. Now the profiler and collectors can be controller independently.
+
+collect
+.......
+
+**default**: ``true``
+
+This option configures the way the profiler behaves when it is enabled. If set
+to ``true``, the profiler collects data for all requests. If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false``
+and activate the data collectors by hand::
+
+    $profiler->enable();
 
 Full Default Configuration
 --------------------------
@@ -434,9 +441,8 @@ Full Default Configuration
     .. code-block:: yaml
 
         framework:
-            charset:              ~
             secret:               ~
-            trust_proxy_headers:  false
+            http_method_override: true
             trusted_proxies:      []
             ide:                  ~
             test:                 ~
@@ -461,8 +467,9 @@ Full Default Configuration
             # profiler configuration
             profiler:
                 enabled:              false
+                collect:              true
                 only_exceptions:      false
-                only_master_requests:  false
+                only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
                 username:
                 password:
@@ -489,8 +496,6 @@ Full Default Configuration
 
             # session configuration
             session:
-                # DEPRECATED! Session starts on demand
-                auto_start:           false
                 storage_id:           session.storage.native
                 handler_id:           session.handler.native_file
                 name:                 ~
@@ -504,20 +509,9 @@ Full Default Configuration
                 gc_maxlifetime:       ~
                 save_path:            %kernel.cache_dir%/sessions
 
-                # DEPRECATED! Please use: cookie_lifetime
-                lifetime:             ~
-
-                # DEPRECATED! Please use: cookie_path
-                path:                 ~
-
-                # DEPRECATED! Please use: cookie_domain
-                domain:               ~
-
-                # DEPRECATED! Please use: cookie_secure
-                secure:               ~
-
-                # DEPRECATED! Please use: cookie_httponly
-                httponly:             ~
+            # serializer configuration
+            serializer:
+               enabled: false
 
             # templating configuration
             templating:
@@ -565,10 +559,5 @@ Full Default Configuration
                 cache:                file
                 file_cache_dir:       %kernel.cache_dir%/annotations
                 debug:                %kernel.debug%
-
-
-.. versionadded:: 2.1
-    The ```framework.session.auto_start`` setting has been removed in Symfony2.1,
-    it will start on demand now.
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2

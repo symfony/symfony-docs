@@ -100,7 +100,7 @@ node definition. Node type are available for:
 * scalar
 * boolean
 * array
-* enum (new in 2.1)
+* enum
 * integer (new in 2.2)
 * float (new in 2.2)
 * variable (no validation)

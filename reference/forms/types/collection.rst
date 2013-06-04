@@ -152,7 +152,7 @@ you need is the JavaScript:
 
     .. code-block:: html+jinja
 
-        <form action="..." method="POST" {{ form_enctype(form) }}>
+        {{ form_start(form) }}
             {# ... #}
 
             {# store the prototype on the data-prototype attribute #}
@@ -168,7 +168,7 @@ you need is the JavaScript:
             <a href="#" id="add-another-email">Add another email</a>
 
             {# ... #}
-        </form>
+        {{ form_end(form) }}
 
         <script type="text/javascript">
             // keep track of how many email fields have been rendered
@@ -325,9 +325,6 @@ as :ref:`cookbook-form-collections-new-prototype`.
 
 prototype_name
 ~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-    The ``prototype_name`` option was added in Symfony 2.1
 
 **type**: ``String`` **default**: ``__name__``
 

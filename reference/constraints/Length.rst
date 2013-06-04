@@ -3,9 +3,6 @@ Length
 
 Validates that a given string length is *between* some minimum and maximum value.
 
-.. versionadded:: 2.1
-    The Length constraint was added in Symfony 2.1.
-
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                |
 +----------------+----------------------------------------------------------------------+

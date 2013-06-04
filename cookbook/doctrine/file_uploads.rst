@@ -222,60 +222,33 @@ The following controller shows you how to handle the entire process::
     // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     /**
      * @Template()
      */
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
         $document = new Document();
         $form = $this->createFormBuilder($document)
             ->add('name')
             ->add('file')
-            ->getForm()
-        ;
+            ->getForm();
 
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
 
-                $em->persist($document);
-                $em->flush();
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
 
-                return $this->redirect($this->generateUrl(...));
-            }
+            $em->persist($document);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl(...));
         }
 
         return array('form' => $form->createView());
     }
-
-.. note::
-
-    When writing the template, don't forget to set the ``enctype`` attribute:
-
-    .. configuration-block::
-
-        .. code-block:: html+jinja
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
-
-                <input type="submit" value="Upload Document" />
-            </form>
-
-        .. code-block:: html+php
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" <?php echo $view['form']->enctype($form) ?>>
-                <?php echo $view['form']->widget($form) ?>
-
-                <input type="submit" value="Upload Document" />
-            </form>
 
 The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``

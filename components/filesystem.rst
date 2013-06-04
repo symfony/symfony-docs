@@ -6,10 +6,6 @@ The Filesystem Component
 
     The Filesystem components provides basic utilities for the filesystem.
 
-.. versionadded:: 2.1
-    The Filesystem Component is new to Symfony 2.1. Previously, the ``Filesystem``
-    class was located in the ``HttpKernel`` component.
-
 Installation
 ------------
 
@@ -234,6 +230,24 @@ isAbsolutePath
     $fs->isAbsolutePath('tmp');
     // return false
     $fs->isAbsolutePath('../dir');
+
+.. versionadded:: 2.3
+    ``dumpFile`` is new in Symfony 2.3
+
+dumpFile
+~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
+dump contents to a file. It does this in an atomic manner: it writes a temporary
+file first and then moves it to the new file location when it's finished.
+This means that the user will always see either the complete old file or
+complete new file (but never a partially-written file)::
+
+    $fs->dumpFile('file.txt', 'Hello World');
+
+The ``file.txt`` file contains ``Hello World`` now.
+
+A desired file mode can be passed as the third argument.
 
 Error Handling
 --------------
