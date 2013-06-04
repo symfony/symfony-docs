@@ -833,6 +833,78 @@ form "type"). It can be used to quickly build a form object in the controller::
         // ...
     }
 
+.. tip::
+
+    Defining your form type as a service is a good practice and makes it easily usable in
+    your application:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # src/Acme/TaskBundle/Resources/config/services.yml
+            services:
+                acme_demo.form.type.task:
+                    class: Acme\TaskBundle\Form\Type\TaskType
+                    tags:
+                        - { name: form.type, alias: task }
+
+        .. code-block:: xml
+
+            <!-- src/Acme/TaskBundle/Resources/config/services.xml -->
+            <service id="acme_demo.form.type.task" class="Acme\TaskBundle\Form\Type\TaskType">
+                <tag name="form.type" alias="task" />
+            </service>
+
+        .. code-block:: php
+
+            // src/Acme/TaskBundle/Resources/config/services.php
+            use Symfony\Component\DependencyInjection\Definition;
+
+            $container
+                ->register('acme_demo.form.type.task', 'Acme\TaskBundle\Form\Type\TaskType')
+                ->addTag('form.type', array(
+                    'alias' => 'task',
+                ))
+            ;
+    
+    That's it! Now you can use your form type directly in a controller::
+
+        // src/Acme/TaskBundle/Controller/DefaultController.php
+
+        // ...
+        public function newAction()
+        {
+            $task = ...;
+            $form = $this->createForm('task', $task);
+
+            // ...
+        }
+
+    or even use it as a normal type in another form::
+
+        // src/Acme/TaskBundle/Form/Type/ListType.php
+        namespace Acme\TaskBundle\Form\Type;
+
+        use Symfony\Component\Form\AbstractType;
+        use Symfony\Component\Form\FormBuilderInterface;
+
+        class ListType extends AbstractType
+        {
+            public function buildForm(FormBuilderInterface $builder, array $options)
+            {
+                // ...
+
+                $builder->add('task', 'task');
+                // Note that the property ``task`` (first argument)
+                // is defined as a ``task`` form type (second).
+            }
+
+            // ...
+        }
+
+    Read :ref:`form-cookbook-form-field-service` for more information.
+
 Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.
