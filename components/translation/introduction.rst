@@ -11,7 +11,7 @@ The Translation Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Translation);
 * :doc:`Install it via Composer</components/using_components>` (``symfony/translation`` on `Packagist`_).
@@ -156,10 +156,11 @@ Using Message Domains
 As you've seen, message files are organized into the different locales that
 they translate. The message files can also be organized further into "domains".
 
-The domain is specific in the fourth argument of the ``addResource()`` method.
-The default domain is ``messages``. For example, suppose that, for organization,
-translations were split into three different domains: ``messages``, ``admin``
-and ``navigation``. The French translation would be loaded like this::
+The domain is specified in the fourth argument of the ``addResource()``
+method. The default domain is ``messages``. For example, suppose that, for
+organization, translations were split into three different domains:
+``messages``, ``admin`` and ``navigation``. The French translation would be
+loaded like this::
 
     // ...
     $translator->addLoader('xliff', new XliffLoader());
@@ -175,12 +176,11 @@ you must specify the domain as the third argument of ``trans()``::
 
 Symfony2 will now look for the message in the ``admin`` domain of the
 specified locale.
-can use ``-Inf`` and ``+Inf`` for the infinite.
 
 Usage
 -----
 
-Read how to use the Translation components in ":doc:`/components/translation/usage`".
+Read how to use the Translation component in ":doc:`/components/translation/usage`".
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

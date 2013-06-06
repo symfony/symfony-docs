@@ -87,9 +87,9 @@ typically set via a ``_locale`` attribute on your routes (see :ref:`book-transla
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the locale hasn't been set explicitly in the session, the ``fallback_locale``
-configuration parameter will be used by the ``Translator``. The parameter
-defaults to ``en`` (see `Configuration`_).
+If the locale hasn't been set, the ``fallback`` configuration parameter will
+be used by the ``Translator``. The parameter defaults to ``en`` (see
+`Configuration`_).
 
 Alternatively, you can guarantee that a locale is set on each user's request
 by defining a ``default_locale`` for the framework:
@@ -311,7 +311,7 @@ works when you use a placeholder following the ``%var%`` pattern.
 .. caution::
 
     The ``%var%`` notation of placeholders is required when translating in
-    Twig templates.
+    Twig templates using the tag.
 
 .. tip::
 
