@@ -14,6 +14,7 @@ Form Types Reference
    types/choice
    types/collection
    types/country
+   types/currency
    types/date
    types/datetime
    types/email
