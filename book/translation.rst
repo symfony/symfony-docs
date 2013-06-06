@@ -78,9 +78,9 @@ The locale used in translations is the one stored in the user session.
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the locale hasn't been set explicitly in the session, the ``fallback_locale``
-configuration parameter will be used by the ``Translator``. The parameter
-defaults to ``en`` (see `Configuration`_).
+If the locale hasn't been set, the ``fallback`` configuration parameter will
+be used by the ``Translator``. The parameter defaults to ``en`` (see
+`Configuration`_).
 
 Alternatively, you can guarantee that a locale is set on the user's session
 by defining a ``default_locale`` for the session service:
@@ -276,7 +276,7 @@ works when you use a placeholder following the ``%var%`` pattern.
 .. caution::
 
     The ``%var%`` notation of placeholders is required when translating in
-    Twig templates.
+    Twig templates using the tag.
 
 .. tip::
 

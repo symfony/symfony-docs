@@ -342,6 +342,7 @@ Or numbers between two other numbers:
 
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
 delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
+can use ``-Inf`` and ``+Inf`` for the infinite.
 
 Forcing the Translator Locale
 -----------------------------
