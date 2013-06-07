@@ -65,6 +65,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `translation.loader`_             | Register a custom service that loads translations                         |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `translation.extractor`_          | Register a custom service that extracts translation messages from a file  |
++-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
@@ -915,6 +917,76 @@ If you're loading translations from a database, you'll still need a resource
 file, but it might either be blank or contain a little bit of information
 about loading those resources from the database. The file is key to trigger
 the ``load`` method on your custom loader.
+
+translation.extractor
+---------------------
+
+**Purpose**: To register a custom service that extracts messages from a file
+
+.. versionadded:: 2.1
+   The ability to add message extractors is new in 2.1
+
+When executing the ``translation:update`` command, it uses extractors to
+extract translation messages from a file. By default, the Symfony2 framework
+has a :class:`Symfony\\Bridge\\TwigBridge\\Translation\\TwigExtractor` and a
+:class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`.
+
+You can create your own extractor by creating a class which implements
+:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` and
+tagging the service with ``translation.extractor``. The tag has one required
+option: ``alias``, this defines the name of the extractor.
+
+    // src/Acme/DemoBundle/Translation/FooExtractor.php
+    namespace Acme\DemoBundle\Translation;
+
+    use Symfony\Component\Translation\Extractor\ExtractorInterface;
+    use Symfony\Component\Translation\MessageCatalogue;
+
+    class FooExtractor implements ExtractorInterface
+    {
+        protected $prefix;
+
+        /**
+         * Extracts translation messages from a template directory to the catalogue.
+         */
+        public function extract($directory, MessageCatalogue $catalogue)
+        {
+            // ...
+        }
+
+        /**
+         * Sets the prefix that should be used for new found messages.
+         */
+        public function setPrefix($prefix)
+        {
+            $this->prefix = $prefix;
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.translation.extractor.foo:
+                class: Acme\DemoBundle\Translation\FooExtractor
+                tags:
+                    - { name: translation.extractor, alias: foo }
+
+    .. code-block:: xml
+
+        <service id="acme_demo.translation.extractor.foo"
+            class="Acme\DemoBundle\Translation\FooExtractor">
+            <tag name="translation.extractor" alias="foo" />
+        </service>
+
+    .. code-block:: php
+
+        $container->register(
+            'acme_demo.translation.extractor.foo',
+            'Acme\DemoBundle\Translation\FooExtractor'
+        )
+            ->addTag('translation.extractor', array('alias' => 'foo'));
 
 .. _reference-dic-tags-twig-extension:
 
