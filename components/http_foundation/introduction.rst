@@ -493,7 +493,10 @@ to ``application/json``.
     as the outer-most array to ``JsonResponse`` and not an indexed array so
     that the final result is an object (e.g. ``{"object": "not inside an array"}``)
     instead of an array (e.g. ``[{"object": "inside an array"}]``). Read
-    the `OWASP guidelines`_ for more information.
+    the `OWASP guidelines`_ for more information. 
+    
+    Only methods that respond to GET requests are vulnerable to XSSI 'JSON Hijacking'. 
+    Methods responding to POST requests only remain unaffected.
 
 JSONP Callback
 ~~~~~~~~~~~~~~
