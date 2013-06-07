@@ -67,6 +67,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `translation.extractor`_          | Register a custom service that extracts translation messages from a file  |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `translation.dumper`_             | Register a custom service that dumps translation messages                 |
++-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
@@ -987,6 +989,60 @@ option: ``alias``, this defines the name of the extractor.
             'Acme\DemoBundle\Translation\FooExtractor'
         )
             ->addTag('translation.extractor', array('alias' => 'foo'));
+
+translation.dumper
+------------------
+
+**Purpose**: To register a custom service that dumps messages to a file
+
+.. versionadded:: 2.1
+   The ability to add message dumpers is new to 2.1
+
+After an `Extractor <translation.extractor>`_ has extracted all messages from
+the templates, the dumpers are executed to dump the messages to a translation
+file in a specific format.
+
+Symfony2 comes already with many dumpers:
+
+* :class:`Symfony\\Component\\Translation\\Dumper\\CsvFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\IcuResFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\IniFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\MoFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\PoFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\QtFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\XliffFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\YamlFileDumper`
+
+You can create your own dumper by extending
+:class:`Symfony\\Component\\Translation\\DumperFileDumper` or implementing
+:class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface` and tagging
+the service with ``translation.dumper``. The tag has one option: ``alias``
+This is the name that's used to determine which dumper should be used.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.translation.dumper.json:
+                class: Acme\DemoBundle\Translation\JsonFileDumper
+                tags:
+                    - { name: translation.dumper, alias: json }
+
+    .. code-block:: xml
+
+        <service id="acme_demo.translation.dumper.json"
+            class="Acme\DemoBundle\Translation\JsonFileDumper">
+            <tag name="translation.dumper" alias="json" />
+        </service>
+
+    .. code-block:: php
+
+        $container->register(
+            'acme_demo.translation.dumper.json',
+            'Acme\DemoBundle\Translation\JsonFileDumper'
+        )
+            ->addTag('translation.dumper', array('alias' => 'json'));
 
 .. _reference-dic-tags-twig-extension:
 
