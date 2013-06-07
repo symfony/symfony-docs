@@ -86,7 +86,7 @@ are done doing other stuff::
     // ... do other things
     
     $process->wait(function ($type, $buffer) {
-        if (Process:ERR === $type) {
+        if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
             echo 'OUT > '.$buffer;
