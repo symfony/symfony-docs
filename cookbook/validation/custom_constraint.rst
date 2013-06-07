@@ -79,11 +79,6 @@ The validator class is also simple, and only has one required method: ``validate
     The first parameter of the ``addViolation`` call is the error message to
     use for that violation.
 
-.. versionadded:: 2.1
-    The ``isValid`` method was renamed to ``validate`` in Symfony 2.1. The
-    ``setMessage`` method was also deprecated, in favor of calling ``addViolation``
-    on the context.
-
 Using the new Validator
 -----------------------
 

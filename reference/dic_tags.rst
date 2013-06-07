@@ -61,6 +61,10 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
++-----------------------------------+---------------------------------------------------------------------------+
 | `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
@@ -560,9 +564,6 @@ kernel.event_subscriber
 
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
-.. versionadded:: 2.1
-   The ability to add kernel event subscribers is new to 2.1.
-
 To enable a custom subscriber, add it as a regular service in one of your
 configuration, and tag it with ``kernel.event_subscriber``:
 
@@ -808,6 +809,30 @@ is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
 For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
+
+.. _reference-dic-tags-serializer-encoder:
+
+serializer.encoder
+------------------
+
+**Purpose**: Register a new encoder in the ``serializer`` service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
+
+.. _reference-dic-tags-serializer-normalizer:
+
+serializer.normalizer
+---------------------
+
+**Purpose**: Register a new normalizer in the Serializer service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
 
 swiftmailer.plugin
 ------------------

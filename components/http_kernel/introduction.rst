@@ -451,9 +451,6 @@ method, which sends the headers and prints the ``Response`` content.
 8) The ``kernel.terminate`` event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    The ``kernel.terminate`` event is new to Symfony 2.1.
-
 **Typical Purposes**: To perform some "heavy" action after the response has
 been streamed to the user
 

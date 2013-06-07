@@ -410,11 +410,6 @@ submission (i.e.  ``/login_check``):
     URL as the firewall will automatically catch and process any form submitted
     to this URL.
 
-.. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
-    ``check_path`` ``logout`` keys. These keys can be route names (as shown
-    in this example) or URLs that have routes configured for them.
-
 Notice that the name of the ``login`` route matches the``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
@@ -770,7 +765,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``
-* ``ip``
+* ``ip`` or ``ips``
 * ``host``
 * ``methods``
 
@@ -877,6 +872,11 @@ prevent any direct access to these resources from a web browser (by guessing the
 ESI URL pattern), the ESI route **must** be secured to be only visible from
 the trusted reverse proxy cache.
 
+.. versionadded:: 2.3
+    Version 2.3 allows multiple IP addresses in a single rule with the ``ips: [a, b]``
+    construct.  Prior to 2.3, users should create one rule per IP address to match and
+    use the ``ip`` key instead of ``ips``.
+
 Here is an example of how you might secure all ESI routes that start with a
 given prefix, ``/esi``, from outside access:
 
@@ -888,20 +888,20 @@ given prefix, ``/esi``, from outside access:
         security:
             # ...
             access_control:
-                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
                 - { path: ^/esi, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ips="127.0.0.1, ::1" />
                 <rule path="^/esi" role="ROLE_NO_ACCESS" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ips' => '127.0.0.1, ::1'),
                 array('path' => '^/esi', 'role' => 'ROLE_NO_ACCESS'),
             ),
 
@@ -909,7 +909,7 @@ Here is how it works when the path is ``/esi/something`` coming from the
 ``10.0.0.1`` IP:
 
 * The first access control rule is ignored as the ``path`` matches but the
-  ``ip`` does not;
+  ``ip`` does not match either of the IPs listed;
 
 * The second access control rule is enabled (the only restriction being the
   ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
@@ -917,7 +917,8 @@ Here is how it works when the path is ``/esi/something`` coming from the
   be anything that does not match an existing role, it just serves as a trick
   to always deny access).
 
-Now, if the same request comes from ``127.0.0.1``:
+Now, if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
+address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
@@ -1160,12 +1161,6 @@ As far as the security system is concerned, the only requirement for your
 custom user class is that it implements the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface.
 
 .. note::
 

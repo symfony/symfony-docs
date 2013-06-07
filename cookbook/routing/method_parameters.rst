@@ -76,36 +76,17 @@ Faking the Method with _method
 
 .. note::
 
-    The ``_method`` functionality shown here is disabled by default in Symfony 2.2.
-    To enable it, you must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>` 
-    before you handle the request (e.g. in your front controller).
+    The ``_method`` functionality shown here is disabled by default in Symfony 2.2
+    and enabled by default in Symfony 2.3. To control it in Symfony 2.2, you
+    must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>` 
+    before you handle the request (e.g. in your front controller). In Symfony
+    2.3, use the :ref:`configuration-framework-http_method_override` option.
 
 Unfortunately, life isn't quite this simple, since most browsers do not
 support sending PUT and DELETE requests. Fortunately Symfony2 provides you
 with a simple way of working around this limitation. By including a ``_method``
 parameter in the query string or parameters of an HTTP request, Symfony2 will
-use this as the method when matching routes. This can be done easily in forms
-with a hidden field. Suppose you have a form for editing a blog post:
-
-.. code-block:: html+jinja
-
-    <form action="{{ path('blog_update', {'slug': blog.slug}) }}" method="post">
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(form) }}
-        <input type="submit" value="Update" />
-    </form>
-
-The submitted request will now match the ``blog_update`` route and the ``updateAction``
-will be used to process the form.
-
-Likewise the delete form could be changed to look like this:
-
-.. code-block:: html+jinja
-
-    <form action="{{ path('blog_delete', {'slug': blog.slug}) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE" />
-        {{ form_widget(delete_form) }}
-        <input type="submit" value="Delete" />
-    </form>
-
-It will then match the ``blog_delete`` route.
+use this as the method when matching routes. Forms automatically include a
+hidden field for this parameter if their submission method is not GET or POST.
+See :ref:`the related chapter in the forms documentation<book-forms-changing-action-and-method>`
+for more information.

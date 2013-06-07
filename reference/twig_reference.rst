@@ -17,9 +17,6 @@ There may also be tags in bundles you use that aren't listed here.
 Functions
 ---------
 
-.. versionadded:: 2.1
-    The ``csrf_token``, ``logout_path`` and ``logout_url`` functions were added in Symfony2.1
-
 .. versionadded:: 2.2
     The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
     the ``{% render %}`` tag was used and had a different signature.
@@ -47,6 +44,16 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset_version(packageName = null)``              | Get the current version of the package, more information in                                |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form(view, variables = {})``                     | This will render the HTML of a complete form, more information in                          |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-form>`.                              |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_start(view, variables = {})``               | This will render the HTML start tag of a form, more information in                         |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-start>`.                             |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``form_end(view, variables = {})``                 | This will render the HTML end tag of a form together with all fields that                  |
+|                                                    | have not been rendered yet, more information                                               |
+|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-end>`.                               |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_enctype(view)``                             | This will render the required ``enctype="multipart/form-data"`` attribute                  |
 |                                                    | if the form contains at least one file upload field, more information in                   |
@@ -85,9 +92,6 @@ Functions
 
 Filters
 -------
-
-.. versionadded:: 2.1
-    The ``humanize`` filter was added in Symfony2.1
 
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Filter Syntax                                                                   | Usage                                                             |
@@ -149,9 +153,6 @@ Tags
 
 Tests
 -----
-
-.. versionadded:: 2.1
-    The ``selectedchoice`` test was added in Symfony2.1
 
 +---------------------------------------------------+------------------------------------------------------------------------------+
 | Test Syntax                                       | Usage                                                                        |

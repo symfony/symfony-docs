@@ -157,7 +157,7 @@ when creating your form. Later, you'll learn how you could create a custom
 
 Cool, you're done! Your user will be able to enter an issue number into the
 text field and it will be transformed back into an Issue object. This means
-that, after a successful bind, the Form framework will pass a real Issue
+that, after a successful submission, the Form framework will pass a real Issue
 object to ``Task::setIssue()`` instead of the issue number.
 
 If the issue isn't found, a form error will be created for that field and
@@ -176,11 +176,6 @@ its error message can be controlled with the ``invalid_message`` field option.
 
 Model and View Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-    The names and method of the transformers were changed in Symfony 2.1.
-    ``prependNormTransformer`` became ``addModelTransformer`` and ``appendClientTransformer``
-    became ``addViewTransformer``.
 
 In the above example, the transformer was used as a "model" transformer.
 In fact, there are two different type of transformers and three different
@@ -201,7 +196,7 @@ used directly.
 
 3) **View Data** - This is the format that's used to fill in the form fields
 themselves. It's also the format in which the user will submit the data. When
-you call ``Form::bind($data)``, the ``$data`` is in the "view" data format.
+you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
 
 The 2 different types of transformers help convert to and from each of these
 types of data:

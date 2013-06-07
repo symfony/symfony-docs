@@ -509,9 +509,6 @@ For more details, see :doc:`/cookbook/bundles/prepend_extension`.
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    The ``config:dump-reference`` command was added in Symfony 2.1
-
 The ``config:dump-reference`` command allows a bundle's default configuration to
 be output to the console in yaml.
 
