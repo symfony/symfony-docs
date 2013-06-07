@@ -128,6 +128,7 @@ that will invalidate the cache for a given resource:
     purging your cached data. You can do this by setting up an access list: 
 
 .. code-block:: text
+
     /* 
      Connect to the backend server 
      on the local machine on port 8080
