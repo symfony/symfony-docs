@@ -650,13 +650,12 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
                     // remove the relationship between the tag and the Task
                     foreach ($originalTags as $tag) {
-                        // remove the Task from the Tag
-                        $tag->getTasks()->removeElement($task);
+                        // remove the Tag from the Task
+                        $task->getTags()->removeElement(tag);
 
                         // if it were a ManyToOne relationship, remove the relationship like this
                         // $tag->setTask(null);
-
-                        $em->persist($tag);
+                        // $em->persist($task);
 
                         // if you wanted to delete the Tag entirely, you can also do that
                         // $em->remove($tag);
