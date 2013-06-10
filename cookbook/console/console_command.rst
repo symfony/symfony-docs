@@ -61,6 +61,11 @@ This command will now automatically be available to run:
 .. code-block:: bash
 
     $ app/console demo:greet Fabien
+    
+The Console component also provides a few helpers to easily color a command's output,
+namely: comment, info, question and error.
+
+    $output->writeln('Hello <info>'.$name.'</info>!');
 
 Getting Services from the Service Container
 -------------------------------------------
