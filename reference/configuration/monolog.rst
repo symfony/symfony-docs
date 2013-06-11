@@ -55,9 +55,6 @@ Monolog Configuration Reference
                     email_prototype:
                         id:                   ~ # Required (when the email_prototype is used)
                         method:               ~
-                    channels:
-                        type:                 ~
-                        elements:             []
                     formatter:            ~
 
     .. code-block:: xml
