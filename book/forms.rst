@@ -230,7 +230,7 @@ controller::
     }
 
 .. versionadded:: 2.3
-    The :method:`Symfony\Component\Form\FormInterface::handleRequest` method was
+    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method was
     added in Symfony 2.3. Previously, the ``$request`` was passed to the
     ``submit`` method - a strategy which is deprecated and will be removed
     in Symfony 3.0. For details on that method, see :ref:`cookbook-form-submit-request`.
@@ -239,26 +239,26 @@ This controller follows a common pattern for handling forms, and has three
 possible paths:
 
 #. When initially loading the page in a browser, the form is simply created and
-   rendered. :method:`Symfony\Component\Form\FormInterface::handleRequest`
+   rendered. :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes that the form was not submitted and does nothing.
-   :method:`Symfony\Component\Form\FormInterface::isValid` returns ``false``
+   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
    if the form was not submitted.
 
-#. When the user submits the form, :method:`Symfony\Component\Form\FormInterface::handleRequest`
+#. When the user submits the form, :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes this and immediately writes the submitted data back into the
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated. If it is invalid (validation is covered in the next section),
-   :method:`Symfony\Component\Form\FormInterface::isValid` returns ``false``
+   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
    again, so the form is rendered together with all validation errors;
 
    .. note::
 
-       You can use the method :method:`Symfony\Component\Form\FormInterface::isSubmitted`
+       You can use the method :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted`
        to check whether a form was submitted, regardless of whether or not the
        submitted data is actually valid.
 
 #. When the user submits the form with valid data, the submitted data is again
-   written into the form, but this time :method:`Symfony\Component\Form\FormInterface::isValid`
+   written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
    returns ``true``. Now you have the opportunity to perform some actions using
    the ``$task`` object (e.g. persisting it to the database) before redirecting
    the user to some other page (e.g. a "thank you" or "success" page).
