@@ -9,10 +9,10 @@ The Filesystem Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Filesystem);
-* Install it via Composer (``symfony/filesystem`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_).
 
 Usage
 -----

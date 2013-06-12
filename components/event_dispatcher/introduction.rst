@@ -47,10 +47,10 @@ used. To make this possible, the Symfony2 kernel throws an event -
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_).
 
 Usage
 -----

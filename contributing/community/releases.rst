@@ -33,18 +33,28 @@ Maintenance
 -----------
 
 Each Symfony version is maintained for a fixed period of time, depending on
-the type of the release.
+the type of the release. We have two maintenance periods:
+
+* *Bug fixes and security fixes*: During this period, all issues can be fixed.
+  The end of this period is referenced as being the *end of maintenance* of a
+  release.
+
+* *Security fixes only*: During this period, only security related issues can
+  be fixed. The end of this period is referenced as being the *end of
+  life* of a release.
 
 Standard Releases
 ~~~~~~~~~~~~~~~~~
 
-A standard release is maintained for an *eight month* period.
+A standard release is maintained for an *eight month* period for bug fixes,
+and for a *fourteen month* period for security issue fixes.
 
 Long Term Support Releases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every two years, a new Long Term Support Release (aka LTS release) is
-published. Each LTS release is supported for a *three year* period.
+published. Each LTS release is supported for a *three year* period for bug
+fixes, and for a *four year* period for security issue fixes.
 
 .. note::
 
@@ -63,14 +73,26 @@ Below is the schedule for the first few versions that use this release model:
 * **Blue** represents the Stabilisation phase
 * **Green** represents the Maintenance period
 
-This results in very predictable dates and maintenance periods.
+This results in very predictable dates and maintenance periods:
 
-* *(special)* Symfony 2.2 will be released at the end of February 2013;
-* *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
-   2013;
-* Symfony 2.4 will be released at the end of November 2013;
-* Symfony 2.5 will be released at the end of May 2014;
-* ...
+| Version | Release | End of Maintenance  | End of Life |
+| ------- | ------- | ------------------- | ----------- |
+| 2.0     | 07/2011 | 03/2013 (20 months) | 09/2013     |
+| 2.1     | 09/2012 | 05/2013 (9 months)  | 11/2013     |
+| 2.2     | 03/2013 | 11/2013 (8 months)  | 05/2014     |
+| **2.3** | 05/2013 | 05/2016 (36 months) | 05/2017     |
+| 2.4     | 11/2013 | 07/2014 (8 months)  | 01/2015     |
+| 2.5     | 05/2014 | 01/2015 (8 months)  | 07/2016     |
+| 2.6     | 11/2014 | 07/2015 (8 months)  | 01/2016     |
+| **2.7** | 05/2015 | 05/2018 (36 months) | 05/2019     |
+| 2.8     | 11/2015 | 07/2016 (8 months)  | 01/2017     |
+| ...     | ...     | ...                 | ...         |
+
+.. tip::
+
+    If you want to learn more about the timeline of any given Symfony version,
+    use the online `timeline calculator`_. You can also get all data as a JSON
+    string via a URL like `http://symfony.com/roadmap.json?version=2.x`.
 
 Backward Compatibility
 ----------------------
@@ -124,3 +146,5 @@ upgrade.
 
 .. _Git repository: https://github.com/symfony/symfony
 .. _SensioLabs:     http://sensiolabs.com/
+.. _roadmap:        http://symfony.com/roadmap
+.. _`timeline calculator`: http://symfony.com/roadmap

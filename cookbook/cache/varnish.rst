@@ -127,54 +127,54 @@ that will invalidate the cache for a given resource:
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data. You can do this by setting up an access list: 
 
-.. code-block:: text
-    /* 
-     Connect to the backend server 
-     on the local machine on port 8080
-     */
-    backend default {
-        .host = "127.0.0.1";
-        .port = "8080";
-    }
+    .. code-block:: text
 
-	// Acl's can contain IP's, subnets and hostnames
-    acl purge {
-        "localhost";
-        "192.168.55.0"/24;
-    }
+        /* 
+         Connect to the backend server 
+         on the local machine on port 8080
+         */
+        backend default {
+            .host = "127.0.0.1";
+            .port = "8080";
+        }
 
-    sub vcl_recv {
-        // Match PURGE request to avoid cache bypassing
-        if (req.request == "PURGE") {
-            // Match client IP to the acl
-            if (!client.ip ~ purge) {
-                // Deny access
-                error 405 "Not allowed.";
+        // Acl's can contain IP's, subnets and hostnames
+        acl purge {
+            "localhost";
+            "192.168.55.0"/24;
+        }
+
+        sub vcl_recv {
+            // Match PURGE request to avoid cache bypassing
+            if (req.request == "PURGE") {
+                // Match client IP to the acl
+                if (!client.ip ~ purge) {
+                    // Deny access
+                    error 405 "Not allowed.";
+                }
+                // Perform a cache lookup
+                return(lookup);
             }
-            // Perform a cache lookup
-            return(lookup);
         }
-    }
-	
-    sub vcl_hit {
-        // Match PURGE request
-        if (req.request == "PURGE") {
-            // Force object expiration for Varnish < 3.0
-            set obj.ttl = 0s;
-            // Do an actual purge for Varnish >= 3.0
-            // purge;
-            error 200 "Purged";
-        }
-    }	
 
-    sub vcl_miss {
-        // Match PURGE request    
-        if (req.request == "PURGE") {
-            // Indicate that the object isn't stored in cache
-            error 404 "Not purged";
+        sub vcl_hit {
+            // Match PURGE request
+            if (req.request == "PURGE") {
+                // Force object expiration for Varnish < 3.0
+                set obj.ttl = 0s;
+                // Do an actual purge for Varnish >= 3.0
+                // purge;
+                error 200 "Purged";
+            }
         }
-    }	
 
+        sub vcl_miss {
+            // Match PURGE request    
+            if (req.request == "PURGE") {
+                // Indicate that the object isn't stored in cache
+                error 404 "Not purged";
+            }
+        }
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
