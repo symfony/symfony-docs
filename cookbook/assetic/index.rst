@@ -6,5 +6,6 @@ Assetic
 
     asset_management
     yuicompressor
+    uglifyjs
     jpeg_optimize
     apply_to_option
