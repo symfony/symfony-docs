@@ -198,7 +198,7 @@ When a Release reaches "end of maintenance"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every release will eventually reach its "end of maintenance". For details,
-see :ref`contributing-release-maintenance`.
+see :ref:`contributing-release-maintenance`.
 
 When a release reaches its end of maintenance, the following items are done.
 For this example, suppose version 2.1 has just reached its end of maintenance:
@@ -211,7 +211,7 @@ For this example, suppose version 2.1 has just reached its end of maintenance:
   to reflect that pull requests should start from the now-oldest maintained
   version (e.g. 2.2).
 
-* Remove all ``versionadded`` mentions - and any other notes related to features
+* Remove all ``versionadded`` directives - and any other notes related to features
   changing or being new - for the version (e.g. 2.1) from the master branch.
   The result is that the next release (which is the first that comes entirely
   *after* the end of maintenance of this branch), will have no mentions of
