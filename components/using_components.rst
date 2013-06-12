@@ -24,12 +24,12 @@ Using the Finder Component
 
     {
         "require": {
-            "symfony/finder": "2.2.*"
+            "symfony/finder": "2.3.*"
         }
     }
 
 If you already have a ``composer.json`` file, just add this line to it. You
-may also need to adjust the version (e.g. ``2.1.1`` or ``2.2.*``).
+may also need to adjust the version (e.g. ``2.2.2`` or ``2.3.*``).
 
 You can research the component names and versions at `packagist.org`_.
 
@@ -69,9 +69,9 @@ immediately::
 
             {
                 "require": {
-                    "symfony/finder": "2.2.*",
-                    "symfony/dom-crawler": "2.2.*",
-                    "symfony/css-selector": "2.2.*"
+                    "symfony/finder": "2.3.*",
+                    "symfony/dom-crawler": "2.3.*",
+                    "symfony/css-selector": "2.3.*"
                 }
             }
 
@@ -81,7 +81,7 @@ immediately::
 
             {
                 "require": {
-                    "symfony/symfony": "2.2.*"
+                    "symfony/symfony": "2.3.*"
                 }
             }
 

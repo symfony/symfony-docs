@@ -76,13 +76,13 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.2.0
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.3.*
 
         # remove the Git history
         $ rm -rf .git
-    
-    For an exact version, replace `2.2.0` with the latest Symfony version
-    (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
+
+    For an exact version, replace "2.3.0" with the latest Symfony version.
+    For details, see the `Symfony Installation Page`_
 
 .. tip::
 
