@@ -57,12 +57,12 @@ Distribution:
 
 .. code-block:: bash
 
-    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.2.0
+    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.3.0
 
 .. tip::
 
-    For an exact version, replace `2.2.0` with the latest Symfony version
-    (e.g. 2.2.1). For details, see the `Symfony Installation Page`_
+    For an exact version, replace "2.3.0" with the latest Symfony version.
+    For details, see the `Symfony Installation Page`_
 
 .. tip::
 
@@ -109,10 +109,10 @@ one of the following commands (replacing ``###`` with your actual filename):
 .. code-block:: bash
 
     # for .tgz file
-    $ tar zxvf Symfony_Standard_Vendors_2.2.###.tgz
+    $ tar zxvf Symfony_Standard_Vendors_2.3.###.tgz
 
     # for a .zip file
-    $ unzip Symfony_Standard_Vendors_2.2.###.zip
+    $ unzip Symfony_Standard_Vendors_2.3.###.zip
 
 If you've downloaded "without vendors", you'll definitely need to read the
 next section.
