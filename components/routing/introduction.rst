@@ -11,10 +11,10 @@ The Routing Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Routing);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/routing`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/routing`` on `Packagist`_).
 
 Usage
 -----
