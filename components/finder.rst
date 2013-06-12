@@ -82,9 +82,6 @@ Search in several locations by chaining calls to
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
-.. versionadded:: 2.2
-   Wildcard support was added in version 2.2.
-
 Use wildcard characters to search in the directories matching a pattern::
 
     $finder->in('src/Symfony/*/*/Resources');
@@ -205,9 +202,6 @@ The ``notContains()`` method excludes files containing given pattern::
 
 Path
 ~~~~
-
-.. versionadded:: 2.2
-   The ``path()`` and ``notPath()`` methods were added in version 2.2.
 
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
