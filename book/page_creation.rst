@@ -245,6 +245,8 @@ application should greet you:
 
     http://localhost/app_dev.php/hello/Ryan
 
+.. _book-page-creation-prod-cache-clear:
+
 .. tip::
 
     You can also view your app in the "prod" :ref:`environment<environments-summary>`

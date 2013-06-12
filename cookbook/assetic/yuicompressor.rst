@@ -8,6 +8,11 @@ Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
 
+.. caution::
+
+    The YUI Compressor is going through a `deprecation process`_. But don't
+    worry! See :doc:`/cookbook/assetic/uglifyjs` for an alternative.
+
 Download the YUI Compressor JAR
 -------------------------------
 
@@ -161,3 +166,4 @@ apply this filter when debug mode is off.
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
 .. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/
+.. _`deprecation process`: http://www.yuiblog.com/blog/2012/10/16/state-of-yui-compressor/
