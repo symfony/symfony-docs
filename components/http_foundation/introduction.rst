@@ -27,7 +27,7 @@ You can install the component in 2 different ways:
 Request
 -------
 
-The most common way to create request is to base it on the current PHP global
+The most common way to create a request is to base it on the current PHP global
 variables with
 :method:`Symfony\\Component\\HttpFoundation\\Request::createFromGlobals`::
 
@@ -66,7 +66,7 @@ can be accessed via several public properties:
 * ``server``: equivalent of ``$_SERVER``;
 
 * ``headers``: mostly equivalent to a sub-set of ``$_SERVER``
-  (``$request->headers->get('Content-Type')``).
+  (``$request->headers->get('user-agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
 instance (or a sub-class of), which is a data holder class:
@@ -128,7 +128,7 @@ has some methods to filter the input values:
   parameter value converted to integer;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`: Filters the
-  parameter by using the PHP ``filter_var()`` function.
+  parameter by using the PHP :phpfunction:`filter_var` function.
 
 All getters takes up to three arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
@@ -150,7 +150,7 @@ When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element. But
 sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the `ParameterBag` getters like
+``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
 :method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
 argument::
 
@@ -172,7 +172,8 @@ thanks to the public ``attributes`` property, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
-on how this is used in the Symfony2 framework, see :ref:`read more<book-fundamentals-attributes>`.
+on how this is used in the Symfony2 framework, see
+:ref:`the Symfony2 book<book-fundamentals-attributes>`.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -188,8 +189,8 @@ this is done via the "path info" of the request, which can be accessed via the
 Simulating a Request
 ~~~~~~~~~~~~~~~~~~~~
 
-Instead of creating a Request based on the PHP globals, you can also simulate
-a Request::
+Instead of creating a request based on the PHP globals, you can also simulate
+a request::
 
     $request = Request::create(
         '/hello-world',
@@ -198,7 +199,7 @@ a Request::
     );
 
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
-creates a request based on a path info, a method and some parameters (the
+creates a request based on a URI, a method and some parameters (the
 query parameters or the request ones depending on the HTTP method); and of
 course, you can also override all other variables as well (by default, Symfony
 creates sensible defaults for all the PHP global variables).
@@ -210,7 +211,7 @@ Based on such a request, you can override the PHP global variables via
 
 .. tip::
 
-    You can also duplicate an existing query via
+    You can also duplicate an existing request via
     :method:`Symfony\\Component\\HttpFoundation\\Request::duplicate` or
     change a bunch of parameters with a single call to
     :method:`Symfony\\Component\\HttpFoundation\\Request::initialize`.
@@ -218,11 +219,11 @@ Based on such a request, you can override the PHP global variables via
 Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
-If you have a session attached to the Request, you can access it via the
+If you have a session attached to the request, you can access it via the
 :method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
 the
 :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
-method tells you if the request contains a Session which was started in one of
+method tells you if the request contains a session which was started in one of
 the previous requests.
 
 Accessing `Accept-*` Headers Data
@@ -238,13 +239,15 @@ by using the following methods:
   returns the list of accepted languages ordered by descending quality;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  returns the list of accepted charsets ordered by descending quality;
+  returns the list of accepted charsets ordered by descending quality.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
-The Request class has many other methods that you can use to access the
-request information. Have a look at the API for more information about them.
+The ``Request`` class has many other methods that you can use to access the
+request information. Have a look at
+:class:`the Request API<Symfony\\Component\\HttpFoundation\\Request>`
+for more information about them.
 
 Response
 --------
