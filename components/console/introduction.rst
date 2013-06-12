@@ -15,10 +15,10 @@ other batch jobs.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Console);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/console`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_).
 
 .. note::
 
@@ -229,6 +229,50 @@ The command can now be used in either of the following ways:
     $ app/console demo:greet Fabien
     $ app/console demo:greet Fabien Potencier
 
+It is also possible to let an argument take a list of values (imagine you want
+to greet all your friends). For this it must be specified at the end of the
+argument list::
+
+    $this
+        // ...
+        ->addArgument(
+            'names',
+            InputArgument::IS_ARRAY,
+            'Who do you want to greet (separate multiple names with a space)?'
+        );
+
+To use this, just specify as many names as you want:
+
+.. code-block:: bash
+
+    $ app/console demo:greet Fabien Ryan Bernhard
+
+You can access the ``names`` argument as an array::
+
+    if ($names = $input->getArgument('names')) {
+        $text .= ' '.implode(', ', $names);
+    }
+
+There are 3 argument variants you can use:
+
+===========================  ===============================================================================================================
+Option                       Value
+===========================  ===============================================================================================================
+InputArgument::REQUIRED      The argument is required
+InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
+InputArgument::IS_ARRAY      The argument can can contain an indefinite number of arguments and must be used at the end of the argument list
+===========================  ===============================================================================================================
+
+You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
+
+    $this
+        // ...
+        ->addArgument(
+            'names',
+            InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+            'Who do you want to greet (separate multiple names with a space)?'
+        );
+
 Using Command Options
 ---------------------
 
@@ -297,7 +341,7 @@ InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), t
 InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
 ===========================  =====================================================================================
 
-You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
+You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:
 
 .. code-block:: php
 

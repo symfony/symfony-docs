@@ -14,10 +14,10 @@ The HttpKernel Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpKernel);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/http-kernel`` on Packagist_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_).
 
 The Workflow of a Request
 -------------------------
@@ -230,7 +230,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 
     The Symfony Framework uses the built-in
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
-    class (actually, it uses a sub-class, which some extra functionality
+    class (actually, it uses a sub-class with some extra functionality
     mentioned below). This class leverages the information that was placed
     on the ``Request`` object's ``attributes`` property during the ``RouterListener``.
 

@@ -48,6 +48,46 @@ confirmed, the core-team works on a solution following these steps:
 
     While we are working on a patch, please do not reveal the issue publicly.
 
+.. note::
+
+    The resolution takes anywhere between a couple of days to a month depending
+    on its complexity and the coordination with the downstream projects (see
+    next paragraph).
+
+Collaborating with Downstream Open-Source Projects
+--------------------------------------------------
+
+As Symfony is used by many large Open-Source projects, we standardized the way
+the Symfony security team collaborates on security issues with downstream
+projects. The process works as follows:
+
+1. After the Symfony security team has acknowledged a security issue, it
+immediately sends an email to the downstream project security teams to inform
+them of the issue;
+
+2. The Symfony security team creates a private Git repository to ease the
+collaboration on the issue and access to this repository is given to the
+Symfony security team, to the Symfony contributors that are impacted by the
+issue, and to one representative of each downstream projects;
+
+3. All people with access to the private repository work on a solution to
+solve the issue via pull requests, code reviews, and comments;
+
+4. Once the fix is found, all involved projects collaborate to find the best
+date for a joint release (there is no guarantee that all releases will be at
+the same time but we will try hard to make them at about the same time).
+
+The list of downstream projects participating in this process is kept as small
+as possible in order to better manage the flow of confidential information
+prior to disclosure. As such, projects are included at the sole discretion of
+the Symfony security team.
+
+As of today, the following projects have validated this process and are part
+of the downstream projects included in this process:
+
+* Drupal
+* eZPublish
+
 Security Advisories
 -------------------
 

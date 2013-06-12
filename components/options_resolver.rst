@@ -11,10 +11,10 @@ The OptionsResolver Component
 Installation
 ------------
 
-You can install the component in several different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/OptionsResolver
-* :doc:`Install it via Composer</components/using_components>` (``symfony/options-resolver`` on `Packagist`_)
+* :doc:`Install it via Composer </components/using_components>` (``symfony/options-resolver`` on `Packagist`_)
 
 Usage
 -----

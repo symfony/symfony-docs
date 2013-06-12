@@ -29,10 +29,10 @@ specification.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Yaml);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/yaml`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_).
 
 Why?
 ----
