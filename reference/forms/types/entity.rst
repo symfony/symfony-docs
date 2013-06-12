@@ -30,6 +30,7 @@ objects from the database.
 |             | - `read_only`_                                                   |
 |             | - `disabled`_                                                    |
 |             | - `error_bubbling`_                                              |
+|             | - `error_mapping`_                                              |
 |             | - `mapped`_                                                      |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`choice</reference/forms/types/choice>`                     |
@@ -172,5 +173,7 @@ These options inherit from the :doc:`field</reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc

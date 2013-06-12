@@ -23,6 +23,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 |             | - `read_only`_                                                        |
 |             | - `disabled`_                                                         |
 |             | - `error_bubbling`_                                                   |
+|             | - `error_mapping`_                                                   |
 |             | - `invalid_message`_                                                  |
 |             | - `invalid_message_parameters`_                                       |
 |             | - `mapped`_                                                           |
@@ -72,6 +73,8 @@ These options inherit from the :doc:`field</reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
