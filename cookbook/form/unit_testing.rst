@@ -117,21 +117,28 @@ might look like this::
 
 To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
-before creating the parent form::
+before creating the parent form using PreloadedExtension class::
 
     // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\PreloadedExtension;
 
     class TestedTypeTest extends TypeTestCase
     {
+        protected function getExtensions()
+        {
+            $childType = new TestChildType();
+            return array(new PreloadedExtension(array(
+                $childType->getName() => $childType
+                ), array()));
+        } 
+
         public function testBindValidData()
         {
-            $this->factory->addType(new TestChildType());
-
             $type = new TestedType();
             $form = $this->factory->create($type);
 
