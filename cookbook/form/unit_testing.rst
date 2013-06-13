@@ -133,8 +133,8 @@ before creating the parent form using PreloadedExtension class::
         {
             $childType = new TestChildType();
             return array(new PreloadedExtension(array(
-                $childType->getName() => $childType
-                ), array()));
+                $childType->getName() => $childType,
+            ), array()));
         } 
 
         public function testBindValidData()
