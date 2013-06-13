@@ -1026,7 +1026,11 @@ instead of simply ``/hello/{name}``:
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"), '/admin');
+
+        $acmeHello = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
+        $acmeHello->setPrefix('/admin');
+
+        $collection->addCollection($acmeHello);
 
         return $collection;
 
