@@ -1,3 +1,6 @@
+.. versionadded:: 2.1
+    The ``error_mapping`` option is new to Symfony 2.1.
+
 error_mapping
 ~~~~~~~~~~~~~
 
@@ -28,6 +31,3 @@ Here are the rules to understand the left and the right side of the mapping:
  That means that any error added to the field is added to the given 
  nested field instead.
  * The right side contains simply the names of fields in the form.
-
-.. versionadded:: 2.1
-    The ``error_mapping`` option is new to Symfony 2.1.
