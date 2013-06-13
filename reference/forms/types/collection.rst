@@ -22,7 +22,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `label`_                                                                  |
 | options     | - `error_bubbling`_                                                         |
-|             | - `error_mapping`_                                                         |
+|             | - `error_mapping`_                                                          |
 |             | - `by_reference`_                                                           |
 |             | - `empty_data`_                                                             |
 |             | - `mapped`_                                                                 |

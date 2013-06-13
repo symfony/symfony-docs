@@ -30,7 +30,7 @@ objects from the database.
 |             | - `read_only`_                                                   |
 |             | - `disabled`_                                                    |
 |             | - `error_bubbling`_                                              |
-|             | - `error_mapping`_                                              |
+|             | - `error_mapping`_                                               |
 |             | - `mapped`_                                                      |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`choice</reference/forms/types/choice>`                     |

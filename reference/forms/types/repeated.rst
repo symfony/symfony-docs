@@ -25,7 +25,7 @@ accuracy.
 | Inherited   | - `invalid_message`_                                                   |
 | options     | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
-|             | - `error_mapping`_                                                            |
+|             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+

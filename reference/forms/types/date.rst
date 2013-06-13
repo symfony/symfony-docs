@@ -38,7 +38,7 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
 |                      | - `virtual`_                                                                |
-|                      | - `error_mapping`_                                                                |
+|                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
 +----------------------+-----------------------------------------------------------------------------+

@@ -18,7 +18,7 @@ if the box is unchecked, the value will be set to false.
 |             | - `read_only`_                                                         |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                    |
+|             | - `error_mapping`_                                                     |
 |             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                              |

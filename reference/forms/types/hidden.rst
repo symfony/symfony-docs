@@ -15,7 +15,7 @@ The hidden type represents a hidden input field.
 | Inherited   | - `data`_                                                            |
 | options     | - `property_path`_                                                   |
 |             | - `mapped`_                                                          |
-|             | - `error_mapping`_                                                  |
+|             | - `error_mapping`_                                                   |
 +-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+

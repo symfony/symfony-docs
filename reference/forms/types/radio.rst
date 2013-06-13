@@ -22,7 +22,7 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                 |
+|             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                           |

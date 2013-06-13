@@ -16,7 +16,7 @@ The text field represents the most basic input text field.
 |             | - `read_only`_                                                     |
 |             | - `disabled`_                                                      |
 |             | - `error_bubbling`_                                                |
-|             | - `error_mapping`_                                                |
+|             | - `error_mapping`_                                                 |
 |             | - `mapped`_                                                        |
 +-------------+--------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                          |

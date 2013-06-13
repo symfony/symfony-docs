@@ -14,7 +14,7 @@ The ``file`` type represents a file input in your form.
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                 |
+|             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>`                            |

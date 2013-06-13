@@ -24,7 +24,7 @@ how the input and output of the data is handled.
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                 |
+|             | - `error_mapping`_                                                  |
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
 |             | - `mapped`_                                                         |

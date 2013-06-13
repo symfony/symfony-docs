@@ -19,7 +19,7 @@ Read about the input search field at `DiveIntoHTML5.info`_
 |             | - `read_only`_                                                       |
 |             | - `disabled`_                                                        |
 |             | - `error_bubbling`_                                                  |
-|             | - `error_mapping`_                                                  |
+|             | - `error_mapping`_                                                   |
 |             | - `mapped`_                                                          |
 +-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`text</reference/forms/types/text>`                             |

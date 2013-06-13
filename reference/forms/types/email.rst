@@ -17,7 +17,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                 |
+|             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                           |

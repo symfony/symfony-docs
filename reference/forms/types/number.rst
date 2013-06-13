@@ -20,7 +20,7 @@ you want to use for your number.
 |             | - `read_only`_                                                       |
 |             | - `disabled`_                                                        |
 |             | - `error_bubbling`_                                                  |
-|             | - `error_mapping`_                                                  |
+|             | - `error_mapping`_                                                   |
 |             | - `invalid_message`_                                                 |
 |             | - `invalid_message_parameters`_                                      |
 |             | - `mapped`_                                                          |

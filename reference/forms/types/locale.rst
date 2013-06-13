@@ -32,7 +32,7 @@ you should just use the ``choice`` type directly.
 |             | - `preferred_choices`_                                                 |
 |             | - `empty_value`_                                                       |
 |             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                    |
+|             | - `error_mapping`_                                                     |
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `read_only`_                                                         |
