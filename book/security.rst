@@ -415,7 +415,7 @@ submission (i.e.  ``/login_check``):
     ``check_path`` ``logout`` keys. These keys can be route names (as shown
     in this example) or URLs that have routes configured for them.
 
-Notice that the name of the ``login`` route matches the``login_path`` config
+Notice that the name of the ``login`` route matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
 
@@ -1247,7 +1247,7 @@ do the following:
 
             encoders:
                 Symfony\Component\Security\Core\User\User:
-                    algorithm:   sha1
+                    algorithm: sha1
                     iterations: 1
                     encode_as_base64: false
 
