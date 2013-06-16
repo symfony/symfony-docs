@@ -45,6 +45,15 @@ output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getInc
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
+.. versionadded:: 2.4
+    The ``getAndFlushOutput()``, ``getAndFlushIncrementalOutput()``, ``getAndFlushErrorOutput()``, `
+    ``getAndFlushIncrementalErrorOutput()``, ``flushOutput()`` and ``flushErrorOutput()`` methods were
+    added in Symfony 2.4.
+
+These methods clears the output and error output buffers. Also, ``getAndFlushOutput()``,
+``getAndFlushIncrementalOutput()``, ``getAndFlushErrorOutput()`` and ``getAndFlushIncrementalErrorOutput()``
+returns the outputs as well.
+
 Getting real-time Process Output
 --------------------------------
 
