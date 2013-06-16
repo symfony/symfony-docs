@@ -713,7 +713,7 @@ and customize the ``form_errors`` fragment.
 .. configuration-block::
 
     .. code-block:: html+jinja
-        
+
         {# form_errors.html.twig #}
         {% block form_errors %}
             {% spaceless %}

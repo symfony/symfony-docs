@@ -1346,7 +1346,7 @@ a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body.
 
-To render it normally, add the ``raw`` filter: 
+To render it normally, add the ``raw`` filter:
 
 .. code-block:: jinja
 

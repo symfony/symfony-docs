@@ -512,7 +512,7 @@ via the ``request`` object::
 .. index::
    single: Translations; Fallback and default locale
 
-It is also possible to store the locale in the session instead of on a per 
+It is also possible to store the locale in the session instead of on a per
 request basis. If you do this, each subsequent request will have this locale.
 
 .. code-block:: php
@@ -556,7 +556,7 @@ by defining a ``default_locale`` for the framework:
 
 .. versionadded:: 2.1
      The ``default_locale`` parameter was defined under the session key
-     originally, however, as of 2.1 this has been moved. This is because the 
+     originally, however, as of 2.1 this has been moved. This is because the
      locale is now set on the request instead of the session.
 
 .. _book-translation-locale-url:

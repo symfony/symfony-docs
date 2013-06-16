@@ -193,7 +193,7 @@ and :phpclass:`DOMNode` objects:
     on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
     For example, you could get the HTML of a ``Crawler`` with something like
     this::
-    
+
         $html = '';
 
         foreach ($crawler as $domElement) {

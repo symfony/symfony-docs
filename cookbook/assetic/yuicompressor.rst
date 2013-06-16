@@ -65,10 +65,10 @@ stylesheets:
                 ),
             ),
         ));
-        
+
 .. note::
 
-    Windows users need to remember to update config to proper java location. 
+    Windows users need to remember to update config to proper java location.
     In Windows7 x64 bit by default it's ``C:\Program Files (x86)\Java\jre6\bin\java.exe``.
 
 You now have access to two new Assetic filters in your application:

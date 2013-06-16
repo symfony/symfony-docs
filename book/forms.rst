@@ -1610,7 +1610,7 @@ but here's a short example:
    The ``constraints`` option, which accepts a single constraint or an array
    of constraints (before 2.1, the option was called ``validation_constraint``,
    and only accepted a single constraint) is new to Symfony 2.1.
-   
+
 .. code-block:: php
 
     use Symfony\Component\Validator\Constraints\Length;
@@ -1630,15 +1630,15 @@ but here's a short example:
 
 .. tip::
 
-    If you are using Validation Groups, you need to either reference the 
-    ``Default`` group when creating the form, or set the correct group on 
+    If you are using Validation Groups, you need to either reference the
+    ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
-    
+
 .. code-block:: php
 
     new NotBlank(array('groups' => array('create', 'update'))
-    
-    
+
+
 Final Thoughts
 --------------
 

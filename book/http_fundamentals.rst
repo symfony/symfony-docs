@@ -358,7 +358,7 @@ Stay Organized
 ~~~~~~~~~~~~~~
 
 Inside your front controller, you have to figure out which code should be
-executed and what the content to return should be. To figure this out, you'll 
+executed and what the content to return should be. To figure this out, you'll
 need to check the incoming URI and execute different parts of your code depending
 on that value. This can get ugly quickly::
 

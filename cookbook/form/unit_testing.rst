@@ -188,7 +188,7 @@ on other extensions. You need add those extensions to the factory object::
         }
 
         // ... your tests
-    } 
+    }
 
 Testing against different Sets of Data
 --------------------------------------

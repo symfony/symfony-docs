@@ -255,7 +255,7 @@ looks up the value of each parameter and uses it in the service definition.
 
 .. caution::
 
-    You may receive a 
+    You may receive a
     :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
     when passing the ``request`` service as an argument. To understand this
     problem better and learn how to solve it, refer to the cookbook article

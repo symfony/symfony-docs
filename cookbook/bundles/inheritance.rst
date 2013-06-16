@@ -34,7 +34,7 @@ simply by creating a file with the same name.
 
 .. note::
 
-    Despite the method name, there is no parent/child relationship between 
+    Despite the method name, there is no parent/child relationship between
     the bundles, it is just a way to extend and override an existing bundle.
 
 Overriding Controllers

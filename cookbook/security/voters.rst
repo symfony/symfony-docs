@@ -102,14 +102,14 @@ the security layer. This can be done easily through the service container.
 
 .. tip::
 
-   Your implementation of the methods 
-   :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute` 
-   and :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass` 
-   are not being called internally by the framework. Once you have registered your 
-   voter the ``vote()`` method will always be called, regardless of whether
-   or not these two methods return true. Therefore you need to call those
-   methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
-   if your voter does not support the class or attribute.
+    Your implementation of the methods
+    :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute`
+    and :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass`
+    are not being called internally by the framework. Once you have registered your
+    voter the ``vote()`` method will always be called, regardless of whether
+    or not these two methods return true. Therefore you need to call those
+    methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
+    if your voter does not support the class or attribute.
 
 Declaring the Voter as a Service
 --------------------------------

@@ -138,7 +138,7 @@ set an authenticated token in the security context if successful.
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
                 $this->securityContext->setToken($authToken);
-                
+
                 return;
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
@@ -480,7 +480,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
                 ),
             ),
         ));
-    
+
 
 Congratulations!  You have written your very own custom security authentication
 provider!

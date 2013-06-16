@@ -188,7 +188,7 @@ Symfony itself - into the ``vendor/`` directory.
     When running ``php composer.phar install`` or ``php composer.phar update``,
     composer will execute post install/update commands to clear the cache
     and install assets. By default, the assets will be copied into your ``web``
-    directory. 
+    directory.
 
     Instead of copying your Symfony assets, you can create symlinks if
     your operating system supports it. To create symlinks, add an entry
@@ -239,7 +239,7 @@ If there are any issues, correct them now before moving on.
     On a UNIX system, this can be done with one of the following commands:
 
     .. code-block:: bash
-    
+
         $ ps aux | grep httpd
 
     or
@@ -261,7 +261,7 @@ If there are any issues, correct them now before moving on.
 
         $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-    
+
     **2. Using Acl on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
@@ -304,12 +304,12 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 .. image:: /images/quick_tour/welcome.png
 
 .. tip::
-    
-    To get nice and short urls you should point the document root of your 
-    webserver or virtual host to the ``Symfony/web/`` directory. Though 
-    this is not required for development it is recommended at the time your 
+
+    To get nice and short urls you should point the document root of your
+    webserver or virtual host to the ``Symfony/web/`` directory. Though
+    this is not required for development it is recommended at the time your
     application goes into production as all system and configuration files
-    become inaccessible to clients then. For information on configuring 
+    become inaccessible to clients then. For information on configuring
     your specific web server document root, read
     :doc:`/cookbook/configuration/web_server_configuration`
     or consult the official documentation of your webserver:

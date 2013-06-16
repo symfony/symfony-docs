@@ -170,7 +170,7 @@ An example WSDL is below.
             <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
             <operation name="hello">
                 <soap:operation soapAction="urn:arnleadservicewsdl#hello" style="rpc"/>
-                
+
                 <input>
                     <soap:body use="encoded" namespace="urn:hellowsdl"
                         encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>

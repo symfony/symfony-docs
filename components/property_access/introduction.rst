@@ -219,7 +219,7 @@ can use setters, the magic ``__set`` or properties to set values::
     }
 
     $person = new Person();
-    
+
     $accessor->setValue($person, 'firstName', 'Wouter');
     $accessor->setValue($person, 'lastName', 'de Jong');
     $accessor->setValue($person, 'children', array(new Person()));

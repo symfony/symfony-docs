@@ -115,7 +115,7 @@ See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 For general information on adding listeners to the events below, see
 :ref:`http-kernel-creating-listener`.
 
-.. tip:: 
+.. tip::
 
     Fabien Potencier also wrote a wonderful series on using the ``HttpKernel``
     component and other Symfony2 components to create your own framework. See
@@ -287,7 +287,7 @@ on the event object that's passed to listeners on this event.
     There are a few minor listeners to the ``kernel.controller`` event in
     the Symfony Framework, and many deal with collecting profiler data when
     the profiler is enabled.
-    
+
     One interesting listener comes from the :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>`,
     which is packaged with the Symfony Standard Edition. This listener's
     :doc:`@ParamConverter</bundles/SensioFrameworkExtraBundle/annotations/converters>`
@@ -357,7 +357,7 @@ is the :ref:`kernel.response<component-http-kernel-kernel-response>` event.
    :align: center
 
 But if the controller returns anything besides a ``Response``, then the kernel
-has a little bit more work to do - :ref:`kernel.view<component-http-kernel-kernel-view>` 
+has a little bit more work to do - :ref:`kernel.view<component-http-kernel-kernel-view>`
 (since the end goal is *always* to generate a ``Response`` object).
 
 .. note::
@@ -444,7 +444,7 @@ method, which sends the headers and prints the ``Response`` content.
     which causes the web debug toolbar to be displayed. Another listener,
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\ContextListener`
     serializes the current user's information into the
-    session so that it can be reloaded on the next request. 
+    session so that it can be reloaded on the next request.
 
 .. _component-http-kernel-kernel-terminate:
 
@@ -679,7 +679,7 @@ look like this::
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
-        
+
         // ...
     }
 

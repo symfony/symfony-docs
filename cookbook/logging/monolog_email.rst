@@ -61,9 +61,9 @@ it is broken down.
                 />
             </monolog:config>
         </container>
-        
+
     .. code-block:: php
-            
+
         // app/config/config_prod.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
@@ -71,21 +71,21 @@ it is broken down.
                     'type'         => 'fingers_crossed',
                     'action_level' => 'critical',
                     'handler'      => 'buffered',
-                ),    
+                ),
                 'buffered' => array(
                     'type'    => 'buffer',
                     'handler' => 'swift',
-                ),    
+                ),
                 'swift' => array(
                     'type'       => 'swift_mailer',
                     'from_email' => 'error@example.com',
                     'to_email'   => 'error@example.com',
                     'subject'    => 'An Error Occurred!',
                     'level'      => 'debug',
-                ),    
+                ),
             ),
-        ));    
-        
+        ));
+
 
 The ``mail`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
@@ -151,7 +151,7 @@ get logged on the server as well as the emails being sent:
                     type="fingers_crossed"
                     action_level="critical"
                     handler="grouped"
-                />                
+                />
                 <monolog:handler
                     name="grouped"
                     type="group"
@@ -188,27 +188,27 @@ get logged on the server as well as the emails being sent:
                     'type'         => 'fingers_crossed',
                     'action_level' => 'critical',
                     'handler'      => 'grouped',
-                ),    
+                ),
                 'grouped' => array(
                     'type'    => 'group',
                     'members' => array('streamed', 'buffered'),
-                ),    
+                ),
                 'streamed'  => array(
                     'type'  => 'stream',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
-                ),    
+                ),
                 'buffered'    => array(
                     'type'    => 'buffer',
                     'handler' => 'swift',
-                ),    
+                ),
                 'swift' => array(
                     'type'       => 'swift_mailer',
                     'from_email' => 'error@example.com',
                     'to_email'   => 'error@example.com',
                     'subject'    => 'An Error Occurred!',
                     'level'      => 'debug',
-                ),    
+                ),
             ),
         ));
 

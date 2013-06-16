@@ -81,14 +81,14 @@ There are several advantages to using constructor injection:
 
 * If the dependency is a requirement and the class cannot work without it
   then injecting it via the constructor ensures it is present when the class
-  is used as the class cannot be constructed without it. 
+  is used as the class cannot be constructed without it.
 
 * The constructor is only ever called once when the object is created, so you
   can be sure that the dependency will not change during the object's lifetime.
 
 These advantages do mean that constructor injection is not suitable for working
 with optional dependencies. It is also more difficult to use in combination
-with class hierarchies: if a class uses constructor injection then extending it 
+with class hierarchies: if a class uses constructor injection then extending it
 and overriding the constructor becomes problematic.
 
 Setter Injection

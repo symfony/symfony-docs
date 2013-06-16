@@ -444,7 +444,7 @@ Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
     use Symfony\Component\HttpFoundation\BinaryFileResponse
-    
+
     $file = 'path/to/file.txt';
     $response = new BinaryFileResponse($file);
 
@@ -461,7 +461,7 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 
     $response->headers->set('Content-Type', 'text/plain')
     $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
-    
+
 
 .. _component-http-foundation-json-response:
 

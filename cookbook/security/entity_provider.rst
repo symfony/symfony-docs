@@ -491,7 +491,7 @@ of the ``security.yml`` file.
                 administrators:
                     entity: { class: AcmeUserBundle:User }
             # ...
-    
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->

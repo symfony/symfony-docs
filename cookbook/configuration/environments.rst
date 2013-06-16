@@ -38,7 +38,7 @@ class:
     // app/AppKernel.php
 
     // ...
-    
+
     class AppKernel extends Kernel
     {
         // ...
@@ -297,7 +297,7 @@ The new environment is now accessible via::
    about the application or underlying infrastructure. To be sure these environments
    aren't accessible, the front controller is usually protected from external
    IP addresses via the following code at the top of the controller:
-   
+
     .. code-block:: php
 
         if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {

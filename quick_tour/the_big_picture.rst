@@ -80,7 +80,7 @@ have a ``Symfony/`` directory that looks like this:
 
         # remove the Git history
         $ rm -rf .git
-    
+
     For an exact version, replace `2.2.0` with the latest Symfony version
     (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
@@ -428,7 +428,7 @@ the profiler.
 
 .. note::
 
-    You can get more information quickly by hovering over the items on the 
+    You can get more information quickly by hovering over the items on the
     Web Debug Toolbar.
 
 Of course, you won't want to show these tools when you deploy your application

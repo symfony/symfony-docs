@@ -92,7 +92,7 @@ Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can make it so that users are always redirected to the default page regardless
-of what URL they had requested previously by setting the 
+of what URL they had requested previously by setting the
 ``always_use_default_target_path`` option to true:
 
 .. configuration-block::
@@ -106,7 +106,7 @@ of what URL they had requested previously by setting the
                     form_login:
                         # ...
                         always_use_default_target_path: true
-                        
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -139,7 +139,7 @@ Using the Referring URL
 
 In case no previous URL was stored in the session, you may wish to try using
 the ``HTTP_REFERER`` instead, as this will often be the same. You can do
-this by setting ``use_referer`` to true (it defaults to false): 
+this by setting ``use_referer`` to true (it defaults to false):
 
 .. configuration-block::
 
@@ -187,7 +187,7 @@ this by setting ``use_referer`` to true (it defaults to false):
 Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also override where the user is redirected to via the form itself by 
+You can also override where the user is redirected to via the form itself by
 including a hidden field with the name ``_target_path``. For example, to
 redirect to the URL defined by some ``account`` route, use the following:
 
@@ -227,13 +227,13 @@ redirect to the URL defined by some ``account`` route, use the following:
             <input type="password" id="password" name="_password" />
 
             <input type="hidden" name="_target_path" value="account" />
-            
+
             <input type="submit" name="login" />
         </form>
 
 Now, the user will be redirected to the value of the hidden form field. The
-value attribute can be a relative path, absolute URL, or a route name. You 
-can even change the name of the hidden form field by changing the ``target_path_parameter`` 
+value attribute can be a relative path, absolute URL, or a route name. You
+can even change the name of the hidden form field by changing the ``target_path_parameter``
 option to another value.
 
 .. configuration-block::
@@ -291,7 +291,7 @@ back to the login form itself. You can set this to a different route (e.g.
                     form_login:
                         # ...
                         failure_path: login_failure
-                        
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
