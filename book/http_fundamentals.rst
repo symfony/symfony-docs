@@ -459,6 +459,8 @@ the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/Acme/DemoBundle/Controller/MainController.php
+    namespace Acme\DemoBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Response;
 
     class MainController
