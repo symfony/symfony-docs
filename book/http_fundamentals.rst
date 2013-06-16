@@ -270,7 +270,6 @@ the user is connecting via a secured connection (i.e. ``https``).
     ``attributes`` property exists entirely to be a place where you can
     prepare and store context-specific information about the request.
 
-
 Symfony also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
 interface to construct the response that needs to be returned to the client::

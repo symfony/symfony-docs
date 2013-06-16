@@ -145,7 +145,6 @@ exist::
     $request->query->get('bar', 'bar');
     // returns 'bar'
 
-
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element. But
@@ -461,7 +460,6 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 
     $response->headers->set('Content-Type', 'text/plain')
     $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
-
 
 .. _component-http-foundation-json-response:
 

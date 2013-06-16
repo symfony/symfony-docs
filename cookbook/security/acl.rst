@@ -58,7 +58,6 @@ First, you need to configure the connection the ACL system is supposed to use:
             'connection' => 'default',
         ));
 
-
 .. note::
 
     The ACL system requires a connection from either Doctrine DBAL (usable by

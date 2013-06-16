@@ -267,7 +267,6 @@ using a processor.
         }
     }
 
-
 .. configuration-block::
 
     .. code-block:: yaml

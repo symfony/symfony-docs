@@ -30,7 +30,6 @@ which requires the following three methods:
         function vote(TokenInterface $token, $object, array $attributes);
     }
 
-
 The ``supportsAttribute()`` method is used to check if the voter supports
 the given user attribute (i.e: a role, an acl, etc.).
 

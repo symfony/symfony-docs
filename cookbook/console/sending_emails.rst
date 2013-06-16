@@ -115,4 +115,3 @@ commands and uses a different spooling method.
     Taking care of the spooling is only needed when memory spooling is used.
     If you are using file spooling (or no spooling at all), there is no need
     to flush the queue manually within the command.
-

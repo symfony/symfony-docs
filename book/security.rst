@@ -1378,7 +1378,6 @@ In a controller this can be shortcut to:
         $user = $this->getUser();
     }
 
-
 .. note::
 
     Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
@@ -1399,7 +1398,6 @@ method:
     .. code-block:: html+php
 
         <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
-
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

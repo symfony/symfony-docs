@@ -153,7 +153,6 @@ apply this filter when debug mode is off.
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
@@ -162,7 +161,6 @@ apply this filter when debug mode is off.
     applied in production, add this to the config_prod file rather than the
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
-
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
 .. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/

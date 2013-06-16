@@ -195,7 +195,6 @@ Symfony itself - into the ``vendor/`` directory.
     in the ``extra`` node of your composer.json file with the key
     ``symfony-assets-install`` and the value ``symlink``:
 
-
     .. code-block:: json
 
         "extra": {

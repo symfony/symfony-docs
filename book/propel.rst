@@ -439,7 +439,6 @@ Propel provides the following hooks:
 * ``preDelete()`` code executed before deleting an object
 * ``postDelete()`` code executed after deleting an object
 
-
 Behaviors
 ---------
 

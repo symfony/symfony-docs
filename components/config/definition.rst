@@ -553,4 +553,3 @@ Otherwise the result is a clean array of configuration values::
         $configuration,
         $configs)
     ;
-

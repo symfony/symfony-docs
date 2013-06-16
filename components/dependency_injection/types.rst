@@ -210,7 +210,6 @@ Another possibility is just setting public fields of the class directly::
             'NewsletterManager'
         ))->setProperty('mailer', new Reference('my_mailer')));
 
-
 There are mainly only disadvantages to using property injection, it is similar
 to setter injection but with these additional important problems:
 
@@ -224,4 +223,3 @@ to setter injection but with these additional important problems:
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
 as in a third party library, which uses public properties for its dependencies.
-

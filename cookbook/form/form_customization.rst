@@ -508,7 +508,6 @@ form is rendered.
                         - 'AcmeDemoBundle:Form'
             # ...
 
-
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -520,7 +519,6 @@ form is rendered.
             </framework:templating>
             <!-- ... -->
         </framework:config>
-
 
     .. code-block:: php
 
@@ -755,7 +753,6 @@ and customize the ``form_errors`` fragment.
                 <?php endforeach; ?>
             </ul>
         <?php endif ?>
-
 
 .. tip::
 

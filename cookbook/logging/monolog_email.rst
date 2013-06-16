@@ -86,7 +86,6 @@ it is broken down.
             ),
         ));
 
-
 The ``mail`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
 It then logs everything including messages below the action level.  The
@@ -211,7 +210,6 @@ get logged on the server as well as the emails being sent:
                 ),
             ),
         ));
-
 
 This uses the ``group`` handler to send the messages to the two
 group members, the ``buffered`` and the ``stream`` handlers. The messages will

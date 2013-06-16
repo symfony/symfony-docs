@@ -86,7 +86,6 @@ method, where exception handling should happen:
     code, though there is a high risk that something may break when upgrading
     to future versions of Symfony.
 
-
 .. code-block:: php
 
     // src/Acme/DemoBundle/Console/Application.php

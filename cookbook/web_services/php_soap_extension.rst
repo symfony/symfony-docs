@@ -44,7 +44,6 @@ In this case, the SOAP service will allow the client to call a method called
 
             $this->mailer->send($message);
 
-
             return 'Hello, '.$name;
         }
     }
@@ -79,7 +78,6 @@ a ``HelloService`` object properly:
         $container
             ->register('hello_service', 'Acme\SoapBundle\Services\HelloService')
             ->addArgument(new Reference('mailer'));
-
 
 Below is an example of a controller that is capable of handling a SOAP
 request. If ``indexAction()`` is accessible via the route ``/soap``, then the
@@ -189,7 +187,6 @@ An example WSDL is below.
             </port>
         </service>
     </definitions>
-
 
 .. _`PHP SOAP`:          http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`:            http://sourceforge.net/projects/nusoap

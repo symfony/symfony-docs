@@ -102,4 +102,3 @@ The same goes for routing files, validation configuration and other resources.
    translations.
 
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle
-
