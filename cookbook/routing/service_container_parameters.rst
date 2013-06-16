@@ -75,7 +75,7 @@ in your container:
 
     .. code-block:: php
 
-        # app/config/config.php
+        // app/config/config.php
         $container->setParameter('acme_demo.locales', 'en|es');
 
 You can also use a parameter to define your route path (or part of your
