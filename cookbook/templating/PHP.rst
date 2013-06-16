@@ -4,7 +4,7 @@
 How to use PHP instead of Twig for Templates
 ============================================
 
-Even if Symfony2 defaults to Twig for its template engine, you can still use
+Symfony2 defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
 Symfony2. Symfony2 adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
