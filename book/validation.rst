@@ -101,7 +101,7 @@ following:
 .. tip::
 
     Protected and private properties can also be validated, as well as "getter"
-    methods (see `validator-constraint-targets`).
+    methods (see :ref:`validator-constraint-targets`).
 
 .. index::
    single: Validation; Using the validator
