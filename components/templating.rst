@@ -108,6 +108,13 @@ This documentation is still being written.
 The Asset Helper
 ----------------
 
-This documentation is still being written.
+The assets helper’s main purpose is to make your application more portable by generating assets's paths.
+
+.. code-block:: html+php
+
+   <link href="<?php echo $view['assets']->getUrl('css/style.css') ?>" rel="stylesheet" type="text/css" />
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
+
 
 .. _Packagist: https://packagist.org/packages/symfony/templating
