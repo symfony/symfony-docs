@@ -5,7 +5,7 @@ The Image constraint works exactly like the :doc:`File</reference/constraints/Fi
 constraint, except that its `mimeTypes`_ and `mimeTypesMessage` options are
 automatically setup to work for image files specifically.
 
-Additionally, as of Symfony 2.1, it has options so you can validate against
+Additionally, it has options so you can validate against
 the width and height of the image.
 
 See the :doc:`File</reference/constraints/File>` constraint for the bulk of
