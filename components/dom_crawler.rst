@@ -309,7 +309,7 @@ and uploading files::
     // select an option
     $form['registration[birthday][year]']->select(1984);
 
-    // select many options from a "multiple" select or checkboxes
+    // select many options from a "multiple" select
     $form['registration[interests]']->select(array('symfony', 'cookies'));
 
     // even fake a file upload
