@@ -86,6 +86,7 @@ This results in very predictable dates and maintenance periods:
 | 2.6     | 11/2014 | 07/2015 (8 months)  | 01/2016     |
 | **2.7** | 05/2015 | 05/2018 (36 months) | 05/2019     |
 | 2.8     | 11/2015 | 07/2016 (8 months)  | 01/2017     |
+| 2.9     | 05/2016 | 01/2017 (8 months)  | 07/2017     |
 | ...     | ...     | ...                 | ...         |
 
 .. tip::
