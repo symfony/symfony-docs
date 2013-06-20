@@ -457,12 +457,14 @@ You are finished! You can now define parts of your app as under WSSE protection.
             firewalls:
                 wsse_secured:
                     pattern:   /api/.*
+                    stateless: true
                     wsse:      true
 
     .. code-block:: xml
 
         <config>
             <firewall name="wsse_secured" pattern="/api/.*">
+                <stateless />
                 <wsse />
             </firewall>
         </config>
@@ -473,6 +475,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
             'firewalls' => array(
                 'wsse_secured' => array(
                     'pattern' => '/api/.*',
+                    'stateless'    => true,
                     'wsse'    => true,
                 ),
             ),
@@ -558,6 +561,7 @@ set to any desirable value per firewall.
             firewalls:
                 wsse_secured:
                     pattern:   /api/.*
+                    stateless: true
                     wsse:      { lifetime: 30 }
 
     .. code-block:: xml
@@ -566,6 +570,7 @@ set to any desirable value per firewall.
             <firewall name="wsse_secured"
                 pattern="/api/.*"
             >
+                <stateless />
                 <wsse lifetime="30" />
             </firewall>
         </config>
@@ -576,6 +581,7 @@ set to any desirable value per firewall.
             'firewalls' => array(
                 'wsse_secured' => array(
                     'pattern' => '/api/.*',
+                    'stateless' => true,
                     'wsse'    => array(
                         'lifetime' => 30,
                     ),
