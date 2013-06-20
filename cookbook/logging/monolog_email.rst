@@ -95,6 +95,13 @@ setting means that the output is then passed onto the ``buffered`` handler.
 
 .. tip::
 
+    When the application crashes with an error 5xx, the swiftmailer memory spool
+    will not be flushed and no mails will be sent. You need to comment out the
+    the ``spool: { type: memory }`` in your ``config.yml`` so the mails will be
+    sent immediately.
+
+.. tip::
+
     If you want both 400 level and 500 level errors to trigger an email,
     set the ``action_level`` to ``error`` instead of ``critical``.
 
