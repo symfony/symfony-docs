@@ -993,9 +993,7 @@ which can secure your controller using annotations::
         // ...
     }
 
-For more information, see the `JMSSecurityExtraBundle`_ documentation. If you're
-using Symfony's Standard Distribution, this bundle is available by default.
-If not, you can easily download and install it.
+For more information, see the `JMSSecurityExtraBundle`_ documentation.
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
