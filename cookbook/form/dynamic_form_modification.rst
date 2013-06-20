@@ -484,15 +484,15 @@ The subscriber would now look like::
         /**
          * @var EntityManager
          */
-        private $om;
+        private $em;
 
         /**
          * @param factory FormFactoryInterface
          */
-        public function __construct(FormFactoryInterface $factory, EntityManager $om)
+        public function __construct(FormFactoryInterface $factory, EntityManager $em)
         {
             $this->factory = $factory;
-            $this->om = $om;
+            $this->em = $em;
         }
 
         public static function getSubscribedEvents()
@@ -525,7 +525,7 @@ The subscriber would now look like::
         {
             $data = $event->getData();
             $id = $data['event'];
-            $meetup = $this->om
+            $meetup = $this->em
                 ->getRepository('AcmeDemoBundle:SportMeetup')
                 ->find($id);
 
@@ -564,7 +564,7 @@ Now that you have that setup, register your form and the listener as services:
                 - { name: form.type, alias: acme_meetup_registration }
         acme.form.meetup_registration_listener
             class: Acme\SportBundle\Form\EventListener\RegistrationSportListener
-            arguments: [@form.factory, @doctrine]
+            arguments: [@form.factory, @doctrine.orm.entity_manager]
 
     .. code-block:: xml
 
@@ -576,7 +576,7 @@ Now that you have that setup, register your form and the listener as services:
             </service>
             <service id="acme.form.meetup_registration_listener" class="Acme\SportBundle\Form\EventListener\RegistrationSportListener">
                 <argument type="service" id="form.factory" />
-                <argument type="service" id="doctrine" />
+                <argument type="service" id="doctrine.orm.entity_manager" />
             </service>
         </services>
 
@@ -594,7 +594,7 @@ Now that you have that setup, register your form and the listener as services:
         $container->setDefinition(
             'acme.form.meetup_registration_listener',
             $definition,
-            array('form.factory', 'doctrine')
+            array('form.factory', 'doctrine.orm.entity_manager')
         );
 
 In this setup, the ``RegistrationSportListener`` will be a constructor argument
