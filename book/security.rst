@@ -697,12 +697,6 @@ URL pattern. You've seen this already in the first example of this chapter,
 where anything matching the regular expression pattern ``^/admin`` requires
 the ``ROLE_ADMIN`` role.
 
-.. caution::
-
-    Understanding exactly how ``access_control`` works is **very** important
-    to make sure your application is properly secured. See :ref:`security-book-access-control-explanation`
-    below for detailed information.
-
 You can define as many URL patterns as you need - each is a regular expression.
 
 .. configuration-block::
