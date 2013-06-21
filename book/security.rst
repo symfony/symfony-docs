@@ -674,14 +674,11 @@ see :doc:`/cookbook/security/form_login`.
 Authorization
 -------------
 
-The first step in security is always authentication: the process of verifying
-who the user is. With Symfony, authentication can be done in any way - via
-a form login, basic HTTP Authentication, or even via Facebook.
-
-Once the user has been authenticated, authorization begins. Authorization
-provides a standard and powerful way to decide if a user can access any resource
-(a URL, a model object, a method call, ...). This works by assigning specific
-roles to each user, and then requiring different roles for different resources.
+The first step in security is always authentication. Once the user has been
+authenticated, authorization begins. Authorization provides a standard and
+powerful way to decide if a user can access any resource (a URL, a model
+object, a method call, ...). This works by assigning specific roles to each
+user, and then requiring different roles for different resources.
 
 The process of authorization has two different sides:
 
