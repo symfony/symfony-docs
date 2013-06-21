@@ -908,13 +908,22 @@ username and the password are different only if all other validation passes
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('username', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('password', new Assert\NotBlank());
+                $metadata->addPropertyConstraint(
+                    'username',
+                    new Assert\NotBlank()
+                );
+                $metadata->addPropertyConstraint(
+                    'password',
+                    new Assert\NotBlank()
+                );
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
-                    'message' => 'The password cannot match your first name',
-                    'groups'  => array('Strict'),
-                )));
+                $metadata->addGetterConstraint(
+                    'passwordLegal',
+                    new Assert\True(array(
+                        'message' => 'The password cannot match your first name',
+                        'groups'  => array('Strict'),
+                    ))
+                );
 
                 $metadata->setGroupSequence(array('User', 'Strict'));
             }

@@ -212,7 +212,9 @@ just a simple PHP class.
 
     .. code-block:: bash
 
-        $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
+        $ php app/console doctrine:generate:entity \
+          --entity="AcmeStoreBundle:Product" \
+          --fields="name:string(255) price:float description:text"
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -696,7 +698,10 @@ a controller, do the following::
 
     $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
-        'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price > :price ORDER BY p.price ASC'
+        'SELECT p
+        FROM AcmeStoreBundle:Product p
+        WHERE p.price > :price
+        ORDER BY p.price ASC'
     )->setParameter('price', '19.99');
 
     $products = $query->getResult();
@@ -858,7 +863,9 @@ ordered alphabetically.
         public function findAllOrderedByName()
         {
             return $this->getEntityManager()
-                ->createQuery('SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC')
+                ->createQuery(
+                    'SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC'
+                )
                 ->getResult();
         }
     }
@@ -892,7 +899,8 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
+    $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" \ 
+      --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
@@ -937,7 +945,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                 products:
                     targetEntity: Product
                     mappedBy: category
-            # don't forget to init the collection in entity __construct() method
+            # don't forget to init the collection in the __construct() method of the entity
 
     .. code-block:: xml
 
@@ -954,7 +962,10 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                     mapped-by="category"
                 />
 
-                <!-- don't forget to init the collection in entity __construct() method -->
+                <!--
+                    don't forget to init the collection in
+                    the __construct() method of the entity
+                -->
             </entity>
         </doctrine-mapping>
 
@@ -1325,7 +1336,8 @@ the current date, only when the entity is first persisted (i.e. inserted):
             <entity name="Acme\StoreBundle\Entity\Product">
                     <!-- ... -->
                     <lifecycle-callbacks>
-                        <lifecycle-callback type="prePersist" method="setCreatedValue" />
+                        <lifecycle-callback type="prePersist"
+                            method="setCreatedValue" />
                     </lifecycle-callbacks>
             </entity>
         </doctrine-mapping>

@@ -304,22 +304,46 @@ Start by adding the ``category`` definition in your ``schema.xml``:
 
 .. code-block:: xml
 
-    <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
+    <database name="default"
+        namespace="Acme\StoreBundle\Model"
+        defaultIdMethod="native">
         <table name="product">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
-            <column name="price" type="decimal" />
-            <column name="description" type="longvarchar" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true" />
 
-            <column name="category_id" type="integer" />
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100" />
+
+            <column name="price"
+                type="decimal" />
+
+            <column name="description"
+                type="longvarchar" />
+
+            <column name="category_id"
+                type="integer" />
+
             <foreign-key foreignTable="category">
                 <reference local="category_id" foreign="id" />
             </foreign-key>
         </table>
 
         <table name="category">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true" />
+
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100" />
        </table>
     </database>
 

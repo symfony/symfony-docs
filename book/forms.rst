@@ -344,7 +344,10 @@ object.
                 $metadata->addPropertyConstraint('task', new NotBlank());
 
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
-                $metadata->addPropertyConstraint('dueDate', new Type('\DateTime'));
+                $metadata->addPropertyConstraint(
+                    'dueDate',
+                    new Type('\DateTime')
+                );
             }
         }
 
@@ -424,7 +427,10 @@ to an array callback, or a ``Closure``::
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+            'validation_groups' => array(
+                'Acme\AcmeBundle\Entity\Client',
+                'determineValidationGroups',
+            ),
         ));
     }
 
@@ -903,7 +909,8 @@ easy to use in your application.
     .. code-block:: xml
 
         <!-- src/Acme/TaskBundle/Resources/config/services.xml -->
-        <service id="acme_demo.form.type.task" class="Acme\TaskBundle\Form\Type\TaskType">
+        <service id="acme_demo.form.type.task"
+            class="Acme\TaskBundle\Form\Type\TaskType">
             <tag name="form.type" alias="task" />
         </service>
 
@@ -913,7 +920,10 @@ easy to use in your application.
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->register('acme_demo.form.type.task', 'Acme\TaskBundle\Form\Type\TaskType')
+            ->register(
+                'acme_demo.form.type.task',
+                'Acme\TaskBundle\Form\Type\TaskType'
+            )
             ->addTag('form.type', array(
                 'alias' => 'task',
             ))
@@ -1286,13 +1296,13 @@ rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``form_label``)   | renders the field's label                                |
+| ``label``   | (e.g. ``form_label``)    | renders the field's label                               |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                  |
+| ``widget``  | (e.g. ``form_widget``)   | renders the field's HTML representation                 |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                               |
+| ``errors``  | (e.g. ``form_errors``)   | renders the field's errors                              |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors)  |
+| ``row``     | (e.g. ``form_row``)      | renders the field's entire row (label, widget & errors) |
 +-------------+--------------------------+---------------------------------------------------------+
 
 .. note::
