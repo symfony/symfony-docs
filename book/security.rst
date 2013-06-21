@@ -25,8 +25,8 @@ application with HTTP Basic authentication.
 
 .. note::
 
-    `Symfony's security component`_ is available as a standalone PHP library
-    for use inside any PHP project.
+    :doc:`Symfony's security component </components/security/introduction>` is
+    available as a standalone PHP library for use inside any PHP project.
 
 Basic Example: HTTP Authentication
 ----------------------------------
@@ -2040,7 +2040,6 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
-.. _`Symfony's security component`: https://github.com/symfony/Security
 .. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
