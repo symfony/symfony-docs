@@ -304,7 +304,9 @@ Using the BCrypt Password Encoder
 ---------------------------------
 
 .. caution::
-	PHP Version 5.5 is required or install the "ircmaxell/password-compat" via composer.
+
+    To use this encoder, you either need to use PHP Version 5.5 or install
+    the `ircmaxell/password-compat`_ library via Composer.
 
 .. versionadded:: 2.2
     The BCrypt password encoder was added in Symfony 2.2.
@@ -470,3 +472,4 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
       ));
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+.. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
