@@ -346,7 +346,7 @@ Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/_error_mapping.rst.inc
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~
