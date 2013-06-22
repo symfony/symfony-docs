@@ -182,7 +182,9 @@ process. Each method can be one of the following formats:
                 public static function loadValidatorMetadata(ClassMetadata $metadata)
                 {
                     $metadata->addConstraint(new Callback(array(
-                        'methods' => array('isAuthorValid'),
+                        'methods' => array(
+                            array('Acme\BlogBundle\MyStaticValidatorClass', 'isAuthorValid'),
+                        ),
                     )));
                 }
             }
