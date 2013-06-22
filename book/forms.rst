@@ -357,15 +357,18 @@ object.
     .. code-block:: xml
 
         <!-- Acme/TaskBundle/Resources/config/validation.xml -->
-        <class name="Acme\TaskBundle\Entity\Task">
-            <property name="task">
-                <constraint name="NotBlank" />
-            </property>
-            <property name="dueDate">
-                <constraint name="NotBlank" />
-                <constraint name="Type">\DateTime</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" charset="UTF-8"?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            <class name="Acme\TaskBundle\Entity\Task">
+                <property name="task">
+                    <constraint name="NotBlank" />
+                </property>
+                <property name="dueDate">
+                    <constraint name="NotBlank" />
+                    <constraint name="Type">\DateTime</constraint>
+                </property>
+            </class>
+        <constraint-mapping>
 
     .. code-block:: php
 

@@ -83,6 +83,7 @@ Each part will be explained in the next section.
                     entity:
                         class:              SecurityBundle:User
                         property:           username
+                        manager_name:       ~
 
                 # Example custom provider
                 my_some_custom_provider:
