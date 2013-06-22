@@ -184,3 +184,49 @@ Read the dedicated :doc:`document <translations>`.
 .. _`fork`: https://help.github.com/articles/fork-a-repo
 .. _`pull requests`: https://help.github.com/articles/using-pull-requests
 .. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
+
+Managing Releases
+-----------------
+
+Symfony has a very standardized release process, which you can read more
+about in the :doc:`/contributing/community/releases` section.
+
+To keep up with the release process, the documentation team makes several
+changes to the documentation at various parts of the lifecycle.
+
+When a Release reaches "end of maintenance"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Every release will eventually reach its "end of maintenance". For details,
+see :ref:`contributing-release-maintenance`.
+
+When a release reaches its end of maintenance, the following items are done.
+For this example, suppose version 2.1 has just reached its end of maintenance:
+
+* Changes and pull requests are no longer merged into to the branch (2.1),
+  except for security updates, which are merged until the release reaches
+  its "end of life".
+
+* All branches still under maintenance (e.g. 2.2 and higher) are updated
+  to reflect that pull requests should start from the now-oldest maintained
+  version (e.g. 2.2).
+
+* Remove all ``versionadded`` directives - and any other notes related to features
+  changing or being new - for the version (e.g. 2.1) from the master branch.
+  The result is that the next release (which is the first that comes entirely
+  *after* the end of maintenance of this branch), will have no mentions of
+  the old version (e.g. 2.1).
+
+When a new Branch is created for a Release
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+During the :ref:`stabilization phase<contributing-release-development>`, a
+new branch on the documentation is created. For example, if version 2.3 were
+being stabilized, then a new 2.3 branch would be created for it. When this
+happens, the following items are done:
+
+* Change all version and master references to the correct version (e.g. 2.3).
+  For example, in installation chapters, we reference the version you should
+  use for installation. As an example, see the changes made in `PR #2688`_.
+
+.. _`PR #2688`: https://github.com/symfony/symfony-docs/pull/2688
