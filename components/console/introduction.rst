@@ -260,7 +260,7 @@ Option                       Value
 ===========================  ===============================================================================================================
 InputArgument::REQUIRED      The argument is required
 InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
-InputArgument::IS_ARRAY      The argument can can contain an indefinite number of arguments and must be used at the end of the argument list
+InputArgument::IS_ARRAY      The argument can contain an indefinite number of arguments and must be used at the end of the argument list
 ===========================  ===============================================================================================================
 
 You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
