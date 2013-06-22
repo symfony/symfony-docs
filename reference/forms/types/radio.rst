@@ -22,6 +22,7 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
+|             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                           |
@@ -54,5 +55,7 @@ These options inherit from the :doc:`field</reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
