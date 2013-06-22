@@ -171,7 +171,7 @@ The console has 5 levels of verbosity. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
 =======================================  ==================================
-Option                                   Value
+Mode                                     Value
 =======================================  ==================================
 OutputInterface::VERBOSITY_QUIET         Do not output any messages
 OutputInterface::VERBOSITY_NORMAL        The default verbosity level
@@ -262,11 +262,11 @@ You can access the ``names`` argument as an array::
 There are 3 argument variants you can use:
 
 ===========================  ===============================================================================================================
-Option                       Value
+Mode                         Value
 ===========================  ===============================================================================================================
 InputArgument::REQUIRED      The argument is required
 InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
-InputArgument::IS_ARRAY      The argument can can contain an indefinite number of arguments and must be used at the end of the argument list
+InputArgument::IS_ARRAY      The argument can contain an indefinite number of arguments and must be used at the end of the argument list
 ===========================  ===============================================================================================================
 
 You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
