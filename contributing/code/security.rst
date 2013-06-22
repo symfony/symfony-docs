@@ -75,7 +75,9 @@ solve the issue via pull requests, code reviews, and comments;
 
 4. Once the fix is found, all involved projects collaborate to find the best
 date for a joint release (there is no guarantee that all releases will be at
-the same time but we will try hard to make them at about the same time).
+the same time but we will try hard to make them at about the same time). When
+the issue is not known to be exploited in the wild, a period of two weeks
+seems like a reasonable amount of time.
 
 The list of downstream projects participating in this process is kept as small
 as possible in order to better manage the flow of confidential information
@@ -85,7 +87,7 @@ the Symfony security team.
 As of today, the following projects have validated this process and are part
 of the downstream projects included in this process:
 
-* Drupal
+* Drupal (releases typically happen on Wednesdays)
 * eZPublish
 
 Security Advisories
