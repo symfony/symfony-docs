@@ -26,21 +26,21 @@ then clone your fork:
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
 Consistent with Symfony's source code, the documentation repository is split into
-multiple branches: ``2.0``, ``2.1``, ``2.2`` corresponding to the different
-versions of Symfony itself. The ``master`` branch holds the documentation
-for the development branch of the code.
+multiple branches: ``2.2``, ``2.3`` corresponding to the different versions of
+Symfony itself. The ``master`` branch holds the documentation for the development
+branch of the code.
 
-Unless you're documenting a feature that was introduced *after* Symfony 2.1
-(e.g. in Symfony 2.2), your changes should always be based on the 2.1 branch.
-To do this checkout the 2.1 branch before the next step:
+Unless you're documenting a feature that was introduced *after* Symfony 2.2
+(e.g. in Symfony 2.3), your changes should always be based on the 2.2 branch.
+To do this checkout the 2.2 branch before the next step:
 
 .. code-block:: bash
 
-    $ git checkout 2.1
+    $ git checkout 2.2
 
 .. tip::
 
-    Your base branch (e.g. 2.1) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
+    Your base branch (e.g. 2.2) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
     that you'll use later.
 
 Next, create a dedicated branch for your changes (for organization):
@@ -61,16 +61,16 @@ Following the example, the pull request will default to be between your
 .. image:: /images/docs-pull-request.png
    :align: center
 
-If you have made your changes based on the 2.1 branch then you need to change
-the base branch to be 2.1 on the preview page:
+If you have made your changes based on the 2.2 branch then you need to change
+the base branch to be 2.2 on the preview page:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center
 
 .. note::
 
-  All changes made to a branch (e.g. 2.1) will be merged up to each "newer"
-  branch (e.g. 2.2, master, etc) for the next release on a weekly basis.
+  All changes made to a branch (e.g. 2.2) will be merged up to each "newer"
+  branch (e.g. 2.3, master, etc) for the next release on a weekly basis.
 
 GitHub covers the topic of `pull requests`_ in detail.
 
@@ -117,7 +117,7 @@ An example submission could now look as follows:
     | ------------- | ---
     | Doc fix?      | yes
     | New docs?     | yes (symfony/symfony#2500)
-    | Applies to    | all (or 2.1+)
+    | Applies to    | all (or 2.3+)
     | Fixed tickets | #1075
 
 .. tip::
@@ -137,8 +137,8 @@ tag and a short description:
 
 .. code-block:: text
 
-    .. versionadded:: 2.2
-        The ``askHiddenResponse`` method was added in Symfony 2.2.
+    .. versionadded:: 2.3
+        The ``askHiddenResponse`` method was added in Symfony 2.3.
 
     You can also ask a question and hide the response. This is particularly...
 
@@ -147,11 +147,11 @@ how the behavior has changed.
 
 .. code-block:: text
 
-    .. versionadded:: 2.2
+    .. versionadded:: 2.3
         The ``include()`` function is a new Twig feature that's available in
-        Symfony 2.2. Prior, the ``{% include %}`` tag was used.
+        Symfony 2.3. Prior, the ``{% include %}`` tag was used.
 
-Whenever a new minor version of Symfony2 is released (e.g. 2.3, 2.4, etc),
+Whenever a new minor version of Symfony2 is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony2 versions that have
 reached end-of-life will be removed. For example, if Symfony 2.5 were released
