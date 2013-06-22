@@ -303,6 +303,9 @@ for the hash algorithm.
 Using the BCrypt Password Encoder
 ---------------------------------
 
+.. caution::
+	PHP Version 5.5 is required or install the "ircmaxell/password-compat" via composer.
+
 .. versionadded:: 2.2
     The BCrypt password encoder was added in Symfony 2.2.
 
