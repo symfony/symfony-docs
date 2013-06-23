@@ -1180,7 +1180,9 @@ class:
         security:
             providers:
                 main:
-                    entity: { class: Acme\UserBundle\Entity\User, property: username }
+                    entity: 
+                        class:    Acme\UserBundle\Entity\User
+                        property: username
 
     .. code-block:: xml
 
@@ -1197,7 +1199,10 @@ class:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'main' => array(
-                    'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
+                    'entity' => array(
+                        'class' => 'Acme\UserBundle\Entity\User',
+                        'property' => 'username',
+                    ),
                 ),
             ),
         ));
