@@ -1226,7 +1226,9 @@ class:
         security:
             providers:
                 main:
-                    entity: { class: Acme\UserBundle\Entity\User, property: username }
+                    entity:
+                        class: Acme\UserBundle\Entity\User
+                        property: username
 
     .. code-block:: xml
 
