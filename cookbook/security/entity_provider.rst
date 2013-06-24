@@ -458,7 +458,7 @@ The code below shows the implementation of the
                 );
             }
 
-            return $this->find($user->getId());
+            return $this->loadUserByUserName($user->getId());
         }
 
         public function supportsClass($class)
