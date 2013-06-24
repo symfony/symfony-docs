@@ -18,11 +18,9 @@ know how to configure a web server or database server.
 Prerequisites
 -------------
 
-1. Download and install the latest `Virtualbox`_.
-
-2. Download and install the latest `Vagrant`_.
-
-3. Install the Symfony Standard Edition as detailed in :doc:`/cookbook/workflow/new_project_git`.
+#. Download and install the latest `VirtualBox`_.
+#. Download and install the latest `Vagrant`_.
+#. Install the Symfony Standard Edition as detailed in :doc:`/cookbook/workflow/new_project_git`.
 
 Setup
 -----
@@ -296,11 +294,11 @@ You will be creating a set of files under a new ``vagrant`` directory:
 
         $ vagrant up
 
-A virtual machine is now being prepared in Virtualbox by Vagrant. This process
+A virtual machine is now being prepared in VirtualBox by Vagrant. This process
 will take several minutes to complete on the initial run, so be patient. When
 the process has completed, you can view the Symfony demo site in a browser at:
 
-http://192.168.33.10/app_dev.php
+    http://192.168.33.10/app_dev.php
 
 Now you can start developing with Symfony! Any changes made to your Symfony
 project directory will appear in the virtual machine.
@@ -309,7 +307,7 @@ Further Configuration
 ---------------------
 
 A MySQL database has been created on the Vagrant virtual machine which you can
-use. Just update your app/config/parameters.yml file:
+use. Just update your ``app/config/parameters.yml`` file:
 
 .. code-block:: yaml
 
@@ -372,9 +370,9 @@ And if you want to install again after destroying, execute:
 
     $ vagrant up
 
-Hopefully your new Vagrant configuration will help you develop your Symfony
+Hopefully, your new Vagrant configuration will help you develop your Symfony
 project without having to worry about your local server setup or the setup of
 another developer's machine.
 
-.. _`Virtualbox`: https://www.virtualbox.org/wiki/Downloads
+.. _`VirtualBox`: https://www.virtualbox.org/wiki/Downloads
 .. _`Vagrant`: http://downloads.vagrantup.com/
