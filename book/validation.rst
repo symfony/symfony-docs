@@ -924,6 +924,133 @@ In this example, it will first validate all constraints in the group ``User``
 (which is the same as the ``Default`` group). Only if all constraints in
 that group are valid, the second group, ``Strict``, will be validated.
 
+Group Sequence Providers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine a ``User`` entity which can be a normal user or a premium user. When
+it's a premium user, some extra constraints should be added to the user entity
+(e.g. the credit card details). To dynamically determine which groups should
+be activated, you can create a Group Sequence Provider. First, create the
+entity and a new constraint group called ``Premium``:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            // ...
+
+            /**
+             * @Assert\NotBlank()
+             */
+            private $name;
+
+            /**
+            * @Assert\CardScheme(
+            *     schemes={"VISA"},
+            *     groups={"Premium"},
+            * )
+            private $creditCard;
+        }
+
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\User:
+            properties:
+                name:
+                    - NotBlank
+                creditCard:
+                    - CardScheme
+                        schemes: [VISA]
+                        groups: [Premium]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <class name="Acme\DemoBundle\Entity\User">
+            <property name="name">
+                <constraint name="NotBlank" />
+            </property>
+
+            <property name="creditCard">
+                <constraint name="CardScheme">
+                    <option name="schemes">
+                        <value>VISA</value>
+                    </option>
+                    <option name="groups">
+                        <value>Premium</value>
+                    </option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class User
+        {
+            private $name;
+            private $creditCard;
+
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank());
+                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme(
+                    'schemes' => array('VISA'),
+                    'groups'  => array('Premium'),
+                ));
+            }
+        }
+
+Now, let this class implement
+:class:`Symfony\\Componet\\Validation\\GroupSequenceProviderInterface` and
+implement a method called
+:method:`Symfony\\Componet\\Validation\\GroupSequenceProviderInterface::getGroupSequence`,
+which returns an array of groups to use and add the
+``@Assert\GroupSequencdeProvider`` annotation to the class. Imagine a method
+``isPremium`` returns true if the user is a premium member. Your method looks
+like this::
+
+    // src/Acme/DemoBundle/Entity/User.php
+    namespace Acme\DemoBundle\Entity;
+
+    // ...
+    use Symfony\Component\Validation\GroupSequenceProviderInterface;
+
+    /**
+     * @Assert\GroupSequenceProvider
+     * ...
+     */
+    class User
+    {
+        // ...
+
+        public function getGroupSequence()
+        {
+            $groups = array('User');
+
+            if ($this->isPremium()) {
+                $groups[] = 'Premium';
+            }
+
+            return $groups;
+        }
+    }
+
 .. _book-validation-raw-values:
 
 Validating Values and Arrays
