@@ -72,7 +72,7 @@ expose them manually by adding the following lines to your autoload code::
     but usually Composer does this for you automatically:
 
     * 1.0.*: when the intl extension is not available
-    * 1.1.*: when intl is compiled with ICU 4.0 or higher
+    * 1.1.*: when intl is compiled with ICU 3.8 or higher
     * 1.2.*: when intl is compiled with ICU 4.4 or higher
 
     These versions are important when you deploy your application to a **server with
