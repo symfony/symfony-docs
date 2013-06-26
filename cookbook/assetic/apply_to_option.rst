@@ -9,8 +9,8 @@ as you'll see here, files that have a specific extension. To show you how
 to handle each option, let's suppose that you want to use Assetic's CoffeeScript
 filter, which compiles CoffeeScript files into Javascript.
 
-The main configuration is just the paths to coffee and node. These default
-respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
+The main configuration is just the paths to coffee, node and node_modules. These default
+respectively to ``/usr/bin/coffee``, ``/usr/bin/node`` and ``/usr/lib/node_modules``:
 
 .. configuration-block::
 
@@ -22,6 +22,7 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
                 coffee:
                     bin: /usr/bin/coffee
                     node: /usr/bin/node
+                    node_paths: [ /usr/lib/node_modules/ ]
 
     .. code-block:: xml
 
@@ -30,7 +31,8 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
             <assetic:filter
                 name="coffee"
                 bin="/usr/bin/coffee"
-                node="/usr/bin/node" />
+                node="/usr/bin/node"
+                node_paths="/usr/lib/node_modules/"/>
         </assetic:config>
 
     .. code-block:: php
@@ -41,6 +43,7 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
                 'coffee' => array(
                     'bin'  => '/usr/bin/coffee',
                     'node' => '/usr/bin/node',
+                    'node_paths' => '/usr/lib/node_modules/',
                 ),
             ),
         ));
@@ -128,6 +131,7 @@ applied to all ``.coffee`` files:
                 coffee:
                     bin: /usr/bin/coffee
                     node: /usr/bin/node
+                    node_paths: [ /usr/lib/node_modules/ ]
                     apply_to: "\.coffee$"
 
     .. code-block:: xml
@@ -138,6 +142,7 @@ applied to all ``.coffee`` files:
                 name="coffee"
                 bin="/usr/bin/coffee"
                 node="/usr/bin/node"
+                node_paths="/usr/lib/node_modules/"
                 apply_to="\.coffee$" />
         </assetic:config>
 
@@ -149,6 +154,7 @@ applied to all ``.coffee`` files:
                 'coffee' => array(
                     'bin'      => '/usr/bin/coffee',
                     'node'     => '/usr/bin/node',
+                    'node_paths' => '/usr/lib/node_modules/',
                     'apply_to' => '\.coffee$',
                 ),
             ),
