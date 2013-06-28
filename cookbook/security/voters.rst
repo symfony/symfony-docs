@@ -25,9 +25,9 @@ which requires the following three methods:
 
     interface VoterInterface
     {
-        function supportsAttribute($attribute);
-        function supportsClass($class);
-        function vote(TokenInterface $token, $object, array $attributes);
+        public function supportsAttribute($attribute);
+        public function supportsClass($class);
+        public function vote(TokenInterface $token, $object, array $attributes);
     }
 
 
@@ -86,7 +86,7 @@ and compare the IP address against a set of blacklisted IP addresses:
             return true;
         }
 
-        function vote(TokenInterface $token, $object, array $attributes)
+        public function vote(TokenInterface $token, $object, array $attributes)
         {
             $request = $this->container->get('request');
             if (in_array($request->getClientIp(), $this->blacklistedIp)) {
