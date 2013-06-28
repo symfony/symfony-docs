@@ -28,11 +28,12 @@ respectively to ``/usr/bin/coffee``, ``/usr/bin/node`` and ``/usr/lib/node_modul
 
         <!-- app/config/config.xml -->
         <assetic:config>
-            <assetic:filter
+            <assetic:filter 
                 name="coffee"
-                bin="/usr/bin/coffee"
-                node="/usr/bin/node"
-                node_paths="/usr/lib/node_modules/"/>
+                bin="/usr/bin/coffee/"
+                node="/usr/bin/node/">
+                <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
+            </assetic:filter>
         </assetic:config>
 
     .. code-block:: php
@@ -43,7 +44,7 @@ respectively to ``/usr/bin/coffee``, ``/usr/bin/node`` and ``/usr/lib/node_modul
                 'coffee' => array(
                     'bin'  => '/usr/bin/coffee',
                     'node' => '/usr/bin/node',
-                    'node_paths' => '/usr/lib/node_modules/',
+                    'node_paths' => array('/usr/lib/node_modules/'),
                 ),
             ),
         ));
@@ -142,10 +143,10 @@ applied to all ``.coffee`` files:
                 name="coffee"
                 bin="/usr/bin/coffee"
                 node="/usr/bin/node"
-                node_paths="/usr/lib/node_modules/"
                 apply_to="\.coffee$" />
+                <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
         </assetic:config>
-
+        
     .. code-block:: php
 
         // app/config/config.php
@@ -154,7 +155,7 @@ applied to all ``.coffee`` files:
                 'coffee' => array(
                     'bin'      => '/usr/bin/coffee',
                     'node'     => '/usr/bin/node',
-                    'node_paths' => '/usr/lib/node_modules/',
+                    'node_paths' => array('/usr/lib/node_modules/'),
                     'apply_to' => '\.coffee$',
                 ),
             ),
