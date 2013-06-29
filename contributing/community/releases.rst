@@ -13,6 +13,8 @@ release comes out every *six months*: one in *May* and one in *November*.
     "rules" explained in this document must be strictly followed as of Symfony
     2.4.
 
+.. _contributing-release-development:
+
 Development
 -----------
 
@@ -28,6 +30,8 @@ The six-months period is divided into two phases:
 During the development phase, any new feature can be reverted if it won't be
 finished in time or if it won't be stable enough to be included in the current
 final release.
+
+.. _contributing-release-maintenance:
 
 Maintenance
 -----------
