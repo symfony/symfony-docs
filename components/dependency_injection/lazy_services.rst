@@ -82,7 +82,8 @@ injected will be the proxy.
 To check if your proxy works you can simply check the interface of the 
 received object.
 
-    var_dump(class_implements($service));
+    .. code-block:: php
+        var_dump(class_implements($service));
     
 If the class implements the ProxyManager\Proxy\LazyLoadingInterface your lazy
 loaded services will work as expected.
