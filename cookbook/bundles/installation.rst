@@ -10,8 +10,8 @@ basic steps for installing a bundle are the same.
 Add Composer Dependencies
 -------------------------
 
-Starting from Symfony 2.1, dependencies are managed with Composer. It's
-a good idea to learn some basics of Composer in `their documentation`_.
+In Symfony, dependencies are managed with Composer. It's a good idea to learn
+some basics of Composer in `their documentation`_.
 
 Before you can use composer to install a bundle, you should look for a
 `Packagist`_ package of that bundle. For example, if you search for the popular
@@ -32,11 +32,6 @@ a particular version of Symfony. This information should be in the ``README``
 file. If it isn't, you can use the version you want. If you choose an incompatible
 version, Composer will throw dependency errors when you try to install. If
 this happens, you can try a different version.
-
-In the case of the FOSUserBundle, the ``README`` file has a caution that version
-1.2.0 must be used for Symfony 2.0 and 1.3+ for Symfony 2.1+. Packagist displays
-example ``require`` statements for all existing versions of a package. The
-current development version of FOSUserBundle is ``"friendsofsymfony/user-bundle": "2.0.*@dev"``.
 
 Now you can add the bundle to your ``composer.json`` file and update the
 dependencies. You can do this manually:

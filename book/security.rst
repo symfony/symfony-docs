@@ -1702,8 +1702,8 @@ a route so that you can use it to generate the URL:
 
 .. caution::
 
-    As of Symfony 2.1, you *must* have a route that corresponds to your logout
-    path. Without this route, logging out will not work.
+    You *must* have a route that corresponds to your logout path. Without
+    this route, logging out will not work.
 
 .. configuration-block::
 

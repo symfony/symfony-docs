@@ -1,6 +1,3 @@
-.. versionadded:: 2.1
-    The ``error_mapping`` option is new to Symfony 2.1.
-
 error_mapping
 ~~~~~~~~~~~~~
 
