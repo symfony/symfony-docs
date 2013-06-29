@@ -258,9 +258,7 @@ thrown.
 
 .. note::
 
-    Prior to version 2.1, ``mkdir`` returned a boolean and did not throw
-    exceptions. As of 2.1, a
-    :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is thrown
-    if a directory creation fails.
+    An :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
+    thrown if directory creation fails.
 
 .. _`Packagist`: https://packagist.org/packages/symfony/filesystem
