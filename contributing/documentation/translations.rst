@@ -20,7 +20,7 @@ for. Here is the list of the official *master* repositories:
 * *French*:   https://github.com/symfony-fr/symfony-docs-fr
 * *Italian*:  https://github.com/garak/symfony-docs-it
 * *Japanese*: https://github.com/symfony-japan/symfony-docs-ja
-* *Polish*:   https://github.com/ampluso/symfony-docs-pl
+* *Polish*:   https://github.com/symfony-docs-pl/symfony-docs-pl
 * *Portuguese (Brazilian)*:  https://github.com/andreia/symfony-docs-pt-BR
 * *Spanish*:  https://github.com/gitnacho/symfony-docs-es
 
