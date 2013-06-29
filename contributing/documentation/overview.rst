@@ -29,17 +29,17 @@ Consistent with Symfony's source code, the documentation repository is split int
 multiple branches, corresponding to the different versions of Symfony itself.
 The ``master`` branch holds the documentation for the development branch of the code.
 
-Unless you're documenting a feature that was introduced *after* Symfony 2.1
-(e.g. in Symfony 2.2), your changes should always be based on the 2.1 branch.
-To do this checkout the 2.1 branch before the next step:
+Unless you're documenting a feature that was introduced *after* Symfony 2.2
+(e.g. in Symfony 2.3), your changes should always be based on the 2.2 branch.
+To do this checkout the 2.2 branch before the next step:
 
 .. code-block:: bash
 
-    $ git checkout 2.1
+    $ git checkout 2.2
 
 .. tip::
 
-    Your base branch (e.g. 2.1) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
+    Your base branch (e.g. 2.2) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
     that you'll use later.
 
 Next, create a dedicated branch for your changes (for organization):
@@ -60,16 +60,16 @@ Following the example, the pull request will default to be between your
 .. image:: /images/docs-pull-request.png
    :align: center
 
-If you have made your changes based on the 2.1 branch then you need to change
-the base branch to be 2.1 on the preview page:
+If you have made your changes based on the 2.2 branch then you need to change
+the base branch to be 2.2 on the preview page:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center
 
 .. note::
 
-  All changes made to a branch (e.g. 2.1) will be merged up to each "newer"
-  branch (e.g. 2.2, master, etc) for the next release on a weekly basis.
+  All changes made to a branch (e.g. 2.2) will be merged up to each "newer"
+  branch (e.g. 2.3, master, etc) for the next release on a weekly basis.
 
 GitHub covers the topic of `pull requests`_ in detail.
 
@@ -116,7 +116,7 @@ An example submission could now look as follows:
     | ------------- | ---
     | Doc fix?      | yes
     | New docs?     | yes (symfony/symfony#2500)
-    | Applies to    | all (or 2.1+)
+    | Applies to    | all (or 2.3+)
     | Fixed tickets | #1075
 
 .. tip::
@@ -136,8 +136,8 @@ tag and a short description:
 
 .. code-block:: text
 
-    .. versionadded:: 2.2
-        The ``askHiddenResponse`` method was added in Symfony 2.2.
+    .. versionadded:: 2.3
+        The ``askHiddenResponse`` method was added in Symfony 2.3.
 
     You can also ask a question and hide the response. This is particularly...
 
@@ -146,11 +146,11 @@ how the behavior has changed.
 
 .. code-block:: text
 
-    .. versionadded:: 2.2
+    .. versionadded:: 2.3
         The ``include()`` function is a new Twig feature that's available in
-        Symfony 2.2. Prior, the ``{% include %}`` tag was used.
+        Symfony 2.3. Prior, the ``{% include %}`` tag was used.
 
-Whenever a new minor version of Symfony2 is released (e.g. 2.3, 2.4, etc),
+Whenever a new minor version of Symfony2 is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony2 versions that have
 reached end-of-life will be removed. For example, if Symfony 2.5 were released
@@ -183,3 +183,49 @@ Read the dedicated :doc:`document <translations>`.
 .. _`fork`: https://help.github.com/articles/fork-a-repo
 .. _`pull requests`: https://help.github.com/articles/using-pull-requests
 .. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
+
+Managing Releases
+-----------------
+
+Symfony has a very standardized release process, which you can read more
+about in the :doc:`/contributing/community/releases` section.
+
+To keep up with the release process, the documentation team makes several
+changes to the documentation at various parts of the lifecycle.
+
+When a Release reaches "end of maintenance"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Every release will eventually reach its "end of maintenance". For details,
+see :ref:`contributing-release-maintenance`.
+
+When a release reaches its end of maintenance, the following items are done.
+For this example, suppose version 2.1 has just reached its end of maintenance:
+
+* Changes and pull requests are no longer merged into to the branch (2.1),
+  except for security updates, which are merged until the release reaches
+  its "end of life".
+
+* All branches still under maintenance (e.g. 2.2 and higher) are updated
+  to reflect that pull requests should start from the now-oldest maintained
+  version (e.g. 2.2).
+
+* Remove all ``versionadded`` directives - and any other notes related to features
+  changing or being new - for the version (e.g. 2.1) from the master branch.
+  The result is that the next release (which is the first that comes entirely
+  *after* the end of maintenance of this branch), will have no mentions of
+  the old version (e.g. 2.1).
+
+When a new Branch is created for a Release
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+During the :ref:`stabilization phase<contributing-release-development>`, a
+new branch on the documentation is created. For example, if version 2.3 were
+being stabilized, then a new 2.3 branch would be created for it. When this
+happens, the following items are done:
+
+* Change all version and master references to the correct version (e.g. 2.3).
+  For example, in installation chapters, we reference the version you should
+  use for installation. As an example, see the changes made in `PR #2688`_.
+
+.. _`PR #2688`: https://github.com/symfony/symfony-docs/pull/2688
