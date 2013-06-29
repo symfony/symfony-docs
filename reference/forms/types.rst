@@ -19,7 +19,6 @@ Form Types Reference
    types/email
    types/entity
    types/file
-   types/field
    types/form
    types/hidden
    types/integer
