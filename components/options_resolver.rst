@@ -81,7 +81,7 @@ Now, try to actually use the class::
 
     echo $person->getFirstName();
 
-Right now, you'll receive a 
+Right now, you'll receive a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`,
 which tells you that the options ``firstName`` and ``lastName`` do not exist.
 This is because you need to configure the ``OptionsResolver`` first, so it
@@ -212,7 +212,7 @@ Closure as the default value::
                 if (GenderGuesser::isMale($options['firstName'])) {
                     return 'male';
                 }
-                
+
                 return 'female';
             },
         ));

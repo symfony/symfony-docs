@@ -264,7 +264,6 @@ but also load a secondary one only if a certain parameter is set::
         $container->loadFromExtension($extension->getAlias());
         $container->compile();
 
-
 .. note::
 
     If you need to manipulate the configuration loaded by an extension then

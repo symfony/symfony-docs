@@ -50,7 +50,6 @@ Below is a minimal template that illustrates a few basics, using two variables
         </body>
     </html>
 
-
 .. tip::
 
    Comments can be included inside templates using the ``{# ... #}`` delimiter.

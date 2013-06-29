@@ -19,7 +19,6 @@ code.
     How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
     page of the book.
 
-
 .. index::
    single: Templating; What is a template?
 
@@ -976,7 +975,6 @@ advantage of Symfony's template inheritance.
     more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
-
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
 just above the closing ``body`` tag. These blocks will contain all of the
@@ -1346,7 +1344,7 @@ a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body.
 
-To render it normally, add the ``raw`` filter: 
+To render it normally, add the ``raw`` filter:
 
 .. code-block:: jinja
 
@@ -1400,7 +1398,6 @@ Template parameters can then be dumped using the ``dump`` function:
             {{ article.title }}
         </a>
     {% endfor %}
-
 
 The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
 is ``true``. By default this means that the variables will be dumped in the

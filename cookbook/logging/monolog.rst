@@ -113,7 +113,7 @@ allows you to log the messages in several ways easily.
         </container>
 
     .. code-block:: php
-        
+
         // app/config/config.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
@@ -121,22 +121,22 @@ allows you to log the messages in several ways easily.
                     'type'  => 'stream',
                     'path'  => '/var/log/symfony.log',
                     'level' => 'error',
-                ),    
+                ),
                 'main' => array(
                     'type'         => 'fingers_crossed',
                     'action_level' => 'warning',
                     'handler'      => 'file',
-                ),    
+                ),
                 'file' => array(
                     'type'  => 'stream',
                     'level' => 'debug',
-                ),   
+                ),
                 'syslog' => array(
                     'type'  => 'syslog',
                     'level' => 'error',
-                ),    
+                ),
             ),
-        ));        
+        ));
 
 The above configuration defines a stack of handlers which will be called
 in the order where they are defined.
@@ -266,7 +266,6 @@ using a processor.
             return $record;
         }
     }
-
 
 .. configuration-block::
 

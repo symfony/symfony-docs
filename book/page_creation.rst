@@ -516,9 +516,9 @@ You'll learn more about each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
-    When Symfony is loading, a special file - ``vendor/autoload.php`` - is 
-    included. This file is created by Composer and will autoload all 
-    application files living in the `src/` folder as well as all 
+    When Symfony is loading, a special file - ``vendor/autoload.php`` - is
+    included. This file is created by Composer and will autoload all
+    application files living in the `src/` folder as well as all
     third-party libraries mentioned in the ``composer.json`` file.
 
     Because of the autoloader, you never need to worry about using ``include``

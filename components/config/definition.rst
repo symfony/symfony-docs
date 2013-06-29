@@ -293,7 +293,7 @@ you can take advantage of the shortcut
                 ->defaultFalse()
     ;
 
-The ``canBeDisabled`` method looks about the same except that the section 
+The ``canBeDisabled`` method looks about the same except that the section
 would be enabled by default.
 
 Merging options
@@ -384,7 +384,7 @@ make both of these ``auto_connect``.
 
 .. caution::
 
-    The target key will not be altered if it's mixed like 
+    The target key will not be altered if it's mixed like
     ``foo-bar_moo`` or if it already exists.
 
 Another difference between Yaml and XML is in the way arrays of values may
@@ -553,4 +553,3 @@ Otherwise the result is a clean array of configuration values::
         $configuration,
         $configs)
     ;
-

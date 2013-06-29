@@ -151,17 +151,17 @@ contains a different class). In order for a class to be autoloaded, you
 As mentioned before, for the autoloader to work, it needs to know that the
 ``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
 example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/orm/lib/``
-directory. This mapping is entirely controlled by Composer. Each 
+directory. This mapping is entirely controlled by Composer. Each
 third-party library you load through composer has their settings defined
 and Composer takes care of everything for you.
 
-For this to work, all third-party libraries used by your project must be 
-defined in the ``composer.json`` file. 
+For this to work, all third-party libraries used by your project must be
+defined in the ``composer.json`` file.
 
 If you look at the ``HelloController`` from the Symfony2 Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
 ``AcmeDemoBundle`` is not defined in your ``composer.json`` file. Nonetheless are
-the files autoloaded. This is because you can tell composer to autoload files 
+the files autoloaded. This is because you can tell composer to autoload files
 from specific directories without defining a dependency:
 
 .. code-block:: yaml

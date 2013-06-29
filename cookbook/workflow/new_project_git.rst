@@ -35,7 +35,7 @@ git repository:
         /app/bootstrap*
         /app/cache/*
         /app/logs/*
-        /vendor/  
+        /vendor/
         /app/config/parameters.yml
 
 .. tip::

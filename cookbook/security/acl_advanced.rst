@@ -39,13 +39,11 @@ domain object, the ACL system will first create an object identity from your
 domain object, and then pass this object identity to the ACL provider for
 further processing.
 
-
 Security Identities
 ~~~~~~~~~~~~~~~~~~~
 
 This is analog to the object identity, but represents a user, or a role in
 your application. Each role, or user has its own security identity.
-
 
 Database Table Structure
 ------------------------
@@ -65,7 +63,6 @@ tables are ordered from least rows to most rows in a typical application:
 - *acl_entries*: This table contains all ACEs. This is typically the table
   with the most rows. It can contain tens of millions without significantly
   impacting performance.
-
 
 Scope of Access Control Entries
 -------------------------------

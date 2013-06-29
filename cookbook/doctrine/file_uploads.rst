@@ -202,7 +202,7 @@ rules::
         class Document
         {
             // ...
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('file', new Assert\File(array(
