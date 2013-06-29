@@ -1772,11 +1772,6 @@ Note that you will *not* need to implement a controller for the ``/logout``
 URL as the firewall takes care of everything. You *do*, however, need to create
 a route so that you can use it to generate the URL:
 
-.. caution::
-
-    As of Symfony 2.1, you *must* have a route that corresponds to your logout
-    path. Without this route, logging out will not work.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -1809,6 +1804,11 @@ a route so that you can use it to generate the URL:
         $collection->add('logout', new Route('/logout', array()));
 
         return $collection;
+
+.. caution::
+
+    As of Symfony 2.1, you *must* have a route that corresponds to your logout
+    path. Without this route, logging out will not work.
 
 Once the user has been logged out, he will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
