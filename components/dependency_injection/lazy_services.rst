@@ -37,7 +37,11 @@ the `ProxyManager bridge`_:
     If you're using the full-stack framework, the proxy manager bridge is already
     included but the actual proxy manager needs to be included. Therefore add
     
-        "ocramius/proxy-manager": ">=0.3.1,<0.4-dev"
+    .. code-block:: json
+
+        "require": {
+            "ocramius/proxy-manager": "0.4.*"
+        }
     
     to your ``composer.json``. Afterwards compile your container and check if you
     get a proxy for your lazy services.
