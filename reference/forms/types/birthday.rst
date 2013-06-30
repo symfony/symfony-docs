@@ -27,8 +27,8 @@ option defaults to 120 years ago to the current year.
 |                      | - `months`_                                                                   |
 |                      | - `days`_                                                                     |
 |                      | - `format`_                                                                   |
-|                      | - `data_timezone`_                                                            |
-|                      | - `user_timezone`_                                                            |
+|                      | - `model_timezone`_                                                           |
+|                      | - `view_timezone`_                                                            |
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
 |                      | - `read_only`_                                                                |
@@ -67,9 +67,9 @@ These options inherit from the :doc:`date</reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 These options inherit from the :doc:`date</reference/forms/types/form>` type:
 
