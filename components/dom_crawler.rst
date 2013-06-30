@@ -70,7 +70,10 @@ This allows you to use jQuery-like selectors to traverse::
 
 Anonymous function can be used to filter with more complex criteria::
 
-    $crawler = $crawler->filter('body > p')->reduce(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $crawler = $crawler->filter('body > p')->reduce(function (Crawler $node, $i) {
         // filter even nodes
         return ($i % 2) == 0;
     });
@@ -137,9 +140,17 @@ Extract attribute and/or node values from the list of nodes::
 
 Call an anonymous function on each node of the list::
 
-    $nodeValues = $crawler->filter('p')->each(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
+
+.. versionadded::
+    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
+    are passed a ``Crawler`` as the first argument. Previously, that argument
+    was a :phpclass:`DOMNode`.
 
 The anonymous function receives the position and the node (as a Crawler) as arguments.
 The result is an array of values returned by the anonymous function calls.
