@@ -5,7 +5,7 @@ currency Field Type
 ===================
 
 The ``currency`` type is a subset of the
-:doc:`choice type </reference/forms/types/choice` that allows the user to
+:doc:`choice type </reference/forms/types/choice>` that allows the user to
 select from a large list of `3-letter ISO 4217`_ currencies.
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
