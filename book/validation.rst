@@ -812,7 +812,7 @@ and then the groups in the group sequence are validated in order.
 .. tip::
 
     Group sequences cannot contain the group ``Default``, as this would create
-    a loop. Instead, use the group ``{ClassName}`` (e.g. ``User``) instead.
+    a loop. Instead, use the group ``{ClassName}`` (e.g. ``User``).
 
 For example, suppose you have a ``User`` class and want to validate that the
 username and the password are different only if all other validation passes
