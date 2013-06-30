@@ -98,12 +98,12 @@ event is dispatched. A listener can wrap or change the exception or do
 anything useful before the exception is thrown by the application.
 
 Listeners receive a
-:class:`Symfony\\Component\\Console\\Event\\ConsoleForExceptionEvent` event::
+:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` event::
 
-    use Symfony\Component\Console\Event\ConsoleForExceptionEvent;
+    use Symfony\Component\Console\Event\ConsoleExceptionEvent;
     use Symfony\Component\Console\ConsoleEvents;
 
-    $dispatcher->addListener(ConsoleEvents::EXCEPTION, function (ConsoleForExceptionEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::EXCEPTION, function (ConsoleExceptionEvent $event) {
         $output = $event->getOutput();
 
         $command = $event->getCommand();
