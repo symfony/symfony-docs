@@ -133,18 +133,17 @@ Alternatives to Base Controller Methods
 When using a controller defined as a service, it will most likely not extend
 the base ``Controller`` class. Instead of relying on its shortcut methods,
 you'll interact directly with the services that you need. Fortunately, this is
-usually pretty easy and the base ``Controller`` class itself is a great source
-on how to perform many common tasks.
+usually pretty easy and the base `Controller class source code`_ is a great
+source on how to perform many common tasks.
 
-For example, if you want to use templates instead of creating the ``Response``
-object directly then if you were extending from the base controller you could
-use::
+For example, if you want to render a template instead of creating the ``Response``
+object directly, then your code would look like this if you were extending
+Symfony's base controller::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Response;
 
     class HelloController extends Controller
     {
@@ -157,14 +156,16 @@ use::
         }
     }
 
-This method actually uses the ``templating`` service::
+If you look at the source code for the ``render`` function in Symfony's
+`base Controller class`_, you'll see that this method actually uses the
+``templating`` service::
 
     public function render($view, array $parameters = array(), Response $response = null)
     {
         return $this->container->get('templating')->renderResponse($view, $parameters, $response);
     }
 
-So in our controller as a service we can instead inject the ``templating``
+In a controller that's defined as a service, you can instead inject the ``templating``
 service and use it directly::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
@@ -240,14 +241,19 @@ argument:
             array(new Reference('templating'))
         ));
 
-Rather than fetching the ``templating`` service from the container just the
-service required is being directly injected into the controller.
+Rather than fetching the ``templating`` service from the container, you can
+inject *only* the exact service(s) that you need directly into the controller.
 
 .. note::
 
-   This does not mean that you cannot extend these controllers from a base
-   controller. The move away from the standard base controller is because
+   This does not mean that you cannot extend these controllers from your own
+   base controller. The move away from the standard base controller is because
    its helper method rely on having the container available which is not
-   the case for controllers defined as services. However, it is worth considering
-   extracting common code into a service to be injected in rather than a parent
-   class.
+   the case for controllers that are defined as services. It may be a good
+   idea to extract common code into a service that's injected rather than
+   place that code into a base controller that you extend. Both approaches
+   are valid, exactly how you want to organize your reusable code is up to
+   you.
+
+.. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
+.. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
