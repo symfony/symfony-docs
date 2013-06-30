@@ -106,6 +106,25 @@ node definition. Node type are available for:
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
 
+Enum nodes
+~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The enum node is new in 2.1
+
+Enum nodes provide a constraint to match the given input against a set of
+values::
+
+    $rootNode
+        ->children()
+            ->enumNode('gender')
+                ->values(array('male', 'female'))
+            ->end()
+        ->end()
+    ;
+
+This will restrict the ``gender`` option to be either ``male`` or ``female``.
+
 Array nodes
 ~~~~~~~~~~~
 
