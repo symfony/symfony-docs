@@ -71,6 +71,37 @@ You will be creating a set of files under a new ``vagrant`` directory:
           end
         end
 
+   This is the main configuration file used by Vagrant. The ``config.vm.box``
+   and ``config.vm.box_url`` values specify that a preconfigured "box" will be
+   used for the base virtual machine. This ``precise32.box`` file happens to be
+   a 32bit Ubuntu Linux machine with certain packages already installed (e.g.
+   `Puppet`_) and is used extensively within the `Vagrant Docs`_.
+
+   The ``config.vm.network`` will create a `private network`_ and specify the IP
+   address of the virtual machine in that network. You can change the IP
+   address to a different private IP address if you wish (such as
+   192.168.50.12, 172.16.32.64, or 10.9.8.7 just to list a few examples), just
+   be sure to update the ``host_ipaddress`` value in the ``puppet.facter``
+   section as well. The last number in the ``host_ipaddress`` must be 1 (so the
+   example host IP address values would be 192.168.50.1, 172.16.32.1, or
+   10.9.8.1 respectively).
+
+   The ``config.vm.synced_folder`` specifies that the directory one level above
+   this file (your project directory) will be synced with the ``/vagrant``
+   directory within the virtual machine. When you make a change to a file in
+   your project directory, that change should be reflected in the virtual
+   machine. The reverse is true as well. The commented out `NFS setting`_ can
+   be useful but is not required. If you would like to use NFS, just uncomment
+   the setting (remove the ``#``).
+
+   The ``config.vm.provision`` sections will execute the
+   ``vagrant/puppet/modules.sh`` and ``vagrant/puppet/manifests/symfony.pp``
+   scripts that you will create next.
+
+   There are a number of other settings for the `Vagrantfile`_ which you can
+   use to customize your virtual machine. These are just the basics to get you
+   started.
+
 3. Create a new file ``vagrant/puppet/modules.sh`` and paste the following
    into it.
 
@@ -97,6 +128,9 @@ You will be creating a set of files under a new ``vagrant`` directory:
         if [ ! -d "/etc/puppet/modules/git" ]; then
             puppet module install puppetlabs-git;
         fi
+
+   This script will be executed within the virtual machine to install necessary
+   Puppet modules for the next script.
 
 4. Create a new file ``vagrant/puppet/manifests/symfony.pp`` and paste the
    following into it.
@@ -276,11 +310,27 @@ You will be creating a set of files under a new ``vagrant`` directory:
             line  => "    || !in_array(@\$_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1', '${::host_ipaddress}'))",
         }
 
+   This file performs the bulk of the work to configure your virtual machine
+   for web development. It will install Apache, MySQL, PHP, and Git. It will
+   configure Apache to use recommended Symfony settings and will set your
+   project ``web/`` directory as the web server's document root. If there are
+   no vendors in your project, it will execute ``php composer.phar install`` to
+   retrieve them. Also, it will update your project ``web/app_dev.php`` file to
+   allow your physical host machine (specified by the ``host_ipaddress`` in the
+   ``vagrant/Vagrantfile``) to have access to view your project website during
+   development.
+
 5. Create a new file ``vagrant/.gitignore`` and paste the following into it.
 
    .. code-block:: text
 
         .vagrant
+
+   When the virtual machine is created by Vagrant, it will create a
+   ``vagrant/.vagrant`` directory to store its files. That directory should not
+   be committed in your version control system. This ``vagrant/.gitignore``
+   file will prevent the ``vagrant/.vagrant`` directory from being listed in
+   the ``git status`` command.
 
 6. Switch to the vagrant directory.
 
@@ -376,3 +426,8 @@ another developer's machine.
 
 .. _`VirtualBox`: https://www.virtualbox.org/wiki/Downloads
 .. _`Vagrant`: http://downloads.vagrantup.com/
+.. _`Puppet`: http://www.puppetlabs.com/
+.. _`Vagrant Docs`: http://docs.vagrantup.com/v2/
+.. _`private network`: http://docs.vagrantup.com/v2/networking/private_network.html
+.. _`NFS setting`: http://docs.vagrantup.com/v2/synced-folders/nfs.html
+.. _`Vagrantfile`: http://docs.vagrantup.com/v2/vagrantfile/index.html
