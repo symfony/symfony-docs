@@ -926,17 +926,18 @@ translation.extractor
 **Purpose**: To register a custom service that extracts messages from a file
 
 .. versionadded:: 2.1
-   The ability to add message extractors is new in 2.1
+   The ability to add message extractors is new in Symfony 2.1.
 
 When executing the ``translation:update`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony2 framework
 has a :class:`Symfony\\Bridge\\TwigBridge\\Translation\\TwigExtractor` and a
-:class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`.
+:class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`, which
+help to find and extract translation keys from Twig templates and PHP files.
 
-You can create your own extractor by creating a class which implements
+You can create your own extractor by creating a class that implements
 :class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` and
 tagging the service with ``translation.extractor``. The tag has one required
-option: ``alias``, this defines the name of the extractor.
+option: ``alias``, which defines the name of the extractor::
 
     // src/Acme/DemoBundle/Translation/FooExtractor.php
     namespace Acme\DemoBundle\Translation;
@@ -996,13 +997,13 @@ translation.dumper
 **Purpose**: To register a custom service that dumps messages to a file
 
 .. versionadded:: 2.1
-   The ability to add message dumpers is new to 2.1
+   The ability to add message dumpers is new in Symfony 2.1.
 
 After an `Extractor <translation.extractor>`_ has extracted all messages from
 the templates, the dumpers are executed to dump the messages to a translation
 file in a specific format.
 
-Symfony2 comes already with many dumpers:
+Symfony2 already comes with many dumpers:
 
 * :class:`Symfony\\Component\\Translation\\Dumper\\CsvFileDumper`
 * :class:`Symfony\\Component\\Translation\\Dumper\\IcuResFileDumper`
@@ -1014,7 +1015,7 @@ Symfony2 comes already with many dumpers:
 * :class:`Symfony\\Component\\Translation\\Dumper\\YamlFileDumper`
 
 You can create your own dumper by extending
-:class:`Symfony\\Component\\Translation\\DumperFileDumper` or implementing
+:class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` or implementing
 :class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface` and tagging
 the service with ``translation.dumper``. The tag has one option: ``alias``
 This is the name that's used to determine which dumper should be used.
