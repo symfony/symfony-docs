@@ -449,7 +449,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</components/yaml/introduction>` to define the routing
+   This example uses :doc:`YAML</components/yaml/format>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 
@@ -459,6 +459,8 @@ the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/Acme/DemoBundle/Controller/MainController.php
+    namespace Acme\DemoBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Response;
 
     class MainController
