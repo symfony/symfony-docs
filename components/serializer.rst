@@ -94,7 +94,7 @@ use the Serializer service created before::
 
     // $jsonContent contains {"name":"foo","age":99}
 
-    echo $jsonContent; // or return it in a Response 
+    echo $jsonContent; // or return it in a Response
 
 The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
 is the object to be serialized and the second is used to choose the proper encoder,

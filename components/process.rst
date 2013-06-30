@@ -63,7 +63,7 @@ anonymous function to the
             echo 'OUT > '.$buffer;
         }
     });
-    
+
 .. versionadded:: 2.1
     The non-blocking feature was added in 2.1.
 
@@ -71,7 +71,7 @@ Running Processes Asynchronously
 --------------------------------
 
 You can also start the subprocess and then let it run asynchronously, retrieving
-output and the status in your main process whenever you need it. Use the 
+output and the status in your main process whenever you need it. Use the
 :method:`Symfony\\Component\\Process\\Process::start` method to start an asynchronous
 process, the :method:`Symfony\\Component\\Process\\Process::isRunning` method
 to check if the process is done and the
@@ -79,21 +79,21 @@ to check if the process is done and the
 
     $process = new Process('ls -lsa');
     $process->start();
-    
+
     while ($process->isRunning()) {
         // waiting for process to finish
     }
 
     echo $process->getOutput();
-    
+
 You can also wait for a process to end if you started it asynchronously and
 are done doing other stuff::
 
     $process = new Process('ls -lsa');
     $process->start();
-    
+
     // ... do other things
-    
+
     $process->wait(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;

@@ -70,4 +70,3 @@ You can also simplify how you execute the application::
 
     $application = new MyApplication();
     $application->run();
-

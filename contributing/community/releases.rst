@@ -79,7 +79,6 @@ Below is the schedule for the first few versions that use this release model:
 
 This results in very predictable dates and maintenance periods:
 
-
 +---------+---------+---------------------+-------------+
 | Version | Release | End of Maintenance  | End of Life |
 +=========+=========+=====================+=============+

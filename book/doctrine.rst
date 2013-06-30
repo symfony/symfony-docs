@@ -91,7 +91,7 @@ information. By convention, this information is usually configured in an
             </doctrine:config>
 
         .. code-block:: php
-        
+
             // app/config/config.php
             $configuration->loadFromExtension('doctrine', array(
                 'dbal' => array(

@@ -1,7 +1,6 @@
 ﻿.. index::
    single: Dependency Injection; Service definitions
 
-
 Working with Container Service Definitions
 ==========================================
 

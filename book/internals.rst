@@ -146,10 +146,10 @@ the Request attributes.
 Handling Requests
 ~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method 
-takes a ``Request`` and *always* returns a ``Response``. To convert the 
-``Request``, ``handle()`` relies on the Resolver and an ordered chain of 
-Event notifications (see the next section for more information about each 
+The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method
+takes a ``Request`` and *always* returns a ``Response``. To convert the
+``Request``, ``handle()`` relies on the Resolver and an ordered chain of
+Event notifications (see the next section for more information about each
 Event):
 
 #. Before doing anything else, the ``kernel.request`` event is notified -- if
@@ -209,14 +209,14 @@ Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType` 
-  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
+  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
   or ``HttpKernelInterface::SUB_REQUEST``);
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
   - returns the Kernel handling the request;
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
   - returns the current ``Request`` being handled.
 
 ``getRequestType()``
@@ -513,7 +513,7 @@ HTTP header of the Response::
     want to get the token for an Ajax request, use a tool like Firebug to get
     the value of the ``X-Debug-Token`` HTTP header.
 
-Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find` 
+Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find`
 method to access tokens based on some criteria::
 
     // get the latest 10 tokens
@@ -526,8 +526,8 @@ method to access tokens based on some criteria::
     $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
 
 If you want to manipulate profiling data on a different machine than the one
-where the information were generated, use the 
-:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and 
+where the information were generated, use the
+:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::import` methods::
 
     // on the production machine

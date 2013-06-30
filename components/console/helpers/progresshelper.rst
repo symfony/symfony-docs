@@ -1,6 +1,6 @@
 .. index::
     single: Console Helpers; Progress Helper
-    
+
 Progress Helper
 ===============
 

@@ -192,7 +192,7 @@ types of underlying data.
 In any form, the 3 different types of data are:
 
 1) **Model data** - This is the data in the format used in your application
-(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``, 
+(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
 you're dealing with the "model" data.
 
 2) **Norm Data** - This is a normalized version of your data, and is commonly

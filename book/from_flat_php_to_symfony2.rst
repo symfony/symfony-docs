@@ -422,8 +422,8 @@ Add a Touch of Symfony2
 
 Symfony2 to the rescue. Before actually using Symfony2, you need to download
 it. This can be done by using Composer, which takes care of downloading the
-correct version and all its dependencies and provides an autoloader. An 
-autoloader is a tool that makes it possible to start using PHP classes 
+correct version and all its dependencies and provides an autoloader. An
+autoloader is a tool that makes it possible to start using PHP classes
 without explicitly including the file containing the class.
 
 In your root directory, create a ``composer.json`` file with the following
@@ -439,7 +439,7 @@ content:
             "files": ["model.php","controllers.php"]
         }
     }
-    
+
 Next, `download Composer`_ and then run the following command, which will download Symfony
 into a vendor/ directory:
 
@@ -448,7 +448,7 @@ into a vendor/ directory:
     $ php composer.phar install
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
-which takes care of autoloading for all the files in the Symfony Framework as well as 
+which takes care of autoloading for all the files in the Symfony Framework as well as
 the files mentioned in the autoload section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is

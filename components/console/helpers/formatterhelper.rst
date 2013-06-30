@@ -29,7 +29,7 @@ actual message to the right of this. Minus the color, it looks like this:
 
     [SomeSection] Here is some message related to that section
 
-To reproduce this style, you can use the 
+To reproduce this style, you can use the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatSection`
 method::
 
@@ -38,14 +38,14 @@ method::
         'Here is some message related to that section'
     );
     $output->writeln($formattedLine);
-    
+
 Print Messages in a Block
 -------------------------
 
 Sometimes you want to be able to print a whole block of text with a background
 color. Symfony uses this when printing error messages.
 
-If you print your error message on more than one line manually, you will 
+If you print your error message on more than one line manually, you will
 notice that the background is only as long as each individual line. Use the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatBlock`
 to generate a block output::
@@ -53,10 +53,10 @@ to generate a block output::
     $errorMessages = array('Error!', 'Something went wrong');
     $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
     $output->writeln($formattedBlock);
-    
-As you can see, passing an array of messages to the 
+
+As you can see, passing an array of messages to the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatBlock`
-method creates the desired output. If you pass ``true`` as third parameter, the 
+method creates the desired output. If you pass ``true`` as third parameter, the
 block will be formatted with more padding (one blank line above and below the
 messages and 2 spaces on the left and right).
 

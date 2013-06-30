@@ -138,7 +138,7 @@ set an authenticated token in the security context if successful.
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
                 $this->securityContext->setToken($authToken);
-                
+
                 return;
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
@@ -377,7 +377,6 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
                 class:  Acme\DemoBundle\Security\Firewall\WsseListener
                 arguments: ["@security.context", "@security.authentication.manager"]
 
-
     .. code-block:: xml
 
         <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
@@ -480,7 +479,6 @@ You are finished! You can now define parts of your app as under WSSE protection.
                 ),
             ),
         ));
-    
 
 Congratulations!  You have written your very own custom security authentication
 provider!

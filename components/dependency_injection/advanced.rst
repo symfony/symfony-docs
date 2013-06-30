@@ -170,4 +170,4 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         $container->setDefinition('foo', $definition);
 
 Notice that Symfony will internally call the PHP function require_once
-which means that your file will be included only once per request. 
+which means that your file will be included only once per request.

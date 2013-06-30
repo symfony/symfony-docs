@@ -187,7 +187,7 @@ Installing the Sphinx extensions
 * Add the following to the ``conf.py`` file:
 
 .. code-block:: py
-    
+
     # ...
     sys.path.append(os.path.abspath('_exts'))
 
@@ -205,7 +205,7 @@ Installing the Sphinx extensions
 
     # use PHP as the primary domain
     primary_domain = 'php'
-    
+
     # set url for API links
     api_url = 'http://api.symfony.com/master/%s'
 
