@@ -59,6 +59,52 @@ below) to access this service (via the alias).
 
    Services are by default public.
 
+Synthetic Services
+------------------
+
+Synthetic services are services that are injected into the container instead
+of being created by the container.
+
+For instance, the ``request`` service which is injected in the
+:method:`HttpKernel::handle() <Symfony\\Component\\HttpKernel\\HttpKernel::handle>`
+method when entering the request :doc:`scope </cookbook/service_container/scopes>`.
+The class does not exist when there is no request, so it can't be included in
+the container configuration. Also, the service should be different for every
+subrequest in the application.
+
+To create a synthetic service, set ``synthetic`` to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            request:
+                synthetic: true
+
+    .. code-block:: xml
+
+        <service id="request"
+            synthetic="true" />
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // ...
+        $container->setDefinition('request', new Definition())
+            ->setSynthetic(true);
+
+As you see, only the ``synthetic`` option is set. All other options are only used
+to configure the container how a service is created by the container. As the
+service isn't created by the container, these options are omitted.
+
+Now, you can inject the class by using
+:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::set`::
+
+    // ...
+    $container->set('request', new MyRequest(...));
+
 Aliasing
 --------
 
