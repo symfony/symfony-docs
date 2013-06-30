@@ -40,6 +40,15 @@ To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
+.. tip::
+
+    You can :ref:`generate the missing getter and setters<book-doctrine-generating-getters-and-setters>`
+    by running:
+
+    .. code-block:: bash
+
+        $ php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
+
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
@@ -154,6 +163,15 @@ focus on the most important methods that come from the
         }
     }
 
+.. tip::
+
+    :ref:`Generate the database table<book-doctrine-creating-the-database-tables-schema>`
+    for your ``User`` entity by running:
+
+    .. code-block:: bash
+
+        $ php app/console doctrine:schema:update --force
+
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
@@ -197,15 +215,9 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
     because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
     method reloads the user on each request by using the ``id``.
 
-.. tip::
-
-    To generate missing setters and getters for your ``User`` entity, you
-    can use ``php app/console doctrine:generate:entities Acme/UserBundle/Entity/User``.
-    For more details, see Doctrine's :ref:`book-doctrine-generating-getters-and-setters`.
-
-Below is an export of my ``User`` table from MySQL with user `admin`
-and password `admin`. For details on how to create user records and
-encode their password, see :ref:`book-security-encoding-user-password`.
+Below is an export of the ``User`` table from MySQL with user ``admin`` and
+password ``admin`` (which has been encoded). For details on how to create
+user records and encode their password, see :ref:`book-security-encoding-user-password`.
 
 .. code-block:: bash
 
@@ -215,12 +227,6 @@ encode their password, see :ref:`book-security-encoding-user-password`.
     +----+----------+------+------------------------------------------+--------------------+-----------+
     |  1 | admin    |      | d033e22ae348aeb5660fc2140aec35850c4da997 | admin@example.com  |         1 |
     +----+----------+------+------------------------------------------+--------------------+-----------+
-
-.. tip::
-
-    To generate database table from your ``User`` entity, you can run
-    ``php app/console doctrine:schema:update --force``.
-    For mor details, see Doctrine's :ref:`book-doctrine-creating-the-database-tables-schema`.
 
 The next part will focus on how to authenticate one of these users
 thanks to the Doctrine entity user provider and a couple of lines of
@@ -337,13 +343,15 @@ entity user provider to load User entity objects from the database by using
 the ``username`` unique field. In other words, this tells Symfony how to
 fetch the user from the database before checking the password validity.
 
-This code is not enough to secure the application for **active** users.
-The next section explains how to forbid non active users.
+Forbid Inactive Users
+---------------------
 
-Forbid non Active Users
------------------------
+If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
+is 0 in the database), the user will still be able to login access the site
+normally. To prevent "inactive" users from logging in, you'll need to do a
+little more work.
 
-The easiest way to exclude non active users is to implement the
+The easiest way to exclude inactive users is to implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
 interface that takes care of checking the user's account status.
 The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
@@ -395,6 +403,9 @@ For this example, the first three methods will return ``true`` whereas the
             return $this->isActive;
         }
     }
+
+Now, if you try to authenticate as a user who's ``is_active`` database field
+is set to 0, you won't be allowed.
 
 The next session will focus on how to write a custom entity provider 
 to authenticate a user with his username or his email address.
