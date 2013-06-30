@@ -85,8 +85,10 @@ For example, you could easily extend the task to be translatable::
 Testing Commands
 ----------------
 
-When testing commands used as part of the full framework :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
-should be used instead of :class:`Symfony\\Component\\Console\\Application`::
+When testing commands used as part of the full framework
+:class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>` should be used
+instead of
+:class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
