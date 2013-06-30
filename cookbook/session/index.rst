@@ -5,4 +5,4 @@ Sessions
     :maxdepth: 2
 
     proxy_examples
-    simulate_locale_in_session
+    locale_sticky_session
