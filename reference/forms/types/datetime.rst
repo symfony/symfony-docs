@@ -28,7 +28,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_seconds`_                                                           |
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
-|                      | - `empty_value`_                                                          |
+|                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
