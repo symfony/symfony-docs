@@ -363,6 +363,8 @@ see the :ref:`book-doctrine-field-types` section.
         class Product
         // ...
 
+.. _book-doctrine-generating-getters-and-setters:
+
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -424,6 +426,8 @@ mapping information) of a bundle or an entire namespace:
     or whether or not you have a getter or setter function for a property.
     The getters and setters are generated here only because you'll need them
     to interact with your PHP object.
+
+.. _book-doctrine-creating-the-database-tables-schema:
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
