@@ -141,7 +141,7 @@ Call an anonymous function on each node of the list::
         return $node->text();
     });
 
-The anonymous function receives the position and the node as arguments.
+The anonymous function receives the position and the node (as a Crawler) as arguments.
 The result is an array of values returned by the anonymous function calls.
 
 Adding the Content
