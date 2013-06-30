@@ -669,7 +669,10 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirect($this->generateUrl(...));
         }
