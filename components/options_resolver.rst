@@ -66,6 +66,9 @@ means you can handle it just like a normal array::
         return $this->options['password'];
     }
 
+Configuring the OptionsResolver
+-------------------------------
+
 Now, try to actually use the class::
 
     $mailer = new Mailer(array(
@@ -113,7 +116,7 @@ the ``OptionsResolver`` class::
     }
 
 Required Options
-----------------
+~~~~~~~~~~~~~~~~
 
 The ``host`` option is required: the class can't work without it. You can set
 the required options by calling
@@ -131,7 +134,7 @@ You are now able to use the class without errors::
         'host' => 'smtp.example.org',
     ));
 
-    echo $person->getHost(); // 'smtp.example.org'
+    echo $mailer->getHost(); // 'smtp.example.org'
 
 If you don't pass a required option, a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
@@ -142,7 +145,7 @@ To determine if an option is required, you can use the
 method.
 
 Optional Options
-----------------
+~~~~~~~~~~~~~~~~
 
 Sometimes, an option can be optional (e.g. the ``password`` option in the
 ``Mailer`` class). You can configure these options by calling
@@ -157,7 +160,7 @@ Sometimes, an option can be optional (e.g. the ``password`` option in the
     }
 
 Set Default Values
-------------------
+~~~~~~~~~~~~~~~~~~
 
 Most of the optional options have a default value. You can configure these
 options by calling
@@ -173,10 +176,11 @@ options by calling
         ));
     }
 
-The default username will be ``root`` now. When the user specifies an age, it
-gets replaced. You don't need to configure ``root`` as an optional option. The
-``OptionsResolver`` already knows that options with a default value are
-optional.
+This would add a third option - ``username`` - and give it a default value
+of ``root``. If the user passes in a ``username`` option, that value will
+override this default. You don't need to configure ``username`` as an optional
+option. The ``OptionsResolver`` already knows that options with a default
+value are optional.
 
 The ``OptionsResolver`` component also has an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::replaceDefaults`
@@ -218,7 +222,7 @@ Closure as the default value::
     otherwise it is considered as the value.
 
 Configure allowed Values
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Not all values are valid values for options. Suppose the ``Mailer`` class has
 a ``transport`` option, it can only be one of ``sendmail``, ``mail`` or
@@ -237,7 +241,7 @@ a ``transport`` option, it can only be one of ``sendmail``, ``mail`` or
 
 There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
-method, which you can use if you want to add an allowed value to the previous
+method, which you can use if you want to add an allowed value to the previously
 set allowed values.
 
 Configure allowed Types
@@ -266,13 +270,13 @@ There is also an
 method, which you can use to add an allowed type to the previous allowed types.
 
 Normalize the Options
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
-Some values need to be normalized before you can use them. For instance, the
-``host`` should always start ``http://``. To do that, you can
-write normalizers. These Closures will be executed after all options are
-passed and return the normalized value. You can configure these normalizers by
-calling
+Some values need to be normalized before you can use them. For instance,
+pretend that the ``host`` should always start with ``http://``. To do that,
+you can write normalizers. These Closures will be executed after all options
+are passed and should return the normalized value. You can configure these
+normalizers by calling
 :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizers`::
 
     // ...
@@ -291,7 +295,7 @@ calling
         ));
     }
 
-You see that the closure also get an ``$options`` parameter. Sometimes, you
+You see that the closure also gets an ``$options`` parameter. Sometimes, you
 need to use the other options for normalizing::
 
     // ...
