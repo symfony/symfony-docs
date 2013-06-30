@@ -162,8 +162,10 @@ process. Each method can be one of the following formats:
             <class name="Acme\BlogBundle\Entity\Author">
                 <constraint name="Callback">
                     <option name="methods">
-                        <value>Acme\BlogBundle\MyStaticValidatorClass</value>
-                        <value>isAuthorValid</value>
+                        <value>
+                            <value>Acme\BlogBundle\MyStaticValidatorClass</value>
+                            <value>isAuthorValid</value>
+                        </value>
                     </option>
                 </constraint>
             </class>
