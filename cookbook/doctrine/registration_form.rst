@@ -290,7 +290,7 @@ Next, update your routes. If you're placing your routes inside your bundle
 
 .. configuration-block::
 
-    .. code-block:: yml
+    .. code-block:: yaml
 
         # src/Acme/AccountBundle/Resources/config/routing.yml
         account_register:
