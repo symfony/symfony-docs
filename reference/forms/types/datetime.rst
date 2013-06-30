@@ -74,6 +74,8 @@ your underlying object. Valid values are:
 The value that comes back from the form will also be normalized back into
 this format.
 
+.. include:: /reference/forms/types/options/_date_limitation.rst.inc
+
 date_format
 ~~~~~~~~~~~
 
