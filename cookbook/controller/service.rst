@@ -15,9 +15,18 @@ this works fine, controllers can also be specified as services.
     primary advantage is that the entire controller or any services passed to
     the controller can be modified via the service container configuration.
     This is especially useful when developing an open-source bundle or any
-    bundle that will be used in many different projects. So, even if you don't
-    specify your controllers as services, you'll likely see this done in some
-    open-source Symfony2 bundles.
+    bundle that will be used in many different projects.
+
+    A second advantage is that your controllers are more "sandboxed". By
+    looking at the constructor arguments, it's easy to see what types of things
+    this controller may or may not do. And because each dependency needs
+    to be injected manually, it's more obvious (i.e. if you have many constructor
+    arguments) when your controller has become too big, and may need to be
+    split into multiple controllers.
+
+    So, even if you don't specify your controllers as services, you'll likely
+    see this done in some open-source Symfony2 bundles. It's also important
+    to understand the pros and cons of both approaches.
 
 Defining the Controller as a Service
 ------------------------------------
