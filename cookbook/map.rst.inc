@@ -137,6 +137,7 @@
 
   * :doc:`/cookbook/session/proxy_examples`
   * :doc:`/cookbook/session/locale_sticky_session`
+  * :doc:`/cookbook/session/sessions_directory`
 
 * **symfony1**
 

@@ -252,9 +252,11 @@ save_path
 **type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
-the default file handler, this is the path where the files are created. You can
-also set this value to the ``save_path`` of your ``php.ini`` by setting the
-value to ``null``:
+the default file handler, this is the path where the session files are created.
+For more information, see :doc:`/cookbook/session/sessions_directory`.
+
+You can also set this value to the ``save_path`` of your ``php.ini`` by setting
+the value to ``null``:
 
 .. configuration-block::
 
