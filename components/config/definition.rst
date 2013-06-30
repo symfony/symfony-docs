@@ -99,8 +99,8 @@ node definition. Node type are available for:
 
 * scalar
 * boolean
-* array
 * enum (new in 2.1)
+* array
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
@@ -110,7 +110,7 @@ Enum nodes
 ~~~~~~~~~~
 
 .. versionadded:: 2.1
-    The enum node is new in 2.1
+    The enum node is new in Symfony 2.1
 
 Enum nodes provide a constraint to match the given input against a set of
 values::
