@@ -1,4 +1,4 @@
-data_timezone
+model_timezone
 ~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: system default timezone
