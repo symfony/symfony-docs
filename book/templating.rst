@@ -1430,8 +1430,7 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint \
-      src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
 
     # or by directory:
     $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views

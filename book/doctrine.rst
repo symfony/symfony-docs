@@ -208,13 +208,12 @@ just a simple PHP class.
 .. tip::
 
     Once you learn the concepts behind Doctrine, you can have Doctrine create
-    simple entity classes for you:
+    simple entity classes for you. This will ask you interactive questions
+    to help you build any entity:
 
     .. code-block:: bash
 
-        $ php app/console doctrine:generate:entity \
-          --entity="AcmeStoreBundle:Product" \
-          --fields="name:string(255) price:float description:text"
+        $ php app/console doctrine:generate:entity
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -899,8 +898,7 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" \ 
-      --fields="name:string(255)"
+    $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
