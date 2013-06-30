@@ -849,7 +849,7 @@ username and the password are different only if all other validation passes
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
-         * @Assert\GroupSequence({"Strict", "User"})
+         * @Assert\GroupSequence({"User", "Strict"})
          */
         class User implements UserInterface
         {
