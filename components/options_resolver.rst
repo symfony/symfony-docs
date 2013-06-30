@@ -19,13 +19,13 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-Imagine you have a ``Person`` class which has 2 options: ``firstName`` and
-``lastName``. These options are going to be handled by the OptionsResolver
+Imagine you have a ``Mailer`` class which has 2 options: ``host`` and
+``password``. These options are going to be handled by the OptionsResolver
 Component.
 
-First, create the ``Person`` class::
+First, create the ``Mailer`` class::
 
-    class Person
+    class Mailer
     {
         protected $options;
 
@@ -56,34 +56,28 @@ The ``$options`` property is an instance of
 means you can handle it just like a normal array::
 
     // ...
-    public function getFirstName()
+    public function getHost()
     {
-        return $this->options['firstName'];
+        return $this->options['host'];
     }
 
-    public function getFullName()
+    public function getPassword()
     {
-        $name = $this->options['firstName'];
-
-        if (isset($this->options['lastName'])) {
-            $name .= ' '.$this->options['lastName'];
-        }
-
-        return $name;
+        return $this->options['password'];
     }
 
 Now, try to actually use the class::
 
-    $person = new Person(array(
-        'firstName' => 'Wouter',
-        'lastName'  => 'de Jong',
+    $mailer = new Mailer(array(
+        'host'     => 'smtp.example.org',
+        'password' => 'pa$$word',
     ));
 
-    echo $person->getFirstName();
+    echo $mailer->getPassword();
 
 Right now, you'll receive a 
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`,
-which tells you that the options ``firstName`` and ``lastName`` do not exist.
+which tells you that the options ``host`` and ``password`` do not exist.
 This is because you need to configure the ``OptionsResolver`` first, so it
 knows which options should be resolved.
 
@@ -100,7 +94,7 @@ the ``OptionsResolver`` class::
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-    class Person
+    class Mailer
     {
         protected $options;
 
@@ -121,23 +115,23 @@ the ``OptionsResolver`` class::
 Required Options
 ----------------
 
-Suppose the ``firstName`` option is required: the class can't work without
-it. You can set the required options by calling
+The ``host`` option is required: the class can't work without it. You can set
+the required options by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setRequired`::
 
     // ...
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setRequired(array('firstName'));
+        $resolver->setRequired(array('host'));
     }
 
 You are now able to use the class without errors::
 
-    $person = new Person(array(
-        'firstName' => 'Wouter',
+    $mailer = new Mailer(array(
+        'host' => 'smtp.example.org',
     ));
 
-    echo $person->getFirstName(); // 'Wouter'
+    echo $person->getHost(); // 'smtp.example.org'
 
 If you don't pass a required option, a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
@@ -150,8 +144,8 @@ method.
 Optional Options
 ----------------
 
-Sometimes, an option can be optional (e.g. the ``lastName`` option in the
-``Person`` class). You can configure these options by calling
+Sometimes, an option can be optional (e.g. the ``password`` option in the
+``Mailer`` class). You can configure these options by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setOptional`::
 
     // ...
@@ -159,7 +153,7 @@ Sometimes, an option can be optional (e.g. the ``lastName`` option in the
     {
         // ...
 
-        $resolver->setOptional(array('lastName'));
+        $resolver->setOptional(array('password'));
     }
 
 Set Default Values
@@ -175,12 +169,12 @@ options by calling
         // ...
 
         $resolver->setDefaults(array(
-            'age' => 0,
+            'username' => 'root',
         ));
     }
 
-The default age will be ``0`` now. When the user specifies an age, it gets
-replaced. You don't need to configure ``age`` as an optional option. The
+The default username will be ``root`` now. When the user specifies an age, it
+gets replaced. You don't need to configure ``root`` as an optional option. The
 ``OptionsResolver`` already knows that options with a default value are
 optional.
 
@@ -196,8 +190,8 @@ that is passed has 2 parameters:
 Default Values that depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you add a ``gender`` option to the ``Person`` class, whose default
-value you guess based on the first name. You can do that easily by using a
+Suppose you add a ``port`` option to the ``Mailer`` class, whose default
+value you guess based on the host. You can do that easily by using a
 Closure as the default value::
 
     use Symfony\Component\OptionsResolver\Options;
@@ -208,12 +202,12 @@ Closure as the default value::
         // ...
 
         $resolver->setDefaults(array(
-            'gender' => function (Options $options) {
-                if (GenderGuesser::isMale($options['firstName'])) {
-                    return 'male';
+            'port' => function (Options $options) {
+                if (in_array($options['host'], array('127.0.0.1', 'localhost')) {
+                    return 80;
                 }
                 
-                return 'female';
+                return 25;
             },
         ));
     }
@@ -226,9 +220,9 @@ Closure as the default value::
 Configure allowed Values
 ------------------------
 
-Not all values are valid values for options. For instance, the ``gender``
-option can only be ``female`` or ``male``. You can configure these allowed
-values by calling
+Not all values are valid values for options. Suppose the ``Mailer`` class has
+a ``transport`` option, it can only be one of ``sendmail``, ``mail`` or
+``smtp``. You can configure these allowed values by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setAllowedValues`::
 
     // ...
@@ -237,7 +231,7 @@ values by calling
         // ...
 
         $resolver->setAllowedValues(array(
-            'gender' => array('male', 'female'),
+            'transport' => array('sendmail', 'mail', 'smtp'),
         ));
     }
 
@@ -249,8 +243,8 @@ set allowed values.
 Configure allowed Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also specify allowed types. For instance, the ``firstName`` option can
-be anything, but it must be a string. You can configure these types by calling
+You can also specify allowed types. For instance, the ``port`` option can
+be anything, but it must be an integer. You can configure these types by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setAllowedTypes`::
 
     // ...
@@ -259,14 +253,13 @@ be anything, but it must be a string. You can configure these types by calling
         // ...
 
         $resolver->setAllowedTypes(array(
-            'firstName' => 'string',
+            'port' => 'integer',
         ));
     }
 
-Possible types are the one associated with the ``is_*`` php functions or a
+Possible types are the ones associated with the ``is_*`` php functions or a
 class name. You can also pass an array of types as the value. For instance,
-``array('null', 'string')`` allows ``firstName`` to be ``null`` or a
-``string``.
+``array('null', 'string')`` allows ``port`` to be ``null`` or a ``string``.
 
 There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
@@ -276,7 +269,7 @@ Normalize the Options
 ---------------------
 
 Some values need to be normalized before you can use them. For instance, the
-``firstName`` should always start with an uppercase letter. To do that, you can
+``host`` should always start ``http://``. To do that, you can
 write normalizers. These Closures will be executed after all options are
 passed and return the normalized value. You can configure these normalizers by
 calling
@@ -288,13 +281,37 @@ calling
         // ...
 
         $resolver->setNormalizers(array(
-            'firstName' => function (Options $options, $value) {
-                return ucfirst($value);
+            'host' => function (Options $options, $value) {
+                if ('http://' !== substr($value, 0, 7)) {
+                    $value = 'http://'.$value;
+                }
+
+                return $value;
             },
         ));
     }
 
 You see that the closure also get an ``$options`` parameter. Sometimes, you
-need to use the other options for normalizing.
+need to use the other options for normalizing::
+
+    // ...
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        // ...
+
+        $resolver->setNormalizers(array(
+            'host' => function (Options $options, $value) {
+                if (!in_array(substr($value, 0, 7), array('http://', 'https://')) {
+                    if ($options['ssl']) {
+                        $value = 'https://'.$value;
+                    } else {
+                        $value = 'http://'.$value;
+                    }
+                }
+
+                return $value;
+            },
+        ));
+    }
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
