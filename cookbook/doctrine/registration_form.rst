@@ -284,27 +284,63 @@ the validation and saves the data into the database::
 Add New Routes
 --------------
 
-Next, update your routes
+Next, update your routes. If you're placing your routes inside your bundle
+(as shown here), don't forget to make sure that the routing file is being
+:ref:`imported<routing-include-external-resources>`.
 
-.. code-block:: yml
+.. configuration-block::
 
-    register:
-       pattern:  /register
-       defaults: { _controller: AcmeAccountBundle:Account:register }
+    .. code-block:: yml
+
+        # src/Acme/AccountBundle/Resources/config/routing.yml
+        account_register:
+           pattern:  /register
+           defaults: { _controller: AcmeAccountBundle:Account:register }
    
-    create:
-       pattern:  /create
-       defaults: { _controller: AcmeAccountBundle:Account:create }
+        account_create:
+           pattern:  /register/create
+           defaults: { _controller: AcmeAccountBundle:Account:create }
 
-Run Doctrine Commands
----------------------
+    .. code-block:: xml
 
-Finally, generate your entities and schema
+        <!-- src/Acme/AccountBundle/Resources/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-.. code-block::
+            <route id="account_register" path="/register">
+                <default key="_controller">AcmeAccountBundle:Account:register</default>
+            </route>
 
-   php app/console doctrine:database:create
-   php app/console doctrine:schema:update --force
+            <route id="account_create" path="/register/create">
+                <default key="_controller">AcmeAccountBundle:Account:create</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // src/Acme/AccountBundle/Resources/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('account_register', new Route('/register', array(
+            '_controller' => 'AcmeAccountBundle:Account:register',
+        )));
+        $collection->add('account_create', new Route('/register/create', array(
+            '_controller' => 'AcmeAccountBundle:Account:create',
+        )));
+
+        return $collection;
+
+Update your Database Schema
+---------------------------
+
+Of course, since you've added a ``User`` entity during this tutorial, make
+sure that your database schema has been updated properly:
+
+   $ php app/console doctrine:schema:update --force
 
 That's it! Your form now validates, and allows you to save the ``User``
 object to the database. The extra ``terms`` checkbox on the ``Registration``
