@@ -16,6 +16,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `rounding_mode`_                                                    |
+|             | - `precision`_                                                        |
 |             | - `grouping`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `required`_                                                         |
@@ -35,6 +36,8 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 
 Field Options
 -------------
+
+.. include:: /reference/forms/types/options/precision.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~

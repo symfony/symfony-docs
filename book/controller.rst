@@ -384,6 +384,8 @@ itself.
 .. note::
 
     You can also define your :doc:`Controllers as Services</cookbook/controller/service>`.
+    This is optional, but can give you more control over the exact dependencies
+    that are injected into your controllers.
 
 .. index::
    single: Controller; Common tasks
