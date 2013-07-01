@@ -185,21 +185,6 @@ interface forces the class to implement the five following methods:
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-.. code-block:: php
-
-    // src/Acme/UserBundle/Entity/User.php
-
-    namespace Acme\UserBundle\Entity;
-
-    use Symfony\Component\Security\Core\User\EquatableInterface;
-
-    // ...
-
-    public function isEqualTo(UserInterface $user)
-    {
-        return $this->id === $user->getId();
-    }
-
 .. note::
 
     The :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
