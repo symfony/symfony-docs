@@ -278,6 +278,8 @@ can use setters, the magic ``__set`` or properties to set values::
 You can also use ``__call`` to set values but you need to enable the feature,
 see `Enable other Features`_.
 
+.. code-block:: php
+
     // ...
     class Person
     {
