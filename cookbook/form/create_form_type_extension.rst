@@ -232,7 +232,7 @@ it in the view::
                 $parentData = $form->getParent()->getData();
 
                 if (null !== $parentData) {
-                    $accessor = PropertyAccess::getPropertyAccessor();
+                    $accessor = PropertyAccess::createPropertyAccessor();
                     $imageUrl = $accessor->getValue($parentData, $options['image_path']);
                 } else {
                      $imageUrl = null;
