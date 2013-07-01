@@ -87,7 +87,7 @@ Structure
 
 * Add a single space around operators (``==``, ``&&``, ...);
 
-* Add a comma after each array item in a multi-line array, even after the	
+* Add a comma after each array item in a multi-line array, even after the
   last one;
 
 * Add a blank line before ``return`` statements, unless the return is alone

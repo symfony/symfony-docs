@@ -34,23 +34,23 @@ class.
 Suppose the class you want to test looks like this::
 
     namespace Acme\DemoBundle\Salary;
-    
+
     use Doctrine\Common\Persistence\ObjectManager;
-    
+
     class SalaryCalculator
     {
         private $entityManager;
-        
+
         public function __construct(ObjectManager $entityManager)
         {
             $this->entityManager = $entityManager;
         }
-        
+
         public function calculateTotalSalary($id)
         {
             $employeeRepository = $this->entityManager->getRepository('AcmeDemoBundle::Employee');
             $employee = $userRepository->find($id);
-            
+
             return $employee->getSalary() + $employee->getBonus();
         }
     }
@@ -62,7 +62,7 @@ it's easy to pass a mock object within a test::
 
     class SalaryCalculatorTest extends \PHPUnit_Framework_TestCase
     {
-        
+
         public function testCalculateTotalSalary()
         {
             // First, mock the object to be used in the test
@@ -72,8 +72,8 @@ it's easy to pass a mock object within a test::
                 ->will($this->returnValue(1000));
             $employee->expects($this->once())
                 ->method('getBonus')
-                ->will($this->returnValue(1100));   
-            
+                ->will($this->returnValue(1100));
+
             // Now, mock the repository so it returns the mock of the employee
             $employeeRepository = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
                 ->disableOriginalConstructor()
@@ -81,7 +81,7 @@ it's easy to pass a mock object within a test::
             $employeeRepository->expects($this->once())
                 ->method('find')
                 ->will($this->returnValue($employee));
-                
+
             // Last, mock the EntityManager to return the mock of the repository
             $entityManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                 ->disableOriginalConstructor()
@@ -89,17 +89,17 @@ it's easy to pass a mock object within a test::
             $entityManager->expects($this->once())
                 ->method('getRepository')
                 ->will($this->returnValue($employeeRepository));
-            
+
             $salaryCalculator = new SalaryCalculator($entityManager);
             $this->assertEquals(2100, $salaryCalculator->calculateTotalSalary(1));
         }
     }
-    
+
 In this example, you are building the mocks from the inside out, first creating
 the employee which gets returned by the ``Repository``, which itself gets
 returned by the ``EntityManager``. This way, no real class is involved in
 testing.
-    
+
 Changing database Settings for functional Tests
 -----------------------------------------------
 
@@ -121,7 +121,7 @@ configuration:
             dbname: testdb
             user: testdb
             password: testdb
-            
+
 .. code-block:: xml
 
     <!-- app/config/config_test.xml -->

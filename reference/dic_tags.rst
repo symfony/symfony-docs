@@ -71,6 +71,10 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `translation.loader`_             | Register a custom service that loads translations                         |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `translation.extractor`_          | Register a custom service that extracts translation messages from a file  |
++-----------------------------------+---------------------------------------------------------------------------+
+| `translation.dumper`_             | Register a custom service that dumps translation messages                 |
++-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `twig.loader`_                    | Register a custom service that loads Twig templates                       |
@@ -954,6 +958,131 @@ If you're loading translations from a database, you'll still need a resource
 file, but it might either be blank or contain a little bit of information
 about loading those resources from the database. The file is key to trigger
 the ``load`` method on your custom loader.
+
+translation.extractor
+---------------------
+
+**Purpose**: To register a custom service that extracts messages from a file
+
+.. versionadded:: 2.1
+   The ability to add message extractors is new in Symfony 2.1.
+
+When executing the ``translation:update`` command, it uses extractors to
+extract translation messages from a file. By default, the Symfony2 framework
+has a :class:`Symfony\\Bridge\\TwigBridge\\Translation\\TwigExtractor` and a
+:class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`, which
+help to find and extract translation keys from Twig templates and PHP files.
+
+You can create your own extractor by creating a class that implements
+:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` and
+tagging the service with ``translation.extractor``. The tag has one required
+option: ``alias``, which defines the name of the extractor::
+
+    // src/Acme/DemoBundle/Translation/FooExtractor.php
+    namespace Acme\DemoBundle\Translation;
+
+    use Symfony\Component\Translation\Extractor\ExtractorInterface;
+    use Symfony\Component\Translation\MessageCatalogue;
+
+    class FooExtractor implements ExtractorInterface
+    {
+        protected $prefix;
+
+        /**
+         * Extracts translation messages from a template directory to the catalogue.
+         */
+        public function extract($directory, MessageCatalogue $catalogue)
+        {
+            // ...
+        }
+
+        /**
+         * Sets the prefix that should be used for new found messages.
+         */
+        public function setPrefix($prefix)
+        {
+            $this->prefix = $prefix;
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.translation.extractor.foo:
+                class: Acme\DemoBundle\Translation\FooExtractor
+                tags:
+                    - { name: translation.extractor, alias: foo }
+
+    .. code-block:: xml
+
+        <service id="acme_demo.translation.extractor.foo"
+            class="Acme\DemoBundle\Translation\FooExtractor">
+            <tag name="translation.extractor" alias="foo" />
+        </service>
+
+    .. code-block:: php
+
+        $container->register(
+            'acme_demo.translation.extractor.foo',
+            'Acme\DemoBundle\Translation\FooExtractor'
+        )
+            ->addTag('translation.extractor', array('alias' => 'foo'));
+
+translation.dumper
+------------------
+
+**Purpose**: To register a custom service that dumps messages to a file
+
+.. versionadded:: 2.1
+   The ability to add message dumpers is new in Symfony 2.1.
+
+After an `Extractor <translation.extractor>`_ has extracted all messages from
+the templates, the dumpers are executed to dump the messages to a translation
+file in a specific format.
+
+Symfony2 already comes with many dumpers:
+
+* :class:`Symfony\\Component\\Translation\\Dumper\\CsvFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\IcuResFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\IniFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\MoFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\PoFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\QtFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\XliffFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\YamlFileDumper`
+
+You can create your own dumper by extending
+:class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` or implementing
+:class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface` and tagging
+the service with ``translation.dumper``. The tag has one option: ``alias``
+This is the name that's used to determine which dumper should be used.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.translation.dumper.json:
+                class: Acme\DemoBundle\Translation\JsonFileDumper
+                tags:
+                    - { name: translation.dumper, alias: json }
+
+    .. code-block:: xml
+
+        <service id="acme_demo.translation.dumper.json"
+            class="Acme\DemoBundle\Translation\JsonFileDumper">
+            <tag name="translation.dumper" alias="json" />
+        </service>
+
+    .. code-block:: php
+
+        $container->register(
+            'acme_demo.translation.dumper.json',
+            'Acme\DemoBundle\Translation\JsonFileDumper'
+        )
+            ->addTag('translation.dumper', array('alias' => 'json'));
 
 .. _reference-dic-tags-twig-extension:
 

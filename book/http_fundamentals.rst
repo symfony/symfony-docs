@@ -270,7 +270,6 @@ the user is connecting via a secured connection (i.e. ``https``).
     ``attributes`` property exists entirely to be a place where you can
     prepare and store context-specific information about the request.
 
-
 Symfony also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
 interface to construct the response that needs to be returned to the client::
@@ -358,7 +357,7 @@ Stay Organized
 ~~~~~~~~~~~~~~
 
 Inside your front controller, you have to figure out which code should be
-executed and what the content to return should be. To figure this out, you'll 
+executed and what the content to return should be. To figure this out, you'll
 need to check the incoming URI and execute different parts of your code depending
 on that value. This can get ugly quickly::
 
@@ -449,7 +448,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</components/yaml/introduction>` to define the routing
+   This example uses :doc:`YAML</components/yaml/format>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 
@@ -459,6 +458,8 @@ the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/Acme/DemoBundle/Controller/MainController.php
+    namespace Acme\DemoBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Response;
 
     class MainController

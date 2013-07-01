@@ -46,8 +46,8 @@ Symfony2 adds automatically:
 .. code-block:: text
 
     sub vcl_fetch {
-        /* 
-        Check for ESI acknowledgement 
+        /*
+        Check for ESI acknowledgement
         and remove Surrogate-Control header
         */
         if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
@@ -80,8 +80,8 @@ that will invalidate the cache for a given resource:
 
 .. code-block:: text
 
-    /* 
-     Connect to the backend server 
+    /*
+     Connect to the backend server
      on the local machine on port 8080
      */
     backend default {
@@ -90,11 +90,11 @@ that will invalidate the cache for a given resource:
     }
 
     sub vcl_recv {
-        /* 
+        /*
         Varnish default behaviour doesn't support PURGE.
-        Match the PURGE request and immediately do a cache lookup, 
+        Match the PURGE request and immediately do a cache lookup,
         otherwise Varnish will directly pipe the request to the backend
-        and bypass the cache        
+        and bypass the cache
         */
         if (req.request == "PURGE") {
             return(lookup);
@@ -125,12 +125,12 @@ that will invalidate the cache for a given resource:
 .. caution::
 
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
-    purging your cached data. You can do this by setting up an access list: 
+    purging your cached data. You can do this by setting up an access list:
 
     .. code-block:: text
 
-        /* 
-         Connect to the backend server 
+        /*
+         Connect to the backend server
          on the local machine on port 8080
          */
         backend default {
@@ -169,7 +169,7 @@ that will invalidate the cache for a given resource:
         }
 
         sub vcl_miss {
-            // Match PURGE request    
+            // Match PURGE request
             if (req.request == "PURGE") {
                 // Indicate that the object isn't stored in cache
                 error 404 "Not purged";

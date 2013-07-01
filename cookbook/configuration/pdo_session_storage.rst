@@ -14,6 +14,13 @@ Symfony2 has a built-in solution for database session storage called
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
+.. versionadded:: 2.1
+    In Symfony2.1 the class and namespace are slightly modified. You can now
+    find the session storage classes in the `Session\\Storage` namespace:
+    ``Symfony\Component\HttpFoundation\Session\Storage``. Also
+    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0.
+    Below, you'll notice that ``%session.storage.options%`` is not used anymore.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -38,6 +45,8 @@ configuration format of your choice):
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
                     password: mypassword
+                calls:
+                    - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
 
             session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
@@ -64,6 +73,10 @@ configuration format of your choice):
                 <argument>mysql:dbname=mydatabase</argument>
                 <argument>myuser</argument>
                 <argument>mypassword</argument>
+                <call method="setAttribute">
+                    <argument type="constant">PDO::ATTR_ERRMODE</argument>
+                    <argument type="constant">PDO::ERRMODE_EXCEPTION</argument>
+                </call>
             </service>
 
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
@@ -98,6 +111,7 @@ configuration format of your choice):
             'myuser',
             'mypassword',
         ));
+        $pdoDefinition->addMethodCall('setAttribute', array(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION));
         $container->setDefinition('pdo', $pdoDefinition);
 
         $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(

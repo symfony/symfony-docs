@@ -64,6 +64,9 @@ anonymous function to the
         }
     });
 
+.. versionadded:: 2.1
+    The non-blocking feature was added in 2.1.
+
 Running Processes Asynchronously
 --------------------------------
 

@@ -52,6 +52,16 @@ Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
 interacting with html links and forms as you traverse through the HTML tree.
 
+.. note::
+
+    The DomCrawler will attempt to automatically fix your HTML to match the
+    official specification. For example, if you nest a ``<p>`` tag inside
+    another ``<p>`` tag, it will be moved to be a sibling of the parent tag.
+    This is expected and is part of the HTML5 spec. But if you're getting
+    unexpected behavior, this could be a cause. And while the ``DomCrawler``
+    isn't meant to dump content, you can see the "fixed" version if your HTML
+    by :ref:`dumping it<component-dom-crawler-dumping>`.
+
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -195,6 +205,8 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNode($node);
     $crawler->add($document);
 
+.. component-dom-crawler-dumping:
+
 .. sidebar:: Manipulating and Dumping a ``Crawler``
 
     These methods on the ``Crawler`` are intended to initially populate your
@@ -204,7 +216,7 @@ and :phpclass:`DOMNode` objects:
     on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
     For example, you could get the HTML of a ``Crawler`` with something like
     this::
-    
+
         $html = '';
 
         foreach ($crawler as $domElement) {

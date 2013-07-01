@@ -386,7 +386,10 @@ object.
                 $metadata->addPropertyConstraint('task', new NotBlank());
 
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
-                $metadata->addPropertyConstraint('dueDate', new Type('\DateTime'));
+                $metadata->addPropertyConstraint(
+                    'dueDate',
+                    new Type('\DateTime')
+                );
             }
         }
 
@@ -496,7 +499,10 @@ to an array callback::
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+            'validation_groups' => array(
+                'Acme\AcmeBundle\Entity\Client',
+                'determineValidationGroups',
+            ),
         ));
     }
 
@@ -1082,7 +1088,8 @@ easy to use in your application.
     .. code-block:: xml
 
         <!-- src/Acme/TaskBundle/Resources/config/services.xml -->
-        <service id="acme_demo.form.type.task" class="Acme\TaskBundle\Form\Type\TaskType">
+        <service id="acme_demo.form.type.task"
+            class="Acme\TaskBundle\Form\Type\TaskType">
             <tag name="form.type" alias="task" />
         </service>
 
@@ -1092,7 +1099,10 @@ easy to use in your application.
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->register('acme_demo.form.type.task', 'Acme\TaskBundle\Form\Type\TaskType')
+            ->register(
+                'acme_demo.form.type.task',
+                'Acme\TaskBundle\Form\Type\TaskType'
+            )
             ->addTag('form.type', array(
                 'alias' => 'task',
             ))
@@ -1458,13 +1468,13 @@ rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``form_label``)   | renders the field's label                                |
+| ``label``   | (e.g. ``form_label``)    | renders the field's label                               |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                  |
+| ``widget``  | (e.g. ``form_widget``)   | renders the field's HTML representation                 |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                               |
+| ``errors``  | (e.g. ``form_errors``)   | renders the field's errors                              |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors)  |
+| ``row``     | (e.g. ``form_row``)      | renders the field's entire row (label, widget & errors) |
 +-------------+--------------------------+---------------------------------------------------------+
 
 .. note::
@@ -1608,7 +1618,6 @@ file:
                     resources:
                         - 'AcmeTaskBundle:Form'
         # ...
-
 
     .. code-block:: xml
 
@@ -1778,6 +1787,11 @@ The answer is to setup the constraints yourself, and attach them to the individu
 fields. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
 but here's a short example:
 
+.. versionadded:: 2.1
+   The ``constraints`` option, which accepts a single constraint or an array
+   of constraints (before 2.1, the option was called ``validation_constraint``,
+   and only accepted a single constraint) is new to Symfony 2.1.
+
 .. code-block:: php
 
     use Symfony\Component\Validator\Constraints\Length;
@@ -1797,15 +1811,14 @@ but here's a short example:
 
 .. tip::
 
-    If you are using Validation Groups, you need to either reference the 
-    ``Default`` group when creating the form, or set the correct group on 
+    If you are using Validation Groups, you need to either reference the
+    ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
-    
+
 .. code-block:: php
 
     new NotBlank(array('groups' => array('create', 'update'))
-    
-    
+
 Final Thoughts
 --------------
 

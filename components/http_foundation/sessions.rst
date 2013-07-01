@@ -130,7 +130,6 @@ Session meta-data
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
   which contains information about the session.
 
-
 Session Data Management
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -162,7 +161,6 @@ the following API which is intended mainly for internal purposes:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`:
   Returns the name of the session bag.
-
 
 Attributes
 ~~~~~~~~~~
@@ -229,7 +227,6 @@ has a simple API
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`:
   Clear the bag;
-
 
 Flash messages
 ~~~~~~~~~~~~~~

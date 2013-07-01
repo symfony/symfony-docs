@@ -52,7 +52,6 @@ below renders the ``index.html.php`` template::
     // src/Acme/HelloBundle/Controller/HelloController.php
 
     // ...
-
     public function indexAction($name)
     {
         return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
@@ -226,10 +225,12 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('AcmeHelloBundle:Hello:fancy', array(
-        'name'  => $name,
-        'color' => 'green'
-    )) ?>
+    <?php echo $view['actions']->render(
+        new ControllerReference('AcmeHelloBundle:Hello:fancy', array(
+            'name'  => $name,
+            'color' => 'green',
+        ))
+    ) ?>
 
 Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::

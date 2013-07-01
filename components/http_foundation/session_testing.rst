@@ -56,4 +56,3 @@ separate PHP processes, simply change the storage engine to
     use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
     $session = new Session(new MockFileSessionStorage());
-

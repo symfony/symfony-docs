@@ -40,6 +40,15 @@ To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
+.. tip::
+
+    You can :ref:`generate the missing getter and setters<book-doctrine-generating-getters-and-setters>`
+    by running:
+
+    .. code-block:: bash
+
+        $ php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
+
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
@@ -154,6 +163,15 @@ focus on the most important methods that come from the
         }
     }
 
+.. tip::
+
+    :ref:`Generate the database table<book-doctrine-creating-the-database-tables-schema>`
+    for your ``User`` entity by running:
+
+    .. code-block:: bash
+
+        $ php app/console doctrine:schema:update --force
+
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
@@ -191,24 +209,20 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
     because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
     method reloads the user on each request by using the ``id``.
 
-Below is an export of my ``User`` table from MySQL. For details on how to
-create user records and encode their password, see :ref:`book-security-encoding-user-password`.
+Below is an export of the ``User`` table from MySQL with user ``admin`` and
+password ``admin`` (which has been encoded). For details on how to create
+user records and encode their password, see :ref:`book-security-encoding-user-password`.
 
 .. code-block:: bash
 
-    $ mysql> select * from user;
-    +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
-    | id | username | salt                             | password                                 | email              | is_active |
-    +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
-    |  1 | hhamon   | 7308e59b97f6957fb42d66f894793079 | 09610f61637408828a35d7debee5b38a8350eebe | hhamon@example.com |         1 |
-    |  2 | jsmith   | ce617a6cca9126bf4036ca0c02e82dee | 8390105917f3a3d533815250ed7c64b4594d7ebf | jsmith@example.com |         1 |
-    |  3 | maxime   | cd01749bb995dc658fa56ed45458d807 | 9764731e5f7fb944de5fd8efad4949b995b72a3c | maxime@example.com |         0 |
-    |  4 | donald   | 6683c2bfd90c0426088402930cadd0f8 | 5c3bcec385f59edcc04490d1db95fdb8673bf612 | donald@example.com |         1 |
-    +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
-    4 rows in set (0.00 sec)
+    $ mysql> select * from acme_users;
+    +----+----------+------+------------------------------------------+--------------------+-----------+
+    | id | username | salt | password                                 | email              | is_active |
+    +----+----------+------+------------------------------------------+--------------------+-----------+
+    |  1 | admin    |      | d033e22ae348aeb5660fc2140aec35850c4da997 | admin@example.com  |         1 |
+    +----+----------+------+------------------------------------------+--------------------+-----------+
 
-The database now contains four users with different usernames, emails and
-statuses. The next part will focus on how to authenticate one of these users
+The next part will focus on how to authenticate one of these users
 thanks to the Doctrine entity user provider and a couple of lines of
 configuration.
 
@@ -323,14 +337,15 @@ entity user provider to load User entity objects from the database by using
 the ``username`` unique field. In other words, this tells Symfony how to
 fetch the user from the database before checking the password validity.
 
-This code and configuration works but it's not enough to secure the application
-for **active** users. As of now, you can still authenticate with ``maxime``. The
-next section explains how to forbid non active users.
+Forbid Inactive Users
+---------------------
 
-Forbid non Active Users
------------------------
+If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
+is 0 in the database), the user will still be able to login access the site
+normally. To prevent "inactive" users from logging in, you'll need to do a
+little more work.
 
-The easiest way to exclude non active users is to implement the
+The easiest way to exclude inactive users is to implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
 interface that takes care of checking the user's account status.
 The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
@@ -355,10 +370,10 @@ For this example, the first three methods will return ``true`` whereas the
     // src/Acme/UserBundle/Entity/User.php
     namespace Acme\UserBundle\Entity;
 
-    // ...
+    use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-    class User implements AdvancedUserInterface
+    class User implements AdvancedUserInterface, \Serializable 
     {
         // ...
 
@@ -383,10 +398,11 @@ For this example, the first three methods will return ``true`` whereas the
         }
     }
 
-If you try to authenticate as ``maxime``, the access is now forbidden as this
-user does not have an enabled account. The next session will focus on how
-to write a custom entity provider to authenticate a user with his username
-or his email address.
+Now, if you try to authenticate as a user who's ``is_active`` database field
+is set to 0, you won't be allowed.
+
+The next session will focus on how to write a custom entity provider 
+to authenticate a user with his username or his email address.
 
 Authenticating Someone with a Custom Entity Provider
 ----------------------------------------------------
@@ -428,8 +444,7 @@ The code below shows the implementation of the
                 ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
                 ->setParameter('email', $username)
-                ->getQuery()
-            ;
+                ->getQuery();
 
             try {
                 // The Query::getSingleResult() method throws an exception
@@ -485,7 +500,7 @@ of the ``security.yml`` file.
                 administrators:
                     entity: { class: AcmeUserBundle:User }
             # ...
-    
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -537,10 +552,11 @@ about in this section.
     authenticated at all.
 
 In this example, the ``AcmeUserBundle:User`` entity class defines a
-many-to-many relationship with a ``AcmeUserBundle:Group`` entity class. A user
-can be related to several groups and a group can be composed of one or
-more users. As a group is also a role, the previous ``getRoles()`` method now
-returns the list of related groups::
+many-to-many relationship with a ``AcmeUserBundle:Role`` entity class.
+A user can be related to several roles and a role can be composed of
+one or more users. The previous ``getRoles()`` method now returns
+the list of related roles. Notice that ``__construct()`` and ``getRoles()``
+methods have changed::
 
     // src/Acme/UserBundle/Entity/User.php
     namespace Acme\UserBundle\Entity;
@@ -550,63 +566,45 @@ returns the list of related groups::
 
     class User implements AdvancedUserInterface, \Serializable
     {
+        // ...
+        
         /**
-         * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+         * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
          *
          */
-        private $groups;
+        private $roles;
 
         public function __construct()
         {
-            $this->groups = new ArrayCollection();
+            $this->roles = new ArrayCollection();
         }
-
-        // ...
 
         public function getRoles()
         {
-            return $this->groups->toArray();
+            return $this->roles->toArray();
         }
+        
+        // ...
 
-        /**
-         * @see \Serializable::serialize()
-         */
-        public function serialize()
-        {
-            return serialize(array(
-                $this->id,
-            ));
-        }
-
-        /**
-         * @see \Serializable::unserialize()
-         */
-        public function unserialize($serialized)
-        {
-            list (
-                $this->id,
-            ) = unserialize($serialized);
-        }
     }
 
-The ``AcmeUserBundle:Group`` entity class defines three table fields (``id``,
-``name`` and ``role``). The unique ``role`` field contains the role name used by
-the Symfony security layer to secure parts of the application. The most
-important thing to notice is that the ``AcmeUserBundle:Group`` entity class
-extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
+The ``AcmeUserBundle:Role`` entity class defines three fields (``id``,
+``name`` and ``role``). The unique ``role`` field contains the role name
+(e.g. ``ROLE_ADMIN``) used by the Symfony security layer to secure parts
+of the application::
 
-    // src/Acme/Bundle/UserBundle/Entity/Group.php
+    // src/Acme/Bundle/UserBundle/Entity/Role.php
     namespace Acme\UserBundle\Entity;
 
-    use Symfony\Component\Security\Core\Role\Role;
+    use Symfony\Component\Security\Core\Role\RoleInterface;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * @ORM\Table(name="acme_groups")
+     * @ORM\Table(name="acme_roles")
      * @ORM\Entity()
      */
-    class Group extends Role
+    class Role implements RoleInterface
     {
         /**
          * @ORM\Column(name="id", type="integer")
@@ -626,7 +624,7 @@ extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
         private $role;
 
         /**
-         * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+         * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
          */
         private $users;
 
@@ -635,8 +633,6 @@ extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
             $this->users = new ArrayCollection();
         }
 
-        // ... getters and setters for each property
-
         /**
          * @see RoleInterface
          */
@@ -644,12 +640,69 @@ extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
         {
             return $this->role;
         }
+        
+        // ... getters and setters for each property
     }
 
-To improve performances and avoid lazy loading of groups when retrieving a user
-from the custom entity provider, the best solution is to join the groups
+For brevity, the getter and setter methods are hidden, but you can
+:ref:`generate them <book-doctrine-generating-getters-and-setters>`:
+
+.. code-block:: bas
+
+    $ php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
+
+Don't forget also to update your database schema:
+
+.. code-block:: bash
+
+    php app/console doctrine:schema:update --force
+
+This will create the ``acme_role`` table and a ``user_role`` that stores
+the many-to-many relationship between ``acme_user`` and ``acme_role``. If
+you had one user linked to one role, your database might look something like
+this:
+
+.. code-block:: text
+
+    $ mysql> select * from acme_users;
+    +----+-------+------------+
+    | id | name  | role       |
+    +----+-------+------------+
+    |  1 | admin | ROLE_ADMIN |
+    +----+-------+------------+
+
+    mysql> select * from user_role;
+    +---------+---------+
+    | user_id | role_id |
+    +---------+---------+
+    |       1 |       1 |
+    +---------+---------+
+
+And that's it! When the user logs in, Symfony security system will call the
+``User::getRoles`` method. This will return an array of ``Role`` objects
+that Symfony will use to determine if the user should have access to certain
+parts of the system.
+
+.. sidebar:: What's the purpose of the RoleInterface?
+
+    Notice that the ``Role`` class implements
+    :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`. This is
+    because Symfony's security system requires that the ``User::getRoles`` method
+    returns an array of either role strings or objects that implement this interface.
+    If ``Role`` didn't implement this interface, then ``User::getRoles``
+    would need to iterate over all the ``Role`` objects, call ``getRole``
+    on each, and create an array of strings to return. Both approaches are
+    valid and equivalent.
+
+.. _cookbook-doctrine-entity-provider-role-db-schema:
+
+Improving Performance with a Join
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To improve performance and avoid lazy loading of roles when retrieving a user
+from the custom entity provider, you can use a Doctrine join to the roles
 relationship in the ``UserRepository::loadUserByUsername()`` method. This will
-fetch the user and his associated roles / groups with a single query::
+fetch the user and his associated roles with a single query::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
     namespace Acme\UserBundle\Entity;
@@ -662,8 +715,8 @@ fetch the user and his associated roles / groups with a single query::
         {
             $q = $this
                 ->createQueryBuilder('u')
-                ->select('u, g')
-                ->leftJoin('u.groups', 'g')
+                ->select('u, r')
+                ->leftJoin('u.roles', 'r')
                 ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
                 ->setParameter('email', $username)
@@ -675,6 +728,6 @@ fetch the user and his associated roles / groups with a single query::
         // ...
     }
 
-The ``QueryBuilder::leftJoin()`` method joins and fetches related groups from
+The ``QueryBuilder::leftJoin()`` method joins and fetches related roles from
 the ``AcmeUserBundle:User`` model class when a user is retrieved with his email
 address or username.
