@@ -19,7 +19,6 @@ code.
     How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
     page of the book.
 
-
 .. index::
    single: Templating; What is a template?
 
@@ -537,7 +536,10 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {{ include('AcmeArticleBundle:Article:articleDetails.html.twig', {'article': article}) }}
+                {{ include(
+                    'AcmeArticleBundle:Article:articleDetails.html.twig',
+                    { 'article': article }
+                ) }}
             {% endfor %}
         {% endblock %}
 
@@ -644,7 +646,9 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
         {# ... #}
         <div id="sidebar">
-            {{ render(controller('AcmeArticleBundle:Article:recentArticles', { 'max': 3 })) }}
+            {{ render(controller('AcmeArticleBundle:Article:recentArticles', {
+                'max': 3
+            })) }}
         </div>
 
     .. code-block:: html+php
@@ -654,7 +658,10 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render(
-                new ControllerReference('AcmeArticleBundle:Article:recentArticles', array('max' => 3))
+                new ControllerReference(
+                    'AcmeArticleBundle:Article:recentArticles',
+                    array('max' => 3)
+                )
             ) ?>
         </div>
 
@@ -737,7 +744,8 @@ in your application configuration:
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:templating hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+            <framework:templating
+                hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
         </framework:config>
 
     .. code-block:: php
@@ -746,7 +754,9 @@ in your application configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'templating'      => array(
-                'hinclude_default_template' => array('AcmeDemoBundle::hinclude.html.twig'),
+                'hinclude_default_template' => array(
+                    'AcmeDemoBundle::hinclude.html.twig',
+                ),
             ),
         ));
 
@@ -760,7 +770,9 @@ any global default template that is defined):
 
     .. code-block:: jinja
 
-        {{ render_hinclude(controller('...'),  {'default': 'AcmeDemoBundle:Default:content.html.twig'}) }}
+        {{ render_hinclude(controller('...'),  {
+            'default': 'AcmeDemoBundle:Default:content.html.twig'
+        }) }}
 
     .. code-block:: php
 
@@ -889,7 +901,9 @@ correctly:
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles in $article): ?>
-            <a href="<?php echo $view['router']->generate('article_show', array('slug' => $article->getSlug()) ?>">
+            <a href="<?php echo $view['router']->generate('article_show', array(
+                'slug' => $article->getSlug(),
+            )) ?>">
                 <?php echo $article->getTitle() ?>
             </a>
         <?php endforeach; ?>
@@ -973,7 +987,6 @@ advantage of Symfony's template inheritance.
     more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
-
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
 just above the closing ``body`` tag. These blocks will contain all of the
@@ -987,14 +1000,14 @@ stylesheets and Javascripts that you'll need throughout your site:
             {# ... #}
 
             {% block stylesheets %}
-                <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+                <link href="{{ asset('/css/main.css') }}" rel="stylesheet" />
             {% endblock %}
         </head>
         <body>
             {# ... #}
 
             {% block javascripts %}
-                <script src="{{ asset('/js/main.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('/js/main.js') }}"></script>
             {% endblock %}
         </body>
     </html>
@@ -1012,7 +1025,7 @@ page. From inside that contact page's template, do the following:
     {% block stylesheets %}
         {{ parent() }}
 
-        <link href="{{ asset('/css/contact.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('/css/contact.css') }}" rel="stylesheet" />
     {% endblock %}
 
     {# ... #}
@@ -1030,7 +1043,7 @@ is by default "web").
 
 .. code-block:: html+jinja
 
-   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
+   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
@@ -1343,7 +1356,7 @@ a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body.
 
-To render it normally, add the ``raw`` filter: 
+To render it normally, add the ``raw`` filter:
 
 .. code-block:: jinja
 
@@ -1397,7 +1410,6 @@ Template parameters can then be dumped using the ``dump`` function:
             {{ article.title }}
         </a>
     {% endfor %}
-
 
 The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
 is ``true``. By default this means that the variables will be dumped in the
@@ -1468,7 +1480,10 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', array('id' => 123, '_format' => 'pdf')) ?>">
+        <a href="<?php echo $view['router']->generate('article_show', array(
+            'id' => 123,
+            '_format' => 'pdf',
+        )) ?>">
             PDF Version
         </a>
 

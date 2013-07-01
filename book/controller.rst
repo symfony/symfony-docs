@@ -384,6 +384,8 @@ itself.
 .. note::
 
     You can also define your :doc:`Controllers as Services</cookbook/controller/service>`.
+    This is optional, but can give you more control over the exact dependencies
+    that are injected into your controllers.
 
 .. index::
    single: Controller; Common tasks
@@ -668,7 +670,10 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirect($this->generateUrl(...));
         }

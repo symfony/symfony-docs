@@ -101,7 +101,7 @@ following:
 .. tip::
 
     Protected and private properties can also be validated, as well as "getter"
-    methods (see `validator-constraint-targets`).
+    methods (see :ref:`validator-constraint-targets`).
 
 .. index::
    single: Validation; Using the validator
@@ -847,7 +847,7 @@ username and the password are different only if all other validation passes
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
-         * @Assert\GroupSequence({"Strict", "User"})
+         * @Assert\GroupSequence({"User", "Strict"})
          */
         class User implements UserInterface
         {
@@ -906,13 +906,22 @@ username and the password are different only if all other validation passes
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('username', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('password', new Assert\NotBlank());
+                $metadata->addPropertyConstraint(
+                    'username',
+                    new Assert\NotBlank()
+                );
+                $metadata->addPropertyConstraint(
+                    'password',
+                    new Assert\NotBlank()
+                );
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
-                    'message' => 'The password cannot match your first name',
-                    'groups'  => array('Strict'),
-                )));
+                $metadata->addGetterConstraint(
+                    'passwordLegal',
+                    new Assert\True(array(
+                        'message' => 'The password cannot match your first name',
+                        'groups'  => array('Strict'),
+                    ))
+                );
 
                 $metadata->setGroupSequence(array('User', 'Strict'));
             }

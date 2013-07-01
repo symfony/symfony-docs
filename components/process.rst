@@ -64,6 +64,9 @@ anonymous function to the
         }
     });
 
+.. versionadded:: 2.1
+    The non-blocking feature was added in 2.1.
+
 Running Processes Asynchronously
 --------------------------------
 
@@ -92,7 +95,7 @@ are done doing other stuff::
     // ... do other things
 
     $process->wait(function ($type, $buffer) {
-        if (Process:ERR === $type) {
+        if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
             echo 'OUT > '.$buffer;

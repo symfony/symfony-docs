@@ -145,7 +145,6 @@ exist::
     $request->query->get('bar', 'bar');
     // returns 'bar'
 
-
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element. But
@@ -441,7 +440,7 @@ Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
     use Symfony\Component\HttpFoundation\BinaryFileResponse
-    
+
     $file = 'path/to/file.txt';
     $response = new BinaryFileResponse($file);
 
@@ -458,7 +457,6 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 
     $response->headers->set('Content-Type', 'text/plain')
     $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
-    
 
 .. _component-http-foundation-json-response:
 
@@ -497,6 +495,9 @@ to ``application/json``.
     that the final result is an object (e.g. ``{"object": "not inside an array"}``)
     instead of an array (e.g. ``[{"object": "inside an array"}]``). Read
     the `OWASP guidelines`_ for more information.
+
+    Only methods that respond to GET requests are vulnerable to XSSI 'JSON Hijacking'.
+    Methods responding to POST requests only remain unaffected.
 
 JSONP Callback
 ~~~~~~~~~~~~~~

@@ -21,8 +21,9 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `hours`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `seconds`_                                                                |
-|                      | - `data_timezone`_                                                          |
-|                      | - `user_timezone`_                                                          |
+|                      | - `model_timezone`_                                                         |
+|                      | - `view_timezone`_                                                          |
+|                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
@@ -113,9 +114,11 @@ this format.
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Overridden Options
 ------------------

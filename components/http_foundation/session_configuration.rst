@@ -19,7 +19,6 @@ is called randomly according to PHP's configuration and if called, it is invoked
 after the `open` operation).  You can read more about this at
 `php.net/session.customhandler`_
 
-
 Native PHP Save Handlers
 ------------------------
 
@@ -59,7 +58,6 @@ Example usage::
     where you need more control, custom save handlers may provide more freedom and flexibility.
     Symfony2 provides several implementations which you may further customise as required.
 
-
 Custom Save Handlers
 --------------------
 
@@ -84,7 +82,6 @@ Example usage::
 
     $storage = new NativeSessionStorage(array(), new PdoSessionHandler());
     $session = new Session($storage);
-
 
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~

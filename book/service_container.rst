@@ -172,6 +172,15 @@ the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
 ":doc:`/cookbook/service_container/scopes`" cookbook article.
 
+.. note::
+
+    In this example, the controller extends Symfony's base Controller, which
+    gives you access to the service container itself. You can then use the
+    ``get`` method to locate and retrieve the ``my_mailer`` service from
+    the service container. You can also define your :doc:`controllers as services</cookbook/controller/service>`.
+    This is a bit more advanced and not necessary, but it allows you to inject
+    only the services you need into your controller.
+
 .. _book-service-container-parameters:
 
 Service Parameters
@@ -251,7 +260,7 @@ looks up the value of each parameter and uses it in the service definition.
 
 .. caution::
 
-    You may receive a 
+    You may receive a
     :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
     when passing the ``request`` service as an argument. To understand this
     problem better and learn how to solve it, refer to the cookbook article
@@ -460,7 +469,9 @@ invokes the service container extension inside the ``FrameworkBundle``:
             'secret'          => 'xxxxxxxxxx',
             'form'            => array(),
             'csrf-protection' => array(),
-            'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'router'          => array(
+                'resource' => '%kernel.root_dir%/config/routing.php',
+            ),
 
             // ...
         ));
@@ -815,8 +826,10 @@ so that it can generate the email content via a template::
 
         protected $templating;
 
-        public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
-        {
+        public function __construct(
+            \Swift_Mailer $mailer,
+            EngineInterface $templating
+        ) {
             $this->mailer = $mailer;
             $this->templating = $templating;
         }
@@ -886,7 +899,8 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: xml
 
-        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\FooExtension">
+        <service id="foo.twig.extension"
+            class="Acme\HelloBundle\Extension\FooExtension">
             <tag name="twig.extension" />
         </service>
 

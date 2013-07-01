@@ -227,7 +227,6 @@ To answer this, change the service declaration:
                 tags:
                     -  { name: acme_mailer.transport, alias: bar }
 
-
     .. code-block:: xml
 
         <service id="acme_mailer.transport.smtp" class="\Swift_SmtpTransport">

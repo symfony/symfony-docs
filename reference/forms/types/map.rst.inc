@@ -21,6 +21,7 @@ Choice Fields
 * :doc:`language</reference/forms/types/language>`
 * :doc:`locale</reference/forms/types/locale>`
 * :doc:`timezone</reference/forms/types/timezone>`
+* :doc:`currency</reference/forms/types/currency>`
 
 Date and Time Fields
 ~~~~~~~~~~~~~~~~~~~~
@@ -58,5 +59,4 @@ Buttons
 Base Fields
 ~~~~~~~~~~~
 
-* :doc:`field</reference/forms/types/field>`
 * :doc:`form</reference/forms/types/form>`

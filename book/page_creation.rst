@@ -114,9 +114,11 @@ an entry when you generated the ``AcmeHelloBundle``:
 
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeHelloBundle/Resources/config/routing.xml" prefix="/" />
+            <import resource="@AcmeHelloBundle/Resources/config/routing.xml"
+                prefix="/" />
         </routes>
 
     .. code-block:: php
@@ -157,7 +159,8 @@ the new route that defines the URL of the page that you're about to create:
 
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello/{name}">
                 <default key="_controller">AcmeHelloBundle:Hello:index</default>
@@ -516,9 +519,9 @@ You'll learn more about each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
-    When Symfony is loading, a special file - ``vendor/autoload.php`` - is 
-    included. This file is created by Composer and will autoload all 
-    application files living in the `src/` folder as well as all 
+    When Symfony is loading, a special file - ``vendor/autoload.php`` - is
+    included. This file is created by Composer and will autoload all
+    application files living in the `src/` folder as well as all
     third-party libraries mentioned in the ``composer.json`` file.
 
     Because of the autoloader, you never need to worry about using ``include``
@@ -770,7 +773,9 @@ format you prefer:
 
         $container->loadFromExtension('framework', array(
             'secret'          => '%secret%',
-            'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'router'          => array(
+                'resource' => '%kernel.root_dir%/config/routing.php',
+            ),
             // ...
             ),
         ));
@@ -936,7 +941,9 @@ the configuration file for the ``dev`` environment.
         </imports>
 
         <framework:config>
-            <framework:router resource="%kernel.root_dir%/config/routing_dev.xml" />
+            <framework:router
+                resource="%kernel.root_dir%/config/routing_dev.xml"
+            />
             <framework:profiler only-exceptions="false" />
         </framework:config>
 
@@ -948,7 +955,9 @@ the configuration file for the ``dev`` environment.
         $loader->import('config.php');
 
         $container->loadFromExtension('framework', array(
-            'router'   => array('resource' => '%kernel.root_dir%/config/routing_dev.php'),
+            'router'   => array(
+                'resource' => '%kernel.root_dir%/config/routing_dev.php',
+            ),
             'profiler' => array('only-exceptions' => false),
         ));
 

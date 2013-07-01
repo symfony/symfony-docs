@@ -59,6 +59,54 @@ below) to access this service (via the alias).
 
    Services are by default public.
 
+Synthetic Services
+------------------
+
+Synthetic services are services that are injected into the container instead
+of being created by the container.
+
+For example, if you're using the :doc:`HttpKernel</components/http_kernel/introduction>`
+component with the DependencyInjection component, then the the ``request``
+service is injected in the
+:method:`ContainerAwareHttpKernel::handle() <Symfony\\Component\\HttpKernel\\DependencyInjection\\ContainerAwareHttpKernel::handle>`
+method when entering the request :doc:`scope </cookbook/service_container/scopes>`.
+The class does not exist when there is no request, so it can't be included in
+the container configuration. Also, the service should be different for every
+subrequest in the application.
+
+To create a synthetic service, set ``synthetic`` to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            request:
+                synthetic: true
+
+    .. code-block:: xml
+
+        <service id="request"
+            synthetic="true" />
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // ...
+        $container->setDefinition('request', new Definition())
+            ->setSynthetic(true);
+
+As you see, only the ``synthetic`` option is set. All other options are only used
+to configure how a service is created by the container. As the service isn't
+created by the container, these options are omitted.
+
+Now, you can inject the class by using
+:method:`Container::set<Symfony\\Component\\DependencyInjection\\Container::set>`::
+
+    // ...
+    $container->set('request', new MyRequest(...));
+
 Aliasing
 --------
 
@@ -122,4 +170,4 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         $container->setDefinition('foo', $definition);
 
 Notice that Symfony will internally call the PHP function require_once
-which means that your file will be included only once per request. 
+which means that your file will be included only once per request.

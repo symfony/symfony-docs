@@ -230,7 +230,7 @@ controller::
     }
 
 .. versionadded:: 2.3
-    The :method:`Symfony\Component\Form\FormInterface::handleRequest` method was
+    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method was
     added in Symfony 2.3. Previously, the ``$request`` was passed to the
     ``submit`` method - a strategy which is deprecated and will be removed
     in Symfony 3.0. For details on that method, see :ref:`cookbook-form-submit-request`.
@@ -239,26 +239,26 @@ This controller follows a common pattern for handling forms, and has three
 possible paths:
 
 #. When initially loading the page in a browser, the form is simply created and
-   rendered. :method:`Symfony\Component\Form\FormInterface::handleRequest`
+   rendered. :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes that the form was not submitted and does nothing.
-   :method:`Symfony\Component\Form\FormInterface::isValid` returns ``false``
+   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
    if the form was not submitted.
 
-#. When the user submits the form, :method:`Symfony\Component\Form\FormInterface::handleRequest`
+#. When the user submits the form, :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes this and immediately writes the submitted data back into the
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated. If it is invalid (validation is covered in the next section),
-   :method:`Symfony\Component\Form\FormInterface::isValid` returns ``false``
+   :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns ``false``
    again, so the form is rendered together with all validation errors;
 
    .. note::
 
-       You can use the method :method:`Symfony\Component\Form\FormInterface::isSubmitted`
+       You can use the method :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted`
        to check whether a form was submitted, regardless of whether or not the
        submitted data is actually valid.
 
 #. When the user submits the form with valid data, the submitted data is again
-   written into the form, but this time :method:`Symfony\Component\Form\FormInterface::isValid`
+   written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
    returns ``true``. Now you have the opportunity to perform some actions using
    the ``$task`` object (e.g. persisting it to the database) before redirecting
    the user to some other page (e.g. a "thank you" or "success" page).
@@ -386,7 +386,10 @@ object.
                 $metadata->addPropertyConstraint('task', new NotBlank());
 
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
-                $metadata->addPropertyConstraint('dueDate', new Type('\DateTime'));
+                $metadata->addPropertyConstraint(
+                    'dueDate',
+                    new Type('\DateTime')
+                );
             }
         }
 
@@ -496,7 +499,10 @@ to an array callback::
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+            'validation_groups' => array(
+                'Acme\AcmeBundle\Entity\Client',
+                'determineValidationGroups',
+            ),
         ));
     }
 
@@ -1082,7 +1088,8 @@ easy to use in your application.
     .. code-block:: xml
 
         <!-- src/Acme/TaskBundle/Resources/config/services.xml -->
-        <service id="acme_demo.form.type.task" class="Acme\TaskBundle\Form\Type\TaskType">
+        <service id="acme_demo.form.type.task"
+            class="Acme\TaskBundle\Form\Type\TaskType">
             <tag name="form.type" alias="task" />
         </service>
 
@@ -1092,7 +1099,10 @@ easy to use in your application.
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->register('acme_demo.form.type.task', 'Acme\TaskBundle\Form\Type\TaskType')
+            ->register(
+                'acme_demo.form.type.task',
+                'Acme\TaskBundle\Form\Type\TaskType'
+            )
             ->addTag('form.type', array(
                 'alias' => 'task',
             ))
@@ -1458,13 +1468,13 @@ rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``form_label``)   | renders the field's label                                |
+| ``label``   | (e.g. ``form_label``)    | renders the field's label                               |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                  |
+| ``widget``  | (e.g. ``form_widget``)   | renders the field's HTML representation                 |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                               |
+| ``errors``  | (e.g. ``form_errors``)   | renders the field's errors                              |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors)  |
+| ``row``     | (e.g. ``form_row``)      | renders the field's entire row (label, widget & errors) |
 +-------------+--------------------------+---------------------------------------------------------+
 
 .. note::
@@ -1608,7 +1618,6 @@ file:
                     resources:
                         - 'AcmeTaskBundle:Form'
         # ...
-
 
     .. code-block:: xml
 
@@ -1778,6 +1787,11 @@ The answer is to setup the constraints yourself, and attach them to the individu
 fields. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
 but here's a short example:
 
+.. versionadded:: 2.1
+   The ``constraints`` option, which accepts a single constraint or an array
+   of constraints (before 2.1, the option was called ``validation_constraint``,
+   and only accepted a single constraint) is new to Symfony 2.1.
+
 .. code-block:: php
 
     use Symfony\Component\Validator\Constraints\Length;
@@ -1797,15 +1811,14 @@ but here's a short example:
 
 .. tip::
 
-    If you are using Validation Groups, you need to either reference the 
-    ``Default`` group when creating the form, or set the correct group on 
+    If you are using Validation Groups, you need to either reference the
+    ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
-    
+
 .. code-block:: php
 
     new NotBlank(array('groups' => array('create', 'update'))
-    
-    
+
 Final Thoughts
 --------------
 

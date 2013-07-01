@@ -21,7 +21,7 @@ npm. First, you need to `install node.js`_. Afterwards you can install UglifyJs
 using npm:
 
 .. code-block:: bash
-    
+
     $ npm install -g uglify-js
 
 This command will install UglifyJs globally and you may need to run it as
@@ -90,29 +90,29 @@ your javascripts:
                 ),
             ),
         ));
-        
+
 .. note::
 
     The path where UglifyJs is installed may vary depending on your system.
     To find out where npm stores the ``bin`` folder, you can use the following
     command:
-    
+
     .. code-block:: bash
-    
+
         $ npm bin -g
-        
+
     It should output a folder on your system, inside which you should find
     the UglifyJs executable.
-    
+
     If you installed UglifyJs locally, you can find the bin folder inside
     the ``node_modules`` folder. It's called ``.bin`` in this case.
 
-You now have access to the ``uglifyjs2`` filter in your application. 
+You now have access to the ``uglifyjs2`` filter in your application.
 
 Minify your Assets
 ------------------
 
-In order to use UglifyJs on your assets, you need to apply it to them. Since 
+In order to use UglifyJs on your assets, you need to apply it to them. Since
 your assets are a part of the view layer, this work is done in your templates:
 
 .. configuration-block::
@@ -188,9 +188,9 @@ The usage of UglifyCss works the same way as UglifyJs. First, make sure
 the node package is installed:
 
 .. code-block:: bash
-    
+
     $ npm install -g uglifycss
-    
+
 Next, add the configuration for this filter:
 
 .. configuration-block::
@@ -222,7 +222,7 @@ Next, add the configuration for this filter:
                 ),
             ),
         ));
-        
+
 To use the filter for your css files, add the filter to the Assetic ``stylesheets``
 helper:
 

@@ -178,7 +178,7 @@ Model and View Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the above example, the transformer was used as a "model" transformer.
-In fact, there are two different type of transformers and three different
+In fact, there are two different types of transformers and three different
 types of underlying data.
 
 .. image:: /images/cookbook/form/DataTransformersTypes.png
@@ -187,7 +187,7 @@ types of underlying data.
 In any form, the 3 different types of data are:
 
 1) **Model data** - This is the data in the format used in your application
-(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``, 
+(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
 you're dealing with the "model" data.
 
 2) **Norm Data** - This is a normalized version of your data, and is commonly

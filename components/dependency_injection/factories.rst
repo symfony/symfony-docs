@@ -4,7 +4,7 @@
 Using a Factory to Create Services
 ==================================
 
-Symfony2's Service Container provides a powerful way of controlling the 
+Symfony2's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this
 will not provide you with everything you need to construct your objects.
@@ -20,9 +20,9 @@ object::
         public function get()
         {
             $newsletterManager = new NewsletterManager();
-            
+
             // ...
-            
+
             return $newsletterManager;
         }
     }
@@ -43,7 +43,7 @@ class:
             newsletter_manager:
                 class:          "%newsletter_manager.class%"
                 factory_class:  "%newsletter_factory.class%"
-                factory_method: get 
+                factory_method: get
 
     .. code-block:: xml
 
@@ -54,7 +54,7 @@ class:
         </parameters>
 
         <services>
-            <service id="newsletter_manager" 
+            <service id="newsletter_manager"
                      class="%newsletter_manager.class%"
                      factory-class="%newsletter_factory.class%"
                      factory-method="get"
@@ -96,7 +96,7 @@ factory itself as a service:
             newsletter_manager:
                 class:            "%newsletter_manager.class%"
                 factory_service:  newsletter_factory
-                factory_method:   get 
+                factory_method:   get
 
     .. code-block:: xml
 
@@ -108,7 +108,7 @@ factory itself as a service:
 
         <services>
             <service id="newsletter_factory" class="%newsletter_factory.class%"/>
-            <service id="newsletter_manager" 
+            <service id="newsletter_manager"
                      class="%newsletter_manager.class%"
                      factory-service="newsletter_factory"
                      factory-method="get"
@@ -136,7 +136,7 @@ factory itself as a service:
 
 .. note::
 
-   The factory service is specified by its id name and not a reference to 
+   The factory service is specified by its id name and not a reference to
    the service itself. So, you do not need to use the @ syntax.
 
 Passing Arguments to the Factory Method
@@ -174,7 +174,7 @@ in the previous example takes the ``templating`` service as an argument:
 
         <services>
             <service id="newsletter_factory" class="%newsletter_factory.class%"/>
-            <service id="newsletter_manager" 
+            <service id="newsletter_manager"
                      class="%newsletter_manager.class%"
                      factory-service="newsletter_factory"
                      factory-method="get"

@@ -66,6 +66,7 @@ Financial and other Number Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * :doc:`CardScheme </reference/constraints/CardScheme>`
+* :doc:`Currency </reference/constraints/Currency>`
 * :doc:`Luhn </reference/constraints/Luhn>`
 * :doc:`Iban </reference/constraints/Iban>`
 * :doc:`Isbn </reference/constraints/Isbn>`

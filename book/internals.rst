@@ -146,10 +146,10 @@ the Request attributes.
 Handling Requests
 ~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method 
-takes a ``Request`` and *always* returns a ``Response``. To convert the 
-``Request``, ``handle()`` relies on the Resolver and an ordered chain of 
-Event notifications (see the next section for more information about each 
+The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method
+takes a ``Request`` and *always* returns a ``Response``. To convert the
+``Request``, ``handle()`` relies on the Resolver and an ordered chain of
+Event notifications (see the next section for more information about each
 Event):
 
 #. Before doing anything else, the ``kernel.request`` event is notified -- if
@@ -209,14 +209,14 @@ Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType` 
-  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
+  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
   or ``HttpKernelInterface::SUB_REQUEST``);
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
   - returns the Kernel handling the request;
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
   - returns the current ``Request`` being handled.
 
 ``getRequestType()``
@@ -415,7 +415,11 @@ and set a new ``Exception`` object, or do nothing::
     response won't work. If you want to overwrite the status code (which you
     should not without a good reason), set the ``X-Status-Code`` header::
 
-        return new Response('Error', 404 /* ignored */, array('X-Status-Code' => 200));
+        return new Response(
+            'Error',
+            404 // ignored,
+            array('X-Status-Code' => 200)
+        );
 
 .. index::
    single: Event Dispatcher
@@ -510,7 +514,7 @@ HTTP header of the Response::
     want to get the token for an Ajax request, use a tool like Firebug to get
     the value of the ``X-Debug-Token`` HTTP header.
 
-Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find` 
+Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find`
 method to access tokens based on some criteria::
 
     // get the latest 10 tokens
@@ -523,8 +527,8 @@ method to access tokens based on some criteria::
     $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
 
 If you want to manipulate profiling data on a different machine than the one
-where the information were generated, use the 
-:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and 
+where the information were generated, use the
+:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::import` methods::
 
     // on the production machine
@@ -607,11 +611,19 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
     .. code-block:: xml
 
-        <import resource="@WebProfilerBundle/Resources/config/routing/profiler.xml" prefix="/_profiler" />
+        <import
+            resource="@WebProfilerBundle/Resources/config/routing/profiler.xml"
+            prefix="/_profiler"
+        />
 
     .. code-block:: php
 
-        $collection->addCollection($loader->import("@WebProfilerBundle/Resources/config/routing/profiler.xml"), '/_profiler');
+        $collection->addCollection(
+            $loader->import(
+                "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+            ),
+            '/_profiler'
+        );
 
 As the profiler adds some overhead, you might want to enable it only under
 certain circumstances in the production environment. The ``only-exceptions``
@@ -623,7 +635,8 @@ portion of the website? You can use a request matcher:
 
     .. code-block:: yaml
 
-        # enables the profiler only for request coming for the 192.168.0.0 network
+        # enables the profiler only for request coming
+        # for the 192.168.0.0 network
         framework:
             profiler:
                 matcher: { ip: 192.168.0.0/24 }
@@ -638,14 +651,18 @@ portion of the website? You can use a request matcher:
             profiler:
                 matcher: { ip: 192.168.0.0/24, path: "^/admin/" }
 
-        # use a custom matcher instance defined in the "custom_matcher" service
+        # use a custom matcher instance defined in
+        # the "custom_matcher" service
         framework:
             profiler:
                 matcher: { service: custom_matcher }
 
     .. code-block:: xml
 
-        <!-- enables the profiler only for request coming for the 192.168.0.0 network -->
+        <!--
+            enables the profiler only for request coming
+            for the 192.168.0.0 network
+        -->
         <framework:config>
             <framework:profiler>
                 <framework:matcher ip="192.168.0.0/24" />
@@ -666,7 +683,10 @@ portion of the website? You can use a request matcher:
             </framework:profiler>
         </framework:config>
 
-        <!-- use a custom matcher instance defined in the "custom_matcher" service -->
+        <!--
+            use a custom matcher instance defined in
+            the "custom_matcher" service
+        -->
         <framework:config>
             <framework:profiler>
                 <framework:matcher service="custom_matcher" />
@@ -675,7 +695,8 @@ portion of the website? You can use a request matcher:
 
     .. code-block:: php
 
-        // enables the profiler only for request coming for the 192.168.0.0 network
+        // enables the profiler only for request coming
+        // for the 192.168.0.0 network
         $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24'),
@@ -692,11 +713,15 @@ portion of the website? You can use a request matcher:
         // combine rules
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'matcher' => array('ip' => '192.168.0.0/24', 'path' => '^/admin/'),
+                'matcher' => array(
+                    'ip' => '192.168.0.0/24',
+                    'path' => '^/admin/',
+                ),
             ),
         ));
 
-        # use a custom matcher instance defined in the "custom_matcher" service
+        // use a custom matcher instance defined in
+        // the "custom_matcher" service
         $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('service' => 'custom_matcher'),

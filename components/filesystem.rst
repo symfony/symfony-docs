@@ -43,7 +43,6 @@ endpoint for filesystem operations::
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
-
 Mkdir
 ~~~~~
 
@@ -134,7 +133,6 @@ the group of a file. The third argument is a boolean recursive option::
     $fs->chgrp('lolcat.mp4', 'nginx');
     // change the group of the video directory recursively
     $fs->chgrp('/video', 'nginx', true);
-
 
 .. note::
 

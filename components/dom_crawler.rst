@@ -52,6 +52,16 @@ Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
 interacting with html links and forms as you traverse through the HTML tree.
 
+.. note::
+
+    The DomCrawler will attempt to automatically fix your HTML to match the
+    official specification. For example, if you nest a ``<p>`` tag inside
+    another ``<p>`` tag, it will be moved to be a sibling of the parent tag.
+    This is expected and is part of the HTML5 spec. But if you're getting
+    unexpected behavior, this could be a cause. And while the ``DomCrawler``
+    isn't meant to dump content, you can see the "fixed" version if your HTML
+    by :ref:`dumping it<component-dom-crawler-dumping>`.
+
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -70,7 +80,10 @@ This allows you to use jQuery-like selectors to traverse::
 
 Anonymous function can be used to filter with more complex criteria::
 
-    $crawler = $crawler->filter('body > p')->reduce(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $crawler = $crawler->filter('body > p')->reduce(function (Crawler $node, $i) {
         // filter even nodes
         return ($i % 2) == 0;
     });
@@ -137,11 +150,19 @@ Extract attribute and/or node values from the list of nodes::
 
 Call an anonymous function on each node of the list::
 
-    $nodeValues = $crawler->filter('p')->each(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
 
-The anonymous function receives the position and the node as arguments.
+.. versionadded::
+    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
+    are passed a ``Crawler`` as the first argument. Previously, that argument
+    was a :phpclass:`DOMNode`.
+
+The anonymous function receives the position and the node (as a Crawler) as arguments.
 The result is an array of values returned by the anonymous function calls.
 
 Adding the Content
@@ -184,6 +205,8 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNode($node);
     $crawler->add($document);
 
+.. component-dom-crawler-dumping:
+
 .. sidebar:: Manipulating and Dumping a ``Crawler``
 
     These methods on the ``Crawler`` are intended to initially populate your
@@ -193,7 +216,7 @@ and :phpclass:`DOMNode` objects:
     on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
     For example, you could get the HTML of a ``Crawler`` with something like
     this::
-    
+
         $html = '';
 
         foreach ($crawler as $domElement) {
