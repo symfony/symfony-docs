@@ -30,7 +30,7 @@ register the mappings for your model classes.
 
 
 In your bundle class, write the following code to register the compiler pass.
-This one is written for the ``FOSUserBundle``, so parts of it will need to
+This one is written for the FOSUserBundle, so parts of it will need to
 be adapted for your case::
 
     use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
