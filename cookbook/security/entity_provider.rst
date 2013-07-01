@@ -561,8 +561,8 @@ In this example, the ``AcmeUserBundle:User`` entity class defines a
 many-to-many relationship with a ``AcmeUserBundle:Role`` entity class.
 A user can be related to several roles and a role can be composed of
 one or more users. The previous ``getRoles()`` method now returns
-the list of related roles.
-Notice that methods ``__construcotor()`` and ``getRoles()`` had changed::
+the list of related roles. Notice that ``__construct()`` and ``getRoles()``
+methods have changed::
 
     // src/Acme/UserBundle/Entity/User.php
     namespace Acme\UserBundle\Entity;
@@ -572,7 +572,7 @@ Notice that methods ``__construcotor()`` and ``getRoles()`` had changed::
 
     class User implements AdvancedUserInterface, \Serializable
     {
-        //...
+        // ...
         
         /**
          * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
@@ -594,11 +594,10 @@ Notice that methods ``__construcotor()`` and ``getRoles()`` had changed::
 
     }
 
-The ``AcmeUserBundle:Role`` entity class defines three table fields (``id``,
-``name`` and ``role``). The unique ``role`` field contains the role name used by
-the Symfony security layer to secure parts of the application. The most
-important thing to notice is that the ``AcmeUserBundle:Role`` entity class
-extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
+The ``AcmeUserBundle:Role`` entity class defines three fields (``id``,
+``name`` and ``role``). The unique ``role`` field contains the role name
+(e.g. ``ROLE_ADMIN``) used by the Symfony security layer to secure parts
+of the application::
 
     // src/Acme/Bundle/UserBundle/Entity/Role.php
     namespace Acme\UserBundle\Entity;
@@ -651,14 +650,63 @@ extends the :class:`Symfony\\Component\\Security\\Core\\Role\\Role`::
         // ... getters and setters for each property
     }
 
-.. tip::
+For brevity, the getter and setter methods are hidden, but you can
+:ref:`generate them <book-doctrine-generating-getters-and-setters>`:
 
-    To generate missing setters and getters for your ``Role`` entity, you
-    can use ``php app/console doctrine:generate:entities Acme/UserBundle/Entity/User``.
-    For more details, see Doctrine's :ref:`book-doctrine-generating-getters-and-setters`.
+.. code-block:: bas
 
-To improve performances and avoid lazy loading of roles when retrieving a user
-from the custom entity provider, the best solution is to join the roles
+    $ php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
+
+Don't forget also to update your database schema:
+
+.. code-block:: bash
+
+    php app/console doctrine:schema:update --force
+
+This will create the ``acme_role`` table and a ``user_role`` that stores
+the many-to-many relationship between ``acme_user`` and ``acme_role``. If
+you had one user linked to one role, your database might look something like
+this:
+
+.. code-block:: text
+
+    $ mysql> select * from acme_users;
+    +----+-------+------------+
+    | id | name  | role       |
+    +----+-------+------------+
+    |  1 | admin | ROLE_ADMIN |
+    +----+-------+------------+
+
+    mysql> select * from user_role;
+    +---------+---------+
+    | user_id | role_id |
+    +---------+---------+
+    |       1 |       1 |
+    +---------+---------+
+
+And that's it! When the user logs in, Symfony security system will call the
+``User::getRoles`` method. This will return an array of ``Role`` objects
+that Symfony will use to determine if the user should have access to certain
+parts of the system.
+
+.. sidebar:: What's the purpose of the RoleInterface?
+
+    Notice that the ``Role`` class implements
+    :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`. This is
+    because Symfony's security system requires that the ``User::getRoles`` method
+    returns an array of either role strings or objects that implement this interface.
+    If ``Role`` didn't implement this interface, then ``User::getRoles``
+    would need to iterate over all the ``Role`` objects, call ``getRole``
+    on each, and create an array of strings to return. Both approaches are
+    valid and equivalent.
+
+.. _cookbook-doctrine-entity-provider-role-db-schema:
+
+Improving Performance with a Join
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To improve performance and avoid lazy loading of roles when retrieving a user
+from the custom entity provider, you can use a Doctrine join to the roles
 relationship in the ``UserRepository::loadUserByUsername()`` method. This will
 fetch the user and his associated roles with a single query::
 
@@ -689,26 +737,3 @@ fetch the user and his associated roles with a single query::
 The ``QueryBuilder::leftJoin()`` method joins and fetches related roles from
 the ``AcmeUserBundle:User`` model class when a user is retrieved with his email
 address or username.
-
-To re-generate all database tables, you can run ``php app/console doctrine:schema:update --force``.
-This will also create additional table ``user_role`` what holds
-relations between users and roles.
-For mor details, see Doctrine's :ref:`book-doctrine-creating-the-database-tables-schema`.
-
-Below is an export of my ``Roles`` and ``user_role`` tables from MySQL:
-
-.. code-block:: bash
-
-    $ mysql> select * from acme_users;
-    +----+-------+------------+
-    | id | name  | role       |
-    +----+-------+------------+
-    |  1 | admin | ROLE_ADMIN |
-    +----+-------+------------+
-
-    mysql> select * from user_role;
-    +---------+---------+
-    | user_id | role_id |
-    +---------+---------+
-    |       1 |       1 |
-    +---------+---------+
