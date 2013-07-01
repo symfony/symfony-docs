@@ -329,7 +329,7 @@ object.
                     <constraint name="Type">\DateTime</constraint>
                 </property>
             </class>
-        <constraint-mapping>
+        </constraint-mapping>
 
     .. code-block:: php
 
