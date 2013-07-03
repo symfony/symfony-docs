@@ -118,6 +118,11 @@ instead of
         }
     }
 
+.. note::
+
+    In the specific case above, the ``name`` parameter and the ``--yell`` option are not
+    mandatory for the command to work well, but they are shown for the example.
+
 To be able to use the fully set up service container for your console tests
 you can extend your test from
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`::
