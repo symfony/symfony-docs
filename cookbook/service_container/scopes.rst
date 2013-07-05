@@ -157,10 +157,11 @@ your code. This should also be taken into account when declaring your service:
         <services>
             <service id="greeting_card_manager"
                 class="Acme\HelloBundle\Mail\GreetingCardManager"
-            />
-            <call method="setRequest">
-                <argument type="service" id="request" on-invalid="null" strict="false" />
-            </call>
+            >
+                <call method="setRequest">
+                    <argument type="service" id="request" on-invalid="null" strict="false" />
+                </call>
+            </service>
         </services>
 
     .. code-block:: php
