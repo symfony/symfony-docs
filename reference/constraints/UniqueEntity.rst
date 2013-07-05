@@ -12,6 +12,7 @@ using an email address that already exists in the system.
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
+|                | - `errorPath`_                                                                     |
 |                | - `ignoreNull`_                                                                     |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
@@ -151,15 +152,75 @@ The name of the repository method to use for making the query to determine the
 uniqueness. If it's left blank, the ``findBy`` method will be used. This
 method should return a countable result.
 
+errorPath
+~~~~~~~~~
+
+**type**: ``string`` **default**: ``The name of the first`` `field`_
+
 .. versionadded:: 2.1
-    The ``ignoreNull`` option was added in Symfony 2.1.
+    The ``errorPath`` option was added in Symfony 2.1.
+
+If the entity violates against this constraint the error message is bound to
+the first field. If there are more than one fields it may be desired to bind the
+error message to another field.
+
+Consider this example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/AdministrationBundle/Resources/config/validation.yml
+        Acme\AdministrationBundle\Entity\Service:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: [ host, port ]
+                    errorPath: port
+                    message: 'This port is already in use on that host.'
+
+    .. code-block:: php-annotations
+
+        namespace Acme\AdministrationBundle\Entity;
+
+        use Doctrine\ORM\Mapping as ORM;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        /**
+         * @ORM\Entity
+         * @UniqueEntity(
+         *     fields={"host", "port"},
+         *     errorPath="port",
+         *     message="This port is already in use on that host."
+         * )
+         */
+        class Service
+        {
+            /**
+             * @ORM\ManyToOne(targetEntity="Host")
+             */
+            public $host;
+
+            /**
+             * @ORM\Column(type="integer")
+             */
+            public $port;
+        }
+
+Now, the message would be bound to the form field of the `port` with this configuration.
+
 
 ignoreNull
 ~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
+.. versionadded:: 2.1
+    The ``ignoreNull`` option was added in Symfony 2.1.
+
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
+
+
+.. _`field`: `fields`_
