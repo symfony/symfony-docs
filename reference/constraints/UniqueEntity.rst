@@ -12,7 +12,7 @@ using an email address that already exists in the system.
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
-|                | - `errorPath`_                                                                     |
+|                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
@@ -155,7 +155,7 @@ method should return a countable result.
 errorPath
 ~~~~~~~~~
 
-**type**: ``string`` **default**: ``The name of the first`` `field`_
+**type**: ``string`` **default**: The name of the first `field`_
 
 .. versionadded:: 2.1
     The ``errorPath`` option was added in Symfony 2.1.
@@ -180,6 +180,7 @@ Consider this example:
 
     .. code-block:: php-annotations
 
+        // src/Acme/AdministrationBundle/Entity/Service.php
         namespace Acme\AdministrationBundle\Entity;
 
         use Doctrine\ORM\Mapping as ORM;
@@ -206,7 +207,51 @@ Consider this example:
             public $port;
         }
 
-Now, the message would be bound to the form field of the `port` with this configuration.
+    .. code-block:: xml
+
+        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\AdministrationBundle\Entity\Service">
+                <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                    <option name="field">
+                        <value>host</value>
+                        <value>port</value>
+                    </option>
+                    <option name="errorPath">port</option>
+                    <option name="message">This port is already in use on that host.</option>
+                </constraint>
+            </class>
+
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/AdministrationBundle/Entity/Service.php
+        namespace Acme\AdministrationBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        class Service
+        {
+            public $host;
+            public $port;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new UniqueEntity(array(
+                    'fields'    => array('host', 'port'),
+                    'errorPath' => 'port',
+                    'message'   => 'This port is already in use on that host.',
+                )));
+            }
+        }
+
+Now, the message would be bound to the form field of the ``port`` with this configuration.
 
 
 ignoreNull
