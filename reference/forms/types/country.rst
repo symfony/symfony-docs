@@ -45,34 +45,7 @@ you should just use the ``choice`` type directly.
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
-
-**default**: ``Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()``
-
-The country type defaults the ``choices`` option to the whole list of countries.
-It uses the default locale to determine which language to use.
-
-Inherited options
------------------
-
-These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
-
-.. include:: /reference/forms/types/options/multiple.rst.inc
-
-.. include:: /reference/forms/types/options/expanded.rst.inc
-
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
-
-.. include:: /reference/forms/types/options/empty_value.rst.inc
-
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
-
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
-
-.. include:: /reference/forms/types/options/required.rst.inc
+choicesttes/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
