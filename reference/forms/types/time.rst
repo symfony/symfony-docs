@@ -34,7 +34,6 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
 |                      | - `inherit_data`_                                                           |
-|                      | - `virtual`_                                                                |
 |                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
@@ -151,7 +150,5 @@ These options inherit from the :doc:`field</reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/virtual.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
