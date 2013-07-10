@@ -1394,8 +1394,6 @@ in a JavaScript string, use the ``js`` context:
 .. index::
    single: Templating; Formats
 
-.. _template-formats:
-
 Debugging
 ---------
 
@@ -1439,6 +1437,8 @@ console command:
 
     # or using the bundle name:
     $ php app/console twig:lint @AcmeArticleBundle
+
+.. _template-formats:
 
 Template Formats
 ----------------
