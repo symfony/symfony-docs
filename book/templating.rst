@@ -1509,7 +1509,7 @@ come packaged with a rich set of helper functions capable of performing
 the most common tasks.
 
 Overall, the topic of templating should be thought of as a powerful tool
-that's at your disposal. In some cases, you may not need to render a template,
+that is at your disposal. In some cases, you may not need to render a template,
 and in Symfony2, that's absolutely fine.
 
 Learn more from the Cookbook
