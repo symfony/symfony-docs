@@ -563,8 +563,8 @@ The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
 template uses an ``article`` variable. This could be passed in by the ``list.html.twig``
 template using the ``with`` command supported on a twig ``include`` tag. In this
-case however, we opt to use the twig ``include`` function which passes context automatically
-and passes also optional hashes.
+case however, we chose to use the twig ``include`` function which also passes context
+by default and passes also optional hashes however without the need for a ``with`` keyword.
 
 .. tip::
 
