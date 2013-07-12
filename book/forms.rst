@@ -654,6 +654,7 @@ guess from the validation rules that both the ``task`` field is a normal
         $form = $this->createFormBuilder($task)
             ->add('task')
             ->add('dueDate', null, array('widget' => 'single_text'))
+            ->add('save', 'submit')
             ->getForm();
     }
 
@@ -918,6 +919,7 @@ ways. If you build your form in the controller, you can use ``setAction()`` and
         ->setMethod('GET')
         ->add('task', 'text')
         ->add('dueDate', 'date')
+        ->add('save', 'submit')
         ->getForm();
 
 .. note::
@@ -991,8 +993,9 @@ that will house the logic for building the task form::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('task');
-            $builder->add('dueDate', null, array('widget' => 'single_text'));
+            $builder->add('task')
+                ->add('dueDate', null, array('widget' => 'single_text'))
+                ->add('save', 'submit');
         }
 
         public function getName()
@@ -1057,8 +1060,9 @@ the choice is ultimately up to you.
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('task');
-            $builder->add('dueDate', null, array('mapped' => false));
+            $builder->add('task')
+                ->add('dueDate', null, array('mapped' => false))
+                ->add('save', 'submit');
         }
 
     Additionally, if there are any fields on the form that aren't included in
@@ -1731,6 +1735,7 @@ an array of the submitted data. This is actually really easy::
             ->add('name', 'text')
             ->add('email', 'email')
             ->add('message', 'textarea')
+            ->add('send', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
