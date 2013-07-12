@@ -34,9 +34,17 @@ the `ProxyManager bridge`_:
 
 .. note::
 
-    If you're using the full-stack framework, this package is not included
-    and needs to be added to ``composer.json`` and installed (which is what
-    the above command does).
+    If you're using the full-stack framework, the proxy manager bridge is already
+    included but the actual proxy manager needs to be included. Therefore add
+    
+    .. code-block:: json
+
+        "require": {
+            "ocramius/proxy-manager": "0.4.*"
+        }
+    
+    to your ``composer.json``. Afterwards compile your container and check if you
+    get a proxy for your lazy services.
 
 Configuration
 -------------
@@ -70,6 +78,16 @@ At this point the retrieved ``$service`` should be a virtual `proxy`_ with
 the same signature of the class representing the service. You can also inject
 the service just like normal into other services. The object that's actually
 injected will be the proxy.
+
+To check if your proxy works you can simply check the interface of the 
+received object.
+
+.. code-block:: php
+
+    var_dump(class_implements($service));
+    
+If the class implements the "ProxyManager\Proxy\LazyLoadingInterface" your lazy
+loaded services will work as expected.
 
 .. note::
 
