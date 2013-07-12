@@ -353,7 +353,7 @@ Create the classes:
 
     $ php app/console propel:model:build
 
-Assuming you have products in your database, you don't want lose them. Thanks to
+Assuming you have products in your database, you don't want tp lose them. Thanks to
 migrations, Propel will be able to update your database without losing existing
 data.
 
@@ -362,7 +362,7 @@ data.
     $ php app/console propel:migration:generate-diff
     $ php app/console propel:migration:migrate
 
-Your database has been updated, you can continue to write your application.
+Your database has been updated, you can continue writing your application.
 
 Saving Related Objects
 ~~~~~~~~~~~~~~~~~~~~~~
