@@ -406,25 +406,40 @@ blog, a forum, ...) and which can be easily shared with other developers. As
 of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
 more about bundles in the last chapter of this tutorial.
 
-Environments
-~~~~~~~~~~~~
-
-Every Symfony application runs within an :term:`environment`. An environment
-is a specific set of configuration and loaded bundles, represented by a string.
-The same application can be run with different configurations by running the
-application in different environments. Symfony2 comes with three environments
-defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
-
-Environments are useful by allowing a single application to have a dev environment
-built for debugging and a production environment optimized for speed. You might
-also load specific bundles based on the selected environment. For example,
-Symfony2 comes with the WebProfilerBundle (described below), enabled only
-in the ``dev`` and ``test`` environments.
-
 .. _quick-tour-big-picture-environments:
 
 Working with Environments
 -------------------------
+
+Now that you have a better understanding of how Symfony2 works, take a closer
+look at the bottom of any Symfony2 rendered page. You should notice a small
+bar with the Symfony2 logo. This is the "Web Debug Toolbar", and it is a
+Symfony2 developer's best friend.
+
+.. image:: /images/quick_tour/web_debug_toolbar.png
+   :align: center
+
+What you see initially is only the tip of the iceberg; click on the long
+hexadecimal number (the session token) to reveal yet another very useful
+Symfony2 debugging tool: the profiler.
+
+.. image:: /images/quick_tour/profiler.png
+   :align: center
+
+.. note::
+
+    You can also get more information quickly by hovering over the items
+    on the Web Debug Toolbar.
+
+When enabled (by default in the dev and test environments), the Profiler
+records a great deal of information on each request made to your application.
+It allows you to view details of each request, including, but not limited to,
+GET or POST parameters and the request headers; logs; an execution timeline;
+information on the currently logged in user; Doctrine queries; and more.
+
+Of course, it would be unwise to have these tools enabled when you deploy
+your application, so by default, the profiler is not enabled in the ``prod``
+environment. (In fact, its bundle is not even loaded).
 
 Symfony2 loads configuration based on the name of the environment. Typically,
 you put your common configuration in ``config.yml`` and override where necessary
@@ -444,18 +459,9 @@ In this example, the ``dev`` environment loads the ``config_dev.yml`` configurat
 file, which itself imports the global ``config.yml`` file and then modifies it by
 enabling the web debug toolbar.
 
-To make your application respond faster, Symfony2 maintains a cache under the
-``app/cache/`` directory. In the ``dev`` environment, this cache is flushed
-automatically whenever you make changes to any code or configuration. But that's
-not the case in the ``prod`` environment, where performance is key. That's why you
-should always use the development environment when developing your application.
+.. tip::
 
-Symfony2 comes with two web-accessible front controllers: ``app_dev.php`` 
-provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
-All web accesses to Symfony2 normally go through one of these front controllers.
-(The ``test`` environment is normally only used when running unit tests, and so 
-doesn't have a dedicated front controller. The console tool also provides a
-front controller that can be used with any environment.)
+    For more details on environments, see ":ref:`Environments & Front Controllers<page-creation-environments>`".
 
 The AcmeDemoBundle is normally only available in the dev environment, but
 if you were to add it (and its routes) to the production environment, you could
@@ -490,42 +496,6 @@ even better looking URL:
     installation of *Symfony Standard Edition*, you will get a 404 error since
     *AcmeDemoBundle* is enabled only in the dev environment and its routes imported
     from *app/config/routing_dev.yml*.
-
-.. _quick-tour-big-picture-web-debug-toolbar:
-
-The Web Debug Toolbar and Profiler
-----------------------------------
-
-
-Now that you have a better understanding of how Symfony2 works, take a closer
-look at the bottom of any Symfony2 rendered page. You should notice a small
-bar with the Symfony2 logo. This is the "Web Debug Toolbar", and it is a
-Symfony2 developer's best friend.
-
-.. image:: /images/quick_tour/web_debug_toolbar.png
-   :align: center
-
-What you see initially is only the tip of the iceberg; click on the long
-hexadecimal number (the session token) to reveal yet another very useful
-Symfony2 debugging tool: the profiler.
-
-.. image:: /images/quick_tour/profiler.png
-   :align: center
-
-When enabled (by default in the dev and test environments), the Profiler
-records a great deal of information on each request made to your application.
-It allows you to view details of each request, including, but not limited to,
-GET or POST parameters and the request headers; logs; an execution timeline;
-information on the currently logged in user; Doctrine queries; and more.
-
-Of course, it would be unwise to have these tools enabled when you deploy
-your application, so by default, the profiler is not enabled in the ``prod``
-environment. (In fact, its bundle is not even loaded).
-
-.. note::
-
-    You can get more information quickly by hovering over the items on the
-    Web Debug Toolbar.
 
 
 Final Thoughts
