@@ -960,7 +960,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
             <entity name="Acme\StoreBundle\Entity\Category">
                 <!-- ... -->
                 <one-to-many field="products"
-                    target-entity="product"
+                    target-entity="Product"
                     mapped-by="category"
                 />
 
@@ -988,7 +988,7 @@ makes sense in the application for each ``Category`` to hold an array of
 .. tip::
 
    The targetEntity value in the decorator used above can reference any entity
-   with a valid namespace, not just entities defined in the same class. To
+   with a valid namespace, not just entities defined in the same namespace. To
    relate to an entity defined in a different class or bundle, enter a full
    namespace as the targetEntity.
 
@@ -1038,7 +1038,8 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
             <entity name="Acme\StoreBundle\Entity\Product">
                 <!-- ... -->
                 <many-to-one field="category"
-                    target-entity="products"
+                    target-entity="Category"
+                    inversed-by="products"
                     join-column="category"
                 >
                     <join-column
