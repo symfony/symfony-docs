@@ -430,7 +430,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
     .. code-block:: xml
 
         <route id="contact" path="/contact">
-            <default key="_controller">AcmeBlogBundle:Main:contact</default>
+            <default key="_controller">AcmeDemoBundle:Main:contact</default>
         </route>
 
     .. code-block:: php
@@ -441,7 +441,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
-            '_controller' => 'AcmeBlogBundle:Main:contact',
+            '_controller' => 'AcmeDemoBundle:Main:contact',
         )));
 
         return $collection;
