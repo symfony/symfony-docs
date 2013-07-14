@@ -493,6 +493,9 @@ you must specify the domain as the third argument of ``trans()``::
 Symfony2 will now look for the message in the ``admin`` domain of the user's
 locale.
 
+.. versionadded:: 2.4
+    Support for translation domain cascading was added in Symfony 2.4.
+
 In some cases, you may need a fallback mechanism: you can also provide an
 array of domains instead:
 
