@@ -107,6 +107,13 @@ to and from addresses and the subject.
 You can combine these handlers with other handlers so that the errors still
 get logged on the server as well as the emails being sent:
 
+.. caution::
+
+    The default spool setting for swiftmailer is to use memory, however 
+    this does not work in the case of buffered logs at present. In order
+    to enable email of logs as per the example below you are required to
+    comment out spool: { type: memory } in the config.yml file. 
+
 .. configuration-block::
 
     .. code-block:: yaml
