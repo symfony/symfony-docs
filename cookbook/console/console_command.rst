@@ -104,13 +104,24 @@ instead of
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getName()));
+            $commandTester->execute(
+               array(
+                  'command' => $command->getName(),
+                  'name'    => 'Fabien',
+                  '--yell'  => true,
+               )
+            );
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 
             // ...
         }
     }
+
+.. note::
+
+    In the specific case above, the ``name`` parameter and the ``--yell`` option are not
+    mandatory for the command to work well, but they are shown for the example.
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
@@ -133,7 +144,13 @@ you can extend your test from
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getName()));
+            $commandTester->execute(
+               array(
+                  'command' => $command->getName(),
+                  'name'    => 'Fabien',
+                  '--yell'  => true,
+               )
+            );
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 
