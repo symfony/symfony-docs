@@ -43,8 +43,8 @@ the `ProxyManager bridge`_:
             "ocramius/proxy-manager": "0.4.*"
         }
     
-    to your ``composer.json``. Afterwards compile your container and check if you
-    get a proxy for your lazy services.
+    to your ``composer.json``. Afterwards compile your container and check
+    to make sure that you get a proxy for your lazy services.
 
 Configuration
 -------------
@@ -87,7 +87,7 @@ received object.
     var_dump(class_implements($service));
     
 If the class implements the "ProxyManager\Proxy\LazyLoadingInterface" your lazy
-loaded services will work as expected.
+loaded services are working.
 
 .. note::
 
