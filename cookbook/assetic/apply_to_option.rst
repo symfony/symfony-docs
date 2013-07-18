@@ -9,8 +9,8 @@ as you'll see here, files that have a specific extension. To show you how
 to handle each option, let's suppose that you want to use Assetic's CoffeeScript
 filter, which compiles CoffeeScript files into Javascript.
 
-The main configuration is just the paths to coffee, node and node_modules. These default
-respectively to ``/usr/bin/coffee``, ``/usr/bin/node`` and ``/usr/lib/node_modules``:
+The main configuration is just the paths to coffee, node and node_modules.
+An example configuration might look like this:
 
 .. configuration-block::
 
