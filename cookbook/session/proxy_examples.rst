@@ -2,7 +2,7 @@
    single: Sessions, session proxy, proxy
 
 Session Proxy Examples
-----------------------
+======================
 
 The session proxy mechanism has a variety of uses and this example demonstrates
 two common uses. Rather than injecting the session handler as normal, a handler
