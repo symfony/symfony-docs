@@ -251,7 +251,7 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
 
     $accept = AcceptHeader::fromString($request->headers->get('Accept'));
     if ($accept->has('text/html')) {
-        $item = $accept->get('html');
+        $item = $accept->get('text/html');
         $charset = $item->getAttribute('charset', 'utf-8');
         $quality = $item->getQuality();
     }
