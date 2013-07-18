@@ -137,12 +137,12 @@ Naming Conventions
 Service Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* A service name contains groups, seperated by dots;
+* A service name contains groups, separated by dots;
 * The DI alias of the bundle is the first group (e.g. ``fos_user``);
 * Use lowercase letters for service and parameter names;
 * A group name uses the underscore notation;
-* Each service has a coresponding parameter containing the class name,
-  following the ``%service name%.class`` convention.
+* Each service has a corresponding parameter containing the class name,
+  following the ``SERVICE NAME.class`` convention.
 
 Documentation
 -------------
