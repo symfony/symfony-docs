@@ -42,12 +42,6 @@ also load specific bundles based on the selected environment. For example,
 Symfony2 comes with the WebProfilerBundle (described below), enabled only
 in the ``dev`` and ``test`` environments.
 
-To make your application respond faster, Symfony2 maintains a cache under the
-``app/cache/`` directory. In the ``dev`` environment, this cache is flushed
-automatically whenever you make changes to any code or configuration. But that's
-not the case in the ``prod`` environment, where performance is key. That's why you
-should always use the development environment when developing your application.
-
 Symfony2 comes with two web-accessible front controllers: ``app_dev.php`` 
 provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
 All web accesses to Symfony2 normally go through one of these front controllers.
@@ -55,6 +49,14 @@ All web accesses to Symfony2 normally go through one of these front controllers.
 doesn't have a dedicated front controller. The console tool also provides a
 front controller that can be used with any environment.)
 
+When the front controller initializes the kernel, it provides two parameters:
+the environment, and also whether the kernel should run in debug mode.
+To make your application respond faster, Symfony2 maintains a cache under the
+``app/cache/`` directory. When in debug mode is enabled (such as ``app_dev.php``
+does by default), this cache is flushed automatically whenever you make changes
+to any code or configuration. When running in debug mode, Symfony2 runs
+slower, but your changes are reflected without having to manually clear the
+cache.
 
 .. index::
    single: Page creation; Example

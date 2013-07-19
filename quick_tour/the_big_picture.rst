@@ -419,7 +419,7 @@ Symfony2 developer's best friend.
 .. image:: /images/quick_tour/web_debug_toolbar.png
    :align: center
 
-What you see initially is only the tip of the iceberg; click on the long
+What you see initially is only the tip of the iceberg; click on the
 hexadecimal number (the session token) to reveal yet another very useful
 Symfony2 debugging tool: the profiler.
 
@@ -429,14 +429,17 @@ Symfony2 debugging tool: the profiler.
 .. note::
 
     You can also get more information quickly by hovering over the items
-    on the Web Debug Toolbar.
+    on the Web Debug Toolbar, or clicking them to go to their respective
+    pages in the profiler.
 
-When enabled (by default in the dev and test environments), the Profiler
-records a great deal of information on each request made to your application.
-It allows you to view details of each request, including, but not limited to,
-GET or POST parameters and the request headers; logs; an execution timeline;
-information on the currently logged in user; Doctrine queries; and more.
-
+When loaded (by default in the dev and test environments), and enabled
+(by default, only in the dev environment) the Profiler provides an interface
+to view a great deal of information recorded on each request made to your
+application. It allows you to view details of each request, including, but
+not limited to, GET or POST parameters and the request headers; logs; an
+execution timeline; information on the currently logged in user; Doctrine
+queries; and more.
+ 
 Of course, it would be unwise to have these tools enabled when you deploy
 your application, so by default, the profiler is not enabled in the ``prod``
 environment. (In fact, its bundle is not even loaded).
