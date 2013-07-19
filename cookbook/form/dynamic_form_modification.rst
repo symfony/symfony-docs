@@ -419,7 +419,7 @@ sport like this::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) use($user, $factory){
+                function(FormEvent $event) use($factory){
                     $form = $event->getForm();
 
                     // this would be your entity, i.e. SportMeetup

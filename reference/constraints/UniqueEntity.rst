@@ -99,7 +99,7 @@ table:
                     'message' => 'This email already exists.',
                 )));
 
-                $metadata->addPropertyConstraint(new Assert\Email());
+                $metadata->addPropertyConstraint('email', new Assert\Email());
             }
         }
 
