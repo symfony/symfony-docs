@@ -2,7 +2,7 @@
    single: Sessions
 
 Bridge a legacy application with Symfony Sessions
--------------------------------------------------
+=================================================
 
 .. versionadded:: 2.3
     The ability to integrate with a legacy PHP session was added in Symfony 2.3.
