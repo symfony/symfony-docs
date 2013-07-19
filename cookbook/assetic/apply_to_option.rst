@@ -32,7 +32,7 @@ An example configuration might look like this:
                 name="coffee"
                 bin="/usr/bin/coffee/"
                 node="/usr/bin/node/">
-                <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
+                <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
             </assetic:filter>
         </assetic:config>
 
