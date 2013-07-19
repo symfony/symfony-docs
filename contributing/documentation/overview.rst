@@ -57,11 +57,9 @@ Creating a Pull Request
 Following the example, the pull request will default to be between your
 ``improving_foo_and_bar`` branch and the ``symfony-docs`` ``master`` branch.
 
-.. image:: /images/docs-pull-request.png
-   :align: center
-
 If you have made your changes based on the 2.2 branch then you need to change
-the base branch to be 2.2 on the preview page:
+the base branch to be 2.2 on the preview page by clicking the ``edit`` button
+on the top left:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center

@@ -50,8 +50,8 @@ choices
 
 **default**: ``Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()``
 
-The country type defaults the ``choices`` option to the all locales.
-It uses the default locale to determine the language.
+The country type defaults the ``choices`` option to the whole list of countries.
+The locale is used to translate the countries names.
 
 Inherited options
 -----------------

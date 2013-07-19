@@ -108,10 +108,6 @@
   * :doc:`/cookbook/request/mime_type`
   * (session) :doc:`/cookbook/session/locale_sticky_session`
 
-* :doc:`/cookbook/session/index`
-
-  * :doc:`/cookbook/session/php_bridge`
-
 * :doc:`/cookbook/routing/index`
 
   * :doc:`/cookbook/routing/scheme`
@@ -150,6 +146,7 @@
   * :doc:`/cookbook/session/proxy_examples`
   * :doc:`/cookbook/session/locale_sticky_session`
   * :doc:`/cookbook/session/sessions_directory`
+  * :doc:`/cookbook/session/php_bridge`
 
 * **symfony1**
 
