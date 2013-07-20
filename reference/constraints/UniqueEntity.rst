@@ -153,9 +153,6 @@ errorPath
 
 **type**: ``string`` **default**: The name of the first `field`_
 
-.. versionadded:: 2.1
-    The ``errorPath`` option was added in Symfony 2.1.
-
 If the entity violates constraint the error message is bound to the first
 field in `fields`_. If there are more than one fields, you may want to map
 the error message to another field.
@@ -253,9 +250,6 @@ ignoreNull
 ~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
-
-.. versionadded:: 2.1
-    The ``ignoreNull`` option was added in Symfony 2.1.
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
