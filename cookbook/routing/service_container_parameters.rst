@@ -116,3 +116,7 @@ path):
     Just like in normal service container configuration files, if you actually
     need a ``%`` in  your route, you can escape the percent sign by doubling
     it, e.g. ``/score-50%%``, which would resolve to ``/score-50%``.
+    
+    However, as the ``%`` characters included in any URL are automatically encoded,
+    the resulting URL of this example would be ``/score-50%25`` (``%25`` is the
+    result of encoding the ``%`` character).
