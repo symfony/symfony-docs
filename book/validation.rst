@@ -779,10 +779,9 @@ user registers and when a user updates his/her contact information later:
 
 With this configuration, there are two validation groups:
 
-* ``Default`` - contains the constraints not assigned to any other group;
-
-* ``User`` - contains the constraints that belongs to group ``Default``
-  (this group is useful for :ref:`book-validation-group-sequence`);
+* ``User`` - contains the constraints that belong to no other group,
+  and is considered the ``Default`` group. (This group is useful for
+  :ref:`book-validation-group-sequence`);
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
