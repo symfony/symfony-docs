@@ -23,6 +23,42 @@ Symfony2 follows this philosophy and provides you with tools and conventions
 to keep your application organized as it grows in users and complexity.
 
 .. index::
+   single: Page creation; Environments & Front Controllers
+
+.. _page-creation-environments:
+
+Environments & Front Controllers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Every Symfony application runs within an :term:`environment`. An environment
+is a specific set of configuration and loaded bundles, represented by a string.
+The same application can be run with different configurations by running the
+application in different environments. Symfony2 comes with three environments
+defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
+
+Environments are useful by allowing a single application to have a dev environment
+built for debugging and a production environment optimized for speed. You might
+also load specific bundles based on the selected environment. For example,
+Symfony2 comes with the WebProfilerBundle (described below), enabled only
+in the ``dev`` and ``test`` environments.
+
+Symfony2 comes with two web-accessible front controllers: ``app_dev.php`` 
+provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
+All web accesses to Symfony2 normally go through one of these front controllers.
+(The ``test`` environment is normally only used when running unit tests, and so 
+doesn't have a dedicated front controller. The console tool also provides a
+front controller that can be used with any environment.)
+
+When the front controller initializes the kernel, it provides two parameters:
+the environment, and also whether the kernel should run in debug mode.
+To make your application respond faster, Symfony2 maintains a cache under the
+``app/cache/`` directory. When in debug mode is enabled (such as ``app_dev.php``
+does by default), this cache is flushed automatically whenever you make changes
+to any code or configuration. When running in debug mode, Symfony2 runs
+slower, but your changes are reflected without having to manually clear the
+cache.
+
+.. index::
    single: Page creation; Example
 
 The "Hello Symfony!" Page

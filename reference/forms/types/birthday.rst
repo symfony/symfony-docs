@@ -24,6 +24,7 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Inherited Options    | - `widget`_                                                                   |
 |                      | - `input`_                                                                    |
+|                      | - `empty_value`_                                                              |  
 |                      | - `months`_                                                                   |
 |                      | - `days`_                                                                     |
 |                      | - `format`_                                                                   |
@@ -60,6 +61,8 @@ These options inherit from the :doc:`date</reference/forms/types/date>` type:
 .. include:: /reference/forms/types/options/date_widget.rst.inc
     
 .. include:: /reference/forms/types/options/date_input.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 .. include:: /reference/forms/types/options/months.rst.inc
 

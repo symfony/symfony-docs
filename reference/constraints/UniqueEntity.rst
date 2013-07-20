@@ -151,7 +151,7 @@ method should return a countable result.
 errorPath
 ~~~~~~~~~
 
-**type**: ``string`` **default**: The name of the first `field`_
+**type**: ``string`` **default**: The name of the first field in `fields`_
 
 If the entity violates constraint the error message is bound to the first
 field in `fields`_. If there are more than one fields, you may want to map
