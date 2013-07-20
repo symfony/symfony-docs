@@ -24,6 +24,8 @@ You can install the component in 2 different ways:
 * Use the official Git repository (https://github.com/symfony/HttpFoundation);
 * :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_).
 
+.. _component-http-foundation-request:
+
 Request
 -------
 
@@ -266,6 +268,8 @@ The ``Request`` class has many other methods that you can use to access the
 request information. Have a look at
 :class:`the Request API<Symfony\\Component\\HttpFoundation\\Request>`
 for more information about them.
+
+.. _component-http-foundation-response:
 
 Response
 --------
