@@ -561,10 +561,10 @@ Including this template from any other template is simple:
 
 The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
-template uses an ``article`` variable. This could be passed in by the ``list.html.twig``
-template using the ``with`` command supported on a twig ``include`` tag. In this
-case however, we chose to use the twig ``include`` function which also passes context
-by default and passes also optional hashes however without the need for a ``with`` keyword.
+template uses an ``article`` variable, which we pass to it. In this case,
+you could avoid doing this entirely, as all of the variables available in
+``list.html.twig`` are also available in ``articleDetails.html.twig`` (unless
+you set `with_context<twig_include_function>`_ to false).
 
 .. tip::
 
@@ -573,8 +573,9 @@ by default and passes also optional hashes however without the need for a ``with
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
 .. versionadded:: 2.2
-    The ``include()`` function is a new Twig feature that's available in
-    Symfony 2.2. Prior, the ``{% include %}`` tag was used.
+    The `include()<twig_include_function>`_ function is a new Twig feature
+    that's available in Symfony 2.2. Prior, the `{% include %}<twig_include_tag>`_
+    tag was used.
 
 .. index::
    single: Templating; Embedding action
@@ -1537,3 +1538,5 @@ Learn more from the Cookbook
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`hinclude.js`: http://mnot.github.com/hinclude/
+.. _`twig_include_function`: http://twig.sensiolabs.org/doc/functions/include.html
+.. _`twig_include_tag`: http://twig.sensiolabs.org/doc/tags/include.html
