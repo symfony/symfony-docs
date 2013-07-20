@@ -109,10 +109,11 @@ get logged on the server as well as the emails being sent:
 
 .. caution::
 
-    The default spool setting for swiftmailer is to use memory, however 
-    this does not work in the case of buffered logs at present. In order
-    to enable email of logs as per the example below you are required to
-    comment out spool: { type: memory } in the config.yml file. 
+    The default spool setting for swiftmailer is set to ``memory``, which
+    means that emails are sent at the very end of the request. However, this
+    does not work with buffered logs at the moment. In order to enable emailing
+    logs per the example below, you are must comment out the ``spool: { type: memory }``
+    line in the ``config.yml`` file.
 
 .. configuration-block::
 
