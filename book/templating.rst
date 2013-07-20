@@ -6,7 +6,7 @@ Creating and using Templates
 
 As you know, the :doc:`controller </book/controller>` is responsible for
 handling each request that comes into a Symfony2 application. In reality,
-the controller delegates the most of the heavy work to other places so that
+the controller delegates most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
 CSS or any other content, it hands the work off to the templating engine.
 In this chapter, you'll learn how to write powerful templates that can be
@@ -204,10 +204,10 @@ First, build a base layout file:
             <body>
                 <div id="sidebar">
                     {% block sidebar %}
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/blog">Blog</a></li>
-                    </ul>
+                        <ul>
+                              <li><a href="/">Home</a></li>
+                              <li><a href="/blog">Blog</a></li>
+                        </ul>
                     {% endblock %}
                 </div>
 
@@ -561,8 +561,10 @@ Including this template from any other template is simple:
 
 The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
-template uses an ``article`` variable. This is passed in by the ``list.html.twig``
-template using the ``with`` command.
+template uses an ``article`` variable, which we pass to it. In this case,
+you could avoid doing this entirely, as all of the variables available in
+``list.html.twig`` are also available in ``articleDetails.html.twig`` (unless
+you set `with_context<twig_include_function>`_ to false).
 
 .. tip::
 
@@ -571,8 +573,9 @@ template using the ``with`` command.
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
 .. versionadded:: 2.2
-    The ``include()`` function is a new Twig feature that's available in
-    Symfony 2.2. Prior, the ``{% include %}`` tag was used.
+    The `include()<twig_include_function>`_ function is a new Twig feature
+    that's available in Symfony 2.2. Prior, the `{% include %}<twig_include_tag>`_
+    tag was used.
 
 .. index::
    single: Templating; Embedding action
@@ -1391,8 +1394,6 @@ in a JavaScript string, use the ``js`` context:
 .. index::
    single: Templating; Formats
 
-.. _template-formats:
-
 Debugging
 ---------
 
@@ -1433,6 +1434,8 @@ console command:
 
     # or using the bundle name:
     $ php app/console twig:lint @AcmeArticleBundle
+
+.. _template-formats:
 
 Template Formats
 ----------------
@@ -1529,3 +1532,5 @@ Learn more from the Cookbook
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`hinclude.js`: http://mnot.github.com/hinclude/
+.. _`twig_include_function`: http://twig.sensiolabs.org/doc/functions/include.html
+.. _`twig_include_tag`: http://twig.sensiolabs.org/doc/tags/include.html
