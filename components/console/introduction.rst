@@ -486,4 +486,4 @@ Learn More!
 * :doc:`/components/console/single_command_tool`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
-.. _ANSICON: http://adoxa.3eeweb.com/ansicon/
+.. _ANSICON: https://github.com/adoxa/ansicon/downloads
