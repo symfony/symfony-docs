@@ -12,6 +12,7 @@ using an email address that already exists in the system.
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
+|                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
@@ -147,10 +148,114 @@ The name of the repository method to use for making the query to determine the
 uniqueness. If it's left blank, the ``findBy`` method will be used. This
 method should return a countable result.
 
+errorPath
+~~~~~~~~~
+
+**type**: ``string`` **default**: The name of the first `field`_
+
+.. versionadded:: 2.1
+    The ``errorPath`` option was added in Symfony 2.1.
+
+If the entity violates constraint the error message is bound to the first
+field in `fields`_. If there are more than one fields, you may want to map
+the error message to another field.
+
+Consider this example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/AdministrationBundle/Resources/config/validation.yml
+        Acme\AdministrationBundle\Entity\Service:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: [host, port]
+                    errorPath: port
+                    message: 'This port is already in use on that host.'
+
+    .. code-block:: php-annotations
+
+        // src/Acme/AdministrationBundle/Entity/Service.php
+        namespace Acme\AdministrationBundle\Entity;
+
+        use Doctrine\ORM\Mapping as ORM;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        /**
+         * @ORM\Entity
+         * @UniqueEntity(
+         *     fields={"host", "port"},
+         *     errorPath="port",
+         *     message="This port is already in use on that host."
+         * )
+         */
+        class Service
+        {
+            /**
+             * @ORM\ManyToOne(targetEntity="Host")
+             */
+            public $host;
+
+            /**
+             * @ORM\Column(type="integer")
+             */
+            public $port;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\AdministrationBundle\Entity\Service">
+                <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                    <option name="field">
+                        <value>host</value>
+                        <value>port</value>
+                    </option>
+                    <option name="errorPath">port</option>
+                    <option name="message">This port is already in use on that host.</option>
+                </constraint>
+            </class>
+
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/AdministrationBundle/Entity/Service.php
+        namespace Acme\AdministrationBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        class Service
+        {
+            public $host;
+            public $port;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new UniqueEntity(array(
+                    'fields'    => array('host', 'port'),
+                    'errorPath' => 'port',
+                    'message'   => 'This port is already in use on that host.',
+                )));
+            }
+        }
+
+Now, the message would be bound to the ``port`` field with this configuration.
+
 ignoreNull
 ~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
+
+.. versionadded:: 2.1
+    The ``ignoreNull`` option was added in Symfony 2.1.
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.

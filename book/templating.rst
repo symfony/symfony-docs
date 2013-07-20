@@ -674,13 +674,15 @@ Asynchronous Content with hinclude.js
 
 Controllers can be embedded asynchronously using the hinclude.js_ javascript library.
 As the embedded content comes from another page (or controller for that matter),
-Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
+Symfony2 uses a version of the standard ``render`` function to configure ``hinclude``
+tags:
 
 .. configuration-block::
 
     .. code-block:: jinja
 
-        {% render url('...') with {}, {'standalone': 'js'} %}
+        {{ render_hinclude(controller('...')) %}
+        {{ render_hinclude(url('...')) %}
 
     .. code-block:: php
 
