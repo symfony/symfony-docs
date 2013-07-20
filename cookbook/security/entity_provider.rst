@@ -653,7 +653,7 @@ of the application::
 For brevity, the getter and setter methods are hidden, but you can
 :ref:`generate them <book-doctrine-generating-getters-and-setters>`:
 
-.. code-block:: bas
+.. code-block:: bash
 
     $ php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
 
