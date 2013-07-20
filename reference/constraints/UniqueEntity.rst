@@ -160,9 +160,9 @@ errorPath
 .. versionadded:: 2.1
     The ``errorPath`` option was added in Symfony 2.1.
 
-If the entity violates against this constraint the error message is bound to
-the first field. If there are more than one fields it may be desired to bind the
-error message to another field.
+If the entity violates constraint the error message is bound to the first
+field in `fields`_. If there are more than one fields, you may want to map
+the error message to another field.
 
 Consider this example:
 
@@ -174,7 +174,7 @@ Consider this example:
         Acme\AdministrationBundle\Entity\Service:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-                    fields: [ host, port ]
+                    fields: [host, port]
                     errorPath: port
                     message: 'This port is already in use on that host.'
 
@@ -251,7 +251,7 @@ Consider this example:
             }
         }
 
-Now, the message would be bound to the form field of the ``port`` with this configuration.
+Now, the message would be bound to the ``port`` field with this configuration.
 
 
 ignoreNull
@@ -266,6 +266,3 @@ If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
-
-
-.. _`field`: `fields`_
