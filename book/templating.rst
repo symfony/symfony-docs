@@ -561,8 +561,10 @@ Including this template from any other template is simple:
 
 The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
-template uses an ``article`` variable. This is passed in by the ``list.html.twig``
-template using the ``with`` command.
+template uses an ``article`` variable. This could be passed in by the ``list.html.twig``
+template using the ``with`` command supported on a twig ``include`` tag. In this
+case however, we chose to use the twig ``include`` function which also passes context
+by default and passes also optional hashes however without the need for a ``with`` keyword.
 
 .. tip::
 
