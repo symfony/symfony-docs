@@ -403,7 +403,7 @@ have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
-of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
+of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
 more about bundles in the last chapter of this tutorial.
 
 .. _quick-tour-big-picture-environments:
@@ -413,13 +413,13 @@ Working with Environments
 
 Now that you have a better understanding of how Symfony2 works, take a closer
 look at the bottom of any Symfony2 rendered page. You should notice a small
-bar with the Symfony2 logo. This is called the "Web Debug Toolbar" and it
-is the developer's best friend.
+bar with the Symfony2 logo. This is the "Web Debug Toolbar", and it is a
+Symfony2 developer's best friend.
 
 .. image:: /images/quick_tour/web_debug_toolbar.png
    :align: center
 
-But what you see initially is only the tip of the iceberg; click on the long
+What you see initially is only the tip of the iceberg; click on the
 hexadecimal number (the session token) to reveal yet another very useful
 Symfony2 debugging tool: the profiler.
 
@@ -428,54 +428,25 @@ Symfony2 debugging tool: the profiler.
 
 .. note::
 
-    You can get more information quickly by hovering over the items on the
-    Web Debug Toolbar.
+    You can also get more information quickly by hovering over the items
+    on the Web Debug Toolbar, or clicking them to go to their respective
+    pages in the profiler.
 
-Of course, you won't want to show these tools when you deploy your application
-to production. That's why you will find another front controller in the
-``web/`` directory (``app.php``), which is optimized for the production environment.
-The ``AcmeDemoBundle`` is normally only available in the dev environment (see
-the note below), but if you were to add it to the production environment, you
-could go here:
+When loaded (by default in the dev and test environments), and enabled
+(by default, only in the dev environment) the Profiler provides an interface
+to view a great deal of information recorded on each request made to your
+application. It allows you to view details of each request, including, but
+not limited to, GET or POST parameters and the request headers; logs; an
+execution timeline; information on the currently logged in user; Doctrine
+queries; and more.
+ 
+Of course, it would be unwise to have these tools enabled when you deploy
+your application, so by default, the profiler is not enabled in the ``prod``
+environment. (In fact, its bundle is not even loaded).
 
-.. code-block:: text
-
-    http://localhost/app.php/demo/hello/Fabien
-
-And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
-``app.php`` part of the URL:
-
-.. code-block:: text
-
-    http://localhost/demo/hello/Fabien
-
-Last but not least, on production servers, you should point your web root
-directory to the ``web/`` directory to secure your installation and have an
-even better looking URL:
-
-.. code-block:: text
-
-    http://localhost/demo/hello/Fabien
-
-.. note::
-
-    Note that the three URLs above are provided here only as **examples** of
-    how a URL looks like when the production front controller is used (with or
-    without mod_rewrite). If you actually try them in an out of the box
-    installation of *Symfony Standard Edition* you will get a 404 error as
-    *AcmeDemoBundle* is enabled only in dev environment and its routes imported
-    in *app/config/routing_dev.yml*.
-
-To make your application respond faster, Symfony2 maintains a cache under the
-``app/cache/`` directory. In the development environment (``app_dev.php``),
-this cache is flushed automatically whenever you make changes to any code or
-configuration. But that's not the case in the production environment
-(``app.php``) where performance is key. That's why you should always use
-the development environment when developing your application.
-
-Different :term:`environments<environment>` of a given application differ
-only in their configuration. In fact, a configuration can inherit from another
-one:
+Symfony2 loads configuration based on the name of the environment. Typically,
+you put your common configuration in ``config.yml`` and override where necessary
+in the configuration for each environment. For example:
 
 .. code-block:: yaml
 
@@ -487,9 +458,48 @@ one:
         toolbar: true
         intercept_redirects: false
 
-The ``dev`` environment (which loads the ``config_dev.yml`` configuration file)
-imports the global ``config.yml`` file and then modifies it by, in this example,
+In this example, the ``dev`` environment loads the ``config_dev.yml`` configuration
+file, which itself imports the global ``config.yml`` file and then modifies it by
 enabling the web debug toolbar.
+
+.. tip::
+
+    For more details on environments, see ":ref:`Environments & Front Controllers<page-creation-environments>`".
+
+The AcmeDemoBundle is normally only available in the dev environment, but
+if you were to add it (and its routes) to the production environment, you could
+go here:
+
+.. code-block:: text
+
+    http://localhost/app.php/demo/hello/Fabien
+
+If instead of using php's built-in webserver, you use Apache with ``mod_rewrite``
+enabled and take advantage of the ``.htaccess`` file Symfony2 provides
+in ``web/``, you can even omit the ``app.php`` part of the URL. The default
+``.htaccess`` points all requests to the ``app.php`` front controller:
+
+.. code-block:: text
+
+    http://localhost/demo/hello/Fabien
+
+Finally, on production servers, you should point your web root directory
+to the ``web/`` directory to better secure your installation and have an
+even better looking URL:
+
+.. code-block:: text
+
+    http://localhost/demo/hello/Fabien
+
+.. note::
+
+    Note that the three URLs above are provided here only as **examples** of
+    how a URL looks like when the production front controller is used (with or
+    without mod_rewrite). If you actually try them in an out-of-the-box
+    installation of *Symfony Standard Edition*, you will get a 404 error since
+    *AcmeDemoBundle* is enabled only in the dev environment and its routes imported
+    from *app/config/routing_dev.yml*.
+
 
 Final Thoughts
 --------------
