@@ -155,7 +155,7 @@ method should return a countable result.
 errorPath
 ~~~~~~~~~
 
-**type**: ``string`` **default**: The name of the first `field`_
+**type**: ``string`` **default**: The name of the first field in `fields`_
 
 .. versionadded:: 2.1
     The ``errorPath`` option was added in Symfony 2.1.
