@@ -8,6 +8,11 @@ automatically setup to work for image files specifically.
 Additionally, as of Symfony 2.1, it has options so you can validate against
 the width and height of the image.
 
+.. versionadded:: 2.4
+    As of Symfony 2.4 you can also validate against the image aspect ratio ( defined
+    as ``width / height``) and selectively allow square, landscape and portrait
+    image orientations.
+
 See the :doc:`File</reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
 
@@ -19,12 +24,22 @@ the documentation on this constraint.
 |                | - `maxWidth`_                                                        |
 |                | - `maxHeight`_                                                       |
 |                | - `minHeight`_                                                       |
+|                | - `maxRatio`_                                                        |
+|                | - `minRatio`_                                                        |
+|                | - `allowSquare`_                                                     |
+|                | - `allowLandscape`_                                                  |
+|                | - `allowPortrait`_                                                   |
 |                | - `mimeTypesMessage`_                                                |
 |                | - `sizeNotDetectedMessage`_                                          |
 |                | - `maxWidthMessage`_                                                 |
 |                | - `minWidthMessage`_                                                 |
 |                | - `maxHeightMessage`_                                                |
 |                | - `minHeightMessage`_                                                |
+|                | - `maxRatioMessage`_                                                 |
+|                | - `minRatioMessage`_                                                 |
+|                | - `allowSquareMessage`_                                              |
+|                | - `allowLandscapeMessage`_                                           |
+|                | - `allowPortraitMessage`_                                            |
 |                | - See :doc:`File</reference/constraints/File>` for inherited options |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`            |
@@ -82,6 +97,8 @@ it is between a certain size, add the following:
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -114,10 +131,10 @@ it is between a certain size, add the following:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
-        // ...
+        namespace Acme/BlogBundle/Entity
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Image;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
@@ -125,7 +142,7 @@ it is between a certain size, add the following:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('headshot', new Image(array(
+                $metadata->addPropertyConstraint('headshot', new Assert\Image(array(
                     'minWidth' => 200,
                     'maxWidth' => 400,
                     'minHeight' => 200,
@@ -136,6 +153,76 @@ it is between a certain size, add the following:
 
 The ``headshot`` property is validated to guarantee that it is a real image
 and that it is between a certain width and height.
+
+You may also want to guarantee the ``headshot`` image to be square. In this
+case you can disable portrait and landscape orientations as shown in the
+following code:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author
+            properties:
+                headshot:
+                    - Image:
+                        allowLandscape: false
+                        allowPortrait: false
+
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Image(
+             *     allowLandscape = false
+             *     allowPortrait = false
+             * )
+             */
+            protected $headshot;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="headshot">
+                <constraint name="Image">
+                    <option name="allowLandscape">false</option>
+                    <option name="allowPortrait">false</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('headshot', new Assert\Image(array(
+                    'allowLandscape'    => false,
+                    'allowPortrait'     => false,
+                )));
+            }
+        }
+
+You can mix all the constraint options to create powerful validation rules.
 
 Options
 -------
@@ -191,6 +278,43 @@ maxHeight
 If set, the height of the image file must be less than or equal to this
 value in pixels.
 
+maxRatio
+~~~~~~~~
+
+**type**: ``integer``
+
+If set, the aspect ratio (``width / height``) of the image file must be less than or equal to this
+value.
+
+minRatio
+~~~~~~~~
+
+**type**: ``integer``
+
+If set, the aspect ratio (``width / height``) of the image file must be greater than or equal to this
+value.
+
+allowSquare
+~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+If this option is false, the image must not be square.
+
+allowLandscape
+~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+If this option is false, the image must not be landscape oriented.
+
+allowPortrait
+~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+If this option is false, the image must not be portrait oriented.
+
 sizeNotDetectedMessage
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -203,29 +327,73 @@ options has been set.
 maxWidthMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px``
+**type**: ``string`` **default**: ``The image width is too big ({{ width }}px).
+Allowed maximum width is {{ max_width }}px``
 
 The error message if the width of the image exceeds `maxWidth`_.
 
 minWidthMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px``
+**type**: ``string`` **default**: ``The image width is too small ({{ width }}px).
+Minimum width expected is {{ min_width }}px``
 
 The error message if the width of the image is less than `minWidth`_.
 
 maxHeightMessage
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px``
+**type**: ``string`` **default**: ``The image height is too big ({{ height }}px).
+Allowed maximum height is {{ max_height }}px``
 
 The error message if the height of the image exceeds `maxHeight`_.
 
 minHeightMessage
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px``
+**type**: ``string`` **default**: ``The image height is too small ({{ height }}px).
+Minimum height expected is {{ min_height }}px``
 
 The error message if the height of the image is less than `minHeight`_.
+
+maxRatioMessage
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image ratio is too big ({{ ratio }}).
+Allowed maximum ratio is {{ max_ratio }}``
+
+The error message if the aspect ratio of the image exceeds `maxRatio`_.
+
+minRatioMessage
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image ratio is too small ({{ ratio }}).
+Minimum ratio expected is {{ min_ratio }}``
+
+The error message if the aspect ratio of the image is less than `minRatio`_.
+
+allowSquareMessage
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image is square ({{ width }}x{{ height }}px).
+Square images are not allowed``
+
+The error message if the image is square and you set `allowSquare`_ to ``false``.
+
+allowLandscapeMessage
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image is landscape oriented ({{ width }}x{{ height }}px).
+Landscape oriented images are not allowed``
+
+The error message if the image is landscape oriented and you set `allowLandscape`_ to ``false``.
+
+allowPortraitMessage
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image is portrait oriented ({{ width }}x{{ height }}px).
+Portrait oriented images are not allowed``
+
+The error message if the image is portrait oriented and you set `allowPoirtrait`_ to ``false``.
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
