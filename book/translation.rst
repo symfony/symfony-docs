@@ -470,6 +470,9 @@ Symfony2 will discover these files and use them when translating either
 .. index::
    single: Translations; Message domains
 
+
+.. _using-message-domains:
+
 Using Message Domains
 ---------------------
 

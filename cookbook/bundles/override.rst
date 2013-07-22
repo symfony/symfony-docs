@@ -129,7 +129,7 @@ Translations
 
 Translations are not related to bundles, but to domains. That means that you
 can override the translations from any translation file, as long as it is in
-:ref:`the correct domain <translation-domains>`.
+:ref:`the correct domain <using-message-domains>`.
 
 .. caution::
 
