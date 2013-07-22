@@ -40,16 +40,22 @@ on an  object that will contain a credit card number.
     .. code-block:: xml
 
         <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
-        <class name="Acme\SubscriptionBundle\Entity\Transaction">
-            <property name="cardNumber">
-                <constraint name="CardScheme">
-                    <option name="schemes">
-                        <value>VISA</value>
-                    </option>
-                    <option name="message">Your credit card number is invalid.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+                <property name="cardNumber">
+                    <constraint name="CardScheme">
+                        <option name="schemes">
+                            <value>VISA</value>
+                        </option>
+                        <option name="message">Your credit card number is invalid.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php-annotations
 

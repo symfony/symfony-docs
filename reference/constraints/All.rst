@@ -54,18 +54,24 @@ entry in that array:
     .. code-block:: xml
 
         <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
-        <class name="Acme\UserBundle\Entity\User">
-            <property name="favoriteColors">
-                <constraint name="All">
-                    <option name="constraints">
-                        <constraint name="NotBlank" />
-                        <constraint name="Length">
-                            <option name="min">5</option>
-                        </constraint>
-                    </option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Entity\User">
+                <property name="favoriteColors">
+                    <constraint name="All">
+                        <option name="constraints">
+                            <constraint name="NotBlank" />
+                            <constraint name="Length">
+                                <option name="min">5</option>
+                            </constraint>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

@@ -101,25 +101,31 @@ blank but is no longer than 100 characters in length, you would do the following
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="profileData">
-                <constraint name="Collection">
-                    <option name="fields">
-                        <value key="personal_email">
-                            <constraint name="Email" />
-                        </value>
-                        <value key="short_bio">
-                            <constraint name="NotBlank" />
-                            <constraint name="Length">
-                                <option name="max">100</option>
-                                <option name="maxMessage">Your bio is too long!</option>
-                            </constraint>
-                        </value>
-                    </option>
-                    <option name="allowMissingFields">true</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="profileData">
+                    <constraint name="Collection">
+                        <option name="fields">
+                            <value key="personal_email">
+                                <constraint name="Email" />
+                            </value>
+                            <value key="short_bio">
+                                <constraint name="NotBlank" />
+                                <constraint name="Length">
+                                    <option name="max">100</option>
+                                    <option name="maxMessage">Your bio is too long!</option>
+                                </constraint>
+                            </value>
+                        </option>
+                        <option name="allowMissingFields">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
