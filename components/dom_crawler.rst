@@ -194,7 +194,7 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNode($node);
     $crawler->add($document);
 
-.. component-dom-crawler-dumping:
+.. _component-dom-crawler-dumping:
 
 .. sidebar:: Manipulating and Dumping a ``Crawler``
 
