@@ -31,8 +31,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
 
-virtual
+inherit_data
 -------
 
-See :doc:`How to use the Virtual Form Field Option</cookbook/form/use_virtuals_forms>`
+See :doc:`/cookbook/form/inherit_data_option`.
 
