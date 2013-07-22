@@ -509,9 +509,6 @@ At first, the translator will look for the message in the ``specialized``
 domain. Without result, it will then look in the ``messages`` domain, and
 so on…
 
-.. versionadded:: 2.4
-    Support for translation domain cascading was added in Symfony 2.4.
-
 .. index::
    single: Translations; User's locale
 
