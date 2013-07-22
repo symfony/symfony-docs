@@ -179,6 +179,22 @@ field is optional but must be a valid email if supplied, you can do the followin
 
 .. configuration-block::
 
+    .. code-block:: yaml
+    
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                profile_data:
+                    - Collection:
+                        fields:
+                            personal_email:
+                                - Collection\Required
+                                    - NotBlank: ~
+                                    - Email: ~
+                            alternate_email:
+                                - Collection\Optional:
+                                    - Email: ~
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -200,6 +216,35 @@ field is optional but must be a valid email if supplied, you can do the followin
                  'personal_email',
              );
         }
+    
+    .. code-block:: xml
+    
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="profile_data">
+                    <constraint name="Collection">
+                        <option name="fields">
+                            <value key="personal_email">
+                                <constraint name="Collection\Required">
+                                    <constraint name="NotBlank" />
+                                    <constraint name="Email" />
+                                </constraint>
+                            </value>
+                            <value key="alternate_email">
+                                <constraint name="Collection\Optional">
+                                    <constraint name="Email" />
+                                </constraint>
+                            </value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
