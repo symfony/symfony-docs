@@ -219,41 +219,27 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
+
     One common issue is that the ``app/cache`` and ``app/logs`` directories
     must be writable both by the web server and the command line user. On
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
     to ensure that permissions will be setup properly.
 
-    **Note that not all web servers run as the user** ``www-data`` as in the examples
-    below. Instead, check which user *your* web server is being run as and
-    use it in place of ``www-data``.
-
-    On a UNIX system, this can be done with one of the following commands:
-
-    .. code-block:: bash
-
-        $ ps aux | grep httpd
-
-    or
-
-    .. code-block:: bash
-
-        $ ps aux | grep apache
-
     **1. Using ACL on a system that supports chmod +a**
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
-    and if you get an error - try the next method. Be sure to replace ``www-data``
-    with your web server user on the first ``chmod`` command:
+    and if you get an error - try the next method. 
 
     .. code-block:: bash
 
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+		$ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+		$ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+
 
     **2. Using Acl on a system that does not support chmod +a**
 
@@ -264,9 +250,10 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        $ sudo setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
-        $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-
+		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+		$ sudo setfacl -R -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+		$ sudo setfacl -dR -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+		
     **3. Without using ACL**
 
     If you don't have access to changing the ACL of the directories, you will
