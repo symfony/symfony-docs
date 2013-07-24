@@ -1201,7 +1201,7 @@ By default, the router will generate relative URLs (e.g. ``/blog``). To generate
 an absolute URL, simply pass ``true`` to the third argument of the ``generate()``
 method::
 
-    $router->generate('blog_show', array('slug' => 'my-blog-post'), true);
+    $this-get('router')->generate('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
 
 .. note::
@@ -1212,7 +1212,7 @@ method::
     scripts run from the command line, you'll need to manually set the desired
     host on the ``RequestContext`` object::
 
-        $router->getContext()->setHost('www.example.com');
+        $this-get('router')->getContext()->setHost('www.example.com');
 
 .. index::
    single: Routing; Generating URLs in a template
@@ -1223,7 +1223,7 @@ Generating URLs with Query Strings
 The ``generate`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
-    $router->generate('blog', array('page' => 2, 'category' => 'Symfony'));
+    $this-get('router')->generate('blog', array('page' => 2, 'category' => 'Symfony'));
     // /blog/2?category=Symfony
 
 Generating URLs from a template
