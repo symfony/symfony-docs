@@ -428,12 +428,12 @@ for the tags in the ``Task`` class::
     {
         // ...
 
-        public function addTag($tag)
+        public function addTag(Tag $tag)
         {
             $this->tags->add($tag);
         }
 
-        public function removeTag($tag)
+        public function removeTag(Tag $tag)
         {
             // ...
         }
@@ -539,7 +539,7 @@ we talk about next!).
         // src/Acme/TaskBundle/Entity/Task.php
 
         // ...
-        public function addTag(ArrayCollection $tag)
+        public function addTag(Tag $tag)
         {
             $tag->addTask($this);
 
@@ -593,7 +593,7 @@ Now, you need to put some code into the ``removeTag`` method of ``Task``::
     {
         // ...
 
-        public function removeTag($tag)
+        public function removeTag(Tag $tag)
         {
             $this->tags->removeElement($tag);
         }
