@@ -192,7 +192,7 @@ To ensure Symfony Router generates urls correctly with Varnish, proper ```X-Forw
 
 .. note::
 
-	Remember to set framework.trust_proxy_headers: true for this to work.
+	Remember to set framework.trust_proxy_headers: true in Symfony configuration for this to work.
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
