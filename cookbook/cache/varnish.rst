@@ -179,22 +179,26 @@ that will invalidate the cache for a given resource:
 Routing
 ------------------
 
-To ensure that the Symfony Router generates urls correctly with Varnish, proper ```X-Forwarded``` headers must be added. Headers depend on how you have configured hosts and ports for the web server and Varnish but this example should work if the web server is using the same IP as Varnish but a different port (e.g. 8080).
+To ensure that the Symfony Router generates urls correctly with Varnish,
+proper ```X-Forwarded``` headers must be added. Headers depend on how you
+have configured hosts and ports for the web server and Varnish but this
+example should work if the web server is using the same IP as Varnish but
+a different port (e.g. 8080).
 
 .. code-block:: text
 
-		sub vcl_recv {
-			if (req.http.X-Forwarded-Proto == "https" ) {
-				set req.http.X-Forwarded-Port = "443";
-			} else {
-				set req.http.X-Forwarded-Port = "80"
-			}
-		}
+    sub vcl_recv {
+        if (req.http.X-Forwarded-Proto == "https" ) {
+            set req.http.X-Forwarded-Port = "443";
+        } else {
+            set req.http.X-Forwarded-Port = "80"
+        }
+    }
 
 .. note::
 
-	Remember to set framework.trust_proxy_headers: true in the Symfony configuration for this to work.
+    Remember to set framework.trust_proxy_headers: true in the Symfony
+    configuration for this to work.
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
-
