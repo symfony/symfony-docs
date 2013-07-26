@@ -197,7 +197,7 @@ a different port (e.g. 8080).
 
 .. note::
 
-    Remember to set framework.trust_proxy_headers: true in the Symfony
+    Remember to set ``framework.trust_proxy_headers: true`` in the Symfony
     configuration for this to work.
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
