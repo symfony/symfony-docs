@@ -35,17 +35,6 @@ will contain a credit card number.
                     - Luhn:
                         message: Please check your credit card number.
 
-    .. code-block:: xml
-
-        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
-        <class name="Acme\SubscriptionBundle\Entity\Transaction">
-            <property name="cardNumber">
-                <constraint name="Luhn">
-                    <option name="message">Please check your credit card number.</option>
-                </constraint>
-            </property>
-        </class>
-
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
@@ -60,6 +49,23 @@ will contain a credit card number.
              */
             protected $cardNumber;
         }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+                <property name="cardNumber">
+                    <constraint name="Luhn">
+                        <option name="message">Please check your credit card number.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

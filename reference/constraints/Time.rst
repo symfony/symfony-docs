@@ -49,11 +49,17 @@ of the day when the event starts:
     .. code-block:: xml
 
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
-        <class name="Acme\EventBundle\Entity\Event">
-            <property name="startsAt">
-                <constraint name="Time" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Event">
+                <property name="startsAt">
+                    <constraint name="Time" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
         

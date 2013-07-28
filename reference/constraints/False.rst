@@ -71,13 +71,19 @@ method returns **false**:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <getter property="stateInvalid">
-                <constraint name="False">
-                    <option name="message">You've entered an invalid state.</option>
-                </constraint>
-            </getter>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <getter property="stateInvalid">
+                    <constraint name="False">
+                        <option name="message">You've entered an invalid state.</option>
+                    </constraint>
+                </getter>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

@@ -100,16 +100,22 @@ it is between a certain size, add the following:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="headshot">
-                <constraint name="Image">
-                    <option name="minWidth">200</option>
-                    <option name="maxWidth">400</option>
-                    <option name="minHeight">200</option>
-                    <option name="maxHeight">400</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="headshot">
+                    <constraint name="Image">
+                        <option name="minWidth">200</option>
+                        <option name="maxWidth">400</option>
+                        <option name="minHeight">200</option>
+                        <option name="maxHeight">400</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

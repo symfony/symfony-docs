@@ -57,13 +57,19 @@ Setup
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <constraint name="Callback">
-                <option name="methods">
-                    <value>isAuthorValid</value>
-                </option>
-            </constraint>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <constraint name="Callback">
+                    <option name="methods">
+                        <value>isAuthorValid</value>
+                    </option>
+                </constraint>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -159,16 +165,22 @@ process. Each method can be one of the following formats:
         .. code-block:: xml
 
             <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-            <class name="Acme\BlogBundle\Entity\Author">
-                <constraint name="Callback">
-                    <option name="methods">
-                        <value>
-                            <value>Acme\BlogBundle\MyStaticValidatorClass</value>
-                            <value>isAuthorValid</value>
-                        </value>
-                    </option>
-                </constraint>
-            </class>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+                <class name="Acme\BlogBundle\Entity\Author">
+                    <constraint name="Callback">
+                        <option name="methods">
+                            <value>
+                                <value>Acme\BlogBundle\MyStaticValidatorClass</value>
+                                <value>isAuthorValid</value>
+                            </value>
+                        </option>
+                    </constraint>
+                </class>
+            </constraint-mapping>
 
         .. code-block:: php
 
