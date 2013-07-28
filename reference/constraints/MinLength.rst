@@ -55,14 +55,20 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Blog">
-            <property name="summary">
-                <constraint name="MinLength">
-                    <option name="limit">3</option>
-                    <option name="message">Your name must have at least {{ limit }} characters.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Blog">
+                <property name="summary">
+                    <constraint name="MinLength">
+                        <option name="limit">3</option>
+                        <option name="message">Your name must have at least {{ limit }} characters.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

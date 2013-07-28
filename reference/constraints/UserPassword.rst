@@ -70,11 +70,17 @@ password:
     .. code-block:: xml
 
         <!-- src/UserBundle/Resources/config/validation.xml -->
-        <class name="Acme\UserBundle\Form\Model\ChangePassword">
-            <property name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword">
-                <option name="message">Wrong value for your current password</option>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Form\Model\ChangePassword">
+                <property name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword">
+                    <option name="message">Wrong value for your current password</option>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
