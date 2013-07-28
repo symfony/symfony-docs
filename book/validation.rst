@@ -960,10 +960,11 @@ entity and a new constraint group called ``Premium``:
             private $name;
 
             /**
-            * @Assert\CardScheme(
-            *     schemes={"VISA"},
-            *     groups={"Premium"},
-            * )
+             * @Assert\CardScheme(
+             *     schemes={"VISA"},
+             *     groups={"Premium"},
+             * )
+             */
             private $creditCard;
         }
 
@@ -1024,14 +1025,14 @@ entity and a new constraint group called ``Premium``:
             }
         }
 
-Now, let this class implement
-:class:`Symfony\\Componet\\Validation\\GroupSequenceProviderInterface` and
-implement a method called
-:method:`Symfony\\Componet\\Validation\\GroupSequenceProviderInterface::getGroupSequence`,
-which returns an array of groups to use and add the
-``@Assert\GroupSequencdeProvider`` annotation to the class. Imagine a method
-``isPremium`` returns true if the user is a premium member. Your method looks
-like this::
+Now, change the ``User`` class to implement
+:class:`Symfony\\Component\\Validation\\GroupSequenceProviderInterface` and
+add the
+:method:`Symfony\\Component\\Validation\\GroupSequenceProviderInterface::getGroupSequence`,
+which should return an array of groups to use. Also, add the
+``@Assert\GroupSequenceProvider`` annotation to the class. If you imagine
+that a method called ``isPremium`` returns true if the user is a premium member,
+then your code might look like this::
 
     // src/Acme/DemoBundle/Entity/User.php
     namespace Acme\DemoBundle\Entity;
@@ -1043,7 +1044,7 @@ like this::
      * @Assert\GroupSequenceProvider
      * ...
      */
-    class User
+    class User implements GroupSequenceProviderInterface
     {
         // ...
 
