@@ -33,4 +33,14 @@ the example below:
             storage_id: session.storage.php_bridge
             handler_id: session.handler.native_file
 
+.. note::
+
+If the legacy application requires it's own session save-handler, do not
+override this, rather set ``handler_id: ~``. Note that a save handler cannot
+be changed once the session has been started. If the application starts the
+session before Symfony initializes the save-handler will have already been 
+set. You will need ``handler_id: ~``. Only override the save-handler if you
+are sure the legacy application can use the Symfony save-handler without
+side effects and that the session has not been started before Symfony inializes.
+
 For more details, see :doc:`/components/http_foundation/session_php_bridge`.
