@@ -144,7 +144,11 @@ set an authenticated token in the security context if successful.
                 // ... you might log something here
 
                 // To deny the authentication clear the token. This will redirect to the login page.
-                // $this->securityContext->setToken(null);
+                // Make sure to only clear your token, not those of other authentication listeners.
+                // $token = $this->securityContext->getToken();
+                // if ($token instanceof WsseUserToken && $this->providerKey === $token->getProviderKey()) {
+                //     $this->securityContext->setToken(null);
+                // }
                 // return;
 
                 // Deny authentication with a '403 Forbidden' HTTP response
