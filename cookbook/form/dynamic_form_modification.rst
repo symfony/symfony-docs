@@ -469,6 +469,8 @@ The subscriber would now look like::
     use Symfony\Component\Form\FormFactoryInterface;
     use Doctrine\ORM\EntityManager;
     use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     class RegistrationSportListener implements EventSubscriberInterface
     {
