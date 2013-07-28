@@ -32,7 +32,7 @@ on all fields.
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
 
 inherit_data
--------
+------------
 
 See :doc:`/cookbook/form/inherit_data_option`.
 
