@@ -830,7 +830,7 @@ username and the password are different only if all other validation passes
                 - Strict
             getters:
                 passwordLegal:
-                    - "True":
+                    - "False":
                         message: "The password cannot match your username"
                         groups: [Strict]
             properties:
@@ -863,7 +863,7 @@ username and the password are different only if all other validation passes
             private $password;
 
             /**
-             * @Assert\True(message="The password cannot match your username", groups={"Strict"})
+             * @Assert\False(message="The password cannot match your username", groups={"Strict"})
              */
             public function isPasswordLegal()
             {
@@ -882,7 +882,7 @@ username and the password are different only if all other validation passes
                 <constraint name="NotBlank" />
             </property>
             <getter property="passwordLegal">
-                <constraint name="True">
+                <constraint name="False">
                     <option name="message">The password cannot match your username</option>
                     <option name="groups">
                         <value>Strict</value>
@@ -918,7 +918,7 @@ username and the password are different only if all other validation passes
 
                 $metadata->addGetterConstraint(
                     'passwordLegal',
-                    new Assert\True(array(
+                    new Assert\False(array(
                         'message' => 'The password cannot match your first name',
                         'groups'  => array('Strict'),
                     ))
