@@ -107,13 +107,13 @@ Choose the right Branch
 Before working on a patch, you must determine on which branch you need to
 work. The branch should be based on the `master` branch if you want to add a
 new feature. But if you want to fix a bug, use the oldest but still maintained
-version of Symfony where the bug happens (like `2.1`).
+version of Symfony where the bug happens (like `2.2`).
 
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a patch
-    for the `2.1` branch, the patch will also be applied by the core team on
+    for the `2.2` branch, the patch will also be applied by the core team on
     the `master` branch.
 
 Create a Topic Branch
@@ -126,18 +126,18 @@ topic branch:
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the 2.1 branch, first track the remote
-`2.1` branch locally:
+Or, if you want to provide a bugfix for the 2.2 branch, first track the remote
+`2.2` branch locally:
 
 .. code-block:: bash
 
-    $ git checkout -t origin/2.1
+    $ git checkout -t origin/2.2
 
-Then create a new branch off the 2.1 branch to work on the bugfix:
+Then create a new branch off the 2.2 branch to work on the bugfix:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME 2.1
+    $ git checkout -b BRANCH_NAME 2.2
 
 .. tip::
 
@@ -230,7 +230,7 @@ while to finish your changes):
 
 .. tip::
 
-    Replace `master` with `2.1` if you are working on a bugfix
+    Replace `master` with `2.2` if you are working on a bugfix
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
@@ -254,8 +254,8 @@ You can now make a pull request on the ``symfony/symfony`` Github repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.1`` if you want
-    the core team to pull a bugfix based on the 2.1 branch.
+    Take care to point your pull request towards ``symfony:2.2`` if you want
+    the core team to pull a bugfix based on the 2.2 branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
