@@ -10,16 +10,27 @@ steps in the process of authenticating the user have been taken successfully,
 you can ask the security context if the authenticated user has access to a
 certain action or resource of the application::
 
-    use Symfony\Component\Security\SecurityContext;
+    use Symfony\Component\Security\Core\SecurityContext;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    
+    // instance of Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface
+    $authenticationManager = ...;
 
-    $securityContext = new SecurityContext();
+    // instance of Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
+    $accessDecisionManager = ...;
+
+    $securityContext = new SecurityContext($authenticationManager, $accessDecisionManager);
 
     // ... authenticate the user
 
     if (!$securityContext->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+
+.. note::
+
+    Read the dedicated sections to learn more about :doc:`/components/security/authentication`
+    and :doc:`/components/security/authorization`.
 
 .. _firewall:
 

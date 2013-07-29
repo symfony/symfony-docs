@@ -128,7 +128,7 @@ For general information on adding listeners to the events below, see
 
 **Typical Purposes**: To add more information to the ``Request``, initialize
 parts of the system, or return a ``Response`` if possible (e.g. a security
-layer that denies access)
+layer that denies access).
 
 :ref:`Kernel Events Information Table<component-http-kernel-event-table>`
 

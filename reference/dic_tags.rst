@@ -969,7 +969,7 @@ translation.extractor
 
 When executing the ``translation:update`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony2 framework
-has a :class:`Symfony\\Bridge\\TwigBridge\\Translation\\TwigExtractor` and a
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
 :class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`, which
 help to find and extract translation keys from Twig templates and PHP files.
 

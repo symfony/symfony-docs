@@ -60,16 +60,22 @@ the following:
     .. code-block:: xml
 
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
-        <class name="Acme\EventBundle\Entity\Participant">
-            <property name="height">
-                <constraint name="Range">
-                    <option name="min">120</option>
-                    <option name="max">180</option>
-                    <option name="minMessage">You must be at least 120cm tall to enter</option>
-                    <option name="maxMessage">You cannot be taller than 180cm to enter</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Participant">
+                <property name="height">
+                    <constraint name="Range">
+                        <option name="min">120</option>
+                        <option name="max">180</option>
+                        <option name="minMessage">You must be at least 120cm tall to enter</option>
+                        <option name="maxMessage">You cannot be taller than 180cm to enter</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

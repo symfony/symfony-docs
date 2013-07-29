@@ -109,29 +109,35 @@ an ``Address`` instance in the ``$address`` property.
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Entity\Address">
-            <property name="street">
-                <constraint name="NotBlank" />
-            </property>
-            <property name="zipCode">
-                <constraint name="NotBlank" />
-                <constraint name="Length">
-                    <option name="max">5</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-        <class name="Acme\HelloBundle\Entity\Author">
-            <property name="firstName">
-                <constraint name="NotBlank" />
-                <constraint name="Length">
-                    <option name="min">4</option>
-                </constraint>
-            </property>
-            <property name="lastName">
-                <constraint name="NotBlank" />
-            </property>
-        </class>
+            <class name="Acme\HelloBundle\Entity\Address">
+                <property name="street">
+                    <constraint name="NotBlank" />
+                </property>
+                <property name="zipCode">
+                    <constraint name="NotBlank" />
+                    <constraint name="Length">
+                        <option name="max">5</option>
+                    </constraint>
+                </property>
+            </class>
+
+            <class name="Acme\HelloBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="NotBlank" />
+                    <constraint name="Length">
+                        <option name="min">4</option>
+                    </constraint>
+                </property>
+                <property name="lastName">
+                    <constraint name="NotBlank" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -208,11 +214,17 @@ property.
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Entity\Author">
-            <property name="address">
-                <constraint name="Valid" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\HelloBundle\Entity\Author">
+                <property name="address">
+                    <constraint name="Valid" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

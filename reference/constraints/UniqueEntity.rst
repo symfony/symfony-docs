@@ -70,15 +70,22 @@ table:
 
     .. code-block:: xml
 
-        <class name="Acme\UserBundle\Entity\Author">
-            <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
-                <option name="fields">email</option>
-                <option name="message">This email already exists.</option>
-            </constraint>
-            <property name="email">
-                <constraint name="Email" />
-            </property>
-        </class>
+        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Entity\Author">
+                <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                    <option name="fields">email</option>
+                    <option name="message">This email already exists.</option>
+                </constraint>
+                <property name="email">
+                    <constraint name="Email" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
