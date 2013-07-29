@@ -244,7 +244,7 @@ a field for issue numbers
 2) You need to worry about passing in the ``em`` option whenever you're creating
 a form that uses the transformer.
 
-Because of these, you may choose to create a :doc:`create a custom field type</cookbook/form/create_custom_field_type>`.
+Because of these, you may choose to :doc:`create a custom field type</cookbook/form/create_custom_field_type>`.
 First, create the custom field type class::
 
     // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
