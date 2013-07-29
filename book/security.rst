@@ -25,8 +25,8 @@ application with HTTP Basic authentication.
 
 .. note::
 
-    `Symfony's security component`_ is available as a standalone PHP library
-    for use inside any PHP project.
+    :doc:`Symfony's security component </components/security/introduction>` is
+    available as a standalone PHP library for use inside any PHP project.
 
 Basic Example: HTTP Authentication
 ----------------------------------
@@ -686,14 +686,11 @@ see :doc:`/cookbook/security/form_login`.
 Authorization
 -------------
 
-The first step in security is always authentication: the process of verifying
-who the user is. With Symfony, authentication can be done in any way - via
-a form login, basic HTTP Authentication, or even via Facebook.
-
-Once the user has been authenticated, authorization begins. Authorization
-provides a standard and powerful way to decide if a user can access any resource
-(a URL, a model object, a method call, ...). This works by assigning specific
-roles to each user, and then requiring different roles for different resources.
+The first step in security is always authentication. Once the user has been
+authenticated, authorization begins. Authorization provides a standard and
+powerful way to decide if a user can access any resource (a URL, a model
+object, a method call, ...). This works by assigning specific roles to each
+user, and then requiring different roles for different resources.
 
 The process of authorization has two different sides:
 
@@ -711,12 +708,6 @@ The most basic way to secure part of your application is to secure an entire
 URL pattern. You've seen this already in the first example of this chapter,
 where anything matching the regular expression pattern ``^/admin`` requires
 the ``ROLE_ADMIN`` role.
-
-.. caution::
-
-    Understanding exactly how ``access_control`` works is **very** important
-    to make sure your application is properly secured. See :ref:`security-book-access-control-explanation`
-    below for detailed information.
 
 You can define as many URL patterns as you need - each is a regular expression.
 
@@ -769,12 +760,15 @@ to find *one* that matches the current request. As soon as it finds a matching
 is used to enforce access.
 
 Each ``access_control`` has several options that configure two different
-things: (a) :ref:`should the incoming request match this access control entry<security-book-access-control-matching-options>`
-and (b) :ref:`once it matches, should some sort of access restriction be enforced<security-book-access-control-enforcement-options>`:
+things:
+
+* (a) :ref:`should the incoming request match this access control entry<security-book-access-control-matching-options>`
+* (b) :ref:`once it matches, should some sort of access restriction be enforced<security-book-access-control-enforcement-options>`:
 
 .. _security-book-access-control-matching-options:
 
-**(a) Matching Options**
+(a) Matching Options
+....................
 
 Symfony2 creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
 for each ``access_control`` entry, which determines whether or not a given
@@ -869,7 +863,8 @@ will match any ``ip``, ``host`` or ``method``:
 
 .. _security-book-access-control-enforcement-options:
 
-**(b) Access Enforcement**
+(b) Access Enforcement
+......................
 
 Once Symfony2 has decided which ``access_control`` entry matches (if any),
 it then *enforces* access restrictions based on the ``roles`` and ``requires_channel``
@@ -1229,7 +1224,9 @@ class:
         security:
             providers:
                 main:
-                    entity: { class: Acme\UserBundle\Entity\User, property: username }
+                    entity:
+                        class: Acme\UserBundle\Entity\User
+                        property: username
 
     .. code-block:: xml
 
@@ -1773,11 +1770,6 @@ Note that you will *not* need to implement a controller for the ``/logout``
 URL as the firewall takes care of everything. You *do*, however, need to create
 a route so that you can use it to generate the URL:
 
-.. caution::
-
-    As of Symfony 2.1, you *must* have a route that corresponds to your logout
-    path. Without this route, logging out will not work.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -1810,6 +1802,11 @@ a route so that you can use it to generate the URL:
         $collection->add('logout', new Route('/logout', array()));
 
         return $collection;
+
+.. caution::
+
+    As of Symfony 2.1, you *must* have a route that corresponds to your logout
+    path. Without this route, logging out will not work.
 
 Once the user has been logged out, he will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
@@ -1930,7 +1927,7 @@ to show a link to exit impersonation:
     .. code-block:: html+jinja
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-            <a href="{{ path('homepage', {_switch_user: '_exit'}) }}">Exit impersonation</a>
+            <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
         {% endif %}
 
     .. code-block:: html+php
@@ -2114,7 +2111,6 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
-.. _`Symfony's security component`: https://github.com/symfony/Security
 .. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
