@@ -572,7 +572,7 @@ The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
 doesn't match the first name of the user (for security reasons). You can
 do this by creating an ``isPasswordLegal`` method, and then asserting that
-this method must return ``true``:
+this method must return ``false``:
 
 .. configuration-block::
 
@@ -582,7 +582,7 @@ this method must return ``true``:
         Acme\BlogBundle\Entity\Author:
             getters:
                 passwordLegal:
-                    - "True": { message: "The password cannot match your first name" }
+                    - "False": { message: "The password cannot match your first name" }
 
     .. code-block:: php-annotations
 
@@ -594,7 +594,7 @@ this method must return ``true``:
         class Author
         {
             /**
-             * @Assert\True(message = "The password cannot match your first name")
+             * @Assert\False(message = "The password cannot match your first name")
              */
             public function isPasswordLegal()
             {
@@ -607,7 +607,7 @@ this method must return ``true``:
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
             <getter property="passwordLegal">
-                <constraint name="True">
+                <constraint name="False">
                     <option name="message">The password cannot match your first name</option>
                 </constraint>
             </getter>
@@ -619,13 +619,13 @@ this method must return ``true``:
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\True;
+        use Symfony\Component\Validator\Constraints\False;
 
         class Author
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('passwordLegal', new True(array(
+                $metadata->addGetterConstraint('passwordLegal', new False(array(
                     'message' => 'The password cannot match your first name',
                 )));
             }
