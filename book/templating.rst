@@ -1398,7 +1398,7 @@ Debugging
 
 When using PHP, you can use ``var_dump()`` if you need to quickly find the
 value of a variable passed. This is useful, for example, inside your controller.
-The same can be achieved when using Twig thanks to the the debug extension.
+The same can be achieved when using Twig thanks to the debug extension.
 
 Template parameters can then be dumped using the ``dump`` function:
 

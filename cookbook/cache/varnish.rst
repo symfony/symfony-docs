@@ -176,5 +176,36 @@ that will invalidate the cache for a given resource:
             }
         }
 
+Routing and X-FORWARDED Headers
+-------------------------------
+
+To ensure that the Symfony Router generates urls correctly with Varnish,
+proper ```X-Forwarded``` headers must be added so that Symfony is aware of
+the original port number of the request. Exactly how this is done depends
+on your setup. As a simple example, Varnish and your web server are on the
+same machine and that Varnish is listening on one port (e.g. 80) and Apache
+on another (e.g. 8080). In this situation, Varnish should add the ``X-Forwarded-Port``
+header so that the Symfony application knows that the original port number
+is 80 and not 8080.
+
+If this header weren't set properly, Symfony may append ``8080`` when generating
+absolute URLs:
+
+.. code-block:: text
+
+    sub vcl_recv {
+        if (req.http.X-Forwarded-Proto == "https" ) {
+            set req.http.X-Forwarded-Port = "443";
+        } else {
+            set req.http.X-Forwarded-Port = "80"
+        }
+    }
+
+.. note::
+
+    Remember to configure :ref:`framework.trusted_proxies<reference-framework-trusted-proxies>`
+    in the Symfony configuration so that Varnish is seen as a trusted proxy
+    and the ``X-Forwarded-`` headers are used.
+
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
