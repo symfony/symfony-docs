@@ -1803,11 +1803,6 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
-.. caution::
-
-    As of Symfony 2.1, you *must* have a route that corresponds to your logout
-    path. Without this route, logging out will not work.
-
 Once the user has been logged out, he will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
