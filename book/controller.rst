@@ -156,9 +156,16 @@ to the controller:
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" path="/hello/{name}">
-            <default key="_controller">AcmeHelloBundle:Hello:index</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{name}">
+                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -235,10 +242,17 @@ example:
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" path="/hello/{first_name}/{last_name}">
-            <default key="_controller">AcmeHelloBundle:Hello:index</default>
-            <default key="color">green</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{first_name}/{last_name}">
+                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+                <default key="color">green</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 

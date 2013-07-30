@@ -90,7 +90,7 @@ of your ``AcmeStoreBundle``:
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <database name="default"
         namespace="Acme\StoreBundle\Model"
         defaultIdMethod="native"
@@ -304,6 +304,7 @@ Start by adding the ``category`` definition in your ``schema.xml``:
 
 .. code-block:: xml
 
+    <?xml version="1.0" encoding="UTF-8" ?>
     <database name="default"
         namespace="Acme\StoreBundle\Model"
         defaultIdMethod="native">

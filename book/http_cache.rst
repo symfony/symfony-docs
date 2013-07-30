@@ -845,10 +845,19 @@ First, to use ESI, be sure to enable it in your application configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
-            <!-- ... -->
-            <framework:esi enabled="true" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config ...>
+                <!-- ... -->
+                <framework:esi enabled="true" />
+            </framework:config>
+
+        </container>
 
     .. code-block:: php
 
@@ -957,9 +966,17 @@ listener that must be enabled in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:fragments path="/_fragment" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:fragments path="/_fragment" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 

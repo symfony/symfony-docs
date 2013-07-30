@@ -722,9 +722,17 @@ tags:
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <framework:config>
-                <framework:fragments path="/_fragment" />
-            </framework:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                    http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:fragments path="/_fragment" />
+                </framework:config>
+            </container>
 
         .. code-block:: php
 
@@ -750,10 +758,18 @@ in your application configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:templating
-                hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating
+                    hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -837,9 +853,16 @@ configuration:
 
     .. code-block:: xml
 
-        <route id="_welcome" path="/">
-            <default key="_controller">AcmeDemoBundle:Welcome:index</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="_welcome" path="/">
+                <default key="_controller">AcmeDemoBundle:Welcome:index</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -875,9 +898,16 @@ route:
 
     .. code-block:: xml
 
-        <route id="article_show" path="/article/{slug}">
-            <default key="_controller">AcmeArticleBundle:Article:show</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="article_show" path="/article/{slug}">
+                <default key="_controller">AcmeArticleBundle:Article:show</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -1134,9 +1164,19 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating>
-            <framework:engine id="twig" />
-        </framework:templating>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating>
+                    <framework:engine id="twig" />
+                </framework:templating>
+            </framework:config>
+        </container>
 
     .. code-block:: php
 

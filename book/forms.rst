@@ -319,7 +319,11 @@ object.
 
         <!-- Acme/TaskBundle/Resources/config/validation.xml -->
         <?xml version="1.0" charset="UTF-8"?>
-        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
             <class name="Acme\TaskBundle\Entity\Task">
                 <property name="task">
                     <constraint name="NotBlank" />
@@ -912,10 +916,16 @@ easy to use in your application.
     .. code-block:: xml
 
         <!-- src/Acme/TaskBundle/Resources/config/services.xml -->
-        <service id="acme_demo.form.type.task"
-            class="Acme\TaskBundle\Form\Type\TaskType">
-            <tag name="form.type" alias="task" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd>
+
+            <service id="acme_demo.form.type.task"
+                class="Acme\TaskBundle\Form\Type\TaskType">
+                <tag name="form.type" alias="task" />
+            </service>
+        </container>
 
     .. code-block:: php
 
@@ -1375,12 +1385,20 @@ file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
-                <twig:form>
-                    <resource>AcmeTaskBundle:Form:fields.html.twig</resource>
-                </twig:form>
-                <!-- ... -->
-        </twig:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                    <twig:form>
+                        <twig:resource>AcmeTaskBundle:Form:fields.html.twig</twig:resource>
+                    </twig:form>
+                    <!-- ... -->
+            </twig:config>
+        </container>
 
     .. code-block:: php
 
@@ -1453,14 +1471,22 @@ file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
-            <framework:templating>
-                <framework:form>
-                    <resource>AcmeTaskBundle:Form</resource>
-                </framework:form>
-            </framework:templating>
-            <!-- ... -->
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config ...>
+                <framework:templating>
+                    <framework:form>
+                        <framework:resource>AcmeTaskBundle:Form</framework:resource>
+                    </framework:form>
+                </framework:templating>
+                <!-- ... -->
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
