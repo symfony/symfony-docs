@@ -41,7 +41,50 @@ Now, the variable ``ga_tracking`` is available in all Twig templates:
 
     <p>The google tracking code is: {{ ga_tracking }}</p>
 
-It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
+It's that easy!
+
+Referencing Services
+--------------------
+
+Instead of using static values, you can also set the value to a service.
+Whenever the global variabele is accessed in the template, the service will be
+requested from the service container and you get access to that object.
+
+This is done by prefixing the string with ``@``, which you already know from
+injecting a service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        twig:
+            # ...
+            globals:
+                user_management: "@acme_user.user_management"
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <twig:config ...>
+            <!-- ... -->
+            <twig:global key="user_management">@acme_user.user_management</twig:global>
+        </twig:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('twig', array(
+             // ...
+             'globals' => array(
+                 'user_management' => '@acme_user.user_management',
+             ),
+        ));
+
+Using Service Container Parameters
+----------------------------------
+
+You can also take advantage of the built-in :ref:`book-service-container-parameters`
 system, which lets you isolate or reuse the value:
 
 .. code-block:: yaml
@@ -77,8 +120,8 @@ system, which lets you isolate or reuse the value:
 
 The same variable is available exactly as before.
 
-More Complex Global Variables
------------------------------
+Using a Twig Extension
+----------------------
 
 If the global variable you want to set is more complicated - say an object -
 then you won't be able to use the above method. Instead, you'll need to create
