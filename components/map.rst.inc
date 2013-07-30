@@ -44,6 +44,7 @@
 
   * :doc:`/components/event_dispatcher/introduction`
   * :doc:`/components/event_dispatcher/container_aware_dispatcher`
+  * :doc:`/components/event_dispatcher/immutable_dispatcher`
   * :doc:`/components/event_dispatcher/generic_event`
 
 * **Filesystem**

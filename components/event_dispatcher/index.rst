@@ -7,3 +7,4 @@ Event Dispatcher
     introduction
     generic_event
     container_aware_dispatcher
+    immutable_dispatcher
