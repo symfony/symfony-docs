@@ -1,5 +1,5 @@
 NotIdenticalTo
-===========
+==============
 
 .. versionadded:: 2.3
     This constraint is new in version 2.3.
