@@ -38,35 +38,31 @@ Field Options
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_HALFUP``
+**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALFUP``
 
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
-option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
+option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
     
-*   ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
-    round towards zero.
+* ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
-    round towards negative infinity.
+* ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
+  infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round 
-    away from zero.
+* ``NumberToLocalizedStringTransformer::ROUND_UP`` Round away from zero.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
-    to round towards positive infinity.
+* ``NumberToLocalizedStringTransformer::ROUND_CEILING`` Round towards
+  positive infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_HALFDOWN`` Rounding mode
-    to round towards "nearest neighbor" unless both neighbors are equidistant,
-    in which case round down.
+* ``NumberToLocalizedStringTransformer::ROUND_HALF_DOWN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round down.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_HALFEVEN`` Rounding mode
-    to round towards the "nearest neighbor" unless both neighbors are equidistant,
-    in which case, round towards the even neighbor.
+* ``NumberToLocalizedStringTransformer::ROUND_HALF_EVEN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round towards the
+  even neighbor.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_HALFUP`` Rounding mode to
-    round towards "nearest neighbor" unless both neighbors are equidistant,
-    in which case round up.
+* ``NumberToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round up.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
