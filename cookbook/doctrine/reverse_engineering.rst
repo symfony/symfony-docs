@@ -56,11 +56,11 @@ folder.
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding
 metadata files. Metadata files describe the entity class to generate based on
-tables fields.
+table fields.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mapping:convert xml ./src/Acme/BlogBundle/Resources/config/doctrine --from-database --force
+    $ php app/console doctrine:mapping:import --force AcmeBlogBundle xml
 
 This command line tool asks Doctrine to introspect the database and generate
 the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine``
@@ -69,8 +69,8 @@ folder of your bundle. This generates two files: ``BlogPost.orm.xml`` and
 
 .. tip::
 
-    It's also possible to generate metadata class in YAML format by changing the
-    first argument to ``yml``.
+    It's also possible to generate the metadata files in YAML format by changing
+    the last argument to ``yml``.
 
 The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 
@@ -78,7 +78,7 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 
     <?xml version="1.0" encoding="utf-8"?>
     <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-      <entity name="BlogPost" table="blog_post">
+      <entity name="Acme\BlogBundle\Entity\BlogPost" table="blog_post">
         <id name="id" type="bigint" column="id">
           <generator strategy="IDENTITY"/>
         </id>
@@ -88,13 +88,6 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
       </entity>
     </doctrine-mapping>
 
-Update the namespace in the ``name`` attribute of the ``entity`` element like
-this:
-
-.. code-block:: xml
-
-    <entity name="Acme\BlogBundle\Entity\BlogPost" table="blog_post">
-
 Once the metadata files are generated, you can ask Doctrine to build related
 entity classes by executing the following two commands.
 
@@ -103,14 +96,14 @@ entity classes by executing the following two commands.
     $ php app/console doctrine:mapping:convert annotation ./src
     $ php app/console doctrine:generate:entities AcmeBlogBundle
 
-The first command generates entity classes with an annotations mapping. But
+The first command generates entity classes with annotation mappings. But
 if you want to use yml or xml mapping instead of annotations, you should
 execute the second command only.
 
 .. tip::
 
-    If you want to use annotations, you can safely delete the XML files after
-    running these two commands.
+    If you want to use annotations, you can safely delete the XML (or YAML) files
+    after running these two commands.
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 
