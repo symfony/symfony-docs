@@ -214,7 +214,7 @@ Process Idle Timeout
 --------------------
 
 .. versionadded:: 2.4
-   The ``setIdleTimeout`` method was added in Symfony 2.4.
+   The :method:`Symfony\\Component\\Process\\Process::setIdleTimeout` method was added in Symfony 2.4.
    
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
