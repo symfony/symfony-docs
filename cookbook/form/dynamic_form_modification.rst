@@ -279,8 +279,6 @@ and fill in the listener logic::
 
                     $formOptions = array(
                         'class' => 'Acme\DemoBundle\Entity\User',
-                        'multiple' => false,
-                        'expanded' => false,
                         'property' => 'fullName',
                         'query_builder' => function(EntityRepository $er) use ($user) {
                             // build a custom query, or call a method on your repository (even better!)
@@ -296,6 +294,10 @@ and fill in the listener logic::
 
         // ...
     }
+
+.. note::
+
+    The ``multiple`` and ``expanded`` form options will default to false because the entity type is ``entity``.
 
 Using the Form
 ~~~~~~~~~~~~~~
