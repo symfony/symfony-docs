@@ -154,7 +154,7 @@ Tags
 |                                                   | current template                                                   |
 +---------------------------------------------------+--------------------------------------------------------------------+
 | ``{% stopwatch name %}...{% endstopwatch %}``     | This will time the run time of the code inside it and put that on  |
-|                                                   | the timeline of the profiler.                                      |
+|                                                   | the timeline of the WebDeveloperBundle.                            |
 +---------------------------------------------------+--------------------------------------------------------------------+
 
 Tests
