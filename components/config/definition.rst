@@ -490,7 +490,7 @@ By changing a string value into an associative array with ``name`` as the key::
         ->children()
             ->arrayNode('connection')
                 ->beforeNormalization()
-                ->ifString()
+                    ->ifString()
                     ->then(function($v) { return array('name'=> $v); })
                 ->end()
                 ->children()
