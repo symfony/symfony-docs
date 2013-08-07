@@ -333,7 +333,7 @@ taste.
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
-    See the `translation.loader tag`_ for more information.
+    See the :ref:`dic-tags-translation-loader` tag for more information.
 
 .. index::
    single: Translations; Creating translation resources
@@ -1014,4 +1014,3 @@ steps:
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-.. _`translation.loader tag`: http://symfony.com/doc/current/reference/dic_tags.html#translation-loader
