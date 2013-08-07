@@ -332,7 +332,7 @@ taste.
 
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
-    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface. 
+    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See the `translation loader tag`_ for more information.
 
 .. index::
