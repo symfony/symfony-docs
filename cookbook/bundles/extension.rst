@@ -62,7 +62,7 @@ When you create a bundle, you have two choices on how to handle configuration:
 The second option - which you'll learn about in this article - is much more
 flexible, but also requires more time to setup. If you're wondering which
 method you should use, it's probably a good idea to start with method #1,
-and then change to #2 later if you need to.
+and then change to #2 later if you need to.  If you plan to distribute your bundle, the second option is recommended.
 
 The second method has several specific advantages:
 
