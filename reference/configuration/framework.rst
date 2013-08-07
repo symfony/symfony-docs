@@ -240,7 +240,7 @@ gc_maxlifetime
 .. versionadded:: 2.1
     The ``gc_maxlifetime`` option is new in version 2.1
 
-**type**: ``integer`` **default**: ``14400``
+**type**: ``integer`` **default**: ``1440``
 
 This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session start
