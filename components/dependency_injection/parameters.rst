@@ -264,3 +264,67 @@ key, and define the type as ``constant``.
             # app/config/config.yml
             imports:
                 - { resource: parameters.xml }
+
+PHP keywords in XML
+-------------------
+
+By default, ``true``, ``false`` and ``null`` in XML are converted to the PHP
+keywords (respectively ``true``, ``false`` and ``null``):
+
+.. code-block:: xml
+
+    <parameters>
+        <parameter key="mailer.send_all_in_once">false</parameters>
+    </parameters>
+
+    <!-- after parsing
+    $container->getParameter('mailer.send_all_in_once'); // returns false
+    -->
+
+To disable this behaviour, use the ``string`` type:
+
+.. code-block:: xml
+
+    <parameters>
+        <parameter key="mailer.some_parameter" type="string">true</parameter>
+    </parameters>
+
+    <!-- after parsing
+    $container->getParameter('mailer.some_parameter'); // returns "true"
+    -->
+
+.. note::
+
+    This is not available for Yaml and PHP, because they already have built-in
+    support for the PHP keywords.
+
+Referencing Services with Parameters
+------------------------------------
+
+A parameter can also reference to a service. While doing so, it specifies an
+invalid behaviour.
+
+Yaml
+~~~~
+
+Start the string with  ``@``, ``@@`` or ``@?`` to reference a service in Yaml.
+
+* ``@mailer`` references to the ``mailer`` service. If the service does not
+  exists, an exception will be thrown;
+* ``@?mailer`` references to the ``mailer`` service. If the service does not
+  exists, it will be ignored;
+
+Xml
+~~~
+
+In XML, use the ``service`` type. The behaviour if the service does not exists
+can be specified using the ``on-invalid`` argument (it can be set to ``null``
+to return ``null`` or ``ignored`` to let the container ignore the error, if
+not specified it throws an exception).
+
+Php
+~~~
+
+In PHP, you can use the
+:class:`Symfony\\Component\\DependencyInjection\\Reference` class to reference
+a service.
