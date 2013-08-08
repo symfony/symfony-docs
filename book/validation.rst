@@ -130,9 +130,9 @@ simple example from inside a controller::
 
         if (count($errors) > 0) {
             return new Response(print_r($errors, true));
-        } else {
-            return new Response('The author is valid! Yes!');
         }
+
+        return new Response('The author is valid! Yes!');
     }
 
 If the ``$name`` property is empty, you will see the following error
@@ -161,9 +161,7 @@ You could also pass the collection of errors into a template.
         return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
             'errors' => $errors,
         ));
-    } else {
-        // ...
-    }
+    } 
 
 Inside the template, you can output the list of errors exactly as needed:
 
@@ -655,7 +653,7 @@ Now, create the ``isPasswordLegal()`` method, and include the logic you need::
 
     public function isPasswordLegal()
     {
-        return ($this->firstName != $this->password);
+        return $this->firstName != $this->password;
     }
 
 .. note::
