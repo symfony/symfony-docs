@@ -437,7 +437,7 @@ When you're building this form to display to the user for the first time,
 then this example works perfectly.
 
 However, things get more difficult when you handle the form submission. This
-is be cause the ``PRE_SET_DATA`` event tells us the data that you're starting
+is because the ``PRE_SET_DATA`` event tells us the data that you're starting
 with (e.g. an empty ``SportMeetup`` object), *not* the submitted data.
 
 On a form, we can usually listen to the following events:
