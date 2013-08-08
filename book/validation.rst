@@ -1036,7 +1036,7 @@ then your code might look like this::
     namespace Acme\DemoBundle\Entity;
 
     // ...
-    use Symfony\Component\Validation\GroupSequenceProviderInterface;
+    use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
     /**
      * @Assert\GroupSequenceProvider
