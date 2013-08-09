@@ -75,10 +75,10 @@ If you have PHP 5.4, you can use the built-in web server:
 .. code-block:: bash
 
     # check your PHP CLI configuration
-    $ php php app/check.php
+    $ php app/check.php
 
     # run the built-in web server
-    $ php php app/console server:run
+    $ php app/console server:run
 
 Then the URL to your application will be "http://localhost:8000/app_dev.php"
 
