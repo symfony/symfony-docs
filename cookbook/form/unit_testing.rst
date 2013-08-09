@@ -77,7 +77,7 @@ be the first test you write::
     $form = $this->factory->create($type);
 
 This test checks that none of your data transformers used by the form
-failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized``
+failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
 method is only set to ``false`` if a data transformer throws an exception::
 
     $form->bind($formData);
