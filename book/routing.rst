@@ -1201,7 +1201,7 @@ By default, the router will generate relative URLs (e.g. ``/blog``). To generate
 an absolute URL, simply pass ``true`` to the third argument of the ``generate()``
 method::
 
-    $this-get('router')->generate('blog_show', array('slug' => 'my-blog-post'), true);
+    $this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
 
 .. note::
@@ -1212,7 +1212,7 @@ method::
     scripts run from the command line, you'll need to manually set the desired
     host on the ``RequestContext`` object::
 
-        $this-get('router')->getContext()->setHost('www.example.com');
+        $this->get('router')->getContext()->setHost('www.example.com');
 
 .. index::
    single: Routing; Generating URLs in a template
