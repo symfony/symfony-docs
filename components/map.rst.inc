@@ -102,9 +102,9 @@
   * :doc:`/components/security/authentication`
   * :doc:`/components/security/authorization`
 
-* **Templating**
+* :doc:`/components/templating/index`
 
-  * :doc:`/components/templating`
+  * :doc:`/components/templating/introduction`
 
 * :doc:`/components/yaml/index`
 
