@@ -1,22 +1,23 @@
 .. index::
     single: Profiling; Matchers
 
-How to use Matchers to enable the Profiler
-==========================================
+How to use Matchers to enable the Profiler Conditionally
+========================================================
 
 By default, the profiler is only activated in the development environment. But
-it's imaginable that a developer always wants to see the profiler, even in
-production. Another situation may be to show the profiler when an admin has
-logged in. You can enable the profiler in these situations by using matchers.
+it's imaginable that a developer may want to see the profiler even in
+production. Another situation may be that you want to show the profiler only
+when an admin has logged in. You can enable the profiler in these situations
+by using matchers.
 
-Using the build-in Matcher
+Using the built-in Matcher
 --------------------------
 
 Symfony2 provides a
-:class:`build-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
-which can match paths and IPs. For instance, only show the profiler when
-accessing the page with the ``168.0.0.1`` ip. Then, the profiler can be
-configured to something like this:
+:class:`built-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
+which can match paths and IPs. For example, if you want to only show the
+profiler when accessing the page with the ``168.0.0.1`` ip, then you can
+use this configuration:
 
 .. configuration-block::
 
@@ -48,7 +49,7 @@ configured to something like this:
         ));
 
 You can also set a ``path`` option to define the path on which the profiler
-should be enabled. For instance, setting it to `^/admin/` will enable the
+should be enabled. For instance, setting it to ``^/admin/`` will enable the
 profiler only for the ``/admin/`` urls.
 
 Creating a Custom Matcher
@@ -60,8 +61,8 @@ which implements
 :class:`Symfony\\Component\\HttpFoundation\\RequestMatcherInterface`. This
 interface requires one method:
 :method:`Symfony\\Component\\HttpFoundation\\RequestMatcherInterface::matches`.
-This method returns a falsey value to disable the profiler, any other value
-enables the profiler.
+This method returns false to disable the profiler and true to enable the
+profiler.
 
 To enable the profiler when a ``ROLE_SUPER_ADMIN`` is logged in, you can use
 something like::
