@@ -9,9 +9,9 @@ Additionally it has options so you can validate against the width and height
 of the image.
 
 .. versionadded:: 2.4
-    As of Symfony 2.4 you can also validate against the image aspect ratio ( defined
-    as ``width / height``) and selectively allow square, landscape and portrait
-    image orientations.
+    As of Symfony 2.4 you can also validate against the image aspect ratio
+    (defined as ``width / height``) and selectively allow square, landscape
+    and portrait image orientations.
 
 See the :doc:`File</reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
@@ -284,39 +284,41 @@ value in pixels.
 maxRatio
 ~~~~~~~~
 
-**type**: ``integer``
+**type**: ``float``
 
-If set, the aspect ratio (``width / height``) of the image file must be less than or equal to this
-value.
+If set, the aspect ratio (``width / height``) of the image file must be less
+than or equal to this value.
 
 minRatio
 ~~~~~~~~
 
-**type**: ``integer``
+**type**: ``float``
 
-If set, the aspect ratio (``width / height``) of the image file must be greater than or equal to this
-value.
+If set, the aspect ratio (``width / height``) of the image file must be greater
+than or equal to this value.
 
 allowSquare
 ~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
-If this option is false, the image must not be square.
+If this option is false, the image cannot be a square. If you want to force
+a square image, then set leave this option as its default ``true`` value
+and set `allowLandscape`_ and `allowPortrait`_ both to ``false``.
 
 allowLandscape
 ~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
-If this option is false, the image must not be landscape oriented.
+If this option is false, the image cannot be landscape oriented.
 
 allowPortrait
 ~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
-If this option is false, the image must not be portrait oriented.
+If this option is false, the image cannot be portrait oriented.
 
 sizeNotDetectedMessage
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -324,7 +326,7 @@ sizeNotDetectedMessage
 **type**: ``string`` **default**: ``The size of the image could not be detected``
 
 If the system is unable to determine the size of the image, this error will
-be displayed. This will only occur when at least one of the four size constraint
+be displayed. This will only occur when at least one of the size constraint
 options has been set.
 
 maxWidthMessage
@@ -397,6 +399,6 @@ allowPortraitMessage
 **type**: ``string`` **default**: ``The image is portrait oriented ({{ width }}x{{ height }}px).
 Portrait oriented images are not allowed``
 
-The error message if the image is portrait oriented and you set `allowPoirtrait`_ to ``false``.
+The error message if the image is portrait oriented and you set `allowPortrait`_ to ``false``.
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
