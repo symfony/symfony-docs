@@ -24,7 +24,7 @@ The Components
     security/index
     serializer
     stopwatch
-    templating
+    templating/index
     yaml/index
 
 .. include:: /components/map.rst.inc
