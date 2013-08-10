@@ -26,11 +26,11 @@ Usage
 
 The :class:`Symfony\\Component\\Templating\\PhpEngine` class is the entry point
 of the component. It needs a
-:class:`template name parser <Symfony\\Component\\Templating\\TemplateNameParserInterface>`
+template name parser (:class:`Symfony\\Component\\Templating\\TemplateNameParserInterface`)
 to convert a template name to a
-:class:`template reference <Symfony\\Component\\Templating\\TemplateReferenceInterface>`
-and :class:`template loader <Symfony\\Component\\Templating\\Loader\\LoaderInterface>`
-to find the template associated to a reference::
+template reference (:class:`Symfony\\Component\\Templating\\TemplateReferenceInterface`).
+It also needs a template loader (:class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`)
+which uses the template reference to actually find and load the template::
 
     use Symfony\Component\Templating\PhpEngine;
     use Symfony\Component\Templating\TemplateNameParser;
@@ -57,16 +57,16 @@ The ``$view`` variable
 
 In all templates parsed by the ``PhpEngine``, you get access to a mysterious
 variable called ``$view``. That variable holds the current ``PhpEngine``
-instance. That means you get access to a bunch of methods that makes your life
+instance. That means you get access to a bunch of methods that make your life
 easier.
 
 Including Templates
 -------------------
 
-The best way to share a snippet of template code is to define a template that
-can then be included into other templates. As the ``$view`` variable is an
+The best way to share a snippet of template code is to create a template that
+can then be included by other templates. As the ``$view`` variable is an
 instance of ``PhpEngine``, you can use the ``render`` method (which was used
-to render the template) inside the template to render another template::
+to render the template originally) inside the template to render another template::
 
     <?php $names = array('Fabien', ...) ?>
     <?php foreach ($names as $name) : ?>
@@ -76,18 +76,20 @@ to render the template) inside the template to render another template::
 Output Escaping
 ---------------
 
-When you display variables to the user, you should escape them using the
+When you render variables, you should probably escape them so that HTML or
+JavaScript code isn't written out to your page. This will prevent things like
+XSS attacks. To do this, use the
 :method:`Symfony\\Component\\Templating\\PhpEngine::escape` method::
 
     <?php echo $view->escape($firstname) ?>
 
 By default, the ``escape()`` method assumes that the variable is outputted
 within an HTML context. The second argument lets you change the context. For
-instance, to output something in a JavaScript script, use the ``js`` context::
+example, to output something inside JavaScript, use the ``js`` context::
 
     <?php echo $view->escape($var, 'js') ?>
 
-The components comes with a HTML and JS escaper. You can register your own
+The component comes with an HTML and JS escaper. You can register your own
 escaper using the
 :method:`Symfony\\Component\\Templating\\PhpEngine::setEscaper` method::
 
@@ -101,10 +103,10 @@ Helpers
 -------
 
 The Templating component can be easily extended via helpers. The component has
-2 build-in helpers:
+2 built-in helpers:
 
-* :doc:`/components/helpers/assetshelper`
-* :doc:`/components/helpers/slotshelper`
+* :doc:`/components/templating/helpers/assetshelper`
+* :doc:`/components/templating/helpers/slotshelper`
 
 Before you can use these helpers, you need to register them using
 :method:`Symfony\\Component\\Templating\\PhpEngine::set`::

@@ -5,7 +5,7 @@ Assets Helper
 =============
 
 The assets helper's main purpose is to make your application more portable by
-generating assets' paths:
+generating asset paths:
 
 .. code-block:: html+php
 
@@ -13,11 +13,14 @@ generating assets' paths:
 
    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>">
 
+The assets helper can then be configured to render paths to a CDN or modify
+the paths in case your assets live in a sub-directory if your host (e.g. ``http://example.com/app``).
+
 Configure Paths
 ---------------
 
 By default, the assets helper will prefix all paths with a slash. You can
-extend this by configuring a basepath in the first argument of the
+configure this by passing a base assets path as the first argument of the
 constructor::
 
     use Symfony\Component\Templating\Helper\AssetsHelper;
@@ -25,7 +28,7 @@ constructor::
     // ...
     $templateEngine->set(new AssetsHelper('/foo/bar'));
 
-Now, if you use the helper everything will be prefixed with ``/foo/bar``:
+Now, if you use the helper, everything will be prefixed with ``/foo/bar``:
 
 .. code-block:: html+php
 
@@ -63,13 +66,13 @@ second is the version. For instance, ``%s?v=%s`` will be rendered as
 Multiple Packages
 -----------------
 
-Paths are internally handled by packages. The component provides 2 packages by
-default:
+Asset path generation is handled internally by packages. The component provides
+2 packages by default:
 
 * :class:`Symfony\\Component\\Templating\\Asset\\PathPackage`
 * :class:`Symfony\\Component\\Templating\\Asset\\UrlPackage`
 
-You can also have multiple packages::
+You can also use multiple packages::
 
     // ...
     $templateEngine->set(new AssetsHelper());

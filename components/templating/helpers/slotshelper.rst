@@ -5,12 +5,14 @@ Slots Helper
 ============
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. The static HTML code can be placed in a layout file
-and the dynamic sections are replaced by slots, which are filled by the child
-template; the layout file decorates the child template.
+well-known header and footer. Using this helper, the static HTML code can
+be placed in a layout file along with "slots", which represent the dynamic
+parts that will change on a page-by-page basis. These slots are then filled
+in by different children template. In other words, the layout file decorates
+the child template.
 
 Displaying Slots
-~~~~~~~~~~~~~~~~
+----------------
 
 The slots are accessible by using the slots helper (``$view['slots']``). Use
 :method:`Symfony\\Component\\Templating\\Helper\\SlotsHelper::output` to
@@ -47,7 +49,7 @@ the content of the subtemplate.
         $templateEngine->set(new SlotsHelper());
 
 Extending Templates
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 The :method:`Symfony\\Component\\Templating\\PhpEngine::extend` method is called in the
 sub-template to set its parent template. Then
@@ -72,7 +74,7 @@ is in the ``_content`` slot.
 
 .. note::
 
-    Multiple levels of inheritance is possible: a layout can extend an other
+    Multiple levels of inheritance is possible: a layout can extend another
     layout.
 
 For large slots, there is also an extended syntax:
