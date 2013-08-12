@@ -207,7 +207,7 @@ Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Beside validating a class property, a constraint can have a class scope by
-providing a target::
+providing a target in its ``Constraint`` class::
 
     public function getTargets()
     {
