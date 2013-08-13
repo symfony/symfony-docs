@@ -536,7 +536,7 @@ in order to put it to use.
                 ->setDefinition($providerId,
                   new DefinitionDecorator('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
-                ->replaceArgument(2, $config['lifetime']);
+                ->replaceArgument(1, $config['lifetime']);
             // ...
         }
 
