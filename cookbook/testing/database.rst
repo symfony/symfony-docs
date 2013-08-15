@@ -111,40 +111,42 @@ to be able to clear the database before every test.
 To do this, you can specify a database configuration which overwrites the default
 configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config_test.yml
-    doctrine:
-        # ...
-        dbal:
-            host: localhost
-            dbname: testdb
-            user: testdb
-            password: testdb
+    .. code-block:: yaml
 
-.. code-block:: xml
+        # app/config/config_test.yml
+        doctrine:
+            # ...
+            dbal:
+                host: localhost
+                dbname: testdb
+                user: testdb
+                password: testdb
 
-    <!-- app/config/config_test.xml -->
-    <doctrine:config>
-        <doctrine:dbal
-            host="localhost"
-            dbname="testdb"
-            user="testdb"
-            password="testdb"
-        >
-    </doctrine:config>
+    .. code-block:: xml
 
-.. code-block:: php
+        <!-- app/config/config_test.xml -->
+        <doctrine:config>
+            <doctrine:dbal
+                host="localhost"
+                dbname="testdb"
+                user="testdb"
+                password="testdb"
+            >
+        </doctrine:config>
 
-    // app/config/config_test.php
-    $configuration->loadFromExtension('doctrine', array(
-        'dbal' => array(
-            'host'     => 'localhost',
-            'dbname'   => 'testdb',
-            'user'     => 'testdb',
-            'password' => 'testdb',
-        ),
-    ));
+    .. code-block:: php
+
+        // app/config/config_test.php
+        $configuration->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'host'     => 'localhost',
+                'dbname'   => 'testdb',
+                'user'     => 'testdb',
+                'password' => 'testdb',
+            ),
+        ));
 
 Make sure that your database runs on localhost and has the defined database and
 user credentials set up.
