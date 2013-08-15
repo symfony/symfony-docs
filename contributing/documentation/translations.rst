@@ -16,6 +16,7 @@ there.
 Finally, find the *master* repository for the language you want to contribute
 for. Here is the list of the official *master* repositories:
 
+* *Czech*:    https://github.com/webuni/symfony-docs-cs
 * *English*:  https://github.com/symfony/symfony-docs
 * *French*:   https://github.com/symfony-fr/symfony-docs-fr
 * *Italian*:  https://github.com/garak/symfony-docs-it
