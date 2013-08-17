@@ -964,9 +964,6 @@ translation.extractor
 
 **Purpose**: To register a custom service that extracts messages from a file
 
-.. versionadded:: 2.1
-   The ability to add message extractors is new in Symfony 2.1.
-
 When executing the ``translation:update`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony2 framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
@@ -1034,9 +1031,6 @@ translation.dumper
 ------------------
 
 **Purpose**: To register a custom service that dumps messages to a file
-
-.. versionadded:: 2.1
-   The ability to add message dumpers is new in Symfony 2.1.
 
 After an `Extractor <translation.extractor>`_ has extracted all messages from
 the templates, the dumpers are executed to dump the messages to a translation

@@ -557,11 +557,6 @@ by defining a ``default_locale`` for the framework:
             'default_locale' => 'en',
         ));
 
-.. versionadded:: 2.1
-     The ``default_locale`` parameter was defined under the session key
-     originally, however, as of 2.1 this has been moved. This is because the
-     locale is now set on the request instead of the session.
-
 .. _book-translation-locale-url:
 
 The Locale and the URL

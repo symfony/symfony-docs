@@ -418,12 +418,8 @@ submission (i.e.  ``/login_check``):
 
     You will *not* need to implement a controller for the ``/login_check``
     URL as the firewall will automatically catch and process any form submitted
-    to this URL.
-
-.. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
-    ``check_path`` ``logout`` keys. These keys can be route names (as shown
-    in this example) or URLs that have routes configured for them.
+    to this URL. However, you *must* have a route (as shown here) for this
+    URL, as well as one for your logout path (see :ref:`book-security-logging-out`).
 
 Notice that the name of the ``login`` route matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
@@ -1699,6 +1695,8 @@ rules by creating a role hierarchy:
 In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+
+.. _book-security-logging-out:
 
 Logging Out
 -----------
