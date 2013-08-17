@@ -134,8 +134,8 @@ Filters
 Tags
 ----
 
-.. versionadded:: 2.3
-    The stopwatch tag was added in Symfony 2.3
+.. versionadded:: 2.4
+    The stopwatch tag was added in Symfony 2.4.
 
 +---------------------------------------------------+--------------------------------------------------------------------+
 | Tag Syntax                                        | Usage                                                              |
@@ -153,8 +153,8 @@ Tags
 | ``{% trans_default_domain language %}``           | This will set the default domain for message catalogues in the     |
 |                                                   | current template                                                   |
 +---------------------------------------------------+--------------------------------------------------------------------+
-| ``{% stopwatch name %}...{% endstopwatch %}``     | This will time the run time of the code inside it and put that on  |
-|                                                   | the timeline of the WebDeveloperBundle.                            |
+| ``{% stopwatch 'name' %}...{% endstopwatch %}``   | This will time the run time of the code inside it and put that on  |
+|                                                   | the timeline of the WebProfilerBundle.                             |
 +---------------------------------------------------+--------------------------------------------------------------------+
 
 Tests
