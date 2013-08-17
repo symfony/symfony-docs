@@ -156,7 +156,7 @@ As mentioned before, for the autoloader to work, it needs to know that the
 ``Sensio`` namespace lives in the ``vendor/sensio/framework-extra-bundle``
 directory and that, for example, the ``Doctrine`` namespace lives in the
 ``vendor/doctrine/orm/lib/`` directory. This mapping is entirely controlled by
-Composer. Each third-party library you load through Composer has their
+Composer. Each third-party library you load through Composer has its
 settings defined and Composer takes care of everything for you.
 
 For this to work, all third-party libraries used by your project must be 
@@ -175,7 +175,7 @@ from specific directories without defining a dependency:
     }
 
 This means that if a class is not found in the ``vendor`` directory, Composer
-will search in the ``src`` directory before throwing a "class does not exists"
+will search in the ``src`` directory before throwing a "class does not exist"
 exception. Read more about configuring the Composer Autoloader in
 `the Composer documentation`_
 
