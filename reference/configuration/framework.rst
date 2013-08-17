@@ -227,7 +227,7 @@ See `gc_probability`_.
 gc_maxlifetime
 ..............
 
-**type**: ``integer`` **default**: ``14400``
+**type**: ``integer`` **default**: ``1440``
 
 This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session start
