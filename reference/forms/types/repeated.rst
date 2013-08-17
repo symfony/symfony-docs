@@ -79,6 +79,7 @@ To render each field individually, use something like this:
 
     .. code-block:: jinja
 
+        {# .first and .second may vary in your use - see the note below #}
         {{ form_row(form.password.first) }}
         {{ form_row(form.password.second) }}
 
@@ -89,8 +90,10 @@ To render each field individually, use something like this:
 
 .. note::
 
-    The sub-field names are ``first`` and ``second`` by default, but can
-    be controlled via the `first_name`_ and `second_name`_ options.
+    The names ``first`` and ``second`` are the default names for the two
+    sub-fields. However, these names can be controlled via the `first_name`_
+    and `second_name`_ options. If you've set these options, then use those
+    values instead of ``first`` and ``second`` when rendering.
 
 Validation
 ~~~~~~~~~~
