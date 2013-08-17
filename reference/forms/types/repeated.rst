@@ -79,8 +79,8 @@ To render each field individually, use something like this:
 
     .. code-block:: jinja
 
-        {{ form_row(form.password.first) }}
-        {{ form_row(form.password.second) }}
+        {{ form_row(form.password.password) }}
+        {{ form_row(form.password.confirm) }}
 
     .. code-block:: php
 
