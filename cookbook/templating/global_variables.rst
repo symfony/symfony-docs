@@ -86,11 +86,17 @@ Referencing Services
 --------------------
 
 Instead of using static values, you can also set the value to a service.
-Whenever the global variabele is accessed in the template, the service will be
+Whenever the global variable is accessed in the template, the service will be
 requested from the service container and you get access to that object.
 
-This is done by prefixing the string with ``@``, which you already know from
-injecting a service:
+.. note::
+
+    The service is not loaded lazily. In other words, as soon as Twig is
+    loaded, your service is instantiated, even if you never use that global
+    variable.
+
+To define a service as a global Twig variable, prefix the string with ``@``.
+This should feel familiar, as it's the same syntax you use in service configuration.
 
 .. configuration-block::
 
