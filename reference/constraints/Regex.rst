@@ -170,12 +170,12 @@ htmlPattern
 
 **type**: ``string|Boolean`` **default**: null
 
-This option specifies the pattern to use in the html5 ``pattern`` attribute.
-By default, the constraint will convert the pattern given in the ``pattern``
-option into a html5 compatible pattern. This means that the delimeters are
-removed (e.g. ``/[a-z]+/`` becomes ``[a-z]+``).
+This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
+You usually don't need to specify this option because by default, the constraint
+will convert the pattern given in the `pattern`_ option into an HTML5 compatible
+pattern. This means that the delimiters are removed (e.g. ``/[a-z]+/`` becomes ``[a-z]+``).
 
-However, their are some other incompatibilities between both patterns which
+However, there are some other incompatibilities between both patterns which
 cannot be fixed by the constraint. For instance, the html5 pattern attribute
 does not support flags. If you have a pattern like ``/[a-z]+/i`` you need to
 specify the html5 compatible pattern in the ``htmlPattern`` option:
@@ -213,14 +213,20 @@ specify the html5 compatible pattern in the ``htmlPattern`` option:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="name">
-                <constraint name="Regex">
-                    <option name="pattern">/^[a-z]+$/i</option>
-                    <option name="htmlPattern">^[a-zA-Z]+$</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="name">
+                    <constraint name="Regex">
+                        <option name="pattern">/^[a-z]+$/i</option>
+                        <option name="htmlPattern">^[a-zA-Z]+$</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
