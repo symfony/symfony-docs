@@ -133,7 +133,7 @@ configuration:
                 dbname="testdb"
                 user="testdb"
                 password="testdb"
-            >
+            />
         </doctrine:config>
 
     .. code-block:: php
