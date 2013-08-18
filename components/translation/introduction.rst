@@ -27,9 +27,9 @@ catalogues*).
 Configuration
 ~~~~~~~~~~~~~
 
-The constructor of the ``Translator`` class needs two arguments: The locale
-and the :class:`Symfony\\Component\\Translation\\MessageSelector` to use when
-using pluralization (more about that later)::
+The constructor of the ``Translator`` class needs one argument: The locale.
+
+.. code-block:: php
 
     use Symfony\Component\Translation\Translator;
     use Symfony\Component\Translation\MessageSelector;
@@ -67,15 +67,31 @@ Loader too. The default loaders are:
   catalogues from PHP arrays.
 * :class:`Symfony\\Component\\Translation\\Loader\\CsvFileLoader` - to load
   catalogues from CSV files.
+* :class:`Symfony\\Component\\Translation\\Loader\\IcuDatFileLoader` - to load
+  catalogues form resource bundles.
+* :class:`Symfony\\Component\\Translation\\Loader\\IcuResFileLoader` - to load
+  catalogues form resource bundles.
+* :class:`Symfony\\Component\\Translation\\Loader\\IniFileLoader` - to load
+  catalogues form ini files.
+* :class:`Symfony\\Component\\Translation\\Loader\\MoFileLoader` - to load
+  catalogues form gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PhpFileLoader` - to load
   catalogues from PHP files.
+* :class:`Symfony\\Component\\Translation\\Loader\\PoFileLoader` - to load
+  catalogues form gettext files.
+* :class:`Symfony\\Component\\Translation\\Loader\\QtFileLoader` - to load
+  catalogues form QT XML files.
 * :class:`Symfony\\Component\\Translation\\Loader\\XliffFileLoader` - to load
   catalogues from Xliff files.
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
   catalogues from Yaml files (requires the :doc:`Yaml component</components/yaml>`).
 
-All loaders, except the ``ArrayLoader``, requires the
-:doc:`Config component</components/config/index>`.
+.. versionadded:: 2.1
+    The ``IcuDatFileLoader``, ``IcuResFileLoader``, ``IniFileLoader``,
+    ``MofileLoader``, ``PoFileLoader`` and ``QtFileLoader`` are new in
+    Symfony 2.1
+
+All file loaders require the :doc:`Config component</components/config/index>`.
 
 At first, you should add one or more loaders to the ``Translator``::
 
