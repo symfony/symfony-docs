@@ -727,8 +727,6 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
             {{ form_row(form.task) }}
             {{ form_row(form.dueDate) }}
-
-            <input type="submit" />
         {{ form_end(form) }}
 
     .. code-block:: html+php
@@ -739,8 +737,6 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
             <?php echo $view['form']->row($form['task']) ?>
             <?php echo $view['form']->row($form['dueDate']) ?>
-
-            <input type="submit" />
         <?php echo $view['form']->end($form) ?>
 
 Take a look at each part:
