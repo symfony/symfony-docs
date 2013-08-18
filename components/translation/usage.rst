@@ -7,10 +7,9 @@ Using the Translator
 Imagine you want to translate the string *"Symfony2 is great"* into French::
 
     use Symfony\Component\Translation\Translator;
-    use Symfony\Component\Translation\MessageSelector;
     use Symfony\Component\Translation\Loader\ArrayLoader;
 
-    $translator = new Translator('fr_FR', new MessageSelector());
+    $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
         'Symfony2 is great!' => 'J'aime Symfony2!',
@@ -213,10 +212,10 @@ recommended format. These files are parsed by one of the loader classes.
         .. code-block:: php
 
             return array(
-                'symfony2.is.great' => 'Symfony2 is great',
-                'symfony2.is.amazing' => 'Symfony2 is amazing',
+                'symfony2.is.great'    => 'Symfony2 is great',
+                'symfony2.is.amazing'  => 'Symfony2 is amazing',
                 'symfony2.has.bundles' => 'Symfony2 has bundles',
-                'user.login' => 'Login',
+                'user.login'           => 'Login',
             );
 
 Pluralization
