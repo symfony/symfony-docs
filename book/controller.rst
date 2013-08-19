@@ -438,7 +438,8 @@ perform a 301 (permanent) redirect, modify the second argument::
 Forwarding
 ~~~~~~~~~~
 
-You can also easily forward to another controller internally with the ``forward()``
+You can also easily forward to another controller internally with the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
 method. Instead of redirecting the user's browser, it makes an internal sub-request,
 and calls the specified controller. The ``forward()`` method returns the ``Response``
 object that's returned from that controller::
@@ -478,17 +479,22 @@ value to each variable.
 
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service and returns a ``Response``
-    object::
+    directly by duplicating the current request. When this
+    :ref:`sub request<http-kernel-sub-requests>` is executed via the ``http_kernel``
+    service the ``HttpKernel`` returns a ``Response`` object::
+    
+        use Symfony\Component\HttpKernel/HttpKernelInterface;
+    
+        $path = array(
+            '_controller' => 'AcmeHelloBundle:Hello:fancy',
+            'name'        => $name,
+            'color'       => 'green',
+        );
+        $request = $this->container->get('request');
+        $subRequest = $request->duplicate(array(), null, $path);
 
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward(
-            'AcmeHelloBundle:Hello:fancy',
-            array(
-                'name'  => $name,
-                'color' => 'green',
-            )
-        );
+        $response = $httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 
 .. index::
    single: Controller; Rendering templates
