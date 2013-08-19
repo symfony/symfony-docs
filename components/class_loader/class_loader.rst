@@ -17,8 +17,8 @@ load all of your project's classes.
 .. tip::
 
     You can use both the ``ApcClassLoader`` and the ``XcacheClassLoader`` to
-    :doc:`cache</components/class_loader/cache_class_loader>` a ``ClassLoader``
-    instance or the ``DebugClassLoader`` to :doc:`debug</components/class_loader/debug_class_loader>`
+    :doc:`cache </components/class_loader/cache_class_loader>` a ``ClassLoader``
+    instance or the ``DebugClassLoader`` to :doc:`debug </components/class_loader/debug_class_loader>`
     it.
 
 Usage

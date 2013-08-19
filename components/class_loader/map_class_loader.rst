@@ -8,7 +8,7 @@ Introduction
 ------------
 
 Additionally to any dynamic class loader (like the
-:doc:`PSR-0 class loader</components/class_loader/class_loader>`) you can use
+:doc:`PSR-0 class loader </components/class_loader/class_loader>`) you can use
 the :class:`Symfony\\Component\\ClassLoader\\MapClassLoader` to statically map
 classes to files. This is useful if you use third-party libraries which don't
 follow the `PSR-0`_ standards.
