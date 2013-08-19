@@ -3,6 +3,7 @@
 * **Class Loader**
 
   * :doc:`/components/class_loader/class_loader`
+  * :doc:`/components/class_loader/map_class_loader`
   * :doc:`/components/class_loader/cache_class_loader`
   * :doc:`/components/class_loader/debug_class_loader`
 
