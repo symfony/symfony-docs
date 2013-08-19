@@ -1,7 +1,8 @@
 * :doc:`/components/using_components`
 
-* **Class Loader**
+* :doc:`/components/class_loader/index`
 
+  * :doc:`/components/class_loader/introduction`
   * :doc:`/components/class_loader/class_loader`
   * :doc:`/components/class_loader/map_class_loader`
   * :doc:`/components/class_loader/cache_class_loader`
