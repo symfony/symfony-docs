@@ -1,11 +1,8 @@
 .. index::
     single: Security; Custom Authenticator
 
-How to create a custom Authenticator
+How to create a Custom Authenticator
 ====================================
-
-Introduction
-------------
 
 Imagine you want to allow access to your website only between 2pm and 4pm (for
 the UTC timezone). Before Symfony 2.4, you had to create a custom token, factory,
@@ -14,8 +11,8 @@ listener and provider.
 The Authenticator
 -----------------
 
-Thanks to new simplified authentication customization options  in Symfony 2.4,
-you don't need to create a whole bunch of new classes, but use the
+But now, thanks to new simplified authentication customization options in
+Symfony 2.4, you don't need to create a whole bunch of new classes, but use the
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`
 interface instead::
 
@@ -90,7 +87,7 @@ interface instead::
 .. versionadded:: 2.4
     The ``SimpleFormAuthenticatorInterface`` interface was added in Symfony 2.4.
 
-How it works
+How it Works
 ------------
 
 There are a lot of things going on:
@@ -131,18 +128,26 @@ Now, configure your ``TimeAuthenticator`` as a service:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <services>
-            <service id="time_authenticator"
-                class="Acme\HelloBundle\Security\TimeAuthenticator">
-                <argument type="service" id="security.encoder_factory"/>
-            </service>
-        </services>
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <services>
+                <service id="time_authenticator"
+                    class="Acme\HelloBundle\Security\TimeAuthenticator">
+                    <argument type="service" id="security.encoder_factory"/>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
+        
+        // ...
 
         $container->setDefinition('time_authenticator', new Definition(
             'Acme\HelloBundle\Security\TimeAuthenticator',
@@ -180,11 +185,12 @@ like this:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <config>
-                <firewall name="secured_area" pattern="^/admin">
-                    <provider name="authenticator" />
+                <firewall name="secured_area"
+                    pattern="^/admin"
+                    provider="authenticator">
                     <simple-form authenticator="time_authenticator"
-                        check_path="login_check"
-                        login_path="login" />
+                        check-path="login_check"
+                        login-path="login" />
                 </firewall>
             </config>
         </srv:container>
