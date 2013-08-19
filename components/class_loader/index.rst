@@ -6,3 +6,4 @@ Class Loader
     
     class_loader
     cache_class_loader
+    debug_class_loader
