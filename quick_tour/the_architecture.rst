@@ -68,7 +68,7 @@ in your projects.
 .. note::
 
     If you want to learn more about Composer's autoloader, read `Composer-Autoloader`_.
-    Symfony also has an autoloading component - read ":doc:`/components/class_loader`".
+    Symfony also has an autoloading component - read ":doc:`/components/class_loader/class_loader`".
 
 Understanding the Bundle System
 -------------------------------
