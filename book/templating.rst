@@ -670,6 +670,8 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
+This however does not mean however to create fat controllers but rather
+to create services used within thin controllers that just render those pieces.
 
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
