@@ -451,7 +451,7 @@ On a form, we can usually listen to the following events:
 The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
     Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
-The key is to add a ``POST_SUBMIT`` listener to the field your new field is dependent
+The key is to add the ``POST_SET_DATA`` and ``POST_SUBMIT`` listeners to the field your new field is dependent
 on. This event will then be called in the middle of the binding process of your root
 form, and if, from this method, you add fields to it, the Form component will detect
 the new field and map it to the client data if it is there.
@@ -466,45 +466,34 @@ The type would now look like::
             $builder
                 ->add('sport', 'entity', array(/* whatever is necessary to fetch the list of sports */))
             ;
-            $factory = $builder->getFormFactory();
 
-            $formModifier = function(FormInterface $form, Sport $sport) use ($factory)
+            $meetupListener = function(FormEvent $e)
             {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (this is, the ID)
+                // in the POST_SUBMIT event
+                $sport = $event->getForm()->getData();
+
+                $positions = $sport->getAvailablePositions();
+
                 $positions = $data->getSport()->getAvailablePositions();
+
+                // do your magic, but don't forget to do it in the parent form, eg:
+                // $e->getForm()->getParent()->add('position', 'entity', array('choices' => $positions));
             }
 
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) {
-                    $form = $event->getForm();
-
-                    // this would be your entity, i.e. SportMeetup
-                    $data = $event->getData();
-
-                    $formModifier($event->getForm(), $sport);
-                }
-            );
-
             $builder->get('meetup')->addEventListener(
-                FormEvents::POST_BIND,
-                function(FormEvent $event) use ($formModifier) {
-                    // It's important here to fetch $event->getForm()->getData(), as
-                    // $event->getData() will get you the client data (this is, the ID)
-                    $sport = $event->getForm()->getData();
-
-                    $positions = $sport->getAvailablePositions();
-
-                    // since we've added the listener to the child, we'll have to pass on
-                    // the parent to the callback functions!
-                    $formModifier($event->getForm()->getParent(), $sport);
-                }
+                FormEvents::POST_SET_DATA,
+                $meetupListener
+            );
+            $builder->get('meetup')->addEventListener(
+                FormEvents::POST_SUBMIT,
+                $meetupListener
             );
         }
     }
 
-You can see that you need to listen on these two events and have different callbacks
-only because in two different scenarios, the data that you can use is available in different events.
-Other than that, the listeners always performs exactly the same things on a given form.
+You can see that you need to listen on these two events but can perform the exact same actions in both.
 
 One piece that may still be missing is the client-side updating of your form
 after the sport is selected. This should be handled by making an AJAX call
