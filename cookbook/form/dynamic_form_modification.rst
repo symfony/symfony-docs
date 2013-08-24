@@ -403,7 +403,7 @@ possible choices will depend on each sport. Football will have attack, defense,
 goalkeeper etc... Baseball will have a pitcher but will not have goalkeeper. You
 will need the correct options to be set in order for validation to pass.
 
-The meetup is passed as an entity hidden field to the form. So we can access each
+The meetup is passed as an entity field to the form. So we can access each
 sport like this::
 
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
@@ -412,8 +412,7 @@ sport like this::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('number_of_people', 'text')
-                ->add('discount_coupon', 'text')
+                ->add('sport', 'entity', array(/* whatever is necessary to fetch the list of sports */))
             ;
             $factory = $builder->getFormFactory();
 
@@ -449,176 +448,52 @@ On a form, we can usually listen to the following events:
 * ``POST_SUBMIT``
 
 .. versionadded:: 2.3
-    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
+The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
     Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
-When listening to ``SUBMIT`` and ``POST_SUBMIT``, it's already "too late" to make
-changes to the form. Fortunately, ``PRE_SUBMIT`` is perfect for this. There
-is, however, a big difference in what ``$event->getData()`` returns for each
-of these events. Specifically, in ``PRE_SUBMIT``, ``$event->getData()`` returns
-the raw data submitted by the user.
+The key is to add the ``POST_SET_DATA`` and ``POST_SUBMIT`` listeners to the field your new field is dependent
+on. This event will then be called in the middle of the binding process of your root
+form, and if, from this method, you add fields to it, the Form component will detect
+the new field and map it to the client data if it is there.
 
-This can be used to get the ``SportMeetup`` id and retrieve it from the database,
-given you have a reference to the object manager (if using doctrine). In
-the end, you have an event subscriber that listens to two different events,
-requires some external services and customizes the form. In such a situation,
-it's probably better to define this as a service rather than using an anonymous
-function as the event listener callback.
+The type would now look like::
 
-The subscriber would now look like::
-
-    // src/Acme/DemoBundle/Form/EventListener/RegistrationSportListener.php
-    namespace Acme\DemoBundle\Form\EventListener;
-
-    use Symfony\Component\Form\FormFactoryInterface;
-    use Doctrine\ORM\EntityManager;
-    use Symfony\Component\Form\FormEvent;
-    use Symfony\Component\Form\FormEvents;
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-    class RegistrationSportListener implements EventSubscriberInterface
+    // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
+    class SportMeetupType extends AbstractType
     {
-        /**
-         * @var FormFactoryInterface
-         */
-        private $factory;
-
-        /**
-         * @var EntityManager
-         */
-        private $em;
-
-        /**
-         * @param factory FormFactoryInterface
-         */
-        public function __construct(FormFactoryInterface $factory, EntityManager $em)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $this->factory = $factory;
-            $this->em = $em;
-        }
+            $builder
+                ->add('sport', 'entity', array(/* whatever is necessary to fetch the list of sports */))
+            ;
 
-        public static function getSubscribedEvents()
-        {
-            return array(
-                FormEvents::PRE_SUBMIT => 'preSubmit',
-                FormEvents::PRE_SET_DATA => 'preSetData',
+            $meetupListener = function(FormEvent $e)
+            {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (this is, the ID)
+                // in the POST_SUBMIT event
+                $sport = $event->getForm()->getData();
+
+                $positions = $sport->getAvailablePositions();
+
+                $positions = $data->getSport()->getAvailablePositions();
+
+                // do your magic, but don't forget to do it in the parent form, eg:
+                // $e->getForm()->getParent()->add('position', 'entity', array('choices' => $positions));
+            }
+
+            $builder->get('meetup')->addEventListener(
+                FormEvents::POST_SET_DATA,
+                $meetupListener
+            );
+            $builder->get('meetup')->addEventListener(
+                FormEvents::POST_SUBMIT,
+                $meetupListener
             );
         }
-
-        /**
-         * @param event FormEvent
-         */
-        public function preSetData(FormEvent $event)
-        {
-            $meetup = $event->getData()->getMeetup();
-
-            // Before SUBMITing the form, the "meetup" will be null
-            if (null === $meetup) {
-                return;
-            }
-
-            $form = $event->getForm();
-            $positions = $meetup->getSport()->getPositions();
-
-            $this->customizeForm($form, $positions);
-        }
-
-        public function preSubmit(FormEvent $event)
-        {
-            $data = $event->getData();
-            $id = $data['event'];
-            $meetup = $this->em
-                ->getRepository('AcmeDemoBundle:SportMeetup')
-                ->find($id);
-
-            if ($meetup === null) {
-                $msg = 'The event %s could not be found for you registration';
-                throw new \Exception(sprintf($msg, $id));
-            }
-            $form = $event->getForm();
-            $positions = $meetup->getSport()->getPositions();
-
-            $this->customizeForm($form, $positions);
-        }
-
-        protected function customizeForm($form, $positions)
-        {
-            // ... customize the form according to the positions
-        }
     }
 
-You can see that you need to listen on these two events and have different callbacks
-only because in two different scenarios, the data that you can use is given in a
-different format. Other than that, this class always performs exactly the same
-things on a given form.
-
-Now that you have that setup, register your form and the listener as services:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        acme.form.sport_meetup:
-            class: Acme\SportBundle\Form\Type\SportMeetupType
-            arguments: [@acme.form.meetup_registration_listener]
-            tags:
-                - { name: form.type, alias: acme_meetup_registration }
-        acme.form.meetup_registration_listener
-            class: Acme\SportBundle\Form\EventListener\RegistrationSportListener
-            arguments: [@form.factory, @doctrine.orm.entity_manager]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <services>
-            <service id="acme.form.sport_meetup" class="Acme\SportBundle\FormType\SportMeetupType">
-                <argument type="service" id="acme.form.meetup_registration_listener" />
-                <tag name="form.type" alias="acme_meetup_registration" />
-            </service>
-            <service id="acme.form.meetup_registration_listener" class="Acme\SportBundle\Form\EventListener\RegistrationSportListener">
-                <argument type="service" id="form.factory" />
-                <argument type="service" id="doctrine.orm.entity_manager" />
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $definition = new Definition('Acme\SportBundle\Form\Type\SportMeetupType');
-        $definition->addTag('form.type', array('alias' => 'acme_meetup_registration'));
-        $container->setDefinition(
-            'acme.form.meetup_registration_listener',
-            $definition,
-            array('security.context')
-        );
-        $definition = new Definition('Acme\SportBundle\Form\EventListener\RegistrationSportListener');
-        $container->setDefinition(
-            'acme.form.meetup_registration_listener',
-            $definition,
-            array('form.factory', 'doctrine.orm.entity_manager')
-        );
-
-In this setup, the ``RegistrationSportListener`` will be a constructor argument
-to ``SportMeetupType``. You can then register it as an event subscriber on
-your form::
-
-    private $registrationSportListener;
-
-    public function __construct(RegistrationSportListener $registrationSportListener)
-    {
-        $this->registrationSportListener = $registrationSportListener;
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // ...
-        $builder->addEventSubscriber($this->registrationSportListener);
-    }
-
-And this should tie everything together. You can now retrieve your form from the
-controller, display it to a user, and validate it with the right choice options
-set for every possible kind of sport that our users are registering for.
+You can see that you need to listen on these two events but can perform the exact same actions in both.
 
 One piece that may still be missing is the client-side updating of your form
 after the sport is selected. This should be handled by making an AJAX call
