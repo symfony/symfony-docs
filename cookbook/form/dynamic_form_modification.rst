@@ -270,11 +270,9 @@ and fill in the listener logic::
                 );
             }
 
-            $factory = $builder->getFormFactory();
-
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) use($user, $factory){
+                function(FormEvent $event) use ($user) {
                     $form = $event->getForm();
 
                     $formOptions = array(
@@ -289,7 +287,7 @@ and fill in the listener logic::
 
                     // create the field, this is similar the $builder->add()
                     // field name, field type, data, options
-                    $form->add($factory->createNamed('friend', 'entity', null, $formOptions));
+                    $form->add('friend', 'entity', $formOptions);
                 }
             );
         }
