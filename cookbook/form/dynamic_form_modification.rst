@@ -370,15 +370,21 @@ it with :ref:`dic-tags-form-type`.
 If you wish to create it from within a controller or any other service that has
 access to the form factory, you then use::
 
-    class FriendMessageController extends Controller
+    use Symfony\Component\DependencyInjection\ContainerAware;
+
+    class FriendMessageController extends ContainerAware
     {
         public function newAction(Request $request)
         {
-            $form = $this->createForm('acme_friend_message');
+            $form = $this->get('form.factory')->create('acme_friend_message');
 
             // ...
         }
     }
+
+If you extend the ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class, you can simply call::
+
+    $form = $this->createForm('acme_friend_message');
 
 You can also easily embed the form type into another form::
 
