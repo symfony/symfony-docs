@@ -22,7 +22,7 @@ Constructing the Translator
 The main access point of the Translation Component is
 :class:`Symfony\\Component\\Translation\\Translator`. Before you can use it,
 you need to configure it and load the messages to translate (called *message
-catalogues*).
+catalogs*).
 
 Configuration
 ~~~~~~~~~~~~~
@@ -49,42 +49,42 @@ The constructor of the ``Translator`` class needs one argument: The locale.
     *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
-Loading Message Catalogues
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Loading Message Catalogs
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-The messages are stored in message catalogues inside the ``Translator``
-class. A message catalogue is like a dictionary of translations for a specific 
+The messages are stored in message catalogs inside the ``Translator``
+class. A message catalog is like a dictionary of translations for a specific 
 locale.
 
-The Translation component uses Loader classes to load catalogues. You can load
+The Translation component uses Loader classes to load catalogs. You can load
 multiple resources for the same locale, it will be combined into one
-catalogue.
+catalog.
 
 The component comes with some default Loaders and you can create your own
 Loader too. The default loaders are:
 
 * :class:`Symfony\\Component\\Translation\\Loader\\ArrayLoader` - to load
-  catalogues from PHP arrays.
+  catalogs from PHP arrays.
 * :class:`Symfony\\Component\\Translation\\Loader\\CsvFileLoader` - to load
-  catalogues from CSV files.
+  catalogs from CSV files.
 * :class:`Symfony\\Component\\Translation\\Loader\\IcuDatFileLoader` - to load
-  catalogues form resource bundles.
+  catalogs form resource bundles.
 * :class:`Symfony\\Component\\Translation\\Loader\\IcuResFileLoader` - to load
-  catalogues form resource bundles.
+  catalogs form resource bundles.
 * :class:`Symfony\\Component\\Translation\\Loader\\IniFileLoader` - to load
-  catalogues form ini files.
+  catalogs form ini files.
 * :class:`Symfony\\Component\\Translation\\Loader\\MoFileLoader` - to load
-  catalogues form gettext files.
+  catalogs form gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PhpFileLoader` - to load
-  catalogues from PHP files.
+  catalogs from PHP files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PoFileLoader` - to load
-  catalogues form gettext files.
+  catalogs form gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\QtFileLoader` - to load
-  catalogues form QT XML files.
+  catalogs form QT XML files.
 * :class:`Symfony\\Component\\Translation\\Loader\\XliffFileLoader` - to load
-  catalogues from Xliff files.
+  catalogs from Xliff files.
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
-  catalogues from Yaml files (requires the :doc:`Yaml component</components/yaml>`).
+  catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml>`).
 
 .. versionadded:: 2.1
     The ``IcuDatFileLoader``, ``IcuResFileLoader``, ``IniFileLoader``,
@@ -134,7 +134,7 @@ To actually translate the message, the Translator uses a simple process:
 * A catalog of translated messages is loaded from translation resources defined
   for the ``locale`` (e.g. ``fr_FR``). Messages from the
   :ref:`fallback locale <Fallback Locale>` are also loaded and added to the
-  catalog if they don't already exist. The end result is a large "dictionary"
+  catalog, if they don't already exist. The end result is a large "dictionary"
   of translations;
 
 * If the message is located in the catalog, the translation is returned. If
@@ -156,8 +156,8 @@ and returns it (if it exists).
 Fallback Locale
 ~~~~~~~~~~~~~~~
 
-If the message is not located in the catalogue of the specific locale, the
-translator will look into the catalogue of the fallback locale. You can set
+If the message is not located in the catalog of the specific locale, the
+translator will look into the catalog of the fallback locale. You can set
 this fallback locale by calling
 :method:`Symfony\\Component\\Translation\\Translator::setFallbackLocale`::
 
