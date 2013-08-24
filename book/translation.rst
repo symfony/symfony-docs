@@ -132,7 +132,7 @@ by defining a ``default_locale`` for the framework:
 Using the Translation inside Controllers
 ----------------------------------------
 
-When you want to use translation inside controllers, you need to get the
+When you want to use translations inside controllers, you need to get the
 ``translator`` service and use
 :method:`Symfony\\Component\\Translation\\Translator::trans` or
 :method:`Symfony\\Component\\Translation\\Translator::transChoice`::

@@ -19,7 +19,7 @@ Imagine you want to translate the string *"Symfony2 is great"* into French::
 
 In this example, the message *"Symfony2 is great!"* will be translated into
 the locale set in the constructor (``fr_FR``) if the message exists in one of
-the message catalogues.
+the message catalogs.
 
 Message Placeholders
 --------------------
@@ -89,7 +89,7 @@ As you've seen, creating a translation is a two-step process:
 #. Create a translation for the message in each locale that you choose to
    support.
 
-The second step is done by creating message catalogues that define the translations
+The second step is done by creating message catalogs that define the translations
 for any number of different locales.
 
 Creating Translations
