@@ -97,6 +97,27 @@ rather than being tied up and hidden with the service definition:
             ->register('mailer', 'Mailer')
             ->addArgument('%mailer.transport%');
 
+.. caution::
+
+    The values between ``parameter`` tags in XML configuration files are not
+    trimmed.
+
+    This means that the following configuration sample will have the value
+    ``\n    sendmail\n``:
+
+    .. code-block:: xml
+
+        <parameter key="mailer.transport">
+            sendmail
+        </parameter>
+
+    In some cases (for constants or class names), this could throw errors. In
+    order to prevent this, you must always inline your parameters as follow:
+
+    .. code-block:: xml
+
+        <parameter key="mailer.transport">sendmail</parameter>
+
 If you were using this elsewhere as well, then you would only need to change
 the parameter value in one place if needed.
 
