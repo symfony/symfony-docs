@@ -80,15 +80,24 @@ information. By convention, this information is usually configured in an
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <doctrine:config>
-                <doctrine:dbal
-                    driver="%database_driver%"
-                    host="%database_host%"
-                    dbname="%database_name%"
-                    user="%database_user%"
-                    password="%database_password%"
-                >
-            </doctrine:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config>
+                    <doctrine:dbal
+                        driver="%database_driver%"
+                        host="%database_host%"
+                        dbname="%database_name%"
+                        user="%database_user%"
+                        password="%database_password%"
+                    >
+                </doctrine:config>
+
+            </container>
 
         .. code-block:: php
 
@@ -161,13 +170,22 @@ for you:
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <doctrine:config
-                driver="pdo_sqlite"
-                path="%kernel.root_dir%/sqlite.db"
-                charset="UTF-8"
-            >
-                <!-- ... -->
-            </doctrine:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config
+                    driver="pdo_sqlite"
+                    path="%kernel.root_dir%/sqlite.db"
+                    charset="UTF-8"
+                >
+                    <!-- ... -->
+                </doctrine:config>
+
+            </container>
 
         .. code-block:: php
 
@@ -299,6 +317,7 @@ in a number of different formats including YAML, XML or directly inside the
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -833,9 +852,11 @@ To do this, add the name of the repository class to your mapping definition.
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
-
-        <!-- ... -->
-        <doctrine-mapping>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product"
                     repository-class="Acme\StoreBundle\Entity\ProductRepository">
@@ -1332,9 +1353,11 @@ the current date, only when the entity is first persisted (i.e. inserted):
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
-
-        <!-- ... -->
-        <doctrine-mapping>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product">
                     <!-- ... -->

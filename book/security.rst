@@ -65,15 +65,12 @@ authentication (i.e. the old-school username/password box):
 
     .. code-block:: xml
 
+        <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
-
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <!-- app/config/security.xml -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <firewall name="secured_area" pattern="^/">
@@ -311,15 +308,13 @@ First, enable form login under your firewall:
 
     .. code-block:: xml
 
+        <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
-
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <!-- app/config/security.xml -->
 
             <config>
                 <firewall name="secured_area" pattern="^/">
@@ -387,7 +382,6 @@ submission (i.e.  ``/login_check``):
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
@@ -396,8 +390,8 @@ submission (i.e.  ``/login_check``):
             <route id="login" pattern="/login">
                 <default key="_controller">AcmeSecurityBundle:Security:login</default>
             </route>
-            <route id="login_check" pattern="/login_check" />
 
+            <route id="login_check" pattern="/login_check" />
         </routes>
 
     ..  code-block:: php
@@ -650,7 +644,7 @@ see :doc:`/cookbook/security/form_login`.
                 <anonymous />
             </firewall>
             <firewall name="secured_area" pattern="^/">
-                <form_login />
+                <form-login />
             </firewall>
 
         .. code-block:: php
@@ -1784,14 +1778,12 @@ a route so that you can use it to generate the URL:
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="logout" path="/logout" />
-
         </routes>
 
     ..  code-block:: php
