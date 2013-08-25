@@ -230,13 +230,13 @@ helper:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/css/*' filter='uglifycss' %}
+        {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='uglifycss' %}
              <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endjavascripts %}
+        {% endstylesheets %}
 
     .. code-block:: html+php
 
-        <?php foreach ($view['assetic']->javascripts(
+        <?php foreach ($view['assetic']->stylesheets(
             array('@AcmeFooBundle/Resources/public/css/*'),
             array('uglifycss')
         ) as $url): ?>
