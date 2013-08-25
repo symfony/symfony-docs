@@ -94,7 +94,7 @@ information. By convention, this information is usually configured in an
                         dbname="%database_name%"
                         user="%database_user%"
                         password="%database_password%"
-                    >
+                    />
                 </doctrine:config>
 
             </container>
