@@ -281,7 +281,7 @@ and fill in the listener logic::
                         'class' => 'Acme\DemoBundle\Entity\User',
                         'property' => 'fullName',
                         'query_builder' => function(EntityRepository $er) use ($user) {
-                            // build a custom query, or call a method on your repository (even better!)
+                            // build a custom query
                         },
                     );
 
