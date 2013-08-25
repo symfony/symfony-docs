@@ -286,7 +286,7 @@ key, and define the type as ``constant``.
             imports:
                 - { resource: parameters.xml }
 
-PHP keywords in XML
+PHP Keywords in XML
 -------------------
 
 By default, ``true``, ``false`` and ``null`` in XML are converted to the PHP
@@ -302,7 +302,7 @@ keywords (respectively ``true``, ``false`` and ``null``):
     $container->getParameter('mailer.send_all_in_once'); // returns false
     -->
 
-To disable this behaviour, use the ``string`` type:
+To disable this behavior, use the ``string`` type:
 
 .. code-block:: xml
 
@@ -319,33 +319,38 @@ To disable this behaviour, use the ``string`` type:
     This is not available for Yaml and PHP, because they already have built-in
     support for the PHP keywords.
 
-Referencing Services with Parameters
-------------------------------------
+Syntax for Referencing Services
+-------------------------------
 
-A parameter can also reference to a service. While doing so, it specifies an
-invalid behaviour.
+You can of course also reference services, which looks a bit different in
+each format. You can configure the behavior if the referenced service does
+not exist. By default, an exception is thrown when a non-existent service
+is referenced.
 
 Yaml
 ~~~~
 
-Start the string with  ``@``, ``@@`` or ``@?`` to reference a service in Yaml.
+Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
 
-* ``@mailer`` references to the ``mailer`` service. If the service does not
+* ``@mailer`` references the ``mailer`` service. If the service does not
   exists, an exception will be thrown;
-* ``@?mailer`` references to the ``mailer`` service. If the service does not
+* ``@?mailer`` references the ``mailer`` service. If the service does not
   exists, it will be ignored;
 
 Xml
 ~~~
 
-In XML, use the ``service`` type. The behaviour if the service does not exists
-can be specified using the ``on-invalid`` argument (it can be set to ``null``
-to return ``null`` or ``ignored`` to let the container ignore the error, if
-not specified it throws an exception).
+In XML, use the ``service`` type. The behavior if the service does not exists
+can be specified using the ``on-invalid`` argument. By default, an exception
+is thrown. Valid values for ``on-invalid`` are ``null`` (uses ``null`` in place
+of the missing service) or ``ignored`` (very similar, except if used on a
+method call, the method call is removed).
 
 Php
 ~~~
 
 In PHP, you can use the
 :class:`Symfony\\Component\\DependencyInjection\\Reference` class to reference
-a service.
+a service. The invalid behavior is configured using the second constructor
+argument and constants from
+:class:`Symfony\\Component\\DependencyInjection\\ContainerInterface`.
