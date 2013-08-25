@@ -1062,9 +1062,9 @@ entity and a new constraint group called ``Premium``:
         }
 
 Now, change the ``User`` class to implement
-:class:`Symfony\\Component\\Validation\\GroupSequenceProviderInterface` and
+:class:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface` and
 add the
-:method:`Symfony\\Component\\Validation\\GroupSequenceProviderInterface::getGroupSequence`,
+:method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
 which should return an array of groups to use. Also, add the
 ``@Assert\GroupSequenceProvider`` annotation to the class. If you imagine
 that a method called ``isPremium`` returns true if the user is a premium member,
