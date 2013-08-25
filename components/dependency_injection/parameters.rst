@@ -337,6 +337,12 @@ Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
 * ``@?mailer`` references the ``mailer`` service. If the service does not
   exists, it will be ignored;
 
+.. tip::
+
+    Use ``@@`` to escape the ``@`` symbol in Yaml. ``@@mailer`` will be
+    converted into the string ``"@mailer"`` instead of referencing the
+    ``mailer`` service.
+
 Xml
 ~~~
 
