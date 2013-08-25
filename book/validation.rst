@@ -263,9 +263,17 @@ annotations if you're using the annotation method to specify your constraints:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:validation enable-annotations="true" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation enable-annotations="true" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -526,14 +534,20 @@ class to have at least 3 characters.
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="firstName">
-                <constraint name="NotBlank" />
-                <constraint name="Length">
-                    <option name="min">3</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="NotBlank" />
+                    <constraint name="Length">
+                        <option name="min">3</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -605,13 +619,19 @@ this method must return ``true``:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <getter property="passwordLegal">
-                <constraint name="True">
-                    <option name="message">The password cannot match your first name</option>
-                </constraint>
-            </getter>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <getter property="passwordLegal">
+                    <constraint name="True">
+                        <option name="message">The password cannot match your first name</option>
+                    </constraint>
+                </getter>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -717,33 +737,39 @@ user registers and when a user updates his/her contact information later:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\User">
-            <property name="email">
-                <constraint name="Email">
-                    <option name="groups">
-                        <value>registration</value>
-                    </option>
-                </constraint>
-            </property>
-            <property name="password">
-                <constraint name="NotBlank">
-                    <option name="groups">
-                        <value>registration</value>
-                    </option>
-                </constraint>
-                <constraint name="Length">
-                    <option name="min">7</option>
-                    <option name="groups">
-                        <value>registration</value>
-                    </option>
-                </constraint>
-            </property>
-            <property name="city">
-                <constraint name="Length">
-                    <option name="min">7</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\User">
+                <property name="email">
+                    <constraint name="Email">
+                        <option name="groups">
+                            <value>registration</value>
+                        </option>
+                    </constraint>
+                </property>
+                <property name="password">
+                    <constraint name="NotBlank">
+                        <option name="groups">
+                            <value>registration</value>
+                        </option>
+                    </constraint>
+                    <constraint name="Length">
+                        <option name="min">7</option>
+                        <option name="groups">
+                            <value>registration</value>
+                        </option>
+                    </constraint>
+                </property>
+                <property name="city">
+                    <constraint name="Length">
+                        <option name="min">7</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -874,26 +900,32 @@ username and the password are different only if all other validation passes
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\User">
-            <property name="username">
-                <constraint name="NotBlank" />
-            </property>
-            <property name="password">
-                <constraint name="NotBlank" />
-            </property>
-            <getter property="passwordLegal">
-                <constraint name="True">
-                    <option name="message">The password cannot match your username</option>
-                    <option name="groups">
-                        <value>Strict</value>
-                    </option>
-                </constraint>
-            </getter>
-            <group-sequence>
-                <value>User</value>
-                <value>Strict</value>
-            </group-sequence>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\User">
+                <property name="username">
+                    <constraint name="NotBlank" />
+                </property>
+                <property name="password">
+                    <constraint name="NotBlank" />
+                </property>
+                <getter property="passwordLegal">
+                    <constraint name="True">
+                        <option name="message">The password cannot match your username</option>
+                        <option name="groups">
+                            <value>Strict</value>
+                        </option>
+                    </constraint>
+                </getter>
+                <group-sequence>
+                    <value>User</value>
+                    <value>Strict</value>
+                </group-sequence>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -983,22 +1015,28 @@ entity and a new constraint group called ``Premium``:
     .. code-block:: xml
 
         <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
-        <class name="Acme\DemoBundle\Entity\User">
-            <property name="name">
-                <constraint name="NotBlank" />
-            </property>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <property name="creditCard">
-                <constraint name="CardScheme">
-                    <option name="schemes">
-                        <value>VISA</value>
-                    </option>
-                    <option name="groups">
-                        <value>Premium</value>
-                    </option>
-                </constraint>
-            </property>
-        </class>
+            <class name="Acme\DemoBundle\Entity\User">
+                <property name="name">
+                    <constraint name="NotBlank" />
+                </property>
+
+                <property name="creditCard">
+                    <constraint name="CardScheme">
+                        <option name="schemes">
+                            <value>VISA</value>
+                        </option>
+                        <option name="groups">
+                            <value>Premium</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

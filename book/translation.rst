@@ -61,9 +61,17 @@ enable the ``Translator`` in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:translator fallback="en" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator fallback="en" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -546,9 +554,17 @@ by defining a ``default_locale`` for the framework:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:default-locale>en</framework:default-locale>
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:default-locale>en</framework:default-locale>
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -590,11 +606,18 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: xml
 
-        <route id="contact" path="/{_locale}/contact">
-            <default key="_controller">AcmeDemoBundle:Contact:index</default>
-            <default key="_locale">en</default>
-            <requirement key="_locale">en|fr|de</requirement>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/{_locale}/contact">
+                <default key="_controller">AcmeDemoBundle:Contact:index</default>
+                <default key="_locale">en</default>
+                <requirement key="_locale">en|fr|de</requirement>
+            </route>
+        </routes>
 
     .. code-block:: php
 

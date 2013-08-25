@@ -566,20 +566,27 @@ the configuration for the development environment:
 
     .. code-block:: xml
 
-        <!-- xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler" -->
-        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- load the profiler -->
-        <framework:config>
-            <framework:profiler only-exceptions="false" />
-        </framework:config>
+            <!-- load the profiler -->
+            <framework:config>
+                <framework:profiler only-exceptions="false" />
+            </framework:config>
 
-        <!-- enable the web profiler -->
-        <webprofiler:config
-            toolbar="true"
-            intercept-redirects="true"
-            verbose="true"
-        />
+            <!-- enable the web profiler -->
+            <webprofiler:config
+                toolbar="true"
+                intercept-redirects="true"
+                verbose="true"
+            />
+        </container>
 
     .. code-block:: php
 
@@ -614,10 +621,17 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
     .. code-block:: xml
 
-        <import
-            resource="@WebProfilerBundle/Resources/config/routing/profiler.xml"
-            prefix="/_profiler"
-        />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import
+                resource="@WebProfilerBundle/Resources/config/routing/profiler.xml"
+                prefix="/_profiler"
+            />
+        </routes>
 
     .. code-block:: php
 
