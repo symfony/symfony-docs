@@ -341,6 +341,7 @@ taste.
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
+    See the :ref:`dic-tags-translation-loader` tag for more information.
 
 .. index::
    single: Translations; Creating translation resources
