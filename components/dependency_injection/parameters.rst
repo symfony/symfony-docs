@@ -340,7 +340,7 @@ Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
 Xml
 ~~~
 
-In XML, use the ``service`` type. The behavior if the service does not exists
+In XML, use the ``service`` type. The behavior if the service does not exist
 can be specified using the ``on-invalid`` argument. By default, an exception
 is thrown. Valid values for ``on-invalid`` are ``null`` (uses ``null`` in place
 of the missing service) or ``ignored`` (very similar, except if used on a
