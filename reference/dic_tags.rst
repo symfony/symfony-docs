@@ -886,6 +886,8 @@ templates):
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
+.. _dic-tags-translation-loader:
+
 translation.loader
 ------------------
 

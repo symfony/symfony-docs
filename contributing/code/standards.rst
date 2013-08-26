@@ -68,15 +68,12 @@ example containing most features described below:
             }
             if ('string' === $dummy) {
                 if ('values' === $mergedOptions['some_default']) {
-                    $dummy = substr($dummy, 0, 5);
-                } else {
-                    $dummy = ucwords($dummy);
+                    return substr($dummy, 0, 5);
                 }
-            } else {
-                throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
+                
+                return ucwords($dummy);
             }
-
-            return $dummy;
+            throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
         }
     }
 

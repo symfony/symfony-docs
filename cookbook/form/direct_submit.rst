@@ -115,6 +115,6 @@ a convenient shortcut to the previous example::
     }
 
 Passing the :class:`Symfony\\Component\HttpFoundation\\Request` directly to
-:method:`Symfony\\Component\\Form\\FormInterface::submit`` still works, but is
+:method:`Symfony\\Component\\Form\\FormInterface::submit` still works, but is
 deprecated and will be removed in Symfony 3.0. You should use the method
 :method:`Symfony\Component\Form\FormInterface::handleRequest` instead.
