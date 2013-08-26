@@ -295,7 +295,8 @@ and fill in the listener logic::
 
 .. note::
 
-    The ``multiple`` and ``expanded`` form options will default to false because the type of the friend field is ``entity``.
+    The ``multiple`` and ``expanded`` form options will default to false
+    because the type of the friend field is ``entity``.
 
 Using the Form
 ~~~~~~~~~~~~~~
