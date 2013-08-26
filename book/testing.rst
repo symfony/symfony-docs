@@ -708,7 +708,13 @@ configuration option:
     .. code-block:: xml
 
         <!-- app/config/config_test.xml -->
-        <container>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+
             <!-- ... -->
             <swiftmailer:config disable-delivery="true" />
         </container>
@@ -814,4 +820,4 @@ Learn more
 
 .. _`DemoControllerTest`: https://github.com/symfony/symfony-standard/blob/master/src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
-.. _`documentation`: http://www.phpunit.de/manual/3.5/en/
+.. _`documentation`: http://phpunit.de/manual/current/en/
