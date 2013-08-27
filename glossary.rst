@@ -18,8 +18,8 @@ Glossary
         (also known as services) in other objects, passing generally it as parameters.
         Different levels of coupling between these objects can be established  
         depending on the method used to inject objects together.
-		The Dependency Injection pattern is the more often associated 
-        to an other specific type of object: the :doc:`/book/service_container`
+        The Dependency Injection pattern is the more often associated 
+        to another specific type of object: the :doc:`/book/service_container`
 
    Project
         A *Project* is a directory composed of an Application, a set of
