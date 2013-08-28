@@ -12,10 +12,10 @@ Glossary
         configuration, and an optional configuration system.
 
    Dependency Injection
-        The Dependency Injection is a design pattern highly used in Symfony2 Framework.
-        It encourages less coupled and more maintainable architecture of an application. 
-        The main principle of this pattern is that it allows developers to *inject* objects 
-        (also known as services) in other objects, passing generally it as parameters.
+        The Dependency Injection is a design pattern highly used in the Symfony2 Framework.
+        It encourages loosely coupled and more maintainable architecture of an application. 
+        The main principle of this pattern is that it allows developers to *inject* into other objects 
+        (also known as services) in other objects, generally passing them as parameters.
         Different levels of coupling between these objects can be established  
         depending on the method used to inject objects together.
         The Dependency Injection pattern is the more often associated 
