@@ -52,6 +52,8 @@ example containing most features described below:
          * @param array  $options
          *
          * @return string|null Transformed input
+         *
+         * @throws \RuntimeException
          */
         private function transformText($dummy, array $options = array())
         {
