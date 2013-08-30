@@ -91,7 +91,7 @@ If you want to set another default package, you can use
 You can specify which package you want to use in the second argument of
 :method:`Symfony\\Component\\Templating\\Helper\\AssetsHelper::getUrl`:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <img src="<?php echo $view['assets']->getUrl('foo.png', 'images') ?>">
     <!-- renders as:
