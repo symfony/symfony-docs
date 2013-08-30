@@ -407,6 +407,12 @@ The meetup is passed as an entity hidden field to the form. So we can access eac
 sport like this::
 
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
+    namespace Acme\DemoBundle\Form\Type;
+    
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
+    
     class SportMeetupType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -419,7 +425,7 @@ sport like this::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) use($factory){
+                function(FormEvent $event) use ($factory){
                     $form = $event->getForm();
 
                     // this would be your entity, i.e. SportMeetup
@@ -532,7 +538,7 @@ The subscriber would now look like::
                 ->find($id);
 
             if ($meetup === null) {
-                $msg = 'The event %s could not be found for you registration';
+                $msg = 'The event %s could not be found for your registration';
                 throw new \Exception(sprintf($msg, $id));
             }
             $form = $event->getForm();
