@@ -1,7 +1,7 @@
 property_path
 ~~~~~~~~~~~~~
 
-**type**: ``any`` **default**: ``the field's value``
+**type**: ``any`` **default**: ``the field's name``
 
 Fields display a property value of the form's domain object by default. When
 the form is submitted, the submitted value is written back into the object.
