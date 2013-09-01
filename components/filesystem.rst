@@ -251,8 +251,8 @@ Error Handling
 --------------
 
 Whenever something wrong happens, an exception implementing
-:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` and :class:`Symfony\\Component\\Filesystem\\Exception\\IOExceptionInterface` is
-thrown.
+:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` and
+:class:`Symfony\\Component\\Filesystem\\Exception\\IOExceptionInterface` is thrown.
 
 .. note::
 
