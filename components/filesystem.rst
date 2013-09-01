@@ -28,7 +28,7 @@ endpoint for filesystem operations::
     try {
         $fs->mkdir('/tmp/random/dir/' . mt_rand());
     } catch (IOException $e) {
-        echo "An error occurred while creating your directory at ".$e.getPath();
+        echo "An error occurred while creating your directory at ".$e->getPath();
     }
 
 .. note::
