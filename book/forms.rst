@@ -1076,7 +1076,7 @@ the choice is ultimately up to you.
 
         $form->get('dueDate')->getData();
         
-    In addition the data of a unmapped field can also directly be modified ::
+    In addition, the data of an unmapped field can also directly be modified::
 
         $form->get('dueDate')->setData('dueDate');        
 
