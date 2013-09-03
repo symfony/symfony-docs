@@ -1075,6 +1075,10 @@ the choice is ultimately up to you.
     The field data can be accessed in a controller with::
 
         $form->get('dueDate')->getData();
+        
+    In addition the data of a unmapped field can also directly be modified ::
+
+        $form->get('dueDate')->setData('dueDate');        
 
 Defining your Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
