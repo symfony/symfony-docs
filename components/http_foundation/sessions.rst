@@ -102,9 +102,6 @@ Session attributes
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`:
   Returns true if the attribute exists;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::keys`:
-  Returns an array of stored attribute keys;
-
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`:
   Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
 
