@@ -95,6 +95,8 @@ type you want. The resource name itself is not actually used in the example::
             // add the new route to the route collection:
             $routeName = 'extraRoute';
             $routes->add($routeName, $route);
+            
+            $this->loaded = true;
 
             return $routes;
         }
