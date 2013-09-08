@@ -270,14 +270,6 @@ looks up the value of each parameter and uses it in the service definition.
 
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
 
-.. caution::
-
-    You may receive a
-    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-    when passing the ``request`` service as an argument. To understand this
-    problem better and learn how to solve it, refer to the cookbook article
-    :doc:`/cookbook/service_container/scopes`.
-
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
@@ -761,6 +753,36 @@ Injecting the dependency by the setter method just needs a change of syntax:
     The approaches presented in this section are called "constructor injection"
     and "setter injection". The Symfony2 service container also supports
     "property injection".
+
+Injecting the Request
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.4
+    The ``request_stack`` service was introduced in version 2.4.
+
+Almost all Symfony2 built-in services behave in the same way: a single
+instance is created by the container which it returns whenever you get it or
+when it is injected into another service. There is one exception in a standard
+Symfony2 application: the ``request`` service.
+
+If you try to inject the ``request`` into a service, you will probably receive
+a
+:class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
+exception. That's because the ``request`` can **change** during the life-time
+of a container (when a sub-request is created for instance).
+
+As of Symfony 2.4, instead of injecting the ``request`` service, you should
+inject the ``request_stack`` service instead and access the Request by calling
+the ``getCurrentRequest()`` method. For earlier versions, or if you want to
+understand this problem better, refer to the cookbook article
+:doc:`/cookbook/service_container/scopes`.
+
+.. tip::
+
+    If you define a controller as a service then you can get the ``Request``
+    object without injecting the container by having it passed in as an
+    argument of your action method. See
+    :ref:`book-controller-request-argument` for details.
 
 Making References Optional
 --------------------------
