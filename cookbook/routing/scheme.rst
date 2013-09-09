@@ -51,7 +51,7 @@ will automatically generate an absolute URL with HTTPS as the scheme:
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
-    # generates /secure
+    {# generates /secure #}
 
     {# If the current scheme is HTTP #}
     {{ path('secure') }}

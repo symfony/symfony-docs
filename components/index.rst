@@ -15,6 +15,7 @@ The Components
     event_dispatcher/index
     filesystem
     finder
+    form/index
     http_foundation/index
     http_kernel/index
     intl

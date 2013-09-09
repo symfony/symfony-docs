@@ -14,6 +14,8 @@ the wheel, it uses the Symfony EventDispatcher component to do the work::
     use Symfony\Component\Console\Application;
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
+    $dispatcher = new EventDispatcher();
+
     $application = new Application();
     $application->setDispatcher($dispatcher);
     $application->run();
