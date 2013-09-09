@@ -4,8 +4,8 @@
 How to use the submit() Function to handle Form Submissions
 ===========================================================
 
-.. versionadded::
-    Before Symfony 2.3, the ``submit`` method was known as ``bind``.
+.. versionadded:: 2.3
+    The ``handleRequest()`` method was added in Symfony 2.3.
 
 In Symfony 2.3, a new :method:`Symfony\Component\Form\FormInterface::handleRequest`
 method was added, which makes handling form submissions easier than ever::
@@ -38,6 +38,9 @@ method was added, which makes handling form submissions easier than ever::
 
 Calling Form::submit() manually
 -------------------------------
+
+.. versionadded:: 2.3
+    Before Symfony 2.3, the ``submit()`` method was known as ``bind()``.
 
 In some cases, you want better control over when exactly your form is submitted
 and what data is passed to it. Instead of using the
