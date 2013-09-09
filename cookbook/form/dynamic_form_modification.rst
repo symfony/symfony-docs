@@ -400,8 +400,8 @@ the data that was submitted by the user. For example, imagine you have a registr
 form for sports gatherings. Some events will allow you to specify your preferred
 position on the field. This would be a ``choice`` field for example. However the
 possible choices will depend on each sport. Football will have attack, defense,
-goalkeeper etc... Baseball will have a pitcher but will not have goalkeeper. You
-will need the correct options to be set in order for validation to pass.
+goalkeeper etc... Baseball will have a pitcher but will not have a goalkeeper. You
+will need the correct options in order for validation to pass.
 
 The meetup is passed as an entity field to the form. So we can access each
 sport like this::
@@ -455,11 +455,13 @@ On a form, we can usually listen to the following events:
 
 .. versionadded:: 2.2.6
 
+    The behavior of the ``POST_BIND`` changed slightly in 2.2.6, which the
+    below example uses.
 
-The key is to add a ``POST_BIND`` listener to the field your new field is dependent
-on. If you add a POST_BIND listener to a form child, and add new children to the parent
-from there, the Form component will detect the new field automatically and maps it
-to the client data if it is available.
+The key is to add a ``POST_BIND`` listener to the field that your new field
+depends on. If you add a ``POST_BIND`` listener to a form child (e.g. ``sport`),
+and add new children to the parent form, the Form component will detect the
+new field automatically and map it to the submitted client data.
 
 The type would now look like::
 
@@ -496,7 +498,7 @@ The type would now look like::
                 }
             );
 
-            $builder->get('meetup')->addEventListener(
+            $builder->get('sport')->addEventListener(
                 FormEvents::POST_BIND,
                 function(FormEvent $event) use ($formModifier) {
                     // It's important here to fetch $event->getForm()->getData(), as
