@@ -307,6 +307,8 @@ querying if the "Save and add" button was clicked::
 .. index::
    single: Forms; Validation
 
+.. _book-forms-form-validation:
+
 Form Validation
 ---------------
 

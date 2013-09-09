@@ -629,6 +629,8 @@ a built-in ControllerResolver that can be used to create a working example::
 
     $kernel->terminate($request, $response);
 
+.. _http-kernel-sub-requests:
+
 Sub Requests
 ------------
 
