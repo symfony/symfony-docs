@@ -141,7 +141,7 @@ also specify alternative text for the link:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email</cookbook/email/spool>`
+    :doc:`Spooling Email </cookbook/email/spool>`
 
 You can also add links to the API documentation:
 
