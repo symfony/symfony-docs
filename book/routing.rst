@@ -422,13 +422,15 @@ longer required. The URL ``/blog`` will match this route and the value of
 the ``page`` parameter will be set to ``1``. The URL ``/blog/2`` will also
 match, giving the ``page`` parameter a value of ``2``. Perfect.
 
-+---------+------------+
-| /blog   | {page} = 1 |
-+---------+------------+
-| /blog/1 | {page} = 1 |
-+---------+------------+
-| /blog/2 | {page} = 2 |
-+---------+------------+
++--------------------+-------+-----------------------+
+| URL                | route | parameters            |
++====================+=======+=======================+
+| /blog              | blog  | {page} = 1            |
++--------------------+-------+-----------------------+
+| /blog/1            | blog  | {page} = 1            |
++--------------------+-------+-----------------------+
+| /blog/2            | blog  | {page} = 2            |
++--------------------+-------+-----------------------+
 
 .. tip::
 
