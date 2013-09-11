@@ -229,7 +229,7 @@ If there are any issues, correct them now before moving on.
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
     and if you get an error - try the next method. This uses a command to
-    try to determine your web server user and set is as ``APACHEUSER``:
+    try to determine your web server user and set it as ``APACHEUSER``:
 
     .. code-block:: bash
 
