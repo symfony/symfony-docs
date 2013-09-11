@@ -520,7 +520,7 @@ regardless of how your project is developed. To name a few:
 * `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* :doc:`ClassLoader</components/class_loader>` An autoloading library that allows
+* :doc:`ClassLoader</components/class_loader/introduction>` An autoloading library that allows
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
