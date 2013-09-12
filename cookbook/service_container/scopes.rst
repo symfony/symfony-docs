@@ -79,12 +79,14 @@ when compiling the container. Read the sidebar below for more details.
 Using a Service from a narrower Scope
 -------------------------------------
 
-If your service has a dependency on a scoped service (like the ``request``),
-you have three ways to deal with it:
+The most common problem with "scope" is when your service has a dependency
+on the ``request`` service. The *easiest* way to solve this is to instead
+inject the ``request_stack`` service and access the current Request by calling
+the ``getCurrentRequest()`` method.
 
-* Use setter injection if the dependency is "synchronized"; this is the
-  recommended way and the best solution for the ``request`` instance as it is
-  synchronized with the ``request`` scope (see
+This solution is great, but there are also others:
+
+* Use setter injection if the dependency is "synchronized"; (see
   :ref:`using-synchronized-service`).
 
 * Put your service in the same scope as the dependency (or a narrower one). If
@@ -108,7 +110,7 @@ Using a synchronized Service
 
 Injecting the container or setting your service to a narrower scope have
 drawbacks. For synchronized services (like the ``request``), using setter
-injection is the best option as it has no drawbacks and everything works
+injection is a nice option as it has no drawbacks and everything works
 without any special code in your service or in your definition::
 
     // src/Acme/HelloBundle/Mail/Mailer.php
