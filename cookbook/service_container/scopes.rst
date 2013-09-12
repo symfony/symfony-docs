@@ -6,8 +6,13 @@ How to work with Scopes
 
 This entry is all about scopes, a somewhat advanced topic related to the
 :doc:`/book/service_container`. If you've ever gotten an error mentioning
-"scopes" when creating services, or need to create a service that depends
-on the ``request`` service, then this entry is for you.
+"scopes" when creating services, then this entry is for you.
+
+.. note::
+
+    If you are trying to inject the ``request`` service, the simple solution
+    is to inject the ``request_stack`` service instead and access the current
+    Request by calling the ``getCurrentRequest()`` method.
 
 Understanding Scopes
 --------------------
@@ -337,10 +342,3 @@ The service config for this class would look something like this:
 
     Injecting the whole container into a service is generally not a good
     idea (only inject what you need).
-
-.. tip::
-
-    If you define a controller as a service then you can get the ``Request``
-    object without injecting the container by having it passed in as an
-    argument of your action method. See
-    :ref:`book-controller-request-argument` for details.
