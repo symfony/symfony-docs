@@ -81,7 +81,7 @@ to your form factory::
         ->addExtension(new HttpFoundationExtension())
         ->getFormFactory();
 
-Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request``
+Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
 object to :method:`Symfony\\Component\\Form\\Form::bind` instead of the raw
 array of submitted values.
 
