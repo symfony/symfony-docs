@@ -71,7 +71,7 @@ The Form component optionally integrates with Symfony's :doc:`HttpFoundation</co
 component to make this even easier.
 
 To integrate the HttpFoundation component, add the
-:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\HttpFoundationExtension`
+:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
 to your form factory::
 
     use Symfony\Component\Form\Forms;
