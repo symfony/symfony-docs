@@ -23,7 +23,7 @@ Your configuration will look like this:
         path:     /
         defaults:
             _controller: FrameworkBundle:Redirect:urlRedirect
-            route: /app
+            path: /app
             permanent: true
 
 In this example, you configure a route for the ``/`` path and let :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController`
