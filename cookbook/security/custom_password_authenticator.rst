@@ -1,15 +1,18 @@
 .. index::
-    single: Security; Custom Authenticator
+    single: Security; Custom Password Authenticator
 
-How to create a Custom Authenticator
-====================================
+How to create a Custom Password Authenticator
+=============================================
 
 Imagine you want to allow access to your website only between 2pm and 4pm (for
 the UTC timezone). Before Symfony 2.4, you had to create a custom token, factory,
 listener and provider.
 
-The Authenticator
------------------
+The Password Authenticator
+--------------------------
+
+.. versionadded:: 2.4
+    The ``SimpleFormAuthenticatorInterface`` interface was added in Symfony 2.4.
 
 But now, thanks to new simplified authentication customization options in
 Symfony 2.4, you don't need to create a whole bunch of new classes, but use the
@@ -84,9 +87,6 @@ interface instead::
         }
     }
 
-.. versionadded:: 2.4
-    The ``SimpleFormAuthenticatorInterface`` interface was added in Symfony 2.4.
-
 How it Works
 ------------
 
@@ -121,6 +121,8 @@ Now, configure your ``TimeAuthenticator`` as a service:
 
         # app/config/config.yml
         services:
+            # ...
+
             time_authenticator:
                 class:     Acme\HelloBundle\Security\TimeAuthenticator
                 arguments: [@security.encoder_factory]
@@ -134,9 +136,12 @@ Now, configure your ``TimeAuthenticator`` as a service:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
+                <!-- ... -->
+
                 <service id="time_authenticator"
-                    class="Acme\HelloBundle\Security\TimeAuthenticator">
-                    <argument type="service" id="security.encoder_factory"/>
+                    class="Acme\HelloBundle\Security\TimeAuthenticator"
+                >
+                    <argument type="service" id="security.encoder_factory" />
                 </service>
             </services>
         </container>
@@ -185,12 +190,15 @@ like this:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <config>
+                <!-- ... -->
+
                 <firewall name="secured_area"
                     pattern="^/admin"
                     provider="authenticator">
                     <simple-form authenticator="time_authenticator"
                         check-path="login_check"
-                        login-path="login" />
+                        login-path="login"
+                    />
                 </firewall>
             </config>
         </srv:container>
@@ -198,6 +206,9 @@ like this:
     .. code-block:: php
 
         // app/config/security.php
+
+        // ..
+
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area'    => array(

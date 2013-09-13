@@ -13,6 +13,6 @@ Security
     form_login
     securing_services
     custom_provider
-    custom_authenticator
+    custom_password_authenticator
     custom_authentication_provider
     target_path
