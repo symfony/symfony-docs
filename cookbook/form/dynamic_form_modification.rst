@@ -463,7 +463,7 @@ On a form, we can usually listen to the following events:
 
 .. versionadded:: 2.2.6
 
-    The behavior of the ``POST_SUBMIT`` changed slightly in 2.2.6, which the
+    The behavior of the ``POST_SUBMIT`` event changed slightly in 2.2.6, which the
     below example uses.
 
 The key is to add a ``POST_SUBMIT`` listener to the field that your new field
