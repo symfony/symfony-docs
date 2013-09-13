@@ -71,7 +71,7 @@ The Form component optionally integrates with Symfony's :doc:`HttpFoundation</co
 component to make this even easier.
 
 To integrate the HttpFoundation component, add the
-:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\HttpFoundationExtension`
+:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
 to your form factory::
 
     use Symfony\Component\Form\Forms;
@@ -81,7 +81,7 @@ to your form factory::
         ->addExtension(new HttpFoundationExtension())
         ->getFormFactory();
 
-Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request``
+Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
 object to :method:`Symfony\\Component\\Form\\Form::bind` instead of the raw
 array of submitted values.
 
