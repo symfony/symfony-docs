@@ -50,10 +50,7 @@ The advantages of doing this will become more obvious as you continue::
         $this->options = $resolver->resolve($options);
     }
 
-The ``$options`` property is an instance of
-:class:`Symfony\\Component\\OptionsResolver\\Options`, which implements
-:phpclass:`ArrayAccess`, :phpclass:`Iterator` and :phpclass:`Countable`. That
-means you can handle it just like a normal array::
+The options property now is a well defined array with all resolved options readily available::
 
     // ...
     public function getHost()
@@ -75,8 +72,6 @@ Now, try to actually use the class::
         'host'     => 'smtp.example.org',
         'password' => 'pa$$word',
     ));
-
-    echo $mailer->getPassword();
 
 Right now, you'll receive a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`,
