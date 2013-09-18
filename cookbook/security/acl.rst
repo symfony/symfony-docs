@@ -217,10 +217,10 @@ The user is now allowed to view, edit, delete, and un-delete objects.
 
 .. _`MongoDBAclBundle`: https://github.com/IamPersistent/MongoDBAclBundle
 
-Looking for alternatives
+Looking for Alternatives
 ------------------------
 
-For more simple use cases this seems to be an overhead for many developer. 
+For more simple use cases this seems to be an overhead for many developers. 
 As a downside there is that in case you change the permissions in any way, 
 you need to change all the existing granted permissions as well. As well 
 when you want to change a specific part of the ACL you need to understand
