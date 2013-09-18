@@ -395,6 +395,15 @@ itself.
     :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`. The service
     container object will then be accessible via the ``container`` property.
 
+.. tip::
+
+    If your host uses PHP 5.4 or higher, you can also use the
+    class:`Symfony\\Component\\DependencyInjection\\ContainerAwareTrait` trait to
+    make the container accessible via the ``container`` property.
+
+.. versionadded:: 2.4
+    The ``ContainerAwareTrait`` is new in Symfony 2.4
+
 .. note::
 
     You can also define your :doc:`Controllers as Services</cookbook/controller/service>`.
