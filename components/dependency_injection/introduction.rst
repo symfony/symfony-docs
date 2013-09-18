@@ -14,10 +14,10 @@ For an introduction to Dependency Injection and service containers see
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/DependencyInjection);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/dependency-injection`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_).
 
 Basic Usage
 -----------
@@ -184,7 +184,7 @@ for the services rather than using PHP to define the services as in the above
 examples. In anything but the smallest applications it make sense to organize
 the service definitions by moving them into one or more configuration files.
 To do this you also need to install
-:doc:`the Config Component</components/config/introduction>`.
+:doc:`the Config Component </components/config/introduction>`.
 
 Loading an XML config file::
 
@@ -209,7 +209,7 @@ Loading a YAML config file::
 .. note::
 
     If you want to load YAML config files then you will also need to install
-    :doc:`The YAML component</components/yaml/introduction>`.
+    :doc:`The YAML component </components/yaml/introduction>`.
 
 If you *do* want to use PHP to create the services then you can move this
 into a separate config file and load it in a similar way::

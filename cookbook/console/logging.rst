@@ -80,12 +80,11 @@ method, where exception handling should happen:
 .. caution::
 
     Due to the nature of the core :class:`Symfony\\Component\\Console\\Application`
-    class, much of the :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
+    class, much of the :method:`run <Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
     method has to be duplicated and even a private property ``originalAutoExit``
     re-implemented. This serves as an example of what you *could* do in your
     code, though there is a high risk that something may break when upgrading
     to future versions of Symfony.
-
 
 .. code-block:: php
 
@@ -188,7 +187,7 @@ In the code above, you disable exception catching so the parent ``run`` method
 will throw all exceptions. When an exception is caught, you simple log it by
 accessing the ``logger`` service from the service container and then handle
 the rest of the logic in the same way that the parent ``run`` method does
-(specifically, since the parent :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
+(specifically, since the parent :method:`run <Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
 method will not handle exceptions rendering and status code handling when
 ``catchExceptions`` is set to false, it has to be done in the overridden
 method).

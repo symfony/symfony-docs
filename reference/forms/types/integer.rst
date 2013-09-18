@@ -16,22 +16,28 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `rounding_mode`_                                                    |
+|             | - `precision`_                                                        |
 |             | - `grouping`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `required`_                                                         |
 | options     | - `label`_                                                            |
 |             | - `read_only`_                                                        |
+|             | - `disabled`_                                                         |
 |             | - `error_bubbling`_                                                   |
+|             | - `error_mapping`_                                                    |
 |             | - `invalid_message`_                                                  |
 |             | - `invalid_message_parameters`_                                       |
+|             | - `mapped`_                                                           |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                            |
+| Parent type | :doc:`field </reference/forms/types/form>`                            |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
 
 Field Options
 -------------
+
+.. include:: /reference/forms/types/options/precision.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
@@ -59,7 +65,7 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`field </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -67,8 +73,14 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

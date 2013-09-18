@@ -8,7 +8,7 @@ Because Symfony2's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
 proxy. Varnish is a powerful, open-source, HTTP accelerator capable of serving
 cached content quickly and including support for :ref:`Edge Side
-Includes<edge-side-includes>`.
+Includes <edge-side-includes>`.
 
 .. index::
     single: Varnish; configuration
@@ -35,6 +35,7 @@ application:
 .. code-block:: text
 
     sub vcl_recv {
+        // Add a Surrogate-Capability header to announce ESI support.
         set req.http.Surrogate-Capability = "abc=ESI/1.0";
     }
 
@@ -45,12 +46,16 @@ Symfony2 adds automatically:
 .. code-block:: text
 
     sub vcl_fetch {
+        /*
+        Check for ESI acknowledgement
+        and remove Surrogate-Control header
+        */
         if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
             unset beresp.http.Surrogate-Control;
 
-            // for Varnish >= 3.0
+            // For Varnish >= 3.0
             set beresp.do_esi = true;
-            // for Varnish < 3.0
+            // For Varnish < 3.0
             // esi;
         }
     }
@@ -75,14 +80,43 @@ that will invalidate the cache for a given resource:
 
 .. code-block:: text
 
-    sub vcl_hit {
+    /*
+     Connect to the backend server
+     on the local machine on port 8080
+     */
+    backend default {
+        .host = "127.0.0.1";
+        .port = "8080";
+    }
+
+    sub vcl_recv {
+        /*
+        Varnish default behaviour doesn't support PURGE.
+        Match the PURGE request and immediately do a cache lookup,
+        otherwise Varnish will directly pipe the request to the backend
+        and bypass the cache
+        */
         if (req.request == "PURGE") {
+            return(lookup);
+        }
+    }
+
+    sub vcl_hit {
+        // Match PURGE request
+        if (req.request == "PURGE") {
+            // Force object expiration for Varnish < 3.0
             set obj.ttl = 0s;
+            // Do an actual purge for Varnish >= 3.0
+            // purge;
             error 200 "Purged";
         }
     }
 
     sub vcl_miss {
+        /*
+        Match the PURGE request and
+        indicate the request wasn't stored in cache.
+        */
         if (req.request == "PURGE") {
             error 404 "Not purged";
         }
@@ -91,7 +125,87 @@ that will invalidate the cache for a given resource:
 .. caution::
 
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
-    purging your cached data.
+    purging your cached data. You can do this by setting up an access list:
+
+    .. code-block:: text
+
+        /*
+         Connect to the backend server
+         on the local machine on port 8080
+         */
+        backend default {
+            .host = "127.0.0.1";
+            .port = "8080";
+        }
+
+        // Acl's can contain IP's, subnets and hostnames
+        acl purge {
+            "localhost";
+            "192.168.55.0"/24;
+        }
+
+        sub vcl_recv {
+            // Match PURGE request to avoid cache bypassing
+            if (req.request == "PURGE") {
+                // Match client IP to the acl
+                if (!client.ip ~ purge) {
+                    // Deny access
+                    error 405 "Not allowed.";
+                }
+                // Perform a cache lookup
+                return(lookup);
+            }
+        }
+
+        sub vcl_hit {
+            // Match PURGE request
+            if (req.request == "PURGE") {
+                // Force object expiration for Varnish < 3.0
+                set obj.ttl = 0s;
+                // Do an actual purge for Varnish >= 3.0
+                // purge;
+                error 200 "Purged";
+            }
+        }
+
+        sub vcl_miss {
+            // Match PURGE request
+            if (req.request == "PURGE") {
+                // Indicate that the object isn't stored in cache
+                error 404 "Not purged";
+            }
+        }
+
+Routing and X-FORWARDED Headers
+-------------------------------
+
+To ensure that the Symfony Router generates urls correctly with Varnish,
+proper ```X-Forwarded``` headers must be added so that Symfony is aware of
+the original port number of the request. Exactly how this is done depends
+on your setup. As a simple example, Varnish and your web server are on the
+same machine and that Varnish is listening on one port (e.g. 80) and Apache
+on another (e.g. 8080). In this situation, Varnish should add the ``X-Forwarded-Port``
+header so that the Symfony application knows that the original port number
+is 80 and not 8080.
+
+If this header weren't set properly, Symfony may append ``8080`` when generating
+absolute URLs:
+
+.. code-block:: text
+
+    sub vcl_recv {
+        if (req.http.X-Forwarded-Proto == "https" ) {
+            set req.http.X-Forwarded-Port = "443";
+        } else {
+            set req.http.X-Forwarded-Port = "80"
+        }
+    }
+
+.. note::
+
+    Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
+    in the Symfony configuration so that Varnish is seen as a trusted proxy
+    and the ``X-Forwarded-`` headers are used.
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html

@@ -41,9 +41,15 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `form.type_guesser`_              | Add your own logic for "form type guessing"                               |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.cache_clearer`_           | Register your service to be called during the cache clearing process      |
++-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.cache_warmer`_            | Register your service to be called during the cache warming process       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_listener`_          | Listen to different events/hooks in Symfony                               |
++-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
++-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.fragment_renderer`_       | Add new HTTP content rendering strategies                                 |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.logger`_                 | Logging with a custom logging channel                                     |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -55,15 +61,19 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `security.listener.factory`_      | Necessary when creating a custom authentication system                    |
-+-----------------------------------+---------------------------------------------------------------------------+
 | `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `translation.loader`_             | Register a custom service that loads translations                         |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `translation.extractor`_          | Register a custom service that extracts translation messages from a file  |
++-----------------------------------+---------------------------------------------------------------------------+
+| `translation.dumper`_             | Register a custom service that dumps translation messages                 |
++-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
++-----------------------------------+---------------------------------------------------------------------------+
+| `twig.loader`_                    | Register a custom service that loads Twig templates                       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -188,7 +198,7 @@ Finally, apply the filter:
 You can also apply your filter via the ``assetic.filters.my_filter.apply_to``
 config option as it's described here: :doc:`/cookbook/assetic/apply_to_option`.
 In order to do that, you must define your filter service in a separate xml
-config file and point to this file's via the ``assetic.filters.my_filter.resource``
+config file and point to this file's path via the ``assetic.filters.my_filter.resource``
 configuration key.
 
 assetic.formula_loader
@@ -251,6 +261,8 @@ doctrine.event_subscriber
 For details on creating Doctrine event subscribers, read the cookbook article:
 :doc:`/cookbook/doctrine/event_listeners_subscribers`.
 
+.. _dic-tags-form-type:
+
 form.type
 ---------
 
@@ -283,7 +295,7 @@ the interface directly::
     class MyFormTypeExtension extends AbstractTypeExtension
     {
         // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), buildViewBottomUp(), getDefaultOptions() or getAllowedOptionValues()
+        // like buildForm(), buildView(), finishView(), setDefaultOptions()
     }
 
 In order for Symfony to know about your form extension and use it, give it
@@ -313,15 +325,15 @@ the `form.type_extension` tag:
         ;
 
 The ``alias`` key of the tag is the type of field that this extension should
-be applied to. For example, to apply the extension to any "field", use the
-"field" value.
+be applied to. For example, to apply the extension to any form/field, use the
+"form" value.
 
 form.type_guesser
 -----------------
 
 **Purpose**: Add your own logic for "form type guessing"
 
-This tag allows you to add your own logic to the :ref:`Form Guessing<book-forms-field-guessing>`
+This tag allows you to add your own logic to the :ref:`Form Guessing <book-forms-field-guessing>`
 process. By default, form guessing is done by "guessers" based on the validation
 metadata and Doctrine metadata (if you're using Doctrine).
 
@@ -331,6 +343,57 @@ tag its service definition with ``form.type_guesser`` (it has no options).
 
 To see an example of how this class might look, see the ``ValidatorTypeGuesser``
 class in the ``Form`` component.
+
+kernel.cache_clearer
+--------------------
+
+**Purpose**: Register your service to be called during the cache clearing process
+
+Cache clearing occurs whenever you call ``cache:clear`` command. If your
+bundle caches files, you should add custom cache clearer for clearing those
+files during the cache clearing process.
+
+In order to register your custom cache clearer, first you must create a
+service class::
+
+    // src/Acme/MainBundle/Cache/MyClearer.php
+    namespace Acme\MainBundle\Cache;
+
+    use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
+
+    class MyClearer implements CacheClearerInterface
+    {
+        public function clear($cacheDir)
+        {
+            // clear your cache
+        }
+
+    }
+
+Then register this class and tag it with ``kernel.cache:clearer``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_cache_clearer:
+                class: Acme\MainBundle\Cache\MyClearer
+                tags:
+                    - { name: kernel.cache_clearer }
+
+    .. code-block:: xml
+
+        <service id="my_cache_clearer" class="Acme\MainBundle\Cache\MyClearer">
+            <tag name="kernel.cache_clearer" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('my_cache_clearer', 'Acme\MainBundle\Cache\MyClearer')
+            ->addTag('kernel.cache_clearer')
+        ;
 
 kernel.cache_warmer
 -------------------
@@ -433,13 +496,15 @@ kernel.request
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 1024      |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`                  | 0 and 255 |
-+-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | 192       |
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`                 | 128       |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 64        |
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`                    | 32        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`                    | 16        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 8         |
 +-------------------------------------------------------------------------------------------+-----------+
 
 kernel.controller
@@ -469,6 +534,8 @@ kernel.response
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`       | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`          | -1024    |
++-------------------------------------------------------------------------------------------+----------+
 
 kernel.exception
 ................
@@ -480,6 +547,71 @@ kernel.exception
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+
+kernel.terminate
+................
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`           | 0        |
++-------------------------------------------------------------------------------------------+----------+
+
+.. _dic-tags-kernel-event-subscriber:
+
+kernel.event_subscriber
+-----------------------
+
+**Purpose**: To subscribe to a set of different events/hooks in Symfony
+
+.. versionadded:: 2.1
+   The ability to add kernel event subscribers is new to 2.1.
+
+To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with ``kernel.event_subscriber``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            kernel.subscriber.your_subscriber_name:
+                class: Fully\Qualified\Subscriber\Class\Name
+                tags:
+                    - { name: kernel.event_subscriber }
+
+    .. code-block:: xml
+
+        <service id="kernel.subscriber.your_subscriber_name" class="Fully\Qualified\Subscriber\Class\Name">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('kernel.subscriber.your_subscriber_name', 'Fully\Qualified\Subscriber\Class\Name')
+            ->addTag('kernel.event_subscriber')
+        ;
+
+.. note::
+
+    Your service must implement the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
+    interface.
+
+.. note::
+
+    If your service is created by a factory, you **MUST** correctly set the ``class``
+    parameter for this tag to work correctly.
+
+kernel.fragment_renderer
+------------------------
+
+**Purpose**: Add a new HTTP content rendering strategy.
+
+To add a new rendering strategy - in addition to the core strategies like
+``EsiFragmentRenderer`` - create a class that implements
+:class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
+register it as a service, then tag it with ``kernel.fragment_renderer``.
 
 .. _dic_tags-monolog:
 
@@ -654,14 +786,6 @@ of your configuration, and tag it with ``routing.loader``:
 
 For more information, see :doc:`/cookbook/routing/custom_route_loader`.
 
-security.listener.factory
--------------------------
-
-**Purpose**: Necessary when creating a custom authentication system
-
-This tag is used when creating your own custom authentication system. For
-details, see :doc:`/cookbook/security/custom_authentication_provider`.
-
 security.remember_me_aware
 --------------------------
 
@@ -737,6 +861,8 @@ templates):
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
+.. _dic-tags-translation-loader:
+
 translation.loader
 ------------------
 
@@ -810,6 +936,131 @@ file, but it might either be blank or contain a little bit of information
 about loading those resources from the database. The file is key to trigger
 the ``load`` method on your custom loader.
 
+translation.extractor
+---------------------
+
+**Purpose**: To register a custom service that extracts messages from a file
+
+.. versionadded:: 2.1
+   The ability to add message extractors is new in Symfony 2.1.
+
+When executing the ``translation:update`` command, it uses extractors to
+extract translation messages from a file. By default, the Symfony2 framework
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
+:class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`, which
+help to find and extract translation keys from Twig templates and PHP files.
+
+You can create your own extractor by creating a class that implements
+:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` and
+tagging the service with ``translation.extractor``. The tag has one required
+option: ``alias``, which defines the name of the extractor::
+
+    // src/Acme/DemoBundle/Translation/FooExtractor.php
+    namespace Acme\DemoBundle\Translation;
+
+    use Symfony\Component\Translation\Extractor\ExtractorInterface;
+    use Symfony\Component\Translation\MessageCatalogue;
+
+    class FooExtractor implements ExtractorInterface
+    {
+        protected $prefix;
+
+        /**
+         * Extracts translation messages from a template directory to the catalogue.
+         */
+        public function extract($directory, MessageCatalogue $catalogue)
+        {
+            // ...
+        }
+
+        /**
+         * Sets the prefix that should be used for new found messages.
+         */
+        public function setPrefix($prefix)
+        {
+            $this->prefix = $prefix;
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.translation.extractor.foo:
+                class: Acme\DemoBundle\Translation\FooExtractor
+                tags:
+                    - { name: translation.extractor, alias: foo }
+
+    .. code-block:: xml
+
+        <service id="acme_demo.translation.extractor.foo"
+            class="Acme\DemoBundle\Translation\FooExtractor">
+            <tag name="translation.extractor" alias="foo" />
+        </service>
+
+    .. code-block:: php
+
+        $container->register(
+            'acme_demo.translation.extractor.foo',
+            'Acme\DemoBundle\Translation\FooExtractor'
+        )
+            ->addTag('translation.extractor', array('alias' => 'foo'));
+
+translation.dumper
+------------------
+
+**Purpose**: To register a custom service that dumps messages to a file
+
+.. versionadded:: 2.1
+   The ability to add message dumpers is new in Symfony 2.1.
+
+After an `Extractor <translation.extractor>`_ has extracted all messages from
+the templates, the dumpers are executed to dump the messages to a translation
+file in a specific format.
+
+Symfony2 already comes with many dumpers:
+
+* :class:`Symfony\\Component\\Translation\\Dumper\\CsvFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\IcuResFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\IniFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\MoFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\PoFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\QtFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\XliffFileDumper`
+* :class:`Symfony\\Component\\Translation\\Dumper\\YamlFileDumper`
+
+You can create your own dumper by extending
+:class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` or implementing
+:class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface` and tagging
+the service with ``translation.dumper``. The tag has one option: ``alias``
+This is the name that's used to determine which dumper should be used.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_demo.translation.dumper.json:
+                class: Acme\DemoBundle\Translation\JsonFileDumper
+                tags:
+                    - { name: translation.dumper, alias: json }
+
+    .. code-block:: xml
+
+        <service id="acme_demo.translation.dumper.json"
+            class="Acme\DemoBundle\Translation\JsonFileDumper">
+            <tag name="translation.dumper" alias="json" />
+        </service>
+
+    .. code-block:: php
+
+        $container->register(
+            'acme_demo.translation.dumper.json',
+            'Acme\DemoBundle\Translation\JsonFileDumper'
+        )
+            ->addTag('translation.dumper', array('alias' => 'json'));
+
 .. _reference-dic-tags-twig-extension:
 
 twig.extension
@@ -876,6 +1127,39 @@ also have to be added as regular services:
             ->addTag('twig.extension')
         ;
 
+twig.loader
+-----------
+
+**Purpose**: Register a custom service that loads Twig templates
+
+By default, Symfony uses only one `Twig Loader`_ -
+:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+to load Twig templates from another resource, you can create a service for
+the new loader and tag it with ``twig.loader``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme.demo_bundle.loader.some_twig_loader:
+                class: Acme\DemoBundle\Loader\SomeTwigLoader
+                tags:
+                    - { name: twig.loader }
+
+    .. code-block:: xml
+
+        <service id="acme.demo_bundle.loader.some_twig_loader" class="Acme\DemoBundle\Loader\SomeTwigLoader">
+            <tag name="twig.loader" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
+            ->addTag('twig.loader')
+        ;
+
 validator.constraint_validator
 ------------------------------
 
@@ -904,5 +1188,6 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
+.. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders

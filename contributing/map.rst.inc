@@ -4,9 +4,9 @@
   * :doc:`Patches </contributing/code/patches>`
   * :doc:`Security </contributing/code/security>`
   * :doc:`Tests </contributing/code/tests>`
-  * :doc:`Coding Standards</contributing/code/standards>`
-  * :doc:`Code Conventions</contributing/code/conventions>`
-  * :doc:`Git</contributing/code/git>`  
+  * :doc:`Coding Standards </contributing/code/standards>`
+  * :doc:`Code Conventions </contributing/code/conventions>`
+  * :doc:`Git </contributing/code/git>`
   * :doc:`License </contributing/code/license>`
 
 * **Documentation**

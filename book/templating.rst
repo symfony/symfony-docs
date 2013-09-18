@@ -6,7 +6,7 @@ Creating and using Templates
 
 As you know, the :doc:`controller </book/controller>` is responsible for
 handling each request that comes into a Symfony2 application. In reality,
-the controller delegates the most of the heavy work to other places so that
+the controller delegates most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
 CSS or any other content, it hands the work off to the templating engine.
 In this chapter, you'll learn how to write powerful templates that can be
@@ -18,7 +18,6 @@ code.
 
     How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
     page of the book.
-
 
 .. index::
    single: Templating; What is a template?
@@ -104,7 +103,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 .. tip::
 
     Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
+    it with ``twig.extension`` :ref:`tag <reference-dic-tags-twig-extension>`.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
@@ -205,10 +204,10 @@ First, build a base layout file:
             <body>
                 <div id="sidebar">
                     {% block sidebar %}
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/blog">Blog</a></li>
-                    </ul>
+                        <ul>
+                              <li><a href="/">Home</a></li>
+                              <li><a href="/blog">Blog</a></li>
+                        </ul>
                     {% endblock %}
                 </div>
 
@@ -376,6 +375,11 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
+.. versionadded:: 2.2
+    Namespaced path support was added in 2.2, allowing for template names
+    like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
+    for more details.
+
 By default, templates can live in two different locations:
 
 * ``app/Resources/views/``: The applications ``views`` directory can contain
@@ -454,7 +458,7 @@ section.
 .. note::
 
    The available "engines" can be configured and even new engines added.
-   See :ref:`Templating Configuration<template-configuration>` for more details.
+   See :ref:`Templating Configuration <template-configuration>` for more details.
 
 .. index::
    single: Templating; Tags and helpers
@@ -532,9 +536,10 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig'
-                       with {'article': article}
-                %}
+                {{ include(
+                    'AcmeArticleBundle:Article:articleDetails.html.twig',
+                    { 'article': article }
+                ) }}
             {% endfor %}
         {% endblock %}
 
@@ -554,16 +559,22 @@ Including this template from any other template is simple:
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
-The template is included using the ``{% include %}`` tag. Notice that the
+The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
-template uses an ``article`` variable. This is passed in by the ``list.html.twig``
-template using the ``with`` command.
+template uses an ``article`` variable, which we pass to it. In this case,
+you could avoid doing this entirely, as all of the variables available in
+``list.html.twig`` are also available in ``articleDetails.html.twig`` (unless
+you set `with_context`_ to false).
 
 .. tip::
 
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
+
+.. versionadded:: 2.2
+    The `include() function`_ is a new Twig feature that's available in Symfony
+    2.2. Prior, the `{% include %} tag`_ tag was used.
 
 .. index::
    single: Templating; Embedding action
@@ -626,43 +637,8 @@ The ``recentList`` template is perfectly straightforward:
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
     you'll learn how to do this correctly.
 
-Even though this controller will only be used internally, you'll need to
-create a route that points to the controller:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        latest_articles:
-            pattern:  /articles/latest/{max}
-            defaults: { _controller: AcmeArticleBundle:Article:recentArticles }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="latest_articles" pattern="/articles/latest/{max}">
-                <default key="_controller">AcmeArticleBundle:Article:recentArticles</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('latest_articles', new Route('/articles/latest/{max}', array(
-            '_controller' => 'AcmeArticleBundle:Article:recentArticles',
-        )));
-
-        return $collection;
-
-To include the controller, you'll need to refer to it using an absolute url:
+To include the controller, you'll need to refer to it using the standard
+string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
@@ -672,7 +648,9 @@ To include the controller, you'll need to refer to it using an absolute url:
 
         {# ... #}
         <div id="sidebar">
-            {% render url('latest_articles', { 'max': 3 }) %}
+            {{ render(controller('AcmeArticleBundle:Article:recentArticles', {
+                'max': 3
+            })) }}
         </div>
 
     .. code-block:: html+php
@@ -682,15 +660,172 @@ To include the controller, you'll need to refer to it using an absolute url:
         <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render(
-                $view['router']->generate('latest_articles', array('max' => 3), true)
+                new ControllerReference(
+                    'AcmeArticleBundle:Article:recentArticles',
+                    array('max' => 3)
+                )
             ) ?>
         </div>
-
-.. include:: /book/_security-2012-6431.rst.inc
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
+Of course, like all controllers, they should ideally be "skinny", meaning
+that as much code as possible lives in reusable :doc:`services </book/service_container>`.
+
+Asynchronous Content with hinclude.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    hinclude.js support was added in Symfony 2.1
+
+Controllers can be embedded asynchronously using the hinclude.js_ javascript library.
+As the embedded content comes from another page (or controller for that matter),
+Symfony2 uses a version of the standard ``render`` function to configure ``hinclude``
+tags:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ render_hinclude(controller('...')) %}
+        {{ render_hinclude(url('...')) %}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array('renderer' => 'hinclude')
+        ) ?>
+
+        <?php echo $view['actions']->render(
+            $view['router']->generate('...'),
+            array('renderer' => 'hinclude')
+        ) ?>
+
+.. note::
+
+   hinclude.js_ needs to be included in your page to work.
+
+.. note::
+
+    When using a controller instead of a URL, you must enable the Symfony
+    ``fragments`` configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                # ...
+                fragments: { path: /_fragment }
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                    http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:fragments path="/_fragment" />
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                // ...
+                'fragments' => array('path' => '/_fragment'),
+            ));
+
+Default content (while loading or if javascript is disabled) can be set globally
+in your application configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:
+                hinclude_default_template: AcmeDemoBundle::hinclude.html.twig
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating
+                    hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating'      => array(
+                'hinclude_default_template' => array(
+                    'AcmeDemoBundle::hinclude.html.twig',
+                ),
+            ),
+        ));
+
+.. versionadded:: 2.2
+    Default templates per render function was added in Symfony 2.2
+
+You can define default templates per ``render`` function (which will override
+any global default template that is defined):
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ render_hinclude(controller('...'),  {
+            'default': 'AcmeDemoBundle:Default:content.html.twig'
+        }) }}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array(
+                'renderer' => 'hinclude',
+                'default' => 'AcmeDemoBundle:Default:content.html.twig',
+            )
+        ) ?>
+
+Or you can also specify a string to display as the default content:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array(
+                'renderer' => 'hinclude',
+                'default' => 'Loading...',
+            )
+        ) ?>
 
 .. index::
    single: Templating; Linking to pages
@@ -715,14 +850,21 @@ configuration:
     .. code-block:: yaml
 
         _welcome:
-            pattern:  /
+            path:     /
             defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
-        <route id="_welcome" pattern="/">
-            <default key="_controller">AcmeDemoBundle:Welcome:index</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="_welcome" path="/">
+                <default key="_controller">AcmeDemoBundle:Welcome:index</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -753,14 +895,21 @@ route:
     .. code-block:: yaml
 
         article_show:
-            pattern:  /article/{slug}
+            path:     /article/{slug}
             defaults: { _controller: AcmeArticleBundle:Article:show }
 
     .. code-block:: xml
 
-        <route id="article_show" pattern="/article/{slug}">
-            <default key="_controller">AcmeArticleBundle:Article:show</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="article_show" path="/article/{slug}">
+                <default key="_controller">AcmeArticleBundle:Article:show</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -791,7 +940,9 @@ correctly:
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles in $article): ?>
-            <a href="<?php echo $view['router']->generate('article_show', array('slug' => $article->getSlug()) ?>">
+            <a href="<?php echo $view['router']->generate('article_show', array(
+                'slug' => $article->getSlug(),
+            )) ?>">
                 <?php echo $article->getTitle() ?>
             </a>
         <?php endforeach; ?>
@@ -875,7 +1026,6 @@ advantage of Symfony's template inheritance.
     more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
-
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
 just above the closing ``body`` tag. These blocks will contain all of the
@@ -889,14 +1039,14 @@ stylesheets and Javascripts that you'll need throughout your site:
             {# ... #}
 
             {% block stylesheets %}
-                <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+                <link href="{{ asset('/css/main.css') }}" rel="stylesheet" />
             {% endblock %}
         </head>
         <body>
             {# ... #}
 
             {% block javascripts %}
-                <script src="{{ asset('/js/main.js') }}" type="text/javascript"></script>
+                <script src="{{ asset('/js/main.js') }}"></script>
             {% endblock %}
         </body>
     </html>
@@ -914,7 +1064,7 @@ page. From inside that contact page's template, do the following:
     {% block stylesheets %}
         {{ parent() }}
 
-        <link href="{{ asset('/css/contact.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('/css/contact.css') }}" rel="stylesheet" />
     {% endblock %}
 
     {# ... #}
@@ -932,7 +1082,7 @@ is by default "web").
 
 .. code-block:: html+jinja
 
-   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
+   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
@@ -974,7 +1124,7 @@ automatically:
 .. tip::
 
     You can add your own global template variables. See the cookbook example
-    on :doc:`Global Variables</cookbook/templating/global_variables>`.
+    on :doc:`Global Variables </cookbook/templating/global_variables>`.
 
 .. index::
    single: Templating; The templating service
@@ -1016,9 +1166,19 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating>
-            <framework:engine id="twig" />
-        </framework:templating>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating>
+                    <framework:engine id="twig" />
+                </framework:templating>
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -1032,7 +1192,7 @@ configuration file:
         ));
 
 Several configuration options are available and are covered in the
-:doc:`Configuration Appendix</reference/configuration/framework>`.
+:doc:`Configuration Appendix </reference/configuration/framework>`.
 
 .. note::
 
@@ -1243,8 +1403,13 @@ is being escaped for HTML output.
 In some cases, you'll need to disable output escaping when you're rendering
 a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
-HTML code. By default, Twig will escape the article body. To render it normally,
-add the ``raw`` filter: ``{{ article.body|raw }}``.
+HTML code. By default, Twig will escape the article body.
+
+To render it normally, add the ``raw`` filter:
+
+.. code-block:: jinja
+
+    {{ article.body|raw }}
 
 You can also disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
@@ -1273,48 +1438,12 @@ in a JavaScript string, use the ``js`` context:
 .. index::
    single: Templating; Formats
 
-.. _template-formats:
-
 Debugging
 ---------
 
-.. versionadded:: 2.0.9
-    This feature is available as of Twig ``1.5.x``, which was first shipped
-    with Symfony 2.0.9.
-
 When using PHP, you can use ``var_dump()`` if you need to quickly find the
 value of a variable passed. This is useful, for example, inside your controller.
-The same can be achieved when using Twig by using the debug extension. This
-needs to be enabled in the config:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            acme_hello.twig.extension.debug:
-                class:        Twig_Extension_Debug
-                tags:
-                     - { name: 'twig.extension' }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <services>
-            <service id="acme_hello.twig.extension.debug" class="Twig_Extension_Debug">
-                <tag name="twig.extension" />
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $definition = new Definition('Twig_Extension_Debug');
-        $definition->addTag('twig.extension');
-        $container->setDefinition('acme_hello.twig.extension.debug', $definition);
+The same can be achieved when using Twig thanks to the debug extension.
 
 Template parameters can then be dumped using the ``dump`` function:
 
@@ -1329,10 +1458,31 @@ Template parameters can then be dumped using the ``dump`` function:
         </a>
     {% endfor %}
 
-
 The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
 is ``true``. By default this means that the variables will be dumped in the
 ``dev`` environment but not the ``prod`` environment.
+
+Syntax Checking
+---------------
+
+.. versionadded:: 2.1
+    The ``twig:lint`` command was added in Symfony 2.1
+
+You can check for syntax errors in Twig templates using the ``twig:lint``
+console command:
+
+.. code-block:: bash
+
+    # You can check by filename:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
+
+    # or by directory:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views
+
+    # or using the bundle name:
+    $ php app/console twig:lint @AcmeArticleBundle
+
+.. _template-formats:
 
 Template Formats
 ----------------
@@ -1382,7 +1532,10 @@ key in the parameter hash:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', array('id' => 123, '_format' => 'pdf')) ?>">
+        <a href="<?php echo $view['router']->generate('article_show', array(
+            'id' => 123,
+            '_format' => 'pdf',
+        )) ?>">
             PDF Version
         </a>
 
@@ -1425,4 +1578,7 @@ Learn more from the Cookbook
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-
+.. _`hinclude.js`: http://mnot.github.com/hinclude/
+.. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
+.. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
+.. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html

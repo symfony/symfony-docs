@@ -25,10 +25,10 @@ and deserialize your objects.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Serializer);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/serializer`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_).
 
 Usage
 -----
@@ -42,7 +42,7 @@ which Encoders and Normalizer are going to be available::
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-    $encoders = array('xml' => new XmlEncoder(), 'json' => new JsonEncoder());
+    $encoders = array(new XmlEncoder(), new JsonEncoder());
     $normalizers = array(new GetSetMethodNormalizer());
 
     $serializer = new Serializer($normalizers, $encoders);
@@ -94,7 +94,7 @@ use the Serializer service created before::
 
     // $jsonContent contains {"name":"foo","age":99}
 
-    echo $jsonContent; // or return it in a Response 
+    echo $jsonContent; // or return it in a Response
 
 The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
 is the object to be serialized and the second is used to choose the proper encoder,

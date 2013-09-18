@@ -42,6 +42,14 @@ are:
     ``AllowOverride None`` and implement the rewrite rules in the ``web/.htaccess``
     into the virtualhost config.
 
+If you are using **php-cgi**, Apache does not pass HTTP basic username and
+password to PHP by default. To work around this limitation, you should use the
+following configuration snippet:
+
+.. code-block:: apache
+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 Nginx
 -----
 
@@ -89,7 +97,7 @@ are:
     also make sure that if you *do* deploy ``app_dev.php`` or ``config.php``
     that these files are secured and not available to any outside user (the
     IP checking code at the top of each file does this by default).
-    
+
     If you have other PHP files in your web directory that need to be executed,
     be sure to include them in the ``location`` block above.
 

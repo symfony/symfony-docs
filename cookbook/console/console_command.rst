@@ -85,8 +85,10 @@ For example, you could easily extend the task to be translatable::
 Testing Commands
 ----------------
 
-When testing commands used as part of the full framework :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
-should be used instead of :class:`Symfony\\Component\\Console\\Application`::
+When testing commands used as part of the full framework
+:class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>` should be used
+instead of
+:class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -102,13 +104,24 @@ should be used instead of :class:`Symfony\\Component\\Console\\Application`::
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getName()));
+            $commandTester->execute(
+               array(
+                  'name'    => 'Fabien',
+                  '--yell'  => true,
+               )
+            );
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 
             // ...
         }
     }
+
+.. note::
+
+    In the specific case above, the ``name`` parameter and the ``--yell`` option
+    are not mandatory for the command to work, but are shown so you can see
+    how to customize them when calling the command.
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
@@ -131,7 +144,12 @@ you can extend your test from
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getName()));
+            $commandTester->execute(
+               array(
+                  'name'    => 'Fabien',
+                  '--yell'  => true,
+               )
+            );
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 

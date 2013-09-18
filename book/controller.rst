@@ -141,7 +141,7 @@ Mapping a URL to a Controller
 -----------------------------
 
 The new controller returns a simple HTML page. To actually view this page
-in your browser, you need to create a route, which maps a specific URL pattern
+in your browser, you need to create a route, which maps a specific URL path
 to the controller:
 
 .. configuration-block::
@@ -150,15 +150,22 @@ to the controller:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index }
+            path:      /hello/{name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">AcmeHelloBundle:Hello:index</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{name}">
+                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -189,7 +196,7 @@ see :ref:`controller-string-syntax`.
 
 .. tip::
 
-    You can learn much more about the routing system in the :doc:`Routing chapter</book/routing>`.
+    You can learn much more about the routing system in the :doc:`Routing chapter </book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
@@ -229,16 +236,23 @@ example:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index, color: green }
+            path:      /hello/{first_name}/{last_name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{first_name}/{last_name}">
-            <default key="_controller">AcmeHelloBundle:Hello:index</default>
-            <default key="color">green</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{first_name}/{last_name}">
+                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+                <default key="color">green</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -325,7 +339,7 @@ working with forms, for example::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($request);
+        $form->bind($request);
         // ...
     }
 
@@ -383,7 +397,9 @@ itself.
 
 .. note::
 
-    You can also define your :doc:`Controllers as Services</cookbook/controller/service>`.
+    You can also define your :doc:`Controllers as Services </cookbook/controller/service>`.
+    This is optional, but can give you more control over the exact dependencies
+    that are injected into your controllers.
 
 .. index::
    single: Controller; Common tasks
@@ -436,7 +452,8 @@ perform a 301 (permanent) redirect, modify the second argument::
 Forwarding
 ~~~~~~~~~~
 
-You can also easily forward to another controller internally with the ``forward()``
+You can also easily forward to another controller internally with the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
 method. Instead of redirecting the user's browser, it makes an internal sub-request,
 and calls the specified controller. The ``forward()`` method returns the ``Response``
 object that's returned from that controller::
@@ -476,17 +493,22 @@ value to each variable.
 
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service. A forward returns a ``Response``
-    object::
+    directly by duplicating the current request. When this
+    :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
+    service the ``HttpKernel`` returns a ``Response`` object::
+    
+        use Symfony\Component\HttpKernel/HttpKernelInterface;
+    
+        $path = array(
+            '_controller' => 'AcmeHelloBundle:Hello:fancy',
+            'name'        => $name,
+            'color'       => 'green',
+        );
+        $request = $this->container->get('request');
+        $subRequest = $request->duplicate(array(), null, $path);
 
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward(
-            'AcmeHelloBundle:Hello:fancy',
-            array(
-                'name'  => $name,
-                'color' => 'green',
-            )
-        );
+        $response = $httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 
 .. index::
    single: Controller; Rendering templates
@@ -527,7 +549,8 @@ The Symfony templating engine is explained in great detail in the
 .. tip::
 
     You can even avoid calling the ``render`` method by using the ``@Template``
-    annotation. See the :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/view>`
+    annotation. See the
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/view>`
     more details.
 
 .. tip::
@@ -640,8 +663,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->get('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.
@@ -663,11 +686,11 @@ For example, imagine you're processing a form submit::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($this->getRequest());
+        $form->bind($this->getRequest());
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                 'notice',
                 'Your changes were saved!'
             );
@@ -689,19 +712,19 @@ the ``notice`` message:
 
     .. code-block:: html+jinja
 
-        {% if app.session.hasFlash('notice') %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
-                {{ app.session.flash('notice') }}
+                {{ flashMessage }}
             </div>
-        {% endif %}
+        {% endfor %}
 
     .. code-block:: html+php
 
-        <?php if ($view['session']->hasFlash('notice')): ?>
+        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo $view['session']->getFlash('notice') ?>
+                <?php echo "<div class='flash-error'>$message</div>" ?>
             </div>
-        <?php endif; ?>
+        <?php endforeach; ?>
 
 By design, flash messages are meant to live for exactly one request (they're
 "gone in a flash"). They're designed to be used across redirects exactly as
@@ -734,6 +757,15 @@ headers and content that's sent back to the client::
     useful methods for reading and mutating the ``Response`` headers. The
     header names are normalized so that using ``Content-Type`` is equivalent
     to ``content-type`` or even ``content_type``.
+
+.. tip::
+
+    There are also special classes to make certain kinds of responses easier:
+
+    - For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+      See :ref:`component-http-foundation-json-response`.
+    - For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
+      See :ref:`component-http-foundation-serving-files`.
 
 .. index::
    single: Controller; Request object

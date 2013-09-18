@@ -13,7 +13,7 @@ request (including comments) is saved in the repository.
 You can easily spot pull request merges as the commit message always follows
 this pattern:
 
-.. block: text
+.. code-block:: text
 
     merged branch USER_NAME/BRANCH_NAME (PR #1111)
 
@@ -30,13 +30,13 @@ stored as a Git note (before March 22 2013, the discussion was part of the
 main merge commit message). To get access to these notes, add this line to
 your ``.git/config`` file:
 
-.. block: text
+.. code-block:: ini
 
     fetch = +refs/notes/*:refs/notes/*
 
 After a fetch, getting the Github discussion for a commit is then a matter of
 adding ``--show-notes=github-comments`` to the ``git show`` command:
 
-.. block: text
+.. code-block:: bash
 
-    git show HEAD --show-notes=github-comments
+    $ git show HEAD --show-notes=github-comments

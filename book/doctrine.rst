@@ -44,21 +44,23 @@ Configuring the Database
 
 Before you really begin, you'll need to configure your database connection
 information. By convention, this information is usually configured in an
-``app/config/parameters.ini`` file:
+``app/config/parameters.yml`` file:
 
-.. code-block:: ini
+.. code-block:: yaml
 
-    ; app/config/parameters.ini
-    [parameters]
-    database_driver   = pdo_mysql
-    database_host     = localhost
-    database_name     = test_project
-    database_user     = root
-    database_password = password
+    # app/config/parameters.yml
+    parameters:
+        database_driver:    pdo_mysql
+        database_host:      localhost
+        database_name:      test_project
+        database_user:      root
+        database_password:  password
+
+    # ...
 
 .. note::
 
-    Defining the configuration via ``parameters.ini`` is just a convention.
+    Defining the configuration via ``parameters.yml`` is just a convention.
     The parameters defined in that file are referenced by the main configuration
     file when setting up Doctrine:
 
@@ -78,18 +80,27 @@ information. By convention, this information is usually configured in an
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <doctrine:config>
-                <doctrine:dbal
-                    driver="%database_driver%"
-                    host="%database_host%"
-                    dbname="%database_name%"
-                    user="%database_user%"
-                    password="%database_password%"
-                >
-            </doctrine:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config>
+                    <doctrine:dbal
+                        driver="%database_driver%"
+                        host="%database_host%"
+                        dbname="%database_name%"
+                        user="%database_user%"
+                        password="%database_password%"
+                    />
+                </doctrine:config>
+
+            </container>
 
         .. code-block:: php
-        
+
             // app/config/config.php
             $configuration->loadFromExtension('doctrine', array(
                 'dbal' => array(
@@ -159,13 +170,22 @@ for you:
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <doctrine:config
-                driver="pdo_sqlite"
-                path="%kernel.root_dir%/sqlite.db"
-                charset="UTF-8"
-            >
-                <!-- ... -->
-            </doctrine:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config
+                    driver="pdo_sqlite"
+                    path="%kernel.root_dir%/sqlite.db"
+                    charset="UTF-8"
+                >
+                    <!-- ... -->
+                </doctrine:config>
+
+            </container>
 
         .. code-block:: php
 
@@ -206,11 +226,12 @@ just a simple PHP class.
 .. tip::
 
     Once you learn the concepts behind Doctrine, you can have Doctrine create
-    simple entity classes for you:
+    simple entity classes for you. This will ask you interactive questions
+    to help you build any entity:
 
     .. code-block:: bash
 
-        $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
+        $ php app/console doctrine:generate:entity
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -296,6 +317,7 @@ in a number of different formats including YAML, XML or directly inside the
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -361,6 +383,8 @@ see the :ref:`book-doctrine-field-types` section.
         class Product
         // ...
 
+.. _book-doctrine-generating-getters-and-setters:
+
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -399,7 +423,8 @@ doesn't replace your existing methods).
     The ``doctrine:generate:entities`` command saves a backup of the original
     ``Product.php`` named ``Product.php~``. In some cases, the presence of
     this file can cause a "Cannot redeclare class" error. It can be safely
-    removed.
+    removed. You can also use the ``--no-backup`` option to prevent generating
+    these backup files.
 
     Note that you don't *need* to use this command. Doctrine doesn't rely
     on code generation. Like with normal PHP classes, you just need to make
@@ -421,6 +446,8 @@ mapping information) of a bundle or an entire namespace:
     or whether or not you have a getter or setter function for a property.
     The getters and setters are generated here only because you'll need them
     to interact with your PHP object.
+
+.. _book-doctrine-creating-the-database-tables-schema:
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -446,7 +473,7 @@ in your application. To do this, run:
     new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
-    :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to
+    :doc:`migrations </bundles/DoctrineMigrationsBundle/index>`, which allow you to
     generate these SQL statements and store them in migration classes that
     can be run systematically on your production server in order to track
     and migrate your database schema safely and reliably.
@@ -478,7 +505,7 @@ of the bundle:
         $product->setPrice('19.99');
         $product->setDescription('Lorem ipsum dolor');
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
 
@@ -554,7 +581,7 @@ on its ``id`` value::
 
     You can achieve the equivalent of this without writing any code by using
     the ``@ParamConverter`` shortcut. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/converters>`
     for more details.
 
 When you query for a particular type of object, you always use what's known
@@ -625,7 +652,7 @@ you have a route that maps a product id to an update action in a controller::
 
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('AcmeStoreBundle:Product')->find($id);
 
         if (!$product) {
@@ -691,9 +718,12 @@ Imagine that you want to query for products, but only return products that
 cost more than ``19.99``, ordered from cheapest to most expensive. From inside
 a controller, do the following::
 
-    $em = $this->getDoctrine()->getEntityManager();
+    $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
-        'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price > :price ORDER BY p.price ASC'
+        'SELECT p
+        FROM AcmeStoreBundle:Product p
+        WHERE p.price > :price
+        ORDER BY p.price ASC'
     )->setParameter('price', '19.99');
 
     $products = $query->getResult();
@@ -728,7 +758,7 @@ for just one object, you can use the ``getSingleResult()`` method instead::
         // ...
 
 The DQL syntax is incredibly powerful, allowing you to easily join between
-entities (the topic of :ref:`relations<book-doctrine-relations>` will be
+entities (the topic of :ref:`relations <book-doctrine-relations>` will be
 covered later), group, etc. For more information, see the official Doctrine
 `Doctrine Query Language`_ documentation.
 
@@ -822,9 +852,11 @@ To do this, add the name of the repository class to your mapping definition.
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
-
-        <!-- ... -->
-        <doctrine-mapping>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product"
                     repository-class="Acme\StoreBundle\Entity\ProductRepository">
@@ -855,7 +887,9 @@ ordered alphabetically.
         public function findAllOrderedByName()
         {
             return $this->getEntityManager()
-                ->createQuery('SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC')
+                ->createQuery(
+                    'SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC'
+                )
                 ->getResult();
         }
     }
@@ -867,7 +901,7 @@ ordered alphabetically.
 
 You can use this new method just like the default finder methods of the repository::
 
-    $em = $this->getDoctrine()->getEntityManager();
+    $em = $this->getDoctrine()->getManager();
     $products = $em->getRepository('AcmeStoreBundle:Product')
                 ->findAllOrderedByName();
 
@@ -934,7 +968,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                 products:
                     targetEntity: Product
                     mappedBy: category
-            # don't forget to init the collection in entity __construct() method
+            # don't forget to init the collection in the __construct() method of the entity
 
     .. code-block:: xml
 
@@ -947,11 +981,14 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
             <entity name="Acme\StoreBundle\Entity\Category">
                 <!-- ... -->
                 <one-to-many field="products"
-                    target-entity="product"
+                    target-entity="Product"
                     mapped-by="category"
                 />
 
-                <!-- don't forget to init the collection in entity __construct() method -->
+                <!--
+                    don't forget to init the collection in
+                    the __construct() method of the entity
+                -->
             </entity>
         </doctrine-mapping>
 
@@ -972,7 +1009,7 @@ makes sense in the application for each ``Category`` to hold an array of
 .. tip::
 
    The targetEntity value in the decorator used above can reference any entity
-   with a valid namespace, not just entities defined in the same class. To
+   with a valid namespace, not just entities defined in the same namespace. To
    relate to an entity defined in a different class or bundle, enter a full
    namespace as the targetEntity.
 
@@ -1022,7 +1059,8 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
             <entity name="Acme\StoreBundle\Entity\Product">
                 <!-- ... -->
                 <many-to-one field="category"
-                    target-entity="products"
+                    target-entity="Category"
+                    inversed-by="products"
                     join-column="category"
                 >
                     <join-column
@@ -1074,7 +1112,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</bundles/DoctrineMigrationsBundle/index>`.
+    :doc:`Doctrine migrations </bundles/DoctrineMigrationsBundle/index>`.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1100,7 +1138,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relate this product to the category
             $product->setCategory($category);
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->persist($product);
             $em->flush();
@@ -1189,14 +1227,14 @@ to the given ``Category`` object via their ``category_id`` value.
 
     The proxy classes are generated by Doctrine and stored in the cache directory.
     And though you'll probably never even notice that your ``$category``
-    object is actually a proxy object, it's important to keep in mind.
+    object is actually a proxy object, it's important to keep it in mind.
 
     In the next section, when you retrieve the product and category data
     all at once (via a *join*), Doctrine will return the *true* ``Category``
     object, since nothing needs to be lazily loaded.
 
-Joining to Related Records
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Joining Related Records
+~~~~~~~~~~~~~~~~~~~~~~~
 
 In the above examples, two queries were made - one for the original object
 (e.g. a ``Category``) and one for the related object(s) (e.g. the ``Product``
@@ -1262,7 +1300,7 @@ Configuration
 
 Doctrine is highly configurable, though you probably won't ever need to worry
 about most of its options. To find out more about configuring Doctrine, see
-the Doctrine section of the :doc:`reference manual</reference/configuration/doctrine>`.
+the Doctrine section of the :doc:`reference manual </reference/configuration/doctrine>`.
 
 Lifecycle Callbacks
 -------------------
@@ -1288,7 +1326,7 @@ callbacks. This is not necessary if you're using YAML or XML for your mapping:
     }
 
 Now, you can tell Doctrine to execute a method on any of the available lifecycle
-events. For example, suppose you want to set a ``created`` date column to
+events. For example, suppose you want to set a ``createdAt`` date column to
 the current date, only when the entity is first persisted (i.e. inserted):
 
 .. configuration-block::
@@ -1298,9 +1336,9 @@ the current date, only when the entity is first persisted (i.e. inserted):
         /**
          * @ORM\PrePersist
          */
-        public function setCreatedValue()
+        public function setCreatedAtValue()
         {
-            $this->created = new \DateTime();
+            $this->createdAt = new \DateTime();
         }
 
     .. code-block:: yaml
@@ -1310,30 +1348,33 @@ the current date, only when the entity is first persisted (i.e. inserted):
             type: entity
             # ...
             lifecycleCallbacks:
-                prePersist: [setCreatedValue]
+                prePersist: [setCreatedAtValue]
 
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
-
-        <!-- ... -->
-        <doctrine-mapping>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product">
                     <!-- ... -->
                     <lifecycle-callbacks>
-                        <lifecycle-callback type="prePersist" method="setCreatedValue" />
+                        <lifecycle-callback type="prePersist"
+                            method="setCreatedAtValue" />
                     </lifecycle-callbacks>
             </entity>
         </doctrine-mapping>
 
 .. note::
 
-    The above example assumes that you've created and mapped a ``created``
+    The above example assumes that you've created and mapped a ``createdAt``
     property (not shown here).
 
 Now, right before the entity is first persisted, Doctrine will automatically
-call this method and the ``created`` field will be set to the current date.
+call this method and the ``createdAt`` field will be set to the current date.
 
 This can be repeated for any of the other lifecycle events, which include:
 
@@ -1351,7 +1392,7 @@ in general, see Doctrine's `Lifecycle Events documentation`_
 
 .. sidebar:: Lifecycle Callbacks and Event Listeners
 
-    Notice that the ``setCreatedValue()`` method receives no arguments. This
+    Notice that the ``setCreatedAtValue()`` method receives no arguments. This
     is always the case for lifecycle callbacks and is intentional: lifecycle
     callbacks should be simple methods that are concerned with internally
     transforming data in the entity (e.g. setting a created/updated field,
@@ -1371,7 +1412,7 @@ These include thing such as *Sluggable*, *Timestampable*, *Loggable*, *Translata
 and *Tree*.
 
 For more information on how to find and use these extensions, see the cookbook
-article about :doc:`using common Doctrine extensions</cookbook/doctrine/common_extensions>`.
+article about :doc:`using common Doctrine extensions </cookbook/doctrine/common_extensions>`.
 
 .. _book-doctrine-field-types:
 
@@ -1459,7 +1500,7 @@ and ``nullable``. Take a few examples:
         <!--
             A string field length 255 that cannot be null
             (reflecting the default values for the "length" and *nullable* options)
-            type attribute is necessary in yaml definitions
+            type attribute is necessary in xml definitions
         -->
         <field name="name" type="string" />
         <field name="email"
@@ -1506,12 +1547,7 @@ Some notable or interesting tasks include:
 
   .. code-block:: bash
 
-      $ php app/console doctrine:ensure-production-settings --no-debug --env=prod
-
-  .. caution::
-
-      Don't forget to add the ``--no-debug`` switch, because the debug flag is
-      always set to true, even if the environment is set to ``prod``.
+      $ php app/console doctrine:ensure-production-settings --env=prod
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see
@@ -1555,21 +1591,21 @@ that allow you to take different actions as objects go through their persistence
 lifecycle.
 
 For more information about Doctrine, see the *Doctrine* section of the
-:doc:`cookbook</cookbook/index>`, which includes the following articles:
+:doc:`cookbook </cookbook/index>`, which includes the following articles:
 
 * :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`MongoDB`: http://www.mongodb.org/
-.. _`Basic Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html
-.. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/query-builder.html
-.. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/dql-doctrine-query-language.html
-.. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/association-mapping.html
+.. _`Basic Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
+.. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
+.. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
+.. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
-.. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#doctrine-mapping-types
-.. _`Property Mapping documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#property-mapping
-.. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/events.html#lifecycle-events
-.. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#quoting-reserved-words
-.. _`Persistent classes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#persistent-classes
-.. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#property-mapping
+.. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#doctrine-mapping-types
+.. _`Property Mapping documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
+.. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
+.. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
+.. _`Persistent classes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes
+.. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping

@@ -41,7 +41,7 @@ which makes all of this quite easy::
             static::$kernel->boot();
             $this->em = static::$kernel->getContainer()
                 ->get('doctrine')
-                ->getEntityManager()
+                ->getManager()
             ;
         }
 

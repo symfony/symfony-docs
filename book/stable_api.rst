@@ -31,6 +31,7 @@ As of Symfony 2.0, the following components have a public tagged API:
 * DependencyInjection
 * DomCrawler
 * EventDispatcher
+* Filesystem (as of Symfony 2.1)
 * Finder
 * HttpFoundation
 * HttpKernel

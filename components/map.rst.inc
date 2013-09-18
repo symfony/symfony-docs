@@ -43,14 +43,28 @@
 * :doc:`/components/event_dispatcher/index`
 
   * :doc:`/components/event_dispatcher/introduction`
+  * :doc:`/components/event_dispatcher/container_aware_dispatcher`
+  * :doc:`/components/event_dispatcher/generic_event`
+  * :doc:`/components/event_dispatcher/immutable_dispatcher`
+
+* **Filesystem**
+
+  * :doc:`/components/filesystem`
 
 * **Finder**
 
   * :doc:`/components/finder`
 
+* :doc:`/components/form/index`
+
+  * :doc:`/components/form/introduction`
+
 * :doc:`/components/http_foundation/index`
 
   * :doc:`/components/http_foundation/introduction`
+  * :doc:`/components/http_foundation/sessions`
+  * :doc:`/components/http_foundation/session_configuration`
+  * :doc:`/components/http_foundation/session_testing`
   * :doc:`/components/http_foundation/trusting_proxies`
 
 * :doc:`/components/http_kernel/index`
@@ -61,17 +75,30 @@
 
   * :doc:`/components/locale`
 
+* **Options Resolver**
+
+  * :doc:`/components/options_resolver`
+
 * **Process**
 
   * :doc:`/components/process`
 
+* :doc:`/components/property_access/index`
+
+  * :doc:`/components/property_access/introduction`
+
 * :doc:`/components/routing/index`
 
   * :doc:`/components/routing/introduction`
+  * :doc:`/components/routing/hostname_pattern`
 
 * **Serializer**
 
   * :doc:`/components/serializer`
+
+* **Stopwatch**
+
+  * :doc:`/components/stopwatch`
 
 * :doc:`/components/security/index`
 
@@ -80,9 +107,9 @@
   * :doc:`/components/security/authentication`
   * :doc:`/components/security/authorization`
 
-* **Templating**
+* :doc:`/components/templating/index`
 
-  * :doc:`/components/templating`
+  * :doc:`/components/templating/introduction`
 
 * :doc:`/components/yaml/index`
 

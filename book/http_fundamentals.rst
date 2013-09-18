@@ -270,7 +270,6 @@ the user is connecting via a secured connection (i.e. ``https``).
     ``attributes`` property exists entirely to be a place where you can
     prepare and store context-specific information about the request.
 
-
 Symfony also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
 interface to construct the response that needs to be returned to the client::
@@ -358,7 +357,7 @@ Stay Organized
 ~~~~~~~~~~~~~~
 
 Inside your front controller, you have to figure out which code should be
-executed and what the content to return should be. To figure this out, you'll 
+executed and what the content to return should be. To figure this out, you'll
 need to check the incoming URI and execute different parts of your code depending
 on that value. This can get ugly quickly::
 
@@ -425,14 +424,21 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
         # app/config/routing.yml
         contact:
-            pattern:  /contact
+            path:     /contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
 
     .. code-block:: xml
 
-        <route id="contact" pattern="/contact">
-            <default key="_controller">AcmeBlogBundle:Main:contact</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/contact">
+                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -442,23 +448,25 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
-            '_controller' => 'AcmeBlogBundle:Main:contact',
+            '_controller' => 'AcmeDemoBundle:Main:contact',
         )));
 
         return $collection;
 
 .. note::
 
-   This example uses :doc:`YAML</components/yaml/introduction>` to define the routing
+   This example uses :doc:`YAML </components/yaml/yaml_format>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 
 When someone visits the ``/contact`` page, this route is matched, and the
-specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
+specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
 the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/Acme/DemoBundle/Controller/MainController.php
+    namespace Acme\DemoBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Response;
 
     class MainController
@@ -471,7 +479,7 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
 
 In this very simple example, the controller simply creates a
 :class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
-"``<h1>Contact us!</h1>"``. In the :doc:`controller chapter</book/controller>`,
+"`` <h1>Contact us! </h1>"``. In the :doc:`controller chapter </book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -504,11 +512,11 @@ libraries that can be used inside *any* PHP project. These libraries, called
 the *Symfony2 Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
-* :doc:`HttpFoundation</components/http_foundation/introduction>` - Contains
+* :doc:`HttpFoundation </components/http_foundation/introduction>` - Contains
   the ``Request`` and ``Response`` classes, as well as other classes for handling
   sessions and file uploads;
 
-* :doc:`Routing</components/routing/introduction>` - Powerful and fast routing system that
+* :doc:`Routing </components/routing/introduction>` - Powerful and fast routing system that
   allows you to map a specific URI (e.g. ``/contact``) to some information
   about how that request should be handled (e.g. execute the ``contactAction()``
   method);
@@ -519,11 +527,11 @@ regardless of how your project is developed. To name a few:
 * `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* :doc:`ClassLoader</components/class_loader>` An autoloading library that allows
+* :doc:`ClassLoader </components/class_loader>` An autoloading library that allows
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
-* :doc:`Templating</components/templating>` A toolkit for rendering templates,
+* :doc:`Templating </components/templating>` A toolkit for rendering templates,
   handling template inheritance (i.e. a template is decorated with a layout)
   and performing other common template tasks;
 

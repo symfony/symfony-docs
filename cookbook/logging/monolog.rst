@@ -36,7 +36,7 @@ to write the logs (the handlers can be shared).
 .. tip::
 
     When injecting the logger in a service you can
-    :ref:`use a custom channel<dic_tags-monolog>` control which "channel"
+    :ref:`use a custom channel <dic_tags-monolog>` control which "channel"
     the logger will log to.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
@@ -113,7 +113,7 @@ allows you to log the messages in several ways easily.
         </container>
 
     .. code-block:: php
-        
+
         // app/config/config.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
@@ -121,22 +121,22 @@ allows you to log the messages in several ways easily.
                     'type'  => 'stream',
                     'path'  => '/var/log/symfony.log',
                     'level' => 'error',
-                ),    
+                ),
                 'main' => array(
                     'type'         => 'fingers_crossed',
                     'action_level' => 'warning',
                     'handler'      => 'file',
-                ),    
+                ),
                 'file' => array(
                     'type'  => 'stream',
                     'level' => 'debug',
-                ),   
+                ),
                 'syslog' => array(
                     'type'  => 'syslog',
                     'level' => 'error',
-                ),    
+                ),
             ),
-        ));        
+        ));
 
 The above configuration defines a stack of handlers which will be called
 in the order where they are defined.
@@ -226,7 +226,7 @@ only for a specific handler.
 A processor is simply a callable receiving the record as its first argument.
 
 Processors are configured using the ``monolog.processor`` DIC tag. See the
-:ref:`reference about it<dic_tags-monolog-processor>`.
+:ref:`reference about it <dic_tags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,7 +239,7 @@ using a processor.
 
     namespace Acme\MyBundle;
 
-    use Symfony\Component\HttpFoundation\Session;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
     class SessionRequestProcessor
     {
@@ -271,6 +271,7 @@ using a processor.
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         services:
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter

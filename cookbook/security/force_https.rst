@@ -36,7 +36,7 @@ to use ``HTTPS`` then you could use the following configuration:
 
 The login form itself needs to allow anonymous access, otherwise users will
 be unable to authenticate. To force it to use ``HTTPS`` you can still use
-``access_control`` rules by using the ``IS_AUTHENTICATED_ANONYMOUSLY`` 
+``access_control`` rules by using the ``IS_AUTHENTICATED_ANONYMOUSLY``
 role:
 
 .. configuration-block::
@@ -51,8 +51,8 @@ role:
         .. code-block:: xml
 
             <access-control>
-                <rule path="^/login" 
-                      role="IS_AUTHENTICATED_ANONYMOUSLY" 
+                <rule path="^/login"
+                      role="IS_AUTHENTICATED_ANONYMOUSLY"
                       requires_channel="https" />
             </access-control>
 

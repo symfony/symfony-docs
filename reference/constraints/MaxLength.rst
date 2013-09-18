@@ -1,10 +1,16 @@
 MaxLength
 =========
 
+.. caution::
+
+    The MaxLength constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Length` with the ``max``
+    option instead.
+
 Validates that the length of a string is not larger than the given limit.
 
 +----------------+-------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                   |
+| Applies to     | :ref:`property or method <validation-property-target>`                  |
 +----------------+-------------------------------------------------------------------------+
 | Options        | - `limit`_                                                              |
 |                | - `message`_                                                            |
@@ -46,13 +52,19 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Blog">
-            <property name="summary">
-                <constraint name="MaxLength">
-                    <option name="limit">100</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Blog">
+                <property name="summary">
+                    <constraint name="MaxLength">
+                        <option name="limit">100</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -78,7 +90,7 @@ Options
 limit
 ~~~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "max" value. Validation will fail if the length
 of the give string is **greater** than this number.

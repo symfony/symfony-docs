@@ -99,11 +99,58 @@ node definition. Node type are available for:
 
 * scalar
 * boolean
+* integer (new in 2.2)
+* float (new in 2.2)
+* enum (new in 2.1)
 * array
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
+
+Numeric node constraints
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The numeric (float and integer) nodes are new in 2.2
+
+Numeric nodes (float and integer) provide two extra constraints -
+:method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder::max` -
+allowing to validate the value::
+
+    $rootNode
+        ->children()
+            ->integerNode('positive_value')
+                ->min(0)
+            ->end()
+            ->floatNode('big_value')
+                ->max(5E45)
+            ->end()
+            ->integerNode('value_inside_a_range')
+                ->min(-50)->max(50)
+            ->end()
+        ->end()
+    ;
+
+Enum nodes
+~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The enum node is new in Symfony 2.1
+
+Enum nodes provide a constraint to match the given input against a set of
+values::
+
+    $rootNode
+        ->children()
+            ->enumNode('gender')
+                ->values(array('male', 'female'))
+            ->end()
+        ->end()
+    ;
+
+This will restrict the ``gender`` option to be either ``male`` or ``female``.
 
 Array nodes
 ~~~~~~~~~~~
@@ -239,6 +286,35 @@ has a certain value:
         ->end()
     ;
 
+Optional Sections
+-----------------
+
+.. versionadded:: 2.2
+    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
+
+If you have entire sections which are optional and can be enabled/disabled,
+you can take advantage of the shortcut
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeDisabled` methods::
+
+    $arrayNode
+        ->canBeEnabled()
+    ;
+
+    // is equivalent to
+
+    $arrayNode
+        ->treatFalseLike(array('enabled' => false))
+        ->treatTrueLike(array('enabled' => true))
+        ->treatNullLike(array('enabled' => true))
+        ->children()
+            ->booleanNode('enabled')
+                ->defaultFalse()
+    ;
+
+The ``canBeDisabled`` method looks about the same except that the section
+would be enabled by default.
+
 Merging options
 ---------------
 
@@ -327,7 +403,7 @@ make both of these ``auto_connect``.
 
 .. caution::
 
-    The target key will not be altered if it's mixed like 
+    The target key will not be altered if it's mixed like
     ``foo-bar_moo`` or if it already exists.
 
 Another difference between Yaml and XML is in the way arrays of values may
@@ -386,7 +462,7 @@ and sometimes only:
 
 By default ``connection`` would be an array in the first case and a string
 in the second making it difficult to validate. You can ensure it is always
-an array with with ``fixXmlConfig``.
+an array with ``fixXmlConfig``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or several
@@ -414,7 +490,7 @@ By changing a string value into an associative array with ``name`` as the key::
         ->children()
             ->arrayNode('connection')
                 ->beforeNormalization()
-                ->ifString()
+                    ->ifString()
                     ->then(function($v) { return array('name'=> $v); })
                 ->end()
                 ->children()
@@ -496,4 +572,3 @@ Otherwise the result is a clean array of configuration values::
         $configuration,
         $configs)
     ;
-

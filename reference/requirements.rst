@@ -19,8 +19,7 @@ Below is the list of required and optional requirements.
 Required
 --------
 
-* PHP needs to be a minimum version of PHP 5.3.2
-* Sqlite3 needs to be enabled
+* PHP needs to be a minimum version of PHP 5.3.3
 * JSON needs to be enabled
 * ctype needs to be enabled
 * Your PHP.ini needs to have the date.timezone setting

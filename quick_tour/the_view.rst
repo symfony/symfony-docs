@@ -50,7 +50,6 @@ Below is a minimal template that illustrates a few basics, using two variables
         </body>
     </html>
 
-
 .. tip::
 
    Comments can be included inside templates using the ``{# ... #}`` delimiter.
@@ -170,7 +169,7 @@ And change the ``index.html.twig`` template to include it:
 
     {# override the body block from embedded.html.twig #}
     {% block content %}
-        {% include "AcmeDemoBundle:Demo:embedded.html.twig" %}
+        {{ include("AcmeDemoBundle:Demo:embedded.html.twig") }}
     {% endblock %}
 
 Embedding other Controllers
@@ -180,57 +179,19 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-Suppose you've created a ``fancyAction`` controller method, and you want to "render"
-it inside the ``index`` template. First, create a route to your new controller
-in one of your application's routing configuration files.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        fancy:
-            pattern:   /included/fancy/{name}/{color}
-            defaults:  { _controller: AcmeDemoBundle:Demo:fancy }
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="fancy" pattern="/included/fancy/{name}/{color}">
-                <default key="_controller">AcmeDemoBundle:Demo:fancy</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('fancy', new Route('/included/fancy/{name}/{color}', array(
-            '_controller' => 'AcmeDemoBundle:Demo:fancy',
-        )));
-
-        return $collection;
-
-To include the result (e.g. ``HTML``) of the controller, use the ``render`` tag:
+Suppose you've created a ``fancyAction`` controller method, and you want to
+"render" it inside the ``index`` template, which means including the result
+(e.g. ``HTML``) of the controller. To do this, use the ``render`` function:
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render url('fancy', { 'name': name, 'color': 'green'}) %}
+    {{ render(controller("AcmeDemoBundle:Demo:fancy", {'name': name, 'color': 'green'})) }}
 
-.. include:: /book/_security-2012-6431.rst.inc
-
-The ``render`` tag will execute the ``AcmeDemoBundle:Demo:fancy`` controller
-and include its result. For example, your new ``fancyAction`` might look
-like this::
+Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
+of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
+simulated request variables (as if the ``fancyAction`` were handling a whole
+new request) and are made available to the controller::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -243,7 +204,7 @@ like this::
 
             return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array(
                 'name' => $name,
-                'object' => $object
+                'object' => $object,
             ));
         }
 
@@ -325,7 +286,7 @@ the basics is easy, and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
 But I'm getting ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the :doc:`next part of this tutorial<the_controller>`.
+and that's exactly the topic of the :doc:`next part of this tutorial <the_controller>`.
 Ready for another 10 minutes with Symfony2?
 
 .. _Twig:          http://twig.sensiolabs.org/

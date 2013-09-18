@@ -4,7 +4,7 @@
 How to use PHP instead of Twig for Templates
 ============================================
 
-Even if Symfony2 defaults to Twig for its template engine, you can still use
+Symfony2 defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
 Symfony2. Symfony2 adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
@@ -52,7 +52,6 @@ below renders the ``index.html.php`` template::
     // src/Acme/HelloBundle/Controller/HelloController.php
 
     // ...
-
     public function indexAction($name)
     {
         return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
@@ -226,10 +225,12 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('AcmeHelloBundle:Hello:fancy', array(
-        'name'  => $name,
-        'color' => 'green'
-    )) ?>
+    <?php echo $view['actions']->render(
+        new ControllerReference('AcmeHelloBundle:Hello:fancy', array(
+            'name'  => $name,
+            'color' => 'green',
+        ))
+    ) ?>
 
 Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
@@ -289,7 +290,7 @@ pattern:
 
     # src/Acme/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        pattern:  /hello/{name}
+        path:  /hello/{name}
         defaults: { _controller: AcmeHelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets

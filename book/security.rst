@@ -25,8 +25,8 @@ application with HTTP Basic authentication.
 
 .. note::
 
-    `Symfony's security component`_ is available as a standalone PHP library
-    for use inside any PHP project.
+    :doc:`Symfony's security component </components/security/introduction>` is
+    available as a standalone PHP library for use inside any PHP project.
 
 Basic Example: HTTP Authentication
 ----------------------------------
@@ -55,23 +55,22 @@ authentication (i.e. the old-school username/password box):
 
             providers:
                 in_memory:
-                    users:
-                        ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-                        admin: { password: kitten, roles: 'ROLE_ADMIN' }
+                    memory:
+                        users:
+                            ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+                            admin: { password: kitten, roles: 'ROLE_ADMIN' }
 
             encoders:
                 Symfony\Component\Security\Core\User\User: plaintext
 
     .. code-block:: xml
 
+        <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
-
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <!-- app/config/security.xml -->
 
             <config>
                 <firewall name="secured_area" pattern="^/">
@@ -84,11 +83,14 @@ authentication (i.e. the old-school username/password box):
                 </access-control>
 
                 <provider name="in_memory">
-                    <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                    <memory>
+                        <user name="ryan" password="ryanpass" roles="ROLE_USER" />
+                        <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                    </memory>
                 </provider>
 
-                <encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
+                <encoder class="Symfony\Component\Security\Core\User\User"
+                    algorithm="plaintext" />
             </config>
         </srv:container>
 
@@ -110,9 +112,17 @@ authentication (i.e. the old-school username/password box):
             ),
             'providers' => array(
                 'in_memory' => array(
-                    'users' => array(
-                        'ryan'  => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'kitten', 'roles'   => 'ROLE_ADMIN'),
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array(
+                                'password' => 'ryanpass',
+                                'roles' => 'ROLE_USER',
+                                ),
+                            'admin' => array(
+                                'password' => 'kitten',
+                                'roles' => 'ROLE_ADMIN',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -216,7 +226,7 @@ sort of message indicating that access has been denied.
     When Symfony denies the user access, the user sees an error screen and
     receives a 403 HTTP status code (``Forbidden``). You can customize the
     access denied error screen by following the directions in the
-    :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
+    :ref:`Error Pages <cookbook-error-pages-by-status-code>` cookbook entry
     to customize the 403 error page.
 
 Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
@@ -275,7 +285,7 @@ then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
 all browsers. However, Symfony supports many authentication mechanisms out
 of the box. For details on all of them, see the
-:doc:`Security Configuration Reference</reference/configuration/security>`.
+:doc:`Security Configuration Reference </reference/configuration/security>`.
 
 In this section, you'll enhance this process by allowing the user to authenticate
 via a traditional HTML login form.
@@ -293,24 +303,23 @@ First, enable form login under your firewall:
                     pattern:    ^/
                     anonymous: ~
                     form_login:
-                        login_path:  /login
-                        check_path:  /login_check
+                        login_path:  login
+                        check_path:  login_check
 
     .. code-block:: xml
 
+        <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
-
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <!-- app/config/security.xml -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <firewall name="secured_area" pattern="^/">
                     <anonymous />
-                    <form-login login_path="/login" check_path="/login_check" />
+                    <form-login login_path="login" check_path="login_check" />
                 </firewall>
             </config>
         </srv:container>
@@ -324,8 +333,8 @@ First, enable form login under your firewall:
                     'pattern'    => '^/',
                     'anonymous'  => array(),
                     'form_login' => array(
-                        'login_path' => '/login',
-                        'check_path' => '/login_check',
+                        'login_path' => 'login',
+                        'check_path' => 'login_check',
                     ),
                 ),
             ),
@@ -352,10 +361,11 @@ First, enable form login under your firewall:
             'form_login' => array(),
 
 Now, when the security system initiates the authentication process, it will
-redirect the user to the login form (``/login`` by default). Implementing
-this login form visually is your job. First, create two routes: one that
-will display the login form (i.e. ``/login``) and one that will handle the
-login form submission (i.e. ``/login_check``):
+redirect the user to the login form (``/login`` by default). Implementing this
+login form visually is your job. First, create the two routes you used in the
+security configuration: the ``login`` route will display the login form (i.e.
+``/login``) and the ``login_check`` route will handle the login form
+submission (i.e.  ``/login_check``):
 
 .. configuration-block::
 
@@ -372,16 +382,16 @@ login form submission (i.e. ``/login_check``):
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="login" pattern="/login">
                 <default key="_controller">AcmeSecurityBundle:Security:login</default>
             </route>
-            <route id="login_check" pattern="/login_check" />
 
+            <route id="login_check" pattern="/login_check" />
         </routes>
 
     ..  code-block:: php
@@ -402,11 +412,14 @@ login form submission (i.e. ``/login_check``):
 
     You will *not* need to implement a controller for the ``/login_check``
     URL as the firewall will automatically catch and process any form submitted
-    to this URL. It's optional, but helpful, to create a route so that you
-    can use it to generate the form submission URL in the login template below.
+    to this URL.
 
-Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``login_path`` config
+.. versionadded:: 2.1
+    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
+    ``check_path`` ``logout`` keys. These keys can be route names (as shown
+    in this example) or URLs that have routes configured for them.
+
+Notice that the name of the ``login`` route matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
 
@@ -475,7 +488,8 @@ Finally, create the corresponding template:
             <input type="password" id="password" name="_password" />
 
             {#
-                If you want to control the URL the user is redirected to on success (more details below)
+                If you want to control the URL the user
+                is redirected to on success (more details below)
                 <input type="hidden" name="_target_path" value="/account" />
             #}
 
@@ -497,7 +511,8 @@ Finally, create the corresponding template:
             <input type="password" id="password" name="_password" />
 
             <!--
-                If you want to control the URL the user is redirected to on success (more details below)
+                If you want to control the URL the user
+                is redirected to on success (more details below)
                 <input type="hidden" name="_target_path" value="/account" />
             -->
 
@@ -515,7 +530,7 @@ The form has very few requirements. First, by submitting the form to ``/login_ch
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
 system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
+(these field names can be :ref:`configured <reference-security-firewall-form-login>`).
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -550,7 +565,7 @@ see :doc:`/cookbook/security/form_login`.
 
     **1. Create the correct routes**
 
-    First, be sure that you've defined the ``/login`` and ``/login_check``
+    First, be sure that you've defined the ``login`` and ``login_check``
     routes correctly and that they correspond to the ``login_path`` and
     ``check_path`` config values. A misconfiguration here can mean that you're
     redirected to a 404 page instead of the login page, or that submitting
@@ -629,7 +644,7 @@ see :doc:`/cookbook/security/form_login`.
                 <anonymous />
             </firewall>
             <firewall name="secured_area" pattern="^/">
-                <form_login />
+                <form-login />
             </firewall>
 
         .. code-block:: php
@@ -665,14 +680,11 @@ see :doc:`/cookbook/security/form_login`.
 Authorization
 -------------
 
-The first step in security is always authentication: the process of verifying
-who the user is. With Symfony, authentication can be done in any way - via
-a form login, basic HTTP Authentication, or even via Facebook.
-
-Once the user has been authenticated, authorization begins. Authorization
-provides a standard and powerful way to decide if a user can access any resource
-(a URL, a model object, a method call, ...). This works by assigning specific
-roles to each user, and then requiring different roles for different resources.
+The first step in security is always authentication. Once the user has been
+authenticated, authorization begins. Authorization provides a standard and
+powerful way to decide if a user can access any resource (a URL, a model
+object, a method call, ...). This works by assigning specific roles to each
+user, and then requiring different roles for different resources.
 
 The process of authorization has two different sides:
 
@@ -690,12 +702,6 @@ The most basic way to secure part of your application is to secure an entire
 URL pattern. You've seen this already in the first example of this chapter,
 where anything matching the regular expression pattern ``^/admin`` requires
 the ``ROLE_ADMIN`` role.
-
-.. caution::
-
-    Understanding exactly how ``access_control`` works is **very** important
-    to make sure your application is properly secured. See :ref:`security-book-access-control-explanation`
-    below for detailed information.
 
 You can define as many URL patterns as you need - each is a regular expression.
 
@@ -748,12 +754,15 @@ to find *one* that matches the current request. As soon as it finds a matching
 is used to enforce access.
 
 Each ``access_control`` has several options that configure two different
-things: (a) :ref:`should the incoming request match this access control entry<security-book-access-control-matching-options>`
-and (b) :ref:`once it matches, should some sort of access restriction be enforced<security-book-access-control-enforcement-options>`:
+things:
+
+* (a) :ref:`should the incoming request match this access control entry <security-book-access-control-matching-options>`
+* (b) :ref:`once it matches, should some sort of access restriction be enforced <security-book-access-control-enforcement-options>`:
 
 .. _security-book-access-control-matching-options:
 
-**(a) Matching Options**
+(a) Matching Options
+....................
 
 Symfony2 creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
 for each ``access_control`` entry, which determines whether or not a given
@@ -792,10 +801,25 @@ Take the following ``access_control`` entries as an example:
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/admin', 'role' => 'ROLE_USER_IP', 'ip' => '127.0.0.1'),
-                array('path' => '^/admin', 'role' => 'ROLE_USER_HOST', 'host' => 'symfony.com'),
-                array('path' => '^/admin', 'role' => 'ROLE_USER_METHOD', 'method' => 'POST, PUT'),
-                array('path' => '^/admin', 'role' => 'ROLE_USER'),
+                array(
+                    'path' => '^/admin',
+                    'role' => 'ROLE_USER_IP',
+                    'ip' => '127.0.0.1',
+                ),
+                array(
+                    'path' => '^/admin',
+                    'role' => 'ROLE_USER_HOST',
+                    'host' => 'symfony.com',
+                ),
+                array(
+                    'path' => '^/admin',
+                    'role' => 'ROLE_USER_METHOD',
+                    'method' => 'POST, PUT',
+                ),
+                array(
+                    'path' => '^/admin',
+                    'role' => 'ROLE_USER',
+                ),
             ),
 
 For each incoming request, Symfony will decide which ``access_control``
@@ -833,7 +857,8 @@ will match any ``ip``, ``host`` or ``method``:
 
 .. _security-book-access-control-enforcement-options:
 
-**(b) Access Enforcement**
+(b) Access Enforcement
+......................
 
 Once Symfony2 has decided which ``access_control`` entry matches (if any),
 it then *enforces* access restrictions based on the ``roles`` and ``requires_channel``
@@ -861,7 +886,7 @@ Securing by IP
 
 Certain situations may arise when you may need to restrict access to a given
 path based on IP. This is particularly relevant in the case of
-:ref:`Edge Side Includes<edge-side-includes>` (ESI), for example. When ESI is
+:ref:`Edge Side Includes <edge-side-includes>` (ESI), for example. When ESI is
 enabled, it's recommended to secure access to ESI URLs. Indeed, some ESI may
 contain some private content like the current logged in user's information. To
 prevent any direct access to these resources from a web browser (by guessing the
@@ -885,15 +910,23 @@ given prefix, ``/esi``, from outside access:
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    ip="127.0.0.1" />
                 <rule path="^/esi" role="ROLE_NO_ACCESS" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
-                array('path' => '^/esi', 'role' => 'ROLE_NO_ACCESS'),
+                array(
+                    'path' => '^/esi',
+                    'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'ip' => '127.0.0.1',
+                ),
+                array(
+                    'path' => '^/esi',
+                    'role' => 'ROLE_NO_ACCESS',
+                ),
             ),
 
 Here is how it works when the path is ``/esi/something`` coming from the
@@ -916,8 +949,6 @@ Now, if the same request comes from ``127.0.0.1``:
 
 * The second access rule is not examined as the first rule matched.
 
-.. include:: /book/_security-2012-6431.rst.inc
-
 .. _book-security-securing-channel:
 
 Securing by Channel
@@ -939,13 +970,18 @@ You can also require a user to access a URL via SSL; just use the
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel="https" />
+                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    requires_channel="https" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/cart/checkout', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
+                array(
+                    'path' => '^/cart/checkout',
+                    'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'requires_channel' => 'https',
+                ),
             ),
 
 .. _book-security-securing-controller:
@@ -1053,9 +1089,10 @@ In fact, you've seen this already in the example in this chapter.
             # ...
             providers:
                 default_provider:
-                    users:
-                        ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-                        admin: { password: kitten, roles: 'ROLE_ADMIN' }
+                    memory:
+                        users:
+                            ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+                            admin: { password: kitten, roles: 'ROLE_ADMIN' }
 
     .. code-block:: xml
 
@@ -1063,8 +1100,10 @@ In fact, you've seen this already in the example in this chapter.
         <config>
             <!-- ... -->
             <provider name="default_provider">
-                <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                <memory>
+                    <user name="ryan" password="ryanpass" roles="ROLE_USER" />
+                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                </memory>
             </provider>
         </config>
 
@@ -1075,9 +1114,17 @@ In fact, you've seen this already in the example in this chapter.
             // ...
             'providers' => array(
                 'default_provider' => array(
-                    'users' => array(
-                        'ryan'  => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'kitten', 'roles'   => 'ROLE_ADMIN'),
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array(
+                                'password' => 'ryanpass',
+                                'roles' => 'ROLE_USER',
+                            ),
+                            'admin' => array(
+                                'password' => 'kitten',
+                                'roles' => 'ROLE_ADMIN',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1149,6 +1196,12 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
+.. versionadded:: 2.1
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface.
+
 .. note::
 
     The user object will be serialized and saved in the session during requests,
@@ -1167,7 +1220,9 @@ class:
         security:
             providers:
                 main:
-                    entity: { class: Acme\UserBundle\Entity\User, property: username }
+                    entity:
+                        class: Acme\UserBundle\Entity\User
+                        property: username
 
     .. code-block:: xml
 
@@ -1184,7 +1239,10 @@ class:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'main' => array(
-                    'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
+                    'entity' => array(
+                        'class' => 'Acme\UserBundle\Entity\User',
+                        'property' => 'username',
+                    ),
                 ),
             ),
         ));
@@ -1222,13 +1280,14 @@ do the following:
             # ...
             providers:
                 in_memory:
-                    users:
-                        ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
-                        admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
+                    memory:
+                        users:
+                            ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
+                            admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
 
             encoders:
                 Symfony\Component\Security\Core\User\User:
-                    algorithm:   sha1
+                    algorithm: sha1
                     iterations: 1
                     encode_as_base64: false
 
@@ -1238,11 +1297,20 @@ do the following:
         <config>
             <!-- ... -->
             <provider name="in_memory">
-                <user name="ryan" password="bb87a29949f3a1ee0559f8a57357487151281386" roles="ROLE_USER" />
-                <user name="admin" password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620" roles="ROLE_ADMIN" />
+                <memory>
+                    <user name="ryan"
+                        password="bb87a29949f3a1ee0559f8a57357487151281386"
+                        roles="ROLE_USER" />
+                    <user name="admin"
+                        password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620"
+                        roles="ROLE_ADMIN" />
+                </memory>
             </provider>
 
-            <encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" iterations="1" encode_as_base64="false" />
+            <encoder class="Symfony\Component\Security\Core\User\User"
+                algorithm="sha1"
+                iterations="1"
+                encode_as_base64="false" />
         </config>
 
     .. code-block:: php
@@ -1252,9 +1320,17 @@ do the following:
             // ...
             'providers' => array(
                 'in_memory' => array(
-                    'users' => array(
-                        'ryan'  => array('password' => 'bb87a29949f3a1ee0559f8a57357487151281386', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620', 'roles' => 'ROLE_ADMIN'),
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array(
+                                'password' => 'bb87a29949f3a1ee0559f8a57357487151281386',
+                                'roles' => 'ROLE_USER',
+                            ),
+                            'admin' => array(
+                                'password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620',
+                                'roles' => 'ROLE_ADMIN',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -1315,6 +1391,13 @@ it as base64. In other words, the password has been greatly obfuscated so
 that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
 
+.. versionadded:: 2.2
+    As of Symfony 2.2 you can also use the :ref:`PBKDF2 <reference-security-pbkdf2>`
+    and :ref:`BCrypt <reference-security-bcrypt>` password encoders.
+
+Determining the Hashed Password
+...............................
+
 If you have some sort of registration form for users, you'll need to be able
 to determine the hashed password so that you can set it on your user. No
 matter what algorithm you configure for your user object, the hashed password
@@ -1339,6 +1422,15 @@ look like::
         $user = $this->get('security.context')->getToken()->getUser();
     }
 
+In a controller this can be shortcut to:
+
+.. code-block:: php
+
+    public function indexAction()
+    {
+        $user = $this->getUser();
+    }
+
 .. note::
 
     Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
@@ -1347,7 +1439,7 @@ look like::
     role.
 
 In a Twig Template this object can be accessed via the ``app.user`` key,
-which calls the :method:`GlobalVariables::getUser()<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
+which calls the :method:`GlobalVariables::getUser() <Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
 method:
 
 .. configuration-block::
@@ -1359,7 +1451,6 @@ method:
     .. code-block:: html+php
 
         <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
-
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1378,10 +1469,12 @@ a new provider that chains the two together:
         security:
             providers:
                 chain_provider:
-                    providers: [in_memory, user_db]
+                    chain:
+                        providers: [in_memory, user_db]
                 in_memory:
-                    users:
-                        foo: { password: test }
+                    memory:
+                        users:
+                            foo: { password: test }
                 user_db:
                     entity: { class: Acme\UserBundle\Entity\User, property: username }
 
@@ -1390,11 +1483,15 @@ a new provider that chains the two together:
         <!-- app/config/security.xml -->
         <config>
             <provider name="chain_provider">
-                <provider>in_memory</provider>
-                <provider>user_db</provider>
+                <chain>
+                    <provider>in_memory</provider>
+                    <provider>user_db</provider>
+                </chain>
             </provider>
             <provider name="in_memory">
-                <user name="foo" password="test" />
+                <memory>
+                    <user name="foo" password="test" />
+                </memory>
             </provider>
             <provider name="user_db">
                 <entity class="Acme\UserBundle\Entity\User" property="username" />
@@ -1407,15 +1504,22 @@ a new provider that chains the two together:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'chain_provider' => array(
-                    'providers' => array('in_memory', 'user_db'),
+                    'chain' => array(
+                        'providers' => array('in_memory', 'user_db'),
+                    ),
                 ),
                 'in_memory' => array(
-                    'users' => array(
-                        'foo' => array('password' => 'test'),
+                    'memory' => array(
+                       'users' => array(
+                           'foo' => array('password' => 'test'),
+                       ),
                     ),
                 ),
                 'user_db' => array(
-                    'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
+                    'entity' => array(
+                        'class' => 'Acme\UserBundle\Entity\User',
+                        'property' => 'username',
+                    ),
                 ),
             ),
         ));
@@ -1438,17 +1542,24 @@ the user from both the ``in_memory`` and ``user_db`` providers.
             security:
                 providers:
                     main_provider:
-                        users:
-                            foo: { password: test }
-                        entity: { class: Acme\UserBundle\Entity\User, property: username }
+                        memory:
+                            users:
+                                foo: { password: test }
+                        entity:
+                            class: Acme\UserBundle\Entity\User,
+                            property: username
 
         .. code-block:: xml
 
             <!-- app/config/security.xml -->
             <config>
                 <provider name=="main_provider">
-                    <user name="foo" password="test" />
-                    <entity class="Acme\UserBundle\Entity\User" property="username" />
+                    <memory>
+                        <user name="foo" password="test" />
+                    </memory>
+
+                    <entity class="Acme\UserBundle\Entity\User"
+                        property="username" />
                 </provider>
             </config>
 
@@ -1458,10 +1569,14 @@ the user from both the ``in_memory`` and ``user_db`` providers.
             $container->loadFromExtension('security', array(
                 'providers' => array(
                     'main_provider' => array(
-                        'users' => array(
-                            'foo' => array('password' => 'test'),
+                        'memory' => array(
+                            'users' => array(
+                                'foo' => array('password' => 'test'),
+                            ),
                         ),
-                        'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
+                        'entity' => array(
+                        'class' => 'Acme\UserBundle\Entity\User',
+                        'property' => 'username'),
                     ),
                 ),
             ));
@@ -1570,7 +1685,10 @@ rules by creating a role hierarchy:
         $container->loadFromExtension('security', array(
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => array('ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),
+                'ROLE_SUPER_ADMIN' => array(
+                    'ROLE_ADMIN',
+                    'ROLE_ALLOWED_TO_SWITCH',
+                ),
             ),
         ));
 
@@ -1645,7 +1763,7 @@ them, you can omit them entirely and shorten your configuration:
         'logout' => array(),
 
 Note that you will *not* need to implement a controller for the ``/logout``
-URL as the firewall takes care of everything. You may, however, want to create
+URL as the firewall takes care of everything. You *do*, however, need to create
 a route so that you can use it to generate the URL:
 
 .. configuration-block::
@@ -1654,19 +1772,18 @@ a route so that you can use it to generate the URL:
 
         # app/config/routing.yml
         logout:
-            pattern:   /logout
+            path:   /logout
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="logout" pattern="/logout" />
-
+            <route id="logout" path="/logout" />
         </routes>
 
     ..  code-block:: php
@@ -1680,10 +1797,15 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
+.. caution::
+
+    As of Symfony 2.1, you *must* have a route that corresponds to your logout
+    path. Without this route, logging out will not work.
+
 Once the user has been logged out, he will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
-:doc:`Security Configuration Reference</reference/configuration/security>`.
+:doc:`Security Configuration Reference </reference/configuration/security>`.
 
 .. _book-security-template:
 
@@ -1799,14 +1921,16 @@ to show a link to exit impersonation:
     .. code-block:: html+jinja
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-            <a href="{{ path('homepage', {_switch_user: '_exit'}) }}">Exit impersonation</a>
+            <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
         {% endif %}
 
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
             <a
-                href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>"
+                href="<?php echo $view['router']->generate('homepage', array(
+                    '_switch_user' => '_exit',
+                ) ?>"
             >
                 Exit impersonation
             </a>
@@ -1846,7 +1970,10 @@ setting:
             'firewalls' => array(
                 'main'=> array(
                     // ...
-                    'switch_user' => array('role' => 'ROLE_ADMIN', 'parameter' => '_want_to_be_this_user'),
+                    'switch_user' => array(
+                        'role' => 'ROLE_ADMIN',
+                        'parameter' => '_want_to_be_this_user',
+                    ),
                 ),
             ),
         ));
@@ -1895,6 +2022,61 @@ cookie will be ever created by Symfony2):
     If you use a form login, Symfony2 will create a cookie even if you set
     ``stateless`` to ``true``.
 
+Utilities
+---------
+
+.. versionadded:: 2.2
+    The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
+
+The Symfony Security Component comes with a collection of nice utilities related
+to security. These utilities are used by Symfony, but you should also use
+them if you want to solve the problem they address.
+
+Comparing Strings
+~~~~~~~~~~~~~~~~~
+
+The time it takes to compare two strings depends on their differences. This
+can be used by an attacker when the two strings represent a password for
+instance; it is known as a `Timing attack`_.
+
+Internally, when comparing two passwords, Symfony uses a constant-time
+algorithm; you can use the same strategy in your own code thanks to the
+:class:`Symfony\\Component\\Security\\Core\\Util\\StringUtils` class::
+
+    use Symfony\Component\Security\Core\Util\StringUtils;
+
+    // is password1 equals to password2?
+    $bool = StringUtils::equals($password1, $password2);
+
+Generating a secure Random Number
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whenever you need to generate a secure random number, you are highly
+encouraged to use the Symfony
+:class:`Symfony\\Component\\Security\\Core\\Util\\SecureRandom` class::
+
+    use Symfony\Component\Security\Core\Util\SecureRandom;
+
+    $generator = new SecureRandom();
+    $random = $generator->nextBytes(10);
+
+The
+:method:`Symfony\\Component\\Security\\Core\\Util\\SecureRandom::nextBytes`
+methods returns a random string composed of the number of characters passed as
+an argument (10 in the above example).
+
+The SecureRandom class works better when OpenSSL is installed but when it's
+not available, it falls back to an internal algorithm, which needs a seed file
+to work correctly. Just pass a file name to enable it::
+
+    $generator = new SecureRandom('/some/path/to/store/the/seed.txt');
+    $random = $generator->nextBytes(10);
+
+.. note::
+
+    You can also access a secure random instance directly from the Symfony
+    dependency injection container; its name is ``security.secure_random``.
+
 Final Words
 -----------
 
@@ -1923,8 +2105,8 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
-.. _`Symfony's security component`: https://github.com/symfony/Security
-.. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.0
+.. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
+.. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack

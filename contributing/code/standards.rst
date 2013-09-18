@@ -49,11 +49,13 @@ example containing most features described below:
 
         /**
          * @param string $dummy Some argument description
-         * @param array $options
+         * @param array  $options
          *
          * @return string|null Transformed input
+         *
+         * @throws \RuntimeException
          */
-        private function transformText($dummy, $options = array())
+        private function transformText($dummy, array $options = array())
         {
             $mergedOptions = array_merge(
                 $options,
@@ -68,15 +70,12 @@ example containing most features described below:
             }
             if ('string' === $dummy) {
                 if ('values' === $mergedOptions['some_default']) {
-                    $dummy = substr($dummy, 0, 5);
-                } else {
-                    $dummy = ucwords($dummy);
+                    return substr($dummy, 0, 5);
                 }
-            } else {
-                throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
+                
+                return ucwords($dummy);
             }
-
-            return $dummy;
+            throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
         }
     }
 
@@ -87,7 +86,7 @@ Structure
 
 * Add a single space around operators (``==``, ``&&``, ...);
 
-* Add a comma after each array item in a multi-line array, even after the	
+* Add a comma after each array item in a multi-line array, even after the
   last one;
 
 * Add a blank line before ``return`` statements, unless the return is alone
@@ -133,6 +132,16 @@ Naming Conventions
 
 * Don't forget to look at the more verbose :doc:`conventions` document for
   more subjective naming considerations.
+
+Service Naming Conventions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* A service name contains groups, separated by dots;
+* The DI alias of the bundle is the first group (e.g. ``fos_user``);
+* Use lowercase letters for service and parameter names;
+* A group name uses the underscore notation;
+* Each service has a corresponding parameter containing the class name,
+  following the ``SERVICE NAME.class`` convention.
 
 Documentation
 -------------

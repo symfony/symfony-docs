@@ -14,8 +14,8 @@ Before working on Symfony2, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.3.2 or above;
-* PHPUnit 3.5.11 or above.
+* PHP version 5.3.3 or above;
+* PHPUnit 3.6.4 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -34,7 +34,7 @@ Set up your user information with your real name and a working email address:
 
 .. tip::
 
-    If your IDE creates configuration files inside project's directory,
+    If your IDE creates configuration files inside the project's directory,
     you can use global ``.gitignore`` file (for all projects) or
     ``.git/info/exclude`` file (per project) to ignore them. See
     `Github's documentation`_.
@@ -42,7 +42,7 @@ Set up your user information with your real name and a working email address:
 .. tip::
 
     Windows users: when installing Git, the installer will ask what to do with
-    line endings and suggests to replace all Lf by CRLF. This is the wrong
+    line endings, and suggests replacing all LF with CRLF. This is the wrong
     setting if you wish to contribute to Symfony! Selecting the as-is method is
     your best choice, as git will convert your line feeds to the ones in the
     repository. If you have already installed Git, you can check the value of
@@ -52,8 +52,8 @@ Set up your user information with your real name and a working email address:
 
         $ git config core.autocrlf
 
-    This will return either "false", "input" or "true", "true" and "false" being
-    the wrong values. Set it to another value by typing:
+    This will return either "false", "input" or "true"; "true" and "false" being
+    the wrong values. Change it to "input" by typing:
 
     .. code-block:: bash
 
@@ -107,13 +107,13 @@ Choose the right Branch
 Before working on a patch, you must determine on which branch you need to
 work. The branch should be based on the `master` branch if you want to add a
 new feature. But if you want to fix a bug, use the oldest but still maintained
-version of Symfony where the bug happens (like `2.0`).
+version of Symfony where the bug happens (like `2.2`).
 
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a patch
-    for the `2.0` branch, the patch will also be applied by the core team on
+    for the `2.2` branch, the patch will also be applied by the core team on
     the `master` branch.
 
 Create a Topic Branch
@@ -126,18 +126,18 @@ topic branch:
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the 2.0 branch, first track the remote
-`2.0` branch locally:
+Or, if you want to provide a bugfix for the 2.2 branch, first track the remote
+`2.2` branch locally:
 
 .. code-block:: bash
 
-    $ git checkout -t origin/2.0
+    $ git checkout -t origin/2.2
 
-Then create a new branch off the 2.0 branch to work on the bugfix:
+Then create a new branch off the 2.2 branch to work on the bugfix:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME 2.0
+    $ git checkout -b BRANCH_NAME 2.2
 
 .. tip::
 
@@ -230,7 +230,7 @@ while to finish your changes):
 
 .. tip::
 
-    Replace `master` with `2.0` if you are working on a bugfix
+    Replace `master` with `2.2` if you are working on a bugfix
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
@@ -254,8 +254,8 @@ You can now make a pull request on the ``symfony/symfony`` Github repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.0`` if you want
-    the core team to pull a bugfix based on the 2.0 branch.
+    Take care to point your pull request towards ``symfony:2.2`` if you want
+    the core team to pull a bugfix based on the 2.2 branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -344,7 +344,7 @@ because you want early feedback on your work, add an item to todo-list:
 .. code-block:: text
 
     - [ ] finish the code
-    - [ ] gather feedback my changes
+    - [ ] gather feedback for my changes
 
 As long as you have items in the todo-list, please prefix the pull request
 title with "[WIP]".
@@ -365,7 +365,7 @@ Rework your Patch
 
 Based on the feedback on the pull request, you might need to rework your
 patch. Before re-submitting the patch, rebase with ``upstream/master`` or
-``upstream/2.0``, don't merge; and force the push to the origin:
+``upstream/2.1``, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 

@@ -49,13 +49,16 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
 
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
     namespace Acme\HelloBundle\Form\Type;
-    
+
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
 
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
     class CompanyType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('name', 'text')
@@ -68,12 +71,12 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
     // src/Acme/HelloBundle/Form/Type/CustomerType.php
     namespace Acme\HelloBundle\Form\Type;
 
+    use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
 
     class CustomerType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('firstName', 'text')
@@ -88,11 +91,12 @@ location form type::
     namespace Acme\HelloBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class LocationType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('address', 'textarea')
@@ -101,11 +105,11 @@ location form type::
                 ->add('country', 'text');
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
-                'virtual' => true,
-            );
+            $resolver->setDefaults(array(
+                'virtual' => true
+            ));
         }
 
         public function getName()
@@ -120,23 +124,27 @@ But you absolutely want to have a dedicated form type to deal with location (rem
 
 The ``virtual`` form field option is the solution.
 
-You can set the option ``'virtual' => true`` in the ``getDefaultOptions`` method
+You can set the option ``'virtual' => true`` in the ``setDefaultOptions()`` method
 of ``LocationType`` and directly start using it in the two original form types.
 
 Look at the result::
 
     // CompanyType
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('foo', new LocationType());
+        $builder->add('foo', new LocationType(), array(
+            'data_class' => 'Acme\HelloBundle\Entity\Company'
+        ));
     }
 
 .. code-block:: php
 
     // CustomerType
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('bar', new LocationType());
+        $builder->add('bar', new LocationType(), array(
+            'data_class' => 'Acme\HelloBundle\Entity\Customer'
+        ));
     }
 
 With the virtual option set to false (default behavior), the Form Component

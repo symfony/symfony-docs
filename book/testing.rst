@@ -17,7 +17,8 @@ it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later.
+    Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
+    needed to test the Symfony core code itself.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the `Tests/` subdirectory of your bundles. If you follow
@@ -174,7 +175,7 @@ you'll use to crawl your site::
 
     $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-The ``request()`` method (see :ref:`more about the request method<book-testing-request-method-sidebar>`)
+The ``request()`` method (see :ref:`more about the request method <book-testing-request-method-sidebar>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
 be used to select elements in the Response, click on links, and submit forms.
 
@@ -336,7 +337,7 @@ giving you a nice API for uploading files.
 .. tip::
 
     You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler<book-testing-crawler>` section below.
+    :ref:`Crawler <book-testing-crawler>` section below.
 
 The ``request`` method can also be used to simulate form submissions directly
 or perform more complex requests::
@@ -440,13 +441,19 @@ HTTP layer. For a list of services available in your application, use the
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On each request, the Symfony profiler collects and stores a lot of data about
-the internal handling of that request. For example, the profiler could be
-used to verify that a given page executes less than a certain number of database
+On each request, you can enable the Symfony profiler to collect data about the
+internal handling of that request. For example, the profiler could be used to
+verify that a given page executes less than a certain number of database
 queries when loading.
 
 To get the Profiler for the last request, do the following::
 
+    // enable the profiler for the very next request
+    $client->enableProfiler();
+
+    $crawler = $client->request('GET', '/profiler');
+
+    // get the profile
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the
@@ -523,8 +530,7 @@ narrow down your node selection by chaining the method calls::
 
     $crawler
         ->filter('h1')
-        ->reduce(function ($node, $i)
-        {
+        ->reduce(function ($node, $i) {
             if (!$node->getAttribute('class')) {
                 return false;
             }
@@ -688,7 +694,13 @@ configuration option:
     .. code-block:: xml
 
         <!-- app/config/config_test.xml -->
-        <container>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+
             <!-- ... -->
             <swiftmailer:config disable-delivery="true" />
         </container>
@@ -729,7 +741,7 @@ You can also override HTTP headers on a per request basis::
 .. tip::
 
     The test client is available as a service in the container in the ``test``
-    environment (or wherever the :ref:`framework.test<reference-framework-test>`
+    environment (or wherever the :ref:`framework.test <reference-framework-test>`
     option is enabled). This means you can override the service entirely
     if you need to.
 
@@ -764,7 +776,7 @@ the installed third-party bundles:
         </testsuite>
     </testsuites>
 
-To include other directories in the code coverage, also edit the ``<filter>``
+To include other directories in the code coverage, also edit the `` <filter>``
 section:
 
 .. code-block:: xml
@@ -792,7 +804,6 @@ Learn more
 * :doc:`/cookbook/testing/profiling`
 * :doc:`/cookbook/testing/bootstrap`
 
-
 .. _`DemoControllerTest`: https://github.com/symfony/symfony-standard/blob/master/src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
-.. _`documentation`: http://www.phpunit.de/manual/3.5/en/
+.. _`documentation`: http://phpunit.de/manual/current/en/

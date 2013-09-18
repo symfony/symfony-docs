@@ -420,34 +420,36 @@ Why should you have to reinvent solutions to all these routine problems?
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 to the rescue. Before actually using Symfony2, you need to make
-sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
-possible to start using PHP classes without explicitly including the file
-containing the class.
+Symfony2 to the rescue. Before actually using Symfony2, you need to download
+it. This can be done by using Composer, which takes care of downloading the
+correct version and all its dependencies and provides an autoloader. An
+autoloader is a tool that makes it possible to start using PHP classes
+without explicitly including the file containing the class.
 
-First, `download Symfony`_ and place it into a ``vendor/symfony/`` directory.
-Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
-files in the application and to configure the autoloader:
+In your root directory, create a ``composer.json`` file with the following
+content:
 
-.. code-block:: html+php
+.. code-block:: json
 
-    <?php
-    // bootstrap.php
-    require_once 'model.php';
-    require_once 'controllers.php';
-    require_once 'vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    {
+        "require": {
+            "symfony/symfony": "2.2.*"
+        },
+        "autoload": {
+            "files": ["model.php","controllers.php"]
+        }
+    }
 
-    $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
-    $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/../vendor/symfony/src',
-    ));
+Next, `download Composer`_ and then run the following command, which will download Symfony
+into a vendor/ directory:
 
-    $loader->register();
+.. code-block:: bash
 
-This tells the autoloader where the ``Symfony`` classes are. With this, you
-can start using Symfony classes without using the ``require`` statement for
-the files that contain them.
+    $ php composer.phar install
+
+Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
+which takes care of autoloading for all the files in the Symfony Framework as well as
+the files mentioned in the autoload section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony2 provides
@@ -460,7 +462,7 @@ the HTTP response being returned. Use them to improve the blog:
 
     <?php
     // index.php
-    require_once 'app/bootstrap.php';
+    require_once 'vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -550,7 +552,7 @@ them for you. Here's the same sample application, now built in Symfony2::
     {
         public function listAction()
         {
-            $posts = $this->get('doctrine')->getEntityManager()
+            $posts = $this->get('doctrine')->getManager()
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
@@ -563,7 +565,7 @@ them for you. Here's the same sample application, now built in Symfony2::
         public function showAction($id)
         {
             $post = $this->get('doctrine')
-                ->getEntityManager()
+                ->getManager()
                 ->getRepository('AcmeBlogBundle:Post')
                 ->find($id)
             ;
@@ -580,7 +582,7 @@ them for you. Here's the same sample application, now built in Symfony2::
         }
     }
 
-The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library</book/doctrine>`
+The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
@@ -637,11 +639,11 @@ A routing configuration map provides this information in a readable format:
 
     # app/config/routing.yml
     blog_list:
-        pattern:  /blog
+        path:     /blog
         defaults: { _controller: AcmeBlogBundle:Blog:list }
 
     blog_show:
-        pattern:  /blog/show/{id}
+        path:     /blog/show/{id}
         defaults: { _controller: AcmeBlogBundle:Blog:show }
 
 Now that Symfony2 is handling all the mundane tasks, the front controller
@@ -665,7 +667,7 @@ controller method is responsible for returning the final ``Response`` object.
 There's really not much else to it.
 
 For a visual representation of how Symfony2 handles each request, see the
-:ref:`request flow diagram<request-flow-figure>`.
+:ref:`request flow diagram <request-flow-figure>`.
 
 Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -679,8 +681,8 @@ migrating the blog from flat PHP to Symfony2 has improved life:
   allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
-  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`;
+  to develop or maintain low-level utilities** such as :ref:`autoloading <autoloading-introduction-sidebar>`,
+  :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
 
 * Symfony2 gives you **access to open source tools** such as Doctrine and the
   Templating, Security, Form, Validation and Translation components (to name
@@ -692,7 +694,7 @@ migrating the blog from flat PHP to Symfony2 has improved life:
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony2's internal HTTP cache** or
   more powerful tools such as `Varnish`_. This is covered in a later chapter
-  all about :doc:`caching</book/http_cache>`.
+  all about :doc:`caching </book/http_cache>`.
 
 And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
@@ -743,7 +745,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 
 Twig is well-supported in Symfony2. And while PHP templates will always
 be supported in Symfony2, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter</book/templating>`.
+be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------
@@ -752,7 +754,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download Symfony`: http://symfony.com/download
+.. _`download Composer`: http://getcomposer.org/download/
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/

@@ -19,15 +19,17 @@ variables and functions by an Object-Oriented layer.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpFoundation);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/http-foundation`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_).
+
+.. _component-http-foundation-request:
 
 Request
 -------
 
-The most common way to create request is to base it on the current PHP global
+The most common way to create a request is to base it on the current PHP global
 variables with
 :method:`Symfony\\Component\\HttpFoundation\\Request::createFromGlobals`::
 
@@ -59,14 +61,14 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
-* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below<component-foundation-attributes>`)
+* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below <component-foundation-attributes>`)
 
 * ``files``: equivalent of ``$_FILES``;
 
 * ``server``: equivalent of ``$_SERVER``;
 
 * ``headers``: mostly equivalent to a sub-set of ``$_SERVER``
-  (``$request->headers->get('Content-Type')``).
+  (``$request->headers->get('User-Agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
 instance (or a sub-class of), which is a data holder class:
@@ -128,7 +130,7 @@ has some methods to filter the input values:
   parameter value converted to integer;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`: Filters the
-  parameter by using the PHP ``filter_var()`` function.
+  parameter by using the PHP :phpfunction:`filter_var` function.
 
 All getters takes up to three arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
@@ -145,12 +147,11 @@ exist::
     $request->query->get('bar', 'bar');
     // returns 'bar'
 
-
 When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element. But
 sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the `ParameterBag` getters like
+``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
 :method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
 argument::
 
@@ -172,7 +173,8 @@ thanks to the public ``attributes`` property, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
-on how this is used in the Symfony2 framework, see :ref:`read more<book-fundamentals-attributes>`.
+on how this is used in the Symfony2 framework, see
+:ref:`the Symfony2 book <book-fundamentals-attributes>`.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -188,8 +190,8 @@ this is done via the "path info" of the request, which can be accessed via the
 Simulating a Request
 ~~~~~~~~~~~~~~~~~~~~
 
-Instead of creating a Request based on the PHP globals, you can also simulate
-a Request::
+Instead of creating a request based on the PHP globals, you can also simulate
+a request::
 
     $request = Request::create(
         '/hello-world',
@@ -198,7 +200,7 @@ a Request::
     );
 
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
-creates a request based on a path info, a method and some parameters (the
+creates a request based on a URI, a method and some parameters (the
 query parameters or the request ones depending on the HTTP method); and of
 course, you can also override all other variables as well (by default, Symfony
 creates sensible defaults for all the PHP global variables).
@@ -210,7 +212,7 @@ Based on such a request, you can override the PHP global variables via
 
 .. tip::
 
-    You can also duplicate an existing query via
+    You can also duplicate an existing request via
     :method:`Symfony\\Component\\HttpFoundation\\Request::duplicate` or
     change a bunch of parameters with a single call to
     :method:`Symfony\\Component\\HttpFoundation\\Request::initialize`.
@@ -218,11 +220,11 @@ Based on such a request, you can override the PHP global variables via
 Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
-If you have a session attached to the Request, you can access it via the
+If you have a session attached to the request, you can access it via the
 :method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
 the
 :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
-method tells you if the request contains a Session which was started in one of
+method tells you if the request contains a session which was started in one of
 the previous requests.
 
 Accessing `Accept-*` Headers Data
@@ -238,13 +240,36 @@ by using the following methods:
   returns the list of accepted languages ordered by descending quality;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  returns the list of accepted charsets ordered by descending quality;
+  returns the list of accepted charsets ordered by descending quality.
+
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
+
+If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
+``Accept-Charset`` or ``Accept-Encoding``, you can use
+:class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` utility class::
+
+    use Symfony\Component\HttpFoundation\AcceptHeader;
+
+    $accept = AcceptHeader::fromString($request->headers->get('Accept'));
+    if ($accept->has('text/html')) {
+        $item = $accept->get('text/html');
+        $charset = $item->getAttribute('charset', 'utf-8');
+        $quality = $item->getQuality();
+    }
+
+    // accepts items are sorted by descending quality
+    $accepts = AcceptHeader::fromString($request->headers->get('Accept'))->all();
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
-The Request class has many other methods that you can use to access the
-request information. Have a look at the API for more information about them.
+The ``Request`` class has many other methods that you can use to access the
+request information. Have a look at
+:class:`the Request API <Symfony\\Component\\HttpFoundation\\Request>`
+for more information about them.
+
+.. _component-http-foundation-response:
 
 Response
 --------
@@ -365,6 +390,86 @@ To redirect the client to another URL, you can use the
 
     $response = new RedirectResponse('http://example.com/');
 
+Streaming a Response
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    Support for streamed responses was added in Symfony 2.1.
+
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse` class allows
+you to stream the Response back to the client. The response content is
+represented by a PHP callable instead of a string::
+
+    use Symfony\Component\HttpFoundation\StreamedResponse;
+
+    $response = new StreamedResponse();
+    $response->setCallback(function () {
+        echo 'Hello World';
+        flush();
+        sleep(2);
+        echo 'Hello World';
+        flush();
+    });
+    $response->send();
+
+.. note::
+
+    The ``flush()`` function does not flush buffering. If ``ob_start()`` has
+    been called before or the ``output_buffering`` php.ini option is enabled,
+    you must call ``ob_flush()`` before ``flush()``.
+
+    Additionally, PHP isn't the only layer that can buffer output. Your web
+    server might also buffer based on its configuration. Even more, if you
+    use fastcgi, buffering can't be disabled at all.
+
+.. _component-http-foundation-serving-files:
+
+Serving Files
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``makeDisposition`` method was added in Symfony 2.1.
+
+When sending a file, you must add a ``Content-Disposition`` header to your
+response. While creating this header for basic file downloads is easy, using
+non-ASCII filenames is more involving. The
+:method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
+abstracts the hard work behind a simple API::
+
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+
+    $response->headers->set('Content-Disposition', $d);
+
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
+    class was added in Symfony 2.2.
+
+Alternatively, if you are serving a static file, you can use a
+:class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+    $file = 'path/to/file.txt';
+    $response = new BinaryFileResponse($file);
+
+The ``BinaryFileResponse`` will automatically handle ``Range`` and
+``If-Range`` headers from the request. It also supports ``X-Sendfile``
+(see for `Nginx`_ and `Apache`_). To make use of it, you need to determine
+whether or not the ``X-Sendfile-Type`` header should be trusted and call
+:method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
+if it should::
+
+    $response::trustXSendfileTypeHeader();
+
+You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
+
+    $response->headers->set('Content-Type', 'text/plain');
+    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
+
+.. _component-http-foundation-json-response:
+
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -380,10 +485,56 @@ right content and headers. A JSON response might look like this::
     )));
     $response->headers->set('Content-Type', 'application/json');
 
+.. versionadded:: 2.1
+    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+    class was added in Symfony 2.1.
+
+There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+class, which can make this even easier::
+
+    use Symfony\Component\HttpFoundation\JsonResponse;
+
+    $response = new JsonResponse();
+    $response->setData(array(
+        'data' => 123
+    ));
+
+This encodes your array of data to JSON and sets the ``Content-Type`` header
+to ``application/json``.
+
+.. caution::
+
+    To avoid XSSI `JSON Hijacking`_, you should pass an associative array
+    as the outer-most array to ``JsonResponse`` and not an indexed array so
+    that the final result is an object (e.g. ``{"object": "not inside an array"}``)
+    instead of an array (e.g. ``[{"object": "inside an array"}]``). Read
+    the `OWASP guidelines`_ for more information.
+
+    Only methods that respond to GET requests are vulnerable to XSSI 'JSON Hijacking'.
+    Methods responding to POST requests only remain unaffected.
+
+JSONP Callback
+~~~~~~~~~~~~~~
+
+If you're using JSONP, you can set the callback function that the data should
+be passed to::
+
+    $response->setCallback('handleResponse');
+
+In this case, the ``Content-Type`` header will be ``text/javascript`` and
+the response content will look like this:
+
+.. code-block:: javascript
+
+    handleResponse({'data': 123});
+
 Session
 -------
 
-TBD -- This part has not been written yet as it will probably be refactored
-soon in Symfony 2.1.
+The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
+.. _Nginx: http://wiki.nginx.org/XSendfile
+.. _Apache: https://tn123.org/mod_xsendfile/
+.. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
+.. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside

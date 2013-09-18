@@ -29,20 +29,26 @@ Configuring the Database
 
 Before you can start, you'll need to configure your database connection
 information. By convention, this information is usually configured in an
-``app/config/parameters.ini`` file:
+``app/config/parameters.yml`` file:
 
-.. code-block:: ini
+.. code-block:: yaml
 
-    ; app/config/parameters.ini
-    [parameters]
-    database_driver   = mysql
-    database_host     = localhost
-    database_name     = test_project
-    database_user     = root
-    database_password = password
-    database_charset  = UTF8
+    # app/config/parameters.yml
+    parameters:
+        database_driver:   mysql
+        database_host:     localhost
+        database_name:     test_project
+        database_user:     root
+        database_password: password
+        database_charset:  UTF8
 
-These parameters defined in ``parameters.ini`` can now be included in the
+.. note::
+
+    Defining the configuration via ``parameters.yml`` is just a convention. The
+    parameters defined in that file are referenced by the main configuration
+    file when setting up Propel:
+
+These parameters defined in ``parameters.yml`` can now be included in the
 configuration file (``config.yml``):
 
 .. code-block:: yaml
@@ -84,7 +90,7 @@ of your ``AcmeStoreBundle``:
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <database name="default"
         namespace="Acme\StoreBundle\Model"
         defaultIdMethod="native"
@@ -298,22 +304,47 @@ Start by adding the ``category`` definition in your ``schema.xml``:
 
 .. code-block:: xml
 
-    <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <database name="default"
+        namespace="Acme\StoreBundle\Model"
+        defaultIdMethod="native">
         <table name="product">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
-            <column name="price" type="decimal" />
-            <column name="description" type="longvarchar" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true" />
 
-            <column name="category_id" type="integer" />
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100" />
+
+            <column name="price"
+                type="decimal" />
+
+            <column name="description"
+                type="longvarchar" />
+
+            <column name="category_id"
+                type="integer" />
+
             <foreign-key foreignTable="category">
                 <reference local="category_id" foreign="id" />
             </foreign-key>
         </table>
 
         <table name="category">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true" />
+
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100" />
        </table>
     </database>
 
@@ -323,7 +354,7 @@ Create the classes:
 
     $ php app/console propel:model:build
 
-Assuming you have products in your database, you don't want lose them. Thanks to
+Assuming you have products in your database, you don't want to lose them. Thanks to
 migrations, Propel will be able to update your database without losing existing
 data.
 
@@ -332,7 +363,7 @@ data.
     $ php app/console propel:migration:generate-diff
     $ php app/console propel:migration:migrate
 
-Your database has been updated, you can continue to write your application.
+Your database has been updated, you can continue writing your application.
 
 Saving Related Objects
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -433,7 +464,6 @@ Propel provides the following hooks:
 * ``preDelete()`` code executed before deleting an object
 * ``postDelete()`` code executed after deleting an object
 
-
 Behaviors
 ---------
 
@@ -449,5 +479,5 @@ You should read the dedicated section for `Propel commands in Symfony2`_.
 .. _`Working With Symfony2`: http://propelorm.org/cookbook/symfony2/working-with-symfony2.html#installation
 .. _`PropelBundle configuration section`: http://propelorm.org/cookbook/symfony2/working-with-symfony2.html#configuration
 .. _`Relationships`: http://propelorm.org/documentation/04-relationships.html
-.. _`Behaviors reference section`: http://propelorm.org/documentation/#behaviors_reference
-.. _`Propel commands in Symfony2`: http://propelorm.org/cookbook/symfony2/working-with-symfony2#the_commands
+.. _`Behaviors reference section`: http://propelorm.org/documentation/#behaviors-reference
+.. _`Propel commands in Symfony2`: http://propelorm.org/cookbook/symfony2/working-with-symfony2#the-commands

@@ -6,9 +6,9 @@ should be an array, you can use this constraint with the ``array`` type option
 to validate this.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - :ref:`type<reference-constraint-type-type>`                       |
+| Options        | - :ref:`type <reference-constraint-type-type>`                      |
 |                | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
@@ -49,14 +49,20 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="age">
-                <constraint name="Type">
-                    <option name="type">integer</option>
-                    <option name="message">The value {{ value }} is not a valid {{ type }}.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="age">
+                    <constraint name="Type">
+                        <option name="type">integer</option>
+                        <option name="message">The value {{ value }} is not a valid {{ type }}.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
         
@@ -85,7 +91,7 @@ Options
 type
 ~~~~
 
-**type**: ``string`` [:ref:`default option<validation-default-option>`]
+**type**: ``string`` [:ref:`default option <validation-default-option>`]
 
 This required option is the fully qualified class name or one of the PHP datatypes
 as determined by PHP's ``is_`` functions.

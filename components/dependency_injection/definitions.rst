@@ -1,7 +1,6 @@
 ﻿.. index::
    single: Dependency Injection; Service definitions
 
-
 Working with Container Service Definitions
 ==========================================
 
@@ -67,7 +66,7 @@ To get an array of the constructor arguments for a definition you can use::
 or to get a single argument by its position::
 
     $definition->getArgument($index);
-    //e.g. $definition->getArguments(0) for the first argument
+    //e.g. $definition->getArgument(0) for the first argument
 
 You can add a new argument to the end of the arguments array using::
 

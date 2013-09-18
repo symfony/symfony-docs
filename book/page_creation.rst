@@ -8,7 +8,7 @@ Creating a new page in Symfony2 is a simple two-step process:
 
 * *Create a route*: A route defines the URL (e.g. ``/about``) to your page
   and specifies a controller (which is a PHP function) that Symfony2 should
-  execute when the URL of an incoming request matches the route pattern;
+  execute when the URL of an incoming request matches the route path;
 
 * *Create a controller*: A controller is a PHP function that takes the incoming
   request and transforms it into the Symfony2 ``Response`` object that's
@@ -21,6 +21,42 @@ HTTP response.
 
 Symfony2 follows this philosophy and provides you with tools and conventions
 to keep your application organized as it grows in users and complexity.
+
+.. index::
+   single: Page creation; Environments & Front Controllers
+
+.. _page-creation-environments:
+
+Environments & Front Controllers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Every Symfony application runs within an :term:`environment`. An environment
+is a specific set of configuration and loaded bundles, represented by a string.
+The same application can be run with different configurations by running the
+application in different environments. Symfony2 comes with three environments
+defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
+
+Environments are useful by allowing a single application to have a dev environment
+built for debugging and a production environment optimized for speed. You might
+also load specific bundles based on the selected environment. For example,
+Symfony2 comes with the WebProfilerBundle (described below), enabled only
+in the ``dev`` and ``test`` environments.
+
+Symfony2 comes with two web-accessible front controllers: ``app_dev.php`` 
+provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
+All web accesses to Symfony2 normally go through one of these front controllers.
+(The ``test`` environment is normally only used when running unit tests, and so 
+doesn't have a dedicated front controller. The console tool also provides a
+front controller that can be used with any environment.)
+
+When the front controller initializes the kernel, it provides two parameters:
+the environment, and also whether the kernel should run in debug mode.
+To make your application respond faster, Symfony2 maintains a cache under the
+``app/cache/`` directory. When in debug mode is enabled (such as ``app_dev.php``
+does by default), this cache is flushed automatically whenever you make changes
+to any code or configuration. When running in debug mode, Symfony2 runs
+slower, but your changes are reflected without having to manually clear the
+cache.
 
 .. index::
    single: Page creation; Example
@@ -103,7 +139,7 @@ an entry when you generated the ``AcmeHelloBundle``:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        AcmeHelloBundle:
+        acme_hello:
             resource: "@AcmeHelloBundle/Resources/config/routing.yml"
             prefix:   /
 
@@ -111,12 +147,13 @@ an entry when you generated the ``AcmeHelloBundle``:
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeHelloBundle/Resources/config/routing.xml" prefix="/" />
+            <import resource="@AcmeHelloBundle/Resources/config/routing.xml"
+                prefix="/" />
         </routes>
 
     .. code-block:: php
@@ -147,19 +184,19 @@ the new route that defines the URL of the page that you're about to create:
 
         # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
-            pattern:  /hello/{name}
+            path:     /hello/{name}
             defaults: { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" pattern="/hello/{name}">
+            <route id="hello" path="/hello/{name}">
                 <default key="_controller">AcmeHelloBundle:Hello:index</default>
             </route>
         </routes>
@@ -177,9 +214,9 @@ the new route that defines the URL of the page that you're about to create:
 
         return $collection;
 
-The routing consists of two basic pieces: the ``pattern``, which is the URL
+The routing consists of two basic pieces: the ``path``, which is the URL
 that this route will match, and a ``defaults`` array, which specifies the
-controller that should be executed. The placeholder syntax in the pattern
+controller that should be executed. The placeholder syntax in the path
 (``{name}``) is a wildcard. It means that ``/hello/Ryan``, ``/hello/Fabien``
 or any other similar URL will match this route. The ``{name}`` placeholder
 parameter will also be passed to the controller so that you can use its value
@@ -245,9 +282,11 @@ application should greet you:
 
     http://localhost/app_dev.php/hello/Ryan
 
+.. _book-page-creation-prod-cache-clear:
+
 .. tip::
 
-    You can also view your app in the "prod" :ref:`environment<environments-summary>`
+    You can also view your app in the "prod" :ref:`environment <environments-summary>`
     by visiting:
 
     .. code-block:: text
@@ -514,13 +553,13 @@ You'll learn more about each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
-    When Symfony is loading, a special file - ``app/autoload.php`` - is included.
-    This file is responsible for configuring the autoloader, which will autoload
-    your application files from the ``src/`` directory and third-party libraries
-    from the ``vendor/`` directory.
+    When Symfony is loading, a special file - ``vendor/autoload.php`` - is
+    included. This file is created by Composer and will autoload all
+    application files living in the `src/` folder as well as all
+    third-party libraries mentioned in the ``composer.json`` file.
 
     Because of the autoloader, you never need to worry about using ``include``
-    or ``require`` statements. Instead, Symfony2 uses the namespace of a class
+    or ``require`` statements. Instead, Composer uses the namespace of a class
     to determine its location and automatically includes the file on your
     behalf the instant you need a class.
 
@@ -534,11 +573,6 @@ You'll learn more about each of these directories in later chapters.
             Acme\HelloBundle\Controller\HelloController
         Path:
             src/Acme/HelloBundle/Controller/HelloController.php
-
-    Typically, the only time you'll need to worry about the ``app/autoload.php``
-    file is when you're including a new third-party library in the ``vendor/``
-    directory. For more information on autoloading, see
-    :doc:`How to autoload Classes</components/class_loader>`.
 
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -566,7 +600,7 @@ in your application and to optimize them the way you want.
 .. note::
 
    While you'll learn the basics here, an entire cookbook entry is devoted
-   to the organization and best practices of :doc:`bundles</cookbook/bundles/best_practices>`.
+   to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a ``BlogBundle``, a ``ForumBundle`` or
@@ -641,7 +675,7 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions<bundles-naming-conventions>`.
+   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions <bundles-naming-conventions>`.
    You could also choose to shorten the name of the bundle to simply ``TestBundle``
    by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
 
@@ -734,20 +768,13 @@ format you prefer:
 
         # app/config/config.yml
         imports:
-            - { resource: parameters.ini }
+            - { resource: parameters.yml }
             - { resource: security.yml }
 
         framework:
             secret:          "%secret%"
-            charset:         UTF-8
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-            form:            true
-            csrf_protection: true
-            validation:      { enable_annotations: true }
-            templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-            session:
-                default_locale: "%locale%"
-                auto_start:     true
+            # ...
 
         # Twig Configuration
         twig:
@@ -759,46 +786,42 @@ format you prefer:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <imports>
-            <import resource="parameters.ini" />
-            <import resource="security.yml" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                                
+            <imports>
+                <import resource="parameters.yml" />
+                <import resource="security.yml" />
+            </imports>
 
-        <framework:config charset="UTF-8" secret="%secret%">
-            <framework:router resource="%kernel.root_dir%/config/routing.xml" />
-            <framework:form />
-            <framework:csrf-protection />
-            <framework:validation annotations="true" />
-            <framework:templating assets-version="SomeVersionScheme">
-                <framework:engine id="twig" />
-            </framework:templating>
-            <framework:session default-locale="%locale%" auto-start="true" />
-        </framework:config>
+            <framework:config secret="%secret%">
+                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+                <!-- ... -->
+            </framework:config>
 
-        <!-- Twig Configuration -->
-        <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
+            <!-- Twig Configuration -->
+            <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
 
-        <!-- ... -->
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
-        $this->import('parameters.ini');
+        $this->import('parameters.yml');
         $this->import('security.yml');
 
         $container->loadFromExtension('framework', array(
             'secret'          => '%secret%',
-            'charset'         => 'UTF-8',
-            'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            'form'            => array(),
-            'csrf-protection' => array(),
-            'validation'      => array('annotations' => true),
-            'templating'      => array(
-                'engines'         => array('twig'),
-                #'assets_version' => "SomeVersionScheme",
+            'router'          => array(
+                'resource' => '%kernel.root_dir%/config/routing.php',
             ),
-            'session' => array(
-                'default_locale' => "%locale%",
-                'auto_start'     => true,
+            // ...
             ),
         ));
 
@@ -837,6 +860,32 @@ options of each feature.
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
     * *PHP*: Very powerful but less readable than standard configuration formats.
+
+Default Configuration Dump
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``config:dump-reference`` command was added in Symfony 2.1
+
+You can dump the default configuration for a bundle in yaml to the console using
+the ``config:dump-reference`` command.  Here is an example of dumping the default
+FrameworkBundle configuration:
+
+.. code-block:: text
+
+    app/console config:dump-reference FrameworkBundle
+
+The extension alias (configuration key) can also be used:
+
+.. code-block:: text
+
+    app/console config:dump-reference framework
+
+.. note::
+
+    See the cookbook article: :doc:`How to expose a Semantic Configuration for
+    a Bundle </cookbook/bundles/extension>` for information on adding
+    configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction
@@ -893,7 +942,7 @@ cached files and allow them to rebuild:
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing chapter</book/testing>`
+    be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
 
 .. index::
@@ -935,16 +984,25 @@ the configuration file for the ``dev`` environment.
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
-        <imports>
-            <import resource="config.xml" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <framework:config>
-            <framework:router resource="%kernel.root_dir%/config/routing_dev.xml" />
-            <framework:profiler only-exceptions="false" />
-        </framework:config>
+            <imports>
+                <import resource="config.xml" />
+            </imports>
 
-        <!-- ... -->
+            <framework:config>
+                <framework:router
+                    resource="%kernel.root_dir%/config/routing_dev.xml"
+                />
+                <framework:profiler only-exceptions="false" />
+            </framework:config>
+
+            <!-- ... -->
 
     .. code-block:: php
 
@@ -952,7 +1010,9 @@ the configuration file for the ``dev`` environment.
         $loader->import('config.php');
 
         $container->loadFromExtension('framework', array(
-            'router'   => array('resource' => '%kernel.root_dir%/config/routing_dev.php'),
+            'router'   => array(
+                'resource' => '%kernel.root_dir%/config/routing_dev.php',
+            ),
             'profiler' => array('only-exceptions' => false),
         ));
 

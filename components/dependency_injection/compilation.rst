@@ -148,7 +148,7 @@ like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config Component</components/config/introduction>` to merge
+to use :doc:`the Config Component </components/config/introduction>` to merge
 and validate the config values. Using the configuration processing you could
 access the config value this way::
 
@@ -264,7 +264,6 @@ but also load a secondary one only if a certain parameter is set::
         $container->loadFromExtension($extension->getAlias());
         $container->compile();
 
-
 .. note::
 
     If you need to manipulate the configuration loaded by an extension then
@@ -273,6 +272,35 @@ but also load a secondary one only if a certain parameter is set::
     after the extensions have been processed.
 
 .. _components-dependency-injection-compiler-passes:
+
+Prepending Configuration passed to the Extension
+------------------------------------------------
+
+.. versionadded:: 2.2
+    The ability to prepend the configuration of a bundle is new in Symfony 2.2.
+
+An Extension can prepend the configuration of any Bundle before the ``load()``
+method is called by implementing :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
+
+    use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+    // ...
+
+    class AcmeDemoExtension implements ExtensionInterface, PrependExtensionInterface
+    {
+        // ...
+
+        public function prepend()
+        {
+            // ...
+
+            $container->prependExtensionConfig($name, $config);
+
+            // ...
+        }
+    }
+
+For more details, see :doc:`/cookbook/bundles/prepend_extension`, which is
+specific to the Symfony2 Framework, but contains more details about this feature.
 
 Creating a Compiler Pass
 ------------------------

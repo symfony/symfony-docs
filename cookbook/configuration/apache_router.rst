@@ -60,13 +60,13 @@ To test that it's working, let's create a very basic route for demo bundle:
 
         # app/config/routing.yml
         hello:
-            pattern:  /hello/{name}
+            path:  /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
+        <route id="hello" path="/hello/{name}">
             <default key="_controller">AcmeDemoBundle:Demo:hello</default>
         </route>
 

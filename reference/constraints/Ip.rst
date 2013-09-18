@@ -6,7 +6,7 @@ the value as IPv4, but a number of different options exist to validate as
 IPv6 and many other combinations.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `version`_                                                        |
 |                | - `message`_                                                        |
@@ -47,11 +47,17 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="ipAddress">
-                <constraint name="Ip" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="ipAddress">
+                    <constraint name="Ip" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

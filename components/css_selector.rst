@@ -10,10 +10,10 @@ The CssSelector Component
 Installation
 ------------
 
-You can install the component in several different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/CssSelector);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/css-selector`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_).
 
 Usage
 -----
@@ -62,7 +62,7 @@ You can use this expression with, for instance, :phpclass:`DOMXPath` or
 
 .. tip::
 
-    The :method:`Crawler::filter()<Symfony\\Component\\DomCrawler\\Crawler::filter>` method
+    The :method:`Crawler::filter() <Symfony\\Component\\DomCrawler\\Crawler::filter>` method
     uses the ``CssSelector`` component to find elements based on a CSS selector
     string. See the :doc:`/components/dom_crawler` for more details.
 

@@ -58,7 +58,6 @@ First, you need to configure the connection the ACL system is supposed to use:
             'connection' => 'default',
         ));
 
-
 .. note::
 
     The ACL system requires a connection from either Doctrine DBAL (usable by
@@ -105,7 +104,7 @@ Creating an ACL, and adding an ACE
             // ... setup $form, and bind data
 
             if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getEntityManager();
+                $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($comment);
                 $entityManager->flush();
 

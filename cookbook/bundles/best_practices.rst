@@ -143,7 +143,7 @@ instance, a ``HelloController`` controller is stored in
 class name is ``Bundle\HelloBundle\Controller\HelloController``.
 
 All classes and files must follow the Symfony2 coding :doc:`standards
-</contributing/code/standards>`.
+ </contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible, like
 Commands, Helpers, Listeners, and Controllers.
@@ -184,7 +184,7 @@ Documentation
 All classes and functions must come with full PHPDoc.
 
 Extensive documentation should also be provided in the :doc:`reStructuredText
-</contributing/documentation/format>` format, under the ``Resources/doc/``
+ </contributing/documentation/format>` format, under the ``Resources/doc/``
 directory; the ``Resources/doc/index.rst`` file is the only mandatory file and
 must be the entry point for the documentation.
 

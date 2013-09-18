@@ -14,6 +14,8 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `type`_                                                              |
 |             | - `options`_                                                           |
+|             | - `first_options`_                                                     |
+|             | - `second_options`_                                                    |
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
@@ -22,8 +24,10 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `invalid_message`_                                                   |
 | options     | - `invalid_message_parameters`_                                        |
+|             | - `mapped`_                                                            |
+|             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/form>`                              |
+| Parent type | :doc:`field </reference/forms/types/form>`                             |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |
 +-------------+------------------------------------------------------------------------+
@@ -36,7 +40,10 @@ Example Usage
     $builder->add('password', 'repeated', array(
         'type' => 'password',
         'invalid_message' => 'The password fields must match.',
-        'options' => array('label' => 'Password'),
+        'options' => array('attr' => array('class' => 'password-field')),
+        'required' => true,
+        'first_options'  => array('label' => 'Password'),
+        'second_options' => array('label' => 'Repeat Password'),
     ));
 
 Upon a successful form submit, the value entered into both of the "password"
@@ -72,20 +79,21 @@ To render each field individually, use something like this:
 
     .. code-block:: jinja
 
-        {{ form_errors(form.password) }}
+        {# .first and .second may vary in your use - see the note below #}
         {{ form_row(form.password.first) }}
         {{ form_row(form.password.second) }}
 
     .. code-block:: php
 
-        <?php echo $view['form']->errors($form['password']) ?>
         <?php echo $view['form']->row($form['password']['first']) ?>
         <?php echo $view['form']->row($form['password']['second']) ?>
 
 .. note::
 
-    The sub-field names are ``first`` and ``second`` by default, but can
-    be controlled via the `first_name`_ and `second_name`_ options.
+    The names ``first`` and ``second`` are the default names for the two
+    sub-fields. However, these names can be controlled via the `first_name`_
+    and `second_name`_ options. If you've set these options, then use those
+    values instead of ``first`` and ``second`` when rendering.
 
 Validation
 ~~~~~~~~~~
@@ -120,6 +128,35 @@ For example, if the ``type`` option is set to ``password``, this array might
 contain the options ``always_empty`` or ``required`` - both options that are
 supported by the ``password`` field type.
 
+first_options
+~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+.. versionadded:: 2.1
+    The ``first_options`` option is new in Symfony 2.1.
+
+Additional options (will be merged into `options` above) that should be passed
+*only* to the first field. This is especially useful for customizing the
+label::
+
+    $builder->add('password', 'repeated', array(
+        'first_options'  => array('label' => 'Password'),
+        'second_options' => array('label' => 'Repeat Password'),
+    ));
+
+second_options
+~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+.. versionadded:: 2.1
+    The ``second_options`` option is new in Symfony 2.1.
+
+Additional options (will be merged into `options` above) that should be passed
+*only* to the second field. This is especially useful for customizing the
+label (see `first_options`_).
+
 first_name
 ~~~~~~~~~~
 
@@ -149,8 +186,12 @@ error_bubbling
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`date </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc

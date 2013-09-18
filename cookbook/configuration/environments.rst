@@ -38,7 +38,7 @@ class:
     // app/AppKernel.php
 
     // ...
-    
+
     class AppKernel extends Kernel
     {
         // ...
@@ -138,7 +138,7 @@ either the ``app.php`` (for the ``prod`` environment) or the ``app_dev.php``
 
    The given URLs assume that your web server is configured to use the ``web/``
    directory of the application as its root. Read more in
-   :doc:`Installing Symfony2</book/installation>`.
+   :doc:`Installing Symfony2 </book/installation>`.
 
 If you open up one of these files, you'll quickly see that the environment
 used by each is explicitly set:
@@ -297,7 +297,7 @@ The new environment is now accessible via::
    about the application or underlying infrastructure. To be sure these environments
    aren't accessible, the front controller is usually protected from external
    IP addresses via the following code at the top of the controller:
-   
+
     .. code-block:: php
 
         if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
@@ -344,7 +344,6 @@ includes the following:
 
     You can easily change the directory location and name. For more information
     read the article :doc:`/cookbook/configuration/override_dir_structure`.
-
 
 Going Further
 -------------

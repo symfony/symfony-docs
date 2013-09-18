@@ -14,3 +14,4 @@ Security
     securing_services
     custom_provider
     custom_authentication_provider
+    target_path

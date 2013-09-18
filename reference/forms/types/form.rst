@@ -6,26 +6,33 @@ form Field Type
 
 See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`.
 
-Overridden Options
-------------------
+The ``form`` type predefines a couple of options that are then available
+on all fields.
 
-empty_data
-~~~~~~~~~~
+.. include:: /reference/forms/types/options/data.rst.inc
 
-**default**: ``array()`` / ``new $data_class()``
+.. include:: /reference/forms/types/options/required.rst.inc
 
-When no ``data_class`` option is specified, it will return an empty array.
-Otherwise, it will default to a new instance of the class defined in
-``data_class``.
+.. include:: /reference/forms/types/options/constraints.rst.inc
+
+.. include:: /reference/forms/types/options/cascade_validation.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/property_path.rst.inc
+
+.. include:: /reference/forms/types/options/attr.rst.inc
+
+.. include:: /reference/forms/types/options/translation_domain.rst.inc
 
 virtual
-~~~~~~~
+-------
 
-**default**: ``false``
+See :doc:`How to use the Virtual Form Field Option </cookbook/form/use_virtuals_forms>`
 
-error_bubbling
-~~~~~~~~~~~~~~
-
-**default**: ``true``
-
-Errors of the form bubbles to the root form by default.

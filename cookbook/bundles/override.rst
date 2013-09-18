@@ -71,7 +71,7 @@ Secondly, if the class is not available as a parameter, you want to make sure th
 class is always overridden when your bundle is used, or you need to modify
 something beyond just the class name, you should use a compiler pass::
 
-    // src/Acme/FooBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
+    // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
     namespace Acme\DemoBundle\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -129,7 +129,7 @@ Translations
 
 Translations are not related to bundles, but to domains. That means that you
 can override the translations from any translation file, as long as it is in
-:ref:`the correct domain <translation-domains>`.
+:ref:`the correct domain <using-message-domains>`.
 
 .. caution::
 

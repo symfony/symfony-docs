@@ -4,7 +4,7 @@
 How to customize your Form Login
 ================================
 
-Using a :ref:`form login<book-security-form-login>` for authentication is
+Using a :ref:`form login <book-security-form-login>` for authentication is
 a common, and flexible, method for handling authentication in Symfony2. Pretty
 much every aspect of the form login can be customized. The full, default
 configuration is shown in the next section.
@@ -31,12 +31,20 @@ directly to the login page), then the user is redirected to the default page,
 which is  ``/`` (i.e. the homepage) by default. You can change this behavior
 in several ways.
 
+.. note::
+
+    As mentioned, by default the user is redirected back to the page he originally
+    requested. Sometimes, this can cause problems, like if a background AJAX
+    request "appears" to be the last visited URL, causing the user to be
+    redirected there. For information on controlling this behavior, see
+    :doc:`/cookbook/security/target_path`.
+
 Changing the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, the default page can be set (i.e. the page the user is redirected to
-if no previous page was stored in the session). To set it to ``/admin`` use
-the following config:
+if no previous page was stored in the session). To set it to the
+``default_security_target`` route use the following config:
 
 .. configuration-block::
 
@@ -48,7 +56,7 @@ the following config:
                 main:
                     form_login:
                         # ...
-                        default_target_path: /admin
+                        default_target_path: default_security_target
 
     .. code-block:: xml
 
@@ -56,7 +64,7 @@ the following config:
         <config>
             <firewall>
                 <form-login
-                    default_target_path="/admin"                    
+                    default_target_path="default_security_target"
                 />
             </firewall>
         </config>
@@ -71,19 +79,20 @@ the following config:
 
                     'form_login' => array(
                         // ...
-                        'default_target_path' => '/admin',
+                        'default_target_path' => 'default_security_target',
                     ),
                 ),
             ),
         ));
 
-Now, when no URL is set in the session, users will be sent to ``/admin``.
+Now, when no URL is set in the session, users will be sent to the
+``default_security_target`` route.
 
 Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can make it so that users are always redirected to the default page regardless
-of what URL they had requested previously by setting the 
+of what URL they had requested previously by setting the
 ``always_use_default_target_path`` option to true:
 
 .. configuration-block::
@@ -97,7 +106,7 @@ of what URL they had requested previously by setting the
                     form_login:
                         # ...
                         always_use_default_target_path: true
-                        
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -129,8 +138,8 @@ Using the Referring URL
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In case no previous URL was stored in the session, you may wish to try using
-the ``HTTP_REFERER`` instead, as this will often be the same. You can  do
-this by setting ``use_referer`` to true (it defaults to false): 
+the ``HTTP_REFERER`` instead, as this will often be the same. You can do
+this by setting ``use_referer`` to true (it defaults to false):
 
 .. configuration-block::
 
@@ -171,10 +180,14 @@ this by setting ``use_referer`` to true (it defaults to false):
             ),
         ));
 
+.. versionadded:: 2.1
+    As of 2.1, if the referer is equal to the ``login_path`` option, the
+    user will be redirected to the ``default_target_path``.
+
 Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also override where the user is redirected to via the form itself by 
+You can also override where the user is redirected to via the form itself by
 including a hidden field with the name ``_target_path``. For example, to
 redirect to the URL defined by some ``account`` route, use the following:
 
@@ -214,13 +227,13 @@ redirect to the URL defined by some ``account`` route, use the following:
             <input type="password" id="password" name="_password" />
 
             <input type="hidden" name="_target_path" value="account" />
-            
+
             <input type="submit" name="login" />
         </form>
 
 Now, the user will be redirected to the value of the hidden form field. The
-value attribute can be a relative path, absolute URL, or a route name. You 
-can even change the name of the hidden form field by changing the ``target_path_parameter`` 
+value attribute can be a relative path, absolute URL, or a route name. You
+can even change the name of the hidden form field by changing the ``target_path_parameter``
 option to another value.
 
 .. configuration-block::
@@ -264,8 +277,8 @@ Redirecting on Login Failure
 In addition to redirecting the user after a successful login, you can also set
 the URL that the user should be redirected to after a failed login (e.g. an
 invalid username or password was submitted). By default, the user is redirected
-back to the login form itself. You can set this to a different URL with the
-following config:
+back to the login form itself. You can set this to a different route (e.g.
+``login_failure``) with the following config:
 
 .. configuration-block::
 
@@ -277,8 +290,8 @@ following config:
                 main:
                     form_login:
                         # ...
-                        failure_path: /login_failure
-                        
+                        failure_path: login_failure
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -300,7 +313,7 @@ following config:
 
                     'form_login' => array(
                         // ...
-                        'failure_path' => login_failure,
+                        'failure_path' => 'login_failure',
                     ),
                 ),
             ),

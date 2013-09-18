@@ -31,11 +31,14 @@ you should just use the ``choice`` type directly.
 |             | - `preferred_choices`_                                                 |
 |             | - `empty_value`_                                                       |
 |             | - `error_bubbling`_                                                    |
+|             | - `error_mapping`_                                                     |
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `read_only`_                                                         |
+|             | - `disabled`_                                                          |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`                           |
+| Parent type | :doc:`choice </reference/forms/types/choice>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType` |
 +-------------+------------------------------------------------------------------------+
@@ -55,7 +58,7 @@ default locale to specify the language.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -67,10 +70,16 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+These options inherit from the :doc:`date </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

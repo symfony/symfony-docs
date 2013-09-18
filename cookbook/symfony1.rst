@@ -48,7 +48,7 @@ lives inside a bundle (roughly equivalent to a symfony1 plugin) and, by default,
 each bundle lives inside the ``src`` directory. In that way, the ``src``
 directory is a bit like the ``plugins`` directory in symfony1, but much more
 flexible. Additionally, while *your* bundles will live in the ``src/`` directory,
-third-party bundles may live in the ``vendor/bundles/`` directory.
+third-party bundles will live somewhere in the ``vendor/`` directory.
 
 To get a better picture of the ``src/`` directory, let's first think of a
 symfony1 application. First, part of your code likely lives inside one or
@@ -77,8 +77,8 @@ The ``vendor/`` directory is basically equivalent to the ``lib/vendor/``
 directory in symfony1, which was the conventional directory for all vendor
 libraries and bundles. By default, you'll find the Symfony2 library files in
 this directory, along with several other dependent libraries such as Doctrine2,
-Twig and Swiftmailer. 3rd party Symfony2 bundles usually live in the
-``vendor/bundles/``.
+Twig and Swiftmailer. 3rd party Symfony2 bundles live somewhere in the
+``vendor/``.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -116,10 +116,10 @@ That array told symfony1 exactly which file contained each class. In the
 production environment, this caused you to need to clear the cache when classes
 were added or moved.
 
-In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
+In Symfony2, a tool named `Composer`_ handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
-Take the ``FrameworkExtraBundle`` from the Symfony2 Standard Edition as an
+Take the FrameworkExtraBundle from the Symfony2 Standard Edition as an
 example::
 
     namespace Sensio\Bundle\FrameworkExtraBundle;
@@ -133,54 +133,51 @@ example::
     }
 
 The file itself lives at
-``vendor/bundles/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
-As you can see, the location of the file follows the namespace of the class.
-Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
-the directory that the file should live in
-(``vendor/bundles/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
-``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
-namespace in the ``vendor/bundles`` directory:
+``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
+As you can see, the second part of the path follows the namespace of the
+class. The first part is equal to the package name of the SensioFrameworkExtraBundle.
 
-.. code-block:: php
-
-    // app/autoload.php
-
-    // ...
-    $loader->registerNamespaces(array(
-        // ...
-
-        'Sensio' => __DIR__.'/../vendor/bundles',
-    ));
+The namespace, ``Sensio\Bundle\FrameworkExtraBundle``, and package name,
+``sensio/framework-extra-bundle``, spells out the directory that the file
+should live in
+(``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``).
+Composer can then look for the file at this specific place and load it very
+fast.
 
 If the file did *not* live at this exact location, you'd receive a
 ``Class "Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle" does not exist.``
-error. In Symfony2, a "class does not exist" means that the suspect class
-namespace and physical location do not match. Basically, Symfony2 is looking
+error. In Symfony2, a "class does not exist" error means that the namespace of
+the class and physical location do not match. Basically, Symfony2 is looking
 in one exact location for that class, but that location doesn't exist (or
 contains a different class). In order for a class to be autoloaded, you
 **never need to clear your cache** in Symfony2.
 
 As mentioned before, for the autoloader to work, it needs to know that the
-``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
-example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/lib/``
-directory. This mapping is entirely controlled by you via the
-``app/autoload.php`` file.
+``Sensio`` namespace lives in the ``vendor/sensio/framework-extra-bundle``
+directory and that, for example, the ``Doctrine`` namespace lives in the
+``vendor/doctrine/orm/lib/`` directory. This mapping is entirely controlled by
+Composer. Each third-party library you load through Composer has its
+settings defined and Composer takes care of everything for you.
+
+For this to work, all third-party libraries used by your project must be
+defined in the ``composer.json`` file.
 
 If you look at the ``HelloController`` from the Symfony2 Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
-``Acme`` namespace is not defined in the ``app/autoload.php``. By default you
-do not need to explicitly configure the location of bundles that live in the
-``src/`` directory. The ``UniversalClassLoader`` is configured to fallback to
-the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
+``AcmeDemoBundle`` is not defined in your ``composer.json`` file. Nonetheless are
+the files autoloaded. This is because you can tell composer to autoload files
+from specific directories without defining a dependency:
 
-.. code-block:: php
+.. code-block:: yaml
 
-    // app/autoload.php
+    "autoload": {
+        "psr-0": { "": "src/" }
+    }
 
-    // ...
-    $loader->registerNamespaceFallbacks(array(
-        __DIR__.'/../src',
-    ));
+This means that if a class is not found in the ``vendor`` directory, Composer
+will search in the ``src`` directory before throwing a "class does not exist"
+exception. Read more about configuring the Composer Autoloader in
+`the Composer documentation`_
 
 Using the Console
 -----------------
@@ -367,4 +364,6 @@ In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
+.. _`Composer`: http://getcomposer.org
 .. _`Symfony2 Standard Edition`: https://github.com/symfony/symfony-standard
+.. _`the Composer documentation`: http://getcomposer.org/doc/04-schema.md#autoload

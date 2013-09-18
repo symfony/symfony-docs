@@ -141,7 +141,7 @@ also specify alternative text for the link:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email</cookbook/email/spool>`
+    :doc:`Spooling Email </cookbook/email/spool>`
 
 You can also add links to the API documentation:
 
@@ -187,7 +187,7 @@ Installing the Sphinx extensions
 * Add the following to the ``conf.py`` file:
 
 .. code-block:: py
-    
+
     # ...
     sys.path.append(os.path.abspath('_exts'))
 
@@ -199,13 +199,13 @@ Installing the Sphinx extensions
     # add the extensions to the list of extensions
     extensions = [..., 'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
 
-    # enable highlighting for PHP code not between ``<?php ... ?>`` by default
+    # enable highlighting for PHP code not between `` <?php ... ?>`` by default
     lexers['php'] = PhpLexer(startinline=True)
     lexers['php-annotations'] = PhpLexer(startinline=True)
 
     # use PHP as the primary domain
     primary_domain = 'php'
-    
+
     # set url for API links
     api_url = 'http://api.symfony.com/master/%s'
 

@@ -14,10 +14,10 @@ The HttpKernel Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpKernel);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/http-kernel`` on Packagist_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_).
 
 The Workflow of a Request
 -------------------------
@@ -55,8 +55,8 @@ matter how varied the architecture of that system::
         );
     }
 
-Internally, :method:`HttpKernel::handle()<Symfony\\Component\\HttpKernel\\HttpKernel::handle>` -
-the concrete implementation of :method:`HttpKernelInterface::handle()<Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle>` -
+Internally, :method:`HttpKernel::handle() <Symfony\\Component\\HttpKernel\\HttpKernel::handle>` -
+the concrete implementation of :method:`HttpKernelInterface::handle() <Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle>` -
 defines a workflow that starts with a :class:`Symfony\\Component\\HttpFoundation\\Request`
 and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
 
@@ -79,8 +79,8 @@ and talks about how one specific implementation of the HttpKernel - the Symfony
 Framework - works.
 
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
-is really simple, and involves creating an :doc:`event dispatcher</components/event_dispatcher/introduction>`
-and a :ref:`controller resolver<component-http-kernel-resolve-controller>`
+is really simple, and involves creating an :doc:`event dispatcher </components/event_dispatcher/introduction>`
+and a :ref:`controller resolver <component-http-kernel-resolve-controller>`
 (explained below). To complete your working kernel, you'll add more event
 listeners to the events discussed below::
 
@@ -107,12 +107,15 @@ listeners to the events discussed below::
     // echo the content and send the headers
     $response->send();
 
+    // triggers the kernel.terminate event
+    $kernel->terminate($request, $response);
+
 See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 
 For general information on adding listeners to the events below, see
 :ref:`http-kernel-creating-listener`.
 
-.. tip:: 
+.. tip::
 
     Fabien Potencier also wrote a wonderful series on using the ``HttpKernel``
     component and other Symfony2 components to create your own framework. See
@@ -125,11 +128,11 @@ For general information on adding listeners to the events below, see
 
 **Typical Purposes**: To add more information to the ``Request``, initialize
 parts of the system, or return a ``Response`` if possible (e.g. a security
-layer that denies access)
+layer that denies access).
 
-:ref:`Kernel Events Information Table<component-http-kernel-event-table>`
+:ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
-The first event that is dispatched inside :method:`HttpKernel::handle<Symfony\\Component\\HttpKernel\\HttpKernel::handle>`
+The first event that is dispatched inside :method:`HttpKernel::handle <Symfony\\Component\\HttpKernel\\HttpKernel::handle>`
 is ``kernel.request``, which may have a variety of different listeners.
 
 .. image:: /images/components/http_kernel/02-kernel-request.png
@@ -142,18 +145,18 @@ that listener may return a :class:`Symfony\\Component\\HttpFoundation\\RedirectR
 to the login page or a 403 Access Denied response.
 
 If a ``Response`` is returned at this stage, the process skips directly to
-the :ref:`kernel.response<component-http-kernel-kernel-response>` event.
+the :ref:`kernel.response <component-http-kernel-kernel-response>` event.
 
 .. image:: /images/components/http_kernel/03-kernel-request-response.png
    :align: center
 
 Other listeners simply initialize things or add more information to the request.
-For example, a listener might determine and set the locale on the Session
+For example, a listener might determine and set the locale on the ``Request``
 object.
 
 Another common listener is routing. A router listener may process the ``Request``
 and determine the controller that should be rendered (see the next section).
-In fact, the ``Request`` object has an ":ref:`attributes<component-foundation-attributes>`"
+In fact, the ``Request`` object has an ":ref:`attributes <component-foundation-attributes>`"
 bag which is a perfect spot to store this extra, application-specific data
 about the request. This means that if your router listener somehow determines
 the controller, it can store it on the ``Request`` attributes (which can be used
@@ -171,7 +174,7 @@ attributes).
     This class executes the routing layer, which returns an *array* of information
     about the matched request, including the ``_controller`` and any placeholders
     that are in the route's pattern (e.g. ``{slug}``). See
-    :doc:`Routing Component</components/routing/introduction>`.
+    :doc:`Routing Component </components/routing/introduction>`.
 
     This array of information is stored in the :class:`Symfony\\Component\\HttpFoundation\\Request`
     object's ``attributes`` array. Adding the routing information here doesn't
@@ -227,7 +230,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 
     The Symfony Framework uses the built-in
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
-    class (actually, it uses a sub-class, which some extra functionality
+    class (actually, it uses a sub-class with some extra functionality
     mentioned below). This class leverages the information that was placed
     on the ``Request`` object's ``attributes`` property during the ``RouterListener``.
 
@@ -264,7 +267,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 **Typical Purposes**: Initialize things or change the controller just before
 the controller is executed.
 
-:ref:`Kernel Events Information Table<component-http-kernel-event-table>`
+:ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
 After the controller callable has been determined, ``HttpKernel::handle``
 dispatches the ``kernel.controller`` event. Listeners to this event might initialize
@@ -276,7 +279,7 @@ the controller is executed. For some examples, see the Symfony2 section below.
    :align: center
 
 Listeners to this event can also change the controller callable completely
-by calling :method:`FilterControllerEvent::setController<Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent::setController>`
+by calling :method:`FilterControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent::setController>`
 on the event object that's passed to listeners on this event.
 
 .. sidebar:: ``kernel.controller`` in the Symfony Framework
@@ -284,10 +287,10 @@ on the event object that's passed to listeners on this event.
     There are a few minor listeners to the ``kernel.controller`` event in
     the Symfony Framework, and many deal with collecting profiler data when
     the profiler is enabled.
-    
+
     One interesting listener comes from the :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>`,
     which is packaged with the Symfony Standard Edition. This listener's
-    :doc:`@ParamConverter</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    :doc:`@ParamConverter </bundles/SensioFrameworkExtraBundle/annotations/converters>`
     functionality allows you to pass a full object (e.g. a ``Post`` object)
     to your controller instead of a scalar value (e.g. an ``id`` parameter
     that was on your route). The listener - ``ParamConverterListener`` - uses
@@ -348,13 +351,13 @@ for each page that is built.
 
 Usually, the controller will return a ``Response`` object. If this is true,
 then the work of the kernel is just about done! In this case, the next step
-is the :ref:`kernel.response<component-http-kernel-kernel-response>` event.
+is the :ref:`kernel.response <component-http-kernel-kernel-response>` event.
 
 .. image:: /images/components/http_kernel/09-controller-returns-response.png
    :align: center
 
 But if the controller returns anything besides a ``Response``, then the kernel
-has a little bit more work to do - :ref:`kernel.view<component-http-kernel-kernel-view>` 
+has a little bit more work to do - :ref:`kernel.view <component-http-kernel-kernel-view>`
 (since the end goal is *always* to generate a ``Response`` object).
 
 .. note::
@@ -370,7 +373,7 @@ has a little bit more work to do - :ref:`kernel.view<component-http-kernel-kerne
 **Typical Purposes**: Transform a non-``Response`` return value from a controller
 into a ``Response``
 
-:ref:`Kernel Events Information Table<component-http-kernel-event-table>`
+:ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
 If the controller doesn't return a ``Response`` object, then the kernel dispatches
 another event - ``kernel.view``. The job of a listener to this event is to
@@ -395,7 +398,7 @@ return a ``Response``.
     event. However, one core bundle -
     :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>` -
     *does* add a listener to this event. If your controller returns an array,
-    and you place the :doc:`@Template</bundles/SensioFrameworkExtraBundle/annotations/view>`
+    and you place the :doc:`@Template </bundles/SensioFrameworkExtraBundle/annotations/view>`
     annotation above the controller, then this listener renders a template,
     passes the array you returned from your controller to that template,
     and creates a ``Response`` containing the returned content from that
@@ -413,19 +416,19 @@ return a ``Response``.
 
 **Typical Purposes**: Modify the ``Response`` object just before it is sent
 
-:ref:`Kernel Events Information Table<component-http-kernel-event-table>`
+:ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
 The end goal of the kernel is to transform a ``Request`` into a ``Response``. The
-``Response`` might be created during the :ref:`kernel.request<component-http-kernel-kernel-request>`
-event, returned from the :ref:`controller<component-http-kernel-calling-controller>`,
-or returned by one of the listeners to the :ref:`kernel.view<component-http-kernel-kernel-view>`
+``Response`` might be created during the :ref:`kernel.request <component-http-kernel-kernel-request>`
+event, returned from the :ref:`controller <component-http-kernel-calling-controller>`,
+or returned by one of the listeners to the :ref:`kernel.view <component-http-kernel-kernel-view>`
 event.
 
 Regardless of who creates the ``Response``, another event - ``kernel.response``
 is dispatched directly afterwards. A typical listener to this event will modify
 the ``Response`` object in some way, such as modifying headers, adding cookies,
 or even changing the content of the ``Response`` itself (e.g. injecting some
-JavaScript before the end ``</body>`` tag of an HTML response).
+JavaScript before the end `` </body>`` tag of an HTML response).
 
 After this event is dispatched, the final ``Response`` object is returned
 from :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle`. In the
@@ -441,7 +444,48 @@ method, which sends the headers and prints the ``Response`` content.
     which causes the web debug toolbar to be displayed. Another listener,
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\ContextListener`
     serializes the current user's information into the
-    session so that it can be reloaded on the next request. 
+    session so that it can be reloaded on the next request.
+
+.. _component-http-kernel-kernel-terminate:
+
+8) The ``kernel.terminate`` event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``kernel.terminate`` event is new to Symfony 2.1.
+
+**Typical Purposes**: To perform some "heavy" action after the response has
+been streamed to the user
+
+:ref:`Kernel Events Information Table <component-http-kernel-event-table>`
+
+The final event of the HttpKernel process is ``kernel.terminate`` and is unique
+because it occurs *after* the ``HttpKernel::handle`` method, and after the
+response is sent to the user. Recall from above, then the code that uses
+the kernel, ends like this::
+
+    // echo the content and send the headers
+    $response->send();
+
+    // triggers the kernel.terminate event
+    $kernel->terminate($request, $response);
+
+As you can see, by calling ``$kernel->terminate`` after sending the response,
+you will trigger the ``kernel.terminate`` event where you can perform certain
+actions that you may have delayed in order to return the response as quickly
+as possible to the client (e.g. sending emails).
+
+.. note::
+
+    Using the ``kernel.terminate`` event is optional, and should only be
+    called if your kernel implements :class:`Symfony\\Component\\HttpKernel\\TerminableInterface`.
+
+.. sidebar:: ``kernel.terminate`` in the Symfony Framework
+
+    If you use the ``SwiftmailerBundle`` with Symfony2 and use ``memory``
+    spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
+    is activated, which actually delivers any emails that you scheduled to
+    send during the request.
 
 .. _component-http-kernel-kernel-exception:
 
@@ -451,7 +495,7 @@ Handling Exceptions:: the ``kernel.exception`` event
 **Typical Purposes**: Handle some type of exception and create an appropriate
 ``Response`` to return for the exception
 
-:ref:`Kernel Events Information Table<component-http-kernel-event-table>`
+:ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
 If an exception is thrown at any point inside ``HttpKernel::handle``, another
 event - ``kernel.exception`` is thrown. Internally, the body of the ``handle``
@@ -539,6 +583,8 @@ each event has their own event object:
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 | kernel.response   | ``KernelEvents::RESPONSE``    | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`                 |
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
+| kernel.terminate  | ``KernelEvents::TERMINATE``   | :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`                   |
++-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 | kernel.exception  | ``KernelEvents::EXCEPTION``   | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`        |
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 
@@ -568,7 +614,7 @@ a built-in ControllerResolver that can be used to create a working example::
             '_controller' => function (Request $request) {
                 return new Response(sprintf("Hello %s", $request->get('name')));
             }
-        ),
+        )
     ));
 
     $request = Request::createFromGlobals();
@@ -583,6 +629,10 @@ a built-in ControllerResolver that can be used to create a working example::
 
     $response = $kernel->handle($request);
     $response->send();
+
+    $kernel->terminate($request, $response);
+
+.. _http-kernel-sub-requests:
 
 Sub Requests
 ------------
@@ -631,7 +681,7 @@ look like this::
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
-        
+
         // ...
     }
 

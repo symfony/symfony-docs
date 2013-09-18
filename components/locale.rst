@@ -25,10 +25,10 @@ Replacement for the following functions and classes is provided:
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Locale);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/locale`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/locale`` on `Packagist`_).
 
 Usage
 -----
@@ -64,5 +64,9 @@ When using the ClassLoader component following code is sufficient to supplement 
     // Get the locale names for a given code or get all locale codes
     $locales = Locale::getDisplayLocales('en');
     $localeCodes = Locale::getLocales();
+
+    // Get ICU versions
+    $icuVersion = Locale::getIntlIcuVersion();
+    $icuDataVersion = Locale::getIcuDataVersion();
 
 .. _Packagist: https://packagist.org/packages/symfony/locale

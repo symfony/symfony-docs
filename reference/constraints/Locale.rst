@@ -8,7 +8,7 @@ The "value" for each locale is either the two letter ISO639-1 *language* code
 the ISO3166 *country* code (e.g. ``fr_FR`` for French/France).
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -48,11 +48,17 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
-        <class name="Acme\UserBundle\Entity\User">
-            <property name="locale">
-                <constraint name="Locale" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Entity\User">
+                <property name="locale">
+                    <constraint name="Locale" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

@@ -25,11 +25,10 @@ which requires the following three methods:
 
     interface VoterInterface
     {
-        function supportsAttribute($attribute);
-        function supportsClass($class);
-        function vote(TokenInterface $token, $object, array $attributes);
+        public function supportsAttribute($attribute);
+        public function supportsClass($class);
+        public function vote(TokenInterface $token, $object, array $attributes);
     }
-
 
 The ``supportsAttribute()`` method is used to check if the voter supports
 the given user attribute (i.e: a role, an acl, etc.).
@@ -86,7 +85,7 @@ and compare the IP address against a set of blacklisted IP addresses:
             return true;
         }
 
-        function vote(TokenInterface $token, $object, array $attributes)
+        public function vote(TokenInterface $token, $object, array $attributes)
         {
             $request = $this->container->get('request');
             if (in_array($request->getClientIp(), $this->blacklistedIp)) {
@@ -102,14 +101,14 @@ the security layer. This can be done easily through the service container.
 
 .. tip::
 
-   Your implementation of the methods 
-   :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute` 
-   and :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass` 
-   are not being called internally by the framework. Once you have registered your 
-   voter the ``vote()`` method will always be called, regardless of whether
-   or not these two methods return true. Therefore you need to call those
-   methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
-   if your voter does not support the class or attribute.
+    Your implementation of the methods
+    :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute`
+    and :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsClass`
+    are not being called internally by the framework. Once you have registered your
+    voter the ``vote()`` method will always be called, regardless of whether
+    or not these two methods return true. Therefore you need to call those
+    methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
+    if your voter does not support the class or attribute.
 
 Declaring the Voter as a Service
 --------------------------------

@@ -97,6 +97,27 @@ rather than being tied up and hidden with the service definition:
             ->register('mailer', 'Mailer')
             ->addArgument('%mailer.transport%');
 
+.. caution::
+
+    The values between ``parameter`` tags in XML configuration files are not
+    trimmed.
+
+    This means that the following configuration sample will have the value
+    ``\n    sendmail\n``:
+
+    .. code-block:: xml
+
+        <parameter key="mailer.transport">
+            sendmail
+        </parameter>
+
+    In some cases (for constants or class names), this could throw errors. In
+    order to prevent this, you must always inline your parameters as follow:
+
+    .. code-block:: xml
+
+        <parameter key="mailer.transport">sendmail</parameter>
+
 If you were using this elsewhere as well, then you would only need to change
 the parameter value in one place if needed.
 
@@ -264,3 +285,78 @@ key, and define the type as ``constant``.
             # app/config/config.yml
             imports:
                 - { resource: parameters.xml }
+
+PHP Keywords in XML
+-------------------
+
+By default, ``true``, ``false`` and ``null`` in XML are converted to the PHP
+keywords (respectively ``true``, ``false`` and ``null``):
+
+.. code-block:: xml
+
+    <parameters>
+        <parameter key="mailer.send_all_in_once">false</parameters>
+    </parameters>
+
+    <!-- after parsing
+    $container->getParameter('mailer.send_all_in_once'); // returns false
+    -->
+
+To disable this behavior, use the ``string`` type:
+
+.. code-block:: xml
+
+    <parameters>
+        <parameter key="mailer.some_parameter" type="string">true</parameter>
+    </parameters>
+
+    <!-- after parsing
+    $container->getParameter('mailer.some_parameter'); // returns "true"
+    -->
+
+.. note::
+
+    This is not available for Yaml and PHP, because they already have built-in
+    support for the PHP keywords.
+
+Syntax for Referencing Services
+-------------------------------
+
+You can of course also reference services, which looks a bit different in
+each format. You can configure the behavior if the referenced service does
+not exist. By default, an exception is thrown when a non-existent service
+is referenced.
+
+Yaml
+~~~~
+
+Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
+
+* ``@mailer`` references the ``mailer`` service. If the service does not
+  exists, an exception will be thrown;
+* ``@?mailer`` references the ``mailer`` service. If the service does not
+  exists, it will be ignored;
+
+.. tip::
+
+    Use ``@@`` to escape the ``@`` symbol in Yaml. ``@@mailer`` will be
+    converted into the string ``"@mailer"`` instead of referencing the
+    ``mailer`` service.
+
+Xml
+~~~
+
+In XML, use the ``service`` type. The behavior if the service does not exist
+can be specified using the ``on-invalid`` argument. By default, an exception
+is thrown. Valid values for ``on-invalid`` are ``null`` (uses ``null`` in place
+of the missing service) or ``ignored`` (very similar, except if used on a
+method call, the method call is removed).
+
+Php
+~~~
+
+In PHP, you can use the
+:class:`Symfony\\Component\\DependencyInjection\\Reference` class to reference
+a service. The invalid behavior is configured using the second constructor
+argument and constants from
+:class:`Symfony\\Component\\DependencyInjection\\ContainerInterface`.

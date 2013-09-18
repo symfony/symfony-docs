@@ -4,8 +4,8 @@
 How to Use Assetic for Asset Management
 =======================================
 
-Assetic combines two major ideas: :ref:`assets<cookbook-assetic-assets>` and
-:ref:`filters<cookbook-assetic-filters>`. The assets are files such as CSS,
+Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
+:ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
 these files before they are served to the browser. This allows a separation
 between the asset files stored in the application and the files actually presented
@@ -43,8 +43,8 @@ Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.
 
-You can use Assetic to process both :ref:`CSS stylesheets<cookbook-assetic-including-css>`
-and :ref:`JavaScript files<cookbook-assetic-including-javascript>`. The philosophy
+You can use Assetic to process both :ref:`CSS stylesheets <cookbook-assetic-including-css>`
+and :ref:`JavaScript files <cookbook-assetic-including-javascript>`. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.
 
 .. _cookbook-assetic-including-javascript:
@@ -117,7 +117,7 @@ inside a ``stylesheets`` block:
 
 But because Assetic changes the paths to your assets, this *will* break any
 background images (or other paths) that uses relative paths, unless you use
-the :ref:`cssrewrite<cookbook-assetic-cssrewrite>` filter.
+the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
 
 .. note::
 
@@ -359,6 +359,8 @@ by Symfony (as the asset files are in the ``dev`` environment). This is on
 purpose - letting Symfony generate these files dynamically in a production
 environment is just too slow.
 
+.. _cookbook-asetic-dump-prod:
+
 Instead, each time you use your app in the ``prod`` environment (and therefore,
 each time you deploy), you should run the following task:
 
@@ -400,10 +402,6 @@ the following change in your ``config_dev.yml`` file:
         $container->loadFromExtension('assetic', array(
             'use_controller' => false,
         ));
-
-.. note::
-
-    You'll also have to remove the ``_assetic`` route in your ``app/config_dev.yml`` file.
 
 Next, since Symfony is no longer generating these assets for you, you'll
 need to dump them manually. To do so, run the following:
