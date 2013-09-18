@@ -16,6 +16,7 @@ Sphinx
   shorthand);
 * Inline hyperlinks are **not** used. Seperate the link and their target
   definition, which you add on the bottom of the page;
+* Inline markup should be closed at the same line as the open-string;
 * You should use a form of *you* instead of *we*.
 
 Example
@@ -26,8 +27,8 @@ Example
     Example
     =======
 
-    When you are working on the docs, you should follow the `Symfony Docs`_
-    standards.
+    When you are working on the docs, you should follow the
+    `Symfony Documentation`_ standards.
 
     Level 2
     -------
@@ -43,7 +44,7 @@ Example
 
         echo 'You cannot use the :: shortcut here';
 
-    .. _`Symfony Docs`: http://symfony.com/doc/current/contributing/documentation/standards.html
+    .. _`Symfony Documentation`: http://symfony.com/doc/current/contributing/documentation/standards.html
 
 Code Examples
 -------------
@@ -60,6 +61,10 @@ Code Examples
 * Description of the folded code: (optional)
   If you fold several lines: the description of the fold can be placed after the ``...``
   If you fold only part of a line: the description can be placed before the line;
+* If usefull, a PHP file should start with the namespace declaration;
+* When using use statements, only the first code block of an article shows the
+  full statement block. In further examples, this block is folded with a
+  ``// ...`` comment and only new use statements are displayed;
 * If useful, a ``codeblock`` should begin with a comment containing the filename
   of the file in the code block. Don't place a blank line after this comment,
   unless the next line is also a comment;
@@ -82,8 +87,11 @@ Example
 .. code-block:: php
 
     // src/Foo/Bar.php
+    namespace Foo;
 
+    use Acme\Demo\Cat;
     // ...
+
     class Bar
     {
         // ...
@@ -93,9 +101,11 @@ Example
             // set foo with a value of bar
             $foo = ...;
 
+            $cat = new Cat($foo);
+
             // ... check if $bar has the correct value
 
-            return $foo->baz($bar, ...);
+            return $cat->baz($bar, ...);
         }
     }
 
