@@ -7,7 +7,7 @@ How to handle File Uploads with Doctrine
 Handling file uploads with Doctrine entities is no different than handling
 any other file upload. In other words, you're free to move the file in your
 controller after handling a form submission. For examples of how to do this,
-see the :doc:`file type reference</reference/forms/types/file>` page.
+see the :doc:`file type reference </reference/forms/types/file>` page.
 
 If you choose to, you can also integrate the file upload into your entity
 lifecycle (i.e. creation, update and removal). In this case, as your entity
@@ -91,14 +91,14 @@ file.
 .. tip::
 
     If you have not done so already, you should probably read the
-    :doc:`file</reference/forms/types/file>` type documentation first to
+    :doc:`file </reference/forms/types/file>` type documentation first to
     understand how the basic upload process works.
 
 .. note::
 
     If you're using annotations to specify your validation rules (as shown
     in this example), be sure that you've enabled validation by annotation
-    (see :ref:`validation configuration<book-validation-configuration>`).
+    (see :ref:`validation configuration <book-validation-configuration>`).
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might

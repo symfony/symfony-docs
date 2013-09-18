@@ -21,7 +21,7 @@ The ``password`` field renders an input password text box.
 |             | - `error_mapping`_                                                     |
 |             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text</reference/forms/types/text>`                               |
+| Parent type | :doc:`text </reference/forms/types/text>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
@@ -44,7 +44,7 @@ Put simply, if for some reason you want to render your password field
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type:
+These options inherit from the :doc:`field </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 

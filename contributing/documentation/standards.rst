@@ -48,13 +48,13 @@ Example
 Code Examples
 -------------
 
-* The code follows the :doc:`Symfony Coding Standards</contributing/code/standards>`
+* The code follows the :doc:`Symfony Coding Standards </contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
   correctly if it crosses the 85th character;
 * When you fold one or more lines of code, place ``...`` in a comment at the point
   of the fold. These comments are: ``// ...`` (php), ``# ...`` (yaml/bash), ``{# ... #}``
-  (twig), ``<!-- ... -->`` (xml/html), ``; ...`` (ini), ``...`` (text);
+  (twig), `` <!-- ... -->`` (xml/html), ``; ...`` (ini), ``...`` (text);
 * When you fold a part of a line, e.g. a variable value, put ``...`` (without comment)
   at the place of the fold;
 * Description of the folded code: (optional)

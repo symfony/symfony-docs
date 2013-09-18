@@ -286,7 +286,7 @@ application should greet you:
 
 .. tip::
 
-    You can also view your app in the "prod" :ref:`environment<environments-summary>`
+    You can also view your app in the "prod" :ref:`environment <environments-summary>`
     by visiting:
 
     .. code-block:: text
@@ -600,7 +600,7 @@ in your application and to optimize them the way you want.
 .. note::
 
    While you'll learn the basics here, an entire cookbook entry is devoted
-   to the organization and best practices of :doc:`bundles</cookbook/bundles/best_practices>`.
+   to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a ``BlogBundle``, a ``ForumBundle`` or
@@ -675,7 +675,7 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions<bundles-naming-conventions>`.
+   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions <bundles-naming-conventions>`.
    You could also choose to shorten the name of the bundle to simply ``TestBundle``
    by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
 
@@ -884,7 +884,7 @@ The extension alias (configuration key) can also be used:
 .. note::
 
     See the cookbook article: :doc:`How to expose a Semantic Configuration for
-    a Bundle</cookbook/bundles/extension>` for information on adding
+    a Bundle </cookbook/bundles/extension>` for information on adding
     configuration for your own bundle.
 
 .. index::
@@ -942,7 +942,7 @@ cached files and allow them to rebuild:
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing chapter</book/testing>`
+    be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
 
 .. index::

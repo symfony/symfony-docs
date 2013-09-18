@@ -34,5 +34,5 @@ on all fields.
 virtual
 -------
 
-See :doc:`How to use the Virtual Form Field Option</cookbook/form/use_virtuals_forms>`
+See :doc:`How to use the Virtual Form Field Option </cookbook/form/use_virtuals_forms>`
 

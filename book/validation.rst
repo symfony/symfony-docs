@@ -33,7 +33,7 @@ your application::
 So far, this is just an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you whether or not the data
 of an object is valid. For this to work, you'll configure a list of rules
-(called :ref:`constraints<validation-constraints>`) that the object must
+(called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules can be specified via a number of
 different formats (YAML, XML, annotations, or PHP).
 
@@ -237,7 +237,7 @@ workflow looks like the following from inside a controller::
 
     This example uses an ``AuthorType`` form class, which is not shown here.
 
-For more information, see the :doc:`Forms</book/forms>` chapter.
+For more information, see the :doc:`Forms </book/forms>` chapter.
 
 .. index::
    pair: Validation; Configuration
@@ -318,8 +318,8 @@ the ":doc:`/cookbook/validation/custom_constraint`" article of the cookbook.
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some constraints, like :doc:`NotBlank</reference/constraints/NotBlank>`,
-are simple whereas others, like the :doc:`Choice</reference/constraints/Choice>`
+Some constraints, like :doc:`NotBlank </reference/constraints/NotBlank>`,
+are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>`
 constraint, have several configuration options available. Suppose that the
 ``Author`` class has another property, ``gender`` that can be set to either
 "male" or "female":
@@ -669,7 +669,7 @@ Classes
 ~~~~~~~
 
 Some constraints apply to the entire class being validated. For example,
-the :doc:`Callback</reference/constraints/Callback>` constraint is a generic
+the :doc:`Callback </reference/constraints/Callback>` constraint is a generic
 constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
@@ -1136,7 +1136,7 @@ it looks like this::
 By calling ``validateValue`` on the validator, you can pass in a raw value and
 the constraint object that you want to validate that value against. A full
 list of the available constraints - as well as the full class name for each
-constraint - is available in the :doc:`constraints reference</reference/constraints>`
+constraint - is available in the :doc:`constraints reference </reference/constraints>`
 section .
 
 The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`

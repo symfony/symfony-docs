@@ -199,7 +199,7 @@ Installing the Sphinx extensions
     # add the extensions to the list of extensions
     extensions = [..., 'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
 
-    # enable highlighting for PHP code not between ``<?php ... ?>`` by default
+    # enable highlighting for PHP code not between `` <?php ... ?>`` by default
     lexers['php'] = PhpLexer(startinline=True)
     lexers['php-annotations'] = PhpLexer(startinline=True)
 

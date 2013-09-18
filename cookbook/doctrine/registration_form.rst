@@ -82,7 +82,7 @@ the class.
 .. note::
 
     If you want to integrate this User within the security system, you need
-    to implement the :ref:`UserInterface<book-security-user-entity>` of the
+    to implement the :ref:`UserInterface <book-security-user-entity>` of the
     security component.
 
 Create a Form for the Model
@@ -286,7 +286,7 @@ Add New Routes
 
 Next, update your routes. If you're placing your routes inside your bundle
 (as shown here), don't forget to make sure that the routing file is being
-:ref:`imported<routing-include-external-resources>`.
+:ref:`imported <routing-include-external-resources>`.
 
 .. configuration-block::
 

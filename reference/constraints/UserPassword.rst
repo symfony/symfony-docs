@@ -22,7 +22,7 @@ but needs to enter his old password for security.
     automatically by the security system.
 
 +----------------+--------------------------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                                      |
+| Applies to     | :ref:`property or method <validation-property-target>`                                     |
 +----------------+--------------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                               |
 +----------------+--------------------------------------------------------------------------------------------+
