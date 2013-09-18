@@ -63,9 +63,9 @@ only if the host is ``m.example.com``.
 Placeholders and Requirements in Hostname Patterns
 --------------------------------------------------
 
-If you're using the :doc:`DependencyInjection Component</components/dependency_injection/index>`
+If you're using the :doc:`DependencyInjection Component </components/dependency_injection/index>`
 (or the full Symfony2 Framework), then you can use
-:ref:`service container parameters<book-service-container-parameters>` as
+:ref:`service container parameters <book-service-container-parameters>` as
 variables anywhere in your routes.
 
 You can avoid hardcoding the domain name by using a placeholder and a requirement.

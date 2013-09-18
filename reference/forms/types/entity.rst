@@ -33,7 +33,7 @@ objects from the database.
 |             | - `error_mapping`_                                               |
 |             | - `mapped`_                                                      |
 +-------------+------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`                     |
+| Parent type | :doc:`choice </reference/forms/types/choice>`                    |
 +-------------+------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
 +-------------+------------------------------------------------------------------+
@@ -145,7 +145,7 @@ are documented above.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -162,7 +162,7 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type:
+These options inherit from the :doc:`field </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

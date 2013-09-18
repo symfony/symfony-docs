@@ -94,7 +94,7 @@ Event Names and Event Objects
 When the dispatcher notifies listeners, it passes an actual ``Event`` object
 to those listeners. The base ``Event`` class is very simple: it contains a
 method for stopping :ref:`event
-propagation<event_dispatcher-event-propagation>`, but not much else.
+propagation <event_dispatcher-event-propagation>`, but not much else.
 
 Often times, data about a specific event needs to be passed along with the
 ``Event`` object so that the listeners have needed information. In the case of
@@ -538,7 +538,7 @@ Dispatcher Shortcuts
 .. versionadded:: 2.1
     ``EventDispatcher::dispatch()`` method returns the event since Symfony 2.1.
 
-The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
+The :method:`EventDispatcher::dispatch <Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
 method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
 object. This allows for various shortcuts. For example if one does not need
 a custom event object, one can simply rely on a plain

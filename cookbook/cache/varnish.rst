@@ -8,7 +8,7 @@ Because Symfony2's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
 proxy. Varnish is a powerful, open-source, HTTP accelerator capable of serving
 cached content quickly and including support for :ref:`Edge Side
-Includes<edge-side-includes>`.
+Includes <edge-side-includes>`.
 
 .. index::
     single: Varnish; configuration
@@ -203,7 +203,7 @@ absolute URLs:
 
 .. note::
 
-    Remember to configure :ref:`framework.trusted_proxies<reference-framework-trusted-proxies>`
+    Remember to configure :ref:`framework.trusted_proxies <reference-framework-trusted-proxies>`
     in the Symfony configuration so that Varnish is seen as a trusted proxy
     and the ``X-Forwarded-`` headers are used.
 

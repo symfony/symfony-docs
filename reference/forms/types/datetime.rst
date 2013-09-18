@@ -37,7 +37,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `mapped`_                                                                 |
 |                      | - `virtual`_                                                                |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`form</reference/forms/types/form>`                                    |
+| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
@@ -50,14 +50,14 @@ date_widget
 
 **type**: ``string`` **default**: ``choice``
 
-Defines the ``widget`` option for the :doc:`date</reference/forms/types/date>` type
+Defines the ``widget`` option for the :doc:`date </reference/forms/types/date>` type
 
 time_widget
 ~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``choice``
 
-Defines the ``widget`` option for the :doc:`time</reference/forms/types/time>` type
+Defines the ``widget`` option for the :doc:`time </reference/forms/types/time>` type
 
 input
 ~~~~~
@@ -83,7 +83,7 @@ date_format
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
 Defines the ``format`` option that will be passed down to the date field.
-See the :ref:`date type's format option<reference-forms-type-date-format>`
+See the :ref:`date type's format option <reference-forms-type-date-format>`
 for more details.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
@@ -109,7 +109,7 @@ for more details.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type:
+These options inherit from the :doc:`field </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

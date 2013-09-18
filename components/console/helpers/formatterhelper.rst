@@ -16,7 +16,7 @@ in the default helper set, which you can get by calling
 
 The methods return a string, which you'll usually render to the console by
 passing it to the
-:method:`OutputInterface::writeln<Symfony\\Component\\Console\\Output\\OutputInterface::writeln>` method.
+:method:`OutputInterface::writeln <Symfony\\Component\\Console\\Output\\OutputInterface::writeln>` method.
 
 Print Messages in a Section
 ---------------------------

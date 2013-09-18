@@ -4,7 +4,7 @@ Regex
 Validates that a value matches a regular expression.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `pattern`_                                                          |
 |                | - `htmlPattern`_                                                      |
@@ -166,7 +166,7 @@ Options
 pattern
 ~~~~~~~
 
-**type**: ``string`` [:ref:`default option<validation-default-option>`]
+**type**: ``string`` [:ref:`default option <validation-default-option>`]
 
 This required option is the regular expression pattern that the input will
 be matched against. By default, this validator will fail if the input string

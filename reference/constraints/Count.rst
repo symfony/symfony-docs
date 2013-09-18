@@ -8,7 +8,7 @@ element count is *between* some minimum and maximum value.
     The Count constraint was added in Symfony 2.1.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `min`_                                                            |
 |                | - `max`_                                                            |
@@ -108,7 +108,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "min" count value. Validation will fail if the given
 collection elements count is **less** than this min value.
@@ -116,7 +116,7 @@ collection elements count is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "max" count value. Validation will fail if the given
 collection elements count is **greater** than this max value.
