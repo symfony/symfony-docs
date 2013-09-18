@@ -467,8 +467,7 @@ Symfony2 will discover these files and use them when translating either
                 'user.login' => 'Login',
             );
 
-.. index::
-   single: Translations; Message domains
+.. _translation-domains:
 
 Using Message Domains
 ---------------------
