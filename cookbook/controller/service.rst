@@ -180,13 +180,14 @@ service and use it directly::
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
     {
         private $templating;
 
-        public function __construct($templating)
+        public function __construct(EngineInterface $templating)
         {
             $this->templating = $templating;
         }
