@@ -231,7 +231,7 @@ this set the seventh argument to ``true``::
 
     $selectedColors = array_map(function($c) use ($colors) {
         return $colors[$c];
-    }, $selected)
+    }, $selected);
 
     $output->writeln('You have just selected: ' . implode(', ', $selectedColors));
 
