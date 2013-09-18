@@ -392,17 +392,13 @@ itself.
 
     Extending the base class is *optional* in Symfony; it contains useful
     shortcuts but nothing mandatory. You can also extend
-    :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`. The service
-    container object will then be accessible via the ``container`` property.
-
-.. tip::
-
-    If your host uses PHP 5.4 or higher, you can also use the
-    class:`Symfony\\Component\\DependencyInjection\\ContainerAwareTrait` trait to
-    make the container accessible via the ``container`` property.
+    :class:`Symfony\\Component\\DependencyInjection\\ContainerAware` or use
+    the class:`Symfony\\Component\\DependencyInjection\\ContainerAwareTrait` trait
+    (if you have PHP 5.4). The service container object will then be accessible
+    via the ``container`` property.
 
 .. versionadded:: 2.4
-    The ``ContainerAwareTrait`` is new in Symfony 2.4
+    The ``ContainerAwareTrait`` is new in Symfony 2.4.
 
 .. note::
 
