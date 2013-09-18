@@ -24,7 +24,7 @@ Basic Usage
         Acme\UserBundle\Entity\User:
             properties:
                 country:
-                    - Country:
+                    - Country: ~
 
     .. code-block:: php-annotations
 
