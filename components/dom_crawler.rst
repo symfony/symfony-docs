@@ -132,7 +132,9 @@ and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
 
 .. note::
 
-    The default namespace is registered with a name "default".
+    The default namespace is registered with a prefix "default". It can be
+    changed with the
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`.
 
 .. caution::
 
