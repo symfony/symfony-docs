@@ -280,6 +280,11 @@ and fill in the listener logic::
                         'property' => 'fullName',
                         'query_builder' => function(EntityRepository $er) use ($user) {
                             // build a custom query
+                            // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
+
+                            // or call a method on your repository that returns the query builder
+                            // the $er is an instance of your UserRepository
+                            // return $er->createOrderByFullNameQueryBuilder();
                         },
                     );
 
