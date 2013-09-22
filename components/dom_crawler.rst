@@ -97,10 +97,12 @@ To remove a node the anonymous function must return false.
 
 Both :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
 :method:`Symfony\\Component\\DomCrawler\\Crawler::filter` methods work with
-XML namespaces, which are automatically registered.
+XML namespaces, which can be either automatically discovered or registered
+explicitly.
 
 .. versionadded:: 2.4
-    Auto discovery of namespaces was introduced in Symfony 2.4.
+    Auto discovery and explicit registration of namespaces was introduced
+    in Symfony 2.4.
 
 Consider an XML below:
 
@@ -136,12 +138,17 @@ and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
     changed with the
     :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`.
 
+Namespaces can be explicitly registered with the
+:method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace`::
+
+    $crawler->registerNamespace('m', 'http://search.yahoo.com/mrss/');
+    $crawler = $crawler->filterXPath('//m:group//yt:aspectRatio');
+
 .. caution::
 
     To query an XML with a CSS selector, the HTML extension needs to be disabled with
     :method:`Symfony\\Component\\CssSelector\\CssSelector::disableHtmlExtension`
     to avoid converting the selector to lowercase.
-
 
 Node Traversing
 ~~~~~~~~~~~~~~~
