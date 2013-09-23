@@ -277,11 +277,14 @@ and fill in the listener logic::
 
                     $formOptions = array(
                         'class' => 'Acme\DemoBundle\Entity\User',
-                        'multiple' => false,
-                        'expanded' => false,
                         'property' => 'fullName',
                         'query_builder' => function(EntityRepository $er) use ($user) {
-                            // build a custom query, or call a method on your repository (even better!)
+                            // build a custom query
+                            // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
+
+                            // or call a method on your repository that returns the query builder
+                            // the $er is an instance of your UserRepository
+                            // return $er->createOrderByFullNameQueryBuilder();
                         },
                     );
 
@@ -294,6 +297,11 @@ and fill in the listener logic::
 
         // ...
     }
+
+.. note::
+
+    The ``multiple`` and ``expanded`` form options will default to false
+    because the type of the friend field is ``entity``.
 
 Using the Form
 ~~~~~~~~~~~~~~
