@@ -196,7 +196,7 @@ absolute URLs:
         if (req.http.X-Forwarded-Proto == "https" ) {
             set req.http.X-Forwarded-Port = "443";
         } else {
-            set req.http.X-Forwarded-Port = "80"
+            set req.http.X-Forwarded-Port = "80";
         }
     }
 
