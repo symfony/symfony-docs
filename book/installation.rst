@@ -241,7 +241,7 @@ If there are any issues, correct them now before moving on.
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 
-    **2. Using Acl on a system that does not support chmod +a**
+    **2. Using ACL on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
