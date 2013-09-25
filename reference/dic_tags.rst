@@ -649,11 +649,6 @@ channel when injecting the logger in a service.
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->register('my_service', $definition);
 
-.. note::
-
-    This works only when the logger service is a constructor argument,
-    not when it is injected through a setter.
-
 .. _dic_tags-monolog-processor:
 
 monolog.processor
