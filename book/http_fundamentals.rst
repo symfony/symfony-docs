@@ -531,9 +531,9 @@ regardless of how your project is developed. To name a few:
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
-* :doc:`Templating</components/templating>` A toolkit for rendering templates,
-  handling template inheritance (i.e. a template is decorated with a layout)
-  and performing other common template tasks;
+* :doc:`Templating</components/templating/introduction>` A toolkit for rendering
+  templates, handling template inheritance (i.e. a template is decorated with
+  a layout) and performing other common template tasks;
 
 * `Security`_ - A powerful library for handling all types of security inside
   an application;

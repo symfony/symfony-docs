@@ -229,7 +229,7 @@ If there are any issues, correct them now before moving on.
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
     and if you get an error - try the next method. This uses a command to
-    try to determine your web server user and set is as ``APACHEUSER``:
+    try to determine your web server user and set it as ``APACHEUSER``:
 
     .. code-block:: bash
 
@@ -241,12 +241,12 @@ If there are any issues, correct them now before moving on.
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 
-    **2. Using Acl on a system that does not support chmod +a**
+    **2. Using ACL on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
     and install setfacl before using it (as is the case with Ubuntu). This
-    uses a command to try to determine your web server user and set is as
+    uses a command to try to determine your web server user and set it as
     ``APACHEUSER``:
 
     .. code-block:: bash
