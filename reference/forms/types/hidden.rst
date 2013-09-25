@@ -42,7 +42,7 @@ Pass errors to the root form, otherwise they will not be visible.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
