@@ -202,6 +202,8 @@ Installing the Sphinx extensions
     # enable highlighting for PHP code not between ``<?php ... ?>`` by default
     lexers['php'] = PhpLexer(startinline=True)
     lexers['php-annotations'] = PhpLexer(startinline=True)
+    lexers['php-standalone'] = PhpLexer(startinline=True)
+    lexers['php-symfony'] = PhpLexer(startinline=True)
 
     # use PHP as the primary domain
     primary_domain = 'php'
