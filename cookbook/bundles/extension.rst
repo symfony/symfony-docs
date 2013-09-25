@@ -492,7 +492,7 @@ configuration arrays together.
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
 normalization and advanced merging. You can read more about this in :doc:`the Config Component documentation</components/config/definition>`.
-You can also see it action by checking out some of the core Configuration classes,
+You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 
 .. index::
