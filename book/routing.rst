@@ -173,7 +173,7 @@ file:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ...>
+            <framework:config>
                 <!-- ... -->
                 <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             </framework:config>
