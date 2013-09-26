@@ -52,7 +52,7 @@ front controller that can be used with any environment.)
 When the front controller initializes the kernel, it provides two parameters:
 the environment, and also whether the kernel should run in debug mode.
 To make your application respond faster, Symfony2 maintains a cache under the
-``app/cache/`` directory. When in debug mode is enabled (such as ``app_dev.php``
+``app/cache/`` directory. When debug mode is enabled (such as ``app_dev.php``
 does by default), this cache is flushed automatically whenever you make changes
 to any code or configuration. When running in debug mode, Symfony2 runs
 slower, but your changes are reflected without having to manually clear the
