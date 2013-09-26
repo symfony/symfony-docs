@@ -45,6 +45,7 @@ You have a simple ``User`` entity mapped to the database::
         /**
          * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
+         * @Assert\Length(max = 4096)
          */
         protected $plainPassword;
 
@@ -84,6 +85,21 @@ the class.
     If you want to integrate this User within the security system, you need
     to implement the :ref:`UserInterface<book-security-user-entity>` of the
     security component.
+
+.. _cookbook-registration-password-max:
+
+.. sidebar:: Why the 4096 Password Limit?
+
+    Notice that the ``plainPassword`` has a max length of ``4096`` characters.
+    For security purposes (`CVE-2013-5750`_), Symfony limits the plain password
+    length to 4096 characters when encoding it. Adding this constraint makes
+    sure that your form will give a validation error if anyone tries a super-long
+    password.
+
+    You'll need to add this constraint anywhere in your application where
+    your user submits a plaintext password (e.g. change password form). The
+    only place where you don't need to worry about this is your login form,
+    since Symfony's Security component handles this for you.
 
 Create a Form for the Model
 ---------------------------
@@ -342,3 +358,5 @@ That's it! Your form now validates, and allows you to save the ``User``
 object to the database. The extra ``terms`` checkbox on the ``Registration``
 model class is used during validation, but not actually used afterwards when
 saving the User to the database.
+
+.. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
