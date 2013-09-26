@@ -1404,6 +1404,13 @@ can always be determined in the following way from a controller::
     $password = $encoder->encodePassword('ryanpass', $user->getSalt());
     $user->setPassword($password);
 
+.. caution::
+
+    When you allow a user to submit a plaintext password (e.g. registration
+    form, change password form), you *must* have validation that guarantees
+    that the password is 4096 characters or less. Read more details in
+    :ref:`How to implement a simple Registration Form <cookbook-registration-password-max>`.
+
 Retrieving the User Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
