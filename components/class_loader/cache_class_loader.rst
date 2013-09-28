@@ -34,7 +34,7 @@ ApcClassLoader
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/ApcClassLoader.php';
     
-    // instance of a class that implements a findFile() method
+    // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
     
     // my_prefix is the APC namespace prefix to use
@@ -43,8 +43,7 @@ ApcClassLoader
     // register the cached class loader
     $cachedLoader->register();
     
-    // eventually deactivate the non-cached loader if it was registered
-    // previously
+    // deactivate the original, non-cached loader if it was registered previously
     $loader->unregister();
 
 XcacheClassLoader
@@ -58,7 +57,7 @@ it is straightforward::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/XcacheClassLoader.php';
     
-    // instance of a class that implements a findFile() method
+    // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
     
     // my_prefix is the XCache namespace
@@ -67,8 +66,7 @@ it is straightforward::
     // register the cached class loader
     $cachedLoader->register();
     
-    // eventually deactivate the non-cached loader if it was registered
-    // previously
+    // deactivate the original, non-cached loader if it was registered previously
     $loader->unregister();
 
 .. _APC:        http://php.net/manual/en/book.apc.php

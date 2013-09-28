@@ -4,13 +4,10 @@
 The PSR-0 Class Loader
 ======================
 
-Introduction
-------------
-
 .. versionadded:: 2.1
     The ``ClassLoader`` class was added in Symfony 2.1.
 
-If your classes and third-party libraries follow the `PSR-0`_ standards, you
+If your classes and third-party libraries follow the `PSR-0`_ standard, you
 can use the :class:`Symfony\\Component\\ClassLoader\\ClassLoader` class to
 load all of your project's classes.
 
@@ -79,9 +76,9 @@ projects::
 
 In this example, if you try to use a class in the ``Doctrine\Common`` namespace
 or one of its children, the autoloader will first look for the class under the
-``doctrine-common`` directory, and it will then fallback to the default
-``Doctrine`` directory (the last one configured) if not found, before giving up.
-The order of the registrations is significant in this case.
+``doctrine-common`` directory. If not found, it will then fallback to the default
+``Doctrine`` directory (the last one configured) before giving up. The order
+of the prefix registrations is significant in this case.
 
 .. _PEAR:  http://pear.php.net/manual/en/standards.naming.php
 .. _PSR-0: http://symfony.com/PSR0

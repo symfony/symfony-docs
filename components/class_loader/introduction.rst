@@ -4,18 +4,21 @@
 The Class Loader Component
 ==========================
 
-    The Class Loader Component provides tools to load and cache your project
-    classes automatically.
+    The Class Loader Component provides tools to autoload your classes and
+    cache their locations for performance.
 
 Usage
 -----
 
-Whenever you use an undefined class, PHP uses the autoloading mechanism to
-delegate the loading of a file defining the class. Symfony2 provides two
-autoloaders, which are able to load your classes:
+Whenever you reference a class that has not been required or included yet,
+PHP uses the `autoloading mechanism`_ to delegate the loading of a file defining
+the class. Symfony2 provides two autoloaders, which are able to load your classes:
 
-* :doc:`A PSR-0 class loader </components/class_loader/class_loader>`
-* :doc:`Load classes based on class-to-file mapping </components/class_loader/map_class_loader>`
+* :doc:`/components/class_loader/class_loader`: loads classes that follow
+  the `PSR-0` class naming standard;
+
+* :doc:`/components/class_loader/map_class_loader`: loads classes using
+  a static map from class name to file path.
 
 Additionally, the Symfony Class Loader Component ships with a set of wrapper
 classes which can be used to add additional functionality on top of existing
@@ -33,4 +36,5 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/class-loader``
   on `Packagist`_).
 
+.. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader
