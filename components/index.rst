@@ -5,7 +5,7 @@ The Components
     :hidden:
 
     using_components
-    class_loader
+    class_loader/index
     config/index
     console/index
     css_selector
