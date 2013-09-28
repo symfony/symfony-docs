@@ -88,6 +88,8 @@ as comments in this file::
 
     // ...
 
+For more details, see :doc:`/components/class_loader/cache_class_loader`.
+
 .. note::
 
     When using the APC autoloader, if you add new classes, they will be found
