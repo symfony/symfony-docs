@@ -261,9 +261,8 @@ without knowledge of the specific save handler.
 
 .. note::
 
-    Under PHP 5.3, you cannot proxy the session handler interface for native PHP handlers, 
-    only user handlers so if you write proxies, be aware they will only work for user-land 
-    session save handlers.
+    Before PHP 5.4, you can only proxy user-land save handlers but not 
+    native PHP save handlers.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration
