@@ -269,6 +269,26 @@ request information. Have a look at
 :class:`the Request API<Symfony\\Component\\HttpFoundation\\Request>`
 for more information about them.
 
+Overriding the Request
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.4
+    The :method:`Symfony\\Component\\HttpFoundation\\Request::setFactory`
+    class was added in Symfony 2.4.
+
+The Request class should not be overridden as it is a data object that
+represents an HTTP message. But when moving from a legacy system, adding
+methods or changing some default behavior might help. In that case, register a
+PHP callable that is able to create an instance of your Request class::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    Request::setFactory(function (array $query = array(), array $request = array(), array $attributes = array(), array $cookies = array(), array $files = array(), array $server = array(), $content = null) {
+        return SpecialRequest::create($query, $request, $attributes, $cookies, $files, $server, $content);
+    });
+
+    $request = Request::createFromGlobals();
+
 .. _component-http-foundation-response:
 
 Response
