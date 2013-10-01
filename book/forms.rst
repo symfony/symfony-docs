@@ -900,7 +900,7 @@ the choice is ultimately up to you.
         
     In addition, the data of an unmapped field can also be modified directly::
 
-        $form->get('dueDate')->setData(new \DateTime());        
+        $form->get('dueDate')->setData(new \DateTime());
 
 Defining your Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
