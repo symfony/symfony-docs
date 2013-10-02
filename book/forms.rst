@@ -385,11 +385,6 @@ Validation is a very powerful feature of Symfony2 and has its own
 Validation Groups
 ~~~~~~~~~~~~~~~~~
 
-.. tip::
-
-    If you're not using :ref:`validation groups <book-validation-validation-groups>`,
-    then you can skip this section.
-
 If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
 you'll need to specify which validation group(s) your form should use::
 
