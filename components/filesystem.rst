@@ -28,7 +28,7 @@ endpoint for filesystem operations::
     try {
         $fs->mkdir('/tmp/random/dir/' . mt_rand());
     } catch (IOException $e) {
-        echo "An error occurred while creating your directory";
+        echo "An error occurred while creating your directory at ".$e->getPath();
     }
 
 .. note::
@@ -251,8 +251,8 @@ Error Handling
 --------------
 
 Whenever something wrong happens, an exception implementing
-:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` is
-thrown.
+:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` and
+:class:`Symfony\\Component\\Filesystem\\Exception\\IOExceptionInterface` is thrown.
 
 .. note::
 
