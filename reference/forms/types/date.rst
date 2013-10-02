@@ -114,6 +114,13 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
+.. note::
+
+    If you want your field to be rendered as a HTML5 date field, you have to use
+    a ``single_text`` widget and the ``yyyy-MM-dd`` format (the `RFC 3339`_ format)
+    which is the default format if you use the ``single_text`` widget and don't
+    specify any other format.
+
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
@@ -151,3 +158,5 @@ These options inherit from the :doc:`field</reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/virtual.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
