@@ -481,8 +481,8 @@ The type would now look like::
     namespace Acme\DemoBundle\Form\Type;
 
     // ...
-    Acme\DemoBundle\Entity\Sport;
-    Symfony\Component\Form\FormInterface;
+    use Acme\DemoBundle\Entity\Sport;
+    use Symfony\Component\Form\FormInterface;
 
     class SportMeetupType extends AbstractType
     {
@@ -493,20 +493,18 @@ The type would now look like::
             ;
 
             $formModifier = function(FormInterface $form, Sport $sport) {
-                $positions = $data->getSport()->getAvailablePositions();
+                $positions = $sport->getAvailablePositions();
 
                 $form->add('position', 'entity', array('choices' => $positions));
-            }
+            };
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) {
-                    $form = $event->getForm();
-
+                function(FormEvent $event) use ($formModifier) {
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
-                    $formModifier($event->getForm(), $sport);
+                    $formModifier($event->getForm(), $data->getSport());
                 }
             );
 
@@ -514,10 +512,8 @@ The type would now look like::
                 FormEvents::POST_BIND,
                 function(FormEvent $event) use ($formModifier) {
                     // It's important here to fetch $event->getForm()->getData(), as
-                    // $event->getData() will get you the client data (this is, the ID)
+                    // $event->getData() will get you the client data (that is, the ID)
                     $sport = $event->getForm()->getData();
-
-                    $positions = $sport->getAvailablePositions();
 
                     // since we've added the listener to the child, we'll have to pass on
                     // the parent to the callback functions!
