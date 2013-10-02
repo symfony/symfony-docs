@@ -21,15 +21,20 @@ The :class:`Symfony\\Component\\Filesystem\\Filesystem` class is the unique
 endpoint for filesystem operations::
 
     use Symfony\Component\Filesystem\Filesystem;
-    use Symfony\Component\Filesystem\Exception\IOException;
+    use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
     $fs = new Filesystem();
 
     try {
         $fs->mkdir('/tmp/random/dir/' . mt_rand());
-    } catch (IOException $e) {
+    } catch (IOExceptionInterface $e) {
         echo "An error occurred while creating your directory at ".$e->getPath();
     }
+
+.. versionadded::
+
+    The ``IOExceptionInterface`` and its ``getPath`` method are new in Symfony
+    2.4. Prior to 2.4, you would catch the ``IOException`` class.
 
 .. note::
 
@@ -251,7 +256,7 @@ Error Handling
 --------------
 
 Whenever something wrong happens, an exception implementing
-:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` and
+:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` or
 :class:`Symfony\\Component\\Filesystem\\Exception\\IOExceptionInterface` is thrown.
 
 .. note::
