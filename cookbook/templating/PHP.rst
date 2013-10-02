@@ -313,11 +313,11 @@ template's code.
 Profiling Templates
 ~~~~~~~~~~~~~~~~~~~
 
-Using the ``stopwatch`` helper, you are able to time parts of your template
+By using the ``stopwatch`` helper, you are able to time parts of your template
 and display it on the timeline of the WebProfilerBundle::
 
     <?php $view['stopwatch']->start('foo') ?>
-    ... things that gets timed
+    ... things that get timed
     <?php $view['stopwatch']->stop('foo') ?>
 
 .. tip::
