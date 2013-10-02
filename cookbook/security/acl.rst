@@ -215,4 +215,16 @@ added above:
 
 The user is now allowed to view, edit, delete, and un-delete objects.
 
+Looking for Alternatives
+------------------------
+
+For more simple use cases this seems to be an overhead for many developers. 
+As a downside there is that in case you change the permissions in any way, 
+you need to change all the existing granted permissions as well. As well 
+when you want to change a specific part of the ACL you need to understand
+the structure and process of this complex voter. So you should consider if
+a classical and simple conditional permission check would fit for you.
+Some do it with the existing voter ":doc:`/cookbook/security/voters`" 
+structure as well, or a custom build solutions.
+
 .. _`MongoDBAclBundle`: https://github.com/IamPersistent/MongoDBAclBundle
