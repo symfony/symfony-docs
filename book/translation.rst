@@ -504,6 +504,22 @@ you must specify the domain as the third argument of ``trans()``::
 Symfony2 will now look for the message in the ``admin`` domain of the user's
 locale.
 
+.. versionadded:: 2.4
+    Support for translation domain cascading was added in Symfony 2.4.
+
+In some cases, you may need a fallback mechanism: you can also provide an
+array of domains instead:
+
+    $this->get('translator')->trans(
+        'Do something',
+        array(),
+        array('specialized', 'messages', 'last_resort')
+    );
+
+At first, the translator will look for the message in the ``specialized``
+domain. Without result, it will then look in the ``messages`` domain, and
+so on…
+
 .. index::
    single: Translations; User's locale
 
