@@ -21,7 +21,7 @@ Before you can use composer to install a bundle, you should look for a
 
     Packagist is the main archive for Composer. If you are searching
     for a bundle, the best thing you can do is check out
-    `KnpBundles`_, it is the unofficial achive of Symfony Bundles. If
+    `KnpBundles`_, it is the unofficial archive of Symfony Bundles. If
     a bundle contains a ``README`` file, it is displayed there and if it
     has a Packagist package it shows a link to the package. It's a
     really useful site to begin searching for bundles.
