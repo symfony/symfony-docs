@@ -20,9 +20,10 @@ For more information on valid formats, see `Date/Time Format Syntax`_::
 
 .. note::
 
-    If you want your field to be rendered as an HTML5 "date" field, you have
+    If you want your field to be rendered as an HTML5 "date" field, you have to
     use a ``single_text`` widget with the ``yyyy-MM-dd`` format (the `RFC 3339`_
     format) which is the default value if you use the ``single_text`` widget.
 
 .. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax
 .. _`IntlDateFormatter::MEDIUM`: http://www.php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
