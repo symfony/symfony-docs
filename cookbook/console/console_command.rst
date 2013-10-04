@@ -62,6 +62,52 @@ This command will now automatically be available to run:
 
     $ app/console demo:greet Fabien
 
+.. _cookbook-console-dic:
+
+Register Commands in the Service Container
+------------------------------------------
+
+.. versionadded:: 2.4
+   Support for registering commands in the service container was added in
+   version 2.4.
+
+You can register commands in the service container using the ``console.command``
+tag:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            acme_hello.command.my_command:
+                class: Acme\HelloBundle\Command\MyCommand
+                tags:
+                    -  { name: console.command }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <service id="acme_hello.command.my_command"
+                class="Acme\HelloBundle\Command\MyCommand">
+                <tag name="console.command" />
+            </service>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        $container
+            ->register('acme_hello.command.my_command', 'Acme\HelloBundle\Command\MyCommand')
+            ->addTag('console.command')
+        ;
+
 Getting Services from the Service Container
 -------------------------------------------
 

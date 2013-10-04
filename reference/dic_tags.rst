@@ -29,6 +29,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.templating.twig`_        | Remove this service if twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `console.command`_                | Add a command                                                             |
++-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `doctrine.event_listener`_        | Add a Doctrine event listener                                             |
@@ -240,6 +242,18 @@ assetic.templating.twig
 
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain twig.
+
+console.command
+---------------
+
+.. versionadded:: 2.4
+   Support for registering commands in the service container was added in
+   version 2.4.
+
+**Purpose**: Add a command to the application
+
+For details on registering your own commands in the service container, read
+:ref:`the cookbook article<cookbook-console-dic>`.
 
 data_collector
 --------------
