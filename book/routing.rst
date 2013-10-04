@@ -41,6 +41,25 @@ The route is simple:
             path:      /blog/{slug}
             defaults:  { _controller: AcmeBlogBundle:Blog:show }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{slug}")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
@@ -208,12 +227,33 @@ A basic route consists of just two parts: the ``path`` to match and a
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         _welcome:
             path:      /
             defaults:  { _controller: AcmeDemoBundle:Main:homepage }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Controller/MainController.php
+        namespace Acme\DemoBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/")
+             */
+            public function homepageAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -228,6 +268,7 @@ A basic route consists of just two parts: the ``path`` to match and a
 
     ..  code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -256,12 +297,33 @@ routes will contain one or more named "wildcard" placeholders:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog_show:
             path:      /blog/{slug}
             defaults:  { _controller: AcmeBlogBundle:Blog:show }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller\BlogController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{slug}")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -275,6 +337,7 @@ routes will contain one or more named "wildcard" placeholders:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -305,12 +368,33 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog
             defaults:  { _controller: AcmeBlogBundle:Blog:index }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller\BlogController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -324,6 +408,7 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -343,12 +428,33 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller\BlogController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page}")
+             */
+            public function indexAction($page)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -362,6 +468,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -386,12 +493,33 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller\BlogController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page}", defaults={"id" = 1})
+             */
+            public function indexAction($page)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -406,6 +534,7 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -449,6 +578,7 @@ Take a quick look at the routes that have been created so far:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
@@ -457,8 +587,36 @@ Take a quick look at the routes that have been created so far:
             path:      /blog/{slug}
             defaults:  { _controller: AcmeBlogBundle:Blog:show }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller\BlogController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page}", defaults={"id" = 1})
+             */
+            public function indexAction($page)
+            {
+                // ...
+            }
+
+            /**
+             * @Route("/blog/{slug}")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -477,6 +635,7 @@ Take a quick look at the routes that have been created so far:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -516,14 +675,35 @@ requirements can easily be added for each parameter. For example:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
             requirements:
                 page:  \d+
 
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Controller/BlogController.php
+        namespace Acme\BlogBundle\Controller\BlogController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page}", requirements={"page" = "\d+"}, defaults={"id" = 1})
+             */
+            public function indexAction($page)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -539,6 +719,7 @@ requirements can easily be added for each parameter. For example:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -586,14 +767,35 @@ URL:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         homepage:
             path:      /{culture}
             defaults:  { _controller: AcmeDemoBundle:Main:homepage, culture: en }
             requirements:
                 culture:  en|fr
 
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Controller/MainController.php
+        namespace Acme\DemoBundle\Controller\MainController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/{culture}", requirements={"culture" = "en|fr"}, defaults={"culture" = "en"})
+             */
+            public function homepageAction($culture)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -609,6 +811,7 @@ URL:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -651,6 +854,7 @@ be accomplished with the following route configuration:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         contact:
             path:     /contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
@@ -663,6 +867,7 @@ be accomplished with the following route configuration:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -680,6 +885,7 @@ be accomplished with the following route configuration:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -697,6 +903,12 @@ be accomplished with the following route configuration:
 .. versionadded:: 2.2
     The ``methods`` option is added in Symfony2.2. Use the ``_method``
     requirement in older versions.
+
+.. tip::
+
+    With the :doc:`FrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    you can use the ``@Method`` annotation to match a route on the *method*
+    of the request.
 
 Despite the fact that these two routes have identical paths (``/contact``),
 the first route will match only GET requests and the second route will match
@@ -734,6 +946,7 @@ routing system can be:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         article_show:
           path:     /articles/{culture}/{year}/{title}.{_format}
           defaults: { _controller: AcmeDemoBundle:Article:show, _format: html }
@@ -742,8 +955,28 @@ routing system can be:
               _format:  html|rss
               year:     \d+
 
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Controller/ArticleController.php
+        namespace Acme\DemoBundle\Controller\ArticleController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route("/articles/{culture}/{year}/{title}.{_format}", requirements={"culture" = "en|fr", "_format" = "html|rss", "year" = "\d+"}, defaults={"_format" = "html"})
+             */
+            public function showAction($culture, $year, $title)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -764,6 +997,7 @@ routing system can be:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -807,7 +1041,7 @@ a slash. URLs matching this route might look like:
 .. note::
 
     Sometimes you want to make certain parts of your routes globally configurable.
-    Symfony2.1 provides you with a way to do this by leveraging service container
+    Symfony2 provides you with a way to do this by leveraging service container
     parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`.
 
 Special Routing Parameters
@@ -838,7 +1072,8 @@ that are special: each adds a unique piece of functionality inside your applicat
 Controller Naming Pattern
 -------------------------
 
-Every route must have a ``_controller`` parameter, which dictates which
+Every route must have a ``_controller`` parameter (if you do not annotate your
+controller directly using the ``@Route`` annotation), which dictates which
 controller should be executed when that route is matched. This parameter
 uses a simple string pattern called the *logical controller name*, which
 Symfony maps to a specific PHP method and class. The pattern has three parts,
@@ -1064,7 +1299,7 @@ from the new routing resource.
 .. tip::
 
     You can also define routes using annotations. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     to see how.
 
 Adding a Host regex to Imported Routes

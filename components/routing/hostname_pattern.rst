@@ -22,6 +22,33 @@ You can also match on the HTTP *host* of the incoming request.
             path:     /
             defaults: { _controller: AcmeDemoBundle:Main:homepage }
 
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Controller/MainController.php
+        namespace Acme\DemoBundle\Controller\MainController;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/", host = "m.example.com")
+             */
+            public function mobileHomepageAction()
+            {
+                // ...
+            }
+
+            /**
+             * @Route("/")
+             */
+            public function homepageAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -122,6 +149,11 @@ dependency injection container parameter.
         )));
 
         return $collection;
+
+.. caution::
+
+    You can't use service container parameters (like ``%domain%`` in the example
+    above), if you use the ``@Route`` annotation in your controllers.
 
 .. _component-routing-host-imported:
 
