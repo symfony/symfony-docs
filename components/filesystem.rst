@@ -31,8 +31,7 @@ endpoint for filesystem operations::
         echo "An error occurred while creating your directory at ".$e->getPath();
     }
 
-.. versionadded::
-
+.. versionadded:: 2.4
     The ``IOExceptionInterface`` and its ``getPath`` method are new in Symfony
     2.4. Prior to 2.4, you would catch the ``IOException`` class.
 
