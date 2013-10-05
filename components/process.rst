@@ -51,7 +51,7 @@ methods returns the new outputs since the last call.
 The :method:`Symfony\\Component\\Process\\Process::flushOutput` method flushes
 the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::flushErrorOutput` flushes
-the content of the error output.
+the contents of the error output.
 
 Getting real-time Process Output
 --------------------------------
