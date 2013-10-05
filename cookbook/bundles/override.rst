@@ -124,9 +124,9 @@ Validation metadata
 
 Symfony loads all validation configuration files from every bundle and
 combines them into one validation metadata tree. This means you are able to
-add new constraints to a property, but you cannot override it.
+add new constraints to a property, but you cannot override them.
 
-To override this, the 3th party bundle needs to have configuration for
+To override this, the 3rd party bundle needs to have configuration for
 :ref:`validation groups <book-validation-validation-groups>`. For instance,
 the FOSUserBundle has this configuration. To create your own validation, add
 the constraints to a new validation group:
