@@ -196,7 +196,7 @@ see :ref:`controller-string-syntax`.
 
 .. tip::
 
-    You can learn much more about the routing system in the :doc:`Routing chapter</book/routing>`.
+    You can learn much more about the routing system in the :doc:`Routing chapter </book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
@@ -402,7 +402,7 @@ itself.
 
 .. note::
 
-    You can also define your :doc:`Controllers as Services</cookbook/controller/service>`.
+    You can also define your :doc:`Controllers as Services </cookbook/controller/service>`.
     This is optional, but can give you more control over the exact dependencies
     that are injected into your controllers.
 
@@ -499,7 +499,7 @@ value to each variable.
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
     directly by duplicating the current request. When this
-    :ref:`sub request<http-kernel-sub-requests>` is executed via the ``http_kernel``
+    :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
     service the ``HttpKernel`` returns a ``Response`` object::
     
         use Symfony\Component\HttpKernel/HttpKernelInterface;
@@ -554,7 +554,8 @@ The Symfony templating engine is explained in great detail in the
 .. tip::
 
     You can even avoid calling the ``render`` method by using the ``@Template``
-    annotation. See the :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/view>`
+    annotation. See the
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/view>`
     more details.
 
 .. tip::

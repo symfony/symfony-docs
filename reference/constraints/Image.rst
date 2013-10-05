@@ -1,7 +1,7 @@
 Image
 =====
 
-The Image constraint works exactly like the :doc:`File</reference/constraints/File>`
+The Image constraint works exactly like the :doc:`File </reference/constraints/File>`
 constraint, except that its `mimeTypes`_ and `mimeTypesMessage` options are
 automatically setup to work for image files specifically.
 
@@ -13,45 +13,45 @@ of the image.
     (defined as ``width / height``) and selectively allow square, landscape
     and portrait image orientations.
 
-See the :doc:`File</reference/constraints/File>` constraint for the bulk of
+See the :doc:`File </reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
 
-+----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                |
-+----------------+----------------------------------------------------------------------+
-| Options        | - `mimeTypes`_                                                       |
-|                | - `minWidth`_                                                        |
-|                | - `maxWidth`_                                                        |
-|                | - `maxHeight`_                                                       |
-|                | - `minHeight`_                                                       |
-|                | - `maxRatio`_                                                        |
-|                | - `minRatio`_                                                        |
-|                | - `allowSquare`_                                                     |
-|                | - `allowLandscape`_                                                  |
-|                | - `allowPortrait`_                                                   |
-|                | - `mimeTypesMessage`_                                                |
-|                | - `sizeNotDetectedMessage`_                                          |
-|                | - `maxWidthMessage`_                                                 |
-|                | - `minWidthMessage`_                                                 |
-|                | - `maxHeightMessage`_                                                |
-|                | - `minHeightMessage`_                                                |
-|                | - `maxRatioMessage`_                                                 |
-|                | - `minRatioMessage`_                                                 |
-|                | - `allowSquareMessage`_                                              |
-|                | - `allowLandscapeMessage`_                                           |
-|                | - `allowPortraitMessage`_                                            |
-|                | - See :doc:`File</reference/constraints/File>` for inherited options |
-+----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`            |
-+----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`   |
-+----------------+----------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `mimeTypes`_                                                        |
+|                | - `minWidth`_                                                         |
+|                | - `maxWidth`_                                                         |
+|                | - `maxHeight`_                                                        |
+|                | - `minHeight`_                                                        |
+|                | - `maxRatio`_                                                         |
+|                | - `minRatio`_                                                         |
+|                | - `allowSquare`_                                                      |
+|                | - `allowLandscape`_                                                   |
+|                | - `allowPortrait`_                                                    |
+|                | - `mimeTypesMessage`_                                                 |
+|                | - `sizeNotDetectedMessage`_                                           |
+|                | - `maxWidthMessage`_                                                  |
+|                | - `minWidthMessage`_                                                  |
+|                | - `maxHeightMessage`_                                                 |
+|                | - `minHeightMessage`_                                                 |
+|                | - `maxRatioMessage`_                                                  |
+|                | - `minRatioMessage`_                                                  |
+|                | - `allowSquareMessage`_                                               |
+|                | - `allowLandscapeMessage`_                                            |
+|                | - `allowPortraitMessage`_                                             |
+|                | - See :doc:`File </reference/constraints/File>` for inherited options |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`             |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`    |
++----------------+-----------------------------------------------------------------------+
 
 Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file</reference/forms/types/file>` form type. For example,
+in a form as a :doc:`file </reference/forms/types/file>` form type. For example,
 suppose you're creating an author form where you can upload a "headshot"
 image for the author. In your form, the ``headshot`` property would be a
 ``file`` type. The ``Author`` class might look as follows::
@@ -233,7 +233,7 @@ You can mix all the constraint options to create powerful validation rules.
 Options
 -------
 
-This constraint shares all of its options with the :doc:`File</reference/constraints/File>`
+This constraint shares all of its options with the :doc:`File </reference/constraints/File>`
 constraint. It does, however, modify two of the default option values and
 add several other options.
 

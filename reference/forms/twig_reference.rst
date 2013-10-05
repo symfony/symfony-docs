@@ -7,8 +7,8 @@ Twig Template Form Function and Variable Reference
 When working with forms in a template, there are two powerful things at your
 disposal:
 
-* :ref:`Functions<reference-form-twig-functions>` for rendering each part of a form
-* :ref:`Variables<twig-reference-form-variables>` for getting *any* information about any field
+* :ref:`Functions <reference-form-twig-functions>` for rendering each part of a form
+* :ref:`Variables <twig-reference-form-variables>` for getting *any* information about any field
 
 You'll use functions often to render your fields. Variables, on the other
 hand, are less commonly-used, but infinitely powerful since you can access

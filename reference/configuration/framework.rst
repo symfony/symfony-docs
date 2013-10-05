@@ -44,7 +44,7 @@ Configuration
     * `assets_version_format`_
 * `profiler`_
     * `collect`_
-    * :ref:`enabled<profiler.enabled>`
+    * :ref:`enabled <profiler.enabled>`
 
 secret
 ~~~~~~

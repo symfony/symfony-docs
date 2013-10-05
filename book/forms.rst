@@ -421,7 +421,7 @@ corresponding errors printed out with the form.
    blank fields.
 
 Validation is a very powerful feature of Symfony2 and has its own
-:doc:`dedicated chapter</book/validation>`.
+:doc:`dedicated chapter </book/validation>`.
 
 .. index::
    single: Forms; Validation groups
@@ -438,7 +438,7 @@ you'll need to specify which validation group(s) your form should use::
         'validation_groups' => array('registration'),
     ))->add(...);
 
-If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
+If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
 good practice), then you'll need to add the following to the ``setDefaultOptions()``
 method::
 
@@ -591,7 +591,7 @@ Field Type Options
 
 Each field type has a number of options that can be used to configure it.
 For example, the ``dueDate`` field is currently being rendered as 3 select
-boxes. However, the :doc:`date field</reference/forms/types/date>` can be
+boxes. However, the :doc:`date field </reference/forms/types/date>` can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box)::
 
@@ -610,7 +610,8 @@ the documentation for each type.
     any field. By default, the ``required`` option is set to ``true``, meaning
     that HTML5-ready browsers will apply client-side validation if the field
     is left blank. If you don't want this behavior, either set the ``required``
-    option on your field to ``false`` or :ref:`disable HTML5 validation<book-forms-html5-validation-disable>`.
+    option on your field to ``false`` or
+    :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`.
 
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
@@ -753,7 +754,7 @@ Take a look at each part:
 
 * ``form_end()`` - Renders the end tag of the form and any fields that have not
   yet been rendered. This is useful for rendering hidden fields and taking
-  advantage of the automatic :ref:`CSRF Protection<forms-csrf>`.
+  advantage of the automatic :ref:`CSRF Protection <forms-csrf>`.
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag
@@ -893,7 +894,7 @@ Twig Template Function Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using Twig, a full reference of the form rendering functions is
-available in the :doc:`reference manual</reference/forms/twig_reference>`.
+available in the :doc:`reference manual </reference/forms/twig_reference>`.
 Read this to know everything about the helpers available and the options
 that can be used with each.
 
@@ -1160,7 +1161,7 @@ HTML form and then translate user-submitted data back to the original object. As
 such, the topic of persisting the ``Task`` object to the database is entirely
 unrelated to the topic of forms. But, if you've configured the ``Task`` class
 to be persisted via Doctrine (i.e. you've added
-:ref:`mapping metadata<book-doctrine-adding-mapping>` for it), then persisting
+:ref:`mapping metadata <book-doctrine-adding-mapping>` for it), then persisting
 it after a form submission can be done when the form is valid::
 
     if ($form->isValid()) {
@@ -1176,7 +1177,7 @@ you can fetch it from the form::
 
     $task = $form->getData();
 
-For more information, see the :doc:`Doctrine ORM chapter</book/doctrine>`.
+For more information, see the :doc:`Doctrine ORM chapter </book/doctrine>`.
 
 The key thing to understand is that when the form is submitted, the submitted
 data is transferred to the underlying object immediately. If you want to
@@ -1339,7 +1340,7 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and  the :doc:`collection</reference/forms/types/collection>` field type reference.
+entry and  the :doc:`collection </reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1522,7 +1523,7 @@ override the default error rendering for *all* fields, copy and customize the
 .. tip::
 
     The "parent" type of each field type is available in the
-    :doc:`form type reference</reference/forms/types>` for each field type.
+    :doc:`form type reference </reference/forms/types>` for each field type.
 
 .. index::
    single: Forms; Global Theming
@@ -1812,7 +1813,7 @@ simple array of your submitted data, how can you add constraints to the data of
 your form?
 
 The answer is to setup the constraints yourself, and attach them to the individual
-fields. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
+fields. The overall approach is covered a bit more in the :ref:`validation chapter <book-validation-raw-values>`,
 but here's a short example:
 
 .. code-block:: php
@@ -1852,12 +1853,12 @@ HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.
 
 There's still much more to learn about the powerful world of forms, such as
-how to handle :doc:`file uploads with Doctrine
-</cookbook/doctrine/file_uploads>` or how to create a form where a dynamic
-number of sub-forms can be added (e.g. a todo list where you can keep adding
-more fields via Javascript before submitting). See the cookbook for these
-topics. Also, be sure to lean on the
-:doc:`field type reference documentation</reference/forms/types>`, which
+how to handle
+:doc:`file uploads with Doctrine </cookbook/doctrine/file_uploads>` or how
+to create a form where a dynamic number of sub-forms can be added (e.g. a
+todo list where you can keep adding more fields via Javascript before submitting).
+See the cookbook for these topics. Also, be sure to lean on the
+:doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.
 
 Learn more from the Cookbook

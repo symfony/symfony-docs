@@ -4,7 +4,7 @@ Length
 Validates that a given string length is *between* some minimum and maximum value.
 
 +----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                |
+| Applies to     | :ref:`property or method <validation-property-target>`               |
 +----------------+----------------------------------------------------------------------+
 | Options        | - `min`_                                                             |
 |                | - `max`_                                                             |
@@ -105,7 +105,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "min" length value. Validation will fail if the given
 value's length is **less** than this min value.
@@ -113,7 +113,7 @@ value's length is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "max" length value. Validation will fail if the given
 value's length is **greater** than this max value.

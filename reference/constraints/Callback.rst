@@ -18,7 +18,7 @@ can do anything, including creating and assigning validation errors.
     add validator "violations".
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`class<validation-class-target>`                                  |
+| Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `methods`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -122,7 +122,7 @@ Options
 methods
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` **default**: ``array()`` [:ref:`default option <validation-default-option>`]
 
 This is an array of the methods that should be executed during the validation
 process. Each method can be one of the following formats:
@@ -226,5 +226,5 @@ process. Each method can be one of the following formats:
         the option to make your callback either a PHP closure or a non-static
         callback. It is *not* currently possible, however, to specify a :term:`service`
         as a constraint. To validate using a service, you should
-        :doc:`create a custom validation constraint</cookbook/validation/custom_constraint>`
+        :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
         and add that new constraint to your class.

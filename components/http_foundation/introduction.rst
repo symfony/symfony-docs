@@ -61,7 +61,7 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
-* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below<component-foundation-attributes>`)
+* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below <component-foundation-attributes>`)
 
 * ``files``: equivalent of ``$_FILES``;
 
@@ -174,7 +174,7 @@ thanks to the public ``attributes`` property, which is also an instance of
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
 on how this is used in the Symfony2 framework, see
-:ref:`the Symfony2 book<book-fundamentals-attributes>`.
+:ref:`the Symfony2 book <book-fundamentals-attributes>`.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -272,7 +272,7 @@ Accessing other Data
 
 The ``Request`` class has many other methods that you can use to access the
 request information. Have a look at
-:class:`the Request API<Symfony\\Component\\HttpFoundation\\Request>`
+:class:`the Request API <Symfony\\Component\\HttpFoundation\\Request>`
 for more information about them.
 
 .. _component-http-foundation-response:
