@@ -57,22 +57,22 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_enctype(view)``                             | This will render the required ``enctype="multipart/form-data"`` attribute                  |
 |                                                    | if the form contains at least one file upload field, more information in                   |
-|                                                    | in :ref:`the Twig Form reference<reference-forms-twig-enctype>`.                           |
+|                                                    | in :ref:`the Twig Form reference <reference-forms-twig-enctype>`.                          |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_widget(view, variables = {})``              | This will render a complete form or a specific HTML widget of a field,                     |
-|                                                    | more information in :ref:`the Twig Form reference<reference-forms-twig-widget>`.           |
+|                                                    | more information in :ref:`the Twig Form reference <reference-forms-twig-widget>`.          |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_errors(view)``                              | This will render any errors for the given field or the "global" errors,                    |
-|                                                    | more information in :ref:`the Twig Form reference<reference-forms-twig-errors>`.           |
+|                                                    | more information in :ref:`the Twig Form reference <reference-forms-twig-errors>`.          |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_label(view, label = null, variables = {})`` | This will render the label for the given field, more information in                        |
-|                                                    | :ref:`the Twig Form reference<reference-forms-twig-label>`.                                |
+|                                                    | :ref:`the Twig Form reference <reference-forms-twig-label>`.                               |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``form_row(view, variables = {})``                 | This will render the row (the field's label, errors and widget) of the                     |
-|                                                    | given field, more information in :ref:`the Twig Form reference<reference-forms-twig-row>`. |
+| ``form_row(view, variables = {})``                 | This will render the row (the field's label, errors and widget) of the given               |
+|                                                    | field, more information in :ref:`the Twig Form reference <reference-forms-twig-row>`.      |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_rest(view, variables = {})``                | This will render all fields that have not yet been rendered, more                          |
-|                                                    | information in :ref:`the Twig Form reference<reference-forms-twig-rest>`.                  |
+|                                                    | information in :ref:`the Twig Form reference <reference-forms-twig-rest>`.                 |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``csrf_token(intention)``                          | This will render a CSRF token. Use this function if you want CSRF protection without       |
 |                                                    | creating a form                                                                            |
@@ -101,10 +101,10 @@ Filters
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|trans(arguments = {}, domain = 'messages', locale = null)``              | This will translate the text into the current language, more      |
 |                                                                                 | information in .                                                  |
-|                                                                                 | :ref:`Translation Filters<book-translation-filters>`.             |
+|                                                                                 | :ref:`Translation Filters <book-translation-filters>`.            |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|transchoice(count, arguments = {}, domain = 'messages', locale = null)`` | This will translate the text with pluralization, more information |
-|                                                                                 | in :ref:`Translation Filters<book-translation-filters>`.          |
+|                                                                                 | in :ref:`Translation Filters <book-translation-filters>`.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_encode(inline = 0)``                                            | This will transform the variable text into a YAML syntax.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
@@ -182,7 +182,7 @@ Those bundles can have other Twig extensions:
   `the official Twig Extensions documentation`_
 * **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and 
   ``{% image %}`` tags. You can read more about them in 
-  :doc:`the Assetic Documentation</cookbook/assetic/asset_management>`;
+  :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`;
 
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html
 .. _`http://twig.sensiolabs.org/documentation`: http://twig.sensiolabs.org/documentation

@@ -115,7 +115,7 @@ is new (e.g. hasn't been persisted to the database). Based on that, the subscrib
 might look like the following:
 
 .. versionadded:: 2.2
-    The ability to pass a string into :method:`FormInterface::add<Symfony\\Component\\Form\\FormInterface::add>`
+    The ability to pass a string into :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
     was added in Symfony 2.2.
 
 .. code-block:: php
@@ -470,7 +470,6 @@ On a form, we can usually listen to the following events:
     Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
 .. versionadded:: 2.2.6
-
     The behavior of the ``POST_SUBMIT`` event changed slightly in 2.2.6, which the
     below example uses.
 

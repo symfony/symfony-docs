@@ -9,7 +9,7 @@ company. It can be used to validate the number before trying to initiate a payme
 through a payment gateway.
 
 +----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                    |
+| Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `schemes`_                                                             |
 |                | - `message`_                                                             |
@@ -101,7 +101,7 @@ Available Options
 schemes
 -------
 
-**type**: ``mixed`` [:ref:`default option<validation-default-option>`]
+**type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 
 This option is required and represents the name of the number scheme used to 
 validate the credit card number, it can either be a string or an array. Valid

@@ -31,7 +31,7 @@ the service container makes writing good code so easy.
 .. tip::
 
     If you want to know a lot more after reading this chapter, check out
-    the :doc:`Dependency Injection Component Documentation</components/dependency_injection/introduction>`.
+    the :doc:`Dependency Injection Component Documentation </components/dependency_injection/introduction>`.
 
 .. index::
    single: Service Container; What is a service?
@@ -183,7 +183,7 @@ later how you can configure a service that has multiple instances in the
     In this example, the controller extends Symfony's base Controller, which
     gives you access to the service container itself. You can then use the
     ``get`` method to locate and retrieve the ``my_mailer`` service from
-    the service container. You can also define your :doc:`controllers as services</cookbook/controller/service>`.
+    the service container. You can also define your :doc:`controllers as services </cookbook/controller/service>`.
     This is a bit more advanced and not necessary, but it allows you to inject
     only the services you need into your controller.
 
@@ -533,7 +533,7 @@ notifying you of options that are missing or the wrong data type.
 
 When installing or configuring a bundle, see the bundle's documentation for
 how the services for the bundle should be installed and configured. The options
-available for the core bundles can be found inside the :doc:`Reference Guide</reference/index>`.
+available for the core bundles can be found inside the :doc:`Reference Guide </reference/index>`.
 
 .. note::
 

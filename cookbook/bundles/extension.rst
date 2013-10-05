@@ -44,7 +44,7 @@ When you create a bundle, you have two choices on how to handle configuration:
     You can specify your services in a configuration file (e.g. ``services.yml``)
     that lives in your bundle and then import it from your main application
     configuration. This is really easy, quick and totally effective. If you
-    make use of :ref:`parameters<book-service-container-parameters>`, then
+    make use of :ref:`parameters <book-service-container-parameters>`, then
     you still have the flexibility to customize your bundle from your application
     configuration. See ":ref:`service-container-imports-directive`" for more
     details.
@@ -75,7 +75,7 @@ The second method has several specific advantages:
 * Smart merging when several configuration files (e.g. ``config_dev.yml``
   and ``config.yml``) override each other's configuration;
 
-* Configuration validation (if you use a :ref:`Configuration Class<cookbook-bundles-extension-config-class>`);
+* Configuration validation (if you use a :ref:`Configuration Class <cookbook-bundles-extension-config-class>`);
 
 * IDE auto-completion when you create an XSD and developers use XML.
 
@@ -251,7 +251,7 @@ It's your job, then, to decide how these configurations should be merged
 together. You might, for example, have later values override previous values
 or somehow merge them together.
 
-Later, in the :ref:`Configuration Class<cookbook-bundles-extension-config-class>`
+Later, in the :ref:`Configuration Class <cookbook-bundles-extension-config-class>`
 section, you'll learn of a truly robust way to handle this. But for now,
 you might just merge them manually::
 
@@ -493,7 +493,8 @@ configuration arrays together.
 
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
-normalization and advanced merging. You can read more about this in :doc:`the Config Component documentation</components/config/definition>`.
+normalization and advanced merging. You can read more about this in
+:doc:`the Config Component documentation </components/config/definition>`.
 You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 

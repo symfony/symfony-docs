@@ -37,7 +37,7 @@ you should just use the ``choice`` type directly.
 |             | - `disabled`_                                                         |
 |             | - `mapped`_                                                           |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`                          |
+| Parent type | :doc:`choice </reference/forms/types/choice>`                         |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType` |
 +-------------+-----------------------------------------------------------------------+
@@ -56,7 +56,7 @@ The locale is used to translate the countries names.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -70,7 +70,7 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`date </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

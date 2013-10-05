@@ -148,7 +148,7 @@ like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config Component</components/config/introduction>` to merge
+to use :doc:`the Config Component </components/config/introduction>` to merge
 and validate the config values. Using the configuration processing you could
 access the config value this way::
 

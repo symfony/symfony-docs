@@ -42,7 +42,7 @@ focus on the most important methods that come from the
 
 .. tip::
 
-    You can :ref:`generate the missing getter and setters<book-doctrine-generating-getters-and-setters>`
+    You can :ref:`generate the missing getter and setters <book-doctrine-generating-getters-and-setters>`
     by running:
 
     .. code-block:: bash
@@ -165,7 +165,7 @@ focus on the most important methods that come from the
 
 .. tip::
 
-    :ref:`Generate the database table<book-doctrine-creating-the-database-tables-schema>`
+    :ref:`Generate the database table <book-doctrine-creating-the-database-tables-schema>`
     for your ``User`` entity by running:
 
     .. code-block:: bash
@@ -216,7 +216,7 @@ Authenticating Someone against a Database
 
 Authenticating a Doctrine user against the database with the Symfony security
 layer is a piece of cake. Everything resides in the configuration of the
-:doc:`SecurityBundle</reference/configuration/security>` stored in the
+:doc:`SecurityBundle </reference/configuration/security>` stored in the
 ``app/config/security.yml`` file.
 
 Below is an example of configuration where the user will enter his/her

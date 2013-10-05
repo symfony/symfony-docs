@@ -217,7 +217,7 @@ For this example, suppose version 2.1 has just reached its end of maintenance:
 When a new Branch is created for a Release
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-During the :ref:`stabilization phase<contributing-release-development>`, a
+During the :ref:`stabilization phase <contributing-release-development>`, a
 new branch on the documentation is created. For example, if version 2.3 were
 being stabilized, then a new 2.3 branch would be created for it. When this
 happens, the following items are done:

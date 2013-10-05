@@ -21,7 +21,7 @@ Installing a Symfony2 Distribution
 
     First, check that you have installed and configured a Web server (such
     as Apache) with PHP 5.3.8 or higher. For more information on Symfony2
-    requirements, see the :doc:`requirements reference</reference/requirements>`.
+    requirements, see the :doc:`requirements reference </reference/requirements>`.
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -308,7 +308,7 @@ If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 
-Be sure to also check out the :doc:`Cookbook</cookbook/index>`, which contains
+Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
 .. note::

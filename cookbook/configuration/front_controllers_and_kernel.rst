@@ -44,7 +44,7 @@ to `decorate`_ the kernel with additional features. Examples include:
 
 * Configuring the autoloader or adding additional autoloading mechanisms;
 * Adding HTTP level caching by wrapping the kernel with an instance of
-  :ref:`AppCache<symfony-gateway-cache>`;
+  :ref:`AppCache <symfony-gateway-cache>`;
 * Enabling (or skipping) the :doc:`ClassCache </cookbook/debugging>`
 * Enabling the :doc:`Debug Component </components/debug>`.
 
@@ -107,7 +107,7 @@ called the ``AppKernel``.
 
 Again, the Symfony2 Standard Edition provides an `AppKernel`_ in the ``app/``
 directory. This class uses the name of the environment - which is passed to
-the Kernel's :method:`constructor<Symfony\\Component\\HttpKernel\\Kernel::__construct>`
+the Kernel's :method:`constructor <Symfony\\Component\\HttpKernel\\Kernel::__construct>`
 method and is available via :method:`Symfony\\Component\\HttpKernel\\Kernel::getEnvironment` -
 to decide which bundles to create. The logic for that is in ``registerBundles()``,
 a method meant to be extended by you when you start adding bundles to your
@@ -147,7 +147,7 @@ This method is responsible for loading the application's
 configuration from the right *environment*.
 
 Environments have been covered extensively
-:doc:`in the previous chapter</cookbook/configuration/environments>`,
+:doc:`in the previous chapter </cookbook/configuration/environments>`,
 and you probably remember that the Standard Edition comes with three
 of them - ``dev``, ``prod`` and ``test``.
 

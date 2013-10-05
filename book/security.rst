@@ -226,7 +226,7 @@ sort of message indicating that access has been denied.
     When Symfony denies the user access, the user sees an error screen and
     receives a 403 HTTP status code (``Forbidden``). You can customize the
     access denied error screen by following the directions in the
-    :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
+    :ref:`Error Pages <cookbook-error-pages-by-status-code>` cookbook entry
     to customize the 403 error page.
 
 Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
@@ -285,7 +285,7 @@ then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
 all browsers. However, Symfony supports many authentication mechanisms out
 of the box. For details on all of them, see the
-:doc:`Security Configuration Reference</reference/configuration/security>`.
+:doc:`Security Configuration Reference </reference/configuration/security>`.
 
 In this section, you'll enhance this process by allowing the user to authenticate
 via a traditional HTML login form.
@@ -530,7 +530,7 @@ The form has very few requirements. First, by submitting the form to ``/login_ch
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
 system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
+(these field names can be :ref:`configured <reference-security-firewall-form-login>`).
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -756,8 +756,8 @@ is used to enforce access.
 Each ``access_control`` has several options that configure two different
 things:
 
-* (a) :ref:`should the incoming request match this access control entry<security-book-access-control-matching-options>`
-* (b) :ref:`once it matches, should some sort of access restriction be enforced<security-book-access-control-enforcement-options>`:
+* (a) :ref:`should the incoming request match this access control entry <security-book-access-control-matching-options>`
+* (b) :ref:`once it matches, should some sort of access restriction be enforced <security-book-access-control-enforcement-options>`:
 
 .. _security-book-access-control-matching-options:
 
@@ -886,7 +886,7 @@ Securing by IP
 
 Certain situations may arise when you may need to restrict access to a given
 path based on IP. This is particularly relevant in the case of
-:ref:`Edge Side Includes<edge-side-includes>` (ESI), for example. When ESI is
+:ref:`Edge Side Includes <edge-side-includes>` (ESI), for example. When ESI is
 enabled, it's recommended to secure access to ESI URLs. Indeed, some ESI may
 contain some private content like the current logged in user's information. To
 prevent any direct access to these resources from a web browser (by guessing the
@@ -1390,8 +1390,8 @@ that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
 
 .. versionadded:: 2.2
-    As of Symfony 2.2 you can also use the :ref:`PBKDF2<reference-security-pbkdf2>`
-    and :ref:`BCrypt<reference-security-bcrypt>` password encoders.
+    As of Symfony 2.2 you can also use the :ref:`PBKDF2 <reference-security-pbkdf2>`
+    and :ref:`BCrypt <reference-security-bcrypt>` password encoders.
 
 Determining the Hashed Password
 ...............................
@@ -1444,7 +1444,7 @@ In a controller this can be shortcut to:
     role.
 
 In a Twig Template this object can be accessed via the ``app.user`` key,
-which calls the :method:`GlobalVariables::getUser()<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
+which calls the :method:`GlobalVariables::getUser() <Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
 method:
 
 .. configuration-block::
@@ -1810,7 +1810,7 @@ a route so that you can use it to generate the URL:
 Once the user has been logged out, he will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
-:doc:`Security Configuration Reference</reference/configuration/security>`.
+:doc:`Security Configuration Reference </reference/configuration/security>`.
 
 .. _book-security-template:
 

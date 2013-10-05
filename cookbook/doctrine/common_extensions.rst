@@ -14,7 +14,7 @@ functionality for `Sluggable`_, `Translatable`_, `Timestampable`_, `Loggable`_,
 The usage for each of these extensions is explained in that repository.
 
 However, to install/activate each extension you must register and activate an
-:doc:`Event Listener</cookbook/doctrine/event_listeners_subscribers>`.
+:doc:`Event Listener </cookbook/doctrine/event_listeners_subscribers>`.
 To do this, you have two options:
 
 #. Use the `StofDoctrineExtensionsBundle`_, which integrates the above library.

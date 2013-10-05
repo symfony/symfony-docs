@@ -49,12 +49,12 @@ your autoloader to load the Routing component::
     Be careful when using ``$_SERVER['REQUEST_URI']``, as it may include
     any query parameters on the URL, which will cause problems with route
     matching. An easy way to solve this is to use the HttpFoundation component
-    as explained :ref:`below<components-routing-http-foundation>`.
+    as explained :ref:`below <components-routing-http-foundation>`.
 
 You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
 
-The :method:`RouteCollection::add()<Symfony\\Component\\Routing\\RouteCollection::add>`
+The :method:`RouteCollection::add() <Symfony\\Component\\Routing\\RouteCollection::add>`
 method takes two arguments. The first is the name of the route. The second
 is a :class:`Symfony\\Component\\Routing\\Route` object, which expects a
 URL path and some array of custom variables in its constructor. This array
@@ -184,7 +184,7 @@ with this class via its constructor::
 
 Normally you can pass the values from the ``$_SERVER`` variable to populate the
 :class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
-:doc:`HttpFoundation</components/http_foundation/index>` component, you can use its
+:doc:`HttpFoundation </components/http_foundation/index>` component, you can use its
 :class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 
