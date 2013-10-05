@@ -5,7 +5,7 @@ email Field Type
 ================
 
 The ``email`` field is a text field that is rendered using the HTML5
-`` <input type="email" />`` tag.
+``<input type="email" />`` tag.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``email`` field (a text box)                              |

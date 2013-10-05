@@ -428,7 +428,7 @@ Regardless of who creates the ``Response``, another event - ``kernel.response``
 is dispatched directly afterwards. A typical listener to this event will modify
 the ``Response`` object in some way, such as modifying headers, adding cookies,
 or even changing the content of the ``Response`` itself (e.g. injecting some
-JavaScript before the end `` </body>`` tag of an HTML response).
+JavaScript before the end ``</body>`` tag of an HTML response).
 
 After this event is dispatched, the final ``Response`` object is returned
 from :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle`. In the

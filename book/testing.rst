@@ -776,7 +776,7 @@ the installed third-party bundles:
         </testsuite>
     </testsuites>
 
-To include other directories in the code coverage, also edit the `` <filter>``
+To include other directories in the code coverage, also edit the ``<filter>``
 section:
 
 .. code-block:: xml

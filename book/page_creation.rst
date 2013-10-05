@@ -883,9 +883,9 @@ The extension alias (configuration key) can also be used:
 
 .. note::
 
-    See the cookbook article: :doc:`How to expose a Semantic Configuration for
-    a Bundle </cookbook/bundles/extension>` for information on adding
-    configuration for your own bundle.
+    See the cookbook article:
+    :doc:`How to expose a Semantic Configuration for a Bundle </cookbook/bundles/extension>`
+    for information on adding configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction

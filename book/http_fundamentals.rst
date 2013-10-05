@@ -479,7 +479,7 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
 
 In this very simple example, the controller simply creates a
 :class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
-"`` <h1>Contact us! </h1>"``. In the :doc:`controller chapter </book/controller>`,
+``<h1>Contact us! </h1>``. In the :doc:`controller chapter </book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard

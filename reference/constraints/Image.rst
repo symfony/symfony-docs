@@ -11,26 +11,26 @@ the width and height of the image.
 See the :doc:`File </reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
 
-+----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`               |
-+----------------+----------------------------------------------------------------------+
-| Options        | - `mimeTypes`_                                                       |
-|                | - `minWidth`_                                                        |
-|                | - `maxWidth`_                                                        |
-|                | - `maxHeight`_                                                       |
-|                | - `minHeight`_                                                       |
-|                | - `mimeTypesMessage`_                                                |
-|                | - `sizeNotDetectedMessage`_                                          |
-|                | - `maxWidthMessage`_                                                 |
-|                | - `minWidthMessage`_                                                 |
-|                | - `maxHeightMessage`_                                                |
-|                | - `minHeightMessage`_                                                |
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `mimeTypes`_                                                        |
+|                | - `minWidth`_                                                         |
+|                | - `maxWidth`_                                                         |
+|                | - `maxHeight`_                                                        |
+|                | - `minHeight`_                                                        |
+|                | - `mimeTypesMessage`_                                                 |
+|                | - `sizeNotDetectedMessage`_                                           |
+|                | - `maxWidthMessage`_                                                  |
+|                | - `minWidthMessage`_                                                  |
+|                | - `maxHeightMessage`_                                                 |
+|                | - `minHeightMessage`_                                                 |
 |                | - See :doc:`File </reference/constraints/File>` for inherited options |
-+----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`            |
-+----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`   |
-+----------------+----------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`             |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`    |
++----------------+-----------------------------------------------------------------------+
 
 Basic Usage
 -----------
