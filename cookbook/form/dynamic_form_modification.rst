@@ -115,7 +115,7 @@ is new (e.g. hasn't been persisted to the database). Based on that, the subscrib
 might look like the following:
 
 .. versionadded:: 2.2
-    The ability to pass a string into :method:`FormInterface::add<Symfony\\Component\\Form\\FormInterface::add>`
+    The ability to pass a string into :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
     was added in Symfony 2.2.
 
 .. code-block:: php

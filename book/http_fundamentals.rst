@@ -455,12 +455,12 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</components/yaml/yaml_format>` to define the routing
+   This example uses :doc:`YAML </components/yaml/yaml_format>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 
 When someone visits the ``/contact`` page, this route is matched, and the
-specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
+specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
 the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
@@ -479,7 +479,7 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
 
 In this very simple example, the controller simply creates a
 :class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
-"``<h1>Contact us!</h1>"``. In the :doc:`controller chapter</book/controller>`,
+"`` <h1>Contact us! </h1>"``. In the :doc:`controller chapter </book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -512,11 +512,11 @@ libraries that can be used inside *any* PHP project. These libraries, called
 the *Symfony2 Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
-* :doc:`HttpFoundation</components/http_foundation/introduction>` - Contains
+* :doc:`HttpFoundation </components/http_foundation/introduction>` - Contains
   the ``Request`` and ``Response`` classes, as well as other classes for handling
   sessions and file uploads;
 
-* :doc:`Routing</components/routing/introduction>` - Powerful and fast routing system that
+* :doc:`Routing </components/routing/introduction>` - Powerful and fast routing system that
   allows you to map a specific URI (e.g. ``/contact``) to some information
   about how that request should be handled (e.g. execute the ``contactAction()``
   method);
@@ -527,11 +527,11 @@ regardless of how your project is developed. To name a few:
 * `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* :doc:`ClassLoader</components/class_loader/introduction>` An autoloading library that allows
+* :doc:`ClassLoader </components/class_loader/introduction>` An autoloading library that allows
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
-* :doc:`Templating</components/templating/introduction>` A toolkit for rendering
+* :doc:`Templating </components/templating/introduction>` A toolkit for rendering
   templates, handling template inheritance (i.e. a template is decorated with
   a layout) and performing other common template tasks;
 

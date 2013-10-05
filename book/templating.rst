@@ -103,7 +103,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 .. tip::
 
     Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
+    it with ``twig.extension`` :ref:`tag <reference-dic-tags-twig-extension>`.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
@@ -458,7 +458,7 @@ section.
 .. note::
 
    The available "engines" can be configured and even new engines added.
-   See :ref:`Templating Configuration<template-configuration>` for more details.
+   See :ref:`Templating Configuration <template-configuration>` for more details.
 
 .. index::
    single: Templating; Tags and helpers
@@ -671,7 +671,7 @@ Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
 Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services</book/service_container>`.
+that as much code as possible lives in reusable :doc:`services </book/service_container>`.
 
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1124,7 +1124,7 @@ automatically:
 .. tip::
 
     You can add your own global template variables. See the cookbook example
-    on :doc:`Global Variables</cookbook/templating/global_variables>`.
+    on :doc:`Global Variables </cookbook/templating/global_variables>`.
 
 .. index::
    single: Templating; The templating service
@@ -1192,7 +1192,7 @@ configuration file:
         ));
 
 Several configuration options are available and are covered in the
-:doc:`Configuration Appendix</reference/configuration/framework>`.
+:doc:`Configuration Appendix </reference/configuration/framework>`.
 
 .. note::
 

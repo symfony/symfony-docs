@@ -8,16 +8,16 @@ Validates that a value is a valid "file", which can be one of the following:
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
   (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
 
-This constraint is commonly used in forms with the :doc:`file</reference/forms/types/file>`
+This constraint is commonly used in forms with the :doc:`file </reference/forms/types/file>`
 form type.
 
 .. tip::
 
-    If the file you're validating is an image, try the :doc:`Image</reference/constraints/Image>`
+    If the file you're validating is an image, try the :doc:`Image </reference/constraints/Image>`
     constraint.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `maxSize`_                                                        |
 |                | - `mimeTypes`_                                                      |
@@ -38,7 +38,7 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file</reference/forms/types/file>` form type. For example,
+in a form as a :doc:`file </reference/forms/types/file>` form type. For example,
 suppose you're creating an author form where you can upload a "bio" PDF for
 the author. In your form, the ``bioFile`` property would be a ``file`` type.
 The ``Author`` class might look as follows::

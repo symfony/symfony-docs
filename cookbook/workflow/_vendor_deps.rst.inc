@@ -11,7 +11,7 @@ you need for each.
 
 By default, these libraries are downloaded by running a ``php composer.phar install``
 "downloader" binary. This ``composer.phar`` file is from a library called
-`Composer`_ and you can read more about installing it in the :ref:`Installation<installation-updating-vendors>`
+`Composer`_ and you can read more about installing it in the :ref:`Installation <installation-updating-vendors>`
 chapter.
 
 The ``composer.phar`` file reads from the ``composer.json`` file at the root

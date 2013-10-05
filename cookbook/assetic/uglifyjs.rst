@@ -169,8 +169,8 @@ apply this filter when debug mode is off (e.g. ``app.php``):
         <?php endforeach; ?>
 
 To try this out, switch to your ``prod`` environment (``app.php``). But before
-you do, don't forget to :ref:`clear your cache<book-page-creation-prod-cache-clear>`
-and :ref:`dump your assetic assets<cookbook-asetic-dump-prod>`.
+you do, don't forget to :ref:`clear your cache <book-page-creation-prod-cache-clear>`
+and :ref:`dump your assetic assets <cookbook-asetic-dump-prod>`.
 
 .. tip::
 

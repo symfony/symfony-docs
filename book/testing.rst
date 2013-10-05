@@ -175,7 +175,7 @@ you'll use to crawl your site::
 
     $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-The ``request()`` method (see :ref:`more about the request method<book-testing-request-method-sidebar>`)
+The ``request()`` method (see :ref:`more about the request method <book-testing-request-method-sidebar>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
 be used to select elements in the Response, click on links, and submit forms.
 
@@ -337,7 +337,7 @@ giving you a nice API for uploading files.
 .. tip::
 
     You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler<book-testing-crawler>` section below.
+    :ref:`Crawler <book-testing-crawler>` section below.
 
 The ``request`` method can also be used to simulate form submissions directly
 or perform more complex requests::
@@ -741,7 +741,7 @@ You can also override HTTP headers on a per request basis::
 .. tip::
 
     The test client is available as a service in the container in the ``test``
-    environment (or wherever the :ref:`framework.test<reference-framework-test>`
+    environment (or wherever the :ref:`framework.test <reference-framework-test>`
     option is enabled). This means you can override the service entirely
     if you need to.
 
@@ -776,7 +776,7 @@ the installed third-party bundles:
         </testsuite>
     </testsuites>
 
-To include other directories in the code coverage, also edit the ``<filter>``
+To include other directories in the code coverage, also edit the `` <filter>``
 section:
 
 .. code-block:: xml

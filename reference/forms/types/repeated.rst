@@ -27,7 +27,7 @@ accuracy.
 |             | - `mapped`_                                                            |
 |             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/form>`                              |
+| Parent type | :doc:`field </reference/forms/types/form>`                             |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |
 +-------------+------------------------------------------------------------------------+
@@ -186,7 +186,7 @@ error_bubbling
 Inherited options
 -----------------
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`date </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

@@ -127,7 +127,7 @@ Deprecations
 When a feature implementation cannot be replaced with a better one without
 breaking backward compatibility, there is still the possibility to deprecate
 the old implementation and add a new preferred one along side. Read the
-:ref:`conventions<contributing-code-conventions-deprecations>` document to
+:ref:`conventions <contributing-code-conventions-deprecations>` document to
 learn more about how deprecations are handled in Symfony.
 
 Rationale

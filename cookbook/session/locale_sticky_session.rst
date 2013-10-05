@@ -14,7 +14,7 @@ Creating LocaleListener
 -----------------------
 
 To simulate that the locale is stored in a session, you need to create and
-register a :doc:`new event listener</cookbook/service_container/event_listener>`.
+register a :doc:`new event listener </cookbook/service_container/event_listener>`.
 The listener will look something like this. Typically, ``_locale`` is used
 as a routing parameter to signify the locale, though it doesn't really matter
 how you determine the desired locale from the request::
@@ -96,7 +96,7 @@ Then register the listener:
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request. Remember, to get the user's locale, always
-use the :method:`Request::getLocale<Symfony\\Component\\HttpFoundation\\Request::getLocale>`
+use the :method:`Request::getLocale <Symfony\\Component\\HttpFoundation\\Request::getLocale>`
 method::
 
     // from a controller...

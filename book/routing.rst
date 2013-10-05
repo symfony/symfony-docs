@@ -79,7 +79,7 @@ for you to use in your controller (keep reading).
 
 The ``_controller`` parameter is a special key that tells Symfony which controller
 should be executed when a URL matches this route. The ``_controller`` string
-is called the :ref:`logical name<controller-string-syntax>`. It follows a
+is called the :ref:`logical name <controller-string-syntax>`. It follows a
 pattern that points to a specific PHP class and method::
 
     // src/Acme/BlogBundle/Controller/BlogController.php
@@ -820,9 +820,9 @@ that are special: each adds a unique piece of functionality inside your applicat
 * ``_controller``: As you've seen, this parameter is used to determine which
   controller is executed when the route is matched;
 
-* ``_format``: Used to set the request format (:ref:`read more<book-routing-format-param>`);
+* ``_format``: Used to set the request format (:ref:`read more <book-routing-format-param>`);
 
-* ``_locale``: Used to set the locale on the request (:ref:`read more<book-translation-locale-url>`);
+* ``_locale``: Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`);
 
 .. tip::
 
@@ -1064,7 +1064,7 @@ from the new routing resource.
 .. tip::
 
     You can also define routes using annotations. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     to see how.
 
 Adding a Host regex to Imported Routes

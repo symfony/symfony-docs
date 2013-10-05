@@ -131,5 +131,5 @@ Using a Twig Extension
 
 If the global variable you want to set is more complicated - say an object -
 then you won't be able to use the above method. Instead, you'll need to create
-a :ref:`Twig Extension<reference-dic-tags-twig-extension>` and return the
+a :ref:`Twig Extension <reference-dic-tags-twig-extension>` and return the
 global variable as one of the entries in the ``getGlobals`` method.

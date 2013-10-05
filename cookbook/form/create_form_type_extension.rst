@@ -4,7 +4,7 @@
 How to Create a Form Type Extension
 ===================================
 
-:doc:`Custom form field types<create_custom_field_type>` are great when
+:doc:`Custom form field types <create_custom_field_type>` are great when
 you need field types with a specific purpose, such as a gender selector,
 or a VAT number input.
 
@@ -88,7 +88,7 @@ to override one of the following methods:
 * ``finishView()``
 
 For more information on what those methods do, you can refer to the
-:doc:`Creating Custom Field Types</cookbook/form/create_custom_field_type>`
+:doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 cookbook article.
 
 Registering your Form Type Extension as a Service
@@ -135,7 +135,7 @@ Adding the extension Business Logic
 The goal of your extension is to display nice images next to file inputs
 (when the underlying model contains images). For that purpose, let's assume
 that you use an approach similar to the one described in
-:doc:`How to handle File Uploads with Doctrine</cookbook/doctrine/file_uploads>`:
+:doc:`How to handle File Uploads with Doctrine </cookbook/doctrine/file_uploads>`:
 you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
 database)::

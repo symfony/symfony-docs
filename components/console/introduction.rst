@@ -191,7 +191,7 @@ level. For example::
     }
 
 When the quiet level is used, all output is suppressed as the default
-:method:`Symfony\Component\Console\Output::write<Symfony\\Component\\Console\\Output::write>`
+:method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output::write>`
 method returns without actually printing.
 
 Using Command Arguments
