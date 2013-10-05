@@ -31,8 +31,8 @@ Enabling them all is as easy as it can get::
 
 The :method:`Symfony\\Component\\Debug\\Debug::enable` method registers an
 error handler and an exception handler. If the :doc:`ClassLoader component
-</components/class_loader>` is available, a special class loader is also
-registered.
+</components/class_loader/introduction>` is available, a special class loader
+is also registered.
 
 Read the following sections for more information about the different available
 tools.
