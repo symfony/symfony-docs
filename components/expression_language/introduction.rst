@@ -131,4 +131,11 @@ Numeric Operators
 
 * ``..`` (range)
 
+Ternary Operators
+.................
+
+* ``foo ? 'yes' : 'no'``
+* ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
+* ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
+
 .. _Packagist: https://packagist.org/packages/symfony/expression-language
