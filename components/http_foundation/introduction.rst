@@ -280,12 +280,12 @@ Overriding the Request
 
 .. versionadded:: 2.4
     The :method:`Symfony\\Component\\HttpFoundation\\Request::setFactory`
-    class was added in Symfony 2.4.
+    method was added in Symfony 2.4.
 
 The Request class should not be overridden as it is a data object that
 represents an HTTP message. But when moving from a legacy system, adding
 methods or changing some default behavior might help. In that case, register a
-PHP callable that is able to create an instance of your Request class::
+PHP callable that is able to create an instance of your ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
 
