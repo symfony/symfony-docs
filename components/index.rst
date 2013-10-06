@@ -13,6 +13,7 @@ The Components
     dom_crawler
     dependency_injection/index
     event_dispatcher/index
+    expression_language/index
     filesystem
     finder
     form/index

@@ -57,6 +57,8 @@
   * :doc:`/components/event_dispatcher/generic_event`
   * :doc:`/components/event_dispatcher/immutable_dispatcher`
 
+* :doc:`/components/expression_language/index`
+
 * **Filesystem**
 
   * :doc:`/components/filesystem`
