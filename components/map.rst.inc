@@ -59,6 +59,8 @@
 
 * :doc:`/components/expression_language/index`
 
+  * :doc:`/components/expression_language/introduction`
+
 * **Filesystem**
 
   * :doc:`/components/filesystem`
