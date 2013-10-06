@@ -35,10 +35,12 @@ and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
 
-Take these lines from ``routing.yml``:
+Take these lines from the ``routing.yml`` in the AcmeDemoBundle of the Standard
+Edition:
 
 .. code-block:: yaml
 
+    # src/Acme/DemoBundle/Resources/config/routing.yml
     _demo:
         resource: "@AcmeDemoBundle/Controller/DemoController.php"
         type:     annotation

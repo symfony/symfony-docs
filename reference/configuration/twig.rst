@@ -31,14 +31,19 @@ TwigBundle Configuration Reference
                     # set to service or leave blank
                     type:                 ~
                     value:                ~
-            autoescape:           ~
-            base_template_class:  ~ # Example: Twig_Template
-            cache:                "%kernel.cache_dir%/twig"
-            charset:              "%kernel.charset%"
-            debug:                "%kernel.debug%"
-            strict_variables:     ~
-            auto_reload:          ~
-            optimizations:        ~
+            autoescape:                ~
+
+            # The following were added in Symfony 2.3.
+            # See http://twig.sensiolabs.org/doc/recipes.html#using-the-template-name-to-set-the-default-escaping-strategy
+            autoescape_service:        ~ # Example: @my_service
+            autoescape_service_method: ~ # use in combination with autoescape_service option
+            base_template_class:       ~ # Example: Twig_Template
+            cache:                     "%kernel.cache_dir%/twig"
+            charset:                   "%kernel.charset%"
+            debug:                     "%kernel.debug%"
+            strict_variables:          ~
+            auto_reload:               ~
+            optimizations:             ~
 
     .. code-block:: xml
 

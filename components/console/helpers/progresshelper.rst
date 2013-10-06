@@ -7,6 +7,12 @@ Progress Helper
 .. versionadded:: 2.2
     The ``progress`` helper was added in Symfony 2.2.
 
+.. versionadded:: 2.3
+    The ``setCurrent`` method was added in Symfony 2.3.
+
+.. versionadded:: 2.4
+    The ``clear`` method was added in Symfony 2.4.
+
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
@@ -27,6 +33,18 @@ pass it a total number of units, and advance the progress as your command execut
     }
 
     $progress->finish();
+
+.. tip::
+
+    You can also set the current progress by calling the
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressHelper::setCurrent`
+    method.
+
+If you want to output something while the progress bar is running,
+call :method:`Symfony\\Component\\Console\\Helper\\ProgressHelper::clear` first.
+After you're done, call
+:method:`Symfony\\Component\\Console\\Helper\\ProgressHelper::display`
+to show the progress bar again.
 
 The appearance of the progress output can be customized as well, with a number
 of different levels of verbosity. Each of these displays different possible

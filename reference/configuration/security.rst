@@ -148,6 +148,12 @@ Each part will be explained in the next section.
                         # by default, the login form *must* be a POST, not a GET
                         post_only:      true
                         remember_me:    false
+
+                        # by default, a session must exist before submitting an authentication request
+                        # if false, then Request::hasPreviousSession is not called during authentication
+                        # new in Symfony 2.3
+                        require_previous_session: true
+
                     remember_me:
                         token_provider: name
                         key: someS3cretKey
@@ -297,6 +303,11 @@ for the hash algorithm.
 
 Using the BCrypt Password Encoder
 ---------------------------------
+
+.. caution::
+
+    To use this encoder, you either need to use PHP Version 5.5 or install
+    the `ircmaxell/password-compat`_ library via Composer.
 
 .. versionadded:: 2.2
     The BCrypt password encoder was added in Symfony 2.2.
@@ -462,3 +473,4 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
       ));
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+.. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

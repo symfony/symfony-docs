@@ -4,10 +4,6 @@
 How to log Messages to different Files
 ======================================
 
-.. versionadded:: 2.1
-    The ability to specify channels for a specific handler was added to
-    the MonologBundle for Symfony 2.1.
-
 The Symfony Standard Edition contains a bunch of channels for logging: ``doctrine``,
 ``event``, ``security`` and ``request``. Each channel corresponds to a logger
 service (``monolog.logger.XXX``) in the container and is injected to the

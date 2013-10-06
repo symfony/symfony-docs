@@ -5,10 +5,6 @@
 How to Define Relationships with Abstract Classes and Interfaces
 ================================================================
 
-.. versionadded:: 2.1
-    The ResolveTargetEntityListener is new to Doctrine 2.2, which was first
-    packaged with Symfony 2.1.
-
 One of the goals of bundles is to create discreet bundles of functionality
 that do not have many (if any) dependencies, allowing you to use that
 functionality in other applications without including unnecessary items.

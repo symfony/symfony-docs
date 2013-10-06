@@ -102,10 +102,6 @@ Let's see this in action::
         }
     }
 
-.. versionadded:: 2.1
-    The ``EquatableInterface`` was added in Symfony 2.1. Use the ``equals()``
-    method of the ``UserInterface`` in Symfony 2.0.
-
 If you have more information about your users - like a "first name" - then
 you can add a ``firstName`` field to hold that data.
 

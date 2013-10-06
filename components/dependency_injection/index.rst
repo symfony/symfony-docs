@@ -14,4 +14,5 @@
     configurators
     parentservices
     advanced
+    lazy_services
     workflow

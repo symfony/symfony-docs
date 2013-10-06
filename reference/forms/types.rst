@@ -9,16 +9,17 @@ Form Types Reference
    :hidden:
 
    types/birthday
+   types/button
    types/checkbox
    types/choice
    types/collection
    types/country
+   types/currency
    types/date
    types/datetime
    types/email
    types/entity
    types/file
-   types/field
    types/form
    types/hidden
    types/integer
@@ -30,7 +31,9 @@ Form Types Reference
    types/percent
    types/radio
    types/repeated
+   types/reset
    types/search
+   types/submit
    types/text
    types/textarea
    types/time

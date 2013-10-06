@@ -9,6 +9,7 @@ The Components
     config/index
     console/index
     css_selector
+    debug
     dom_crawler
     dependency_injection/index
     event_dispatcher/index
@@ -17,7 +18,7 @@ The Components
     form/index
     http_foundation/index
     http_kernel/index
-    locale
+    intl
     options_resolver
     process
     property_access/index

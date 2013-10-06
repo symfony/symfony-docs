@@ -77,6 +77,14 @@ with:
     $ php app/console list --verbose
     $ php app/console list -v
 
+The verbose flag can optionally take a value between 1 (default) and 3 to
+output even more verbose messages:
+
+    $ php app/console list --verbose=2
+    $ php app/console list -vv
+    $ php app/console list --verbose=3
+    $ php app/console list -vvv
+
 If you set the optional arguments to give your application a name and version::
 
     $application = new Application('Acme Console Application', '1.2');

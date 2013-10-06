@@ -367,9 +367,6 @@ The ``FrameworkBundle`` registers several listeners:
 ``kernel.terminate`` Event
 ..........................
 
-.. versionadded:: 2.1
-    The ``kernel.terminate`` event is new since Symfony 2.1.
-
 The purpose of this event is to perform "heavier" tasks after the response
 was already served to the client.
 

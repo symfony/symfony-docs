@@ -45,6 +45,14 @@ output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getInc
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
+.. versionadded:: 2.4
+    The ``flushOutput()`` and ``flushErrorOutput()`` methods were added in Symfony 2.4.
+
+The :method:`Symfony\\Component\\Process\\Process::flushOutput` method flushes
+the contents of the output and
+:method:`Symfony\\Component\\Process\\Process::flushErrorOutput` flushes
+the contents of the error output.
+
 Getting real-time Process Output
 --------------------------------
 
@@ -63,9 +71,6 @@ anonymous function to the
             echo 'OUT > '.$buffer;
         }
     });
-
-.. versionadded:: 2.1
-    The non-blocking feature was added in 2.1.
 
 Running Processes Asynchronously
 --------------------------------
@@ -102,19 +107,31 @@ are done doing other stuff::
         }
     });
 
+.. note::
+
+    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
+    which means that your code will halt at this line until the external
+    process is completed.
+
 Stopping a Process
 ------------------
 
+.. versionadded:: 2.3
+    The ``signal`` parameter of the ``stop`` method was added in Symfony 2.3.
+
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
-a timeout as its argument. Once the timeout is reached, the process is terminated.
+two arguments : a timeout and a signal. Once the timeout is reached, the signal
+is sent to the running process. The default signal sent to a process is ``SIGKILL``.
+Please read the :ref:`signal documentation below<reference-process-signal>`
+to find out more about signal handling in the Process component::
 
     $process = new Process('ls -lsa');
     $process->start();
 
     // ... do other things
 
-    $process->stop(3);
+    $process->stop(3, SIGINT);
 
 Executing PHP Code in Isolation
 -------------------------------
@@ -130,9 +147,6 @@ instead::
     );
     $process->run();
 
-.. versionadded:: 2.1
-    The ``ProcessBuilder`` class was added in Symfony 2.1.
-
 To make your code work better on all platforms, you might want to use the
 :class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
 
@@ -140,6 +154,34 @@ To make your code work better on all platforms, you might want to use the
 
     $builder = new ProcessBuilder(array('ls', '-lsa'));
     $builder->getProcess()->run();
+
+.. versionadded:: 2.3
+    The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
+    method was added in Symfony 2.3.
+
+In case you are building a binary driver, you can use the
+:method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
+the generated process commands.
+
+The following example will generate two process commands for a tar binary
+adapter::
+
+    use Symfony\Component\Process\ProcessBuilder;
+
+    $builder = new ProcessBuilder();
+    $builder->setPrefix('/usr/bin/tar');
+
+    // '/usr/bin/tar' '--list' '--file=archive.tar.gz'
+    echo $builder
+        ->setArguments(array('--list', '--file=archive.tar.gz'))
+        ->getProcess()
+        ->getCommandLine();
+
+    // '/usr/bin/tar' '-xzf' 'archive.tar.gz'
+    echo $builder
+        ->setArguments(array('-xzf', 'archive.tar.gz'))
+        ->getProcess()
+        ->getCommandLine();
 
 Process Timeout
 ---------------
@@ -171,4 +213,80 @@ check regularly::
         usleep(200000);
     }
 
+.. _reference-process-signal:
+
+Process Idle Timeout
+--------------------
+
+.. versionadded:: 2.4
+   The :method:`Symfony\\Component\\Process\\Process::setIdleTimeout` method was added in Symfony 2.4.
+   
+In contrast to the timeout of the previous paragraph, the idle timeout only
+considers the time since the last output was produced by the process::
+
+   use Symfony\Component\Process\Process;
+   
+   $process = new Process('something-with-variable-runtime');
+   $process->setTimeout(3600);
+   $process->setIdleTimeout(60);
+   $process->run();
+   
+In the case above, a process is considered timed out, when either the total runtime
+exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
+
+Process Signals
+---------------
+
+.. versionadded:: 2.3
+    The ``signal`` method was added in Symfony 2.3.
+
+When running a program asynchronously, you can send it posix signals with the
+:method:`Symfony\\Component\\Process\\Process::signal` method::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('find / -name "rabbit"');
+    $process->start();
+
+    // will send a SIGKILL to the process
+    $process->signal(SIGKILL);
+
+.. caution::
+
+    Due to some limitations in PHP, if you're using signals with the Process
+    component, you may have to prefix your commands with `exec`_. Please read
+    `Symfony Issue#5759`_ and `PHP Bug#39992`_ to understand why this is happening.
+
+    POSIX signals are not available on Windows platforms, please refer to the
+    `PHP documentation`_ for available signals.
+
+Process Pid
+-----------
+
+.. versionadded:: 2.3
+    The ``getPid`` method was added in Symfony 2.3.
+
+You can access the `pid`_ of a running process with the
+:method:`Symfony\\Component\\Process\\Process::getPid` method.
+
+.. code-block:: php
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('/usr/bin/php worker.php');
+    $process->start();
+
+    $pid = $process->getPid();
+
+.. caution::
+
+    Due to some limitations in PHP, if you want to get the pid of a symfony Process,
+    you may have to prefix your commands with `exec`_. Please read
+    `Symfony Issue#5759`_ to understand why this is happening.
+
+.. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
+.. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
+.. _`exec`: http://en.wikipedia.org/wiki/Exec_(operating_system)
+.. _`pid`: http://en.wikipedia.org/wiki/Process_identifier
+.. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process

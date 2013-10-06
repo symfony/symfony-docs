@@ -48,9 +48,8 @@ that refers to the bundle.
 2.1 Remove bundle routing
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The routing for the AcmeDemoBundle can be found in
-``app/config/routing_dev.yml``. The routes are ``_welcome``, ``_demo_secured``
-and ``_demo``. Remove all three of these entries.
+The routing for the AcmeDemoBundle can be found in ``app/config/routing_dev.yml``.
+Remove the ``_acme_demo`` entry at the bottom of this file.
 
 2.2 Remove bundle configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

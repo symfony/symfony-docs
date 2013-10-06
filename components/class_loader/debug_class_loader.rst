@@ -4,9 +4,6 @@
 Debugging a Class Loader
 ========================
 
-.. versionadded:: 2.1
-    The ``DebugClassLoader`` class was added in Symfony 2.1.
-
 The :class:`Symfony\\Component\\ClassLoader\\DebugClassLoader` attempts to
 throw more helpful exceptions when a class isn't found by the registered
 autoloaders. All autoloaders that implement a ``findFile()`` method are replaced

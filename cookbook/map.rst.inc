@@ -60,6 +60,7 @@
   * :doc:`/cookbook/doctrine/multiple_entity_managers`
   * :doc:`/cookbook/doctrine/custom_dql_functions`
   * :doc:`/cookbook/doctrine/resolve_target_entity`
+  * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
 
 * :doc:`/cookbook/email/index`
@@ -85,9 +86,10 @@
   * :doc:`/cookbook/form/form_collections`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/form/create_form_type_extension`
-  * :doc:`/cookbook/form/use_virtuals_forms`
+  * :doc:`/cookbook/form/inherit_data_option`
   * :doc:`/cookbook/form/unit_testing`
   * :doc:`/cookbook/form/use_empty_data`
+  * :doc:`/cookbook/form/direct_submit`
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
@@ -130,6 +132,10 @@
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
 
+* **Serializer**
+
+  * :doc:`/cookbook/serializer`
+
 * :doc:`/cookbook/service_container/index`
 
   * :doc:`/cookbook/service_container/event_listener`
@@ -141,6 +147,7 @@
   * :doc:`/cookbook/session/proxy_examples`
   * :doc:`/cookbook/session/locale_sticky_session`
   * :doc:`/cookbook/session/sessions_directory`
+  * :doc:`/cookbook/session/php_bridge`
 
 * **symfony1**
 

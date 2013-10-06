@@ -100,8 +100,8 @@ node definition. Node type are available for:
 * scalar
 * boolean
 * integer (new in 2.2)
-* float (new in 2.2)
-* enum (new in 2.1)
+* float
+* enum
 * array
 * variable (no validation)
 
@@ -135,9 +135,6 @@ allowing to validate the value::
 
 Enum nodes
 ~~~~~~~~~~
-
-.. versionadded:: 2.1
-    The enum node is new in Symfony 2.1
 
 Enum nodes provide a constraint to match the given input against a set of
 values::
