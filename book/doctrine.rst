@@ -272,8 +272,8 @@ in a number of different formats including YAML, XML or directly inside the
         class Product
         {
             /**
-             * @ORM\Id
              * @ORM\Column(type="integer")
+             * @ORM\Id
              * @ORM\GeneratedValue(strategy="AUTO")
              */
             protected $id;

@@ -31,7 +31,7 @@ option.
 |             | - `by_reference`_                                                            |
 |             | - `empty_data`_                                                              |
 +-------------+------------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>` (if expanded), ``field`` otherwise |
+| Parent type | :doc:`form </reference/forms/types/form>`                                    |
 +-------------+------------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |
 +-------------+------------------------------------------------------------------------------+
@@ -110,7 +110,7 @@ can be created to supply the choices.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

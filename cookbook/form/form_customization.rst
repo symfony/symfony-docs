@@ -298,6 +298,24 @@ When the ``form.age`` widget is rendered, Symfony will use the ``integer_widget`
 block from the new template and the ``input`` tag will be wrapped in the
 ``div`` element specified in the customized block.
 
+Child Forms
+...........
+
+You can also apply a form theme to a specific child of your form:
+
+.. code-block:: html+jinja
+
+    {% form_theme form.child 'AcmeDemoBundle:Form:fields.html.twig' %}
+
+This is useful when you want to have a custom theme for a nested form that's
+different than the one of your main form. Just specify both your themes:
+
+.. code-block:: html+jinja
+
+    {% form_theme form 'AcmeDemoBundle:Form:fields.html.twig' %}
+
+    {% form_theme form.child 'AcmeDemoBundle:Form:fields_child.html.twig' %}
+
 .. _cookbook-form-php-theming:
 
 Form Theming in PHP
@@ -332,6 +350,13 @@ tell Symfony to use the theme via the ``setTheme`` helper method:
 When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
+
+If you want to apply a theme to a specific child form, pass it to the ``setTheme``
+method:
+
+.. code-block:: php
+
+    <?php $view['form']->setTheme($form['child'], 'AcmeDemoBundle:Form/Child'); ?>
 
 .. _cookbook-form-twig-import-base-blocks:
 
