@@ -299,16 +299,16 @@ block from the new template and the ``input`` tag will be wrapped in the
 ``div`` element specified in the customized block.
 
 Child Forms
-~~~~~~~~~~~
+...........
 
-You can apply a form theme to a specific child of your form:
+You can also apply a form theme to a specific child of your form:
 
 .. code-block:: html+jinja
 
     {% form_theme form.child 'AcmeDemoBundle:Form:fields.html.twig' %}
 
-This is useful when you want to have a custom theme for a nested form different
-than the one of your main form. Just specify both your themes:
+This is useful when you want to have a custom theme for a nested form that's
+different than the one of your main form. Just specify both your themes:
 
 .. code-block:: html+jinja
 
