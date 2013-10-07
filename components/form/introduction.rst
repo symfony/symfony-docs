@@ -17,10 +17,10 @@ be from a normal form post or from an API.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Form);
-* Install it via Composer (``symfony/form`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_).
 
 Configuration
 -------------
@@ -51,7 +51,8 @@ support for very important features:
   messages for submitted data.
 
 The Symfony2 Form component relies on other libraries to solve these problems.
-Most of the time you will use Twig and the Symfony :doc:`HttpFoundation </components/http_foundation/introduction>`,
+Most of the time you will use Twig and the Symfony
+:doc:`HttpFoundation </components/http_foundation/introduction>`,
 Translation and Validator components, but you can replace any of these with
 a different library of your choice.
 
@@ -66,8 +67,9 @@ Request Handling
 ~~~~~~~~~~~~~~~~
 
 To process form data, you'll need to grab information off of the request (typically
-``$_POST`` data) and pass the array of submitted data to :method:`Symfony\\Component\\Form\\Form::bind`.
-The Form component optionally integrates with Symfony's :doc:`HttpFoundation </components/http_foundation/introduction>`
+``$_POST`` data) and pass the array of submitted data to
+:method:`Symfony\\Component\\Form\\Form::bind`. The Form component optionally
+integrates with Symfony's :doc:`HttpFoundation </components/http_foundation/introduction>`
 component to make this even easier.
 
 To integrate the HttpFoundation component, add the
