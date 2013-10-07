@@ -339,7 +339,7 @@ replaced with the same value.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field </reference/forms/types/form>` type.
+These options inherit from the :doc:`form </reference/forms/types/form>` type.
 Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/label.rst.inc

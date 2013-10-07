@@ -137,7 +137,7 @@ error_bubbling
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
