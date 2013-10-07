@@ -397,7 +397,7 @@ Now, try the code in action. Imagine you're inside a controller::
         }
     }
 
-Now, a single row is added to both the ``category`` and product tables. The
+Now, a single row is added to both the ``category`` and ``product`` tables. The
 ``product.category_id`` column for the new product is set to whatever the id is
 of the new category. Propel manages the persistence of this relationship for
 you.
