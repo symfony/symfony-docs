@@ -151,5 +151,3 @@ These options inherit from the :doc:`field </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/virtual.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
-
-.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
