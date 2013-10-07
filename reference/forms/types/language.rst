@@ -71,7 +71,7 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
-These options inherit from the :doc:`date </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

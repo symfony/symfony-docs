@@ -74,7 +74,7 @@ These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-These options inherit from the :doc:`date </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

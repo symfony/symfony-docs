@@ -20,7 +20,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 |             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`field </reference/forms/types/form>`                          |
+| Parent type | :doc:`form </reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
 +-------------+---------------------------------------------------------------------+
@@ -28,7 +28,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 

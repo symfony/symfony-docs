@@ -136,7 +136,7 @@ error_bubbling
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
@@ -151,5 +151,3 @@ These options inherit from the :doc:`field </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
-
-.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
