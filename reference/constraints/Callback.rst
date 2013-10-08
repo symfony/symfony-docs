@@ -114,7 +114,12 @@ those errors should be attributed::
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $context->addViolationAt('firstName', 'This name sounds totally fake!', array(), null);
+                $context->addViolationAt(
+                    'firstName',
+                    'This name sounds totally fake!',
+                    array(),
+                    null
+                );
             }
         }
     }
@@ -123,7 +128,7 @@ Static Callbacks
 ----------------
 
 You can also use the constraint with static methods. Since static methods don't
-have access to the object instance, they receive the object as first argument::
+have access to the object instance, they receive the object as the first argument::
 
     public static function validate($object, ExecutionContextInterface $context)
     {
@@ -132,7 +137,12 @@ have access to the object instance, they receive the object as first argument::
 
         // check if the name is actually a fake name
         if (in_array($object->getFirstName(), $fakeNames)) {
-            $context->addViolationAt('firstName', 'This name sounds totally fake!', array(), null);
+            $context->addViolationAt(
+                'firstName',
+                'This name sounds totally fake!',
+                array(),
+                null
+            );
         }
     }
 
@@ -142,7 +152,7 @@ External Callbacks and Closures
 If you want to execute a static callback method that is not located in the class
 of the validated object, you can configure the constraint to invoke an array
 callable as supported by PHP's :phpfunction:`call_user_func` function. Suppose
-your validation function is `Vendor\Package\Validator::validate()`::
+your validation function is ``Vendor\Package\Validator::validate()``::
 
     namespace Vendor\Package;
 
@@ -156,7 +166,7 @@ your validation function is `Vendor\Package\Validator::validate()`::
         }
     }
 
-You can then use the following configuration to invoke this validator::
+You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
 
@@ -173,7 +183,6 @@ You can then use the following configuration to invoke this validator::
         namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\ExecutionContextInterface;
 
         /**
          * @Assert\Callback({"Vendor\Package\Validator", "validate"})
@@ -212,17 +221,17 @@ You can then use the following configuration to invoke this validator::
             {
                 $metadata->addConstraint(new Assert\Callback(array(
                     'Vendor\Package\Validator',
-                    'validate'
+                    'validate',
                 )));
             }
         }
 
 .. note::
 
-    The Callback constraint does *not* support global callback functions or
-    It is *not* possible to specify a global function or a :term:`service`
-    method as callback. To validate using a service, you should
-    :doc:`create a custom validation constraint</cookbook/validation/custom_constraint>`
+    The Callback constraint does *not* support global callback functions nor
+    is it possible to specify a global function or a :term:`service` method
+    as callback. To validate using a service, you should
+    :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
     and add that new constraint to your class.
 
 When configuring the constraint via PHP, you can also pass a closure to the
@@ -252,20 +261,20 @@ Options
 callback
 ~~~~~~~~
 
-**type**: ``string``, ``array`` or ``Closure`` [:ref:`default option<validation-default-option>`]
+**type**: ``string``, ``array`` or ``Closure`` [:ref:`default option <validation-default-option>`]
 
 The callback option accepts three different formats for specifying the
 callback method:
 
-* A **string** containing the name of a concrete or static method.
+* A **string** containing the name of a concrete or static method;
 
-* An array callable with the format ``array('<Class>', '<method>')``.
+* An array callable with the format ``array('<Class>', '<method>')``;
 
 * A closure.
 
 Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
 instance as only argument.
 
-Static or closure callbacks receive the validated object as first argument
+Static or closure callbacks receive the validated object as the first argument
 and the :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
-instance as second argument.
+instance as the second argument.
