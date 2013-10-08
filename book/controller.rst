@@ -502,7 +502,7 @@ value to each variable.
     :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
     service the ``HttpKernel`` returns a ``Response`` object::
     
-        use Symfony\Component\HttpKernel/HttpKernelInterface;
+        use Symfony\Component\HttpKernel\HttpKernelInterface;
     
         $path = array(
             '_controller' => 'AcmeHelloBundle:Hello:fancy',
