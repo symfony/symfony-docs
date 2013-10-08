@@ -232,7 +232,7 @@ helper:
 
         {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='uglifycss' %}
              <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
+        {% stylesheets %}
 
     .. code-block:: html+php
 
