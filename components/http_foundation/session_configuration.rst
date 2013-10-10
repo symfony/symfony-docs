@@ -249,12 +249,17 @@ using the `Native*SessionHandler` classes, while
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`
 will be used to wrap any custom save handlers, that implement :phpclass:`SessionHandlerInterface`.
 
-Under PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
+From PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
 including `Native*SessionHandler` classes which inherit from :phpclass:`SessionHandler`.
 
 The proxy mechanism allows you to get more deeply involved in session save handler
 classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
+
+.. note::
+
+    Before PHP 5.4, you can only proxy user-land save handlers but not 
+    native PHP save handlers.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration
