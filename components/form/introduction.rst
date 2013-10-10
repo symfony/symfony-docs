@@ -146,14 +146,14 @@ component offers a rich integration.
 
 To use the integration, you'll need the ``TwigBridge``, which provides integration
 between Twig and several Symfony2 components. If you're using Composer, you
-could install the latest 2.1 version by adding the following ``require``
+could install the latest 2.3 version by adding the following ``require``
 line to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/twig-bridge": "2.1.*"
+            "symfony/twig-bridge": "2.3.*"
         }
     }
 
@@ -222,15 +222,15 @@ via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
 ``Translation`` and :doc:`Config </components/config/introduction>` components
-installed. If you're using Composer, you could get the latest 2.1 version
+installed. If you're using Composer, you could get the latest 2.3 version
 of each of these by adding the following to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/translation": "2.1.*",
-            "symfony/config": "2.1.*"
+            "symfony/translation": "2.3.*",
+            "symfony/config": "2.3.*"
         }
     }
 
@@ -274,13 +274,13 @@ array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
 it's installed in your application. If you're using Composer and want to
-install the latest 2.1 version, add this to your ``composer.json``:
+install the latest 2.3 version, add this to your ``composer.json``:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/validator": "2.1.*"
+            "symfony/validator": "2.3.*"
         }
     }
 
@@ -557,7 +557,7 @@ If the request is a POST, process the submitted data (via ``bind``). Then:
     to ``bind``::
 
         if (isset($_POST[$form->getName()])) {
-            $form->bind($_POST[$form->getName())
+            $form->bind($_POST[$form->getName()]);
 
             // ...
         }

@@ -178,9 +178,9 @@ Rename
 :method:`Symfony\\Component\\Filesystem\\Filesystem::rename` is used to rename
 files and directories::
 
-    //rename a file
+    // rename a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
-    //rename a directory
+    // rename a directory
     $fs->rename('/tmp/files', '/path/to/store/files');
 
 symlink

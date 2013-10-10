@@ -9,7 +9,7 @@ cannot only be based on the person (``Token``) who is requesting access, but
 also involve a domain object that access is being requested for. This is where
 the ACL system comes in.
 
-.. sidebar:: Alternatives to ACLS
+.. sidebar:: Alternatives to ACLs
 
     Using ACL's isn't trivial, and for simpler use cases, it may be overkill.
     If your permission logic could be described by just writing some code (e.g.
