@@ -1,15 +1,15 @@
 .. index::
     single: Limit Metadata Writes; Session
 
-Limit session metadata writes
+Limit Session Metadata Writes
 =============================
 
 .. versionadded:: 2.4
     The ability to limit session metadata writes was added in Symfony 2.4.
 
-The default behaviour of PHP session is to persist the session regardless of
+The default behavior of PHP session is to persist the session regardless of
 whether the session data has changed or not. In Symfony, each time the session
-is accessed metadata is recorded (session created/last used) which can be used
+is accessed, metadata is recorded (session created/last used) which can be used
 to determine session age and idle time.
 
 If for performance reasons you wish to limit the frequency at which the session
@@ -53,12 +53,12 @@ than zero:
             ),
         ));
 
-.. info::
+.. note::
 
     PHP default's behavior is to save the session whether it has been changed or
     not. When using ``framework.session.metadata_update_threshold`` Symfony
     will wrap the session handler (configured at
-    ``framework.session.handler_id``) into the WriteCheckSessionHandler, that
+    ``framework.session.handler_id``) into the WriteCheckSessionHandler. This
     will prevent any session write if the session was not modified.
 
 .. caution::
