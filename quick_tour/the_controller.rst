@@ -131,7 +131,7 @@ from any controller::
     $foo = $session->get('foo');
 
     // use a default value if the key doesn't exist
-    $filters = $session->set('filters', array());
+    $filters = $session->get('filters', array());
 
 You can also store small messages that will only be available for the very
 next request::
