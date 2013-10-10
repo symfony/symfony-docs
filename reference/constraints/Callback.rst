@@ -25,7 +25,7 @@ can do anything, including creating and assigning validation errors.
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
-| Options        | - `callback`_                                                          |
+| Options        | - :ref:`callback <callback-option>`                                    |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
 +----------------+------------------------------------------------------------------------+
@@ -257,6 +257,8 @@ constructor of the Callback constraint::
 
 Options
 -------
+
+.. _callback-option:
 
 callback
 ~~~~~~~~
