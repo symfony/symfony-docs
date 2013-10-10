@@ -557,7 +557,7 @@ If the request is a POST, process the submitted data (via ``bind``). Then:
     to ``bind``::
 
         if (isset($_POST[$form->getName()])) {
-            $form->bind($_POST[$form->getName())
+            $form->bind($_POST[$form->getName()]);
 
             // ...
         }
