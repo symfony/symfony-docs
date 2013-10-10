@@ -649,7 +649,7 @@ this:
 
 .. code-block:: text
 
-    $ mysql> select * from acme_users;
+    $ mysql> select * from acme_role;
     +----+-------+------------+
     | id | name  | role       |
     +----+-------+------------+
