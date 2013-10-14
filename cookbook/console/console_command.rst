@@ -71,8 +71,9 @@ Register Commands in the Service Container
    Support for registering commands in the service container was added in
    version 2.4.
 
-You can register commands in the service container using the ``console.command``
-tag:
+Instead of putting your command in the ``Command`` directory and having Symfony
+auto-discover it for you, you can register commands in the service container
+using the ``console.command`` tag:
 
 .. configuration-block::
 
@@ -107,6 +108,12 @@ tag:
             ->register('acme_hello.command.my_command', 'Acme\HelloBundle\Command\MyCommand')
             ->addTag('console.command')
         ;
+
+.. tip::
+
+    Registering your command as a service gives you more control over its
+    location and the services that are injected into it. But, there are no
+    functional advantages, so you don't need register your command as a service.
 
 Getting Services from the Service Container
 -------------------------------------------
