@@ -143,10 +143,11 @@ The ``addListener()`` method takes up to three arguments:
 * A PHP callable that will be notified when an event is thrown that it listens
   to;
 
-* An optional priority integer (higher equals more important) that determines
-  when a listener is triggered versus other listeners (defaults to ``0``). If
-  two listeners have the same priority, they are executed in the order that
-  they were added to the dispatcher.
+* An optional priority integer (higher equals more important, and therefore
+  that the listener will be triggered earlier) that determines when a listener
+  is triggered versus other listeners (defaults to ``0``). If two listeners
+  have the same priority, they are executed in the order that they were added
+  to the dispatcher.
 
 .. note::
 
