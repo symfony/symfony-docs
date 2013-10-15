@@ -113,7 +113,7 @@ using the ``console.command`` tag:
 
     Registering your command as a service gives you more control over its
     location and the services that are injected into it. But, there are no
-    functional advantages, so you don't need register your command as a service.
+    functional advantages, so you don't need to register your command as a service.
 
 Getting Services from the Service Container
 -------------------------------------------
