@@ -203,7 +203,8 @@ level. For example::
    :method:`Symfony\\Component\Console\\Output\\Output::isDebug`
    methods were introduced in version 2.4
 
-.. code-block:: php
+There are also more semantic methods you can use to test for each of the
+verbosity levels::
 
     if ($output->isQuiet()) {
         // ...
