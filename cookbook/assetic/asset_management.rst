@@ -18,11 +18,11 @@ directly:
 
     .. code-block:: html+jinja
 
-        <script src="{{ asset('js/script.js') }}" type="text/javascript" />
+        <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
 
     .. code-block:: php
 
-        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript" />
+        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript"></script>
 
 But *with* Assetic, you can manipulate these assets however you want (or
 load them from anywhere) before serving them. This means you can:
