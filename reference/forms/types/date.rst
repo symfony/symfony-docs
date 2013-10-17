@@ -12,7 +12,7 @@ a string, a timestamp or an array. As long as the `input`_ option is set
 correctly, the field will take care of all of the details.
 
 The field can be rendered as a single text box, three text boxes (month,
-day, and year) or three select boxes (see the `widget_` option).
+day, and year) or three select boxes (see the `widget`_ option).
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
