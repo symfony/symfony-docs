@@ -22,7 +22,7 @@ Your configuration will look like this:
     root:
         path:     /
         defaults:
-            _controller: FrameworkBundle:Redirect:urlRedirect
+            _controller: FrameworkBundle:Redirect:redirect
             path: /app
             permanent: true
 
