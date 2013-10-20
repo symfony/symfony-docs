@@ -152,7 +152,7 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 .. note::
     
     If you are working with a collection of Doctrine entities, it will be helpful
-    to read the documention for the :doc:`/reference/forms/types/collection`
+    to read the documentation for the :doc:`/reference/forms/types/collection`
     as well. In addition, there is a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
     
