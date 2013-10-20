@@ -62,7 +62,7 @@ Basic Usage
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
         
-        use Symfomy\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
   
         class Author
