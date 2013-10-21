@@ -524,14 +524,14 @@ regardless of how your project is developed. To name a few:
 * `Form`_ - A full-featured and flexible framework for creating forms and
   handling form submissions;
 
-* `Validator`_ A system for creating rules about data and then validating
+* `Validator`_ - A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* :doc:`ClassLoader </components/class_loader/introduction>` An autoloading library that allows
+* :doc:`ClassLoader </components/class_loader/introduction>` - An autoloading library that allows
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
-* :doc:`Templating </components/templating/introduction>` A toolkit for rendering
+* :doc:`Templating </components/templating/introduction>` - A toolkit for rendering
   templates, handling template inheritance (i.e. a template is decorated with
   a layout) and performing other common template tasks;
 
