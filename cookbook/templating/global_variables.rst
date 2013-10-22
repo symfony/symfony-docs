@@ -39,7 +39,7 @@ Now, the variable ``ga_tracking`` is available in all Twig templates:
 
 .. code-block:: html+jinja
 
-    <p>The google tracking code is: {{ ga_tracking }}</p>
+    <p>The google tracking code is: {{ ga_tracking|raw }}</p>
 
 It's that easy!
 
