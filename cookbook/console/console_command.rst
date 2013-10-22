@@ -159,7 +159,6 @@ instead of
             $commandTester = new CommandTester($command);
             $commandTester->execute(
                 array(
-                    'command' => $command->getName(),
                     'name'    => 'Fabien',
                     '--yell'  => true,
                 )
@@ -170,6 +169,11 @@ instead of
             // ...
         }
     }
+
+.. versionadded:: 2.4
+    Since Symfony 2.4, the ``CommandTester`` automatically detects the name of
+    the command to execute. Thus, you don't need to pass it via the ``command``
+    argument anymore.
 
 .. note::
 
@@ -200,7 +204,6 @@ you can extend your test from
             $commandTester = new CommandTester($command);
             $commandTester->execute(
                 array(
-                    'command' => $command->getName(),
                     'name'    => 'Fabien',
                     '--yell'  => true,
                 )
