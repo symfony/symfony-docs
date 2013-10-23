@@ -373,10 +373,10 @@ submission (i.e.  ``/login_check``):
 
         # app/config/routing.yml
         login:
-            pattern:   /login
+            path:   /login
             defaults:  { _controller: AcmeSecurityBundle:Security:login }
         login_check:
-            pattern:   /login_check
+            path:   /login_check
 
     .. code-block:: xml
 
@@ -387,11 +387,11 @@ submission (i.e.  ``/login_check``):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login" pattern="/login">
+            <route id="login" path="/login">
                 <default key="_controller">AcmeSecurityBundle:Security:login</default>
             </route>
 
-            <route id="login_check" pattern="/login_check" />
+            <route id="login_check" path="/login_check" />
         </routes>
 
     ..  code-block:: php
