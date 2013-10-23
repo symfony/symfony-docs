@@ -424,6 +424,10 @@ and set a new ``Exception`` object, or do nothing::
             array('X-Status-Code' => 200)
         );
 
+.. seealso::
+
+    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
+
 .. index::
    single: Event Dispatcher
 
@@ -433,10 +437,6 @@ The Event Dispatcher
 The event dispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
 see the :doc:`Event Dispatcher Component Documentation </components/event_dispatcher/introduction>`.
-
-.. seealso::
-
-    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
 .. index::
    single: Profiler
