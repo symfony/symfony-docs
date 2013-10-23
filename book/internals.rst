@@ -592,20 +592,20 @@ the configuration for the development environment:
 
         // load the profiler
         $container->loadFromExtension('framework', array(
-            'profiler' => array('only-exceptions' => false),
+            'profiler' => array('only_exceptions' => false),
         ));
 
         // enable the web profiler
         $container->loadFromExtension('web_profiler', array(
             'toolbar'             => true,
-            'intercept-redirects' => true,
+            'intercept_redirects' => true,
             'verbose'             => true,
         ));
 
-When ``only-exceptions`` is set to ``true``, the profiler only collects data
+When ``only_exceptions`` is set to ``true``, the profiler only collects data
 when an exception is thrown by the application.
 
-When ``intercept-redirects`` is set to ``true``, the web profiler intercepts
+When ``intercept_redirects`` is set to ``true``, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
 
@@ -643,7 +643,7 @@ If you enable the web profiler, you also need to mount the profiler routes:
         );
 
 As the profiler adds some overhead, you might want to enable it only under
-certain circumstances in the production environment. The ``only-exceptions``
+certain circumstances in the production environment. The ``only_exceptions``
 settings limits profiling to 500 pages, but what if you want to get
 information when the client IP comes from a specific address, or for a limited
 portion of the website? You can use a Profiler Matcher, learn more about that
