@@ -25,7 +25,7 @@ Basic Usage
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url:
+                    - Url: ~
 
     .. code-block:: php-annotations
 
