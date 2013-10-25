@@ -99,7 +99,7 @@ Usage sample::
 
     $builder->add('gender', 'entity', array(
         'class' => 'MyBundle:Gender',
-        'property' => 'translations['en'].name',
+        'property' => 'translations["en"].name',
         'query_builder' => function(EntityRepository $er) {
             return $er->createQueryBuilder('g')
                ->join('g.translations', 't')
