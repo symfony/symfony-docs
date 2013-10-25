@@ -55,6 +55,17 @@ as either a ``select`` tag, a set or radio buttons or a series of checkboxes
 If the entity object does not have a ``__toString()`` method the ``property`` option
 is needed.
 
+Using Choices
+~~~~~~~~~~~~~
+
+If you want to limit the entities which are available as choices you can provide 
+them by calling the getter function of an entity:
+
+    $builder->add('users', 'entity', array(
+        'class' => 'AcmeHelloBundle:User',
+        'choices' => $group->getUsers(),
+    ));
+
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -132,15 +143,17 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: ``null``
+**type**:  array || ``\Traversable`` **default**: all entities
+
+If the choices are provided only these will be available. The choices need to 
+be a traversable collection such as the 
+``Doctrine\Common\Collections\ArrayCollection`` containing only entities of the 
+specified class.
 
 choice_list
 ~~~~~~~~~~~
 
-**default**: all entities selected
-
-The choices will default to all entities selected with one of the options that
-are documented above.
+**default**: ``null``
 
 Inherited options
 -----------------
