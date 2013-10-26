@@ -194,6 +194,7 @@ value you guess based on the host. You can do that easily by using a
 Closure as the default value::
 
     use Symfony\Component\OptionsResolver\Options;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     // ...
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -202,7 +203,7 @@ Closure as the default value::
 
         $resolver->setDefaults(array(
             'port' => function (Options $options) {
-                if (in_array($options['host'], array('127.0.0.1', 'localhost')) {
+                if (in_array($options['host'], array('127.0.0.1', 'localhost'))) {
                     return 80;
                 }
 
@@ -300,7 +301,7 @@ need to use the other options for normalizing::
 
         $resolver->setNormalizers(array(
             'host' => function (Options $options, $value) {
-                if (!in_array(substr($value, 0, 7), array('http://', 'https://')) {
+                if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
                     if ($options['ssl']) {
                         $value = 'https://'.$value;
                     } else {

@@ -168,6 +168,9 @@ on other extensions. You need add those extensions to the factory object::
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
 
     class TestedTypeTest extends TypeTestCase
     {

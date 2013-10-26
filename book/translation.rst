@@ -520,15 +520,13 @@ via the ``request`` object::
 
     $request->setLocale('en_US');
 
+.. tip::
+
+    Read :doc:`/cookbook/session/locale_sticky_session` to learn, how to store
+    the user's locale in the session.
+
 .. index::
    single: Translations; Fallback and default locale
-
-It is also possible to store the locale in the session instead of on a per
-request basis. If you do this, each subsequent request will have this locale.
-
-.. code-block:: php
-
-    $this->get('session')->set('_locale', 'en_US');
 
 See the :ref:`book-translation-locale-url` section below about setting the
 locale via routing.
