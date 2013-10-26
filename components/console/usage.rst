@@ -80,6 +80,8 @@ with:
 The verbose flag can optionally take a value between 1 (default) and 3 to
 output even more verbose messages:
 
+.. code-block:: bash
+
     $ php app/console list --verbose=2
     $ php app/console list -vv
     $ php app/console list --verbose=3

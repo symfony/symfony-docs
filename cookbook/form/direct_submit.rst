@@ -86,7 +86,7 @@ method, pass the submitted data directly to
 Passing a Request to Form::submit() (deprecated)
 ------------------------------------------------
 
-.. versionadded::
+.. versionadded:: 2.3
     Before Symfony 2.3, the ``submit`` method was known as ``bind``.
 
 Before Symfony 2.3, the :method:`Symfony\Component\Form\FormInterface::submit`
