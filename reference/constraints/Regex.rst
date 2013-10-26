@@ -211,10 +211,10 @@ specify the html5 compatible pattern in the ``htmlPattern`` option:
         class Author
         {
             /**
-             * @Assert\Regex({
+             * @Assert\Regex(
              *     pattern     = "/^[a-z]+$/i",
              *     htmlPattern = "^[a-zA-Z]+$"
-             * })
+             * )
              */
             protected $name;
         }
