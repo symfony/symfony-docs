@@ -27,8 +27,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Locale);
 * :doc:`Install it via Composer </components/using_components>` (``symfony/locale`` on `Packagist`_).
+* Use the official Git repository (https://github.com/symfony/Locale);
 
 Usage
 -----
