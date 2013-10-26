@@ -5,3 +5,4 @@ Expression Language
     :maxdepth: 2
 
     introduction
+    syntax

@@ -10,14 +10,14 @@ The ExpressionLanguage Component
     (mostly, but not limited to, Booleans).
 
 .. versionadded:: 2.4
-    The ExpressionLanguage Component was new in Symfony 2.4.
+    The ExpressionLanguage component was new in Symfony 2.4.
 
 Installation
 ------------
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/ExpressionLanguage);
+* Use the official Git repository (https://github.com/symfony/expression-language);
 * :doc:`Install it via Composer </components/using_components>` (``symfony/expression-language`` on `Packagist`_).
 
 Usage
@@ -29,7 +29,7 @@ compare them to the expression in an ``if`` statement. A simple example of an
 expression is ``1 + 2``. You can also use more complicated expressions, such
 as ``someArray[3].someMethod('bar')``.
 
-The component provide 2 ways to work with expressions:
+The component provides 2 ways to work with expressions:
 
 * **compile**: the expression is compiled to PHP, so it can be cached and
   evaluated;
@@ -46,96 +46,10 @@ The main class of the component is
 
     echo $language->compile('1 + 2'); // displays (1 + 2)
 
-Supported Literals
-~~~~~~~~~~~~~~~~~~
+Expression Syntax
+-----------------
 
-The component supports:
-
-* **strings** - single and double quotes (e.g. ``'hello'``)
-* **numbers** - e.g. ``103``
-* **arrays** - using twig notation (e.g. ``[1, 2]``)
-* **hashes** - using twig notation (e.g. ``{ foo: 'bar' }``)
-* **booleans** - ``true`` and ``false``
-* **null** - ``null``
-
-Supported Operators
-~~~~~~~~~~~~~~~~~~~
-
-The component comes with a lot of operators:
-
-Arithmetic Operators
-....................
-
-* ``+`` (addition)
-* ``-`` (subtraction)
-* ``*`` (multiplication)
-* ``/`` (division)
-* ``%`` (modulus)
-* ``**`` (pow)
-
-Assignment Operators
-....................
-
-* ``=``
-
-Bitwise Operators
-.................
-
-* ``&`` (and)
-* ``|`` (or)
-* ``^`` (xor)
-
-Comparison Operators
-....................
-
-* ``==`` (equal)
-* ``===`` (identical)
-* ``!=`` (not equal)
-* ``!==`` (not identical)
-* ``<`` (less than)
-* ``>`` (greater than)
-* ``<=`` (less than or equal to)
-* ``>=`` (greater than or equal to)
-* ``=~`` (regex match)
-* ``!~`` (regex does not match)
-
-.. sidebar:: Regex Operator
-
-    The Regex Operators (``=~`` and ``!~``) are coming from Perl. This
-    operator matches if the regular expression on the right side of the
-    operator matches the string on the left. For instance,
-    ``'foobar' =~ '/foo/'`` evaluates to true.
-    ``!~`` is the opposite and matches if the regular expression does *not*
-    match the string.
-
-Logical Operators
-.................
-
-* ``not`` or ``!``
-* ``and`` or ``&&``
-* ``or`` or ``||``
-
-String Operators
-................
-
-* ``~`` (concatenation)
-
-Array Operators
-...............
-
-* ``in`` (contain)
-* ``not in`` (does not contain)
-
-Numeric Operators
-.................
-
-* ``..`` (range)
-
-Ternary Operators
-.................
-
-* ``foo ? 'yes' : 'no'``
-* ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
-* ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
+See ":doc:`/components/expression_language/syntax`" to learn the syntax of the
+ExpressionLanguage component.
 
 .. _Packagist: https://packagist.org/packages/symfony/expression-language

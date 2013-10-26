@@ -60,6 +60,7 @@
 * :doc:`/components/expression_language/index`
 
   * :doc:`/components/expression_language/introduction`
+  * :doc:`/components/expression_language/syntax`
 
 * **Filesystem**
 
