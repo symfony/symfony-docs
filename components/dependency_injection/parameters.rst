@@ -275,7 +275,7 @@ key, and define the type as ``constant``.
 
 .. note::
 
-    This does not works for Yaml configuration. If you're using Yaml, you can
+    This does not work for Yaml configuration. If you're using Yaml, you can
     import an XML file to take advantage of this functionality:
 
     .. configuration-block::
