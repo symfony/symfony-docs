@@ -22,7 +22,7 @@ your controller::
         // ...
     }
 
-The ``logger`` service has different methods for different the logging levels.
+The ``logger`` service has different methods for different logging levels.
 See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
 on which methods are available.
 
