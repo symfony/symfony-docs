@@ -17,7 +17,7 @@ your controller::
     {
         $logger = $this->get('logger');
         $logger->info('I just got the logger');
-        $logger->err('An error occurred');
+        $logger->error('An error occurred');
 
         // ...
     }
