@@ -16,8 +16,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_).
-* Use the official Git repository (https://github.com/symfony/HttpKernel);
+* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_);
+* Use the official Git repository (https://github.com/symfony/HttpKernel).
 
 The Workflow of a Request
 -------------------------

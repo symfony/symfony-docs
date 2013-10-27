@@ -49,8 +49,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_).
-* Use the official Git repository (https://github.com/symfony/EventDispatcher);
+* :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/EventDispatcher).
 
 Usage
 -----
