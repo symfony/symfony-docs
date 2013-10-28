@@ -4,7 +4,7 @@
 How to create a Console Command
 ===============================
 
-The Console page of the Components section (:doc:`/components/console/introduction`) covers
+The Console page of the Components section (:doc:`/components/console/introductcion`) covers
 how to create a Console command. This cookbook article covers the differences
 when creating Console commands within the Symfony2 framework.
 
@@ -173,7 +173,7 @@ instead of
 .. versionadded:: 2.4
     Since Symfony 2.4, the ``CommandTester`` automatically detects the name of
     the command to execute. Thus, you don't need to pass it via the ``command``
-    argument anymore.
+    key anymore.
 
 .. note::
 
