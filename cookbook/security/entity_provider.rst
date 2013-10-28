@@ -642,14 +642,14 @@ Don't forget also to update your database schema:
 
     php app/console doctrine:schema:update --force
 
-This will create the ``acme_role`` table and a ``user_role`` that stores
-the many-to-many relationship between ``acme_user`` and ``acme_role``. If
+This will create the ``acme_roles`` table and a ``user_role`` that stores
+the many-to-many relationship between ``acme_users`` and ``acme_roles``. If
 you had one user linked to one role, your database might look something like
 this:
 
 .. code-block:: text
 
-    $ mysql> select * from acme_role;
+    $ mysql> select * from acme_roles;
     +----+-------+------------+
     | id | name  | role       |
     +----+-------+------------+
