@@ -23,7 +23,7 @@ have a protocol.
 |             | - `error_mapping`_                                                |
 |             | - `mapped`_                                                       |
 +-------------+-------------------------------------------------------------------+
-| Parent type | :doc:`text</reference/forms/types/text>`                          |
+| Parent type | :doc:`text </reference/forms/types/text>`                         |
 +-------------+-------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType` |
 +-------------+-------------------------------------------------------------------+
@@ -43,7 +43,7 @@ the data is submitted to the form.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 

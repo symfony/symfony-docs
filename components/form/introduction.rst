@@ -17,10 +17,10 @@ be from a normal form post or from an API.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
 * Use the official Git repository (https://github.com/symfony/Form);
-* Install it via Composer (``symfony/form`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_).
 
 Configuration
 -------------
@@ -51,7 +51,8 @@ support for very important features:
   messages for submitted data.
 
 The Symfony2 Form component relies on other libraries to solve these problems.
-Most of the time you will use Twig and the Symfony :doc:`HttpFoundation</components/http_foundation/introduction>`,
+Most of the time you will use Twig and the Symfony
+:doc:`HttpFoundation </components/http_foundation/introduction>`,
 Translation and Validator components, but you can replace any of these with
 a different library of your choice.
 
@@ -66,8 +67,9 @@ Request Handling
 ~~~~~~~~~~~~~~~~
 
 To process form data, you'll need to grab information off of the request (typically
-``$_POST`` data) and pass the array of submitted data to :method:`Symfony\\Component\\Form\\Form::bind`.
-The Form component optionally integrates with Symfony's :doc:`HttpFoundation</components/http_foundation/introduction>`
+``$_POST`` data) and pass the array of submitted data to
+:method:`Symfony\\Component\\Form\\Form::bind`. The Form component optionally
+integrates with Symfony's :doc:`HttpFoundation </components/http_foundation/introduction>`
 component to make this even easier.
 
 To integrate the HttpFoundation component, add the
@@ -144,18 +146,18 @@ component offers a rich integration.
 
 To use the integration, you'll need the ``TwigBridge``, which provides integration
 between Twig and several Symfony2 components. If you're using Composer, you
-could install the latest 2.1 version by adding the following ``require``
+could install the latest 2.3 version by adding the following ``require``
 line to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/twig-bridge": "2.1.*"
+            "symfony/twig-bridge": "2.3.*"
         }
     }
 
-The TwigBridge integration provides you with several :doc:`Twig Functions</reference/forms/twig_reference>`
+The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
 that help you render each the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
@@ -193,7 +195,7 @@ The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
 to Twig, which gives you access to the Twig functions for rendering forms.
 To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\TwigRendererEngine`,
-where you define your :ref:`form themes<cookbook-form-customization-form-themes>`
+where you define your :ref:`form themes <cookbook-form-customization-form-themes>`
 (i.e. resources/files that define form HTML markup).
 
 For general details on rendering forms, see :doc:`/cookbook/form/form_customization`.
@@ -219,16 +221,16 @@ with Symfony's ``Translation`` component, or add the 2 Twig filters yourself,
 via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
-``Translation`` and :doc:`Config</components/config/introduction>` components
-installed. If you're using Composer, you could get the latest 2.1 version
+``Translation`` and :doc:`Config </components/config/introduction>` components
+installed. If you're using Composer, you could get the latest 2.3 version
 of each of these by adding the following to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/translation": "2.1.*",
-            "symfony/config": "2.1.*"
+            "symfony/translation": "2.3.*",
+            "symfony/config": "2.3.*"
         }
     }
 
@@ -272,13 +274,13 @@ array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
 it's installed in your application. If you're using Composer and want to
-install the latest 2.1 version, add this to your ``composer.json``:
+install the latest 2.3 version, add this to your ``composer.json``:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/validator": "2.1.*"
+            "symfony/validator": "2.3.*"
         }
     }
 
@@ -404,10 +406,10 @@ is created from the form factory.
 As you can see, creating a form is like writing a recipe: you call ``add``
 for each new field you want to create. The first argument to ``add`` is the
 name of your field, and the second is the field "type". The Form component
-comes with a lot of :doc:`built-in types</reference/forms/types>`.
+comes with a lot of :doc:`built-in types </reference/forms/types>`.
 
-Now that you've built your form, learn how to :ref:`render<component-form-intro-rendering-form>`
-it and :ref:`process the form submission<component-form-intro-handling-submission>`.
+Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
+it and :ref:`process the form submission <component-form-intro-handling-submission>`.
 
 Setting Default Values
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -443,7 +445,7 @@ builder:
 .. tip::
 
     In this example, the default data is an array. Later, when you use the
-    :ref:`data_class<book-forms-data-class>` option to bind data directly
+    :ref:`data_class <book-forms-data-class>` option to bind data directly
     to objects, your default data will be an instance of that object.
 
 .. _component-form-intro-rendering-form:
@@ -555,7 +557,7 @@ If the request is a POST, process the submitted data (via ``bind``). Then:
     to ``bind``::
 
         if (isset($_POST[$form->getName()])) {
-            $form->bind($_POST[$form->getName())
+            $form->bind($_POST[$form->getName()]);
 
             // ...
         }

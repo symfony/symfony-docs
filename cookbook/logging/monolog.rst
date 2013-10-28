@@ -17,12 +17,12 @@ your controller::
     {
         $logger = $this->get('logger');
         $logger->info('I just got the logger');
-        $logger->err('An error occurred');
+        $logger->error('An error occurred');
 
         // ...
     }
 
-The ``logger`` service has different methods for different the logging levels.
+The ``logger`` service has different methods for different logging levels.
 See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
 on which methods are available.
 
@@ -36,7 +36,7 @@ to write the logs (the handlers can be shared).
 .. tip::
 
     When injecting the logger in a service you can
-    :ref:`use a custom channel<dic_tags-monolog>` control which "channel"
+    :ref:`use a custom channel <dic_tags-monolog>` control which "channel"
     the logger will log to.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
@@ -226,7 +226,7 @@ only for a specific handler.
 A processor is simply a callable receiving the record as its first argument.
 
 Processors are configured using the ``monolog.processor`` DIC tag. See the
-:ref:`reference about it<dic_tags-monolog-processor>`.
+:ref:`reference about it <dic_tags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

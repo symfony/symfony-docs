@@ -65,7 +65,7 @@ Synthetic Services
 Synthetic services are services that are injected into the container instead
 of being created by the container.
 
-For example, if you're using the :doc:`HttpKernel</components/http_kernel/introduction>`
+For example, if you're using the :doc:`HttpKernel </components/http_kernel/introduction>`
 component with the DependencyInjection component, then the ``request``
 service is injected in the
 :method:`ContainerAwareHttpKernel::handle() <Symfony\\Component\\HttpKernel\\DependencyInjection\\ContainerAwareHttpKernel::handle>`
@@ -102,7 +102,7 @@ to configure how a service is created by the container. As the service isn't
 created by the container, these options are omitted.
 
 Now, you can inject the class by using
-:method:`Container::set<Symfony\\Component\\DependencyInjection\\Container::set>`::
+:method:`Container::set <Symfony\\Component\\DependencyInjection\\Container::set>`::
 
     // ...
     $container->set('request', new MyRequest(...));

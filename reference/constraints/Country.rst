@@ -4,7 +4,7 @@ Country
 Validates that a value is a valid two-letter country code.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -24,7 +24,7 @@ Basic Usage
         Acme\UserBundle\Entity\User:
             properties:
                 country:
-                    - Country:
+                    - Country: ~
 
     .. code-block:: php-annotations
 

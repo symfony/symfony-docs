@@ -9,6 +9,17 @@ cannot only be based on the person (``Token``) who is requesting access, but
 also involve a domain object that access is being requested for. This is where
 the ACL system comes in.
 
+.. sidebar:: Alternatives to ACLs
+
+    Using ACL's isn't trivial, and for simpler use cases, it may be overkill.
+    If your permission logic could be described by just writing some code (e.g.
+    to check if a Blog is owned by the current User), then consider using
+    :doc:`voters </cookbook/security/voters>`. A voter is passed the object
+    being voted on, which you can use to make complex decisions and effectively
+    implement your own ACL. Enforcing authorization (e.g. the ``isGranted``
+    part) will look similar to what you see in this entry, but your voter
+    class will handle the logic behind the scenes, instead of the ACL system.
+
 Imagine you are designing a blog system where your users can comment on your
 posts. Now, you want a user to be able to edit his own comments, but not those
 of other users; besides, you yourself want to be able to edit all comments. In

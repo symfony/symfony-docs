@@ -8,7 +8,7 @@ How to Register Event Listeners and Subscribers
 
 Doctrine packages a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
-:doc:`services</book/service_container>` and tell Doctrine to notify those
+:doc:`services </book/service_container>` and tell Doctrine to notify those
 objects whenever a certain action (e.g. ``prePersist``) happens within Doctrine.
 This could be useful, for example, to create an independent search index
 whenever an object in your database is saved.
@@ -23,7 +23,7 @@ Configuring the Listener/Subscriber
 -----------------------------------
 
 To register a service to act as an event listener or subscriber you just have
-to :ref:`tag<book-service-container-tags>` it with the appropriate name. Depending
+to :ref:`tag <book-service-container-tags>` it with the appropriate name. Depending
 on your use-case, you can hook a listener into every DBAL connection and ORM
 entity manager or just into one specific DBAL connection and all the entity
 managers that use this connection.

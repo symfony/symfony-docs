@@ -17,7 +17,7 @@ The hidden type represents a hidden input field.
 |             | - `mapped`_                                                          |
 |             | - `error_mapping`_                                                   |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/form>`                            |
+| Parent type | :doc:`form </reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
 +-------------+----------------------------------------------------------------------+
@@ -42,7 +42,7 @@ Pass errors to the root form, otherwise they will not be visible.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

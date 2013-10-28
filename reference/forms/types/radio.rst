@@ -9,8 +9,8 @@ be set to the specified value. Radio buttons cannot be unchecked - the value onl
 changes when another radio button with the same name gets checked.
 
 The ``radio`` type isn't usually used directly. More commonly it's used
-internally by other types such as :doc:`choice</reference/forms/types/choice>`.
-If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/checkbox>`.
+internally by other types such as :doc:`choice </reference/forms/types/choice>`.
+If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/checkbox>`.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
@@ -25,7 +25,7 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 |             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/form>`                           |
+| Parent type | :doc:`form </reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
@@ -44,7 +44,7 @@ not affect the value that's set on your object.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

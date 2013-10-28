@@ -50,10 +50,7 @@ The advantages of doing this will become more obvious as you continue::
         $this->options = $resolver->resolve($options);
     }
 
-The ``$options`` property is an instance of
-:class:`Symfony\\Component\\OptionsResolver\\Options`, which implements
-:phpclass:`ArrayAccess`, :phpclass:`Iterator` and :phpclass:`Countable`. That
-means you can handle it just like a normal array::
+The options property now is a well defined array with all resolved options readily available::
 
     // ...
     public function getHost()
@@ -75,8 +72,6 @@ Now, try to actually use the class::
         'host'     => 'smtp.example.org',
         'password' => 'pa$$word',
     ));
-
-    echo $mailer->getPassword();
 
 Right now, you'll receive a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`,
@@ -199,6 +194,7 @@ value you guess based on the host. You can do that easily by using a
 Closure as the default value::
 
     use Symfony\Component\OptionsResolver\Options;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     // ...
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -207,7 +203,7 @@ Closure as the default value::
 
         $resolver->setDefaults(array(
             'port' => function (Options $options) {
-                if (in_array($options['host'], array('127.0.0.1', 'localhost')) {
+                if (in_array($options['host'], array('127.0.0.1', 'localhost'))) {
                     return 80;
                 }
 
@@ -305,7 +301,7 @@ need to use the other options for normalizing::
 
         $resolver->setNormalizers(array(
             'host' => function (Options $options, $value) {
-                if (!in_array(substr($value, 0, 7), array('http://', 'https://')) {
+                if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
                     if ($options['ssl']) {
                         $value = 'https://'.$value;
                     } else {

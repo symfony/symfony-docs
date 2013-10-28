@@ -4,8 +4,8 @@
 How to Use Assetic for Asset Management
 =======================================
 
-Assetic combines two major ideas: :ref:`assets<cookbook-assetic-assets>` and
-:ref:`filters<cookbook-assetic-filters>`. The assets are files such as CSS,
+Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
+:ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
 these files before they are served to the browser. This allows a separation
 between the asset files stored in the application and the files actually presented
@@ -18,11 +18,11 @@ directly:
 
     .. code-block:: html+jinja
 
-        <script src="{{ asset('js/script.js') }}" type="text/javascript" />
+        <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
 
     .. code-block:: php
 
-        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript" />
+        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript"></script>
 
 But *with* Assetic, you can manipulate these assets however you want (or
 load them from anywhere) before serving them. This means you can:
@@ -43,8 +43,8 @@ Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.
 
-You can use Assetic to process both :ref:`CSS stylesheets<cookbook-assetic-including-css>`
-and :ref:`JavaScript files<cookbook-assetic-including-javascript>`. The philosophy
+You can use Assetic to process both :ref:`CSS stylesheets <cookbook-assetic-including-css>`
+and :ref:`JavaScript files <cookbook-assetic-including-javascript>`. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.
 
 .. _cookbook-assetic-including-javascript:
@@ -117,7 +117,7 @@ inside a ``stylesheets`` block:
 
 But because Assetic changes the paths to your assets, this *will* break any
 background images (or other paths) that uses relative paths, unless you use
-the :ref:`cssrewrite<cookbook-assetic-cssrewrite>` filter.
+the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
 
 .. note::
 

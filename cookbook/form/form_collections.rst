@@ -112,7 +112,7 @@ goal is to allow the tags of a ``Task`` to be modified right inside the task
 form itself, create a form for the ``Task`` class.
 
 Notice that you embed a collection of ``TagType`` forms using the
-:doc:`collection</reference/forms/types/collection>` field type::
+:doc:`collection </reference/forms/types/collection>` field type::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
     namespace Acme\TaskBundle\Form\Type;
@@ -451,7 +451,7 @@ Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false`
 
 With these two changes, when the form is submitted, each new ``Tag`` object
 is added to the ``Task`` class by calling the ``addTag`` method. Before this
-change, they were added internally by the form by calling ``$task->getTags()->add($task)``.
+change, they were added internally by the form by calling ``$task->getTags()->add($tag)``.
 That was just fine, but forcing the use of the "adder" method makes handling
 these new ``Tag`` objects easier (especially if you're using Doctrine, which
 we talk about next!).

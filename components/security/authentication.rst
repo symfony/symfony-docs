@@ -190,8 +190,19 @@ Each encoder should implement :class:`Symfony\\Component\\Security\\Core\\Encode
 or be an array with a ``class`` and an ``arguments`` key, which allows the
 encoder factory to construct the encoder only when it is needed.
 
-Password Encoders
-~~~~~~~~~~~~~~~~~
+Creating a Custom Password Encoder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are many built-in password encoders. But if you need to create your
+own, it just needs to follow these rules:
+
+#. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
+
+#. ``$this->checkPasswordLength($raw);`` must be the first code executed in
+   ``encodePassword()`` and ``isPasswordValid()`` (see `CVE-2013-5750`_).
+
+Using Password Encoders
+~~~~~~~~~~~~~~~~~~~~~~~
 
 When the :method:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactory::getEncoder`
 method of the password encoder factory is called with the user object as
@@ -213,3 +224,5 @@ which should be used to encode this user's password::
         $user->getPassword(),
         $password,
         $user->getSalt());
+
+.. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form

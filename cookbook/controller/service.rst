@@ -133,7 +133,7 @@ the route ``_controller`` value:
 
     You can also use annotations to configure routing using a controller
     defined as a service. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     for details.
 
 Alternatives to Base Controller Methods
@@ -180,13 +180,14 @@ service and use it directly::
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
     {
         private $templating;
 
-        public function __construct($templating)
+        public function __construct(EngineInterface $templating)
         {
             $this->templating = $templating;
         }

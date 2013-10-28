@@ -298,6 +298,24 @@ When the ``form.age`` widget is rendered, Symfony will use the ``integer_widget`
 block from the new template and the ``input`` tag will be wrapped in the
 ``div`` element specified in the customized block.
 
+Child Forms
+...........
+
+You can also apply a form theme to a specific child of your form:
+
+.. code-block:: html+jinja
+
+    {% form_theme form.child 'AcmeDemoBundle:Form:fields.html.twig' %}
+
+This is useful when you want to have a custom theme for a nested form that's
+different than the one of your main form. Just specify both your themes:
+
+.. code-block:: html+jinja
+
+    {% form_theme form 'AcmeDemoBundle:Form:fields.html.twig' %}
+
+    {% form_theme form.child 'AcmeDemoBundle:Form:fields_child.html.twig' %}
+
 .. _cookbook-form-php-theming:
 
 Form Theming in PHP
@@ -332,6 +350,13 @@ tell Symfony to use the theme via the ``setTheme`` helper method:
 When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
+
+If you want to apply a theme to a specific child form, pass it to the ``setTheme``
+method:
+
+.. code-block:: php
+
+    <?php $view['form']->setTheme($form['child'], 'AcmeDemoBundle:Form/Child'); ?>
 
 .. _cookbook-form-twig-import-base-blocks:
 
@@ -668,7 +693,7 @@ Other Common Customizations
 So far, this recipe has shown you several different ways to customize a single
 piece of how a form is rendered. The key is to customize a specific fragment that
 corresponds to the portion of the form you want to control (see
-:ref:`naming form blocks<cookbook-form-customization-sidebar>`).
+:ref:`naming form blocks <cookbook-form-customization-sidebar>`).
 
 In the next sections, you'll see how you can make several common form customizations.
 To apply these customizations, use one of the methods described in the
@@ -681,7 +706,7 @@ Customizing Error Output
    The form component only handles *how* the validation errors are rendered,
    and not the actual validation error messages. The error messages themselves
    are determined by the validation constraints you apply to your objects.
-   For more information, see the chapter on :doc:`validation</book/validation>`.
+   For more information, see the chapter on :doc:`validation </book/validation>`.
 
 There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered

@@ -156,7 +156,7 @@ Adding custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions</cookbook/form/create_form_type_extension>`. One of the
+:doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
@@ -168,6 +168,9 @@ on other extensions. You need add those extensions to the factory object::
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -176,6 +179,7 @@ on other extensions. You need add those extensions to the factory object::
             parent::setUp();
 
             $this->factory = Forms::createFormFactoryBuilder()
+                ->addExtensions($this->getExtensions())
                 ->addTypeExtension(
                     new FormTypeValidatorExtension(
                         $this->getMock('Symfony\Component\Validator\ValidatorInterface')

@@ -7,8 +7,8 @@ Twig Template Form Function and Variable Reference
 When working with forms in a template, there are two powerful things at your
 disposal:
 
-* :ref:`Functions<reference-form-twig-functions>` for rendering each part of a form
-* :ref:`Variables<twig-reference-form-variables>` for getting *any* information about any field
+* :ref:`Functions <reference-form-twig-functions>` for rendering each part of a form
+* :ref:`Variables <twig-reference-form-variables>` for getting *any* information about any field
 
 You'll use functions often to render your fields. Variables, on the other
 hand, are less commonly-used, but infinitely powerful since you can access
@@ -295,6 +295,9 @@ object:
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
+.. versionadded:: 2.4
+    The ``submitted`` variable was added in Symfony 2.4.
+
 +-----------------+-----------------------------------------------------------------------------------------+
 | Variable        | Usage                                                                                   |
 +=================+=========================================================================================+
@@ -309,6 +312,8 @@ object:
 |                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
 |                 | since this only returns "global" errors: some individual fields may have errors         |
 |                 | Instead, use the ``valid`` option                                                       |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``submitted``   | Returns ``true`` or ``false`` depending on whether the whole form is submitted          |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``valid``       | Returns ``true`` or ``false`` depending on whether the whole form is valid              |
 +-----------------+-----------------------------------------------------------------------------------------+

@@ -21,7 +21,7 @@ Installing a Symfony2 Distribution
 
     First, check that you have installed and configured a Web server (such
     as Apache) with PHP 5.3.8 or higher. For more information on Symfony2
-    requirements, see the :doc:`requirements reference</reference/requirements>`.
+    requirements, see the :doc:`requirements reference </reference/requirements>`.
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -229,24 +229,24 @@ If there are any issues, correct them now before moving on.
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
     and if you get an error - try the next method. This uses a command to
-    try to determine your web server user and set is as ``APACHEUSER``:
+    try to determine your web server user and set it as ``APACHEUSER``:
 
     .. code-block:: bash
 
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
-		$ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-		$ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+        $ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 
-    **2. Using Acl on a system that does not support chmod +a**
+    **2. Using ACL on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
     and install setfacl before using it (as is the case with Ubuntu). This
-    uses a command to try to determine your web server user and set is as
+    uses a command to try to determine your web server user and set it as
     ``APACHEUSER``:
 
     .. code-block:: bash
@@ -308,7 +308,7 @@ If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 
-Be sure to also check out the :doc:`Cookbook</cookbook/index>`, which contains
+Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
 .. note::

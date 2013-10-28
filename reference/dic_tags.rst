@@ -29,6 +29,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.templating.twig`_        | Remove this service if twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `console.command`_                | Add a command                                                             |
++-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `doctrine.event_listener`_        | Add a Doctrine event listener                                             |
@@ -241,6 +243,18 @@ assetic.templating.twig
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain twig.
 
+console.command
+---------------
+
+.. versionadded:: 2.4
+   Support for registering commands in the service container was added in
+   version 2.4.
+
+**Purpose**: Add a command to the application
+
+For details on registering your own commands in the service container, read
+:ref:`the cookbook article<cookbook-console-dic>`.
+
 data_collector
 --------------
 
@@ -337,7 +351,7 @@ form.type_guesser
 
 **Purpose**: Add your own logic for "form type guessing"
 
-This tag allows you to add your own logic to the :ref:`Form Guessing<book-forms-field-guessing>`
+This tag allows you to add your own logic to the :ref:`Form Guessing <book-forms-field-guessing>`
 process. By default, form guessing is done by "guessers" based on the validation
 metadata and Doctrine metadata (if you're using Doctrine).
 
@@ -648,11 +662,6 @@ channel when injecting the logger in a service.
         $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(new Reference('logger'));
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->register('my_service', $definition);
-
-.. note::
-
-    This works only when the logger service is a constructor argument,
-    not when it is injected through a setter.
 
 .. _dic_tags-monolog-processor:
 

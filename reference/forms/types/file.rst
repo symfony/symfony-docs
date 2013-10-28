@@ -17,7 +17,7 @@ The ``file`` type represents a file input in your form.
 |             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form</reference/forms/types/form>`                            |
+| Parent type | :doc:`form </reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
@@ -79,7 +79,7 @@ how to manage a file upload associated with a Doctrine entity.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

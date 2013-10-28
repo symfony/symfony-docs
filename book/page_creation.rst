@@ -52,7 +52,7 @@ front controller that can be used with any environment.)
 When the front controller initializes the kernel, it provides two parameters:
 the environment, and also whether the kernel should run in debug mode.
 To make your application respond faster, Symfony2 maintains a cache under the
-``app/cache/`` directory. When in debug mode is enabled (such as ``app_dev.php``
+``app/cache/`` directory. When debug mode is enabled (such as ``app_dev.php``
 does by default), this cache is flushed automatically whenever you make changes
 to any code or configuration. When running in debug mode, Symfony2 runs
 slower, but your changes are reflected without having to manually clear the
@@ -286,7 +286,7 @@ application should greet you:
 
 .. tip::
 
-    You can also view your app in the "prod" :ref:`environment<environments-summary>`
+    You can also view your app in the "prod" :ref:`environment <environments-summary>`
     by visiting:
 
     .. code-block:: text
@@ -600,7 +600,7 @@ in your application and to optimize them the way you want.
 .. note::
 
    While you'll learn the basics here, an entire cookbook entry is devoted
-   to the organization and best practices of :doc:`bundles</cookbook/bundles/best_practices>`.
+   to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
 a single feature. You might create a ``BlogBundle``, a ``ForumBundle`` or
@@ -674,7 +674,7 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions<bundles-naming-conventions>`.
+   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions <bundles-naming-conventions>`.
    You could also choose to shorten the name of the bundle to simply ``TestBundle``
    by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
 
@@ -879,9 +879,9 @@ The extension alias (configuration key) can also be used:
 
 .. note::
 
-    See the cookbook article: :doc:`How to expose a Semantic Configuration for
-    a Bundle</cookbook/bundles/extension>` for information on adding
-    configuration for your own bundle.
+    See the cookbook article:
+    :doc:`How to expose a Semantic Configuration for a Bundle </cookbook/bundles/extension>`
+    for information on adding configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction
@@ -938,7 +938,7 @@ cached files and allow them to rebuild:
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing chapter</book/testing>`
+    be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
 
 .. index::

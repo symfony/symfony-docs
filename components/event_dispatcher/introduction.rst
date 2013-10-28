@@ -94,7 +94,7 @@ Event Names and Event Objects
 When the dispatcher notifies listeners, it passes an actual ``Event`` object
 to those listeners. The base ``Event`` class is very simple: it contains a
 method for stopping :ref:`event
-propagation<event_dispatcher-event-propagation>`, but not much else.
+propagation <event_dispatcher-event-propagation>`, but not much else.
 
 Often times, data about a specific event needs to be passed along with the
 ``Event`` object so that the listeners have needed information. In the case of
@@ -143,10 +143,11 @@ The ``addListener()`` method takes up to three arguments:
 * A PHP callable that will be notified when an event is thrown that it listens
   to;
 
-* An optional priority integer (higher equals more important) that determines
-  when a listener is triggered versus other listeners (defaults to ``0``). If
-  two listeners have the same priority, they are executed in the order that
-  they were added to the dispatcher.
+* An optional priority integer (higher equals more important, and therefore
+  that the listener will be triggered earlier) that determines when a listener
+  is triggered versus other listeners (defaults to ``0``). If two listeners
+  have the same priority, they are executed in the order that they were added
+  to the dispatcher.
 
 .. note::
 
@@ -532,7 +533,7 @@ can be the way to go, especially for optional dependencies.
 Dispatcher Shortcuts
 ~~~~~~~~~~~~~~~~~~~~
 
-The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
+The :method:`EventDispatcher::dispatch <Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
 method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
 object. This allows for various shortcuts. For example if one does not need
 a custom event object, one can simply rely on a plain

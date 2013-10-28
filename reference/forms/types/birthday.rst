@@ -4,13 +4,13 @@
 birthday Field Type
 ===================
 
-A :doc:`date</reference/forms/types/date>` field that specializes in handling
+A :doc:`date </reference/forms/types/date>` field that specializes in handling
 birthdate data.
 
 Can be rendered as a single text box, three text boxes (month, day, and year),
 or three select boxes.
 
-This type is essentially the same as the :doc:`date</reference/forms/types/date>`
+This type is essentially the same as the :doc:`date </reference/forms/types/date>`
 type, but with a more appropriate default for the `years`_ option. The `years`_
 option defaults to 120 years ago to the current year.
 
@@ -37,7 +37,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `mapped`_                                                                   |
 |                      | - `inherit_data`_                                                             |
 +----------------------+-------------------------------------------------------------------------------+
-| Parent type          | :doc:`date</reference/forms/types/date>`                                      |
+| Parent type          | :doc:`date </reference/forms/types/date>`                                     |
 +----------------------+-------------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`        |
 +----------------------+-------------------------------------------------------------------------------+
@@ -56,7 +56,7 @@ relevant when the ``widget`` option is set to ``choice``.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`date</reference/forms/types/date>` type:
+These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
     
@@ -74,7 +74,7 @@ These options inherit from the :doc:`date</reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

@@ -272,8 +272,8 @@ in a number of different formats including YAML, XML or directly inside the
         class Product
         {
             /**
-             * @ORM\Id
              * @ORM\Column(type="integer")
+             * @ORM\Id
              * @ORM\GeneratedValue(strategy="AUTO")
              */
             protected $id;
@@ -473,7 +473,7 @@ in your application. To do this, run:
     new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
-    :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to
+    :doc:`migrations </bundles/DoctrineMigrationsBundle/index>`, which allow you to
     generate these SQL statements and store them in migration classes that
     can be run systematically on your production server in order to track
     and migrate your database schema safely and reliably.
@@ -581,7 +581,7 @@ on its ``id`` value::
 
     You can achieve the equivalent of this without writing any code by using
     the ``@ParamConverter`` shortcut. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/converters>`
     for more details.
 
 When you query for a particular type of object, you always use what's known
@@ -758,7 +758,7 @@ for just one object, you can use the ``getSingleResult()`` method instead::
         // ...
 
 The DQL syntax is incredibly powerful, allowing you to easily join between
-entities (the topic of :ref:`relations<book-doctrine-relations>` will be
+entities (the topic of :ref:`relations <book-doctrine-relations>` will be
 covered later), group, etc. For more information, see the official Doctrine
 `Doctrine Query Language`_ documentation.
 
@@ -1112,7 +1112,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</bundles/DoctrineMigrationsBundle/index>`.
+    :doc:`Doctrine migrations </bundles/DoctrineMigrationsBundle/index>`.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1300,7 +1300,7 @@ Configuration
 
 Doctrine is highly configurable, though you probably won't ever need to worry
 about most of its options. To find out more about configuring Doctrine, see
-the Doctrine section of the :doc:`reference manual</reference/configuration/doctrine>`.
+the Doctrine section of the :doc:`reference manual </reference/configuration/doctrine>`.
 
 Lifecycle Callbacks
 -------------------
@@ -1412,7 +1412,7 @@ These include thing such as *Sluggable*, *Timestampable*, *Loggable*, *Translata
 and *Tree*.
 
 For more information on how to find and use these extensions, see the cookbook
-article about :doc:`using common Doctrine extensions</cookbook/doctrine/common_extensions>`.
+article about :doc:`using common Doctrine extensions </cookbook/doctrine/common_extensions>`.
 
 .. _book-doctrine-field-types:
 
@@ -1591,7 +1591,7 @@ that allow you to take different actions as objects go through their persistence
 lifecycle.
 
 For more information about Doctrine, see the *Doctrine* section of the
-:doc:`cookbook</cookbook/index>`, which includes the following articles:
+:doc:`cookbook </cookbook/index>`, which includes the following articles:
 
 * :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`

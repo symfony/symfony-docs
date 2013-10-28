@@ -73,8 +73,8 @@ original method, and change its functionality::
     the controller using the standard ``FOSUserBundle:Registration:register``
     syntax in routes and templates. This is the best practice.
 
-Overriding Resources: Templates, Routing, Validation, etc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Overriding Resources: Templates, Routing, etc
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most resources can also be overridden, simply by creating a file in the same
 location as your parent bundle.
@@ -86,7 +86,7 @@ you can create your own file in the same location of ``AcmeUserBundle``.
 Symfony will ignore the file that lives inside the ``FOSUserBundle`` entirely,
 and use your file instead.
 
-The same goes for routing files, validation configuration and other resources.
+The same goes for routing files and some other resources.
 
 .. note::
 
@@ -97,8 +97,9 @@ The same goes for routing files, validation configuration and other resources.
 
 .. caution::
 
-   Translation files do not work in the same way as described above. Read
-   :ref:`override-translations` if you want to learn how to override
-   translations.
+   Translation and validation files do not work in the same way as described
+   above. Read ":ref:`override-translations`" if you want to learn how to
+   override translations and see ":ref:`override-validation`" for tricks to
+   override the validation.
 
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle

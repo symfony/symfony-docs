@@ -115,7 +115,7 @@ is new (e.g. hasn't been persisted to the database). Based on that, the subscrib
 might look like the following:
 
 .. versionadded:: 2.2
-    The ability to pass a string into :method:`FormInterface::add<Symfony\\Component\\Form\\FormInterface::add>`
+    The ability to pass a string into :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
     was added in Symfony 2.2.
 
 .. code-block:: php
@@ -277,11 +277,14 @@ and fill in the listener logic::
 
                     $formOptions = array(
                         'class' => 'Acme\DemoBundle\Entity\User',
-                        'multiple' => false,
-                        'expanded' => false,
                         'property' => 'fullName',
                         'query_builder' => function(EntityRepository $er) use ($user) {
-                            // build a custom query, or call a method on your repository (even better!)
+                            // build a custom query
+                            // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
+
+                            // or call a method on your repository that returns the query builder
+                            // the $er is an instance of your UserRepository
+                            // return $er->createOrderByFullNameQueryBuilder();
                         },
                     );
 
@@ -294,6 +297,11 @@ and fill in the listener logic::
 
         // ...
     }
+
+.. note::
+
+    The ``multiple`` and ``expanded`` form options will default to false
+    because the type of the friend field is ``entity``.
 
 Using the Form
 ~~~~~~~~~~~~~~
@@ -462,12 +470,11 @@ On a form, we can usually listen to the following events:
     Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
 .. versionadded:: 2.2.6
-
     The behavior of the ``POST_SUBMIT`` event changed slightly in 2.2.6, which the
     below example uses.
 
 The key is to add a ``POST_SUBMIT`` listener to the field that your new field
-depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport`),
+depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),
 and add new children to the parent form, the Form component will detect the
 new field automatically and map it to the submitted client data.
 
@@ -477,8 +484,8 @@ The type would now look like::
     namespace Acme\DemoBundle\Form\Type;
 
     // ...
-    Acme\DemoBundle\Entity\Sport;
-    Symfony\Component\Form\FormInterface;
+    use Acme\DemoBundle\Entity\Sport;
+    use Symfony\Component\Form\FormInterface;
 
     class SportMeetupType extends AbstractType
     {
@@ -489,20 +496,18 @@ The type would now look like::
             ;
 
             $formModifier = function(FormInterface $form, Sport $sport) {
-                $positions = $data->getSport()->getAvailablePositions();
+                $positions = $sport->getAvailablePositions();
 
                 $form->add('position', 'entity', array('choices' => $positions));
-            }
+            };
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) {
-                    $form = $event->getForm();
-
+                function(FormEvent $event) use ($formModifier) {
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
-                    $formModifier($event->getForm(), $sport);
+                    $formModifier($event->getForm(), $data->getSport());
                 }
             );
 
@@ -510,10 +515,8 @@ The type would now look like::
                 FormEvents::POST_SUBMIT,
                 function(FormEvent $event) use ($formModifier) {
                     // It's important here to fetch $event->getForm()->getData(), as
-                    // $event->getData() will get you the client data (this is, the ID)
+                    // $event->getData() will get you the client data (that is, the ID)
                     $sport = $event->getForm()->getData();
-
-                    $positions = $sport->getAvailablePositions();
 
                     // since we've added the listener to the child, we'll have to pass on
                     // the parent to the callback functions!

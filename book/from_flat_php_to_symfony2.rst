@@ -582,7 +582,7 @@ them for you. Here's the same sample application, now built in Symfony2::
         }
     }
 
-The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library</book/doctrine>`
+The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
@@ -667,7 +667,7 @@ controller method is responsible for returning the final ``Response`` object.
 There's really not much else to it.
 
 For a visual representation of how Symfony2 handles each request, see the
-:ref:`request flow diagram<request-flow-figure>`.
+:ref:`request flow diagram <request-flow-figure>`.
 
 Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -681,8 +681,8 @@ migrating the blog from flat PHP to Symfony2 has improved life:
   allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
-  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`;
+  to develop or maintain low-level utilities** such as :ref:`autoloading <autoloading-introduction-sidebar>`,
+  :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
 
 * Symfony2 gives you **access to open source tools** such as Doctrine and the
   Templating, Security, Form, Validation and Translation components (to name
@@ -694,7 +694,7 @@ migrating the blog from flat PHP to Symfony2 has improved life:
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony2's internal HTTP cache** or
   more powerful tools such as `Varnish`_. This is covered in a later chapter
-  all about :doc:`caching</book/http_cache>`.
+  all about :doc:`caching </book/http_cache>`.
 
 And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
@@ -745,7 +745,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 
 Twig is well-supported in Symfony2. And while PHP templates will always
 be supported in Symfony2, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter</book/templating>`.
+be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------
