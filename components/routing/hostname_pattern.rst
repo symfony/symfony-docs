@@ -81,7 +81,7 @@ dependency injection container parameter.
             host:     m.{domain}
             defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
             requirements:
-                domain: %domain%
+                domain: "%domain%"
 
         homepage:
             path:  /
@@ -90,7 +90,6 @@ dependency injection container parameter.
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
@@ -125,10 +124,10 @@ dependency injection container parameter.
 
 .. _component-routing-host-imported:
 
-Adding a Host Regex to Imported Routes
---------------------------------------------
+Using Host Matching of Imported Routes
+--------------------------------------
 
-You can set a host regex on imported routes:
+You can also set the host option on imported routes:
 
 .. configuration-block::
 
