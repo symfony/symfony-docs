@@ -104,7 +104,7 @@ Deserializing an Object
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Let's see now how to do the exactly the opposite. This time, the information
-of the `People` class would be encoded in XML format::
+of the ``Person`` class would be encoded in XML format::
 
     $data = <<<EOF
     <person>
