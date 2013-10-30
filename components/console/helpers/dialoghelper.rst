@@ -123,8 +123,8 @@ in the last argument. Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as he provides an invalid answer and will only
 be able to proceed if her input is valid.
 
-Hiding the User's Response
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Validating a hidden Response
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
     The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
