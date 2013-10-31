@@ -370,6 +370,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progresshelper`: shows a progress bar
+* :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 
 Testing Commands
 ----------------
