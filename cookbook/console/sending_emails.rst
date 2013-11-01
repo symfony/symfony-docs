@@ -102,7 +102,7 @@ console command::
 
     $message = new \Swift_Message();
     
-    // prepare the message...
+    // ... prepare the message
     
     $container = $this->getContainer();
     $mailer = $container->get('mailer');
