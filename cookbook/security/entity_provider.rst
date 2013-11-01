@@ -83,7 +83,7 @@ focus on the most important methods that come from the
         private $salt;
 
         /**
-         * @ORM\Column(type="string", length=40)
+         * @ORM\Column(type="string", length=64)
          */
         private $password;
 
