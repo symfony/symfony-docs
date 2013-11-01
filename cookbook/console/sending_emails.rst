@@ -100,8 +100,16 @@ commands, emails are not sent automatically. You must take care of flushing
 the queue yourself. Use the following code to send emails inside your
 console command::
 
+    $message = new \Swift_Message();
+    
+    // prepare the message...
+    
     $container = $this->getContainer();
     $mailer = $container->get('mailer');
+    
+    $mailer->send($message);
+    
+    // now manually flush the queue
     $spool = $mailer->getTransport()->getSpool();
     $transport = $container->get('swiftmailer.transport.real');
 
