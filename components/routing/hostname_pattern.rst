@@ -72,7 +72,7 @@ you can use placeholders in your hostname:
 
         projects_homepage:
             path:     /
-            host:     {project_name}.example.com
+            host:     "{project_name}.example.com"
             defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
 
         homepage:
@@ -124,7 +124,7 @@ instance, if you want to match both ``m.example.com`` and
 
         mobile_homepage:
             path:     /
-            host:     {subdomain}.example.com
+            host:     "{subdomain}.example.com"
             defaults: 
                 _controller: AcmeDemoBundle:Main:mobileHomepage
                 subdomain: m
@@ -193,7 +193,7 @@ instance, if you want to match both ``m.example.com`` and
 
             mobile_homepage:
                 path:     /
-                host:     m.{domain}
+                host:     "m.{domain}"
                 defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
                 requirements:
                     domain: "%domain%"
