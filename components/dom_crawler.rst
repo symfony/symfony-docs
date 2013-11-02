@@ -212,13 +212,8 @@ and :phpclass:`DOMNode` objects:
             $html .= $domElement->ownerDocument->saveHTML($domElement);
         }
 
-Form and Link support
-~~~~~~~~~~~~~~~~~~~~~
-
-Special treatment is given to links and forms inside the DOM tree.
-
 Links
-.....
+~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
 the ``selectLink`` method on an existing crawler. This returns a Crawler
@@ -246,7 +241,7 @@ methods to get more information about the selected link itself::
     URI that you can act on.
 
 Forms
-.....
+~~~~~
 
 Special treatment is also given to forms. A ``selectButton()`` method is
 available on the Crawler which returns another Crawler that matches a button
