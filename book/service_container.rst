@@ -658,7 +658,7 @@ Using references is a very powerful tool that allows you to create independent s
 classes with well-defined dependencies. In this example, the ``newsletter_manager``
 service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
-the work of instantiating the objects.
+the work of instantiating the classes.
 
 Optional Dependencies: Setter Injection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

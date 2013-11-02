@@ -216,6 +216,11 @@ your code. This should also be taken into account when declaring your service:
                 ->setSynthetic(true)
                 ->setSynchronized(true);
 
+.. caution::
+
+    The service using the synchronized service will need to be public in order
+    have its setter called when the scope changes.
+
 .. _changing-service-scope:
 
 Changing the Scope of your Service
