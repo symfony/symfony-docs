@@ -61,7 +61,7 @@ that constructor with no arguments::
 
 You can instantiate your class however you want. In this example, we pass
 some dependency into the ``BlogType`` when we instantiate it, then use that
-to instantiate the ``Blog`` object. The point is, you can set ``empty_data``
+to instantiate the ``Blog`` class. The point is, you can set ``empty_data``
 to the exact "new" object that you want to use.
 
 Option 2: Provide a Closure
