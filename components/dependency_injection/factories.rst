@@ -10,7 +10,7 @@ as well as calling methods and setting parameters. Sometimes, however, this
 will not provide you with everything you need to construct your objects.
 For this situation, you can use a factory to create the object and tell the
 service container to call a method on the factory rather than directly instantiating
-the object.
+the class.
 
 Suppose you have a factory that configures and returns a new NewsletterManager
 object::

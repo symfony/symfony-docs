@@ -685,8 +685,8 @@ tags:
 
     .. code-block:: jinja
 
-        {{ render_hinclude(controller('...')) %}
-        {{ render_hinclude(url('...')) %}
+        {{ render_hinclude(controller('...')) }}
+        {{ render_hinclude(url('...')) }}
 
     .. code-block:: php
 
