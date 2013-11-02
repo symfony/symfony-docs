@@ -13,7 +13,7 @@ Before contributing, you need to become familiar with the :doc:`markup
 language <format>` used by the documentation.
 
 The Symfony2 documentation is hosted on GitHub:
-2
+
 .. code-block:: text
 
     https://github.com/symfony/symfony-docs
