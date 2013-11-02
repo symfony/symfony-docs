@@ -31,8 +31,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: yaml
 
-        # src/Acme/BookcaseBunlde/Resources/config/validation.yml
-        Acme\BookcaseBunlde\Entity\Book:
+        # src/Acme/BookcaseBundle/Resources/config/validation.yml
+        Acme\BookcaseBundle\Entity\Book:
             properties:
                 isbn:
                     - Isbn:
@@ -42,7 +42,7 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: php-annotations
 
-        // src/Acme/BookcaseBunlde/Entity/Book.php
+        // src/Acme/BookcaseBundle/Entity/Book.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Book
@@ -59,8 +59,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: xml
 
-        <!-- src/Acme/BookcaseBunlde/Resources/config/validation.xml -->
-        <class name="Acme\BookcaseBunlde\Entity\Book">
+        <!-- src/Acme/BookcaseBundle/Resources/config/validation.xml -->
+        <class name="Acme\BookcaseBundle\Entity\Book">
             <property name="isbn">
                 <constraint name="Isbn">
                     <option name="isbn10">true</option>
@@ -72,8 +72,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: php
 
-        // src/Acme/BookcaseBunlde/Entity/Book.php
-        namespace Acme\BookcaseBunlde\Entity;
+        // src/Acme/BookcaseBundle/Entity/Book.php
+        namespace Acme\BookcaseBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
