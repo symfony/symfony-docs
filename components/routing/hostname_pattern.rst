@@ -4,9 +4,6 @@
 How to match a route based on the Host
 ======================================
 
-.. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
-
 You can also match on the HTTP *host* of the incoming request.
 
 .. configuration-block::

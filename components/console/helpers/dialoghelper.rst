@@ -56,9 +56,6 @@ the default value (``AcmeDemoBundle`` here) is returned.
 Autocompletion
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 2.2
-    Autocompletion for questions was added in Symfony 2.2.
-
 You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
 
@@ -73,9 +70,6 @@ will be autocompleted as the user types::
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The ``askHiddenResponse`` method was added in Symfony 2.2.
 
 You can also ask a question and hide the response. This is particularly
 convenient for passwords::
@@ -144,9 +138,6 @@ be able to proceed if her input is valid.
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.2
-    The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
-
 You can also ask and validate a hidden response::
 
     $dialog = $this->getHelperSet()->get('dialog');
@@ -170,10 +161,6 @@ some reason, pass true as the fifth argument.
 
 Let the user choose from a list of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select` method
-    was added in Symfony 2.2.
 
 If you have a predefined set of answers the user can choose from, you
 could use the ``ask`` method described above or, to make sure the user

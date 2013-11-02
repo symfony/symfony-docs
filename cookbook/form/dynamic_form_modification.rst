@@ -114,10 +114,6 @@ The goal is to create a "name" field *only* if the underlying Product object
 is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
 might look like the following:
 
-.. versionadded:: 2.2
-    The ability to pass a string into :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
-    was added in Symfony 2.2.
-
 .. code-block:: php
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
@@ -468,10 +464,6 @@ On a form, we can usually listen to the following events:
 .. versionadded:: 2.3
     The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
     Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
-
-.. versionadded:: 2.2.6
-    The behavior of the ``POST_SUBMIT`` event changed slightly in 2.2.6, which the
-    below example uses.
 
 The key is to add a ``POST_SUBMIT`` listener to the field that your new field
 depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),
