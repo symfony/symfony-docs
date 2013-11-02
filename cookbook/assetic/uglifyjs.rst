@@ -4,8 +4,8 @@
 How to Minify CSS/JS Files (using UglifyJs and UglifyCss)
 =========================================================
 
-`UglifyJs`_ is a javascript parser/compressor/beautifier toolkit. It can be used
-to combine and minify javascript assets so that they require less HTTP requests
+`UglifyJs`_ is a JavaScript parser/compressor/beautifier toolkit. It can be used
+to combine and minify JavaScript assets so that they require less HTTP requests
 and make your site load faster. `UglifyCss`_ is a css compressor/beautifier
 that is very similar to UglifyJs.
 

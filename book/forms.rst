@@ -1691,7 +1691,7 @@ There's still much more to learn about the powerful world of forms, such as
 how to handle
 :doc:`file uploads with Doctrine </cookbook/doctrine/file_uploads>` or how
 to create a form where a dynamic number of sub-forms can be added (e.g. a
-todo list where you can keep adding more fields via Javascript before submitting).
+todo list where you can keep adding more fields via JavaScript before submitting).
 See the cookbook for these topics. Also, be sure to lean on the
 :doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.
