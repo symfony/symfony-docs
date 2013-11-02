@@ -7,14 +7,14 @@ look and feel familiar, you should follow these standards.
 Sphinx
 ------
 
-* The following characters are choosen for different heading levels: level 1
+* The following characters are chosen for different heading levels: level 1
   is ``=``, level 2 ``-``, level 3 ``~``, level 4 ``.`` and level 5 ``"``;
 * Each line should break approximately after the first word that crosses the
   72nd character (so most lines end up being 72-78 characters);
 * The ``::`` shorthand is *preferred* over ``.. code-block:: php`` to begin a PHP
   code block (read `the Sphinx documentation`_ to see when you should use the
   shorthand);
-* Inline hyperlinks are **not** used. Seperate the link and their target
+* Inline hyperlinks are **not** used. Separate the link and their target
   definition, which you add on the bottom of the page;
 * You should use a form of *you* instead of *we*.
 
