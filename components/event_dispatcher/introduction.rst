@@ -306,7 +306,7 @@ the ``dispatch`` method. Now, any listener to the ``store.order`` event will
 receive the ``FilterOrderEvent`` and have access to the ``Order`` object via
 the ``getOrder`` method::
 
-    // some listener class that's been registered for "STORE_ORDER" event
+    // some listener class that's been registered for "store.order" event
     use Acme\StoreBundle\Event\FilterOrderEvent;
 
     public function onStoreOrder(FilterOrderEvent $event)
