@@ -971,6 +971,18 @@ entity and a new constraint group called ``Premium``:
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\User:
+            properties:
+                name:
+                    - NotBlank
+                creditCard:
+                    - CardScheme
+                        schemes: [VISA]
+                        groups: [Premium]
+
     .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Entity/User.php
@@ -995,18 +1007,6 @@ entity and a new constraint group called ``Premium``:
              */
             private $creditCard;
         }
-
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\User:
-            properties:
-                name:
-                    - NotBlank
-                creditCard:
-                    - CardScheme
-                        schemes: [VISA]
-                        groups: [Premium]
 
     .. code-block:: xml
 

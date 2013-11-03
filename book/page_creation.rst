@@ -95,7 +95,7 @@ inside a bundle.
 
 A bundle is nothing more than a directory that houses everything related
 to a specific feature, including PHP classes, configuration, and even stylesheets
-and Javascript files (see :ref:`page-creation-bundles`).
+and JavaScript files (see :ref:`page-creation-bundles`).
 
 To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
