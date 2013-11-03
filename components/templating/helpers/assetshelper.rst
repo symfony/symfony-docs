@@ -14,7 +14,7 @@ generating asset paths:
    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>">
 
 The assets helper can then be configured to render paths to a CDN or modify
-the paths in case your assets live in a sub-directory if your host (e.g. ``http://example.com/app``).
+the paths in case your assets live in a sub-directory of your host (e.g. ``http://example.com/app``).
 
 Configure Paths
 ---------------
