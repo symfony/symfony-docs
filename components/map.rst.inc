@@ -96,6 +96,13 @@
   * :doc:`/components/routing/introduction`
   * :doc:`/components/routing/hostname_pattern`
 
+* :doc:`/components/security/index`
+
+  * :doc:`/components/security/introduction`
+  * :doc:`/components/security/firewall`
+  * :doc:`/components/security/authentication`
+  * :doc:`/components/security/authorization`
+
 * **Serializer**
 
   * :doc:`/components/serializer`
@@ -103,13 +110,6 @@
 * **Stopwatch**
 
   * :doc:`/components/stopwatch`
-
-* :doc:`/components/security/index`
-
-  * :doc:`/components/security/introduction`
-  * :doc:`/components/security/firewall`
-  * :doc:`/components/security/authentication`
-  * :doc:`/components/security/authorization`
 
 * :doc:`/components/templating/index`
 
