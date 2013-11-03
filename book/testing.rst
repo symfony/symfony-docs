@@ -244,9 +244,9 @@ document::
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`,
-    `Referer` and `X-Requested-With` HTTP headers, you'd pass the following (mind
-    the `HTTP_` prefix for non standard headers)::
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
+    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    the ``HTTP_`` prefix for non standard headers)::
 
         $client->request(
             'GET',
