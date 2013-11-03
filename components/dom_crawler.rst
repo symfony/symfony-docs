@@ -157,7 +157,7 @@ Call an anonymous function on each node of the list::
         return $node->text();
     });
 
-.. versionadded::
+.. versionadded:: 2.3
     As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
     are passed a ``Crawler`` as the first argument. Previously, that argument
     was a :phpclass:`DOMNode`.
