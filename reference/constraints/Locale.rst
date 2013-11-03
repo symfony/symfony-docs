@@ -28,7 +28,7 @@ Basic Usage
         Acme\UserBundle\Entity\User:
             properties:
                 locale:
-                    - Locale:
+                    - Locale: ~
 
     .. code-block:: php-annotations
 
