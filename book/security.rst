@@ -416,7 +416,7 @@ submission (i.e.  ``/login_check``):
 
 .. versionadded:: 2.1
     As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
-    ``check_path`` ``logout`` keys. These keys can be route names (as shown
+    ``check_path`` and ``logout`` keys. These keys can be route names (as shown
     in this example) or URLs that have routes configured for them.
 
 Notice that the name of the ``login`` route matches the ``login_path`` config
