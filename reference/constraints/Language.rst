@@ -24,7 +24,7 @@ Basic Usage
         Acme\UserBundle\Entity\User:
             properties:
                 preferredLanguage:
-                    - Language:
+                    - Language: ~
 
     .. code-block:: php-annotations
 

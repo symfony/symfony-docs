@@ -159,7 +159,7 @@ You can also ask and validate a hidden response::
 
     $password = $dialog->askHiddenResponseAndValidate(
         $output,
-        'Please enter the name of the widget',
+        'Please enter your password',
         $validator,
         20,
         false
