@@ -31,7 +31,7 @@ If your problem definitely looks like a bug, report it using the official bug
 * *(optional)* Attach a :doc:`patch <patches>`.
 
 .. _documentation: http://symfony.com/doc/current/
-.. _users mailing-list: http://groups.google.com/group/symfony-users
+.. _users mailing-list: http://groups.google.com/group/symfony2
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony
 .. _tracker: https://github.com/symfony/symfony/issues
