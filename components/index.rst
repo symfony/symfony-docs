@@ -9,8 +9,8 @@ The Components
     config/index
     console/index
     css_selector
-    dom_crawler
     dependency_injection/index
+    dom_crawler
     event_dispatcher/index
     filesystem
     finder
