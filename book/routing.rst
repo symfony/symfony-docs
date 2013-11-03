@@ -707,8 +707,8 @@ form via the same URL, while using distinct controllers for the two actions.
 
     If no ``methods`` are specified, the route will match on *all* methods.
 
-Adding a Host
-~~~~~~~~~~~~~
+Adding a Host Requirement
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
     Host matching support was added in Symfony 2.2
@@ -1067,8 +1067,8 @@ from the new routing resource.
     :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     to see how.
 
-Adding a Host regex to Imported Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding a Host requirement to Imported Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
     Host matching support was added in Symfony 2.2
