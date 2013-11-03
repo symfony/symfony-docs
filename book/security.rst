@@ -146,7 +146,7 @@ that looks like the following:
 * Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
   can access it;
 * All URLs *not* matching ``/admin/*`` are accessible by all users (and the
-  user is never prompted to login).
+  user is never prompted to log in).
 
 Let's look briefly at how security works and how each part of the configuration
 comes into play.
@@ -1635,9 +1635,9 @@ the first provider is always used:
             ),
         ));
 
-In this example, if a user tries to login via HTTP authentication, the authentication
+In this example, if a user tries to log in via HTTP authentication, the authentication
 system will use the ``in_memory`` user provider. But if the user tries to
-login via the form login, the ``user_db`` provider will be used (since it's
+log in via the form login, the ``user_db`` provider will be used (since it's
 the default for the firewall as a whole).
 
 For more information about user provider and firewall configuration, see
@@ -1869,7 +1869,7 @@ Impersonating a User
 --------------------
 
 Sometimes, it's useful to be able to switch from one user to another without
-having to logout and login again (for instance when you are debugging or trying
+having to log out and log in again (for instance when you are debugging or trying
 to understand a bug a user sees that you can't reproduce). This can be easily
 done by activating the ``switch_user`` firewall listener:
 

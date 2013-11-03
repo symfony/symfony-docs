@@ -117,7 +117,7 @@ Each part will be explained in the next section.
                         # submit the login form here
                         check_path: /login_check
 
-                        # the user is redirected here when he/she needs to login
+                        # the user is redirected here when he/she needs to log in
                         login_path: /login
 
                         # if true, forward the user to the login form instead of redirecting
