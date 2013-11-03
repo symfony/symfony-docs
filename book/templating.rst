@@ -676,7 +676,10 @@ that as much code as possible lives in reusable :doc:`services </book/service_co
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Controllers can be embedded asynchronously using the hinclude.js_ javascript library.
+.. versionadded:: 2.1
+    hinclude.js support was added in Symfony 2.1
+
+Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
 Symfony2 uses a version of the standard ``render`` function to configure ``hinclude``
 tags:
@@ -741,7 +744,7 @@ tags:
                 'fragments' => array('path' => '/_fragment'),
             ));
 
-Default content (while loading or if javascript is disabled) can be set globally
+Default content (while loading or if JavaScript is disabled) can be set globally
 in your application configuration:
 
 .. configuration-block::
@@ -971,7 +974,7 @@ correctly:
 Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
-Templates also commonly refer to images, Javascript, stylesheets and other
+Templates also commonly refer to images, JavaScript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
 but Symfony2 provides a more dynamic option via the ``asset`` Twig function:
 
@@ -1004,21 +1007,21 @@ look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-frame
 configuration option.
 
 .. index::
-   single: Templating; Including stylesheets and Javascripts
+   single: Templating; Including stylesheets and JavaScripts
    single: Stylesheets; Including stylesheets
-   single: Javascript; Including Javascripts
+   single: JavaScript; Including JavaScripts
 
-Including Stylesheets and Javascripts in Twig
+Including Stylesheets and JavaScripts in Twig
 ---------------------------------------------
 
-No site would be complete without including Javascript files and stylesheets.
+No site would be complete without including JavaScript files and stylesheets.
 In Symfony, the inclusion of these assets is handled elegantly by taking
 advantage of Symfony's template inheritance.
 
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and Javascript assets in Symfony. Symfony also packages another library,
+    and JavaScript assets in Symfony. Symfony also packages another library,
     called Assetic, which follows this philosophy but allows you to do much
     more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
@@ -1026,7 +1029,7 @@ advantage of Symfony's template inheritance.
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
 just above the closing ``body`` tag. These blocks will contain all of the
-stylesheets and Javascripts that you'll need throughout your site:
+stylesheets and JavaScripts that you'll need throughout your site:
 
 .. code-block:: html+jinja
 
@@ -1049,7 +1052,7 @@ stylesheets and Javascripts that you'll need throughout your site:
     </html>
 
 That's easy enough! But what if you need to include an extra stylesheet or
-Javascript from a child template? For example, suppose you have a contact
+JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
