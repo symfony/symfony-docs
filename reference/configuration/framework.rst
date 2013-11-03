@@ -463,8 +463,8 @@ Full Default Configuration
             form:
                 enabled:              false
                 csrf_protection:
-                    enabled:              true
-                    field_name:           ~
+                    enabled:          true
+                    field_name:       ~
 
             # esi configuration
             esi:
