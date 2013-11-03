@@ -58,7 +58,7 @@ is needed.
 Using Choices
 ~~~~~~~~~~~~~
 
-If you want to limit the entities which are available as choices you can provide 
+If you want to limit the entities which are available as choices you can provide
 them by calling the getter function of an entity:
 
     $builder->add('users', 'entity', array(
@@ -145,9 +145,9 @@ choices
 
 **type**:  array || ``\Traversable`` **default**: all entities
 
-If the choices are provided only these will be available. The choices need to 
-be a traversable collection such as the 
-``Doctrine\Common\Collections\ArrayCollection`` containing only entities of the 
+If the choices are provided only these will be available. The choices need to
+be a traversable collection such as the
+``Doctrine\Common\Collections\ArrayCollection`` containing only entities of the
 specified class.
 
 choice_list
