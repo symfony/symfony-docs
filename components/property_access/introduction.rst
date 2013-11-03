@@ -17,8 +17,8 @@ Installation
 
 You can install the component in two different ways:
 
-* Use the official Git repository (https://github.com/symfony/PropertyAccess);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/PropertyAccess).
 
 Usage
 -----
