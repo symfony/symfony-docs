@@ -501,9 +501,9 @@ value to each variable.
     directly by duplicating the current request. When this
     :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
     service the ``HttpKernel`` returns a ``Response`` object::
-    
+
         use Symfony\Component\HttpKernel\HttpKernelInterface;
-    
+
         $path = array(
             '_controller' => 'AcmeHelloBundle:Hello:fancy',
             'name'        => $name,
@@ -750,11 +750,14 @@ headers and content that's sent back to the client::
     use Symfony\Component\HttpFoundation\Response;
 
     // create a simple Response with a 200 status code (the default)
-    $response = new Response('Hello '.$name, 200);
+    $response = new Response('Hello '.$name, Response::HTTP_OK);
 
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 .. tip::
 

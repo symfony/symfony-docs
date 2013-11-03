@@ -309,9 +309,12 @@ code, and an array of HTTP headers::
 
     $response = new Response(
         'Content',
-        200,
+        Response::HTTP_OK,
         array('content-type' => 'text/html')
     );
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 These information can also be manipulated after the Response object creation::
 
@@ -320,7 +323,7 @@ These information can also be manipulated after the Response object creation::
     // the headers public attribute is a ResponseHeaderBag
     $response->headers->set('Content-Type', 'text/plain');
 
-    $response->setStatusCode(404);
+    $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
 When setting the ``Content-Type`` of the Response, you can set the charset,
 but it is better to set it via the
