@@ -123,7 +123,7 @@ in the last argument. Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as he provides an invalid answer and will only
 be able to proceed if her input is valid.
 
-Validating a hidden Response
+Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
