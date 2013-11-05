@@ -50,7 +50,7 @@ Quick example::
 
 .. caution::
 
-    Symfony sessions are incompatible with PHP ini directive ``session.auto_start = 1``
+    Symfony sessions are incompatible with php.ini directive ``session.auto_start = 1``
     This directive should be turned off in ``php.ini``, in the webserver directives or
     in ``.htaccess``.
 

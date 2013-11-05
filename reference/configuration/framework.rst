@@ -79,7 +79,7 @@ full TextMate string would look like this:
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-PHP.ini value to the file link string. If this configuration value is set, then
+php.ini value to the file link string. If this configuration value is set, then
 the ``ide`` option does not need to be specified.
 
 .. _reference-framework-test:
