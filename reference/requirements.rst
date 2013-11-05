@@ -22,7 +22,7 @@ Required
 * PHP needs to be a minimum version of PHP 5.3.3
 * JSON needs to be enabled
 * ctype needs to be enabled
-* Your PHP.ini needs to have the date.timezone setting
+* Your PHP.ini needs to have the ``date.timezone`` setting
 
 Optional
 --------
