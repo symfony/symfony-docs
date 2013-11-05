@@ -358,27 +358,27 @@ will be show next):
 
 .. code-block:: javascript
 
-    // Get the ul that holds the collection of tags
-    var collectionHolder = $('ul.tags');
-
     // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-    var $newLinkLi = $('<li></li>').append($addTagLink);
+    var addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+    var newLinkLi = $('<li></li>').append(addTagLink);
 
     jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        var collectionHolder = $('ul.tags');
+
         // add the "add a tag" anchor and li to the tags ul
-        collectionHolder.append($newLinkLi);
+        collectionHolder.append(newLinkLi);
 
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
         collectionHolder.data('index', collectionHolder.find(':input').length);
 
-        $addTagLink.on('click', function(e) {
+        addTagLink.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
             e.preventDefault();
 
             // add a new tag form (see next code block)
-            addTagForm(collectionHolder, $newLinkLi);
+            addTagForm(collectionHolder, newLinkLi);
         });
     });
 
@@ -393,7 +393,7 @@ one example:
 
 .. code-block:: javascript
 
-    function addTagForm(collectionHolder, $newLinkLi) {
+    function addTagForm(collectionHolder, newLinkLi) {
         // Get the data-prototype explained earlier
         var prototype = collectionHolder.data('prototype');
 
@@ -408,8 +408,8 @@ one example:
         collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
-        $newLinkLi.before($newFormLi);
+        var newFormLi = $('<li></li>').append(newForm);
+        newLinkLi.before(newFormLi);
     }
 
 .. note::
