@@ -415,7 +415,7 @@ represented by a PHP callable instead of a string::
 .. note::
 
     The ``flush()`` function does not flush buffering. If ``ob_start()`` has
-    been called before or the ``output_buffering`` php.ini option is enabled,
+    been called before or the ``output_buffering`` ``php.ini`` option is enabled,
     you must call ``ob_flush()`` before ``flush()``.
 
     Additionally, PHP isn't the only layer that can buffer output. Your web

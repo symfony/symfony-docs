@@ -37,7 +37,7 @@ to ensure that the cache is cleared whenever any source files change. Otherwise,
 the updates you've made won't be seen.
 
 For example, to disable these checks in APC, simply add ``apc.stat=0`` to
-your php.ini configuration.
+your ``php.ini`` configuration.
 
 .. index::
    single: Performance; Autoloader

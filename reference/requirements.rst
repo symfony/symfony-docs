@@ -22,7 +22,7 @@ Required
 * PHP needs to be a minimum version of PHP 5.3.3
 * JSON needs to be enabled
 * ctype needs to be enabled
-* Your php.ini needs to have the ``date.timezone`` setting
+* Your ``php.ini`` needs to have the ``date.timezone`` setting
 
 Optional
 --------
@@ -35,7 +35,7 @@ Optional
 * POSIX needs to be enabled (only on \*nix)
 * Intl needs to be installed with ICU 4+
 * APC 3.0.17+ (or another opcode cache needs to be installed)
-* php.ini recommended settings
+* ``php.ini`` recommended settings
 
   * ``short_open_tag = Off``
   * ``magic_quotes_gpc = Off``
