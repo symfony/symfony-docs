@@ -167,7 +167,7 @@ and tag it as a "security.voter":
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
 
-.. security-voters-change-strategy:
+.. _security-voters-change-strategy:
 
 Changing the Access Decision Strategy
 -------------------------------------
@@ -217,5 +217,5 @@ the new voter will deny access to any user in the list of blacklisted IPs.
 
 .. seealso::
 
-    For a more advanced usage see 
+    For a more advanced usage see
     :ref:`components-security-access-decision-manager`.
