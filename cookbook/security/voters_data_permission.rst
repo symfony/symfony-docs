@@ -1,28 +1,29 @@
 .. index::
    single: Security; Data Permission Voters
 
-How to implement your own Voter to check user permissions for accessing a given object
+How to implement your own Voter to check User Permissions for accessing a Given Object
 ======================================================================================
 
-In Symfony2 you can check the permission to access data by the 
-:doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming 
-for many applications. A much easier solution is to work with custom voters
-voters, which are like simple conditional statements. Voters can be 
-also used to check for permission as a part or even the whole 
+In Symfony2 you can check the permission to access data by the
+:doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming
+for many applications. A much easier solution is to work with custom voters,
+which are like simple conditional statements. Voters can be
+also be used to check for permission as a part or even the whole
 application: :doc:`"/cookbook/security/voters"`.
 
 .. tip::
 
     It is good to understand the basics about what and how
-    :doc:`authorization </components/security/authorization>` works.
+    :doc:`authorization </components/security/authorization>` works.                        // correct link in book?
 
-How Symfony Uses Voters
+How Symfony uses Voters
 -----------------------
 
 In order to use voters, you have to understand how Symfony works with them.
-In general, all registered custom voters will be called every time you ask 
-Symfony about permissions (ACL). In general there are three different 
-approaches on how to handle the feedback from all voters: 
+In general, all registered custom voters will be called every time you ask
+Symfony about permissions (ACL). You can use one of three different
+approaches on how to handle the feedback from all voters: affirmative,
+consensus and unanimous. For more information have a look at
 :ref:`"components-security-access-decision-manager"`.
 
 The Voter Interface
@@ -32,13 +33,13 @@ A custom voter must implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
 which has this structure:
 
-.. code-block:: php
+.. code-block:: php                                                                     // :: shortcut? and put the snippet (to line 56) in a single file an reference ?
 
     interface VoterInterface
     {
         public function supportsAttribute($attribute);
         public function supportsClass($class);
-        public function vote(TokenInterface $token, $object, array $attributes);
+        public function vote(TokenInterface $token, $post, array $attributes);
     }
 
 The ``supportsAttribute()`` method is used to check if the voter supports
@@ -60,7 +61,7 @@ object according to your custom conditions (e.g. he must be the owner of
 the object). If the condition fails, you'll return
 ``VoterInterface::ACCESS_DENIED``, otherwise you'll return
 ``VoterInterface::ACCESS_GRANTED``. In case the responsibility for this decision
-belongs not to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``.
+does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``.
 
 Creating the Custom Voter
 -------------------------
@@ -72,81 +73,86 @@ You could store your Voter to check permission for the view and edit action like
     // src/Acme/DemoBundle/Security/Authorization/Entity/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Entity;
 
+    use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Doctrine\Common\Util\ClassUtils;
 
     class PostVoter implements VoterInterface
     {
-        
-        public function supportsAttribute($attribute) 
+        public function supportsAttribute($attribute)
         {
             return in_array($attribute, array(
                 'view',
                 'edit',
             ));
         }
-        
-        public function supportsClass($class)
+
+        public function supportsClass($obj)
         {
-            // could be "Acme\DemoBundle\Entity\Post" as well
-            $array = array("Acme\DemoBundle\Entity\Post");
-         
+            $array = array('Acme\DemoBundle\Entity\Post');
+
             foreach ($array as $item) {
                 // check with stripos in case doctrine is using a proxy class for this object
-                if (stripos($s, $item) !== false) {
-
+                // if (stripos($s, $item) !== false) {
+                if ($obj instanceof $item))         // check if this will also check for interfaces etc. like it should be in oop (inheritace)
+                                                    // or  return $targetClass === $class || is_subclass_of($class, $targetClass);
                     return true;
                 }
             }
 
             return false;
         }
-        
-        public function vote(TokenInterface $token, $object, array $attributes) 
+
+        /** @var \Acme\DemoBundle\Entity\Post $post */
+        public function vote(TokenInterface $token, $post, array $attributes) // remove array
         {
+            // always get the first attribute
+            $attribute = $attributes[0];
+
             // get current logged in user
             $user = $token->getUser();
-                    
+
             // check if class of this object is supported by this voter
-            if (!($this->supportsClass(get_class($object)))) {
+            if (!($this->supportsClass($post))) {                                 // maybe without ClassUtils::getRealClass(
 
                 return VoterInterface::ACCESS_ABSTAIN;
             }
-    
-            // check if the given attribute is covered by this voter
-            foreach ($attributes as $attribute) {
-                if (!$this->supportsAttribute($attribute)) {
 
-                    return VoterInterface::ACCESS_ABSTAIN;
-                }
+            // check if the given attribute is covered by this voter
+            if (!$this->supportsAttribute($attribute)) {
+
+                return VoterInterface::ACCESS_ABSTAIN;
             }
-    
+
             // check if given user is instance of user interface
             if (!($user instanceof UserInterface)) {
 
                 return VoterInterface::ACCESS_DENIED;
             }
-            
-            switch($this->attributes[0]) {
+
+            switch($attribute) {
                 case 'view':
-                    if ($object->isPrivate() === false) {
+                    // the data object could have for e.g. a method isPrivate() which checks the the boolean attribute $private
+                    if (!$post->isPrivate()) {
 
                         return VoterInterface::ACCESS_GRANTED;
                     }
                     break;
-                    
+
                 case 'edit':
-                    if ($user->getId() === $object->getOwner()->getId()) {
+                    // we assume that our data object has a method getOwner() to get the current owner user entity for this data object
+                    if ($user->getId() === $post->getOwner()->getId()) {
 
                         return VoterInterface::ACCESS_GRANTED;
                     }
                     break;
-                    
+
                 default:
-                    // otherwise denied access
-                    return VoterInterface::ACCESS_DENIED;
+                    // otherwise throw an exception
+                    throw new PreconditionFailedHttpException('The Attribute "'.$attribute.'"" was not found.')
             }
 
         }
@@ -170,6 +176,53 @@ and tag it as a "security.voter":
             security.access.post_voter:
                 class:      Acme\DemoBundle\Security\Authorization\Entity\PostVoter
                 public:     false
-                # the service gets tagged as a voter
                 tags:
                    - { name: security.voter }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services">
+            <services>
+                <service id="security.access.post_document_voter"
+                    class="Acme\DemoBundle\Security\Authorization\Document\PostVoter"
+                    public="false">
+                    <tag name="security.voter" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        $container
+            ->register('security.access.post_document_voter', 'Acme\DemoBundle\Security\Authorization\Document\PostVoter')
+            ->addTag('security.voter')
+        ;
+
+How to use the Voter in a Controller
+------------------------------------
+
+.. code-block:: php
+
+    // src/Acme/DemoBundle/Controller/PostController.php
+    namespace Acme\DemoBundle\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    class PostController
+    {
+        public function showAction($id)
+        {
+            // keep in mind, this will call all registered security voters
+            if (false === $this->get('security.context')->isGranted('view')) {
+                throw new AccessDeniedException('Unauthorised access!');
+            }
+
+            $product = $this->getDoctrine()
+                ->getRepository('AcmeStoreBundle:Post')
+                ->find($id);
+
+            return new Response('<html><body>Headline for Post: '.$post->getName().'</body></html>');
+        }
+    }
