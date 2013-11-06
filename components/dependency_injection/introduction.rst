@@ -16,8 +16,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/DependencyInjection);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/DependencyInjection).
 
 Basic Usage
 -----------

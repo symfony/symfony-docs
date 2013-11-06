@@ -19,8 +19,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Security);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/security`` on Packagist_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/security`` on Packagist_);
+* Use the official Git repository (https://github.com/symfony/Security).
 
 Sections
 --------

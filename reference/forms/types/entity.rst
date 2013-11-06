@@ -18,8 +18,8 @@ objects from the database.
 |             | - `query_builder`_                                               |
 |             | - `em`_                                                          |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`                                                      |
-| Options     | - `choice_list`                                                  |
+| Overridden  | - `choices`_                                                     |
+| Options     | - `choice_list`_                                                 |
 +-------------+------------------------------------------------------------------+
 | Inherited   | - `required`_                                                    |
 | options     | - `label`_                                                       |
@@ -71,6 +71,22 @@ option. The easiest way to use the option is as follows::
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
+    ));
+
+.. _reference-forms-entity-choices:
+
+Using Choices
+~~~~~~~~~~~~~
+
+If you already have the exact collection of entities that you want included
+in the choice element, you can simply pass them via the ``choices`` key.
+For example, if you have a ``$group`` variable (passed into your form perhaps
+as a form option) and ``getUsers`` returns a collection of ``User`` entities,
+then you can supply the ``choices`` option directly::
+
+    $builder->add('users', 'entity', array(
+        'class' => 'AcmeHelloBundle:User',
+        'choices' => $group->getUsers(),
     ));
 
 .. include:: /reference/forms/types/options/select_how_rendered.rst.inc
@@ -132,15 +148,21 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: ``null``
+**type**:  array || ``\Traversable`` **default**: ``null``
+
+Instead of allowing the `class`_ and `query_builder`_ options to fetch the
+entities to include for you, you can pass the ``choices`` option directly.
+See :ref:`reference-forms-entity-choices`.
 
 choice_list
 ~~~~~~~~~~~
 
-**default**: all entities selected
+**default**: :class:`Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\EntityChoiceList`
 
-The choices will default to all entities selected with one of the options that
-are documented above.
+The purpose of the ``entity`` type is to create and configure this ``EntityChoiceList``
+for you, by using all of the above options. If you need to override this
+option, you may just consider using the :doc:`/reference/forms/types/choice`
+directly.
 
 Inherited options
 -----------------

@@ -16,8 +16,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/HttpKernel);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_);
+* Use the official Git repository (https://github.com/symfony/HttpKernel).
 
 The Workflow of a Request
 -------------------------
@@ -262,7 +262,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 .. _component-http-kernel-kernel-controller:
 
 3) The ``kernel.controller`` event
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Initialize things or change the controller just before
 the controller is executed.
@@ -300,7 +300,7 @@ on the event object that's passed to listeners on this event.
     next section to see why this is important.
 
 4) Getting the Controller Arguments
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, ``HttpKernel::handle`` calls
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`.
@@ -486,8 +486,8 @@ as possible to the client (e.g. sending emails).
 
 .. _component-http-kernel-kernel-exception:
 
-Handling Exceptions:: the ``kernel.exception`` event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Handling Exceptions: the ``kernel.exception`` event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Handle some type of exception and create an appropriate
 ``Response`` to return for the exception

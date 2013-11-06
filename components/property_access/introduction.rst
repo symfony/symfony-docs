@@ -17,8 +17,8 @@ Installation
 
 You can install the component in two different ways:
 
-* Use the official Git repository (https://github.com/symfony/PropertyAccess);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/PropertyAccess).
 
 Usage
 -----
@@ -166,7 +166,7 @@ The ``getValue`` method can also use the magic ``__get`` method::
     class Person
     {
         private $children = array(
-            'wouter' => array(...),
+            'Wouter' => array(...),
         );
 
         public function __get($id)
@@ -243,7 +243,7 @@ Writing to Objects
 ------------------
 
 The ``setValue`` method has the same features as the ``getValue`` method. You
-can use setters, the magic ``__set`` or properties to set values::
+can use setters, the magic ``__set`` method or properties to set values::
 
     // ...
     class Person
@@ -372,7 +372,7 @@ configured to enable extra features. To do that you could use the
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
     // ...
-    $accessor = new PropertyAccessor(true) // this enable handling of magic __call
+    $accessor = new PropertyAccessor(true) // this enables handling of magic __call
 
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access

@@ -88,12 +88,14 @@ as your normally do:
 
 .. code-block:: bash
 
-    $ php composer.phar install --optimize-autoloader
+    $ php composer.phar install --no-dev --optimize-autoloader
 
 .. tip::
 
     The ``--optimize-autoloader`` flag makes Composer's autoloader more
-    performant by building a "class map".
+    performant by building a "class map". The ``--no-dev`` flag 
+    ensures that development packages are not installed in the production
+    environment.
 
 C) Clear your Symfony cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

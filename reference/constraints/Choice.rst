@@ -124,7 +124,7 @@ form element.
         }
     }
 
-You can pass the name of this method to the `callback_` option of the ``Choice``
+You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.
 
 .. configuration-block::

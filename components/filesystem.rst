@@ -11,8 +11,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Filesystem);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Filesystem).
 
 Usage
 -----
@@ -50,7 +50,7 @@ endpoint for filesystem operations::
 Mkdir
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates directory.
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
 On posix filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
@@ -233,11 +233,11 @@ isAbsolutePath
     // return false
     $fs->isAbsolutePath('../dir');
 
-.. versionadded:: 2.3
-    ``dumpFile`` is new in Symfony 2.3
-
 dumpFile
 ~~~~~~~~
+
+.. versionadded:: 2.3
+    ``dumpFile`` is new in Symfony 2.3.
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
 dump contents to a file. It does this in an atomic manner: it writes a temporary

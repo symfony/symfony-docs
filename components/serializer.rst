@@ -30,8 +30,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Serializer);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Serializer).
 
 Usage
 -----
@@ -130,7 +130,7 @@ Deserializing an Object
 -----------------------
 
 Let's see now how to do the exactly the opposite. This time, the information
-of the `People` class would be encoded in XML format::
+of the ``Person`` class would be encoded in XML format::
 
     $data = <<<EOF
     <person>
