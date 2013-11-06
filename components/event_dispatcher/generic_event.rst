@@ -5,8 +5,8 @@ The Generic Event Object
 ========================
 
 The base :class:`Symfony\\Component\\EventDispatcher\\Event` class provided by the
-``Event Dispatcher`` component is deliberately sparse to allow the creation of
-API specific event objects by inheritance using OOP. This allow for elegant and
+Event Dispatcher component is deliberately sparse to allow the creation of
+API specific event objects by inheritance using OOP. This allows for elegant and
 readable code in complex applications.
 
 The :class:`Symfony\\Component\\EventDispatcher\\GenericEvent` is available

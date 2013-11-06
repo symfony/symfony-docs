@@ -166,7 +166,7 @@ The ``getValue`` method can also use the magic ``__get`` method::
     class Person
     {
         private $children = array(
-            'wouter' => array(...),
+            'Wouter' => array(...),
         );
 
         public function __get($id)
@@ -243,7 +243,7 @@ Writing to Objects
 ------------------
 
 The ``setValue`` method has the same features as the ``getValue`` method. You
-can use setters, the magic ``__set`` or properties to set values::
+can use setters, the magic ``__set`` method or properties to set values::
 
     // ...
     class Person

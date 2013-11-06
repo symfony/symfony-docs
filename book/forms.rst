@@ -1412,7 +1412,7 @@ renders the form:
 
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
 
-        {{ form(form) }}
+        <!-- ... render the form -->
 
     .. code-block:: html+php
 
@@ -1421,7 +1421,7 @@ renders the form:
 
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
 
-        <?php echo $view['form']->form($form) ?>
+        <!-- ... render the form -->
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the

@@ -30,7 +30,7 @@ on top of the previous one.
 
 The deepest level is the :namespace:`Symfony\\Component\\HttpFoundation`
 component. HttpFoundation provides the main objects needed to deal with HTTP.
-It is an Object-Oriented abstraction of some native PHP functions and
+It is an object-oriented abstraction of some native PHP functions and
 variables:
 
 * The :class:`Symfony\\Component\\HttpFoundation\\Request` class abstracts

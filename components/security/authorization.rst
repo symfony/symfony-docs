@@ -29,6 +29,8 @@ An authorization decision will always be based on a few things:
     Any object on which for which access control needs to be checked, like
     an article or a comment object.
 
+.. _components-security-access-decision-manager:
+
 Access Decision Manager
 -----------------------
 
@@ -69,6 +71,11 @@ recognizes several strategies:
         $allowIfAllAbstainDecisions,
         $allowIfEqualGrantedDeniedDecisions
     );
+
+.. seealso::
+
+    You can change the default strategy in the
+    :ref:`configuration <security-voters-change-strategy>`.
 
 Voters
 ------

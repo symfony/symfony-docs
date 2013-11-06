@@ -46,7 +46,7 @@ endpoint for filesystem operations::
 Mkdir
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates directory.
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
 On posix filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 

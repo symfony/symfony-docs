@@ -217,7 +217,7 @@ uploadIniSizeErrorMessage
 **type**: ``string`` **default**: ``The file is too large. Allowed maximum size is {{ limit }}``
 
 The message that is displayed if the uploaded file is larger than the ``upload_max_filesize``
-PHP.ini setting.
+``php.ini`` setting.
 
 uploadFormSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

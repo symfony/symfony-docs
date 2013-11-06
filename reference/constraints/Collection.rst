@@ -317,7 +317,7 @@ allowMissingFields
 
 If this option is set to ``false`` and one or more fields from the `fields`_
 option are not present in the underlying collection, a validation error will
-be returned. If set to ``true``, it's ok if some fields in the `fields_`
+be returned. If set to ``true``, it's ok if some fields in the `fields`_
 option are not present in the underlying collection.
 
 missingFieldsMessage
