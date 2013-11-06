@@ -218,8 +218,7 @@ object:
 
     .. code-block:: html+jinja
 
-        <label for="{{ form.name.vars.id }}"
-            class="{{ form.name.vars.required ? 'required' : '' }}">
+        <label for="{{ form.name.vars.id }}" class="{{ form.name.vars.required ? 'required' : '' }}">
             {{ form.name.vars.label }}
         </label>
 
