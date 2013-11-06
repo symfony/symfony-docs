@@ -1448,12 +1448,7 @@ using. The following types are supported in Doctrine:
   * ``boolean``
   * ``object`` (serialized and stored in a ``CLOB`` field)
   * ``array`` (serialized and stored in a ``CLOB`` field)
-  * ``simple_array`` (serialized using :phpfunction:`implode()` and :phpfunction:`explode()`,
-    with a comma as delimiter, and stored in a ``CLOB`` field)
-  * ``json_array`` (serialized using :phpfunction:`json_encode()` and :phpfunction:`json_decode()`,
-    and stored in a ``CLOB`` field)
   * ``blob`` (mapped to a resource stream)
-  * ``guid``
 
 For more information, see Doctrine's `Mapping Types documentation`_.
 
