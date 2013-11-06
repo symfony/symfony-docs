@@ -268,6 +268,10 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
+        use Symfony\Component\HttpFoundation\Response;
+
+        // ...
+
         // Assert that there is at least one h2 tag
         // with the class "subtitle"
         $this->assertGreaterThan(
@@ -295,7 +299,7 @@ document::
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
         $this->assertEquals(
-            200,
+            Response::HTTP_OK,
             $client->getResponse()->getStatusCode()
         );
 
@@ -305,6 +309,9 @@ document::
         );
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was added with Symfony 2.4.
 
 .. index::
    single: Tests; Client
