@@ -1,8 +1,8 @@
 .. index::
    single: Security; Configuration reference
 
-Security Configuration Reference
-================================
+SecurityBundle Configuration Reference
+======================================
 
 The security system is one of the most powerful parts of Symfony2, and can
 largely be controlled via its configuration.

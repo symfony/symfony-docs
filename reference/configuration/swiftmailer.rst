@@ -1,8 +1,8 @@
 .. index::
    single: Configuration reference; Swiftmailer
 
-SwiftmailerBundle Configuration ("swiftmailer")
-===============================================
+SwiftmailerBundle Configuration Reference
+=========================================
 
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered. For a full list of the default configuration
