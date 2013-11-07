@@ -17,6 +17,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `date_widget`_                                                            |
 |                      | - `time_widget`_                                                            |
+|                      | - `widget`_                                                                 |
 |                      | - `input`_                                                                  |
 |                      | - `date_format`_                                                            |
 |                      | - `hours`_                                                                  |
@@ -58,6 +59,15 @@ time_widget
 **type**: ``string`` **default**: ``choice``
 
 Defines the ``widget`` option for the :doc:`time </reference/forms/types/time>` type
+
+widget
+~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+Defines the ``widget`` option for both the :doc:`date </reference/forms/types/date>`
+type and :doc:`time </reference/forms/types/time>` type. This can be overridden with
+the `date_widget`_ and `time_widget`_ options.
 
 input
 ~~~~~
