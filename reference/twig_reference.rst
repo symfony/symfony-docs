@@ -75,12 +75,12 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``logout_path(key)``                               | This will generate the relative logout URL for the given firewall                          |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``logout_url(key)``                                | Equal to ``logout_path(...)`` but this will generate an absolute url                       |
+| ``logout_url(key)``                                | Equal to ``logout_path(...)`` but this will generate an absolute URL                       |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``path(name, parameters = {})``                    | Get a relative url for the given route, more information in                                |
+| ``path(name, parameters = {})``                    | Get a relative URL for the given route, more information in                                |
 |                                                    | ":ref:`book-templating-pages`".                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute url                                    |
+| ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute URL                                    |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 
 Filters
