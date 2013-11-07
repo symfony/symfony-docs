@@ -127,7 +127,7 @@ does *not* match, because "foo" fails the month wildcard.
 
 .. tip::
 
-    If you want to match all urls which start with a certain path and end in an
+    If you want to match all URLs which start with a certain path and end in an
     arbitrary suffix you can use the following route definition::
 
         $route = new Route(

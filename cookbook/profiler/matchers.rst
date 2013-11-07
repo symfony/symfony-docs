@@ -50,7 +50,7 @@ use this configuration:
 
 You can also set a ``path`` option to define the path on which the profiler
 should be enabled. For instance, setting it to ``^/admin/`` will enable the
-profiler only for the ``/admin/`` urls.
+profiler only for the ``/admin/`` URLs.
 
 Creating a Custom Matcher
 -------------------------
