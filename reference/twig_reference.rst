@@ -176,9 +176,8 @@ Symfony Standard Edition Extensions
 The Symfony Standard Edition adds some bundles to the Symfony2 Core Framework.
 Those bundles can have other Twig extensions:
 
-* **Twig Extension** includes all extensions that do not belong to the
-  Twig core but can be interesting. You can read more in 
-  `the official Twig Extensions documentation`_;
+* **Twig Extensions** includes some interesting extensions that do not belong to the
+  Twig core. You can read more in `the official Twig Extensions documentation`_;
 * **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and 
   ``{% image %}`` tags. You can read more about them in 
   :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
