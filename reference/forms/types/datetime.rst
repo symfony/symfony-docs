@@ -66,7 +66,7 @@ widget
 **type**: ``string`` **default**: ``null``
 
 Defines the ``widget`` option for both the :doc:`date </reference/forms/types/date>`
-type and :doc:`time </reference/forms/types/time>` type. Can be overridden with
+type and :doc:`time </reference/forms/types/time>` type. This can be overridden with
 the `date_widget`_ and `time_widget`_ options.
 
 input
