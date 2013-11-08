@@ -13,7 +13,7 @@ It is compiled by running::
 
     $container->compile();
 
-The compile method uses *Compiler Passes* for the compilation. The *Dependency Injection*
+The compile method uses *Compiler Passes* for the compilation. The Dependency Injection
 component comes with several passes which are automatically registered for
 compilation. For example the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CheckDefinitionValidityPass`
 checks for various potential issues with the definitions that have been set
@@ -40,7 +40,7 @@ and can be registered with the container with::
 
     $container->registerExtension($extension);
 
-The main work of the extension is done in the ``load`` method. In the load method
+The main work of the extension is done in the ``load`` method. In the ``load`` method
 you can load configuration from one or more configuration files as well as
 manipulate the container definitions using the methods shown in :doc:`/components/dependency_injection/definitions`.
 

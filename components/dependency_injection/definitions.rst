@@ -73,7 +73,7 @@ You can add a new argument to the end of the arguments array using::
     $definition->addArgument($argument);
 
 The argument can be a string, an array, a service parameter by using ``%parameter_name%``
-or a service id by using ::
+or a service id by using::
 
     use Symfony\Component\DependencyInjection\Reference;
 
@@ -122,6 +122,6 @@ You can also replace any existing method calls with an array of new ones with::
 .. note::
 
     The methods here that change service definitions can only be used before
-    the container is compiled, once the container is compiled you cannot
+    the container is compiled. Once the container is compiled you cannot
     manipulate service definitions further. To learn more about compiling
     the container see :doc:`/components/dependency_injection/compilation`.

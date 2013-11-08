@@ -27,7 +27,7 @@ To begin with, define the ``TransportChain`` class::
             $this->transports = array();
         }
 
-        public function addTransport(\Swift_Transport  $transport)
+        public function addTransport(\Swift_Transport $transport)
         {
             $this->transports[] = $transport;
         }
@@ -176,7 +176,7 @@ Adding additional attributes on Tags
 ------------------------------------
 
 Sometimes you need additional information about each service that's tagged with your tag.
-For example, you might want to add an alias to each TransportChain.
+For example, you might want to add an alias to each member of the transport chain.
 
 To begin with, change the ``TransportChain`` class::
 
