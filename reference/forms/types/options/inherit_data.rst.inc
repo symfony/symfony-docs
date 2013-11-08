@@ -6,6 +6,6 @@ inherit_data
 
 **type**: ``boolean`` **default**: ``false``
 
-This option determines if the form will inherit data form its parent form.
+This option determines if the form will inherit data from its parent form.
 This can be useful is you have a set of fields that are duplicated across
 multiple forms. See :doc:`/cookbook/form/inherit_data_option`.
