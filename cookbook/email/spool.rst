@@ -1,8 +1,8 @@
 .. index::
    single: Emails; Spooling
 
-How to Spool Email
-==================
+How to Spool Emails
+===================
 
 When you are using the ``SwiftmailerBundle`` to send an email from a Symfony2
 application, it will default to sending the email immediately. You may, however,
@@ -52,7 +52,7 @@ swiftmailer with the memory option, use the following configuration:
              ...,
             'spool' => array('type' => 'memory')
         ));
-        
+
 Spool using a file
 ------------------
 
@@ -88,11 +88,12 @@ In order to use the spool with a file, use the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-             ...,
+             // ...
+
             'spool' => array(
                 'type' => 'file',
                 'path' => '/path/to/spool',
-            )
+            ),
         ));
 
 .. tip::

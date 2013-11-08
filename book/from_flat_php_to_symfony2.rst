@@ -33,7 +33,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     $result = mysql_query('SELECT id, title FROM post', $link);
     ?>
 
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title>List of Posts</title>
@@ -70,6 +70,7 @@ to maintain. There are several problems that need to be addressed:
   way to reuse any part of the application for other "pages" of the blog.
 
 .. note::
+
     Another problem not mentioned here is the fact that the database is
     tied to MySQL. Though not covered here, Symfony2 fully integrates `Doctrine`_,
     a library dedicated to database abstraction and mapping.
@@ -106,7 +107,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
 
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title>List of Posts</title>
@@ -130,7 +131,7 @@ is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
 
-In this case, our controller prepares data from the database and then includes
+In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
 easily change *just* the template file if you needed to render the blog
 entries in some other format (e.g. ``list.json.php`` for JSON format).
@@ -211,6 +212,7 @@ that by creating a new ``layout.php`` file:
 .. code-block:: html+php
 
     <!-- templates/layout.php -->
+    <!DOCTYPE html>
     <html>
         <head>
             <title><?php echo $title ?></title>
@@ -366,9 +368,9 @@ on the requested URI:
 
     // route the request internally
     $uri = $_SERVER['REQUEST_URI'];
-    if ($uri == '/index.php') {
+    if ('/index.php' == $uri) {
         list_action();
-    } elseif ($uri == '/index.php/show' && isset($_GET['id'])) {
+    } elseif ('/index.php/show' == $uri && isset($_GET['id'])) {
         show_action($_GET['id']);
     } else {
         header('Status: 404 Not Found');
@@ -418,34 +420,36 @@ Why should you have to reinvent solutions to all these routine problems?
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 to the rescue. Before actually using Symfony2, you need to make
-sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
-possible to start using PHP classes without explicitly including the file
-containing the class.
+Symfony2 to the rescue. Before actually using Symfony2, you need to download
+it. This can be done by using Composer, which takes care of downloading the
+correct version and all its dependencies and provides an autoloader. An
+autoloader is a tool that makes it possible to start using PHP classes
+without explicitly including the file containing the class.
 
-First, `download symfony`_ and place it into a ``vendor/symfony/symfony/`` directory.
-Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
-files in the application and to configure the autoloader:
+In your root directory, create a ``composer.json`` file with the following
+content:
 
-.. code-block:: html+php
+.. code-block:: json
 
-    <?php
-    // bootstrap.php
-    require_once 'model.php';
-    require_once 'controllers.php';
-    require_once 'vendor/symfony/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    {
+        "require": {
+            "symfony/symfony": "2.2.*"
+        },
+        "autoload": {
+            "files": ["model.php","controllers.php"]
+        }
+    }
 
-    $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
-    $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/../vendor/symfony/symfony/src',
-    ));
+Next, `download Composer`_ and then run the following command, which will download Symfony
+into a vendor/ directory:
 
-    $loader->register();
+.. code-block:: bash
 
-This tells the autoloader where the ``Symfony`` classes are. With this, you
-can start using Symfony classes without using the ``require`` statement for
-the files that contain them.
+    $ php composer.phar install
+
+Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
+which takes care of autoloading for all the files in the Symfony Framework as well as
+the files mentioned in the autoload section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony2 provides
@@ -458,7 +462,7 @@ the HTTP response being returned. Use them to improve the blog:
 
     <?php
     // index.php
-    require_once 'app/bootstrap.php';
+    require_once 'vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -466,9 +470,9 @@ the HTTP response being returned. Use them to improve the blog:
     $request = Request::createFromGlobals();
 
     $uri = $request->getPathInfo();
-    if ($uri == '/') {
+    if ('/' == $uri) {
         $response = list_action();
-    } elseif ($uri == '/show' && $request->query->has('id')) {
+    } elseif ('/show' == $uri && $request->query->has('id')) {
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
@@ -530,18 +534,15 @@ The Sample Application in Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The blog has come a *long* way, but it still contains a lot of code for such
-a simple application. Along the way, we've also invented a simple routing
+a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone `Routing`_ and
 `Templating`_ components, which already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony2 take care of
-them for you. Here's the same sample application, now built in Symfony2:
+them for you. Here's the same sample application, now built in Symfony2::
 
-.. code-block:: html+php
-
-    <?php
     // src/Acme/BlogBundle/Controller/BlogController.php
     namespace Acme\BlogBundle\Controller;
 
@@ -555,7 +556,10 @@ them for you. Here's the same sample application, now built in Symfony2:
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
+            return $this->render(
+                'AcmeBlogBundle:Blog:list.html.php',
+                array('posts' => $posts)
+            );
         }
 
         public function showAction($id)
@@ -563,18 +567,22 @@ them for you. Here's the same sample application, now built in Symfony2:
             $post = $this->get('doctrine')
                 ->getManager()
                 ->getRepository('AcmeBlogBundle:Post')
-                ->find($id);
+                ->find($id)
+            ;
 
             if (!$post) {
                 // cause the 404 page not found to be displayed
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
+            return $this->render(
+                'AcmeBlogBundle:Blog:show.html.php',
+                array('post' => $post)
+            );
         }
     }
 
-The two controllers are still lightweight. Each uses the Doctrine ORM library
+The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
@@ -590,7 +598,10 @@ now quite a bit simpler:
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->generate('blog_show', array('id' => $post->getId())) ?>">
+            <a href="<?php echo $view['router']->generate(
+                'blog_show',
+                array('id' => $post->getId())
+            ) ?>">
                 <?php echo $post->getTitle() ?>
             </a>
         </li>
@@ -602,10 +613,13 @@ The layout is nearly identical:
 .. code-block:: html+php
 
     <!-- app/Resources/views/layout.html.php -->
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
-            <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
+            <title><?php echo $view['slots']->output(
+                'title',
+                'Default title'
+            ) ?></title>
         </head>
         <body>
             <?php echo $view['slots']->output('_content') ?>
@@ -614,7 +628,7 @@ The layout is nearly identical:
 
 .. note::
 
-    We'll leave the show template as an exercise, as it should be trivial to
+    The show template is left as an exercise, as it should be trivial to
     create based on the list template.
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
@@ -625,21 +639,18 @@ A routing configuration map provides this information in a readable format:
 
     # app/config/routing.yml
     blog_list:
-        pattern:  /blog
+        path:     /blog
         defaults: { _controller: AcmeBlogBundle:Blog:list }
 
     blog_show:
-        pattern:  /blog/show/{id}
+        path:     /blog/show/{id}
         defaults: { _controller: AcmeBlogBundle:Blog:show }
 
 Now that Symfony2 is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
 it once it's created (and if you use a Symfony2 distribution, you won't
-even need to create it!):
+even need to create it!)::
 
-.. code-block:: html+php
-
-    <?php
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
     require_once __DIR__.'/../app/AppKernel.php';
@@ -656,7 +667,7 @@ controller method is responsible for returning the final ``Response`` object.
 There's really not much else to it.
 
 For a visual representation of how Symfony2 handles each request, see the
-:ref:`request flow diagram<request-flow-figure>`.
+:ref:`request flow diagram <request-flow-figure>`.
 
 Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -667,23 +678,23 @@ migrating the blog from flat PHP to Symfony2 has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
-  allows for new developers to be productive in your project more quickly.
+  allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
-  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`.
+  to develop or maintain low-level utilities** such as :ref:`autoloading <autoloading-introduction-sidebar>`,
+  :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
 
 * Symfony2 gives you **access to open source tools** such as Doctrine and the
   Templating, Security, Form, Validation and Translation components (to name
-  a few).
+  a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the ``Routing``
-  component.
+  component;
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony2's internal HTTP cache** or
   more powerful tools such as `Varnish`_. This is covered in a later chapter
-  all about :doc:`caching</book/http_cache>`.
+  all about :doc:`caching </book/http_cache>`.
 
 And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
@@ -701,6 +712,7 @@ for example, the list template written in Twig:
 
     {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
     {% extends "::layout.html.twig" %}
+
     {% block title %}List of Posts{% endblock %}
 
     {% block body %}
@@ -721,7 +733,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 .. code-block:: html+jinja
 
     {# app/Resources/views/layout.html.twig #}
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title>{% block title %}Default title{% endblock %}</title>
@@ -732,8 +744,8 @@ The corresponding ``layout.html.twig`` template is also easier to write:
     </html>
 
 Twig is well-supported in Symfony2. And while PHP templates will always
-be supported in Symfony2, we'll continue to discuss the many advantages of
-Twig. For more information, see the :doc:`templating chapter</book/templating>`.
+be supported in Symfony2, the many advantages of Twig will continue to
+be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------
@@ -742,10 +754,10 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download symfony`: http://symfony.com/download
+.. _`download Composer`: http://getcomposer.org/download/
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
-.. _`Varnish`: http://www.varnish-cache.org
+.. _`Varnish`: https://www.varnish-cache.org/
 .. _`PHPUnit`: http://www.phpunit.de

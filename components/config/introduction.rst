@@ -15,11 +15,10 @@ may be (Yaml, XML, INI files, or for instance a database).
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Config);
-* Install it via PEAR ( `pear.symfony.com/Config`);
-* Install it via Composer (`symfony/config` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/config`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Config).
 
 Sections
 --------
@@ -27,3 +26,5 @@ Sections
 * :doc:`/components/config/resources`
 * :doc:`/components/config/caching`
 * :doc:`/components/config/definition`
+
+.. _Packagist: https://packagist.org/packages/symfony/config

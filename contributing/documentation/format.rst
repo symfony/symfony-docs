@@ -52,6 +52,8 @@ the highlighted pseudo-language:
 
     A list of supported languages is available on the `Pygments website`_.
 
+.. _docs-configuration-blocks:
+
 Configuration Blocks
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -108,10 +110,6 @@ The current list of supported formats are the following:
 +-----------------+-------------+
 | html+jinja      | Twig        |
 +-----------------+-------------+
-| jinja+html      | Twig        |
-+-----------------+-------------+
-| php+html        | PHP         |
-+-----------------+-------------+
 | html+php        | PHP         |
 +-----------------+-------------+
 | ini             | INI         |
@@ -143,11 +141,13 @@ also specify alternative text for the link:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email</cookbook/email/spool>`
+    :doc:`Spooling Email </cookbook/email/spool>`
 
 You can also add links to the API documentation:
 
 .. code-block:: rst
+
+    :namespace:`Symfony\\Component\\BrowserKit`
 
     :class:`Symfony\\Component\\Routing\\Matcher\\ApacheUrlMatcher`
 
@@ -187,7 +187,7 @@ Installing the Sphinx extensions
 * Add the following to the ``conf.py`` file:
 
 .. code-block:: py
-    
+
     # ...
     sys.path.append(os.path.abspath('_exts'))
 
@@ -202,18 +202,20 @@ Installing the Sphinx extensions
     # enable highlighting for PHP code not between ``<?php ... ?>`` by default
     lexers['php'] = PhpLexer(startinline=True)
     lexers['php-annotations'] = PhpLexer(startinline=True)
+    lexers['php-standalone'] = PhpLexer(startinline=True)
+    lexers['php-symfony'] = PhpLexer(startinline=True)
 
     # use PHP as the primary domain
     primary_domain = 'php'
-    
-    # set url for API links
+
+    # set URL for API links
     api_url = 'http://api.symfony.com/master/%s'
 
-.. _reStructuredText:        http://docutils.sf.net/rst.html
-.. _Sphinx:                  http://sphinx.pocoo.org/
-.. _documents:               http://github.com/symfony/symfony-docs
-.. _reStructuredText Primer: http://sphinx.pocoo.org/rest.html
-.. _markup:                  http://sphinx.pocoo.org/markup/
+.. _reStructuredText:        http://docutils.sourceforge.net/rst.html
+.. _Sphinx:                  http://sphinx-doc.org/
+.. _documents:               https://github.com/symfony/symfony-docs
+.. _reStructuredText Primer: http://sphinx-doc.org/rest.html
+.. _markup:                  http://sphinx-doc.org/markup/
 .. _Pygments website:        http://pygments.org/languages/
 .. _source:                  https://github.com/fabpot/sphinx-php
-.. _Sphinx quick setup:      http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
+.. _Sphinx quick setup:      http://sphinx-doc.org/tutorial.html#setting-up-the-documentation-sources

@@ -2,8 +2,8 @@
    single: Doctrine; ORM configuration reference
    single: Configuration reference; Doctrine ORM
 
-Configuration Reference
-=======================
+Doctrine Configuration Reference
+================================
 
 .. configuration-block::
 
@@ -40,7 +40,7 @@ Configuration Reference
                         # True to use as persistent connection for the ibm_db2 driver
                         persistent:           ~
 
-                        # The protocol to use for the ibm_db2 driver (default to TCPIP if ommited)
+                        # The protocol to use for the ibm_db2 driver (default to TCPIP if omitted)
                         protocol:             ~
 
                         # True to use dbname as service name instead of SID for Oracle
@@ -85,7 +85,7 @@ Configuration Reference
                                 # True to use as persistent connection for the ibm_db2 driver
                                 persistent:           ~
 
-                                # The protocol to use for the ibm_db2 driver (default to TCPIP if ommited)
+                                # The protocol to use for the ibm_db2 driver (default to TCPIP if omitted)
                                 protocol:             ~
 
                                 # True to use dbname as service name instead of SID for Oracle
@@ -170,6 +170,7 @@ Configuration Reference
 
     .. code-block:: xml
 
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -207,9 +208,9 @@ Configuration Reference
                         <doctrine:metadata-cache-driver type="memcache" host="localhost" port="11211" instance-class="Memcache" class="Doctrine\Common\Cache\MemcacheCache" />
                         <doctrine:mapping name="AcmeHelloBundle" />
                         <doctrine:dql>
-                            <doctrine:string-function name="test_string>Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
-                            <doctrine:numeric-function name="test_numeric>Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
-                            <doctrine:datetime-function name="test_datetime>Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                            <doctrine:string-function name="test_string">Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
+                            <doctrine:numeric-function name="test_numeric">Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
+                            <doctrine:datetime-function name="test_datetime">Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
                         </doctrine:dql>
                     </doctrine:entity-manager>
                     <doctrine:entity-manager name="em2" connection="conn2" metadata-cache-driver="apc">
@@ -239,7 +240,7 @@ the ORM resolves to:
             # the standard distribution overrides this to be true in debug, false otherwise
             auto_generate_proxy_classes: false
             proxy_namespace: Proxies
-            proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
+            proxy_dir: "%kernel.cache_dir%/doctrine/orm/Proxies"
             default_entity_manager: default
             metadata_cache_driver: array
             query_cache_driver: array
@@ -313,14 +314,10 @@ can control. The following configuration options exist for a mapping:
 Doctrine DBAL Configuration
 ---------------------------
 
-.. note::
-
-    DoctrineBundle supports all parameters that default Doctrine drivers
-    accept, converted to the XML or YAML naming standards that Symfony
-    enforces. See the Doctrine `DBAL documentation`_ for more information.
-
-Besides default Doctrine options, there are some Symfony-related ones that you
-can configure. The following block shows all possible configuration keys:
+DoctrineBundle supports all parameters that default Doctrine drivers
+accept, converted to the XML or YAML naming standards that Symfony
+enforces. See the Doctrine `DBAL documentation`_ for more information.
+The following block shows all possible configuration keys:
 
 .. configuration-block::
 
@@ -334,20 +331,25 @@ can configure. The following block shows all possible configuration keys:
                 user:                 user
                 password:             secret
                 driver:               pdo_mysql
+                # the DBAL driverClass option
                 driver_class:         MyNamespace\MyDriverImpl
+                # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 %kernel.data_dir%/data.sqlite
+                path:                 "%kernel.data_dir%/data.sqlite"
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
+                # the DBAL wrapperClass option
                 wrapper_class:        MyDoctrineDbalConnectionWrapper
                 charset:              UTF8
-                logging:              %kernel.debug%
+                logging:              "%kernel.debug%"
                 platform_service:     MyOwnDatabasePlatformService
                 mapping_types:
                     enum: string
                 types:
                     custom: Acme\HelloBundle\MyCustomType
+                # the DBAL keepSlave option
+                keep_slave:           false
 
     .. code-block:: xml
 
@@ -405,4 +407,4 @@ which is the first one defined or the one configured via the
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` if the name of the connection.
 
-.. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
+.. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html

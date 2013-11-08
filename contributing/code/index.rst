@@ -10,4 +10,5 @@ Contributing Code
     tests
     standards
     conventions
+    git
     license

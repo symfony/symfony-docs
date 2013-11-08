@@ -6,5 +6,6 @@ Contributing Documentation
 
     overview
     format
+    standards
     translations
     license

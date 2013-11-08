@@ -10,14 +10,34 @@ inspired by the Python LogBook library.
 Usage
 -----
 
-In Monolog each logger defines a logging channel. Each channel has a
-stack of handlers to write the logs (the handlers can be shared).
+To log a message simply get the logger service from the container in
+your controller::
+
+    public function indexAction()
+    {
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        $logger->error('An error occurred');
+
+        // ...
+    }
+
+The ``logger`` service has different methods for different logging levels.
+See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
+on which methods are available.
+
+Handlers and Channels: Writing logs to different Locations
+----------------------------------------------------------
+
+In Monolog each logger defines a logging channel, which organizes your log
+messages into different "categories". Then, each channel has a stack of handlers
+to write the logs (the handlers can be shared).
 
 .. tip::
 
     When injecting the logger in a service you can
-    :ref:`use a custom channel<dic_tags-monolog>` to see easily which
-    part of the application logged the message.
+    :ref:`use a custom channel <dic_tags-monolog>` control which "channel"
+    the logger will log to.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
 (by default in the ``app/logs/prod.log`` in the prod environment and
@@ -29,19 +49,6 @@ messages in a buffer and to log them only if a message reaches the
 action level (ERROR in the configuration provided in the standard
 edition) by forwarding the messages to another handler.
 
-To log a message simply get the logger service from the container in
-your controller::
-
-    $logger = $this->get('logger');
-    $logger->info('We just got the logger');
-    $logger->err('An error occurred');
-
-.. tip::
-
-    Using only the methods of the
-    :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` interface
-    allows to change the logger implementation without changing your code.
-
 Using several handlers
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -52,10 +59,10 @@ allows you to log the messages in several ways easily.
 
     .. code-block:: yaml
 
-        # app/config/config*.yml
+        # app/config/config.yml
         monolog:
             handlers:
-                syslog:
+                applog:
                     type: stream
                     path: /var/log/symfony.log
                     level: error
@@ -66,9 +73,13 @@ allows you to log the messages in several ways easily.
                 file:
                     type: stream
                     level: debug
+                syslog:
+                    type: syslog
+                    level: error
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -77,7 +88,7 @@ allows you to log the messages in several ways easily.
 
             <monolog:config>
                 <monolog:handler
-                    name="syslog"
+                    name="applog"
                     type="stream"
                     path="/var/log/symfony.log"
                     level="error"
@@ -93,8 +104,39 @@ allows you to log the messages in several ways easily.
                     type="stream"
                     level="debug"
                 />
+                <monolog:handler
+                    name="syslog"
+                    type="syslog"
+                    level="error"
+                />
             </monolog:config>
         </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'applog' => array(
+                    'type'  => 'stream',
+                    'path'  => '/var/log/symfony.log',
+                    'level' => 'error',
+                ),
+                'main' => array(
+                    'type'         => 'fingers_crossed',
+                    'action_level' => 'warning',
+                    'handler'      => 'file',
+                ),
+                'file' => array(
+                    'type'  => 'stream',
+                    'level' => 'debug',
+                ),
+                'syslog' => array(
+                    'type'  => 'syslog',
+                    'level' => 'error',
+                ),
+            ),
+        ));
 
 The above configuration defines a stack of handlers which will be called
 in the order where they are defined.
@@ -137,6 +179,7 @@ easily. Your formatter must implement
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -146,6 +189,7 @@ easily. Your formatter must implement
             <services>
                 <service id="my_formatter" class="Monolog\Formatter\JsonFormatter" />
             </services>
+
             <monolog:config>
                 <monolog:handler
                     name="file"
@@ -155,6 +199,22 @@ easily. Your formatter must implement
                 />
             </monolog:config>
         </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container
+            ->register('my_formatter', 'Monolog\Formatter\JsonFormatter');
+
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'file' => array(
+                    'type'      => 'stream',
+                    'level'     => 'debug',
+                    'formatter' => 'my_formatter',
+                ),
+            ),
+        ));
 
 Adding some extra data in the log messages
 ------------------------------------------
@@ -166,7 +226,7 @@ only for a specific handler.
 A processor is simply a callable receiving the record as its first argument.
 
 Processors are configured using the ``monolog.processor`` DIC tag. See the
-:ref:`reference about it<dic_tags-monolog-processor>`.
+:ref:`reference about it <dic_tags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,7 +267,6 @@ using a processor.
         }
     }
 
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -221,7 +280,7 @@ using a processor.
 
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
-                arguments:  [ @session ]
+                arguments:  ["@session"]
                 tags:
                     - { name: monolog.processor, method: processRecord }
 
@@ -232,6 +291,59 @@ using a processor.
                     path: "%kernel.logs_dir%/%kernel.environment%.log"
                     level: debug
                     formatter: monolog.formatter.session_request
+
+    .. code-block:: xml
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
+            <services>
+                <service id="monolog.formatter.session_request" class="Monolog\Formatter\LineFormatter">
+                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%&#xA;</argument>
+                </service>
+
+                <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
+                    <argument type="service" id="session" />
+                    <tag name="monolog.processor" method="processRecord" />
+                </service>
+            </services>
+
+            <monolog:config>
+                <monolog:handler
+                    name="main"
+                    type="stream"
+                    path="%kernel.logs_dir%/%kernel.environment%.log"
+                    level="debug"
+                    formatter="monolog.formatter.session_request"
+                />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container
+            ->register('monolog.formatter.session_request', 'Monolog\Formatter\LineFormatter')
+            ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n');
+
+        $container
+            ->register('monolog.processor.session_request', 'Acme\MyBundle\SessionRequestProcessor')
+            ->addArgument(new Reference('session'))
+            ->addTag('monolog.processor', array('method' => 'processRecord'));
+
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main' => array(
+                    'type'      => 'stream',
+                    'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
+                    'level'     => 'debug',
+                    'formatter' => 'monolog.formatter.session_request',
+                ),
+            ),
+        ));
 
 .. note::
 

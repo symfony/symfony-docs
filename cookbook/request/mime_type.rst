@@ -43,10 +43,19 @@ project::
 Registering your Listener
 -------------------------
 
-As for any other listener, you need to add it in one of your configuration
-file and register it as a listener by adding the ``kernel.event_listener`` tag:
+As with any other listener, you need to add it in one of your configuration
+files and register it as a listener by adding the ``kernel.event_listener`` tag:
 
 .. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            acme.demobundle.listener.request:
+                class: Acme\DemoBundle\RequestListener
+                tags:
+                    - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     .. code-block:: xml
 
@@ -63,20 +72,14 @@ file and register it as a listener by adding the ``kernel.event_listener`` tag:
             </services>
         </container>
 
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            acme.demobundle.listener.request:
-                class: Acme\DemoBundle\RequestListener
-                tags:
-                    - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
     .. code-block:: php
 
         # app/config/config.php
         $definition = new Definition('Acme\DemoBundle\RequestListener');
-        $definition->addTag('kernel.event_listener', array('event' => 'kernel.request', 'method' => 'onKernelRequest'));
+        $definition->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.request',
+            'method' => 'onKernelRequest',
+        ));
         $container->setDefinition('acme.demobundle.listener.request', $definition);
 
 At this point, the ``acme.demobundle.listener.request`` service has been

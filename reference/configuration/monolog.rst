@@ -1,8 +1,8 @@
 .. index::
    pair: Monolog; Configuration reference
 
-Configuration Reference
-=======================
+Monolog Configuration Reference
+===============================
 
 .. configuration-block::
 
@@ -54,10 +54,7 @@ Configuration Reference
                     subject:              ~
                     email_prototype:
                         id:                   ~ # Required (when the email_prototype is used)
-                        factory-method:       ~
-                    channels:
-                        type:                 ~
-                        elements:             []
+                        method:               ~
                     formatter:            ~
 
     .. code-block:: xml

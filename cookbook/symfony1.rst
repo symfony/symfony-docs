@@ -10,17 +10,17 @@ at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
 routing, controllers and templates all remain.
 
-In this chapter, we'll walk through the differences between symfony1 and Symfony2.
+This chapter walks through the differences between symfony1 and Symfony2.
 As you'll see, many tasks are tackled in a slightly different way. You'll
 come to appreciate these minor differences as they promote stable, predictable,
 testable and decoupled code in your Symfony2 applications.
 
-So, sit back and relax as we take you from "then" to "now".
+So, sit back and relax as you travel from "then" to "now".
 
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Standard`_ -
+When looking at a Symfony2 project - for example, the `Symfony2 Standard Edition`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -61,7 +61,7 @@ In other words, the code that drives your application lives in many different
 places.
 
 In Symfony2, life is much simpler because *all* Symfony2 code must live in
-a bundle. In our pretend symfony1 project, all the code *could* be moved
+a bundle. In the pretend symfony1 project, all the code *could* be moved
 into one or more plugins (which is a very good practice, in fact). Assuming
 that all modules, PHP classes, schema, routing configuration, etc were moved
 into a plugin, the symfony1 ``plugins/`` directory would be very similar
@@ -90,9 +90,11 @@ a bundle. With the help of a console command, the ``Resources/public/``
 directory of each bundle is copied or symbolically-linked to the ``web/bundles/``
 directory. This allows you to keep assets organized inside your bundle, but
 still make them available to the public. To make sure that all bundles are
-available, run the following command::
+available, run the following command:
 
-    php app/console assets:install web
+.. code-block:: bash
+
+    $ php app/console assets:install web
 
 .. note::
 
@@ -114,10 +116,10 @@ That array told symfony1 exactly which file contained each class. In the
 production environment, this caused you to need to clear the cache when classes
 were added or moved.
 
-In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
+In Symfony2, a tool named `Composer`_ handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
-Take the ``FrameworkExtraBundle`` from the Symfony2 Standard Edition as an
+Take the FrameworkExtraBundle from the Symfony2 Standard Edition as an
 example::
 
     namespace Sensio\Bundle\FrameworkExtraBundle;
@@ -132,52 +134,50 @@ example::
 
 The file itself lives at
 ``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
-As you can see, the location of the file follows the namespace of the class.
-Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
-the directory that the file should live in
+As you can see, the second part of the path follows the namespace of the
+class. The first part is equal to the package name of the SensioFrameworkExtraBundle.
+
+The namespace, ``Sensio\Bundle\FrameworkExtraBundle``, and package name,
+``sensio/framework-extra-bundle``, spells out the directory that the file
+should live in
 (``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``).
-This is because, in the ``app/autoload.php`` file, you'll configure Symfony to
-look for the ``Sensio`` namespace in the ``vendor/sensio`` directory:
-
-.. code-block:: php
-
-    // app/autoload.php
-
-    // ...
-    $loader->registerNamespaces(array(
-        ...,
-        'Sensio'           => __DIR__.'/../vendor/sensio/framework-extra-bundle',
-    ));
+Composer can then look for the file at this specific place and load it very
+fast.
 
 If the file did *not* live at this exact location, you'd receive a
 ``Class "Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle" does not exist.``
-error. In Symfony2, a "class does not exist" means that the suspect class
-namespace and physical location do not match. Basically, Symfony2 is looking
+error. In Symfony2, a "class does not exist" error means that the namespace of
+the class and physical location do not match. Basically, Symfony2 is looking
 in one exact location for that class, but that location doesn't exist (or
 contains a different class). In order for a class to be autoloaded, you
 **never need to clear your cache** in Symfony2.
 
 As mentioned before, for the autoloader to work, it needs to know that the
-``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
-example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/orm/lib/``
-directory. This mapping is entirely controlled by you via the
-``app/autoload.php`` file.
+``Sensio`` namespace lives in the ``vendor/sensio/framework-extra-bundle``
+directory and that, for example, the ``Doctrine`` namespace lives in the
+``vendor/doctrine/orm/lib/`` directory. This mapping is entirely controlled by
+Composer. Each third-party library you load through Composer has its
+settings defined and Composer takes care of everything for you.
+
+For this to work, all third-party libraries used by your project must be
+defined in the ``composer.json`` file.
 
 If you look at the ``HelloController`` from the Symfony2 Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
-``Acme`` namespace is not defined in the ``app/autoload.php``. By default you
-do not need to explicitly configure the location of bundles that live in the
-``src/`` directory. The ``UniversalClassLoader`` is configured to fallback to
-the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
+``AcmeDemoBundle`` is not defined in your ``composer.json`` file. Nonetheless are
+the files autoloaded. This is because you can tell composer to autoload files
+from specific directories without defining a dependency:
 
-.. code-block:: php
+.. code-block:: yaml
 
-    // app/autoload.php
+    "autoload": {
+        "psr-0": { "": "src/" }
+    }
 
-    // ...
-    $loader->registerNamespaceFallbacks(array(
-        __DIR__.'/../src',
-    ));
+This means that if a class is not found in the ``vendor`` directory, Composer
+will search in the ``src`` directory before throwing a "class does not exist"
+exception. Read more about configuring the Composer Autoloader in
+`the Composer documentation`_
 
 Using the Console
 -----------------
@@ -185,16 +185,16 @@ Using the Console
 In symfony1, the console is in the root directory of your project and is
 called ``symfony``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php symfony
+    $ php symfony
 
 In Symfony2, the console is now in the app sub-directory and is called
 ``console``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php app/console
+    $ php app/console
 
 Applications
 ------------
@@ -237,7 +237,8 @@ class::
     // config/ProjectConfiguration.class.php
     public function setup()
     {
-        $this->enableAllPluginsExcept(array(... some plugins here));
+        // some plugins here
+        $this->enableAllPluginsExcept(array(...));
     }
 
 In Symfony2, the bundles are activated inside the application kernel::
@@ -262,11 +263,37 @@ In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
 automatically loaded inside any plugin. In Symfony2, routing and application
 configuration inside a bundle must be included manually. For example, to
 include a routing resource from a bundle called ``AcmeDemoBundle``, you can
-do the following::
+do the following:
 
-    # app/config/routing.yml
-    _hello:
-        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        _hello:
+            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.yml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="@AcmeDemoBundle/Resources/config/routing.xml" />
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));
+
+        return $collection;
 
 This will load the routes found in the ``Resources/config/routing.yml`` file
 of the ``AcmeDemoBundle``. The special ``@AcmeDemoBundle`` is a shortcut syntax
@@ -274,11 +301,25 @@ that, internally, resolves to the full path to that bundle.
 
 You can use this same strategy to bring in configuration from a bundle:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    imports:
-        - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        imports:
+            - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <imports>
+            <import resource="@AcmeDemoBundle/Resources/config/config.xml" />
+        </imports>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $this->import('@AcmeDemoBundle/Resources/config/config.php')
 
 In Symfony2, configuration is a bit like ``app.yml`` in symfony1, except much
 more systematic. With ``app.yml``, you could simply create any keys you wanted.
@@ -295,10 +336,22 @@ used them in your application:
 In Symfony2, you can also create arbitrary entries under the ``parameters``
 key of your configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    parameters:
-        email.from_address: foo.bar@example.com
+    .. code-block:: yaml
+
+        parameters:
+            email.from_address: foo.bar@example.com
+
+    .. code-block:: xml
+
+        <parameters>
+            <parameter key="email.from_address">foo.bar@example.com</parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        $container->setParameter('email.from_address', 'foo.bar@example.com');
 
 You can now access this from a controller, for example::
 
@@ -311,4 +364,6 @@ In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
-.. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard
+.. _`Composer`: http://getcomposer.org
+.. _`Symfony2 Standard Edition`: https://github.com/symfony/symfony-standard
+.. _`the Composer documentation`: http://getcomposer.org/doc/04-schema.md#autoload

@@ -34,7 +34,7 @@ simply by creating a file with the same name.
 
 .. note::
 
-    Despite the method name, there is no parent/child relationship between 
+    Despite the method name, there is no parent/child relationship between
     the bundles, it is just a way to extend and override an existing bundle.
 
 Overriding Controllers
@@ -73,8 +73,8 @@ original method, and change its functionality::
     the controller using the standard ``FOSUserBundle:Registration:register``
     syntax in routes and templates. This is the best practice.
 
-Overriding Resources: Templates, Routing, Validation, etc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Overriding Resources: Templates, Routing, etc
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most resources can also be overridden, simply by creating a file in the same
 location as your parent bundle.
@@ -86,7 +86,7 @@ you can create your own file in the same location of ``AcmeUserBundle``.
 Symfony will ignore the file that lives inside the ``FOSUserBundle`` entirely,
 and use your file instead.
 
-The same goes for routing files, validation configuration and other resources.
+The same goes for routing files and some other resources.
 
 .. note::
 
@@ -97,12 +97,9 @@ The same goes for routing files, validation configuration and other resources.
 
 .. caution::
 
-   Translation files do not work in the same way as described above. All
-   translation files are accumulated into a set of "pools" (one for each)
-   domain. Symfony loads translation files from bundles first (in the order
-   that the bundles are initialized) and then from your ``app/Resources``
-   directory. If the same translation is specified in two resources, the
-   translation from the resource that's loaded last will win.
+   Translation and validation files do not work in the same way as described
+   above. Read ":ref:`override-translations`" if you want to learn how to
+   override translations and see ":ref:`override-validation`" for tricks to
+   override the validation.
 
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle
-

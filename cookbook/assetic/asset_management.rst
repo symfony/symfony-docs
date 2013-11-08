@@ -4,11 +4,12 @@
 How to Use Assetic for Asset Management
 =======================================
 
-Assetic combines two major ideas: assets and filters. The assets are files
-such as CSS, JavaScript and image files. The filters are things that can
-be applied to these files before they are served to the browser. This allows
-a separation between the asset files stored in the application and the files
-actually presented to the user.
+Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
+:ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
+JavaScript and image files. The filters are things that can be applied to
+these files before they are served to the browser. This allows a separation
+between the asset files stored in the application and the files actually presented
+to the user.
 
 Without Assetic, you just serve the files that are stored in the application
 directly:
@@ -17,14 +18,14 @@ directly:
 
     .. code-block:: html+jinja
 
-        <script src="{{ asset('js/script.js') }}" type="text/javascript" />
+        <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
 
     .. code-block:: php
 
-        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript" />
+        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript"></script>
 
 But *with* Assetic, you can manipulate these assets however you want (or
-load them from anywhere) before serving them. These means you can:
+load them from anywhere) before serving them. This means you can:
 
 * Minify and combine all of your CSS and JS files
 
@@ -33,12 +34,27 @@ load them from anywhere) before serving them. These means you can:
 
 * Run image optimizations on your images
 
+.. _cookbook-assetic-assets:
+
 Assets
 ------
 
 Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
-drawn from various sources such as from within a bundle:
+drawn from various sources such as from within a bundle.
+
+You can use Assetic to process both :ref:`CSS stylesheets <cookbook-assetic-including-css>`
+and :ref:`JavaScript files <cookbook-assetic-including-javascript>`. The philosophy
+behind adding either is basically the same, but with a slightly different syntax.
+
+.. _cookbook-assetic-including-javascript:
+
+Including JavaScript Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To include JavaScript files, use the ``javascript`` tag in any template.
+This will most commonly live in the ``javascripts`` block, if you're using
+the default block names from the Symfony Standard Distribution:
 
 .. configuration-block::
 
@@ -51,30 +67,14 @@ drawn from various sources such as from within a bundle:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
+            array('@AcmeFooBundle/Resources/public/js/*')
+        ) as $url): ?>
             <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 .. tip::
 
-    To bring in CSS stylesheets, you can use the same methodologies seen
-    in this entry, except with the `stylesheets` tag:
-
-    .. configuration-block::
-
-        .. code-block:: html+jinja
-
-            {% stylesheets '@AcmeFooBundle/Resources/public/css/*' %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-
-        .. code-block:: html+php
-
-            <?php foreach ($view['assetic']->stylesheets(
-                                                 array('@AcmeFooBundle/Resources/public/css/*')
-                                             ) as $url): ?>
-                <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-            <?php endforeach; ?>
+    You can also include CSS Stylesheets: see :ref:`cookbook-assetic-including-css`.
 
 In this example, all of the files in the ``Resources/public/js/`` directory
 of the ``AcmeFooBundle`` will be loaded and served from a different location.
@@ -84,23 +84,76 @@ The actual rendered tag might simply look like:
 
     <script src="/app_dev.php/js/abcd123.js"></script>
 
+This is a key point: once you let Assetic handle your assets, the files are
+served from a different location. This *will* cause problems with CSS files
+that reference images by their relative path. See :ref:`cookbook-assetic-cssrewrite`.
+
+.. _cookbook-assetic-including-css:
+
+Including CSS Stylesheets
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To bring in CSS stylesheets, you can use the same methodologies seen
+above, except with the ``stylesheets`` tag. If you're using the default
+block names from the Symfony Standard Distribution, this will usually live
+inside a ``stylesheets`` block:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% stylesheets 'bundles/acme_foo/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->stylesheets(
+            array('bundles/acme_foo/css/*'),
+            array('cssrewrite')
+        ) as $url): ?>
+            <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+        <?php endforeach; ?>
+
+But because Assetic changes the paths to your assets, this *will* break any
+background images (or other paths) that uses relative paths, unless you use
+the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
+
 .. note::
 
-    This is a key point: once you let Assetic handle your assets, the files are
-    served from a different location. This *can* cause problems with CSS files
-    that reference images by their relative path. However, this can be fixed
-    by using the ``cssrewrite`` filter, which updates paths in CSS files
-    to reflect their new location.
+    Notice that in the original example that included JavaScript files, you
+    referred to the files using a path like ``@AcmeFooBundle/Resources/public/file.js``,
+    but that in this example, you referred to the CSS files using their actual,
+    publicly-accessible path: ``bundles/acme_foo/css``. You can use either, except
+    that there is a known issue that causes the ``cssrewrite`` filter to fail
+    when using the ``@AcmeFooBundle`` syntax for CSS Stylesheets.
+
+.. _cookbook-assetic-cssrewrite:
+
+Fixing CSS Paths with the ``cssrewrite`` Filter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since Assetic generates new URLs for your assets, any relative paths inside
+your CSS files will break. To fix this, make sure to use the ``cssrewrite``
+filter with your ``stylesheets`` tag. This parses your CSS files and corrects
+the paths internally to reflect the new location.
+
+You can see an example in the previous section.
+
+.. caution::
+
+    When using the ``cssrewrite`` filter, don't refer to your CSS files using
+    the ``@AcmeFooBundle`` syntax. See the note in the above section for details.
 
 Combining Assets
 ~~~~~~~~~~~~~~~~
 
-You can also combine several files into one. This helps to reduce the number
-of HTTP requests, which is great for front end performance. It also allows
-you to maintain the files more easily by splitting them into manageable parts.
-This can help with re-usability as you can easily split project-specific
-files from those which can be used in other applications, but still serve
-them as a single file:
+One feature of Assetic is that it will combine many files into one. This helps
+to reduce the number of HTTP requests, which is great for front end performance.
+It also allows you to maintain the files more easily by splitting them into
+manageable parts. This can help with re-usability as you can easily split
+project-specific files from those which can be used in other applications,
+but still serve them as a single file:
 
 .. configuration-block::
 
@@ -116,22 +169,27 @@ them as a single file:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*',
-                  '@AcmeBarBundle/Resources/public/js/form.js',
-                  '@AcmeBarBundle/Resources/public/js/calendar.js')) as $url): ?>
+            array(
+                '@AcmeFooBundle/Resources/public/js/*',
+                '@AcmeBarBundle/Resources/public/js/form.js',
+                '@AcmeBarBundle/Resources/public/js/calendar.js',
+            )
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-In the `dev` environment, each file is still served individually, so that
-you can debug problems more easily. However, in the `prod` environment, this
-will be rendered as a single `script` tag.
+In the ``dev`` environment, each file is still served individually, so that
+you can debug problems more easily. However, in the ``prod`` environment
+(or more specifically, when the ``debug`` flag is ``false``), this will be
+rendered as a single ``script`` tag, which contains the contents of all of
+the JavaScript files.
 
 .. tip::
 
     If you're new to Assetic and try to use your application in the ``prod``
     environment (by using the ``app.php`` controller), you'll likely see
     that all of your CSS and JS breaks. Don't worry! This is on purpose.
-    For details on using Assetic in the `prod` environment, see :ref:`cookbook-assetic-dumping`.
+    For details on using Assetic in the ``prod`` environment, see :ref:`cookbook-assetic-dumping`.
 
 And combining files doesn't only apply to *your* files. You can also use Assetic to
 combine third party assets, such as jQuery, with your own into a single file:
@@ -149,10 +207,15 @@ combine third party assets, such as jQuery, with your own into a single file:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
-                  '@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
+            array(
+                '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
+                '@AcmeFooBundle/Resources/public/js/*',
+            )
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
+
+.. _cookbook-assetic-filters:
 
 Filters
 -------
@@ -173,7 +236,7 @@ and deployment processes.
 
 To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
-available to use (we'll use the filter below).
+available to use (you'll use the filter below).
 
 For example to use the JavaScript YUI Compressor the following config should
 be added:
@@ -223,7 +286,8 @@ into your template:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')) as $url): ?>
+            array('yui_js')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
@@ -294,6 +358,8 @@ Moreover, that file does **not** actually exist, nor is it dynamically rendered
 by Symfony (as the asset files are in the ``dev`` environment). This is on
 purpose - letting Symfony generate these files dynamically in a production
 environment is just too slow.
+
+.. _cookbook-asetic-dump-prod:
 
 Instead, each time you use your app in the ``prod`` environment (and therefore,
 each time you deploy), you should run the following task:

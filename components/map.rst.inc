@@ -1,6 +1,12 @@
-* **Class Loader**
+* :doc:`/components/using_components`
 
-  * :doc:`/components/class_loader`
+* :doc:`/components/class_loader/index`
+
+  * :doc:`/components/class_loader/introduction`
+  * :doc:`/components/class_loader/class_loader`
+  * :doc:`/components/class_loader/map_class_loader`
+  * :doc:`/components/class_loader/cache_class_loader`
+  * :doc:`/components/class_loader/debug_class_loader`
 
 * :doc:`/components/config/index`
 
@@ -13,6 +19,8 @@
 
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
+  * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/helpers/index`
 
 * **CSS Selector**
 
@@ -22,12 +30,15 @@
 
   * :doc:`/components/dependency_injection/introduction`
   * :doc:`/components/dependency_injection/types`
+  * :doc:`/components/dependency_injection/parameters`
   * :doc:`/components/dependency_injection/definitions`
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
   * :doc:`/components/dependency_injection/factories`
+  * :doc:`/components/dependency_injection/configurators`
   * :doc:`/components/dependency_injection/parentservices`
   * :doc:`/components/dependency_injection/advanced`
+  * :doc:`/components/dependency_injection/workflow`
 
 * **DOM Crawler**
 
@@ -38,14 +49,19 @@
   * :doc:`/components/event_dispatcher/introduction`
   * :doc:`/components/event_dispatcher/container_aware_dispatcher`
   * :doc:`/components/event_dispatcher/generic_event`
+  * :doc:`/components/event_dispatcher/immutable_dispatcher`
 
 * **Filesystem**
 
   * :doc:`/components/filesystem`
-  
+
 * **Finder**
 
   * :doc:`/components/finder`
+
+* :doc:`/components/form/index`
+
+  * :doc:`/components/form/introduction`
 
 * :doc:`/components/http_foundation/index`
 
@@ -53,27 +69,53 @@
   * :doc:`/components/http_foundation/sessions`
   * :doc:`/components/http_foundation/session_configuration`
   * :doc:`/components/http_foundation/session_testing`
+  * :doc:`/components/http_foundation/trusting_proxies`
+
+* :doc:`/components/http_kernel/index`
+
+  * :doc:`/components/http_kernel/introduction`
 
 * **Locale**
 
   * :doc:`/components/locale`
 
+* **Options Resolver**
+
+  * :doc:`/components/options_resolver`
+
 * **Process**
 
   * :doc:`/components/process`
 
-* **Routing**
+* :doc:`/components/property_access/index`
 
-  * :doc:`/components/routing`
+  * :doc:`/components/property_access/introduction`
+
+* :doc:`/components/routing/index`
+
+  * :doc:`/components/routing/introduction`
+  * :doc:`/components/routing/hostname_pattern`
+
+* :doc:`/components/security/index`
+
+  * :doc:`/components/security/introduction`
+  * :doc:`/components/security/firewall`
+  * :doc:`/components/security/authentication`
+  * :doc:`/components/security/authorization`
 
 * **Serializer**
 
   * :doc:`/components/serializer`
 
-* **Templating**
+* **Stopwatch**
 
-  * :doc:`/components/templating`
+  * :doc:`/components/stopwatch`
 
-* **YAML**
+* :doc:`/components/templating/index`
 
-  * :doc:`/components/yaml`
+  * :doc:`/components/templating/introduction`
+
+* :doc:`/components/yaml/index`
+
+  * :doc:`/components/yaml/introduction`
+  * :doc:`/components/yaml/yaml_format`

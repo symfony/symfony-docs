@@ -18,15 +18,26 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
 |             | - `prototype`_                                                              |
+|             | - `prototype_name`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `label`_                                                                  |
 | options     | - `error_bubbling`_                                                         |
+|             | - `error_mapping`_                                                          |
 |             | - `by_reference`_                                                           |
+|             | - `empty_data`_                                                             |
+|             | - `mapped`_                                                                 |
 +-------------+-----------------------------------------------------------------------------+
-| Parent type | :doc:`form</reference/forms/types/form>`                                    |
+| Parent type | :doc:`form </reference/forms/types/form>`                                   |
 +-------------+-----------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`    |
 +-------------+-----------------------------------------------------------------------------+
+
+.. note::
+
+    If you are working with a collection of Doctrine entities, pay special 
+    attention to the `allow_add`_, `allow_delete`_ and `by_reference`_ options.
+    You can also see a complete example in the cookbook article 
+    :doc:`/cookbook/form/form_collections`.
 
 Basic Usage
 -----------
@@ -51,11 +62,11 @@ The simplest way to render this is all at once:
 .. configuration-block::
 
     .. code-block:: jinja
-    
+
         {{ form_row(form.emails) }}
 
     .. code-block:: php
-    
+
         <?php echo $view['form']->row($form['emails']) ?>
 
 A much more flexible method would look like this:
@@ -63,7 +74,7 @@ A much more flexible method would look like this:
 .. configuration-block::
 
     .. code-block:: html+jinja
-    
+
         {{ form_label(form.emails) }}
         {{ form_errors(form.emails) }}
 
@@ -80,7 +91,7 @@ A much more flexible method would look like this:
 
         <?php echo $view['form']->label($form['emails']) ?>
         <?php echo $view['form']->errors($form['emails']) ?>
-        
+
         <ul>
         <?php foreach ($form['emails'] as $emailField): ?>
             <li>
@@ -113,7 +124,7 @@ your form):
 
 .. code-block:: html
 
-    <input type="email" id="form_emails_1" name="form[emails][0]" value="foo@foo.com" />
+    <input type="email" id="form_emails_0" name="form[emails][0]" value="foo@foo.com" />
     <input type="email" id="form_emails_1" name="form[emails][1]" value="bar@bar.com" />
 
 To allow your user to add another email, just set `allow_add`_ to ``true``
@@ -141,7 +152,7 @@ you need is the JavaScript:
 .. configuration-block::
 
     .. code-block:: html+jinja
-    
+
         <form action="..." method="POST" {{ form_enctype(form) }}>
             {# ... #}
 
@@ -154,9 +165,9 @@ you need is the JavaScript:
                 </li>
             {% endfor %}
             </ul>
-        
+
             <a href="#" id="add-another-email">Add another email</a>
-        
+
             {# ... #}
         </form>
 
@@ -171,12 +182,12 @@ you need is the JavaScript:
                     // grab the prototype template
                     var newWidget = emailList.attr('data-prototype');
                     // replace the "__name__" used in the id and name of the prototype
-                    // with a number that's unique to our emails
+                    // with a number that's unique to your emails
                     // end name attribute looks like name="contact[emails][2]"
                     newWidget = newWidget.replace(/__name__/g, emailCount);
                     emailCount++;
 
-                    // create a new list element and add it to our list
+                    // create a new list element and add it to the list
                     var newLi = jQuery('<li></li>').html(newWidget);
                     newLi.appendTo(jQuery('#email-fields-list'));
 
@@ -191,7 +202,7 @@ you need is the JavaScript:
     is automatically available on the ``data-prototype`` attribute of the
     element (e.g. ``div`` or ``table``) that surrounds your collection. The
     only difference is that the entire "form row" is rendered for you, meaning
-    you wouldn't have to wrap it in any container element like we've done
+    you wouldn't have to wrap it in any container element as was done
     above.
 
 Field Options
@@ -204,7 +215,7 @@ type
 
 This is the field type for each item in this collection (e.g. ``text``, ``choice``,
 etc). For example, if you have an array of email addresses, you'd use the
-:doc:`email</reference/forms/types/email>` type. If you want to embed
+:doc:`email </reference/forms/types/email>` type. If you want to embed
 a collection of some other form, create a new instance of your form type
 and pass it as this option.
 
@@ -214,7 +225,7 @@ options
 **type**: ``array`` **default**: ``array()``
 
 This is the array that's passed to the form type specified in the `type`_
-option. For example, if you used the :doc:`choice</reference/forms/types/choice>`
+option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
 type as your `type`_ option (e.g. for a collection of drop-down menus), then
 you'd need to at least pass the ``choices`` option to the underlying type::
 
@@ -294,12 +305,12 @@ collection field:
 .. configuration-block::
 
     .. code-block:: jinja
-    
+
         {{ form_row(form.emails.vars.prototype) }}
 
     .. code-block:: php
-    
-        <?php echo $view['form']->row($form['emails']->getVar('prototype')) ?>
+
+        <?php echo $view['form']->row($form['emails']->vars['prototype']) ?>
 
 Note that all you really need is the "widget", but depending on how you're
 rendering your form, having the entire "form row" may be easier for you.
@@ -313,13 +324,29 @@ rendering your form, having the entire "form row" may be easier for you.
 For details on how to actually use this option, see the above example as well
 as :ref:`cookbook-form-collections-new-prototype`.
 
+prototype_name
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``prototype_name`` option was added in Symfony 2.1
+
+**type**: ``String`` **default**: ``__name__``
+
+If you have several collections in your form, or worse, nested collections
+you may want to change the placeholder so that unrelated placeholders are not
+replaced with the same value.
+
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/form>` type.
+These options inherit from the :doc:`form </reference/forms/types/form>` type.
 Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~
@@ -331,3 +358,5 @@ error_bubbling
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc

@@ -6,7 +6,7 @@ or a string (or an object that can be cast into a string) that follows
 a valid "HH:MM:SS" format.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -44,6 +44,37 @@ of the day when the event starts:
              * @Assert\Time()
              */
              protected $startsAt;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Event">
+                <property name="startsAt">
+                    <constraint name="Time" />
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+        
+        // src/Acme/EventBundle/Entity/Event.php
+        namespace Acme\EventBundle\Entity;
+        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('startsAt', new Assert\Time());
+            }
         }
 
 Options

@@ -1,7 +1,7 @@
 .. index::
    single: Session; Database Storage
 
-How to use PdoSessionStorage to store Sessions in the Database
+How to use PdoSessionHandler to store Sessions in the Database
 ==============================================================
 
 The default session storage of Symfony2 writes the session information to
@@ -15,10 +15,10 @@ To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
 .. versionadded:: 2.1
-    In Symfony2.1 the class and namespace are slightly modified. You can now 
+    In Symfony2.1 the class and namespace are slightly modified. You can now
     find the session storage classes in the `Session\\Storage` namespace:
     ``Symfony\Component\HttpFoundation\Session\Storage``. Also
-    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0. 
+    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0.
     Below, you'll notice that ``%session.storage.options%`` is not used anymore.
 
 .. configuration-block::
@@ -45,16 +45,18 @@ configuration format of your choice):
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
                     password: mypassword
+                calls:
+                    - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
 
             session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-                arguments: [@pdo, %pdo.db_options%]
+                arguments: ["@pdo", "%pdo.db_options%"]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session handler-id="session.handler.pdo" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -71,6 +73,10 @@ configuration format of your choice):
                 <argument>mysql:dbname=mydatabase</argument>
                 <argument>myuser</argument>
                 <argument>mypassword</argument>
+                <call method="setAttribute">
+                    <argument type="constant">PDO::ATTR_ERRMODE</argument>
+                    <argument type="constant">PDO::ERRMODE_EXCEPTION</argument>
+                </call>
             </service>
 
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
@@ -86,9 +92,9 @@ configuration format of your choice):
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->loadFromExtension('framework', array(
-            // ...
+            ...,
             'session' => array(
-                ...,
+                // ...,
                 'handler_id' => 'session.handler.pdo',
             ),
         ));
@@ -105,6 +111,7 @@ configuration format of your choice):
             'myuser',
             'mypassword',
         ));
+        $pdoDefinition->addMethodCall('setAttribute', array(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION));
         $container->setDefinition('pdo', $pdoDefinition);
 
         $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
@@ -136,14 +143,14 @@ parameter.ini by referencing the database-related parameters defined there:
         pdo:
             class: PDO
             arguments:
-                - "mysql:dbname=%database_name%"
-                - %database_user%
-                - %database_password%
+                - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
+                - "%database_user%"
+                - "%database_password%"
 
     .. code-block:: xml
 
         <service id="pdo" class="PDO">
-            <argument>mysql:dbname=%database_name%</argument>
+            <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
             <argument>%database_user%</argument>
             <argument>%database_password%</argument>
         </service>
@@ -151,7 +158,7 @@ parameter.ini by referencing the database-related parameters defined there:
     .. code-block:: php
 
         $pdoDefinition = new Definition('PDO', array(
-            'mysql:dbname=%database_name%',
+            'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
             '%database_user%',
             '%database_password%',
         ));
@@ -187,3 +194,25 @@ For PostgreSQL, the statement should look like this:
         session_time integer NOT NULL,
         CONSTRAINT session_pkey PRIMARY KEY (session_id)
     );
+
+Microsoft SQL Server
+~~~~~~~~~~~~~~~~~~~~
+
+For MSSQL, the statement might look like the following:
+
+.. code-block:: sql
+
+    CREATE TABLE [dbo].[session](
+	    [session_id] [nvarchar](255) NOT NULL,
+	    [session_value] [ntext] NOT NULL,
+        [session_time] [int] NOT NULL,
+		PRIMARY KEY CLUSTERED(
+			[session_id] ASC
+		) WITH (
+		    PAD_INDEX  = OFF,
+		    STATISTICS_NORECOMPUTE  = OFF,
+		    IGNORE_DUP_KEY = OFF,
+		    ALLOW_ROW_LOCKS  = ON,
+		    ALLOW_PAGE_LOCKS  = ON
+		) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

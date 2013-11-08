@@ -1,5 +1,5 @@
 .. index::
-   single: Serializer 
+   single: Serializer
    single: Components; Serializer
 
 The Serializer Component
@@ -15,7 +15,7 @@ simple schema.
 
 As you can see in the picture above, an array is used as a man in
 the middle. This way, Encoders will only deal with turning specific
-**formats** into **arrays** and vice versa. The same way, Normalizers 
+**formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
 Serialization is a complicated topic, and while this component may not work
@@ -25,16 +25,15 @@ and deserialize your objects.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Serializer);
-* Install it via PEAR ( `pear.symfony.com/Serializer`);
-* Install it via Composer (`symfony/serializer` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Serializer).
 
 Usage
 -----
 
-Using the Serializer component is really simple. We just need to set up
+Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
 which Encoders and Normalizer are going to be available::
 
@@ -51,8 +50,8 @@ which Encoders and Normalizer are going to be available::
 Serializing an object
 ~~~~~~~~~~~~~~~~~~~~~
 
-For the sake of this example, let's assume the following class already
-exists in our project::
+For the sake of this example, assume the following class already
+exists in your project::
 
     namespace Acme;
 
@@ -84,14 +83,18 @@ exists in our project::
         }
     }
 
-Now, if we want to serialize this object into JSON, we only need to
+Now, if you want to serialize this object into JSON, you only need to
 use the Serializer service created before::
 
     $person = new Acme\Person();
     $person->setName('foo');
     $person->setAge(99);
 
-    $serializer->serialize($person, 'json'); // Output: {"name":"foo","age":99}
+    $jsonContent = $serializer->serialize($person, 'json');
+
+    // $jsonContent contains {"name":"foo","age":99}
+
+    echo $jsonContent; // or return it in a Response
 
 The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
 is the object to be serialized and the second is used to choose the proper encoder,
@@ -101,7 +104,7 @@ Deserializing an Object
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Let's see now how to do the exactly the opposite. This time, the information
-of the `People` class would be encoded in XML format::
+of the ``Person`` class would be encoded in XML format::
 
     $data = <<<EOF
     <person>
@@ -119,13 +122,14 @@ needs three parameters:
 2. The name of the class this information will be decoded to
 3. The encoder used to convert that information into an array
 
-JMSSerializationBundle
-----------------------
+JMSSerializer
+-------------
 
-A popular third-party bundle, `JMSSerializationBundle`_ exists and extends
-(and sometimes replaces) the serialization functionality. This includes the
+A popular third-party library, `JMS serializer`_, provides a more
+sophisticated albeit more complex solution. This library includes the
 ability to configure how your objects should be serialize/deserialized via
 annotations (as well as YML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 
-.. _`JMSSerializationBundle`: https://github.com/schmittjoh/JMSSerializerBundle
+.. _`JMS serializer`: https://github.com/schmittjoh/serializer
+.. _Packagist: https://packagist.org/packages/symfony/serializer

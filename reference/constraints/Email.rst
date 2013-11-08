@@ -5,7 +5,7 @@ Validates that a value is a valid email address. The underlying value is
 cast to a string before being validated.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
@@ -30,6 +30,25 @@ Basic Usage
                     - Email:
                         message: The email "{{ value }}" is not a valid email.
                         checkMX: true
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Email(
+             *     message = "The email '{{ value }}' is not a valid email.",
+             *     checkMX = true
+             * )
+             */
+             protected $email;
+        }
+
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
@@ -48,22 +67,23 @@ Basic Usage
             </class>
         </constraint-mapping>
 
-    .. code-block:: php-annotations
+    .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-
+        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            /**
-             * @Assert\Email(
-             *     message = "The email '{{ value }}' is not a valid email.",
-             *     checkMX = true
-             * )
-             */
-             protected $email;
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('email', new Assert\Email(array(
+                    'message' => 'The email "{{ value }}" is not a valid email.',
+                    'checkMX' => true,
+                )));
+            }
         }
 
 Options

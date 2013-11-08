@@ -4,7 +4,7 @@
 How to customize your Form Login
 ================================
 
-Using a :ref:`form login<book-security-form-login>` for authentication is
+Using a :ref:`form login <book-security-form-login>` for authentication is
 a common, and flexible, method for handling authentication in Symfony2. Pretty
 much every aspect of the form login can be customized. The full, default
 configuration is shown in the next section.
@@ -12,92 +12,9 @@ configuration is shown in the next section.
 Form Login Configuration Reference
 ----------------------------------
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                main:
-                    form_login:
-                        # the user is redirected here when he/she needs to login
-                        login_path:                     /login
-
-                        # if true, forward the user to the login form instead of redirecting
-                        use_forward:                    false
-
-                        # submit the login form here
-                        check_path:                     /login_check
-
-                        # by default, the login form *must* be a POST, not a GET
-                        post_only:                      true
-
-                        # login success redirecting options (read further below)
-                        always_use_default_target_path: false
-                        default_target_path:            /
-                        target_path_parameter:          _target_path
-                        use_referer:                    false
-
-                        # login failure redirecting options (read further below)
-                        failure_path:                   null
-                        failure_forward:                false
-
-                        # field names for the username and password fields
-                        username_parameter:             _username
-                        password_parameter:             _password
-
-                        # csrf token options
-                        csrf_parameter:                 _csrf_token
-                        intention:                      authenticate
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <form-login
-                    check_path="/login_check"
-                    login_path="/login"
-                    use_forward="false"
-                    always_use_default_target_path="false"
-                    default_target_path="/"
-                    target_path_parameter="_target_path"
-                    use_referer="false"
-                    failure_path="null"
-                    failure_forward="false"
-                    username_parameter="_username"
-                    password_parameter="_password"
-                    csrf_parameter="_csrf_token"
-                    intention="authenticate"
-                    post_only="true"
-                />
-            </firewall>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array('form_login' => array(
-                    'check_path'                     => '/login_check',
-                    'login_path'                     => '/login',
-                    'user_forward'                   => false,
-                    'always_use_default_target_path' => false,
-                    'default_target_path'            => '/',
-                    'target_path_parameter'          => _target_path,
-                    'use_referer'                    => false,
-                    'failure_path'                   => null,
-                    'failure_forward'                => false,
-                    'username_parameter'             => '_username',
-                    'password_parameter'             => '_password',
-                    'csrf_parameter'                 => '_csrf_token',
-                    'intention'                      => 'authenticate',
-                    'post_only'                      => true,
-                )),
-            ),
-        ));
+To see the full form login configuration reference, see
+:doc:`/reference/configuration/security`. Some of the more interesting options
+are explained below.
 
 Redirecting after Success
 -------------------------
@@ -105,10 +22,11 @@ Redirecting after Success
 You can change where the login form redirects after a successful login using
 the various config options. By default the form will redirect to the URL the
 user requested (i.e. the URL which triggered the login form being shown).
-For example, if the user requested ``http://www.example.com/admin/post/18/edit``
-then after he/she will eventually be sent back to ``http://www.example.com/admin/post/18/edit`` 
-after successfully logging in. This is done by storing the requested URL
-in the session. If no URL is present in the session (perhaps the user went
+For example, if the user requested ``http://www.example.com/admin/post/18/edit``,
+then after she successfully logs in, she will eventually be sent back to
+``http://www.example.com/admin/post/18/edit``.
+This is done by storing the requested URL in the session.
+If no URL is present in the session (perhaps the user went
 directly to the login page), then the user is redirected to the default page,
 which is  ``/`` (i.e. the homepage) by default. You can change this behavior
 in several ways.
@@ -125,8 +43,8 @@ Changing the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, the default page can be set (i.e. the page the user is redirected to
-if no previous page was stored in the session). To set it to ``/admin`` use
-the following config:
+if no previous page was stored in the session). To set it to the
+``default_security_target`` route use the following config:
 
 .. configuration-block::
 
@@ -138,7 +56,7 @@ the following config:
                 main:
                     form_login:
                         # ...
-                        default_target_path: /admin
+                        default_target_path: default_security_target
 
     .. code-block:: xml
 
@@ -146,7 +64,7 @@ the following config:
         <config>
             <firewall>
                 <form-login
-                    default_target_path="/admin"                    
+                    default_target_path="default_security_target"
                 />
             </firewall>
         </config>
@@ -156,20 +74,25 @@ the following config:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'default_target_path' => '/admin',
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'default_target_path' => 'default_security_target',
+                    ),
+                ),
             ),
         ));
 
-Now, when no URL is set in the session users will be sent to ``/admin``.
+Now, when no URL is set in the session, users will be sent to the
+``default_security_target`` route.
 
 Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can make it so that users are always redirected to the default page regardless
-of what URL they had requested previously by setting the 
+of what URL they had requested previously by setting the
 ``always_use_default_target_path`` option to true:
 
 .. configuration-block::
@@ -183,7 +106,7 @@ of what URL they had requested previously by setting the
                     form_login:
                         # ...
                         always_use_default_target_path: true
-                        
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -200,10 +123,14 @@ of what URL they had requested previously by setting the
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'always_use_default_target_path' => true,
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'always_use_default_target_path' => true,
+                    ),
+                ),
             ),
         ));
 
@@ -212,7 +139,7 @@ Using the Referring URL
 
 In case no previous URL was stored in the session, you may wish to try using
 the ``HTTP_REFERER`` instead, as this will often be the same. You can do
-this by setting ``use_referer`` to true (it defaults to false): 
+this by setting ``use_referer`` to true (it defaults to false):
 
 .. configuration-block::
 
@@ -242,10 +169,14 @@ this by setting ``use_referer`` to true (it defaults to false):
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'use_referer' => true,
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'use_referer' => true,
+                    ),
+                ),
             ),
         ));
 
@@ -256,7 +187,7 @@ this by setting ``use_referer`` to true (it defaults to false):
 Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also override where the user is redirected to via the form itself by 
+You can also override where the user is redirected to via the form itself by
 including a hidden field with the name ``_target_path``. For example, to
 redirect to the URL defined by some ``account`` route, use the following:
 
@@ -296,13 +227,13 @@ redirect to the URL defined by some ``account`` route, use the following:
             <input type="password" id="password" name="_password" />
 
             <input type="hidden" name="_target_path" value="account" />
-            
+
             <input type="submit" name="login" />
         </form>
 
 Now, the user will be redirected to the value of the hidden form field. The
-value attribute can be a relative path, absolute URL, or a route name. You 
-can even change the name of the hidden form field by changing the ``target_path_parameter`` 
+value attribute can be a relative path, absolute URL, or a route name. You
+can even change the name of the hidden form field by changing the ``target_path_parameter``
 option to another value.
 
 .. configuration-block::
@@ -332,20 +263,22 @@ option to another value.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    'target_path_parameter' => redirect_url,
-                )),
+                'main' => array(
+                    'form_login' => array(
+                        'target_path_parameter' => redirect_url,
+                    ),
+                ),
             ),
         ));
 
 Redirecting on Login Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to redirect the user after a successful login, you can also set
+In addition to redirecting the user after a successful login, you can also set
 the URL that the user should be redirected to after a failed login (e.g. an
 invalid username or password was submitted). By default, the user is redirected
-back to the login form itself. You can set this to a different URL with the
-following config:
+back to the login form itself. You can set this to a different route (e.g.
+``login_failure``) with the following config:
 
 .. configuration-block::
 
@@ -357,8 +290,8 @@ following config:
                 main:
                     form_login:
                         # ...
-                        failure_path: /login_failure
-                        
+                        failure_path: login_failure
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -375,9 +308,13 @@ following config:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'failure_path' => login_failure,
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'failure_path' => 'login_failure',
+                    ),
+                ),
             ),
         ));

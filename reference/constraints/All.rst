@@ -5,7 +5,7 @@ When applied to an array (or Traversable object), this constraint allows
 you to apply a collection of constraints to each element of the array.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `constraints`_                                                       |
 +----------------+------------------------------------------------------------------------+
@@ -30,25 +30,69 @@ entry in that array:
                 favoriteColors:
                     - All:
                         - NotBlank:  ~
-                        - MinLength: 5
+                        - Length:
+                            min: 5
 
     .. code-block:: php-annotations
 
-       // src/Acme/UserBundle/Entity/User.php
-       namespace Acme\UserBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
+  
+        class User
+        {
+            /**
+             * @Assert\All({
+             *     @Assert\NotBlank,
+             *     @Assert\Length(min = "5")
+             * })
+             */
+             protected $favoriteColors = array();
+        }
 
-       class User
-       {
-           /**
-            * @Assert\All({
-            *     @Assert\NotBlank
-            *     @Assert\MinLength(5),
-            * })
-            */
-            protected $favoriteColors = array();
-       }
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Entity\User">
+                <property name="favoriteColors">
+                    <constraint name="All">
+                        <option name="constraints">
+                            <constraint name="NotBlank" />
+                            <constraint name="Length">
+                                <option name="min">5</option>
+                            </constraint>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+       
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('favoriteColors', new Assert\All(array(
+                    'constraints' => array(
+                        new Assert\NotBlank(),
+                        new Assert\Length(array('min' => 5)),
+                    ),
+                )));
+            }
+        }
 
 Now, each entry in the ``favoriteColors`` array will be validated to not
 be blank and to be at least 5 characters long.
@@ -59,7 +103,7 @@ Options
 constraints
 ~~~~~~~~~~~
 
-**type**: ``array`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` [:ref:`default option <validation-default-option>`]
 
 This required option is the array of validation constraints that you want
 to apply to each element of the underlying array.

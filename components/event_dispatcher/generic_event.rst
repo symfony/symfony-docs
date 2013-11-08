@@ -8,8 +8,8 @@ The Generic Event Object
     The ``GenericEvent`` event class was added in Symfony 2.1
 
 The base :class:`Symfony\\Component\\EventDispatcher\\Event` class provided by the
-``Event Dispatcher`` component is deliberately sparse to allow the creation of
-API specific event objects by inheritance using OOP. This allow for elegant and
+Event Dispatcher component is deliberately sparse to allow the creation of
+API specific event objects by inheritance using OOP. This allows for elegant and
 readable code in complex applications.
 
 The :class:`Symfony\\Component\\EventDispatcher\\GenericEvent` is available
@@ -54,7 +54,7 @@ Simply passing a subject::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
-    $event = GenericEvent($subject);
+    $event = new GenericEvent($subject);
     $dispatcher->dispatch('foo', $event);
 
     class FooListener
@@ -72,7 +72,10 @@ the event arguments::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
-    $event = new GenericEvent($subject, array('type' => 'foo', 'counter' => 0)));
+    $event = new GenericEvent(
+        $subject,
+        array('type' => 'foo', 'counter' => 0)
+    );
     $dispatcher->dispatch('foo', $event);
 
     echo $event['counter'];

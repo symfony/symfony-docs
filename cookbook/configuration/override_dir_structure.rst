@@ -4,8 +4,8 @@
 How to override Symfony's Default Directory Structure
 =====================================================
 
-Symfony automatically ships with a default directory structure. You can 
-easily override this directory structure to create your own. The default 
+Symfony automatically ships with a default directory structure. You can
+easily override this directory structure to create your own. The default
 directory structure is:
 
 .. code-block:: text
@@ -23,10 +23,12 @@ directory structure is:
         app.php
         ...
 
+.. _override-cache-dir:
+
 Override the ``cache`` directory
 --------------------------------
 
-You can override the cache directory by overriding the ``getCacheDir`` method 
+You can override the cache directory by overriding the ``getCacheDir`` method
 in the ``AppKernel`` class of you application::
 
     // app/AppKernel.php
@@ -38,26 +40,28 @@ in the ``AppKernel`` class of you application::
 
         public function getCacheDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/cache/';
+            return $this->rootDir.'/'.$this->environment.'/cache';
         }
     }
 
 ``$this->rootDir`` is the absolute path to the ``app`` directory and ``$this->environment``
-is the current environment (i.e. ``dev``). In this case we have changed 
+is the current environment (i.e. ``dev``). In this case you have changed
 the location of the cache directory to ``app/{environment}/cache``.
 
-.. warning::
+.. caution::
 
     You should keep the ``cache`` directory different for each environment,
     otherwise some unexpected behaviour may happen. Each environment generates
     its own cached config files, and so each needs its own directory to store
     those cache files.
 
+.. _override-logs-dir:
+
 Override the ``logs`` directory
 -------------------------------
 
-Overriding the ``logs`` directory is the same as overriding the ``cache`` 
-directory, the only difference is that you need to override the ``getLogDir`` 
+Overriding the ``logs`` directory is the same as overriding the ``cache``
+directory, the only difference is that you need to override the ``getLogDir``
 method::
 
     // app/AppKernel.php
@@ -69,11 +73,11 @@ method::
 
         public function getLogDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/logs/';
+            return $this->rootDir.'/'.$this->environment.'/logs';
         }
     }
 
-Here we have changed the location of the directory to ``app/{environment}/logs``.
+Here you have changed the location of the directory to ``app/{environment}/logs``.
 
 Override the ``web`` directory
 ------------------------------
@@ -87,6 +91,19 @@ may need to modify the paths inside these files::
     require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
     require_once __DIR__.'/../Symfony/app/AppKernel.php';
 
+Since Symfony 2.1 (in which Composer is introduced), you also need to change
+the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
+
+.. code-block:: json
+
+    {
+        ...
+        "extra": {
+            ...
+            "symfony-web-dir": "my_new_web_dir"
+        }
+    }
+
 .. tip::
 
     Some shared hosts have a ``public_html`` web directory root. Renaming
@@ -98,19 +115,38 @@ may need to modify the paths inside these files::
 
 .. note::
 
-    If you use the AsseticBundle you need to configure this, so it can use 
+    If you use the AsseticBundle you need to configure this, so it can use
     the correct ``web`` directory:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # app/config/config.yml
+        .. code-block:: yaml
 
-        # ...
-        assetic:
+            # app/config/config.yml
+
             # ...
-            read_from: %kernel.root_dir%/../../public_html
+            assetic:
+                # ...
+                read_from: "%kernel.root_dir%/../../public_html"
 
-    Now you just need to dump the assets again and your application should 
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+
+            <!-- ... -->
+            <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+
+        .. code-block:: php
+
+            // app/config/config.php
+
+            // ...
+            $container->loadFromExtension('assetic', array(
+                // ...
+                'read_from' => '%kernel.root_dir%/../../public_html',
+            ));
+
+    Now you just need to dump the assets again and your application should
     work:
 
     .. code-block:: bash

@@ -1,10 +1,16 @@
 Min
 ===
 
+.. caution::
+
+    The Min constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Range` with the ``min``
+    option instead.
+
 Validates that a given number is *greater* than some minimum number.
 
 +----------------+--------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`              |
+| Applies to     | :ref:`property or method <validation-property-target>`             |
 +----------------+--------------------------------------------------------------------+
 | Options        | - `limit`_                                                         |
 |                | - `message`_                                                       |
@@ -34,14 +40,53 @@ the following:
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Participant
         {
             /**
-             * @Assert\Min(limit = "18", message = "You must be 18 or older to enter")
+             * @Assert\Min(limit = "18", message = "You must be 18 or older to enter.")
              */
              protected $age;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.yml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Participant">
+                <property name="age">
+                    <constraint name="Min">
+                        <option name="limit">18</option>
+                        <option name="message">You must be 18 or older to enter.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity\Participant;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\Min(array(
+                    'limit'   => '18',
+                    'message' => 'You must be 18 or older to enter.',
+                )));
+            }
         }
 
 Options
@@ -50,7 +95,7 @@ Options
 limit
 ~~~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
@@ -69,6 +114,4 @@ invalidMessage
 **type**: ``string`` **default**: ``This value should be a valid number``
 
 The message that will be shown if the underlying value is not a number (per
-the `is_numeric`_ PHP function).
-
-.. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php
+the :phpfunction:`is_numeric` PHP function).

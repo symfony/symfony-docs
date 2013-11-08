@@ -57,6 +57,7 @@ File Constraints
 Financial Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
+* :doc:`CardScheme </reference/constraints/CardScheme>`
 * :doc:`Luhn </reference/constraints/Luhn>`
 
 Other Constraints

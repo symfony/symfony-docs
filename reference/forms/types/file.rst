@@ -12,9 +12,12 @@ The ``file`` type represents a file input in your form.
 | Inherited   | - `required`_                                                       |
 | options     | - `label`_                                                          |
 |             | - `read_only`_                                                      |
+|             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
+|             | - `error_mapping`_                                                  |
+|             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form</reference/forms/types/form>`                            |
+| Parent type | :doc:`form </reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
@@ -22,7 +25,7 @@ The ``file`` type represents a file input in your form.
 Basic Usage
 -----------
 
-Let's say you have this form definition:
+Say you have this form definition:
 
 .. code-block:: php
 
@@ -47,7 +50,7 @@ used to move the ``attachment`` file to a permanent location:
 
         if ($form->isValid()) {
             $someNewFilename = ...
-        
+
             $form['attachment']->getData()->move($dir, $someNewFilename);
 
             // ...
@@ -81,7 +84,7 @@ how to manage a file upload associated with a Doctrine entity.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -89,4 +92,10 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

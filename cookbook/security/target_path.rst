@@ -5,9 +5,10 @@ How to change the Default Target Path Behavior
 ==============================================
 
 By default, the security component retains the information of the last request
-URI in a session variable named ``_security.target_path``. Upon a successful
-login, the user is redirected to this path, as to help her continue from
-the last known page she visited.
+URI in a session variable named ``_security.main.target_path`` (with ``main`` being
+the name of the firewall, defined in ``security.yml``). Upon a successful
+login, the user is redirected to this path, as to help her continue from the
+last known page she visited.
 
 On some occasions, this is unexpected. For example when the last request
 URI was an HTTP POST against a route which is configured to allow only a POST
@@ -61,7 +62,7 @@ Next, create your own ``ExceptionListener``::
                 return;
             }
 
-            $request->getSession()->set('_security.target_path', $request->getUri());
+            parent::setTargetPath($request);
         }
     }
 

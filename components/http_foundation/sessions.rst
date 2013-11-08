@@ -37,7 +37,7 @@ Quick example::
 
 .. note::
 
-    Symfony sessions are designed to replace several native PHP funtions.
+    Symfony sessions are designed to replace several native PHP functions.
     Applications should avoid using ``session_start()``, ``session_regenerate_id()``,
     ``session_id()``, ``session_name()``, and ``session_destroy()`` and instead
     use the APIs in the following section.
@@ -48,9 +48,9 @@ Quick example::
     start on demand, that is, if any session request is made to read/write session
     data.
 
-.. warning::
+.. caution::
 
-    Symfony sessions are incompatible with PHP ini directive ``session.auto_start = 1``
+    Symfony sessions are incompatible with ``php.ini`` directive ``session.auto_start = 1``
     This directive should be turned off in ``php.ini``, in the webserver directives or
     in ``.htaccess``.
 
@@ -102,9 +102,6 @@ Session attributes
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`:
   Returns true if the attribute exists;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::keys`:
-  Returns an array of stored attribute keys;
-
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`:
   Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
 
@@ -131,9 +128,8 @@ an array. A few methods exist for "Bag" management:
 Session meta-data
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
-  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetadataBag`
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
   which contains information about the session.
-
 
 Session Data Management
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,7 +162,6 @@ the following API which is intended mainly for internal purposes:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`:
   Returns the name of the session bag.
-
 
 Attributes
 ~~~~~~~~~~
@@ -234,12 +229,11 @@ has a simple API
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`:
   Clear the bag;
 
-
 Flash messages
 ~~~~~~~~~~~~~~
 
 The purpose of the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
-is to provide a way of settings and retrieving messages on a per session basis.
+is to provide a way of setting and retrieving messages on a per session basis.
 The usual workflow for flash messages would be set in an request, and displayed
 after a page redirect. For example, a user submits a form which hits an update
 controller, and after processing the controller redirects the page to either the
@@ -305,7 +299,10 @@ Examples of setting multiple flashes::
     $session->start();
 
     // add flash messages
-    $session->getFlashBag()->add('warning', 'Your config file is writable, it should be set read-only');
+    $session->getFlashBag()->add(
+        'warning',
+        'Your config file is writable, it should be set read-only'
+    );
     $session->getFlashBag()->add('error', 'Failed to update name');
     $session->getFlashBag()->add('error', 'Another error');
 

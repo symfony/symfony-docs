@@ -37,16 +37,16 @@ to ensure that the cache is cleared whenever any source files change. Otherwise,
 the updates you've made won't be seen.
 
 For example, to disable these checks in APC, simply add ``apc.stat=0`` to
-your php.ini configuration.
+your ``php.ini`` configuration.
 
 .. index::
    single: Performance; Autoloader
 
-Use an Autoloader that caches (e.g. ``ApcUniversalClassLoader``)
-----------------------------------------------------------------
+Use Composer's Class Map Functionality
+--------------------------------------
 
-By default, the Symfony2 standard edition uses the ``UniversalClassLoader``
-in the `autoloader.php`_ file. This autoloader is easy to use, as it will
+By default, the Symfony2 standard edition uses Composer's autoloader
+in the `autoload.php`_ file. This autoloader is easy to use, as it will
 automatically find any new classes that you've placed in the registered
 directories.
 
@@ -54,7 +54,20 @@ Unfortunately, this comes at a cost, as the loader iterates over all configured
 namespaces to find a particular file, making ``file_exists`` calls until it
 finally finds the file it's looking for.
 
-The simplest solution is to cache the location of each class after it's located
+The simplest solution is to tell Composer to build a "class map" (i.e. a
+big array of the locations of all the classes). This can be done from the
+command line, and might become part of your deploy process:
+
+.. code-block:: bash
+
+    php composer.phar dump-autoload --optimize
+
+Internally, this builds the big class map array in ``vendor/composer/autoload_classmap.php``.
+
+Caching the Autoloader with APC
+-------------------------------
+
+Another solution is to cache the location of each class after it's located
 the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
 that does exactly this. To use it, just adapt your front controller file.
 If you're using the Standard Distribution, this code should already be available
@@ -66,13 +79,16 @@ as comments in this file::
     $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
     // Use APC for autoloading to improve performance
-    // Change 'sf2' by the prefix you want in order to prevent key conflict with another application
+    // Change 'sf2' by the prefix you want in order
+    // to prevent key conflict with another application
     /*
     $loader = new ApcClassLoader('sf2', $loader);
     $loader->register(true);
     */
 
     // ...
+
+For more details, see :doc:`/components/class_loader/cache_class_loader`.
 
 .. note::
 
@@ -125,5 +141,5 @@ is no longer a reason to use a bootstrap file.
 
 .. _`byte code caches`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`APC`: http://php.net/manual/en/book.apc.php
-.. _`autoloader.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
+.. _`autoload.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
 .. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php

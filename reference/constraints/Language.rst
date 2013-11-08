@@ -4,7 +4,7 @@ Language
 Validates that a value is a valid language code.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -24,22 +24,53 @@ Basic Usage
         Acme\UserBundle\Entity\User:
             properties:
                 preferredLanguage:
-                    - Language:
+                    - Language: ~
 
     .. code-block:: php-annotations
 
-       // src/Acme/UserBundle/Entity/User.php
-       namespace Acme\UserBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
+  
+        class User
+        {
+            /**
+             * @Assert\Language
+             */
+             protected $preferredLanguage;
+        }
 
-       class User
-       {
-           /**
-            * @Assert\Language
-            */
-            protected $preferredLanguage;
-       }
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Entity\User">
+                <property name="preferredLanguage">
+                    <constraint name="Language" />
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('preferredLanguage', new Assert\Language());
+            }
+        }
 
 Options
 -------

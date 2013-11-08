@@ -17,7 +17,7 @@ Getting familiar with Twig
 
 .. tip::
 
-    If you want to learn Twig, we highly recommend you to read its official
+    If you want to learn Twig, it's highly recommended you read its official
     `documentation`_. This section is just a quick overview of the main
     concepts.
 
@@ -49,7 +49,6 @@ Below is a minimal template that illustrates a few basics, using two variables
             </ul>
         </body>
     </html>
-
 
 .. tip::
 
@@ -98,7 +97,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, we like to think about this problem
+well-known header and footer. In Symfony2, you think about this problem
 differently: a template can be decorated by another one. This works exactly
 the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and
@@ -170,7 +169,7 @@ And change the ``index.html.twig`` template to include it:
 
     {# override the body block from embedded.html.twig #}
     {% block content %}
-        {% include "AcmeDemoBundle:Demo:embedded.html.twig" %}
+        {{ include("AcmeDemoBundle:Demo:embedded.html.twig") }}
     {% endblock %}
 
 Embedding other Controllers
@@ -180,13 +179,14 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-Suppose you've created a ``fancy`` action, and you want to include it inside
-the ``index`` template. To do this, use the ``render`` tag:
+Suppose you've created a ``fancyAction`` controller method, and you want to
+"render" it inside the ``index`` template, which means including the result
+(e.g. ``HTML``) of the controller. To do this, use the ``render`` function:
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render "AcmeDemoBundle:Demo:fancy" with {'name': name, 'color': 'green'} %}
+    {{ render(controller("AcmeDemoBundle:Demo:fancy", {'name': name, 'color': 'green'})) }}
 
 Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
 of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
@@ -202,7 +202,10 @@ new request) and are made available to the controller::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array(
+                'name' => $name,
+                'object' => $object,
+            ));
         }
 
         // ...
@@ -283,7 +286,7 @@ the basics is easy, and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
 But I'm getting ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the :doc:`next part of this tutorial<the_controller>`.
+and that's exactly the topic of the :doc:`next part of this tutorial <the_controller>`.
 Ready for another 10 minutes with Symfony2?
 
 .. _Twig:          http://twig.sensiolabs.org/

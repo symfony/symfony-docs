@@ -44,7 +44,7 @@ Then, define the chain as a service:
 
         services:
             acme_mailer.transport_chain:
-                class: %acme_mailer.transport_chain.class%
+                class: "%acme_mailer.transport_chain.class%"
 
     .. code-block:: xml
 
@@ -67,9 +67,9 @@ Then, define the chain as a service:
 Define Services with a Custom Tag
 ---------------------------------
 
-Now we want several of the ``\Swift_Transport`` classes to be instantiated
+Now you might want several of the ``\Swift_Transport`` classes to be instantiated
 and added to the chain automatically using the ``addTransport()`` method.
-As an example we add the following transports as services:
+For example you may add the following transports as services:
 
 .. configuration-block::
 
@@ -79,7 +79,7 @@ As an example we add the following transports as services:
             acme_mailer.transport.smtp:
                 class: \Swift_SmtpTransport
                 arguments:
-                    - %mailer_host%
+                    - "%mailer_host%"
                 tags:
                     -  { name: acme_mailer.transport }
             acme_mailer.transport.sendmail:
@@ -128,14 +128,22 @@ custom tag::
     {
         public function process(ContainerBuilder $container)
         {
-            if (false === $container->hasDefinition('acme_mailer.transport_chain')) {
+            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
                 return;
             }
 
-            $definition = $container->getDefinition('acme_mailer.transport_chain');
+            $definition = $container->getDefinition(
+                'acme_mailer.transport_chain'
+            );
 
-            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $attributes) {
-                $definition->addMethodCall('addTransport', array(new Reference($id)));
+            $taggedServices = $container->findTaggedServiceIds(
+                'acme_mailer.transport'
+            );
+            foreach ($taggedServices as $id => $attributes) {
+                $definition->addMethodCall(
+                    'addTransport',
+                    array(new Reference($id))
+                );
             }
         }
     }
@@ -160,8 +168,8 @@ run when the container is compiled::
 
 .. note::
 
-    Compiler passes are registered differently is you are using the full
-    stack framework, see :doc:`/cookbook/service_container/compiler_passes`
+    Compiler passes are registered differently if you are using the full
+    stack framework. See :doc:`/cookbook/service_container/compiler_passes`
     for more details.
 
 Adding additional attributes on Tags
@@ -198,7 +206,7 @@ To begin with, change the ``TransportChain`` class::
     }
 
 As you can see, when ``addTransport`` is called, it takes not only a ``Swift_Transport``
-object, but also a string alias for that transport. So, how can we allow
+object, but also a string alias for that transport. So, how can you allow
 each tagged transport service to also supply an alias?
 
 To answer this, change the service declaration:
@@ -211,14 +219,13 @@ To answer this, change the service declaration:
             acme_mailer.transport.smtp:
                 class: \Swift_SmtpTransport
                 arguments:
-                    - %mailer_host%
+                    - "%mailer_host%"
                 tags:
                     -  { name: acme_mailer.transport, alias: foo }
             acme_mailer.transport.sendmail:
                 class: \Swift_SendmailTransport
                 tags:
                     -  { name: acme_mailer.transport, alias: bar }
-
 
     .. code-block:: xml
 
@@ -242,15 +249,23 @@ use this, update the compiler::
     {
         public function process(ContainerBuilder $container)
         {
-            if (false === $container->hasDefinition('acme_mailer.transport_chain')) {
+            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
                 return;
             }
 
-            $definition = $container->getDefinition('acme_mailer.transport_chain');
+            $definition = $container->getDefinition(
+                'acme_mailer.transport_chain'
+            );
 
-            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $tagAttributes) {
+            $taggedServices = $container->findTaggedServiceIds(
+                'acme_mailer.transport'
+            );
+            foreach ($taggedServices as $id => $tagAttributes) {
                 foreach ($tagAttributes as $attributes) {
-                    $definition->addMethodCall('addTransport', array(new Reference($id), $attributes["alias"]));
+                    $definition->addMethodCall(
+                        'addTransport',
+                        array(new Reference($id), $attributes["alias"])
+                    );
                 }
             }
         }

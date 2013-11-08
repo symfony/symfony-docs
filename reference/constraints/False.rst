@@ -8,7 +8,7 @@ string "``0``".
 Also see :doc:`True <True>`.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+
@@ -51,17 +51,54 @@ method returns **false**:
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
             /**
-             * @Assert\False()
+             * @Assert\False(
+             *     message = "You've entered an invalid state."
+             * )
              */
-             public function isStateInvalid($message = "You've entered an invalid state.")
+             public function isStateInvalid()
              {
                 // ...
              }
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <getter property="stateInvalid">
+                    <constraint name="False">
+                        <option name="message">You've entered an invalid state.</option>
+                    </constraint>
+                </getter>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addGetterConstraint('stateInvalid', new Assert\False());
+            }
         }
 
 .. caution::

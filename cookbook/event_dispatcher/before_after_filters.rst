@@ -5,13 +5,13 @@ How to setup before and after Filters
 =====================================
 
 It is quite common in web application development to need some logic to be
-executed just before or just after your controller actions acting as filters 
+executed just before or just after your controller actions acting as filters
 or hooks.
 
 In symfony1, this was achieved with the preExecute and postExecute methods.
 Most major frameworks have similar methods but there is no such thing in Symfony2.
 The good news is that there is a much better way to interfere with the
-Request -> Response process using the :doc:`EventDispatcher component</components/event_dispatcher/introduction>`.
+Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
 
 Token validation Example
 ------------------------
@@ -156,7 +156,7 @@ your listener to be called just before any controller is executed.
         services:
             demo.tokens.action_listener:
                 class: Acme\DemoBundle\EventListener\TokenListener
-                arguments: [ %tokens% ]
+                arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
@@ -174,13 +174,16 @@ your listener to be called just before any controller is executed.
         use Symfony\Component\DependencyInjection\Definition;
 
         $listener = new Definition('Acme\DemoBundle\EventListener\TokenListener', array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
+        $listener->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.controller',
+            'method' => 'onKernelController'
+        ));
         $container->setDefinition('demo.tokens.action_listener', $listener);
 
 With this configuration, your ``TokenListener`` ``onKernelController`` method
 will be executed on each request. If the controller that is about to be executed
 implements ``TokenAuthenticatedController``, token authentication is
-applied. This let's us have a "before" filter on any controller that you
+applied. This lets you have a "before" filter on any controller that you
 want.
 
 After filters with the ``kernel.response`` Event
@@ -248,7 +251,7 @@ event:
         services:
             demo.tokens.action_listener:
                 class: Acme\DemoBundle\EventListener\TokenListener
-                arguments: [ %tokens% ]
+                arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
                     - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
@@ -268,13 +271,19 @@ event:
         use Symfony\Component\DependencyInjection\Definition;
 
         $listener = new Definition('Acme\DemoBundle\EventListener\TokenListener', array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
-        $listener->addTag('kernel.event_listener', array('event' => 'kernel.response', 'method' => 'onKernelResponse'));
+        $listener->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.controller',
+            'method' => 'onKernelController'
+        ));
+        $listener->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.response',
+            'method' => 'onKernelResponse'
+        ));
         $container->setDefinition('demo.tokens.action_listener', $listener);
 
 That's it! The ``TokenListener`` is now notified before every controller is
 executed (``onKernelController``) and after every controller returns a response
 (``onKernelResponse``). By making specific controllers implement the ``TokenAuthenticatedController``
-interface, our listener knows which controllers it should take action on.
+interface, your listener knows which controllers it should take action on.
 And by storing a value in the request's "attributes" bag, the ``onKernelResponse``
 method knows to add the extra header. Have fun!

@@ -65,7 +65,9 @@ for converting to and from the issue number and the Issue object::
          * Transforms a string (number) to an object (issue).
          *
          * @param  string $number
+         *
          * @return Issue|null
+         *
          * @throws TransformationFailedException if object (issue) is not found.
          */
         public function reverseTransform($number)
@@ -118,11 +120,28 @@ issue field in some form.
                 $entityManager = $options['em'];
                 $transformer = new IssueToNumberTransformer($entityManager);
 
-                // add a normal text field, but add our transformer to it
+                // add a normal text field, but add your transformer to it
                 $builder->add(
                     $builder->create('issue', 'text')
                         ->addModelTransformer($transformer)
                 );
+            }
+
+            public function setDefaultOptions(OptionsResolverInterface $resolver)
+            {
+                $resolver->setDefaults(array(
+                    'data_class' => 'Acme\TaskBundle\Entity\Task',
+                ));
+
+                $resolver->setRequired(array(
+                    'em',
+                ));
+
+                $resolver->setAllowedTypes(array(
+                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
+                ));
+
+                // ...
             }
 
             // ...
@@ -133,7 +152,7 @@ when creating your form. Later, you'll learn how you could create a custom
 ``issue`` field type to avoid needing to do this in your controller::
 
     $taskForm = $this->createForm(new TaskType(), $task, array(
-        'em' => $this->getDoctrine()->getEntityManager(),
+        'em' => $this->getDoctrine()->getManager(),
     ));
 
 Cool, you're done! Your user will be able to enter an issue number into the
@@ -164,13 +183,16 @@ Model and View Transformers
     became ``addViewTransformer``.
 
 In the above example, the transformer was used as a "model" transformer.
-In fact, there are two different type of transformers and three different
+In fact, there are two different types of transformers and three different
 types of underlying data.
+
+.. image:: /images/cookbook/form/DataTransformersTypes.png
+   :align: center
 
 In any form, the 3 different types of data are:
 
 1) **Model data** - This is the data in the format used in your application
-(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``, 
+(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
 you're dealing with the "model" data.
 
 2) **Norm Data** - This is a normalized version of your data, and is commonly
@@ -196,11 +218,11 @@ Which transformer you need depends on your situation.
 
 To use the view transformer, call ``addViewTransformer``.
 
-So why did we use the model transformer?
-----------------------------------------
+So why use the model transformer?
+---------------------------------
 
-In our example, the field is a ``text`` field, and we always expect a text
-field to be a simple, scalar format in the "norm" and "view" formats. For
+In this example, the field is a ``text`` field, and a text field is always
+expected to be a simple, scalar format in the "norm" and "view" formats. For
 this reason, the most appropriate transformer was the "model" transformer
 (which converts to/from the *norm* format - string issue number - to the *model*
 format - Issue object).
@@ -222,7 +244,7 @@ a field for issue numbers
 2) You need to worry about passing in the ``em`` option whenever you're creating
 a form that uses the transformer.
 
-Because of these, you may choose to create a :doc:`create a custom field type</cookbook/form/create_custom_field_type>`.
+Because of these, you may choose to :doc:`create a custom field type </cookbook/form/create_custom_field_type>`.
 First, create the custom field type class::
 
     // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
@@ -294,6 +316,17 @@ it's recognized as a custom field type:
             <tag name="form.type" alias="issue_selector" />
         </service>
 
+    .. code-block:: php
+
+        $container
+            ->setDefinition('acme_demo.type.issue_selector', array(
+                new Reference('doctrine.orm.entity_manager'),
+            ))
+            ->addTag('form.type', array(
+                'alias' => 'issue_selector',
+            ))
+        ;
+
 Now, whenever you need to use your special ``issue_selector`` field type,
 it's quite easy::
 
@@ -309,7 +342,7 @@ it's quite easy::
         {
             $builder
                 ->add('task')
-                ->add('dueDate', null, array('widget' => 'single_text'));
+                ->add('dueDate', null, array('widget' => 'single_text'))
                 ->add('issue', 'issue_selector');
         }
 
@@ -318,4 +351,3 @@ it's quite easy::
             return 'task';
         }
     }
-

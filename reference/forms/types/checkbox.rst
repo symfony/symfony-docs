@@ -9,16 +9,19 @@ has a Boolean value: if the box is checked, the field will be set to true,
 if the box is unchecked, the value will be set to false.
 
 +-------------+------------------------------------------------------------------------+
-| Rendered as | ``input`` ``text`` field                                               |
+| Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `required`_                                                          |
 | options     | - `label`_                                                             |
 |             | - `read_only`_                                                         |
+|             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
+|             | - `error_mapping`_                                                     |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                             |
+| Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
@@ -47,7 +50,7 @@ not affect the value that's set on your object.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -55,4 +58,10 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

@@ -1,10 +1,16 @@
 MinLength
 =========
 
+.. caution::
+
+    The MinLength constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Length` with the ``min``
+    option instead.
+
 Validates that the length of a string is at least as long as the given limit.
 
 +----------------+-------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                   |
+| Applies to     | :ref:`property or method <validation-property-target>`                  |
 +----------------+-------------------------------------------------------------------------+
 | Options        | - `limit`_                                                              |
 |                | - `message`_                                                            |
@@ -31,6 +37,8 @@ Basic Usage
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Blog.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Blog
@@ -47,14 +55,39 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Blog">
-            <property name="summary">
-                <constraint name="MinLength">
-                    <option name="limit">3</option>
-                    <option name="message">Your name must have at least {{ limit }} characters.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Blog">
+                <property name="summary">
+                    <constraint name="MinLength">
+                        <option name="limit">3</option>
+                        <option name="message">Your name must have at least {{ limit }} characters.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Blog.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Blog
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('summary', new Assert\MinLength(array(
+                    'limit'   => 3,
+                    'message' => 'Your name must have at least {{ limit }} characters.',
+                )));
+            }
+        }
 
 Options
 -------
@@ -62,7 +95,7 @@ Options
 limit
 ~~~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "min" value. Validation will fail if the length
 of the give string is **less** than this number.
@@ -80,8 +113,6 @@ charset
 
 **type**: ``charset`` **default**: ``UTF-8``
 
-If the PHP extension "mbstring" is installed, then the PHP function `mb_strlen`_
+If the PHP extension "mbstring" is installed, then the PHP function :phpfunction:`mb_strlen`
 will be used to calculate the length of the string. The value of the ``charset``
 option is passed as the second argument to that function.
-
-.. _`mb_strlen`: http://php.net/manual/en/function.mb-strlen.php

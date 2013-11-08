@@ -15,16 +15,24 @@ other batch jobs.
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Console);
-* Install it via PEAR ( `pear.symfony.com/Console`);
-* Install it via Composer (`symfony/console` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Console).
+
+.. note::
+
+    Windows does not support ANSI colors by default so the Console Component detects and
+    disables colors where Windows does not have support. However, if Windows is not
+    configured with an ANSI driver and your console commands invoke other scripts which
+    emit ANSI color sequences, they will be shown as raw escape characters.
+
+    To enable ANSI colour support for Windows, please install `ANSICON`_.
 
 Creating a basic Command
 ------------------------
 
-To make a console command to greet us from the command line, create ``GreetCommand.php``
+To make a console command that greets you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
     namespace Acme\DemoBundle\Command;
@@ -42,8 +50,17 @@ and add the following to it::
             $this
                 ->setName('demo:greet')
                 ->setDescription('Greet someone')
-                ->addArgument('name', InputArgument::OPTIONAL, 'Who do you want to greet?')
-                ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
+                ->addArgument(
+                    'name',
+                    InputArgument::OPTIONAL,
+                    'Who do you want to greet?'
+                )
+                ->addOption(
+                   'yell',
+                   null,
+                   InputOption::VALUE_NONE,
+                   'If set, the task will yell in uppercase letters'
+                )
             ;
         }
 
@@ -68,8 +85,8 @@ You also need to create the file to run at the command line which creates
 an ``Application`` and adds commands to it::
 
     #!/usr/bin/env php
-    # app/console
-    <?php 
+    <?php
+    // app/console
 
     use Acme\DemoBundle\Command\GreetCommand;
     use Symfony\Component\Console\Application;
@@ -99,6 +116,8 @@ You can also use the ``--yell`` option to make everything uppercase:
 This prints::
 
     HELLO FABIEN
+
+.. _components-console-coloring:
 
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
@@ -130,6 +149,51 @@ Available foreground and background colors are: ``black``, ``red``, ``green``,
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and ``conceal``.
 
+You can also set these colors and options inside the tagname::
+
+    // green text
+    $output->writeln('<fg=green>foo</fg=green>');
+
+    // black text on a cyan background
+    $output->writeln('<fg=black;bg=cyan>foo</fg=black;bg=cyan>');
+
+    // bold text on a yellow background
+    $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
+
+Verbosity Levels
+~~~~~~~~~~~~~~~~
+
+The console has 3 levels of verbosity. These are defined in the
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
+
+==================================  ===============================
+Mode                                Value
+==================================  ===============================
+OutputInterface::VERBOSITY_QUIET    Do not output any messages
+OutputInterface::VERBOSITY_NORMAL   The default verbosity level
+OutputInterface::VERBOSITY_VERBOSE  Increased verbosity of messages
+==================================  ===============================
+
+You can specify the quiet verbosity level with the ``--quiet`` or ``-q``
+option. The ``--verbose`` or ``-v`` option is used when you want an increased
+level of verbosity.
+
+.. tip::
+
+    The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
+    level is used.
+
+It is possible to print a message in a command for only a specific verbosity
+level. For example::
+
+    if (OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
+        $output->writeln(...);
+    }
+
+When the quiet level is used, all output is suppressed as the default
+:method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output::write>`
+method returns without actually printing.
+
 Using Command Arguments
 -----------------------
 
@@ -141,8 +205,16 @@ and make the ``name`` argument required::
 
     $this
         // ...
-        ->addArgument('name', InputArgument::REQUIRED, 'Who do you want to greet?')
-        ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?');
+        ->addArgument(
+            'name',
+            InputArgument::REQUIRED,
+            'Who do you want to greet?'
+        )
+        ->addArgument(
+            'last_name',
+            InputArgument::OPTIONAL,
+            'Your last name?'
+        );
 
 You now have access to a ``last_name`` argument in your command::
 
@@ -156,6 +228,50 @@ The command can now be used in either of the following ways:
 
     $ app/console demo:greet Fabien
     $ app/console demo:greet Fabien Potencier
+
+It is also possible to let an argument take a list of values (imagine you want
+to greet all your friends). For this it must be specified at the end of the
+argument list::
+
+    $this
+        // ...
+        ->addArgument(
+            'names',
+            InputArgument::IS_ARRAY,
+            'Who do you want to greet (separate multiple names with a space)?'
+        );
+
+To use this, just specify as many names as you want:
+
+.. code-block:: bash
+
+    $ app/console demo:greet Fabien Ryan Bernhard
+
+You can access the ``names`` argument as an array::
+
+    if ($names = $input->getArgument('names')) {
+        $text .= ' '.implode(', ', $names);
+    }
+
+There are 3 argument variants you can use:
+
+===========================  ===============================================================================================================
+Mode                         Value
+===========================  ===============================================================================================================
+InputArgument::REQUIRED      The argument is required
+InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
+InputArgument::IS_ARRAY      The argument can contain an indefinite number of arguments and must be used at the end of the argument list
+===========================  ===============================================================================================================
+
+You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
+
+    $this
+        // ...
+        ->addArgument(
+            'names',
+            InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+            'Who do you want to greet (separate multiple names with a space)?'
+        );
 
 Using Command Options
 ---------------------
@@ -178,7 +294,13 @@ how many times in a row the message should be printed::
 
     $this
         // ...
-        ->addOption('iterations', null, InputOption::VALUE_REQUIRED, 'How many times should the message be printed?', 1);
+        ->addOption(
+            'iterations',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'How many times should the message be printed?',
+            1
+        );
 
 Next, use this in the command to print the message multiple times:
 
@@ -219,37 +341,29 @@ InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), t
 InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
 ===========================  =====================================================================================
 
-You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
+You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:
 
 .. code-block:: php
 
     $this
         // ...
-        ->addOption('iterations', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'How many times should the message be printed?', 1);
+        ->addOption(
+            'iterations',
+            null,
+            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+            'How many times should the message be printed?',
+            1
+        );
 
-Asking the User for Information
--------------------------------
+Console Helpers
+---------------
 
-When creating commands, you have the ability to collect more information
-from the user by asking him/her questions. For example, suppose you want
-to confirm an action before actually executing it. Add the following to your
-command::
+The console component also contains a set of "helpers" - different small
+tools capable of helping you with different tasks:
 
-    $dialog = $this->getHelperSet()->get('dialog');
-    if (!$dialog->askConfirmation($output, '<question>Continue with this action?</question>', false)) {
-        return;
-    }
-
-In this case, the user will be asked "Continue with this action", and unless
-they answer with ``y``, the task will stop running. The third argument to
-``askConfirmation`` is the default value to return if the user doesn't enter
-any input.
-
-You can also ask questions with more than a simple yes/no answer. For example,
-if you needed to know the name of something, you might do the following::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-    $name = $dialog->ask($output, 'Please enter the name of the widget', 'foo');
+* :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
+* :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
+* :doc:`/components/console/helpers/progresshelper`: shows a progress bar
 
 Testing Commands
 ----------------
@@ -285,7 +399,7 @@ method returns what would have been displayed during a normal call from the
 console.
 
 You can test sending arguments and options to the command by passing them
-as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
+as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
     use Symfony\Component\Console\Application;
@@ -364,3 +478,12 @@ returns the returned code from the command (return value from command's
     something and display feedback to the user. So, instead of calling a
     command from the Web, refactor your code and move the logic to a new
     class.
+
+Learn More!
+-----------
+
+* :doc:`/components/console/usage`
+* :doc:`/components/console/single_command_tool`
+
+.. _Packagist: https://packagist.org/packages/symfony/console
+.. _ANSICON: https://github.com/adoxa/ansicon/downloads

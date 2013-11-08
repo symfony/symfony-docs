@@ -19,11 +19,15 @@ accuracy.
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
+| Overridden  | - `error_bubbling`_                                                    |
+| Options     |                                                                        |
++-------------+------------------------------------------------------------------------+
 | Inherited   | - `invalid_message`_                                                   |
 | options     | - `invalid_message_parameters`_                                        |
-|             | - `error_bubbling`_                                                    |
+|             | - `mapped`_                                                            |
+|             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/form>`                              |
+| Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |
 +-------------+------------------------------------------------------------------------+
@@ -51,6 +55,45 @@ The most important option is ``type``, which can be any field type and determine
 the actual type of the two underlying fields. The ``options`` option is passed
 to each of those individual fields, meaning - in this example - any option
 supported by the ``password`` type can be passed in this array.
+
+Rendering
+~~~~~~~~~
+
+The repeated field type is actually two underlying fields, which you can
+render all at once, or individually. To render all at once, use something
+like:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ form_row(form.password) }}
+
+    .. code-block:: php
+
+        <?php echo $view['form']->row($form['password']) ?>
+
+To render each field individually, use something like this:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {# .first and .second may vary in your use - see the note below #}
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+
+    .. code-block:: php
+
+        <?php echo $view['form']->row($form['password']['first']) ?>
+        <?php echo $view['form']->row($form['password']['second']) ?>
+
+.. note::
+
+    The names ``first`` and ``second`` are the default names for the two
+    sub-fields. However, these names can be controlled via the `first_name`_
+    and `second_name`_ options. If you've set these options, then use those
+    values instead of ``first`` and ``second`` when rendering.
 
 Validation
 ~~~~~~~~~~
@@ -132,13 +175,23 @@ second_name
 
 The same as ``first_name``, but for the second field.
 
+Overridden Options
+------------------
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
+
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc

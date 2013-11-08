@@ -1,12 +1,15 @@
 Luhn
-======
+====
+
+.. versionadded:: 2.2
+    The Luhn validation is new in Symfony 2.2.
 
 This constraint is used to ensure that a credit card number passes the `Luhn algorithm`_.
 It is useful as a first step to validating a credit card: before communicating with a
 payment gateway.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 +----------------+-----------------------------------------------------------------------+
@@ -32,20 +35,11 @@ will contain a credit card number.
                     - Luhn:
                         message: Please check your credit card number.
 
-    .. code-block:: xml
-
-        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
-        <class name="Acme\SubscriptionBundle\Entity\Transaction">
-            <property name="cardNumber">
-                <constraint name="Luhn">
-                    <option name="message">Please check your credit card number.</option>
-                </constraint>
-            </property>
-        </class>
-
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -56,11 +50,30 @@ will contain a credit card number.
             protected $cardNumber;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+                <property name="cardNumber">
+                    <constraint name="Luhn">
+                        <option name="message">Please check your credit card number.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
     .. code-block:: php
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Luhn;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
         {
@@ -68,7 +81,7 @@ will contain a credit card number.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('luhn', new Luhn(array(
+                $metadata->addPropertyConstraint('cardNumber', new Assert\Luhn(array(
                     'message' => 'Please check your credit card number',
                 )));
             }

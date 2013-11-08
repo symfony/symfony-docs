@@ -4,10 +4,10 @@
 Databases and Propel
 ====================
 
-Let's face it, one of the most common and challenging tasks for any application
+One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Symfony2
 does not come integrated with any ORMs but the Propel integration is easy.
-To get started, read `Working With Symfony2`_.
+To install Propel, read `Working With Symfony2`_ on the Propel documentation.
 
 A Simple Example: A Product
 ---------------------------
@@ -18,8 +18,8 @@ persist it to the database and fetch it back out.
 .. sidebar:: Code along with the example
 
     If you want to follow along with the example in this chapter, create an
-    ``AcmeStoreBundle`` via: 
-    
+    ``AcmeStoreBundle`` via:
+
     .. code-block:: bash
 
         $ php app/console generate:bundle --namespace=Acme/StoreBundle
@@ -28,7 +28,7 @@ Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you can start, you'll need to configure your database connection
-information.  By convention, this information is usually configured in an
+information. By convention, this information is usually configured in an
 ``app/config/parameters.yml`` file:
 
 .. code-block:: yaml
@@ -48,14 +48,17 @@ information.  By convention, this information is usually configured in an
     parameters defined in that file are referenced by the main configuration
     file when setting up Propel:
 
-    .. code-block:: yaml
+These parameters defined in ``parameters.yml`` can now be included in the
+configuration file (``config.yml``):
 
-        propel:
-            dbal:
-                driver:     %database_driver%
-                user:       %database_user%
-                password:   %database_password%
-                dsn:        %database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%
+.. code-block:: yaml
+
+    propel:
+        dbal:
+            driver:     "%database_driver%"
+            user:       "%database_user%"
+            password:   "%database_password%"
+            dsn:        "%database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%"
 
 Now that Propel knows about your database, Symfony2 can create the database for
 you:
@@ -68,7 +71,7 @@ you:
 
     In this example, you have one configured connection, named ``default``. If
     you want to configure more than one connection, read the `PropelBundle
-    configuration section <Working With Symfony2 - Configuration>`_.
+    configuration section`_.
 
 Creating a Model Class
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -87,13 +90,29 @@ of your ``AcmeStoreBundle``:
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <database name="default"
+        namespace="Acme\StoreBundle\Model"
+        defaultIdMethod="native"
+    >
         <table name="product">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
-            <column name="price" type="decimal" />
-            <column name="description" type="longvarchar" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true"
+            />
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100"
+            />
+            <column name="price"
+                type="decimal"
+            />
+            <column name="description"
+                type="longvarchar"
+            />
         </table>
     </database>
 
@@ -171,19 +190,21 @@ Fetching Objects from the Database
 Fetching an object back from the database is even easier. For example, suppose
 you've configured a route to display a specific ``Product`` based on its ``id``
 value::
-    
+
     // ...
     use Acme\StoreBundle\Model\ProductQuery;
-    
+
     public function showAction($id)
     {
         $product = ProductQuery::create()
             ->findPk($id);
-    
+
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
-    
+
         // ... do something, like pass the $product object into a template
     }
 
@@ -192,47 +213,49 @@ Updating an Object
 
 Once you've fetched an object from Propel, updating it is easy. Suppose you
 have a route that maps a product id to an update action in a controller::
-    
+
     // ...
     use Acme\StoreBundle\Model\ProductQuery;
-    
+
     public function updateAction($id)
     {
         $product = ProductQuery::create()
             ->findPk($id);
-    
+
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
-    
+
         $product->setName('New product name!');
         $product->save();
-    
+
         return $this->redirect($this->generateUrl('homepage'));
     }
 
 Updating an object involves just three steps:
 
-#. fetching the object from Propel;
-#. modifying the object;
-#. saving it.
+#. fetching the object from Propel (line 6 - 13);
+#. modifying the object (line 15);
+#. saving it (line 16).
 
 Deleting an Object
 ~~~~~~~~~~~~~~~~~~
 
-Deleting an object is very similar, but requires a call to the ``delete()``
-method on the object::
+Deleting an object is very similar to updating, but requires a call to the
+``delete()`` method on the object::
 
     $product->delete();
 
 Querying for Objects
 --------------------
-    
+
 Propel provides generated ``Query`` classes to run both basic and complex queries
 without any work::
-    
+
     \Acme\StoreBundle\Model\ProductQuery::create()->findPk($id);
-    
+
     \Acme\StoreBundle\Model\ProductQuery::create()
         ->filterByName('Foo')
         ->findOne();
@@ -259,7 +282,7 @@ If you want to reuse some queries, you can add your own methods to the
         public function filterByExpensivePrice()
         {
             return $this
-                ->filterByPrice(array('min' => 1000))
+                ->filterByPrice(array('min' => 1000));
         }
     }
 
@@ -281,22 +304,47 @@ Start by adding the ``category`` definition in your ``schema.xml``:
 
 .. code-block:: xml
 
-    <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <database name="default"
+        namespace="Acme\StoreBundle\Model"
+        defaultIdMethod="native">
         <table name="product">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
-            <column name="price" type="decimal" />
-            <column name="description" type="longvarchar" />
-    
-            <column name="category_id" type="integer" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true" />
+
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100" />
+
+            <column name="price"
+                type="decimal" />
+
+            <column name="description"
+                type="longvarchar" />
+
+            <column name="category_id"
+                type="integer" />
+
             <foreign-key foreignTable="category">
                 <reference local="category_id" foreign="id" />
             </foreign-key>
         </table>
-    
+
         <table name="category">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true" />
+
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100" />
        </table>
     </database>
 
@@ -306,7 +354,7 @@ Create the classes:
 
     $ php app/console propel:model:build
 
-Assuming you have products in your database, you don't want lose them. Thanks to
+Assuming you have products in your database, you don't want to lose them. Thanks to
 migrations, Propel will be able to update your database without losing existing
 data.
 
@@ -315,41 +363,41 @@ data.
     $ php app/console propel:migration:generate-diff
     $ php app/console propel:migration:migrate
 
-Your database has been updated, you can continue to write your application.
+Your database has been updated, you can continue writing your application.
 
 Saving Related Objects
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's see the code in action. Imagine you're inside a controller::
+Now, try the code in action. Imagine you're inside a controller::
 
     // ...
     use Acme\StoreBundle\Model\Category;
     use Acme\StoreBundle\Model\Product;
     use Symfony\Component\HttpFoundation\Response;
-    
+
     class DefaultController extends Controller
     {
         public function createProductAction()
         {
             $category = new Category();
             $category->setName('Main Products');
-    
+
             $product = new Product();
             $product->setName('Foo');
             $product->setPrice(19.99);
             // relate this product to the category
             $product->setCategory($category);
-    
+
             // save the whole
             $product->save();
-    
+
             return new Response(
                 'Created product id: '.$product->getId().' and category id: '.$category->getId()
             );
         }
     }
 
-Now, a single row is added to both the ``category`` and product tables. The
+Now, a single row is added to both the ``category`` and ``product`` tables. The
 ``product.category_id`` column for the new product is set to whatever the id is
 of the new category. Propel manages the persistence of this relationship for
 you.
@@ -363,15 +411,15 @@ before.  First, fetch a ``$product`` object and then access its related
 
     // ...
     use Acme\StoreBundle\Model\ProductQuery;
-    
+
     public function showAction($id)
     {
         $product = ProductQuery::create()
             ->joinWithCategory()
             ->findPk($id);
-    
+
         $categoryName = $product->getCategory()->getName();
-    
+
         // ...
     }
 
@@ -395,9 +443,8 @@ inserted, updated, deleted, etc).
 To add a hook, just add a new method to the object class::
 
     // src/Acme/StoreBundle/Model/Product.php
-    
+
     // ...
-    
     class Product extends BaseProduct
     {
         public function preInsert(\PropelPDO $con = null)
@@ -417,7 +464,6 @@ Propel provides the following hooks:
 * ``preDelete()`` code executed before deleting an object
 * ``postDelete()`` code executed after deleting an object
 
-
 Behaviors
 ---------
 
@@ -430,8 +476,8 @@ Commands
 
 You should read the dedicated section for `Propel commands in Symfony2`_.
 
-.. _`Working With Symfony2`: http://www.propelorm.org/cookbook/symfony2/working-with-symfony2.html#installation
-.. _`Working With Symfony2 - Configuration`: http://www.propelorm.org/cookbook/symfony2/working-with-symfony2.html#configuration
-.. _`Relationships`: http://www.propelorm.org/documentation/04-relationships.html
-.. _`Behaviors reference section`: http://www.propelorm.org/documentation/#behaviors_reference
-.. _`Propel commands in Symfony2`: http://www.propelorm.org/cookbook/symfony2/working-with-symfony2#the_commands
+.. _`Working With Symfony2`: http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2.html#installation
+.. _`PropelBundle configuration section`: http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2.html#configuration
+.. _`Relationships`: http://propelorm.org/Propel/documentation/04-relationships.html
+.. _`Behaviors reference section`: http://propelorm.org/Propel/documentation/#behaviors-reference
+.. _`Propel commands in Symfony2`: http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2#the-commands

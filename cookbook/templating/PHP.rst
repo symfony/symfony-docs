@@ -4,7 +4,7 @@
 How to use PHP instead of Twig for Templates
 ============================================
 
-Even if Symfony2 defaults to Twig for its template engine, you can still use
+Symfony2 defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
 Symfony2. Symfony2 adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
@@ -18,7 +18,7 @@ your application configuration file:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # app/config/config.yml
         framework:
             # ...
@@ -38,11 +38,12 @@ your application configuration file:
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            ...,
-            'templating'      => array(
+            // ...
+
+            'templating' => array(
                 'engines' => array('twig', 'php'),
             ),
-        )); 
+        ));
 
 You can now render a PHP template instead of a Twig one simply by using the
 ``.php`` extension in the template name instead of ``.twig``. The controller
@@ -51,10 +52,26 @@ below renders the ``index.html.php`` template::
     // src/Acme/HelloBundle/Controller/HelloController.php
 
     // ...
-
     public function indexAction($name)
     {
         return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
+    }
+
+You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
+shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template::
+
+    // src/Acme/HelloBundle/Controller/HelloController.php
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+    // ...
+
+    /**
+     * @Template(engine="php")
+     */
+    public function indexAction($name)
+    {
+        return array('name' => $name);
     }
 
 .. index::
@@ -65,7 +82,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, we like to think about this problem
+well-known header and footer. In Symfony2, this problem is thought about
 differently: a template can be decorated by another one.
 
 The ``index.html.php`` template is decorated by ``layout.html.php``, thanks to
@@ -208,7 +225,12 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('AcmeHelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php echo $view['actions']->render(
+        new ControllerReference('AcmeHelloBundle:Hello:fancy', array(
+            'name'  => $name,
+            'color' => 'green',
+        ))
+    ) ?>
 
 Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
@@ -222,7 +244,10 @@ Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action 
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeHelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeHelloBundle:Hello:fancy.html.php', array(
+                'name'   => $name,
+                'object' => $object
+            ));
         }
 
         // ...
@@ -265,7 +290,7 @@ pattern:
 
     # src/Acme/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        pattern:  /hello/{name}
+        path:  /hello/{name}
         defaults: { _controller: AcmeHelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets

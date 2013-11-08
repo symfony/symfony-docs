@@ -6,3 +6,6 @@ Console
 
     introduction
     usage
+    single_command_tool
+
+    helpers/index

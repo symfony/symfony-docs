@@ -20,11 +20,11 @@ or after a method is executed, without interfering with other plugins. This is
 not an easy problem to solve with single inheritance, and multiple inheritance
 (were it possible with PHP) has its own drawbacks.
 
-The Symfony2 Event Dispatcher component implements the `Observer`_ pattern in
+The Symfony2 Event Dispatcher component implements the `Mediator`_ pattern in
 a simple and effective way to make all these things possible and to make your
 projects truly extensible.
 
-Take a simple example from the `Symfony2 HttpKernel component`_. Once a
+Take a simple example from the :doc:`/components/http_kernel/introduction`. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
 used. To make this possible, the Symfony2 kernel throws an event -
@@ -47,11 +47,10 @@ used. To make this possible, the Symfony2 kernel throws an event -
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* Install it via PEAR ( `pear.symfony.com/EventDispatcher`);
-* Install it via Composer (`symfony/event-dispatcher` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/EventDispatcher).
 
 Usage
 -----
@@ -95,7 +94,7 @@ Event Names and Event Objects
 When the dispatcher notifies listeners, it passes an actual ``Event`` object
 to those listeners. The base ``Event`` class is very simple: it contains a
 method for stopping :ref:`event
-propagation<event_dispatcher-event-propagation>`, but not much else.
+propagation <event_dispatcher-event-propagation>`, but not much else.
 
 Often times, data about a specific event needs to be passed along with the
 ``Event`` object so that the listeners have needed information. In the case of
@@ -144,10 +143,11 @@ The ``addListener()`` method takes up to three arguments:
 * A PHP callable that will be notified when an event is thrown that it listens
   to;
 
-* An optional priority integer (higher equals more important) that determines
-  when a listener is triggered versus other listeners (defaults to ``0``). If
-  two listeners have the same priority, they are executed in the order that
-  they were added to the dispatcher.
+* An optional priority integer (higher equals more important, and therefore
+  that the listener will be triggered earlier) that determines when a listener
+  is triggered versus other listeners (defaults to ``0``). If two listeners
+  have the same priority, they are executed in the order that they were added
+  to the dispatcher.
 
 .. note::
 
@@ -188,10 +188,10 @@ In many cases, a special ``Event`` subclass that's specific to the given event
 is passed to the listener. This gives the listener access to special
 information about the event. Check the documentation or implementation of each
 event to determine the exact ``Symfony\Component\EventDispatcher\Event``
-instance that's being passed. For example, the ``kernel.event`` event passes an
+instance that's being passed. For example, the ``kernel.response`` event passes an
 instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent
+    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
@@ -230,8 +230,8 @@ that serves to define and document your event::
          * The store.order event is thrown each time an order is created
          * in the system.
          *
-         * The event listener receives an Acme\StoreBundle\Event\FilterOrderEvent
-         * instance.
+         * The event listener receives an
+         * Acme\StoreBundle\Event\FilterOrderEvent instance.
          *
          * @var string
          */
@@ -306,7 +306,7 @@ the ``dispatch`` method. Now, any listener to the ``store.order`` event will
 receive the ``FilterOrderEvent`` and have access to the ``Order`` object via
 the ``getOrder`` method::
 
-    // some listener class that's been registered for "STORE_ORDER" event
+    // some listener class that's been registered for "store.order" event
     use Acme\StoreBundle\Event\FilterOrderEvent;
 
     public function onStoreOrder(FilterOrderEvent $event)
@@ -317,6 +317,8 @@ the ``getOrder`` method::
 
 .. index::
    single: Event Dispatcher; Event subscribers
+
+.. _event_dispatcher-using-event-subscribers:
 
 Using Event Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -340,7 +342,7 @@ subscribes to the ``kernel.response`` and ``store.order`` events::
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        static public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
                 'kernel.response' => array(
@@ -390,6 +392,10 @@ indexed by event names and whose values are either the method name to call or
 an array composed of the method name to call and a priority. The example
 above shows how to register several listener methods for the same event in
 subscriber and also shows how to pass the priority of each listener method.
+The higher the priority, the earlier the method is called. In the above
+example, when the ``kernel.response`` event is triggered, the methods
+``onKernelResponsePre``, ``onKernelResponseMid``, and ``onKernelResponsePost``
+are called in that order.
 
 .. index::
    single: Event Dispatcher; Stopping event flow
@@ -533,7 +539,7 @@ Dispatcher Shortcuts
 .. versionadded:: 2.1
     ``EventDispatcher::dispatch()`` method returns the event since Symfony 2.1.
 
-The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
+The :method:`EventDispatcher::dispatch <Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
 method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
 object. This allows for various shortcuts. For example if one does not need
 a custom event object, one can simply rely on a plain
@@ -592,7 +598,16 @@ part of the listener's processing logic::
         }
     }
 
-.. _Observer: http://en.wikipedia.org/wiki/Observer_pattern
-.. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel
+Other Dispatchers
+-----------------
+
+Besides the commonly used ``EventDispatcher``, the component comes with 2
+other dispatchers:
+
+* :doc:`/components/event_dispatcher/container_aware_dispatcher`
+* :doc:`/components/event_dispatcher/immutable_dispatcher`
+
+.. _Mediator: http://en.wikipedia.org/wiki/Mediator_pattern
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
+.. _Packagist: https://packagist.org/packages/symfony/event-dispatcher

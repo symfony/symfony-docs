@@ -19,12 +19,9 @@ Installing a Symfony2 Distribution
 
 .. tip::
 
-    First, check that you have installed and configured a Web server (such as
-    Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
-    recommended). For more information on Symfony2 requirements, see the
-    :doc:`requirements reference</reference/requirements>`. For information on
-    configuring your specific web server document root, see the following
-    documentation: `Apache`_ | `Nginx`_ .
+    First, check that you have installed and configured a Web server (such
+    as Apache) with PHP 5.3.8 or higher. For more information on Symfony2
+    requirements, see the :doc:`requirements reference </reference/requirements>`.
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -60,20 +57,25 @@ Distribution:
 
 .. code-block:: bash
 
-    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony dev-master
+    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.2.0
 
 .. tip::
 
-    For an exact version, replace `dev-master` with the latest Symfony version
-    (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
+    For an exact version, replace `2.2.0` with the latest Symfony version
+    (e.g. 2.2.1). For details, see the `Symfony Installation Page`_
 
-This command may take several minutes to run as Composer download the Standard
+.. tip::
+
+    To download the vendor files faster, add the ``--prefer-dist`` option at
+    the end of any Composer command.
+
+This command may take several minutes to run as Composer downloads the Standard
 Distribution along with all of the vendor libraries that it needs. When it finishes,
 you should have a directory that looks something like this:
 
 .. code-block:: text
 
-    path/to/webroot/ <- your web root directory
+    path/to/webroot/ <- your web server directory (sometimes named htdocs or public)
         Symfony/ <- the new directory
             app/
                 cache/
@@ -107,10 +109,10 @@ one of the following commands (replacing ``###`` with your actual filename):
 .. code-block:: bash
 
     # for .tgz file
-    $ tar zxvf Symfony_Standard_Vendors_2.1.###.tgz
+    $ tar zxvf Symfony_Standard_Vendors_2.2.###.tgz
 
     # for a .zip file
-    $ unzip Symfony_Standard_Vendors_2.1.###.zip
+    $ unzip Symfony_Standard_Vendors_2.2.###.zip
 
 If you've downloaded "without vendors", you'll definitely need to read the
 next section.
@@ -120,6 +122,16 @@ next section.
     You can easily override the default directory structure. See
     :doc:`/cookbook/configuration/override_dir_structure` for more
     information.
+
+All public files and the front controller that handles incoming requests in
+a Symfony2 application live in the ``Symfony/web/`` directory. So, assuming
+you unpacked the archive into your web server's or virtual host's document root,
+your application's URLs will start with ``http://localhost/Symfony/web/``.
+
+.. note::
+
+    The following examples assume you don't touch the document root settings
+    so all URLs start with ``http://localhost/Symfony/web/``
 
 .. _installation-updating-vendors:
 
@@ -131,7 +143,7 @@ you'll start to develop your own application. A Symfony project depends on
 a number of external libraries. These are downloaded into the `vendor/` directory
 of your project via a library called `Composer`_.
 
-Depending on how you downloaded Symfony, you may or may not need to do update
+Depending on how you downloaded Symfony, you may or may not need to update
 your vendors right now. But, updating your vendors is always safe, and guarantees
 that you have all the vendor libraries you need.
 
@@ -170,9 +182,12 @@ Symfony itself - into the ``vendor/`` directory.
     When running ``php composer.phar install`` or ``php composer.phar update``,
     composer will execute post install/update commands to clear the cache
     and install assets. By default, the assets will be copied into your ``web``
-    directory. To create symlinks instead of copying the assets, you can
-    add an entry in the ``extra`` node of your composer.json file with the
-    key ``symfony-assets-install`` and the value ``symlink``:
+    directory.
+
+    Instead of copying your Symfony assets, you can create symlinks if
+    your operating system supports it. To create symlinks, add an entry
+    in the ``extra`` node of your composer.json file with the key
+    ``symfony-assets-install`` and the value ``symlink``:
 
     .. code-block:: json
 
@@ -208,39 +223,38 @@ If there are any issues, correct them now before moving on.
     must be writable both by the web server and the command line user. On
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
-    to ensure that permissions will be setup properly. Change ``www-data``
-    to your web server user:
+    to ensure that permissions will be setup properly.
 
     **1. Using ACL on a system that supports chmod +a**
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
-    and if you get an error - try the next method:
+    and if you get an error - try the next method. This uses a command to
+    try to determine your web server user and set it as ``APACHEUSER``:
 
     .. code-block:: bash
 
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+        $ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
-    **2. Using Acl on a system that does not support chmod +a**
+
+    **2. Using ACL on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
-    and install setfacl before using it (as is the case with Ubuntu), like
-    so:
+    and install setfacl before using it (as is the case with Ubuntu). This
+    uses a command to try to determine your web server user and set it as
+    ``APACHEUSER``:
 
     .. code-block:: bash
 
-        $ sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-        $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-
-    Note that not all web servers run as the user ``www-data``. You have to
-    check which user the web server is being run as and put it in for ``www-data``.
-    This can be done by checking your process list to see which user is running
-    your web server processes.
-
+		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+		$ sudo setfacl -R -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+		$ sudo setfacl -dR -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+		
     **3. Without using ACL**
 
     If you don't have access to changing the ACL of the directories, you will
@@ -248,9 +262,7 @@ If there are any issues, correct them now before moving on.
     be group-writable or world-writable (depending if the web server user
     and the command line user are in the same group or not). To achieve
     this, put the following line at the beginning of the ``app/console``,
-    ``web/app.php`` and ``web/app_dev.php`` files:
-
-    .. code-block:: php
+    ``web/app.php`` and ``web/app_dev.php`` files::
 
         umask(0002); // This will let the permissions be 0775
 
@@ -270,7 +282,19 @@ first "real" Symfony2 webpage:
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
-.. image:: /images/quick_tour/welcome.jpg
+.. image:: /images/quick_tour/welcome.png
+
+.. tip::
+
+    To get nice and short urls you should point the document root of your
+    webserver or virtual host to the ``Symfony/web/`` directory. Though
+    this is not required for development it is recommended at the time your
+    application goes into production as all system and configuration files
+    become inaccessible to clients then. For information on configuring
+    your specific web server document root, read
+    :doc:`/cookbook/configuration/web_server_configuration`
+    or consult the official documentation of your webserver:
+    `Apache`_ | `Nginx`_ .
 
 Beginning Development
 ---------------------
@@ -278,15 +302,19 @@ Beginning Development
 Now that you have a fully-functional Symfony2 application, you can begin
 development! Your distribution may contain some sample code - check the
 ``README.md`` file included with the distribution (open it as a text file)
-to learn about what sample code was included with your distribution and how
-you can remove it later.
+to learn about what sample code was included with your distribution.
 
-If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 
-Be sure to also check out the :doc:`Cookbook</cookbook/index>`, which contains
+Be sure to also check out the :doc:`Cookbook </cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
+
+.. note::
+
+    If you want to remove the sample code from your distribution, take a look
+    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 Using Source Control
 --------------------

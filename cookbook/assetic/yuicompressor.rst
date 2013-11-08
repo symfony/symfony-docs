@@ -8,6 +8,11 @@ Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
 
+.. caution::
+
+    The YUI Compressor is going through a `deprecation process`_. But don't
+    worry! See :doc:`/cookbook/assetic/uglifyjs` for an alternative.
+
 Download the YUI Compressor JAR
 -------------------------------
 
@@ -60,10 +65,10 @@ stylesheets:
                 ),
             ),
         ));
-        
+
 .. note::
 
-    Windows users need to remember to update config to proper java location. 
+    Windows users need to remember to update config to proper java location.
     In Windows7 x64 bit by default it's ``C:\Program Files (x86)\Java\jre6\bin\java.exe``.
 
 You now have access to two new Assetic filters in your application:
@@ -89,7 +94,8 @@ the view layer, this work is done in your templates:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')) as $url): ?>
+            array('yui_js')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
@@ -97,7 +103,7 @@ the view layer, this work is done in your templates:
 
     The above example assumes that you have a bundle called ``AcmeFooBundle``
     and your JavaScript files are in the ``Resources/public/js`` directory under
-    your bundle. This isn't important however - you can include your Javascript
+    your bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
 
 With the addition of the ``yui_js`` filter to the asset tags above, you should
@@ -116,7 +122,8 @@ can be repeated to minify your stylesheets.
 
         <?php foreach ($view['assetic']->stylesheets(
             array('@AcmeFooBundle/Resources/public/css/*'),
-            array('yui_css')) as $url): ?>
+            array('yui_css')
+        ) as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach; ?>
 
@@ -141,10 +148,10 @@ apply this filter when debug mode is off.
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('?yui_js')) as $url): ?>
+            array('?yui_js')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
-
 
 .. tip::
 
@@ -155,6 +162,6 @@ apply this filter when debug mode is off.
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
 
-
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
-.. _`Download the JAR`: http://yuilibrary.com/downloads/#yuicompressor
+.. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/
+.. _`deprecation process`: http://www.yuiblog.com/blog/2012/10/16/state-of-yui-compressor/

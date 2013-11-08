@@ -11,7 +11,7 @@ a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
 application* needs to render the content of a page.
 
-To see how simple this is, let's look at a Symfony2 controller in action.
+See how simple this is by looking at a Symfony2 controller in action.
 The following controller would render a page that simply prints ``Hello world!``::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -73,7 +73,7 @@ maps a URL to that controller (#2).
 .. note::
 
     Though similarly named, a "front controller" is different from the
-    "controllers" we'll talk about in this chapter. A front controller
+    "controllers" talked about in this chapter. A front controller
     is a short PHP file that lives in your web directory and through which
     all requests are directed. A typical application will have a production
     front controller (e.g. ``app.php``) and a development front controller
@@ -102,7 +102,7 @@ a controller object. Controllers are also called *actions*.
     {
         public function indexAction($name)
         {
-          return new Response('<html><body>Hello '.$name.'!</body></html>');
+            return new Response('<html><body>Hello '.$name.'!</body></html>');
         }
     }
 
@@ -115,11 +115,11 @@ a controller object. Controllers are also called *actions*.
     will house several controllers/actions (e.g. ``updateAction``, ``deleteAction``,
     etc).
 
-This controller is pretty straightforward, but let's walk through it:
+This controller is pretty straightforward:
 
 * *line 4*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
-  ``Response`` class, which our controller must return.
+  ``Response`` class, which the controller must return.
 
 * *line 6*: The class name is the concatenation of a name for the controller
   class (i.e. ``Hello``) and the word ``Controller``. This is a convention
@@ -141,7 +141,7 @@ Mapping a URL to a Controller
 -----------------------------
 
 The new controller returns a simple HTML page. To actually view this page
-in your browser, you need to create a route, which maps a specific URL pattern
+in your browser, you need to create a route, which maps a specific URL path
 to the controller:
 
 .. configuration-block::
@@ -150,15 +150,22 @@ to the controller:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index }
+            path:      /hello/{name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">AcmeHelloBundle:Hello:index</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{name}">
+                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -189,7 +196,7 @@ see :ref:`controller-string-syntax`.
 
 .. tip::
 
-    You can learn much more about the routing system in the :doc:`Routing chapter</book/routing>`.
+    You can learn much more about the routing system in the :doc:`Routing chapter </book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
@@ -202,11 +209,8 @@ Route Parameters as Controller Arguments
 You already know that the ``_controller`` parameter ``AcmeHelloBundle:Hello:index``
 refers to a ``HelloController::indexAction()`` method that lives inside the
 ``AcmeHelloBundle`` bundle. What's more interesting is the arguments that are
-passed to that method:
+passed to that method::
 
-.. code-block:: php
-
-    <?php
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
 
@@ -221,7 +225,7 @@ passed to that method:
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
-``{name}`` parameter from the matched route (``ryan`` in our example). In
+``{name}`` parameter from the matched route (``ryan`` in the example). In
 fact, when executing your controller, Symfony2 matches each argument of
 the controller with a parameter from the matched route. Take the following
 example:
@@ -232,16 +236,23 @@ example:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: AcmeHelloBundle:Hello:index, color: green }
+            path:      /hello/{first_name}/{last_name}
+            defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{first_name}/{last_name}">
-            <default key="_controller">AcmeHelloBundle:Hello:index</default>
-            <default key="color">green</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{first_name}/{last_name}">
+                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+                <default key="color">green</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -335,6 +346,14 @@ working with forms, for example::
 .. index::
    single: Controller; Base controller class
 
+Creating Static Pages
+---------------------
+
+You can create a static page without even creating a controller (only a route
+and template are needed).
+
+Use it! See :doc:`/cookbook/templating/render_without_controller`.
+
 The Base Controller Class
 -------------------------
 
@@ -344,9 +363,7 @@ access to any resource it might need. By extending this ``Controller`` class,
 you can take advantage of several helper methods.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify the
-``HelloController`` to extend it:
-
-.. code-block:: php
+``HelloController`` to extend it::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
@@ -358,7 +375,7 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
     {
         public function indexAction($name)
         {
-          return new Response('<html><body>Hello '.$name.'!</body></html>');
+            return new Response('<html><body>Hello '.$name.'!</body></html>');
         }
     }
 
@@ -375,13 +392,14 @@ itself.
 
     Extending the base class is *optional* in Symfony; it contains useful
     shortcuts but nothing mandatory. You can also extend
-    ``Symfony\Component\DependencyInjection\ContainerAware``. The service
+    :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`. The service
     container object will then be accessible via the ``container`` property.
 
 .. note::
 
-    You can also define your :doc:`Controllers as Services
-    </cookbook/controller/service>`.
+    You can also define your :doc:`Controllers as Services </cookbook/controller/service>`.
+    This is optional, but can give you more control over the exact dependencies
+    that are injected into your controllers.
 
 .. index::
    single: Controller; Common tasks
@@ -422,9 +440,7 @@ perform a 301 (permanent) redirect, modify the second argument::
 .. tip::
 
     The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to:
-
-    .. code-block:: php
+    object that specializes in redirecting the user. It's equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -436,7 +452,8 @@ perform a 301 (permanent) redirect, modify the second argument::
 Forwarding
 ~~~~~~~~~~
 
-You can also easily forward to another controller internally with the ``forward()``
+You can also easily forward to another controller internally with the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
 method. Instead of redirecting the user's browser, it makes an internal sub-request,
 and calls the specified controller. The ``forward()`` method returns the ``Response``
 object that's returned from that controller::
@@ -445,7 +462,7 @@ object that's returned from that controller::
     {
         $response = $this->forward('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
-            'color' => 'green'
+            'color' => 'green',
         ));
 
         // ... further modify the response or return it directly
@@ -476,14 +493,22 @@ value to each variable.
 
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
-    directly via the ``http_kernel`` service. A forward returns a ``Response``
-    object::
+    directly by duplicating the current request. When this
+    :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
+    service the ``HttpKernel`` returns a ``Response`` object::
+    
+        use Symfony\Component\HttpKernel\HttpKernelInterface;
+    
+        $path = array(
+            '_controller' => 'AcmeHelloBundle:Hello:fancy',
+            'name'        => $name,
+            'color'       => 'green',
+        );
+        $request = $this->container->get('request');
+        $subRequest = $request->duplicate(array(), null, $path);
 
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
-            'name'  => $name,
-            'color' => 'green',
-        ));
+        $response = $httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 
 .. index::
    single: Controller; Rendering templates
@@ -498,14 +523,22 @@ that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
 content from the template can be used to create a ``Response`` object::
 
-    $content = $this->renderView('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+    use Symfony\Component\HttpFoundation\Response;
+
+    $content = $this->renderView(
+        'AcmeHelloBundle:Hello:index.html.twig',
+        array('name' => $name)
+    );
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
 returns a ``Response`` object containing the content from the template::
 
-    return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+    return $this->render(
+        'AcmeHelloBundle:Hello:index.html.twig',
+        array('name' => $name)
+    );
 
 In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
 the ``AcmeHelloBundle`` will be rendered.
@@ -515,11 +548,21 @@ The Symfony templating engine is explained in great detail in the
 
 .. tip::
 
+    You can even avoid calling the ``render`` method by using the ``@Template``
+    annotation. See the
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/view>`
+    more details.
+
+.. tip::
+
     The ``renderView`` method is a shortcut to direct use of the ``templating``
     service. The ``templating`` service can also be used directly::
 
         $templating = $this->get('templating');
-        $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+        $content = $templating->render(
+            'AcmeHelloBundle:Hello:index.html.twig',
+            array('name' => $name)
+        );
 
 .. note::
 
@@ -527,7 +570,10 @@ The Symfony templating engine is explained in great detail in the
     be careful to avoid the pitfall of making your directory structure unduly
     elaborate::
 
-        $templating->render('AcmeHelloBundle:Hello/Greetings:index.html.twig', array('name' => $name));
+        $templating->render(
+            'AcmeHelloBundle:Hello/Greetings:index.html.twig',
+            array('name' => $name)
+        );
         // index.html.twig found in Resources/views/Hello/Greetings is rendered.
 
 .. index::
@@ -644,7 +690,10 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirect($this->generateUrl(...));
         }
@@ -669,7 +718,7 @@ the ``notice`` message:
             </div>
         {% endfor %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
             <div class="flash-notice">
@@ -692,6 +741,8 @@ The only requirement for a controller is to return a ``Response`` object. The
 abstraction around the HTTP response - the text-based message filled with HTTP
 headers and content that's sent back to the client::
 
+    use Symfony\Component\HttpFoundation\Response;
+
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);
 
@@ -706,6 +757,15 @@ headers and content that's sent back to the client::
     useful methods for reading and mutating the ``Response`` headers. The
     header names are normalized so that using ``Content-Type`` is equivalent
     to ``content-type`` or even ``content_type``.
+
+.. tip::
+
+    There are also special classes to make certain kinds of responses easier:
+
+    - For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+      See :ref:`component-http-foundation-json-response`.
+    - For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
+      See :ref:`component-http-foundation-serving-files`.
 
 .. index::
    single: Controller; Request object

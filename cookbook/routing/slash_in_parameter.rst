@@ -4,7 +4,7 @@
 How to allow a "/" character in a route parameter
 =================================================
 
-Sometimes, you need to compose URLs with parameters that can contain a slash 
+Sometimes, you need to compose URLs with parameters that can contain a slash
 ``/``. For example, take the classic ``/hello/{name}`` route. By default,
 ``/hello/Fabien`` will match this route but not ``/hello/Fabien/Kris``. This
 is because Symfony uses this character as separator between route parts.
@@ -15,19 +15,19 @@ matches the ``/hello/{name}`` route, where ``{name}`` equals ``Fabien/Kris``.
 Configure the Route
 -------------------
 
-By default, the symfony routing components requires that the parameters 
-match the following regex pattern: ``[^/]+``. This means that all characters 
-are allowed except ``/``. 
+By default, the Symfony routing components requires that the parameters
+match the following regex path: ``[^/]+``. This means that all characters
+are allowed except ``/``.
 
-You must explicitly allow ``/`` to be part of your parameter by specifying 
-a more permissive regex pattern.
+You must explicitly allow ``/`` to be part of your parameter by specifying
+a more permissive regex path.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         _hello:
-            pattern: /hello/{name}
+            path:     /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
             requirements:
                 name: ".+"
@@ -40,7 +40,7 @@ a more permissive regex pattern.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_hello" pattern="/hello/{name}">
+            <route id="_hello" path="/hello/{name}">
                 <default key="_controller">AcmeDemoBundle:Demo:hello</default>
                 <requirement key="name">.+</requirement>
             </route>

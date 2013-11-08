@@ -6,3 +6,5 @@ Console
 
     console_command
     usage
+    sending_emails
+    logging

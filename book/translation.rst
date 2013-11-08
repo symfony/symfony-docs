@@ -14,29 +14,30 @@ the user::
     // text will *always* print out in English
     echo 'Hello World';
 
-    // text can be translated into the end-user's language or default to English
+    // text can be translated into the end-user's language or
+    // default to English
     echo $translator->trans('Hello World');
 
 .. note::
 
     The term *locale* refers roughly to the user's language and country. It
     can be any string that your application uses to manage translations
-    and other format differences (e.g. currency format). We recommended the
+    and other format differences (e.g. currency format). The
     `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
-    code (e.g. ``fr_FR`` for French/France).
+    code (e.g. ``fr_FR`` for French/France) is recommended.
 
-In this chapter, we'll learn how to prepare an application to support multiple
+In this chapter, you'll learn how to prepare an application to support multiple
 locales and then how to create translations for multiple locales. Overall,
 the process has several common steps:
 
-1. Enable and configure Symfony's ``Translation`` component;
+#. Enable and configure Symfony's ``Translation`` component;
 
-2. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
+#. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
 
-3. Create translation resources for each supported locale that translate
+#. Create translation resources for each supported locale that translate
    each message in the application;
 
-4. Determine, set and manage the user's locale for the request and optionally
+#. Determine, set and manage the user's locale for the request and optionally
    on the user's entire session.
 
 .. index::
@@ -60,9 +61,17 @@ enable the ``Translator`` in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:translator fallback="en" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator fallback="en" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -94,20 +103,21 @@ Translation of text is done through the  ``translator`` service
 (:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
 of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
-for example, that we're translating a simple message from inside a controller:
+for example, that you're translating a simple message from inside a controller::
 
-.. code-block:: php
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
 
     public function indexAction()
     {
-        $t = $this->get('translator')->trans('Symfony2 is great');
+        $translated = $this->get('translator')->trans('Symfony2 is great');
 
-        return new Response($t);
+        return new Response($translated);
     }
 
 When this code is executed, Symfony2 will attempt to translate the message
 "Symfony2 is great" based on the ``locale`` of the user. For this to work,
-we need to tell Symfony2 how to translate the message via a "translation
+you need to tell Symfony2 how to translate the message via a "translation
 resource", which is a collection of message translations for a given locale.
 This "dictionary" of translations can be created in several different formats,
 XLIFF being the recommended format:
@@ -170,30 +180,35 @@ the appropriate message catalog and returns it (if it exists).
 Message Placeholders
 ~~~~~~~~~~~~~~~~~~~~
 
-Sometimes, a message containing a variable needs to be translated:
+Sometimes, a message containing a variable needs to be translated::
 
-.. code-block:: php
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
 
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans('Hello '.$name);
+        $translated = $this->get('translator')->trans('Hello '.$name);
 
-        return new Response($t);
+        return new Response($translated);
     }
 
 However, creating a translation for this string is impossible since the translator
 will try to look up the exact message, including the variable portions
 (e.g. "Hello Ryan" or "Hello Fabien"). Instead of writing a translation
-for every possible iteration of the ``$name`` variable, we can replace the
-variable with a "placeholder":
+for every possible iteration of the ``$name`` variable, you can replace the
+variable with a "placeholder"::
 
-.. code-block:: php
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
 
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans('Hello %name%', array('%name%' => $name));
+        $translated = $this->get('translator')->trans(
+            'Hello %name%',
+            array('%name%' => $name)
+        );
 
-        new Response($t);
+        return new Response($translated);
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
@@ -236,12 +251,12 @@ is done just as before:
     required when translating in Twig templates, and is overall a sensible
     convention to follow.
 
-As we've seen, creating a translation is a two-step process:
+As you've seen, creating a translation is a two-step process:
 
-1. Abstract the message that needs to be translated by processing it through
+#. Abstract the message that needs to be translated by processing it through
    the ``Translator``.
 
-2. Create a translation for the message in each locale that you choose to
+#. Create a translation for the message in each locale that you choose to
    support.
 
 The second step is done by creating message catalogues that define the translations
@@ -259,6 +274,8 @@ catalogue is like a dictionary of translations for a specific locale. For
 example, the catalogue for the ``fr_FR`` locale might contain the following
 translation:
 
+.. code-block:: text
+
     Symfony2 is Great => J'aime Symfony2
 
 It's the responsibility of the developer (or translator) of an internationalized
@@ -270,9 +287,9 @@ filesystem and discovered by Symfony, thanks to some conventions.
     Each time you create a *new* translation resource (or install a bundle
     that includes a translation resource), be sure to clear your cache so
     that Symfony can discover the new translation resource:
-    
+
     .. code-block:: bash
-    
+
         $ php app/console cache:clear
 
 .. index::
@@ -292,14 +309,14 @@ Symfony2 looks for message files (i.e. translations) in the following locations:
 The locations are listed with the highest priority first. That is you can
 override the translation messages of a bundle in any of the top 2 directories.
 
-The override mechanism works at a key level: only the overriden keys need
+The override mechanism works at a key level: only the overridden keys need
 to be listed in a higher priority message file. When a key is not found
-in a message file, the translator will automatically fallback to the lower
+in a message file, the translator will automatically fall back to the lower
 priority message files.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
-according to the following pattern: ``domain.locale.loader``:
+according to the following path: ``domain.locale.loader``:
 
 * **domain**: An optional way to organize messages into groups (e.g. ``admin``,
   ``navigation`` or the default ``messages``) - see `Using Message Domains`_;
@@ -324,6 +341,7 @@ taste.
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
+    See the :ref:`dic-tags-translation-loader` tag for more information.
 
 .. index::
    single: Translations; Creating translation resources
@@ -380,13 +398,11 @@ Symfony2 will discover these files and use them when translating either
 .. sidebar:: Using Real or Keyword Messages
 
     This example illustrates the two different philosophies when creating
-    messages to be translated:
+    messages to be translated::
 
-    .. code-block:: php
+        $translated = $translator->trans('Symfony2 is great');
 
-        $t = $translator->trans('Symfony2 is great');
-
-        $t = $translator->trans('symfony2.great');
+        $translated = $translator->trans('symfony2.great');
 
     In the first method, messages are written in the language of the default
     locale (English in this case). That message is then used as the "id"
@@ -398,11 +414,11 @@ Symfony2 will discover these files and use them when translating either
     locale (i.e. to translate ``symfony2.great`` to ``Symfony2 is great``).
 
     The second method is handy because the message key won't need to be changed
-    in every translation file if we decide that the message should actually
+    in every translation file if you decide that the message should actually
     read "Symfony2 is really great" in the default locale.
 
     The choice of which method to use is entirely up to you, but the "keyword"
-    format is often recommended. 
+    format is often recommended.
 
     Additionally, the ``php`` and ``yaml`` file formats support nested ids to
     avoid repeating yourself if you use keywords instead of real text for your
@@ -426,7 +442,7 @@ Symfony2 will discover these files and use them when translating either
             return array(
                 'symfony2' => array(
                     'is' => array(
-                        'great' => 'Symfony2 is great',
+                        'great'   => 'Symfony2 is great',
                         'amazing' => 'Symfony2 is amazing',
                     ),
                     'has' => array(
@@ -460,13 +476,15 @@ Symfony2 will discover these files and use them when translating either
                 'user.login' => 'Login',
             );
 
-.. index::
-   single: Translations; Message domains
+.. _translation-domains:
+
+
+.. _using-message-domains:
 
 Using Message Domains
 ---------------------
 
-As we've seen, message files are organized into the different locales that
+As you've seen, message files are organized into the different locales that
 they translate. The message files can also be organized further into "domains".
 When creating message files, the domain is the first portion of the filename.
 The default domain is ``messages``. For example, suppose that, for organization,
@@ -479,9 +497,7 @@ files:
 * ``navigation.fr.xliff``
 
 When translating strings that are not in the default domain (``messages``),
-you must specify the domain as the third argument of ``trans()``:
-
-.. code-block:: php
+you must specify the domain as the third argument of ``trans()``::
 
     $this->get('translator')->trans('Symfony2 is great', array(), 'admin');
 
@@ -495,26 +511,22 @@ Handling the User's Locale
 --------------------------
 
 The locale of the current user is stored in the request and is accessible
-via the ``request`` object:
+via the ``request`` object::
 
-.. code-block:: php
-
-    // access the reqest object in a standard controller
+    // access the request object in a standard controller
     $request = $this->getRequest();
 
     $locale = $request->getLocale();
 
     $request->setLocale('en_US');
 
+.. tip::
+
+    Read :doc:`/cookbook/session/locale_sticky_session` to learn, how to store
+    the user's locale in the session.
+
 .. index::
    single: Translations; Fallback and default locale
-
-It is also possible to store the locale in the session instead of on a per 
-request basis. If you do this, each subsequent request will have this locale.
-
-.. code-block:: php
-
-    $this->get('session')->set('_locale', 'en_US');
 
 See the :ref:`book-translation-locale-url` section below about setting the
 locale via routing.
@@ -522,7 +534,7 @@ locale via routing.
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the locale hasn't been set explicitly in the session, the ``fallback_locale``
+If the locale hasn't been set explicitly in the session, the ``fallback``
 configuration parameter will be used by the ``Translator``. The parameter
 defaults to ``en`` (see `Configuration`_).
 
@@ -540,9 +552,17 @@ by defining a ``default_locale`` for the framework:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:default-locale>en</framework:default-locale>
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:default-locale>en</framework:default-locale>
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -553,7 +573,7 @@ by defining a ``default_locale`` for the framework:
 
 .. versionadded:: 2.1
      The ``default_locale`` parameter was defined under the session key
-     originally, however, as of 2.1 this has been moved. This is because the 
+     originally, however, as of 2.1 this has been moved. This is because the
      locale is now set on the request instead of the session.
 
 .. _book-translation-locale-url:
@@ -561,7 +581,7 @@ by defining a ``default_locale`` for the framework:
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Since you can store the locale of the user is in the session, it may be tempting
+Since you can store the locale of the user in the session, it may be tempting
 to use the same URL to display a resource in many different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
@@ -577,18 +597,25 @@ by the routing system using the special ``_locale`` parameter:
     .. code-block:: yaml
 
         contact:
-            pattern:   /{_locale}/contact
+            path:      /{_locale}/contact
             defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
             requirements:
                 _locale: en|fr|de
 
     .. code-block:: xml
 
-        <route id="contact" pattern="/{_locale}/contact">
-            <default key="_controller">AcmeDemoBundle:Contact:index</default>
-            <default key="_locale">en</default>
-            <requirement key="_locale">en|fr|de</requirement>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/{_locale}/contact">
+                <default key="_controller">AcmeDemoBundle:Contact:index</default>
+                <default key="_locale">en</default>
+                <requirement key="_locale">en|fr|de</requirement>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -600,7 +627,7 @@ by the routing system using the special ``_locale`` parameter:
             '_controller' => 'AcmeDemoBundle:Contact:index',
             '_locale'     => 'en',
         ), array(
-            '_locale'     => 'en|fr|de'
+            '_locale'     => 'en|fr|de',
         )));
 
         return $collection;
@@ -623,7 +650,15 @@ Message pluralization is a tough topic as the rules can be quite complex. For
 instance, here is the mathematic representation of the Russian pluralization
 rules::
 
-    (($number % 10 == 1) && ($number % 100 != 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
+    (($number % 10 == 1) && ($number % 100 != 11))
+        ? 0
+        : ((($number % 10 >= 2)
+            && ($number % 10 <= 4)
+            && (($number % 100 < 10)
+            || ($number % 100 >= 20)))
+                ? 1
+                : 2
+    );
 
 As you can see, in Russian, you can have three different plural forms, each
 given an index of 0, 1 or 2. For each form, the plural is different, and
@@ -635,11 +670,9 @@ all the forms as a string separated by a pipe (``|``)::
     'There is one apple|There are %count% apples'
 
 To translate pluralized messages, use the
-:method:`Symfony\\Component\\Translation\\Translator::transChoice` method:
+:method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
 
-.. code-block:: php
-
-    $t = $this->get('translator')->transChoice(
+    $translated = $this->get('translator')->transChoice(
         'There is one apple|There are %count% apples',
         10,
         array('%count%' => 10)
@@ -679,7 +712,7 @@ used to determine which plural form to use. The tags can be any descriptive
 string that ends with a colon (``:``). The tags also do not need to be the
 same in the original message as in the translated one.
 
-.. tip:
+.. tip::
 
     As tags are optional, the translator doesn't use them (the translator will
     only get a string based on its position in the string).
@@ -732,6 +765,8 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony2 provides native
 support for both Twig and PHP templates.
 
+.. _book-translation-tags:
+
 Twig Templates
 ~~~~~~~~~~~~~~
 
@@ -764,8 +799,10 @@ You can also specify the message domain and pass some additional variables:
     {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
 
     {% transchoice count with {'%name%': 'Fabien'} from "app" %}
-        {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf] %name%, there are %count% apples
     {% endtranschoice %}
+
+.. _book-translation-filters:
 
 The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:
@@ -784,9 +821,9 @@ texts* and complex expressions:
 
     Using the translation tags or filters have the same effect, but with
     one subtle difference: automatic output escaping is only applied to
-    variables translated using a filter. In other words, if you need to
-    be sure that your translated variable is *not* output escaped, you must
-    apply the raw filter after the translation filter:
+    translations using a filter. In other words, if you need to be sure
+    that your translated is *not* output escaped, you must apply the
+    ``raw`` filter after the translation filter:
 
     .. code-block:: jinja
 
@@ -797,22 +834,23 @@ texts* and complex expressions:
 
             {% set message = '<h3>foo</h3>' %}
 
-            {# a variable translated via a filter is escaped by default #}
+            {# strings and variables translated via a filter is escaped by default #}
             {{ message|trans|raw }}
+            {{ '<h3>bar</h3>'|trans|raw }}
 
-            {# but static strings are never escaped #}
-            {{ '<h3>foo</h3>'|trans }}
+.. tip::
+
+    You can set the translation domain for an entire Twig template with a single tag:
+
+    .. code-block:: jinja
+
+           {% trans_default_domain "app" %}
+
+    Note that this only influences the current template, not any "included"
+    templates (in order to avoid side effects).
 
 .. versionadded:: 2.1
-     You can now set the translation domain for an entire Twig template with a
-     single tag:
-
-     .. code-block:: jinja
-
-            {% trans_default_domain "app" %}
-
-     Note that this only influences the current template, not any "included"
-     templates (in order to avoid side effects).
+    The ``trans_default_domain`` tag is new in Symfony2.1
 
 PHP Templates
 ~~~~~~~~~~~~~
@@ -835,15 +873,13 @@ Forcing the Translator Locale
 
 When translating a message, Symfony2 uses the locale from the current request
 or the ``fallback`` locale if necessary. You can also manually specify the
-locale to use for translation:
-
-.. code-block:: php
+locale to use for translation::
 
     $this->get('translator')->trans(
         'Symfony2 is great',
         array(),
         'messages',
-        'fr_FR',
+        'fr_FR'
     );
 
     $this->get('translator')->transChoice(
@@ -851,7 +887,7 @@ locale to use for translation:
         10,
         array('%count%' => 10),
         'messages',
-        'fr_FR',
+        'fr_FR'
     );
 
 Translating Database Content
@@ -868,9 +904,7 @@ Translating Constraint Messages
 
 The best way to understand constraint translation is to see it in action. To start,
 suppose you've created a plain-old-PHP object that you need to use somewhere in
-your application:
-
-.. code-block:: php
+your application::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
@@ -939,7 +973,7 @@ empty, add the following:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new NotBlank(array(
-                    'message' => 'author.name.not_blank'
+                    'message' => 'author.name.not_blank',
                 )));
             }
         }
@@ -991,12 +1025,12 @@ steps:
   a specific convention;
 
 * Manage the user's locale, which is stored on the request, but can also
-  be set once the user's session.
+  be set on the user's session.
 
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
-.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
+.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

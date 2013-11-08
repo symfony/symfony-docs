@@ -24,12 +24,12 @@ Working with cached Container
 Before building it, the kernel checks to see if a cached version of the container
 exists. The ``HttpKernel`` has a debug setting and if this is false, the
 cached version is used if it exists. If debug is true then the kernel
-:doc:`checks to see if configuration is fresh<components/config/caching>`
-and if it is, the cached version of the container is. If not then the container
+:doc:`checks to see if configuration is fresh </components/config/caching>`
+and if it is, the cached version of the container is used. If not then the container
 is built from the application-level configuration and the bundles's extension
 configuration.
 
-Read :ref:`Dumping the Configuration for Performance<components-dependency-injection-dumping>`
+Read :ref:`Dumping the Configuration for Performance <components-dependency-injection-dumping>`
 for more details.
 
 Application-level Configuration
@@ -40,9 +40,9 @@ files are loaded which are then merged when the extensions are processed. This
 allows for different configuration for different environments e.g. dev, prod.
 
 These files contain parameters and services that are loaded directly into
-the container as per :ref:`Setting Up the Container with Configuration Files<components-dependency-injection-loading-config>`.
+the container as per :ref:`Setting Up the Container with Configuration Files <components-dependency-injection-loading-config>`.
 They also contain configuration that is processed by extensions as per
-:ref:`Managing Configuration with Extensions<components-dependency-injection-extension>`.
+:ref:`Managing Configuration with Extensions <components-dependency-injection-extension>`.
 These are considered to be bundle configuration since each bundle contains
 an Extension class.
 
@@ -51,19 +51,19 @@ Bundle-level Configuration with Extensions
 
 By convention, each bundle contains an Extension class which is in the bundle's
 ``DependencyInjection`` directory. These are registered with the ``ContainerBuilder``
-when the kernel is booted. When the ``ContainerBuilder`` is :doc:`compiled<components/dependency-injection/compilation>`,
+when the kernel is booted. When the ``ContainerBuilder`` is :doc:`compiled </components/dependency_injection/compilation>`,
 the application-level configuration relevant to the bundle's extension is
 passed to the Extension which also usually loads its own config file(s), typically from the bundle's
 ``Resources/config`` directory. The application-level config is usually processed
-with a :doc:`Configuration object<components/config/definition>` also stored
+with a :doc:`Configuration object </components/config/definition>` also stored
 in the bundle's ``DependencyInjection`` directory.
 
 Compiler passes to allow Interaction between Bundles
 ----------------------------------------------------
 
-:ref:`Compiler passes<components-dependency-injection-compiler-passes>` are
+:ref:`Compiler passes <components-dependency-injection-compiler-passes>` are
 used to allow interaction between different bundles as they cannot affect
-each others configuration in the extension classes. One of the main uses is
+each other's configuration in the extension classes. One of the main uses is
 to process tagged services, allowing bundles to register services to picked
 up by other bundles, such as Monolog loggers, Twig extensions and Data Collectors
 for the Web Profiler. Compiler passes are usually placed in the bundle's
@@ -74,5 +74,5 @@ Compilation and Caching
 
 After the compilation process has loaded the services from the configuration,
 extensions and the compiler passes, it is dumped so that the cache can be used
-next time. The dumped version is then used during subsequent request as it
+next time. The dumped version is then used during subsequent requests as it
 is more efficient.

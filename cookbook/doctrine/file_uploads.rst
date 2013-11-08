@@ -1,14 +1,13 @@
 .. index::
    single: Doctrine; File uploads
 
-
 How to handle File Uploads with Doctrine
 ========================================
 
 Handling file uploads with Doctrine entities is no different than handling
 any other file upload. In other words, you're free to move the file in your
 controller after handling a form submission. For examples of how to do this,
-see the :doc:`file type reference</reference/forms/types/file>` page.
+see the :doc:`file type reference </reference/forms/types/file>` page.
 
 If you choose to, you can also integrate the file upload into your entity
 lifecycle (i.e. creation, update and removal). In this case, as your entity
@@ -22,7 +21,7 @@ will be covered in this cookbook entry.
 Basic Setup
 -----------
 
-First, create a simple Doctrine Entity class to work with::
+First, create a simple ``Doctrine`` Entity class to work with::
 
     // src/Acme/DemoBundle/Entity/Document.php
     namespace Acme\DemoBundle\Entity;
@@ -55,23 +54,29 @@ First, create a simple Doctrine Entity class to work with::
 
         public function getAbsolutePath()
         {
-            return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+            return null === $this->path
+                ? null
+                : $this->getUploadRootDir().'/'.$this->path;
         }
 
         public function getWebPath()
         {
-            return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+            return null === $this->path
+                ? null
+                : $this->getUploadDir().'/'.$this->path;
         }
 
         protected function getUploadRootDir()
         {
-            // the absolute directory path where uploaded documents should be saved
+            // the absolute directory path where uploaded
+            // documents should be saved
             return __DIR__.'/../../../../web/'.$this->getUploadDir();
         }
 
         protected function getUploadDir()
         {
-            // get rid of the __DIR__ so it doesn't screw when displaying uploaded doc/image in the view.
+            // get rid of the __DIR__ so it doesn't screw up
+            // when displaying uploaded doc/image in the view.
             return 'uploads/documents';
         }
     }
@@ -86,14 +91,14 @@ file.
 .. tip::
 
     If you have not done so already, you should probably read the
-    :doc:`file</reference/forms/types/file>` type documentation first to
+    :doc:`file </reference/forms/types/file>` type documentation first to
     understand how the basic upload process works.
 
 .. note::
 
     If you're using annotations to specify your validation rules (as shown
     in this example), be sure that you've enabled validation by annotation
-    (see :ref:`validation configuration<book-validation-configuration>`).
+    (see :ref:`validation configuration <book-validation-configuration>`).
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might
@@ -114,7 +119,7 @@ look like this::
 Next, create this property on your ``Document`` class and add some validation
 rules::
 
-    // src/Acme/DemoBundle/Entity/Document.php
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     // ...
     class Document
@@ -122,10 +127,89 @@ rules::
         /**
          * @Assert\File(maxSize="6000000")
          */
-        public $file;
+        private $file;
+
+        /**
+         * Sets file.
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file = null)
+        {
+            $this->file = $file;
+        }
+
+        /**
+         * Get file.
+         *
+         * @return UploadedFile
+         */
+        public function getFile()
+        {
+            return $this->file;
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\Document:
+            properties:
+                file:
+                    - File:
+                        maxSize: 6000000
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/Document.php
+        namespace Acme\DemoBundle\Entity;
 
         // ...
-    }
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Document
+        {
+            /**
+             * @Assert\File(maxSize="6000000")
+             */
+            private $file;
+
+            // ...
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/validation.yml -->
+        <class name="Acme\DemoBundle\Entity\Document">
+            <property name="file">
+                <constraint name="File">
+                    <option name="maxSize">6000000</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Entity/Document.php
+        namespace Acme\DemoBundle\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Document
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('file', new Assert\File(array(
+                    'maxSize' => 6000000,
+                )));
+            }
+        }
 
 .. note::
 
@@ -135,6 +219,7 @@ rules::
 
 The following controller shows you how to handle the entire process::
 
+    // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     // ...
@@ -159,7 +244,7 @@ The following controller shows you how to handle the entire process::
                 $em->persist($document);
                 $em->flush();
 
-                $this->redirect($this->generateUrl(...));
+                return $this->redirect($this->generateUrl(...));
             }
         }
 
@@ -170,15 +255,27 @@ The following controller shows you how to handle the entire process::
 
     When writing the template, don't forget to set the ``enctype`` attribute:
 
-    .. code-block:: html+php
+    .. configuration-block::
 
-        <h1>Upload File</h1>
+        .. code-block:: html+jinja
 
-        <form action="#" method="post" {{ form_enctype(form) }}>
-            {{ form_widget(form) }}
+            <h1>Upload File</h1>
 
-            <input type="submit" value="Upload Document" />
-        </form>
+            <form action="#" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+
+                <input type="submit" value="Upload Document" />
+            </form>
+
+        .. code-block:: html+php
+
+            <h1>Upload File</h1>
+
+            <form action="#" method="post" <?php echo $view['form']->enctype($form) ?>>
+                <?php echo $view['form']->widget($form) ?>
+
+                <input type="submit" value="Upload Document" />
+            </form>
 
 The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``
@@ -197,7 +294,7 @@ in a moment to handle the file upload::
         $em->persist($document);
         $em->flush();
 
-        $this->redirect(...);
+        return $this->redirect(...);
     }
 
 The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
@@ -206,18 +303,22 @@ object, which is what's returned after a ``file`` field is submitted::
     public function upload()
     {
         // the file property can be empty if the field is not required
-        if (null === $this->file) {
+        if (null === $this->getFile()) {
             return;
         }
 
-        // we use the original file name here but you should
+        // use the original file name here but you should
         // sanitize it at least to avoid any security issues
-        
-        // move takes the target directory and then the target filename to move to
-        $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
 
-        // set the path property to the filename where you'ved saved the file
-        $this->path = $this->file->getClientOriginalName();
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->path = $this->getFile()->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
@@ -258,15 +359,36 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
      */
     class Document
     {
+        private $temp;
+
+        /**
+         * Sets file.
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file = null)
+        {
+            $this->file = $file;
+            // check if we have an old image path
+            if (isset($this->path)) {
+                // store the old name to delete after the update
+                $this->temp = $this->path;
+                $this->path = null;
+            } else {
+                $this->path = 'initial';
+            }
+        }
+
         /**
          * @ORM\PrePersist()
          * @ORM\PreUpdate()
          */
         public function preUpload()
         {
-            if (null !== $this->file) {
+            if (null !== $this->getFile()) {
                 // do whatever you want to generate a unique name
-                $this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+                $filename = sha1(uniqid(mt_rand(), true));
+                $this->path = $filename.'.'.$this->getFile()->guessExtension();
             }
         }
 
@@ -276,16 +398,23 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function upload()
         {
-            if (null === $this->file) {
+            if (null === $this->getFile()) {
                 return;
             }
 
             // if there is an error when moving the file, an exception will
             // be automatically thrown by move(). This will properly prevent
             // the entity from being persisted to the database on error
-            $this->file->move($this->getUploadRootDir(), $this->path);
+            $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
-            unset($this->file);
+            // check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->getUploadRootDir().'/'.$this->temp);
+                // clear the temp image path
+                $this->temp = null;
+            }
+            $this->file = null;
         }
 
         /**
@@ -312,7 +441,7 @@ call to ``$document->upload()`` should be removed from the controller::
         $em->persist($document);
         $em->flush();
 
-        $this->redirect(...);
+        return $this->redirect(...);
     }
 
 .. note::
@@ -346,8 +475,24 @@ property, instead of the actual filename::
      */
     class Document
     {
-        // a property used temporarily while deleting
-        private $filenameForRemove;
+        private $temp;
+
+        /**
+         * Sets file.
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file = null)
+        {
+            $this->file = $file;
+            // check if we have an old image path
+            if (is_file($this->getAbsolutePath())) {
+                // store the old name to delete after the update
+                $this->temp = $this->getAbsolutePath();
+            } else {
+                $this->path = 'initial';
+            }
+        }
 
         /**
          * @ORM\PrePersist()
@@ -355,8 +500,8 @@ property, instead of the actual filename::
          */
         public function preUpload()
         {
-            if (null !== $this->file) {
-                $this->path = $this->file->guessExtension();
+            if (null !== $this->getFile()) {
+                $this->path = $this->getFile()->guessExtension();
             }
         }
 
@@ -366,16 +511,27 @@ property, instead of the actual filename::
          */
         public function upload()
         {
-            if (null === $this->file) {
+            if (null === $this->getFile()) {
                 return;
+            }
+
+            // check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->temp);
+                // clear the temp image path
+                $this->temp = null;
             }
 
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
-            $this->file->move($this->getUploadRootDir(), $this->id.'.'.$this->file->guessExtension());
+            $this->getFile()->move(
+                $this->getUploadRootDir(),
+                $this->id.'.'.$this->getFile()->guessExtension()
+            );
 
-            unset($this->file);
+            $this->setFile(null);
         }
 
         /**
@@ -383,7 +539,7 @@ property, instead of the actual filename::
          */
         public function storeFilenameForRemove()
         {
-            $this->filenameForRemove = $this->getAbsolutePath();
+            $this->temp = $this->getAbsolutePath();
         }
 
         /**
@@ -391,14 +547,16 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($this->filenameForRemove) {
-                unlink($this->filenameForRemove);
+            if (isset($this->temp)) {
+                unlink($this->temp);
             }
         }
 
         public function getAbsolutePath()
         {
-            return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
+            return null === $this->path
+                ? null
+                : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
     }
 

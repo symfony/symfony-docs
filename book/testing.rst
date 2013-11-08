@@ -77,7 +77,7 @@ of your bundle::
             $calc = new Calculator();
             $result = $calc->add(30, 12);
 
-            // assert that our calculator added the numbers correctly!
+            // assert that your calculator added the numbers correctly!
             $this->assertEquals(42, $result);
         }
     }
@@ -145,7 +145,10 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-            $this->assertGreaterThan(0, $crawler->filter('html:contains("Hello Fabien")')->count());
+            $this->assertGreaterThan(
+                0,
+                $crawler->filter('html:contains("Hello Fabien")')->count()
+            );
         }
     }
 
@@ -155,7 +158,9 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
     kernel of your application. In most cases, this happens automatically.
     However, if your kernel is in a non-standard directory, you'll need
     to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR`` environment
-    variable to the directory of your kernel::
+    variable to the directory of your kernel:
+
+    .. code-block:: xml
 
         <phpunit>
             <!-- ... -->
@@ -170,7 +175,7 @@ you'll use to crawl your site::
 
     $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-The ``request()`` method (see :ref:`more about the request method<book-testing-request-method-sidebar>`)
+The ``request()`` method (see :ref:`more about the request method <book-testing-request-method-sidebar>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
 be used to select elements in the Response, click on links, and submit forms.
 
@@ -217,7 +222,10 @@ Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
 document::
 
-    $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
+    $this->assertRegExp(
+        '/Hello Fabien/',
+        $client->getResponse()->getContent()
+    );
 
 .. _book-testing-request-method-sidebar:
 
@@ -227,17 +235,18 @@ document::
 
         request(
             $method,
-            $uri, 
-            array $parameters = array(), 
-            array $files = array(), 
-            array $server = array(), 
-            $content = null, 
+            $uri,
+            array $parameters = array(),
+            array $files = array(),
+            array $server = array(),
+            $content = null,
             $changeHistory = true
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
-    and `Referer` HTTP headers, you'd pass the following::
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
+    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    the ``HTTP_`` prefix for non standard headers)::
 
         $client->request(
             'GET',
@@ -245,8 +254,9 @@ document::
             array(),
             array(),
             array(
-                'CONTENT_TYPE' => 'application/json',
-                'HTTP_REFERER' => '/foo/bar',
+                'CONTENT_TYPE'          => 'application/json',
+                'HTTP_REFERER'          => '/foo/bar',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
 
@@ -258,14 +268,23 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
-        // Assert that there is more than one h2 tag with the class "subtitle"
-        $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count());
+        // Assert that there is at least one h2 tag
+        // with the class "subtitle"
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('h2.subtitle')->count()
+        );
 
         // Assert that there are exactly 4 h2 tags on the page
         $this->assertCount(4, $crawler->filter('h2'));
 
         // Assert that the "Content-Type" header is "application/json"
-        $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+                'Content-Type',
+                'application/json'
+            )
+        );
 
         // Assert that the response content matches a regexp.
         $this->assertRegExp('/foo/', $client->getResponse()->getContent());
@@ -275,10 +294,15 @@ document::
         // Assert that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
 
         // Assert that the response is a redirect to /demo/contact
-        $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+        $this->assertTrue(
+            $client->getResponse()->isRedirect('/demo/contact')
+        );
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
@@ -313,13 +337,23 @@ giving you a nice API for uploading files.
 .. tip::
 
     You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler<book-testing-crawler>` section below.
+    :ref:`Crawler <book-testing-crawler>` section below.
 
 The ``request`` method can also be used to simulate form submissions directly
 or perform more complex requests::
 
     // Directly submit a form (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
+
+    // Submit a raw JSON string in the request body
+    $client->request(
+        'POST',
+        '/submit',
+        array(),
+        array(),
+        array('CONTENT_TYPE' => 'application/json'),
+        '{"name":"Fabien"}'
+    );
 
     // Form submission with a file upload
     use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -329,14 +363,6 @@ or perform more complex requests::
         'photo.jpg',
         'image/jpeg',
         123
-    );
-    // or
-    $photo = array(
-        'tmp_name' => '/path/to/photo.jpg',
-        'name' => 'photo.jpg',
-        'type' => 'image/jpeg',
-        'size' => 123,
-        'error' => UPLOAD_ERR_OK
     );
     $client->request(
         'POST',
@@ -441,8 +467,8 @@ it automatically. You can examine the response and force a redirection
 afterwards  with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
-    
-If you want the client to automatically follow all redirects, you can 
+
+If you want the client to automatically follow all redirects, you can
 force him with the ``followRedirects()`` method::
 
     $client->followRedirects();
@@ -504,8 +530,7 @@ narrow down your node selection by chaining the method calls::
 
     $crawler
         ->filter('h1')
-        ->reduce(function ($node, $i)
-        {
+        ->reduce(function ($node, $i) {
             if (!$node->getAttribute('class')) {
                 return false;
             }
@@ -528,8 +553,10 @@ The Crawler can extract information from the nodes::
     // Returns the node value for the first node
     $crawler->text();
 
-    // Extracts an array of attributes for all nodes (_text returns the node value)
-    // returns an array for each element in crawler, each with the value and href
+    // Extracts an array of attributes for all nodes
+    // (_text returns the node value)
+    // returns an array for each element in crawler,
+    // each with the value and href
     $info = $crawler->extract(array('_text', 'href'));
 
     // Executes a lambda for each node and return an array of results
@@ -568,7 +595,7 @@ Just like links, you select forms with the ``selectButton()`` method::
 
 .. note::
 
-    Notice that we select form buttons and not forms as a form can have several
+    Notice that you select form buttons and not forms as a form can have several
     buttons; if you use the traversing API, keep in mind that you must look for a
     button.
 
@@ -661,16 +688,20 @@ configuration option:
         # app/config/config_test.yml
 
         # ...
-
         swiftmailer:
             disable_delivery: true
 
     .. code-block:: xml
 
         <!-- app/config/config_test.xml -->
-        <container>
-            <!-- ... -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
+            <!-- ... -->
             <swiftmailer:config disable-delivery="true" />
         </container>
 
@@ -679,9 +710,8 @@ configuration option:
         // app/config/config_test.php
 
         // ...
-
         $container->loadFromExtension('swiftmailer', array(
-            'disable_delivery' => true
+            'disable_delivery' => true,
         ));
 
 You can also use a different environment entirely, or override the default
@@ -711,7 +741,7 @@ You can also override HTTP headers on a per request basis::
 .. tip::
 
     The test client is available as a service in the container in the ``test``
-    environment (or wherever the :ref:`framework.test<reference-framework-test>`
+    environment (or wherever the :ref:`framework.test <reference-framework-test>`
     option is enabled). This means you can override the service entirely
     if you need to.
 
@@ -751,6 +781,7 @@ section:
 
 .. code-block:: xml
 
+    <!-- ... -->
     <filter>
         <whitelist>
             <directory>../src</directory>
@@ -771,8 +802,8 @@ Learn more
 * :doc:`/cookbook/testing/http_authentication`
 * :doc:`/cookbook/testing/insulating_clients`
 * :doc:`/cookbook/testing/profiling`
-
+* :doc:`/cookbook/testing/bootstrap`
 
 .. _`DemoControllerTest`: https://github.com/symfony/symfony-standard/blob/master/src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
-.. _`documentation`: http://www.phpunit.de/manual/3.5/en/
+.. _`documentation`: http://phpunit.de/manual/current/en/

@@ -1,11 +1,11 @@
 .. index::
-   single: Config; Define and process configuration values
+   single: Config; Defining and processing configuration values
 
-Define and process configuration values
-=======================================
+Defining and processing configuration values
+============================================
 
-Validate configuration values
------------------------------
+Validating configuration values
+-------------------------------
 
 After loading configuration values from all kinds of resources, the values
 and their structure can be validated using the "Definition" part of the Config
@@ -38,8 +38,8 @@ they are when first encountered. Also, some keys are only available when
 another key has a specific value (in the sample configuration above: the
 ``memory`` key only makes sense when the ``driver`` is ``sqlite``).
 
-Define a hierarchy of configuration values using the TreeBuilder
-----------------------------------------------------------------
+Defining a hierarchy of configuration values using the TreeBuilder
+------------------------------------------------------------------
 
 All the rules concerning configuration values can be defined using the
 :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`.
@@ -66,8 +66,8 @@ should be returned from a custom ``Configuration`` class which implements the
         }
     }
 
-Add node definitions to the tree
---------------------------------
+Adding node definitions to the tree
+-----------------------------------
 
 Variable nodes
 ~~~~~~~~~~~~~~
@@ -99,41 +99,90 @@ node definition. Node type are available for:
 
 * scalar
 * boolean
+* integer (new in 2.2)
+* float (new in 2.2)
+* enum (new in 2.1)
 * array
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
 
+Numeric node constraints
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The numeric (float and integer) nodes are new in 2.2
+
+Numeric nodes (float and integer) provide two extra constraints -
+:method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder::max` -
+allowing to validate the value::
+
+    $rootNode
+        ->children()
+            ->integerNode('positive_value')
+                ->min(0)
+            ->end()
+            ->floatNode('big_value')
+                ->max(5E45)
+            ->end()
+            ->integerNode('value_inside_a_range')
+                ->min(-50)->max(50)
+            ->end()
+        ->end()
+    ;
+
+Enum nodes
+~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The enum node is new in Symfony 2.1
+
+Enum nodes provide a constraint to match the given input against a set of
+values::
+
+    $rootNode
+        ->children()
+            ->enumNode('gender')
+                ->values(array('male', 'female'))
+            ->end()
+        ->end()
+    ;
+
+This will restrict the ``gender`` option to be either ``male`` or ``female``.
+
 Array nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
-node. The array node itself, may have a pre-defined set of variable nodes:
-
-.. code-block:: php
+node. The array node itself, may have a pre-defined set of variable nodes::
 
     $rootNode
-        ->arrayNode('connection')
-            ->scalarNode('driver')->end()
-            ->scalarNode('host')->end()
-            ->scalarNode('username')->end()
-            ->scalarNode('password')->end()
-        ->end()
-    ;
-
-Or you may define a prototype for each node inside an array node:
-
-.. code-block:: php
-
-    $rootNode
-        ->arrayNode('connections')
-            ->prototype('array')
+        ->children()
+            ->arrayNode('connection')
                 ->children()
                     ->scalarNode('driver')->end()
                     ->scalarNode('host')->end()
                     ->scalarNode('username')->end()
                     ->scalarNode('password')->end()
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+Or you may define a prototype for each node inside an array node::
+
+    $rootNode
+        ->children()
+            ->arrayNode('connections')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('driver')->end()
+                        ->scalarNode('host')->end()
+                        ->scalarNode('username')->end()
+                        ->scalarNode('password')->end()
+                    ->end()
                 ->end()
             ->end()
         ->end()
@@ -150,28 +199,42 @@ Array node options
 Before defining the children of an array node, you can provide options like:
 
 ``useAttributeAsKey()``
-    Provide the name of a child node, whose value should be used as the key in the resulting array
+    Provide the name of a child node, whose value should be used as the key in the resulting array.
 ``requiresAtLeastOneElement()``
     There should be at least one element in the array (works only when ``isRequired()`` is also
     called).
+``addDefaultsIfNotSet()``
+    If any child nodes have default values, use them if explicit values haven't been provided.
 
-An example of this:
-
-.. code-block:: php
+An example of this::
 
     $rootNode
-        ->arrayNode('parameters')
-            ->isRequired()
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('array')
-                ->children()
-                    ->scalarNode('name')->isRequired()->end()
-                    ->scalarNode('value')->isRequired()->end()
+        ->children()
+            ->arrayNode('parameters')
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('value')->isRequired()->end()
+                    ->end()
                 ->end()
             ->end()
         ->end()
     ;
+
+In YAML, the configuration might look like this:
+
+.. code-block:: yaml
+
+    database:
+        parameters:
+            param1: { value: param1val }
+
+In XML, each ``parameters`` node would have a ``name`` attribute (along with
+``value``), which would be removed and used as the key for that element in
+the final array. The ``useAttributeAsKey`` is useful for normalizing how
+arrays are specified between different formats like XML and YAML.
 
 Default and required values
 ---------------------------
@@ -194,23 +257,64 @@ has a certain value:
 .. code-block:: php
 
     $rootNode
-        ->arrayNode('connection')
-            ->children()
-                ->scalarNode('driver')
-                    ->isRequired()
-                    ->cannotBeEmpty()
+        ->children()
+            ->arrayNode('connection')
+                ->children()
+                    ->scalarNode('driver')
+                        ->isRequired()
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('host')
+                        ->defaultValue('localhost')
+                    ->end()
+                    ->scalarNode('username')->end()
+                    ->scalarNode('password')->end()
+                    ->booleanNode('memory')
+                        ->defaultFalse()
+                    ->end()
                 ->end()
-                ->scalarNode('host')
-                    ->defaultValue('localhost')
-                ->end()
-                ->scalarNode('username')->end()
-                ->scalarNode('password')->end()
-                ->booleanNode('memory')
-                    ->defaultFalse()
+            ->end()
+            ->arrayNode('settings')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('name')
+                        ->isRequired()
+                        ->cannotBeEmpty()
+                        ->defaultValue('value')
+                    ->end()
                 ->end()
             ->end()
         ->end()
     ;
+
+Optional Sections
+-----------------
+
+.. versionadded:: 2.2
+    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
+
+If you have entire sections which are optional and can be enabled/disabled,
+you can take advantage of the shortcut
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeDisabled` methods::
+
+    $arrayNode
+        ->canBeEnabled()
+    ;
+
+    // is equivalent to
+
+    $arrayNode
+        ->treatFalseLike(array('enabled' => false))
+        ->treatTrueLike(array('enabled' => true))
+        ->treatNullLike(array('enabled' => true))
+        ->children()
+            ->booleanNode('enabled')
+                ->defaultFalse()
+    ;
+
+The ``canBeDisabled`` method looks about the same except that the section
+would be enabled by default.
 
 Merging options
 ---------------
@@ -240,22 +344,24 @@ with ``append()``::
         $rootNode = $treeBuilder->root('database');
 
         $rootNode
-            ->arrayNode('connection')
-                ->children()
-                    ->scalarNode('driver')
-                        ->isRequired()
-                        ->cannotBeEmpty()
+            ->children()
+                ->arrayNode('connection')
+                    ->children()
+                        ->scalarNode('driver')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('host')
+                            ->defaultValue('localhost')
+                        ->end()
+                        ->scalarNode('username')->end()
+                        ->scalarNode('password')->end()
+                        ->booleanNode('memory')
+                            ->defaultFalse()
+                        ->end()
                     ->end()
-                    ->scalarNode('host')
-                        ->defaultValue('localhost')
-                    ->end()
-                    ->scalarNode('username')->end()
-                    ->scalarNode('password')->end()
-                    ->booleanNode('memory')
-                        ->defaultFalse()
-                    ->end()
+                    ->append($this->addParametersNode())
                 ->end()
-                ->append($this->addParametersNode())
             ->end()
         ;
 
@@ -273,7 +379,6 @@ with ``append()``::
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
-                    ->scalarNode('name')->isRequired()->end()
                     ->scalarNode('value')->isRequired()->end()
                 ->end()
             ->end()
@@ -296,6 +401,11 @@ configuration formats, mainly the differences between Yaml and XML.
 The separator used in keys is typically ``_`` in Yaml and ``-`` in XML. For
 example, ``auto_connect`` in Yaml and ``auto-connect``. The normalization would
 make both of these ``auto_connect``.
+
+.. caution::
+
+    The target key will not be altered if it's mixed like
+    ``foo-bar_moo`` or if it already exists.
 
 Another difference between Yaml and XML is in the way arrays of values may
 be represented. In Yaml you may have:
@@ -353,12 +463,12 @@ and sometimes only:
 
 By default ``connection`` would be an array in the first case and a string
 in the second making it difficult to validate. You can ensure it is always
-an array with with ``fixXmlConfig``.
+an array with ``fixXmlConfig``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or several
-keys to be set explicitly. So that, if everything apart from id is optional in this
-config:
+keys to be set explicitly. So that, if everything apart from ``name`` is optional
+in this config:
 
 .. code-block:: yaml
 
@@ -378,13 +488,17 @@ you can allow the following as well:
 By changing a string value into an associative array with ``name`` as the key::
 
     $rootNode
-        ->arrayNode('connection')
-           ->beforeNormalization()
-               ->ifString()
-               ->then(function($v) { return array('name'=> $v); })
-           ->end()
-           ->scalarValue('name')->isRequired()
-           // ...
+        ->children()
+            ->arrayNode('connection')
+                ->beforeNormalization()
+                    ->ifString()
+                    ->then(function($v) { return array('name'=> $v); })
+                ->end()
+                ->children()
+                    ->scalarNode('name')->isRequired()
+                    // ...
+                ->end()
+            ->end()
         ->end()
     ;
 
@@ -397,13 +511,15 @@ builder implements a fluent interface for a well-known control structure.
 The builder is used for adding advanced validation rules to node definitions, like::
 
     $rootNode
-        ->arrayNode('connection')
-            ->children()
-                ->scalarNode('driver')
-                    ->isRequired()
-                    ->validate()
+        ->children()
+            ->arrayNode('connection')
+                ->children()
+                    ->scalarNode('driver')
+                        ->isRequired()
+                        ->validate()
                         ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
-                        ->thenInvalid('Invalid database driver "%s"')
+                            ->thenInvalid('Invalid database driver "%s"')
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -452,6 +568,8 @@ Otherwise the result is a clean array of configuration values::
     $configs = array($config1, $config2);
 
     $processor = new Processor();
-    $configuration = new DatabaseConfiguration;
-    $processedConfiguration = $processor->processConfiguration($configuration, $configs);
-
+    $configuration = new DatabaseConfiguration();
+    $processedConfiguration = $processor->processConfiguration(
+        $configuration,
+        $configs
+    );

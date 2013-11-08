@@ -77,7 +77,7 @@ use this pattern of class extension:
             $this->stopPropagation();
         }
 
-        public function getReturnValue($val)
+        public function getReturnValue()
         {
             return $this->returnValue;
         }
@@ -97,7 +97,7 @@ and *add* the method ``bar()``:
     {
         public function onFooMethodIsNotFound(HandleUndefinedMethodEvent $event)
         {
-            // we only want to respond to the calls to the 'bar' method
+            // only respond to the calls to the 'bar' method
             if ('bar' != $event->getMethod()) {
                 // allow another listener to take care of this unknown method
                 return;
@@ -116,7 +116,7 @@ and *add* the method ``bar()``:
         }
     }
 
-Finally, add the new ``bar`` method to the ``Foo`` class by register an
+Finally, add the new ``bar`` method to the ``Foo`` class by registering an
 instance of ``Bar`` with the ``foo.method_is_not_found`` event:
 
 .. code-block:: php

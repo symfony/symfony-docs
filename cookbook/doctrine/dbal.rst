@@ -38,7 +38,7 @@ To get started, configure the database connection parameters:
 
     .. code-block:: xml
 
-        // app/config/config.xml
+        <!-- app/config/config.xml -->
         <doctrine:config>
             <doctrine:dbal
                 name="default"
@@ -64,9 +64,7 @@ To get started, configure the database connection parameters:
 For full DBAL configuration options, see :ref:`reference-dbal-configuration`.
 
 You can then access the Doctrine DBAL connection by accessing the
-``database_connection`` service:
-
-.. code-block:: php
+``database_connection`` service::
 
     class UserController extends Controller
     {
@@ -108,10 +106,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
-                <doctrine:dbal default-connection="default">
-                    <doctrine:connection>
-                        <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
-                    </doctrine:connection>
+                    <doctrine:type name="custom_first" class="Acme\HelloBundle\Type\CustomFirst" />
+                    <doctrine:type name="custom_second" class="Acme\HelloBundle\Type\CustomSecond" />
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -121,12 +117,9 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-                'connections' => array(
-                    'default' => array(
-                        'mapping_types' => array(
-                            'enum'  => 'string',
-                        ),
-                    ),
+                'types' => array(
+                    'custom_first'  => 'Acme\HelloBundle\Type\CustomFirst',
+                    'custom_second' => 'Acme\HelloBundle\Type\CustomSecond',
                 ),
             ),
         ));
@@ -138,7 +131,7 @@ The SchemaTool is used to inspect the database to compare the schema. To
 achieve this task, it needs to know which mapping type needs to be used
 for each database types. Registering new ones can be done through the configuration.
 
-Let's map the ENUM type (not suppoorted by DBAL by default) to a the ``string``
+Let's map the ENUM type (not supported by DBAL by default) to a the ``string``
 mapping type:
 
 .. configuration-block::
@@ -165,8 +158,10 @@ mapping type:
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom_first" class="Acme\HelloBundle\Type\CustomFirst" />
-                    <doctrine:type name="custom_second" class="Acme\HelloBundle\Type\CustomSecond" />
+                <doctrine:dbal default-connection="default">
+                    <doctrine:connection>
+                        <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                    </doctrine:connection>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -176,9 +171,12 @@ mapping type:
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-                'types' => array(
-                    'custom_first'  => 'Acme\HelloBundle\Type\CustomFirst',
-                    'custom_second' => 'Acme\HelloBundle\Type\CustomSecond',
+                'connections' => array(
+                    'default' => array(
+                        'mapping_types' => array(
+                            'enum'  => 'string',
+                        ),
+                    ),
                 ),
             ),
         ));

@@ -194,3 +194,29 @@ Full Default Configuration
             delivery_address:     ~
             disable_delivery:     ~
             logging:              "%kernel.debug%"
+
+    .. code-block:: xml
+
+        <swiftmailer:config
+            transport="smtp"
+            username=""
+            password=""
+            host="localhost"
+            port="false"
+            encryption=""
+            auth_mode=""
+            sender_address=""
+            delivery_address=""
+            disable_delivery=""
+            logging="%kernel.debug%"
+        >
+            <swiftmailer:spool
+                path="%kernel.cache_dir%/swiftmailer/spool"
+                type="file"
+            />
+
+            <swiftmailer:antiflood
+                sleep="0"
+                threshold="99"
+            />
+        </swiftmailer:config>

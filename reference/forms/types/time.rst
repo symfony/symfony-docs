@@ -23,9 +23,18 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `seconds`_                                                                |
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
+|                      | - `empty_value`_                                                            |
++----------------------+-----------------------------------------------------------------------------+
+| Overridden Options   | - `by_reference`_                                                           |
+|                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
+|                      | - `read_only`_                                                              |
+|                      | - `disabled`_                                                               |
+|                      | - `mapped`_                                                                 |
+|                      | - `virtual`_                                                                |
+|                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+
@@ -108,11 +117,38 @@ this format.
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
 
+.. include:: /reference/forms/types/options/empty_value.rst.inc
+
+Overridden Options
+------------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
+
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/virtual.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc

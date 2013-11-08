@@ -7,7 +7,7 @@ Validates that a given number is *between* some minimum and maximum number.
     The Range constraint was added in Symfony 2.1.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `min`_                                                            |
 |                | - `max`_                                                            |
@@ -43,19 +43,62 @@ the following:
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Participant
         {
             /**
              * @Assert\Range(
-             *      min = "120",
-             *      max = "180",
+             *      min = 120,
+             *      max = 180,
              *      minMessage = "You must be at least 120cm tall to enter",
              *      maxMessage = "You cannot be taller than 180cm to enter"
              * )
              */
              protected $height;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Participant">
+                <property name="height">
+                    <constraint name="Range">
+                        <option name="min">120</option>
+                        <option name="max">180</option>
+                        <option name="minMessage">You must be at least 120cm tall to enter</option>
+                        <option name="maxMessage">You cannot be taller than 180cm to enter</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('height', new Assert\Range(array(
+                    'min'        => 120,
+                    'max'        => 180,
+                    'minMessage' => 'You must be at least 120cm tall to enter',
+                    'maxMessage' => 'You cannot be taller than 180cm to enter',
+                )));
+            }
         }
 
 Options
@@ -64,7 +107,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
@@ -72,7 +115,7 @@ value is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option <validation-default-option>`]
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.

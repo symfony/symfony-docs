@@ -7,7 +7,7 @@ to ``null``. To force that a value strictly be equal to ``null``, see the
 blank, see :doc:`/reference/constraints/NotBlank`.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 +----------------+-----------------------------------------------------------------------+
@@ -26,13 +26,17 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: yaml
 
-        properties:
-            firstName:
-                - Blank: ~
+        # src/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - Blank: ~
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -41,6 +45,37 @@ of an ``Author`` class were blank, you could do the following:
              * @Assert\Blank()
              */
             protected $firstName;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="Blank" />
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', new Assert\Blank());
+            }
         }
 
 Options

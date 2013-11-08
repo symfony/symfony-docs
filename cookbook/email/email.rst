@@ -16,7 +16,8 @@ the power of the `Swiftmailer`_ library.
         public function registerBundles()
         {
             $bundles = array(
-                ...,
+                // ...
+
                 new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             );
 
@@ -106,7 +107,12 @@ an email is pretty straightforward::
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
-            ->setBody($this->renderView('HelloBundle:Hello:email.txt.twig', array('name' => $name)))
+            ->setBody(
+                $this->renderView(
+                    'HelloBundle:Hello:email.txt.twig',
+                    array('name' => $name)
+                )
+            )
         ;
         $this->get('mailer')->send($message);
 
@@ -129,5 +135,5 @@ of `Creating Messages`_ in great detail in its documentation.
     * :doc:`dev_environment`
     * :doc:`spool`
 
-.. _`Swiftmailer`: http://www.swiftmailer.org/
+.. _`Swiftmailer`: http://swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages.html

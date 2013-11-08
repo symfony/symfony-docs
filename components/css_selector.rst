@@ -10,11 +10,10 @@ The CssSelector Component
 Installation
 ------------
 
-You can install the component in several different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/CssSelector);
-* Install it via PEAR ( `pear.symfony.com/CssSelector`);
-* Install it via Composer (`symfony/css-selector` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/CssSelector).
 
 Usage
 -----
@@ -33,8 +32,8 @@ long and unwieldy expressions.
 
 Many developers -- particularly web developers -- are more comfortable
 using CSS selectors to find elements. As well as working in stylesheets,
-CSS selectors are used in Javascript with the ``querySelectorAll`` function
-and in popular Javascript libraries such as jQuery, Prototype and MooTools.
+CSS selectors are used in JavaScript with the ``querySelectorAll`` function
+and in popular JavaScript libraries such as jQuery, Prototype and MooTools.
 
 CSS selectors are less powerful than XPath, but far easier to write, read
 and understand. Since they are less powerful, almost all CSS selectors can
@@ -63,7 +62,7 @@ You can use this expression with, for instance, :phpclass:`DOMXPath` or
 
 .. tip::
 
-    The :method:`Crawler::filter()<Symfony\\Component\\DomCrawler\\Crawler::filter>` method
+    The :method:`Crawler::filter() <Symfony\\Component\\DomCrawler\\Crawler::filter>` method
     uses the ``CssSelector`` component to find elements based on a CSS selector
     string. See the :doc:`/components/dom_crawler` for more details.
 
@@ -91,3 +90,5 @@ Several pseudo-classes are not yet supported:
 * ``*:first-of-type``, ``*:last-of-type``, ``*:nth-of-type``,
   ``*:nth-last-of-type``, ``*:only-of-type``. (These work with an element
   name (e.g. ``li:first-of-type``) but not with ``*``.
+
+.. _Packagist: https://packagist.org/packages/symfony/css-selector

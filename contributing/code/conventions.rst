@@ -32,7 +32,7 @@ is a main relation:
 * a ``CookieJar`` has many ``Cookie`` objects;
 
 * a Service ``Container`` has many services and many parameters (as services
-  is the main relation, we use the naming convention for this relation);
+  is the main relation, the naming convention is used for this relation);
 
 * a Console ``Input`` has many arguments and many options. There is no "main"
   relation, and so the naming convention does not apply.
@@ -72,7 +72,38 @@ must be used instead (where ``XXX`` is the name of the related thing):
 
 .. note::
 
-    While "setXXX" and "replaceXXX" are very similar, there is one notable 
-    difference: "setXXX" may replace, or add new elements to the relation. 
+    While "setXXX" and "replaceXXX" are very similar, there is one notable
+    difference: "setXXX" may replace, or add new elements to the relation.
     "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
     key as passed to "replaceXXX" it must throw an exception.
+
+.. _contributing-code-conventions-deprecations:
+
+Deprecations
+------------
+
+From time to time, some classes and/or methods are deprecated in the
+framework; that happens when a feature implementation cannot be changed
+because of backward compatibility issues, but we still want to propose a
+"better" alternative. In that case, the old implementation can simply be
+**deprecated**.
+
+A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
+relevant classes, methods, properties, ...::
+
+    /**
+     * @deprecated Deprecated since version 2.X, to be removed in 2.Y. Use XXX instead.
+     */
+
+The deprecation message should indicate the version when the class/method was
+deprecated, the version when it will be removed, and whenever possible, how
+the feature was replaced.
+
+A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
+the migration starting one or two minor versions before the version where the
+feature will be removed (depending on the criticality of the removal)::
+
+    trigger_error(
+        'XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.',
+        E_USER_DEPRECATED
+    );

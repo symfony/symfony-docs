@@ -12,7 +12,7 @@ a string, a timestamp or an array. As long as the `input`_ option is set
 correctly, the field will take care of all of the details.
 
 The field can be rendered as a single text box, three text boxes (month,
-day, and year) or three select boxes (see the `widget_` option).
+day, and year) or three select boxes (see the `widget`_ option).
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
@@ -26,12 +26,19 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
 |                      | - `format`_                                                                 |
-|                      | - `pattern`_                                                                |
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
+| Overridden Options   | - `by_reference`_                                                           |
+|                      | - `error_bubbling`_                                                         |
++----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
+|                      | - `read_only`_                                                              |
+|                      | - `disabled`_                                                               |
+|                      | - `mapped`_                                                                 |
+|                      | - `virtual`_                                                                |
+|                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
 +----------------------+-----------------------------------------------------------------------------+
@@ -107,17 +114,40 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
-.. include:: /reference/forms/types/options/date_pattern.rst.inc
-
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
 
+Overridden Options
+------------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
+
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/virtual.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc

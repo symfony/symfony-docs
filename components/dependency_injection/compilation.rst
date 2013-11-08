@@ -61,7 +61,10 @@ A very simple extension may just load configuration files into the container::
     {
         public function load(array $configs, ContainerBuilder $container)
         {
-            $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            $loader = new XmlFileLoader(
+                $container,
+                new FileLocator(__DIR__.'/../Resources/config')
+            );
             $loader->load('services.xml');
         }
 
@@ -109,12 +112,19 @@ processed when the container is compiled at which point the Extensions are loade
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $container = new ContainerBuilder();
+    $container->registerExtension(new AcmeDemoExtension);
+
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('config.yml');
 
-    $container->registerExtension(new AcmeDemoExtension);
     // ...
     $container->compile();
+
+.. note::
+
+    When loading a config file that uses an extension alias as a key, the
+    extension must already have been registered with the container builder
+    or an exception will be thrown.
 
 The values from those sections of the config files are passed into the first
 argument of the ``load`` method of the extension::
@@ -134,11 +144,11 @@ like this::
         array(
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        )
+        ),
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config Component</components/config/introduction>` to merge
+to use :doc:`the Config Component </components/config/introduction>` to merge
 and validate the config values. Using the configuration processing you could
 access the config value this way::
 
@@ -210,7 +220,7 @@ benefit of merging multiple files and validation of the configuration::
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $container->setParameter('acme_demo.FOO', $config['foo'])
+        $container->setParameter('acme_demo.FOO', $config['foo']);
 
         // ...
     }
@@ -225,13 +235,34 @@ but also load a secondary one only if a certain parameter is set::
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
 
         if ($config['advanced']) {
             $loader->load('advanced.xml');
         }
     }
+
+.. note::
+
+    Just registering an extension with the container is not enough to get
+    it included in the processed extensions when the container is compiled.
+    Loading config which uses the extension's alias as a key as in the above
+    examples will ensure it is loaded. The container builder can also be
+    told to load it with its
+    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::loadFromExtension`
+    method::
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+        $container = new ContainerBuilder();
+        $extension = new AcmeDemoExtension();
+        $container->registerExtension($extension);
+        $container->loadFromExtension($extension->getAlias());
+        $container->compile();
 
 .. note::
 
@@ -242,11 +273,41 @@ but also load a secondary one only if a certain parameter is set::
 
 .. _components-dependency-injection-compiler-passes:
 
+Prepending Configuration passed to the Extension
+------------------------------------------------
+
+.. versionadded:: 2.2
+    The ability to prepend the configuration of a bundle is new in Symfony 2.2.
+
+An Extension can prepend the configuration of any Bundle before the ``load()``
+method is called by implementing :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
+
+    use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+    // ...
+
+    class AcmeDemoExtension implements ExtensionInterface, PrependExtensionInterface
+    {
+        // ...
+
+        public function prepend()
+        {
+            // ...
+
+            $container->prependExtensionConfig($name, $config);
+
+            // ...
+        }
+    }
+
+For more details, see :doc:`/cookbook/bundles/prepend_extension`, which is
+specific to the Symfony2 Framework, but contains more details about this feature.
+
 Creating a Compiler Pass
 ------------------------
 
 You can also create and register your own compiler passes with the container.
-To create a compiler pass it needs to implements the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
+To create a compiler pass it needs to implement the
+:class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
 interface. The compiler pass gives you an opportunity to manipulate the service
 definitions that have been compiled. This can be very powerful, but is not
 something needed in everyday use.
@@ -254,7 +315,10 @@ something needed in everyday use.
 The compiler pass must have the ``process`` method which is passed the container
 being compiled::
 
-    class CustomCompilerPass
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    class CustomCompilerPass implements CompilerPassInterface
     {
         public function process(ContainerBuilder $container)
         {
@@ -281,7 +345,7 @@ will then be called when the container is compiled::
 
 .. note::
 
-    Compiler passes are registered differently is you are using the full
+    Compiler passes are registered differently if you are using the full
     stack framework, see :doc:`/cookbook/service_container/compiler_passes`
     for more details.
 
@@ -309,7 +373,10 @@ For example, to run your custom pass after the default removal passes have been 
     use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
     $container = new ContainerBuilder();
-    $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
+    $container->addCompilerPass(
+        new CustomCompilerPass,
+        PassConfig::TYPE_AFTER_REMOVING
+    );
 
 .. _components-dependency-injection-dumping:
 
@@ -325,7 +392,7 @@ worlds though by using configuration files and then dumping and caching the resu
 configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
+    use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
     $file = __DIR__ .'/cache/container.php';
 
@@ -357,7 +424,10 @@ it::
         $container->compile();
 
         $dumper = new PhpDumper($container);
-        file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+        file_put_contents(
+            $file,
+            $dumper->dump(array('class' => 'MyCachedContainer'))
+        );
     }
 
 You will now get the speed of the PHP configured container with the ease of using
@@ -386,14 +456,17 @@ but getting an up to date configuration whilst developing your application::
 
         if (!$isDebug) {
             $dumper = new PhpDumper($container);
-            file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+            file_put_contents(
+                $file,
+                $dumper->dump(array('class' => 'MyCachedContainer'))
+            );
         }
     }
 
 This could be further improved by only recompiling the container in debug
 mode when changes have been made to its configuration rather than on every
 request. This can be done by caching the resource files used to configure
-the container in the way describe in ":doc:`/components/config/caching`"
+the container in the way described in ":doc:`/components/config/caching`"
 in the config component documentation.
 
 You do not need to work out which files to cache as the container builder

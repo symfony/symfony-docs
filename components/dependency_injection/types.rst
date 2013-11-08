@@ -23,7 +23,7 @@ the dependency::
     {
         protected $mailer;
 
-        public function __construct(Mailer $mailer)
+        public function __construct(\Mailer $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -43,7 +43,7 @@ service container configuration:
                 # ...
             newsletter_manager:
                 class:     NewsletterManager
-                arguments: [@my_mailer]
+                arguments: ["@my_mailer"]
 
     .. code-block:: xml
 
@@ -81,14 +81,14 @@ There are several advantages to using constructor injection:
 
 * If the dependency is a requirement and the class cannot work without it
   then injecting it via the constructor ensures it is present when the class
-  is used as the class cannot be constructed without it. 
+  is used as the class cannot be constructed without it.
 
 * The constructor is only ever called once when the object is created, so you
   can be sure that the dependency will not change during the object's lifetime.
 
 These advantages do mean that constructor injection is not suitable for working
 with optional dependencies. It is also more difficult to use in combination
-with class hierarchies: if a class uses constructor injection then extending it 
+with class hierarchies: if a class uses constructor injection then extending it
 and overriding the constructor becomes problematic.
 
 Setter Injection
@@ -101,7 +101,7 @@ accepts the dependency::
     {
         protected $mailer;
 
-        public function setMailer(Mailer $mailer)
+        public function setMailer(\Mailer $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -119,7 +119,7 @@ accepts the dependency::
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
+                    - [setMailer, ["@my_mailer"]]
 
     .. code-block:: xml
 
@@ -186,7 +186,7 @@ Another possibility is just setting public fields of the class directly::
             newsletter_manager:
                 class:     NewsletterManager
                 properties:
-                    mailer: @my_mailer
+                    mailer: "@my_mailer"
 
     .. code-block:: xml
 
@@ -210,7 +210,6 @@ Another possibility is just setting public fields of the class directly::
             'NewsletterManager'
         ))->setProperty('mailer', new Reference('my_mailer')));
 
-
 There are mainly only disadvantages to using property injection, it is similar
 to setter injection but with these additional important problems:
 
@@ -224,4 +223,3 @@ to setter injection but with these additional important problems:
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
 as in a third party library, which uses public properties for its dependencies.
-

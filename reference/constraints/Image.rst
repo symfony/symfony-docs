@@ -1,42 +1,42 @@
 Image
 =====
 
-The Image constraint works exactly like the :doc:`File</reference/constraints/File>`
+The Image constraint works exactly like the :doc:`File </reference/constraints/File>`
 constraint, except that its `mimeTypes`_ and `mimeTypesMessage` options are
 automatically setup to work for image files specifically.
 
 Additionally, as of Symfony 2.1, it has options so you can validate against
 the width and height of the image.
 
-See the :doc:`File</reference/constraints/File>` constraint for the bulk of
+See the :doc:`File </reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
 
-+----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                |
-+----------------+----------------------------------------------------------------------+
-| Options        | - `mimeTypes`_                                                       |
-|                | - `minWidth`_                                                        |
-|                | - `maxWidth`_                                                        |
-|                | - `maxHeight`_                                                       |
-|                | - `minHeight`_                                                       |
-|                | - `mimeTypesMessage`_                                                |
-|                | - `sizeNotDetectedMessage`_                                          |
-|                | - `maxWidthMessage`_                                                 |
-|                | - `minWidthMessage`_                                                 |
-|                | - `maxHeightMessage`_                                                |
-|                | - `minHeightMessage`_                                                |
-|                | - See :doc:`File</reference/constraints/File>` for inherited options |
-+----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`            |
-+----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`   |
-+----------------+----------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `mimeTypes`_                                                        |
+|                | - `minWidth`_                                                         |
+|                | - `maxWidth`_                                                         |
+|                | - `maxHeight`_                                                        |
+|                | - `minHeight`_                                                        |
+|                | - `mimeTypesMessage`_                                                 |
+|                | - `sizeNotDetectedMessage`_                                           |
+|                | - `maxWidthMessage`_                                                  |
+|                | - `minWidthMessage`_                                                  |
+|                | - `maxHeightMessage`_                                                 |
+|                | - `minHeightMessage`_                                                 |
+|                | - See :doc:`File </reference/constraints/File>` for inherited options |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`             |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`    |
++----------------+-----------------------------------------------------------------------+
 
 Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file</reference/forms/types/file>` form type. For example,
+in a form as a :doc:`file </reference/forms/types/file>` form type. For example,
 suppose you're creating an author form where you can upload a "headshot"
 image for the author. In your form, the ``headshot`` property would be a
 ``file`` type. The ``Author`` class might look as follows::
@@ -91,7 +91,7 @@ it is between a certain size, add the following:
              *     minWidth = 200,
              *     maxWidth = 400,
              *     minHeight = 200,
-             *     maxHeight = 400,
+             *     maxHeight = 400
              * )
              */
             protected $headshot;
@@ -100,16 +100,22 @@ it is between a certain size, add the following:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="headshot">
-                <constraint name="Image">
-                    <option name="minWidth">200</option>
-                    <option name="maxWidth">400</option>
-                    <option name="minHeight">200</option>
-                    <option name="maxHeight">400</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="headshot">
+                    <constraint name="Image">
+                        <option name="minWidth">200</option>
+                        <option name="maxWidth">400</option>
+                        <option name="minHeight">200</option>
+                        <option name="maxHeight">400</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -140,7 +146,7 @@ and that it is between a certain width and height.
 Options
 -------
 
-This constraint shares all of its options with the :doc:`File</reference/constraints/File>`
+This constraint shares all of its options with the :doc:`File </reference/constraints/File>`
 constraint. It does, however, modify two of the default option values and
 add several other options.
 

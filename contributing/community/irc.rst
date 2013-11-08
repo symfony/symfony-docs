@@ -14,7 +14,7 @@ time for at least 4 topics.
 
 .. caution::
 
-    Note that its not the expected goal of them meeting to find final
+    Note that it's not the expected goal of the meeting to find final
     solutions, but more to ensure that there is a common understanding of the
     issue at hand and move the discussion forward in ways which are hard to
     achieve with less real time communication tools.

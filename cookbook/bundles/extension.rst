@@ -21,7 +21,7 @@ as integration of other related components:
 
         framework:
             # ...
-            form:            true
+            form: true
 
     .. code-block:: xml
 
@@ -33,7 +33,7 @@ as integration of other related components:
 
         $container->loadFromExtension('framework', array(
             // ...
-            'form'            => true,
+            'form' => true,
             // ...
         ));
 
@@ -44,7 +44,7 @@ When you create a bundle, you have two choices on how to handle configuration:
     You can specify your services in a configuration file (e.g. ``services.yml``)
     that lives in your bundle and then import it from your main application
     configuration. This is really easy, quick and totally effective. If you
-    make use of :ref:`parameters<book-service-container-parameters>`, then
+    make use of :ref:`parameters <book-service-container-parameters>`, then
     you still have the flexibility to customize your bundle from your application
     configuration. See ":ref:`service-container-imports-directive`" for more
     details.
@@ -62,7 +62,8 @@ When you create a bundle, you have two choices on how to handle configuration:
 The second option - which you'll learn about in this article - is much more
 flexible, but also requires more time to setup. If you're wondering which
 method you should use, it's probably a good idea to start with method #1,
-and then change to #2 later if you need to.
+and then change to #2 later if you need to. If you plan to distribute your 
+bundle, the second option is recommended.
 
 The second method has several specific advantages:
 
@@ -74,7 +75,7 @@ The second method has several specific advantages:
 * Smart merging when several configuration files (e.g. ``config_dev.yml``
   and ``config.yml``) override each other's configuration;
 
-* Configuration validation (if you use a :ref:`Configuration Class<cookbook-bundles-extension-config-class>`);
+* Configuration validation (if you use a :ref:`Configuration Class <cookbook-bundles-extension-config-class>`);
 
 * IDE auto-completion when you create an XSD and developers use XML.
 
@@ -225,7 +226,7 @@ The array passed to your ``load()`` method will look like this::
         array(
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        )
+        ),
     )
 
 Notice that this is an *array of arrays*, not just a single flat array of the
@@ -250,7 +251,7 @@ It's your job, then, to decide how these configurations should be merged
 together. You might, for example, have later values override previous values
 or somehow merge them together.
 
-Later, in the :ref:`Configuration Class<cookbook-bundles-extension-config-class>`
+Later, in the :ref:`Configuration Class <cookbook-bundles-extension-config-class>`
 section, you'll learn of a truly robust way to handle this. But for now,
 you might just merge them manually::
 
@@ -293,7 +294,10 @@ configuration::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
     }
 
@@ -305,7 +309,10 @@ option is passed and set to true::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
 
         if (isset($config['enabled']) && $config['enabled']) {
             $loader->load('services.xml');
@@ -351,14 +358,22 @@ Add the following to the ``load()`` method to do this::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
 
         if (!isset($config['my_type'])) {
-            throw new \InvalidArgumentException('The "my_type" option must be set');
+            throw new \InvalidArgumentException(
+                'The "my_type" option must be set'
+            );
         }
 
-        $container->setParameter('acme_hello.my_service_type', $config['my_type']);
+        $container->setParameter(
+            'acme_hello.my_service_type',
+            $config['my_type']
+        );
     }
 
 Now, the user can effectively configure the service by specifying the ``my_type``
@@ -394,7 +409,7 @@ configuration value:
         // app/config/config.php
         $container->loadFromExtension('acme_hello', array(
             'my_type' => 'foo',
-            // ...
+            ...,
         ));
 
 Global Parameters
@@ -409,7 +424,6 @@ global parameters available to use:
 * ``kernel.root_dir``
 * ``kernel.cache_dir``
 * ``kernel.logs_dir``
-* ``kernel.bundle_dirs``
 * ``kernel.bundles``
 * ``kernel.charset``
 
@@ -457,6 +471,7 @@ and build a tree that defines your configuration in that class::
 
             return $treeBuilder;
         }
+    }
 
 This is a *very* simple example, but you can now use this class in your ``load()``
 method to merge your configuration and force validation. If any options other
@@ -478,9 +493,20 @@ configuration arrays together.
 
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
-normalization and advanced merging. You can read more about this in :doc:`the Config Component documentation</components/config/definition>`.
-You can also see it action by checking out some of the core Configuration classes,
+normalization and advanced merging. You can read more about this in
+:doc:`the Config Component documentation </components/config/definition>`.
+You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
+
+Modifying the configuration of another Bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have multiple bundles that depend on each other, it may be useful
+to allow one ``Extension`` class to modify the configuration passed to another
+bundle's ``Extension`` class, as if the end-developer has actually placed that
+configuration in his/her ``app/config/config.yml`` file.
+
+For more details, see :doc:`/cookbook/bundles/prepend_extension`.
 
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -493,9 +519,10 @@ be output to the console in yaml.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
-``__constructor()`` it will work automatically.  If you have a something
-different your ``Extension`` class will have to override the
-``Extension::getConfiguration()`` method.  Have it return an instance of your
+``__construct()`` it will work automatically.  If you have something
+different, your ``Extension`` class must override the
+:method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
+method and return an instance of your
 ``Configuration``.
 
 Comments and examples can be added to your configuration nodes using the
@@ -526,6 +553,7 @@ Comments and examples can be added to your configuration nodes using the
 
             return $treeBuilder;
         }
+    }
 
 This text appears as yaml comments in the output of the ``config:dump-reference``
 command.
@@ -546,9 +574,9 @@ When creating an extension, follow these simple conventions:
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the Bundle
-:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
-your bundle::
+automatically by Symfony2. If not, override the
+:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
+method in your bundle::
 
     // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;

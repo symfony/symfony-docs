@@ -25,13 +25,13 @@ If your problem definitely looks like a bug, report it using the official bug
 * Describe the steps needed to reproduce the bug with short code examples
   (providing a unit test that illustrates the bug is best);
 
-* Give as much details as possible about your environment (OS, PHP version,
+* Give as much detail as possible about your environment (OS, PHP version,
   Symfony version, enabled extensions, ...);
 
 * *(optional)* Attach a :doc:`patch <patches>`.
 
-.. _documentation: http://symfony.com/doc/2.0/
-.. _users mailing-list: http://groups.google.com/group/symfony-users
+.. _documentation: http://symfony.com/doc/current/
+.. _users mailing-list: http://groups.google.com/group/symfony2
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony
 .. _tracker: https://github.com/symfony/symfony/issues

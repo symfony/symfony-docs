@@ -18,24 +18,41 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
+| Overridden  | - `choice_list`_                                                       |
+| Options     |                                                                        |
++-------------+------------------------------------------------------------------------+
 | Inherited   | - `multiple`_                                                          |
 | options     | - `expanded`_                                                          |
 |             | - `preferred_choices`_                                                 |
 |             | - `empty_value`_                                                       |
-|             | - `error_bubbling`_                                                    |
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `read_only`_                                                         |
+|             | - `disabled`_                                                          |
+|             | - `error_bubbling`_                                                    |
+|             | - `error_mapping`_                                                     |
+|             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`                           |
+| Parent type | :doc:`choice </reference/forms/types/choice>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
 
+Overridden Options
+------------------
+
+choice_list
+~~~~~~~~~~~
+
+**default**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\TimezoneChoiceList`
+
+The Timezone type defaults the choice_list to all timezones returned by
+:phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
+
 Inherited options
 -----------------
 
-These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -45,7 +62,7 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -53,4 +70,10 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc

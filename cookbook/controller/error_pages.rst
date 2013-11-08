@@ -16,9 +16,11 @@ control you need:
 
 1. Customize the error templates of the different error pages (explained below);
 
-2. Replace the default exception controller ``TwigBundle::Exception:show``
+2. Replace the default exception controller ``twig.controller.exception:showAction``
    with your own controller and handle it however you want (see
-   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`);
+   :ref:`exception_controller in the Twig reference <config-twig-exception-controller>`).
+   The default exception controller is registered as a service - the actual
+   class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
 
 .. tip::
 
@@ -28,7 +30,7 @@ control you need:
     information, see :ref:`kernel-kernel.exception`.
 
 All of the error templates live inside ``TwigBundle``. To override the
-templates, we simply rely on the standard method for overriding templates that
+templates, simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
 :ref:`overriding-bundle-templates`.
 
@@ -50,6 +52,14 @@ end-user, create a new template located at
     </body>
     </html>
 
+.. caution::
+
+    You **must not** use ``is_granted`` in your error pages (or layout used
+    by your error pages), because the router runs before the firewall. If
+    the router throws an exception (for instance, when the route does not
+    match), then using ``is_granted`` will throw a further exception. You
+    can use ``is_granted`` safely by saying ``{% if app.user and is_granted('...') %}``.
+
 .. tip::
 
     If you're not familiar with Twig, don't worry. Twig is a simple, powerful
@@ -58,7 +68,7 @@ end-user, create a new template located at
 
 In addition to the standard HTML error page, Symfony provides a default error
 page for many of the most common response formats, including JSON
-(``error.json.twig``), XML (``error.xml.twig``) and even Javascript
+(``error.json.twig``), XML (``error.xml.twig``) and even JavaScript
 (``error.js.twig``), to name a few. To override any of these templates, just
 create a new file with the same name in the
 ``app/Resources/TwigBundle/views/Exception`` directory. This is the standard

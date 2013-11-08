@@ -25,11 +25,10 @@ Replacement for the following functions and classes is provided:
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Locale);
-* Install it via PEAR ( `pear.symfony.com/Locale`);
-* Install it via Composer (`symfony/locale` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/locale`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Locale).
 
 Usage
 -----
@@ -43,7 +42,9 @@ When using the ClassLoader component following code is sufficient to supplement 
     if (!function_exists('intl_get_error_code')) {
         require __DIR__.'/path/to/src/Symfony/Component/Locale/Resources/stubs/functions.php';
 
-        $loader->registerPrefixFallbacks(array(__DIR__.'/path/to/src/Symfony/Component/Locale/Resources/stubs'));
+        $loader->registerPrefixFallbacks(
+            array(__DIR__.'/path/to/src/Symfony/Component/Locale/Resources/stubs')
+        );
     }
 
 :class:`Symfony\\Component\\Locale\\Locale` class enriches native :phpclass:`Locale` class with additional features:
@@ -65,6 +66,7 @@ When using the ClassLoader component following code is sufficient to supplement 
     $localeCodes = Locale::getLocales();
 
     // Get ICU versions
-    $icuVersion = Locale::getIcuVersion();
+    $icuVersion = Locale::getIntlIcuVersion();
     $icuDataVersion = Locale::getIcuDataVersion();
 
+.. _Packagist: https://packagist.org/packages/symfony/locale

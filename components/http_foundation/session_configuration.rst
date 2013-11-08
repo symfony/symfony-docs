@@ -19,7 +19,6 @@ is called randomly according to PHP's configuration and if called, it is invoked
 after the `open` operation).  You can read more about this at
 `php.net/session.customhandler`_
 
-
 Native PHP Save Handlers
 ------------------------
 
@@ -27,7 +26,7 @@ So-called 'native' handlers, are save handlers which are either compiled into
 PHP or provided by PHP extensions, such as PHP-Sqlite, PHP-Memcached and so on.
 
 All native save handlers are internal to PHP and as such, have no public facing API.
-They must be configured by PHP ini directives, usually ``session.save_path`` and
+They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
 docblock of the ``setOptions()`` method of each class.
 
@@ -59,7 +58,6 @@ Example usage::
     where you need more control, custom save handlers may provide more freedom and flexibility.
     Symfony2 provides several implementations which you may further customise as required.
 
-
 Custom Save Handlers
 --------------------
 
@@ -73,26 +71,26 @@ examples if you wish to write your own.
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcacheSessionHandler`
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
 
 Example usage::
 
     use Symfony\Component\HttpFoundation\Session\Session;
-    use Symfony\Component\HttpFoundation\Session\Storage\SessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $storage = new NativeSessionStorage(array(), new PdoSessionHandler());
     $session = new Session($storage);
 
-
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
-can configure most of the PHP ini configuration directives which are documented
+can configure most of the ``php.ini`` configuration directives which are documented
 at `php.net/session.configuration`_.
 
-To configure these setting, pass the keys (omitting the initial ``session.`` part
+To configure these settings, pass the keys (omitting the initial ``session.`` part
 of the key) as a key-value array to the ``$options`` constructor argument.
 Or set them via the
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
@@ -133,7 +131,7 @@ example if these were set to ``5/100`` respectively, it would mean a probability
 of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
 
 If the garbage collection handler is invoked, PHP will pass the value stored in
-the PHP ini directive ``session.gc_maxlifetime`. The meaning in this context is
+the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
 that any stored session that was saved more than ``maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
 
@@ -163,7 +161,7 @@ calculated by adding the PHP runtime configuration value in
 
 .. note::
 
-    A cookie lifetime of ``0`` means the cookie expire when the browser is closed.
+    A cookie lifetime of ``0`` means the cookie expires when the browser is closed.
 
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,7 +201,7 @@ Both methods return a Unix timestamp (relative to the server).
 This meta-data can be used to explicitly expire a session on access, e.g.::
 
     $session->start();
-    if (time() - $session->getMetadataBag()->getLastUpdate() > $maxIdleTime) {
+    if (time() - $session->getMetadataBag()->getLastUsed() > $maxIdleTime) {
         $session->invalidate();
         throw new SessionExpired(); // redirect to expired session page
     }
@@ -251,12 +249,17 @@ using the `Native*SessionHandler` classes, while
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`
 will be used to wrap any custom save handlers, that implement :phpclass:`SessionHandlerInterface`.
 
-Under PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
+From PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
 including `Native*SessionHandler` classes which inherit from :phpclass:`SessionHandler`.
 
-The proxy mechanism allow you to get more deeply involved in session save handler
+The proxy mechanism allows you to get more deeply involved in session save handler
 classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
+
+.. note::
+
+    Before PHP 5.4, you can only proxy user-land save handlers but not 
+    native PHP save handlers.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration

@@ -6,7 +6,7 @@ How to create a Custom Validation Constraint
 
 You can create a custom constraint by extending the base constraint class,
 :class:`Symfony\\Component\\Validator\\Constraint`.
-As an example we're going to create a simple validator that checks if a string
+As an example you're going to create a simple validator that checks if a string
 contains only alphanumeric characters.
 
 Creating Constraint class
@@ -14,7 +14,7 @@ Creating Constraint class
 
 First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
-    // src/Acme/DemoBundle/Validator/constraints/ContainsAlphanumeric.php
+    // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumeric.php
     namespace Acme\DemoBundle\Validator\Constraints;
 
     use Symfony\Component\Validator\Constraint;
@@ -38,7 +38,7 @@ Creating the Validator itself
 -----------------------------
 
 As you can see, a constraint class is fairly minimal. The actual validation is
-performed by a another "constraint validator" class. The constraint validator
+performed by another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
 includes some simple default logic::
 
@@ -52,7 +52,7 @@ In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method: ``validate``::
+The validator class is also simple, and only has one required method ``validate()``::
 
     // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace Acme\DemoBundle\Validator\Constraints;
@@ -207,7 +207,7 @@ Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Beside validating a class property, a constraint can have a class scope by
-providing a target::
+providing a target in its ``Constraint`` class::
 
     public function getTargets()
     {
@@ -221,7 +221,7 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-                $this->context->addViolationAtSubPath('foo', $constraint->message, array(), null);
+                $this->context->addViolationAt('foo', $constraint->message, array(), null);
             }
         }
     }
@@ -236,7 +236,7 @@ not to the property:
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\DemoBundle\Entity\AcmeEntity:
             constraints:
-                - ContainsAlphanumeric
+                - Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: php-annotations
 
@@ -252,5 +252,5 @@ not to the property:
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\DemoBundle\Entity\AcmeEntity">
-            <constraint name="ContainsAlphanumeric" />
+            <constraint name="Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric" />
         </class>

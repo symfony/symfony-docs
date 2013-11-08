@@ -13,11 +13,10 @@ The Filesystem Component
 Installation
 ------------
 
-You can install the component in many different ways:
+You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Filesystem);
-* Install it via PEAR ( `pear.symfony.com/Filesystem`);
-* Install it via Composer (`symfony/filesystem` on Packagist).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Filesystem).
 
 Usage
 -----
@@ -33,26 +32,27 @@ endpoint for filesystem operations::
     try {
         $fs->mkdir('/tmp/random/dir/' . mt_rand());
     } catch (IOException $e) {
-        echo "An error occured while creating your directory";
+        echo "An error occurred while creating your directory";
     }
 
 .. note::
 
     Methods :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::exists`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` and
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` can receive a
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
-
 
 Mkdir
 ~~~~~
 
-Mkdir creates directory. On posix filesystems, directories are created with a
-default mode value `0777`. You can use the second argument to set your own mode::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
+On posix filesystems, directories are created with a default mode value
+`0777`. You can use the second argument to set your own mode::
 
     $fs->mkdir('/tmp/photos', 0700);
 
@@ -64,8 +64,8 @@ default mode value `0777`. You can use the second argument to set your own mode:
 Exists
 ~~~~~~
 
-Exists checks for the presence of all files or directories and returns false if a
-file is missing::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
+presence of all files or directories and returns false if a file is missing::
 
     // this directory exists, return true
     $fs->exists('/tmp/photos');
@@ -81,9 +81,10 @@ file is missing::
 Copy
 ~~~~
 
-This method is used to copy files. If the target already exists, the file is
-copied only if the source modification date is earlier than the target. This
-behavior can be overridden by the third boolean argument::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` is used to copy
+files. If the target already exists, the file is copied only if the source
+modification date is later than the target. This behavior can be overridden by
+the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
     $fs->copy('image-ICC.jpg', 'image.jpg');
@@ -94,9 +95,9 @@ behavior can be overridden by the third boolean argument::
 Touch
 ~~~~~
 
-Touch sets access and modification time for a file. The current time is used by
-default. You can set your own with the second argument. The third argument is
-the access time::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::touch` sets access and
+modification time for a file. The current time is used by default. You can set
+your own with the second argument. The third argument is the access time::
 
     // set modification time to the current timestamp
     $fs->touch('file.txt');
@@ -113,8 +114,8 @@ the access time::
 Chown
 ~~~~~
 
-Chown is used to change the owner of a file. The third argument is a boolean
-recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chown` is used to change
+the owner of a file. The third argument is a boolean recursive option::
 
     // set the owner of the lolcat video to www-data
     $fs->chown('lolcat.mp4', 'www-data');
@@ -129,14 +130,13 @@ recursive option::
 Chgrp
 ~~~~~
 
-Chgrp is used to change the group of a file. The third argument is a boolean
-recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` is used to change
+the group of a file. The third argument is a boolean recursive option::
 
     // set the group of the lolcat video to nginx
     $fs->chgrp('lolcat.mp4', 'nginx');
     // change the group of the video directory recursively
     $fs->chgrp('/video', 'nginx', true);
-
 
 .. note::
 
@@ -146,13 +146,13 @@ recursive option::
 Chmod
 ~~~~~
 
-Chmod is used to change the mode of a file. The third argument is a boolean
-recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` is used to change
+the mode of a file. The fourth argument is a boolean recursive option::
 
     // set the mode of the video to 0600
     $fs->chmod('video.ogg', 0600);
     // change the mod of the src directory recursively
-    $fs->chmod('src', 0700, true);
+    $fs->chmod('src', 0700, 0000, true);
 
 .. note::
 
@@ -162,7 +162,8 @@ recursive option::
 Remove
 ~~~~~~
 
-Remove let's you remove files, symlink, directories easily::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` let's you remove
+files, symlink, directories easily::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
@@ -174,45 +175,54 @@ Remove let's you remove files, symlink, directories easily::
 Rename
 ~~~~~~
 
-Rename is used to rename files and directories::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::rename` is used to rename
+files and directories::
 
-    //rename a file
+    // rename a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
-    //rename a directory
+    // rename a directory
     $fs->rename('/tmp/files', '/path/to/store/files');
 
 symlink
 ~~~~~~~
 
-Creates a symbolic link from the target to the destination. If the filesystem
-does not support symbolic links, a third boolean argument is available::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::symlink` creates a
+symbolic link from the target to the destination. If the filesystem does not
+support symbolic links, a third boolean argument is available::
 
     // create a symbolic link
     $fs->symlink('/path/to/source', '/path/to/destination');
-    // duplicate the source directory if the filesystem does not support symbolic links
+    // duplicate the source directory if the filesystem
+    // does not support symbolic links
     $fs->symlink('/path/to/source', '/path/to/destination', true);
 
 makePathRelative
 ~~~~~~~~~~~~~~~~
 
-Return the relative path of a directory given another one::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::makePathRelative` returns
+the relative path of a directory given another one::
 
     // returns '../'
-    $fs->makePathRelative('/var/lib/symfony/src/Symfony/', '/var/lib/symfony/src/Symfony/Component');
+    $fs->makePathRelative(
+        '/var/lib/symfony/src/Symfony/',
+        '/var/lib/symfony/src/Symfony/Component'
+    );
     // returns 'videos'
-    $fs->makePathRelative('/tmp', '/tmp/videos');
+    $fs->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
 ~~~~~~
 
-Mirrors a directory::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` mirrors a
+directory::
 
     $fs->mirror('/path/to/source', '/path/to/target');
 
 isAbsolutePath
 ~~~~~~~~~~~~~~
 
-isAbsolutePath returns true if the given path is absolute, false otherwise::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsolutePath` returns
+``true`` if the given path is absolute, false otherwise::
 
     // return true
     $fs->isAbsolutePath('/tmp');
@@ -232,7 +242,9 @@ thrown.
 
 .. note::
 
-    Prior to version 2.1, :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`
-    returned a boolean and did not throw exceptions. As of 2.1, a
-    :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
-    thrown if a directory creation fails.
+    Prior to version 2.1, ``mkdir`` returned a boolean and did not throw
+    exceptions. As of 2.1, a
+    :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is thrown
+    if a directory creation fails.
+
+.. _`Packagist`: https://packagist.org/packages/symfony/filesystem
