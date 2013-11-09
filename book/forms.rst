@@ -420,21 +420,21 @@ corresponding errors printed out with the form.
    but are being prevented by your browser from, for example, submitting
    blank fields.
 
-.. configuration-block::
+   .. configuration-block::
 
-    .. code-block:: html+jinja
+       .. code-block:: html+jinja
 
-        {# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}
+           {# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}
 
-        {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+           {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-    .. code-block:: html+php
+       .. code-block:: html+php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php -->
+           <!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php -->
 
-        <?php echo $view['form']->form($form, array(
-            'attr' => array('novalidate' => 'novalidate'),
-        )) ?>
+           <?php echo $view['form']->form($form, array(
+               'attr' => array('novalidate' => 'novalidate'),
+           )) ?>
 
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter </book/validation>`.
