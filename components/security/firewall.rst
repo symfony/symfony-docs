@@ -127,11 +127,11 @@ Flow: Firewall, Authentication, Authorization
 Hopefully you can now see a little bit about how the "flow" of the security
 context works:
 
-#. the Firewall is registered as a listener on the ``kernel.request`` event;
-#. at the beginning of the request, the Firewall checks the firewall map
+#. The Firewall is registered as a listener on the ``kernel.request`` event;
+#. At the beginning of the request, the Firewall checks the firewall map
    to see if any firewall should be active for this URL;
-#. If a firewall is found in the map for this URL, its listeners are notified
-#. each listener checks to see if the current request contains any authentication
+#. If a firewall is found in the map for this URL, its listeners are notified;
+#. Each listener checks to see if the current request contains any authentication
    information - a listener may (a) authenticate a user, (b) throw an
    ``AuthenticationException``, or (c) do nothing (because there is no
    authentication information on the request);

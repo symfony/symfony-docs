@@ -100,8 +100,8 @@ type
 
 **type**: ``string`` **default**: ``file``
 
-The method used to store spooled messages. Currently only ``file`` is supported.
-However, a custom spool should be possible by creating a service called
+The method used to store spooled messages. Valid values are ``memory`` and
+``file``. A custom spool should be possible by creating a service called
 ``swiftmailer.spool.myspool`` and setting this value to ``myspool``.
 
 path
