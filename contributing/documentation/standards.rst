@@ -109,7 +109,8 @@ Language Standards
 * Capitalize the first letter of any heading and the first letter of all
   nouns and adjectives afterwards (verbs are lowercase);
 * Do not use `Serial (Oxford) Commas`_;
-* You should use a form of *you* instead of *we*.
+* You should use a form of *you* instead of *we* (i.e. avoid the first person
+  point of view: use the second instead).
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
