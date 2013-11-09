@@ -349,14 +349,16 @@ will be show next):
 
 .. code-block:: javascript
 
-    // Get the ul that holds the collection of tags
-    var collectionHolder = $('ul.tags');
+    var collectionHolder;
 
     // setup an "add a tag" link
     var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
     var $newLinkLi = $('<li></li>').append($addTagLink);
 
     jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        collectionHolder = $('ul.tags');
+        
         // add the "add a tag" anchor and li to the tags ul
         collectionHolder.append($newLinkLi);
 
