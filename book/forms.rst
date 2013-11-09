@@ -423,10 +423,12 @@ corresponding errors printed out with the form.
    .. code-block:: html+jinja
 
      {# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}
+     
      {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
    .. code-block:: html+php
-
+      <!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php -->
+      
       <?php echo $view['form']->form($form, array(
          'attr' => array('novalidate' => 'novalidate'),
       )) ?>
