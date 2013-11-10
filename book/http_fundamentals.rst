@@ -551,7 +551,7 @@ So then, what *is* the Symfony2 *Framework*? The *Symfony2 Framework* is
 a PHP library that accomplishes two distinct tasks:
 
 #. Provides a selection of components (i.e. the Symfony2 Components) and
-   third-party libraries (e.g. `Swiftmailer`_ for sending emails);
+   third-party libraries (e.g. `Swift Mailer`_ for sending emails);
 
 #. Provides sensible configuration and a "glue" library that ties all of these
    pieces together.
@@ -577,4 +577,4 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`Validator`: https://github.com/symfony/Validator
 .. _`Security`: https://github.com/symfony/Security
 .. _`Translation`: https://github.com/symfony/Translation
-.. _`Swiftmailer`: http://swiftmailer.org/
+.. _`Swift Mailer`: http://swiftmailer.org/
