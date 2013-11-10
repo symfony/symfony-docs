@@ -29,7 +29,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         Acme\BlogBundle\Entity\Author:
             properties:
                 firstName:
-                    - "Null": ~
+                    - 'Null': ~
 
     .. code-block:: php-annotations
 
@@ -79,8 +79,8 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
 .. caution::
 
-    When using YAML, be sure to surround ``Null`` with quotes (``"Null"``)
-    or else YAML will convert this into a Null value.
+    When using YAML, be sure to surround ``Null`` with quotes (``'Null'``)
+    or else YAML will convert this into a ``null`` value.
 
 Options
 -------
