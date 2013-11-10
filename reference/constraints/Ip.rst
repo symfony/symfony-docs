@@ -113,6 +113,6 @@ of a variety of different values:
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This is not a valid IP address``
+**type**: ``string`` **default**: ``This is not a valid IP address.``
 
 This message is shown if the string is not a valid IP address.

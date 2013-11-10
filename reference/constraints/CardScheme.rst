@@ -123,7 +123,7 @@ For more information about the used schemes, see `Wikipedia: Issuer identificati
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``Unsupported card type or invalid card number``
+**type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
 
