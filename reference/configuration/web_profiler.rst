@@ -1,8 +1,8 @@
 .. index::
    single: Configuration reference; WebProfiler
 
-WebProfilerBundle Configuration Reference
-=========================================
+WebProfilerBundle Configuration ("web_profiler")
+================================================
 
 Full Default Configuration
 --------------------------

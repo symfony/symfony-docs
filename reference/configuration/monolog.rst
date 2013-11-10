@@ -1,8 +1,8 @@
 .. index::
    pair: Monolog; Configuration reference
 
-MonologBundle Configuration Reference
-=====================================
+MonologBundle Configuration ("monolog")
+=======================================
 
 .. configuration-block::
 

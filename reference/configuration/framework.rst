@@ -1,8 +1,8 @@
 .. index::
    single: Configuration reference; Framework
 
-FrameworkBundle Configuration Reference
-=======================================
+FrameworkBundle Configuration ("framework")
+===========================================
 
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered.
