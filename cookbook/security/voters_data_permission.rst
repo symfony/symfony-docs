@@ -13,8 +13,8 @@ application: :doc:`"/cookbook/security/voters"`.
 
 .. tip::
 
-    It is good to understand the basics about what and how
-    :doc:`authorization </components/security/authorization>` works.                        // correct link in book?
+    Have a look at the referenced page if you are not familiar with
+    :doc:`authorization </components/security/authorization>`.
 
 How Symfony uses Voters
 -----------------------
@@ -33,7 +33,9 @@ A custom voter must implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
 which has this structure:
 
-.. code-block:: php                                                                     // :: shortcut? and put the snippet (to line 56) in a single file an reference ?
+// how to put this following snippet (to line 56) in a single file an embed it? as it is used in voters.rst as well.
+
+.. code-block:: php
 
     interface VoterInterface
     {
@@ -95,10 +97,8 @@ You could store your Voter to check permission for the view and edit action like
             $array = array('Acme\DemoBundle\Entity\Post');
 
             foreach ($array as $item) {
-                // check with stripos in case doctrine is using a proxy class for this object
-                // if (stripos($s, $item) !== false) {
-                if ($obj instanceof $item))         // check if this will also check for interfaces etc. like it should be in oop (inheritace)
-                                                    // or  return $targetClass === $class || is_subclass_of($class, $targetClass);
+                if ($obj instanceof $item))
+
                     return true;
                 }
             }
@@ -107,16 +107,21 @@ You could store your Voter to check permission for the view and edit action like
         }
 
         /** @var \Acme\DemoBundle\Entity\Post $post */
-        public function vote(TokenInterface $token, $post, array $attributes) // remove array
+        public function vote(TokenInterface $token, $post, array $attributes)
         {
-            // always get the first attribute
+            // check if voter is used correct, only allow one attribute for a check
+            if(count($attributes) !== 1 || !is_string($attributes[0])) {
+                throw new PreconditionFailedHttpException('The Attribute was not set correct. Maximum 1 attribute.');
+            }
+
+            // set the attribute to check against
             $attribute = $attributes[0];
 
             // get current logged in user
             $user = $token->getUser();
 
             // check if class of this object is supported by this voter
-            if (!($this->supportsClass($post))) {                                 // maybe without ClassUtils::getRealClass(
+            if (!($this->supportsClass($post))) {
 
                 return VoterInterface::ACCESS_ABSTAIN;
             }
@@ -151,8 +156,8 @@ You could store your Voter to check permission for the view and edit action like
                     break;
 
                 default:
-                    // otherwise throw an exception
-                    throw new PreconditionFailedHttpException('The Attribute "'.$attribute.'"" was not found.')
+                    // otherwise throw an exception, which will break the request
+                    throw new PreconditionFailedHttpException('The Attribute "'.$attribute.'" was not found.')
             }
 
         }
