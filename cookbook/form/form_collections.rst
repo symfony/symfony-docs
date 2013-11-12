@@ -410,7 +410,7 @@ one example:
         $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append($newForm);
+        var $newFormLi = $('<li></li>').append(newForm);
         $newLinkLi.before($newFormLi);
     }
 
