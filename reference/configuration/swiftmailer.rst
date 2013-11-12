@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration reference; Swiftmailer
+   single: Configuration reference; Swift Mailer
 
 SwiftmailerBundle Configuration ("swiftmailer")
 ===============================================
@@ -8,7 +8,7 @@ This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered. For a full list of the default configuration
 options, see `Full Default Configuration`_
 
-The ``swiftmailer`` key configures Symfony's integration with Swiftmailer,
+The ``swiftmailer`` key configures Symfony's integration with Swift Mailer,
 which is responsible for creating and delivering email messages.
 
 Configuration
@@ -119,7 +119,7 @@ sender_address
 
 If set, all messages will be delivered with this address as the "return path"
 address, which is where bounced messages should go. This is handled internally
-by Swiftmailer's ``Swift_Plugins_ImpersonatePlugin`` class.
+by Swift Mailer's ``Swift_Plugins_ImpersonatePlugin`` class.
 
 antiflood
 ~~~~~~~~~
@@ -166,7 +166,7 @@ logging
 
 **type**: ``Boolean`` **default**: ``%kernel.debug%``
 
-If true, Symfony's data collector will be activated for Swiftmailer and the
+If true, Symfony's data collector will be activated for Swift Mailer and the
 information will be available in the profiler.
 
 Full Default Configuration

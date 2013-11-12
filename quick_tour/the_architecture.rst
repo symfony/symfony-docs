@@ -184,7 +184,7 @@ PHP. Have a look at the default configuration:
             auto_generate_proxy_classes: "%kernel.debug%"
             auto_mapping: true
 
-    # Swiftmailer Configuration
+    # Swift Mailer Configuration
     swiftmailer:
         transport: "%mailer_transport%"
         host:      "%mailer_host%"

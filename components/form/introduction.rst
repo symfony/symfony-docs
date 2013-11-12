@@ -334,12 +334,12 @@ and then access it whenever you need to build a form.
 
 .. note::
 
-    In this document, the form factory is always a locally variable called
+    In this document, the form factory is always a local variable called
     ``$formFactory``. The point here is that you will probably need to create
     this object in some more "global" way so you can access it from anywhere.
 
 Exactly how you gain access to your one form factory is up to you. If you're
-using a :term`Service Container`, then you should add the form factory to
+using a :term:`Service Container`, then you should add the form factory to
 your container and grab it out whenever you need to. If your application
 uses global or static variables (not usually a good idea), then you can store
 the object on some static class or do something similar.
@@ -414,7 +414,7 @@ it and :ref:`process the form submission <component-form-intro-handling-submissi
 Setting Default Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you need you form to load with some default values (or you're building
+If you need your form to load with some default values (or you're building
 an "edit" form), simply pass in the default data when creating your form
 builder:
 
