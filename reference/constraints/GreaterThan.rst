@@ -91,7 +91,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be greater than {{ compared_value }}``
+**type**: ``string`` **default**: ``This value should be greater than {{ compared_value }}.``
 
 This is the message that will be shown if the value is not greater than the
 comparison value.
