@@ -13,8 +13,10 @@ application: :doc:`"/cookbook/security/voters"`.
 
 .. tip::
 
-    Have a look at the referenced page if you are not familiar with
-    :doc:`authorization </components/security/authorization>`.
+    Have a look at the pages
+    :doc:`security </cookbook/security>` and
+    :doc:`authorization </components/security/authorization>`
+    if you are not familiar with these topics.
 
 How Symfony uses Voters
 -----------------------
