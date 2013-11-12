@@ -12,9 +12,10 @@ This entry is all about scopes, a somewhat advanced topic related to the
 
     If you are trying to inject the ``request`` service, the simple solution
     is to inject the ``request_stack`` service instead and access the current
-    Request by calling the ``getCurrentRequest()`` method. The rest of this
-    entry talks about scopes in a theoretical and more advanced way. If you're
-    dealing with scopes for the ``request`` service, simply inject ``request_stack``.
+    Request by calling the ``getCurrentRequest()`` method (see :ref:`book-container-request-stack`).
+    The rest of this entry talks about scopes in a theoretical and more advanced
+    way. If you're dealing with scopes for the ``request`` service, simply
+    inject ``request_stack``.
 
 Understanding Scopes
 --------------------
@@ -34,8 +35,8 @@ also defines a third scope: ``request``. This scope is tied to the request,
 meaning a new instance is created for each subrequest and is unavailable
 outside the request (for instance in the CLI).
 
-The Example: client Scope
-~~~~~~~~~~~~~~~~~~~~~~~~~
+An Example: client Scope
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Other than the ``request`` service (which has a simple solution, see the
 above note), no services in the default Symfony2 container belong to any
@@ -64,14 +65,14 @@ when compiling the container. Read the sidebar below for more details.
     from it, such as what the "sender" address should be. You add it as a
     constructor argument. Let's look at why this presents a problem:
 
-    * When requesting ``my_mailer``, an instance of ``my_mailer`` (let's call
-      it *MailerA*) is created and the ``client_configuration`` service (let's
-      call it *ConfigurationA*) is passed to it. Life is good!
+    * When requesting ``my_mailer``, an instance of ``my_mailer`` (called
+      *MailerA* here) is created and the ``client_configuration`` service (
+      called *ConfigurationA* here) is passed to it. Life is good!
 
     * Your application now needs to do something with another client, and
       you've architected your application in such a way that you handle this
       by entering a new ``client_configuration`` scope and setting a new
-      ``client_configuration`` service into the container. Let's call this
+      ``client_configuration`` service into the container. Call this
       *ConfigurationB*.
 
     * Somewhere in your application, you once again ask for the ``my_mailer``
@@ -96,14 +97,14 @@ Using a Service from a narrower Scope
 
 There are several solutions to the scope problem:
 
-* Use setter injection if the dependency is "synchronized"; (see
+* A) Use setter injection if the dependency is "synchronized"; (see
   :ref:`using-synchronized-service`).
 
-* Put your service in the same scope as the dependency (or a narrower one). If
+* B) Put your service in the same scope as the dependency (or a narrower one). If
   you depend on the ``client_configuration`` service, this means putting your
   new service in the ``client`` scope (see :ref:`changing-service-scope`);
 
-* Pass the entire container to your service and retrieve your dependency from
+* C) Pass the entire container to your service and retrieve your dependency from
   the container each time you need it to be sure you have the right instance
   -- your service can live in the default ``container`` scope (see
   :ref:`passing-container`);
@@ -112,15 +113,15 @@ Each scenario is detailed in the following sections.
 
 .. _using-synchronized-service:
 
-Using a synchronized Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A) Using a synchronized Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
     Synchronized services are new in Symfony 2.3.
 
-Injecting the container or setting your service to a narrower scope have
+Both injecting the container and setting your service to a narrower scope have
 drawbacks. Assume first that the ``client_configuration`` service has been
-marked as "synchronized":
+marked as ``synchronized``:
 
 .. configuration-block::
 
@@ -132,6 +133,7 @@ marked as "synchronized":
                 class:        Acme\HelloBundle\Client\ClientConfiguration
                 scope:        client
                 synchronized: true
+                # ...
 
     .. code-block:: xml
 
@@ -139,10 +141,17 @@ marked as "synchronized":
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
 
             <services>
-                <service id="client_configuration" scope="client" synchronized="true" class="Acme\HelloBundle\Client\ClientConfiguration" />
+                <service
+                    id="client_configuration"
+                    scope="client"
+                    synchronized="true"
+                    class="Acme\HelloBundle\Client\ClientConfiguration"
+                />
             </services>
         </container>
 
@@ -151,13 +160,13 @@ marked as "synchronized":
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $defn = new Definition(
+        $definition = new Definition(
             'Acme\HelloBundle\Client\ClientConfiguration',
             array()
         );
-        $defn->setScope('client');
-        $defn->setSynchronized(true);
-        $container->setDefinition('client_configuration', $defn);
+        $definition->setScope('client');
+        $definition->setSynchronized(true);
+        $container->setDefinition('client_configuration', $definition);
 
 Now, if you inject this service using setter injection, there are no drawbacks
 and everything works without any special code in your service or in your definition::
@@ -202,8 +211,8 @@ your code. This should also be taken into account when declaring your service:
 
         # src/Acme/HelloBundle/Resources/config/services.yml
         services:
-            greeting_card_manager:
-                class: Acme\HelloBundle\Mail\GreetingCardManager
+            my_mailer:
+                class: Acme\HelloBundle\Mail\Mailer
                 calls:
                     - [setClientConfiguration, ['@?client_configuration=']]
 
@@ -211,11 +220,16 @@ your code. This should also be taken into account when declaring your service:
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <services>
-            <service id="greeting_card_manager"
-                class="Acme\HelloBundle\Mail\GreetingCardManager"
+            <service id="my_mailer"
+                class="Acme\HelloBundle\Mail\Mailer"
             >
                 <call method="setClientConfiguration">
-                    <argument type="service" id="client_configuration" on-invalid="null" strict="false" />
+                    <argument
+                        type="service"
+                        id="client_configuration"
+                        on-invalid="null"
+                        strict="false"
+                    />
                 </call>
             </service>
         </services>
@@ -227,19 +241,25 @@ your code. This should also be taken into account when declaring your service:
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
         $definition = $container->setDefinition(
-            'greeting_card_manager',
-            new Definition('Acme\HelloBundle\Mail\GreetingCardManager')
+            'my_mailer',
+            new Definition('Acme\HelloBundle\Mail\Mailer')
         )
         ->addMethodCall('setClientConfiguration', array(
-            new Reference('client_configuration', ContainerInterface::NULL_ON_INVALID_REFERENCE, false)
+            new Reference(
+                'client_configuration',
+                ContainerInterface::NULL_ON_INVALID_REFERENCE,
+                false
+            )
         ));
 
 .. _changing-service-scope:
 
-Changing the Scope of your Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+B) Changing the Scope of your Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Changing the scope of a service should be done in its definition:
+Changing the scope of a service should be done in its definition. This example
+assumes that the ``Mailer`` class has a ``__construct`` function whose first
+argument is the ``ClientConfiguration`` object:
 
 .. configuration-block::
 
@@ -247,8 +267,8 @@ Changing the scope of a service should be done in its definition:
 
         # src/Acme/HelloBundle/Resources/config/services.yml
         services:
-            greeting_card_manager:
-                class: Acme\HelloBundle\Mail\GreetingCardManager
+            my_mailer:
+                class: Acme\HelloBundle\Mail\Mailer
                 scope: client
                 arguments: [@client_configuration]
 
@@ -256,8 +276,8 @@ Changing the scope of a service should be done in its definition:
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <services>
-            <service id="greeting_card_manager"
-                class="Acme\HelloBundle\Mail\GreetingCardManager"
+            <service id="my_mailer"
+                class="Acme\HelloBundle\Mail\Mailer"
                 scope="client"
             />
             <argument type="service" id="client_configuration" />
@@ -269,17 +289,17 @@ Changing the scope of a service should be done in its definition:
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = $container->setDefinition(
-            'greeting_card_manager',
+            'my_mailer',
             new Definition(
-                'Acme\HelloBundle\Mail\GreetingCardManager',
+                'Acme\HelloBundle\Mail\Mailer',
                 array(new Reference('client_configuration'),
             ))
         )->setScope('client');
 
 .. _passing-container:
 
-Passing the Container as a Dependency of your Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C) Passing the Container as a Dependency of your Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Setting the scope to a narrower one is not always possible (for instance, a
 twig extension must be in the ``container`` scope as the Twig environment

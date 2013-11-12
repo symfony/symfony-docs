@@ -754,6 +754,8 @@ Injecting the dependency by the setter method just needs a change of syntax:
     and "setter injection". The Symfony2 service container also supports
     "property injection".
 
+.. _book-container-request-stack:
+
 Injecting the Request
 ~~~~~~~~~~~~~~~~~~~~~
 
