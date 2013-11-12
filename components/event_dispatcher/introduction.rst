@@ -49,8 +49,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/EventDispatcher).
 
 Usage
 -----
@@ -188,7 +188,7 @@ In many cases, a special ``Event`` subclass that's specific to the given event
 is passed to the listener. This gives the listener access to special
 information about the event. Check the documentation or implementation of each
 event to determine the exact ``Symfony\Component\EventDispatcher\Event``
-instance that's being passed. For example, the ``kernel.event`` event passes an
+instance that's being passed. For example, the ``kernel.response`` event passes an
 instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -306,7 +306,7 @@ the ``dispatch`` method. Now, any listener to the ``store.order`` event will
 receive the ``FilterOrderEvent`` and have access to the ``Order`` object via
 the ``getOrder`` method::
 
-    // some listener class that's been registered for "STORE_ORDER" event
+    // some listener class that's been registered for "store.order" event
     use Acme\StoreBundle\Event\FilterOrderEvent;
 
     public function onStoreOrder(FilterOrderEvent $event)

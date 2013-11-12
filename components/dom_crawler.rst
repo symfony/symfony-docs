@@ -17,8 +17,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/DomCrawler);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/DomCrawler).
 
 Usage
 -----
@@ -157,12 +157,12 @@ Call an anonymous function on each node of the list::
         return $node->text();
     });
 
-.. versionadded::
+.. versionadded:: 2.3
     As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
     are passed a ``Crawler`` as the first argument. Previously, that argument
     was a :phpclass:`DOMNode`.
 
-The anonymous function receives the position and the node (as a Crawler) as arguments.
+The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
 Adding the Content
@@ -230,13 +230,8 @@ and :phpclass:`DOMNode` objects:
 
     The ``html`` method is new in Symfony 2.3.
 
-Form and Link support
-~~~~~~~~~~~~~~~~~~~~~
-
-Special treatment is given to links and forms inside the DOM tree.
-
 Links
-.....
+~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
 the ``selectLink`` method on an existing crawler. This returns a Crawler
@@ -264,7 +259,7 @@ methods to get more information about the selected link itself::
     URI that you can act on.
 
 Forms
-.....
+~~~~~
 
 Special treatment is also given to forms. A ``selectButton()`` method is
 available on the Crawler which returns another Crawler that matches a button
@@ -345,6 +340,9 @@ and uploading files::
     // even fake a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');
 
+Using the Form Data
+...................
+
 What's the point of doing all of this? If you're testing internally, you
 can grab the information off of your form as if it had just been submitted
 by using the PHP values::
@@ -379,6 +377,27 @@ directly::
 
     // submit that form
     $crawler = $client->submit($form);
+
+.. _components-dom-crawler-invalid:
+
+Selecting Invalid Choice Values
+...............................
+
+.. versionadded:: 2.4
+    The :method:`Symfony\\Component\\DomCrawler\\Form::disableValidation`
+    method was added in Symfony 2.4.
+
+By default, choice fields (select, radio) have internal validation activated
+to prevent you from setting invalid values. If you want to be able to set
+invalid values, you can use the  ``disableValidation()`` method on either
+the whole form or specific field(s)::
+
+    // Disable validation for a specific field
+    $form['country']->disableValidation()->select('Invalid value');
+
+    // Disable validation for the whole form
+    $form->disableValidation();
+    $form['country']->select('Invalid value');
 
 .. _`Goutte`:  https://github.com/fabpot/goutte
 .. _Packagist: https://packagist.org/packages/symfony/dom-crawler

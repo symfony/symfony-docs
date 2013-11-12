@@ -26,7 +26,7 @@ So-called 'native' handlers, are save handlers which are either compiled into
 PHP or provided by PHP extensions, such as PHP-Sqlite, PHP-Memcached and so on.
 
 All native save handlers are internal to PHP and as such, have no public facing API.
-They must be configured by PHP ini directives, usually ``session.save_path`` and
+They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
 docblock of the ``setOptions()`` method of each class.
 
@@ -87,7 +87,7 @@ Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
-can configure most of the PHP ini configuration directives which are documented
+can configure most of the ``php.ini`` configuration directives which are documented
 at `php.net/session.configuration`_.
 
 To configure these settings, pass the keys (omitting the initial ``session.`` part
@@ -131,7 +131,7 @@ example if these were set to ``5/100`` respectively, it would mean a probability
 of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
 
 If the garbage collection handler is invoked, PHP will pass the value stored in
-the PHP ini directive ``session.gc_maxlifetime``. The meaning in this context is
+the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
 that any stored session that was saved more than ``maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
 

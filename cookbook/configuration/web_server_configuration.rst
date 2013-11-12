@@ -48,7 +48,20 @@ following configuration snippet:
 
 .. code-block:: apache
 
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]   
+
+.. caution::
+
+    In Apache 2.4, ``Order allow,deny`` has been replaced by ``Require all granted``,
+    and hence you need to modify your Directory permission settings as follows:
+
+        .. code-block:: apache
+
+            <Directory /var/www/project/web>
+                # enable the .htaccess rewrites
+                AllowOverride All
+                Require all granted
+            </Directory>
 
 Nginx
 -----

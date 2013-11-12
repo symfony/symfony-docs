@@ -114,7 +114,7 @@ In order to add a new worker, first create a class::
 
     }
 
-And then add register it as a tagged service:
+And then register it as a tagged service:
 
 .. configuration-block::
 
@@ -317,7 +317,7 @@ the interface directly::
     }
 
 In order for Symfony to know about your form extension and use it, give it
-the `form.type_extension` tag:
+the ``form.type_extension`` tag:
 
 .. configuration-block::
 
@@ -388,7 +388,7 @@ service class::
 
     }
 
-Then register this class and tag it with ``kernel.cache:clearer``:
+Then register this class and tag it with ``kernel.cache_clearer``:
 
 .. configuration-block::
 
@@ -449,7 +449,7 @@ The ``isOptional`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony 2.0, optional warmers
 are always executed anyways, so this function has no real effect.
 
-To register your warmer with Symfony, give it the kernel.cache_warmer tag:
+To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
 
 .. configuration-block::
 
@@ -504,7 +504,7 @@ core Symfony listeners and their priorities.
 
     All listeners listed here may not be listening depending on your environment,
     settings and bundles. Additionally, third-party bundles will bring in
-    additional listener not listed here.
+    additional listeners not listed here.
 
 kernel.request
 ..............
@@ -621,7 +621,7 @@ configuration, and tag it with ``kernel.event_subscriber``:
 kernel.fragment_renderer
 ------------------------
 
-**Purpose**: Add a new HTTP content rendering strategy.
+**Purpose**: Add a new HTTP content rendering strategy
 
 To add a new rendering strategy - in addition to the core strategies like
 ``EsiFragmentRenderer`` - create a class that implements
@@ -1124,7 +1124,7 @@ configuration, and tag it with ``twig.extension``:
 
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the cookbook article:
-:doc:`/cookbook/templating/twig_extension`
+:doc:`/cookbook/templating/twig_extension`.
 
 Before writing your own extensions, have a look at the
 `Twig official extension repository`_ which already includes several

@@ -31,7 +31,7 @@ the following to your command::
         return;
     }
 
-In this case, the user will be asked "Continue with this action", and will return
+In this case, the user will be asked "Continue with this action?", and will return
 ``true`` if the user answers with ``y`` or false in any other case. The third
 argument to ``askConfirmation`` is the default value to return if the user doesn't
 enter any input.
@@ -159,7 +159,7 @@ You can also ask and validate a hidden response::
 
     $password = $dialog->askHiddenResponseAndValidate(
         $output,
-        'Please enter the name of the widget',
+        'Please enter your password',
         $validator,
         20,
         false

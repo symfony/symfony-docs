@@ -27,7 +27,7 @@ Basic Usage
         Acme\BlogBundle\Entity\Author:
             properties:
                 ipAddress:
-                    - Ip:
+                    - Ip: ~
 
     .. code-block:: php-annotations
 

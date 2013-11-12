@@ -13,7 +13,7 @@ Introduction
 
 Finding the file for a particular class can be an expensive task. Luckily,
 the Class Loader Component comes with two classes to cache the mapping
-from a class to its containing file. Both the :class:`Symfonfy\\Component\\ClassLoader\\ApcClassLoader`
+from a class to its containing file. Both the :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader`
 and the :class:`Symfony\\Component\\ClassLoader\\XcacheClassLoader` wrap
 around an object which implements a ``findFile()`` method to find the file
 for a class.

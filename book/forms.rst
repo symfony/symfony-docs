@@ -806,7 +806,9 @@ used the ``form_row`` helper:
                 {{ form_widget(form.dueDate) }}
             </div>
 
-        <input type="submit" />
+            <div>
+                {{ form_widget(form.save) }}
+            </div>
 
         {{ form_end(form) }}
 
@@ -828,7 +830,9 @@ used the ``form_row`` helper:
                 <?php echo $view['form']->widget($form['dueDate']) ?>
             </div>
 
-            <input type="submit" />
+            <div>
+                <?php echo $view['form']->widget($form['save']) ?>
+            </div>
 
         <?php echo $view['form']->end($form) ?>
 
@@ -1408,7 +1412,7 @@ renders the form:
 
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
 
-        {{ form(form) }}
+        <!-- ... render the form -->
 
     .. code-block:: html+php
 
@@ -1417,7 +1421,7 @@ renders the form:
 
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
 
-        <?php echo $view['form']->form($form) ?>
+        <!-- ... render the form -->
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
@@ -1856,7 +1860,7 @@ There's still much more to learn about the powerful world of forms, such as
 how to handle
 :doc:`file uploads with Doctrine </cookbook/doctrine/file_uploads>` or how
 to create a form where a dynamic number of sub-forms can be added (e.g. a
-todo list where you can keep adding more fields via Javascript before submitting).
+todo list where you can keep adding more fields via JavaScript before submitting).
 See the cookbook for these topics. Also, be sure to lean on the
 :doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.

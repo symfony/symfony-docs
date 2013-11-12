@@ -30,7 +30,7 @@ on top of the previous one.
 
 The deepest level is the :namespace:`Symfony\\Component\\HttpFoundation`
 component. HttpFoundation provides the main objects needed to deal with HTTP.
-It is an Object-Oriented abstraction of some native PHP functions and
+It is an object-oriented abstraction of some native PHP functions and
 variables:
 
 * The :class:`Symfony\\Component\\HttpFoundation\\Request` class abstracts
@@ -417,9 +417,16 @@ and set a new ``Exception`` object, or do nothing::
 
         return new Response(
             'Error',
-            404 // ignored,
-            array('X-Status-Code' => 200)
+            Response::HTTP_NOT_FOUND, // ignored
+            array('X-Status-Code' => Response::HTTP_OK)
         );
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was added in Symfony 2.4.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
 .. index::
    single: Event Dispatcher
@@ -430,10 +437,6 @@ The Event Dispatcher
 The event dispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
 see the :doc:`Event Dispatcher Component Documentation </components/event_dispatcher/introduction>`.
-
-.. seealso::
-
-    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
 .. index::
    single: Profiler
@@ -589,20 +592,20 @@ the configuration for the development environment:
 
         // load the profiler
         $container->loadFromExtension('framework', array(
-            'profiler' => array('only-exceptions' => false),
+            'profiler' => array('only_exceptions' => false),
         ));
 
         // enable the web profiler
         $container->loadFromExtension('web_profiler', array(
             'toolbar'             => true,
-            'intercept-redirects' => true,
+            'intercept_redirects' => true,
             'verbose'             => true,
         ));
 
-When ``only-exceptions`` is set to ``true``, the profiler only collects data
+When ``only_exceptions`` is set to ``true``, the profiler only collects data
 when an exception is thrown by the application.
 
-When ``intercept-redirects`` is set to ``true``, the web profiler intercepts
+When ``intercept_redirects`` is set to ``true``, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
 
@@ -640,7 +643,7 @@ If you enable the web profiler, you also need to mount the profiler routes:
         );
 
 As the profiler adds some overhead, you might want to enable it only under
-certain circumstances in the production environment. The ``only-exceptions``
+certain circumstances in the production environment. The ``only_exceptions``
 settings limits profiling to 500 pages, but what if you want to get
 information when the client IP comes from a specific address, or for a limited
 portion of the website? You can use a Profiler Matcher, learn more about that

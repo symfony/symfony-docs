@@ -278,11 +278,14 @@ interface to construct the response that needs to be returned to the client::
     $response = new Response();
 
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
-    $response->setStatusCode(200);
+    $response->setStatusCode(Response::HTTP_OK);
     $response->headers->set('Content-Type', 'text/html');
 
     // prints the HTTP headers followed by the content
     $response->send();
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
@@ -364,6 +367,7 @@ on that value. This can get ugly quickly::
     // index.php
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 
@@ -372,7 +376,7 @@ on that value. This can get ugly quickly::
     } elseif ($path == '/contact') {
         $response = new Response('Contact us');
     } else {
-        $response = new Response('Page not found.', 404);
+        $response = new Response('Page not found.', Response::HTTP_NOT_FOUND);
     }
     $response->send();
 
@@ -479,7 +483,7 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
 
 In this very simple example, the controller simply creates a
 :class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
-``<h1>Contact us! </h1>``. In the :doc:`controller chapter </book/controller>`,
+``<h1>Contact us!</h1>``. In the :doc:`controller chapter </book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -524,14 +528,14 @@ regardless of how your project is developed. To name a few:
 * `Form`_ - A full-featured and flexible framework for creating forms and
   handling form submissions;
 
-* `Validator`_ A system for creating rules about data and then validating
+* `Validator`_ - A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* :doc:`ClassLoader </components/class_loader/introduction>` An autoloading library that allows
+* :doc:`ClassLoader </components/class_loader/introduction>` - An autoloading library that allows
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
-* :doc:`Templating </components/templating/introduction>` A toolkit for rendering
+* :doc:`Templating </components/templating/introduction>` - A toolkit for rendering
   templates, handling template inheritance (i.e. a template is decorated with
   a layout) and performing other common template tasks;
 

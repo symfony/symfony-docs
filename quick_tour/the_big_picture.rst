@@ -232,7 +232,10 @@ controller might create the response by hand, based on the request::
 
     $name = $request->query->get('name');
 
-    return new Response('Hello '.$name, 200, array('Content-Type' => 'text/plain'));
+    return new Response('Hello '.$name, Response::HTTP_OK, array('Content-Type' => 'text/plain'));
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 .. note::
 
@@ -421,7 +424,7 @@ When loaded and enabled (by default in the ``dev`` :ref:`environment<quick-tour-
 the Profiler provides a web interface for a *huge* amount of information recorded
 on each request, including logs, a timeline of the request, GET or POST parameters,
 security details, database queries and more!
- 
+
 Of course, it would be unwise to have these tools enabled when you deploy
 your application, so by default, the profiler is not enabled in the ``prod``
 environment.

@@ -167,6 +167,8 @@ and tag it as a "security.voter":
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
 
+.. _security-voters-change-strategy:
+
 Changing the Access Decision Strategy
 -------------------------------------
 
@@ -212,3 +214,8 @@ application configuration file with the following code.
 
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
+
+.. seealso::
+
+    For a more advanced usage see
+    :ref:`components-security-access-decision-manager`.

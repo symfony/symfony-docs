@@ -29,7 +29,7 @@ Functions
 | ``render(path('route', {params}))``                |                                                                                            |
 | ``render(url('route', {params}))``                 |                                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``render_esi(controller('B:C:a', {params}))``      | This will generates an ESI tag when possible or fallback to the ``render``                 |
+| ``render_esi(controller('B:C:a', {params}))``      | This will generate an ESI tag when possible or fallback to the ``render``                  |
 | ``render_esi(url('route', {params}))``             | behavior otherwise. For more information, see :ref:`templating-embedding-controller`.      |
 | ``render_esi(path('route', {params}))``            |                                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
@@ -82,25 +82,28 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``logout_path(key)``                               | This will generate the relative logout URL for the given firewall                          |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``logout_url(key)``                                | Equal to ``logout_path(...)`` but this will generate an absolute url                       |
+| ``logout_url(key)``                                | Equal to ``logout_path(...)`` but this will generate an absolute URL                       |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``path(name, parameters = {})``                    | Get a relative url for the given route, more information in                                |
+| ``path(name, parameters = {})``                    | Get a relative URL for the given route, more information in                                |
 |                                                    | ":ref:`book-templating-pages`".                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute url                                    |
+| ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute URL                                    |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 
 Filters
 -------
 
+.. versionadded:: 2.1
+    The ``humanize`` filter was added in Symfony 2.1
+
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Filter Syntax                                                                   | Usage                                                             |
 +=================================================================================+===================================================================+
 | ``text|humanize``                                                               | Makes a technical name human readable (replaces underscores by    |
-|                                                                                 | spaces and capitalizes the string)                                |
+|                                                                                 | spaces and capitalizes the string).                               |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|trans(arguments = {}, domain = 'messages', locale = null)``              | This will translate the text into the current language, more      |
-|                                                                                 | information in .                                                  |
+|                                                                                 | information in                                                    |
 |                                                                                 | :ref:`Translation Filters <book-translation-filters>`.            |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|transchoice(count, arguments = {}, domain = 'messages', locale = null)`` | This will translate the text with pluralization, more information |
@@ -172,8 +175,8 @@ Global Variables
 +-------------------------------------------------------+------------------------------------------------------------------------------------+
 | Variable                                              | Usage                                                                              |
 +=======================================================+====================================================================================+
-| ``app`` *Attributes*: ``app.user``, ``app.request``   | The ``app`` variable is available everywhere, and gives you quick                  |
-| ``app.session``, ``app.environment``, ``app.debug``   | access to many commonly needed objects. The ``app`` variable is                    |
+| ``app`` *Attributes*: ``app.user``, ``app.request``,  | The ``app`` variable is available everywhere, and gives you quick                  |
+| ``app.session``, ``app.environment``, ``app.debug``,  | access to many commonly needed objects. The ``app`` variable is                    |
 | ``app.security``                                      | instance of :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables` |
 +-------------------------------------------------------+------------------------------------------------------------------------------------+
 
@@ -183,12 +186,11 @@ Symfony Standard Edition Extensions
 The Symfony Standard Edition adds some bundles to the Symfony2 Core Framework.
 Those bundles can have other Twig extensions:
 
-* **Twig Extension** includes all extensions that do not belong to the
-  Twig core but can be interesting. You can read more in 
-  `the official Twig Extensions documentation`_
+* **Twig Extensions** includes some interesting extensions that do not belong to the
+  Twig core. You can read more in `the official Twig Extensions documentation`_;
 * **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and 
   ``{% image %}`` tags. You can read more about them in 
-  :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`;
+  :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
 
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html
 .. _`http://twig.sensiolabs.org/documentation`: http://twig.sensiolabs.org/documentation

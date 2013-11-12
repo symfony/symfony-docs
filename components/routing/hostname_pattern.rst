@@ -60,31 +60,23 @@ You can also match on the HTTP *host* of the incoming request.
 Both routes match the same path ``/``, however the first one will match
 only if the host is ``m.example.com``.
 
-Placeholders and Requirements in Hostname Patterns
---------------------------------------------------
+Using Placeholders
+------------------
 
-If you're using the :doc:`DependencyInjection Component </components/dependency_injection/index>`
-(or the full Symfony2 Framework), then you can use
-:ref:`service container parameters <book-service-container-parameters>` as
-variables anywhere in your routes.
-
-You can avoid hardcoding the domain name by using a placeholder and a requirement.
-The ``%domain%`` in requirements is replaced by the value of the ``domain``
-dependency injection container parameter.
+The host option uses the same syntax as the path matching system. This means
+you can use placeholders in your hostname:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        mobile_homepage:
+        projects_homepage:
             path:     /
-            host:     m.{domain}
+            host:     "{project_name}.example.com"
             defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
-            requirements:
-                domain: %domain%
 
         homepage:
-            path:  /
+            path:     /
             defaults: { _controller: AcmeDemoBundle:Main:homepage }
 
     .. code-block:: xml
@@ -93,11 +85,71 @@ dependency injection container parameter.
 
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd"
+        >
 
-            <route id="mobile_homepage" path="/" host="m.example.com">
+            <route id="projects_homepage" path="/" host="{project_name}.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
-                <requirement key="domain">%domain%</requirement>
+            </route>
+
+            <route id="homepage" path="/">
+                <default key="_controller">AcmeDemoBundle:Main:homepage</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('project_homepage', new Route('/', array(
+            '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
+        ), array(), array(), '{project_name}.example.com'));
+
+        $collection->add('homepage', new Route('/', array(
+            '_controller' => 'AcmeDemoBundle:Main:homepage',
+        )));
+
+        return $collection;
+
+You can also set requirements and default options for these placeholders. For
+instance, if you want to match both ``m.example.com`` and
+``mobile.example.com``, you use this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        mobile_homepage:
+            path:     /
+            host:     "{subdomain}.example.com"
+            defaults: 
+                _controller: AcmeDemoBundle:Main:mobileHomepage
+                subdomain: m
+            requirements:
+                subdomain: m|mobile
+
+        homepage:
+            path:     /
+            defaults: { _controller: AcmeDemoBundle:Main:homepage }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd"
+        >
+
+            <route id="mobile_homepage" path="/" host="{subdomain}.example.com">
+                <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
+                <default key="subdomain">m</default>
+
+                <requirement key="subdomain">m|mobile</requirement>
             </route>
 
             <route id="homepage" path="/">
@@ -113,9 +165,10 @@ dependency injection container parameter.
         $collection = new RouteCollection();
         $collection->add('mobile_homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
+            'subdomain'   => 'm',
         ), array(
-            'domain' => '%domain%',
-        ), array(), 'm.{domain}'));
+            'subdomain' => 'm|mobile',
+        ), array(), '{subdomain}.example.com'));
 
         $collection->add('homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:homepage',
@@ -123,12 +176,74 @@ dependency injection container parameter.
 
         return $collection;
 
+.. tip::
+
+    Make sure you also include a default option for the ``subdomain``
+    placeholder, otherwise you need to include the subdomains value each time
+    you generate the route.
+
+.. sidebar:: Using Service Parameters
+
+    You can also use service parameters if you do not want to hardcode the
+    hostname:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            mobile_homepage:
+                path:     /
+                host:     "m.{domain}"
+                defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
+                requirements:
+                    domain: "%domain%"
+
+            homepage:
+                path:  /
+                defaults: { _controller: AcmeDemoBundle:Main:homepage }
+
+        .. code-block:: xml
+
+            <?xml version="1.0" encoding="UTF-8" ?>
+
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <route id="mobile_homepage" path="/" host="m.example.com">
+                    <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
+                    <requirement key="domain">%domain%</requirement>
+                </route>
+
+                <route id="homepage" path="/">
+                    <default key="_controller">AcmeDemoBundle:Main:homepage</default>
+                </route>
+            </routes>
+
+        .. code-block:: php
+
+            use Symfony\Component\Routing\RouteCollection;
+            use Symfony\Component\Routing\Route;
+
+            $collection = new RouteCollection();
+            $collection->add('mobile_homepage', new Route('/', array(
+                '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
+            ), array(
+                'domain' => '%domain%',
+            ), array(), 'm.{domain}'));
+
+            $collection->add('homepage', new Route('/', array(
+                '_controller' => 'AcmeDemoBundle:Main:homepage',
+            )));
+
+            return $collection;
+
 .. _component-routing-host-imported:
 
-Adding a Host Regex to Imported Routes
---------------------------------------------
+Using Host Matching of Imported Routes
+--------------------------------------
 
-You can set a host regex on imported routes:
+You can also set the host option on imported routes:
 
 .. configuration-block::
 

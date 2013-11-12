@@ -565,8 +565,8 @@ Otherwise the result is a clean array of configuration values::
     $configs = array($config1, $config2);
 
     $processor = new Processor();
-    $configuration = new DatabaseConfiguration;
+    $configuration = new DatabaseConfiguration();
     $processedConfiguration = $processor->processConfiguration(
         $configuration,
-        $configs)
-    ;
+        $configs
+    );

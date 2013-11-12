@@ -12,8 +12,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/CssSelector);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/CssSelector).
 
 Usage
 -----
@@ -32,8 +32,8 @@ long and unwieldy expressions.
 
 Many developers -- particularly web developers -- are more comfortable
 using CSS selectors to find elements. As well as working in stylesheets,
-CSS selectors are used in Javascript with the ``querySelectorAll`` function
-and in popular Javascript libraries such as jQuery, Prototype and MooTools.
+CSS selectors are used in JavaScript with the ``querySelectorAll`` function
+and in popular JavaScript libraries such as jQuery, Prototype and MooTools.
 
 CSS selectors are less powerful than XPath, but far easier to write, read
 and understand. Since they are less powerful, almost all CSS selectors can

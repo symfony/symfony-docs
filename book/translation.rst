@@ -534,7 +534,7 @@ locale via routing.
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the locale hasn't been set explicitly in the session, the ``fallback_locale``
+If the locale hasn't been set explicitly in the session, the ``fallback``
 configuration parameter will be used by the ``Translator``. The parameter
 defaults to ``en`` (see `Configuration`_).
 

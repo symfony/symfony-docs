@@ -153,17 +153,20 @@ set an authenticated token in the security context if successful.
 
                 // Deny authentication with a '403 Forbidden' HTTP response
                 $response = new Response();
-                $response->setStatusCode(403);
+                $response->setStatusCode(Response::HTTP_FORBIDDEN);
                 $event->setResponse($response);
 
             }
 
             // By default deny authorization
             $response = new Response();
-            $response->setStatusCode(403);
+            $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $event->setResponse($response);
         }
     }
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 This listener checks the request for the expected `X-WSSE` header, matches
 the value returned for the expected WSSE information, creates a token using
