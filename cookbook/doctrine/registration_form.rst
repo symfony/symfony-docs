@@ -306,12 +306,12 @@ Next, update your routes. If you're placing your routes inside your bundle
 
         # src/Acme/AccountBundle/Resources/config/routing.yml
         account_register:
-           pattern:  /register
-           defaults: { _controller: AcmeAccountBundle:Account:register }
+            path:     /register
+            defaults: { _controller: AcmeAccountBundle:Account:register }
    
         account_create:
-           pattern:  /register/create
-           defaults: { _controller: AcmeAccountBundle:Account:create }
+            path:     /register/create
+            defaults: { _controller: AcmeAccountBundle:Account:create }
 
     .. code-block:: xml
 

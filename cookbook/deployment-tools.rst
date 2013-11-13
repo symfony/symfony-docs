@@ -84,7 +84,7 @@ B) Update your vendors
 Your vendors can be updated before transferring your source code (i.e.
 update the ``vendor/`` directory, then transfer that with your source
 code) or afterwards on the server. Either way, just update your vendors
-as your normally do:
+as you normally do:
 
 .. code-block:: bash
 

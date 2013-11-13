@@ -558,7 +558,7 @@ Or::
 
 Or::
 
-    $response = $dispatcher->dispatch('bar.event', new BarEvent())->getBar();
+    $bar = $dispatcher->dispatch('bar.event', new BarEvent())->getBar();
 
 and so on...
 

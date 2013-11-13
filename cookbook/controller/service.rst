@@ -112,13 +112,13 @@ the route ``_controller`` value:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello
+            path:         /hello
             defaults:     { _controller: acme.hello.controller:indexAction }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello">
+        <route id="hello" path="/hello">
             <default key="_controller">acme.hello.controller:indexAction</default>
         </route>
 

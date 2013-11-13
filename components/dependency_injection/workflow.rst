@@ -64,7 +64,7 @@ Compiler passes to allow Interaction between Bundles
 :ref:`Compiler passes <components-dependency-injection-compiler-passes>` are
 used to allow interaction between different bundles as they cannot affect
 each other's configuration in the extension classes. One of the main uses is
-to process tagged services, allowing bundles to register services to picked
+to process tagged services, allowing bundles to register services to be picked
 up by other bundles, such as Monolog loggers, Twig extensions and Data Collectors
 for the Web Profiler. Compiler passes are usually placed in the bundle's
 ``DependencyInjection/Compiler`` directory.

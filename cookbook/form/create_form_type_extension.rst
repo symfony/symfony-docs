@@ -163,13 +163,13 @@ database)::
         // ...
 
         /**
-         * Get the image url
+         * Get the image URL
          *
          * @return null|string
          */
         public function getWebPath()
         {
-            // ... $webPath being the full image url, to be used in templates
+            // ... $webPath being the full image URL, to be used in templates
 
             return $webPath;
         }
@@ -181,11 +181,11 @@ the ``file`` form type:
 #. Override the ``setDefaultOptions`` method in order to add an image_path
    option;
 #. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
-   url to the view.
+   URL to the view.
 
 The logic is the following: when adding a form field of type ``file``,
 you will be able to specify a new option: ``image_path``. This option will
-tell the file field how to get the actual image url in order to display
+tell the file field how to get the actual image URL in order to display
 it in the view::
 
     // src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
@@ -220,7 +220,7 @@ it in the view::
         }
 
         /**
-         * Pass the image url to the view
+         * Pass the image URL to the view
          *
          * @param FormView $view
          * @param FormInterface $form

@@ -178,7 +178,7 @@ a 403 Response is returned.
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`
     class, is a very useful base class which provides commonly needed functionality
     for security extensions. This includes maintaining the token in the session,
-    providing success / failure handlers, login form urls, and more. As WSSE
+    providing success / failure handlers, login form URLs, and more. As WSSE
     does not require maintaining authentication sessions or login forms, it
     won't be used for this example.
 

@@ -40,12 +40,12 @@ Now, if you use the helper, everything will be prefixed with ``/foo/bar``:
 Absolute Urls
 -------------
 
-You can also specify a url to use in the second parameter of the constructor::
+You can also specify a URL to use in the second parameter of the constructor::
 
     // ...
     $templateEngine->set(new AssetsHelper(null, 'http://cdn.example.com/'));
 
-Now urls are rendered like ``http://cdn.example.com/images/logo.png``.
+Now URLs are rendered like ``http://cdn.example.com/images/logo.png``.
 
 Versioning
 ----------
@@ -57,7 +57,7 @@ can be specified in the third argument::
     // ...
     $templateEngine->set(new AssetsHelper(null, null, '328rad75'));
 
-Now, every url is suffixed with ``?328rad75``. If you want to have a different
+Now, every URL is suffixed with ``?328rad75``. If you want to have a different
 format, you can specify the new format in fourth argument. It's a string that
 is used in :phpfunction:`sprintf`. The first argument is the path and the
 second is the version. For instance, ``%s?v=%s`` will be rendered as

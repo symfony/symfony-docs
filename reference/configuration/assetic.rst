@@ -1,8 +1,8 @@
 .. index::
    pair: Assetic; Configuration reference
 
-AsseticBundle Configuration Reference
-=====================================
+AsseticBundle Configuration ("assetic")
+=======================================
 
 Full Default Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

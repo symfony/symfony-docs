@@ -18,7 +18,7 @@ starting one allowing you to test your code without complications. You may also
 run multiple instances in the same PHP process.
 
 The mock storage drivers do not read or write the system globals
-`session_id()` or `session_name()`. Methods are provided to simulate this if
+``session_id()`` or ``session_name()``. Methods are provided to simulate this if
 required:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getId`: Gets the

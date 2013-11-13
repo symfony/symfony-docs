@@ -5,7 +5,7 @@ How to use Gmail to send Emails
 ===============================
 
 During development, instead of using a regular SMTP server to send emails, you
-might find using Gmail easier and more practical. The Swiftmailer bundle makes
+might find using Gmail easier and more practical. The ``SwiftmailerBundle`` makes
 it really easy.
 
 .. tip::
