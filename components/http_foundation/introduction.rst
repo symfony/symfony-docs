@@ -322,7 +322,7 @@ Sending the response to the client is then as simple as calling
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
-The response cookies can be manipulated though the ``headers`` public
+The response cookies can be manipulated through the ``headers`` public
 attribute::
 
     use Symfony\Component\HttpFoundation\Cookie;

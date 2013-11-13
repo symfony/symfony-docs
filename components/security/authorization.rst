@@ -26,7 +26,7 @@ An authorization decision will always be based on a few things:
     Each attribute stands for a certain right the user should have, e.g.
     ``ROLE_ADMIN`` to make sure the user is an administrator.
 * An object (optional)
-    Any object on which for which access control needs to be checked, like
+    Any object for which access control needs to be checked, like
     an article or a comment object.
 
 .. _components-security-access-decision-manager:

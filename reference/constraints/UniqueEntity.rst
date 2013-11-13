@@ -167,8 +167,8 @@ errorPath
 .. versionadded:: 2.1
     The ``errorPath`` option was added in Symfony 2.1.
 
-If the entity violates constraint the error message is bound to the first
-field in `fields`_. If there are more than one fields, you may want to map
+If the entity violates the constraint the error message is bound to the first
+field in `fields`_. If there is more than one field, you may want to map
 the error message to another field.
 
 Consider this example:

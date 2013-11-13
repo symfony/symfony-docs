@@ -202,7 +202,7 @@ you need is the JavaScript:
     is automatically available on the ``data-prototype`` attribute of the
     element (e.g. ``div`` or ``table``) that surrounds your collection. The
     only difference is that the entire "form row" is rendered for you, meaning
-    you wouldn't have to wrap it in any container element as was done
+    you wouldn't have to wrap it in any container element as it was done
     above.
 
 Field Options

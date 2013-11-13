@@ -77,6 +77,11 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
             }
         }
 
+.. caution::
+
+    When using YAML, be sure to surround ``Null`` with quotes (``'Null'``)
+    or else YAML will convert this into a ``null`` value.
+
 Options
 -------
 
