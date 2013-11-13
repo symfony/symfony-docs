@@ -61,7 +61,7 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
-* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below <component-foundation-attributes>`)
+* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below <component-foundation-attributes>`);
 
 * ``files``: equivalent of ``$_FILES``;
 
@@ -109,7 +109,7 @@ methods to retrieve and update its data:
   parameter by name;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`: Returns
-  true if the parameter is defined;
+  ``true`` if the parameter is defined;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`: Removes
   a parameter.
@@ -351,7 +351,7 @@ Sending the response to the client is then as simple as calling
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
-The response cookies can be manipulated though the ``headers`` public
+The response cookies can be manipulated through the ``headers`` public
 attribute::
 
     use Symfony\Component\HttpFoundation\Cookie;
@@ -484,7 +484,7 @@ whether or not the ``X-Sendfile-Type`` header should be trusted and call
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
 if it should::
 
-    $response::trustXSendfileTypeHeader();
+    BinaryFileResponse::trustXSendfileTypeHeader();
 
 You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
 

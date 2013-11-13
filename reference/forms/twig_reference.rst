@@ -48,7 +48,7 @@ the other helpers to render individual parts of the form instead:
         {{ form_row(form.name) }}
         {{ form_row(form.dueDate) }}
 
-        <input type="submit" value="Submit me"/>
+        {{ form_row(form.submit, { 'label': 'Submit me' }) }}
     {{ form_end(form) }}
 
 .. _reference-forms-twig-start:

@@ -178,7 +178,7 @@ that will invalidate the cache for a given resource:
 Routing and X-FORWARDED Headers
 -------------------------------
 
-To ensure that the Symfony Router generates urls correctly with Varnish,
+To ensure that the Symfony Router generates URLs correctly with Varnish,
 proper ```X-Forwarded``` headers must be added so that Symfony is aware of
 the original port number of the request. Exactly how this is done depends
 on your setup. As a simple example, Varnish and your web server are on the

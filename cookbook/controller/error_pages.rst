@@ -63,7 +63,7 @@ end-user, create a new template located at
 .. tip::
 
     If you're not familiar with Twig, don't worry. Twig is a simple, powerful
-    and optional templating engine that integrates with ``Symfony2``. For more
+    and optional templating engine that integrates with Symfony2. For more
     information about Twig see :doc:`/book/templating`.
 
 In addition to the standard HTML error page, Symfony provides a default error

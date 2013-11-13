@@ -77,7 +77,7 @@ The ``vendor/`` directory is basically equivalent to the ``lib/vendor/``
 directory in symfony1, which was the conventional directory for all vendor
 libraries and bundles. By default, you'll find the Symfony2 library files in
 this directory, along with several other dependent libraries such as Doctrine2,
-Twig and Swiftmailer. 3rd party Symfony2 bundles live somewhere in the
+Twig and Swift Mailer. 3rd party Symfony2 bundles live somewhere in the
 ``vendor/``.
 
 The ``web/`` Directory

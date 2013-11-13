@@ -104,7 +104,7 @@ listeners to the events discussed below::
     // by dispatching events, calling a controller, and returning the response
     $response = $kernel->handle($request);
 
-    // echo the content and send the headers
+    // send the headers and echo the content
     $response->send();
 
     // triggers the kernel.terminate event
@@ -461,7 +461,7 @@ because it occurs *after* the ``HttpKernel::handle`` method, and after the
 response is sent to the user. Recall from above, then the code that uses
 the kernel, ends like this::
 
-    // echo the content and send the headers
+    // send the headers and echo the content
     $response->send();
 
     // triggers the kernel.terminate event

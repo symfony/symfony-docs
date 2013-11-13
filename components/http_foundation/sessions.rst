@@ -62,24 +62,24 @@ as follows divided into a couple of groups.
 Session workflow
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`:
-  Starts the session - do not use ``session_start()``.
+  Starts the session - do not use ``session_start()``;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
   Regenerates the session ID - do not use ``session_regenerate_id()``.
   This method can optionally change the lifetime of the new cookie that will
-  be emitted by calling this method.
+  be emitted by calling this method;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
-  Clears all session data and regenerates session ID. Do not use ``session_destroy()``.
+  Clears all session data and regenerates session ID. Do not use ``session_destroy()``;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
-  session ID. Do not use ``session_id()``.
+  session ID. Do not use ``session_id()``;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`: Sets the
-  session ID. Do not use ``session_id()``.
+  session ID. Do not use ``session_id()``;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getName`: Gets the
-  session name. Do not use ``session_name()``.
+  session name. Do not use ``session_name()``;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setName`: Sets the
   session name. Do not use ``session_name()``.
@@ -99,23 +99,23 @@ Session attributes
   Returns true if the attribute exists;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`:
-  Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+  Sets multiple attributes at once: takes a keyed array and sets each key => value pair;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`:
   Deletes an attribute by key;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`:
-  Clear all attributes;
+  Clear all attributes.
 
 The attributes are stored internally in an "Bag", a PHP object that acts like
 an array. A few methods exist for "Bag" management:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`:
-  Registers a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`
+  Registers a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getBag`:
   Gets a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
-  bag name.
+  bag name;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`:
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
@@ -238,7 +238,7 @@ would be displayed immediately on the subsequent page load for that session.
 This is however just one application for flash messages.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\AutoExpireFlashBag`
-   This implementation messages set in one page-load will
+   In this implementation, messages set in one page-load will
    be available for display only on the next page load. These messages will auto
    expire regardless of if they are retrieved or not.
 
@@ -302,7 +302,7 @@ Examples of setting multiple flashes::
     $session->getFlashBag()->add('error', 'Failed to update name');
     $session->getFlashBag()->add('error', 'Another error');
 
-Displaying the flash messages might look like this:
+Displaying the flash messages might look as follows.
 
 Simple, display one type of message::
 

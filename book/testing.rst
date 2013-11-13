@@ -703,7 +703,7 @@ The Client used by functional tests creates a Kernel that runs in a special
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
 
-For example, by default, the swiftmailer is configured to *not* actually
+For example, by default, the Swift Mailer is configured to *not* actually
 deliver emails in the ``test`` environment. You can see this under the ``swiftmailer``
 configuration option:
 

@@ -13,7 +13,7 @@ This field has different options on how to handle input values that aren't
 integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6).
 
 +-------------+-----------------------------------------------------------------------+
-| Rendered as | ``input`` ``text`` field                                              |
+| Rendered as | ``input`` ``number`` field                                            |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `rounding_mode`_                                                    |
 |             | - `precision`_                                                        |

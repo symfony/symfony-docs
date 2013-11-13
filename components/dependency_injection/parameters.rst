@@ -60,7 +60,7 @@ One use for this is to inject the values into your services. This allows
 you to configure different versions of services between applications or multiple
 services based on the same class but configured differently within a single
 application. You could inject the choice of mail transport into the ``Mailer``
-class directly but by making it a parameter. This makes it easier to change
+class directly. But declaring it as a parameter makes it easier to change
 rather than being tied up and hidden with the service definition:
 
 .. configuration-block::
@@ -343,7 +343,7 @@ Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
     converted into the string ``"@mailer"`` instead of referencing the
     ``mailer`` service.
 
-Xml
+XML
 ~~~
 
 In XML, use the ``service`` type. The behavior if the service does not exist
@@ -352,7 +352,7 @@ is thrown. Valid values for ``on-invalid`` are ``null`` (uses ``null`` in place
 of the missing service) or ``ignored`` (very similar, except if used on a
 method call, the method call is removed).
 
-Php
+PHP
 ~~~
 
 In PHP, you can use the
