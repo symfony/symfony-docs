@@ -4,7 +4,7 @@
 How to change the Default Target Path Behavior
 ==============================================
 
-By default, the security component retains the information of the last request
+By default, the Security component retains the information of the last request
 URI in a session variable named ``_security.main.target_path`` (with ``main`` being
 the name of the firewall, defined in ``security.yml``). Upon a successful
 login, the user is redirected to this path, as to help her continue from the

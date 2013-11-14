@@ -4,7 +4,7 @@
 The Firewall and Security Context
 =================================
 
-Central to the Security Component is the security context, which is an instance
+Central to the Security component is the security context, which is an instance
 of :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`. When all
 steps in the process of authenticating the user have been taken successfully,
 you can ask the security context if the authenticated user has access to a
@@ -74,7 +74,7 @@ with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKe
     $dispatcher->addListener(KernelEvents::REQUEST, array($firewall, 'onKernelRequest');
 
 The firewall is registered to listen to the ``kernel.request`` event that
-will be dispatched by the ``HttpKernel`` at the beginning of each request
+will be dispatched by the HttpKernel at the beginning of each request
 it processes. This way, the firewall may prevent the user from going any
 further than allowed.
 

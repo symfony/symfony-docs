@@ -31,7 +31,7 @@ the service container makes writing good code so easy.
 .. tip::
 
     If you want to know a lot more after reading this chapter, check out
-    the :doc:`Dependency Injection Component Documentation </components/dependency_injection/introduction>`.
+    the :doc:`DependencyInjection component documentation </components/dependency_injection/introduction>`.
 
 .. index::
    single: Service Container; What is a service?

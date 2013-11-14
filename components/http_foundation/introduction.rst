@@ -6,7 +6,7 @@
 The HttpFoundation Component
 ============================
 
-    The HttpFoundation Component defines an object-oriented layer for the HTTP
+    The HttpFoundation component defines an object-oriented layer for the HTTP
     specification.
 
 In PHP, the request is represented by some global variables (``$_GET``,

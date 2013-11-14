@@ -1,5 +1,5 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
 How to customize a Method Behavior without using Inheritance
 ============================================================

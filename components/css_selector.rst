@@ -5,7 +5,7 @@
 The CssSelector Component
 =========================
 
-    The CssSelector Component converts CSS selectors to XPath expressions.
+    The CssSelector component converts CSS selectors to XPath expressions.
 
 Installation
 ------------
@@ -41,8 +41,8 @@ be converted to an XPath equivalent. This XPath expression can then be used
 with other functions and classes that use XPath to find elements in a
 document.
 
-The ``CssSelector`` component
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The CssSelector component
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The component's only goal is to convert CSS selectors to their XPath
 equivalents::
@@ -63,7 +63,7 @@ You can use this expression with, for instance, :phpclass:`DOMXPath` or
 .. tip::
 
     The :method:`Crawler::filter() <Symfony\\Component\\DomCrawler\\Crawler::filter>` method
-    uses the ``CssSelector`` component to find elements based on a CSS selector
+    uses the CssSelector component to find elements based on a CSS selector
     string. See the :doc:`/components/dom_crawler` for more details.
 
 Limitations of the CssSelector component

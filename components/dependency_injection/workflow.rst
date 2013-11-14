@@ -12,9 +12,9 @@ Symfony2 full stack framework will help you see how this all fits together,
 whether you are using the full stack framework or looking to use the service
 container in another application.
 
-The full stack framework uses the ``HttpKernel`` component to manage the loading
+The full stack framework uses the HttpKernel component to manage the loading
 of the service container configuration from the application and bundles and
-also handles the compilation and caching. Even if you are not using ``HttpKernel``,
+also handles the compilation and caching. Even if you are not using HttpKernel,
 it should give you an idea of one way of organizing configuration in a modular
 application.
 
@@ -22,7 +22,7 @@ Working with cached Container
 -----------------------------
 
 Before building it, the kernel checks to see if a cached version of the container
-exists. The ``HttpKernel`` has a debug setting and if this is false, the
+exists. The HttpKernel has a debug setting and if this is false, the
 cached version is used if it exists. If debug is true then the kernel
 :doc:`checks to see if configuration is fresh </components/config/caching>`
 and if it is, the cached version of the container is used. If not then the container

@@ -30,7 +30,7 @@ In this chapter, you'll learn how to prepare an application to support multiple
 locales and then how to create translations for multiple locales. Overall,
 the process has several common steps:
 
-#. Enable and configure Symfony's ``Translation`` component;
+#. Enable and configure Symfony's Translation component;
 
 #. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
 
