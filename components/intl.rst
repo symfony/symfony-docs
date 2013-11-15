@@ -66,7 +66,7 @@ code::
     The intl extension internally uses the `ICU library`_ to obtain localization
     data such as number formats in different languages, country names and more.
     To make this data accessible to userland PHP libraries, Symfony2 ships a copy
-    in the `ICU component`_.
+    in the `Icu component`_.
 
     Depending on the ICU version compiled with your intl extension, a matching
     version of that component needs to be installed. It sounds complicated,
@@ -87,7 +87,7 @@ code::
 
     For example, consider that your development machines ship ICU 4.8 and the server
     ICU 4.2. When you run ``php composer.phar update`` on the development machine, version
-    1.2.* of the ICU component will be installed. But after deploying the
+    1.2.* of the Icu component will be installed. But after deploying the
     application, ``php composer.phar install`` will fail with the following error:
 
     .. code-block:: bash
@@ -102,7 +102,7 @@ code::
               library icu has the wrong version installed or is missing from your
               system, make sure to have the extension providing it.
 
-    The error tells you that the requested version of the ICU component, version
+    The error tells you that the requested version of the Icu component, version
     1.2, is not compatible with PHP's ICU version 4.2.
 
     One solution to this problem is to run ``php composer.phar update`` instead of
@@ -118,7 +118,7 @@ code::
         $ php -i | grep ICU
         ICU version => 4.2.1
 
-    Then fix the ICU component in your composer.json file to a matching version:
+    Then fix the Icu component in your ``composer.json`` file to a matching version:
 
     .. code-block:: json
 
@@ -408,7 +408,7 @@ to the current default locale::
 That's all you need to know for now. Have fun coding!
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
-.. _ICU component: https://packagist.org/packages/symfony/icu
+.. _Icu component: https://packagist.org/packages/symfony/icu
 .. _intl extension: http://www.php.net/manual/en/book.intl.php
 .. _install the intl extension: http://www.php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
