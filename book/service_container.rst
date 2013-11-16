@@ -763,8 +763,9 @@ Injecting the Request
     The ``request_stack`` service was introduced in version 2.4.
 
 As of Symfony 2.4, instead of injecting the ``request`` service, you should
-inject the ``request_stack`` service instead and access the Request by calling
-the ``getCurrentRequest()`` method:
+inject the ``request_stack`` service and access the ``Request`` by calling
+the :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
+method::
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -830,7 +831,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
             array(new Reference('request_stack'))
         ));
 
-.. sidebar: Why not Inject the request Service?
+.. sidebar:: Why not Inject the ``request`` Service?
 
     Almost all Symfony2 built-in services behave in the same way: a single
     instance is created by the container which it returns whenever you get it or
