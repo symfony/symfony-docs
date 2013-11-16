@@ -16,7 +16,6 @@ Sphinx
   shorthand);
 * Inline hyperlinks are **not** used. Separate the link and their target
   definition, which you add on the bottom of the page;
-* You should use a form of *you* instead of *we*.
 
 Example
 ~~~~~~~
@@ -104,5 +103,17 @@ Example
     In Yaml you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
     but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
 
+Language Standards
+------------------
+
+* For sections, use the following rule for capitalization:
+  `Capitalization of the first word, and all other words, except for closed-class words`_:
+    The Vitamins are in my Fresh California Raisins
+* Do not use `Serial (Oxford) Commas`_;
+* You should use a form of *you* instead of *we* (i.e. avoid the first person
+  point of view: use the second instead).
+
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
+.. _`Capitalization of the first word, and all other words, except for closed-class words`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
+.. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma
