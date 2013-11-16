@@ -72,9 +72,9 @@ Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
 (and their orders) are:
 
-* **Configuration** (including services and routing): Yaml, Xml, Php
-* **Validation**: Yaml, Annotations, Xml, Php
-* **Doctrine Mapping**: Annotations, Yaml, Xml, Php
+* **Configuration** (including services and routing): YAML, XML, PHP
+* **Validation**: YAML, Annotations, XML, PHP
+* **Doctrine Mapping**: Annotations, YAML, XML, PHP
 
 Example
 ~~~~~~~
@@ -101,7 +101,7 @@ Example
 
 .. caution::
 
-    In Yaml you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
+    In YAML you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
     but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code

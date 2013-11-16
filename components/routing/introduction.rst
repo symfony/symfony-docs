@@ -265,7 +265,7 @@ other loaders that work the same way:
 * :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
 
 If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
-have to provide the name of a php file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
+have to provide the name of a PHP file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
 
     // RouteProvider.php
     use Symfony\Component\Routing\RouteCollection;

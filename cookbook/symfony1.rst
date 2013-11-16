@@ -262,7 +262,7 @@ Routing (``routing.yml``) and Configuration (``config.yml``)
 In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
 automatically loaded inside any plugin. In Symfony2, routing and application
 configuration inside a bundle must be included manually. For example, to
-include a routing resource from a bundle called ``AcmeDemoBundle``, you can
+include a routing resource from a bundle called AcmeDemoBundle, you can
 do the following:
 
 .. configuration-block::
@@ -296,7 +296,7 @@ do the following:
         return $collection;
 
 This will load the routes found in the ``Resources/config/routing.yml`` file
-of the ``AcmeDemoBundle``. The special ``@AcmeDemoBundle`` is a shortcut syntax
+of the AcmeDemoBundle. The special ``@AcmeDemoBundle`` is a shortcut syntax
 that, internally, resolves to the full path to that bundle.
 
 You can use this same strategy to bring in configuration from a bundle:

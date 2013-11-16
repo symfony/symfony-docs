@@ -255,8 +255,8 @@ looks up the value of each parameter and uses it in the service definition.
 .. note::
 
     If you want to use a string that starts with an ``@`` sign as a parameter
-    value (i.e. a very safe mailer password) in a yaml file, you need to escape
-    it by adding another ``@`` sign (This only applies to the YAML format):
+    value (i.e. a very safe mailer password) in a YAML file, you need to escape
+    it by adding another ``@`` sign (this only applies to the YAML format):
 
     .. code-block:: yaml
 

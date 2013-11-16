@@ -11,10 +11,10 @@ How to Create and store a Symfony2 Project in Subversion
 
 Once you've read through :doc:`/book/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. The
-preferred method to manage Symfony2 projects is using `git`_ but some prefer
+preferred method to manage Symfony2 projects is using `Git`_ but some prefer
 to use `Subversion`_ which is totally fine!. In this cookbook article, you'll
-learn how to manage your project using `svn`_ in a similar manner you
-would do with `git`_.
+learn how to manage your project using `SVN`_ in a similar manner you
+would do with `Git`_.
 
 .. tip::
 
@@ -105,7 +105,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
 .. tip::
 
-	If you rely on any "dev" versions, then git may be used to install
+	If you rely on any "dev" versions, then Git may be used to install
 	those libraries, since there is no archive available for download.
 
 At this point, you have a fully-functional Symfony2 project stored in your
@@ -128,7 +128,7 @@ to learn more about how to configure and develop inside your application.
 Subversion hosting solutions
 ----------------------------
 
-The biggest difference between `git`_ and `svn`_ is that Subversion *needs* a
+The biggest difference between `Git`_ and `SVN`_ is that Subversion *needs* a
 central repository to work. You then have several solutions:
 
 - Self hosting: create your own repository and access it either through the
@@ -137,10 +137,10 @@ central repository to work. You then have several solutions:
 
 - Third party hosting: there are a lot of serious free hosting solutions
   available like `GitHub`_, `Google code`_, `SourceForge`_ or `Gna`_. Some of them offer
-  git hosting as well.
+  Git hosting as well.
 
-.. _`git`: http://git-scm.com/
-.. _`svn`: http://subversion.apache.org/
+.. _`Git`: http://git-scm.com/
+.. _`SVN`: http://subversion.apache.org/
 .. _`Subversion`: http://subversion.apache.org/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/

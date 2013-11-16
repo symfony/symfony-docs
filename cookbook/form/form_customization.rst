@@ -915,7 +915,7 @@ form, modify the ``use`` tag and add the following:
         {% endif %}
     {% endblock %}
 
-In twig, If you're making the form customization inside a separate template, use
+In Twig, If you're making the form customization inside a separate template, use
 the following:
 
 .. code-block:: html+jinja

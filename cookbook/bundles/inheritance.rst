@@ -13,7 +13,7 @@ things like controllers, templates, and other files in a bundle's
 For example, suppose that you're installing the `FOSUserBundle`_, but you
 want to override its base ``layout.html.twig`` template, as well as one of
 its controllers. Suppose also that you have your own ``AcmeUserBundle``
-where you want the overridden files to live. Start by registering the ``FOSUserBundle``
+where you want the overridden files to live. Start by registering the FOSUserBundle
 as the "parent" of your bundle::
 
     // src/Acme/UserBundle/AcmeUserBundle.php
@@ -29,7 +29,7 @@ as the "parent" of your bundle::
         }
     }
 
-By making this simple change, you can now override several parts of the ``FOSUserBundle``
+By making this simple change, you can now override several parts of the FOSUserBundle
 simply by creating a file with the same name.
 
 .. note::
@@ -41,7 +41,7 @@ Overriding Controllers
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you want to add some functionality to the ``registerAction`` of a
-``RegistrationController`` that lives inside ``FOSUserBundle``. To do so,
+``RegistrationController`` that lives inside FOSUserBundle. To do so,
 just create your own ``RegistrationController.php`` file, override the bundle's
 original method, and change its functionality::
 
@@ -79,11 +79,11 @@ Overriding Resources: Templates, Routing, etc
 Most resources can also be overridden, simply by creating a file in the same
 location as your parent bundle.
 
-For example, it's very common to need to override the ``FOSUserBundle``'s
+For example, it's very common to need to override the FOSUserBundle's
 ``layout.html.twig`` template so that it uses your application's base layout.
-Since the file lives at ``Resources/views/layout.html.twig`` in the ``FOSUserBundle``,
-you can create your own file in the same location of ``AcmeUserBundle``.
-Symfony will ignore the file that lives inside the ``FOSUserBundle`` entirely,
+Since the file lives at ``Resources/views/layout.html.twig`` in the FOSUserBundle,
+you can create your own file in the same location of AcmeUserBundle.
+Symfony will ignore the file that lives inside the FOSUserBundle entirely,
 and use your file instead.
 
 The same goes for routing files and some other resources.

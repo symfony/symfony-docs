@@ -10,7 +10,7 @@ Introduction
 
 The Config Component provides several classes to help you find, load, combine,
 autofill and validate configuration values of any kind, whatever their source
-may be (Yaml, XML, INI files, or for instance a database).
+may be (YAML, XML, INI files, or for instance a database).
 
 Installation
 ------------

@@ -113,7 +113,7 @@ If your service depends on a scoped service, the best solution is to put
 it in the same scope (or a narrower one). Usually, this means putting your
 new service in the ``request`` scope.
 
-But this is not always possible (for instance, a twig extension must be in
+But this is not always possible (for instance, a Twig extension must be in
 the ``container`` scope as the Twig environment needs it as a dependency).
 In these cases, you should pass the entire container into your service and
 retrieve your dependency from the container each time you need it to be sure

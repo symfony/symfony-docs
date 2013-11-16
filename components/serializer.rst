@@ -6,7 +6,7 @@ The Serializer Component
 ========================
 
    The Serializer Component is meant to be used to turn objects into a
-   specific format (XML, JSON, Yaml, ...) and the other way around.
+   specific format (XML, JSON, YAML, ...) and the other way around.
 
 In order to do so, the Serializer Component follows the following
 simple schema.
@@ -128,7 +128,7 @@ JMSSerializer
 A popular third-party library, `JMS serializer`_, provides a more
 sophisticated albeit more complex solution. This library includes the
 ability to configure how your objects should be serialize/deserialized via
-annotations (as well as YML, XML and PHP), integration with the Doctrine ORM,
+annotations (as well as YAML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer

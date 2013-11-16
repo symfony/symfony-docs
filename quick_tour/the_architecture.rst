@@ -118,9 +118,9 @@ a single ``Bundle`` class that describes it::
         return $bundles;
     }
 
-In addition to the ``AcmeDemoBundle`` that was already talked about, notice
-that the kernel also enables other bundles such as the ``FrameworkBundle``,
-``DoctrineBundle``, ``SwiftmailerBundle``, and ``AsseticBundle`` bundle.
+In addition to the AcmeDemoBundle that was already talked about, notice
+that the kernel also enables other bundles such as the FrameworkBundle,
+DoctrineBundle, SwiftmailerBundle, and AsseticBundle bundle.
 They are all part of the core framework.
 
 Configuring a Bundle
@@ -245,7 +245,7 @@ When you want to reference a file from a bundle, use this notation:
 to the real path to the bundle. For instance, the logical path
 ``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
 ``src/Acme/DemoBundle/Controller/DemoController.php``, because Symfony knows
-the location of the ``AcmeDemoBundle``.
+the location of the AcmeDemoBundle.
 
 Logical Controller Names
 ........................
@@ -269,10 +269,10 @@ Extending Bundles
 
 If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
 to "override" files, controllers or templates. For example, you can create
-a bundle - ``AcmeNewBundle`` - and specify that it overrides ``AcmeDemoBundle``.
+a bundle - AcmeNewBundle - and specify that it overrides AcmeDemoBundle.
 When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
-first look for the ``WelcomeController`` class in ``AcmeNewBundle`` and, if
-it doesn't exist, then look inside ``AcmeDemoBundle``. This means that one bundle
+first look for the ``WelcomeController`` class in AcmeNewBundle and, if
+it doesn't exist, then look inside AcmeDemoBundle. This means that one bundle
 can override almost any part of another bundle!
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between

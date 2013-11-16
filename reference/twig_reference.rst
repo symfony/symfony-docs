@@ -104,7 +104,7 @@ Filters
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_encode(inline = 0)``                                            | This will transform the variable text into a YAML syntax.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| ``variable|yaml_dump``                                                          | This will render a yaml syntax with their type.                   |
+| ``variable|yaml_dump``                                                          | This will render a YAML syntax with their type.                   |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``classname|abbr_class``                                                        | This will render an ``abbr`` element with the short name of a     |
 |                                                                                 | PHP class.                                                        |
