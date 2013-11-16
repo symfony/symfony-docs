@@ -101,7 +101,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
    developing.
 
 8. Finally, download all of the third-party vendor libraries by
-   executing composer. For details, see :ref:`installation-updating-vendors`.
+   executing Composer. For details, see :ref:`installation-updating-vendors`.
 
 .. tip::
 

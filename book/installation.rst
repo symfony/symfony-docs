@@ -180,7 +180,7 @@ Symfony itself - into the ``vendor/`` directory.
 .. tip::
 
     When running ``php composer.phar install`` or ``php composer.phar update``,
-    composer will execute post install/update commands to clear the cache
+    Composer will execute post install/update commands to clear the cache
     and install assets. By default, the assets will be copied into your ``web``
     directory.
 

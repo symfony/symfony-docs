@@ -69,7 +69,7 @@ git repository:
         $ git commit -m "Initial commit"
 
 8. Finally, download all of the third-party vendor libraries by
-   executing composer. For details, see :ref:`installation-updating-vendors`.
+   executing Composer. For details, see :ref:`installation-updating-vendors`.
 
 At this point, you have a fully-functional Symfony2 project that's correctly
 committed to Git. You can immediately begin development, committing the new
@@ -95,7 +95,7 @@ Instead of using the ``composer.json`` system for managing your vendor
 libraries, you may instead choose to use native `git submodules`_. There
 is nothing wrong with this approach, though the ``composer.json`` system
 is the official way to solve this problem and probably much easier to
-deal with. Unlike Git submodules, ``Composer`` is smart enough to calculate
+deal with. Unlike Git submodules, Composer is smart enough to calculate
 which libraries depend on which other libraries.
 
 Storing your Project on a Remote Server

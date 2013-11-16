@@ -13,7 +13,7 @@ Add Composer Dependencies
 Starting from Symfony 2.1, dependencies are managed with Composer. It's
 a good idea to learn some basics of Composer in `their documentation`_.
 
-Before you can use composer to install a bundle, you should look for a
+Before you can use Composer to install a bundle, you should look for a
 `Packagist`_ package of that bundle. For example, if you search for the popular
 `FOSUserBundle`_ you will find a packaged called `friendsofsymfony/user-bundle`_.
 
