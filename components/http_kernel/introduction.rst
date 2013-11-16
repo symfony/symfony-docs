@@ -482,7 +482,7 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the ``SwiftmailerBundle`` with Symfony2 and use ``memory``
+    If you use the SwiftmailerBundle with Symfony2 and use ``memory``
     spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
     is activated, which actually delivers any emails that you scheduled to
     send during the request.

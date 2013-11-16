@@ -37,7 +37,7 @@ widespread standard structure:
 
 .. tip::
 
-    Most subversion hosting should follow this standard practice. This
+    Most Subversion hosting should follow this standard practice. This
     is the recommended layout in `Version Control with Subversion`_ and the
     layout used by most free hosting (see :ref:`svn-hosting`).
 
@@ -59,14 +59,14 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
         $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
-4. Copy the Symfony2 project files in the subversion folder:
+4. Copy the Symfony2 project files in the Subversion folder:
 
    .. code-block:: bash
 
         $ mv Symfony/* myproject/
 
 5. Let's now set the ignore rules. Not everything *should* be stored in your
-   subversion repository. Some files (like the cache) are generated and
+   Subversion repository. Some files (like the cache) are generated and
    others (like the database configuration) are meant to be customized
    on each machine. This makes use of the ``svn:ignore`` property, so that
    specific files can be ignored.

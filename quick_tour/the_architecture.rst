@@ -193,8 +193,8 @@ PHP. Have a look at the default configuration:
         spool:     { type: memory }
 
 Each entry like ``framework`` defines the configuration for a specific bundle.
-For example, ``framework`` configures the ``FrameworkBundle`` while ``swiftmailer``
-configures the ``SwiftmailerBundle``.
+For example, ``framework`` configures the FrameworkBundle while ``swiftmailer``
+configures the SwiftmailerBundle.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file. For example, the ``dev`` environment loads the

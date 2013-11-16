@@ -6,7 +6,7 @@ How to send an Email
 
 Sending emails is a classic task for any web application and one that has
 special complications and potential pitfalls. Instead of recreating the wheel,
-one solution to send emails is to use the ``SwiftmailerBundle``, which leverages
+one solution to send emails is to use the SwiftmailerBundle, which leverages
 the power of the `Swift Mailer`_ library.
 
 .. note::

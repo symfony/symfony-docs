@@ -5,7 +5,7 @@ How to test that an Email is sent in a functional Test
 ======================================================
 
 Sending e-mails with Symfony2 is pretty straightforward thanks to the
-``SwiftmailerBundle``, which leverages the power of the `Swift Mailer`_ library.
+SwiftmailerBundle, which leverages the power of the `Swift Mailer`_ library.
 
 To functionally test that an email was sent, and even assert the email subject,
 content or any other headers, you can use :ref:`the Symfony2 Profiler <internals-profiler>`.

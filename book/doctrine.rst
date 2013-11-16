@@ -1564,7 +1564,7 @@ Some notable or interesting tasks include:
 .. note::
 
    To be able to load data fixtures to your database, you will need to have
-   the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
+   the DoctrineFixturesBundle bundle installed. To learn how to do it,
    read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
    documentation.
 

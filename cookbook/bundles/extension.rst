@@ -11,7 +11,7 @@ you'll see a number of different configuration "namespaces", such as ``framework
 you to configure things at a high level and then let the bundle make all the
 low-level, complex changes that result.
 
-For example, the following tells the ``FrameworkBundle`` to enable the form
+For example, the following tells the FrameworkBundle to enable the form
 integration, which involves the defining of quite a few services as well
 as integration of other related components:
 

@@ -840,7 +840,7 @@ format you prefer:
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony ``FrameworkBundle`` and includes configuration for the
+for the core Symfony FrameworkBundle and includes configuration for the
 routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.

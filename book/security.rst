@@ -1007,7 +1007,7 @@ authorization from inside a controller::
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
+You can also choose to install and use the optional JMSSecurityExtraBundle,
 which can secure your controller using annotations::
 
     // ...
