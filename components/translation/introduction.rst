@@ -13,8 +13,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Translation);
 * :doc:`Install it via Composer</components/using_components>` (``symfony/translation`` on `Packagist`_).
+* Use the official Git repository (https://github.com/symfony/Translation);
 
 Constructing the Translator
 ---------------------------
@@ -48,6 +48,8 @@ The constructor of the ``Translator`` class needs one argument: The locale.
     other format differences (e.g. currency format). The `ISO639-1`_
     *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
+
+.. _component-translator-message-catalogs:
 
 Loading Message Catalogs
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,9 +120,9 @@ method), the second is the resource and the third argument is the locale::
 Loading Messages with the File Loaders
 ......................................
 
-If you use one of the file loaders, you also use the ``addResource`` method.
-The only difference is that you put the file name as the second argument,
-instead of an array::
+If you use one of the file loaders, you should also use the ``addResource``
+method. The only difference is that you should put the file name to the resource
+file as the second argument, instead of an array::
 
     // ...
     $translator->addLoader('yaml', new YamlFileLoader());
@@ -133,7 +135,7 @@ To actually translate the message, the Translator uses a simple process:
 
 * A catalog of translated messages is loaded from translation resources defined
   for the ``locale`` (e.g. ``fr_FR``). Messages from the
-  :ref:`fallback locale <Fallback Locale>` are also loaded and added to the
+  :ref:`components-fallback-locales` are also loaded and added to the
   catalog, if they don't already exist. The end result is a large "dictionary"
   of translations;
 
@@ -146,23 +148,28 @@ You start this process by calling
 Translator looks for the exact string inside the appropriate message catalog
 and returns it (if it exists).
 
-.. tip::
+.. _components-fallback-locales:
 
-    When a translation does not exist for a locale, the translator first tries
-    to find the translation for the language (e.g. ``fr`` if the locale is
-    ``fr_FR``). If this also fails, it looks for a translation using the
-    fallback locale.
-
-Fallback Locale
-~~~~~~~~~~~~~~~
+Fallback Locales
+~~~~~~~~~~~~~~~~
 
 If the message is not located in the catalog of the specific locale, the
-translator will look into the catalog of the fallback locale. You can set
-this fallback locale by calling
+translator will look into the catalog of one or more fallback locales. For
+example, assume you're trying to translate into the ``fr_FR`` locale:
+
+1. First, the translator looks for the translation in the ``fr_FR`` locale;
+
+2. If it wasn't found, the translator looks for the translation in the ``fr``
+   locale;
+
+3. If the translation still isn't found, the translator uses the one or more
+   fallback locales set explicitly on the translator.
+
+For (3), the fallback locales can be set by calling
 :method:`Symfony\\Component\\Translation\\Translator::setFallbackLocale`::
 
     // ...
-    $translator->setFallbackLocale('en_EN');
+    $translator->setFallbackLocale(array('en'));
 
 .. _using-message-domains:
 

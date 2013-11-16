@@ -12,7 +12,7 @@ Imagine you want to translate the string *"Symfony2 is great"* into French::
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
-        'Symfony2 is great!' => 'J'aime Symfony2!',
+        'Symfony2 is great!' => 'J\'aime Symfony2!',
     ), 'fr_FR');
     
     echo $translator->trans('Symfony2 is great!');
@@ -20,6 +20,8 @@ Imagine you want to translate the string *"Symfony2 is great"* into French::
 In this example, the message *"Symfony2 is great!"* will be translated into
 the locale set in the constructor (``fr_FR``) if the message exists in one of
 the message catalogs.
+
+.. _component-translation-placeholders:
 
 Message Placeholders
 --------------------
@@ -217,6 +219,8 @@ recommended format. These files are parsed by one of the loader classes.
                 'symfony2.has.bundles' => 'Symfony2 has bundles',
                 'user.login'           => 'Login',
             );
+
+.. _component-translation-pluralization:
 
 Pluralization
 -------------

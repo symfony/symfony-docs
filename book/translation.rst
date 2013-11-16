@@ -27,27 +27,30 @@ into the language of the user::
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
 In this chapter, you'll learn how to use the Translation component in the
-Symfony2 framework. Read the
-:doc:`components documentation </components/translation>` to learn how to use
-the Translator. Overall, the process has several common steps:
+Symfony2 framework. You can read the
+:doc:`Translation component documentation </components/translation/usage>`
+to learn even more. Overall, the process has several steps:
 
-#. Enable and configure Symfony's Translation component;
+#. :ref:`Enable and configure <book-translation-configuration>` Symfony's
+   translation service;
 
 #. Abstract strings (i.e. "messages") by wrapping them in calls to the
-   ``Translator`` (learn about this in ":doc:`/components/translation/usage`");
+   ``Translator`` (":ref:`book-translation-basic`");
 
-#. Create translation resources for each supported locale that translate
-   each message in the application;
+#. :ref:`Create translation resources/files <book-translation-resources>`
+   for each supported locale that translate each message in the application;
 
-#. Determine, set and manage the user's locale for the request and optionally
-   on the user's entire session.
+#. Determine, :ref:`set and manage the user's locale <book-translation-user-locale>`
+   for the request and optionally on the user's entire session.
+
+.. _book-translation-configuration:
 
 Configuration
 -------------
 
 Translations are handled by a ``translator`` :term:`service` that uses the
 user's locale to lookup and return translated messages. Before using it,
-enable the ``Translator`` in your configuration:
+enable the ``translator`` in your configuration:
 
 .. configuration-block::
 
@@ -79,225 +82,133 @@ enable the ``Translator`` in your configuration:
             'translator' => array('fallback' => 'en'),
         ));
 
-The ``fallback`` option defines the fallback locale when a translation does
-not exist in the user's locale.
-
-.. tip::
-
-    When a translation does not exist for a locale, the translator first tries
-    to find the translation for the language (``fr`` if the locale is
-    ``fr_FR`` for instance). If this also fails, it looks for a translation
-    using the fallback locale.
+See :ref:`book-translation-fallback` for details on the ``fallback`` key
+and what Symfony does when it doesn't find a translation.
 
 The locale used in translations is the one stored on the request. This is
 typically set via a ``_locale`` attribute on your routes (see :ref:`book-translation-locale-url`).
 
-Fallback and Default Locale
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _book-translation-basic:
 
-If the locale hasn't been set, the ``fallback`` configuration parameter will
-be used by the ``Translator``. The parameter defaults to ``en`` (see
-`Configuration`_).
+Basic Translation
+-----------------
 
-Alternatively, you can guarantee that a locale is set on each user's request
-by defining a ``default_locale`` for the framework:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            default_locale: en
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:default-locale>en</framework:default-locale>
-        </framework:config>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'default_locale' => 'en',
-        ));
-
-.. versionadded:: 2.1
-     The ``default_locale`` parameter was defined under the session key
-     originally, however, as of 2.1 this has been moved. This is because the
-     locale is now set on the request instead of the session.
-
-Using the Translation inside Controllers
-----------------------------------------
-
-When you want to use translations inside controllers, you need to get the
-``translator`` service and use
-:method:`Symfony\\Component\\Translation\\Translator::trans` or
-:method:`Symfony\\Component\\Translation\\Translator::transChoice`::
-
-    // src/Acme/DemoBundle/Controller/DemoController.php
-    namespace Amce\DemoBundle\Controller;
+Translation of text is done through the  ``translator`` service
+(:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
+of text (called a *message*), use the
+:method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
+for example, that you're translating a simple message from inside a controller::
 
     // ...
-    class DemoController extends Controller
+    use Symfony\Component\HttpFoundation\Response;
+
+    public function indexAction()
     {
-        public function indexAction()
-        {
-            $translator = $this->get('translator');
+        $translated = $this->get('translator')->trans('Symfony2 is great');
 
-            $translated = $translator->trans('Symfony2 is great!');
-
-            return new Response($translated);
-        }
+        return new Response($translated);
     }
 
-Translation Locations and Naming Conventions
---------------------------------------------
+.. _book-translation-resources:
 
-Symfony2 looks for message files (i.e. translations) in the following locations:
-
-* the ``<kernel root directory>/Resources/translations`` directory;
-
-* the ``<kernel root directory>/Resources/<bundle name>/translations`` directory;
-
-* the ``Resources/translations/`` directory of the bundle.
-
-The locations are listed with the highest priority first. That is you can
-override the translation messages of a bundle in any of the top 2 directories.
-
-The override mechanism works at a key level: only the overridden keys need
-to be listed in a higher priority message file. When a key is not found
-in a message file, the translator will automatically fall back to the lower
-priority message files.
-
-The filename of the translations is also important as Symfony2 uses a convention
-to determine details about the translations. Each message file must be named
-according to the following path: ``domain.locale.loader``:
-
-* **domain**: An optional way to organize messages into groups (e.g. ``admin``,
-  ``navigation`` or the default ``messages``) - see ":ref:`using-message-domains`";
-
-* **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
-
-* **loader**: How Symfony2 should load and parse the file (e.g. ``xliff``,
-  ``php`` or ``yml``).
-
-The loader can be the name of any registered loader. By default, Symfony
-provides the following loaders:
-
-* ``xliff``: XLIFF file;
-* ``php``: PHP file;
-* ``yml``: YAML file.
-
-The choice of which loader to use is entirely up to you and is a matter of
-taste.
-
-.. note::
-
-    You can also store translations in a database, or any other storage by
-    providing a custom class implementing the
-    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
-    See the :ref:`dic-tags-translation-loader` tag for more information.
-
-.. caution::
-
-    Each time you create a *new* translation resource (or install a bundle
-    that includes a translation resource), be sure to clear your cache so
-    that Symfony can discover the new translation resource:
-
-    .. code-block:: bash
-
-        $ php app/console cache:clear
-
-Handling the User's Locale
---------------------------
-
-The locale of the current user is stored in the request and is accessible
-via the ``request`` object::
-
-    // access the request object in a standard controller
-    $request = $this->getRequest();
-
-    $locale = $request->getLocale();
-
-    $request->setLocale('en_US');
-
-.. tip::
-
-    Read :doc:`/cookbook/session/locale_sticky_session` to learn, how to store
-    the user's locale in the session.
-
-.. index::
-   single: Translations; Fallback and default locale
-
-See the :ref:`book-translation-locale-url` section below about setting the
-locale via routing.
-
-.. _book-translation-locale-url:
-
-The Locale and the URL
-~~~~~~~~~~~~~~~~~~~~~~
-
-Since you can store the locale of the user in the session, it may be tempting
-to use the same URL to display a resource in many different languages based
-on the user's locale. For example, ``http://www.example.com/contact`` could
-show content in English for one user and French for another user. Unfortunately,
-this violates a fundamental rule of the Web: that a particular URL returns
-the same resource regardless of the user. To further muddy the problem, which
-version of the content would be indexed by search engines?
-
-A better policy is to include the locale in the URL. This is fully-supported
-by the routing system using the special ``_locale`` parameter:
+When this code is executed, Symfony2 will attempt to translate the message
+"Symfony2 is great" based on the ``locale`` of the user. For this to work,
+you need to tell Symfony2 how to translate the message via a "translation
+resource", which is usually a file that contains a collection of translations
+for a given locale. This "dictionary" of translations can be created in several
+different formats, XLIFF being the recommended format:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        contact:
-            path:      /{_locale}/contact
-            defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
-            requirements:
-                _locale: en|fr|de
-
     .. code-block:: xml
 
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">AcmeDemoBundle:Contact:index</default>
-                <default key="_locale">en</default>
-                <requirement key="_locale">en|fr|de</requirement>
-            </route>
-        </routes>
+        <!-- messages.fr.xliff -->
+        <?xml version="1.0"?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>Symfony2 is great</source>
+                        <target>J'aime Symfony2</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        // messages.fr.php
+        return array(
+            'Symfony2 is great' => 'J\'aime Symfony2',
+        );
 
-        $collection = new RouteCollection();
-        $collection->add('contact', new Route('/{_locale}/contact', array(
-            '_controller' => 'AcmeDemoBundle:Contact:index',
-            '_locale'     => 'en',
-        ), array(
-            '_locale'     => 'en|fr|de',
-        )));
+    .. code-block:: yaml
 
-        return $collection;
+        # messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
 
-When using the special ``_locale`` parameter in a route, the matched locale
-will *automatically be set on the user's session*. In other words, if a user
-visits the URI ``/fr/contact``, the locale ``fr`` will automatically be set
-as the locale for the user's session.
+For information on where these files should be located, see :ref:`book-translation-resource-locations`.
 
-You can now use the user's locale to create routes to other translated pages
-in your application.
+Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
+the message will be translated into ``J'aime Symfony2``. You can also translate
+message inside your :ref:`templates <book-translation-tags>`.
+
+The Translation Process
+~~~~~~~~~~~~~~~~~~~~~~~
+
+To actually translate the message, Symfony2 uses a simple process:
+
+* The ``locale`` of the current user, which is stored on the request is determined;
+
+* A catalog (e.g. big collection) of translated messages is loaded from translation
+  resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
+  :ref:`fallback locale <book-translation-fallback>` are also loaded and
+  added to the catalog if they don't already exist. The end result is a large
+  "dictionary" of translations.
+
+* If the message is located in the catalog, the translation is returned. If
+  not, the translator returns the original message.
+
+When using the ``trans()`` method, Symfony2 looks for the exact string inside
+the appropriate message catalog and returns it (if it exists).
+
+Message Placeholders
+--------------------
+
+Sometimes, a message containing a variable needs to be translated::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    public function indexAction($name)
+    {
+        $translated = $this->get('translator')->trans('Hello '.$name);
+
+        return new Response($translated);
+    }
+
+However, creating a translation for this string is impossible since the translator
+will try to look up the exact message, including the variable portions
+(e.g. *"Hello Ryan"* or *"Hello Fabien"*).
+
+For details on how to handle this situation, see :ref:`component-translation-placeholders`
+in the components documentation. For how to do this in templates, see :ref:`book-translation-tags`.
+
+Pluralization
+-------------
+
+Another complication is when you have translations that may or may not be
+plural, based on some variable:
+
+.. code-block:: text
+
+    There is one apple.
+    There are 5 apples.
+
+To handle this, use the :method:`Symfony\\Component\\Translation\\Translator::transChoice`
+method or the ``transchoice`` tag/filter in your :ref:`template <book-translation-tags>`.
+
+For much more information, see :ref:`component-translation-pluralization`
+in the Translation component documentation.
 
 Translations in Templates
 -------------------------
@@ -413,14 +324,218 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
+.. _book-translation-resource-locations:
+
+Translation Resource/File Names and Locations
+---------------------------------------------
+
+Symfony2 looks for message files (i.e. translations) in the following locations:
+
+* the ``app/Resources/translations`` directory;
+
+* the ``app/Resources/<bundle name>/translations`` directory;
+
+* the ``Resources/translations/`` directory inside of any bundle.
+
+The locations are listed here with the highest priority first. That is, you can
+override the translation messages of a bundle in any of the top 2 directories.
+
+The override mechanism works at a key level: only the overridden keys need
+to be listed in a higher priority message file. When a key is not found
+in a message file, the translator will automatically fall back to the lower
+priority message files.
+
+The filename of the translation files is also important: each message file
+must be named according to the following path: ``domain.locale.loader``:
+
+* **domain**: An optional way to organize messages into groups (e.g. ``admin``,
+  ``navigation`` or the default ``messages``) - see ":ref:`using-message-domains`";
+
+* **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
+
+* **loader**: How Symfony2 should load and parse the file (e.g. ``xliff``,
+  ``php``, ``yml``, etc).
+
+The loader can be the name of any registered loader. By default, Symfony
+provides many loaders, including:
+
+* ``xliff``: XLIFF file;
+* ``php``: PHP file;
+* ``yml``: YAML file.
+
+The choice of which loader to use is entirely up to you and is a matter of
+taste. For more options, see :ref:`component-translator-message-catalogs`.
+
+.. note::
+
+    You can also store translations in a database, or any other storage by
+    providing a custom class implementing the
+    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
+    See the :ref:`dic-tags-translation-loader` tag for more information.
+
+.. caution::
+
+    Each time you create a *new* translation resource (or install a bundle
+    that includes a translation resource), be sure to clear your cache so
+    that Symfony can discover the new translation resource:
+
+    .. code-block:: bash
+
+        $ php app/console cache:clear
+
+.. _book-translation-fallback:
+
+Fallback Translation Locales
+----------------------------
+
+Imagine that the user's locale is ``fr_FR`` and that you're translating the
+key ``Symfony2 is great``. To find the French translation, Symfony actually
+checks translation resources for several different locales:
+
+1. First, Symfony looks for the translation in a ``fr_FR`` translation resource
+   (e.g. ``messages.fr_FR.xfliff``);
+
+2. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
+   resource (e.g. ``messages.fr.xliff``);
+
+3. If the translation still isn't found, Symfony uses the ``fallback`` configuration
+   parameter, which defaults to ``en`` (see `Configuration`_).
+
+.. _book-translation-user-locale:
+
+Handling the User's Locale
+--------------------------
+
+The locale of the current user is stored in the request and is accessible
+via the ``request`` object::
+
+    // access the request object in a standard controller
+    $request = $this->getRequest();
+
+    $locale = $request->getLocale();
+
+    $request->setLocale('en_US');
+
+.. tip::
+
+    Read :doc:`/cookbook/session/locale_sticky_session` to learn, how to store
+    the user's locale in the session.
+
+.. index::
+   single: Translations; Fallback and default locale
+
+See the :ref:`book-translation-locale-url` section below about setting the
+locale via routing.
+
+.. _book-translation-locale-url:
+
+The Locale and the URL
+~~~~~~~~~~~~~~~~~~~~~~
+
+Since you can store the locale of the user in the session, it may be tempting
+to use the same URL to display a resource in many different languages based
+on the user's locale. For example, ``http://www.example.com/contact`` could
+show content in English for one user and French for another user. Unfortunately,
+this violates a fundamental rule of the Web: that a particular URL returns
+the same resource regardless of the user. To further muddy the problem, which
+version of the content would be indexed by search engines?
+
+A better policy is to include the locale in the URL. This is fully-supported
+by the routing system using the special ``_locale`` parameter:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        contact:
+            path:      /{_locale}/contact
+            defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
+            requirements:
+                _locale: en|fr|de
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/{_locale}/contact">
+                <default key="_controller">AcmeDemoBundle:Contact:index</default>
+                <default key="_locale">en</default>
+                <requirement key="_locale">en|fr|de</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('contact', new Route('/{_locale}/contact', array(
+            '_controller' => 'AcmeDemoBundle:Contact:index',
+            '_locale'     => 'en',
+        ), array(
+            '_locale'     => 'en|fr|de',
+        )));
+
+        return $collection;
+
+When using the special ``_locale`` parameter in a route, the matched locale
+will *automatically be set on the user's session*. In other words, if a user
+visits the URI ``/fr/contact``, the locale ``fr`` will automatically be set
+as the locale for the user's session.
+
+You can now use the user's locale to create routes to other translated pages
+in your application.
+
+Setting a Default Locale
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+What if the user's locale hasn't been determined? You can guarantee that a
+locale is set on each user's request by defining a ``default_locale`` for
+the framework:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            default_locale: en
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:default-locale>en</framework:default-locale>
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'default_locale' => 'en',
+        ));
+
+.. versionadded:: 2.1
+     The ``default_locale`` parameter was defined under the session key
+     originally, however, as of 2.1 this has been moved. This is because the
+     locale is now set on the request instead of the session.
+
 .. _book-translation-constraint-messages:
 
 Translating Constraint Messages
 -------------------------------
 
-The best way to understand constraint translation is to see it in action. To start,
-suppose you've created a plain-old-PHP object that you need to use somewhere in
-your application::
+If you're using validation constraints with the form framework, then translating
+the error messages is easy: simply create a translation resource for the
+``validators`` :ref:`domain <using-message-domains>`.
+
+To start, suppose you've created a plain-old-PHP object that you need to
+use somewhere in your application::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
