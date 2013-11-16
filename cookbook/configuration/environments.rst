@@ -331,10 +331,10 @@ includes the following:
 * ``appDevDebugProjectContainer.php`` - the cached "service container" that
   represents the cached application configuration;
 
-* ``appdevUrlGenerator.php`` - the PHP class generated from the routing
+* ``appDevUrlGenerator.php`` - the PHP class generated from the routing
   configuration and used when generating URLs;
 
-* ``appdevUrlMatcher.php`` - the PHP class used for route matching - look
+* ``appDevUrlMatcher.php`` - the PHP class used for route matching - look
   here to see the compiled regular expression logic used to match incoming
   URLs to different routes;
 

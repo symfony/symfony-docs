@@ -352,7 +352,7 @@ in your source, you'll likely just see something like this:
 
 .. code-block:: html
 
-    <script src="/app_dev.php/js/abcd123.js"></script>
+    <script src="/js/abcd123.js"></script>
 
 Moreover, that file does **not** actually exist, nor is it dynamically rendered
 by Symfony (as the asset files are in the ``dev`` environment). This is on

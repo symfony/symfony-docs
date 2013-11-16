@@ -850,7 +850,7 @@ texts* and complex expressions:
     templates (in order to avoid side effects).
 
 .. versionadded:: 2.1
-    The ``trans_default_domain`` tag is new in Symfony2.1
+    The ``trans_default_domain`` tag is new in Symfony 2.1
 
 PHP Templates
 ~~~~~~~~~~~~~

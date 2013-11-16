@@ -136,13 +136,6 @@ Instead, you can set the ``intercept_redirects`` option to ``true`` in the
 ``config_dev.yml`` file, which will cause the redirect to stop and allow
 you to open the report with details of the sent emails.
 
-.. tip::
-
-    Alternatively, you can open the profiler after the redirect and search
-    by the submit URL used on previous request (e.g. ``/contact/handle``).
-    The profiler's search feature allows you to load the profiler information
-    for any past requests.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -171,3 +164,10 @@ you to open the report with details of the sent emails.
         $container->loadFromExtension('web_profiler', array(
             'intercept_redirects' => 'true',
         ));
+
+.. tip::
+
+    Alternatively, you can open the profiler after the redirect and search
+    by the submit URL used on the previous request (e.g. ``/contact/handle``).
+    The profiler's search feature allows you to load the profiler information
+    for any past requests.

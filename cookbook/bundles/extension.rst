@@ -70,7 +70,7 @@ The second method has several specific advantages:
 * Much more powerful than simply defining parameters: a specific option value
   might trigger the creation of many service definitions;
 
-* Ability to have configuration hierarchy
+* Ability to have configuration hierarchy;
 
 * Smart merging when several configuration files (e.g. ``config_dev.yml``
   and ``config.yml``) override each other's configuration;
