@@ -71,6 +71,41 @@ delete it by matching on GET, PUT and DELETE.
 
         return $collection;
 
+    .. code-block:: php-annotations
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+        class DemoController
+        {
+            /**
+             * @Route("/blog/{slug}", name="blog_show")
+             * @Method("GET")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+
+            /**
+             * @Route("/blog/{slug}", name="blog_update")
+             * @Method("PUT")
+             */
+            public function updateAction($slug)
+            {
+                // ...
+            }
+
+            /**
+             * @Route("/blog/{slug}", name="blog_delete")
+             * @Method("DELETE")
+             */
+            public function deleteAction($slug)
+            {
+                // ...
+            }
+        }
+
 Faking the Method with _method
 ------------------------------
 
