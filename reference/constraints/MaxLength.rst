@@ -98,7 +98,7 @@ of the give string is **greater** than this number.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less``
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
 The message that will be shown if the underlying string has a length that
 is longer than the `limit`_ option.

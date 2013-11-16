@@ -83,6 +83,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid time``
+**type**: ``string`` **default**: ``This value is not a valid time.``
 
 This message is shown if the underlying data is not a valid time.

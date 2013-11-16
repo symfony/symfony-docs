@@ -92,7 +92,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid email address``
+**type**: ``string`` **default**: ``This value is not a valid email address.``
 
 This message is shown if the underlying data is not a valid email address.
 

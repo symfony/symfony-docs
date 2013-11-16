@@ -103,7 +103,7 @@ value is **less** than this min value.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be {{ limit }} or more``
+**type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
 The message that will be shown if the underlying value is less than the `limit`_
 option.
@@ -111,7 +111,7 @@ option.
 invalidMessage
 ~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be a valid number``
+**type**: ``string`` **default**: ``This value should be a valid number.``
 
 The message that will be shown if the underlying value is not a number (per
 the :phpfunction:`is_numeric` PHP function).
