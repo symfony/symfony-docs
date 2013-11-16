@@ -82,6 +82,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid locale``
+**type**: ``string`` **default**: ``This value is not a valid locale.``
 
 This message is shown if the string is not a valid locale.

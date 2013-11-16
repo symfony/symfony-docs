@@ -83,6 +83,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should not be null``
+**type**: ``string`` **default**: ``This value should not be null.``
 
 This is the message that will be shown if the value is ``null``.

@@ -122,6 +122,11 @@
 
   * :doc:`/components/templating/introduction`
 
+* :doc:`/components/translation/index`
+
+  * :doc:`/components/translation/introduction`
+  * :doc:`/components/translation/usage`
+
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`

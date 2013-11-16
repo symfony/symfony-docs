@@ -78,6 +78,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid language``
+**type**: ``string`` **default**: ``This value is not a valid language.``
 
 This message is shown if the string is not a valid language code.

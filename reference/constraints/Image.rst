@@ -160,7 +160,7 @@ You can find a list of existing image mime types on the `IANA website`_
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This file is not a valid image``
+**type**: ``string`` **default**: ``This file is not a valid image.``
 
 minWidth
 ~~~~~~~~
@@ -197,7 +197,7 @@ value in pixels.
 sizeNotDetectedMessage
 ~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The size of the image could not be detected``
+**type**: ``string`` **default**: ``The size of the image could not be detected.``
 
 If the system is unable to determine the size of the image, this error will
 be displayed. This will only occur when at least one of the four size constraint
@@ -206,28 +206,28 @@ options has been set.
 maxWidthMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px``
+**type**: ``string`` **default**: ``The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.``
 
 The error message if the width of the image exceeds `maxWidth`_.
 
 minWidthMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px``
+**type**: ``string`` **default**: ``The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.``
 
 The error message if the width of the image is less than `minWidth`_.
 
 maxHeightMessage
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px``
+**type**: ``string`` **default**: ``The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.``
 
 The error message if the height of the image exceeds `maxHeight`_.
 
 minHeightMessage
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px``
+**type**: ``string`` **default**: ``The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.``
 
 The error message if the height of the image is less than `minHeight`_.
 

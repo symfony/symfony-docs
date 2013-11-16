@@ -105,7 +105,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option <validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "min" count value. Validation will fail if the given
 collection elements count is **less** than this min value.
@@ -113,7 +113,7 @@ collection elements count is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option <validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "max" count value. Validation will fail if the given
 collection elements count is **greater** than this max value.
@@ -121,21 +121,21 @@ collection elements count is **greater** than this max value.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``.
+**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``
 
 The message that will be shown if the underlying collection elements count is less than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or less.``.
+**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or less.``
 
 The message that will be shown if the underlying collection elements count is more than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``.
+**type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
 The message that will be shown if min and max values are equal and the underlying collection elements 
 count is not exactly this value.

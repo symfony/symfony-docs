@@ -80,6 +80,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid datetime``
+**type**: ``string`` **default**: ``This value is not a valid datetime.``
 
 This message is shown if the underlying data is not a valid datetime.
