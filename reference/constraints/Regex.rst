@@ -271,6 +271,6 @@ string does **not** match the `pattern`_ regular expression.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not valid``
+**type**: ``string`` **default**: ``This value is not valid.``
 
 This is the message that will be shown if this validator fails.

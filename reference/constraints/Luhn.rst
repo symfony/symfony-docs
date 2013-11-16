@@ -93,7 +93,7 @@ Available Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``Invalid card number``
+**type**: ``string`` **default**: ``Invalid card number.``
 
 The default message supplied when the value does not pass the Luhn check.
 

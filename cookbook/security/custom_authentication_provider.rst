@@ -230,6 +230,12 @@ the ``PasswordDigest`` header value matches with the user's password.
             throw new AuthenticationException('The WSSE authentication failed.');
         }
 
+        /**
+         * This function is specific to Wsse authentication and is only used to help this example
+         *
+         * For more information specific to the logic here, see
+         * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129
+         */
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
             // Check created time is not in the future
@@ -242,7 +248,8 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
-            // Validate nonce is unique within 5 minutes
+            // Validate that the nonce is *not* used in the last 5 minutes
+            // if it has, this could be a replay attack
             if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 > time()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }

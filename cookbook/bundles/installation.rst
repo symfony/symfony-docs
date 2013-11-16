@@ -15,7 +15,7 @@ some basics of Composer in `their documentation`_.
 
 Before you can use composer to install a bundle, you should look for a
 `Packagist`_ package of that bundle. For example, if you search for the popular
-`FOSUserBundle`_ you will find a packaged called `friendsofsymfony/user-bundle`_.
+`FOSUserBundle`_ you will find a package called `friendsofsymfony/user-bundle`_.
 
 .. note::
 

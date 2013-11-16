@@ -84,6 +84,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be blank``
+**type**: ``string`` **default**: ``This value should be blank.``
 
 This is the message that will be shown if the value is not blank.

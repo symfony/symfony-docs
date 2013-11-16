@@ -103,7 +103,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``message`` **default**: ``This value should be the user current password``
+**type**: ``message`` **default**: ``This value should be the user current password.``
 
 This is the message that's displayed when the underlying string does *not*
 match the current user's password.

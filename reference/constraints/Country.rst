@@ -78,6 +78,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid country``
+**type**: ``string`` **default**: ``This value is not a valid country.``
 
 This message is shown if the string is not a valid country code.

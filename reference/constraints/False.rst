@@ -112,6 +112,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be false``
+**type**: ``string`` **default**: ``This value should be false.``
 
 This message is shown if the underlying data is not false.

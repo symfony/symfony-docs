@@ -94,8 +94,8 @@ using a special "tag":
 
     There is an additional tag option ``priority`` that is optional and defaults
     to 0. This value can be from -255 to 255, and the listeners will be executed
-    in the order of their priority. This is useful when you need to guarantee
-    that one listener is executed before another.
+    in the order of their priority (highest to lowest). This is useful when
+    you need to guarantee that one listener is executed before another.
 
 Request events, checking types
 ------------------------------

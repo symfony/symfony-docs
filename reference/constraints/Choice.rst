@@ -311,7 +311,7 @@ will fail.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``The value you selected is not a valid choice``
+**type**: ``string`` **default**: ``The value you selected is not a valid choice.``
 
 This is the message that you will receive if the ``multiple`` option is set
 to ``false``, and the underlying value is not in the valid array of choices.
@@ -319,7 +319,7 @@ to ``false``, and the underlying value is not in the valid array of choices.
 multipleMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``One or more of the given values is invalid``
+**type**: ``string`` **default**: ``One or more of the given values is invalid.``
 
 This is the message that you will receive if the ``multiple`` option is set
 to ``true``, and one of the values on the underlying array being checked
@@ -328,7 +328,7 @@ is not in the array of valid choices.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``You must select at least {{ limit }} choices``
+**type**: ``string`` **default**: ``You must select at least {{ limit }} choices.``
 
 This is the validation error message that's displayed when the user chooses
 too few choices per the `min`_ option.
@@ -336,7 +336,7 @@ too few choices per the `min`_ option.
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``You must select at most {{ limit }} choices``
+**type**: ``string`` **default**: ``You must select at most {{ limit }} choices.``
 
 This is the validation error message that's displayed when the user chooses
 too many options per the `max`_ option.
