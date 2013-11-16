@@ -10,7 +10,7 @@ inspired by the Python LogBook library.
 Usage
 -----
 
-To log a message simply get the logger service from the container in
+To log a message simply get the ``logger`` service from the container in
 your controller::
 
     public function indexAction()

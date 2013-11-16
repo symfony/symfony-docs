@@ -18,7 +18,7 @@ Functions
 ---------
 
 .. versionadded:: 2.1
-    The ``csrf_token``, ``logout_path`` and ``logout_url`` functions were added in Symfony2.1
+    The ``csrf_token``, ``logout_path`` and ``logout_url`` functions were added in Symfony 2.1
 
 .. versionadded:: 2.2
     The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
@@ -151,7 +151,7 @@ Tests
 -----
 
 .. versionadded:: 2.1
-    The ``selectedchoice`` test was added in Symfony2.1
+    The ``selectedchoice`` test was added in Symfony 2.1
 
 +---------------------------------------------------+------------------------------------------------------------------------------+
 | Test Syntax                                       | Usage                                                                        |

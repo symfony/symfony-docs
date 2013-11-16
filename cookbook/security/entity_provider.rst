@@ -668,7 +668,7 @@ the many-to-many relationship between ``acme_user`` and ``acme_role``. If
 you had one user linked to one role, your database might look something like
 this:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ mysql> select * from acme_role;
     +----+-------+------------+
@@ -677,7 +677,7 @@ this:
     |  1 | admin | ROLE_ADMIN |
     +----+-------+------------+
 
-    mysql> select * from user_role;
+    $ mysql> select * from user_role;
     +---------+---------+
     | user_id | role_id |
     +---------+---------+

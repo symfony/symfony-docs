@@ -57,7 +57,7 @@ and ``_demo``. Remove all three of these entries.
 
 Some bundles contain configuration in one of the ``app/config/config*.yml``
 files. Be sure to remove the related configuration from these files. You can
-quickly spot bundle configuration by looking at a ``acme_demo`` (or whatever
+quickly spot bundle configuration by looking for a ``acme_demo`` (or whatever
 the name of the bundle is, e.g. ``fos_user`` for the ``FOSUserBundle``) string in
 the configuration files.
 
