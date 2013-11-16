@@ -5,7 +5,7 @@
 The Routing Component
 =====================
 
-   The Routing Component maps an HTTP request to a set of configuration
+   The Routing component maps an HTTP request to a set of configuration
    variables.
 
 Installation

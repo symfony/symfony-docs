@@ -293,7 +293,7 @@ and create the appropriate response based on your application logic*.
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called ``HttpFoundation``. This component can be
+    included with Symfony called HttpFoundation. This component can be
     used entirely independently of Symfony and also provides classes for handling
     sessions and file uploads.
 

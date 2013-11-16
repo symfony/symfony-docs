@@ -342,7 +342,7 @@ To add your own form type guesser, create a class that implements the
 tag its service definition with ``form.type_guesser`` (it has no options).
 
 To see an example of how this class might look, see the ``ValidatorTypeGuesser``
-class in the ``Form`` component.
+class in the Form component.
 
 kernel.cache_clearer
 --------------------

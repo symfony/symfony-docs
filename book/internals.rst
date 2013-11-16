@@ -25,8 +25,8 @@ on top of the previous one.
     Composer's autoloader (``vendor/autoload.php``), which is included in
     the ``app/autoload.php`` file.
 
-``HttpFoundation`` Component
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+HttpFoundation Component
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The deepest level is the :namespace:`Symfony\\Component\\HttpFoundation`
 component. HttpFoundation provides the main objects needed to deal with HTTP.
@@ -46,10 +46,10 @@ variables:
 
 .. note::
 
-    Read more about the :doc:`HttpFoundation Component </components/http_foundation/introduction>`.
+    Read more about the :doc:`HttpFoundation component </components/http_foundation/introduction>`.
 
-``HttpKernel`` Component
-~~~~~~~~~~~~~~~~~~~~~~~~
+HttpKernel Component
+~~~~~~~~~~~~~~~~~~~~
 
 On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
 component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
@@ -58,11 +58,11 @@ handled. It also provides extension points and tools that makes it the ideal
 starting point to create a Web framework without too much overhead.
 
 It also optionally adds configurability and extensibility, thanks to the
-Dependency Injection component and a powerful plugin system (bundles).
+DependencyInjection component and a powerful plugin system (bundles).
 
 .. seealso::
 
-    Read more about the :doc:`HttpKernel Component </components/http_kernel/introduction>`,
+    Read more about the :doc:`HttpKernel component </components/http_kernel/introduction>`,
     :doc:`Dependency Injection </book/service_container>` and
     :doc:`Bundles </cookbook/bundles/best_practices>`.
 
@@ -235,8 +235,8 @@ add the following code at the beginning of your listener method::
 
 .. tip::
 
-    If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-    :doc:`Event Dispatcher Component Documentation </components/event_dispatcher/introduction>`
+    If you are not yet familiar with the Symfony2 EventDispatcher, read the
+    :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`
     section first.
 
 .. index::
@@ -429,14 +429,14 @@ and set a new ``Exception`` object, or do nothing::
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
-The Event Dispatcher
---------------------
+The EventDispatcher
+-------------------
 
-The event dispatcher is a standalone component that is responsible for much
+The EventDispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
-see the :doc:`Event Dispatcher Component Documentation </components/event_dispatcher/introduction>`.
+see the :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`.
 
 .. index::
    single: Profiler
@@ -657,4 +657,4 @@ Learn more from the Cookbook
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
 
-.. _`Symfony2 Dependency Injection component`: https://github.com/symfony/DependencyInjection
+.. _`Symfony2 DependencyInjection component`: https://github.com/symfony/DependencyInjection

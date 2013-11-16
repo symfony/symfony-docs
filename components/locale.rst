@@ -5,7 +5,7 @@
 The Locale Component
 ====================
 
-    Locale component provides fallback code to handle cases when the ``intl`` extension is missing.
+    The Locale component provides fallback code to handle cases when the ``intl`` extension is missing.
     Additionally it extends the implementation of a native :phpclass:`Locale` class with several handy methods.
 
 Replacement for the following functions and classes is provided:

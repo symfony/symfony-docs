@@ -7,7 +7,7 @@ The Security Component
 Introduction
 ------------
 
-The Security Component provides a complete security system for your web
+The Security component provides a complete security system for your web
 application. It ships with facilities for authenticating using HTTP basic
 or digest authentication, interactive form login or X.509 certificate login,
 but also allows you to implement your own authentication strategies.

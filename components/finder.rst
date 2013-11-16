@@ -5,7 +5,7 @@
 The Finder Component
 ====================
 
-   The Finder Component finds files and directories via an intuitive fluent
+   The Finder component finds files and directories via an intuitive fluent
    interface.
 
 Installation

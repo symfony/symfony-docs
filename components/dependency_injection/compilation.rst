@@ -13,7 +13,7 @@ It is compiled by running::
 
     $container->compile();
 
-The compile method uses *Compiler Passes* for the compilation. The Dependency Injection
+The compile method uses *Compiler Passes* for the compilation. The DependencyInjection
 component comes with several passes which are automatically registered for
 compilation. For example the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CheckDefinitionValidityPass`
 checks for various potential issues with the definitions that have been set
@@ -148,7 +148,7 @@ like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config Component </components/config/introduction>` to merge
+to use :doc:`the Config component </components/config/introduction>` to merge
 and validate the config values. Using the configuration processing you could
 access the config value this way::
 
