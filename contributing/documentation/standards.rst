@@ -16,7 +16,7 @@ Sphinx
   shorthand);
 * Inline hyperlinks are **not** used. Seperate the link and their target
   definition, which you add on the bottom of the page;
-* Inline markup should be closed at the same line as the open-string;
+* Inline markup should be closed on the same line as the open-string;
 * You should use a form of *you* instead of *we*.
 
 Example
@@ -61,10 +61,11 @@ Code Examples
 * Description of the folded code: (optional)
   If you fold several lines: the description of the fold can be placed after the ``...``
   If you fold only part of a line: the description can be placed before the line;
-* If usefull, a PHP file should start with the namespace declaration;
-* When using use statements, only the first code block of an article shows the
-  full statement block. In further examples, this block is folded with a
-  ``// ...`` comment and only new use statements are displayed;
+* If useful to the reader, a PHP code example should start with the namespace
+  declaration;
+* When referencing classes, be sure to show the ``use`` statements at the
+  top of your code block. You don't need to show *all* ``use`` statements
+  in every example, just show what is actually being used in the code block;
 * If useful, a ``codeblock`` should begin with a comment containing the filename
   of the file in the code block. Don't place a blank line after this comment,
   unless the next line is also a comment;
