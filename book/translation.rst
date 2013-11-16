@@ -305,9 +305,6 @@ texts* and complex expressions:
     Note that this only influences the current template, not any "included"
     templates (in order to avoid side effects).
 
-.. versionadded:: 2.1
-    The ``trans_default_domain`` tag is new in Symfony2.1
-
 PHP Templates
 ~~~~~~~~~~~~~
 
@@ -519,11 +516,6 @@ the framework:
         $container->loadFromExtension('framework', array(
             'default_locale' => 'en',
         ));
-
-.. versionadded:: 2.1
-     The ``default_locale`` parameter was defined under the session key
-     originally, however, as of 2.1 this has been moved. This is because the
-     locale is now set on the request instead of the session.
 
 .. _book-translation-constraint-messages:
 
