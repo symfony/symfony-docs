@@ -55,7 +55,7 @@ Loading Message Catalogs
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The messages are stored in message catalogs inside the ``Translator``
-class. A message catalog is like a dictionary of translations for a specific 
+class. A message catalog is like a dictionary of translations for a specific
 locale.
 
 The Translation component uses Loader classes to load catalogs. You can load
@@ -86,7 +86,7 @@ Loader too. The default loaders are:
 * :class:`Symfony\\Component\\Translation\\Loader\\XliffFileLoader` - to load
   catalogs from Xliff files.
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
-  catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml>`).
+  catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml/introduction>`).
 
 .. versionadded:: 2.1
     The ``IcuDatFileLoader``, ``IcuResFileLoader``, ``IniFileLoader``,
