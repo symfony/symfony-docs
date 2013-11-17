@@ -20,8 +20,9 @@ Installing a Symfony2 Distribution
 .. tip::
 
     First, check that you have installed and configured a Web server (such
-    as Apache) with PHP 5.3.3 or higher. For more information on Symfony2
-    requirements, see the :doc:`requirements reference </reference/requirements>`.
+    as Apache) with PHP >= 5.3.3 (5.3.8 or higher being highly recommended). For
+    more information on Symfony2 requirements, see the
+    :doc:`requirements reference </reference/requirements>`.
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
