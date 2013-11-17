@@ -20,5 +20,4 @@
 * **Community**
 
   * :doc:`Release Process </contributing/community/releases>`
-  * :doc:`IRC Meetings </contributing/community/irc>`
   * :doc:`Other Resources </contributing/community/other>`
