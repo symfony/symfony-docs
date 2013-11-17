@@ -13,13 +13,13 @@ Installation
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/translation`` on `Packagist`_).
-* Use the official Git repository (https://github.com/symfony/Translation);
+* :doc:`Install it via Composer </components/using_components>` (``symfony/translation`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Translation).
 
 Constructing the Translator
 ---------------------------
 
-The main access point of the Translation Component is
+The main access point of the Translation component is
 :class:`Symfony\\Component\\Translation\\Translator`. Before you can use it,
 you need to configure it and load the messages to translate (called *message
 catalogs*).
@@ -59,7 +59,7 @@ class. A message catalog is like a dictionary of translations for a specific
 locale.
 
 The Translation component uses Loader classes to load catalogs. You can load
-multiple resources for the same locale, it will be combined into one
+multiple resources for the same locale, which will then be combined into one
 catalog.
 
 The component comes with some default Loaders and you can create your own
@@ -90,10 +90,10 @@ Loader too. The default loaders are:
 
 .. versionadded:: 2.1
     The ``IcuDatFileLoader``, ``IcuResFileLoader``, ``IniFileLoader``,
-    ``MofileLoader``, ``PoFileLoader`` and ``QtFileLoader`` are new in
+    ``MofileLoader``, ``PoFileLoader`` and ``QtFileLoader`` were added in
     Symfony 2.1
 
-All file loaders require the :doc:`Config component</components/config/index>`.
+All file loaders require the :doc:`Config component </components/config/index>`.
 
 At first, you should add one or more loaders to the ``Translator``::
 
@@ -203,7 +203,7 @@ specified locale.
 Usage
 -----
 
-Read how to use the Translation component in ":doc:`/components/translation/usage`".
+Read how to use the Translation component in :doc:`/components/translation/usage`.
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

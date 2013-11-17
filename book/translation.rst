@@ -41,7 +41,8 @@ to learn even more. Overall, the process has several steps:
    for each supported locale that translate each message in the application;
 
 #. Determine, :ref:`set and manage the user's locale <book-translation-user-locale>`
-   for the request and optionally on the user's entire session.
+   for the request and optionally
+   :doc:`on the user's entire session </cookbook/session/locale_sticky_session>`.
 
 .. _book-translation-configuration:
 
@@ -147,11 +148,12 @@ different formats, XLIFF being the recommended format:
         # messages.fr.yml
         Symfony2 is great: J'aime Symfony2
 
-For information on where these files should be located, see :ref:`book-translation-resource-locations`.
+For information on where these files should be located, see
+:ref:`book-translation-resource-locations`.
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony2``. You can also translate
-message inside your :ref:`templates <book-translation-tags>`.
+the message inside your :ref:`templates <book-translation-tags>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -278,8 +280,8 @@ texts* and complex expressions:
     Using the translation tags or filters have the same effect, but with
     one subtle difference: automatic output escaping is only applied to
     translations using a filter. In other words, if you need to be sure
-    that your translated is *not* output escaped, you must apply the
-    ``raw`` filter after the translation filter:
+    that your translated message is *not* output escaped, you must apply
+    the ``raw`` filter after the translation filter:
 
     .. code-block:: jinja
 
@@ -290,7 +292,7 @@ texts* and complex expressions:
 
             {% set message = '<h3>foo</h3>' %}
 
-            {# strings and variables translated via a filter is escaped by default #}
+            {# strings and variables translated via a filter are escaped by default #}
             {{ message|trans|raw }}
             {{ '<h3>bar</h3>'|trans|raw }}
 
@@ -303,7 +305,7 @@ texts* and complex expressions:
            {% trans_default_domain "app" %}
 
     Note that this only influences the current template, not any "included"
-    templates (in order to avoid side effects).
+    template (in order to avoid side effects).
 
 .. versionadded:: 2.1
     The ``trans_default_domain`` tag is new in Symfony 2.1
@@ -349,7 +351,7 @@ The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
 * **domain**: An optional way to organize messages into groups (e.g. ``admin``,
-  ``navigation`` or the default ``messages``) - see ":ref:`using-message-domains`";
+  ``navigation`` or the default ``messages``) - see :ref:`using-message-domains`;
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
@@ -377,7 +379,7 @@ taste. For more options, see :ref:`component-translator-message-catalogs`.
 
     Each time you create a *new* translation resource (or install a bundle
     that includes a translation resource), be sure to clear your cache so
-    that Symfony can discover the new translation resource:
+    that Symfony can discover the new translation resources:
 
     .. code-block:: bash
 
@@ -484,11 +486,13 @@ by the routing system using the special ``_locale`` parameter:
         return $collection;
 
 When using the special ``_locale`` parameter in a route, the matched locale
-will *automatically be set on the user's session*. In other words, if a user
+will *automatically be set on the Request* and can be retrieved via the
+:method:`Symfony\\Component\\HttpFoundation\\Request::getLocale` method.
+In other words, if a user
 visits the URI ``/fr/contact``, the locale ``fr`` will automatically be set
-as the locale for the user's session.
+as the locale for the current request.
 
-You can now use the user's locale to create routes to other translated pages
+You can now use the locale to create routes to other translated pages
 in your application.
 
 Setting a Default Locale
@@ -659,7 +663,7 @@ steps:
 * Abstract messages in your application by wrapping each in either the
   :method:`Symfony\\Component\\Translation\\Translator::trans` or
   :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods
-  (learn about this in ":doc:`/components/translation/usage`");
+  (learn about this in :doc:`/components/translation/usage`);
 
 * Translate each message into multiple locales by creating translation message
   files. Symfony2 discovers and processes each file because its name follows
