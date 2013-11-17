@@ -24,6 +24,13 @@ Required
 * ctype needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
 
+.. caution::
+
+    Be aware that Symfony2 has some known limitations when using PHP 5.3.8
+    or below. For more information see the `Requirements section of the readme`_
+
+.. _`Requirements section of the readme`: https://github.com/symfony/symfony#requirements
+
 Optional
 --------
 
