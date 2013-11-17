@@ -34,7 +34,7 @@ in several ways.
 .. note::
 
     As mentioned, by default the user is redirected back to the page he originally
-    requested. Sometimes, this can cause problems, like if a background AJAX
+    requested. Sometimes, this can cause problems, like if a background Ajax
     request "appears" to be the last visited URL, causing the user to be
     redirected there. For information on controlling this behavior, see
     :doc:`/cookbook/security/target_path`.
