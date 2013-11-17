@@ -59,7 +59,7 @@ To do so, just create a new handler and configure it like this:
             </monolog:handlers>
         </monolog:config>
 
-Yaml specification
+YAML specification
 ------------------
 
 You can specify the configuration by many forms:

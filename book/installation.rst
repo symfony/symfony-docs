@@ -180,7 +180,7 @@ Symfony itself - into the ``vendor/`` directory.
 .. tip::
 
     When running ``php composer.phar install`` or ``php composer.phar update``,
-    composer will execute post install/update commands to clear the cache
+    Composer will execute post install/update commands to clear the cache
     and install assets. By default, the assets will be copied into your ``web``
     directory.
 
@@ -321,11 +321,11 @@ Using Source Control
 
 If you're using a version control system like ``Git`` or ``Subversion``, you
 can setup your version control system and begin committing your project to
-it as normal. The Symfony Standard edition *is* the starting point for your
+it as normal. The Symfony Standard Edition *is* the starting point for your
 new project.
 
 For specific instructions on how best to setup your project to be stored
-in git, see :doc:`/cookbook/workflow/new_project_git`.
+in Git, see :doc:`/cookbook/workflow/new_project_git`.
 
 Ignoring the ``vendor/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

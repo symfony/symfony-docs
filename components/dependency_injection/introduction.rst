@@ -179,7 +179,7 @@ Setting Up the Container with Configuration Files
 -------------------------------------------------
 
 As well as setting up the services using PHP as above you can also use
-configuration files. This allows you to use XML or Yaml to write the definitions
+configuration files. This allows you to use XML or YAML to write the definitions
 for the services rather than using PHP to define the services as in the above
 examples. In anything but the smallest applications it make sense to organize
 the service definitions by moving them into one or more configuration files.

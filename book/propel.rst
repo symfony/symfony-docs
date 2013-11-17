@@ -126,7 +126,7 @@ After creating your ``schema.xml``, generate your model from it by running:
     $ php app/console propel:model:build
 
 This generates each model class to quickly develop your application in the
-``Model/`` directory the ``AcmeStoreBundle`` bundle.
+``Model/`` directory of the ``AcmeStoreBundle`` bundle.
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

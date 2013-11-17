@@ -11,7 +11,7 @@ you'll see a number of different configuration "namespaces", such as ``framework
 you to configure things at a high level and then let the bundle make all the
 low-level, complex changes that result.
 
-For example, the following tells the ``FrameworkBundle`` to enable the form
+For example, the following tells the FrameworkBundle to enable the form
 integration, which involves the defining of quite a few services as well
 as integration of other related components:
 
@@ -515,7 +515,7 @@ Default Configuration Dump
     The ``config:dump-reference`` command was added in Symfony 2.1
 
 The ``config:dump-reference`` command allows a bundle's default configuration to
-be output to the console in yaml.
+be output to the console in YAML.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
@@ -555,7 +555,7 @@ Comments and examples can be added to your configuration nodes using the
         }
     }
 
-This text appears as yaml comments in the output of the ``config:dump-reference``
+This text appears as YAML comments in the output of the ``config:dump-reference``
 command.
 
 .. index::

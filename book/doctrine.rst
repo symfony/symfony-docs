@@ -1485,7 +1485,7 @@ and ``nullable``. Take a few examples:
         fields:
             # A string field length 255 that cannot be null
             # (reflecting the default values for the "length" and *nullable* options)
-            # type attribute is necessary in yaml definitions
+            # type attribute is necessary in YAML definitions
             name:
                 type: string
 
@@ -1502,7 +1502,7 @@ and ``nullable``. Take a few examples:
         <!--
             A string field length 255 that cannot be null
             (reflecting the default values for the "length" and *nullable* options)
-            type attribute is necessary in xml definitions
+            type attribute is necessary in XML definitions
         -->
         <field name="name" type="string" />
         <field name="email"
@@ -1564,7 +1564,7 @@ Some notable or interesting tasks include:
 .. note::
 
    To be able to load data fixtures to your database, you will need to have
-   the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
+   the DoctrineFixturesBundle bundle installed. To learn how to do it,
    read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
    documentation.
 

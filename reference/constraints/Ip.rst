@@ -83,7 +83,7 @@ version
 
 **type**: ``string`` **default**: ``4``
 
-This determines exactly *how* the ip address is validated and can take one
+This determines exactly *how* the IP address is validated and can take one
 of a variety of different values:
 
 **All ranges**

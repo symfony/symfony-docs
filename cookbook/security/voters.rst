@@ -31,7 +31,7 @@ which requires the following three methods:
     }
 
 The ``supportsAttribute()`` method is used to check if the voter supports
-the given user attribute (i.e: a role, an acl, etc.).
+the given user attribute (i.e: a role, an ACL, etc.).
 
 The ``supportsClass()`` method is used to check if the voter supports the
 current user token class.

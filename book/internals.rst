@@ -66,8 +66,8 @@ Dependency Injection component and a powerful plugin system (bundles).
     :doc:`Dependency Injection </book/service_container>` and
     :doc:`Bundles </cookbook/bundles/best_practices>`.
 
-``FrameworkBundle`` Bundle
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+FrameworkBundle
+~~~~~~~~~~~~~~~
 
 The :namespace:`Symfony\\Bundle\\FrameworkBundle` bundle is the bundle that
 ties the main components and libraries together to make a lightweight and fast
@@ -254,7 +254,7 @@ or setup variables so that a Controller can be called after the event. Any
 listener can return a ``Response`` object via the ``setResponse()`` method on
 the event. In this case, all other listeners won't be called.
 
-This event is used by ``FrameworkBundle`` to populate the ``_controller``
+This event is used by the FrameworkBundle to populate the ``_controller``
 ``Request`` attribute, via the
 :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`. RequestListener
 uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
@@ -273,7 +273,7 @@ the ``Request`` and determine the Controller name (stored in the
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
-This event is not used by ``FrameworkBundle``, but can be an entry point used
+This event is not used by the FrameworkBundle, but can be an entry point used
 to modify the controller that should be executed::
 
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -299,7 +299,7 @@ to modify the controller that should be executed::
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
-This event is not used by ``FrameworkBundle``, but it can be used to implement
+This event is not used by the FrameworkBundle, but it can be used to implement
 a view sub-system. This event is called *only* if the Controller does *not*
 return a ``Response`` object. The purpose of the event is to allow some other
 return value to be converted into a ``Response``.
@@ -342,7 +342,7 @@ The purpose of this event is to allow other systems to modify or replace the
         // ... modify the response object
     }
 
-The ``FrameworkBundle`` registers several listeners:
+The FrameworkBundle registers several listeners:
 
 * :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`:
   collects data for the current request;
@@ -387,7 +387,7 @@ was already served to the client.
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-``FrameworkBundle`` registers an
+The FrameworkBundle registers an
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
 ``exception_listener.controller`` parameter -- must be in the
