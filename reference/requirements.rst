@@ -24,6 +24,11 @@ Required
 * ctype needs to be enabled
 * Your ``php.ini`` needs to have the ``date.timezone`` setting
 
+.. caution::
+
+    Be aware that Symfony2 has some known limitations when using PHP 5.3.8
+    or below. For more information see the `Requirements section of the readme`_
+
 Optional
 --------
 
@@ -48,3 +53,5 @@ Doctrine
 If you want to use Doctrine, you will need to have PDO installed. Additionally,
 you need to have the PDO driver installed for the database server you want
 to use.
+
+.. _`Requirements section of the readme`: https://github.com/symfony/symfony#requirements
