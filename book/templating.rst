@@ -1403,9 +1403,11 @@ In many cases, you may want to allow a single controller to render multiple
 different formats based on the "request format". For that reason, a common
 pattern is to do the following::
 
-    public function indexAction()
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction(Request $request)
     {
-        $format = $this->getRequest()->getRequestFormat();
+        $format = $request->getRequestFormat();
 
         return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }

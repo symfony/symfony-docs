@@ -202,7 +202,7 @@ rules::
         class Document
         {
             // ...
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('file', new Assert\File(array(
@@ -222,12 +222,13 @@ The following controller shows you how to handle the entire process::
     // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     /**
      * @Template()
      */
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
         $document = new Document();
         $form = $this->createFormBuilder($document)
@@ -236,8 +237,8 @@ The following controller shows you how to handle the entire process::
             ->getForm()
         ;
 
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 

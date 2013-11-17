@@ -557,12 +557,14 @@ each ``ETag`` must be unique across all representations of the same resource.
 
 To see a simple implementation, generate the ETag as the md5 of the content::
 
-    public function indexAction()
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction(Request $request)
     {
         $response = $this->render('MyBundle:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
         $response->setPublic(); // make sure the response is public/cacheable
-        $response->isNotModified($this->getRequest());
+        $response->isNotModified($request);
 
         return $response;
     }
@@ -604,7 +606,9 @@ For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
 header value::
 
-    public function showAction($articleSlug)
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function showAction(Request $request, $articleSlug)
     {
         // ...
 
@@ -617,7 +621,7 @@ header value::
         // Set response as public. Otherwise it will be private by default.
         $response->setPublic();
 
-        if ($response->isNotModified($this->getRequest())) {
+        if ($response->isNotModified($request)) {
             return $response;
         }
 
@@ -653,8 +657,9 @@ the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
 
-    public function showAction($articleSlug)
+    public function showAction(Request $request, $articleSlug)
     {
         // Get the minimum information to compute
         // the ETag or the Last-Modified value
@@ -671,7 +676,7 @@ exposing a simple and efficient pattern::
         $response->setPublic();
 
         // Check that the Response is not modified for the given Request
-        if ($response->isNotModified($this->getRequest())) {
+        if ($response->isNotModified($request)) {
             // return the 304 Response immediately
             return $response;
         } else {
