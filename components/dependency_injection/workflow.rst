@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Workflow
+   single: DependencyInjection; Workflow
 
 Container Building Workflow
 ===========================

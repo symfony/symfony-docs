@@ -1,8 +1,8 @@
 .. index::
     single: APC; ApcClassLoader
-    single: Class Loader; ApcClassLoader
-    single: Class Loader; Cache
-    single: Class Loader; XcacheClassLoader
+    single: ClassLoader; ApcClassLoader
+    single: ClassLoader; Cache
+    single: ClassLoader; XcacheClassLoader
     single: XCache; XcacheClassLoader
     
 Cache a Class Loader

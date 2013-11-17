@@ -1,5 +1,5 @@
 ﻿.. index::
-   single: Dependency Injection; Compilation
+   single: DependencyInjection; Compilation
 
 Compiling the Container
 =======================

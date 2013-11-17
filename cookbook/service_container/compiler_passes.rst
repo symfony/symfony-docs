@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Compiler passes
+   single: DependencyInjection; Compiler passes
    single: Service Container; Compiler passes
 
 How to work with Compiler Passes in Bundles

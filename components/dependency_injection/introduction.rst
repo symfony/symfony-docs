@@ -1,5 +1,5 @@
 ﻿.. index::
-    single: Dependency Injection
+    single: DependencyInjection
     single: Components; DependencyInjection
 
 The DependencyInjection Component

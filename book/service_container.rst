@@ -1,6 +1,6 @@
 .. index::
    single: Service Container
-   single: Dependency Injection; Container
+   single: DependencyInjection; Container
 
 Service Container
 =================

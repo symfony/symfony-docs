@@ -91,7 +91,7 @@ The second method has several specific advantages:
 
 .. index::
    single: Bundle; Extension
-   single: Dependency Injection; Extension
+   single: DependencyInjection; Extension
 
 Creating an Extension Class
 ---------------------------

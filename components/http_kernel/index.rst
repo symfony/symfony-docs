@@ -1,4 +1,4 @@
-HTTPKernel
+HttpKernel
 ==========
 
 .. toctree::

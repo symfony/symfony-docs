@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Scopes
+   single: DependencyInjection; Scopes
 
 How to work with Scopes
 =======================
