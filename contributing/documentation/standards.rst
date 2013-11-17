@@ -119,7 +119,9 @@ Language Standards
 
 * For sections, use the following rule for capitalization:
   `Capitalization of the first word, and all other words, except for closed-class words`_:
+
     The Vitamins are in my Fresh California Raisins
+
 * Do not use `Serial (Oxford) Commas`_;
 * You should use a form of *you* instead of *we* (i.e. avoid the first person
   point of view: use the second instead).
