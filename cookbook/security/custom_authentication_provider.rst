@@ -165,7 +165,7 @@ set an authenticated token in the security context if successful.
         }
     }
 
-This listener checks the request for the expected `X-WSSE` header, matches
+This listener checks the request for the expected ``X-WSSE` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
@@ -555,7 +555,7 @@ in order to put it to use.
     should use instead of the hard-coded 300 seconds. These two steps are
     not shown here.
 
-The lifetime of each wsse request is now configurable, and can be
+The lifetime of each WSSE request is now configurable, and can be
 set to any desirable value per firewall.
 
 .. configuration-block::
