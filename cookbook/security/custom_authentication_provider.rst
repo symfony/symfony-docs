@@ -165,7 +165,7 @@ set an authenticated token in the security context if successful.
         }
     }
 
-This listener checks the request for the expected ``X-WSSE` header, matches
+This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
