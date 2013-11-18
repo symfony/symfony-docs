@@ -834,7 +834,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 For more details, see :doc:`/cookbook/serializer`.
 
 swiftmailer.default.plugin
-------------------
+--------------------------
 
 **Purpose**: Register a custom SwiftMailer Plugin
 
