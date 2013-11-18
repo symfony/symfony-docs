@@ -117,7 +117,7 @@ Example
 Language Standards
 ------------------
 
-* For sections, use the following rule for capitalization:
+* For sections, use the following capitalization rules:
   `Capitalization of the first word, and all other words, except for closed-class words`_:
     The Vitamins are in my Fresh California Raisins
 * Do not use `Serial (Oxford) Commas`_;
