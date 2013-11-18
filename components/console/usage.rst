@@ -5,7 +5,7 @@ Using Console Commands, Shortcuts and Built-in Commands
 =======================================================
 
 In addition to the options you specify for your commands, there are some
-built-in options as well as a couple of built-in commands for the console component.
+built-in options as well as a couple of built-in commands for the Console component.
 
 .. note::
 

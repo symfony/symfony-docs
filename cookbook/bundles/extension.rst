@@ -91,7 +91,7 @@ The second method has several specific advantages:
 
 .. index::
    single: Bundle; Extension
-   single: Dependency Injection; Extension
+   single: DependencyInjection; Extension
 
 Creating an Extension Class
 ---------------------------
@@ -494,7 +494,7 @@ configuration arrays together.
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
 normalization and advanced merging. You can read more about this in
-:doc:`the Config Component documentation </components/config/definition>`.
+:doc:`the Config component documentation </components/config/definition>`.
 You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 

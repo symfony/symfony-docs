@@ -1,5 +1,5 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
 How to setup before and after Filters
 =====================================

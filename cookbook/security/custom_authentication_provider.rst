@@ -78,7 +78,7 @@ provider.
 
 .. note::
 
-    The ``WsseUserToken`` class extends the security component's
+    The ``WsseUserToken`` class extends the Security component's
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`
     class, which provides basic token functionality. Implement the
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
@@ -282,7 +282,7 @@ The Factory
 You have created a custom token, custom listener, and custom provider. Now
 you need to tie them all together. How do you make your provider available
 to your security configuration? The answer is by using a ``factory``. A factory
-is where you hook into the security component, telling it the name of your
+is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.

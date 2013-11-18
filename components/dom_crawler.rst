@@ -5,7 +5,7 @@
 The DomCrawler Component
 ========================
 
-    The DomCrawler Component eases DOM navigation for HTML and XML documents.
+    The DomCrawler component eases DOM navigation for HTML and XML documents.
 
 .. note::
 
@@ -58,7 +58,7 @@ interacting with html links and forms as you traverse through the HTML tree.
     official specification. For example, if you nest a `` <p>`` tag inside
     another `` <p>`` tag, it will be moved to be a sibling of the parent tag.
     This is expected and is part of the HTML5 spec. But if you're getting
-    unexpected behavior, this could be a cause. And while the ``DomCrawler``
+    unexpected behavior, this could be a cause. And while the DomCrawler
     isn't meant to dump content, you can see the "fixed" version if your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
@@ -73,7 +73,7 @@ Using XPath expressions is really easy::
 
     ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
-Filtering is even easier if you have the ``CssSelector`` Component installed.
+Filtering is even easier if you have the CssSelector component installed.
 This allows you to use jQuery-like selectors to traverse::
 
     $crawler = $crawler->filter('body > p');

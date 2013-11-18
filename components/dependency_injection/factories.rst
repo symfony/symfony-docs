@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Factories
+   single: DependencyInjection; Factories
 
 Using a Factory to Create Services
 ==================================

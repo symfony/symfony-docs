@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Parameters
+   single: DependencyInjection; Parameters
 
 Introduction to Parameters
 ==========================

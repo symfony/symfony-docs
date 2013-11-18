@@ -22,7 +22,7 @@
   * :doc:`/components/console/single_command_tool`
   * :doc:`/components/console/helpers/index`
 
-* **CSS Selector**
+* **CssSelector**
 
   * :doc:`/components/css_selector`
 
@@ -40,7 +40,7 @@
   * :doc:`/components/dependency_injection/advanced`
   * :doc:`/components/dependency_injection/workflow`
 
-* **DOM Crawler**
+* **DomCrawler**
 
   * :doc:`/components/dom_crawler`
 
@@ -79,7 +79,7 @@
 
   * :doc:`/components/locale`
 
-* **Options Resolver**
+* **OptionsResolver**
 
   * :doc:`/components/options_resolver`
 
