@@ -88,6 +88,57 @@ that service is preconfigured to use the channel you've specified.
 For more information - including a full example - read ":ref:`dic_tags-monolog`"
 in the Dependency Injection Tags reference section.
 
+.. _cookbook-monolog-channels-config:
+
+Configure Additional Channels without Tagged Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    Since Symfony 2.3 you can install MonologBundle 2.4 to be able to configure
+    additional channels in the configuration.
+
+With MonologBundle 2.4 you can configure additional channels without the
+need to tag your services:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        monolog:
+            channels: ["foo", "bar"]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
+        >
+            <monolog:config>
+                <monolog:channel>foo</monolog:channel>
+                <monolog:channel>bar</monolog:channel>
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('monolog', array(
+            'channels' => array(
+                'foo',
+                'bar',
+            ),
+        ));
+
+With this, you can now send log messages to the ``foo`` channel by using
+the automically registered logger service ``monolog.logger.foo``.
+
+
 Learn more from the Cookbook
 ----------------------------
 
