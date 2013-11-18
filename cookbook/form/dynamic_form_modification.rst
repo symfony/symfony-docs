@@ -527,7 +527,7 @@ only because in two different scenarios, the data that you can use is available 
 Other than that, the listeners always perform exactly the same things on a given form.
 
 One piece that may still be missing is the client-side updating of your form
-after the sport is selected. This should be handled by making an AJAX call
+after the sport is selected. This should be handled by making an Ajax call
 back to your application. In that controller, you can bind your form, but
 instead of processing it, simply use the bound form to render the updated
-fields. The response from the AJAX call can then be used to update the view.
+fields. The response from the Ajax call can then be used to update the view.

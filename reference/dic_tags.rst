@@ -25,9 +25,9 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.formula_resource`_       | Adds a resource to the current asset manager                              |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.php`_         | Remove this service if php templating is disabled                         |
+| `assetic.templating.php`_         | Remove this service if PHP templating is disabled                         |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.twig`_        | Remove this service if twig templating is disabled                        |
+| `assetic.templating.twig`_        | Remove this service if Twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -209,7 +209,7 @@ assetic.formula_loader
 A Formula loader is a class implementing
 ``Assetic\\Factory\Loader\\FormulaLoaderInterface`` interface. This class
 is responsible for loading assets from a particular kind of resources (for
-instance, twig template). Assetic ships loaders for php and twig templates.
+instance, twig template). Assetic ships loaders for PHP and Twig templates.
 
 An ``alias`` attribute defines the name of the loader.
 
@@ -218,13 +218,13 @@ assetic.formula_resource
 
 **Purpose**: Adds a resource to the current asset manager
 
-A resource is something formulae can be loaded from. For instance, twig
+A resource is something formulae can be loaded from. For instance, Twig
 templates are resources.
 
 assetic.templating.php
 ----------------------
 
-**Purpose**: Remove this service if php templating is disabled
+**Purpose**: Remove this service if PHP templating is disabled
 
 The tagged service will be removed from the container if the
 ``framework.templating.engines`` config section does not contain php.
@@ -232,10 +232,10 @@ The tagged service will be removed from the container if the
 assetic.templating.twig
 -----------------------
 
-**Purpose**: Remove this service if twig templating is disabled
+**Purpose**: Remove this service if Twig templating is disabled
 
 The tagged service will be removed from the container if
-``framework.templating.engines`` config section does not contain twig.
+``framework.templating.engines`` config section does not contain ``twig``.
 
 data_collector
 --------------

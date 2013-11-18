@@ -23,8 +23,8 @@ It is used to test the core types and you can use it to test your types too.
 .. note::
 
     Depending on the way you installed your Symfony or Symfony Form component
-    the tests may not be downloaded. Use the --prefer-source option with
-    composer if this is the case.
+    the tests may not be downloaded. Use the ``--prefer-source`` option with
+    Composer if this is the case.
 
 The Basics
 ----------

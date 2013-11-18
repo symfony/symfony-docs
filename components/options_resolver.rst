@@ -257,7 +257,7 @@ be anything, but it must be an integer. You can configure these types by calling
         ));
     }
 
-Possible types are the ones associated with the ``is_*`` php functions or a
+Possible types are the ones associated with the ``is_*`` PHP functions or a
 class name. You can also pass an array of types as the value. For instance,
 ``array('null', 'string')`` allows ``port`` to be ``null`` or a ``string``.
 

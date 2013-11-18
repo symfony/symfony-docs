@@ -47,7 +47,7 @@ to take some manual steps after transferring the files (see `Common Post-Deploym
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
-If you're using source control (e.g. git or svn), you can simplify by having
+If you're using source control (e.g. Git or SVN), you can simplify by having
 your live installation also be a copy of your repository. When you're ready
 to upgrade it is as simple as fetching the latest updates from your source
 control system.

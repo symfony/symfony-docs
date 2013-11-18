@@ -840,7 +840,7 @@ format you prefer:
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony ``FrameworkBundle`` and includes configuration for the
+for the core Symfony FrameworkBundle and includes configuration for the
 routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.
@@ -854,7 +854,7 @@ options of each feature.
     three formats (YAML, XML and PHP). Each has its own advantages and
     disadvantages. The choice of which to use is up to you:
 
-    * *YAML*: Simple, clean and readable (learn more about yaml in
+    * *YAML*: Simple, clean and readable (learn more about YAML in
       ":doc:`/components/yaml/yaml_format`");
 
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
@@ -867,7 +867,7 @@ Default Configuration Dump
 .. versionadded:: 2.1
     The ``config:dump-reference`` command was added in Symfony 2.1
 
-You can dump the default configuration for a bundle in yaml to the console using
+You can dump the default configuration for a bundle in YAML to the console using
 the ``config:dump-reference`` command.  Here is an example of dumping the default
 FrameworkBundle configuration:
 

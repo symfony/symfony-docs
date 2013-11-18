@@ -219,7 +219,7 @@ You can then achieve the same results as above using an annotation::
     annotations on public and protected methods, you cannot use them with
     private methods or methods marked final.
 
-The ``JMSSecurityExtraBundle`` also allows you to secure the parameters and return
+The JMSSecurityExtraBundle also allows you to secure the parameters and return
 values of methods. For more information, see the `JMSSecurityExtraBundle`_
 documentation.
 

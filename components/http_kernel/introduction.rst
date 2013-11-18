@@ -386,7 +386,7 @@ to create a ``Response``.
 This can be useful if you want to use a "view" layer: instead of returning
 a ``Response`` from the controller, you return data that represents the page.
 A listener to this event could then use this data to create a ``Response`` that
-is in the correct format (e.g HTML, json, etc).
+is in the correct format (e.g HTML, JSON, etc).
 
 At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
@@ -482,7 +482,7 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the ``SwiftmailerBundle`` with Symfony2 and use ``memory``
+    If you use the SwiftmailerBundle with Symfony2 and use ``memory``
     spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
     is activated, which actually delivers any emails that you scheduled to
     send during the request.
