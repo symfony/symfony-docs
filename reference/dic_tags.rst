@@ -840,9 +840,12 @@ swiftmailer.default.plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.default.plugin`` (it has no options). ``default`` in this 
-tag is the name of the mailer. You should change it to the name of your mailer 
-in order to use this tag.
+it with ``swiftmailer.default.plugin`` (it has no options). 
+
+.. note::
+
+    ``default`` in this tag is the name of the mailer. You should change it to the
+    name of your mailer in order to use this tag.
 
 A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
 For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
