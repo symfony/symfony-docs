@@ -53,7 +53,9 @@ tables are ordered from least rows to most rows in a typical application:
 
 - *acl_security_identities*: This table records all security identities (SID)
   which hold ACEs. The default implementation ships with two security
-  identities: ``RoleSecurityIdentity`` and ``UserSecurityIdentity``.
+  identities:
+  :class:`Symfony\\Component\\Security\\Acl\\Domain\\RoleSecurityIdentity` and
+  :class:`Symfony\\Component\\Security\\Acl\\Domain\\UserSecurityIdentity`.
 - *acl_classes*: This table maps class names to a unique ID which can be
   referenced from other tables.
 - *acl_object_identities*: Each row in this table represents a single domain
