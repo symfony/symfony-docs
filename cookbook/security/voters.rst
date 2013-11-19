@@ -114,7 +114,7 @@ Declaring the Voter as a Service
 --------------------------------
 
 To inject the voter into the security layer, you must declare it as a service,
-and tag it as a "security.voter":
+and tag it as a ``security.voter``:
 
 .. configuration-block::
 
