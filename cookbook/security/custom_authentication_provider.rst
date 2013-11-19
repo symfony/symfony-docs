@@ -281,7 +281,7 @@ The Factory
 
 You have created a custom token, custom listener, and custom provider. Now
 you need to tie them all together. How do you make your provider available
-to your security configuration? The answer is by using a ``factory``. A factory
+to your security configuration? The answer is by using a *factory*. A factory
 is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
@@ -531,7 +531,7 @@ the ``addConfiguration`` method.
     }
 
 Now, in the ``create`` method of the factory, the ``$config`` argument will
-contain a 'lifetime' key, set to 5 minutes (300 seconds) unless otherwise
+contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
 in order to put it to use.
 

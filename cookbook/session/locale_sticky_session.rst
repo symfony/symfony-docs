@@ -10,8 +10,8 @@ during a user's request. In this article, you'll learn how to make the locale
 of a user "sticky" so that once it's set, that same locale will be used for
 every subsequent request.
 
-Creating LocaleListener
------------------------
+Creating a LocaleListener
+-------------------------
 
 To simulate that the locale is stored in a session, you need to create and
 register a :doc:`new event listener </cookbook/service_container/event_listener>`.
