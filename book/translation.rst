@@ -6,7 +6,7 @@ Translations
 
 The term "internationalization" (often abbreviated `i18n`_) refers to the
 process of abstracting strings and other locale-specific pieces out of your
-application and into a layer where they can be translated and converted based
+application into a layer where they can be translated and converted based
 on the user's locale (i.e. language and country). For text, this means
 wrapping each with a function capable of translating the text (or "message")
 into the language of the user::
