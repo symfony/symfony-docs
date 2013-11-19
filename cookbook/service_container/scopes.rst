@@ -149,7 +149,7 @@ your code. This should also be taken into account when declaring your service:
             greeting_card_manager:
                 class: Acme\HelloBundle\Mail\GreetingCardManager
                 calls:
-                    - [setRequest, ['@?request']]
+                    - [setRequest, ['@?request=']]
 
     .. code-block:: xml
 
