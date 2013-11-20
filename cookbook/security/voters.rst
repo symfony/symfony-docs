@@ -67,6 +67,10 @@ and compare the IP address against a set of blacklisted IP addresses:
 
     class ClientIpVoter implements VoterInterface
     {
+        private $container;
+
+        private $blacklistedIp;
+            
         public function __construct(ContainerInterface $container, array $blacklistedIp = array())
         {
             $this->container     = $container;
