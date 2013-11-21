@@ -133,7 +133,7 @@ and tag it as a "security.voter":
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
                  class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
-            <argument type="service" id="request strict="false" />
+            <argument type="service" id="request" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
                 <argument>171.171.171.171</argument>
