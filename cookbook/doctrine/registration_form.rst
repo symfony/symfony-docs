@@ -84,7 +84,7 @@ the class.
 
     If you want to integrate this User within the security system, you need
     to implement the :ref:`UserInterface <book-security-user-entity>` of the
-    security component.
+    Security component.
 
 .. _cookbook-registration-password-max:
 
@@ -144,7 +144,7 @@ data class (i.e. your ``User`` entity).
 
 .. tip::
 
-    To explore more things about the form component, read :doc:`/book/forms`.
+    To explore more things about the Form component, read :doc:`/book/forms`.
 
 Embedding the User form into a Registration Form
 ------------------------------------------------

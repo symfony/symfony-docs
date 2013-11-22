@@ -77,9 +77,9 @@ Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
 (and their orders) are:
 
-* **Configuration** (including services and routing): Yaml, Xml, Php
-* **Validation**: Yaml, Annotations, Xml, Php
-* **Doctrine Mapping**: Annotations, Yaml, Xml, Php
+* **Configuration** (including services and routing): YAML, XML, PHP
+* **Validation**: YAML, Annotations, XML, PHP
+* **Doctrine Mapping**: Annotations, YAML, XML, PHP
 
 Example
 ~~~~~~~
@@ -111,15 +111,17 @@ Example
 
 .. caution::
 
-    In Yaml you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
+    In YAML you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
     but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
 
 Language Standards
 ------------------
 
-* For sections, use the following rule for capitalization:
+* For sections, use the following capitalization rules:
   `Capitalization of the first word, and all other words, except for closed-class words`_:
+
     The Vitamins are in my Fresh California Raisins
+
 * Do not use `Serial (Oxford) Commas`_;
 * You should use a form of *you* instead of *we* (i.e. avoid the first person
   point of view: use the second instead).

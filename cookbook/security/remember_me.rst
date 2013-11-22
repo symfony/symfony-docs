@@ -122,7 +122,7 @@ before accessing certain resources. For example, you might allow "remember me"
 users to see basic account information, but then require them to actually
 re-authenticate before modifying that information.
 
-The security component provides an easy way to do this. In addition to roles
+The Security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:
 

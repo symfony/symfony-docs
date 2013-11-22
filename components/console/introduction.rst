@@ -22,7 +22,7 @@ You can install the component in 2 different ways:
 
 .. note::
 
-    Windows does not support ANSI colors by default so the Console Component detects and
+    Windows does not support ANSI colors by default so the Console component detects and
     disables colors where Windows does not have support. However, if Windows is not
     configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.

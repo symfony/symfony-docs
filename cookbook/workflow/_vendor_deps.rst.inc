@@ -1,5 +1,5 @@
-Managing Vendor Libraries with composer.json
---------------------------------------------
+Managing Vendor Libraries with ``composer.json``
+------------------------------------------------
 
 How does it work?
 ~~~~~~~~~~~~~~~~~

@@ -137,7 +137,7 @@ that will invalidate the cache for a given resource:
             .port = "8080";
         }
 
-        // Acl's can contain IP's, subnets and hostnames
+        // ACL's can contain IP's, subnets and hostnames
         acl purge {
             "localhost";
             "192.168.55.0"/24;
@@ -146,7 +146,7 @@ that will invalidate the cache for a given resource:
         sub vcl_recv {
             // Match PURGE request to avoid cache bypassing
             if (req.request == "PURGE") {
-                // Match client IP to the acl
+                // Match client IP to the ACL
                 if (!client.ip ~ purge) {
                     // Deny access
                     error 405 "Not allowed.";

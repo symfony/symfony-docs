@@ -1,5 +1,5 @@
-Property Access
-===============
+PropertyAccess
+==============
 
 .. toctree::
     :maxdepth: 2

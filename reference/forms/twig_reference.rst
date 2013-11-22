@@ -248,7 +248,7 @@ to see what options you have available.
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the form component calls ``buildView`` and ``buildViewBottomUp``
+    object of your form when the Form component calls ``buildView`` and ``buildViewBottomUp``
     on each "node" of your form tree. To see what "view" variables a particularly
     field has, find the source code for the form field (and its parent fields)
     and look at the above two functions.

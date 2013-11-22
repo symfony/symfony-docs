@@ -8,7 +8,7 @@ The Form Component
     The Form component allows you to easily create, process and reuse HTML
     forms.
 
-The form component is a tool to help you solve the problem of allowing end-users
+The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
 traditionally this has been through HTML forms, the component focuses on
 processing data to and from your client and application, whether that data
@@ -89,7 +89,7 @@ array of submitted values.
 
 .. note::
 
-    For more information about the ``HttpFoundation`` component or how to
+    For more information about the HttpFoundation component or how to
     install it, see :doc:`/components/http_foundation/introduction`.
 
 CSRF Protection
@@ -217,11 +217,11 @@ text and other strings.
 
 To add these Twig filters, you can either use the built-in
 :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension` that integrates
-with Symfony's ``Translation`` component, or add the 2 Twig filters yourself,
+with Symfony's Translation component, or add the 2 Twig filters yourself,
 via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
-``Translation`` and :doc:`Config </components/config/introduction>` components
+Translation and :doc:`Config </components/config/introduction>` components
 installed. If you're using Composer, you could get the latest 2.3 version
 of each of these by adding the following to your ``composer.json`` file:
 

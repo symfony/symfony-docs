@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Advanced configuration
+   single: DependencyInjection; Advanced configuration
 
 Advanced Container Configuration
 ================================

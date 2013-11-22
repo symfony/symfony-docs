@@ -194,7 +194,7 @@ this folder.
     More commonly, however, you'll want to customize how errors are displayed
     across *all* fields. You can do this by customizing the ``form_errors``
     fragment. This takes advantage of field type inheritance. Specifically,
-    since the ``text`` type extends from the ``form`` type, the form component
+    since the ``text`` type extends from the ``form`` type, the Form component
     will first look for the type-specific fragment (e.g. ``text_errors``) before
     falling back to its parent fragment name if it doesn't exist (e.g. ``form_errors``).
 
@@ -703,7 +703,7 @@ Customizing Error Output
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
-   The form component only handles *how* the validation errors are rendered,
+   The Form component only handles *how* the validation errors are rendered,
    and not the actual validation error messages. The error messages themselves
    are determined by the validation constraints you apply to your objects.
    For more information, see the chapter on :doc:`validation </book/validation>`.
@@ -897,7 +897,7 @@ form, modify the ``use`` tag and add the following:
         {% endif %}
     {% endblock %}
 
-In twig, If you're making the form customization inside a separate template, use
+In Twig, If you're making the form customization inside a separate template, use
 the following:
 
 .. code-block:: html+jinja

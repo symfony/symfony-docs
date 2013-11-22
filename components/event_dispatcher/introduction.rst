@@ -1,9 +1,9 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
    single: Components; EventDispatcher
 
-The Event Dispatcher Component
-==============================
+The EventDispatcher Component
+=============================
 
 Introduction
 ------------
@@ -20,7 +20,7 @@ or after a method is executed, without interfering with other plugins. This is
 not an easy problem to solve with single inheritance, and multiple inheritance
 (were it possible with PHP) has its own drawbacks.
 
-The Symfony2 Event Dispatcher component implements the `Mediator`_ pattern in
+The Symfony2 EventDispatcher component implements the `Mediator`_ pattern in
 a simple and effective way to make all these things possible and to make your
 projects truly extensible.
 
@@ -42,7 +42,7 @@ used. To make this possible, the Symfony2 kernel throws an event -
   the ``Response`` object.
 
 .. index::
-   single: Event Dispatcher; Events
+   single: EventDispatcher; Events
 
 Installation
 ------------
@@ -65,7 +65,7 @@ and passed to all of the listeners. As you'll see later, the ``Event`` object
 itself often contains data about the event being dispatched.
 
 .. index::
-   pair: Event Dispatcher; Naming conventions
+   pair: EventDispatcher; Naming conventions
 
 Naming Conventions
 ..................
@@ -86,7 +86,7 @@ Here are some examples of good event names:
 * ``form.pre_set_data``
 
 .. index::
-   single: Event Dispatcher; Event subclasses
+   single: EventDispatcher; Event subclasses
 
 Event Names and Event Objects
 .............................
@@ -123,7 +123,7 @@ listeners registered with that event::
     $dispatcher = new EventDispatcher();
 
 .. index::
-   single: Event Dispatcher; Listeners
+   single: EventDispatcher; Listeners
 
 Connecting Listeners
 ~~~~~~~~~~~~~~~~~~~~
@@ -204,7 +204,7 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 .. _event_dispatcher-closures-as-listeners:
 
 .. index::
-   single: Event Dispatcher; Creating and dispatching an event
+   single: EventDispatcher; Creating and dispatching an event
 
 Creating and Dispatching an Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -316,7 +316,7 @@ the ``getOrder`` method::
     }
 
 .. index::
-   single: Event Dispatcher; Event subscribers
+   single: EventDispatcher; Event subscribers
 
 .. _event_dispatcher-using-event-subscribers:
 
@@ -398,7 +398,7 @@ example, when the ``kernel.response`` event is triggered, the methods
 are called in that order.
 
 .. index::
-   single: Event Dispatcher; Stopping event flow
+   single: EventDispatcher; Stopping event flow
 
 .. _event_dispatcher-event-propagation:
 
@@ -434,7 +434,7 @@ which returns a boolean value::
     }
 
 .. index::
-   single: Event Dispatcher; Event Dispatcher aware events and listeners
+   single: EventDispatcher; EventDispatcher aware events and listeners
 
 .. _event_dispatcher-dispatcher-aware-events:
 
@@ -526,7 +526,7 @@ time. But when you have a long list of dependencies, using setter injection
 can be the way to go, especially for optional dependencies.
 
 .. index::
-   single: Event Dispatcher; Dispatcher shortcuts
+   single: EventDispatcher; Dispatcher shortcuts
 
 .. _event_dispatcher-shortcuts:
 
@@ -563,7 +563,7 @@ Or::
 and so on...
 
 .. index::
-   single: Event Dispatcher; Event name introspection
+   single: EventDispatcher; Event name introspection
 
 .. _event_dispatcher-event-name-introspection:
 

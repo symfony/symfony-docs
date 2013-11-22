@@ -5,7 +5,7 @@
 The Templating Component
 ========================
 
-    The Templating Component provides all the tools needed to build any kind
+    The Templating component provides all the tools needed to build any kind
     of template system.
 
     It provides an infrastructure to load template files and optionally

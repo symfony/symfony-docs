@@ -6,8 +6,8 @@
 The HttpKernel Component
 ========================
 
-    The HttpKernel Component provides a structured process for converting
-    a ``Request`` into a ``Response`` by making use of the event dispatcher.
+    The HttpKernel component provides a structured process for converting
+    a ``Request`` into a ``Response`` by making use of the EventDispatcher.
     It's flexible enough to create a full-stack framework (Symfony), a micro-framework
     (Silex) or an advanced CMS system (Drupal).
 
@@ -79,7 +79,7 @@ and talks about how one specific implementation of the HttpKernel - the Symfony
 Framework - works.
 
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
-is really simple, and involves creating an :doc:`event dispatcher </components/event_dispatcher/introduction>`
+is really simple, and involves creating an :doc:`EventDispatcher </components/event_dispatcher/introduction>`
 and a :ref:`controller resolver <component-http-kernel-resolve-controller>`
 (explained below). To complete your working kernel, you'll add more event
 listeners to the events discussed below::
@@ -117,7 +117,7 @@ For general information on adding listeners to the events below, see
 
 .. tip::
 
-    Fabien Potencier also wrote a wonderful series on using the ``HttpKernel``
+    Fabien Potencier also wrote a wonderful series on using the HttpKernel
     component and other Symfony2 components to create your own framework. See
     `Create your own framework... on top of the Symfony2 Components`_.
 
@@ -174,7 +174,7 @@ attributes).
     This class executes the routing layer, which returns an *array* of information
     about the matched request, including the ``_controller`` and any placeholders
     that are in the route's pattern (e.g. ``{slug}``). See
-    :doc:`Routing Component </components/routing/introduction>`.
+    :doc:`Routing component </components/routing/introduction>`.
 
     This array of information is stored in the :class:`Symfony\\Component\\HttpFoundation\\Request`
     object's ``attributes`` array. Adding the routing information here doesn't
@@ -386,7 +386,7 @@ to create a ``Response``.
 This can be useful if you want to use a "view" layer: instead of returning
 a ``Response`` from the controller, you return data that represents the page.
 A listener to this event could then use this data to create a ``Response`` that
-is in the correct format (e.g HTML, json, etc).
+is in the correct format (e.g HTML, JSON, etc).
 
 At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
@@ -479,7 +479,7 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the ``SwiftmailerBundle`` with Symfony2 and use ``memory``
+    If you use the SwiftmailerBundle with Symfony2 and use ``memory``
     spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
     is activated, which actually delivers any emails that you scheduled to
     send during the request.
@@ -511,7 +511,7 @@ exception and create an appropriate error ``Response``.
 
 For example, to generate a 404 page, you might throw a special type of exception
 and then add a listener on this event that looks for this exception and
-creates and returns a 404 ``Response``. In fact, the ``HttpKernel`` component
+creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
@@ -523,7 +523,7 @@ below for more details).
 
     **ExceptionListener in HttpKernel**
 
-    The first comes core to the ``HttpKernel`` component
+    The first comes core to the HttpKernel component
     and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`.
     The listener has several goals:
 

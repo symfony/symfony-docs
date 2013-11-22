@@ -1,5 +1,5 @@
 ﻿.. index::
-   single: Dependency Injection; Tags
+   single: DependencyInjection; Tags
 
 Working with Tagged Services
 ============================

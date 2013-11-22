@@ -11,7 +11,7 @@ you'll see a number of different configuration "namespaces", such as ``framework
 you to configure things at a high level and then let the bundle make all the
 low-level, complex changes that result.
 
-For example, the following tells the ``FrameworkBundle`` to enable the form
+For example, the following tells the FrameworkBundle to enable the form
 integration, which involves the defining of quite a few services as well
 as integration of other related components:
 
@@ -91,7 +91,7 @@ The second method has several specific advantages:
 
 .. index::
    single: Bundle; Extension
-   single: Dependency Injection; Extension
+   single: DependencyInjection; Extension
 
 Creating an Extension Class
 ---------------------------
@@ -494,7 +494,7 @@ configuration arrays together.
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
 normalization and advanced merging. You can read more about this in
-:doc:`the Config Component documentation </components/config/definition>`.
+:doc:`the Config component documentation </components/config/definition>`.
 You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 
@@ -512,7 +512,7 @@ Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``config:dump-reference`` command allows a bundle's default configuration to
-be output to the console in yaml.
+be output to the console in YAML.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
@@ -552,7 +552,7 @@ Comments and examples can be added to your configuration nodes using the
         }
     }
 
-This text appears as yaml comments in the output of the ``config:dump-reference``
+This text appears as YAML comments in the output of the ``config:dump-reference``
 command.
 
 .. index::

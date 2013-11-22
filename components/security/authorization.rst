@@ -98,7 +98,7 @@ manager to use them:
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
     or ``VoterInterface::ACCESS_ABSTAIN``;
 
-The security component contains some standard voters which cover many use
+The Security component contains some standard voters which cover many use
 cases:
 
 AuthenticatedVoter

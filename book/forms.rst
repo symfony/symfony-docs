@@ -11,8 +11,8 @@ learning the most important features of the form library along the way.
 
 .. note::
 
-   The Symfony form component is a standalone library that can be used outside
-   of Symfony2 projects. For more information, see the `Symfony2 Form Component`_
+   The Symfony Form component is a standalone library that can be used outside
+   of Symfony2 projects. For more information, see the `Symfony2 Form component`_
    on Github.
 
 .. index::
@@ -186,7 +186,7 @@ it into a format that's suitable for being rendered in an HTML form.
    The form system is smart enough to access the value of the protected
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
-   "setter" method so that the form component can get and put data onto the
+   "setter" method so that the Form component can get and put data onto the
    property. For a Boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
@@ -1213,7 +1213,7 @@ Embedded Forms
 Often, you'll want to build a form that will include fields from many different
 objects. For example, a registration form may contain data belonging to
 a ``User`` object as well as many ``Address`` objects. Fortunately, this
-is easy and natural with the form component.
+is easy and natural with the Form component.
 
 Embedding a Single Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1415,7 +1415,7 @@ do this, create a new template file that will store the new markup:
         </div>
 
 The ``form_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the form component to use your new ``form_row``
+``form_row`` function. To tell the Form component to use your new ``form_row``
 fragment defined above, add the following to the top of the template that
 renders the form:
 
@@ -1896,7 +1896,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
 
-.. _`Symfony2 Form Component`: https://github.com/symfony/Form
+.. _`Symfony2 Form component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/2.2/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

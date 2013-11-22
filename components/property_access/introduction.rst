@@ -9,8 +9,8 @@ The PropertyAccess Component
     object or array using a simple string notation.
 
 .. versionadded:: 2.2
-    The PropertyAccess Component is new to Symfony 2.2. Previously, the
-    ``PropertyPath`` class was located in the ``Form`` component.
+    The PropertyAccess component is new to Symfony 2.2. Previously, the
+    ``PropertyPath`` class was located in the Form component.
 
 Installation
 ------------
