@@ -665,7 +665,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
-
+        
+        use Doctrine\Common\Collections\ArrayCollection;
+        
         // ...
         public function editAction($id, Request $request)
         {
@@ -676,7 +678,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for is '.$id);
             }
 
-            $originalTags = new \Doctrine\Common\Collections\ArrayCollection();
+            $originalTags = new ArrayCollection();
 
             // Create an ArrayCollection of the current Tag objects in the database
             foreach ($task->getTags() as $tag) {
@@ -691,11 +693,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
                 // remove the relationship between the tag and the Task
                 foreach ($originalTags as $tag) {
-                    if ($task->getTags()->contains($tag) == false) {
+                    if (false === $task->getTags()->contains($tag)) {
                         // remove the Task from the Tag
                         $tag->getTasks()->removeElement($task);
 
-                        // if it were a ManyToOne relationship, remove the relationship like this
+                        // if it was a ManyToOne relationship, remove the relationship like this
                         // $tag->setTask(null);
 
                         $em->persist($tag);
