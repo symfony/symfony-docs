@@ -109,7 +109,7 @@ the project.
 The easiest way to store your project on a remote server is via a web-based
 hosting service like `GitHub`_ or `Bitbucket`_. Of course, there are more
 services out there, you can start your research with a
-`comparision of hosting services`_.
+`comparison of hosting services`_.
 
 Alternatively, you can store your Git repository on any server by creating
 a `barebones repository`_ and then pushing to it. One library that helps
@@ -123,4 +123,4 @@ manage this is `Gitolite`_.
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
 .. _`Github .gitignore`: https://help.github.com/articles/ignoring-files
 .. _`Bitbucket`: https://bitbucket.org/
-.. _`comparision of hosting services`: http://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities
+.. _`comparison of hosting services`: http://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities
