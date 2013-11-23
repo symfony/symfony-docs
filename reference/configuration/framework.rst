@@ -7,7 +7,7 @@ FrameworkBundle Configuration ("framework")
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered.
 
-The ``FrameworkBundle`` contains most of the "base" framework functionality
+The FrameworkBundle contains most of the "base" framework functionality
 and can be configured under the ``framework`` key in your application configuration.
 This includes settings related to sessions, translation, forms, validation,
 routing and more.

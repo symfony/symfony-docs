@@ -1,6 +1,6 @@
 .. index::
    single: Service Container
-   single: Dependency Injection; Container
+   single: DependencyInjection; Container
 
 Service Container
 =================
@@ -31,7 +31,7 @@ the service container makes writing good code so easy.
 .. tip::
 
     If you want to know a lot more after reading this chapter, check out
-    the :doc:`Dependency Injection Component Documentation </components/dependency_injection/introduction>`.
+    the :doc:`DependencyInjection component documentation </components/dependency_injection/introduction>`.
 
 .. index::
    single: Service Container; What is a service?
@@ -251,8 +251,8 @@ looks up the value of each parameter and uses it in the service definition.
 .. note::
 
     If you want to use a string that starts with an ``@`` sign as a parameter
-    value (i.e. a very safe mailer password) in a yaml file, you need to escape
-    it by adding another ``@`` sign (This only applies to the YAML format):
+    value (i.e. a very safe mailer password) in a YAML file, you need to escape
+    it by adding another ``@`` sign (this only applies to the YAML format):
 
     .. code-block:: yaml
 
@@ -452,9 +452,9 @@ In other words, a service container extension configures the services for
 a bundle on your behalf. And as you'll see in a moment, the extension provides
 a sensible, high-level interface for configuring the bundle.
 
-Take the ``FrameworkBundle`` - the core Symfony2 framework bundle - as an
+Take the FrameworkBundle - the core Symfony2 framework bundle - as an
 example. The presence of the following code in your application configuration
-invokes the service container extension inside the ``FrameworkBundle``:
+invokes the service container extension inside the FrameworkBundle:
 
 .. configuration-block::
 
@@ -502,21 +502,21 @@ invokes the service container extension inside the ``FrameworkBundle``:
 
 When the configuration is parsed, the container looks for an extension that
 can handle the ``framework`` configuration directive. The extension in question,
-which lives in the ``FrameworkBundle``, is invoked and the service configuration
-for the ``FrameworkBundle`` is loaded. If you remove the ``framework`` key
+which lives in the FrameworkBundle, is invoked and the service configuration
+for the FrameworkBundle is loaded. If you remove the ``framework`` key
 from your application configuration file entirely, the core Symfony2 services
 won't be loaded. The point is that you're in control: the Symfony2 framework
 doesn't contain any magic or perform any actions that you don't have control
 over.
 
 Of course you can do much more than simply "activate" the service container
-extension of the ``FrameworkBundle``. Each extension allows you to easily
+extension of the FrameworkBundle. Each extension allows you to easily
 customize the bundle, without worrying about how the internal services are
 defined.
 
 In this case, the extension allows you to customize the ``error_handler``,
 ``csrf_protection``, ``router`` configuration and much more. Internally,
-the ``FrameworkBundle`` uses the options specified here to define and configure
+the FrameworkBundle uses the options specified here to define and configure
 the services specific to it. The bundle takes care of creating all the necessary
 ``parameters`` and ``services`` for the service container, while still allowing
 much of the configuration to be easily customized. As an added bonus, most
@@ -1020,7 +1020,7 @@ the framework.
     Be sure that the ``swiftmailer`` entry appears in your application
     configuration. As was mentioned in :ref:`service-container-extension-configuration`,
     the ``swiftmailer`` key invokes the service extension from the
-    ``SwiftmailerBundle``, which registers the ``mailer`` service.
+    SwiftmailerBundle, which registers the ``mailer`` service.
 
 .. _book-service-container-tags:
 
@@ -1061,7 +1061,7 @@ to be used for a specific purpose. Take the following example:
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 
-The ``twig.extension`` tag is a special tag that the ``TwigBundle`` uses
+The ``twig.extension`` tag is a special tag that the TwigBundle uses
 during configuration. By giving the service this ``twig.extension`` tag,
 the bundle knows that the ``foo.twig.extension`` service should be registered
 as a Twig extension with Twig. In other words, Twig finds all services tagged

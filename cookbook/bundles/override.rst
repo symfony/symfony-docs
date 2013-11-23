@@ -167,7 +167,7 @@ the constraints to a new validation group:
             </class>
         </constraint-mapping>
 
-Now, update the FosUserBundle configuration, so it uses your validation groups
+Now, update the FOSUserBundle configuration, so it uses your validation groups
 instead of the original ones.
 
 .. _override-translations:

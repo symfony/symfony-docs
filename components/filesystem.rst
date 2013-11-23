@@ -4,7 +4,11 @@
 The Filesystem Component
 ========================
 
-    The Filesystem components provides basic utilities for the filesystem.
+    The Filesystem component provides basic utilities for the filesystem.
+
+.. versionadded:: 2.1
+    The Filesystem component is new to Symfony 2.1. Previously, the ``Filesystem``
+    class was located in the HttpKernel component.
 
 Installation
 ------------

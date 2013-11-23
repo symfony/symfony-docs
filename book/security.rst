@@ -31,7 +31,7 @@ application with HTTP Basic authentication.
 Basic Example: HTTP Authentication
 ----------------------------------
 
-The security component can be configured via your application configuration.
+The Security component can be configured via your application configuration.
 In fact, most standard security setups are just a matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
 matching ``/admin/*`` and to ask the user for credentials using basic HTTP
@@ -1009,7 +1009,7 @@ authorization from inside a controller::
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
+You can also choose to install and use the optional JMSSecurityExtraBundle,
 which can secure your controller using annotations::
 
     // ...
@@ -1034,7 +1034,7 @@ the one seen in the previous section. For example, suppose you have a service
 You can restrict use of this class - no matter where it's being used from -
 to users that have a specific role.
 
-For more information on how you can use the security component to secure
+For more information on how you can use the Security component to secure
 different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
 
 Access Control Lists (ACLs): Securing Individual Database Objects
@@ -1045,7 +1045,7 @@ posts. Now, you want a user to be able to edit his own comments, but not
 those of other users. Also, as the admin user, you yourself want to be able
 to edit *all* comments.
 
-The security component comes with an optional access control list (ACL) system
+The Security component comes with an optional access control list (ACL) system
 that you can use when you need to control access to individual instances
 of an object in your system. *Without* ACL, you can secure your system so that
 only certain users can edit blog comments in general. But *with* ACL, you
@@ -2026,7 +2026,7 @@ Utilities
 .. versionadded:: 2.2
     The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
 
-The Symfony Security Component comes with a collection of nice utilities related
+The Symfony Security component comes with a collection of nice utilities related
 to security. These utilities are used by Symfony, but you should also use
 them if you want to solve the problem they address.
 
@@ -2079,7 +2079,7 @@ Final Words
 -----------
 
 Security can be a deep and complex issue to solve correctly in your application.
-Fortunately, Symfony's security component follows a well-proven security
+Fortunately, Symfony's Security component follows a well-proven security
 model based around *authentication* and *authorization*. Authentication,
 which always happens first, is handled by a firewall whose job is to determine
 the identity of the user through several different methods (e.g. HTTP authentication,

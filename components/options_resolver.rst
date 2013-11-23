@@ -1,11 +1,11 @@
 .. index::
-    single: Options Resolver
+    single: OptionsResolver
     single: Components; OptionsResolver
 
 The OptionsResolver Component
 =============================
 
-    The OptionsResolver Component helps you configure objects with option
+    The OptionsResolver component helps you configure objects with option
     arrays. It supports default values, option constraints and lazy options.
 
 Installation
@@ -177,7 +177,7 @@ override this default. You don't need to configure ``username`` as an optional
 option. The ``OptionsResolver`` already knows that options with a default
 value are optional.
 
-The ``OptionsResolver`` component also has an
+The OptionsResolver component also has an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::replaceDefaults`
 method. This can be used to override the previous default value. The closure
 that is passed has 2 parameters:
@@ -257,7 +257,7 @@ be anything, but it must be an integer. You can configure these types by calling
         ));
     }
 
-Possible types are the ones associated with the ``is_*`` php functions or a
+Possible types are the ones associated with the ``is_*`` PHP functions or a
 class name. You can also pass an array of types as the value. For instance,
 ``array('null', 'string')`` allows ``port`` to be ``null`` or a ``string``.
 

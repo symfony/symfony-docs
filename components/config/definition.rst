@@ -12,7 +12,7 @@ and their structure can be validated using the "Definition" part of the Config
 Component. Configuration values are usually expected to show some kind of
 hierarchy. Also, values should be of a certain type, be restricted in number
 or be one of a given set of values. For example, the following configuration
-(in Yaml) shows a clear hierarchy and some validation rules that should be
+(in YAML) shows a clear hierarchy and some validation rules that should be
 applied to it (like: "the value for ``auto_connect`` must be a boolean value"):
 
 .. code-block:: yaml
@@ -393,10 +393,10 @@ Normalization
 When the config files are processed they are first normalized, then merged
 and finally the tree is used to validate the resulting array. The normalization
 process is used to remove some of the differences that result from different
-configuration formats, mainly the differences between Yaml and XML.
+configuration formats, mainly the differences between YAML and XML.
 
-The separator used in keys is typically ``_`` in Yaml and ``-`` in XML. For
-example, ``auto_connect`` in Yaml and ``auto-connect``. The normalization would
+The separator used in keys is typically ``_`` in YAML and ``-`` in XML. For
+example, ``auto_connect`` in YAML and ``auto-connect``. The normalization would
 make both of these ``auto_connect``.
 
 .. caution::
@@ -404,8 +404,8 @@ make both of these ``auto_connect``.
     The target key will not be altered if it's mixed like
     ``foo-bar_moo`` or if it already exists.
 
-Another difference between Yaml and XML is in the way arrays of values may
-be represented. In Yaml you may have:
+Another difference between YAML and XML is in the way arrays of values may
+be represented. In YAML you may have:
 
 .. code-block:: yaml
 
@@ -444,7 +444,7 @@ a second argument::
         ->end()
     ;
 
-As well as fixing this, ``fixXmlConfig`` ensures that single xml elements
+As well as fixing this, ``fixXmlConfig`` ensures that single XML elements
 are still turned into an array. So you may have:
 
 .. code-block:: xml

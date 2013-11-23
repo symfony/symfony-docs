@@ -78,7 +78,7 @@ provider.
 
 .. note::
 
-    The ``WsseUserToken`` class extends the security component's
+    The ``WsseUserToken`` class extends the Security component's
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`
     class, which provides basic token functionality. Implement the
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
@@ -168,7 +168,7 @@ set an authenticated token in the security context if successful.
 .. versionadded:: 2.4
     Support for HTTP status code constants was added in Symfony 2.4.
 
-This listener checks the request for the expected `X-WSSE` header, matches
+This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
@@ -285,7 +285,7 @@ The Factory
 You have created a custom token, custom listener, and custom provider. Now
 you need to tie them all together. How do you make your provider available
 to your security configuration? The answer is by using a ``factory``. A factory
-is where you hook into the security component, telling it the name of your
+is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
@@ -562,7 +562,7 @@ in order to put it to use.
     should use instead of the hard-coded 300 seconds. These two steps are
     not shown here.
 
-The lifetime of each wsse request is now configurable, and can be
+The lifetime of each WSSE request is now configurable, and can be
 set to any desirable value per firewall.
 
 .. configuration-block::

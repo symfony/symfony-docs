@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Parameters
+   single: DependencyInjection; Parameters
 
 Introduction to Parameters
 ==========================
@@ -275,7 +275,7 @@ key, and define the type as ``constant``.
 
 .. note::
 
-    This does not work for Yaml configuration. If you're using Yaml, you can
+    This does not work for YAML configuration. If you're using YAML, you can
     import an XML file to take advantage of this functionality:
 
     .. configuration-block::
@@ -316,7 +316,7 @@ To disable this behavior, use the ``string`` type:
 
 .. note::
 
-    This is not available for Yaml and PHP, because they already have built-in
+    This is not available for YAML and PHP, because they already have built-in
     support for the PHP keywords.
 
 Syntax for Referencing Services
@@ -327,10 +327,10 @@ each format. You can configure the behavior if the referenced service does
 not exist. By default, an exception is thrown when a non-existent service
 is referenced.
 
-Yaml
+YAML
 ~~~~
 
-Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
+Start the string with  ``@`` or ``@?`` to reference a service in YAML.
 
 * ``@mailer`` references the ``mailer`` service. If the service does not
   exist, an exception will be thrown;
@@ -339,7 +339,7 @@ Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
 
 .. tip::
 
-    Use ``@@`` to escape the ``@`` symbol in Yaml. ``@@mailer`` will be
+    Use ``@@`` to escape the ``@`` symbol in YAML. ``@@mailer`` will be
     converted into the string ``"@mailer"`` instead of referencing the
     ``mailer`` service.
 

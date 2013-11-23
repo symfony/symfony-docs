@@ -1,5 +1,5 @@
-Class Loader
-============
+ClassLoader
+===========
 
 .. toctree::
     :maxdepth: 2

@@ -246,7 +246,7 @@ have all the request information at your fingertips::
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
-the user is connecting via a secured connection (i.e. ``https``).
+the user is connecting via a secured connection (i.e. HTTPS).
 
 .. sidebar:: ParameterBags and Request attributes
 
@@ -296,7 +296,7 @@ and create the appropriate response based on your application logic*.
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called ``HttpFoundation``. This component can be
+    included with Symfony called HttpFoundation. This component can be
     used entirely independently of Symfony and also provides classes for handling
     sessions and file uploads.
 

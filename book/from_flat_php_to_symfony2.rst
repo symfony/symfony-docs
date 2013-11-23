@@ -247,7 +247,7 @@ the layout:
 You've now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
-uses a ``Templating`` component that allows this to be accomplished cleanly
+uses a Templating component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
 
 Adding a Blog "show" Page
@@ -586,7 +586,7 @@ them for you. Here's the same sample application, now built in Symfony2::
     }
 
 The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
-to retrieve objects from the database and the ``Templating`` component to
+to retrieve objects from the database and the Templating component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
 
@@ -691,7 +691,7 @@ migrating the blog from flat PHP to Symfony2 has improved life:
   Templating, Security, Form, Validation and Translation components (to name
   a few);
 
-* The application now enjoys **fully-flexible URLs** thanks to the ``Routing``
+* The application now enjoys **fully-flexible URLs** thanks to the Routing
   component;
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools

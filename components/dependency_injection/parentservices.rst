@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Parent services
+   single: DependencyInjection; Parent services
 
 Managing Common Dependencies with Parent Services
 =================================================

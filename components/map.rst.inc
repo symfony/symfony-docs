@@ -23,7 +23,7 @@
   * :doc:`/components/console/events`
   * :doc:`/components/console/helpers/index`
 
-* **CSS Selector**
+* **CssSelector**
 
   * :doc:`/components/css_selector`
 
@@ -46,7 +46,7 @@
   * :doc:`/components/dependency_injection/lazy_services`
   * :doc:`/components/dependency_injection/workflow`
 
-* **DOM Crawler**
+* **DomCrawler**
 
   * :doc:`/components/dom_crawler`
 
@@ -91,7 +91,7 @@
 
   * :doc:`/components/intl`
 
-* **Options Resolver**
+* **OptionsResolver**
 
   * :doc:`/components/options_resolver`
 

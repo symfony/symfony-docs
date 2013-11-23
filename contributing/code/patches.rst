@@ -44,7 +44,7 @@ Set up your user information with your real name and a working email address:
     Windows users: when installing Git, the installer will ask what to do with
     line endings, and suggests replacing all LF with CRLF. This is the wrong
     setting if you wish to contribute to Symfony! Selecting the as-is method is
-    your best choice, as git will convert your line feeds to the ones in the
+    your best choice, as Git will convert your line feeds to the ones in the
     repository. If you have already installed Git, you can check the value of
     this setting by typing:
 
@@ -375,7 +375,7 @@ patch. Before re-submitting the patch, rebase with ``upstream/master`` or
 .. note::
 
     when doing a ``push --force``, always specify the branch name explicitly
-    to avoid messing other branches in the repo (``--force`` tells git that
+    to avoid messing other branches in the repo (``--force`` tells Git that
     you really want to mess with things so do it carefully).
 
 Often, moderators will ask you to "squash" your commits. This means you will
@@ -397,7 +397,7 @@ type this command, an editor will popup showing a list of commits:
 
 To squash all commits into the first one, remove the word "pick" before the
 second and the last commits, and replace it by the word "squash" or just "s".
-When you save, git will start rebasing, and if successful, will ask you to
+When you save, Git will start rebasing, and if successful, will ask you to
 edit the commit message, which by default is a listing of the commit messages
 of all the commits. When you finish, execute the push command.
 

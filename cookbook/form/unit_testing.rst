@@ -4,7 +4,7 @@
 How to Unit Test your Forms
 ===========================
 
-The Form Component consists of 3 core objects: a form type (implementing
+The Form component consists of 3 core objects: a form type (implementing
 :class:`Symfony\\Component\\Form\\FormTypeInterface`), the
 :class:`Symfony\\Component\\Form\\Form` and the
 :class:`Symfony\\Component\\Form\\FormView`.
@@ -24,6 +24,12 @@ test the core types and you can use it to test your types too.
     The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
     namespace in 2.3. Previously, the class was located in
     ``Symfony\Component\Form\Tests\Extension\Core\Type``.
+
+.. note::
+
+    Depending on the way you installed your Symfony or Symfony Form component
+    the tests may not be downloaded. Use the ``--prefer-source`` option with
+    Composer if this is the case.
 
 The Basics
 ----------
