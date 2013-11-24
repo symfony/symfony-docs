@@ -27,7 +27,7 @@ Required
 .. caution::
 
     Be aware that Symfony2 has some known limitations when using a PHP version inferior
-    to 5.3.8. For more information see the `Requirements section of the README`_.
+    to 5.3.8 or equal to 5.3.16. For more information see the `Requirements section of the README`_.
 
 Optional
 --------
