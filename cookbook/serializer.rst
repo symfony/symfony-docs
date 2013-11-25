@@ -67,7 +67,7 @@ You can load normalizers and/or encoders by tagging them as
 :ref:`serializer.encoder<reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
-Here an example on how to load the 
+Here is an example on how to load the 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`:
 
 .. configuration-block:: 
