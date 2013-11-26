@@ -36,7 +36,7 @@ which has this structure:
 
 .. include:: /cookbook/security/voter_interface.rst.inc
 
-In this example, you'll check if the user will have access to a specific
+In this example, it'll check if the user will have access to a specific
 object according to your custom conditions (e.g. he must be the owner of
 the object). If the condition fails, you'll return
 ``VoterInterface::ACCESS_DENIED``, otherwise you'll return
@@ -140,7 +140,7 @@ You could store your Voter to check permission for the view and edit action like
     }
 
 That's it! The voter is done. The next step is to inject the voter into
-the security layer. This can be done easily through the service container.
+the security layer.
 
 Declaring the Voter as a Service
 --------------------------------
