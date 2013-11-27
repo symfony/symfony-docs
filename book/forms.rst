@@ -1475,7 +1475,7 @@ Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
 In Symfony, every part of a form that is rendered - HTML form elements, errors,
-labels, etc - is defined in a base theme, which is a collection of blocks
+labels, etc. - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
 In Twig, every block needed is defined in a single template file (`form_div_layout.html.twig`_)

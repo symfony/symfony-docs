@@ -101,7 +101,7 @@ Then, you need to configure the service:
         services:
             acme_demo.profiler.matcher.super_admin:
                 class: "%acme_demo.profiler.matcher.super_admin.class%"
-                arguments: [@security.context]
+                arguments: ["@security.context"]
 
     .. code-block:: xml
 

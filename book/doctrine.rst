@@ -1087,7 +1087,7 @@ in a way that makes sense for your needs. The fact that the data needs to
 be persisted to a database is always secondary.
 
 Now, look at the metadata above the ``$category`` property on the ``Product``
-class. The information here tells doctrine that the related class is ``Category``
+class. The information here tells Doctrine that the related class is ``Category``
 and that it should store the ``id`` of the category record on a ``category_id``
 field that lives on the ``product`` table. In other words, the related ``Category``
 object will be stored on the ``$category`` property, but behind the scenes,
@@ -1285,7 +1285,7 @@ More Information on Associations
 
 This section has been an introduction to one common type of entity relationship,
 the one-to-many relationship. For more advanced details and examples of how
-to use other types of relations (e.g. ``one-to-one``, ``many-to-many``), see
+to use other types of relations (e.g. one-to-one, many-to-many), see
 Doctrine's `Association Mapping Documentation`_.
 
 .. note::

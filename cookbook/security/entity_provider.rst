@@ -237,7 +237,7 @@ then be checked against your User entity records in the database:
 
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
-                ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+                ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
             providers:
                 administrators:

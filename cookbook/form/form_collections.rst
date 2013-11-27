@@ -555,7 +555,7 @@ we talk about next!).
             }
         }
 
-    If you have a ``OneToMany`` relationship, then the workaround is similar,
+    If you have a one-to-many relationship, then the workaround is similar,
     except that you can simply call ``setTask`` from inside ``addTag``.
 
 .. _cookbook-form-collections-remove:
@@ -652,11 +652,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     ``Tag`` is properly removed.
 
     In Doctrine, you have two side of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a ``ManyToMany`` relation
+    inverse side. Normally in this case you'll have a many-to-many relation
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
 
-    But if you have an ``OneToMany`` relation or a ``ManyToMany`` with a
+    But if you have an one-to-many relation or a many-to-many with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
     you'll need to do more work for the removed tags to persist correctly.
 
@@ -703,7 +703,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                     // remove the Task from the Tag
                     $tag->getTasks()->removeElement($task);
 
-                    // if it were a ManyToOne relationship, remove the relationship like this
+                    // if it were a many-to-one relationship, remove the relationship like this
                     // $tag->setTask(null);
 
                     $em->persist($tag);
@@ -723,7 +723,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         }
 
     As you can see, adding and removing the elements correctly can be tricky.
-    Unless you have a ManyToMany relationship where Task is the "owning" side,
+    Unless you have a many-to-many relationship where Task is the "owning" side,
     you'll need to do extra work to make sure that the relationship is properly
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
