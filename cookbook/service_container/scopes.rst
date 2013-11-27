@@ -80,7 +80,7 @@ you have three ways to deal with it:
 * Use setter injection if the dependency is "synchronized"; this is the
   recommended way and the best solution for the ``request`` instance as it is
   synchronized with the ``request`` scope (see
-  :ref:`using-synchronized-service`).
+  :ref:`using-synchronized-service`);
 
 * Put your service in the same scope as the dependency (or a narrower one). If
   you depend on the ``request`` service, this means putting your new service
@@ -89,7 +89,7 @@ you have three ways to deal with it:
 * Pass the entire container to your service and retrieve your dependency from
   the container each time you need it to be sure you have the right instance
   -- your service can live in the default ``container`` scope (see
-  :ref:`passing-container`);
+  :ref:`passing-container`).
 
 Each scenario is detailed in the following sections.
 
@@ -230,7 +230,7 @@ Changing the scope of a service should be done in its definition:
             greeting_card_manager:
                 class: Acme\HelloBundle\Mail\GreetingCardManager
                 scope: request
-                arguments: [@request]
+                arguments: ["@request"]
 
     .. code-block:: xml
 
