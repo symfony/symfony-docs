@@ -83,9 +83,9 @@ flexibility to your forms.
 Adding An Event Subscriber To A Form Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So, instead of directly adding that "name" widget via your ProductType form
+So, instead of directly adding that "name" widget via your ``ProductType`` form
 class, let's delegate the responsibility of creating that particular field
-to an Event Subscriber::
+to an event subscriber::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
@@ -237,7 +237,7 @@ done in the constructor::
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have all the basics in place you an take advantage of the ``securityContext``
+Now that you have all the basics in place you can take advantage of the ``SecurityContext``
 and fill in the listener logic::
 
     // src/Acme/DemoBundle/FormType/FriendMessageFormType.php

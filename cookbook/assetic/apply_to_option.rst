@@ -119,7 +119,7 @@ work as the regular JavaScript files will not survive the CoffeeScript compilati
 
 This problem can be avoided by using the ``apply_to`` option in the config,
 which allows you to specify that a filter should always be applied to particular
-file extensions. In this case you can specify that the Coffee filter is
+file extensions. In this case you can specify that the ``coffee`` filter is
 applied to all ``.coffee`` files:
 
 .. configuration-block::

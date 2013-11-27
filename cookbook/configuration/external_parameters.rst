@@ -133,8 +133,8 @@ in the container. The following imports a file named ``parameters.php``.
     closure resources are all supported by the ``imports`` directive.
 
 In ``parameters.php``, tell the service container the parameters that you wish
-to set. This is useful when important configuration is in a nonstandard
-format. The example below includes a Drupal database's configuration in
+to set. This is useful when important configuration is in a non-standard
+format. The example below includes a Drupal database configuration in
 the Symfony service container.
 
 .. code-block:: php

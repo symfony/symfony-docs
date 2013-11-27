@@ -20,8 +20,8 @@ This is where Data Transformers come into play.
 Creating the Transformer
 ------------------------
 
-First, create an `IssueToNumberTransformer` class - this class will be responsible
-for converting to and from the issue number and the Issue object::
+First, create an ``IssueToNumberTransformer`` class - this class will be responsible
+for converting to and from the issue number and the ``Issue`` object::
 
     // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformer.php
     namespace Acme\TaskBundle\Form\DataTransformer;
@@ -129,17 +129,16 @@ issue field in some form.
 
             public function setDefaultOptions(OptionsResolverInterface $resolver)
             {
-                $resolver->setDefaults(array(
-                    'data_class' => 'Acme\TaskBundle\Entity\Task',
-                ));
-
-                $resolver->setRequired(array(
-                    'em',
-                ));
-
-                $resolver->setAllowedTypes(array(
-                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                ));
+                $resolver
+                    ->setDefaults(array(
+                        'data_class' => 'Acme\TaskBundle\Entity\Task',
+                    ))
+                    ->setRequired(array(
+                        'em',
+                    ))
+                    ->setAllowedTypes(array(
+                        'em' => 'Doctrine\Common\Persistence\ObjectManager',
+                    ));
 
                 // ...
             }
@@ -234,7 +233,7 @@ In the above example, you applied the transformer to a normal ``text`` field.
 This was easy, but has two downsides:
 
 1) You need to always remember to apply the transformer whenever you're adding
-a field for issue numbers
+a field for issue numbers.
 
 2) You need to worry about passing in the ``em`` option whenever you're creating
 a form that uses the transformer.

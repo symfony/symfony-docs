@@ -184,7 +184,7 @@ this folder.
 
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
-    you need to customize textarea fields, you would customize ``textarea_widget``.
+    you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
 
     As you can see, the fragment name is a combination of the field type and
     which part of the field is being rendered (e.g. ``widget``, ``label``,
@@ -343,7 +343,7 @@ tell Symfony to use the theme via the ``setTheme`` helper method:
 
 .. code-block:: php
 
-    <?php $view['form']->setTheme($form, array('AcmeDemoBundle:Form')) ;?>
+    <?php $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
 
     <?php $view['form']->widget($form['age']) ?>
 
@@ -424,7 +424,7 @@ Making Application-wide Customizations
 
 If you'd like a certain form customization to be global to your application,
 you can accomplish this by making the form customizations in an external
-template and then importing it inside your application configuration:
+template and then importing it inside your application configuration.
 
 Twig
 ~~~~
@@ -618,10 +618,11 @@ How to customize an Individual field
 
 So far, you've seen the different ways you can customize the widget output
 of all text field types. You can also customize individual fields. For example,
-suppose you have two ``text`` fields - ``first_name`` and ``last_name`` - but
-you only want to customize one of the fields. This can be accomplished by
-customizing a fragment whose name is a combination of the field id attribute and
-which part of the field is being customized. For example:
+suppose you have two ``text`` fields in a ``product`` form - ``name`` and
+``description`` - but you only want to customize one of the fields. This can be
+accomplished by customizing a fragment whose name is a combination of the field's
+``id`` attribute and which part of the field is being customized. For example, to
+customize the ``name`` field only:
 
 .. configuration-block::
 
@@ -882,7 +883,7 @@ Adding "help" messages
 
 You can also customize your form widgets to have an optional "help" message.
 
-In Twig, If you're making the form customization inside the same template as your
+In Twig, if you're making the form customization inside the same template as your
 form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
@@ -897,7 +898,7 @@ form, modify the ``use`` tag and add the following:
         {% endif %}
     {% endblock %}
 
-In Twig, If you're making the form customization inside a separate template, use
+In Twig, if you're making the form customization inside a separate template, use
 the following:
 
 .. code-block:: html+jinja
@@ -951,7 +952,7 @@ Using Form Variables
 --------------------
 
 Most of the functions available for rendering different parts of a form (e.g.
-the form widget, form label, form errors, etc) also allow you to make certain
+the form widget, form label, form errors, etc.) also allow you to make certain
 customizations directly. Look at the following example:
 
 .. configuration-block::

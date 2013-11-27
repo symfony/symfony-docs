@@ -178,7 +178,7 @@ database)::
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
 
-#. Override the ``setDefaultOptions`` method in order to add an image_path
+#. Override the ``setDefaultOptions`` method in order to add an ``image_path``
    option;
 #. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
    URL to the view.

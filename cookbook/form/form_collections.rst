@@ -237,7 +237,7 @@ When the user submits the form, the submitted data for the ``tags`` field are
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
 on the ``tag`` field of the ``Task`` instance.
 
-The ``Tags`` collection is accessible naturally via ``$task->getTags()``
+The ``tags`` collection is accessible naturally via ``$task->getTags()``
 and can be persisted to the database or used however you need.
 
 So far, this works great, but this doesn't allow you to dynamically add new
@@ -407,7 +407,7 @@ one example:
 
 .. note::
 
-    It is better to separate your javascript in real JavaScript files than
+    It is better to separate your JavaScript in real JavaScript files than
     to write it inside the HTML as is done here.
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
