@@ -306,7 +306,7 @@ texts* and complex expressions:
     templates (in order to avoid side effects).
 
 .. versionadded:: 2.1
-    The ``trans_default_domain`` tag is new in Symfony2.1
+    The ``trans_default_domain`` tag is new in Symfony 2.1
 
 PHP Templates
 ~~~~~~~~~~~~~
@@ -524,52 +524,6 @@ the framework:
      The ``default_locale`` parameter was defined under the session key
      originally, however, as of 2.1 this has been moved. This is because the
      locale is now set on the request instead of the session.
-
-PHP Templates
-~~~~~~~~~~~~~
-
-The translator service is accessible in PHP templates through the
-``translator`` helper:
-
-.. code-block:: html+php
-
-    <?php echo $view['translator']->trans('Symfony2 is great') ?>
-
-    <?php echo $view['translator']->transChoice(
-        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
-        10,
-        array('%count%' => 10)
-    ) ?>
-
-Forcing the Translator Locale
------------------------------
-
-When translating a message, Symfony2 uses the locale from the current request
-or the ``fallback`` locale if necessary. You can also manually specify the
-locale to use for translation::
-
-    $this->get('translator')->trans(
-        'Symfony2 is great',
-        array(),
-        'messages',
-        'fr_FR'
-    );
-
-    $this->get('translator')->transChoice(
-        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
-        10,
-        array('%count%' => 10),
-        'messages',
-        'fr_FR'
-    );
-
-Translating Database Content
-----------------------------
-
-The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_. For more information, see the documentation
-for that library.
->>>>>>> 2300a74000deafb340921eec2310a399be8d5a25
 
 .. _book-translation-constraint-messages:
 
