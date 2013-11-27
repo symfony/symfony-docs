@@ -41,7 +41,7 @@ current development version of FOSUserBundle is ``"friendsofsymfony/user-bundle"
 Now you can add the bundle to your ``composer.json`` file and update the
 dependencies. You can do this manually:
 
-1. **Add it to the composer.json file:**
+1. **Add it to the ``composer.json`` file:**
 
    .. code-block:: json
 
@@ -137,7 +137,7 @@ Other Setup
 -----------
 
 At this point, check the ``README`` file of your brand new bundle to see
-what do to next.
+what to do next.
 
 .. _their documentation: http://getcomposer.org/doc/00-intro.md
 .. _Packagist:           https://packagist.org

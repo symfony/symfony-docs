@@ -141,7 +141,7 @@ independently (for example, the admin UI, the frontend UI and database migration
 The Environments
 ----------------
 
-We just mentioned another method the ``AppKernel`` has to implement -
+As just mentioned, the ``AppKernel`` has to implement another method -
 :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`.
 This method is responsible for loading the application's
 configuration from the right *environment*.

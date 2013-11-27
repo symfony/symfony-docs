@@ -104,7 +104,7 @@ your JavaScripts:
     It should output a folder on your system, inside which you should find
     the UglifyJS executable.
 
-    If you installed UglifyJS locally, you can find the bin folder inside
+    If you installed UglifyJS locally, you can find the ``bin`` folder inside
     the ``node_modules`` folder. It's called ``.bin`` in this case.
 
 You now have access to the ``uglifyjs2`` filter in your application.
@@ -175,7 +175,7 @@ and :ref:`dump your assetic assets <cookbook-asetic-dump-prod>`.
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
-    enable it by adding the apply-to attribute to the filter configuration, for
+    enable it by adding the ``apply_to`` attribute to the filter configuration, for
     example in the ``uglifyjs2`` filter ``apply_to: "\.js$"``. To only have
     the filter applied in production, add this to the ``config_prod`` file
     rather than the common config file. For details on applying filters by

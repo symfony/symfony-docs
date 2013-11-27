@@ -56,7 +56,7 @@ class name.
 .. note::
 
     Symfony2 core Bundles do not prefix the Bundle class with ``Symfony``
-    and always add a ``Bundle`` subnamespace; for example:
+    and always add a ``Bundle`` sub-namespace; for example:
     :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
 Each bundle has an alias, which is the lower-cased short version of the bundle
