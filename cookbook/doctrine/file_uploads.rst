@@ -13,7 +13,7 @@ If you choose to, you can also integrate the file upload into your entity
 lifecycle (i.e. creation, update and removal). In this case, as your entity
 is created, updated, and removed from Doctrine, the file uploading and removal
 processing will take place automatically (without needing to do anything in
-your controller);
+your controller).
 
 To make this work, you'll need to take care of a number of details, which
 will be covered in this cookbook entry.
@@ -21,7 +21,7 @@ will be covered in this cookbook entry.
 Basic Setup
 -----------
 
-First, create a simple ``Doctrine`` Entity class to work with::
+First, create a simple Doctrine entity class to work with::
 
     // src/Acme/DemoBundle/Entity/Document.php
     namespace Acme\DemoBundle\Entity;
@@ -454,7 +454,7 @@ call to ``$document->upload()`` should be removed from the controller::
 .. caution::
 
     The ``PreUpdate`` and ``PostUpdate`` callbacks are only triggered if there
-    is a change in one of the entity's field that are persisted. This means
+    is a change in one of the entity's fields that are persisted. This means
     that, by default, if you modify only the ``$file`` property, these events
     will not be triggered, as the property itself is not directly persisted
     via Doctrine. One solution would be to use an ``updated`` field that's

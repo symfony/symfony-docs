@@ -18,7 +18,7 @@ your test always has the same data to work with.
 Mocking the ``Repository`` in a Unit Test
 -----------------------------------------
 
-If you want to test code which depends on a doctrine ``Repository`` in isolation,
+If you want to test code which depends on a Doctrine repository in isolation,
 you need to mock the ``Repository``. Normally you inject the ``EntityManager``
 into your class and use it to get the repository. This makes things a little
 more difficult as you need to mock both the ``EntityManager`` and your repository
@@ -27,7 +27,7 @@ class.
 .. tip::
 
     It is possible (and a good idea) to inject your repository directly by
-    registering your repository as a :doc:`factory service </components/dependency_injection/factories>`
+    registering your repository as a :doc:`factory service </components/dependency_injection/factories>`.
     This is a little bit more work to setup, but makes testing easier as you
     only need to mock the repository.
 

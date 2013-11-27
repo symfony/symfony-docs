@@ -63,7 +63,7 @@ places.
 In Symfony2, life is much simpler because *all* Symfony2 code must live in
 a bundle. In the pretend symfony1 project, all the code *could* be moved
 into one or more plugins (which is a very good practice, in fact). Assuming
-that all modules, PHP classes, schema, routing configuration, etc were moved
+that all modules, PHP classes, schema, routing configuration, etc. were moved
 into a plugin, the symfony1 ``plugins/`` directory would be very similar
 to the Symfony2 ``src/`` directory.
 
@@ -176,8 +176,8 @@ from specific directories without defining a dependency:
 
 This means that if a class is not found in the ``vendor`` directory, Composer
 will search in the ``src`` directory before throwing a "class does not exist"
-exception. Read more about configuring the Composer Autoloader in
-`the Composer documentation`_
+exception. Read more about configuring the Composer autoloader in
+`the Composer documentation`_.
 
 Using the Console
 -----------------
