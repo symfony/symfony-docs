@@ -184,7 +184,7 @@ method, where exception handling should happen:
     }
 
 In the code above, you disable exception catching so the parent ``run`` method
-will throw all exceptions. When an exception is caught, you simple log it by
+will throw all exceptions. When an exception is caught, you simply log it by
 accessing the ``logger`` service from the service container and then handle
 the rest of the logic in the same way that the parent ``run`` method does
 (specifically, since the parent :method:`run <Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
@@ -192,7 +192,7 @@ method will not handle exceptions rendering and status code handling when
 ``catchExceptions`` is set to false, it has to be done in the overridden
 method).
 
-For the extended Application class to work properly with in console shell mode,
+For the extended ``Application`` class to work properly with in console shell mode,
 you have to do a small trick to intercept the ``autoExit`` setter and store the
 setting in a different property, since the parent property is private.
 

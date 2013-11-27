@@ -572,7 +572,7 @@ Full Default Configuration
 
 
 .. versionadded:: 2.1
-    The ```framework.session.auto_start`` setting has been removed in Symfony2.1,
+    The ```framework.session.auto_start`` setting has been removed in Symfony 2.1,
     it will start on demand now.
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2

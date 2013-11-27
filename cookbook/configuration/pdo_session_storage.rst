@@ -15,10 +15,10 @@ To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
 .. versionadded:: 2.1
-    In Symfony2.1 the class and namespace are slightly modified. You can now
+    In Symfony 2.1 the class and namespace are slightly modified. You can now
     find the session storage classes in the `Session\\Storage` namespace:
     ``Symfony\Component\HttpFoundation\Session\Storage``. Also
-    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0.
+    note that in Symfony 2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony 2.0.
     Below, you'll notice that ``%session.storage.options%`` is not used anymore.
 
 .. configuration-block::
@@ -134,7 +134,7 @@ database for the session data.
 
 But if you'd like to store the session data in the same database as the rest
 of your project's data, you can use the connection settings from the
-parameter.ini by referencing the database-related parameters defined there:
+``parameters.yml`` file by referencing the database-related parameters defined there:
 
 .. configuration-block::
 

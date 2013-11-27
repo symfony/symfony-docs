@@ -117,7 +117,7 @@ might look like this::
 
 To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
-before creating the parent form using PreloadedExtension class::
+before creating the parent form using the ``PreloadedExtension`` class::
 
     // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
     namespace Acme\TestBundle\Tests\Form\Type;
