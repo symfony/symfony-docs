@@ -12,7 +12,7 @@ One of the solutions is to configure your firewall to use ``http_basic`` in
 the test environment as explained in
 :doc:`/cookbook/testing/http_authentication`.
 Another way would be to create a token yourself and store it in a session.
-While doing this, you have to make sure that appropriate cookie is sent
+While doing this, you have to make sure that an appropriate cookie is sent
 with a request. The following example demonstrates this technique::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
@@ -57,5 +57,5 @@ with a request. The following example demonstrates this technique::
 
 .. note::
 
-    The technique described in :doc:`/cookbook/testing/http_authentication`.
-    is cleaner and therefore preferred way.
+    The technique described in :doc:`/cookbook/testing/http_authentication`
+    is cleaner and therefore the preferred way.

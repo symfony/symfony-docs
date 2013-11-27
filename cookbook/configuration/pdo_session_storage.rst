@@ -16,7 +16,7 @@ configuration format of your choice):
 
 .. versionadded:: 2.1
     In Symfony 2.1 the class and namespace are slightly modified. You can now
-    find the session storage classes in the `Session\\Storage` namespace:
+    find the session storage classes in the ``Session\Storage`` namespace:
     ``Symfony\Component\HttpFoundation\Session\Storage``. Also
     note that in Symfony 2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony 2.0.
     Below, you'll notice that ``%session.storage.options%`` is not used anymore.

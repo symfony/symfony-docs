@@ -19,7 +19,7 @@ class and override the default method named ``setTargetPath()``.
 
 First, override the ``security.exception_listener.class`` parameter in your
 configuration file. This can be done from your main configuration file (in
-`app/config`) or from a configuration file being imported from a bundle:
+``app/config``) or from a configuration file being imported from a bundle:
 
 .. configuration-block::
 

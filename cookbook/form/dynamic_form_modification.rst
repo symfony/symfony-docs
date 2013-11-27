@@ -348,7 +348,7 @@ it with :ref:`dic-tags-form-type`.
         services:
             acme.form.friend_message:
                 class: Acme\DemoBundle\Form\Type\FriendMessageFormType
-                arguments: [@security.context]
+                arguments: ["@security.context"]
                 tags:
                     -
                         name: form.type
