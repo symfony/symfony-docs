@@ -5,11 +5,11 @@
 The Debug Component
 ===================
 
-    The Debug Component provides tools to ease debugging PHP code.
+    The Debug component provides tools to ease debugging PHP code.
 
 .. versionadded:: 2.3
-    The Debug Component is new to Symfony 2.3. Previously, the classes were
-    located in the ``HttpKernel`` component.
+    The Debug component is new to Symfony 2.3. Previously, the classes were
+    located in the HttpKernel component.
 
 Installation
 ------------
