@@ -86,7 +86,7 @@ received object.
 
     var_dump(class_implements($service));
     
-If the class implements the "ProxyManager\Proxy\LazyLoadingInterface" your lazy
+If the class implements the "ProxyManager\\Proxy\\LazyLoadingInterface" your lazy
 loaded services are working.
 
 .. note::
