@@ -649,6 +649,12 @@ channel when injecting the logger in a service.
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->register('my_service', $definition);
 
+.. tip::
+    If you use MonologBundle in version 2.4 or above, you are able to configure
+    your custom channels in the application configuration and retrieve the
+    corresponding logger service from the service container directly (see
+    :ref:`cookbook-monolog-channels-config`).
+
 .. _dic_tags-monolog-processor:
 
 monolog.processor
