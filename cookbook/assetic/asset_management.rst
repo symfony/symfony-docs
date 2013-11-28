@@ -43,8 +43,9 @@ Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.
 
-You can use Assetic to process both :ref:`CSS stylesheets <cookbook-assetic-including-css>`
-and :ref:`JavaScript files <cookbook-assetic-including-javascript>`. The philosophy
+You can use Assetic to process :ref:`CSS stylesheets <cookbook-assetic-including-css>`,
+:ref:`JavaScript files <cookbook-assetic-including-javascript>` and
+:ref:`images <cookbook-assetic-including-image>`. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.
 
 .. _cookbook-assetic-including-javascript:
@@ -127,6 +128,32 @@ the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
     publicly-accessible path: ``bundles/acme_foo/css``. You can use either, except
     that there is a known issue that causes the ``cssrewrite`` filter to fail
     when using the ``@AcmeFooBundle`` syntax for CSS Stylesheets.
+
+.. _cookbook-assetic-including-image:
+
+Including images
+~~~~~~~~~~~~~~~~
+
+To include an image you can use the ``image`` tag.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% image '@AcmeFooBundle/Resources/public/images/example.jpg' %}
+            <img src="{{ asset_url }}" alt="Example" />
+        {% endimage %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->image(
+            array('@AcmeFooBundle/Resources/public/images/example.jpg')
+        ) as $url): ?>
+            <img src="<?php echo $view->escape($url) ?>" alt="Example" />
+        <?php endforeach; ?>
+
+You can also use Assetic for image optimization. More information in
+:doc:`/cookbook/assetic/jpeg_optimize`.
 
 .. _cookbook-assetic-cssrewrite:
 
