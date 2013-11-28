@@ -129,7 +129,7 @@ simple example from inside a controller::
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
-            return new Response(print_r($errors, true));
+            return new Response($errors);
         }
 
         return new Response('The author is valid! Yes!');
