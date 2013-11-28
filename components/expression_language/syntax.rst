@@ -49,6 +49,8 @@ to JavaScript::
         )
     );
 
+This will print ``Honeycrisp``;
+
 Calling Methods
 ~~~~~~~~~~~~~~~
 
@@ -77,7 +79,7 @@ JavaScript::
         )
     );
 
-This will print "Hi Hi Hi!";
+This will print ``Hi Hi Hi!``.
 
 .. _component-expression-arrays:
 
@@ -178,7 +180,7 @@ Examples::
         )
     );
 
-These would both return ``false``.
+Both variables would be set to ``false``.
 
 Logical Operators
 ~~~~~~~~~~~~~~~~~
@@ -198,7 +200,7 @@ For example::
         )
     );
 
-This would return ``true``.
+This ``$ret`` variable will be set to ``true``.
 
 String Operators
 ~~~~~~~~~~~~~~~~
@@ -207,7 +209,7 @@ String Operators
 
 For example::
 
-    $ret4 = $language->evaluate(
+    echo $language->evaluate(
         'firstName~" "~lastName',
         array(
             'firstName' => 'Arthur',
@@ -233,12 +235,14 @@ For example::
     $user = new User();
     $user->group = 'human_resources';
 
-    $ret5 = $language->evaluate(
+    $inGroup = $language->evaluate(
         'user.group in ["human_resources", "marketing"]',
         array(
             'user' => $user
         )
     );
+
+The ``$inGroup`` would evaluate to ``true``.
 
 Numeric Operators
 ~~~~~~~~~~~~~~~~~

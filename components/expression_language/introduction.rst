@@ -10,22 +10,22 @@ The ExpressionLanguage Component
     (mostly, but not limited to, Booleans).
 
 .. versionadded:: 2.4
-    The ExpressionLanguage component was added in Symfony 2.4.
+    The ExpressionLanguage component was introduced in Symfony 2.4.
 
 Installation
 ------------
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/expression-language`` on `Packagist`_).
-* Use the official Git repository (https://github.com/symfony/expression-language);
+* :doc:`Install it via Composer </components/using_components>` (``symfony/expression-language`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/expression-language).
 
 How can the Expression Engine Help Me?
 --------------------------------------
 
 The purpose of the component is to allow users to use expressions inside
-configuration for more complex logic. In the Symfony2 Framework, for example,
-expressions can be used in security, for validation rules, and in route matching.
+configuration for more complex logic. For some examples, the Symfony2 Framework
+uses expressions in security, for validation rules and in route matching.
 
 Besides using the component in the framework itself, the ExpressionLanguage
 component is a perfect candidate for the foundation of a *business rule engine*.
@@ -52,15 +52,15 @@ Usage
 
 The ExpressionLanguage component can compile and evaluate expressions.
 Expressions are one-liners that often return a Boolean, which can be used
-by the code executing the expression in an ``if`` statements. A simple example
+by the code executing the expression in an ``if`` statement. A simple example
 of an expression is ``1 + 2``. You can also use more complicated expressions,
 such as ``someArray[3].someMethod('bar')``.
 
 The component provides 2 ways to work with expressions:
 
+* **evaluation**: the expression is evaluated without being compiled to PHP;
 * **compile**: the expression is compiled to PHP, so it can be cached and
-  evaluated;
-* **evaluation**: the expression is evaluated without being compiled to PHP.
+  evaluated.
 
 The main class of the component is
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage`::
