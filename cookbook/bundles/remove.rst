@@ -77,7 +77,7 @@ can remove the ``Acme`` directory as well.
 .. tip::
 
     If you don't know the location of a bundle, you can use the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Bundle\\Bundle::getPath` method
+    :method:`Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface::getPath` method
     to get the path of the bundle::
 
         echo $this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath();
