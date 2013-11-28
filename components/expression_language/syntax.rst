@@ -49,7 +49,7 @@ to JavaScript::
         )
     );
 
-This will print ``Honeycrisp``;
+This will print ``Honeycrisp``.
 
 Calling Methods
 ~~~~~~~~~~~~~~~
