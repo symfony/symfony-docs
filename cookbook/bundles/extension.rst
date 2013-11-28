@@ -177,10 +177,11 @@ You can begin specifying configuration under this namespace immediately:
     array. You can still provide some sensible defaults for your bundle if
     you want.
 
-Registering the Extension class
+Registering the Extension Class
 -------------------------------
 
-An Extension class will automatically be registered by Symfony2 when following these simple conventions:
+An Extension class will automatically be registered by Symfony2 when
+following these simple conventions:
 
 * The extension must be stored in the ``DependencyInjection`` sub-namespace;
 
@@ -189,10 +190,11 @@ An Extension class will automatically be registered by Symfony2 when following t
 
 * The extension should provide an XSD schema.
 
-Manually registering an Extension class
+Manually Registering an Extension Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To manually register an extension class override the
+When not following the conventions you will have to manually register your
+extension. To manually register an extension class override the
 :method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
 method in your bundle::
 
@@ -553,6 +555,9 @@ For more details, see :doc:`/cookbook/bundles/prepend_extension`.
 
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``config:dump-reference`` command was added in Symfony 2.1
 
 The ``config:dump-reference`` command allows a bundle's default configuration to
 be output to the console in YAML.
