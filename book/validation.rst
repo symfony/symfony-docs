@@ -129,7 +129,14 @@ simple example from inside a controller::
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
-            return new Response($errors);
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging
+             */
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
         }
 
         return new Response('The author is valid! Yes!');
