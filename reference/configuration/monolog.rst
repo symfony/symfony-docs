@@ -30,6 +30,8 @@ MonologBundle Configuration ("monolog")
                     id:                  my_handler
 
                 # Default options and values for some "my_custom_handler" 
+                # Note: "level" and "bubble" options are not used when handler type is "service"
+                #    Those options must be configured in the service definition.
                 my_custom_handler:
                     type:                 ~ # Required
                     id:                   ~
