@@ -665,7 +665,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
-
+        
+        use Doctrine\Common\Collections\ArrayCollection;
+        
         // ...
         public function editAction($id, Request $request)
         {
@@ -676,11 +678,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for is '.$id);
             }
 
-            $originalTags = array();
+            $originalTags = new ArrayCollection();
 
-            // Create an array of the current Tag objects in the database
+            // Create an ArrayCollection of the current Tag objects in the database
             foreach ($task->getTags() as $tag) {
-                $originalTags[] = $tag;
+                $originalTags->add($tag);
             }
 
             $editForm = $this->createForm(new TaskType(), $task);
@@ -689,27 +691,20 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
             if ($editForm->isValid()) {
 
-                // filter $originalTags to contain tags no longer present
-                foreach ($task->getTags() as $tag) {
-                    foreach ($originalTags as $key => $toDel) {
-                        if ($toDel->getId() === $tag->getId()) {
-                            unset($originalTags[$key]);
-                        }
-                    }
-                }
-
                 // remove the relationship between the tag and the Task
                 foreach ($originalTags as $tag) {
-                    // remove the Task from the Tag
-                    $tag->getTasks()->removeElement($task);
+                    if (false === $task->getTags()->contains($tag)) {
+                        // remove the Task from the Tag
+                        $tag->getTasks()->removeElement($task);
 
-                    // if it were a many-to-one relationship, remove the relationship like this
-                    // $tag->setTask(null);
+                        // if it was a many-to-one relationship, remove the relationship like this
+                        // $tag->setTask(null);
 
-                    $em->persist($tag);
+                        $em->persist($tag);
 
-                    // if you wanted to delete the Tag entirely, you can also do that
-                    // $em->remove($tag);
+                        // if you wanted to delete the Tag entirely, you can also do that
+                        // $em->remove($tag);
+                    }
                 }
 
                 $em->persist($task);
