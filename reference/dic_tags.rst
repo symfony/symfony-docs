@@ -844,8 +844,9 @@ it with ``swiftmailer.default.plugin`` (it has no options).
 
 .. note::
 
-    ``default`` in this tag is the name of the mailer. You should change it to the
-    name of your mailer in order to use this tag.
+    ``default`` in this tag is the name of the mailer. If you have multiple
+    mailers configured or have changed the default mailer name for some reason,
+    you should change it to the name of your mailer in order to use this tag.
 
 A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
 For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
