@@ -81,12 +81,11 @@ Creating your own Channel
 -------------------------
 
 You can change the channel monolog logs to one service at a time. This is done
-by tagging your service with ``monolog.logger`` and specifying which channel
-the service should log to. By doing this, the logger that is injected into
-that service is preconfigured to use the channel you've specified.
-
-For more information - including a full example - read ":ref:`dic_tags-monolog`"
-in the Dependency Injection Tags reference section.
+either via the :ref:`configuration <cookbook-monolog-channels-config>` below
+or by tagging your service with :ref:`monolog.logger<dic_tags-monolog>` and
+specifying which channel the service should log to. With the tag, the logger
+that is injected into that service is preconfigured to use the channel you've
+specified.
 
 .. _cookbook-monolog-channels-config:
 
@@ -94,8 +93,9 @@ Configure Additional Channels without Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Since Symfony 2.3 you can install MonologBundle 2.4 to be able to configure
-    additional channels in the configuration.
+    This feature was introduced to the MonologBundle in version 2.4. This
+    version is compatible with Symfony 2.3, but only MonologBundle 2.3 is
+    installed by default. To use this feature, upgrade your bundle manually.
 
 With MonologBundle 2.4 you can configure additional channels without the
 need to tag your services:
@@ -136,8 +136,7 @@ need to tag your services:
         ));
 
 With this, you can now send log messages to the ``foo`` channel by using
-the automically registered logger service ``monolog.logger.foo``.
-
+the automatically registered logger service ``monolog.logger.foo``.
 
 Learn more from the Cookbook
 ----------------------------

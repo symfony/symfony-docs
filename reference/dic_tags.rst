@@ -650,10 +650,10 @@ channel when injecting the logger in a service.
         $container->register('my_service', $definition);
 
 .. tip::
-    If you use MonologBundle in version 2.4 or above, you are able to configure
-    your custom channels in the application configuration and retrieve the
-    corresponding logger service from the service container directly (see
-    :ref:`cookbook-monolog-channels-config`).
+
+    If you use MonologBundle 2.4 or higher, you can configure custom channels
+    in the configuration and retrieve the corresponding logger service from
+    the service container directly (see :ref:`cookbook-monolog-channels-config`).
 
 .. _dic_tags-monolog-processor:
 
