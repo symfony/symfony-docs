@@ -30,6 +30,9 @@ MonologBundle Configuration ("monolog")
                     id:                  my_handler
 
                 # Default options and values for some "my_custom_handler" 
+                # Note: many of these options are specific to the "type".
+                # For example, the "service" type doesn't use any options
+                # except id and channels
                 my_custom_handler:
                     type:                 ~ # Required
                     id:                   ~

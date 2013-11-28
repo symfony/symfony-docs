@@ -64,7 +64,7 @@ It can now be used from a template:
 
     .. code-block:: html+php
 
-        <?php foreach ($view['assetic']->images(
+        <?php foreach ($view['assetic']->image(
             array('@AcmeFooBundle/Resources/public/images/example.jpg'),
             array('jpegoptim')
         ) as $url): ?>
