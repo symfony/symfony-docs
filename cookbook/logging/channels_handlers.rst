@@ -24,36 +24,65 @@ To do so, just create a new handler and configure it like this:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         monolog:
             handlers:
                 main:
-                    type: stream
-                    path: /var/log/symfony.log
-                    channels: !doctrine
+                    type:     stream
+                    path:     /var/log/symfony.log
+                    channels: [!doctrine]
                 doctrine:
-                    type: stream
-                    path: /var/log/doctrine.log
-                    channels: doctrine
+                    type:     stream
+                    path:     /var/log/doctrine.log
+                    channels: [doctrine]
 
     .. code-block:: xml
 
-        <monolog:config>
-            <monolog:handlers>
+        <!-- app/config/config.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
+        >
+            <monolog:config>
                 <monolog:handler name="main" type="stream" path="/var/log/symfony.log">
                     <monolog:channels>
-                        <type>exclusive</type>
-                        <channel>doctrine</channel>
+                        <monolog:channel>!doctrine</monolog:channel>
                     </monolog:channels>
                 </monolog:handler>
 
-                <monolog:handler name="doctrine" type="stream" path="/var/log/doctrine.log" />
+                <monolog:handler name="doctrine" type="stream" path="/var/log/doctrine.log">
                     <monolog:channels>
-                        <type>inclusive</type>
-                        <channel>doctrine</channel>
+                        <monolog:channel>doctrine</monolog:channel>
                     </monolog:channels>
                 </monolog:handler>
-            </monolog:handlers>
-        </monolog:config>
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main'     => array(
+                    'type'     => 'stream',
+                    'path'     => '/var/log/symfony.log',
+                    'channels' => array(
+                        '!doctrine',
+                    ),
+                ),
+                'doctrine' => array(
+                    'type'     => 'stream',
+                    'path'     => '/var/log/doctrine.log',
+                    'channels' => array(
+                        'doctrine',
+                    ),
+                ),
+            ),
+        ));
 
 YAML specification
 ------------------
@@ -69,13 +98,6 @@ You can specify the configuration by many forms:
 
     channels: [foo, bar]   # Include only channels "foo" and "bar"
     channels: [!foo, !bar] # Include all channels, except "foo" and "bar"
-
-    channels:
-        type:     inclusive # Include only those listed below
-        elements: [ foo, bar ]
-    channels:
-        type:     exclusive # Include all, except those listed below
-        elements: [ foo, bar ]
 
 Creating your own Channel
 -------------------------
