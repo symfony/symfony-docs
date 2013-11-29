@@ -81,6 +81,24 @@ JavaScript::
 
 This will print ``Hi Hi Hi!``.
 
+.. _component-expression-functions:
+
+Working with Functions
+----------------------
+
+You can also use registered functions in the expression by using the same
+syntax as PHP and JavaScript. The ExpressionLanguage component comes with one
+function by default: ``constant()`` Which will return the value of the PHP
+constant::
+
+    define('DB_USER', 'root');
+
+    echo $language->evaluate(
+        'constant("DB_USER")'
+    );
+
+This will print ``root``.
+
 .. _component-expression-arrays:
 
 Working with Arrays
