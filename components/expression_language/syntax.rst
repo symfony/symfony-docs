@@ -88,7 +88,7 @@ Working with Functions
 
 You can also use registered functions in the expression by using the same
 syntax as PHP and JavaScript. The ExpressionLanguage component comes with one
-function by default: ``constant()`` Which will return the value of the PHP
+function by default: ``constant()``, which will return the value of the PHP
 constant::
 
     define('DB_USER', 'root');
@@ -101,7 +101,7 @@ This will print ``root``.
 
 .. tip::
 
-    To read how to register your own function to use in an expression, see
+    To read how to register your own functions to use in an expression, see
     ":doc:`/components/expression_language/extending`".
 
 .. _component-expression-arrays:
@@ -285,7 +285,7 @@ For example::
     );
 
 This will evaluate to ``true``, because ``user.age`` is in the range from
-``18`` till ``45``
+``18`` to ``45``.
 
 Ternary Operators
 ~~~~~~~~~~~~~~~~~

@@ -5,18 +5,18 @@ Extending the ExpressionLanguage
 ================================
 
 The ExpressionLanguage can be extended by adding custom functions. For
-instance, in the framework, the security has custom functions to check the
-user's role.
+instance, in the Symfony Framework, the security has custom functions to check
+the user's role.
 
 .. note::
 
     If you want to learn how to use functions in an expression, read
     ":ref:`component-expression-functions`".
 
-Register Functions
-------------------
+Registering Functions
+---------------------
 
-Functions will be registered on the current ``ExpressionLanguage`` instance.
+Functions are registered on each specific ``ExpressionLanguage`` instance.
 That means the functions can be used in any expression executed by that
 instance.
 
@@ -52,13 +52,12 @@ This method has 3 arguments:
 
 This will print ``hello``.
 
-Creating a new ExpressionLanguage class
+Creating a new ExpressionLanguage Class
 ---------------------------------------
 
 When you use the ``ExpressionLanguage`` class in your library, it's recommend
 to create a new ``ExpressionLanguage`` class and register the functions there.
-The class will execute ``registerFunctions`` to register the default
-functions, you can override this to also add your own functions::
+Override ``registerFunctions`` to add your own functions::
 
     namespace Acme\AwesomeLib\ExpressionLanguage;
 
