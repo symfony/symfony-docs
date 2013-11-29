@@ -81,6 +81,29 @@ JavaScript::
 
 This will print ``Hi Hi Hi!``.
 
+.. _component-expression-functions:
+
+Working with Functions
+----------------------
+
+You can also use registered functions in the expression by using the same
+syntax as PHP and JavaScript. The ExpressionLanguage component comes with one
+function by default: ``constant()`` Which will return the value of the PHP
+constant::
+
+    define('DB_USER', 'root');
+
+    echo $language->evaluate(
+        'constant("DB_USER")'
+    );
+
+This will print ``root``.
+
+.. tip::
+
+    To read how to register your own function to use in an expression, see
+    ":doc:`/components/expression_language/extending`".
+
 .. _component-expression-arrays:
 
 Working with Arrays
@@ -127,11 +150,6 @@ For example::
     );
 
 This will print out ``42``.
-
-Assignment Operators
-~~~~~~~~~~~~~~~~~~~~
-
-* ``=``
 
 Bitwise Operators
 ~~~~~~~~~~~~~~~~~
@@ -248,6 +266,26 @@ Numeric Operators
 ~~~~~~~~~~~~~~~~~
 
 * ``..`` (range)
+
+For example::
+
+    class User
+    {
+        public $age;
+    }
+
+    $user = new User();
+    $user->age = 34;
+
+    $language->evaluate(
+        'user.age in 18..45',
+        array(
+            'user' => $user,
+        )
+    );
+
+This will evaluate to ``true``, because ``user.age`` is in the range from
+``18`` till ``45``
 
 Ternary Operators
 ~~~~~~~~~~~~~~~~~
