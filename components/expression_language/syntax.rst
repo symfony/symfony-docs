@@ -99,6 +99,11 @@ constant::
 
 This will print ``root``.
 
+.. tip::
+
+    To read how to register your own function to use in an expression, see
+    ":doc:`/components/expression_language/extending`".
+
 .. _component-expression-arrays:
 
 Working with Arrays
