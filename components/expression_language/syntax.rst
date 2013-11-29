@@ -244,6 +244,26 @@ Numeric Operators
 
 * ``..`` (range)
 
+For example::
+
+    class User
+    {
+        public $age;
+    }
+
+    $user = new User();
+    $user->age = 34;
+
+    $language->evaluate(
+        'user.age in 18..45',
+        array(
+            'user' => $user,
+        )
+    );
+
+This will evaluate to ``true``, because ``user.age`` is in the range from
+``18`` till ``45``
+
 Ternary Operators
 ~~~~~~~~~~~~~~~~~
 
