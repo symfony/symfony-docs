@@ -179,10 +179,6 @@ Translating
 
 Read the dedicated :doc:`document <translations>`.
 
-.. _`fork`: https://help.github.com/articles/fork-a-repo
-.. _`pull requests`: https://help.github.com/articles/using-pull-requests
-.. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
-
 Managing Releases
 -----------------
 
@@ -227,4 +223,7 @@ happens, the following items are done:
   For example, in installation chapters, we reference the version you should
   use for installation. As an example, see the changes made in `PR #2688`_.
 
-.. _`PR #2688`: https://github.com/symfony/symfony-docs/pull/2688
+.. _`fork`:                       https://help.github.com/articles/fork-a-repo
+.. _`pull requests`:              https://help.github.com/articles/using-pull-requests
+.. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
+.. _`PR #2688`:                   https://github.com/symfony/symfony-docs/pull/2688
