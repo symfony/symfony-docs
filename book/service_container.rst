@@ -630,17 +630,20 @@ the work of instantiating the classes.
 Using the Expression Language
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.4
+    The Expression Language functionality was introduced in Symfony 2.4.
+
 The service container also supports an "expression" that allows you to inject
 very specific values into a service.
 
 For example, suppose you have a third service (not shown here), called ``mailer_configuration``,
-which has a ``getMailerMethod`` method on it, which will return a string
+which has a ``getMailerMethod()`` method on it, which will return a string
 like ``sendmail`` based on some configuration. Remember that the first argument
 to the ``my_mailer`` service is the simple string ``sendmail``:
 
 .. include includes/_service_container_my_mailer.rst.inc
 
-But instead of hardcoding this, how could we get this value from the ``getMailerMethod``
+But instead of hardcoding this, how could we get this value from the ``getMailerMethod()``
 of the new ``mailer_configuration`` service? One way is to use an expression:
 
 .. configuration-block::
@@ -659,7 +662,9 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
 
             <services>
                 <service id="my_mailer" class="Acme\HelloBundle\Mailer">
@@ -672,10 +677,11 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
 
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
             'Acme\HelloBundle\Mailer',
-            array(new Expression("service('mailer_configuration').getMailerMethod()"))
+            array(new Expression('service("mailer_configuration").getMailerMethod()'))
         ));
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
@@ -694,15 +700,17 @@ via a ``container`` variable. Here's another example:
 
         services:
             my_mailer:
-                class:        Acme\HelloBundle\Mailer
-                arguments:    ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
+                class:     Acme\HelloBundle\Mailer
+                arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
 
             <services>
                 <service id="my_mailer" class="Acme\HelloBundle\Mailer">
@@ -714,10 +722,13 @@ via a ``container`` variable. Here's another example:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\ExpressionLanguage\Expression;
 
         $container->setDefinition('my_mailer', new Definition(
             'Acme\HelloBundle\Mailer',
-            array(new Expression("@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"))
+            array(new Expression(
+                "@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
+            ))
         ));
 
 Expressions can be used in ``parameters``, ``arguments``, ``properties``,
