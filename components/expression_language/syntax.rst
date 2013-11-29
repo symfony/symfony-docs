@@ -128,11 +128,6 @@ For example::
 
 This will print out ``42``.
 
-Assignment Operators
-~~~~~~~~~~~~~~~~~~~~
-
-* ``=``
-
 Bitwise Operators
 ~~~~~~~~~~~~~~~~~
 
