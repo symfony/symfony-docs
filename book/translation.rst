@@ -22,8 +22,8 @@ into the language of the user::
 
     The term *locale* refers roughly to the user's language and country. It
     can be any string that your application uses to manage translations and
-    other format differences (e.g. currency format). The `ISO639-1`_
-    *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_
+    other format differences (e.g. currency format). The `ISO 639-1`_
+    *language* code, an underscore (``_``), then the `ISO 3166-1 alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
 In this chapter, you'll learn how to use the Translation component in the
@@ -673,6 +673,6 @@ steps:
   be set on the user's session.
 
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
-.. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
-.. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+.. _`ISO 3166-1 alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO 639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
