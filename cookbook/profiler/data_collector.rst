@@ -140,6 +140,7 @@ All blocks have access to the ``collector`` object.
     Built-in templates use a base64 encoded image for the toolbar:
 
     .. code-block:: html
+
         <img src="data:image/png;base64,..." />
 
     You can easily calculate the base64 value for an image with this
