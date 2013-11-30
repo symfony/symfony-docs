@@ -896,6 +896,17 @@ original template:
 
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
+.. tip::
+
+    Labels of required fields are rendered with a CSS class called ``required``
+    by default. You can use it to add an Asterisk using CSS only:
+
+    .. code-block:: css
+
+        label.required:before {
+            content: "* ";
+        }
+
 Adding "help" messages
 ~~~~~~~~~~~~~~~~~~~~~~
 
