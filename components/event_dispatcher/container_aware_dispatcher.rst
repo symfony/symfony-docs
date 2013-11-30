@@ -2,7 +2,7 @@
    single: EventDispatcher; Service container aware
 
 The Container Aware Event Dispatcher
-===================================
+====================================
 
 .. versionadded:: 2.1
     This feature was moved into the EventDispatcher component in Symfony 2.1.
