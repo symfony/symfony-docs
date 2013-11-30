@@ -666,9 +666,6 @@ You can also override the markup for an entire field row using the same method:
 
     .. code-block:: html+jinja
 
-        {# _product_name_row.html.twig #}
-        {% form_theme form _self %}
-
         {% block _product_name_row %}
             <div class="name_row">
                 {{ form_label(form) }}
