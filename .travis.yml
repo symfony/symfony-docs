@@ -1,0 +1,10 @@
+language: python
+
+python:
+    - "2.7"
+
+install: 
+    - "git submodule update --init"
+    - "pip install -q -r requirements.txt --use-mirrors"
+
+script: sphinx-build -nW -b html -d _build/doctrees . _build/html
