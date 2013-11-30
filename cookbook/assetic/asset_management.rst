@@ -238,7 +238,7 @@ To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
 available to use (you'll use the filter below).
 
-For example to use the JavaScript YUI Compressor the following config should
+For example to use the UglifyJS JavaScript minifier the following config should
 be added:
 
 .. configuration-block::
@@ -248,16 +248,16 @@ be added:
         # app/config/config.yml
         assetic:
             filters:
-                yui_js:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                uglifyjs2:
+                    bin: /usr/local/bin/uglifyjs
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <assetic:config>
             <assetic:filter
-                name="yui_js"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                name="uglifyjs2"
+                bin="/usr/local/bin/uglifyjs" />
         </assetic:config>
 
     .. code-block:: php
@@ -265,8 +265,8 @@ be added:
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
             'filters' => array(
-                'yui_js' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                'uglifyjs2' => array(
+                    'bin' => '/usr/local/bin/uglifyjs',
                 ),
             ),
         ));
@@ -278,7 +278,7 @@ into your template:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
@@ -286,13 +286,13 @@ into your template:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')
+            array('uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 A more detailed guide about configuring and using Assetic filters as well as
-details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompressor`.
+details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/uglifyjs`.
 
 Controlling the URL used
 ------------------------
