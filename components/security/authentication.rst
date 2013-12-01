@@ -110,7 +110,7 @@ Authenticating Users by their Username and Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An authentication provider will attempt to authenticate a user based on
-the credentials he provided. Usually these are a username and a password.
+the credentials they provided. Usually these are a username and a password.
 Most web applications store their user's username and a hash of the user's
 password combined with a randomly generated salt. This means that the average
 authentication would consist of fetching the salt and the hashed password

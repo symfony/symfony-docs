@@ -474,7 +474,7 @@ The resulting HTTP header will look like this:
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to
 send the ``Date`` header. Consequently the cache (e.g. the browser) might
-need to rely onto his local clock to evaluate the ``Expires`` header making
+need to rely on the local clock to evaluate the ``Expires`` header making
 the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
 servers should not send ``Expires`` dates more than one year in the future."

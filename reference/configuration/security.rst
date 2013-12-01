@@ -117,7 +117,7 @@ Each part will be explained in the next section.
                         # submit the login form here
                         check_path: /login_check
 
-                        # the user is redirected here when he/she needs to log in
+                        # the user is redirected here when they need to log in
                         login_path: /login
 
                         # if true, forward the user to the login form instead of redirecting
@@ -237,7 +237,7 @@ The Login Form and Process
 
 *   ``login_path`` (type: ``string``, default: ``/login``)
     This is the route or path that the user will be redirected to (unless
-    ``use_forward`` is set to ``true``) when he/she tries to access a
+    ``use_forward`` is set to ``true``) when they try to access a
     protected resource but isn't fully authenticated.
 
     This path **must** be accessible by a normal, un-authenticated user, else

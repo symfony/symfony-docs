@@ -5,7 +5,7 @@ Security
 ========
 
 Security is a two-step process whose goal is to prevent a user from accessing
-a resource that he/she should not have access to.
+a resource that they should not have access to.
 
 In the first step of the process, the security system identifies who the user
 is by requiring the user to submit some sort of identification. This is called
@@ -165,7 +165,7 @@ Firewalls (Authentication)
 
 When a user makes a request to a URL that's protected by a firewall, the
 security system is activated. The job of the firewall is to determine whether
-or not the user needs to be authenticated, and if he does, to send a response
+or not the user needs to be authenticated, and if they do, to send a response
 back to the user initiating the authentication process.
 
 A firewall is activated when the URL of an incoming request matches the configured
@@ -217,7 +217,7 @@ If the credentials are valid, the original request can be re-tried.
    :align: center
 
 In this example, the user ``ryan`` successfully authenticates with the firewall.
-But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, he's still denied
+But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, they're still denied
 access to ``/admin/foo``. Ultimately, this means that the user will see some
 sort of message indicating that access has been denied.
 
@@ -1041,7 +1041,7 @@ Access Control Lists (ACLs): Securing Individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit his own comments, but not
+posts. Now, you want a user to be able to edit their own comments, but not
 those of other users. Also, as the admin user, you yourself want to be able
 to edit *all* comments.
 
@@ -1800,7 +1800,7 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
-Once the user has been logged out, he will be redirected to whatever path
+Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
 :doc:`Security Configuration Reference </reference/configuration/security>`.
