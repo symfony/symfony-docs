@@ -341,7 +341,7 @@ file:
 
 Now, the vendor directory won't be committed to source control. This is fine
 (actually, it's great!) because when someone else clones or checks out the
-project, he/she can simply run the ``php composer.phar install`` script to
+project, they can simply run the ``php composer.phar install`` script to
 install all the necessary project dependencies.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs

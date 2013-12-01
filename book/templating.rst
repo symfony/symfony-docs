@@ -1362,7 +1362,7 @@ this classic example:
 
         Hello <?php echo $name ?>
 
-Imagine that the user enters the following code as his/her name:
+Imagine the user enters the following code for their name:
 
 .. code-block:: text
 

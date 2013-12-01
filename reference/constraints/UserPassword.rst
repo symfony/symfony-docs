@@ -10,8 +10,8 @@ UserPassword
     ``Symfony\\Component\\Security\\Core\\Validator\\Constraints`` namespace instead.
 
 This validates that an input value is equal to the current authenticated
-user's password. This is useful in a form where a user can change his password,
-but needs to enter his old password for security.
+user's password. This is useful in a form where a user can change their password,
+but needs to enter their old password for security.
 
 .. note::
 
@@ -32,7 +32,7 @@ Basic Usage
 -----------
 
 Suppose you have a `PasswordChange` class, that's used in a form where the
-user can change his password by entering his old password and a new password.
+user can change their password by entering their old password and a new password.
 This constraint will validate that the old password matches the user's current
 password:
 

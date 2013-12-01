@@ -67,7 +67,7 @@ Configuring the Request Context per Command
 -------------------------------------------
 
 To change it only in one command you can simply fetch the Request Context
-service and override its settings::
+from the ``router`` service and override its settings::
 
    // src/Acme/DemoBundle/Command/DemoCommand.php
 
