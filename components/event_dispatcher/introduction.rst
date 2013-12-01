@@ -11,7 +11,7 @@ Introduction
 Objected Oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
-behaviors. But if he wants to share his changes with other developers who have
+behaviors. But if they want to share the changes with other developers who have
 also made their own subclasses, code inheritance is no longer the answer.
 
 Consider the real-world example where you want to provide a plugin system for
