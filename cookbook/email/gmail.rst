@@ -40,7 +40,8 @@ In the development configuration file, change the ``transport`` setting to
             <swiftmailer:config
                 transport="gmail"
                 username="your_gmail_username"
-                password="your_gmail_password" />
+                password="your_gmail_password"
+            />
         </container>
 
     .. code-block:: php

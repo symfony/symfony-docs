@@ -12,10 +12,14 @@ option. If setting up and maintaining your own reliable mail server causes
 you a headache there's a simple solution: Leverage the cloud to send your
 emails.
 
-The following example shows how easy it is to integrate
-`Amazon's Simple Email Services (SES)`_ into Symfony. But no matter what
-service you're actually using, there's nothing more to it than configuring an
-SMTP endpoint for Swift Mailer.
+This cookbook shows how easy it is to integrate
+`Amazon's Simple Email Service (SES)`_ into Symfony.
+
+.. note::
+
+    You can use the same technique for other mail services, as most of the
+    time there is nothing more to it than configuring an SMTP endpoint for
+    Swift Mailer.
 
 In the Symfony configuration, change the Swift Mailer settings ``transport``,
 ``host``, ``port`` and ``encryption`` according to the information provided in
@@ -52,7 +56,8 @@ and complete the configuration with the provided ``username`` and ``password``:
                 port="465"
                 encryption="tls"
                 username="AWS_ACCESS_KEY"
-                password="AWS_SECRET_KEY" />
+                password="AWS_SECRET_KEY"
+            />
         </container>
 
     .. code-block:: php
@@ -108,6 +113,6 @@ And that's it, you're ready to start sending emails through the cloud!
 
         * SES may be subject to a charge.
 
-.. _`Amazon's Simple Email Services (SES)`: http://aws.amazon.com/ses
+.. _`Amazon's Simple Email Service (SES)`: http://aws.amazon.com/ses
 .. _`SES console`: https://console.aws.amazon.com/ses
 .. _`Amazon Web Services (AWS)`: http://aws.amazon.com
