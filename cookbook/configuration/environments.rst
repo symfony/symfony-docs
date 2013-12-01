@@ -148,13 +148,29 @@ used by each is explicitly set:
 
     <?php
 
-    require_once __DIR__.'/../app/bootstrap_cache.php';
-    require_once __DIR__.'/../app/AppCache.php';
-
+    use Symfony\Component\ClassLoader\ApcClassLoader;
     use Symfony\Component\HttpFoundation\Request;
 
-    $kernel = new AppCache(new AppKernel('prod', false));
-    $kernel->handle(Request::createFromGlobals())->send();
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
+
+    // Use APC for autoloading to improve performance.
+    // Change 'sf2' to a unique prefix in order to prevent cache key conflicts
+    // with other applications also using APC.
+    /*
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
+    */
+
+    require_once __DIR__.'/../app/AppKernel.php';
+    //require_once __DIR__.'/../app/AppCache.php';
+
+    $kernel = new AppKernel('prod', false);
+    $kernel->loadClassCache();
+    //$kernel = new AppCache($kernel);
+    $request = Request::createFromGlobals();
+    $response = $kernel->handle($request);
+    $response->send();
+    $kernel->terminate($request, $response);
 
 As you can see, the ``prod`` key specifies that this environment will run
 in the ``prod`` environment. A Symfony2 application can be executed in any
@@ -277,13 +293,29 @@ to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``:
 
     <?php
 
-    require_once __DIR__.'/../app/bootstrap.php';
-    require_once __DIR__.'/../app/AppKernel.php';
-
+    use Symfony\Component\ClassLoader\ApcClassLoader;
     use Symfony\Component\HttpFoundation\Request;
 
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
+
+    // Use APC for autoloading to improve performance.
+    // Change 'sf2' to a unique prefix in order to prevent cache key conflicts
+    // with other applications also using APC.
+    /*
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
+    */
+
+    require_once __DIR__.'/../app/AppKernel.php';
+    //require_once __DIR__.'/../app/AppCache.php';
+
     $kernel = new AppKernel('benchmark', false);
-    $kernel->handle(Request::createFromGlobals())->send();
+    $kernel->loadClassCache();
+    //$kernel = new AppCache($kernel);
+    $request = Request::createFromGlobals();
+    $response = $kernel->handle($request);
+    $response->send();
+    $kernel->terminate($request, $response);
 
 The new environment is now accessible via::
 
