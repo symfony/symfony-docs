@@ -8,9 +8,10 @@ The ``locale`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of locales (language+country). As an added bonus,
 the locale names are displayed in the language of the user.
 
-The "value" for each locale is either the two letter ISO639-1 *language* code
-(e.g. ``fr``), or the language code followed by an underscore (``_``), then
-the ISO3166 *country* code (e.g. ``fr_FR`` for French/France).
+The "value" for each locale is either the two letter `ISO 639-1`_ *language*
+code (e.g. ``fr``), or the language code followed by an underscore (``_``),
+then the `ISO 3166-1 alpha-2`_ *country* code (e.g. ``fr_FR``
+for French/France).
 
 .. note::
 
@@ -85,3 +86,6 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. _`ISO 639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+.. _`ISO 3166-1 alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
