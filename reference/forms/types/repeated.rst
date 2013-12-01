@@ -6,7 +6,7 @@ repeated Field Type
 
 This is a special field "group", that creates two identical fields whose
 values must match (or a validation error is thrown). The most common use
-is when you need the user to repeat his or her password or email to verify
+is when you need the user to repeat their password or email to verify
 accuracy.
 
 +-------------+------------------------------------------------------------------------+

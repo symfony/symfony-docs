@@ -169,8 +169,8 @@ How to Dynamically Generate Forms based on user Data
 
 Sometimes you want a form to be generated dynamically based not only on data
 from the form but also on something else - like some data from the current user.
-Suppose you have a social website where a user can only message people who
-are his friends on the website. In this case, a "choice list" of whom to message
+Suppose you have a social website where a user can only message people marked 
+as friends on the website. In this case, a "choice list" of whom to message
 should only contain users that are the current user's friends.
 
 Creating the Form Type

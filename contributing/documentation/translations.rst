@@ -58,7 +58,7 @@ Symfony2 documentation for a new language.
 As starting a translation is a lot of work, talk about your plan on the
 `Symfony docs mailing-list`_ and try to find motivated people willing to help.
 
-When the team is ready, nominate a team manager; he will be responsible for
+When the team is ready, nominate a team manager; they will be responsible for
 the *master* repository.
 
 Create the repository and copy the *English* documents.

@@ -49,8 +49,8 @@ if you want to know a bundle name, you can add this to your command::
         'AcmeDemoBundle'
     );
 
-The user will be asked "Please enter the name of the bundle". She can type
-some name which will be returned by the ``ask`` method. If she leaves it empty,
+The user will be asked "Please enter the name of the bundle". They can type
+some name which will be returned by the ``ask`` method. If they leave it empty,
 the default value (``AcmeDemoBundle`` here) is returned.
 
 Hiding the User's Response
@@ -120,8 +120,8 @@ function should also return the value of the user's input if the validation was 
 You can set the max number of times to ask in the ``$attempts`` argument.
 If you reach this max number it will use the default value, which is given
 in the last argument. Using ``false`` means the amount of attempts is infinite.
-The user will be asked as long as he provides an invalid answer and will only
-be able to proceed if her input is valid.
+The user will be asked as long as they provide an invalid answer and will only
+be able to proceed if their input is valid.
 
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,7 +184,7 @@ The option which should be selected by default is provided with the fourth
 parameter. The default is ``null``, which means that no option is the default one.
 
 If the user enters an invalid string, an error message is shown and the user
-is asked to provide the answer another time, until she enters a valid string
+is asked to provide the answer another time, until they enter a valid string
 or the maximum attempts is reached (which you can define in the fifth
 parameter). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth parameter.
