@@ -32,6 +32,8 @@ component is a perfect candidate for the foundation of a *business rule engine*.
 The idea is to let the webmaster of a website configure things in a dynamic
 way without using PHP and without introducing security problems:
 
+.. _component-expression-language-examples:
+
 .. code-block:: text
 
     # Get the special price if
