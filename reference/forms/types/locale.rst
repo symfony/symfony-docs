@@ -42,7 +42,7 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                          |
 +-------------+------------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType` |
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LocaleType`   |
 +-------------+------------------------------------------------------------------------+
 
 Overridden Options
@@ -54,9 +54,8 @@ choices
 **default**: :method:`Symfony\\Component\\Locale\\Locale::getDisplayLocales`
 
 The choices option defaults to all locales returned by
-:method:`Symfony\\Component\\Locale\\Locale::getDisplayLocales`. It uses the
-default locale to specify the language.
-
+:method:`Symfony\\Component\\Locale\\Locale::getDisplayLocales`.
+The default locale is used to translate the locale names.
 
 Inherited options
 -----------------
