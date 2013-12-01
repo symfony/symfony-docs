@@ -1,7 +1,7 @@
 .. index::
-   single: Emails; Cloud
+   single: Emails; Using the cloud
 
-How to use the Cloud to send Emails
+How to use the Cloud to Send Emails
 ===================================
 
 Requirements for sending emails from a production system differ from your
@@ -38,30 +38,33 @@ and complete the configuration with the provided ``username`` and ``password``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
-        <!--
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        <swiftmailer:config
-            transport="smtp"
-            host="email-smtp.us-east-1.amazonaws.com"
-            port="465"
-            encryption="tls"
-            username="AWS_ACCESS_KEY"
-            password="AWS_SECRET_KEY" />
+            <!-- ... -->
+            <swiftmailer:config
+                transport="smtp"
+                host="email-smtp.us-east-1.amazonaws.com"
+                port="465"
+                encryption="tls"
+                username="AWS_ACCESS_KEY"
+                password="AWS_SECRET_KEY" />
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-            'transport' => "smtp",
-            'host' => "email-smtp.us-east-1.amazonaws.com",
-            'port'  => 465,
-            'encryption'  => "tls",
-            'username'  => "AWS_ACCESS_KEY",
-            'password'  => "AWS_SECRET_KEY",
+            'transport'  => 'smtp',
+            'host'       => 'email-smtp.us-east-1.amazonaws.com',
+            'port'       => 465,
+            'encryption' => 'tls',
+            'username'   => 'AWS_ACCESS_KEY',
+            'password'   => 'AWS_SECRET_KEY',
         ));
 
 The ``port`` and ``encryption`` keys are not present in the Symfony Standard
@@ -71,7 +74,7 @@ And that's it, you're ready to start sending emails through the cloud!
 
 .. tip::
 
-    If you are using the Symfony Standard Edition, configure the parameters at
+    If you are using the Symfony Standard Edition, configure the parameters in
     ``parameters.yml`` and use them in your configuration files. This allows
     for different Swift Mailer configurations for each installation of your
     application. For instance, use Gmail during development and the cloud in
@@ -95,7 +98,7 @@ And that's it, you're ready to start sending emails through the cloud!
 
         * You have to sign up to `Amazon Web Services (AWS)`_;
 
-        * Every sender address used in the ``From`` or ``ReturnPath`` (bounce
+        * Every sender address used in the ``From`` or ``Return-Path`` (bounce
           address) header needs to be confirmed by the owner. You can also
           confirm an entire domain;
 
