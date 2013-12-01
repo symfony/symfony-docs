@@ -899,7 +899,7 @@ original template:
 .. sidebar:: Using CSS only
 
     By default, ``label`` tags of required fields are rendered with a
-    ``required`` CSS class. Thus, you can also add an Asterisk using CSS only:
+    ``required`` CSS class. Thus, you can also add an asterisk using CSS only:
 
     .. code-block:: css
 
