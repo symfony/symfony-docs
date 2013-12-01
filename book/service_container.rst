@@ -627,6 +627,8 @@ service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the classes.
 
+.. _book-services-expressions:
+
 Using the Expression Language
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

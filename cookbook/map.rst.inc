@@ -78,6 +78,10 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * (service container) :doc:`/cookbook/service_container/event_listener`
 
+* :doc:`/cookbook/expression/index`
+
+  * :doc:`/cookbook/expression/expressions`
+
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/form_customization`

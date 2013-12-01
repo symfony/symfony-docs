@@ -3,7 +3,7 @@
     Single: Components; Expression Language
 
 The ExpressionLanguage Component
-=================================
+================================
 
     The ExpressionLanguage component provides an engine that can compile and
     evaluate expressions. An expression is a one-liner that returns a value

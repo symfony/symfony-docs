@@ -953,6 +953,8 @@ address):
 
 * The second access rule is not examined as the first rule matched.
 
+.. _book-security-allow-if:
+
 Securing by an Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
