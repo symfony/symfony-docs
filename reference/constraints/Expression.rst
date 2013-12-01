@@ -130,7 +130,7 @@ expression that must return true in order for validation to pass. To learn
 more about the expression language syntax, see
 :doc:`/components/expression_language/syntax`.
 
-For more information about the expression and what variables you have available
+For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
 option details below.
 

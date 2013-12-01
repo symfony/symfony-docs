@@ -1981,7 +1981,7 @@ Inside the expression, you have access to a number of variables:
   ``isGranted`` ;
 * ``token`` The token object;
 * ``trust_resolver``: The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
-   object: probably not useful directly.
+   object: you'll probably use the ``is_*`` functions below instead.
 
 Additionally, you have access to a number of functions inside the expression.
 **Note**: some of these functions *look* similar to the ``IS_AUTHENTICATED_*``
@@ -2018,7 +2018,7 @@ attributes, but work differently. See the note below:
     Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
     behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,
     the ``is_remember_me`` function *only* returns true if the user is authenticated
-    via a remember me cookie and ``is_fully_authenticated`` *only* returns
+    via a remember-me cookie and ``is_fully_authenticated`` *only* returns
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
 

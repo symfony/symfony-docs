@@ -728,7 +728,7 @@ Completely Customized Route Matching with Conditions
 
 As you've seen, a route can be made to match only certain routing wildcards
 (via regular expressions), HTTP methods, or host names. But the routing system
-can be extended to almost an infinite flexibility with ``conditions``:
+can be extended to have an almost infinite flexibility using ``conditions``:
 
 .. configuration-block::
 
@@ -775,13 +775,13 @@ can be extended to almost an infinite flexibility with ``conditions``:
 
         return $collection;
 
-The ``condition`` is an expression, and you can learn more about it syntax
+The ``condition`` is an expression, and you can learn more about its syntax
 here: :doc:`/components/expression_language/syntax`. With this, the route
 won't match unless the HTTP method is either GET or HEAD *and* if the ``User-Agent``
 header matches ``firefox``.
 
-You can do any complex logic you need here by leveraging two variables that
-are passed into the expression:
+You can do any complex logic you need in the expression by leveraging two
+variables that are passed into the expression:
 
 * ``context``: An instance of :class:`Symfony\\Component\\Routing\\RequestContext`,
   which holds the most fundamental information about the route being matched;
@@ -804,7 +804,7 @@ are passed into the expression:
             // ...
         }
 
-    Because of this, using the ``condition`` key causes no extra roverhead
+    Because of this, using the ``condition`` key causes no extra overhead
     beyond the time it takes for the underlying PHP to execute.
 
 .. index::
