@@ -112,7 +112,7 @@ the cookie remains valid.
 Forcing the User to Re-authenticate before accessing certain Resources
 ----------------------------------------------------------------------
 
-When the user returns to your site, he/she is authenticated automatically based
+When the user returns to your site, they are authenticated automatically based
 on the information stored in the remember me cookie. This allows the user
 to access protected resources as if the user had actually authenticated upon
 visiting the site.
@@ -195,16 +195,16 @@ which can secure your controller using annotations:
     * If a non-authenticated (or anonymously authenticated user) tries to
       access the account area, the user will be asked to authenticate.
 
-    * Once the user has entered his username and password, assuming the
+    * Once the user has entered their username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
       any page in the account section, including the ``editAction`` controller.
 
-    * If the user's session ends, when the user returns to the site, he will
+    * If the user's session ends, when the user returns to the site, they will
       be able to access every account page - except for the edit page - without
-      being forced to re-authenticate. However, when he tries to access the
-      ``editAction`` controller, he will be forced to re-authenticate, since
-      he is not, yet, fully authenticated.
+      being forced to re-authenticate. However, when they try to access the
+      ``editAction`` controller, they will be forced to re-authenticate, since
+      they are not, yet, fully authenticated.
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.

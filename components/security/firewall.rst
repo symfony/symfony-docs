@@ -101,7 +101,7 @@ firewall map will jump in.
 
 The exception listener determines what happens next, based on the arguments
 it received when it was created. It may start the authentication procedure,
-perhaps ask the user to supply his credentials again (when he has only been
+perhaps ask the user to supply their credentials again (when they have only been
 authenticated based on a "remember-me" cookie), or transform the exception
 into an :class:`Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException`,
 which will eventually result in an "HTTP/1.1 403: Access Denied" response.
@@ -119,7 +119,7 @@ object and the exception by which the exception listener was triggered.
 The method should return a :class:`Symfony\\Component\\HttpFoundation\\Response`
 object. This could be, for instance, the page containing the login form or,
 in the case of Basic HTTP authentication, a response with a ``WWW-Authenticate``
-header, which will prompt the user to supply his username and password.
+header, which will prompt the user to supply their username and password.
 
 Flow: Firewall, Authentication, Authorization
 ---------------------------------------------

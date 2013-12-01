@@ -487,7 +487,7 @@ method:
 
     .. code-block:: php-standalone
 
-        use Symfony\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
         $form = $formFactory->createBuilder()
