@@ -21,6 +21,9 @@ Functions
     The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
     the ``{% render %}`` tag was used and had a different signature.
 
+.. versionadded:: 2.4
+    The ``expression`` function was introduced in Symfony 2.4.
+
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
@@ -88,6 +91,9 @@ Functions
 |                                                    | ":ref:`book-templating-pages`".                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute URL                                    |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``expression(expression)``                         | Creates an :class:Symfony\\Component\\ExpressionLanguage\\Expression in Twig. See          |
+|                                                    | ":ref:`Template Expressions <book-security-template-expression>`".                         |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 
 Filters
