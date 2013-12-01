@@ -731,8 +731,8 @@ via a ``container`` variable. Here's another example:
             ))
         ));
 
-Expressions can be used in ``parameters``, ``arguments``, ``properties``,
-as arguments with ``configurator`` and as arguments to ``calls`` (method calls).
+Expressions can be used in ``arguments``, ``properties``, as arguments with
+``configurator`` and as arguments to ``calls`` (method calls).
 
 Optional Dependencies: Setter Injection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
