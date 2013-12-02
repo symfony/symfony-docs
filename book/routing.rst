@@ -967,7 +967,8 @@ be done by "importing" that file:
 .. note::
 
    When importing resources from YAML, the key (e.g. ``acme_hello``) is meaningless.
-   Just be sure that it's unique so no other lines override it.
+   Just be sure that it's unique so no other lines override it. In most cases, a 
+   vendorname_shortbundlename or vendorname_shortbundlename_controllername pattern is appropriate.
 
 The ``resource`` key loads the given routing resource. In this example the
 resource is the full path to a file, where the ``@AcmeHelloBundle`` shortcut
