@@ -38,6 +38,12 @@ in the object using the constructor::
     $cache = new MyDatabaseParserCache(...);
     $language = new ExpressionLanguage($cache);
 
+.. note::
+
+    The `DoctrineBridge`_ has a ParserCache implementation using the
+    `doctrine cache library`_, which gives you caching for all sorts of cache
+    strategies, like Apc, Filesystem and Apc.
+
 Using Parsed and Serialized Expressions
 ---------------------------------------
 
@@ -59,3 +65,6 @@ Both ``evaluate`` and ``compile`` can handle ``ParsedExpression`` and
     $expression = new SerializedParsedExpression(serialize($language->parse('1 + 4')));
 
     echo $language->evaluate($expression); // prints 5
+
+.. _DoctrineBridge: https://github.com/symfony/DoctrineBridge
+.. _`doctrine cache library`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
