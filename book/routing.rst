@@ -785,7 +785,7 @@ variables that are passed into the expression:
 
 * ``context``: An instance of :class:`Symfony\\Component\\Routing\\RequestContext`,
   which holds the most fundamental information about the route being matched;
-* ``request``: The Symfony :class:`Symfony\\Component\\HttpFoundation\\Request``
+* ``request``: The Symfony :class:`Symfony\\Component\\HttpFoundation\\Request`
   object (see :ref:`component-http-foundation-request`).
 
 .. caution::
