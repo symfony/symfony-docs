@@ -1901,14 +1901,16 @@ You can also use expressions inside your templates:
 
     .. code-block:: html+jinja
 
-        {% if is_granted(expression('has_role("ROLE_ADMIN")')) %}
+        {% if is_granted(expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        )) %}
             <a href="...">Delete</a>
         {% endif %}
 
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted(new Expression(
-            'has_role("ROLE_ADMIN")'
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
         ))): ?>
             <a href="...">Delete</a>
         <?php endif; ?>
