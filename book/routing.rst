@@ -68,6 +68,13 @@ The route is simple:
 
         return $collection;
 
+.. note::
+
+   When defining routes, the key (e.g. ``blog_show``) is meaningless.
+   Just be sure that it's unique so no other lines override it. In most cases, a 
+   vendorname_shortbundlename_controllername_actionname pattern
+   (e.g. ``acme_blog_show``) is appropriate.
+
 .. versionadded:: 2.2
     The ``path`` option is new in Symfony2.2, ``pattern`` is used in older
     versions.
