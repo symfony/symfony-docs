@@ -41,9 +41,9 @@ You can also render each of the three parts of the field individually:
     .. code-block:: php
 
         <div>
-            <?php echo $view['form']->label($form['age']) }} ?>
-            <?php echo $view['form']->errors($form['age']) }} ?>
-            <?php echo $view['form']->widget($form['age']) }} ?>
+            <?php echo $view['form']->label($form['age']); ?>
+            <?php echo $view['form']->errors($form['age']); ?>
+            <?php echo $view['form']->widget($form['age']); ?>
         </div>
 
 In both cases, the form label, errors and HTML widget are rendered by using
@@ -71,7 +71,7 @@ just one line:
 
     .. code-block:: php
 
-        <?php echo $view['form']->widget($form) }} ?>
+        <?php echo $view['form']->widget($form); ?>
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
@@ -645,7 +645,6 @@ which part of the field is being customized. For example:
         <?php echo $view['form']->widget($form['name']); ?>
 
         <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_widget.html.php -->
-
         <div class="text_widget">
               echo $view['form']->block('form_widget_simple') ?>
         </div>
@@ -666,6 +665,8 @@ You can also override the markup for an entire field row using the same method:
 
     .. code-block:: html+jinja
 
+        {% form_theme form _self %}
+
         {% block _product_name_row %}
             <div class="name_row">
                 {{ form_label(form) }}
@@ -674,10 +675,16 @@ You can also override the markup for an entire field row using the same method:
             </div>
         {% endblock %}
 
+        {{ form_row(form.name) }}
+
     .. code-block:: html+php
 
-        <!-- _product_name_row.html.php -->
+        <!-- Main template -->
+        <?php echo $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
 
+        <?php echo $view['form']->row($form['name']); ?>
+
+        <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
