@@ -7,3 +7,4 @@ Expression Language
     introduction
     syntax
     extending
+    caching
