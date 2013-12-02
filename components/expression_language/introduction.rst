@@ -3,7 +3,7 @@
     Single: Components; Expression Language
 
 The ExpressionLanguage Component
-=================================
+================================
 
     The ExpressionLanguage component provides an engine that can compile and
     evaluate expressions. An expression is a one-liner that returns a value
@@ -31,6 +31,8 @@ Besides using the component in the framework itself, the ExpressionLanguage
 component is a perfect candidate for the foundation of a *business rule engine*.
 The idea is to let the webmaster of a website configure things in a dynamic
 way without using PHP and without introducing security problems:
+
+.. _component-expression-language-examples:
 
 .. code-block:: text
 
