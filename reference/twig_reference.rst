@@ -92,7 +92,7 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute URL                                    |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``expression(expression)``                         | Creates an :class:Symfony\\Component\\ExpressionLanguage\\Expression in Twig. See          |
+| ``expression(expression)``                         | Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in Twig. See        |
 |                                                    | ":ref:`Template Expressions <book-security-template-expression>`".                         |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 

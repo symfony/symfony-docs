@@ -69,7 +69,7 @@ One way to accomplish this is with the Expression constraint:
             constraints:
                 - Expression:
                     expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
-                    message: "If this is a tech post, the category should be php or symfony!"
+                    message: "If this is a tech post, the category should be either php or symfony!"
 
     .. code-block:: php-annotations
 
@@ -80,8 +80,8 @@ One way to accomplish this is with the Expression constraint:
 
         /**
          * @Assert\Expression(
-         *  "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()",
-         *  message="If this is a tech post, the category should be php or symfony!"
+         *     "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()",
+         *     message="If this is a tech post, the category should be either php or symfony!"
          * )
          */
         class BlogPost
@@ -98,7 +98,7 @@ One way to accomplish this is with the Expression constraint:
                     this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()
                 </option>
                 <option name="message">
-                    If this is a tech post, the category should be php or symfony!
+                    If this is a tech post, the category should be either php or symfony!
                 </option>
             </constraint>
         </class>
@@ -118,7 +118,7 @@ One way to accomplish this is with the Expression constraint:
             {
                 $metadata->addConstraint(new Assert\Expression(array(
                     'expression' => 'this.getCategory() in ["php", "symfony"] or !this.isTechnicalPost()',
-                    'message' => 'If this is a tech post, the category should be php or symfony!',
+                    'message' => 'If this is a tech post, the category should be either php or symfony!',
                 )));
             }
 

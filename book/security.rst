@@ -994,7 +994,7 @@ key:
             ),
 
 In this case, when the user tries to access any URL starting with ``/_internal/secure``,
-she will only be granted access if the IP address is ``127.0.0.1`` or if
+they will only be granted access if the IP address is ``127.0.0.1`` or if
 the user has the ``ROLE_ADMIN`` role.
 
 Inside the expression, you have access to a number of different variables
@@ -1966,10 +1966,12 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
     }
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
-user object's ``isSuperAdmin`` method returns ``true``, then access will
+user object's ``isSuperAdmin()`` method returns ``true``, then access will
 be granted (note: your User object may not have an ``isSuperAdmin`` method,
-that method is invented for this example). This uses an expression and you
-can learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
+that method is invented for this example).
+
+This uses an expression and you can learn more about the expression language
+syntax, see :doc:`/components/expression_language/syntax`.
 
 .. _book-security-expression-variables:
 
@@ -1985,11 +1987,9 @@ Inside the expression, you have access to a number of variables:
 * ``trust_resolver``: The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
    object: you'll probably use the ``is_*`` functions below instead.
 
-Additionally, you have access to a number of functions inside the expression.
-**Note**: some of these functions *look* similar to the ``IS_AUTHENTICATED_*``
-attributes, but work differently. See the note below:
+Additionally, you have access to a number of functions inside the expression:
 
-* ``is_authenticated``: Returns true if the user is authenticated via "remember-me"
+* ``is_authenticated``: Returns ``true`` if the user is authenticated via "remember-me"
   or authenticated "fully" - i.e. returns true if the user is "logged in";
 * ``is_anonymous``: Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with
   the ``isGranted`` function;
