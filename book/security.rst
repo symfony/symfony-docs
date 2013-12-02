@@ -893,6 +893,14 @@ prevent any direct access to these resources from a web browser (by guessing the
 ESI URL pattern), the ESI route **must** be secured to be only visible from
 the trusted reverse proxy cache.
 
+.. caution::
+
+    As you'll read in the explanation below the example, the ``ip`` option
+    does not restrict to a specific IP address. Instead, using the ``ip``
+    key means that the ``access_control`` entry will only match this IP address,
+    and users accessing it from a different IP address will continue down
+    the ``acces_control`` list.
+
 Here is an example of how you might secure all ESI routes that start with a
 given prefix, ``/esi``, from outside access:
 
@@ -951,11 +959,13 @@ Now, if the same request comes from ``127.0.0.1``:
 
 .. _book-security-securing-channel:
 
-Securing by Channel
-~~~~~~~~~~~~~~~~~~~
+Forcing a Channel (http, https)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also require a user to access a URL via SSL; just use the
-``requires_channel`` argument in any ``access_control`` entries:
+``requires_channel`` argument in any ``access_control`` entries. If this
+``access_control`` is matched and the request is using the ``http`` channel,
+the user will be redirected to ``https``:
 
 .. configuration-block::
 
