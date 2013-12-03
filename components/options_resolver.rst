@@ -215,9 +215,9 @@ A previously set default value can be overwritten by invoking
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefaults`
 again. When using a closure as the new value it is passed 2 arguments:
 
-    * ``$options``: an :class:`Symfony\\Component\\OptionsResolver\\Options`
-      instance with all the other default options
-    * ``$previousValue``: the previous set default value
+* ``$options``: an :class:`Symfony\\Component\\OptionsResolver\\Options`
+  instance with all the other default options
+* ``$previousValue``: the previous set default value
 
 .. code-block:: php
 
