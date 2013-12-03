@@ -57,12 +57,7 @@ Distribution:
 
 .. code-block:: bash
 
-    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.3.7
-
-.. tip::
-
-    For an exact version, replace "2.3.7" with the latest Symfony version.
-    For details, see the `Symfony Installation Page`_
+    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.3.*
 
 .. tip::
 
