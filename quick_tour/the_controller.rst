@@ -90,17 +90,22 @@ Getting information from the Request
 ------------------------------------
 
 Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object::
+to the ``Request`` object. The framework injects the ``Request`` object in the
+controller if a variable is type hinted with
+`Symfony\Component\HttpFoundation\Request`::
 
-    $request = $this->getRequest();
+    use Symfony\Component\HttpFoundation\Request;
 
-    $request->isXmlHttpRequest(); // is it an Ajax request?
+    public function indexAction(Request $request)
+    {
+        $request->isXmlHttpRequest(); // is it an Ajax request?
 
-    $request->getPreferredLanguage(array('en', 'fr'));
+        $request->getPreferredLanguage(array('en', 'fr'));
 
-    $request->query->get('page'); // get a $_GET parameter
+        $request->query->get('page'); // get a $_GET parameter
 
-    $request->request->get('page'); // get a $_POST parameter
+        $request->request->get('page'); // get a $_POST parameter
+    }
 
 In a template, you can also access the ``Request`` object via the
 ``app.request`` variable:
@@ -122,16 +127,18 @@ by using native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->getRequest()->getSession();
+    use Symfony\Component\HttpFoundation\Request;
 
-    // store an attribute for reuse during a later user request
-    $session->set('foo', 'bar');
+    public function indexAction(Request $request)
+    {
+        $session = $request->getSession();
 
-    // in another controller for another request
-    $foo = $session->get('foo');
+        // store an attribute for reuse during a later user request
+        $session->set('foo', 'bar');
 
-    // use a default value if the key doesn't exist
-    $filters = $session->get('filters', array());
+        // use a default value if the key doesn't exist
+        $filters = $session->get('filters', array());
+    }
 
 You can also store small messages that will only be available for the very
 next request::
