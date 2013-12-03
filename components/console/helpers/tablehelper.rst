@@ -12,7 +12,7 @@ When building a console application it may be useful to display tabular data:
 .. image:: /images/components/console/table.png
 
 To display table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
-set headers, rows and render::
+set headers, rows, optional dividers, and render::
 
     $table = $app->getHelperSet()->get('table');
     $table
@@ -23,6 +23,7 @@ set headers, rows and render::
             array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
             array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
         ))
+        ->setDividersAt(array(2))
     ;
     $table->render($output);
 
@@ -52,8 +53,10 @@ You can also control table rendering by setting custom rendering option values:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setPaddingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setHorizontalBorderChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setHorizontalDividerChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setVerticalBorderChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setCrossingChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setCrossingDividerChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setCellHeaderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setCellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setBorderFormat`
