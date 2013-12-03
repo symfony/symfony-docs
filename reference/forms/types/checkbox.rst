@@ -13,8 +13,9 @@ if the box is unchecked, the value will be set to false.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `required`_                                                          |
-| options     | - `label`_                                                             |
+| Inherited   | - `data`_                                                              |
+| options     | - `required`_                                                          |
+|             | - `label`_                                                             |
 |             | - `read_only`_                                                         |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
@@ -47,10 +48,16 @@ value
 The value that's actually used as the value for the checkbox. This does
 not affect the value that's set on your object.
 
+.. caution::
+
+    To make a checkbox checked by default, use the `data`_ option.
+
 Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
