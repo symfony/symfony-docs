@@ -676,9 +676,6 @@ that as much code as possible lives in reusable :doc:`services </book/service_co
 Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    hinclude.js support was added in Symfony 2.1
-
 Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
 Symfony2 uses a version of the standard ``render`` function to configure ``hinclude``
