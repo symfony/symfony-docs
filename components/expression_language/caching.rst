@@ -1,11 +1,11 @@
 .. index::
     single: Caching; ExpressionLanguage
 
-Caching Expressions Using ParserCaches
-======================================
+Caching Expressions Using Parser Caches
+=======================================
 
 The ExpressionLanguage component already provides a
-:method:`Symfony\\Component\\ExpresionLanguage\\ExpressionLanguage::compile`
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::compile`
 method to be able to cache the expressions in plain PHP. But internally, the
 component also caches the parsed expressions, so duplicated expressions can be
 compiled/evaluated quicker.
@@ -13,17 +13,17 @@ compiled/evaluated quicker.
 The Workflow
 ------------
 
-Both ``evaluate`` and ``compile`` needs to do some things before it can
+Both ``evaluate`` and ``compile`` need to do some things before each can
 provide the return values. For ``evaluate``, this overhead is even bigger.
 
 Both methods need to tokenize and parse the expression. This is done by the 
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
-method. It'll return a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`.
+method. It  returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`.
 Now, the ``compile`` method just returns the string conversion of this object.
 The ``evaluate`` method needs to loop through the "nodes" (pieces of an
 expression saved in the ``ParsedExpression``) and evaluate them on the fly.
 
-To save time, the ``ExpressionLanguage`` caches the ``ParsedExpression``, so
+To save time, the ``ExpressionLanguage`` caches the ``ParsedExpression`` so
 it can skip the tokenize and parse steps with duplicate expressions.
 The caching is done by a
 :class:`Symfony\\Component\\ExpressionLanguage\\ParserCache\\ParserCacheInterface`
