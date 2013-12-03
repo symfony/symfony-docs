@@ -33,9 +33,10 @@ the following to your command::
 
 In this case, the user will be asked "Continue with this action?", and will
 return ``true`` if the user answers with ``y`` or ``false`` if the user answers
-with ``n``. The third argument to ``askConfirmation`` is the default value to
-return if the user doesn't enter any input. Any other input will ask the same
-question again.
+with ``n``. The third argument to
+:method:`Symfony\\Component\\Console\\Helper\\DialogHelper::askConfirmation`
+is the default value to return if the user doesn't enter any input. Any other
+input will ask the same question again.
 
 Asking the User for Information
 -------------------------------
