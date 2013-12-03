@@ -109,4 +109,10 @@ PHP type (including objects)::
 This will print "Honeycrisp". For more information, see the :doc:`/components/expression_language/syntax`
 entry, especially :ref:`component-expression-objects` and :ref:`component-expression-arrays`.
 
+Caching
+-------
+
+The component provides some different caching strategies, read more about them
+in :doc:`/components/expression_language/caching`.
+
 .. _Packagist: https://packagist.org/packages/symfony/expression-language
