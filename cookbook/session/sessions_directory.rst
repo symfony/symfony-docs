@@ -30,12 +30,14 @@ session directory to ``app/sessions``:
         # app/config/config.yml
         framework:
             session:
+                handler_id: session.nativefile.handler
                 save_path: "%kernel.root_dir%/sessions"
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
+            <framework:session handler-id="session.nativefile.handler" />
             <framework:session save-path="%kernel.root_dir%/sessions" />
         </framework:config>
 
@@ -43,5 +45,15 @@ session directory to ``app/sessions``:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
+            'session' => array('handler-id' => "session.nativefile.handler"),
             'session' => array('save-path' => "%kernel.root_dir%/sessions"),
         ));
+        
+.. note:: 
+
+    If you choose to use globally defined settings from ``php.ini`` by setting the 
+    ``handler_id`` to null, ``~``, Symfony will use the PHP ini values for ``session.save_handler``
+    and any associated ``session.save_path`` where appropriate.
+    
+    PHP stock installation usually defaults to the ``files`` handler although this may not be
+    the case.
