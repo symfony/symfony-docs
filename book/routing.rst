@@ -654,12 +654,12 @@ be accomplished with the following route configuration:
         contact:
             path:     /contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
-            methods:  [GET]
+            methods:  GET
 
         contact_process:
             path:     /contact
             defaults: { _controller: AcmeDemoBundle:Main:contactProcess }
-            methods:  [POST]
+            methods:  POST
 
     .. code-block:: xml
 
