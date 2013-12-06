@@ -904,12 +904,12 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
         <?php echo $view['actions']->render(
             new ControllerReference('...:news', array('max' => 5)),
-            array('renderer' => 'esi'))
+            array('strategy' => 'esi'))
         ?>
 
         <?php echo $view['actions']->render(
             $view['router']->generate('latest_news', array('max' => 5), true),
-            array('renderer' => 'esi'),
+            array('strategy' => 'esi'),
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi`` Twig function), you
