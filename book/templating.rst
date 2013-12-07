@@ -1364,7 +1364,7 @@ this classic example:
 
 Imagine the user enters the following code for their name:
 
-.. code-block:: text
+.. code-block:: html
 
     <script>alert('hello!')</script>
 

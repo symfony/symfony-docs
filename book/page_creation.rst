@@ -867,15 +867,15 @@ You can dump the default configuration for a bundle in YAML to the console using
 the ``config:dump-reference`` command.  Here is an example of dumping the default
 FrameworkBundle configuration:
 
-.. code-block:: text
+.. code-block:: bash
 
-    app/console config:dump-reference FrameworkBundle
+    $ app/console config:dump-reference FrameworkBundle
 
 The extension alias (configuration key) can also be used:
 
-.. code-block:: text
+.. code-block:: bash
 
-    app/console config:dump-reference framework
+    $ app/console config:dump-reference framework
 
 .. note::
 
