@@ -4,7 +4,7 @@
 The PSR-0 Class Loader
 ======================
 
-If your classes and third-party libraries follow the `PSR-0`_ standard, you
+If your classes and third-party libraries follow the `http://www.php-fig.org/psr/psr-0/`_ standard, you
 can use the :class:`Symfony\\Component\\ClassLoader\\ClassLoader` class to
 load all of your project's classes.
 
