@@ -66,7 +66,7 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.3.0
+        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.3.*
 
 .. _`quick-tour-big-picture-built-in-server`:
 
