@@ -124,7 +124,7 @@ Language Standards
 
 * Do not use `Serial (Oxford) Commas`_;
 * You should use a form of *you* instead of *we* (i.e. avoid the first person
-  point of view: use the second instead).
+  point of view: use the second instead);
 * When referencing a hypothetical person, such as "a user with a session cookie", gender-neutral
   pronouns (they/their/them) should be used. For example, instead of:
 
