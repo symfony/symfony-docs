@@ -32,7 +32,7 @@ git repository:
    .. code-block:: text
 
         /web/bundles/
-        /app/bootstrap*
+        /app/bootstrap/*
         /app/cache/*
         /app/logs/*
         /vendor/
