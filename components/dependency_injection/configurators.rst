@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Service configurators
+   single: DependencyInjection; Service configurators
 
 Configuring Services with a Service Configurator
 ================================================

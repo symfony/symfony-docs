@@ -1,5 +1,5 @@
 .. index::
-    single: Class Loader; DebugClassLoader
+    single: ClassLoader; DebugClassLoader
     
 Debugging a Class Loader
 ========================

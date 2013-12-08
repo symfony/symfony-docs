@@ -127,7 +127,7 @@ database for the session data.
 
 But if you'd like to store the session data in the same database as the rest
 of your project's data, you can use the connection settings from the
-parameter.ini by referencing the database-related parameters defined there:
+``parameters.yml`` file by referencing the database-related parameters defined there:
 
 .. configuration-block::
 

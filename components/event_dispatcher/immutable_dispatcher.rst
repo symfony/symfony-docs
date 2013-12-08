@@ -1,5 +1,5 @@
 .. index::
-    single: Event Dispatcher; Immutable
+    single: EventDispatcher; Immutable
 
 The Immutable Event Dispatcher
 ==============================

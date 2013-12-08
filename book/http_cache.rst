@@ -474,7 +474,7 @@ The resulting HTTP header will look like this:
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to
 send the ``Date`` header. Consequently the cache (e.g. the browser) might
-need to rely onto his local clock to evaluate the ``Expires`` header making
+need to rely on the local clock to evaluate the ``Expires`` header making
 the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
 servers should not send ``Expires`` dates more than one year in the future."
@@ -535,7 +535,7 @@ example).
     The 304 status code means "Not Modified". It's important because with
     this status code the response does *not* contain the actual content being
     requested. Instead, the response is simply a light-weight set of directions that
-    tell cache that it should use its stored version.
+    tells the cache that it should use its stored version.
 
 Like with expiration, there are two different HTTP headers that can be used
 to implement the validation model: ``ETag`` and ``Last-Modified``.
@@ -1059,14 +1059,17 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 
             $response = new Response();
             if (!$this->getStore()->purge($request->getUri())) {
-                $response->setStatusCode(404, 'Not purged');
+                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not purged');
             } else {
-                $response->setStatusCode(200, 'Purged');
+                $response->setStatusCode(Response::HTTP_OK, 'Purged');
             }
 
             return $response;
         }
     }
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 .. caution::
 

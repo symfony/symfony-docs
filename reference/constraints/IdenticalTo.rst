@@ -96,6 +96,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be identical to {{ compared_value_type }} {{ compared_value }}``
+**type**: ``string`` **default**: ``This value should be identical to {{ compared_value_type }} {{ compared_value }}.``
 
 This is the message that will be shown if the value is not identical.

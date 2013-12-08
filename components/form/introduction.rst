@@ -8,7 +8,7 @@ The Form Component
     The Form component allows you to easily create, process and reuse HTML
     forms.
 
-The form component is a tool to help you solve the problem of allowing end-users
+The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
 traditionally this has been through HTML forms, the component focuses on
 processing data to and from your client and application, whether that data
@@ -19,8 +19,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Form);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Form).
 
 Configuration
 -------------
@@ -89,7 +89,7 @@ array of submitted values.
 
 .. note::
 
-    For more information about the ``HttpFoundation`` component or how to
+    For more information about the HttpFoundation component or how to
     install it, see :doc:`/components/http_foundation/introduction`.
 
 CSRF Protection
@@ -217,11 +217,11 @@ text and other strings.
 
 To add these Twig filters, you can either use the built-in
 :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension` that integrates
-with Symfony's ``Translation`` component, or add the 2 Twig filters yourself,
+with Symfony's Translation component, or add the 2 Twig filters yourself,
 via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
-``Translation`` and :doc:`Config </components/config/introduction>` components
+Translation and :doc:`Config </components/config/introduction>` components
 installed. If you're using Composer, you could get the latest 2.3 version
 of each of these by adding the following to your ``composer.json`` file:
 
@@ -334,12 +334,12 @@ and then access it whenever you need to build a form.
 
 .. note::
 
-    In this document, the form factory is always a locally variable called
+    In this document, the form factory is always a local variable called
     ``$formFactory``. The point here is that you will probably need to create
     this object in some more "global" way so you can access it from anywhere.
 
 Exactly how you gain access to your one form factory is up to you. If you're
-using a :term`Service Container`, then you should add the form factory to
+using a :term:`Service Container`, then you should add the form factory to
 your container and grab it out whenever you need to. If your application
 uses global or static variables (not usually a good idea), then you can store
 the object on some static class or do something similar.
@@ -414,7 +414,7 @@ it and :ref:`process the form submission <component-form-intro-handling-submissi
 Setting Default Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you need you form to load with some default values (or you're building
+If you need your form to load with some default values (or you're building
 an "edit" form), simply pass in the default data when creating your form
 builder:
 
@@ -487,7 +487,7 @@ method:
 
     .. code-block:: php-standalone
 
-        use Symfony\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
         $form = $formFactory->createBuilder()

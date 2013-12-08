@@ -2,7 +2,7 @@ CardScheme
 ==========
 
 This constraint ensures that a credit card number is valid for a given credit card
-company. It can be used to validate the number before trying to initiate a payment 
+company. It can be used to validate the number before trying to initiate a payment
 through a payment gateway.
 
 +----------------+--------------------------------------------------------------------------+
@@ -20,7 +20,7 @@ Basic Usage
 -----------
 
 To use the ``CardScheme`` validator, simply apply it to a property or method
-on an  object that will contain a credit card number.
+on an object that will contain a credit card number.
 
 .. configuration-block::
 
@@ -100,7 +100,7 @@ schemes
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 
-This option is required and represents the name of the number scheme used to 
+This option is required and represents the name of the number scheme used to
 validate the credit card number, it can either be a string or an array. Valid
 values are:
 
@@ -120,7 +120,7 @@ For more information about the used schemes, see `Wikipedia: Issuer identificati
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``Unsupported card type or invalid card number``
+**type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
 

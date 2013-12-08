@@ -83,7 +83,7 @@ focus on the most important methods that come from the
         private $salt;
 
         /**
-         * @ORM\Column(type="string", length=40)
+         * @ORM\Column(type="string", length=64)
          */
         private $password;
 
@@ -219,7 +219,7 @@ layer is a piece of cake. Everything resides in the configuration of the
 :doc:`SecurityBundle </reference/configuration/security>` stored in the
 ``app/config/security.yml`` file.
 
-Below is an example of configuration where the user will enter his/her
+Below is an example of configuration where the user will enter their 
 username and password via HTTP basic authentication. That information will
 then be checked against your User entity records in the database:
 
@@ -237,7 +237,7 @@ then be checked against your User entity records in the database:
 
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
-                ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+                ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
             providers:
                 administrators:
@@ -387,12 +387,12 @@ Now, if you try to authenticate as a user who's ``is_active`` database field
 is set to 0, you won't be allowed.
 
 The next session will focus on how to write a custom entity provider 
-to authenticate a user with his username or his email address.
+to authenticate a user with their username or email address.
 
 Authenticating Someone with a Custom Entity Provider
 ----------------------------------------------------
 
-The next step is to allow a user to authenticate with his username or his email
+The next step is to allow a user to authenticate with their username or email
 address as they are both unique in the database. Unfortunately, the native
 entity provider is only able to handle a single property to fetch the user from
 the database.
@@ -516,7 +516,7 @@ of the ``security.yml`` file.
 
 By doing this, the security layer will use an instance of ``UserRepository`` and
 call its ``loadUserByUsername()`` method to fetch a user from the database
-whether he filled in his username or email address.
+whether they filled in their username or email address.
 
 Managing Roles in the Database
 ------------------------------
@@ -647,7 +647,7 @@ the many-to-many relationship between ``acme_user`` and ``acme_role``. If
 you had one user linked to one role, your database might look something like
 this:
 
-.. code-block:: text
+.. code-block:: bash
 
     $ mysql> select * from acme_role;
     +----+-------+------------+
@@ -656,7 +656,7 @@ this:
     |  1 | admin | ROLE_ADMIN |
     +----+-------+------------+
 
-    mysql> select * from user_role;
+    $ mysql> select * from user_role;
     +---------+---------+
     | user_id | role_id |
     +---------+---------+
@@ -687,7 +687,7 @@ Improving Performance with a Join
 To improve performance and avoid lazy loading of roles when retrieving a user
 from the custom entity provider, you can use a Doctrine join to the roles
 relationship in the ``UserRepository::loadUserByUsername()`` method. This will
-fetch the user and his associated roles with a single query::
+fetch the user and their associated roles with a single query::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
     namespace Acme\UserBundle\Entity;
@@ -714,5 +714,5 @@ fetch the user and his associated roles with a single query::
     }
 
 The ``QueryBuilder::leftJoin()`` method joins and fetches related roles from
-the ``AcmeUserBundle:User`` model class when a user is retrieved with his email
+the ``AcmeUserBundle:User`` model class when a user is retrieved by their email
 address or username.

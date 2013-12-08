@@ -73,7 +73,7 @@ or if an existing product is being edited (e.g. a product fetched from the datab
 
 Suppose now, that you don't want the user to be able to change the ``name`` value
 once the object has been created. To do this, you can rely on Symfony's
-:doc:`Event Dispatcher </components/event_dispatcher/introduction>`
+:doc:`EventDispatcher </components/event_dispatcher/introduction>`
 system to analyze the data on the object and modify the form based on the
 Product object's data. In this entry, you'll learn how to add this level of
 flexibility to your forms.
@@ -83,9 +83,9 @@ flexibility to your forms.
 Adding An Event Subscriber To A Form Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So, instead of directly adding that "name" widget via your ProductType form
+So, instead of directly adding that "name" widget via your ``ProductType`` form
 class, let's delegate the responsibility of creating that particular field
-to an Event Subscriber::
+to an event subscriber::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
@@ -165,8 +165,8 @@ How to Dynamically Generate Forms based on user Data
 
 Sometimes you want a form to be generated dynamically based not only on data
 from the form but also on something else - like some data from the current user.
-Suppose you have a social website where a user can only message people who
-are his friends on the website. In this case, a "choice list" of whom to message
+Suppose you have a social website where a user can only message people marked 
+as friends on the website. In this case, a "choice list" of whom to message
 should only contain users that are the current user's friends.
 
 Creating the Form Type
@@ -233,7 +233,7 @@ done in the constructor::
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have all the basics in place you an take advantage of the ``securityContext``
+Now that you have all the basics in place you can take advantage of the ``SecurityContext``
 and fill in the listener logic::
 
     // src/Acme/DemoBundle/FormType/FriendMessageFormType.php
@@ -344,7 +344,7 @@ it with :ref:`dic-tags-form-type`.
         services:
             acme.form.friend_message:
                 class: Acme\DemoBundle\Form\Type\FriendMessageFormType
-                arguments: [@security.context]
+                arguments: ["@security.context"]
                 tags:
                     -
                         name: form.type

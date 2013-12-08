@@ -5,12 +5,12 @@ How to remove the AcmeDemoBundle
 ================================
 
 The Symfony2 Standard Edition comes with a complete demo that lives inside a
-bundle called ``AcmeDemoBundle``. It is a great boilerplate to refer to while
+bundle called AcmeDemoBundle. It is a great boilerplate to refer to while
 starting a project, but you'll probably want to eventually remove it.
 
 .. tip::
 
-    This article uses the ``AcmeDemoBundle`` as an example, but you can use
+    This article uses the AcmeDemoBundle as an example, but you can use
     these steps to remove any bundle.
 
 1. Unregister the bundle in the ``AppKernel``
@@ -18,7 +18,7 @@ starting a project, but you'll probably want to eventually remove it.
 
 To disconnect the bundle from the framework, you should remove the bundle from
 the ``Appkernel::registerBundles()`` method. The bundle is normally found in
-the ``$bundles`` array but the ``AcmeDemoBundle`` is only registered in a
+the ``$bundles`` array but the AcmeDemoBundle is only registered in a
 development environment and you can find him in the if statement after::
 
     // app/AppKernel.php
@@ -56,11 +56,11 @@ Remove the ``_acme_demo`` entry at the bottom of this file.
 
 Some bundles contain configuration in one of the ``app/config/config*.yml``
 files. Be sure to remove the related configuration from these files. You can
-quickly spot bundle configuration by looking at a ``acme_demo`` (or whatever
-the name of the bundle is, e.g. ``fos_user`` for the ``FOSUserBundle``) string in
+quickly spot bundle configuration by looking for a ``acme_demo`` (or whatever
+the name of the bundle is, e.g. ``fos_user`` for the FOSUserBundle) string in
 the configuration files.
 
-The ``AcmeDemoBundle`` doesn't have configuration. However, the bundle is
+The AcmeDemoBundle doesn't have configuration. However, the bundle is
 used in the configuration for  the ``app/config/security.yml`` file. You can
 use it as a boilerplate for your own security, but you **can** also remove
 everything: it doesn't matter to Symfony if you remove it or not.
@@ -76,7 +76,7 @@ can remove the ``Acme`` directory as well.
 .. tip::
 
     If you don't know the location of a bundle, you can use the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Bundle\\Bundle::getPath` method
+    :method:`Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface::getPath` method
     to get the path of the bundle::
 
         echo $this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath();
@@ -86,7 +86,7 @@ can remove the ``Acme`` directory as well.
 
 .. note::
 
-    This doesn't apply to the ``AcmeDemoBundle`` - no other bundles depend
+    This doesn't apply to the AcmeDemoBundle - no other bundles depend
     on it, so you can skip this step.
 
 Some bundles rely on other bundles, if you remove one of the two, the other

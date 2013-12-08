@@ -25,7 +25,7 @@ Basic Usage
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url:
+                    - Url: ~
 
     .. code-block:: php-annotations
 
@@ -79,7 +79,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid URL``
+**type**: ``string`` **default**: ``This value is not a valid URL.``
 
 This message is shown if the URL is invalid.
 

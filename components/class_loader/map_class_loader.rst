@@ -1,5 +1,5 @@
 .. index::
-    single: Class Loader; MapClassLoader
+    single: ClassLoader; MapClassLoader
     
 MapClassLoader
 ==============

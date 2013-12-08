@@ -40,7 +40,7 @@ the `ProxyManager bridge`_:
     .. code-block:: json
 
         "require": {
-            "ocramius/proxy-manager": "0.4.*"
+            "ocramius/proxy-manager": "0.5.*"
         }
     
     to your ``composer.json``. Afterwards compile your container and check
@@ -86,8 +86,8 @@ received object.
 
     var_dump(class_implements($service));
     
-If the class implements the "ProxyManager\Proxy\LazyLoadingInterface" your lazy
-loaded services are working.
+If the class implements the ``ProxyManager\Proxy\LazyLoadingInterface`` your
+lazy loaded services are working.
 
 .. note::
 

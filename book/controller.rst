@@ -236,7 +236,7 @@ example:
 
         # app/config/routing.yml
         hello:
-            path:      /hello/{first_name}/{last_name}
+            path:      /hello/{firstName}/{lastName}
             defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
 
     .. code-block:: xml
@@ -248,7 +248,7 @@ example:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" path="/hello/{first_name}/{last_name}">
+            <route id="hello" path="/hello/{firstName}/{lastName}">
                 <default key="_controller">AcmeHelloBundle:Hello:index</default>
                 <default key="color">green</default>
             </route>
@@ -257,19 +257,19 @@ example:
     .. code-block:: php
 
         // app/config/routing.php
-        $collection->add('hello', new Route('/hello/{first_name}/{last_name}', array(
+        $collection->add('hello', new Route('/hello/{firstName}/{lastName}', array(
             '_controller' => 'AcmeHelloBundle:Hello:index',
             'color'       => 'green',
         )));
 
 The controller for this can take several arguments::
 
-    public function indexAction($first_name, $last_name, $color)
+    public function indexAction($firstName, $lastName, $color)
     {
         // ...
     }
 
-Notice that both placeholder variables (``{first_name}``, ``{last_name}``)
+Notice that both placeholder variables (``{firstName}``, ``{lastName}``)
 as well as the default ``color`` variable are available as arguments in the
 controller. When a route is matched, the placeholder variables are merged
 with the ``defaults`` to make one array that's available to your controller.
@@ -281,11 +281,11 @@ the following guidelines in mind while you develop.
 
     Symfony is able to match the parameter names from the route to the variable
     names in the controller method's signature. In other words, it realizes that
-    the ``{last_name}`` parameter matches up with the ``$last_name`` argument.
+    the ``{lastName}`` parameter matches up with the ``$lastName`` argument.
     The arguments of the controller could be totally reordered and still work
     perfectly::
 
-        public function indexAction($last_name, $color, $first_name)
+        public function indexAction($lastName, $color, $firstName)
         {
             // ...
         }
@@ -295,7 +295,7 @@ the following guidelines in mind while you develop.
     The following would throw a ``RuntimeException`` because there is no ``foo``
     parameter defined in the route::
 
-        public function indexAction($first_name, $last_name, $color, $foo)
+        public function indexAction($firstName, $lastName, $color, $foo)
         {
             // ...
         }
@@ -303,17 +303,17 @@ the following guidelines in mind while you develop.
     Making the argument optional, however, is perfectly ok. The following
     example would not throw an exception::
 
-        public function indexAction($first_name, $last_name, $color, $foo = 'bar')
+        public function indexAction($firstName, $lastName, $color, $foo = 'bar')
         {
             // ...
         }
 
 * **Not all routing parameters need to be arguments on your controller**
 
-    If, for example, the ``last_name`` weren't important for your controller,
+    If, for example, the ``lastName`` weren't important for your controller,
     you could omit it entirely::
 
-        public function indexAction($first_name, $color)
+        public function indexAction($firstName, $color)
         {
             // ...
         }
@@ -501,9 +501,9 @@ value to each variable.
     directly by duplicating the current request. When this
     :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
     service the ``HttpKernel`` returns a ``Response`` object::
-    
+
         use Symfony\Component\HttpKernel\HttpKernelInterface;
-    
+
         $path = array(
             '_controller' => 'AcmeHelloBundle:Hello:fancy',
             'name'        => $name,
@@ -750,11 +750,14 @@ headers and content that's sent back to the client::
     use Symfony\Component\HttpFoundation\Response;
 
     // create a simple Response with a 200 status code (the default)
-    $response = new Response('Hello '.$name, 200);
+    $response = new Response('Hello '.$name, Response::HTTP_OK);
 
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 .. tip::
 

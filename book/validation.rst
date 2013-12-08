@@ -129,7 +129,14 @@ simple example from inside a controller::
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
-            return new Response(print_r($errors, true));
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging
+             */
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
         }
 
         return new Response('The author is valid! Yes!');
@@ -685,7 +692,7 @@ on that class. To do this, you can organize each constraint into one or more
 constraints.
 
 For example, suppose you have a ``User`` class, which is used both when a
-user registers and when a user updates his/her contact information later:
+user registers and when a user updates their contact information later:
 
 .. configuration-block::
 
@@ -971,6 +978,18 @@ entity and a new constraint group called ``Premium``:
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\User:
+            properties:
+                name:
+                    - NotBlank
+                creditCard:
+                    - CardScheme
+                        schemes: [VISA]
+                        groups: [Premium]
+
     .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Entity/User.php
@@ -995,18 +1014,6 @@ entity and a new constraint group called ``Premium``:
              */
             private $creditCard;
         }
-
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\User:
-            properties:
-                name:
-                    - NotBlank
-                creditCard:
-                    - CardScheme
-                        schemes: [VISA]
-                        groups: [Premium]
 
     .. code-block:: xml
 

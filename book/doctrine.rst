@@ -1087,7 +1087,7 @@ in a way that makes sense for your needs. The fact that the data needs to
 be persisted to a database is always secondary.
 
 Now, look at the metadata above the ``$category`` property on the ``Product``
-class. The information here tells doctrine that the related class is ``Category``
+class. The information here tells Doctrine that the related class is ``Category``
 and that it should store the ``id`` of the category record on a ``category_id``
 field that lives on the ``product`` table. In other words, the related ``Category``
 object will be stored on the ``$category`` property, but behind the scenes,
@@ -1285,7 +1285,7 @@ More Information on Associations
 
 This section has been an introduction to one common type of entity relationship,
 the one-to-many relationship. For more advanced details and examples of how
-to use other types of relations (e.g. ``one-to-one``, ``many-to-many``), see
+to use other types of relations (e.g. one-to-one, many-to-many), see
 Doctrine's `Association Mapping Documentation`_.
 
 .. note::
@@ -1441,12 +1441,19 @@ using. The following types are supported in Doctrine:
   * ``date``
   * ``time``
   * ``datetime``
+  * ``datetimetz``
 
 * **Other Types**
 
   * ``boolean``
   * ``object`` (serialized and stored in a ``CLOB`` field)
   * ``array`` (serialized and stored in a ``CLOB`` field)
+  * ``blob`` (mapped to a resource stream)
+  * ``simple_array`` (serialized using :phpfunction:`implode()` and :phpfunction:`explode()`,
+    with a comma as delimiter, and stored in a ``CLOB`` field)
+  * ``json_array`` (serialized using :phpfunction:`json_encode()` and :phpfunction:`json_decode()`,
+    and stored in a ``CLOB`` field)
+  * ``guid``
 
 For more information, see Doctrine's `Mapping Types documentation`_.
 
@@ -1483,7 +1490,7 @@ and ``nullable``. Take a few examples:
         fields:
             # A string field length 255 that cannot be null
             # (reflecting the default values for the "length" and *nullable* options)
-            # type attribute is necessary in yaml definitions
+            # type attribute is necessary in YAML definitions
             name:
                 type: string
 
@@ -1500,7 +1507,7 @@ and ``nullable``. Take a few examples:
         <!--
             A string field length 255 that cannot be null
             (reflecting the default values for the "length" and *nullable* options)
-            type attribute is necessary in xml definitions
+            type attribute is necessary in XML definitions
         -->
         <field name="name" type="string" />
         <field name="email"
@@ -1562,7 +1569,7 @@ Some notable or interesting tasks include:
 .. note::
 
    To be able to load data fixtures to your database, you will need to have
-   the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
+   the DoctrineFixturesBundle bundle installed. To learn how to do it,
    read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
    documentation.
 

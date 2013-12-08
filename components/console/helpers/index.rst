@@ -12,7 +12,7 @@ The Console Helpers
     progresshelper
     tablehelper
 
-The Console Components comes with some useful helpers. These helpers contain
+The Console component comes with some useful helpers. These helpers contain
 function to ease some common tasks.
 
 .. include:: map.rst.inc

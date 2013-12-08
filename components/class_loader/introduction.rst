@@ -1,10 +1,10 @@
 .. index::
-    single: Components; Class Loader
+    single: Components; ClassLoader
 
-The Class Loader Component
-==========================
+The ClassLoader Component
+=========================
 
-    The Class Loader Component provides tools to autoload your classes and
+    The ClassLoader component provides tools to autoload your classes and
     cache their locations for performance.
 
 Usage
@@ -20,7 +20,7 @@ the class. Symfony2 provides two autoloaders, which are able to load your classe
 * :doc:`/components/class_loader/map_class_loader`: loads classes using
   a static map from class name to file path.
 
-Additionally, the Symfony Class Loader Component ships with a set of wrapper
+Additionally, the Symfony ClassLoader component ships with a set of wrapper
 classes which can be used to add additional functionality on top of existing
 autoloaders:
 
@@ -32,9 +32,9 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/ClassLoader);
 * :doc:`Install it via Composer </components/using_components>` (``symfony/class-loader``
-  on `Packagist`_).
+  on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/ClassLoader).
 
 .. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader

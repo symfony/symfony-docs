@@ -77,12 +77,17 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
             }
         }
 
+.. caution::
+
+    When using YAML, be sure to surround ``Null`` with quotes (``'Null'``)
+    or else YAML will convert this into a ``null`` value.
+
 Options
 -------
 
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be null``
+**type**: ``string`` **default**: ``This value should be null.``
 
 This is the message that will be shown if the value is not ``null``.

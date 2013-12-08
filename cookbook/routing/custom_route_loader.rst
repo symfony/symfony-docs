@@ -5,7 +5,7 @@ How to create a custom Route Loader
 ===================================
 
 A custom route loader allows you to add routes to an application without
-including them, for example, in a Yaml file. This comes in handy when
+including them, for example, in a YAML file. This comes in handy when
 you have a bundle but don't want to manually add the routes for the bundle
 to ``app/config/routing.yml``. This may be especially important when you want
 to make the bundle reusable, or when you have open-sourced it as this would
@@ -28,7 +28,7 @@ Loading Routes
 The routes in a Symfony application are loaded by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
-different types, for instance Yaml files or ``@Route`` and ``@Method`` annotations
+different types, for instance YAML files or ``@Route`` and ``@Method`` annotations
 in controller files. The specialized loaders implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
 and therefore have two important methods:
@@ -58,7 +58,7 @@ Creating a Custom Loader
 ------------------------
 
 To load routes from some custom source (i.e. from something other than annotations,
-Yaml or XML files), you need to create a custom route loader. This loader
+YAML or XML files), you need to create a custom route loader. This loader
 should implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
 The sample loader below supports loading routing resources with a type of
@@ -224,7 +224,7 @@ to load secondary routing resources.
 Of course you still need to implement
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
-Whenever you want to load another resource - for instance a Yaml routing
+Whenever you want to load another resource - for instance a YAML routing
 configuration file - you can call the
 :method:`Symfony\\Component\\Config\\Loader\\Loader::import` method::
 
@@ -259,7 +259,7 @@ configuration file - you can call the
 
     The resource name and type of the imported routing configuration can
     be anything that would normally be supported by the routing configuration
-    loader (Yaml, XML, PHP, annotation, etc.).
+    loader (YAML, XML, PHP, annotation, etc.).
 
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
 .. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle

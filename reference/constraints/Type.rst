@@ -115,6 +115,6 @@ as determined by PHP's ``is_`` functions.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be of type {{ type }}``
+**type**: ``string`` **default**: ``This value should be of type {{ type }}.``
 
 The message if the underlying data is not of the given type.

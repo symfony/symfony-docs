@@ -17,12 +17,12 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Console);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Console).
 
 .. note::
 
-    Windows does not support ANSI colors by default so the Console Component detects and
+    Windows does not support ANSI colors by default so the Console component detects and
     disables colors where Windows does not have support. However, if Windows is not
     configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.
@@ -396,6 +396,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progresshelper`: shows a progress bar
+* :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 
 Testing Commands
 ----------------

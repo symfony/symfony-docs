@@ -105,7 +105,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option <validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "min" length value. Validation will fail if the given
 value's length is **less** than this min value.
@@ -113,7 +113,7 @@ value's length is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option <validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "max" length value. Validation will fail if the given
 value's length is **greater** than this max value.
@@ -131,21 +131,21 @@ is used.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``.
+**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
 The message that will be shown if the underlying value's length is less than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``.
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
 The message that will be shown if the underlying value's length is more than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``.
+**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
 The message that will be shown if min and max values are equal and the underlying
 value's length is not exactly this value.

@@ -26,8 +26,10 @@ An authorization decision will always be based on a few things:
     Each attribute stands for a certain right the user should have, e.g.
     ``ROLE_ADMIN`` to make sure the user is an administrator.
 * An object (optional)
-    Any object on which for which access control needs to be checked, like
+    Any object for which access control needs to be checked, like
     an article or a comment object.
+
+.. _components-security-access-decision-manager:
 
 Access Decision Manager
 -----------------------
@@ -70,6 +72,11 @@ recognizes several strategies:
         $allowIfEqualGrantedDeniedDecisions
     );
 
+.. seealso::
+
+    You can change the default strategy in the
+    :ref:`configuration <security-voters-change-strategy>`.
+
 Voters
 ------
 
@@ -91,7 +98,7 @@ manager to use them:
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
     or ``VoterInterface::ACCESS_ABSTAIN``;
 
-The security component contains some standard voters which cover many use
+The Security component contains some standard voters which cover many use
 cases:
 
 AuthenticatedVoter

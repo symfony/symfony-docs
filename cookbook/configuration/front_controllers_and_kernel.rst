@@ -46,7 +46,7 @@ to `decorate`_ the kernel with additional features. Examples include:
 * Adding HTTP level caching by wrapping the kernel with an instance of
   :ref:`AppCache <symfony-gateway-cache>`;
 * Enabling (or skipping) the :doc:`ClassCache </cookbook/debugging>`
-* Enabling the :doc:`Debug Component </components/debug>`.
+* Enabling the :doc:`Debug component </components/debug>`.
 
 The front controller can be chosen by requesting URLs like:
 
@@ -141,7 +141,7 @@ independently (for example, the admin UI, the frontend UI and database migration
 The Environments
 ----------------
 
-We just mentioned another method the ``AppKernel`` has to implement -
+As just mentioned, the ``AppKernel`` has to implement another method -
 :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`.
 This method is responsible for loading the application's
 configuration from the right *environment*.

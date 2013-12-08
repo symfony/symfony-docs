@@ -114,7 +114,7 @@ Now, let's have a look at the ``layout.html.php`` file:
 The layout is itself decorated by another one (``::base.html.php``). Symfony2
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
-looked for in the ``app/Resources/views/`` directory. This directory store
+looked for in the ``app/Resources/views/`` directory. This directory stores
 global views for your entire project:
 
 .. code-block:: html+php

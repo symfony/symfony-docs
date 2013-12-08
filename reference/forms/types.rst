@@ -8,37 +8,44 @@ Form Types Reference
    :maxdepth: 1
    :hidden:
 
-   types/birthday
-   types/button
-   types/checkbox
-   types/choice
-   types/collection
-   types/country
-   types/currency
-   types/date
-   types/datetime
+   types/text
+   types/textarea
    types/email
-   types/entity
-   types/file
-   types/form
-   types/hidden
    types/integer
-   types/language
-   types/locale
    types/money
    types/number
    types/password
    types/percent
-   types/radio
-   types/repeated
-   types/reset
    types/search
-   types/submit
-   types/text
-   types/textarea
-   types/time
-   types/timezone
    types/url
+
+   types/choice
+   types/entity
+   types/country
+   types/language
+   types/locale
+   types/timezone
+   types/currency
+
+   types/date
+   types/datetime
+   types/time
+   types/birthday
+
+   types/checkbox
+   types/file
+   types/radio
+
+   types/collection
+   types/repeated
+
+   types/hidden
+
+   types/button
+   types/reset
+   types/submit
+
+   types/form
 
 A form is composed of *fields*, each of which are built with the help of
 a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony2 comes

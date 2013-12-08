@@ -22,7 +22,13 @@ Required
 * PHP needs to be a minimum version of PHP 5.3.3
 * JSON needs to be enabled
 * ctype needs to be enabled
-* Your PHP.ini needs to have the date.timezone setting
+* Your ``php.ini`` needs to have the ``date.timezone`` setting
+
+.. caution::
+
+    Be aware that Symfony2 has some known limitations when using a PHP version
+    less than 5.3.8 or equal to 5.3.16. For more information see the
+    `Requirements section of the README`_.
 
 Optional
 --------
@@ -35,7 +41,7 @@ Optional
 * POSIX needs to be enabled (only on \*nix)
 * Intl needs to be installed with ICU 4+
 * APC 3.0.17+ (or another opcode cache needs to be installed)
-* PHP.ini recommended settings
+* ``php.ini`` recommended settings
 
   * ``short_open_tag = Off``
   * ``magic_quotes_gpc = Off``
@@ -48,3 +54,5 @@ Doctrine
 If you want to use Doctrine, you will need to have PDO installed. Additionally,
 you need to have the PDO driver installed for the database server you want
 to use.
+
+.. _`Requirements section of the README`: https://github.com/symfony/symfony#requirements

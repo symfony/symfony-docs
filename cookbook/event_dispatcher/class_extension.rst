@@ -1,5 +1,5 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
 How to extend a Class without using Inheritance
 ===============================================
@@ -77,7 +77,7 @@ use this pattern of class extension:
             $this->stopPropagation();
         }
 
-        public function getReturnValue($val)
+        public function getReturnValue()
         {
             return $this->returnValue;
         }

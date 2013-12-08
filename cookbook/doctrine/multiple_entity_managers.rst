@@ -200,7 +200,7 @@ You can now use Doctrine just as you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
 
-The same applies to repository call::
+The same applies to repository calls::
 
     class UserController extends Controller
     {
@@ -225,3 +225,4 @@ The same applies to repository call::
             ;
         }
     }
+

@@ -43,8 +43,9 @@ Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.
 
-You can use Assetic to process both :ref:`CSS stylesheets <cookbook-assetic-including-css>`
-and :ref:`JavaScript files <cookbook-assetic-including-javascript>`. The philosophy
+You can use Assetic to process :ref:`CSS stylesheets <cookbook-assetic-including-css>`,
+:ref:`JavaScript files <cookbook-assetic-including-javascript>` and
+:ref:`images <cookbook-assetic-including-image>`. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.
 
 .. _cookbook-assetic-including-javascript:
@@ -127,6 +128,32 @@ the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
     publicly-accessible path: ``bundles/acme_foo/css``. You can use either, except
     that there is a known issue that causes the ``cssrewrite`` filter to fail
     when using the ``@AcmeFooBundle`` syntax for CSS Stylesheets.
+
+.. _cookbook-assetic-including-image:
+
+Including images
+~~~~~~~~~~~~~~~~
+
+To include an image you can use the ``image`` tag.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% image '@AcmeFooBundle/Resources/public/images/example.jpg' %}
+            <img src="{{ asset_url }}" alt="Example" />
+        {% endimage %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->image(
+            array('@AcmeFooBundle/Resources/public/images/example.jpg')
+        ) as $url): ?>
+            <img src="<?php echo $view->escape($url) ?>" alt="Example" />
+        <?php endforeach; ?>
+
+You can also use Assetic for image optimization. More information in
+:doc:`/cookbook/assetic/jpeg_optimize`.
 
 .. _cookbook-assetic-cssrewrite:
 
@@ -238,7 +265,7 @@ To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
 available to use (you'll use the filter below).
 
-For example to use the JavaScript YUI Compressor the following config should
+For example to use the UglifyJS JavaScript minifier the following config should
 be added:
 
 .. configuration-block::
@@ -248,16 +275,16 @@ be added:
         # app/config/config.yml
         assetic:
             filters:
-                yui_js:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                uglifyjs2:
+                    bin: /usr/local/bin/uglifyjs
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <assetic:config>
             <assetic:filter
-                name="yui_js"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                name="uglifyjs2"
+                bin="/usr/local/bin/uglifyjs" />
         </assetic:config>
 
     .. code-block:: php
@@ -265,8 +292,8 @@ be added:
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
             'filters' => array(
-                'yui_js' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                'uglifyjs2' => array(
+                    'bin' => '/usr/local/bin/uglifyjs',
                 ),
             ),
         ));
@@ -278,7 +305,7 @@ into your template:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
@@ -286,13 +313,13 @@ into your template:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')
+            array('uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 A more detailed guide about configuring and using Assetic filters as well as
-details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompressor`.
+details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/uglifyjs`.
 
 Controlling the URL used
 ------------------------
@@ -352,7 +379,7 @@ in your source, you'll likely just see something like this:
 
 .. code-block:: html
 
-    <script src="/app_dev.php/js/abcd123.js"></script>
+    <script src="/js/abcd123.js"></script>
 
 Moreover, that file does **not** actually exist, nor is it dynamically rendered
 by Symfony (as the asset files are in the ``dev`` environment). This is on

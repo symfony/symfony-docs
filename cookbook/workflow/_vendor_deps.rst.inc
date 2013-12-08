@@ -1,5 +1,5 @@
-Managing Vendor Libraries with composer.json
---------------------------------------------
+Managing Vendor Libraries with ``composer.json``
+------------------------------------------------
 
 How does it work?
 ~~~~~~~~~~~~~~~~~
@@ -59,7 +59,7 @@ and download the exact same set of vendor libraries. This means that you're
 controlling exactly what each vendor library looks like, without needing to
 actually commit them to *your* repository.
 
-So, whenever a developer uses your project, he/she should run the ``php composer.phar install``
+So, whenever a developer uses your project, they should run the ``php composer.phar install``
 script to ensure that all of the needed vendor libraries are downloaded.
 
 .. sidebar:: Upgrading Symfony

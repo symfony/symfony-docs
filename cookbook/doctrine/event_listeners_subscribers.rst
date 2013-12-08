@@ -157,7 +157,7 @@ entity), you should check for the entity's class type in your method
 Creating the Subscriber Class
 -----------------------------
 
-A doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
+A Doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
 interface and have an event method for each event it subscribes to::
 
     // src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php
@@ -165,7 +165,7 @@ interface and have an event method for each event it subscribes to::
 
     use Doctrine\Common\EventSubscriber;
     use Doctrine\ORM\Event\LifecycleEventArgs;
-    // for doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+    // for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
     use Acme\StoreBundle\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber

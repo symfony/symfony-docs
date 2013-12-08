@@ -4,7 +4,7 @@
 How to implement your own Voter to blacklist IP Addresses
 =========================================================
 
-The Symfony2 security component provides several layers to authorize users.
+The Symfony2 Security component provides several layers to authorize users.
 One of the layers is called a `voter`. A voter is a dedicated class that checks
 if the user has the rights to be connected to the application. For instance,
 Symfony2 provides a layer that checks if the user is fully authorized or if
@@ -31,7 +31,7 @@ which requires the following three methods:
     }
 
 The ``supportsAttribute()`` method is used to check if the voter supports
-the given user attribute (i.e: a role, an acl, etc.).
+the given user attribute (i.e: a role, an ACL, etc.).
 
 The ``supportsClass()`` method is used to check if the voter supports the
 current user token class.
@@ -61,15 +61,18 @@ and compare the IP address against a set of blacklisted IP addresses:
     // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\DependencyInjection\ContainerInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
     class ClientIpVoter implements VoterInterface
     {
-        public function __construct(ContainerInterface $container, array $blacklistedIp = array())
+        protected $requestStack;
+        private $blacklistedIp;
+
+        public function __construct(RequestStack $requestStack, array $blacklistedIp = array())
         {
-            $this->container     = $container;
+            $this->requestStack  = $requestStack;
             $this->blacklistedIp = $blacklistedIp;
         }
 
@@ -87,7 +90,7 @@ and compare the IP address against a set of blacklisted IP addresses:
 
         public function vote(TokenInterface $token, $object, array $attributes)
         {
-            $request = $this->container->get('request');
+            $request = $this->requestStack->getCurrentRequest();
             if (in_array($request->getClientIp(), $this->blacklistedIp)) {
                 return VoterInterface::ACCESS_DENIED;
             }
@@ -114,7 +117,7 @@ Declaring the Voter as a Service
 --------------------------------
 
 To inject the voter into the security layer, you must declare it as a service,
-and tag it as a "security.voter":
+and tag it as a ``security.voter``:
 
 .. configuration-block::
 
@@ -124,7 +127,7 @@ and tag it as a "security.voter":
         services:
             security.access.blacklist_voter:
                 class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments:  ["@service_container", [123.123.123.123, 171.171.171.171]]
+                arguments:  ["@request_stack", [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
                     - { name: security.voter }
@@ -134,7 +137,7 @@ and tag it as a "security.voter":
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
                  class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
-            <argument type="service" id="service_container" strict="false" />
+            <argument type="service" id="request_stack" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
                 <argument>171.171.171.171</argument>
@@ -151,7 +154,7 @@ and tag it as a "security.voter":
         $definition = new Definition(
             'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
-                new Reference('service_container'),
+                new Reference('request_stack'),
                 array('123.123.123.123', '171.171.171.171'),
             ),
         );
@@ -166,6 +169,8 @@ and tag it as a "security.voter":
    configuration file (e.g. ``app/config/config.yml``). For more information
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
+
+.. _security-voters-change-strategy:
 
 Changing the Access Decision Strategy
 -------------------------------------
@@ -212,3 +217,8 @@ application configuration file with the following code.
 
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
+
+.. seealso::
+
+    For a more advanced usage see
+    :ref:`components-security-access-decision-manager`.

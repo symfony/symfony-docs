@@ -1,11 +1,11 @@
 ﻿.. index::
-    single: Dependency Injection
+    single: DependencyInjection
     single: Components; DependencyInjection
 
-The Dependency Injection Component
-==================================
+The DependencyInjection Component
+=================================
 
-    The Dependency Injection component allows you to standardize and centralize
+    The DependencyInjection component allows you to standardize and centralize
     the way objects are constructed in your application.
 
 For an introduction to Dependency Injection and service containers see
@@ -16,8 +16,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/DependencyInjection);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/DependencyInjection).
 
 Basic Usage
 -----------
@@ -179,12 +179,12 @@ Setting Up the Container with Configuration Files
 -------------------------------------------------
 
 As well as setting up the services using PHP as above you can also use
-configuration files. This allows you to use XML or Yaml to write the definitions
+configuration files. This allows you to use XML or YAML to write the definitions
 for the services rather than using PHP to define the services as in the above
 examples. In anything but the smallest applications it make sense to organize
 the service definitions by moving them into one or more configuration files.
 To do this you also need to install
-:doc:`the Config Component </components/config/introduction>`.
+:doc:`the Config component </components/config/introduction>`.
 
 Loading an XML config file::
 

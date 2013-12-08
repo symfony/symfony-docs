@@ -13,9 +13,9 @@ Add Composer Dependencies
 In Symfony, dependencies are managed with Composer. It's a good idea to learn
 some basics of Composer in `their documentation`_.
 
-Before you can use composer to install a bundle, you should look for a
+Before you can use Composer to install a bundle, you should look for a
 `Packagist`_ package of that bundle. For example, if you search for the popular
-`FOSUserBundle`_ you will find a packaged called `friendsofsymfony/user-bundle`_.
+`FOSUserBundle`_ you will find a package called `friendsofsymfony/user-bundle`_.
 
 .. note::
 
@@ -36,7 +36,7 @@ this happens, you can try a different version.
 Now you can add the bundle to your ``composer.json`` file and update the
 dependencies. You can do this manually:
 
-1. **Add it to the composer.json file:**
+1. **Add it to the ``composer.json`` file:**
 
    .. code-block:: json
 
@@ -132,7 +132,7 @@ Other Setup
 -----------
 
 At this point, check the ``README`` file of your brand new bundle to see
-what do to next.
+what to do next.
 
 .. _their documentation: http://getcomposer.org/doc/00-intro.md
 .. _Packagist:           https://packagist.org

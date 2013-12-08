@@ -27,7 +27,7 @@ all matches.
 Resource loaders
 ----------------
 
-For each type of resource (Yaml, XML, annotation, etc.) a loader must be defined.
+For each type of resource (YAML, XML, annotation, etc.) a loader must be defined.
 Each loader should implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
 or extend the abstract :class:`Symfony\\Component\\Config\\Loader\\FileLoader`
 class, which allows for recursively importing other resources::

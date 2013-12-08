@@ -276,7 +276,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
 The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
-a user submits her password, the password is appended to the salt value and
+a user submits their password, the salt value is appended to the password and
 then encoded using this algorithm before being compared to the hashed password
 returned by your ``getPassword()`` method. Additionally, depending on your
 options, the password may be encoded multiple times and encoded to base64.

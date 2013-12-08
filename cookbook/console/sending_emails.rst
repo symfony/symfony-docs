@@ -64,7 +64,7 @@ Configuring the Request Context per Command
 -------------------------------------------
 
 To change it only in one command you can simply fetch the Request Context
-service and override its settings::
+from the ``router`` service and override its settings::
 
    // src/Acme/DemoBundle/Command/DemoCommand.php
 
@@ -89,7 +89,7 @@ Sending emails in a console command works the same way as described in the
 :doc:`/cookbook/email/email` cookbook except if memory spooling is used.
 
 When using memory spooling (see the :doc:`/cookbook/email/spool` cookbook for more
-information), you must be aware that because of how symfony handles console
+information), you must be aware that because of how Symfony handles console
 commands, emails are not sent automatically. You must take care of flushing
 the queue yourself. Use the following code to send emails inside your
 console command::

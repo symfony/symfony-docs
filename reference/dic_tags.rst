@@ -25,9 +25,9 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.formula_resource`_       | Adds a resource to the current asset manager                              |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.php`_         | Remove this service if php templating is disabled                         |
+| `assetic.templating.php`_         | Remove this service if PHP templating is disabled                         |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.twig`_        | Remove this service if twig templating is disabled                        |
+| `assetic.templating.twig`_        | Remove this service if Twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `console.command`_                | Add a command                                                             |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -67,7 +67,7 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
+| `swiftmailer.default.plugin`_     | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -114,7 +114,7 @@ In order to add a new worker, first create a class::
 
     }
 
-And then add register it as a tagged service:
+And then register it as a tagged service:
 
 .. configuration-block::
 
@@ -215,7 +215,7 @@ assetic.formula_loader
 A Formula loader is a class implementing
 ``Assetic\\Factory\Loader\\FormulaLoaderInterface`` interface. This class
 is responsible for loading assets from a particular kind of resources (for
-instance, twig template). Assetic ships loaders for php and twig templates.
+instance, twig template). Assetic ships loaders for PHP and Twig templates.
 
 An ``alias`` attribute defines the name of the loader.
 
@@ -224,13 +224,13 @@ assetic.formula_resource
 
 **Purpose**: Adds a resource to the current asset manager
 
-A resource is something formulae can be loaded from. For instance, twig
+A resource is something formulae can be loaded from. For instance, Twig
 templates are resources.
 
 assetic.templating.php
 ----------------------
 
-**Purpose**: Remove this service if php templating is disabled
+**Purpose**: Remove this service if PHP templating is disabled
 
 The tagged service will be removed from the container if the
 ``framework.templating.engines`` config section does not contain php.
@@ -238,10 +238,10 @@ The tagged service will be removed from the container if the
 assetic.templating.twig
 -----------------------
 
-**Purpose**: Remove this service if twig templating is disabled
+**Purpose**: Remove this service if Twig templating is disabled
 
 The tagged service will be removed from the container if
-``framework.templating.engines`` config section does not contain twig.
+``framework.templating.engines`` config section does not contain ``twig``.
 
 console.command
 ---------------
@@ -317,7 +317,7 @@ the interface directly::
     }
 
 In order for Symfony to know about your form extension and use it, give it
-the `form.type_extension` tag:
+the ``form.type_extension`` tag:
 
 .. configuration-block::
 
@@ -360,7 +360,7 @@ To add your own form type guesser, create a class that implements the
 tag its service definition with ``form.type_guesser`` (it has no options).
 
 To see an example of how this class might look, see the ``ValidatorTypeGuesser``
-class in the ``Form`` component.
+class in the Form component.
 
 kernel.cache_clearer
 --------------------
@@ -388,7 +388,7 @@ service class::
 
     }
 
-Then register this class and tag it with ``kernel.cache:clearer``:
+Then register this class and tag it with ``kernel.cache_clearer``:
 
 .. configuration-block::
 
@@ -449,7 +449,7 @@ The ``isOptional`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony 2.0, optional warmers
 are always executed anyways, so this function has no real effect.
 
-To register your warmer with Symfony, give it the kernel.cache_warmer tag:
+To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
 
 .. configuration-block::
 
@@ -504,7 +504,7 @@ core Symfony listeners and their priorities.
 
     All listeners listed here may not be listening depending on your environment,
     settings and bundles. Additionally, third-party bundles will bring in
-    additional listener not listed here.
+    additional listeners not listed here.
 
 kernel.request
 ..............
@@ -621,7 +621,7 @@ configuration, and tag it with ``kernel.event_subscriber``:
 kernel.fragment_renderer
 ------------------------
 
-**Purpose**: Add a new HTTP content rendering strategy.
+**Purpose**: Add a new HTTP content rendering strategy
 
 To add a new rendering strategy - in addition to the core strategies like
 ``EsiFragmentRenderer`` - create a class that implements
@@ -662,6 +662,12 @@ channel when injecting the logger in a service.
         $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(new Reference('logger'));
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->register('my_service', $definition);
+
+.. tip::
+
+    If you use MonologBundle 2.4 or higher, you can configure custom channels
+    in the configuration and retrieve the corresponding logger service from
+    the service container directly (see :ref:`cookbook-monolog-channels-config`).
 
 .. _dic_tags-monolog-processor:
 
@@ -847,14 +853,20 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
 For more details, see :doc:`/cookbook/serializer`.
 
-swiftmailer.plugin
-------------------
+swiftmailer.default.plugin
+--------------------------
 
 **Purpose**: Register a custom SwiftMailer Plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.plugin`` (it has no options).
+it with ``swiftmailer.default.plugin`` (it has no options). 
+
+.. note::
+
+    ``default`` in this tag is the name of the mailer. If you have multiple
+    mailers configured or have changed the default mailer name for some reason,
+    you should change it to the name of your mailer in order to use this tag.
 
 A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
 For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
@@ -1124,7 +1136,7 @@ configuration, and tag it with ``twig.extension``:
 
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the cookbook article:
-:doc:`/cookbook/templating/twig_extension`
+:doc:`/cookbook/templating/twig_extension`.
 
 Before writing your own extensions, have a look at the
 `Twig official extension repository`_ which already includes several

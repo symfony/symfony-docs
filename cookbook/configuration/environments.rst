@@ -141,20 +141,14 @@ either the ``app.php`` (for the ``prod`` environment) or the ``app_dev.php``
    :doc:`Installing Symfony2 </book/installation>`.
 
 If you open up one of these files, you'll quickly see that the environment
-used by each is explicitly set:
+used by each is explicitly set::
 
-.. code-block:: php
-   :linenos:
+    // web/app.php
+    // ... 
 
-    <?php
+    $kernel = new AppKernel('prod', false);
 
-    require_once __DIR__.'/../app/bootstrap_cache.php';
-    require_once __DIR__.'/../app/AppCache.php';
-
-    use Symfony\Component\HttpFoundation\Request;
-
-    $kernel = new AppCache(new AppKernel('prod', false));
-    $kernel->handle(Request::createFromGlobals())->send();
+    // ...
 
 As you can see, the ``prod`` key specifies that this environment will run
 in the ``prod`` environment. A Symfony2 application can be executed in any
@@ -173,13 +167,14 @@ environment by using this code and changing the environment string.
 .. sidebar:: *Debug* Mode
 
     Important, but unrelated to the topic of *environments* is the ``false``
-    key on line 8 of the front controller above. This specifies whether or
-    not the application should run in "debug mode". Regardless of the environment,
-    a Symfony2 application can be run with debug mode set to ``true`` or
-    ``false``. This affects many things in the application, such as whether
-    or not the cache files are dynamically rebuilt on each request. Though not
-    a requirement, debug mode is generally set to ``true`` for the ``dev`` and
-    ``test`` environments and ``false`` for the ``prod`` environment.
+    argument as the second argument to the ``AppKernel`` constructor. This
+    specifies whether or not the application should run in "debug mode". Regardless
+    of the environment, a Symfony2 application can be run with debug mode
+    set to ``true`` or ``false``. This affects many things in the application,
+    such as whether or not errors should be displayed or if cache files are
+    dynamically rebuilt on each request. Though not a requirement, debug mode
+    is generally set to ``true`` for the ``dev`` and ``test`` environments
+    and ``false`` for the ``prod`` environment.
 
     Internally, the value of the debug mode becomes the ``kernel.debug``
     parameter used inside the :doc:`service container </book/service_container>`.
@@ -273,19 +268,15 @@ the ``prod`` environment, except for any changes explicitly made here.
 
 Because you'll want this environment to be accessible via a browser, you
 should also create a front controller for it. Copy the ``web/app.php`` file
-to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``:
+to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``::
 
-.. code-block:: php
+    // web/app_benchmark.php
 
-    <?php
 
-    require_once __DIR__.'/../app/bootstrap.php';
-    require_once __DIR__.'/../app/AppKernel.php';
-
-    use Symfony\Component\HttpFoundation\Request;
-
+    // change just this line
     $kernel = new AppKernel('benchmark', false);
-    $kernel->handle(Request::createFromGlobals())->send();
+
+    // ...
 
 The new environment is now accessible via::
 
@@ -333,10 +324,10 @@ includes the following:
 * ``appDevDebugProjectContainer.php`` - the cached "service container" that
   represents the cached application configuration;
 
-* ``appdevUrlGenerator.php`` - the PHP class generated from the routing
+* ``appDevUrlGenerator.php`` - the PHP class generated from the routing
   configuration and used when generating URLs;
 
-* ``appdevUrlMatcher.php`` - the PHP class used for route matching - look
+* ``appDevUrlMatcher.php`` - the PHP class used for route matching - look
   here to see the compiled regular expression logic used to match incoming
   URLs to different routes;
 

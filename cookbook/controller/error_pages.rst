@@ -8,7 +8,7 @@ How to customize Error Pages
 When any exception is thrown in Symfony2, the exception is caught inside the
 ``Kernel`` class and eventually forwarded to a special controller,
 ``TwigBundle:Exception:show`` for handling. This controller, which lives
-inside the core ``TwigBundle``, determines which error template to display and
+inside the core TwigBundle, determines which error template to display and
 the status code that should be set for the given exception.
 
 Error pages can be customized in two different ways, depending on how much
@@ -29,7 +29,7 @@ control you need:
     which allows complete control over exception handling. For more
     information, see :ref:`kernel-kernel.exception`.
 
-All of the error templates live inside ``TwigBundle``. To override the
+All of the error templates live inside the TwigBundle. To override the
 templates, simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
 :ref:`overriding-bundle-templates`.
@@ -63,12 +63,12 @@ end-user, create a new template located at
 .. tip::
 
     If you're not familiar with Twig, don't worry. Twig is a simple, powerful
-    and optional templating engine that integrates with ``Symfony2``. For more
+    and optional templating engine that integrates with Symfony2. For more
     information about Twig see :doc:`/book/templating`.
 
 In addition to the standard HTML error page, Symfony provides a default error
 page for many of the most common response formats, including JSON
-(``error.json.twig``), XML (``error.xml.twig``) and even Javascript
+(``error.json.twig``), XML (``error.xml.twig``) and even JavaScript
 (``error.js.twig``), to name a few. To override any of these templates, just
 create a new file with the same name in the
 ``app/Resources/TwigBundle/views/Exception`` directory. This is the standard
@@ -98,10 +98,10 @@ Symfony uses the following algorithm to determine which template to use:
 .. tip::
 
     To see the full list of default error templates, see the
-    ``Resources/views/Exception`` directory of the ``TwigBundle``. In a
-    standard Symfony2 installation, the ``TwigBundle`` can be found at
+    ``Resources/views/Exception`` directory of the TwigBundle. In a
+    standard Symfony2 installation, the TwigBundle can be found at
     ``vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle``. Often, the easiest way
-    to customize an error page is to copy it from the ``TwigBundle`` into
+    to customize an error page is to copy it from the TwigBundle into
     ``app/Resources/TwigBundle/views/Exception`` and then modify it.
 
 .. note::

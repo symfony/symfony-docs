@@ -45,7 +45,7 @@ method returns **false**:
         Acme\BlogBundle\Entity\Author
             getters:
                 stateInvalid:
-                    - "False":
+                    - 'False':
                         message: You've entered an invalid state.
 
     .. code-block:: php-annotations
@@ -103,8 +103,8 @@ method returns **false**:
 
 .. caution::
 
-    When using YAML, be sure to surround ``False`` with quotes (``"False"``)
-    or else YAML will convert this into a Boolean value.
+    When using YAML, be sure to surround ``False`` with quotes (``'False'``)
+    or else YAML will convert this into a ``false`` Boolean value.
 
 Options
 -------
@@ -112,6 +112,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be false``
+**type**: ``string`` **default**: ``This value should be false.``
 
 This message is shown if the underlying data is not false.

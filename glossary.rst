@@ -67,11 +67,11 @@ Glossary
         chapter.
 
    HTTP Specification
-        The *Http Specification* is a document that describes the Hypertext
+        The *HTTP Specification* is a document that describes the Hypertext
         Transfer Protocol - a set of rules laying out the classic client-server
         request-response communication. The specification defines the format
         used for a request and response as well as the possible HTTP headers
-        that each may have. For more information, read the `Http Wikipedia`_
+        that each may have. For more information, read the `HTTP Wikipedia`_
         article or the `HTTP 1.1 RFC`_.
 
    Environment
@@ -119,7 +119,7 @@ Glossary
         application or for just a part of it. See the
         :doc:`/book/security` chapters.
 
-   Yaml
+   YAML
         *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
         lightweight, humane data serialization language used extensively in
         Symfony2's configuration files.  See the :doc:`/components/yaml/introduction` 

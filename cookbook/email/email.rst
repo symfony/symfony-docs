@@ -6,8 +6,8 @@ How to send an Email
 
 Sending emails is a classic task for any web application and one that has
 special complications and potential pitfalls. Instead of recreating the wheel,
-one solution to send emails is to use the ``SwiftmailerBundle``, which leverages
-the power of the `Swiftmailer`_ library.
+one solution to send emails is to use the SwiftmailerBundle, which leverages
+the power of the `Swift Mailer`_ library.
 
 .. note::
 
@@ -29,7 +29,7 @@ the power of the `Swiftmailer`_ library.
 Configuration
 -------------
 
-Before using Swiftmailer, be sure to include its configuration. The only
+Before using Swift Mailer, be sure to include its configuration. The only
 mandatory configuration parameter is ``transport``:
 
 .. configuration-block::
@@ -74,7 +74,7 @@ mandatory configuration parameter is ``transport``:
             'password'   => "your_password",
         ));
 
-The majority of the Swiftmailer configuration deals with how the messages
+The majority of the Swift Mailer configuration deals with how the messages
 themselves should be delivered.
 
 The following configuration attributes are available:
@@ -96,7 +96,7 @@ The following configuration attributes are available:
 Sending Emails
 --------------
 
-The Swiftmailer library works by creating, configuring and then sending
+The Swift Mailer library works by creating, configuring and then sending
 ``Swift_Message`` objects. The "mailer" is responsible for the actual delivery
 of the message and is accessible via the ``mailer`` service. Overall, sending
 an email is pretty straightforward::
@@ -123,7 +123,7 @@ To keep things decoupled, the email body has been stored in a template and
 rendered with the ``renderView()`` method.
 
 The ``$message`` object supports many more options, such as including attachments,
-adding HTML content, and much more. Fortunately, Swiftmailer covers the topic
+adding HTML content, and much more. Fortunately, Swift Mailer covers the topic
 of `Creating Messages`_ in great detail in its documentation.
 
 .. tip::
@@ -135,5 +135,5 @@ of `Creating Messages`_ in great detail in its documentation.
     * :doc:`dev_environment`
     * :doc:`spool`
 
-.. _`Swiftmailer`: http://swiftmailer.org/
+.. _`Swift Mailer`: http://swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages.html

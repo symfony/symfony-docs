@@ -11,8 +11,8 @@ learning the most important features of the form library along the way.
 
 .. note::
 
-   The Symfony form component is a standalone library that can be used outside
-   of Symfony2 projects. For more information, see the `Symfony2 Form Component`_
+   The Symfony Form component is a standalone library that can be used outside
+   of Symfony2 projects. For more information, see the `Symfony2 Form component`_
    on Github.
 
 .. index::
@@ -186,7 +186,7 @@ it into a format that's suitable for being rendered in an HTML form.
    The form system is smart enough to access the value of the protected
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
-   "setter" method so that the form component can get and put data onto the
+   "setter" method so that the Form component can get and put data onto the
    property. For a Boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
@@ -419,6 +419,22 @@ corresponding errors printed out with the form.
    useful when you want to test your server-side validation constraints,
    but are being prevented by your browser from, for example, submitting
    blank fields.
+
+   .. configuration-block::
+
+       .. code-block:: html+jinja
+
+           {# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}
+
+           {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+       .. code-block:: html+php
+
+           <!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php -->
+
+           <?php echo $view['form']->form($form, array(
+               'attr' => array('novalidate' => 'novalidate'),
+           )) ?>
 
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter </book/validation>`.
@@ -806,7 +822,9 @@ used the ``form_row`` helper:
                 {{ form_widget(form.dueDate) }}
             </div>
 
-        <input type="submit" />
+            <div>
+                {{ form_widget(form.save) }}
+            </div>
 
         {{ form_end(form) }}
 
@@ -828,7 +846,9 @@ used the ``form_row`` helper:
                 <?php echo $view['form']->widget($form['dueDate']) ?>
             </div>
 
-            <input type="submit" />
+            <div>
+                <?php echo $view['form']->widget($form['save']) ?>
+            </div>
 
         <?php echo $view['form']->end($form) ?>
 
@@ -1193,7 +1213,7 @@ Embedded Forms
 Often, you'll want to build a form that will include fields from many different
 objects. For example, a registration form may contain data belonging to
 a ``User`` object as well as many ``Address`` objects. Fortunately, this
-is easy and natural with the form component.
+is easy and natural with the Form component.
 
 Embedding a Single Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1395,7 +1415,7 @@ do this, create a new template file that will store the new markup:
         </div>
 
 The ``form_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the form component to use your new ``form_row``
+``form_row`` function. To tell the Form component to use your new ``form_row``
 fragment defined above, add the following to the top of the template that
 renders the form:
 
@@ -1408,7 +1428,7 @@ renders the form:
 
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
 
-        {{ form(form) }}
+        <!-- ... render the form -->
 
     .. code-block:: html+php
 
@@ -1417,7 +1437,7 @@ renders the form:
 
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
 
-        <?php echo $view['form']->form($form) ?>
+        <!-- ... render the form -->
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
@@ -1455,7 +1475,7 @@ Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
 In Symfony, every part of a form that is rendered - HTML form elements, errors,
-labels, etc - is defined in a base theme, which is a collection of blocks
+labels, etc. - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
 In Twig, every block needed is defined in a single template file (`form_div_layout.html.twig`_)
@@ -1856,7 +1876,7 @@ There's still much more to learn about the powerful world of forms, such as
 how to handle
 :doc:`file uploads with Doctrine </cookbook/doctrine/file_uploads>` or how
 to create a form where a dynamic number of sub-forms can be added (e.g. a
-todo list where you can keep adding more fields via Javascript before submitting).
+todo list where you can keep adding more fields via JavaScript before submitting).
 See the cookbook for these topics. Also, be sure to lean on the
 :doc:`field type reference documentation </reference/forms/types>`, which
 includes examples of how to use each field type and its options.
@@ -1871,7 +1891,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
 
-.. _`Symfony2 Form Component`: https://github.com/symfony/Form
+.. _`Symfony2 Form component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

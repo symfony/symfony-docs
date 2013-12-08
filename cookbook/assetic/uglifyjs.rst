@@ -1,35 +1,35 @@
 .. index::
-   single: Assetic; UglifyJs
+   single: Assetic; UglifyJS
 
-How to Minify CSS/JS Files (using UglifyJs and UglifyCss)
+How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)
 =========================================================
 
-`UglifyJs`_ is a javascript parser/compressor/beautifier toolkit. It can be used
-to combine and minify javascript assets so that they require less HTTP requests
-and make your site load faster. `UglifyCss`_ is a css compressor/beautifier
-that is very similar to UglifyJs.
+`UglifyJS`_ is a JavaScript parser/compressor/beautifier toolkit. It can be used
+to combine and minify JavaScript assets so that they require less HTTP requests
+and make your site load faster. `UglifyCSS`_ is a CSS compressor/beautifier
+that is very similar to UglifyJS.
 
-In this cookbook, the installation, configuration and usage of UglifyJs is
-shown in detail. ``UglifyCss`` works pretty much the same way and is only
+In this cookbook, the installation, configuration and usage of UglifyJS is
+shown in detail. UglifyCSS works pretty much the same way and is only
 talked about briefly.
 
-Install UglifyJs
+Install UglifyJS
 ----------------
 
-UglifyJs is available as an `Node.js`_ npm module and can be installed using
-npm. First, you need to `install node.js`_. Afterwards you can install UglifyJs
+UglifyJS is available as an `Node.js`_ npm module and can be installed using
+npm. First, you need to `install Node.js`_. Afterwards you can install UglifyJS
 using npm:
 
 .. code-block:: bash
 
     $ npm install -g uglify-js
 
-This command will install UglifyJs globally and you may need to run it as
+This command will install UglifyJS globally and you may need to run it as
 a root user.
 
 .. note::
 
-    It's also possible to install UglifyJs inside your project only. To do
+    It's also possible to install UglifyJS inside your project only. To do
     this, install it without the ``-g`` option and specify the path where
     to put the module:
 
@@ -39,7 +39,7 @@ a root user.
         $ mkdir app/Resources/node_modules
         $ npm install uglify-js --prefix app/Resources
 
-    It is recommended that you install UglifyJs in your ``app/Resources`` folder
+    It is recommended that you install UglifyJS in your ``app/Resources`` folder
     and add the ``node_modules`` folder to version control. Alternatively,
     you can create an npm `package.json`_ file and specify your dependencies
     there.
@@ -54,11 +54,11 @@ in the ``node_modules`` directory:
 
     $ ./app/Resources/node_modules/.bin/uglifyjs --help
 
-Configure the uglifyjs2 Filter
-------------------------------
+Configure the ``uglifyjs2`` Filter
+----------------------------------
 
 Now we need to configure Symfony2 to use the ``uglifyjs2`` filter when processing
-your javascripts:
+your JavaScripts:
 
 .. configuration-block::
 
@@ -93,7 +93,7 @@ your javascripts:
 
 .. note::
 
-    The path where UglifyJs is installed may vary depending on your system.
+    The path where UglifyJS is installed may vary depending on your system.
     To find out where npm stores the ``bin`` folder, you can use the following
     command:
 
@@ -102,9 +102,9 @@ your javascripts:
         $ npm bin -g
 
     It should output a folder on your system, inside which you should find
-    the UglifyJs executable.
+    the UglifyJS executable.
 
-    If you installed UglifyJs locally, you can find the bin folder inside
+    If you installed UglifyJS locally, you can find the ``bin`` folder inside
     the ``node_modules`` folder. It's called ``.bin`` in this case.
 
 You now have access to the ``uglifyjs2`` filter in your application.
@@ -112,7 +112,7 @@ You now have access to the ``uglifyjs2`` filter in your application.
 Minify your Assets
 ------------------
 
-In order to use UglifyJs on your assets, you need to apply it to them. Since
+In order to use UglifyJS on your assets, you need to apply it to them. Since
 your assets are a part of the view layer, this work is done in your templates:
 
 .. configuration-block::
@@ -175,16 +175,16 @@ and :ref:`dump your assetic assets <cookbook-asetic-dump-prod>`.
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
-    enable it by adding the apply-to attribute to the filter configuration, for
+    enable it by adding the ``apply_to`` attribute to the filter configuration, for
     example in the ``uglifyjs2`` filter ``apply_to: "\.js$"``. To only have
     the filter applied in production, add this to the ``config_prod`` file
     rather than the common config file. For details on applying filters by
     file extension, see :ref:`cookbook-assetic-apply-to`.
 
-Install, configure and use UglifyCss
+Install, configure and use UglifyCSS
 ------------------------------------
 
-The usage of UglifyCss works the same way as UglifyJs. First, make sure
+The usage of UglifyCSS works the same way as UglifyJS. First, make sure
 the node package is installed:
 
 .. code-block:: bash
@@ -223,7 +223,7 @@ Next, add the configuration for this filter:
             ),
         ));
 
-To use the filter for your css files, add the filter to the Assetic ``stylesheets``
+To use the filter for your CSS files, add the filter to the Assetic ``stylesheets``
 helper:
 
 .. configuration-block::
@@ -247,8 +247,8 @@ Just like with the ``uglifyjs2`` filter, if you prefix the filter name with
 ``?`` (i.e. ``?uglifycss``), the minification will only happen when you're
 not in debug mode.
 
-.. _`UglifyJs`: https://github.com/mishoo/UglifyJS
-.. _`UglifyCss`: https://github.com/fmarcia/UglifyCSS
+.. _`UglifyJS`: https://github.com/mishoo/UglifyJS
+.. _`UglifyCSS`: https://github.com/fmarcia/UglifyCSS
 .. _`Node.js`: http://nodejs.org/
-.. _`install node.js`: http://nodejs.org/
+.. _`install Node.js`: http://nodejs.org/
 .. _`package.json`: http://package.json.nodejitsu.com/

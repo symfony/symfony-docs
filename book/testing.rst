@@ -244,9 +244,9 @@ document::
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`,
-    `Referer` and `X-Requested-With' HTTP headers, you'd pass the following (mind
-    the `HTTP_` prefix for non standard headers)::
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
+    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    the ``HTTP_`` prefix for non standard headers)::
 
         $client->request(
             'GET',
@@ -267,6 +267,10 @@ document::
 
     To get you started faster, here is a list of the most common and
     useful test assertions::
+
+        use Symfony\Component\HttpFoundation\Response;
+
+        // ...
 
         // Assert that there is at least one h2 tag
         // with the class "subtitle"
@@ -295,7 +299,7 @@ document::
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
         $this->assertEquals(
-            200,
+            Response::HTTP_OK,
             $client->getResponse()->getStatusCode()
         );
 
@@ -305,6 +309,9 @@ document::
         );
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was added with Symfony 2.4.
 
 .. index::
    single: Tests; Client
@@ -696,7 +703,7 @@ The Client used by functional tests creates a Kernel that runs in a special
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
 
-For example, by default, the swiftmailer is configured to *not* actually
+For example, by default, the Swift Mailer is configured to *not* actually
 deliver emails in the ``test`` environment. You can see this under the ``swiftmailer``
 configuration option:
 

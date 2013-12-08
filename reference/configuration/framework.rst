@@ -7,7 +7,7 @@ FrameworkBundle Configuration ("framework")
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered.
 
-The ``FrameworkBundle`` contains most of the "base" framework functionality
+The FrameworkBundle contains most of the "base" framework functionality
 and can be configured under the ``framework`` key in your application configuration.
 This includes settings related to sessions, translation, forms, validation,
 routing and more.
@@ -20,11 +20,14 @@ Configuration
 * `ide`_
 * `test`_
 * `trusted_proxies`_
-* `form`_
-    * enabled
 * `csrf_protection`_
     * enabled
-    * field_name
+    * field_name (deprecated)
+* `form`_
+    * enabled
+    * csrf_protection
+        * enabled
+        * field_name
 * `session`_
     * `name`_
     * `cookie_lifetime`_
@@ -99,7 +102,7 @@ full TextMate string would look like this:
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-PHP.ini value to the file link string. If this configuration value is set, then
+``php.ini`` value to the file link string. If this configuration value is set, then
 the ``ide`` option does not need to be specified.
 
 .. _reference-framework-test:
@@ -447,12 +450,16 @@ Full Default Configuration
             test:                 ~
             default_locale:       en
 
+            csrf_protection:
+                enabled:              false
+                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
+
             # form configuration
             form:
                 enabled:              false
-            csrf_protection:
-                enabled:              false
-                field_name:           _token
+                csrf_protection:
+                    enabled:          true
+                    field_name:       ~
 
             # esi configuration
             esi:

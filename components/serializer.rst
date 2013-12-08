@@ -5,10 +5,10 @@
 The Serializer Component
 ========================
 
-   The Serializer Component is meant to be used to turn objects into a
-   specific format (XML, JSON, Yaml, ...) and the other way around.
+   The Serializer component is meant to be used to turn objects into a
+   specific format (XML, JSON, YAML, ...) and the other way around.
 
-In order to do so, the Serializer Component follows the following
+In order to do so, the Serializer component follows the following
 simple schema.
 
 .. _component-serializer-encoders:
@@ -30,8 +30,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Serializer);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Serializer).
 
 Usage
 -----
@@ -130,7 +130,7 @@ Deserializing an Object
 -----------------------
 
 Let's see now how to do the exactly the opposite. This time, the information
-of the `People` class would be encoded in XML format::
+of the ``Person`` class would be encoded in XML format::
 
     $data = <<<EOF
     <person>
@@ -187,7 +187,7 @@ JMSSerializer
 A popular third-party library, `JMS serializer`_, provides a more
 sophisticated albeit more complex solution. This library includes the
 ability to configure how your objects should be serialize/deserialized via
-annotations (as well as YML, XML and PHP), integration with the Doctrine ORM,
+annotations (as well as YAML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer

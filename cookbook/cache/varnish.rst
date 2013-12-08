@@ -137,7 +137,7 @@ that will invalidate the cache for a given resource:
             .port = "8080";
         }
 
-        // Acl's can contain IP's, subnets and hostnames
+        // ACL's can contain IP's, subnets and hostnames
         acl purge {
             "localhost";
             "192.168.55.0"/24;
@@ -146,7 +146,7 @@ that will invalidate the cache for a given resource:
         sub vcl_recv {
             // Match PURGE request to avoid cache bypassing
             if (req.request == "PURGE") {
-                // Match client IP to the acl
+                // Match client IP to the ACL
                 if (!client.ip ~ purge) {
                     // Deny access
                     error 405 "Not allowed.";
@@ -178,7 +178,7 @@ that will invalidate the cache for a given resource:
 Routing and X-FORWARDED Headers
 -------------------------------
 
-To ensure that the Symfony Router generates urls correctly with Varnish,
+To ensure that the Symfony Router generates URLs correctly with Varnish,
 proper ```X-Forwarded``` headers must be added so that Symfony is aware of
 the original port number of the request. Exactly how this is done depends
 on your setup. As a simple example, Varnish and your web server are on the

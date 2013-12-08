@@ -95,7 +95,7 @@ inside a bundle.
 
 A bundle is nothing more than a directory that houses everything related
 to a specific feature, including PHP classes, configuration, and even stylesheets
-and Javascript files (see :ref:`page-creation-bundles`).
+and JavaScript files (see :ref:`page-creation-bundles`).
 
 To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
@@ -839,7 +839,7 @@ format you prefer:
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony ``FrameworkBundle`` and includes configuration for the
+for the core Symfony FrameworkBundle and includes configuration for the
 routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.
@@ -853,7 +853,7 @@ options of each feature.
     three formats (YAML, XML and PHP). Each has its own advantages and
     disadvantages. The choice of which to use is up to you:
 
-    * *YAML*: Simple, clean and readable (learn more about yaml in
+    * *YAML*: Simple, clean and readable (learn more about YAML in
       ":doc:`/components/yaml/yaml_format`");
 
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
@@ -863,7 +863,7 @@ options of each feature.
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can dump the default configuration for a bundle in yaml to the console using
+You can dump the default configuration for a bundle in YAML to the console using
 the ``config:dump-reference`` command.  Here is an example of dumping the default
 FrameworkBundle configuration:
 

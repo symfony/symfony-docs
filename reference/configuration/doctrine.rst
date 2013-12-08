@@ -2,8 +2,8 @@
    single: Doctrine; ORM configuration reference
    single: Configuration reference; Doctrine ORM
 
-Doctrine Configuration Reference
-================================
+DoctrineBundle Configuration ("doctrine")
+=========================================
 
 .. configuration-block::
 
@@ -405,6 +405,6 @@ which is the first one defined or the one configured via the
 ``default_connection`` parameter.
 
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
-service where ``[name]`` if the name of the connection.
+service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html

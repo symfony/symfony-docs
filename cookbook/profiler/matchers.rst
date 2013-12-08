@@ -16,7 +16,7 @@ Using the built-in Matcher
 Symfony2 provides a
 :class:`built-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
 which can match paths and IPs. For example, if you want to only show the
-profiler when accessing the page with the ``168.0.0.1`` ip, then you can
+profiler when accessing the page with the ``168.0.0.1`` IP, then you can
 use this configuration:
 
 .. configuration-block::
@@ -50,7 +50,7 @@ use this configuration:
 
 You can also set a ``path`` option to define the path on which the profiler
 should be enabled. For instance, setting it to ``^/admin/`` will enable the
-profiler only for the ``/admin/`` urls.
+profiler only for the ``/admin/`` URLs.
 
 Creating a Custom Matcher
 -------------------------
@@ -101,7 +101,7 @@ Then, you need to configure the service:
         services:
             acme_demo.profiler.matcher.super_admin:
                 class: "%acme_demo.profiler.matcher.super_admin.class%"
-                arguments: [@security.context]
+                arguments: ["@security.context"]
 
     .. code-block:: xml
 

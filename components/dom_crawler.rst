@@ -5,7 +5,7 @@
 The DomCrawler Component
 ========================
 
-    The DomCrawler Component eases DOM navigation for HTML and XML documents.
+    The DomCrawler component eases DOM navigation for HTML and XML documents.
 
 .. note::
 
@@ -17,8 +17,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/DomCrawler);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/DomCrawler).
 
 Usage
 -----
@@ -58,7 +58,7 @@ interacting with html links and forms as you traverse through the HTML tree.
     official specification. For example, if you nest a `` <p>`` tag inside
     another `` <p>`` tag, it will be moved to be a sibling of the parent tag.
     This is expected and is part of the HTML5 spec. But if you're getting
-    unexpected behavior, this could be a cause. And while the ``DomCrawler``
+    unexpected behavior, this could be a cause. And while the DomCrawler
     isn't meant to dump content, you can see the "fixed" version if your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
@@ -73,7 +73,7 @@ Using XPath expressions is really easy::
 
     ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
-Filtering is even easier if you have the ``CssSelector`` Component installed.
+Filtering is even easier if you have the CssSelector component installed.
 This allows you to use jQuery-like selectors to traverse::
 
     $crawler = $crawler->filter('body > p');
@@ -157,12 +157,12 @@ Call an anonymous function on each node of the list::
         return $node->text();
     });
 
-.. versionadded::
+.. versionadded:: 2.3
     As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
     are passed a ``Crawler`` as the first argument. Previously, that argument
     was a :phpclass:`DOMNode`.
 
-The anonymous function receives the position and the node (as a Crawler) as arguments.
+The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
 Adding the Content

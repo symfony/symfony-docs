@@ -22,7 +22,7 @@ You can also override it on a per request basis::
 When your application is using a ``form_login``, you can simplify your tests
 by allowing your test configuration to make use of HTTP authentication. This
 way you can use the above to authenticate in tests, but still have your users
-login via the normal ``form_login``. The trick is to include the ``http_basic``
+log in via the normal ``form_login``. The trick is to include the ``http_basic``
 key in your firewall, along with the ``form_login`` key:
 
 .. configuration-block::
@@ -33,7 +33,7 @@ key in your firewall, along with the ``form_login`` key:
         security:
             firewalls:
                 your_firewall_name:
-                    http_basic:
+                    http_basic: ~
 
     .. code-block:: xml
 

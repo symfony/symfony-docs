@@ -7,7 +7,7 @@ How to Apply an Assetic Filter to a Specific File Extension
 Assetic filters can be applied to individual files, groups of files or even,
 as you'll see here, files that have a specific extension. To show you how
 to handle each option, let's suppose that you want to use Assetic's CoffeeScript
-filter, which compiles CoffeeScript files into Javascript.
+filter, which compiles CoffeeScript files into JavaScript.
 
 The main configuration is just the paths to coffee, node and node_modules.
 An example configuration might look like this:
@@ -119,7 +119,7 @@ work as the regular JavaScript files will not survive the CoffeeScript compilati
 
 This problem can be avoided by using the ``apply_to`` option in the config,
 which allows you to specify that a filter should always be applied to particular
-file extensions. In this case you can specify that the Coffee filter is
+file extensions. In this case you can specify that the ``coffee`` filter is
 applied to all ``.coffee`` files:
 
 .. configuration-block::

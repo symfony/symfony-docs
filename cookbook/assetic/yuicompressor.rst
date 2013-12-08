@@ -68,7 +68,7 @@ stylesheets:
 
 .. note::
 
-    Windows users need to remember to update config to proper java location.
+    Windows users need to remember to update config to proper Java location.
     In Windows7 x64 bit by default it's ``C:\Program Files (x86)\Java\jre6\bin\java.exe``.
 
 You now have access to two new Assetic filters in your application:
@@ -103,7 +103,7 @@ the view layer, this work is done in your templates:
 
     The above example assumes that you have a bundle called ``AcmeFooBundle``
     and your JavaScript files are in the ``Resources/public/js`` directory under
-    your bundle. This isn't important however - you can include your Javascript
+    your bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
 
 With the addition of the ``yui_js`` filter to the asset tags above, you should
@@ -156,9 +156,9 @@ apply this filter when debug mode is off.
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
-    enable it by adding the apply-to attribute to the filter configuration, for
-    example in the yui_js filter ``apply_to: "\.js$"``. To only have the filter
-    applied in production, add this to the config_prod file rather than the
+    enable it by adding the ``apply_to`` attribute to the filter configuration, for
+    example in the ``yui_js`` filter ``apply_to: "\.js$"``. To only have the filter
+    applied in production, add this to the ``config_prod`` file rather than the
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
 

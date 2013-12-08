@@ -247,7 +247,7 @@ the layout:
 You've now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
-uses a ``Templating`` component that allows this to be accomplished cleanly
+uses a Templating component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
 
 Adding a Blog "show" Page
@@ -476,11 +476,14 @@ the HTTP response being returned. Use them to improve the blog:
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
-        $response = new Response($html, 404);
+        $response = new Response($html, Response::HTTP_NOT_FOUND);
     }
 
     // echo the headers and send the response
     $response->send();
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,
@@ -583,7 +586,7 @@ them for you. Here's the same sample application, now built in Symfony2::
     }
 
 The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
-to retrieve objects from the database and the ``Templating`` component to
+to retrieve objects from the database and the Templating component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
 
@@ -688,7 +691,7 @@ migrating the blog from flat PHP to Symfony2 has improved life:
   Templating, Security, Form, Validation and Translation components (to name
   a few);
 
-* The application now enjoys **fully-flexible URLs** thanks to the ``Routing``
+* The application now enjoys **fully-flexible URLs** thanks to the Routing
   component;
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools

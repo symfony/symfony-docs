@@ -27,7 +27,7 @@ Basic Usage
         Acme\BlogBundle\Entity\Author:
             properties:
                 ipAddress:
-                    - Ip:
+                    - Ip: ~
 
     .. code-block:: php-annotations
 
@@ -83,7 +83,7 @@ version
 
 **type**: ``string`` **default**: ``4``
 
-This determines exactly *how* the ip address is validated and can take one
+This determines exactly *how* the IP address is validated and can take one
 of a variety of different values:
 
 **All ranges**
@@ -113,6 +113,6 @@ of a variety of different values:
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This is not a valid IP address``
+**type**: ``string`` **default**: ``This is not a valid IP address.``
 
 This message is shown if the string is not a valid IP address.

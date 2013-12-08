@@ -78,6 +78,10 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * (service container) :doc:`/cookbook/service_container/event_listener`
 
+* :doc:`/cookbook/expression/index`
+
+  * :doc:`/cookbook/expression/expressions`
+
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/form_customization`
@@ -97,6 +101,7 @@
 
   * :doc:`/cookbook/logging/monolog`
   * :doc:`/cookbook/logging/monolog_email`
+  * :doc:`/cookbook/logging/monolog_regex_based_excludes`
   * :doc:`/cookbook/logging/channels_handlers`
 
 * :doc:`/cookbook/profiler/index`
@@ -117,6 +122,7 @@
   * :doc:`/cookbook/routing/method_parameters`
   * :doc:`/cookbook/routing/service_container_parameters`
   * :doc:`/cookbook/routing/custom_route_loader`
+  * :doc:`/cookbook/routing/redirect_trailing_slash`
 
 * :doc:`/cookbook/security/index`
 
