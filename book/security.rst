@@ -140,7 +140,7 @@ authentication (i.e. the old-school username/password box):
 
 .. tip::
 
-    If you have a seperate file (e.g. ``app/config/security.yml``) for the 
+    If you have a separate file (e.g. ``app/config/security.yml``) for the 
     security configuration make sure to import it inside your main config 
     file (e.g. ``app/config/config.yml``).
     
