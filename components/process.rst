@@ -257,6 +257,24 @@ When running a program asynchronously, you can send it posix signals with the
     POSIX signals are not available on Windows platforms, please refer to the
     `PHP documentation`_ for available signals.
 
+Redirecting output to /dev/null
+------------------------------
+.. versionadded:: 2.4The ``setProcessPipes`` method was added in Symfony 2.4.
+
+Occasionally the output of a process is not important because you are
+communicating with it via other means. In these cases it can be helpful
+to redirect the output to /dev/null to avoid blocking on full pipes.
+
+
+    use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\NullProcessPipes;
+
+    $process = new Process('find / -name "rabbit"');
+    $process->setProcessPipes(new NullProcessPipes);
+    $process->run();
+
+    $process->getOutput() // Will be empty, but this process will never block on output!
+
 Process Pid
 -----------
 
