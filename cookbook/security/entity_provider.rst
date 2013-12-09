@@ -149,6 +149,9 @@ focus on the most important methods that come from the
         {
             return serialize(array(
                 $this->id,
+                $this->username,
+                $this->salt,
+                $this->password,
             ));
         }
 
@@ -159,9 +162,19 @@ focus on the most important methods that come from the
         {
             list (
                 $this->id,
+                $this->username,
+                $this->salt,
+                $this->password,
             ) = unserialize($serialized);
         }
     }
+
+.. note::
+
+    When implementing the
+    :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
+    you determine yourself which properties need to be compared to distinguish
+    your user objects.
 
 .. tip::
 
@@ -573,7 +586,7 @@ methods have changed::
     class User implements AdvancedUserInterface, \Serializable
     {
         // ...
-        
+
         /**
          * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
          *
@@ -589,7 +602,7 @@ methods have changed::
         {
             return $this->roles->toArray();
         }
-        
+
         // ...
 
     }
@@ -646,7 +659,7 @@ of the application::
         {
             return $this->role;
         }
-        
+
         // ... getters and setters for each property
     }
 
