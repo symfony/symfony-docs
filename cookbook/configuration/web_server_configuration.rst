@@ -48,7 +48,7 @@ following configuration snippet:
 
 .. code-block:: apache
 
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]   
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 .. caution::
 

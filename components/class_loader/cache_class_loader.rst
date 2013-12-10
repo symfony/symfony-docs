@@ -20,8 +20,8 @@ for a class.
 
 .. note::
 
-  Both the ``ApcClassLoader`` and the ``XcacheClassLoader`` can be used
-  to cache Composer's `autoloader`_.
+    Both the ``ApcClassLoader`` and the ``XcacheClassLoader`` can be used
+    to cache Composer's `autoloader`_.
 
 ApcClassLoader
 --------------

@@ -93,7 +93,7 @@ as you normally do:
 .. tip::
 
     The ``--optimize-autoloader`` flag makes Composer's autoloader more
-    performant by building a "class map". The ``--no-dev`` flag 
+    performant by building a "class map". The ``--no-dev`` flag
     ensures that development packages are not installed in the production
     environment.
 

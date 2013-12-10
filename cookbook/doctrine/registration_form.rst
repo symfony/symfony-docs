@@ -271,7 +271,7 @@ And its template:
         <input type="submit" />
     </form>
 
-Next, create the controller which handles the form submission.  This performs
+Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database::
 
     public function createAction()

@@ -158,6 +158,6 @@ License
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
-.. _`PSR-0`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
-.. _`PSR-1`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
-.. _`PSR-2`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+.. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
+.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/

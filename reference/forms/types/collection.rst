@@ -34,9 +34,9 @@ forms, which is useful when creating forms that expose one-to-many relationships
 
 .. note::
 
-    If you are working with a collection of Doctrine entities, pay special 
+    If you are working with a collection of Doctrine entities, pay special
     attention to the `allow_add`_, `allow_delete`_ and `by_reference`_ options.
-    You can also see a complete example in the cookbook article 
+    You can also see a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
 
 Basic Usage

@@ -240,7 +240,7 @@ layer is a piece of cake. Everything resides in the configuration of the
 :doc:`SecurityBundle </reference/configuration/security>` stored in the
 ``app/config/security.yml`` file.
 
-Below is an example of configuration where the user will enter their 
+Below is an example of configuration where the user will enter their
 username and password via HTTP basic authentication. That information will
 then be checked against your User entity records in the database:
 
@@ -379,7 +379,7 @@ For this example, the first three methods will return ``true`` whereas the
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-    class User implements AdvancedUserInterface, \Serializable 
+    class User implements AdvancedUserInterface, \Serializable
     {
         // ...
 
@@ -407,7 +407,7 @@ For this example, the first three methods will return ``true`` whereas the
 Now, if you try to authenticate as a user who's ``is_active`` database field
 is set to 0, you won't be allowed.
 
-The next session will focus on how to write a custom entity provider 
+The next session will focus on how to write a custom entity provider
 to authenticate a user with their username or email address.
 
 Authenticating Someone with a Custom Entity Provider
