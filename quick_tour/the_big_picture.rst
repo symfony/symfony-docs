@@ -61,12 +61,11 @@ have a ``Symfony/`` directory that looks like this:
 .. note::
 
     If you are familiar with `Composer`_, you can download Composer and then
-    run the following command instead of downloading the archive (replacing
-    ``2.3.0`` with the latest Symfony release like ``2.3.1``):
+    run the following command instead of downloading the archive:
 
     .. code-block:: bash
 
-        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.3.0
+        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.4.*
 
 .. _`quick-tour-big-picture-built-in-server`:
 
