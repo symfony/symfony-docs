@@ -113,9 +113,9 @@ Next, to actually validate an ``Author`` object, use the ``validate`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify whether or not the data on the object satisfies those
-constraints. If validation fails, a non-empty list
-(class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) of errors
-is returned. Take this simple example from inside a controller::
+constraints. If validation fails, a non-empty list of errors
+(class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) is
+returned. Take this simple example from inside a controller:
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
