@@ -183,14 +183,14 @@ instead of
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
-:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`::
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
     use Acme\DemoBundle\Command\GreetCommand;
 
-    class ListCommandTest extends WebTestCase
+    class ListCommandTest extends KernelTestCase
     {
         public function testExecute()
         {
@@ -214,3 +214,12 @@ you can extend your test from
             // ...
         }
     }
+
+.. versionadded:: 2.5
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` was
+    extracted from :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`
+    in Symfony 2.5, where WebTestCase was made to inherit from KernelTestCase.
+    The difference being that WebTestCase makes available an instance of
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Client` via `createClient()`,
+    while KernelTestCase makes available an instance of
+    :class:`Symfony\\Component\\HttpKernel\\KernelInterface` via `createKernel()`.
