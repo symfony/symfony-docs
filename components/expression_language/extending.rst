@@ -21,7 +21,7 @@ That means the functions can be used in any expression executed by that
 instance.
 
 To register a function, use
-:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::register``.
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::register`.
 This method has 3 arguments:
 
 * **name** - The name of the function in an expression;
