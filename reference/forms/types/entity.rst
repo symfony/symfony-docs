@@ -184,7 +184,7 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 
 .. note::
     
-    This option expects for array of objects unlike choice field that requires an array of keys
+    This option expects an array of objects unlike the choice field that requires an array of keys.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
