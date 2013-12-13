@@ -83,8 +83,8 @@ flexibility to your forms.
 Adding an Event Listener to a Form Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So, instead of directly adding that ``name`` widget, let's delegate the
-responsibility of creating that particular field to an event listener::
+So, instead of directly adding that ``name`` widget, the responsibility of
+creating that particular field is delegated to an event listener::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
