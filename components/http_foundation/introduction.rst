@@ -490,7 +490,7 @@ Using Socket Handles or File Descriptors as Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using the :class:`Symfony\\Component\\HttpFoundation\\SocketResponse` class you can output the content of a
-socket handle or file descriptor as Response.
+socket handle or file descriptor as Response::
 
     use Symfony\Component\HttpFoundation\SocketResponse;
 
