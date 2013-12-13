@@ -486,6 +486,34 @@ You can still set the ``Content-Type`` of the sent file, or change its ``Content
 
 .. _component-http-foundation-json-response:
 
+Using Socket Handles or File Descriptors as Response
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using the :class:`Symfony\\Component\\HttpFoundation\\SocketResponse` class you can output the content of a
+socket handle or file descriptor as Response.
+
+    use Symfony\Component\HttpFoundation\SocketResponse;
+
+    $fd = fopen("/tmp/example.txt", "r");
+
+    $response = new SocketResponse();
+    $response->setHandle($fd);
+    $response->send();
+
+By using the PHP builtin stream wrappers, a file descriptor also can represent a Url::
+
+    use Symfony\Component\HttpFoundation\SocketResponse;
+
+    $fd = fopen("http://www.example.com/", "r");
+
+    $response = new SocketResponse($fd);
+    $response->setHandle($fd);
+    $response->send();
+
+While sending the Response, ``fpassthru()`` is called for the given socket handle. As default, the handle is closed
+after sending with ``flose()``. This can be changed by calling
+:method:`Symfony\\Component\\HttpFoundation\\SocketRequest::setClose`.
+
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
