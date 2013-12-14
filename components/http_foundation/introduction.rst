@@ -240,10 +240,13 @@ by using the following methods:
   returns the list of accepted languages ordered by descending quality;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  returns the list of accepted charsets ordered by descending quality.
+  returns the list of accepted charsets ordered by descending quality;
 
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`:
+  returns the list of accepted charsets ordered by descending quality;
+
+  .. versionadded:: 2.4
+      The ``getEncodings()`` method was added in Symfony 2.4.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
@@ -269,6 +272,26 @@ request information. Have a look at
 :class:`the Request API <Symfony\\Component\\HttpFoundation\\Request>`
 for more information about them.
 
+Overriding the Request
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.4
+    The :method:`Symfony\\Component\\HttpFoundation\\Request::setFactory`
+    method was added in Symfony 2.4.
+
+The ``Request`` class should not be overridden as it is a data object that
+represents an HTTP message. But when moving from a legacy system, adding
+methods or changing some default behavior might help. In that case, register a
+PHP callable that is able to create an instance of your ``Request`` class::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    Request::setFactory(function (array $query = array(), array $request = array(), array $attributes = array(), array $cookies = array(), array $files = array(), array $server = array(), $content = null) {
+        return SpecialRequest::create($query, $request, $attributes, $cookies, $files, $server, $content);
+    });
+
+    $request = Request::createFromGlobals();
+
 .. _component-http-foundation-response:
 
 Response
@@ -283,9 +306,12 @@ code, and an array of HTTP headers::
 
     $response = new Response(
         'Content',
-        200,
+        Response::HTTP_OK,
         array('content-type' => 'text/html')
     );
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 These information can also be manipulated after the Response object creation::
 
@@ -294,7 +320,7 @@ These information can also be manipulated after the Response object creation::
     // the headers public attribute is a ResponseHeaderBag
     $response->headers->set('Content-Type', 'text/plain');
 
-    $response->setStatusCode(404);
+    $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
 When setting the ``Content-Type`` of the Response, you can set the charset,
 but it is better to set it via the
@@ -393,9 +419,6 @@ To redirect the client to another URL, you can use the
 Streaming a Response
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    Support for streamed responses was added in Symfony 2.1.
-
 The :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse` class allows
 you to stream the Response back to the client. The response content is
 represented by a PHP callable instead of a string::
@@ -427,9 +450,6 @@ represented by a PHP callable instead of a string::
 Serving Files
 ~~~~~~~~~~~~~
 
-.. versionadded:: 2.1
-    The ``makeDisposition`` method was added in Symfony 2.1.
-
 When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
@@ -441,10 +461,6 @@ abstracts the hard work behind a simple API::
     $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
 
     $response->headers->set('Content-Disposition', $d);
-
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
-    class was added in Symfony 2.2.
 
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
@@ -484,10 +500,6 @@ right content and headers. A JSON response might look like this::
         'data' => 123,
     )));
     $response->headers->set('Content-Type', 'application/json');
-
-.. versionadded:: 2.1
-    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
-    class was added in Symfony 2.1.
 
 There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
 class, which can make this even easier::

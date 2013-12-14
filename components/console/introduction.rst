@@ -163,16 +163,22 @@ You can also set these colors and options inside the tagname::
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
 
-The console has 3 levels of verbosity. These are defined in the
+.. versionadded:: 2.3
+   The ``VERBOSITY_VERY_VERBOSE`` and ``VERBOSITY_DEBUG`` constants were introduced
+   in version 2.3
+
+The console has 5 levels of verbosity. These are defined in the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
 
-==================================  ===============================
-Mode                                Value
-==================================  ===============================
-OutputInterface::VERBOSITY_QUIET    Do not output any messages
-OutputInterface::VERBOSITY_NORMAL   The default verbosity level
-OutputInterface::VERBOSITY_VERBOSE  Increased verbosity of messages
-==================================  ===============================
+=======================================  ==================================
+Mode                                     Value
+=======================================  ==================================
+OutputInterface::VERBOSITY_QUIET         Do not output any messages
+OutputInterface::VERBOSITY_NORMAL        The default verbosity level
+OutputInterface::VERBOSITY_VERBOSE       Increased verbosity of messages
+OutputInterface::VERBOSITY_VERY_VERBOSE  Informative non essential messages
+OutputInterface::VERBOSITY_DEBUG         Debug messages
+=======================================  ==================================
 
 You can specify the quiet verbosity level with the ``--quiet`` or ``-q``
 option. The ``--verbose`` or ``-v`` option is used when you want an increased
@@ -181,13 +187,39 @@ level of verbosity.
 .. tip::
 
     The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
-    level is used.
+    level or above is used.
 
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
 
-    if (OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
+    if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
         $output->writeln(...);
+    }
+
+.. versionadded:: 2.4
+   The :method:`Symfony\\Component\Console\\Output\\Output::isQuiet`,
+   :method:`Symfony\\Component\Console\\Output\\Output::isVerbose`,
+   :method:`Symfony\\Component\Console\\Output\\Output::isVeryVerbose` and
+   :method:`Symfony\\Component\Console\\Output\\Output::isDebug`
+   methods were introduced in version 2.4
+
+There are also more semantic methods you can use to test for each of the
+verbosity levels::
+
+    if ($output->isQuiet()) {
+        // ...
+    }
+
+    if ($output->isVerbose()) {
+        // ...
+    }
+
+    if ($output->isVeryVerbose()) {
+        // ...
+    }
+
+    if ($output->isDebug()) {
+        // ...
     }
 
 When the quiet level is used, all output is suppressed as the default
@@ -364,6 +396,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progresshelper`: shows a progress bar
+* :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 
 Testing Commands
 ----------------

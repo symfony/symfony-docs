@@ -55,6 +55,7 @@ MonologBundle Configuration ("monolog")
                     from_email:           ~
                     to_email:             ~
                     subject:              ~
+                    mailer:               ~
                     email_prototype:
                         id:                   ~ # Required (when the email_prototype is used)
                         method:               ~

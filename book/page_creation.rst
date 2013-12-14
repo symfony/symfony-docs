@@ -625,7 +625,6 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -863,9 +862,6 @@ options of each feature.
 
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.1
-    The ``config:dump-reference`` command was added in Symfony 2.1
 
 You can dump the default configuration for a bundle in YAML to the console using
 the ``config:dump-reference`` command.  Here is an example of dumping the default

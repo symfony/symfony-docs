@@ -17,8 +17,13 @@ is done in a real application. It is simple to bootstrap and you can trust
 the Symfony components enough to use them as a testing base.
 
 There is already a class that you can benefit from for simple FormTypes
-testing: :class:`Symfony\\Component\\Form\\Tests\\Extension\\Core\\Type\\TypeTestCase`.
-It is used to test the core types and you can use it to test your types too.
+testing: :class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to
+test the core types and you can use it to test your types too.
+
+.. versionadded:: 2.3
+    The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
+    namespace in 2.3. Previously, the class was located in
+    ``Symfony\Component\Form\Tests\Extension\Core\Type``.
 
 .. note::
 
@@ -36,11 +41,11 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testBindValidData()
+        public function testSubmitValidData()
         {
             $formData = array(
                 'test' => 'test',
@@ -53,7 +58,8 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $object = new TestObject();
             $object->fromArray($formData);
 
-            $form->bind($formData);
+            // submit the data to the form directly
+            $form->submit($formData);
 
             $this->assertTrue($form->isSynchronized());
             $this->assertEquals($object, $form->getData());
@@ -80,7 +86,7 @@ This test checks that none of your data transformers used by the form
 failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
 method is only set to ``false`` if a data transformer throws an exception::
 
-    $form->bind($formData);
+    $form->submit($formData);
     $this->assertTrue($form->isSynchronized());
 
 .. note::
@@ -89,7 +95,7 @@ method is only set to ``false`` if a data transformer throws an exception::
     active in the test case and it relies on validation configuration.
     Instead, unit test your custom constraints directly.
 
-Next, verify the binding and mapping of the form. The test below
+Next, verify the submission and mapping of the form. The test below
 checks if all the fields are correctly specified::
 
     $this->assertEquals($object, $form->getData());
@@ -137,7 +143,7 @@ before creating the parent form using the ``PreloadedExtension`` class::
             ), array()));
         }
 
-        public function testBindValidData()
+        public function testSubmitValidData()
         {
             $type = new TestedType();
             $form = $this->factory->create($type);
@@ -167,7 +173,7 @@ on other extensions. You need add those extensions to the factory object::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
@@ -212,7 +218,7 @@ a good opportunity to use them::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {

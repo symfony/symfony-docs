@@ -15,12 +15,14 @@ The Cookbook
     doctrine/index
     email/index
     event_dispatcher/index
+    expression/index
     form/index
     logging/index
     profiler/index
     request/index
     routing/index
     security/index
+    serializer
     service_container/index
     session/index
     symfony1

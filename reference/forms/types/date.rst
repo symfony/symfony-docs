@@ -26,8 +26,8 @@ day, and year) or three select boxes (see the `widget`_ option).
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
 |                      | - `format`_                                                                 |
-|                      | - `data_timezone`_                                                          |
-|                      | - `user_timezone`_                                                          |
+|                      | - `model_timezone`_                                                         |
+|                      | - `view_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
@@ -37,7 +37,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
-|                      | - `virtual`_                                                                |
+|                      | - `inherit_data`_                                                           |
 |                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
@@ -114,9 +114,9 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 Overridden Options
 ------------------
@@ -148,6 +148,6 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/virtual.rst.inc
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc

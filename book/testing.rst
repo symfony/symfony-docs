@@ -268,6 +268,10 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
+        use Symfony\Component\HttpFoundation\Response;
+
+        // ...
+
         // Assert that there is at least one h2 tag
         // with the class "subtitle"
         $this->assertGreaterThan(
@@ -295,7 +299,7 @@ document::
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
         $this->assertEquals(
-            200,
+            Response::HTTP_OK,
             $client->getResponse()->getStatusCode()
         );
 
@@ -305,6 +309,9 @@ document::
         );
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was added with Symfony 2.4.
 
 .. index::
    single: Tests; Client
@@ -401,6 +408,10 @@ The Client supports many operations that can be done in a real browser::
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    The ``getInternalRequest()`` and ``getInternalResponse()`` method were
+    added in Symfony 2.3.
+
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
@@ -409,8 +420,18 @@ client's internal objects::
 
 You can also get the objects related to the latest request::
 
+    // the HttpKernel request instance
     $request  = $client->getRequest();
+
+    // the BrowserKit request instance
+    $request  = $client->getInternalRequest();
+
+    // the HttpKernel response instance
     $response = $client->getResponse();
+
+    // the BrowserKit response instance
+    $response = $client->getInternalResponse();
+
     $crawler  = $client->getCrawler();
 
 If your requests are not insulated, you can also access the ``Container`` and
@@ -656,6 +677,11 @@ their type::
 
     // Upload a file
     $form['photo']->upload('/path/to/lucas.jpg');
+
+.. tip::
+
+    If you purposefully want to select "invalid" select/radio values, see
+    :ref:`components-dom-crawler-invalid`.
 
 .. tip::
 

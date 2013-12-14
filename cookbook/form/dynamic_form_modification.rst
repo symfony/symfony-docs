@@ -114,10 +114,6 @@ The goal is to create a "name" field *only* if the underlying Product object
 is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
 might look like the following:
 
-.. versionadded:: 2.2
-    The ability to pass a string into :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
-    was added in Symfony 2.2.
-
 .. code-block:: php
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
@@ -461,16 +457,16 @@ On a form, we can usually listen to the following events:
 
 * ``PRE_SET_DATA``
 * ``POST_SET_DATA``
-* ``PRE_BIND``
-* ``BIND``
-* ``POST_BIND``
+* ``PRE_SUBMIT``
+* ``SUBMIT``
+* ``POST_SUBMIT``
 
-.. versionadded:: 2.2.6
-    The behavior of the ``POST_BIND`` event changed slightly in 2.2.6, which the
-    below example uses.
+.. versionadded:: 2.3
+    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
+    Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
-The key is to add a ``POST_BIND`` listener to the field that your new field
-depends on. If you add a ``POST_BIND`` listener to a form child (e.g. ``sport``),
+The key is to add a ``POST_SUBMIT`` listener to the field that your new field
+depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),
 and add new children to the parent form, the Form component will detect the
 new field automatically and map it to the submitted client data.
 
@@ -508,7 +504,7 @@ The type would now look like::
             );
 
             $builder->get('sport')->addEventListener(
-                FormEvents::POST_BIND,
+                FormEvents::POST_SUBMIT,
                 function(FormEvent $event) use ($formModifier) {
                     // It's important here to fetch $event->getForm()->getData(), as
                     // $event->getData() will get you the client data (that is, the ID)
@@ -527,7 +523,7 @@ only because in two different scenarios, the data that you can use is available 
 Other than that, the listeners always perform exactly the same things on a given form.
 
 One piece that may still be missing is the client-side updating of your form
-after the sport is selected. This should be handled by making an Ajax call
-back to your application. In that controller, you can bind your form, but
-instead of processing it, simply use the bound form to render the updated
-fields. The response from the Ajax call can then be used to update the view.
+after the sport is selected. This should be handled by making an AJAX call
+back to your application. In that controller, you can submit your form, but
+instead of processing it, simply use the submitted form to render the updated
+fields. The response from the AJAX call can then be used to update the view.

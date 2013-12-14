@@ -412,12 +412,8 @@ submission (i.e.  ``/login_check``):
 
     You will *not* need to implement a controller for the ``/login_check``
     URL as the firewall will automatically catch and process any form submitted
-    to this URL.
-
-.. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``
-    and ``check_path``. These keys can be route names (as shown in this example)
-    or URLs that have routes configured for them.
+    to this URL. However, you *must* have a route (as shown here) for this
+    URL, as well as one for your logout path (see :ref:`book-security-logging-out`).
 
 Notice that the name of the ``login`` route matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
@@ -770,7 +766,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``
-* ``ip``
+* ``ip`` or ``ips``
 * ``host``
 * ``methods``
 
@@ -868,6 +864,8 @@ options:
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown);
 
+* ``allow_if`` If the expression returns false, then access is denied;
+
 * ``requires_channel`` If the incoming request's channel (e.g. ``http``)
   does not match this value (e.g. ``https``), the user will be redirected
   (e.g. redirected from ``http`` to ``https``, or vice versa).
@@ -893,6 +891,11 @@ prevent any direct access to these resources from a web browser (by guessing the
 ESI URL pattern), the ESI route **must** be secured to be only visible from
 the trusted reverse proxy cache.
 
+.. versionadded:: 2.3
+    Version 2.3 allows multiple IP addresses in a single rule with the ``ips: [a, b]``
+    construct.  Prior to 2.3, users should create one rule per IP address to match and
+    use the ``ip`` key instead of ``ips``.
+
 .. caution::
 
     As you'll read in the explanation below the example, the ``ip`` option
@@ -912,14 +915,14 @@ given prefix, ``/esi``, from outside access:
         security:
             # ...
             access_control:
-                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
                 - { path: ^/esi, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
             <access-control>
                 <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    ip="127.0.0.1" />
+                    ips="127.0.0.1, ::1" />
                 <rule path="^/esi" role="ROLE_NO_ACCESS" />
             </access-control>
 
@@ -929,11 +932,11 @@ given prefix, ``/esi``, from outside access:
                 array(
                     'path' => '^/esi',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                    'ip' => '127.0.0.1',
+                    'ips' => '127.0.0.1, ::1'
                 ),
                 array(
                     'path' => '^/esi',
-                    'role' => 'ROLE_NO_ACCESS',
+                    'role' => 'ROLE_NO_ACCESS'
                 ),
             ),
 
@@ -941,7 +944,7 @@ Here is how it works when the path is ``/esi/something`` coming from the
 ``10.0.0.1`` IP:
 
 * The first access control rule is ignored as the ``path`` matches but the
-  ``ip`` does not;
+  ``ip`` does not match either of the IPs listed;
 
 * The second access control rule is enabled (the only restriction being the
   ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
@@ -949,13 +952,66 @@ Here is how it works when the path is ``/esi/something`` coming from the
   be anything that does not match an existing role, it just serves as a trick
   to always deny access).
 
-Now, if the same request comes from ``127.0.0.1``:
+Now, if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
+address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
   ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
 
 * The second access rule is not examined as the first rule matched.
+
+.. _book-security-allow-if:
+
+Securing by an Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.4
+    The ``allow_if`` functionality was introduced in Symfony 2.4.
+
+Once an ``access_control`` entry is matched, you can deny access via the
+``roles`` key or use more complex logic with an expression in the ``allow_if``
+key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                -
+                    path: ^/_internal/secure
+                    allow_if: "'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')"
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal/secure"
+                    allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array(
+                    'path' => '^/_internal/secure',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
+                ),
+            ),
+
+In this case, when the user tries to access any URL starting with ``/_internal/secure``,
+they will only be granted access if the IP address is ``127.0.0.1`` or if
+the user has the ``ROLE_ADMIN`` role.
+
+Inside the expression, you have access to a number of different variables
+and functions including ``request``, which is the Symfony
+:class:`Symfony\\Component\\HttpFoundation\\Request` object (see
+:ref:`component-http-foundation-request`).
+
+For a list of the other functions and variables, see
+:ref:`functions and variables <book-security-expression-variables>`.
 
 .. _book-security-securing-channel:
 
@@ -1031,9 +1087,7 @@ which can secure your controller using annotations::
         // ...
     }
 
-For more information, see the `JMSSecurityExtraBundle`_ documentation. If you're
-using Symfony's Standard Distribution, this bundle is available by default.
-If not, you can easily download and install it.
+For more information, see the `JMSSecurityExtraBundle`_ documentation.
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1206,12 +1260,6 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface.
-
 .. note::
 
     The user object will be serialized and saved in the session during requests,
@@ -1358,6 +1406,10 @@ the password is simply run through the ``sha1`` algorithm one time and without
 any extra encoding. You can now calculate the hashed password either programmatically
 (e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
 
+.. tip::
+
+    Supported algorithms for this method depend on your PHP version. Full list is available calling the PHP method ``hash_algos()``.
+
 If you're creating your users dynamically (and storing them in a database),
 you can use even tougher hashing algorithms and then rely on an actual password
 encoder object to help you encode passwords. For example, suppose your User
@@ -1400,10 +1452,6 @@ will default to hashing your password 5000 times in a row and then encoding
 it as base64. In other words, the password has been greatly obfuscated so
 that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
-
-.. versionadded:: 2.2
-    As of Symfony 2.2 you can also use the :ref:`PBKDF2 <reference-security-pbkdf2>`
-    and :ref:`BCrypt <reference-security-bcrypt>` password encoders.
 
 Determining the Hashed Password
 ...............................
@@ -1672,6 +1720,8 @@ doesn't need to be defined anywhere - you can just start using it.
     Symfony2. If you define your own roles with a dedicated ``Role`` class
     (more advanced), don't use the ``ROLE_`` prefix.
 
+.. _book-security-role-hierarchy:
+
 Hierarchical Roles
 ~~~~~~~~~~~~~~~~~~
 
@@ -1712,6 +1762,8 @@ rules by creating a role hierarchy:
 In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+
+.. _book-security-logging-out:
 
 Logging Out
 -----------
@@ -1814,11 +1866,6 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
-.. caution::
-
-    As of Symfony 2.1, you *must* have a route that corresponds to your logout
-    path. Without this route, logging out will not work.
-
 Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
@@ -1853,6 +1900,33 @@ the built-in helper function:
     idea to have a main firewall that covers all URLs (as has been shown
     in this chapter).
 
+.. _book-security-template-expression:
+
+.. versionadded:: 2.4
+    The ``expression`` functionality was introduced in Symfony 2.4.
+
+You can also use expressions inside your templates:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted(expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        )) %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+For more details on expressions and security, see :ref:`book-security-expressions`.
+
 Access Control in Controllers
 -----------------------------
 
@@ -1874,6 +1948,91 @@ method of the security context::
 
     A firewall must be active or an exception will be thrown when the ``isGranted``
     method is called. See the note above about templates for more details.
+
+.. _book-security-expressions:
+
+Complex Access Controls with Expressions
+----------------------------------------
+
+.. versionadded:: 2.4
+    The expression functionality was introduced in Symfony 2.4.
+
+In addition to a role like ``ROLE_ADMIN``, the ``isGranted`` method also
+accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
+
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Symfony\Component\ExpressionLanguage\Expression;
+    // ...
+
+    public function indexAction()
+    {
+        if (!$this->get('security.context')->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))) {
+            throw new AccessDeniedException();
+        }
+
+        // ...
+    }
+
+In this example, if the current user has ``ROLE_ADMIN`` or if the current
+user object's ``isSuperAdmin()`` method returns ``true``, then access will
+be granted (note: your User object may not have an ``isSuperAdmin`` method,
+that method is invented for this example).
+
+This uses an expression and you can learn more about the expression language
+syntax, see :doc:`/components/expression_language/syntax`.
+
+.. _book-security-expression-variables:
+
+Inside the expression, you have access to a number of variables:
+
+* ``user`` The user object (or the string ``anon`` if you're not authenticated);
+* ``roles`` The array of roles the user has, including from the
+  :ref:`role hierarchy <book-security-role-hierarchy>` but not including
+  the ``IS_AUTHENTICATED_*`` attributes (see the functions below);
+* ``object``: The object (if any) that's passed as the second argument to
+  ``isGranted`` ;
+* ``token`` The token object;
+* ``trust_resolver``: The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
+   object: you'll probably use the ``is_*`` functions below instead.
+
+Additionally, you have access to a number of functions inside the expression:
+
+* ``is_authenticated``: Returns ``true`` if the user is authenticated via "remember-me"
+  or authenticated "fully" - i.e. returns true if the user is "logged in";
+* ``is_anonymous``: Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with
+  the ``isGranted`` function;
+* ``is_remember_me``: Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``,
+  see below;
+* ``is_fully_authenticated``: Similar, but not equal to ``IS_AUTHENTICATED_FULLY``,
+  see below;
+* ``has_role``: Checks to see if the user has the given role - equivalent
+  to an expression like ``'ROLE_ADMIN' in roles``.
+
+.. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
+
+    The ``is_remember_me`` and ``is_authenticated_fully`` functions are *similar*
+    to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
+    with the ``isGranted`` function - but they are **not** the same. The
+    following shows the difference::
+
+        use Symfony\Component\ExpressionLanguage\Expression;
+        // ...
+
+        $sc = $this->get('security.context');
+        $access1 = $sc->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $access2 = $sc->isGranted(new Expression(
+            'is_remember_me() or is_fully_authenticated()'
+        ));
+
+    Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
+    behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,
+    the ``is_remember_me`` function *only* returns true if the user is authenticated
+    via a remember-me cookie and ``is_fully_authenticated`` *only* returns
+    true if the user has actually logged in during this session (i.e. is
+    full-fledged).
 
 Impersonating a User
 --------------------
@@ -2041,9 +2200,6 @@ cookie will be ever created by Symfony2):
 
 Utilities
 ---------
-
-.. versionadded:: 2.2
-    The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
 
 The Symfony Security component comes with a collection of nice utilities related
 to security. These utilities are used by Symfony, but you should also use

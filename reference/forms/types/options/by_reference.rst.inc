@@ -20,7 +20,7 @@ To explain this further, here's a simple example::
         )
 
 If ``by_reference`` is true, the following takes place behind the scenes
-when you call ``bind`` on the form::
+when you call ``submit`` (or ``handleRequest``) on the form::
 
     $article->setTitle('...');
     $article->getAuthor()->setName('...');
@@ -28,7 +28,7 @@ when you call ``bind`` on the form::
 
 Notice that ``setAuthor`` is not called. The author is modified by reference.
 
-If you set ``by_reference`` to false, binding looks like this::
+If you set ``by_reference`` to false, submitting looks like this::
 
     $article->setTitle('...');
     $author = $article->getAuthor();

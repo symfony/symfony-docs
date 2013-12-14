@@ -24,6 +24,66 @@ rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
 
+.. _reference-forms-twig-form:
+
+form(view, variables)
+---------------------
+
+Renders the HTML of a complete form.
+
+.. code-block:: jinja
+
+    {# render the form and change the submission method #}
+    {{ form(form, {'method': 'GET'}) }}
+
+You will mostly use this helper for prototyping or if you use custom form
+themes. If you need more flexibility in rendering the form, you should use
+the other helpers to render individual parts of the form instead:
+
+.. code-block:: jinja
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.dueDate) }}
+
+        {{ form_row(form.submit, { 'label': 'Submit me' }) }}
+    {{ form_end(form) }}
+
+.. _reference-forms-twig-start:
+
+form_start(view, variables)
+---------------------------
+
+Renders the start tag of a form. This helper takes care of printing the
+configured method and target action of the form. It will also include the
+correct ``enctype`` property if the form contains upload fields.
+
+.. code-block:: jinja
+
+    {# render the start tag and change the submission method #}
+    {{ form_start(form, {'method': 'GET'}) }}
+
+.. _reference-forms-twig-end:
+
+form_end(view, variables)
+-------------------------
+
+Renders the end tag of a form.
+
+.. code-block:: jinja
+
+    {{ form_end(form) }}
+
+This helper also outputs ``form_rest()`` unless you set ``render_rest`` to
+false:
+
+.. code-block:: jinja
+
+    {# don't render unrendered fields #}
+    {{ form_end(form, {'render_rest': false}) }}
+
 .. _reference-forms-twig-label:
 
 form_label(view, label, variables)
@@ -118,6 +178,11 @@ obvious (since it'll render the field for you).
 
 form_enctype(view)
 ------------------
+
+.. note::
+
+    This helper was deprecated in Symfony 2.3 and will be removed in Symfony 3.0.
+    You should use ``form_start()`` instead.
 
 If the form contains at least one file upload field, this will render the
 required ``enctype="multipart/form-data"`` form attribute. It's always a
@@ -230,9 +295,8 @@ object:
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
-.. versionadded:: 2.1
-    The ``valid``, ``label_attr``, ``compound``, and ``disabled`` variables
-    are new in Symfony 2.1.
+.. versionadded:: 2.4
+    The ``submitted`` variable was added in Symfony 2.4.
 
 +-----------------+-----------------------------------------------------------------------------------------+
 | Variable        | Usage                                                                                   |
@@ -248,6 +312,8 @@ object:
 |                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
 |                 | since this only returns "global" errors: some individual fields may have errors         |
 |                 | Instead, use the ``valid`` option                                                       |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``submitted``   | Returns ``true`` or ``false`` depending on whether the whole form is submitted          |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``valid``       | Returns ``true`` or ``false`` depending on whether the whole form is valid              |
 +-----------------+-----------------------------------------------------------------------------------------+
@@ -277,4 +343,4 @@ object:
 |                 | (for example, a ``choice`` field, which is actually a group of checkboxes               |
 +-----------------+-----------------------------------------------------------------------------------------+
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

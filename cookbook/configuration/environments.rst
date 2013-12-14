@@ -200,11 +200,14 @@ environment by using this code and changing the environment string.
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'logging'  => '%kernel.debug%',
-
                     // ...
                 ),
                 // ...
             ));
+
+    As of Symfony 2.3, showing errors or not no longer depends on the debug
+    mode. You'll need to enable that in your front controller by calling
+    :method:`Symfony\\Component\\Debug\\Debug::enable`.
 
 .. index::
    single: Environments; Creating a new environment

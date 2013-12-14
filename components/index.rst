@@ -9,15 +9,17 @@ The Components
     config/index
     console/index
     css_selector
+    debug
     dependency_injection/index
     dom_crawler
     event_dispatcher/index
+    expression_language/index
     filesystem
     finder
     form/index
     http_foundation/index
     http_kernel/index
-    locale
+    intl
     options_resolver
     process
     property_access/index

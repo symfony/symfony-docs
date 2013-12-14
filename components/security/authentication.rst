@@ -198,10 +198,8 @@ own, it just needs to follow these rules:
 
 #. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
 
-#. The first line in ``encodePassword`` and ``isPasswordValid`` must check
-   to make sure the password is not too long (e.g. 4096). This is for security
-   (see `CVE-2013-5750`_), and you can copy the `BasePasswordEncoder::checkPasswordLength`_
-   implementation from Symfony 2.4.
+#. ``$this->checkPasswordLength($raw);`` must be the first code executed in
+   ``encodePassword()`` and ``isPasswordValid()`` (see `CVE-2013-5750`_).
 
 Using Password Encoders
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -228,4 +226,3 @@ which should be used to encode this user's password::
         $user->getSalt());
 
 .. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
-.. _`BasePasswordEncoder::checkPasswordLength`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/BasePasswordEncoder.php

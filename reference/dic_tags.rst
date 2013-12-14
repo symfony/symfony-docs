@@ -29,6 +29,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.templating.twig`_        | Remove this service if Twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `console.command`_                | Add a command                                                             |
++-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `doctrine.event_listener`_        | Add a Doctrine event listener                                             |
@@ -61,7 +63,11 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.remember_me_aware`_     | To allow remember me authentication                                       |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
+| `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
++-----------------------------------+---------------------------------------------------------------------------+
+| `swiftmailer.default.plugin`_     | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -236,6 +242,18 @@ assetic.templating.twig
 
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain ``twig``.
+
+console.command
+---------------
+
+.. versionadded:: 2.4
+   Support for registering commands in the service container was added in
+   version 2.4.
+
+**Purpose**: Add a command to the application
+
+For details on registering your own commands in the service container, read
+:ref:`the cookbook article<cookbook-console-dic>`.
 
 data_collector
 --------------
@@ -564,9 +582,6 @@ kernel.event_subscriber
 
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
-.. versionadded:: 2.1
-   The ability to add kernel event subscribers is new to 2.1.
-
 To enable a custom subscriber, add it as a regular service in one of your
 configuration, and tag it with ``kernel.event_subscriber``:
 
@@ -647,6 +662,12 @@ channel when injecting the logger in a service.
         $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(new Reference('logger'));
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->register('my_service', $definition);
+
+.. tip::
+
+    If you use MonologBundle 2.4 or higher, you can configure custom channels
+    in the configuration and retrieve the corresponding logger service from
+    the service container directly (see :ref:`cookbook-monolog-channels-config`).
 
 .. _dic_tags-monolog-processor:
 
@@ -808,14 +829,44 @@ is used behind the scenes to determine if the user should have access. The
 
 For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
 
-swiftmailer.plugin
+.. _reference-dic-tags-serializer-encoder:
+
+serializer.encoder
 ------------------
+
+**Purpose**: Register a new encoder in the ``serializer`` service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
+
+.. _reference-dic-tags-serializer-normalizer:
+
+serializer.normalizer
+---------------------
+
+**Purpose**: Register a new normalizer in the Serializer service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
+
+For more details, see :doc:`/cookbook/serializer`.
+
+swiftmailer.default.plugin
+--------------------------
 
 **Purpose**: Register a custom SwiftMailer Plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.plugin`` (it has no options).
+it with ``swiftmailer.default.plugin`` (it has no options). 
+
+.. note::
+
+    ``default`` in this tag is the name of the mailer. If you have multiple
+    mailers configured or have changed the default mailer name for some reason,
+    you should change it to the name of your mailer in order to use this tag.
 
 A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
 For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
@@ -936,9 +987,6 @@ translation.extractor
 
 **Purpose**: To register a custom service that extracts messages from a file
 
-.. versionadded:: 2.1
-   The ability to add message extractors is new in Symfony 2.1.
-
 When executing the ``translation:update`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony2 framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
@@ -1006,9 +1054,6 @@ translation.dumper
 ------------------
 
 **Purpose**: To register a custom service that dumps messages to a file
-
-.. versionadded:: 2.1
-   The ability to add message dumpers is new in Symfony 2.1.
 
 After an `Extractor <translation.extractor>`_ has extracted all messages from
 the templates, the dumpers are executed to dump the messages to a translation
@@ -1183,6 +1228,6 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
 .. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders

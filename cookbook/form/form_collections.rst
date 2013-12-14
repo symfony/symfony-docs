@@ -172,12 +172,10 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
 
             $form = $this->createForm(new TaskType(), $task);
 
-            // process the form on POST
-            if ($request->isMethod('POST')) {
-                $form->bind($request);
-                if ($form->isValid()) {
-                    // ... maybe do some form processing, like saving the Task and Tag objects
-                }
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
             return $this->render('AcmeTaskBundle:Task:new.html.twig', array(
@@ -200,7 +198,7 @@ zero tags when first created).
 
         {# ... #}
 
-        <form action="..." method="POST" {{ form_enctype(form) }}>
+        {{ form_start(form) }}
             {# render the task's only field: description #}
             {{ form_row(form.description) }}
 
@@ -211,10 +209,9 @@ zero tags when first created).
                     <li>{{ form_row(tag.name) }}</li>
                 {% endfor %}
             </ul>
+        {{ form_end(form) }}
 
-            {{ form_rest(form) }}
-            {# ... #}
-        </form>
+        {# ... #}
 
     .. code-block:: html+php
 
@@ -222,16 +219,17 @@ zero tags when first created).
 
         <!-- ... -->
 
-        <form action="..." method="POST" ...>
+        <?php echo $view['form']->start($form) ?>
+            <!-- render the task's only field: description -->
+            <?php echo $view['form']->row($form['description']) ?>
+
             <h3>Tags</h3>
             <ul class="tags">
                 <?php foreach($form['tags'] as $tag): ?>
                     <li><?php echo $view['form']->row($tag['name']) ?></li>
                 <?php endforeach; ?>
             </ul>
-
-            <?php echo $view['form']->rest($form) ?>
-        </form>
+        <?php echo $view['form']->end($form) ?>
 
         <!-- ... -->
 
@@ -382,9 +380,6 @@ to dynamically add a new form when this link is clicked. The ``data-prototype``
 HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
 and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
 which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
-
-.. versionadded:: 2.1
-    The placeholder was changed from ``$$name$$`` to ``__name__`` in Symfony 2.1
 
 The actual code needed to make this all work can vary quite a bit, but here's
 one example:
@@ -673,7 +668,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
-
+        
+        use Doctrine\Common\Collections\ArrayCollection;
+        
         // ...
         public function editAction($id, Request $request)
         {
@@ -684,35 +681,26 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for is '.$id);
             }
 
-            $originalTags = array();
+            $originalTags = new ArrayCollection();
 
-            // Create an array of the current Tag objects in the database
+            // Create an ArrayCollection of the current Tag objects in the database
             foreach ($task->getTags() as $tag) {
-                $originalTags[] = $tag;
+                $originalTags->add($tag);
             }
 
             $editForm = $this->createForm(new TaskType(), $task);
 
-            if ($request->isMethod('POST')) {
-                $editForm->bind($this->getRequest());
+            $editForm->handleRequest($request);
 
-                if ($editForm->isValid()) {
+            if ($editForm->isValid()) {
 
-                    // filter $originalTags to contain tags no longer present
-                    foreach ($task->getTags() as $tag) {
-                        foreach ($originalTags as $key => $toDel) {
-                            if ($toDel->getId() === $tag->getId()) {
-                                unset($originalTags[$key]);
-                            }
-                        }
-                    }
-
-                    // remove the relationship between the tag and the Task
-                    foreach ($originalTags as $tag) {
+                // remove the relationship between the tag and the Task
+                foreach ($originalTags as $tag) {
+                    if (false === $task->getTags()->contains($tag)) {
                         // remove the Task from the Tag
                         $tag->getTasks()->removeElement($task);
 
-                        // if it were a many-to-one relationship, remove the relationship like this
+                        // if it was a many-to-one relationship, remove the relationship like this
                         // $tag->setTask(null);
 
                         $em->persist($tag);
@@ -720,13 +708,13 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                         // if you wanted to delete the Tag entirely, you can also do that
                         // $em->remove($tag);
                     }
-
-                    $em->persist($task);
-                    $em->flush();
-
-                    // redirect back to some edit page
-                    return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
                 }
+
+                $em->persist($task);
+                $em->flush();
+
+                // redirect back to some edit page
+                return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
             }
 
             // render some form template

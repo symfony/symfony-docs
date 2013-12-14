@@ -48,17 +48,25 @@ By default, if the user enters a non-integer number, it will be rounded
 down. There are several other rounding methods, and each is a constant
 on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
-    round towards zero.
+* ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
-    round towards negative infinity.
+* ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
+  infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round 
-    away from zero.
+* ``IntegerToLocalizedStringTransformer::ROUND_UP`` Round away from zero.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
-    to round towards positive infinity.
+* ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Round towards
+  positive infinity.
+
+* ``IntegerToLocalizedStringTransformer::ROUND_HALF_DOWN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round down.
+
+* ``IntegerToLocalizedStringTransformer::ROUND_HALF_EVEN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round towards the
+  even neighbor.
+
+* ``IntegerToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round up.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 

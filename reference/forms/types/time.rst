@@ -21,8 +21,8 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `hours`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `seconds`_                                                                |
-|                      | - `data_timezone`_                                                          |
-|                      | - `user_timezone`_                                                          |
+|                      | - `model_timezone`_                                                         |
+|                      | - `view_timezone`_                                                          |
 |                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
@@ -33,7 +33,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
-|                      | - `virtual`_                                                                |
+|                      | - `inherit_data`_                                                           |
 |                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
@@ -113,9 +113,9 @@ this format.
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
@@ -149,6 +149,6 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/virtual.rst.inc
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc

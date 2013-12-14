@@ -25,6 +25,7 @@ Form Types Reference
    types/language
    types/locale
    types/timezone
+   types/currency
 
    types/date
    types/datetime
@@ -40,7 +41,10 @@ Form Types Reference
 
    types/hidden
 
-   types/field
+   types/button
+   types/reset
+   types/submit
+
    types/form
 
 A form is composed of *fields*, each of which are built with the help of

@@ -62,11 +62,11 @@ have a ``Symfony/`` directory that looks like this:
 
     If you are familiar with `Composer`_, you can download Composer and then
     run the following command instead of downloading the archive (replacing
-    ``2.2.0`` with the latest Symfony release like ``2.2.1``):
+    ``2.3.0`` with the latest Symfony release like ``2.3.1``):
 
     .. code-block:: bash
 
-        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.2.0
+        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.3.0
 
 .. _`quick-tour-big-picture-built-in-server`:
 
@@ -177,11 +177,22 @@ these paths (called routes) are defined in the ``app/config/routing.yml`` config
 file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
 indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
 configuration file is also loaded. In the Standard Edition, the routes to
-these "demo" pages are placed in that file:
+these "demo" pages are imported from this file:
 
 .. code-block:: yaml
 
     # app/config/routing_dev.yml
+    # ...
+
+    # AcmeDemoBundle routes (to be removed)
+    _acme_demo:
+        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+
+This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
+
+.. code-block:: yaml
+
+    # src/Acme/DemoBundle/Resources/config/routing.yml
     _welcome:
         path:  /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
@@ -221,7 +232,10 @@ controller might create the response by hand, based on the request::
 
     $name = $request->query->get('name');
 
-    return new Response('Hello '.$name, 200, array('Content-Type' => 'text/plain'));
+    return new Response('Hello '.$name, Response::HTTP_OK, array('Content-Type' => 'text/plain'));
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 .. note::
 
@@ -292,7 +306,8 @@ key:
 
 .. code-block:: yaml
 
-    # app/config/routing_dev.yml
+    # src/Acme/DemoBundle/Resources/config/routing.yml
+    # ...
     _demo:
         resource: "@AcmeDemoBundle/Controller/DemoController.php"
         type:     annotation
@@ -409,7 +424,7 @@ When loaded and enabled (by default in the ``dev`` :ref:`environment<quick-tour-
 the Profiler provides a web interface for a *huge* amount of information recorded
 on each request, including logs, a timeline of the request, GET or POST parameters,
 security details, database queries and more!
- 
+
 Of course, it would be unwise to have these tools enabled when you deploy
 your application, so by default, the profiler is not enabled in the ``prod``
 environment.

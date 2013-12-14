@@ -4,9 +4,6 @@
 How to use Service Container Parameters in your Routes
 ======================================================
 
-.. versionadded:: 2.1
-    The ability to use parameters in your routes was added in Symfony 2.1.
-
 Sometimes you may find it useful to make some parts of your routes
 globally configurable. For instance, if you build an internationalized
 site, you'll probably start with one or two locales. Surely you'll

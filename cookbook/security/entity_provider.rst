@@ -185,27 +185,6 @@ interface forces the class to implement the five following methods:
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface and implement the ``isEqualTo`` method.
-
-.. code-block:: php
-
-    // src/Acme/UserBundle/Entity/User.php
-
-    namespace Acme\UserBundle\Entity;
-
-    use Symfony\Component\Security\Core\User\EquatableInterface;
-
-    // ...
-
-    public function isEqualTo(UserInterface $user)
-    {
-        return $this->id === $user->getId();
-    }
-
 .. note::
 
     The :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``

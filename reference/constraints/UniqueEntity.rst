@@ -151,10 +151,6 @@ repositoryMethod
 
 **type**: ``string`` **default**: ``findBy``
 
-.. versionadded:: 2.1
-    The ``repositoryMethod`` option was added in Symfony 2.1. Before, it
-    always used the ``findBy`` method.
-
 The name of the repository method to use for making the query to determine the
 uniqueness. If it's left blank, the ``findBy`` method will be used. This
 method should return a countable result.
@@ -163,9 +159,6 @@ errorPath
 ~~~~~~~~~
 
 **type**: ``string`` **default**: The name of the first field in `fields`_
-
-.. versionadded:: 2.1
-    The ``errorPath`` option was added in Symfony 2.1.
 
 If the entity violates the constraint the error message is bound to the first
 field in `fields`_. If there is more than one field, you may want to map
@@ -260,14 +253,10 @@ Consider this example:
 
 Now, the message would be bound to the ``port`` field with this configuration.
 
-
 ignoreNull
 ~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
-
-.. versionadded:: 2.1
-    The ``ignoreNull`` option was added in Symfony 2.1.
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.

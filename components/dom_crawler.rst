@@ -80,7 +80,10 @@ This allows you to use jQuery-like selectors to traverse::
 
 Anonymous function can be used to filter with more complex criteria::
 
-    $crawler = $crawler->filter('body > p')->reduce(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $crawler = $crawler->filter('body > p')->reduce(function (Crawler $node, $i) {
         // filter even nodes
         return ($i % 2) == 0;
     });
@@ -147,11 +150,19 @@ Extract attribute and/or node values from the list of nodes::
 
 Call an anonymous function on each node of the list::
 
-    $nodeValues = $crawler->filter('p')->each(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
 
-The anonymous function receives the node and the position as arguments.
+.. versionadded:: 2.3
+    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
+    are passed a ``Crawler`` as the first argument. Previously, that argument
+    was a :phpclass:`DOMNode`.
+
+The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
 Adding the Content
@@ -211,6 +222,13 @@ and :phpclass:`DOMNode` objects:
         foreach ($crawler as $domElement) {
             $html .= $domElement->ownerDocument->saveHTML($domElement);
         }
+
+    Or you can get the HTML of the first node using
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
+
+        $html = $crawler->html();
+
+    The ``html`` method is new in Symfony 2.3.
 
 Links
 ~~~~~
@@ -322,6 +340,9 @@ and uploading files::
     // even fake a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');
 
+Using the Form Data
+...................
+
 What's the point of doing all of this? If you're testing internally, you
 can grab the information off of your form as if it had just been submitted
 by using the PHP values::
@@ -356,6 +377,27 @@ directly::
 
     // submit that form
     $crawler = $client->submit($form);
+
+.. _components-dom-crawler-invalid:
+
+Selecting Invalid Choice Values
+...............................
+
+.. versionadded:: 2.4
+    The :method:`Symfony\\Component\\DomCrawler\\Form::disableValidation`
+    method was added in Symfony 2.4.
+
+By default, choice fields (select, radio) have internal validation activated
+to prevent you from setting invalid values. If you want to be able to set
+invalid values, you can use the  ``disableValidation()`` method on either
+the whole form or specific field(s)::
+
+    // Disable validation for a specific field
+    $form['country']->disableValidation()->select('Invalid value');
+
+    // Disable validation for the whole form
+    $form->disableValidation();
+    $form['country']->select('Invalid value');
 
 .. _`Goutte`:  https://github.com/fabpot/goutte
 .. _Packagist: https://packagist.org/packages/symfony/dom-crawler

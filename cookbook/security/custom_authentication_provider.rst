@@ -153,17 +153,20 @@ set an authenticated token in the security context if successful.
 
                 // Deny authentication with a '403 Forbidden' HTTP response
                 $response = new Response();
-                $response->setStatusCode(403);
+                $response->setStatusCode(Response::HTTP_FORBIDDEN);
                 $event->setResponse($response);
 
             }
 
             // By default deny authorization
             $response = new Response();
-            $response->setStatusCode(403);
+            $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $event->setResponse($response);
         }
     }
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
@@ -436,9 +439,6 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
-
-.. versionadded:: 2.1
-    Before 2.1, the factory below was added via ``security.yml`` instead.
 
 .. code-block:: php
 
