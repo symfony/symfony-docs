@@ -10,6 +10,7 @@ install:
     - "git clone http://github.com/doctrine/DoctrineFixturesBundle _bndls/doctrine-fixtures"
     - "git clone http://github.com/doctrine/DoctrineMigrationsBundle _bndls/doctrine-migrations"
     - "git clone http://github.com/doctrine/DoctrineMongoDBBundle _bndls/doctrine-mongodb"
+    - "git clone http://github.com/symfony-cmf/symfony-cmf-docs cmf"
     - "mv _bndls/doctrine-mongodb/Resources/doc bundles/DoctrineMongoDBBundle"
     - "mv _bndls/doctrine-migrations/Resources/doc bundles/DoctrineMigrationsBundle"
     - "mv _bndls/doctrine-fixtures/Resources/doc bundles/DoctrineFixturesBundle"
