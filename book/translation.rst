@@ -411,12 +411,14 @@ Handling the User's Locale
 The locale of the current user is stored in the request and is accessible
 via the ``request`` object::
 
-    // access the request object in a standard controller
-    $request = $this->getRequest();
+    use Symfony\Component\HttpFoundation\Request;
 
-    $locale = $request->getLocale();
+    public function indexAction(Request $request)
+    {
+        $locale = $request->getLocale();
 
-    $request->setLocale('en_US');
+        $request->setLocale('en_US');
+    }
 
 .. tip::
 
