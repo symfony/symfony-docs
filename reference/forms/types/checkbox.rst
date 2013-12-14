@@ -50,7 +50,7 @@ not affect the value that's set on your object.
 
 .. caution::
 
-    To make a checkbox checked by default, use the `data`_ option.
+    To make a checkbox checked by default, set the `data`_ option to ``true``.
 
 Inherited options
 -----------------
