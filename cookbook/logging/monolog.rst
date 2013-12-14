@@ -23,8 +23,7 @@ your controller::
     }
 
 The ``logger`` service has different methods for different logging levels.
-See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
-on which methods are available.
+See LoggerInterface_ for details on which methods are available.
 
 Handlers and Channels: Writing logs to different Locations
 ----------------------------------------------------------
@@ -351,3 +350,4 @@ using a processor.
     handler level instead of globally.
 
 .. _Monolog: https://github.com/Seldaek/monolog
+.. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php

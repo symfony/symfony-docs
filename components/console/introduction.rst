@@ -160,6 +160,8 @@ You can also set these colors and options inside the tagname::
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
 
+.. verbosity-levels:
+
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
 
@@ -225,6 +227,11 @@ verbosity levels::
 When the quiet level is used, all output is suppressed as the default
 :method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output::write>`
 method returns without actually printing.
+
+.. tip::
+
+    You can use `MonologBundle`_ 2.4 to display messages on the console. This
+    is cleaner than wrapping your output calls in conditions (see :doc:/cookbook/logging/monolog_console).
 
 Using Command Arguments
 -----------------------
@@ -520,3 +527,4 @@ Learn More!
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/downloads
+.. _MonologBundle: https://github.com/symfony/MonologBundle
