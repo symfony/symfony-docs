@@ -181,8 +181,8 @@ Installing the Sphinx extensions
 
 * Download the extension from the `source`_ repository
 
-* Copy the ``sensio`` directory to the ``_exts`` folder under your source
-  folder (where ``conf.py`` is located)
+* Copy the ``sensio`` directory to the ``_exts`` (you may have to create it) folder under your source
+  folder (the source folder is where ``conf.py`` is located)
 
 * Add the following to the ``conf.py`` file:
 
@@ -210,6 +210,31 @@ Installing the Sphinx extensions
 
     # set URL for API links
     api_url = 'http://api.symfony.com/master/%s'
+
+.. tip::
+
+    It seems that with newest Sphinx versions you may receive an error such
+    ``There is a syntax error in your configuration file: invalid syntax (conf.py, line 268)``
+    This happens because you try to append "extensions" to an empty array.
+
+    Look for this line near the top of ``config.py``
+
+    .. code-block:: py
+
+        extensions = []
+
+    Replace it by:
+
+    .. code-block:: py
+
+        extensions = ['sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
+
+    And you can now remove this line you added previously:
+
+    .. code-block:: py
+
+        extensions = [..., 'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
+
 
 .. _reStructuredText:        http://docutils.sourceforge.net/rst.html
 .. _Sphinx:                  http://sphinx-doc.org/
