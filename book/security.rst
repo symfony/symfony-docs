@@ -1360,7 +1360,8 @@ any extra encoding. You can now calculate the hashed password either programmati
 
 .. tip::
 
-    Supported algorithms for this method depend on your PHP version. Full list is available calling the PHP method ``hash_algos()``.
+    Supported algorithms for this method depend on your PHP version.
+    A full list is available calling the PHP function :phpfunction:`hash_algos`.
 
 If you're creating your users dynamically (and storing them in a database),
 you can use even tougher hashing algorithms and then rely on an actual password
