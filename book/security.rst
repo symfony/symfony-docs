@@ -904,7 +904,7 @@ the trusted reverse proxy cache.
     does not restrict to a specific IP address. Instead, using the ``ip``
     key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down
-    the ``acces_control`` list.
+    the ``access_control`` list.
 
 Here is an example of how you might secure all ESI routes that start with a
 given prefix, ``/esi``, from outside access:
