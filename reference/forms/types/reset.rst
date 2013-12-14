@@ -15,6 +15,7 @@ A button that resets all fields to their original values.
 | Inherited            | - `attr`_                                                           |
 | options              | - `disabled`_                                                       |
 |                      | - `label`_                                                          |
+|                      | - `label_attr`_                                                     |
 |                      | - `translation_domain`_                                             |
 +----------------------+---------------------------------------------------------------------+
 | Parent type          | :doc:`button</reference/forms/types/button>`                        |
@@ -30,5 +31,7 @@ Inherited options
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/button_label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc

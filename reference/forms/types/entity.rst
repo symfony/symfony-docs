@@ -23,6 +23,7 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Inherited   | - `required`_                                                    |
 | options     | - `label`_                                                       |
+|             | - `label_attr`_                                                  |
 |             | - `multiple`_                                                    |
 |             | - `expanded`_                                                    |
 |             | - `preferred_choices`_                                           |
@@ -189,6 +190,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
