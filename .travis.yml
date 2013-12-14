@@ -5,6 +5,16 @@ python:
 
 install: 
     - "git submodule update --init"
+    - "git clone http://github.com/sensiolabs/SensioFrameworkExtraBundle _bndls/sensio-framework-extra"
+    - "git clone http://github.com/sensiolabs/SensioGeneratorBundle _bndls/sensio-generator"
+    - "git clone http://github.com/doctrine/DoctrineFixturesBundle _bndls/doctrine-fixtures"
+    - "git clone http://github.com/doctrine/DoctrineMigrationsBundle _bndls/doctrine-migrations"
+    - "git clone http://github.com/doctrine/DoctrineMongoDBBundle _bndls/doctrine-mongodb"
+    - "mv _bndls/doctrine-mongodb/Resources/doc bundles/DoctrineMongoDBBundle"
+    - "mv _bndls/doctrine-migrations/Resources/doc bundles/DoctrineMigrationsBundle"
+    - "mv _bndls/doctrine-fixtures/Resources/doc bundles/DoctrineFixturesBundle"
+    - "mv _bndls/sensio-framework-extra/Resources/doc bundles/SensioFrameworkExtraBundle"
+    - "mv _bndls/sensio-generator/Resources/doc bundles/SensioGeneratorBundle"
     - "pip install -q -r requirements.txt --use-mirrors"
 
 script: sphinx-build -nW -b html -d _build/doctrees . _build/html
