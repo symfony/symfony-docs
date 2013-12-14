@@ -519,6 +519,11 @@ Finally, create the corresponding template:
             <button type="submit">login</button>
         </form>
 
+.. caution::
+
+    This login form is currently not protected against CSRF attacks. Read
+    :doc:`/cookbook/security/csrf_in_login_form` on how to protect your login form.
+
 .. tip::
 
     The ``error`` variable passed into the template is an instance of
