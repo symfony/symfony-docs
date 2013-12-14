@@ -19,6 +19,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `allow_delete`_                                                           |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
+|             | - `delete_empty`_                                                           |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
@@ -26,6 +27,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `error_mapping`_                                                          |
 |             | - `by_reference`_                                                           |
 |             | - `empty_data`_                                                             |
+|             | - `required`_                                                               |
 |             | - `mapped`_                                                                 |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                   |
@@ -334,6 +336,16 @@ If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are not
 replaced with the same value.
 
+delete_empty
+~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you want to explicitly remove entirely empty collection entries from your
+form you have to set this option to true. Existing collection entries will
+however only be deleted if you have `allow_delete`_ option enabled, otherwise
+the empty values will be kept.
+
 Inherited options
 -----------------
 
@@ -358,5 +370,7 @@ error_bubbling
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
