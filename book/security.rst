@@ -1406,6 +1406,10 @@ the password is simply run through the ``sha1`` algorithm one time and without
 any extra encoding. You can now calculate the hashed password either programmatically
 (e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
 
+.. tip::
+
+    Supported algorithms for this method depend on your PHP version. Full list is available calling the PHP method ``hash_algos()``.
+
 If you're creating your users dynamically (and storing them in a database),
 you can use even tougher hashing algorithms and then rely on an actual password
 encoder object to help you encode passwords. For example, suppose your User
