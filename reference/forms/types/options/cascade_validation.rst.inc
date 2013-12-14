@@ -11,6 +11,5 @@ the data from ``CategoryType`` to also be validated.
 Instead of using this option, you can also use the ``Valid`` constraint in
 your model to force validation on a child object stored on a property.
 
-
-
+.. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
 
