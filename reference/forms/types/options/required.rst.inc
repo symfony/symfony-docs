@@ -11,3 +11,8 @@ guess your field type, then the value of this option will be guessed from
 your validation information.
 
 .. _`HTML5 required attribute`: http://diveintohtml5.info/forms.html
+
+.. note::
+
+The required option does also affect the way how empty data of your form is
+being handled. For further details check the :doc:` empty_data</reference/forms/types/options/empty_data.rst.inc>` option.
