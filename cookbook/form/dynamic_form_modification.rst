@@ -100,7 +100,7 @@ creating that particular field is delegated to an event listener::
             $builder->add('price');
 
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-                // adding the name field if needed
+                // ... adding the name field if needed
             });
         }
 
@@ -121,9 +121,9 @@ the event listener might look like the following::
             $form = $event->getForm();
 
             // check if the Product object is "new"
-            // If you didn't pass any data to the form, the data is "null".
+            // If no data is passed to the form, the data is "null".
             // This should be considered a new "Product"
-            if (!$product || !$product->getId()) {
+            if (!$product || null !== $product->getId()) {
                 $form->add('name', 'text');
             }
         });
@@ -212,7 +212,7 @@ class::
             $product = $event->getData();
             $form = $event->getForm();
 
-            if (!$product || !$product->getId()) {
+            if (!$product || null !== $product->getId()) {
                 $form->add('name', 'text');
             }
         }
