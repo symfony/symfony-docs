@@ -564,4 +564,4 @@ was too large or whether non-existing fields were submitted::
 .. caution::
 
     By doing this, you can disable something more than just form validation,
-    because ``POST_SUBMIT`` event can be used for something else.
+    because the ``POST_SUBMIT`` event can be used for something else too.
