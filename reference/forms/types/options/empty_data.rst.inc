@@ -14,7 +14,7 @@ The true default value of this option depends on the field options:
 
 
 But you can customize this to your needs. For example, if you want the ``gender`` field to be
-set to explicitly ``null`` when no value is selected, you can do it like this:
+explicitly set to ``null`` when no value is selected, you can do it like this:
 
 .. code-block:: php
 
