@@ -556,7 +556,7 @@ was too large or whether non-existing fields were submitted::
     {
         $builder->addEventListener(FormEvents::POST_SUBMIT, function($event) {
             $event->stopPropagation();
-        }, /* priority higher than ValidationListener */ 900);
+        }, 900); /* priority higher than ValidationListener */
 
         // ...
     }
