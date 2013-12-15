@@ -775,7 +775,7 @@ create a ``phpunit.xml`` file to tweak the configuration for your local machine.
     ``phpunit.xml`` file.
 
 By default, only the tests stored in "standard" bundles are run by the
-``phpunit`` command (standard being tests in the ``src/*/Bundle/Tests`` or
+``phpunit`` command (standard being tests in the ``src/*/*Bundle/Tests`` or
 ``src/*/Bundle/*Bundle/Tests`` directories) But you can easily add more
 directories. For instance, the following configuration adds the tests from
 the installed third-party bundles:
