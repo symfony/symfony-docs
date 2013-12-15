@@ -477,9 +477,7 @@ Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was added in Symfony 2.3,
-    although setting it to an empty array achieved the same result in previous
-    versions. Please note that empty array doesn't work anymore.
+    The ability to set ``validation_groups`` to false was added in Symfony 2.3.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
