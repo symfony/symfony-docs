@@ -13,6 +13,10 @@ on all fields.
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/constraints.rst.inc
 
 .. include:: /reference/forms/types/options/cascade_validation.rst.inc
