@@ -1,11 +1,11 @@
 .. index::
    single: Sessions, sessions directory
 
-Configuring the Directory where Sessions Files are Saved
+Configuring the Directory Where Sessions Files are Saved
 ========================================================
 
 By default, Symfony stores the session data in files in the cache
-directory `"%kernel.cach_dir%/sessions"`. This means that when you clear
+directory ``%kernel.cach_dir%/sessions``. This means that when you clear
 the cache, any current sessions will also be deleted.
 
 .. note::
@@ -60,8 +60,8 @@ session directory to ``app/sessions``:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             'session' => array(
-                'handler-id' => "session.handler.native_file"),
-                'save-path' => "%kernel.root_dir%/sessions"),
+                'handler-id' => 'session.handler.native_file',
+                'save-path' => '%kernel.root_dir%/sessions',
             ),
         ));
         
