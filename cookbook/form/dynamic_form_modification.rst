@@ -536,19 +536,18 @@ back to your application. In that controller, you can submit your form, but
 instead of processing it, simply use the submitted form to render the updated
 fields. The response from the AJAX call can then be used to update the view.
 
-.. _cookbook-dynamic-form-modification-supressing-form-validation:
+.. _cookbook-dynamic-form-modification-suppressing-form-validation:
 
-Supressing Form Validation
+Suppressing Form Validation
 ---------------------------
 
-One way you can use ``POST_SUBMIT`` event is to completely supress 
-form validation. The reason for that is even if you set ``group_validation`` 
-to ``false`` there still some integrity check are run, for example whether 
-an uploaded file was too large or whether non-existing fields were submitted. 
+To suppress form validation you can use the ``POST_SUBMIT`` event and prevent
+:class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
+invocation.
 
-If you want to suppress even that, you should use ``POST_SUBMIT`` event to prevent 
-:class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener` 
-invocation::
+The reason for this is even if you set ``group_validation`` to ``false`` there 
+are still some integrity checks executed, for example whether an uploaded file 
+was too large or whether non-existing fields were submitted::
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvents;
@@ -557,11 +556,12 @@ invocation::
     {
         $builder->addEventListener(FormEvents::POST_SUBMIT, function($event) {
             $event->stopPropagation();
-        }, /* priority higher than ValidationListener */ 200);
+        }, /* priority higher than ValidationListener */ 900);
 
         // ...
     }
 
-Note that that by doing that you can disable something more than form validation, 
-because ``POST_SUBMIT`` event can be used for something else. 
-You also have to know what would be the right priority for disabling POST_SUBMIT events.
+.. caution::
+
+    By doing this, you can disable something more than just form validation,
+    because ``POST_SUBMIT`` event can be used for something else.
