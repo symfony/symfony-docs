@@ -95,6 +95,64 @@ To remove a node the anonymous function must return false.
     All filter methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
     instance with filtered content.
 
+Both :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
+:method:`Symfony\\Component\\DomCrawler\\Crawler::filter` methods work with
+XML namespaces, which can be either automatically discovered or registered
+explicitly.
+
+.. versionadded:: 2.4
+    Auto discovery and explicit registration of namespaces was introduced
+    in Symfony 2.4.
+
+Consider an XML below:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <entry
+      xmlns="http://www.w3.org/2005/Atom"
+      xmlns:media="http://search.yahoo.com/mrss/"
+      xmlns:yt="http://gdata.youtube.com/schemas/2007">
+        <id>tag:youtube.com,2008:video:kgZRZmEc9j4</id>
+        <yt:accessControl action="comment" permission="allowed"/>
+        <yt:accessControl action="videoRespond" permission="moderated"/>
+        <media:group>
+            <media:title type="plain">Chordates - CrashCourse Biology #24</media:title>
+            <yt:aspectRatio>widescreen</yt:aspectRatio>
+        </media:group>
+    </entry>
+
+It can be filtered with ``DomCrawler`` without a need to register namespace
+aliases both with :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath`::
+
+    $crawler = $crawler->filterXPath('//default:entry/media:group//yt:aspectRatio');
+
+and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
+
+    use Symfony\Component\CssSelector\CssSelector;
+
+    CssSelector::disableHtmlExtension();
+    $crawler = $crawler->filter('default|entry media|group yt|aspectRatio');
+
+.. note::
+
+    The default namespace is registered with a prefix "default". It can be
+    changed with the
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`.
+
+    The default namespace is removed when loading the content if it's the only
+    namespace in the document. It's done to simplify the xpath queries.
+
+Namespaces can be explicitly registered with the
+:method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace`::
+
+    $crawler->registerNamespace('m', 'http://search.yahoo.com/mrss/');
+    $crawler = $crawler->filterXPath('//m:group//yt:aspectRatio');
+
+.. caution::
+
+    To query an XML with a CSS selector, the HTML extension needs to be disabled with
+    :method:`Symfony\\Component\\CssSelector\\CssSelector::disableHtmlExtension`
+    to avoid converting the selector to lowercase.
+
 Node Traversing
 ~~~~~~~~~~~~~~~
 
