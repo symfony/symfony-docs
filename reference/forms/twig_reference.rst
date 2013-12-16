@@ -295,6 +295,9 @@ object:
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
+.. versionadded:: 2.4
+    The ``submitted`` variable was added in Symfony 2.4.
+
 +-----------------+-----------------------------------------------------------------------------------------+
 | Variable        | Usage                                                                                   |
 +=================+=========================================================================================+
@@ -309,6 +312,8 @@ object:
 |                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
 |                 | since this only returns "global" errors: some individual fields may have errors         |
 |                 | Instead, use the ``valid`` option                                                       |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``submitted``   | Returns ``true`` or ``false`` depending on whether the whole form is submitted          |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``valid``       | Returns ``true`` or ``false`` depending on whether the whole form is valid              |
 +-----------------+-----------------------------------------------------------------------------------------+

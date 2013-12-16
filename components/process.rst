@@ -36,14 +36,19 @@ a command in a sub-process::
 The component takes care of the subtle differences between the different platforms
 when executing the command.
 
-.. versionadded:: 2.2
-    The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods were added in Symfony 2.2.
-
 The ``getOutput()`` method always return the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
+
+.. versionadded:: 2.4
+    The ``flushOutput()`` and ``flushErrorOutput()`` methods were added in Symfony 2.4.
+
+The :method:`Symfony\\Component\\Process\\Process::flushOutput` method flushes
+the contents of the output and
+:method:`Symfony\\Component\\Process\\Process::flushErrorOutput` flushes
+the contents of the error output.
 
 Getting real-time Process Output
 --------------------------------
@@ -63,9 +68,6 @@ anonymous function to the
             echo 'OUT > '.$buffer;
         }
     });
-
-.. versionadded:: 2.1
-    The non-blocking feature was added in 2.1.
 
 Running Processes Asynchronously
 --------------------------------
@@ -209,6 +211,25 @@ check regularly::
     }
 
 .. _reference-process-signal:
+
+Process Idle Timeout
+--------------------
+
+.. versionadded:: 2.4
+   The :method:`Symfony\\Component\\Process\\Process::setIdleTimeout` method was added in Symfony 2.4.
+   
+In contrast to the timeout of the previous paragraph, the idle timeout only
+considers the time since the last output was produced by the process::
+
+   use Symfony\Component\Process\Process;
+   
+   $process = new Process('something-with-variable-runtime');
+   $process->setTimeout(3600);
+   $process->setIdleTimeout(60);
+   $process->run();
+   
+In the case above, a process is considered timed out, when either the total runtime
+exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 
 Process Signals
 ---------------

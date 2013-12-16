@@ -417,9 +417,12 @@ and set a new ``Exception`` object, or do nothing::
 
         return new Response(
             'Error',
-            404 // ignored,
-            array('X-Status-Code' => 200)
+            Response::HTTP_NOT_FOUND, // ignored
+            array('X-Status-Code' => Response::HTTP_OK)
         );
+
+    .. versionadded:: 2.4
+        Support for HTTP status code constants was added in Symfony 2.4.
 
 .. seealso::
 

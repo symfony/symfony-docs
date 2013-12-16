@@ -57,6 +57,13 @@
   * :doc:`/components/event_dispatcher/generic_event`
   * :doc:`/components/event_dispatcher/immutable_dispatcher`
 
+* :doc:`/components/expression_language/index`
+
+  * :doc:`/components/expression_language/introduction`
+  * :doc:`/components/expression_language/syntax`
+  * :doc:`/components/expression_language/extending`
+  * :doc:`/components/expression_language/caching`
+
 * **Filesystem**
 
   * :doc:`/components/filesystem`

@@ -78,6 +78,10 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * (service container) :doc:`/cookbook/service_container/event_listener`
 
+* :doc:`/cookbook/expression/index`
+
+  * :doc:`/cookbook/expression/expressions`
+
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/form_customization`
@@ -150,6 +154,7 @@
   * :doc:`/cookbook/session/locale_sticky_session`
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
+  * :doc:`/cookbook/session/limit_metadata_writes`
 
 * **symfony1**
 

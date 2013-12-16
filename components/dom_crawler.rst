@@ -340,6 +340,9 @@ and uploading files::
     // even fake a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');
 
+Using the Form Data
+...................
+
 What's the point of doing all of this? If you're testing internally, you
 can grab the information off of your form as if it had just been submitted
 by using the PHP values::
@@ -374,6 +377,27 @@ directly::
 
     // submit that form
     $crawler = $client->submit($form);
+
+.. _components-dom-crawler-invalid:
+
+Selecting Invalid Choice Values
+...............................
+
+.. versionadded:: 2.4
+    The :method:`Symfony\\Component\\DomCrawler\\Form::disableValidation`
+    method was added in Symfony 2.4.
+
+By default, choice fields (select, radio) have internal validation activated
+to prevent you from setting invalid values. If you want to be able to set
+invalid values, you can use the  ``disableValidation()`` method on either
+the whole form or specific field(s)::
+
+    // Disable validation for a specific field
+    $form['country']->disableValidation()->select('Invalid value');
+
+    // Disable validation for the whole form
+    $form->disableValidation();
+    $form['country']->select('Invalid value');
 
 .. _`Goutte`:  https://github.com/fabpot/goutte
 .. _Packagist: https://packagist.org/packages/symfony/dom-crawler

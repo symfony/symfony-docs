@@ -88,11 +88,6 @@ Loader too. The default loaders are:
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
   catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml/introduction>`).
 
-.. versionadded:: 2.1
-    The ``IcuDatFileLoader``, ``IcuResFileLoader``, ``IniFileLoader``,
-    ``MofileLoader``, ``PoFileLoader`` and ``QtFileLoader`` were added in
-    Symfony 2.1
-
 All file loaders require the :doc:`Config component </components/config/index>`.
 
 At first, you should add one or more loaders to the ``Translator``::
