@@ -138,6 +138,9 @@ and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
     changed with the
     :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`.
 
+    The default namespace is removed when loading the content if it's the only
+    namespace in the document. It's done to simplify the xpath queries.
+
 Namespaces can be explicitly registered with the
 :method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace`::
 
