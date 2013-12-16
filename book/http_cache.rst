@@ -301,9 +301,9 @@ The ``Cache-Control`` header is unique in that it contains not one, but various
 pieces of information about the cacheability of a response. Each piece of
 information is separated by a comma:
 
-     Cache-Control: private, max-age=0, must-revalidate
+    Cache-Control: private, max-age=0, must-revalidate
 
-     Cache-Control: max-age=3600, must-revalidate
+    Cache-Control: max-age=3600, must-revalidate
 
 Symfony provides an abstraction around the ``Cache-Control`` header to make
 its creation more manageable::
@@ -662,7 +662,7 @@ exposing a simple and efficient pattern::
         // a database or a key-value store for instance)
         $article = ...;
 
-        // create a Response with a ETag and/or a Last-Modified header
+        // create a Response with an ETag and/or a Last-Modified header
         $response = new Response();
         $response->setETag($article->computeETag());
         $response->setLastModified($article->getPublishedAt());
@@ -674,17 +674,17 @@ exposing a simple and efficient pattern::
         if ($response->isNotModified($this->getRequest())) {
             // return the 304 Response immediately
             return $response;
-        } else {
-            // do more work here - like retrieving more data
-            $comments = ...;
-
-            // or render a template with the $response you've already started
-            return $this->render(
-                'MyBundle:MyController:article.html.twig',
-                array('article' => $article, 'comments' => $comments),
-                $response
-            );
         }
+
+        // do more work here - like retrieving more data
+        $comments = ...;
+
+        // or render a template with the $response you've already started
+        return $this->render(
+            'MyBundle:MyController:article.html.twig',
+            array('article' => $article, 'comments' => $comments),
+            $response
+        );
     }
 
 When the ``Response`` is not modified, the ``isNotModified()`` automatically sets
@@ -715,8 +715,6 @@ version of the response for the particular URI and return them based on the
 request's ``Accept-Encoding`` value. This is done by using the ``Vary`` response
 header, which is a comma-separated list of different headers whose values
 trigger a different representation of the requested resource:
-
-.. code-block:: text
 
     Vary: Accept-Encoding, User-Agent
 
@@ -951,8 +949,9 @@ component cache will only last for 60 seconds.
 When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of
 the rest of the page. Symfony2 takes care of generating a unique URL for any
-controller reference and it is able to route them properly thanks to a
-listener that must be enabled in your configuration:
+controller reference and it is able to route them properly thanks to the
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\FragmentListener`
+that must be enabled in your configuration:
 
 .. configuration-block::
 
@@ -1058,10 +1057,10 @@ Here is how you can configure the Symfony2 reverse proxy to support the
             }
 
             $response = new Response();
-            if (!$this->getStore()->purge($request->getUri())) {
-                $response->setStatusCode(404, 'Not purged');
-            } else {
+            if ($this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(200, 'Purged');
+            } else {
+                $response->setStatusCode(404, 'Not purged');
             }
 
             return $response;
