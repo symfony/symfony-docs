@@ -301,6 +301,8 @@ The ``Cache-Control`` header is unique in that it contains not one, but various
 pieces of information about the cacheability of a response. Each piece of
 information is separated by a comma:
 
+.. code-block:: text
+
     Cache-Control: private, max-age=0, must-revalidate
 
     Cache-Control: max-age=3600, must-revalidate
@@ -715,6 +717,8 @@ version of the response for the particular URI and return them based on the
 request's ``Accept-Encoding`` value. This is done by using the ``Vary`` response
 header, which is a comma-separated list of different headers whose values
 trigger a different representation of the requested resource:
+
+.. code-block:: text
 
     Vary: Accept-Encoding, User-Agent
 
