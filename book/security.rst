@@ -1363,6 +1363,15 @@ any extra encoding. You can now calculate the hashed password either programmati
     Supported algorithms for this method depend on your PHP version.
     A full list is available calling the PHP function :phpfunction:`hash_algos`.
 
+.. caution::
+
+    The above example is not meaned for practical usage, it uses a weak hash
+    algorithm and it is only done to be able to generate the password easily. Using
+    :ref:`BCrypt <reference-security-bcrypt>` is a better option.
+
+.. versionadded:: 2.2
+    The BCrypt encoder was introduced in Symfony 2.2.
+
 If you're creating your users dynamically (and storing them in a database),
 you can use even tougher hashing algorithms and then rely on an actual password
 encoder object to help you encode passwords. For example, suppose your User
@@ -1378,7 +1387,7 @@ configure the encoder for that user:
             # ...
 
             encoders:
-                Acme\UserBundle\Entity\User: sha512
+                Acme\UserBundle\Entity\User: bcrypt
 
     .. code-block:: xml
 
@@ -1386,7 +1395,7 @@ configure the encoder for that user:
         <config>
             <!-- ... -->
 
-            <encoder class="Acme\UserBundle\Entity\User" algorithm="sha512" />
+            <encoder class="Acme\UserBundle\Entity\User" algorithm="bcrypt" />
         </config>
 
     .. code-block:: php
@@ -1395,20 +1404,17 @@ configure the encoder for that user:
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
-                'Acme\UserBundle\Entity\User' => 'sha512',
+                'Acme\UserBundle\Entity\User' => 'bcrypt',
             ),
         ));
 
-In this case, you're using the stronger ``sha512`` algorithm. Also, since
-you've simply specified the algorithm (``sha512``) as a string, the system
-will default to hashing your password 5000 times in a row and then encoding
-it as base64. In other words, the password has been greatly obfuscated so
-that the hashed password can't be decoded (i.e. you can't determine the password
-from the hashed password).
+In this case, you're using the strong ``bcrypt`` algorithm. This means that the
+password has been greatly obfuscated so that the hashed password can't be
+decoded (i.e. you can't determine the password from the hashed password).
 
 .. versionadded:: 2.2
     As of Symfony 2.2 you can also use the :ref:`PBKDF2 <reference-security-pbkdf2>`
-    and :ref:`BCrypt <reference-security-bcrypt>` password encoders.
+    password encoder.
 
 Determining the Hashed Password
 ...............................

@@ -257,9 +257,7 @@ then be checked against your User entity records in the database:
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
-                    algorithm:        sha1
-                    encode_as_base64: false
-                    iterations:       1
+                    algorithm: bcrypt
 
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
@@ -282,9 +280,7 @@ then be checked against your User entity records in the database:
         <!-- app/config/security.xml -->
         <config>
             <encoder class="Acme\UserBundle\Entity\User"
-                algorithm="sha1"
-                encode-as-base64="false"
-                iterations="1"
+                algorithm="bcrypt"
             />
 
             <role id="ROLE_ADMIN">ROLE_USER</role>
@@ -307,9 +303,7 @@ then be checked against your User entity records in the database:
         $container->loadFromExtension('security', array(
             'encoders' => array(
                 'Acme\UserBundle\Entity\User' => array(
-                    'algorithm'         => 'sha1',
-                    'encode_as_base64'  => false,
-                    'iterations'        => 1,
+                    'algorithm' => 'bcrypt',
                 ),
             ),
             'role_hierarchy' => array(
@@ -335,9 +329,9 @@ then be checked against your User entity records in the database:
             ),
         ));
 
-The ``encoders`` section associates the ``sha1`` password encoder to the entity
+The ``encoders`` section associates the ``bcrypt`` password encoder to the entity
 class. This means that Symfony will expect the password that's stored in
-the database to be encoded using this algorithm. For details on how to create
+the database to be encoded using this encoder. For details on how to create
 a new User object with a properly encoded password, see the
 :ref:`book-security-encoding-user-password` section of the security chapter.
 
