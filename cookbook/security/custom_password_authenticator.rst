@@ -1,12 +1,13 @@
 .. index::
     single: Security; Custom Password Authenticator
 
-How to create a Custom Password Authenticator
-=============================================
+How to create a Custom Form Password Authenticator
+==================================================
 
-Imagine you want to allow access to your website only between 2pm and 4pm (for
-the UTC timezone). Before Symfony 2.4, you had to create a custom token, factory,
-listener and provider.
+Imagine you want to allow access to your website only between 2pm and 4pm
+UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
+and provider. In this entry, you'll learn how to do this for a login form
+(i.e. where your user submits their username and password).
 
 The Password Authenticator
 --------------------------
@@ -14,10 +15,10 @@ The Password Authenticator
 .. versionadded:: 2.4
     The ``SimpleFormAuthenticatorInterface`` interface was added in Symfony 2.4.
 
-But now, thanks to new simplified authentication customization options in
-Symfony 2.4, you don't need to create a whole bunch of new classes, but use the
-:class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`
-interface instead::
+First, create a new class that implements
+:class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
+Eventually, this will allow you to create custom logic for authenticating
+the user::
 
     // src/Acme/HelloBundle/Security/TimeAuthenticator.php
     namespace Acme\HelloBundle\Security;
@@ -90,18 +91,43 @@ interface instead::
 How it Works
 ------------
 
-There are a lot of things going on:
+Great! Now you just need to setup some :ref:`cookbook-security-password-authenticator-config`.
+But first, you can find out more about what each method in this class does.
 
-* ``createToken()`` creates a Token that will be used to authenticate the user;
-* ``authenticateToken()`` checks that the Token is allowed to log in by first
-  getting the User via the user provider and then, by checking the password
-  and the current time (a Token with roles is authenticated);
-* ``supportsToken()`` is just a way to allow several authentication mechanisms to
-  be used for the same firewall (that way, you can for instance first try to
-  authenticate the user via a certificate or an API key and fall back to a
-  form login);
-* An encoder is needed to check the user password's validity; this is a
-  service provided by default::
+1) createToken
+~~~~~~~~~~~~~~
+
+When Symfony begins handling a request, ``createToken`` is called, where
+you create a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
+object that contains whatever information you need in ``authenticateToken``
+to authenticate the user (e.g. the username and password).
+
+Whatever token object you create here will be passed to you later in ``authenticateToken``.
+
+2) supportsToken
+~~~~~~~~~~~~~~~~
+
+.. include:: _supportsToken.rst.inc
+
+3) authenticateToken
+~~~~~~~~~~~~~~~~~~~~
+
+If ``supportsToken`` returns ``true``, Symfony will now call ``authenticateToken``.
+Your job here is to checks that the token is allowed to log in by first
+getting the User object via the user provider and then, by checking the password
+and the current time.
+
+.. note::
+
+    The "flow" of how you get the User object and determine whether or not
+    the token is valid (e.g. checking the password), may vary based on your
+    requirements.
+
+Ultimately, your job is to return a *new* token object that is "authenticated"
+(i.e. it has at least 1 role set on it) and which has the User object inside
+of it.
+
+Inside this method, an encoder is needed to check the password's validity::
 
         $encoder = $this->encoderFactory->getEncoder($user);
         $passwordValid = $encoder->isPasswordValid(
@@ -109,6 +135,12 @@ There are a lot of things going on:
             $token->getCredentials(),
             $user->getSalt()
         );
+
+This is a service that is already available in Symfony and the password algorithm
+is configured in ``security.yml`` under the ``encoders`` key. Below, you'll
+see how to inject that into the ``TimeAuthenticator``.
+
+.. _cookbook-security-password-authenticator-config:
 
 Configuration
 -------------
@@ -125,7 +157,7 @@ Now, configure your ``TimeAuthenticator`` as a service:
 
             time_authenticator:
                 class:     Acme\HelloBundle\Security\TimeAuthenticator
-                arguments: [@security.encoder_factory]
+                arguments: ["@security.encoder_factory"]
 
     .. code-block:: xml
 
@@ -159,8 +191,8 @@ Now, configure your ``TimeAuthenticator`` as a service:
             array(new Reference('security.encoder_factory'))
         ));
 
-Then, activate it in your ``firewalls`` section using the ``simple-form`` key
-like this:
+Then, activate it in the ``firewalls`` section of ``security.yml`` using
+the ``simple_form`` key:
 
 .. configuration-block::
 
@@ -173,9 +205,8 @@ like this:
             firewalls:
                 secured_area:
                     pattern: ^/admin
-                    provider: authenticator
-                    simple-form:
-                        provider:      ...
+                    # ...
+                    simple_form:
                         authenticator: time_authenticator
                         check_path:    login_check
                         login_path:    login
@@ -194,7 +225,7 @@ like this:
 
                 <firewall name="secured_area"
                     pattern="^/admin"
-                    provider="authenticator">
+                    >
                     <simple-form authenticator="time_authenticator"
                         check-path="login_check"
                         login-path="login"
@@ -213,8 +244,7 @@ like this:
             'firewalls' => array(
                 'secured_area'    => array(
                     'pattern'     => '^/admin',
-                    'provider'    => 'authenticator',
-                    'simple-form' => array(
+                    'simple_form' => array(
                         'provider'      => ...,
                         'authenticator' => 'time_authenticator',
                         'check_path'    => 'login_check',
@@ -223,3 +253,10 @@ like this:
                 ),
             ),
         ));
+
+The ``simple_form`` key has the same options as the normal ``form_login``
+option, but with the additional ``authenticator`` key that points to the
+new service. For details, see :ref:`reference-security-firewall-form-login`.
+
+If creating a login form in general is new to you or you don't understand
+the ``check_path`` or ``login_path`` options, see :doc:`/cookbook/security/form_login`.
