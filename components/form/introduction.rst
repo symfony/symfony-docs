@@ -70,11 +70,19 @@ Request Handling
     The ``handleRequest()`` method was added in Symfony 2.3.
 
 To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
-method.
+method::
 
-To optionally integrate the HttpFoundation component, add the
-:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
-to your form factory::
+    $form->handleRequest();
+
+Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
+object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
+``$_GET``) based on the HTTP method configured on the form (POST is default).
+
+.. sidebar:: Integration with the HttpFoundation Component
+
+    If you use the HttpFoundation component, then you should add the
+    :class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
+    to your form factory::
 
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
@@ -83,13 +91,15 @@ to your form factory::
         ->addExtension(new HttpFoundationExtension())
         ->getFormFactory();
 
-Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
-object to :method:`Symfony\\Component\\Form\\Form::handleRequest`.
+        Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
+        object to :method:`Symfony\\Component\\Form\\Form::handleRequest`::
 
-.. note::
+            $form->handleRequest($request);
 
-    For more information about the HttpFoundation component or how to
-    install it, see :doc:`/components/http_foundation/introduction`.
+    .. note::
+
+        For more information about the HttpFoundation component or how to
+        install it, see :doc:`/components/http_foundation/introduction`.
 
 CSRF Protection
 ~~~~~~~~~~~~~~~
