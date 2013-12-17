@@ -23,12 +23,19 @@ done by activating the ``switch_user`` firewall listener:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <!-- ... -->
-                <switch-user />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <config>
+                <firewall>
+                    <!-- ... -->
+                    <switch-user />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -99,12 +106,19 @@ setting:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <!-- ... -->
-                <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user" />
-            </firewall>
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <config>
+                <firewall>
+                    <!-- ... -->
+                    <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
