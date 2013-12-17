@@ -1,16 +1,16 @@
 .. index::
    single: Routing; Redirect using Framework:RedirectController
 
-How to Configure a Redirect Without a Custom Controller
+How to Configure a Redirect without a Custom Controller
 =======================================================
 
 Sometimes, a URL needs to redirect to another URL. You can do that by creating
-a new controller action which only task is to redirect, but using the
+a new controller action whose only task is to redirect, but using the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController` of
-the FrameworkBundle, it's a lot easier.
+the FrameworkBundle is even easier.
 
 You can redirect to a specific path (e.g. ``/about``) or to a specific route
-using it's name (e.g. ``homepage``).
+using its name (e.g. ``homepage``).
 
 Redirecting Using a Path
 ------------------------
@@ -26,7 +26,7 @@ action to redirect to this new url:
 
         # app/config/routing.yml
 
-        # loading the App controllers
+        # load some routes - one should ultimately have the path "/app"
         AppBundle:
             resource: "@AcmeAppBundle/Controller/"
             type:     annotation
@@ -49,7 +49,7 @@ action to redirect to this new url:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <!-- loading the App controllers -->
+            <!-- load some routes - one should ultimately have the path "/app" -->
             <import resource="@AcmeAppBundle/Controller/"
                 type="annotation"
                 prefix="/app"
@@ -71,7 +71,7 @@ action to redirect to this new url:
 
         $collection = new RouteCollection();
 
-        // loading the App controllers
+        // load some routes - one should ultimately have the path "/app"
         $acmeApp = $loader->import(
             "@AcmeAppBundle/Controller/",
             "annotation"
@@ -90,9 +90,9 @@ action to redirect to this new url:
         return $collection;
 
 In this example, you configured a route for the ``/`` path and let the
-``RedirectController`` handle it to redirect it to ``/app``. The ``permanent``
-switch tells the action to issue a ``301`` HTTP status code instead of the
-default ``302`` HTTP status code.
+``RedirectController`` redirect it to ``/app``. The ``permanent`` switch
+tells the action to issue a ``301`` HTTP status code instead of the default
+``302`` HTTP status code.
 
 Redirecting Using a Route
 -------------------------
