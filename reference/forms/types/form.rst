@@ -13,6 +13,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
+.. include:: /reference/forms/types/options/data_class.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
