@@ -169,6 +169,7 @@ marked as ``synchronized``:
         );
         $definition->setScope('client');
         $definition->setSynchronized(true);
+        $definition->setSynthetic(true);
         $container->setDefinition('client_configuration', $definition);
 
 Now, if you inject this service using setter injection, there are no drawbacks
