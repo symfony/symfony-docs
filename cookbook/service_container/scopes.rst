@@ -134,6 +134,7 @@ marked as ``synchronized``:
                 class:        Acme\HelloBundle\Client\ClientConfiguration
                 scope:        client
                 synchronized: true
+                synthetic:    true
                 # ...
 
     .. code-block:: xml
@@ -151,6 +152,7 @@ marked as ``synchronized``:
                     id="client_configuration"
                     scope="client"
                     synchronized="true"
+                    synthetic="true"
                     class="Acme\HelloBundle\Client\ClientConfiguration"
                 />
             </services>
@@ -196,9 +198,9 @@ and everything works without any special code in your service or in your definit
         }
     }
 
-Whenever the ``client`` scope is entered or left, the service container will
-automatically call the ``setClientConfiguration()`` method with the current
-``client_configuration`` instance.
+Whenever the ``client`` scope is active, the service container will
+automatically call the ``setClientConfiguration()`` method when the
+``client_configuration`` service is set in the container.
 
 You might have noticed that the ``setClientConfiguration()`` method accepts
 ``null`` as a valid value for the ``client_configuration`` argument. That's
