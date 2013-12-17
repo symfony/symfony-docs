@@ -95,7 +95,7 @@ To remove a node the anonymous function must return false.
     All filter methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
     instance with filtered content.
 
-Both :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
+Both the :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
 :method:`Symfony\\Component\\DomCrawler\\Crawler::filter` methods work with
 XML namespaces, which can be either automatically discovered or registered
 explicitly.
@@ -104,7 +104,7 @@ explicitly.
     Auto discovery and explicit registration of namespaces was introduced
     in Symfony 2.4.
 
-Consider an XML below:
+Consider the XML below:
 
     <?xml version="1.0" encoding="UTF-8"?>
     <entry
@@ -120,7 +120,7 @@ Consider an XML below:
         </media:group>
     </entry>
 
-It can be filtered with ``DomCrawler`` without a need to register namespace
+This can be filtered with the  ``Crawler`` without needing to register namespace
 aliases both with :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath`::
 
     $crawler = $crawler->filterXPath('//default:entry/media:group//yt:aspectRatio');
@@ -136,21 +136,22 @@ and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
 
     The default namespace is registered with a prefix "default". It can be
     changed with the
-    :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`.
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`
+    method.
 
     The default namespace is removed when loading the content if it's the only
     namespace in the document. It's done to simplify the xpath queries.
 
 Namespaces can be explicitly registered with the
-:method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace`::
+:method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace` method::
 
     $crawler->registerNamespace('m', 'http://search.yahoo.com/mrss/');
     $crawler = $crawler->filterXPath('//m:group//yt:aspectRatio');
 
 .. caution::
 
-    To query an XML with a CSS selector, the HTML extension needs to be disabled with
-    :method:`Symfony\\Component\\CssSelector\\CssSelector::disableHtmlExtension`
+    To query XML with a CSS selector, the HTML extension needs to be disabled with
+    :method:`CssSelector::disableHtmlExtension <Symfony\\Component\\CssSelector\\CssSelector::disableHtmlExtension>`
     to avoid converting the selector to lowercase.
 
 Node Traversing
