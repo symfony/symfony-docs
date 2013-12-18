@@ -1072,7 +1072,7 @@ Now, change the ``User`` class to implement
 add the
 :method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
 which should return an array of groups to use. Also, add the
-``@Assert\GroupSequenceProvider`` annotation to the class. If you imagine
+``@Assert\GroupSequenceProvider`` annotation to the class (or ``group_sequence_provider: true`` to the YAML). If you imagine
 that a method called ``isPremium`` returns true if the user is a premium member,
 then your code might look like this::
 
