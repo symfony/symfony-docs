@@ -7,12 +7,7 @@ Symfony2 test suite to check that you have not broken anything.
 PHPUnit
 -------
 
-To run the Symfony2 test suite, `install`_ PHPUnit 3.7.28 or later first:
-
-.. code-block:: bash
-
-    $ pear config-set auto_discover 1
-    $ pear install pear.phpunit.de/PHPUnit
+To run the Symfony2 test suite, `install PHPUnit`_ 3.7 (or later) first.
 
 Dependencies (optional)
 -----------------------
@@ -115,5 +110,5 @@ browser.
     The code coverage only works if you have Xdebug enabled and all
     dependencies installed.
 
-.. _install: http://www.phpunit.de/manual/current/en/installation.html
+.. _install PHPUnit: http://www.phpunit.de/manual/current/en/installation.html
 .. _`Composer`: http://getcomposer.org/
