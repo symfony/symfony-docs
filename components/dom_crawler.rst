@@ -106,11 +106,14 @@ explicitly.
 
 Consider the XML below:
 
+.. code-block:: xml
+
     <?xml version="1.0" encoding="UTF-8"?>
     <entry
-      xmlns="http://www.w3.org/2005/Atom"
-      xmlns:media="http://search.yahoo.com/mrss/"
-      xmlns:yt="http://gdata.youtube.com/schemas/2007">
+        xmlns="http://www.w3.org/2005/Atom"
+        xmlns:media="http://search.yahoo.com/mrss/"
+        xmlns:yt="http://gdata.youtube.com/schemas/2007"
+    >
         <id>tag:youtube.com,2008:video:kgZRZmEc9j4</id>
         <yt:accessControl action="comment" permission="allowed"/>
         <yt:accessControl action="videoRespond" permission="moderated"/>
