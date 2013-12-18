@@ -62,7 +62,7 @@ to a host using the ``host`` key:
             ),
         ));
 
-The ``host`` (like the ``path``) is a regular expression. In this example,
+The ``host`` (like the ``pattern``) is a regular expression. In this example,
 the firewall will only be activated if the host is equal exactly (due to
 the ``^`` and ``$`` regex characters) to the hostname ``admin.example.com``.
 If the hostname does not match this pattern, the firewall will not be activated
