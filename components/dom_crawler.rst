@@ -106,19 +106,22 @@ explicitly.
 
 Consider the XML below:
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <entry
-      xmlns="http://www.w3.org/2005/Atom"
-      xmlns:media="http://search.yahoo.com/mrss/"
-      xmlns:yt="http://gdata.youtube.com/schemas/2007">
-        <id>tag:youtube.com,2008:video:kgZRZmEc9j4</id>
-        <yt:accessControl action="comment" permission="allowed"/>
-        <yt:accessControl action="videoRespond" permission="moderated"/>
-        <media:group>
-            <media:title type="plain">Chordates - CrashCourse Biology #24</media:title>
-            <yt:aspectRatio>widescreen</yt:aspectRatio>
-        </media:group>
-    </entry>
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry
+            xmlns="http://www.w3.org/2005/Atom"
+            xmlns:media="http://search.yahoo.com/mrss/"
+            xmlns:yt="http://gdata.youtube.com/schemas/2007"
+        >
+            <id>tag:youtube.com,2008:video:kgZRZmEc9j4</id>
+            <yt:accessControl action="comment" permission="allowed"/>
+            <yt:accessControl action="videoRespond" permission="moderated"/>
+            <media:group>
+                <media:title type="plain">Chordates - CrashCourse Biology #24</media:title>
+                <yt:aspectRatio>widescreen</yt:aspectRatio>
+            </media:group>
+        </entry>
 
 This can be filtered with the  ``Crawler`` without needing to register namespace
 aliases both with :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath`::
