@@ -35,7 +35,7 @@ Registering your own namespaces
 
 You can also register your own custom namespaces. Suppose that you're using
 some third-party library that includes Twig templates that live in
-``vendor/acme/foo-project/templates``. First, register a namespace for this
+``vendor/acme/foo-bar/templates``. First, register a namespace for this
 directory:
 
 .. configuration-block::
@@ -72,7 +72,7 @@ directory:
         ));
 
 The registered namespace is called ``foo_bar``, which refers to the
-``vendor/acme/foo-project/templates`` directory. Assuming there's a file
+``vendor/acme/foo-bar/templates`` directory. Assuming there's a file
 called ``sidebar.twig`` in that directory, you can use it easily:
 
 .. code-block:: jinja
