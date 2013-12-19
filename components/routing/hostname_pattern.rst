@@ -194,8 +194,8 @@ instance, if you want to match both ``m.example.com`` and
             mobile_homepage:
                 path:     /
                 host:     "m.{domain}"
-                defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
-                requirements:
+                defaults:
+                    _controller: AcmeDemoBundle:Main:mobileHomepage
                     domain: "%domain%"
 
             homepage:
@@ -212,7 +212,7 @@ instance, if you want to match both ``m.example.com`` and
 
                 <route id="mobile_homepage" path="/" host="m.example.com">
                     <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
-                    <requirement key="domain">%domain%</requirement>
+                    <default key="domain">%domain%</requirement>
                 </route>
 
                 <route id="homepage" path="/">
@@ -228,8 +228,8 @@ instance, if you want to match both ``m.example.com`` and
             $collection = new RouteCollection();
             $collection->add('mobile_homepage', new Route('/', array(
                 '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
-            ), array(
                 'domain' => '%domain%',
+            ), array(
             ), array(), 'm.{domain}'));
 
             $collection->add('homepage', new Route('/', array(
