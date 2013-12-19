@@ -13,14 +13,15 @@ compiled/evaluated quicker.
 The Workflow
 ------------
 
-Both ``evaluate`` and ``compile`` need to do some things before each can
-provide the return values. For ``evaluate``, this overhead is even bigger.
+Both :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::evaluate`
+and ``compile()`` need to do some things before each can provide the return
+values. For ``evaluate()``, this overhead is even bigger.
 
-Both methods need to tokenize and parse the expression. This is done by the 
+Both methods need to tokenize and parse the expression. This is done by the
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
 method. It  returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`.
-Now, the ``compile`` method just returns the string conversion of this object.
-The ``evaluate`` method needs to loop through the "nodes" (pieces of an
+Now, the ``compile()`` method just returns the string conversion of this object.
+The ``evaluate()`` method needs to loop through the "nodes" (pieces of an
 expression saved in the ``ParsedExpression``) and evaluate them on the fly.
 
 To save time, the ``ExpressionLanguage`` caches the ``ParsedExpression`` so
@@ -40,14 +41,14 @@ in the object using the constructor::
 
 .. note::
 
-    The `DoctrineBridge`_ has a ParserCache implementation using the
+    The `DoctrineBridge`_ provides a Parser Cache implementation using the
     `doctrine cache library`_, which gives you caching for all sorts of cache
-    strategies, like Apc, Filesystem and Apc.
+    strategies, like Apc, Filesystem and Memcached.
 
 Using Parsed and Serialized Expressions
 ---------------------------------------
 
-Both ``evaluate`` and ``compile`` can handle ``ParsedExpression`` and
+Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 ``SerializedParsedExpression``::
 
     use Symfony\Component\ExpressionLanguage\ParsedExpression;
