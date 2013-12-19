@@ -115,7 +115,7 @@ The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify whether or not the data on the object satisfies those
 constraints. If validation fails, a non-empty list of errors
 (class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) is
-returned. Take this simple example from inside a controller:
+returned. Take this simple example from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
@@ -169,7 +169,7 @@ You could also pass the collection of errors into a template.
         return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
             'errors' => $errors,
         ));
-    } 
+    }
 
 Inside the template, you can output the list of errors exactly as needed:
 
