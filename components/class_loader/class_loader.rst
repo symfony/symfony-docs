@@ -31,7 +31,7 @@ is straightforward::
     $loader = new ClassLoader();
 
     // to enable searching the include path (eg. for PEAR packages)
-    $loader->useIncludePath(true);
+    $loader->setUseIncludePath(true);
 
     // ... register namespaces and prefixes here - see below
 
