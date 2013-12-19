@@ -196,7 +196,7 @@ instance, if you want to match both ``m.example.com`` and
                 host:     "m.{domain}"
                 defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
                 requirements:
-                    domain: "%domain%"
+                    domain: %domain%
 
             homepage:
                 path:  /
