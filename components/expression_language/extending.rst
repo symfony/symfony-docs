@@ -50,7 +50,10 @@ This method has 3 arguments:
 
     echo $language->evaluate('lowercase("HELLO")');
 
-This will print ``hello``.
+This will print ``hello``. Both the **compiler** and **evaluator** are passed
+an ``arguments`` variable as their first argument, which is equal to the
+second argument to ``evaluate()`` or ``compile()`` (e.g. the "values" when
+evaluating or the "names" if compiling).
 
 Creating a new ExpressionLanguage Class
 ---------------------------------------
