@@ -399,6 +399,13 @@ For this example, the first three methods will return ``true`` whereas the
 Now, if you try to authenticate as a user who's ``is_active`` database field
 is set to 0, you won't be allowed.
 
+.. note::
+
+    When using the ``AdvancedUserInterface``, you should also add any of
+    the properties used by these methods (like ``isActive``) to the ``serialize``
+    method. If you *don't* do this, your user may not be deserialized correctly
+    from the session on each request.
+
 The next session will focus on how to write a custom entity provider
 to authenticate a user with their username or email address.
 
