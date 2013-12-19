@@ -30,7 +30,7 @@ Step 1: Get `Composer`_
 
 .. code-block:: bash
 
-    curl -s http://getcomposer.org/installer | php
+    $ curl -s http://getcomposer.org/installer | php
 
 Make sure you download ``composer.phar`` in the same folder where
 the ``composer.json`` file is located.

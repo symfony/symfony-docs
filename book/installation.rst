@@ -44,7 +44,7 @@ have curl installed, it's as easy as:
 
 .. code-block:: bash
 
-    curl -s https://getcomposer.org/installer | php
+    $ curl -s https://getcomposer.org/installer | php
 
 .. note::
 
@@ -146,7 +146,7 @@ Step 1: Get `Composer`_ (The great new PHP packaging system)
 
 .. code-block:: bash
 
-    curl -s http://getcomposer.org/installer | php
+    $ curl -s http://getcomposer.org/installer | php
 
 Make sure you download ``composer.phar`` in the same folder where
 the ``composer.json`` file is located (this is your Symfony project
@@ -169,8 +169,8 @@ Symfony itself - into the ``vendor/`` directory.
 
     .. code-block:: bash
 
-        php installer
-        php composer.phar install
+        $ php installer
+        $ php composer.phar install
 
 .. tip::
 
