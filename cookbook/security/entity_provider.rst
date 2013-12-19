@@ -402,7 +402,7 @@ is set to 0, you won't be allowed.
 .. note::
 
     When using the ``AdvancedUserInterface``, you should also add any of
-    the properties used by these methods (like ``isActive``) to the ``serialize``
+    the properties used by these methods (like ``isActive()``) to the ``serialize()``
     method. If you *don't* do this, your user may not be deserialized correctly
     from the session on each request.
 
