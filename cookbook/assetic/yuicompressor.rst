@@ -163,5 +163,5 @@ apply this filter when debug mode is off.
     see :ref:`cookbook-assetic-apply-to`.
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
-.. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/
+.. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
 .. _`deprecation process`: http://www.yuiblog.com/blog/2012/10/16/state-of-yui-compressor/
