@@ -40,7 +40,7 @@ This method has 3 arguments:
         }
 
         return sprintf('strtolower(%s)', $str);
-    }, function ($str) {
+    }, function ($arguments, $str) {
         if (!is_string($str)) {
             return $str;
         }
@@ -75,7 +75,7 @@ Override ``registerFunctions`` to add your own functions::
                 }
 
                 return sprintf('strtolower(%s)', $str);
-            }, function ($str) {
+            }, function ($arguments, $str) {
                 if (!is_string($str)) {
                     return $str;
                 }
