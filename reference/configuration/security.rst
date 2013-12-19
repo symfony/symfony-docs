@@ -140,6 +140,7 @@ Each part will be explained in the next section.
                         default_target_path:            /
                         target_path_parameter:          _target_path
                         use_referer:                    false
+                        target_forward:                 false
 
                         # login failure redirecting options (read further below)
                         failure_path:    /foo
@@ -290,6 +291,7 @@ Redirecting after Login
 * ``default_target_path`` (type: ``string``, default: ``/``)
 * ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
 * ``use_referer`` (type: ``Boolean``, default: ``false``)
+* ``target_forward`` (type: ``Boolean``, default: ``false``)
 
 .. _reference-security-pbkdf2:
 
@@ -478,5 +480,29 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
            ),
       ));
 
+.. _reference-security-cors:
+
+CORS and Login Redirect
+-----------------------
+
+If you're using the Login Form as an API, you might need to implement
+`Cross-Origin Resource Sharing`_ mechanism to allow browsers to send XMLHttpRequests
+with users' credentials through different domain names.
+
+If you don't want the browsers to send requests to the success target path but want
+them to receive the result of a successful authentication, you can set the ``target_forward``
+option to ``true``.
+
+.. note::
+
+    If you're not using the ``target_forward`` option and refuse cross-origin requests
+    to success target, browsers will throw messages like:
+
+        XMLHttpRequest cannot load [...]. The request was redirected to [...], which is
+        disallowed for cross-origin requests that require preflight.
+
+
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
+.. _`Cross-Origin Resource Sharing`: http://www.w3.org/TR/cors/
+
