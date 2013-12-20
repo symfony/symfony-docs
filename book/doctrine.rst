@@ -1550,11 +1550,11 @@ Some notable or interesting tasks include:
 
 * ``doctrine:ensure-production-settings`` - checks to see if the current
   environment is configured efficiently for production. This should always
-  be run in the ``prod`` environment:
+  be run in the ``prod`` environment with debug mode disabled:
 
   .. code-block:: bash
 
-      $ php app/console doctrine:ensure-production-settings --env=prod
+      $ php app/console doctrine:ensure-production-settings --env=prod --no-debug
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see
