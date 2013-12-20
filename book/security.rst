@@ -677,6 +677,11 @@ see :doc:`/cookbook/security/form_login`.
     for different firewalls. But usually for most applications, having one
     main firewall is enough.
 
+    **5. Routing error pages are not covered by firewalls**
+
+    As Routing is done *before* security, Routing error pages are not covered
+    by any firewall.
+
 Authorization
 -------------
 
@@ -999,73 +1004,6 @@ the user will be redirected to ``https``:
                     'requires_channel' => 'https',
                 ),
             ),
-
-.. _book-security-securing-controller:
-
-Securing a Controller
-~~~~~~~~~~~~~~~~~~~~~
-
-Protecting your application based on URL patterns is easy, but may not be
-fine-grained enough in certain cases. When necessary, you can easily force
-authorization from inside a controller::
-
-    // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-    public function helloAction($name)
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
-        // ...
-    }
-
-.. _book-security-securing-controller-annotations:
-
-You can also choose to install and use the optional JMSSecurityExtraBundle,
-which can secure your controller using annotations::
-
-    // ...
-    use JMS\SecurityExtraBundle\Annotation\Secure;
-
-    /**
-     * @Secure(roles="ROLE_ADMIN")
-     */
-    public function helloAction($name)
-    {
-        // ...
-    }
-
-For more information, see the `JMSSecurityExtraBundle`_ documentation.
-
-Securing other Services
-~~~~~~~~~~~~~~~~~~~~~~~
-
-In fact, anything in Symfony can be protected using a strategy similar to
-the one seen in the previous section. For example, suppose you have a service
-(i.e. a PHP class) whose job is to send emails from one user to another.
-You can restrict use of this class - no matter where it's being used from -
-to users that have a specific role.
-
-For more information on how you can use the Security component to secure
-different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
-
-Access Control Lists (ACLs): Securing Individual Database Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit their own comments, but not
-those of other users. Also, as the admin user, you yourself want to be able
-to edit *all* comments.
-
-The Security component comes with an optional access control list (ACL) system
-that you can use when you need to control access to individual instances
-of an object in your system. *Without* ACL, you can secure your system so that
-only certain users can edit blog comments in general. But *with* ACL, you
-can restrict or allow access on a comment-by-comment basis.
-
-For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
 
 Users
 -----
@@ -1658,6 +1596,111 @@ In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
 
+Access Control
+--------------
+
+Now that you have Users and Roles, you can go further than URL patterns based authorization.
+
+.. _book-security-securing-controller:
+
+Access Control in Controllers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Protecting your application based on URL patterns is easy, but may not be
+fine-grained enough in certain cases. When necessary, you can easily force
+authorization from inside a controller::
+
+    // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    public function helloAction($name)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        // ...
+    }
+
+.. caution::
+
+    A firewall must be active or an exception will be thrown when the ``isGranted()``
+    method is called. It's almost always a good idea to have a main firewall that
+    covers all URLs (as it has been shown in this chapter).
+
+.. _book-security-securing-controller-annotations:
+
+You can also choose to install and use the optional `JMSSecurityExtraBundle`_,
+which can secure your controller using annotations::
+
+    // ...
+    use JMS\SecurityExtraBundle\Annotation\Secure;
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function helloAction($name)
+    {
+        // ...
+    }
+
+Access Control in Other Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In fact, anything in Symfony can be protected using a strategy similar to
+the one seen in the previous section. For example, suppose you have a service
+(i.e. a PHP class) whose job is to send emails from one user to another.
+You can restrict use of this class - no matter where it's being used from -
+to users that have a specific role.
+
+For more information on how you can use the Security component to secure
+different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
+
+.. _book-security-template:
+
+Access Control in Templates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to check if the current user has a role inside a template, use
+the built-in helper function:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+.. note::
+
+    If you use this function and are *not* at a URL behind a firewall
+    active, an exception will be thrown. Again, it's almost always a good
+    idea to have a main firewall that covers all URLs (as has been shown
+    in this chapter).
+
+Access Control Lists (ACLs): Securing Individual Database Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine you are designing a blog system where your users can comment on your
+posts. Now, you want a user to be able to edit their own comments, but not
+those of other users. Also, as the admin user, you yourself want to be able
+to edit *all* comments.
+
+The Security component comes with an optional access control list (ACL) system
+that you can use when you need to control access to individual instances
+of an object in your system. *Without* ACL, you can secure your system so that
+only certain users can edit blog comments in general. But *with* ACL, you
+can restrict or allow access on a comment-by-comment basis.
+
+For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
+
 Logging Out
 -----------
 
@@ -1768,57 +1811,6 @@ Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
 :doc:`Security Configuration Reference </reference/configuration/security>`.
-
-.. _book-security-template:
-
-Access Control in Templates
----------------------------
-
-If you want to check if the current user has a role inside a template, use
-the built-in helper function:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="...">Delete</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
-            <a href="...">Delete</a>
-        <?php endif; ?>
-
-.. note::
-
-    If you use this function and are *not* at a URL where there is a firewall
-    active, an exception will be thrown. Again, it's almost always a good
-    idea to have a main firewall that covers all URLs (as has been shown
-    in this chapter).
-
-Access Control in Controllers
------------------------------
-
-If you want to check if the current user has a role in your controller, use
-the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
-method of the security context::
-
-    public function indexAction()
-    {
-        // show different content to admin users
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            // ... load admin content here
-        }
-
-        // ... load other regular content here
-    }
-
-.. note::
-
-    A firewall must be active or an exception will be thrown when the ``isGranted``
-    method is called. See the note above about templates for more details.
 
 Impersonating a User
 --------------------
