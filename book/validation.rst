@@ -117,6 +117,8 @@ constraints. If validation fails, a non-empty list of errors
 (class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) is
 returned. Take this simple example from inside a controller:
 
+.. code-block:: php
+
     // ...
     use Symfony\Component\HttpFoundation\Response;
     use Acme\BlogBundle\Entity\Author;
