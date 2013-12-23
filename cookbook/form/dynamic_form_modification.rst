@@ -78,14 +78,97 @@ system to analyze the data on the object and modify the form based on the
 Product object's data. In this entry, you'll learn how to add this level of
 flexibility to your forms.
 
+.. _`cookbook-forms-event-listener`:
+
+Adding an Event Listener to a Form Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So, instead of directly adding that ``name`` widget, the responsibility of
+creating that particular field is delegated to an event listener::
+
+    // src/Acme/DemoBundle/Form/Type/ProductType.php
+    namespace Acme\DemoBundle\Form\Type;
+
+    // ...
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
+
+    class ProductType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder->add('price');
+
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                // ... adding the name field if needed
+            });
+        }
+
+        // ...
+    }
+
+
+The goal is to create a ``name`` field *only* if the underlying ``Product``
+object is new (e.g. hasn't been persisted to the database). Based on that,
+the event listener might look like the following::
+
+    // ...
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        // ...
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
+            $product = $event->getData();
+            $form = $event->getForm();
+
+            // check if the Product object is "new"
+            // If no data is passed to the form, the data is "null".
+            // This should be considered a new "Product"
+            if (!$product || null !== $product->getId()) {
+                $form->add('name', 'text');
+            }
+        });
+    }
+
+.. versionadded:: 2.2
+    The ability to pass a string into
+    :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
+    was added in Symfony 2.2.
+
+.. note::
+    You can of course use any callback type instead of a closure, e.g. a method
+    call on the ``ProductType`` object itself for better readability::
+
+        // ...
+        class ProductType extends AbstractType
+        {
+            public function buildForm(FormBuilderInterface $builder, array $options)
+            {
+                // ...
+                $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+            }
+
+            public function onPreSetData(FormEvent $event){
+                // ...
+            }
+        }
+
+.. note::
+
+    The ``FormEvents::PRE_SET_DATA`` line actually resolves to the string
+    ``form.pre_set_data``. :class:`Symfony\\Component\\Form\\FormEvents`
+    serves an organizational purpose. It is a centralized location in which
+    you can find all of the various form events available. You can view the
+    full list of form events via the
+    :class:`Symfony\\Component\\Form\\FormEvents` class.
+
 .. _`cookbook-forms-event-subscriber`:
 
-Adding An Event Subscriber To A Form Class
+Adding an Event Subscriber to a Form Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So, instead of directly adding that "name" widget via your ``ProductType`` form
-class, let's delegate the responsibility of creating that particular field
-to an event subscriber::
+For better reusability or if there is some heavy logic in your event listener,
+you can also move the logic for creating the ``name`` field to an
+:ref:`event subscriber <event_dispatcher-using-event-subscribers:ref:>`::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
@@ -105,20 +188,8 @@ to an event subscriber::
         // ...
     }
 
-.. _`cookbook-forms-inside-subscriber-class`:
-
-Inside the Event Subscriber Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The goal is to create a "name" field *only* if the underlying Product object
-is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
-might look like the following:
-
-.. versionadded:: 2.2
-    The ability to pass a string into :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
-    was added in Symfony 2.2.
-
-.. code-block:: php
+Now the logic for creating the ``name`` field resides in it own subscriber
+class::
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace Acme\DemoBundle\Form\EventListener;
@@ -138,29 +209,15 @@ might look like the following:
 
         public function preSetData(FormEvent $event)
         {
-            $data = $event->getData();
+            $product = $event->getData();
             $form = $event->getForm();
 
-            // check if the product object is "new"
-            // If you didn't pass any data to the form, the data is "null".
-            // This should be considered a new "Product"
-            if (!$data || !$data->getId()) {
+            if (!$product || null !== $product->getId()) {
                 $form->add('name', 'text');
             }
         }
     }
 
-.. tip::
-
-    The ``FormEvents::PRE_SET_DATA`` line actually resolves to the string
-    ``form.pre_set_data``. :class:`Symfony\\Component\\Form\\FormEvents` serves
-    an organizational purpose. It is a centralized location in which you can
-    find all of the various form events available.
-
-.. note::
-
-    You can view the full list of form events via the :class:`Symfony\\Component\\Form\\FormEvents`
-    class.
 
 .. _cookbook-form-events-user-data:
 

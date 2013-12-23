@@ -254,7 +254,7 @@ has a simple API
   Adds a flash message to the stack of specified type;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::set`:
-  Sets flashes by type;  This method conveniently takes both singles messages as
+  Sets flashes by type; This method conveniently takes both singles messages as
   a ``string`` or multiple messages in an ``array``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::get`:

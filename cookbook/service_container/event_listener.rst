@@ -8,7 +8,7 @@ Symfony has various events and hooks that can be used to trigger custom
 behavior in your application. Those events are thrown by the HttpKernel
 component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class.
 
-To hook into an event and add your own custom logic, you have to  create
+To hook into an event and add your own custom logic, you have to create
 a service that will act as an event listener on that event. In this entry,
 you will create a service that will act as an Exception Listener, allowing
 you to modify how exceptions are shown by your application. The ``KernelEvents::EXCEPTION``

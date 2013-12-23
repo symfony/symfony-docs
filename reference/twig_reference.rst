@@ -191,8 +191,8 @@ Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong to the
   Twig core. You can read more in `the official Twig Extensions documentation`_;
-* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and 
-  ``{% image %}`` tags. You can read more about them in 
+* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
+  ``{% image %}`` tags. You can read more about them in
   :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
 
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

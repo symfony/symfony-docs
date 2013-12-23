@@ -44,7 +44,7 @@ have curl installed, it's as easy as:
 
 .. code-block:: bash
 
-    curl -s https://getcomposer.org/installer | php
+    $ curl -s https://getcomposer.org/installer | php
 
 .. note::
 
@@ -135,7 +135,7 @@ Updating Vendors
 
 At this point, you've downloaded a fully-functional Symfony project in which
 you'll start to develop your own application. A Symfony project depends on
-a number of external libraries. These are downloaded into the `vendor/` directory
+a number of external libraries. These are downloaded into the ``vendor/`` directory
 of your project via a library called `Composer`_.
 
 Depending on how you downloaded Symfony, you may or may not need to update
@@ -146,7 +146,7 @@ Step 1: Get `Composer`_ (The great new PHP packaging system)
 
 .. code-block:: bash
 
-    curl -s http://getcomposer.org/installer | php
+    $ curl -s http://getcomposer.org/installer | php
 
 Make sure you download ``composer.phar`` in the same folder where
 the ``composer.json`` file is located (this is your Symfony project
@@ -169,8 +169,8 @@ Symfony itself - into the ``vendor/`` directory.
 
     .. code-block:: bash
 
-        php installer
-        php composer.phar install
+        $ php installer
+        $ php composer.phar install
 
 .. tip::
 
@@ -231,7 +231,7 @@ If there are any issues, correct them now before moving on.
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data' | grep -v root | head -1 | cut -d\  -f1`
         $ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
@@ -246,7 +246,7 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data' | grep -v root | head -1 | cut -d\  -f1`
 		$ sudo setfacl -R -m u:"$APACHEUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 		$ sudo setfacl -dR -m u:"$APACHEUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 		

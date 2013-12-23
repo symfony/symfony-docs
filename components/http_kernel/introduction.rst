@@ -193,7 +193,7 @@ The only requirement is that it is a PHP callable - i.e. a function, method
 on an object, or a ``Closure``.
 
 But *how* you determine the exact controller for a request is entirely up
-to your application. This is the job of the "controller resolver" -  a class
+to your application. This is the job of the "controller resolver" - a class
 that implements :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`
 and is one of the constructor arguments to ``HttpKernel``.
 

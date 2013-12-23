@@ -335,7 +335,5 @@ need to learn a lot to become a Symfony2 master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
-.. _standards:  http://symfony.com/PSR0
-.. _convention: http://pear.php.net/
 .. _Composer:   http://getcomposer.org
 .. _`Composer-Autoloader`: http://getcomposer.org/doc/01-basic-usage.md#autoloading

@@ -125,7 +125,7 @@ instance, if you want to match both ``m.example.com`` and
         mobile_homepage:
             path:     /
             host:     "{subdomain}.example.com"
-            defaults: 
+            defaults:
                 _controller: AcmeDemoBundle:Main:mobileHomepage
                 subdomain: m
             requirements:

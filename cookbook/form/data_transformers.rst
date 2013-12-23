@@ -97,6 +97,12 @@ for converting to and from the issue number and the ``Issue`` object::
     If you want a new issue to be created when an unknown number is entered, you
     can instantiate it rather than throwing the ``TransformationFailedException``.
 
+.. note::
+
+    When ``null`` is passed to the ``transform()`` method, your transformer
+    should return an equivalent value of the type it is transforming to (e.g.
+    an empty string, 0 for integers or 0.0 for floats).
+
 Using the Transformer
 ---------------------
 

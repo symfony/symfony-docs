@@ -117,7 +117,7 @@ group_by
 
 **type**: ``string``
 
-This is a property path (e.g. ``author.name``) used to organize the 
+This is a property path (e.g. ``author.name``) used to organize the
 available choices in groups. It only works when rendered as a select tag
 and does so by adding optgroup tags around options. Choices that do not
 return a value for this property path are rendered directly under the
@@ -181,6 +181,11 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. note::
+    
+    This option expects an array of entity objects, unlike the ``choice`` field
+    that requires an array of keys.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
