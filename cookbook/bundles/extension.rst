@@ -188,12 +188,13 @@ following these simple conventions:
 * The extension must be named after the bundle name and suffixed with
   ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
 
-* The extension should provide an XSD schema.
+* The extension *should* provide an XSD schema (but will be registered automatically
+  regardless).
 
 Manually Registering an Extension Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When not following the conventions you will have to manually register your
+When not following the conventions, you will have to manually register your
 extension. To manually register an extension class override the
 :method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
 method in your bundle::
