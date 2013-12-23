@@ -485,7 +485,7 @@ Redirecting
 
 When a request returns a redirect response, the client does not follow
 it automatically. You can examine the response and force a redirection
-afterwards  with the ``followRedirect()`` method::
+afterwards with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
 
@@ -581,8 +581,7 @@ The Crawler can extract information from the nodes::
     $info = $crawler->extract(array('_text', 'href'));
 
     // Executes a lambda for each node and return an array of results
-    $data = $crawler->each(function ($node, $i)
-    {
+    $data = $crawler->each(function ($node, $i) {
         return $node->attr('href');
     });
 

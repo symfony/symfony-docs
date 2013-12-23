@@ -1076,7 +1076,7 @@ Global Template Variables
 -------------------------
 
 During each request, Symfony2 will set a global template variable ``app``
-in both Twig and PHP template engines by default.  The ``app`` variable
+in both Twig and PHP template engines by default. The ``app`` variable
 is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
@@ -1349,7 +1349,7 @@ this classic example:
 
 Imagine the user enters the following code for their name:
 
-.. code-block:: text
+.. code-block:: html
 
     <script>alert('hello!')</script>
 

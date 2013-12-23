@@ -161,5 +161,4 @@ upgrade.
 
 .. _Git repository: https://github.com/symfony/symfony
 .. _SensioLabs:     http://sensiolabs.com/
-.. _roadmap:        http://symfony.com/roadmap
 .. _`timeline calculator`: http://symfony.com/roadmap

@@ -28,7 +28,7 @@ An example configuration might look like this:
 
         <!-- app/config/config.xml -->
         <assetic:config>
-            <assetic:filter 
+            <assetic:filter
                 name="coffee"
                 bin="/usr/bin/coffee/"
                 node="/usr/bin/node/">
@@ -72,7 +72,7 @@ templates:
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>
 
-This is all that's needed to compile this CoffeeScript file and server it
+This is all that's needed to compile this CoffeeScript file and serve it
 as the compiled JavaScript.
 
 Filter Multiple Files

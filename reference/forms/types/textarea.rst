@@ -4,7 +4,7 @@
 textarea Field Type
 ===================
 
-Renders a ``textarea`` HTML element. 
+Renders a ``textarea`` HTML element.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``textarea`` tag                                                       |

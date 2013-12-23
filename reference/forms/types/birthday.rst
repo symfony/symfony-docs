@@ -24,7 +24,7 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Inherited Options    | - `widget`_                                                                   |
 |                      | - `input`_                                                                    |
-|                      | - `empty_value`_                                                              |  
+|                      | - `empty_value`_                                                              |
 |                      | - `months`_                                                                   |
 |                      | - `days`_                                                                     |
 |                      | - `format`_                                                                   |
@@ -50,7 +50,7 @@ years
 
 **type**: ``array`` **default**: 120 years ago to the current year
 
-List of years available to the year field type.  This option is only
+List of years available to the year field type. This option is only
 relevant when the ``widget`` option is set to ``choice``.
 
 Inherited options

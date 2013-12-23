@@ -7,7 +7,7 @@ Understanding how the Front Controller, Kernel and Environments work together
 
 The section :doc:`/cookbook/configuration/environments` explained the basics
 on how Symfony uses environments to run your application with different configuration
-settings. This section will explain a bit  more in-depth what happens when
+settings. This section will explain a bit more in-depth what happens when
 your application is bootstrapped. To hook into this process, you need to understand
 three parts that work together:
 

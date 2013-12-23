@@ -193,7 +193,7 @@ The only requirement is that it is a PHP callable - i.e. a function, method
 on an object, or a ``Closure``.
 
 But *how* you determine the exact controller for a request is entirely up
-to your application. This is the job of the "controller resolver" -  a class
+to your application. This is the job of the "controller resolver" - a class
 that implements :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`
 and is one of the constructor arguments to ``HttpKernel``.
 
@@ -569,21 +569,23 @@ each event has their own event object:
 
 .. _component-http-kernel-event-table:
 
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| **Name**          | ``KernelEvents`` **Constant** | **Argument passed to the listener**                                                 |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| kernel.request    | ``KernelEvents::REQUEST``     | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| kernel.controller | ``KernelEvents::CONTROLLER``  | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`               |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| kernel.view       | ``KernelEvents::VIEW``        | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent` |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| kernel.response   | ``KernelEvents::RESPONSE``    | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`                 |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| kernel.terminate  | ``KernelEvents::TERMINATE``   | :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`                   |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| kernel.exception  | ``KernelEvents::EXCEPTION``   | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`        |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| **Name**              | ``KernelEvents`` **Constant**    | **Argument passed to the listener**                                                 |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.request        | ``KernelEvents::REQUEST``        | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.controller     | ``KernelEvents::CONTROLLER``     | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`               |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.view           | ``KernelEvents::VIEW``           | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent` |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.response       | ``KernelEvents::RESPONSE``       | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`                 |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.finish_request | ``KernelEvents::FINISH_REQUEST`` | :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`                  |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.terminate      | ``KernelEvents::TERMINATE``      | :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`                   |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
+| kernel.exception      | ``KernelEvents::EXCEPTION``      | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`        |
++-----------------------+----------------------------------+-------------------------------------------------------------------------------------+
 
 .. _http-kernel-working-example:
 

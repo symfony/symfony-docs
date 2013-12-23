@@ -1360,7 +1360,7 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and  the :doc:`collection </reference/forms/types/collection>` field type reference.
+entry and the :doc:`collection </reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming

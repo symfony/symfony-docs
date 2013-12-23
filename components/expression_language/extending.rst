@@ -21,7 +21,7 @@ That means the functions can be used in any expression executed by that
 instance.
 
 To register a function, use
-:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::register``.
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::register`.
 This method has 3 arguments:
 
 * **name** - The name of the function in an expression;
@@ -40,7 +40,7 @@ This method has 3 arguments:
         }
 
         return sprintf('strtolower(%s)', $str);
-    }, function ($str) {
+    }, function ($arguments, $str) {
         if (!is_string($str)) {
             return $str;
         }
@@ -50,7 +50,10 @@ This method has 3 arguments:
 
     echo $language->evaluate('lowercase("HELLO")');
 
-This will print ``hello``.
+This will print ``hello``. Both the **compiler** and **evaluator** are passed
+an ``arguments`` variable as their first argument, which is equal to the
+second argument to ``evaluate()`` or ``compile()`` (e.g. the "values" when
+evaluating or the "names" if compiling).
 
 Creating a new ExpressionLanguage Class
 ---------------------------------------
@@ -75,7 +78,7 @@ Override ``registerFunctions`` to add your own functions::
                 }
 
                 return sprintf('strtolower(%s)', $str);
-            }, function ($str) {
+            }, function ($arguments, $str) {
                 if (!is_string($str)) {
                     return $str;
                 }

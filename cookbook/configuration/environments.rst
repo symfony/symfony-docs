@@ -55,7 +55,7 @@ multiple environments in an elegant, powerful and transparent way.
 
 Of course, in reality, each environment differs only somewhat from others.
 Generally, all environments will share a large base of common configuration.
-Opening the "dev" configuration file,  you can see how this is accomplished
+Opening the "dev" configuration file, you can see how this is accomplished
 easily and transparently:
 
 .. configuration-block::

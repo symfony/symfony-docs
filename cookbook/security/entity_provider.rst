@@ -149,6 +149,9 @@ focus on the most important methods that come from the
         {
             return serialize(array(
                 $this->id,
+                $this->username,
+                $this->salt,
+                $this->password,
             ));
         }
 
@@ -159,9 +162,19 @@ focus on the most important methods that come from the
         {
             list (
                 $this->id,
+                $this->username,
+                $this->salt,
+                $this->password,
             ) = unserialize($serialized);
         }
     }
+
+.. note::
+
+    When implementing the
+    :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
+    you determine yourself which properties need to be compared to distinguish
+    your user objects.
 
 .. tip::
 
@@ -219,7 +232,7 @@ layer is a piece of cake. Everything resides in the configuration of the
 :doc:`SecurityBundle </reference/configuration/security>` stored in the
 ``app/config/security.yml`` file.
 
-Below is an example of configuration where the user will enter their 
+Below is an example of configuration where the user will enter their
 username and password via HTTP basic authentication. That information will
 then be checked against your User entity records in the database:
 
@@ -358,7 +371,7 @@ For this example, the first three methods will return ``true`` whereas the
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-    class User implements AdvancedUserInterface, \Serializable 
+    class User implements AdvancedUserInterface, \Serializable
     {
         // ...
 
@@ -386,7 +399,14 @@ For this example, the first three methods will return ``true`` whereas the
 Now, if you try to authenticate as a user who's ``is_active`` database field
 is set to 0, you won't be allowed.
 
-The next session will focus on how to write a custom entity provider 
+.. note::
+
+    When using the ``AdvancedUserInterface``, you should also add any of
+    the properties used by these methods (like ``isActive()``) to the ``serialize()``
+    method. If you *don't* do this, your user may not be deserialized correctly
+    from the session on each request.
+
+The next session will focus on how to write a custom entity provider
 to authenticate a user with their username or email address.
 
 Authenticating Someone with a Custom Entity Provider
@@ -552,7 +572,7 @@ methods have changed::
     class User implements AdvancedUserInterface, \Serializable
     {
         // ...
-        
+
         /**
          * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
          *
@@ -568,7 +588,7 @@ methods have changed::
         {
             return $this->roles->toArray();
         }
-        
+
         // ...
 
     }
@@ -625,7 +645,7 @@ of the application::
         {
             return $this->role;
         }
-        
+
         // ... getters and setters for each property
     }
 
@@ -640,7 +660,7 @@ Don't forget also to update your database schema:
 
 .. code-block:: bash
 
-    php app/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
 This will create the ``acme_role`` table and a ``user_role`` that stores
 the many-to-many relationship between ``acme_user`` and ``acme_role``. If

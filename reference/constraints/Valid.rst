@@ -34,7 +34,7 @@ an ``Address`` instance in the ``$address`` property.
 .. code-block:: php
 
     // src/Acme/HelloBundle/Entity/Author.php
-    namespace Amce\HelloBundle\Entity;
+    namespace Acme\HelloBundle\Entity;
 
     class Author
     {

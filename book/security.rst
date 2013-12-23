@@ -902,7 +902,7 @@ the trusted reverse proxy cache.
     does not restrict to a specific IP address. Instead, using the ``ip``
     key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down
-    the ``acces_control`` list.
+    the ``access_control`` list.
 
 Here is an example of how you might secure all ESI routes that start with a
 given prefix, ``/esi``, from outside access:
@@ -1589,59 +1589,6 @@ Now, all authentication mechanisms will use the ``chain_provider``, since
 it's the first specified. The ``chain_provider`` will, in turn, try to load
 the user from both the ``in_memory`` and ``user_db`` providers.
 
-.. tip::
-
-    If you have no reasons to separate your ``in_memory`` users from your
-    ``user_db`` users, you can accomplish this even more easily by combining
-    the two sources into a single provider:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/security.yml
-            security:
-                providers:
-                    main_provider:
-                        memory:
-                            users:
-                                foo: { password: test }
-                        entity:
-                            class: Acme\UserBundle\Entity\User,
-                            property: username
-
-        .. code-block:: xml
-
-            <!-- app/config/security.xml -->
-            <config>
-                <provider name=="main_provider">
-                    <memory>
-                        <user name="foo" password="test" />
-                    </memory>
-
-                    <entity class="Acme\UserBundle\Entity\User"
-                        property="username" />
-                </provider>
-            </config>
-
-        .. code-block:: php
-
-            // app/config/security.php
-            $container->loadFromExtension('security', array(
-                'providers' => array(
-                    'main_provider' => array(
-                        'memory' => array(
-                            'users' => array(
-                                'foo' => array('password' => 'test'),
-                            ),
-                        ),
-                        'entity' => array(
-                        'class' => 'Acme\UserBundle\Entity\User',
-                        'property' => 'username'),
-                    ),
-                ),
-            ));
-
 You can also configure the firewall or individual authentication mechanisms
 to use a specific provider. Again, unless a provider is specified explicitly,
 the first provider is always used:
@@ -1702,7 +1649,7 @@ Roles
 
 The idea of a "role" is key to the authorization process. Each user is assigned
 a set of roles and then each resource requires one or more roles. If the user
-has the required roles, access is granted. Otherwise access is denied.
+has any one of the required roles, access is granted. Otherwise access is denied.
 
 Roles are pretty simple, and are basically strings that you can invent and
 use as needed (though roles are objects internally). For example, if you

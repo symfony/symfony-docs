@@ -442,7 +442,7 @@ EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``EventDispatcher`` always injects a reference to itself in the passed event
-object.  This means that all listeners have direct access to the
+object. This means that all listeners have direct access to the
 ``EventDispatcher`` object that notified the listener via the passed ``Event``
 object's :method:`Symfony\\Component\\EventDispatcher\\Event::getDispatcher`
 method.
@@ -489,7 +489,7 @@ Dispatching another event from within a listener::
 
 While this above is sufficient for most uses, if your application uses multiple
 ``EventDispatcher`` instances, you might need to specifically inject a known
-instance of the ``EventDispatcher`` into your listeners.  This could be done
+instance of the ``EventDispatcher`` into your listeners. This could be done
 using constructor or setter injection as follows:
 
 Constructor injection::
