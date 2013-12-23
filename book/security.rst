@@ -1702,7 +1702,7 @@ Roles
 
 The idea of a "role" is key to the authorization process. Each user is assigned
 a set of roles and then each resource requires one or more roles. If the user
-has the required roles, access is granted. Otherwise access is denied.
+has any one of the required roles, access is granted. Otherwise access is denied.
 
 Roles are pretty simple, and are basically strings that you can invent and
 use as needed (though roles are objects internally). For example, if you
