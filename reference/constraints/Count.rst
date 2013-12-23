@@ -68,9 +68,9 @@ you might add the following:
 
             <class name="Acme\EventBundle\Entity\Participant">
                 <property name="emails">
-                    <constraint name="Count">       
-                        <option name="min">1</option> 
-                        <option name="max">5</option> 
+                    <constraint name="Count">
+                        <option name="min">1</option>
+                        <option name="max">5</option>
                         <option name="minMessage">You must specify at least one email</option>
                         <option name="maxMessage">You cannot specify more than {{ limit }} emails</option>
                     </constraint>
@@ -137,5 +137,5 @@ exactMessage
 
 **type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
-The message that will be shown if min and max values are equal and the underlying collection elements 
+The message that will be shown if min and max values are equal and the underlying collection elements
 count is not exactly this value.

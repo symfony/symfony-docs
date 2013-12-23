@@ -260,8 +260,8 @@ Restrict files by last modified dates with the
 
     $finder->date('since yesterday');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='. You can also use ``since`` or ``after`` as an alias for ``>``, and
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
 ``until`` or ``before`` as an alias for ``<``.
 
 The target value can be any date supported by the `strtotime`_ function.

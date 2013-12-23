@@ -134,7 +134,7 @@ Creating the Database Tables/Schema
 Now you have a usable ``Product`` class and all you need to persist it. Of
 course, you don't yet have the corresponding ``product`` table in your
 database. Fortunately, Propel can automatically create all the database tables
-needed for every known model in your application.  To do this, run:
+needed for every known model in your application. To do this, run:
 
 .. code-block:: bash
 
@@ -153,7 +153,7 @@ Persisting Objects to the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that you have a ``Product`` object and corresponding ``product`` table,
-you're ready to persist data to the database.  From inside a controller, this
+you're ready to persist data to the database. From inside a controller, this
 is pretty easy. Add the following method to the ``DefaultController`` of the
 bundle::
 
@@ -406,7 +406,7 @@ Fetching Related Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you need to fetch associated objects, your workflow looks just like it did
-before.  First, fetch a ``$product`` object and then access its related
+before. First, fetch a ``$product`` object and then access its related
 ``Category``::
 
     // ...
@@ -435,7 +435,7 @@ Lifecycle Callbacks
 -------------------
 
 Sometimes, you need to perform an action right before or after an object is
-inserted, updated, or deleted.  These types of actions are known as "lifecycle"
+inserted, updated, or deleted. These types of actions are known as "lifecycle"
 callbacks or "hooks", as they're callback methods that you need to execute
 during different stages of the lifecycle of an object (e.g. the object is
 inserted, updated, deleted, etc).

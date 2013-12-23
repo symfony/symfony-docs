@@ -192,7 +192,7 @@ validator::
     }
 
 As mentioned above, Symfony2 will automatically look for a class named after
-the constraint, with ``Validator`` appended.  If your constraint validator
+the constraint, with ``Validator`` appended. If your constraint validator
 is defined as a service, it's important that you override the
 ``validatedBy()`` method to return the alias used when defining your service,
 otherwise Symfony2 won't use the constraint validator service, and will

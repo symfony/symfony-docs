@@ -14,7 +14,7 @@ Environment Variables
 ---------------------
 
 Symfony will grab any environment variable prefixed with ``SYMFONY__`` and
-set it as a parameter in the service container.  Double underscores are replaced
+set it as a parameter in the service container. Double underscores are replaced
 with a period, as a period is not a valid character in an environment variable
 name.
 
@@ -39,7 +39,7 @@ the following ``VirtualHost`` configuration:
 .. note::
 
     The example above is for an Apache configuration, using the `SetEnv`_
-    directive.  However, this will work for any web server which supports
+    directive. However, this will work for any web server which supports
     the setting of environment variables.
 
     Also, in order for your console to work (which does not use Apache),

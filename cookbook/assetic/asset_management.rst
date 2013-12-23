@@ -255,7 +255,7 @@ In fact, Assetic has a long list of available filters.
 
 Many of the filters do not do the work directly, but use existing third-party
 libraries to do the heavy-lifting. This means that you'll often need to install
-a third-party library to use a filter.  The great advantage of using Assetic
+a third-party library to use a filter. The great advantage of using Assetic
 to invoke these libraries (as opposed to using them directly) is that instead
 of having to run them manually after you work on the files, Assetic will
 take care of this for you and remove this step altogether from your development

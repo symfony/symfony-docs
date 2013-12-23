@@ -478,7 +478,7 @@ Redirecting
 
 When a request returns a redirect response, the client does not follow
 it automatically. You can examine the response and force a redirection
-afterwards  with the ``followRedirect()`` method::
+afterwards with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
 

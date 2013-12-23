@@ -250,7 +250,7 @@ Constants as Parameters
 -----------------------
 
 The container also has support for setting PHP constants as parameters. To
-take advantage of this feature, map the name of your constant  to a parameter
+take advantage of this feature, map the name of your constant to a parameter
 key, and define the type as ``constant``.
 
 .. configuration-block::

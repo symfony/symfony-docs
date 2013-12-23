@@ -491,7 +491,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
             ),
         ));
 
-Congratulations!  You have written your very own custom security authentication
+Congratulations! You have written your very own custom security authentication
 provider!
 
 A Little Extra

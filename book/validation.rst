@@ -169,7 +169,7 @@ You could also pass the collection of errors into a template.
         return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
             'errors' => $errors,
         ));
-    } 
+    }
 
 Inside the template, you can output the list of errors exactly as needed:
 

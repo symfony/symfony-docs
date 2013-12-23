@@ -267,7 +267,7 @@ And its template:
     {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
     {{ form(form) }}
 
-Next, create the controller which handles the form submission.  This performs
+Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database::
 
     public function createAction(Request $request)
