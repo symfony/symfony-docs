@@ -177,6 +177,51 @@ You can begin specifying configuration under this namespace immediately:
     array. You can still provide some sensible defaults for your bundle if
     you want.
 
+Registering the Extension Class
+-------------------------------
+
+An Extension class will automatically be registered by Symfony2 when
+following these simple conventions:
+
+* The extension must be stored in the ``DependencyInjection`` sub-namespace;
+
+* The extension must be named after the bundle name and suffixed with
+  ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
+
+* The extension should provide an XSD schema.
+
+Manually Registering an Extension Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When not following the conventions you will have to manually register your
+extension. To manually register an extension class override the
+:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
+method in your bundle::
+
+    // ...
+    use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
+
+    class AcmeHelloBundle extends Bundle
+    {
+        public function build(ContainerBuilder $container)
+        {
+            parent::build($container);
+
+            // register extensions that do not follow the conventions manually
+            $container->registerExtension(new UnconventionalExtensionClass());
+        }
+    }
+
+In this case, the extension class must also implement a ``getAlias()`` method
+and return a unique alias named after the bundle (e.g. ``acme_hello``). This
+is required because the class name doesn't follow the conventions by ending
+in ``Extension``.
+
+Additionally, the ``load()`` method of your extension will *only* be called
+if the user specifies the ``acme_hello`` alias in at least one configuration
+file. Once again, this is because the Extension class doesn't follow the
+conventions set out above, so nothing happens automatically.
+
 Parsing the ``$configs`` Array
 ------------------------------
 
@@ -560,47 +605,6 @@ command.
 
 .. index::
    pair: Convention; Configuration
-
-Extension Conventions
----------------------
-
-When creating an extension, follow these simple conventions:
-
-* The extension must be stored in the ``DependencyInjection`` sub-namespace;
-
-* The extension must be named after the bundle name and suffixed with
-  ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
-
-* The extension should provide an XSD schema.
-
-If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the
-:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
-method in your bundle::
-
-    // ...
-    use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
-
-    class AcmeHelloBundle extends Bundle
-    {
-        public function build(ContainerBuilder $container)
-        {
-            parent::build($container);
-
-            // register extensions that do not follow the conventions manually
-            $container->registerExtension(new UnconventionalExtensionClass());
-        }
-    }
-
-In this case, the extension class must also implement a ``getAlias()`` method
-and return a unique alias named after the bundle (e.g. ``acme_hello``). This
-is required because the class name doesn't follow the standards by ending
-in ``Extension``.
-
-Additionally, the ``load()`` method of your extension will *only* be called
-if the user specifies the ``acme_hello`` alias in at least one configuration
-file. Once again, this is because the Extension class doesn't follow the
-standards set out above, so nothing happens automatically.
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
