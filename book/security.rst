@@ -1073,21 +1073,20 @@ authorization from inside a controller::
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional JMSSecurityExtraBundle,
-which can secure your controller using annotations::
+Thanks to the FrameworkExtraBundle, you can also secure your controller using annotations::
 
     // ...
-    use JMS\SecurityExtraBundle\Annotation\Secure;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function helloAction($name)
     {
         // ...
     }
 
-For more information, see the `JMSSecurityExtraBundle`_ documentation.
+For more information, see the `SensioFrameworkExtraBundle`_ documentation.
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
