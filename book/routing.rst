@@ -1244,7 +1244,7 @@ route. With this information, any URL can easily be generated::
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`,
     you can use the
     :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
-    method, which call's the router service's
+    method, which calls the router service's
     :method:`Symfony\\Component\\Routing\\Router::generate` method.
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
