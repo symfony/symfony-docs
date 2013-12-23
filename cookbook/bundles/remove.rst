@@ -62,7 +62,7 @@ the name of the bundle is, e.g. ``fos_user`` for the FOSUserBundle) string in
 the configuration files.
 
 The AcmeDemoBundle doesn't have configuration. However, the bundle is
-used in the configuration for  the ``app/config/security.yml`` file. You can
+used in the configuration for the ``app/config/security.yml`` file. You can
 use it as a boilerplate for your own security, but you **can** also remove
 everything: it doesn't matter to Symfony if you remove it or not.
 

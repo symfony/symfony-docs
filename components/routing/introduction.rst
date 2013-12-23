@@ -85,7 +85,7 @@ placeholders as regular expressions.
 4. An array of options. These contain internal settings for the route and
 are the least commonly needed.
 
-5. A host. This is matched against the host of the request.  See
+5. A host. This is matched against the host of the request. See
    :doc:`/components/routing/hostname_pattern` for more details.
 
 6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).

@@ -54,7 +54,7 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 *   ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
     round towards negative infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round 
+*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round
     away from zero.
 
 *   ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode

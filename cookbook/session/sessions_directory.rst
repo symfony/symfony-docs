@@ -20,7 +20,7 @@ that your current sessions aren't lost when you clear Symfony's cache.
     about storing sessions in the :doc:`database </cookbook/configuration/pdo_session_storage>`.
 
 To change the directory in which Symfony saves session data, you only need
-change the framework configuration.  In this example, you will change the
+change the framework configuration. In this example, you will change the
 session directory to ``app/sessions``:
 
 .. configuration-block::

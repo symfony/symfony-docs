@@ -55,8 +55,7 @@ container and use it to do the logging::
             if ($input->getOption('yell')) {
                 $text = strtoupper($text);
                 $logger->warn('Yelled: '.$text);
-            }
-            else {
+            } else {
                 $logger->info('Greeted: '.$text);
             }
 
