@@ -1085,7 +1085,7 @@ authorization from inside a controller::
 
 .. _book-security-securing-controller-annotations:
 
-Thanks to the FrameworkExtraBundle, you can also secure your controller using annotations::
+Thanks to the SensioFrameworkExtraBundle, you can also secure your controller using annotations::
 
     // ...
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
