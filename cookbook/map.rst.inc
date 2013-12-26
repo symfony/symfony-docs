@@ -128,6 +128,7 @@
 
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
+  * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
@@ -140,6 +141,7 @@
   * :doc:`/cookbook/security/api_key_authentication`
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
+  * :doc:`/cookbook/security/csrf_in_login_form`
 
 * **Serializer**
 

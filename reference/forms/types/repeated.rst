@@ -22,8 +22,9 @@ accuracy.
 | Overridden  | - `error_bubbling`_                                                    |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `invalid_message`_                                                   |
-| options     | - `invalid_message_parameters`_                                        |
+| Inherited   | - `data`_                                                              |
+| options     | - `invalid_message`_                                                   |
+|             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
 |             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
@@ -181,6 +182,8 @@ Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

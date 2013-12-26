@@ -16,6 +16,7 @@ if the box is unchecked, the value will be set to false.
 | Inherited   | - `data`_                                                              |
 | options     | - `required`_                                                          |
 |             | - `label`_                                                             |
+|             | - `label_attr`_                                                        |
 |             | - `read_only`_                                                         |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
@@ -50,7 +51,7 @@ not affect the value that's set on your object.
 
 .. caution::
 
-    To make a checkbox checked by default, use the `data`_ option.
+    To make a checkbox checked by default, set the `data`_ option to ``true``.
 
 Inherited options
 -----------------
@@ -62,6 +63,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
