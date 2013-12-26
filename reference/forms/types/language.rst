@@ -34,6 +34,7 @@ you should just use the ``choice`` type directly.
 |             | - `error_mapping`_                                                     |
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
+|             | - `label_attr`_                                                        |
 |             | - `data`_                                                              |
 |             | - `read_only`_                                                         |
 |             | - `disabled`_                                                          |
@@ -77,6 +78,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
