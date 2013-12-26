@@ -6,6 +6,7 @@ Security
 
     entity_provider
     remember_me
+    impersonating_user
     voters
     acl
     acl_advanced

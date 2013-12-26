@@ -31,8 +31,9 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `view_timezone`_                                                          |
 |                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `invalid_message`_                                                        |
-| options              | - `invalid_message_parameters`_                                             |
+| Inherited            | - `data`_                                                                   |
+| options              | - `invalid_message`_                                                        |
+|                      | - `invalid_message_parameters`_                                             |
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
@@ -120,6 +121,8 @@ Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

@@ -21,6 +21,7 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `required`_                                                       |
 | options     | - `label`_                                                          |
+|             | - `data`_                                                           |
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
@@ -88,6 +89,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 

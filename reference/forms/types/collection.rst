@@ -341,10 +341,6 @@ Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
-.. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
-
 error_bubbling
 ~~~~~~~~~~~~~~
 
@@ -352,8 +348,12 @@ error_bubbling
 
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
