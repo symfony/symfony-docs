@@ -230,8 +230,10 @@ method returns without actually printing.
 
 .. tip::
 
-    You can use `MonologBundle`_ 2.4 to display messages on the console. This
-    is cleaner than wrapping your output calls in conditions (see :doc:/cookbook/logging/monolog_console).
+    The MonologBridge provides a :class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler`
+    class that allows you to display messages on the console. This is cleaner
+    than wrapping your output calls in conditions. For an example use in
+    the Symfony Framework, see :doc:/cookbook/logging/monolog_console.
 
 Using Command Arguments
 -----------------------
@@ -527,4 +529,3 @@ Learn More!
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/downloads
-.. _MonologBundle: https://github.com/symfony/MonologBundle

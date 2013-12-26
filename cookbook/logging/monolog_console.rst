@@ -4,7 +4,11 @@
 How to Configure Monolog to Display Console Messages
 ====================================================
 
-It is possible to use the console to print messages for a certain :ref:`verbosity-levels`
+.. versionadded:: 2.3
+    This feature was introduced to the MonologBundle in version 2.4, which
+    was first packaged with Symfony at version 2.4 (but compatible with Symfony 2.3).
+
+It is possible to use the console to print messages for certain :ref:`verbosity-levels`
 using the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance that is passed when a command gets executed.
 
@@ -39,15 +43,18 @@ The example above could then be rewritten as::
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // assuming the Command extends ContainerAwareCommand...
+        $logger = $this->getContainer()->get('logger');
         $logger->debug('Some info');
 
         $logger->notice('Some more info');
     }
 
-These messages will get displayed on the console, timestamped, colored
-depending on the log level and error logs are written to the error output
-(php://stderr). There is no need to conditionally handle the verbosity
-settings anymore.
+Depending on the verbosity level that the command is run in and the user's
+configuration (see below), these messages may or may not be displayed to
+the console. If they are displayed, they are timestamped and colored appropriately.
+Additionally, error logs are written to the error output (php://stderr).
+There is no need to conditionally handle the verbosity settings anymore.
 
 The Monolog console handler is enabled in the Monolog configuration. This is
 the default in Symfony Standard Edition 2.4 too.
