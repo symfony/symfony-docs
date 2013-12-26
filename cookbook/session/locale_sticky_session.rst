@@ -100,4 +100,9 @@ use the :method:`Request::getLocale <Symfony\\Component\\HttpFoundation\\Request
 method::
 
     // from a controller...
-    $locale = $this->getRequest()->getLocale();
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction(Request $request)
+    {
+        $locale = $request->getLocale();
+    }

@@ -5,10 +5,10 @@ How to implement your own Voter to blacklist IP Addresses
 =========================================================
 
 The Symfony2 Security component provides several layers to authorize users.
-One of the layers is called a `voter`. A voter is a dedicated class that checks
-if the user has the rights to be connected to the application. For instance,
-Symfony2 provides a layer that checks if the user is fully authorized or if
-it has some expected roles.
+One of the layers is called a "voter". A voter is a dedicated class that checks
+if the user has the rights to connect to the application or access a specific
+resource/URL. For instance, Symfony2 provides a layer that checks if the user
+is fully authorized or if it has some expected roles.
 
 It is sometimes useful to create a custom voter to handle a specific case not
 handled by the framework. In this section, you'll learn how to create a voter
@@ -34,18 +34,18 @@ The ``supportsAttribute()`` method is used to check if the voter supports
 the given user attribute (i.e: a role, an ACL, etc.).
 
 The ``supportsClass()`` method is used to check if the voter supports the
-current user token class.
+class of the object whose access is being checked (doesn't apply to this entry).
 
 The ``vote()`` method must implement the business logic that verifies whether
 or not the user is granted access. This method must return one of the following
 values:
 
-* ``VoterInterface::ACCESS_GRANTED``: The user is allowed to access the application
-* ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if the user is granted or not
-* ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
+* ``VoterInterface::ACCESS_GRANTED``: The authorization will be granted by this voter;
+* ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if authorization should be granted;
+* ``VoterInterface::ACCESS_DENIED``: The authorization will be denied by this voter.
 
 In this example, you'll check if the user's IP address matches against a list of
-blacklisted addresses. If the user's IP is blacklisted, you'll return
+blacklisted addresses and "something" will be the application. If the user's IP is blacklisted, you'll return
 ``VoterInterface::ACCESS_DENIED``, otherwise you'll return
 ``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
 access, not to grant access.

@@ -171,7 +171,7 @@ focus on the most important methods that come from the
 
 .. note::
 
-    When implementing the
+    If you choose to implement
     :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
     you determine yourself which properties need to be compared to distinguish
     your user objects.
@@ -198,14 +198,27 @@ interface forces the class to implement the five following methods:
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-.. note::
+.. sidebar:: What is the importance of serialize and unserialize?
 
     The :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
     methods have been added to allow the ``User`` class to be serialized
     to the session. This may or may not be needed depending on your setup,
-    but it's probably a good idea. Only the ``id`` needs to be serialized,
-    because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
-    method reloads the user on each request by using the ``id``.
+    but it's probably a good idea. The ``id`` is the most important value
+    that needs to be serialized because the
+    :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
+    method reloads the user on each request by using the ``id``. In practice,
+    this means that the User object is reloaded from the database on each
+    request using the ``id`` from the serialized object. This makes sure
+    all of the User's data is fresh.
+
+    Symfony also uses the ``username``, ``salt``, and ``password`` to verify
+    that the User has not changed between requests. Failing to serialize
+    these may cause you to be logged out on each request. If your User implements
+    :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
+    then instead of these properties being checked, your ``isEqualTo`` method
+    is simply called, and you can check whatever properties you want. Unless
+    you understand this, you probably *won't* need to implement this interface
+    or worry about it.
 
 Below is an export of the ``User`` table from MySQL with user ``admin`` and
 password ``admin`` (which has been encoded). For details on how to create

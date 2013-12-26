@@ -160,6 +160,8 @@ You can also set these colors and options inside the tagname::
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
 
+.. verbosity-levels:
+
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
 
@@ -225,6 +227,13 @@ verbosity levels::
 When the quiet level is used, all output is suppressed as the default
 :method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output::write>`
 method returns without actually printing.
+
+.. tip::
+
+    The MonologBridge provides a :class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler`
+    class that allows you to display messages on the console. This is cleaner
+    than wrapping your output calls in conditions. For an example use in
+    the Symfony Framework, see :doc:/cookbook/logging/monolog_console.
 
 Using Command Arguments
 -----------------------

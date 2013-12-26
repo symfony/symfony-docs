@@ -6,6 +6,7 @@ Security
 
     entity_provider
     remember_me
+    impersonating_user
     voters
     acl
     acl_advanced
@@ -18,3 +19,4 @@ Security
     api_key_authentication
     custom_authentication_provider
     target_path
+    csrf_in_login_form
