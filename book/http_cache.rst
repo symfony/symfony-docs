@@ -1101,6 +1101,6 @@ Learn more from the Cookbook
 .. _`validation model`: http://tools.ietf.org/html/rfc2616#section-13.3
 .. _`RFC 2616`: http://tools.ietf.org/html/rfc2616
 .. _`HTTP Bis`: http://tools.ietf.org/wg/httpbis/
-.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-12
-.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-12
+.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional
+.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache
 .. _`ESI`: http://www.w3.org/TR/esi-lang
