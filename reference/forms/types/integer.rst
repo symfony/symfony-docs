@@ -21,6 +21,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `required`_                                                         |
 | options     | - `label`_                                                            |
+|             | - `data`_                                                             |
 |             | - `read_only`_                                                        |
 |             | - `disabled`_                                                         |
 |             | - `error_bubbling`_                                                   |
@@ -70,6 +71,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 

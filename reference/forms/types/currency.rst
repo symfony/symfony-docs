@@ -26,6 +26,7 @@ should just use the ``choice`` type directly.
 |             | - `error_bubbling`_                                                    |
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
+|             | - `data`_                                                              |
 |             | - `read_only`_                                                         |
 |             | - `disabled`_                                                          |
 |             | - `mapped`_                                                            |
@@ -60,11 +61,13 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
