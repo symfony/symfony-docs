@@ -599,12 +599,14 @@ Suppressing Form Validation
 ---------------------------
 
 To suppress form validation you can use the ``POST_SUBMIT`` event and prevent
-:class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
-invocation.
+the :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
+from being called.
 
-The reason for this is even if you set ``group_validation`` to ``false`` there 
-are still some integrity checks executed, for example whether an uploaded file 
-was too large or whether non-existing fields were submitted::
+The reason for needing to do this is that even if you set ``group_validation``
+to ``false`` there  are still some integrity checks executed. For example
+an uploaded file will still be checked to see if it is too large and the form
+will still check to see if non-existing fields were submitted. To disable
+all of this, use a listener::
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvents;
@@ -620,5 +622,5 @@ was too large or whether non-existing fields were submitted::
 
 .. caution::
 
-    By doing this, you can disable something more than just form validation,
-    because the ``POST_SUBMIT`` event can be used for something else too.
+    By doing this, you may accidentally disable something more than just form
+    validation, since the ``POST_SUBMIT`` event may have other listeners.
