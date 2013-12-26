@@ -496,9 +496,9 @@ value to each variable.
     directly by duplicating the current request. When this
     :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
     service the ``HttpKernel`` returns a ``Response`` object::
-    
+
         use Symfony\Component\HttpKernel\HttpKernelInterface;
-    
+
         $path = array(
             '_controller' => 'AcmeHelloBundle:Hello:fancy',
             'name'        => $name,
@@ -585,8 +585,6 @@ Accessing other Services
 When extending the base controller class, you can access any Symfony2 service
 via the ``get()`` method. Here are several common services you might need::
 
-    $request = $this->getRequest();
-
     $templating = $this->get('templating');
 
     $router = $this->get('router');
@@ -655,16 +653,21 @@ by using the native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->getRequest()->getSession();
+    use Symfony\Component\HttpFoundation\Response;
 
-    // store an attribute for reuse during a later user request
-    $session->set('foo', 'bar');
+    public function indexAction(Request $request)
+    {
+        $session = $request->getSession();
 
-    // in another controller for another request
-    $foo = $session->get('foo');
+        // store an attribute for reuse during a later user request
+        $session->set('foo', 'bar');
 
-    // use a default value if the key doesn't exist
-    $filters = $session->get('filters', array());
+        // in another controller for another request
+        $foo = $session->get('foo');
+
+        // use a default value if the key doesn't exist
+        $filters = $session->get('filters', array());
+    }
 
 These attributes will remain on the user for the remainder of that user's
 session.
@@ -682,11 +685,13 @@ These types of messages are called "flash" messages.
 
 For example, imagine you're processing a form submit::
 
-    public function updateAction()
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function updateAction(Request $request)
     {
         $form = $this->createForm(...);
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             // do some sort of processing
@@ -775,17 +780,22 @@ The Request Object
 ------------------
 
 Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object when extending the base ``Controller`` class::
+to the ``Request`` object. The framework injects the ``Request`` object in the
+controller if a variable is type hinted with
+`Symfony\Component\HttpFoundation\Request`::
 
-    $request = $this->getRequest();
+    use Symfony\Component\HttpFoundation\Request;
 
-    $request->isXmlHttpRequest(); // is it an Ajax request?
+    public function indexAction(Request $request)
+    {
+        $request->isXmlHttpRequest(); // is it an Ajax request?
 
-    $request->getPreferredLanguage(array('en', 'fr'));
+        $request->getPreferredLanguage(array('en', 'fr'));
 
-    $request->query->get('page'); // get a $_GET parameter
+        $request->query->get('page'); // get a $_GET parameter
 
-    $request->request->get('page'); // get a $_POST parameter
+        $request->request->get('page'); // get a $_POST parameter
+    }
 
 Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
 object and are easily accessible.
