@@ -25,6 +25,13 @@ MonologBundle Configuration ("monolog")
                     action_level:        WARNING
                     buffer_size:         30
                     handler:             custom
+                console:
+                    type:                console
+                    verbosity_levels:
+                        VERBOSITY_NORMAL:       WARNING
+                        VERBOSITY_VERBOSE:      NOTICE
+                        VERBOSITY_VERY_VERBOSE: INFO
+                        VERBOSITY_DEBUG:        DEBUG
                 custom:
                     type:                service
                     id:                  my_handler
@@ -83,6 +90,10 @@ MonologBundle Configuration ("monolog")
                     type="fingers_crossed"
                     action-level="warning"
                     handler="custom"
+                />
+                <monolog:handler
+                    name="console"
+                    type="console"
                 />
                 <monolog:handler
                     name="custom"
