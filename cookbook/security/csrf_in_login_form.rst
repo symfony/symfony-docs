@@ -81,7 +81,7 @@ using the login form:
 
 .. configuration-block::
 
-    .. code-block:: html+twig
+    .. code-block:: html+jinja
 
         {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
 
