@@ -226,7 +226,7 @@ user records and encode their password, see :ref:`book-security-encoding-user-pa
 
 .. code-block:: bash
 
-    $ mysql> select * from acme_users;
+    $ mysql> SELECT * FROM acme_users;
     +----+----------+------+------------------------------------------+--------------------+-----------+
     | id | username | salt | password                                 | email              | is_active |
     +----+----------+------+------------------------------------------+--------------------+-----------+
@@ -682,14 +682,14 @@ this:
 
 .. code-block:: bash
 
-    $ mysql> select * from acme_role;
+    $ mysql> SELECT * FROM acme_role;
     +----+-------+------------+
     | id | name  | role       |
     +----+-------+------------+
     |  1 | admin | ROLE_ADMIN |
     +----+-------+------------+
 
-    $ mysql> select * from user_role;
+    $ mysql> SELECT * FROM user_role;
     +---------+---------+
     | user_id | role_id |
     +---------+---------+
