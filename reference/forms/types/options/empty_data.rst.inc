@@ -8,17 +8,13 @@ choice is selected.
 
 The true default value of this option depends on the field options:
 
-* If ``compound`` is ``true`` and ``data_class`` is set, then ``new $data_class()``;
-* If ``compound`` is ``true`` and no ``data_class`` is set, then ``array()``;
-* If ``compound`` is ``false``, then ``null``.
+* If ``required`` is ``true`` and ``data_class`` is set, then ``new $data_class()``;
+* If ``required`` is ``true`` and no ``data_class`` is set, then ``array()``;
+* If ``required`` is ``false``, then ``null``.
 
-.. tip::
 
-    The ``compound`` option is set to ``true`` when the field actually represents
-    a collection of fields (e.g. a form of fields).
-
-For example, if you want the ``gender`` field to be set to ``null`` when no
-value is selected, you can do it like this:
+But you can customize this to your needs. For example, if you want the ``gender`` field to be
+explicitly set to ``null`` when no value is selected, you can do it like this:
 
 .. code-block:: php
 
