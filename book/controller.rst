@@ -653,7 +653,7 @@ by using the native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
 
     public function indexAction(Request $request)
     {
@@ -781,7 +781,7 @@ The Request Object
 
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object. The framework injects the ``Request`` object in the
-controller if a variable is type hinted with
+controller if a variable is type-hinted with
 `Symfony\Component\HttpFoundation\Request`::
 
     use Symfony\Component\HttpFoundation\Request;
