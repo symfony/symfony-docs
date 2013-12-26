@@ -104,6 +104,7 @@
 
   * :doc:`/cookbook/profiler/data_collector`
   * :doc:`/cookbook/profiler/matchers`
+  * :doc:`/cookbook/profiler/storage`
 
 * :doc:`/cookbook/request/index`
 
