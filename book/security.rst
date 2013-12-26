@@ -685,7 +685,9 @@ see :doc:`/cookbook/security/form_login`.
     **5. Routing error pages are not covered by firewalls**
 
     As Routing is done *before* security, Routing error pages are not covered
-    by any firewall.
+    by any firewall. This means you can't check for security or even access
+    the user object on these pages. See :doc:`/cookbook/controller/error_pages`
+    for more details.
 
 Authorization
 -------------
@@ -1609,7 +1611,8 @@ and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
 Access Control
 --------------
 
-Now that you have Users and Roles, you can go further than URL patterns based authorization.
+Now that you have a User and Roles, you can go further than URL-pattern based
+authorization.
 
 .. _book-security-securing-controller:
 
@@ -1636,7 +1639,7 @@ authorization from inside a controller::
 
     A firewall must be active or an exception will be thrown when the ``isGranted()``
     method is called. It's almost always a good idea to have a main firewall that
-    covers all URLs (as it has been shown in this chapter).
+    covers all URLs (as is shown in this chapter).
 
 .. _book-security-securing-controller-annotations:
 
