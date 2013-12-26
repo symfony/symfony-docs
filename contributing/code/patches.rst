@@ -177,14 +177,12 @@ in mind the following:
 
 .. tip::
 
-    You can check the coding standards of your patch by running the following
-    `script <http://cs.sensiolabs.org/get/php-cs-fixer.phar>`_
-    (`source <https://github.com/fabpot/PHP-CS-Fixer>`_):
+    When submitting pull requests, `ubot`_ checks your code
+    for common typos and verifies that you are using the PHP coding standards
+    as defined in PSR-1 and PSR-2.
 
-    .. code-block:: bash
-
-        $ cd /path/to/symfony/src
-        $ php symfony-cs-fixer.phar fix . Symfony20Finder
+    Whenever it detects problems, it kindly posts a comment on your pull request
+    with a patch.
 
 .. tip::
 
@@ -410,3 +408,4 @@ of all the commits. When you finish, execute the push command.
 .. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
 .. _`documentation repository`:            https://github.com/symfony/symfony-docs
+.. _ubot:                                  http://ubot.io
