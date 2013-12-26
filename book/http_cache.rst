@@ -301,9 +301,11 @@ The ``Cache-Control`` header is unique in that it contains not one, but various
 pieces of information about the cacheability of a response. Each piece of
 information is separated by a comma:
 
-     Cache-Control: private, max-age=0, must-revalidate
+.. code-block:: text
 
-     Cache-Control: max-age=3600, must-revalidate
+    Cache-Control: private, max-age=0, must-revalidate
+
+    Cache-Control: max-age=3600, must-revalidate
 
 Symfony provides an abstraction around the ``Cache-Control`` header to make
 its creation more manageable::
@@ -385,7 +387,7 @@ header when none is set by the developer by following these rules:
 * If ``Cache-Control`` is empty (but one of the other cache headers is present),
   its value is set to ``private, must-revalidate``;
 
-* But if at least one ``Cache-Control`` directive is set, and no 'public' or
+* But if at least one ``Cache-Control`` directive is set, and no ``public`` or
   ``private`` directives have been explicitly added, Symfony2 adds the
   ``private`` directive automatically (except when ``s-maxage`` is set).
 
@@ -667,7 +669,7 @@ exposing a simple and efficient pattern::
         // a database or a key-value store for instance)
         $article = ...;
 
-        // create a Response with a ETag and/or a Last-Modified header
+        // create a Response with an ETag and/or a Last-Modified header
         $response = new Response();
         $response->setETag($article->computeETag());
         $response->setLastModified($article->getPublishedAt());
@@ -679,17 +681,17 @@ exposing a simple and efficient pattern::
         if ($response->isNotModified($request)) {
             // return the 304 Response immediately
             return $response;
-        } else {
-            // do more work here - like retrieving more data
-            $comments = ...;
-
-            // or render a template with the $response you've already started
-            return $this->render(
-                'MyBundle:MyController:article.html.twig',
-                array('article' => $article, 'comments' => $comments),
-                $response
-            );
         }
+
+        // do more work here - like retrieving more data
+        $comments = ...;
+
+        // or render a template with the $response you've already started
+        return $this->render(
+            'MyBundle:MyController:article.html.twig',
+            array('article' => $article, 'comments' => $comments),
+            $response
+        );
     }
 
 When the ``Response`` is not modified, the ``isNotModified()`` automatically sets
@@ -956,8 +958,9 @@ component cache will only last for 60 seconds.
 When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of
 the rest of the page. Symfony2 takes care of generating a unique URL for any
-controller reference and it is able to route them properly thanks to a
-listener that must be enabled in your configuration:
+controller reference and it is able to route them properly thanks to the
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\FragmentListener`
+that must be enabled in your configuration:
 
 .. configuration-block::
 
@@ -1063,10 +1066,10 @@ Here is how you can configure the Symfony2 reverse proxy to support the
             }
 
             $response = new Response();
-            if (!$this->getStore()->purge($request->getUri())) {
-                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not purged');
-            } else {
+            if ($this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(Response::HTTP_OK, 'Purged');
+            } else {
+                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not purged');
             }
 
             return $response;
@@ -1104,6 +1107,6 @@ Learn more from the Cookbook
 .. _`validation model`: http://tools.ietf.org/html/rfc2616#section-13.3
 .. _`RFC 2616`: http://tools.ietf.org/html/rfc2616
 .. _`HTTP Bis`: http://tools.ietf.org/wg/httpbis/
-.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-12
-.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-12
+.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional
+.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache
 .. _`ESI`: http://www.w3.org/TR/esi-lang
