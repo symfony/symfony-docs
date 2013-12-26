@@ -139,11 +139,10 @@ Then implement the actual listener::
     namespace Acme\DemoBundle\EventListener;
 
     use Symfony\Component\Console\Event\ConsoleExceptionEvent;
-    use \Psr\Log\LoggerInterface;
+    use Psr\Log\LoggerInterface;
 
     class ConsoleExceptionListener
     {
-        /** @var $logger LoggerInterface */
         private $logger;
 
         public function __construct(LoggerInterface $logger)
@@ -168,9 +167,11 @@ Then implement the actual listener::
         }
     }
 
-In the code above, when a command throws an exception, the listener will
+In the code above, when any command throws an exception, the listener will
 receive an event. You can simply log it by passing the logger service via the
-service configuration.
+service configuration. Your method receives a
+:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent`` object,
+which has methods to get information about the event and the exception.
 
 Logging non-0 exit statuses
 ---------------------------
@@ -243,11 +244,10 @@ Then implement the actual listener::
     namespace Acme/DemoBundle\EventListener;
 
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
-    use \Psr\Log\LoggerInterface;
+    use Psr\Log\LoggerInterface;
 
     class ConsoleTerminateListener
     {
-        /** @var $logger LoggerInterface */
         private $logger;
 
         public function __construct(LoggerInterface $logger)
