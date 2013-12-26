@@ -319,7 +319,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="secured_area" pattern="^/">
                     <anonymous />
-                    <form-login login_path="login" check_path="login_check" />
+                    <form-login login-path="login" check-path="login_check" />
                 </firewall>
             </config>
         </srv:container>
@@ -518,6 +518,11 @@ Finally, create the corresponding template:
 
             <button type="submit">login</button>
         </form>
+
+.. caution::
+
+    This login form is currently not protected against CSRF attacks. Read
+    :doc:`/cookbook/security/csrf_in_login_form` on how to protect your login form.
 
 .. tip::
 

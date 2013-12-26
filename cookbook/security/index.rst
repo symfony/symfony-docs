@@ -15,3 +15,4 @@ Security
     custom_provider
     custom_authentication_provider
     target_path
+    csrf_in_login_form
