@@ -477,14 +477,10 @@ Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was added in Symfony 2.3,
-    although setting it to an empty array achieved the same result in previous
-    versions.
+    The ability to set ``validation_groups`` to false was added in Symfony 2.3.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
-these cases, you can skip the call to :method:`Symfony\\Component\\Form\\FormInterface::isValid`
-in your controller. If this is not possible, you can alternatively set the
-``validation_groups`` option to ``false`` or an empty array::
+these cases you can set the ``validation_groups`` option to ``false``::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -497,9 +493,8 @@ in your controller. If this is not possible, you can alternatively set the
 
 Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
-fields were submitted. If you want to suppress validation completely, remove
-the :method:`Symfony\\Component\\Form\\FormInterface::isValid` call from your
-controller.
+fields were submitted. If you want to suppress validation, you can use the
+:ref:`POST_SUBMIT event <cookbook-dynamic-form-modification-suppressing-form-validation>`
 
 .. index::
    single: Forms; Validation groups based on submitted data

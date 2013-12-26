@@ -592,3 +592,33 @@ after the sport is selected. This should be handled by making an AJAX call
 back to your application. In that controller, you can submit your form, but
 instead of processing it, simply use the submitted form to render the updated
 fields. The response from the AJAX call can then be used to update the view.
+
+.. _cookbook-dynamic-form-modification-suppressing-form-validation:
+
+Suppressing Form Validation
+---------------------------
+
+To suppress form validation you can use the ``POST_SUBMIT`` event and prevent
+:class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
+invocation.
+
+The reason for this is even if you set ``group_validation`` to ``false`` there 
+are still some integrity checks executed, for example whether an uploaded file 
+was too large or whether non-existing fields were submitted::
+
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\FormEvents;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function($event) {
+            $event->stopPropagation();
+        }, 900); // Always set a higher priority than ValidationListener
+
+        // ...
+    }
+
+.. caution::
+
+    By doing this, you can disable something more than just form validation,
+    because the ``POST_SUBMIT`` event can be used for something else too.
