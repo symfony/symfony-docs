@@ -49,8 +49,8 @@ your application. Each role, or user has its own security identity.
     For users, the security identity is based on the username. This means that,
     if for any reason, a user's username was to change, you must ensure its
     security identity is updated too. The
-    :method:`MutableAclProvider::updateUserSecurityIdentity <Symfony\\Component\\Security\\Acl\\Dbal\\MutableAclProvider::updateUserSecurityIdentity>`
-    ``updateUserSecurityIdentity`` method is there to handle the update.
+    :method:`MutableAclProvider::updateUserSecurityIdentity() <Symfony\\Component\\Security\\Acl\\Dbal\\MutableAclProvider::updateUserSecurityIdentity>`
+    method is there to handle the update.
 
 Database Table Structure
 ------------------------
