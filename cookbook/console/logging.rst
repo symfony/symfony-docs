@@ -170,7 +170,7 @@ Then implement the actual listener::
 In the code above, when any command throws an exception, the listener will
 receive an event. You can simply log it by passing the logger service via the
 service configuration. Your method receives a
-:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent`` object,
+:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` object,
 which has methods to get information about the event and the exception.
 
 Logging non-0 exit statuses
