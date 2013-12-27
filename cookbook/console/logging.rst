@@ -34,7 +34,7 @@ container and use it to do the logging::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
-    use \Psr\Log\LoggerInterface;
+    use Psr\Log\LoggerInterface;
 
     class GreetCommand extends ContainerAwareCommand
     {
