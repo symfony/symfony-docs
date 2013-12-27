@@ -241,7 +241,7 @@ First configure a listener for console terminate events in the service container
 Then implement the actual listener::
 
     // src/Acme/DemoBundle/EventListener/ConsoleExceptionListener.php
-    namespace Acme/DemoBundle\EventListener;
+    namespace Acme\DemoBundle\EventListener;
 
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
     use Psr\Log\LoggerInterface;
