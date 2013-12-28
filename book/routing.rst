@@ -1054,7 +1054,7 @@ instead of simply ``/hello/{name}``:
         $acmeHello = $loader->import(
             "@AcmeHelloBundle/Resources/config/routing.php"
         );
-        $acmeHello->setPrefix('/admin');
+        $acmeHello->addPrefix('/admin');
 
         $collection->addCollection($acmeHello);
 
