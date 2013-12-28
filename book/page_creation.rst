@@ -165,7 +165,7 @@ an entry when you generated the ``AcmeHelloBundle``:
         $collection = new RouteCollection();
         $collection->addCollection(
             $loader->import('@AcmeHelloBundle/Resources/config/routing.php'),
-            '/',
+            '/'
         );
 
         return $collection;
