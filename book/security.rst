@@ -1098,7 +1098,7 @@ Thanks to the SensioFrameworkExtraBundle, you can also secure your controller us
         // ...
     }
 
-For more information, see the `SensioFrameworkExtraBundle`_ documentation.
+For more information, see the :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -2164,7 +2164,6 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 
-.. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
