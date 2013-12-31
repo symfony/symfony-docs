@@ -4,13 +4,13 @@
 How to Configure Monolog to Display Console Messages
 ====================================================
 
-.. versionadded:: 2.3
-    This feature was introduced to the MonologBundle in version 2.4, which
-    was first packaged with Symfony at version 2.4 (but compatible with Symfony 2.3).
+.. versionadded:: 2.4
+    This feature was introduced to the MonologBridge in Symfony 2.4.
 
-It is possible to use the console to print messages for certain :ref:`verbosity-levels`
-using the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
-instance that is passed when a command gets executed.
+It is possible to use the console to print messages for certain
+:ref:`verbosity levels <verbosity-levels>` using the
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance that
+is passed when a command gets executed.
 
 When a lot of logging has to happen, it's cumbersome to print information
 depending on the verbosity settings (``-v``, ``-vv``, ``-vvv``) because the
@@ -32,7 +32,7 @@ For example::
     }
 
 Instead of using these semantic methods to test for each of the verbosity
-levels, `MonologBundle`_ 2.4 provides a `ConsoleHandler`_ that listens to
+levels, the `MonologBridge`_ provides a `ConsoleHandler`_ that listens to
 console events and writes log messages to the console output depending on the
 current log level and the console verbosity.
 
@@ -96,8 +96,9 @@ With the ``verbosity_levels`` option you can adapt the mapping between
 verbosity and log level. In the given example it will also show notices in
 normal verbosity mode (instead of warnings only). Additionally, it will only
 use messages logged with the custom ``my_channel`` channel and it changes the
-display style via a custom formatter. See also the :doc:`reference/configuration/monolog`
-for more information:
+display style via a custom formatter (see the
+:doc:`MonologBundle reference </reference/configuration/monolog>` for more
+information):
 
 .. configuration-block::
 
@@ -180,4 +181,4 @@ for more information:
         ;
 
 .. _ConsoleHandler: https://github.com/symfony/MonologBridge/blob/master/Handler/ConsoleHandler.php
-.. _MonologBundle: https://github.com/symfony/MonologBundle
+.. _MonologBridge: https://github.com/symfony/MonologBridge
