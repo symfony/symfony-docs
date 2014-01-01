@@ -13,6 +13,7 @@ objects from the database.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
 | Options     | - `class`_                                                       |
+|             | - `data_class`_                                                  |
 |             | - `property`_                                                    |
 |             | - `group_by`_                                                    |
 |             | - `query_builder`_                                               |
@@ -104,6 +105,8 @@ class
 The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
 a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
 or the short alias name (as shown prior).
+
+.. include:: /reference/forms/types/options/data_class.rst.inc
 
 property
 ~~~~~~~~
