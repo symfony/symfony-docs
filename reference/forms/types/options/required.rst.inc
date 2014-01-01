@@ -12,7 +12,7 @@ your validation information.
 
 .. note::
 
-    The required option does also affect the way how empty data of your form is
-    being handled. For further details check the `empty_data`_ option.
+    The required option also affects how empty data for each field is
+    handled. For more details, see the `empty_data`_ option.
 
 .. _`HTML5 required attribute`: http://diveintohtml5.info/forms.html

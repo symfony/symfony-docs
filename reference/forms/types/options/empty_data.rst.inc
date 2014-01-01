@@ -8,8 +8,8 @@ choice is selected.
 
 The true default value of this option depends on the field options:
 
-* If ``data_class`` is set and  ``required`` is  ``true``, then ``null``;
-* If ``data_class`` is set and  ``required`` is  ``false``, then ``new $data_class()``;
+* If ``data_class`` is set and  ``required`` is  ``true``, then ``new $data_class()``;
+* If ``data_class`` is set and  ``required`` is  ``false``, then ``null``;
 * If ``data_class`` is not set and  ``compound`` is  ``true``, then ``array()``;
 * If ``data_class`` is not set and  ``compound`` is  ``false``, then ``null``.
 
