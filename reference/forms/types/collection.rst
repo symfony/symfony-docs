@@ -26,6 +26,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `error_mapping`_                                                          |
 |             | - `by_reference`_                                                           |
 |             | - `empty_data`_                                                             |
+|             | - `required`_                                                               |
 |             | - `mapped`_                                                                 |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                   |
@@ -358,5 +359,7 @@ error_bubbling
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
