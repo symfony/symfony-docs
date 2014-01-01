@@ -339,6 +339,9 @@ replaced with the same value.
 delete_empty
 ~~~~~~~~~~~~
 
+.. versionadded:: 2.5
+    The delete_empty option was introduced in Symfony 2.5.
+
 **type**: ``Boolean`` **default**: ``false``
 
 If you want to explicitly remove entirely empty collection entries from your
