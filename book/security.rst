@@ -660,7 +660,7 @@ see :doc:`/cookbook/security/form_login`.
                 ),
             ),
 
-    **3. Be sure ``/login_check`` is behind a firewall**
+    **3. Be sure /login_check is behind a firewall**
 
     Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
     is behind the firewall you're using for your form login (in this example,
@@ -1205,19 +1205,6 @@ As far as the security system is concerned, the only requirement for your
 custom user class is that it implements the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface.
-
-.. note::
-
-    The user object will be serialized and saved in the session during requests,
-    therefore it is recommended that you `implement the \Serializable interface`_
-    in your user object. This is especially important if your ``User`` class
-    has a parent class with private properties.
 
 Next, configure an ``entity`` user provider, and point it to your ``User``
 class:
