@@ -1349,19 +1349,7 @@ You can now calculate the hashed password either programmatically
 (e.g. ``password_hash('ryanpass', PASSWORD_BCRYPT, array('cost' => 12));``)
 or via some online tool.
 
-.. caution::
-
-    If you're using PHP 5.4 or lower, you'll need to install the ``ircmaxell/password-compat``
-    library via Composer:
-
-    .. code-block:: json
-
-        {
-            "require": {
-                "...": "all the other dependencies...",
-                "ircmaxell/password-compat": "~1.0.3"
-            }
-        }
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
 Supported algorithms for this method depend on your PHP version. A full list
 is available by calling the PHP function :phpfunction:`hash_algos`.

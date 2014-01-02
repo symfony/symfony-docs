@@ -95,6 +95,8 @@ focus on the most important methods that come from the
         public function __construct()
         {
             $this->isActive = true;
+            // may not be needed, see section on salt below
+            // $this->salt = md5(uniqid(null, true));
         }
 
         /**
@@ -110,6 +112,8 @@ focus on the most important methods that come from the
          */
         public function getSalt()
         {
+            // you *may* need a real salt depending on your encoder
+            // see section on salt below
             return null;
         }
 
@@ -144,8 +148,9 @@ focus on the most important methods that come from the
             return serialize(array(
                 $this->id,
                 $this->username,
-                $this->salt,
                 $this->password,
+                // see section on salt below
+                // $this->salt,
             ));
         }
 
@@ -157,18 +162,12 @@ focus on the most important methods that come from the
             list (
                 $this->id,
                 $this->username,
-                $this->salt,
                 $this->password,
+                // see section on salt below
+                // $this->salt
             ) = unserialize($serialized);
         }
     }
-
-.. note::
-
-    If you choose to implement
-    :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
-    you determine yourself which properties need to be compared to distinguish
-    your user objects.
 
 .. tip::
 
@@ -186,7 +185,7 @@ interface forces the class to implement the five following methods:
 
 * ``getRoles()``,
 * ``getPassword()``,
-* ``getPassword()``,
+* ``getSalt()``,
 * ``getUsername()``,
 * ``eraseCredentials()``
 
@@ -212,6 +211,20 @@ user records and encode their password, see :ref:`book-security-encoding-user-pa
 The next part will focus on how to authenticate one of these users
 thanks to the Doctrine entity user provider and a couple of lines of
 configuration.
+
+.. sidebar:: Do you need to use a Salt?
+
+    Yes. Hashing a password with a salt is a necessary step so that encoded
+    passwords can't be decoded. However, some encoders - like Bcrypt - have
+    a built-in salt mechanism. If you configure ``bcrypt`` as your encoder
+    in ``security.yml`` (see the next section), then ``getSalt()`` should
+    return ``null``, so that Bcrypt generates the salt itself.
+
+    However, if you use an encoder that does *not* have a built-in salting
+    ability (e.g. ``sha512``), you *must* (from a security perspective) generate
+    your own, random salt, store it on a ``salt`` property that is saved to
+    the database, and return it from ``getSalt()``. Some of the code needed
+    is commented out in the above example.
 
 Authenticating Someone against a Database
 -----------------------------------------
@@ -310,6 +323,8 @@ class. This means that Symfony will expect the password that's stored in
 the database to be encoded using this encoder. For details on how to create
 a new User object with a properly encoded password, see the
 :ref:`book-security-encoding-user-password` section of the security chapter.
+
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
 The ``providers`` section defines an ``administrators`` user provider. A
 user provider is a "source" of where users are loaded during authentication.
