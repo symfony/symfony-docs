@@ -18,5 +18,5 @@ as a key. This attributes can also be directly set inside the template:
         echo $view['form']->label(
             $form['name'],
             'Your name',
-            array('class' => 'CUSTOM_LABEL_CLASS')
+            array('label_attr' => array('class' => 'CUSTOM_LABEL_CLASS'))
         );
