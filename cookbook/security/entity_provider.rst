@@ -32,7 +32,7 @@ The Data Model
 --------------
 
 For the purpose of this cookbook, the ``AcmeUserBundle`` bundle contains a
-``User`` entity class with the following fields: ``id``, ``username``, ``salt``,
+``User`` entity class with the following fields: ``id``, ``username``,
 ``password``, ``email`` and ``isActive``. The ``isActive`` field tells whether
 or not the user account is active.
 
@@ -78,11 +78,6 @@ focus on the most important methods that come from the
         private $username;
 
         /**
-         * @ORM\Column(type="string", length=32)
-         */
-        private $salt;
-
-        /**
          * @ORM\Column(type="string", length=64)
          */
         private $password;
@@ -100,7 +95,6 @@ focus on the most important methods that come from the
         public function __construct()
         {
             $this->isActive = true;
-            $this->salt = md5(uniqid(null, true));
         }
 
         /**
@@ -116,7 +110,7 @@ focus on the most important methods that come from the
          */
         public function getSalt()
         {
-            return $this->salt;
+            return null;
         }
 
         /**
@@ -192,33 +186,15 @@ interface forces the class to implement the five following methods:
 
 * ``getRoles()``,
 * ``getPassword()``,
-* ``getSalt()``,
+* ``getPassword()``,
 * ``getUsername()``,
 * ``eraseCredentials()``
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-.. sidebar:: What is the importance of serialize and unserialize?
-
-    The :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
-    methods have been added to allow the ``User`` class to be serialized
-    to the session. This may or may not be needed depending on your setup,
-    but it's probably a good idea. The ``id`` is the most important value
-    that needs to be serialized because the
-    :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
-    method reloads the user on each request by using the ``id``. In practice,
-    this means that the User object is reloaded from the database on each
-    request using the ``id`` from the serialized object. This makes sure
-    all of the User's data is fresh.
-
-    Symfony also uses the ``username``, ``salt``, and ``password`` to verify
-    that the User has not changed between requests. Failing to serialize
-    these may cause you to be logged out on each request. If your User implements
-    :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
-    then instead of these properties being checked, your ``isEqualTo`` method
-    is simply called, and you can check whatever properties you want. Unless
-    you understand this, you probably *won't* need to implement this interface
-    or worry about it.
+If you're curious about the ``serialize`` method or are looking for details
+on the logic of seeing if the User stored in the session is the same as the
+one stored in the database, see :ref:`cookbook-security-serialize-equatable`.
 
 Below is an export of the ``User`` table from MySQL with user ``admin`` and
 password ``admin`` (which has been encoded). For details on how to create
@@ -227,11 +203,11 @@ user records and encode their password, see :ref:`book-security-encoding-user-pa
 .. code-block:: bash
 
     $ mysql> select * from acme_users;
-    +----+----------+------+------------------------------------------+--------------------+-----------+
-    | id | username | salt | password                                 | email              | is_active |
-    +----+----------+------+------------------------------------------+--------------------+-----------+
-    |  1 | admin    |      | d033e22ae348aeb5660fc2140aec35850c4da997 | admin@example.com  |         1 |
-    +----+----------+------+------------------------------------------+--------------------+-----------+
+    +----+----------+------------------------------------------+--------------------+-----------+
+    | id | username | password                                 | email              | is_active |
+    +----+----------+------------------------------------------+--------------------+-----------+
+    |  1 | admin    | d033e22ae348aeb5660fc2140aec35850c4da997 | admin@example.com  |         1 |
+    +----+----------+------------------------------------------+--------------------+-----------+
 
 The next part will focus on how to authenticate one of these users
 thanks to the Doctrine entity user provider and a couple of lines of
@@ -743,3 +719,46 @@ fetch the user and their associated roles with a single query::
 The ``QueryBuilder::leftJoin()`` method joins and fetches related roles from
 the ``AcmeUserBundle:User`` model class when a user is retrieved by their email
 address or username.
+
+.. _`cookbook-security-serialize-equatable`:
+
+Understanding serialize and how a User is Saved in the Session
+--------------------------------------------------------------
+
+If you're curious about the importance of the ``serialize`` method inside
+the User class or how the User object is serialized or deserialized, then
+this section is for you. If not, feel free to skip this.
+
+Once the user is logged in, the entire User object is serialized into the
+session. On the next request, the User object is deserialized. Then, value
+of the ``id`` property is used to re-query for a fresh User object from the
+database. Finally, the fresh User object is compared in some way to the deserialized
+User object to make sure that they represent the same user. For example, if
+the ``username`` on the 2 User objects doesn't match for some reason, then
+the user will be logged out for security reasons.
+
+Even though this all happens automatically, there are a few important side-effects.
+
+First, the :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
+methods have been added to allow the ``User`` class to be serialized
+to the session. This may or may not be needed depending on your setup,
+but it's probably a good idea. Only the ``id`` needs to be serialized,
+because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
+method refreshes the user on each request by using the ``id`` (as explained
+above). In practice, this means that the User object is reloaded from the
+database on each request using the ``id`` from the serialized object. This
+makes sure all of the User's data is fresh.
+
+
+Symfony also uses the ``username``, ``salt``, and ``password`` to verify
+that the User has not changed between requests. Failing to serialize
+these may cause you to be logged out on each request. If your User implements
+:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
+then instead of these properties being checked, your ``isEqualTo`` method
+is simply called, and you can check whatever properties you want. Unless
+you understand this, you probably *won't* need to implement this interface
+or worry about it.
+
+.. versionadded:: 2.1
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
+    and the ``EquatableInterface`` was added in its place.
