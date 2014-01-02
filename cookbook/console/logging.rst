@@ -150,7 +150,8 @@ Then implement the actual listener::
             $this->logger = $logger;
         }
 
-        public function onConsoleException(ConsoleExceptionEvent $event) {
+        public function onConsoleException(ConsoleExceptionEvent $event)
+        {
             $command = $event->getCommand();
             $exception = $event->getException();
 
@@ -255,7 +256,8 @@ Then implement the actual listener::
             $this->logger = $logger;
         }
 
-        public function onConsoleTerminate(ConsoleTerminateEvent $event) {
+        public function onConsoleTerminate(ConsoleTerminateEvent $event)
+        {
             $statusCode = $event->getExitCode();
             $command = $event->getCommand();
 
