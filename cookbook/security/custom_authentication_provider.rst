@@ -4,6 +4,15 @@
 How to create a custom Authentication Provider
 ==============================================
 
+.. tip::
+
+    Creating a custom authentication system is hard, and this entry will walk
+    you through that process. But depending on your needs, you may be able
+    to solve your problem in a simpler way using these documents:
+
+    * :doc:`/cookbook/security/custom_password_authenticator`
+    * :doc:`/cookbook/security/api_key_authentication`
+
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony2 makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
