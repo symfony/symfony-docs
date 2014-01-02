@@ -1148,7 +1148,7 @@ section .
 The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
-which holds the error message on its `getMessage` method.
+which holds the error message on its ``getMessage`` method.
 
 Final Thoughts
 --------------

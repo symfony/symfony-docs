@@ -17,7 +17,7 @@ starting a project, but you'll probably want to eventually remove it.
 ---------------------------------------------
 
 To disconnect the bundle from the framework, you should remove the bundle from
-the ``Appkernel::registerBundles()`` method. The bundle is normally found in
+the ``AppKernel::registerBundles()`` method. The bundle is normally found in
 the ``$bundles`` array but the AcmeDemoBundle is only registered in a
 development environment and you can find him in the if statement after::
 

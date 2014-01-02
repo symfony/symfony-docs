@@ -43,11 +43,11 @@ and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
 .. versionadded:: 2.4
-    The ``flushOutput()`` and ``flushErrorOutput()`` methods were added in Symfony 2.4.
+    The ``clearOutput()`` and ``clearErrorOutput()`` methods were added in Symfony 2.4.
 
-The :method:`Symfony\\Component\\Process\\Process::flushOutput` method flushes
+The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
-:method:`Symfony\\Component\\Process\\Process::flushErrorOutput` flushes
+:method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
 
 Getting real-time Process Output

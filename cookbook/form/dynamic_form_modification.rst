@@ -163,7 +163,7 @@ Adding an Event Subscriber to a Form Class
 
 For better reusability or if there is some heavy logic in your event listener,
 you can also move the logic for creating the ``name`` field to an
-:ref:`event subscriber <event_dispatcher-using-event-subscribers:ref:>`::
+:ref:`event subscriber <event_dispatcher-using-event-subscribers>`::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;

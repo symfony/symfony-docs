@@ -1,12 +1,26 @@
 .. index::
    single: Sessions, sessions directory
 
-Configuring the Directory where Sessions Files are Saved
+Configuring the Directory Where Sessions Files are Saved
 ========================================================
 
-By default, Symfony stores the session data in the cache directory. This
-means that when you clear the cache, any current sessions will also be
-deleted.
+By default, Symfony stores the session data in files in the cache
+directory ``%kernel.cache_dir%/sessions``. This means that when you clear
+the cache, any current sessions will also be deleted.
+
+.. note::
+
+    If the ``session`` configuration key is set to ``~``, Symfony will use the
+    global PHP ini values for ``session.save_handler`` and associated
+    ``session.save_path`` from ``php.ini``.
+
+.. note::
+
+    While the Symfony Full Stack Framework defaults to using the
+    ``session.handler.native_file``, the Symfony Standard Edition is
+    configured to use PHP's global session settings by default and therefor
+    sessions will be stored according to the ``session.save_path`` location
+    and will not be deleted when clearing the cache.
 
 Using a different directory to save session data is one method to ensure
 that your current sessions aren't lost when you clear Symfony's cache.
@@ -30,18 +44,34 @@ session directory to ``app/sessions``:
         # app/config/config.yml
         framework:
             session:
+                handler_id: session.handler.native_file
                 save_path: "%kernel.root_dir%/sessions"
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:session save-path="%kernel.root_dir%/sessions" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:session handler-id="session.handler.native_file" />
+                <framework:session save-path="%kernel.root_dir%/sessions" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'session' => array('save-path' => "%kernel.root_dir%/sessions"),
+            'session' => array(
+                'handler-id' => 'session.handler.native_file',
+                'save-path' => '%kernel.root_dir%/sessions',
+            ),
         ));
+        

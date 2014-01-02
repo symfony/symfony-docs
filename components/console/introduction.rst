@@ -160,7 +160,7 @@ You can also set these colors and options inside the tagname::
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
 
-.. verbosity-levels:
+.. _verbosity-levels:
 
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
