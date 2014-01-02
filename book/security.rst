@@ -1265,7 +1265,7 @@ in plain text (whether those users are stored in a configuration file or in
 a database somewhere). Of course, in a real application, you'll want to encode
 your users' passwords for security reasons. This is easily accomplished by
 mapping your User class to one of several built-in "encoders". For example,
-to store your users in memory, but obscure their passwords via ``sha1``,
+to store your users in memory, but obscure their passwords via ``bcrypt``,
 do the following:
 
 .. configuration-block::
@@ -1279,14 +1279,17 @@ do the following:
                 in_memory:
                     memory:
                         users:
-                            ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
-                            admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
+                            ryan:
+                                password: $2a$12$w/aHvnC/XNeDVrrl65b3dept8QcKqpADxUlbraVXXsC03Jam5hvoO
+                                roles: 'ROLE_USER'
+                            admin:
+                                password: $2a$12$HmOsqRDJK0HuMDQ5Fb2.AOLMQHyNHGD0seyjU3lEVusjT72QQEIpW
+                                roles: 'ROLE_ADMIN'
 
             encoders:
                 Symfony\Component\Security\Core\User\User:
-                    algorithm: sha1
-                    iterations: 1
-                    encode_as_base64: false
+                    algorithm: bcrypt
+                    cost: 12
 
     .. code-block:: xml
 
@@ -1296,18 +1299,18 @@ do the following:
             <provider name="in_memory">
                 <memory>
                     <user name="ryan"
-                        password="bb87a29949f3a1ee0559f8a57357487151281386"
+                        password="$2a$12$w/aHvnC/XNeDVrrl65b3dept8QcKqpADxUlbraVXXsC03Jam5hvoO"
                         roles="ROLE_USER" />
                     <user name="admin"
-                        password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620"
+                        password="$2a$12$HmOsqRDJK0HuMDQ5Fb2.AOLMQHyNHGD0seyjU3lEVusjT72QQEIpW"
                         roles="ROLE_ADMIN" />
                 </memory>
             </provider>
 
             <encoder class="Symfony\Component\Security\Core\User\User"
-                algorithm="sha1"
-                iterations="1"
-                encode_as_base64="false" />
+                algorithm="bcrypt"
+                cost="12"
+            />
         </config>
 
     .. code-block:: php
@@ -1320,11 +1323,11 @@ do the following:
                     'memory' => array(
                         'users' => array(
                             'ryan' => array(
-                                'password' => 'bb87a29949f3a1ee0559f8a57357487151281386',
+                                'password' => '$2a$12$w/aHvnC/XNeDVrrl65b3dept8QcKqpADxUlbraVXXsC03Jam5hvoO',
                                 'roles' => 'ROLE_USER',
                             ),
                             'admin' => array(
-                                'password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620',
+                                'password' => '$2a$12$HmOsqRDJK0HuMDQ5Fb2.AOLMQHyNHGD0seyjU3lEVusjT72QQEIpW',
                                 'roles' => 'ROLE_ADMIN',
                             ),
                         ),
@@ -1333,71 +1336,35 @@ do the following:
             ),
             'encoders' => array(
                 'Symfony\Component\Security\Core\User\User' => array(
-                    'algorithm'         => 'sha1',
-                    'iterations'        => 1,
-                    'encode_as_base64'  => false,
+                    'algorithm'         => 'bcrypt',
+                    'iterations'        => 12,
                 ),
             ),
         ));
 
-By setting the ``iterations`` to ``1`` and the ``encode_as_base64`` to false,
-the password is simply run through the ``sha1`` algorithm one time and without
-any extra encoding. You can now calculate the hashed password either programmatically
-(e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
-
-.. tip::
-
-    Supported algorithms for this method depend on your PHP version.
-    A full list is available calling the PHP function :phpfunction:`hash_algos`.
-
-.. caution::
-
-    The above example is not meaned for practical usage, it uses a weak hash
-    algorithm and it is only done to be able to generate the password easily. Using
-    :ref:`BCrypt <reference-security-bcrypt>` is a better option.
-
 .. versionadded:: 2.2
     The BCrypt encoder was introduced in Symfony 2.2.
 
-If you're creating your users dynamically (and storing them in a database),
-you can use even tougher hashing algorithms and then rely on an actual password
-encoder object to help you encode passwords. For example, suppose your User
-object is ``Acme\UserBundle\Entity\User`` (like in the above example). First,
-configure the encoder for that user:
+You can now calculate the hashed password either programmatically
+(e.g. ``password_hash('ryanpass', PASSWORD_BCRYPT, array('cost' => 12));``)
+or via some online tool.
 
-.. configuration-block::
+.. caution::
 
-    .. code-block:: yaml
+    If you're using PHP 5.4 or lower, you'll need to install the ``ircmaxell/password-compat``
+    library via Composer:
 
-        # app/config/security.yml
-        security:
-            # ...
+    .. code-block:: json
 
-            encoders:
-                Acme\UserBundle\Entity\User: bcrypt
+        {
+            "require": {
+                "...": "all the other dependencies...",
+                "ircmaxell/password-compat": "~1.0.3"
+            }
+        }
 
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-
-            <encoder class="Acme\UserBundle\Entity\User" algorithm="bcrypt" />
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-            'encoders' => array(
-                'Acme\UserBundle\Entity\User' => 'bcrypt',
-            ),
-        ));
-
-In this case, you're using the strong ``bcrypt`` algorithm. This means that the
-password has been greatly obfuscated so that the hashed password can't be
-decoded (i.e. you can't determine the password from the hashed password).
+Supported algorithms for this method depend on your PHP version. A full list
+is available by calling the PHP function :phpfunction:`hash_algos`.
 
 .. versionadded:: 2.2
     As of Symfony 2.2 you can also use the :ref:`PBKDF2 <reference-security-pbkdf2>`
@@ -1406,10 +1373,11 @@ decoded (i.e. you can't determine the password from the hashed password).
 Determining the Hashed Password
 ...............................
 
-If you have some sort of registration form for users, you'll need to be able
-to determine the hashed password so that you can set it on your user. No
-matter what algorithm you configure for your user object, the hashed password
-can always be determined in the following way from a controller::
+If you're storing users in the database and you have some sort of registration
+form for users, you'll need to be able to determine the hashed password so
+that you can set it on your user before inserting it. No matter what algorithm
+you configure for your user object, the hashed password can always be determined
+in the following way from a controller::
 
     $factory = $this->get('security.encoder_factory');
     $user = new Acme\UserBundle\Entity\User();
@@ -1417,6 +1385,10 @@ can always be determined in the following way from a controller::
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword('ryanpass', $user->getSalt());
     $user->setPassword($password);
+
+In order for this to work, just make sure that you have the encoder for your
+user class (e.g. ``Acme\UserBundle\Entity\User``) configured under the ``encoders``
+key in ``app/config/security.yml``.
 
 .. caution::
 
@@ -2070,5 +2042,4 @@ Learn more from the Cookbook
 .. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
-.. _`functions-online.com`: http://www.functions-online.com/sha1.html
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
