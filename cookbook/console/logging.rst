@@ -34,7 +34,7 @@ container and use it to do the logging::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
-    use \Psr\Log\LoggerInterface;
+    use Psr\Log\LoggerInterface;
 
     class GreetCommand extends ContainerAwareCommand
     {
@@ -150,7 +150,8 @@ Then implement the actual listener::
             $this->logger = $logger;
         }
 
-        public function onConsoleException(ConsoleExceptionEvent $event) {
+        public function onConsoleException(ConsoleExceptionEvent $event)
+        {
             $command = $event->getCommand();
             $exception = $event->getException();
 
@@ -170,7 +171,7 @@ Then implement the actual listener::
 In the code above, when any command throws an exception, the listener will
 receive an event. You can simply log it by passing the logger service via the
 service configuration. Your method receives a
-:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent`` object,
+:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` object,
 which has methods to get information about the event and the exception.
 
 Logging non-0 exit statuses
@@ -241,7 +242,7 @@ First configure a listener for console terminate events in the service container
 Then implement the actual listener::
 
     // src/Acme/DemoBundle/EventListener/ConsoleExceptionListener.php
-    namespace Acme/DemoBundle\EventListener;
+    namespace Acme\DemoBundle\EventListener;
 
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
     use Psr\Log\LoggerInterface;
@@ -255,7 +256,8 @@ Then implement the actual listener::
             $this->logger = $logger;
         }
 
-        public function onConsoleTerminate(ConsoleTerminateEvent $event) {
+        public function onConsoleTerminate(ConsoleTerminateEvent $event)
+        {
             $statusCode = $event->getExitCode();
             $command = $event->getCommand();
 

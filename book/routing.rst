@@ -562,13 +562,15 @@ is *not* a number).
 As a result, a URL like ``/blog/my-blog-post`` will now properly match the
 ``blog_show`` route.
 
-+--------------------+-----------+-----------------------+
-| URL                | route     | parameters            |
-+====================+===========+=======================+
-| /blog/2            | blog      | {page} = 2            |
-+--------------------+-----------+-----------------------+
-| /blog/my-blog-post | blog_show | {slug} = my-blog-post |
-+--------------------+-----------+-----------------------+
++----------------------+-----------+-------------------------+
+| URL                  | route     | parameters              |
++======================+===========+=========================+
+| /blog/2              | blog      | {page} = 2              |
++----------------------+-----------+-------------------------+
+| /blog/my-blog-post   | blog_show | {slug} = my-blog-post   |
++----------------------+-----------+-------------------------+
+| /blog/2-my-blog-post | blog_show | {slug} = 2-my-blog-post |
++----------------------+-----------+-------------------------+
 
 .. sidebar:: Earlier Routes always Win
 
@@ -1142,7 +1144,7 @@ instead of simply ``/hello/{name}``:
         $acmeHello = $loader->import(
             "@AcmeHelloBundle/Resources/config/routing.php"
         );
-        $acmeHello->setPrefix('/admin');
+        $acmeHello->addPrefix('/admin');
 
         $collection->addCollection($acmeHello);
 
