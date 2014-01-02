@@ -686,7 +686,7 @@ their type::
 Testing Configuration
 ---------------------
 
-The client used by functional tests creates a Kernel that runs in a special
+The Client used by functional tests creates a Kernel that runs in a special
 ``test`` environment. Since Symfony loads the ``app/config/config_test.yml``
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
@@ -767,7 +767,7 @@ PHPUnit Configuration
 
 Each application has its own PHPUnit configuration, stored in the
 ``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create a ``app/phpunit.xml`` file to setup a configuration for your local
+create an ``app/phpunit.xml`` file to setup a configuration for your local
 machine only.
 
 .. tip::
@@ -777,12 +777,11 @@ machine only.
 
 By default, only the tests from your own custom bundles stored in the standard
 directories ``src/*/*Bundle/Tests`` or ``src/*/Bundle/*Bundle/Tests`` are run
-by the ``phpunit`` command:
+by the ``phpunit`` command, as configured in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
     <!-- app/phpunit.xml.dist -->
-
     <phpunit>
         <!-- ... -->
         <testsuites>
@@ -800,7 +799,6 @@ configuration adds tests from a custom ``lib/tests`` directory:
 .. code-block:: xml
 
     <!-- app/phpunit.xml.dist -->
-
     <phpunit>
         <!-- ... -->
         <testsuites>
@@ -818,18 +816,14 @@ section:
 .. code-block:: xml
 
     <!-- app/phpunit.xml.dist -->
-
     <phpunit>
         <!-- ... -->
         <filter>
             <whitelist>
-                <directory>../src</directory>
+                <!-- ... -->
                 <directory>../lib</directory>
                 <exclude>
-                    <directory>../src/*/*Bundle/Resources</directory>
-                    <directory>../src/*/*Bundle/Tests</directory>
-                    <directory>../src/*/Bundle/*Bundle/Resources</directory>
-                    <directory>../src/*/Bundle/*Bundle/Tests</directory>
+                    <!-- ... -->
                     <directory>../lib/tests</directory>
                 </exclude>
             </whitelist>
