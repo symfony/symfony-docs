@@ -125,7 +125,7 @@ factory itself as a service:
 
         $container->setDefinition('newsletter_factory', new Definition(
             '%newsletter_factory.class%'
-        ))
+        ));
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%'
         ))->setFactoryService(
@@ -193,7 +193,7 @@ in the previous example takes the ``templating`` service as an argument:
 
         $container->setDefinition('newsletter_factory', new Definition(
             '%newsletter_factory.class%'
-        ))
+        ));
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
             array(new Reference('templating'))
