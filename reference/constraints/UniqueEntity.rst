@@ -220,7 +220,7 @@ Consider this example:
 
             <class name="Acme\AdministrationBundle\Entity\Service">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
-                    <option name="field">
+                    <option name="fields">
                         <value>host</value>
                         <value>port</value>
                     </option>
