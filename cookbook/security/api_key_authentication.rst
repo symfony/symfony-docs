@@ -20,7 +20,7 @@ allows you to implement such a scheme really easily.
 
 Your exact situation may differ, but in this example, a token is read
 from an ``apikey`` query parameter, the proper username is loaded from that
-value, and then a User object is created::
+value and then a User object is created::
 
     // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
     namespace Acme\HelloBundle\Security;
@@ -59,7 +59,9 @@ value, and then a User object is created::
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
             $apiKey = $token->getCredentials();
-            if (!$username = $this->userProvider->getUsernameForApiKey($apiKey)) {
+            $username = $this->userProvider->getUsernameForApiKey($apiKey)
+
+            if (!$username) {
                 throw new AuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
@@ -91,10 +93,10 @@ probably differ:
 1. createToken
 ~~~~~~~~~~~~~~
 
-Early in the request cycle, Symfony calls ``createToken``. Your job here
+Early in the request cycle, Symfony calls ``createToken()``. Your job here
 is to create a token object that contains all of the information from the
 request that you need to authenticate the user (e.g. the ``apikey`` query
-parameter). If that information is missing, throwing the
+parameter). If that information is missing, throwing a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\BadCredentialsException`
 will cause authentication to fail.
 
@@ -106,11 +108,11 @@ will cause authentication to fail.
 3. authenticateToken
 ~~~~~~~~~~~~~~~~~~~~
 
-If ``supportsToken`` returns ``true``, Symfony will now call ``authenticateToken``.
+If ``supportsToken()`` returns ``true``, Symfony will now call ``authenticateToken()``.
 One key part is the ``$userProvider``, which is an external class that helps
 you load information about the user. You'll learn more about this next.
 
-In this specific example, the following things happen in ``authenticateToken``:
+In this specific example, the following things happen in ``authenticateToken()``:
 
 #. First, you use the ``$userProvider`` to somehow look up the ``$username`` that
    corresponds to the ``$apiKey``;
@@ -119,18 +121,18 @@ In this specific example, the following things happen in ``authenticateToken``:
 #. Finally, you create an *authenticated token* (i.e. a token with at least one
    role) that has the proper roles and the User object attached to it.
 
-The goal is ultimately to use the ``$apiKey`` to find or create a User object.
-*How* you do this (e.g. query a database) and the exact class for your User
-object may vary. Those differences will be most obvious in your user provider.
+The goal is ultimately to use the ``$apiKey`` to find or create a ``User``
+object. *How* you do this (e.g. query a database) and the exact class for
+your ``User`` object may vary. Those differences will be most obvious in your
+user provider.
 
 The User Provider
 ~~~~~~~~~~~~~~~~~
 
-The ``$userProvider`` can be any user provider (see
-:doc:`how to create a custom user provider </cookbook/security/custom_provider>`).
+The ``$userProvider`` can be any user provider (see :doc:`/cookbook/security/custom_provider`).
 In this example, the ``$apiKey`` is used to somehow find the username for
-the user. This work is done in a ``getUsernameForApiKey`` method, which is
-created entirely custom for our use-case (i.e. this isn't a method that's
+the user. This work is done in a ``getUsernameForApiKey()`` method, which
+is created entirely custom for this use-case (i.e. this isn't a method that's
 used by Symfony's core user provider system).
 
 The ``$userProvider`` might look something like this::
@@ -140,6 +142,8 @@ The ``$userProvider`` might look something like this::
 
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\User;
+    use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
     class ApiKeyUserProvider extends UserProviderInterface
     {
@@ -147,7 +151,7 @@ The ``$userProvider`` might look something like this::
         {
             // Look up the username based on the token in the database, via
             // an API call, or do something entirely different
-            $username = // ...
+            $username = ...;
 
             return $username;
         }
@@ -174,7 +178,7 @@ The ``$userProvider`` might look something like this::
 
         public function supportsClass($class)
         {
-            return $class === 'Symfony\Component\Security\Core\User\User';
+            return 'Symfony\Component\Security\Core\User\User' === $class;
         }
     }
 
@@ -183,23 +187,23 @@ The ``$userProvider`` might look something like this::
     Read the dedicated article to learn
     :doc:`how to create a custom user provider </cookbook/security/custom_provider>`.
 
-The logic inside ``getUsernameForApiKey`` is up to you. You may somehow transform
+The logic inside ``getUsernameForApiKey()`` is up to you. You may somehow transform
 the API key (e.g. ``37b51d``) into a username (e.g. ``jondoe``) by looking
 up some information in a "token" database table.
 
-The same is true for ``loadUserByUsername``. In this example, Symfony's core
+The same is true for ``loadUserByUsername()``. In this example, Symfony's core
 :class:`Symfony\\Component\\Security\\Core\\User\\User` class is simply created.
 This makes sense if you don't need to store any extra information on your
 User object (e.g. ``firstName``). But if you do, you may instead have your *own*
 user class which you create and populate here by querying a database. This
-would allow you to have custom data on the User object.
+would allow you to have custom data on the ``User`` object.
 
-Finally, just make sure that ``supportsClass`` return ``true`` for User
-objects with the same class as whatever user you return in ``loadUserByUsername``.
+Finally, just make sure that ``supportsClass()`` returns ``true`` for User
+objects with the same class as whatever user you return in ``loadUserByUsername()``.
 If your authentication is stateless like in this example (i.e. you expect
 the user to send the API key with every request and so you don't save the
 login to the session), then you can simply throw the ``UnsupportedUserException``
-exception in ``refreshUser``.
+exception in ``refreshUser()``.
 
 .. note::
 
@@ -212,9 +216,10 @@ Configuration
 -------------
 
 Once you have your ``ApiKeyAuthentication`` all setup, you need to register
-it as a service and use it in ``security.yml``. First, register it as a service.
-This assumes that you have already setup your custom user provider as a service
-called ``your_api_key_user_provider`` (see :doc:`/cookbook/security/custom_provider`).
+it as a service and use it in your security configuration (e.g. ``security.yml``).
+First, register it as a service. This assumes that you have already setup
+your custom user provider as a service called ``your_api_key_user_provider``
+(see :doc:`/cookbook/security/custom_provider`).
 
 .. configuration-block::
 
@@ -260,8 +265,8 @@ called ``your_api_key_user_provider`` (see :doc:`/cookbook/security/custom_provi
             array(new Reference('your_api_key_user_provider'))
         ));
 
-Now, activate it in the ``firewalls`` section of ``security.yml`` using the
-``simple_preauth`` key:
+Now, activate it in the ``firewalls`` section of your security configuration
+using the ``simple_preauth`` key:
 
 .. configuration-block::
 
@@ -395,32 +400,31 @@ configuration or set it to ``false``:
 Storing authentication information in the session works like this:
 
 #. At the end of each request, Symfony serializes the token object (returned
-   from ``authenticateToken``), which also serializes the User object (since
-   it's set on a property on the token);
-#. On the next request the token is deserialized and the deserialized User
-   object is passed to the ``refreshUser`` function of the user provider.
+   from ``authenticateToken()``), which also serializes the ``User`` object
+   (since it's set on a property on the token);
+#. On the next request the token is deserialized and the deserialized ``User``
+   object is passed to the ``refreshUser()`` function of the user provider.
 
-The second step is the important one: Symfony calls ``refreshUser`` and passes
+The second step is the important one: Symfony calls ``refreshUser()`` and passes
 you the user object that was serialized in the session. If your users are
 stored in the database, then you may want to re-query for a fresh version
 of the user to make sure it's not out-of-date. But regardless of your requirements,
-``refreshUser`` should now return the User object::
+``refreshUser()`` should now return the User object::
 
     // src/Acme/HelloBundle/Security/ApiKeyUserProvider.php
 
     // ...
-
     class ApiKeyUserProvider extends UserProviderInterface
     {
         // ...
 
         public function refreshUser(UserInterface $user)
         {
-            // $user is the User that you set in the token inside authenticateToken
+            // $user is the User that you set in the token inside authenticateToken()
             // after it has been deserialized from the session
 
             // you might use $user to query the database for a fresh user
-            $id = $user->getId();
+            // $id = $user->getId();
             // use $id to make a query
 
             // if you are *not* reading from a database and are just creating
@@ -431,12 +435,12 @@ of the user to make sure it's not out-of-date. But regardless of your requiremen
 
 .. note::
 
-    You'll also want to make sure that your User object is being serialized
-    correctly. If your User object has private properties, PHP can't serialize
+    You'll also want to make sure that your ``User`` object is being serialized
+    correctly. If your ``User`` object has private properties, PHP can't serialize
     those. In this case, you may get back a User object that has a ``null``
     value for each property. For an example, see :doc:`/cookbook/security/entity_provider`.
 
-Only Authenticating for certain URLs
+Only Authenticating for Certain URLs
 ------------------------------------
 
 This entry has assumed that you want to look for the ``apikey`` authentication
@@ -445,12 +449,13 @@ really need to look for authentication information once the user has reached
 a certain URL (e.g. the redirect URL in OAuth).
 
 Fortunately, handling this situation is easy: just check to see what the
-current URL is before creating the token in ``createToken``::
+current URL is before creating the token in ``createToken()``::
 
     // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
 
     // ...
     use Symfony\Component\Security\Http\HttpUtils;
+    use Symfony\Component\HttpFoundation\Request;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
@@ -477,8 +482,8 @@ current URL is before creating the token in ``createToken``::
         }
     }
 
-This uses a handy :class:`Symfony\\Component\\Security\\Http\\HttpUtils`
-class to see if the current URL matches the URL you're looking for. In this
+This uses the handy :class:`Symfony\\Component\\Security\\Http\\HttpUtils`
+class to check if the current URL matches the URL you're looking for. In this
 case, the URL (``/login/check``) has been hardcoded in the class, but you
 could also inject it as the third constructor argument.
 

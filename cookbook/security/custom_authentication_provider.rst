@@ -8,7 +8,7 @@ How to create a custom Authentication Provider
 
     Creating a custom authentication system is hard, and this entry will walk
     you through that process. But depending on your needs, you may be able
-    to use solve your problem in a simpler way using these documents:
+    to solve your problem in a simpler way using these documents:
 
     * :doc:`/cookbook/security/custom_password_authenticator`
     * :doc:`/cookbook/security/api_key_authentication`

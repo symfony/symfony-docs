@@ -1,7 +1,7 @@
 .. index::
     single: Security; Custom Password Authenticator
 
-How to create a Custom Form Password Authenticator
+How to Create a Custom Form Password Authenticator
 ==================================================
 
 Imagine you want to allow access to your website only between 2pm and 4pm
@@ -97,12 +97,12 @@ But first, you can find out more about what each method in this class does.
 1) createToken
 ~~~~~~~~~~~~~~
 
-When Symfony begins handling a request, ``createToken`` is called, where
+When Symfony begins handling a request, ``createToken()`` is called, where
 you create a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
-object that contains whatever information you need in ``authenticateToken``
+object that contains whatever information you need in ``authenticateToken()``
 to authenticate the user (e.g. the username and password).
 
-Whatever token object you create here will be passed to you later in ``authenticateToken``.
+Whatever token object you create here will be passed to you later in ``authenticateToken()``.
 
 2) supportsToken
 ~~~~~~~~~~~~~~~~
@@ -112,20 +112,20 @@ Whatever token object you create here will be passed to you later in ``authentic
 3) authenticateToken
 ~~~~~~~~~~~~~~~~~~~~
 
-If ``supportsToken`` returns ``true``, Symfony will now call ``authenticateToken``.
-Your job here is to checks that the token is allowed to log in by first
-getting the User object via the user provider and then, by checking the password
+If ``supportsToken`` returns ``true``, Symfony will now call ``authenticateToken()``.
+Your job here is to check that the token is allowed to log in by first
+getting the ``User`` object via the user provider and then, by checking the password
 and the current time.
 
 .. note::
 
-    The "flow" of how you get the User object and determine whether or not
+    The "flow" of how you get the ``User`` object and determine whether or not
     the token is valid (e.g. checking the password), may vary based on your
     requirements.
 
 Ultimately, your job is to return a *new* token object that is "authenticated"
-(i.e. it has at least 1 role set on it) and which has the User object inside
-of it.
+(i.e. it has at least 1 role set on it) and which has the ``User`` object
+inside of it.
 
 Inside this method, an encoder is needed to check the password's validity::
 
@@ -137,8 +137,8 @@ Inside this method, an encoder is needed to check the password's validity::
         );
 
 This is a service that is already available in Symfony and the password algorithm
-is configured in ``security.yml`` under the ``encoders`` key. Below, you'll
-see how to inject that into the ``TimeAuthenticator``.
+is configured in the security configuration (e.g. ``security.yml``) under
+the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthenticator``.
 
 .. _cookbook-security-password-authenticator-config:
 
@@ -191,8 +191,8 @@ Now, configure your ``TimeAuthenticator`` as a service:
             array(new Reference('security.encoder_factory'))
         ));
 
-Then, activate it in the ``firewalls`` section of ``security.yml`` using
-the ``simple_form`` key:
+Then, activate it in the ``firewalls`` section of the security configuration
+using the ``simple_form`` key:
 
 .. configuration-block::
 
