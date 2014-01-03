@@ -486,7 +486,10 @@ sport like this::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('sport', 'entity', array(...))
+                ->add('sport', 'entity', array(
+                    'class' => 'AcmeDemoBundle:Sport',
+                    'empty_value' => '',
+                ));
             ;
 
             $builder->addEventListener(
@@ -497,12 +500,18 @@ sport like this::
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
-                    $positions = $data->getSport()->getAvailablePositions();
+                    $sport = $data->getSport();
+                    $positions = (null === $sport) ? array() : $sport->getAvailablePositions();
 
-                    $form->add('position', 'entity', array('choices' => $positions));
+                    $form->add('position', 'entity', array(
+                        'class' => 'AcmeDemoBundle:Position',
+                        'empty_value' => '',
+                        'choices' => $positions,
+                    ));
                 }
             );
         }
+        // ...
     }
 
 When you're building this form to display to the user for the first time,
@@ -547,13 +556,20 @@ The type would now look like::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('sport', 'entity', array(...))
+                ->add('sport', 'entity', array(
+                    'class' => 'AcmeDemoBundle:Sport',
+                    'empty_value' => '',
+                ));
             ;
 
-            $formModifier = function(FormInterface $form, Sport $sport) {
-                $positions = $sport->getAvailablePositions();
+            $formModifier = function(FormInterface $form, Sport $sport = null) {
+                $positions = (null === $sport) ? array() : $sport->getAvailablePositions();
 
-                $form->add('position', 'entity', array('choices' => $positions));
+                $form->add('position', 'entity', array(
+                    'class' => 'AcmeDemoBundle:Position',
+                    'empty_value' => '',
+                    'choices' => $positions,
+                ));
             };
 
             $builder->addEventListener(
@@ -579,17 +595,119 @@ The type would now look like::
                 }
             );
         }
+        // ...
     }
 
-You can see that you need to listen on these two events and have different callbacks
-only because in two different scenarios, the data that you can use is available in different events.
-Other than that, the listeners always perform exactly the same things on a given form.
+You can see that you need to listen on these two events and have different
+callbacks only because in two different scenarios, the data that you can use is
+available in different events. Other than that, the listeners always perform
+exactly the same things on a given form.
 
-One piece that may still be missing is the client-side updating of your form
-after the sport is selected. This should be handled by making an AJAX call
-back to your application. In that controller, you can submit your form, but
-instead of processing it, simply use the submitted form to render the updated
-fields. The response from the AJAX call can then be used to update the view.
+One piece that is still missing is the client-side updating of your form after
+the sport is selected. This should be handled by making an AJAX call back to
+your application. Assume that you have a sport meetup creation controller::
+
+    // src/Acme/DemoBundle/Controller/MeetupController.php
+    // ...
+
+    /**
+     * @Route("/meetup")
+     */
+    class MeetupController extends Controller
+    {
+        /**
+         * @Route("/create", name="meetup_create")
+         * @Template
+         */
+        public function createAction(Request $request)
+        
+        {
+            $meetup = new SportMeetup();
+            $form = $this->createForm(new SportMeetupType(), $meetup);
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // ... save the meetup, redirect etc.
+            }
+
+            return array('form' => $form->createView());
+        }
+        // ...
+    }
+
+The associated template uses some JavaScript to update the ``position`` form
+field according to the current selection in the ``sport`` field. To ease things
+it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
+
+.. code-block:: html+jinja
+
+    {# src/Acme/DemoBundle/Resources/views/Meetup/create.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
+        {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
+        {# ... #}
+    {{ form_end(form) }}
+
+    {# ... Include jQuery and scripts from FOSJsRoutingBundle ... #}
+    <script>
+    $(function(){
+        // When sport gets selected ...
+        $('#meetup_sport').change(function(){
+            var $position = $('#meetup_position');
+            // Remove current position options except first "empty_value" option
+            $position.find('option:not(:first)').remove();
+            var sportId = $(this).val();
+            if (sportId) {
+                // Issue AJAX call fetching positions for selected sport as JSON
+                $.getJSON(
+                    // FOSJsRoutingBundle generates route including selected sport ID
+                    Routing.generate('meetup_positions_by_sport', {id: sportId}),
+                    function(positions) {
+                        // Append fetched positions associated with selected sport
+                        $.each(positions, function(key, position){
+                            $position.append(new Option(position[1], position[0]));
+                        });
+                    }
+                );
+            }
+        });
+    });
+    </script>
+
+The last piece is implementing a controller for the
+``meetup_positions_by_sport`` route returning the positions as JSON according
+to the currently selected sport. To ease things again the controller makes use
+of the :doc:`@ParamConverter </bundles/SensioFrameworkExtraBundle/annotations/converters>`
+listener to convert the submitted sport ID into a ``Sport`` object::
+
+    // src/Acme/DemoBundle/Controller/MeetupController.php
+    // ...
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+    /**
+     * @Route("/meetup")
+     */
+    class MeetupController extends Controller
+    {
+        // ...
+        /**
+         * @Route("/{id}/positions.json", name="meetup_positions_by_sport", options={"expose"=true})
+         */
+        public function positionsBySportAction(Sport $sport)
+        {
+            $result = array();
+            foreach ($sport->getAvailablePositions() as $position) {
+                $result[] = array($position->getId(), $position->getName());
+            }
+
+            return new JsonResponse($result);
+        }
+    }
+
+.. note::
+
+    The returned JSON should not be created from an associative array
+    (``$result[$position->getId()] = $position->getName())``) as the iterating
+    order in JavaScript is undefined and may vary in different browsers.
 
 .. _cookbook-dynamic-form-modification-suppressing-form-validation:
 
@@ -622,3 +740,6 @@ all of this, use a listener::
 
     By doing this, you may accidentally disable something more than just form
     validation, since the ``POST_SUBMIT`` event may have other listeners.
+
+.. _`jQuery`: http://jquery.com
+.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
