@@ -890,7 +890,7 @@ to get the ``id``:
 
     .. code-block:: html+php
 
-        <?php echo $form['task']['vars']['id']?>
+        <?php echo $form['task']->vars['id']?>
 
 To get the value used for the form field's name attribute you need to use
 the ``full_name`` value:
@@ -903,7 +903,7 @@ the ``full_name`` value:
 
     .. code-block:: html+php
 
-        <?php echo $form['task']['vars']['full_name'] ?>
+        <?php echo $form['task']->vars['full_name'] ?>
 
 Twig Template Function Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
