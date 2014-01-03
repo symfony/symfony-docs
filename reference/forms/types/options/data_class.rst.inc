@@ -1,6 +1,3 @@
-.. versionadded:: 2.4
-    The ``data_class`` option was introduced in Symfony 2.4.
-
 data_class
 ~~~~~~~~~~
 
