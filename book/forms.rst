@@ -784,7 +784,7 @@ output can be customized on many different levels.
 
         .. code-block:: html+php
 
-            <?php echo $view['form']->get('value')->getTask() ?>
+            <?php echo $form->vars['value']->getTask() ?>
 
 .. index::
    single: Forms; Rendering each field by hand
@@ -890,7 +890,7 @@ to get the ``id``:
 
     .. code-block:: html+php
 
-        <?php echo $form['task']->get('id') ?>
+        <?php echo $form['task']['vars']['id']?>
 
 To get the value used for the form field's name attribute you need to use
 the ``full_name`` value:
@@ -903,7 +903,7 @@ the ``full_name`` value:
 
     .. code-block:: html+php
 
-        <?php echo $form['task']->get('full_name') ?>
+        <?php echo $form['task'][vars']['full_name'] ?>
 
 Twig Template Function Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
