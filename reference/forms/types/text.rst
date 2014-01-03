@@ -10,7 +10,8 @@ The text field represents the most basic input text field.
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
 | Inherited   | - `max_length`_                                                    |
-| options     | - `required`_                                                      |
+| options     | - `empty_data`_                                                    |
+|             | - `required`_                                                      |
 |             | - `label`_                                                         |
 |             | - `label_attr`_                                                    |
 |             | - `data`_                                                          |
@@ -33,6 +34,8 @@ Inherited Options
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

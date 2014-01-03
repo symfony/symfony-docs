@@ -18,7 +18,8 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 | Options     | - `value`_                                                          |
 +-------------+---------------------------------------------------------------------+
 | Inherited   | - `data`_                                                           |
-| options     | - `required`_                                                       |
+| options     | - `empty_data`_                                                     |
+|             | - `required`_                                                       |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `read_only`_                                                      |
@@ -53,6 +54,8 @@ Inherited Options
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
