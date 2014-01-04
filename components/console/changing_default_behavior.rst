@@ -1,8 +1,49 @@
 .. index::
-   single: Console; Single command application
+   single: Console; Changing the Default Behavior
+
+Changing the Default Behavior
+=============================
+
+When building a command line tool, you may need to customize it to fit your needs.
+Probably you want to change the Default Command that the Application runs or
+maybe you just want to run a Single Command instead of have to pass the command
+name each time. Fortunately it is possible to do both.
+
+Changing the Default Command
+----------------------------
+
+By default the Application will always run the ListCommand. In order to change
+the default command you just need to pass the command name you want to run by
+default to the :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
+method::
+
+    #!/usr/bin/env php
+    <?php
+    // app/console
+
+    use Acme\DemoBundle\Command\GreetCommand;
+    use Symfony\Component\Console\Application;
+
+    $command = new GreetCommand();
+    $application = new Application();
+    $application->add($command);
+    $application->setDefaultCommand($command->getName());
+    $application->run()
+
+Test the new console command by running the following
+
+.. code-block:: bash
+
+    $ app/console Fabien
+
+This will print the following to the command line:
+
+.. code-block:: text
+
+    Hello Fabien
 
 Building a Single Command Application
-=====================================
+-------------------------------------
 
 When building a command line tool, you may not need to provide several commands.
 In such case, having to pass the command name each time is tedious. Fortunately,
