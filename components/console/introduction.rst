@@ -199,10 +199,10 @@ level. For example::
     }
 
 .. versionadded:: 2.4
-   The :method:`Symfony\\Component\Console\\Output\\Output::isQuiet`,
-   :method:`Symfony\\Component\Console\\Output\\Output::isVerbose`,
-   :method:`Symfony\\Component\Console\\Output\\Output::isVeryVerbose` and
-   :method:`Symfony\\Component\Console\\Output\\Output::isDebug`
+   The :method:`Symfony\\Component\\Console\\Output\\Output::isQuiet`,
+   :method:`Symfony\\Component\\Console\\Output\\Output::isVerbose`,
+   :method:`Symfony\\Component\\Console\\Output\\Output::isVeryVerbose` and
+   :method:`Symfony\\Component\\Console\\Output\\Output::isDebug`
    methods were introduced in version 2.4
 
 There are also more semantic methods you can use to test for each of the
@@ -225,7 +225,7 @@ verbosity levels::
     }
 
 When the quiet level is used, all output is suppressed as the default
-:method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output::write>`
+:method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output\\Output::write>`
 method returns without actually printing.
 
 .. tip::
