@@ -72,7 +72,7 @@ Get the Symfony2 source code:
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
 * After the "forking action" has completed, clone your fork locally
-  (this will create a `symfony` directory):
+  (this will create a ``symfony`` directory):
 
 .. code-block:: bash
 
@@ -105,16 +105,16 @@ Choose the right Branch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Before working on a patch, you must determine on which branch you need to
-work. The branch should be based on the `master` branch if you want to add a
+work. The branch should be based on the ``master`` branch if you want to add a
 new feature. But if you want to fix a bug, use the oldest but still maintained
-version of Symfony where the bug happens (like `2.2`).
+version of Symfony where the bug happens (like ``2.2``).
 
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a patch
-    for the `2.2` branch, the patch will also be applied by the core team on
-    the `master` branch.
+    for the ``2.2`` branch, the patch will also be applied by the core team on
+    the ``master`` branch.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
@@ -126,14 +126,14 @@ topic branch:
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the 2.2 branch, first track the remote
-`2.2` branch locally:
+Or, if you want to provide a bugfix for the ``2.2`` branch, first track the remote
+``2.2`` branch locally:
 
 .. code-block:: bash
 
     $ git checkout -t origin/2.2
 
-Then create a new branch off the 2.2 branch to work on the bugfix:
+Then create a new branch off the ``2.2`` branch to work on the bugfix:
 
 .. code-block:: bash
 
@@ -141,11 +141,11 @@ Then create a new branch off the 2.2 branch to work on the bugfix:
 
 .. tip::
 
-    Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the
+    Use a descriptive name for your branch (``ticket_XXX`` where ``XXX`` is the
     ticket number is a good convention for bug fixes).
 
 The above checkout commands automatically switch the code to the newly created
-branch (check the branch you are working on with `git branch`).
+branch (check the branch you are working on with ``git branch``).
 
 Work on your Patch
 ~~~~~~~~~~~~~~~~~~
@@ -154,7 +154,7 @@ Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
 
 * Read about the Symfony :doc:`conventions <conventions>` and follow the
-  coding :doc:`standards <standards>` (use `git diff --check` to check for
+  coding :doc:`standards <standards>` (use ``git diff --check`` to check for
   trailing spaces -- also read the tip below);
 
 * Add unit tests to prove that the bug is fixed or that the new feature
@@ -164,7 +164,7 @@ in mind the following:
   provide a compatibility layer to support the old way) -- patches that break
   backward compatibility have less chance to be merged;
 
-* Do atomic and logically separate commits (use the power of `git rebase` to
+* Do atomic and logically separate commits (use the power of ``git rebase`` to
   have a clean and logical history);
 
 * Squash irrelevant commits that are just about fixing coding standards or
@@ -199,11 +199,11 @@ Prepare your Patch for Submission
 When your patch is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
-* An explanation of the changes in the relevant CHANGELOG file(s) (the ``[BC
-  BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
+* An explanation of the changes in the relevant ``CHANGELOG`` file(s) (the
+ ``[BC BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
 
 * An explanation on how to upgrade an existing application in the relevant
-  UPGRADE file(s) if the changes break backward compatibility or if you
+  ``UPGRADE`` file(s) if the changes break backward compatibility or if you
   deprecate something that will ultimately break backward compatibility.
 
 Step 3: Submit your Patch
@@ -254,7 +254,7 @@ You can now make a pull request on the ``symfony/symfony`` Github repository.
 .. tip::
 
     Take care to point your pull request towards ``symfony:2.2`` if you want
-    the core team to pull a bugfix based on the 2.2 branch.
+    the core team to pull a bugfix based on the ``2.2`` branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -317,10 +317,10 @@ Some answers to the questions trigger some more requirements:
    documentation and reference it under the "Doc PR" section;
 
  * If you answer yes to "BC breaks?", the patch must contain updates to the
-   relevant CHANGELOG and UPGRADE files;
+   relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
  * If you answer yes to "Deprecations?", the patch must contain updates to the
-   relevant CHANGELOG and UPGRADE files;
+   relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
  * If you answer no to "Tests pass", you must add an item to a todo-list with
    the actions that must be done to fix the tests;
@@ -394,11 +394,11 @@ type this command, an editor will popup showing a list of commits:
     pick 7fc64b4 second commit
     pick 7d33018 third commit
 
-To squash all commits into the first one, remove the word "pick" before the
-second and the last commits, and replace it by the word "squash" or just "s".
-When you save, Git will start rebasing, and if successful, will ask you to
-edit the commit message, which by default is a listing of the commit messages
-of all the commits. When you finish, execute the push command.
+To squash all commits into the first one, remove the word ``pick`` before the
+second and the last commits, and replace it by the word ``squash`` or just
+ ``s``. When you save, Git will start rebasing, and if successful, will ask
+ you to edit the commit message, which by default is a listing of the commit
+ messages of all the commits. When you finish, execute the push command.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
