@@ -18,7 +18,7 @@ A simple, non-responsive button.
 |                      | - `label_attr`_                                                      |
 |                      | - `translation_domain`_                                              |
 +----------------------+----------------------------------------------------------------------+
-| Overridden Options   | - `auto_initialize`                                                  |
+| Overriden options    | - `auto_initialize`_                                                 |
 +----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
@@ -37,5 +37,8 @@ Options
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
+
+Overriden options
+-----------------
 
 .. include:: /reference/forms/types/options/button_auto_initialize.rst.inc
