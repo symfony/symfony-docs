@@ -129,3 +129,20 @@ done as follow::
     Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
     interface: ``HttpKernelInterface::MASTER_REQUEST`` and
     ``HttpKernelInterface::SUB_REQUEST``.
+
+Using several Event Dispatchers
+-------------------------------
+
+.. versionadded:: 2.5
+    Since 2.5 the ``kernel.event_listener`` and ``kernel.event_subscriber``
+    tags can be used to register listeners and subscribers to any Event
+    Dispatcher.
+
+Using the ``dispatcher`` attribute on either ``kernel.event_listener`` or
+``kernel.event_subscriber`` tags will allow to register an event listener
+or a subscriber to any Event Dispatcher.
+
+However, in these cases, It is recommended to register a new
+:class:`Symfony\\Component\\EventDispatcher\\DependecyInjection\\RegisterListenersPass`
+in order to change the name of the tags (read more about compiler passes
+ in the cookbook article section ":doc:`/cookbook/service_container/compiler_passes`").
