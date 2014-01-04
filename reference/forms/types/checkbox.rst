@@ -13,7 +13,7 @@ if the box is unchecked, the value will be set to false.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
-| Overriden   | - `empty_data`_                                                        |
+| Overridden  | - `empty_data`_                                                        |
 | options     | - `compound`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `data`_                                                              |
@@ -45,6 +45,13 @@ Field Options
 -------------
 
 .. include:: /reference/forms/types/options/value.rst.inc
+
+Overriden options
+-----------------
+
+.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
+
+.. include:: /reference/forms/types/options/checkbox_compound.rst.inc
 
 Overriden options
 -----------------
