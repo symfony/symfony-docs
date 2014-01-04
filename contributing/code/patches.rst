@@ -228,7 +228,8 @@ while to finish your changes):
 
 .. tip::
 
-    Replace `master` with `2.2` if you are working on a bugfix
+    Replace ``master`` with the branch you selected previously (e.g. ``2.2``)
+    if you are working on a bugfix
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
@@ -243,7 +244,7 @@ Check that all tests still pass and push your branch remotely:
 
 .. code-block:: bash
 
-    $ git push origin BRANCH_NAME
+    $ git push -f origin BRANCH_NAME
 
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
