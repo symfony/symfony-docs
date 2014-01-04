@@ -179,7 +179,7 @@ in mind the following:
 
     When submitting pull requests, `fabbot`_ checks your code
     for common typos and verifies that you are using the PHP coding standards
-    as defined in PSR-1 and PSR-2.
+    as defined in `PSR-1`_ and `PSR-2`_.
 
     A status is posted below the pull request description with a summary
     of any problems it detects or any Travis CI build failures.
@@ -410,3 +410,5 @@ second and the last commits, and replace it by the word ``squash`` or just
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
 .. _`documentation repository`:            https://github.com/symfony/symfony-docs
 .. _`fabbot`:                              http://fabbot.io
+.. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
