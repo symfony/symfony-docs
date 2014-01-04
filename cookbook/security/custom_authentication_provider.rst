@@ -182,6 +182,13 @@ a 403 Response is returned.
     does not require maintaining authentication sessions or login forms, it
     won't be used for this example.
 
+.. note::
+
+    Returning prematurely from the listener is relevant only if you want to chain
+    authentication providers (for example to allow anonymous users). If you want
+    to forbid access to anonymous users and have a nice 403 error, you should set
+    the status code of the response before returning.
+
 The Authentication Provider
 ---------------------------
 
