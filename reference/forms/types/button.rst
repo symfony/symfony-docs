@@ -18,6 +18,8 @@ A simple, non-responsive button.
 |                      | - `label_attr`_                                                      |
 |                      | - `translation_domain`_                                              |
 +----------------------+----------------------------------------------------------------------+
+| Overriden options    | - `auto_initialize`_                                                 |
++----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |
@@ -35,3 +37,8 @@ Options
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
+
+Overriden options
+-----------------
+
+.. include:: /reference/forms/types/options/button_auto_initialize.rst.inc
