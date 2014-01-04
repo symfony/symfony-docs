@@ -474,8 +474,10 @@ The meetup is passed as an entity field to the form. So we can access each
 sport like this::
 
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
+
     namespace Acme\DemoBundle\Form\Type;
 
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
@@ -487,9 +489,9 @@ sport like this::
         {
             $builder
                 ->add('sport', 'entity', array(
-                    'class' => 'AcmeDemoBundle:Sport',
+                    'class'       => 'AcmeDemoBundle:Sport',
                     'empty_value' => '',
-                ));
+                ))
             ;
 
             $builder->addEventListener(
@@ -501,16 +503,17 @@ sport like this::
                     $data = $event->getData();
 
                     $sport = $data->getSport();
-                    $positions = (null === $sport) ? array() : $sport->getAvailablePositions();
+                    $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                     $form->add('position', 'entity', array(
-                        'class' => 'AcmeDemoBundle:Position',
+                        'class'       => 'AcmeDemoBundle:Position',
                         'empty_value' => '',
-                        'choices' => $positions,
+                        'choices'     => $positions,
                     ));
                 }
             );
         }
+
         // ...
     }
 
@@ -545,11 +548,12 @@ new field automatically and map it to the submitted client data.
 The type would now look like::
 
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
+
     namespace Acme\DemoBundle\Form\Type;
 
     // ...
-    use Acme\DemoBundle\Entity\Sport;
     use Symfony\Component\Form\FormInterface;
+    use Acme\DemoBundle\Entity\Sport;
 
     class SportMeetupType extends AbstractType
     {
@@ -557,18 +561,18 @@ The type would now look like::
         {
             $builder
                 ->add('sport', 'entity', array(
-                    'class' => 'AcmeDemoBundle:Sport',
+                    'class'       => 'AcmeDemoBundle:Sport',
                     'empty_value' => '',
                 ));
             ;
 
             $formModifier = function(FormInterface $form, Sport $sport = null) {
-                $positions = (null === $sport) ? array() : $sport->getAvailablePositions();
+                $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', 'entity', array(
-                    'class' => 'AcmeDemoBundle:Position',
+                    'class'       => 'AcmeDemoBundle:Position',
                     'empty_value' => '',
-                    'choices' => $positions,
+                    'choices'     => $positions,
                 ));
             };
 
@@ -595,6 +599,7 @@ The type would now look like::
                 }
             );
         }
+
         // ...
     }
 
@@ -608,6 +613,15 @@ the sport is selected. This should be handled by making an AJAX call back to
 your application. Assume that you have a sport meetup creation controller::
 
     // src/Acme/DemoBundle/Controller/MeetupController.php
+
+    namespace Acme\DemoBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\HttpFoundation\Request;
+    use Acme\DemoBundle\Entity\SportMeetup;
+    use Acme\DemoBundle\Form\Type\SportMeetupType;
     // ...
 
     /**
@@ -620,7 +634,6 @@ your application. Assume that you have a sport meetup creation controller::
          * @Template
          */
         public function createAction(Request $request)
-        
         {
             $meetup = new SportMeetup();
             $form = $this->createForm(new SportMeetupType(), $meetup);
@@ -631,6 +644,7 @@ your application. Assume that you have a sport meetup creation controller::
 
             return array('form' => $form->createView());
         }
+
         // ...
     }
 
@@ -638,40 +652,79 @@ The associated template uses some JavaScript to update the ``position`` form
 field according to the current selection in the ``sport`` field. To ease things
 it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# src/Acme/DemoBundle/Resources/views/Meetup/create.html.twig #}
-    {{ form_start(form) }}
-        {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
-        {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
-        {# ... #}
-    {{ form_end(form) }}
+    .. code-block:: html+jinja
 
-    {# ... Include jQuery and scripts from FOSJsRoutingBundle ... #}
-    <script>
-    $(function(){
-        // When sport gets selected ...
-        $('#meetup_sport').change(function(){
-            var $position = $('#meetup_position');
-            // Remove current position options except first "empty_value" option
-            $position.find('option:not(:first)').remove();
-            var sportId = $(this).val();
-            if (sportId) {
-                // Issue AJAX call fetching positions for selected sport as JSON
-                $.getJSON(
-                    // FOSJsRoutingBundle generates route including selected sport ID
-                    Routing.generate('meetup_positions_by_sport', {id: sportId}),
-                    function(positions) {
-                        // Append fetched positions associated with selected sport
-                        $.each(positions, function(key, position){
-                            $position.append(new Option(position[1], position[0]));
-                        });
-                    }
-                );
-            }
+        {# src/Acme/DemoBundle/Resources/views/Meetup/create.html.twig #}
+
+        {{ form_start(form) }}
+            {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
+            {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
+            {# ... #}
+        {{ form_end(form) }}
+
+        {# ... Include jQuery and scripts from FOSJsRoutingBundle ... #}
+        <script>
+        $(function(){
+            // When sport gets selected ...
+            $('#meetup_sport').change(function(){
+                var $position = $('#meetup_position');
+                // Remove current position options except first "empty_value" option
+                $position.find('option:not(:first)').remove();
+                var sportId = $(this).val();
+                if (sportId) {
+                    // Issue AJAX call fetching positions for selected sport as JSON
+                    $.getJSON(
+                        // FOSJsRoutingBundle generates route including selected sport ID
+                        Routing.generate('meetup_positions_by_sport', {id: sportId}),
+                        function(positions) {
+                            // Append fetched positions associated with selected sport
+                            $.each(positions, function(key, position){
+                                $position.append(new Option(position[1], position[0]));
+                            });
+                        }
+                    );
+                }
+            });
         });
-    });
-    </script>
+        </script>
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/DemoBundle/Resources/views/Meetup/create.html.php -->
+
+        <?php echo $view['form']->start($form) ?>
+            <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
+            <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->
+            <!-- ... -->
+        <?php echo $view['form']->end($form) ?>
+
+        <!-- ... Include jQuery and scripts from FOSJsRoutingBundle ... -->
+        <script>
+        $(function(){
+            // When sport gets selected ...
+            $('#meetup_sport').change(function(){
+                var $position = $('#meetup_position');
+                // Remove current position options except first "empty_value" option
+                $position.find('option:not(:first)').remove();
+                var sportId = $(this).val();
+                if (sportId) {
+                    // Issue AJAX call fetching positions for selected sport as JSON
+                    $.getJSON(
+                        // FOSJsRoutingBundle generates route including selected sport ID
+                        Routing.generate('meetup_positions_by_sport', {id: sportId}),
+                        function(positions) {
+                            // Append fetched positions associated with selected sport
+                            $.each(positions, function(key, position){
+                                $position.append(new Option(position[1], position[0]));
+                            });
+                        }
+                    );
+                }
+            });
+        });
+        </script>
 
 The last piece is implementing a controller for the
 ``meetup_positions_by_sport`` route returning the positions as JSON according
@@ -680,8 +733,13 @@ of the :doc:`@ParamConverter </bundles/SensioFrameworkExtraBundle/annotations/co
 listener to convert the submitted sport ID into a ``Sport`` object::
 
     // src/Acme/DemoBundle/Controller/MeetupController.php
+
+    namespace Acme\DemoBundle\Controller;
+
     // ...
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Acme\DemoBundle\Entity\Sport;
 
     /**
      * @Route("/meetup")
@@ -689,6 +747,7 @@ listener to convert the submitted sport ID into a ``Sport`` object::
     class MeetupController extends Controller
     {
         // ...
+
         /**
          * @Route("/{id}/positions.json", name="meetup_positions_by_sport", options={"expose"=true})
          */
