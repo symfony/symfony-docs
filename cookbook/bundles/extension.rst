@@ -89,6 +89,8 @@ The second method has several specific advantages:
     supported configuration settings for which backward compatibility will
     be maintained.
 
+For other usages of the parameter ``%`` syntax see :doc:`Configuration </cookbook/configuration>`.
+
 .. index::
    single: Bundle; Extension
    single: DependencyInjection; Extension
