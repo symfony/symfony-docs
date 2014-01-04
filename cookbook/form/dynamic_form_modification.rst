@@ -474,7 +474,6 @@ The meetup is passed as an entity field to the form. So we can access each
 sport like this::
 
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
-
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -548,7 +547,6 @@ new field automatically and map it to the submitted client data.
 The type would now look like::
 
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
-
     namespace Acme\DemoBundle\Form\Type;
 
     // ...
@@ -613,7 +611,6 @@ the sport is selected. This should be handled by making an AJAX call back to
 your application. Assume that you have a sport meetup creation controller::
 
     // src/Acme/DemoBundle/Controller/MeetupController.php
-
     namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -657,7 +654,6 @@ it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
     .. code-block:: html+jinja
 
         {# src/Acme/DemoBundle/Resources/views/Meetup/create.html.twig #}
-
         {{ form_start(form) }}
             {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
             {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
@@ -693,7 +689,6 @@ it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
     .. code-block:: html+php
 
         <!-- src/Acme/DemoBundle/Resources/views/Meetup/create.html.php -->
-
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
             <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->
@@ -733,7 +728,6 @@ of the :doc:`@ParamConverter </bundles/SensioFrameworkExtraBundle/annotations/co
 listener to convert the submitted sport ID into a ``Sport`` object::
 
     // src/Acme/DemoBundle/Controller/MeetupController.php
-
     namespace Acme\DemoBundle\Controller;
 
     // ...
