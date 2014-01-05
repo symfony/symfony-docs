@@ -1,5 +1,5 @@
 .. index::
-   single: Session; Database Storage
+    single: Session; Database Storage
 
 How to use PdoSessionHandler to store Sessions in the Database
 ==============================================================

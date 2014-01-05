@@ -6,6 +6,7 @@ Configuration
 
     environments
     override_dir_structure
+    using_configuration_parameters
     front_controllers_and_kernel
     external_parameters
     pdo_session_storage

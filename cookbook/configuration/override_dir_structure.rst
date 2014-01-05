@@ -1,5 +1,5 @@
 .. index::
-   single: Override Symfony
+    single: Override Symfony
 
 How to override Symfony's Default Directory Structure
 =====================================================

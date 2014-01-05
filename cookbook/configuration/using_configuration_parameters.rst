@@ -1,0 +1,177 @@
+.. index::
+    single: Using Configuration Parameters
+
+Using Configuration Parameters
+==============================
+
+Parameters, such as ``kernel.root_dir`` (pointing to a path) or ``kernel.debug``
+(whether debug mode is enabled), are common in configuration. By wrapping the
+parameter name within 2 ``%`` characters, you indicate that this value should
+be replaced by the value of the parameter. When using Symfony, you can have
+parameters defined in a bundle and used only in that bundle and also parameters
+defined in a bundle and used in another. Usually they would have a name
+like ``demo_bundle.service_doer.local_parameter`` making explicit where this
+parameter comes from. If the parameter is global then it may not have a
+namespace, e.g. ``%some_global_option_here%``.
+
+Basic Usage
+-----------
+
+You can use parameters inside the ``parameters.yml`` file:
+
+.. code-block:: yaml
+
+    # app/config/parameters.yml
+    parameters:
+        payment_test_mode: "%kernel.root_dir%"
+
+Inside ``config.yml`` and other configuration files building larger
+strings:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        my_bundle:
+            local:
+                directory:  "%kernel.root_dir%/../web/media/image"
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            my-bundle="http://example.org/schema/dic/my_bundle">
+            <my-bundle:config>
+                <my-bundle:local directory="%kernel.root_dir%/../web/media/image" />
+            </my-bundle:config>
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('my_bundle', array(
+            'local' => array(
+                'directory' => '%kernel.root_dir%/../web/media/image',
+            ),
+        ));
+
+For more information on how parameters are used in Symfony please see
+:ref:`parameters <book-service-container-parameters>`.
+
+Besides these usages above you can use this syntax in routing files and handle
+parameters in special cases as discussed below.
+
+Using Parameters in your Bundle Configuration
+---------------------------------------------
+
+If for instance, there is a use case in which you want to use the
+``%kernel.debug%`` debug mode parameter to make your bundle adapt its
+configuration depending on this. For this case you cannot use
+the syntax directly and expect this to work. The configuration handling
+will just tread this ``%kernel.debug%`` as a string. Consider
+this example with the AcmeDemoBundle::
+
+    // Inside Configuration class
+    ->booleanNode('logging')->defaultValue('%kernel.debug%')->end()
+
+    // Inside the Extension class
+    $config = $this->processConfiguration($configuration, $configs);
+    var_dump($config['logging']);
+
+Now, examine the results to see this closely:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        my_bundle:
+            logging: true
+            # true, as expected
+
+        my_bundle:
+            logging: %kernel.debug%
+            # true/false (depends on 2nd parameter of AppKernel),
+            # as expected, because %kernel.debug% inside configuration
+            # gets evaluated before being passed to the extension
+
+        my_bundle: ~
+        # passes the string "%kernel.debug%".
+        # Which is always considered as true.
+        # The Configurator does not know anything about
+        # "%kernel.debug%" being a parameter.
+
+    .. code-block:: xml
+
+        I confess i need help here @WouterJ
+
+    .. code-block:: php
+
+        I confess i need help here @WouterJ
+
+In order to support this use case, the ``Configuration`` class has to
+be injected with this parameter via the extension as follows::
+
+    namespace Acme\DemoBundle\DependencyInjection;
+
+    use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+    use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+    class Configuration implements ConfigurationInterface
+    {
+        private $debug;
+
+        public function  __construct($debug)
+        {
+            $this->debug = (Boolean) $debug;
+        }
+
+        public function getConfigTreeBuilder()
+        {
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('acme_demo');
+
+            $rootNode
+                ->children()
+                    // ...
+                    ->booleanNode('logging')->defaultValue($this->debug)->end()
+                    // ...
+                ->end()
+            ;
+
+            return $treeBuilder;
+        }
+    }
+
+And set it in the constructor of ``Configuration`` via the ``Extension`` class::
+
+    namespace Acme\DemoBundle\DependencyInjection;
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+    use Symfony\Component\Config\FileLocator;
+
+    class AcmeDemoExtension extends Extension
+    {
+        // ...
+
+        public function getConfiguration(array $config, ContainerBuilder $container)
+        {
+            return new Configuration($container->getParameter('kernel.debug'));
+        }
+    }
+
+.. sidebar:: Setting the Default in the Extension
+
+There are some instances of ``%kernel.debug%`` usage within a ``Configurator``
+class in TwigBundle and AsseticBundle, however this is because the default
+parameter value is set by the Extension class. For example in AsseticBundle,
+you can find::
+
+    $container->setParameter('assetic.debug', $config['debug']);
+
+The string ``%kernel.debug%`` passed here as an argument handles the
+interpreting job to the container which in turn does the evaluation.
+Both ways accomplish similar goals. AsseticBundle will not use
+anymore ``%kernel.debug%`` but rather the new ``%assetic.debug%`` parameter.

@@ -89,7 +89,10 @@ The second method has several specific advantages:
     supported configuration settings for which backward compatibility will
     be maintained.
 
-For other usages of the parameter ``%`` syntax see :doc:`Configuration </cookbook/configuration>`.
+.. seealso::
+
+    For other usages of the parameter ``%`` syntax see
+    :doc:`Using Configuration Parameters </cookbook/using_configuration_parameters>`.
 
 .. index::
    single: Bundle; Extension
