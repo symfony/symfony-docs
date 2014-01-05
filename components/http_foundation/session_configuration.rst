@@ -28,9 +28,8 @@ PHP or provided by PHP extensions, such as PHP-Sqlite, PHP-Memcached and so on.
 All native save handlers are internal to PHP and as such, have no public facing API.
 They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
-the docblock of the ``setOptions()`` method of each class. For an example of this for
-a save handler provided via the Memcached extension is
-`php.net/manual/en/memcached.setoption`_
+the docblock of the ``setOptions()`` method of each class. For instance, the one
+provided by the Memcached extension can be found on `php.net/memcached.setoption`_
 
 While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
@@ -270,4 +269,4 @@ without knowledge of the specific save handler.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration
-.. _`php.net/manual/en/memcached.setoption`: http://php.net/manual/en/memcached.setoption
+.. _`php.net/memcached.setoption`: http://php.net/memcached.setoption
