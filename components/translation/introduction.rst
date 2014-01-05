@@ -62,6 +62,9 @@ The Translation component uses Loader classes to load catalogs. You can load
 multiple resources for the same locale, which will then be combined into one
 catalog.
 
+.. versionadded:: 2.4
+    The ``JsonFileLoader`` was introduced in Symfony 2.4.    
+
 The component comes with some default Loaders and you can create your own
 Loader too. The default loaders are:
 
@@ -85,6 +88,8 @@ Loader too. The default loaders are:
   catalogs form QT XML files.
 * :class:`Symfony\\Component\\Translation\\Loader\\XliffFileLoader` - to load
   catalogs from Xliff files.
+* :class:`Symfony\\Component\\Translation\\Loader\\JsonFileLoader` - to load
+  catalogs from JSON files.
 * :class:`Symfony\\Component\\Translation\\Loader\\YamlFileLoader` - to load
   catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml/introduction>`).
 
