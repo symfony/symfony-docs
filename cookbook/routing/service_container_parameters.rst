@@ -121,4 +121,7 @@ path):
     the resulting URL of this example would be ``/score-50%25`` (``%25`` is the
     result of encoding the ``%`` character).
 
-For other usages of the parameter ``%`` syntax see :doc:`Configuration </cookbook/configuration>`.
+.. seealso::
+
+    For other usages of the parameter ``%`` syntax see
+    :doc:`Using Configuration Parameters </cookbook/using_configuration_parameters>`.
