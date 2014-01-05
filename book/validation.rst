@@ -587,7 +587,7 @@ allows you to add a constraint to any public method whose name starts with
 as "getters".
 
 .. versionadded:: 2.5
-    Support for methods starting with ``has`` is new in Symfony 2.5.
+    Support for methods starting with ``has`` was introduced in Symfony 2.5.
 
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
