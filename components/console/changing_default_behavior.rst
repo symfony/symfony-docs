@@ -23,9 +23,9 @@ method::
 
     #!/usr/bin/env php
     <?php
-    // app/console
+    // application.php
 
-    use Acme\DemoBundle\Command\GreetCommand;
+    use Acme\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $command = new GreetCommand();
