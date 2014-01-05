@@ -525,7 +525,7 @@ Learn More!
 -----------
 
 * :doc:`/components/console/usage`
-* :doc:`/components/console/single_command_tool`
+* :doc:`/components/console/changing_default_behavior`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/downloads
