@@ -68,11 +68,16 @@ If for instance, there is a use case in which you want to use the
 ``%kernel.debug%`` debug mode parameter to make your bundle adapt its
 configuration depending on this. For this case you cannot use
 the syntax directly and expect this to work. The configuration handling
-will just tread this ``%kernel.debug%`` as a string. Consider
+will just treat this ``%kernel.debug%`` as a string. Consider
 this example with the AcmeDemoBundle::
 
     // Inside Configuration class
-    ->booleanNode('logging')->defaultValue('%kernel.debug%')->end()
+    $rootNode
+        ->children()
+            ->booleanNode('logging')->defaultValue('%kernel.debug%')->end()
+            // ...
+        ->end()
+    ;
 
     // Inside the Extension class
     $config = $this->processConfiguration($configuration, $configs);
@@ -102,11 +107,46 @@ Now, examine the results to see this closely:
 
     .. code-block:: xml
 
-        I confess i need help here @WouterJ
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            my-bundle="http://example.org/schema/dic/my_bundle">
+
+            <my-bundle:config logging="true" />
+            <!-- true, as expected -->
+
+             <my-bundle:config logging="%kernel.debug%" />
+             <!-- true/false (depends on 2nd parameter of AppKernel),
+                  as expected, because %kernel.debug% inside configuration
+                  gets evaluated before being passed to the extension -->
+
+            <my-bundle:config />
+            <!-- passes the string "%kernel.debug%".
+                 Which is always considered as true.
+                 The Configurator does not know anything about
+                 "%kernel.debug%" being a parameter. -->
+        </container>
 
     .. code-block:: php
 
-        I confess i need help here @WouterJ
+        $container->loadFromExtension('my_bundle', array(
+                'logging' => true,
+                // true, as expected
+            )
+        );
+
+        $container->loadFromExtension('my_bundle', array(
+                'logging' => "%kernel.debug%",
+                // true/false (depends on 2nd parameter of AppKernel),
+                // as expected, because %kernel.debug% inside configuration
+                // gets evaluated before being passed to the extension
+            )
+        );
+
+        $container->loadFromExtension('my_bundle');
+        // passes the string "%kernel.debug%".
+        // Which is always considered as true.
+        // The Configurator does not know anything about
+        // "%kernel.debug%" being a parameter.
 
 In order to support this use case, the ``Configuration`` class has to
 be injected with this parameter via the extension as follows::
