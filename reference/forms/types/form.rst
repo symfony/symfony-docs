@@ -41,6 +41,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/block_name.rst.inc
 
+.. include:: /reference/forms/types/options/max_length.rst.inc
+
 inherit_data
 ------------
 
