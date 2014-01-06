@@ -12,6 +12,13 @@ The Config component provides several classes to help you find, load, combine,
 autofill and validate configuration values of any kind, whatever their source
 may be (YAML, XML, INI files, or for instance a database).
 
+.. caution::
+
+    ``IniFileLoader`` parses with the `parse_ini_file` function, therefore
+    it can only configure parameters as string values. For other
+    data types support (e.g. Boolean, integer, etc), the other loaders
+    are recommended.
+
 Installation
 ------------
 
