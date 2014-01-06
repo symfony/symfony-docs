@@ -59,3 +59,6 @@ on all fields.
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+.. include:: /reference/forms/types/options/action.rst.inc
+
+.. include:: /reference/forms/types/options/method.rst.inc
