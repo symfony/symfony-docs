@@ -398,7 +398,7 @@ To squash all commits into the first one, remove the word ``pick`` before the
 second and the last commits, and replace it by the word ``squash`` or just
  ``s``. When you save, Git will start rebasing, and if successful, will ask
  you to edit the commit message, which by default is a listing of the commit
- messages of all the commits. When you finish, execute the push command.
+ messages of all the commits. When you are finished, execute the push command.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
