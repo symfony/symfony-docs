@@ -29,7 +29,7 @@ When passing objects into an expression, you can use different syntaxes to
 access properties and call methods on the object.
 
 Accessing Public Properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Public properties on objects can be accessed by using the ``.`` syntax, similar
 to JavaScript::
