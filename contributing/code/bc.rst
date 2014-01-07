@@ -87,13 +87,13 @@ All classes in the ``Symfony`` namespace are **safe for use**. That means that:
 
 When extending the class:
 
-* You can safely override public properties.
-
 * You cannot safely use protected properties and methods. We may change or
   remove them, but will document this in the UPGRADE file.
 
-* You cannot safely override protected properties. We may change or
-  remove them, but will document this in the UPGRADE file.
+* You can safely override public properties.
+
+* You cannot safely override protected properties. We may change or remove them,
+  but will document this in the UPGRADE file.
 
 * You cannot safely override public or protected methods. We may change them,
   but will document this in the UPGRADE file.
