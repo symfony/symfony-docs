@@ -17,8 +17,10 @@ Possible values are:
 * PATCH
 
 As PUT, DELETE and PATCH are not nativly supported by most clients, Symfony
-simulates them, see :doc:`/cookbook/routing/method_parameters`.
+simulates them. For more information see
+:doc:`/cookbook/routing/method_parameters`.
 
 .. note::
+
     Using ``PUT``, ``PATCH`` and ``DELETE`` is only allowed if
     :ref:`configuration-framework-http_method_override` is enabled.
