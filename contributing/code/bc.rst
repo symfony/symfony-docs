@@ -1,7 +1,7 @@
 Our Backwards Compatibility Promise
 ===================================
 
-As of Symfony 2.1, we promise you backwards compatibility for all further 2.x
+As of Symfony 2.3, we promise you backwards compatibility for all further 2.x
 releases. Ensuring smooth upgrades of your projects is our first priority.
 However, backwards compatibility comes in many different flavors. This page
 lists which code changes are covered by our promise and to what degree.
