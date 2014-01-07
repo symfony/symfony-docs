@@ -7,7 +7,8 @@ method
 **type**: ``string`` **default**: ``POST``
 
 This option specifies the HTTP method used to submit the form's data. It's
-value is rendered as the ``method`` attribute of the ``form`` element.
+value is rendered as the ``method`` attribute of the ``form`` element and to
+perform some consistency checks when evaluating the form after submission.
 Possible values are:
 
 * POST
@@ -16,11 +17,10 @@ Possible values are:
 * DELETE
 * PATCH
 
-As PUT, DELETE and PATCH are not nativly supported by most clients, Symfony
-simulates them. For more information see
-:doc:`/cookbook/routing/method_parameters`.
+.. note:
 
-.. note::
-
-    Using ``PUT``, ``PATCH`` and ``DELETE`` is only allowed if
-    :ref:`configuration-framework-http_method_override` is enabled.
+    If not natively supported by a client, Symfony allows to simulate PUT,
+    DELETE and PATCH requests by using a POST request instead and passing the
+    intended "real" method by either using a ``X-HTTP-Method-Override``
+    request header or by passing it via the special ``_method`` data field.
+    For more information see :doc:`/cookbook/routing/method_parameters`.
