@@ -46,8 +46,29 @@ means that:
 * You can safely implement the interface.
 
 
+Safe Operations
+~~~~~~~~~~~~~~~
+
+The following table summarizes the safe operations when using our interfaces:
+
+==============================================  ==============  ==============
+Operation                                       Normal          API
+==============================================  ==============  ==============
+Type hint against                               Safe            Safe
+Use method                                      Safe            Safe
+**When Implementing**
+Implement method                                Not Safe        Safe
+Add custom method                               Not Safe        Not Safe
+Add custom method parameter                     Not Safe        Not Safe
+Add parameter default value                     Safe            Safe
+==============================================  ==============  ==============
+
+
 Allowed Changes
 ~~~~~~~~~~~~~~~
+
+This table tells you which changes you are allowed to do when working on
+Symfony code:
 
 ==============================================  ==============  ==============
 Type of Change                                  Normal          API
@@ -78,6 +99,8 @@ Normal Classes
 ~~~~~~~~~~~~~~
 
 All classes in the ``Symfony`` namespace are **safe for use**. That means that:
+
+* You can safely type hint against the class' name.
 
 * You can safely create new instances.
 
@@ -123,8 +146,37 @@ that:
 * You can safely override public or protected methods.
 
 
+Safe Operations
+~~~~~~~~~~~~~~~
+
+The following table summarizes the safe operations when using our classes:
+
+==============================================  ==============  ==============
+Operation                                       Normal          API
+==============================================  ==============  ==============
+Type hint against                               Safe            Safe
+Create instance                                 Safe            Safe
+Extend                                          Safe            Safe
+Use public property                             Safe            Safe
+Use protected property                          Not Safe        Safe
+Use public method                               Safe            Safe
+Use protected method                            Not Safe        Safe
+**When Extending**
+Override public property                        Safe            Safe
+Override protected property                     Not Safe        Safe
+Override public method                          Not Safe        Safe
+Override protected method                       Not Safe        Safe
+Add custom method                               Not Safe        Not Safe
+Add custom method parameter                     Not Safe        Not Safe
+Add parameter default value                     Safe            Safe
+==============================================  ==============  ==============
+
+
 Allowed Changes
 ~~~~~~~~~~~~~~~
+
+This table tells you which changes you are allowed to do when working on
+Symfony code:
 
 ==================================================  ==============  ==============
 Type of Change                                      Normal          API
