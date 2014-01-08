@@ -83,12 +83,12 @@ Remove method                                   No              No
 Change name                                     No              No
 Add parameter without a default value           No              No
 Add parameter with a default value              Yes [1]_        No
-Remove parameter                                No              No
+Remove parameter                                Yes [2]_        Yes [2]_
 Add default value to a parameter                Yes [1]_        No
 Remove default value of a parameter             No              No
 Add type hint to a parameter                    No              No
 Remove type hint of a parameter                 Yes [1]_        No
-Change return type                              Yes [1]_ [2]_   No
+Change return type                              Yes [1]_ [3]_   No
 ==============================================  ==============  ==============
 
 
@@ -185,7 +185,7 @@ Remove entirely                                     No              No
 Make final                                          Yes [1]_        No
 Make abstract                                       No              No
 Change name or namespace                            No              No
-Change parent class                                 Yes [3]_        Yes [3]_
+Change parent class                                 Yes [4]_        Yes [4]_
 Add interface                                       Yes             Yes
 Remove interface                                    No              No
 **Public Properties**
@@ -208,12 +208,12 @@ Change name                                         No              No
 Reduce visibility                                   No              No
 Add parameter without a default value               No              No
 Add parameter with a default value                  Yes [1]_        No
-Remove parameter                                    No              No
+Remove parameter                                    Yes [2]_        Yes [2]_
 Add default value to a parameter                    Yes [1]_        No
 Remove default value of a parameter                 No              No
-Add type hint to a parameter                        Yes [4]_        No
+Add type hint to a parameter                        Yes [5]_        No
 Remove type hint of a parameter                     Yes [1]_        No
-Change return type                                  Yes [1]_ [2]_   No
+Change return type                                  Yes [1]_ [3]_   No
 **Protected Methods**
 Add protected method                                Yes             Yes
 Remove protected method                             Yes [1]_        No
@@ -221,19 +221,21 @@ Change name                                         No              No
 Reduce visibility                                   Yes [1]_        No
 Add parameter without a default value               Yes [1]_        No
 Add parameter with a default value                  Yes [1]_        No
-Remove parameter                                    Yes [1]_        No
+Remove parameter                                    Yes [2]_        Yes [2]_
 Add default value to a parameter                    Yes [1]_        No
 Remove default value of a parameter                 Yes [1]_        No
 Add type hint to a parameter                        Yes [1]_        No
 Remove type hint of a parameter                     Yes [1]_        No
-Change return type                                  Yes [1]_ [2]_   No
+Change return type                                  Yes [1]_ [3]_   No
 ==================================================  ==============  ==============
 
 
 .. [1] Should be avoided. When done, this change must be documented in the
        UGPRADE file.
 
-.. [2] The return type may only be changed to compatible types. The following
+.. [2] Only the last parameter(s) of a method may be removed.
+
+.. [3] The return type may only be changed to compatible types. The following
        type changes are allowed:
 
        ===================  ==================================================================
@@ -249,10 +251,10 @@ Change return type                                  Yes [1]_ [2]_   No
        ``Countable``        array
        ===================  ==================================================================
 
-.. [3] When changing the parent class, the original parent class must remain an
+.. [4] When changing the parent class, the original parent class must remain an
        ancestor of the class.
 
-.. [4] A type hint may only be added if passing a value with a different type
+.. [5] A type hint may only be added if passing a value with a different type
        previously generated a fatal error.
 
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
