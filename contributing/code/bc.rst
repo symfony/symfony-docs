@@ -26,7 +26,8 @@ in order to guarantee smooth upgrades to all future 2.x versions.
 Using Our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
 
-### Normal Interfaces
+Normal Interfaces
+.................
 
 All interfaces in the ``Symfony`` namespace are **safe for use**. That means
 that:
@@ -44,7 +45,8 @@ Methods tagged with ``@api`` are treated as if they belonged to an API
 interface.
 
 
-### API Interfaces
+API Interfaces
+..............
 
 All interfaces tagged with ``@api`` are also **safe for implementation**. That
 means that:
@@ -52,7 +54,8 @@ means that:
 * You can safely implement the interface.
 
 
-### Safe Operations
+Safe Operations
+...............
 
 The following table summarizes the safe operations when using our interfaces:
 
@@ -72,7 +75,8 @@ Add parameter default value                     Safe            Safe
 Using Our Classes
 ~~~~~~~~~~~~~~~~~
 
-### Normal Classes
+Normal Classes
+..............
 
 All classes in the ``Symfony`` namespace are **safe for use**. That means that:
 
@@ -97,7 +101,8 @@ Properties and methods tagged with ``@api`` are treated as if they belonged
 to an API class.
 
 
-### API Classes
+API Classes
+...........
 
 All classes tagged with ``@api`` are also **safe for extension**. That means
 that:
@@ -109,7 +114,8 @@ that:
 * You can safely override public or protected methods.
 
 
-### Safe Operations
+Safe Operations
+...............
 
 The following table summarizes the safe operations when using our classes:
 
