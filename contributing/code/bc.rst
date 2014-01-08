@@ -158,10 +158,10 @@ Type hint against                               Safe            Safe
 Create instance                                 Safe            Safe
 Extend                                          Safe            Safe
 Use public property                             Safe            Safe
-Use protected property                          Not Safe        Safe
 Use public method                               Safe            Safe
-Use protected method                            Not Safe        Safe
 **When Extending**
+Use protected property                          Not Safe        Safe
+Use protected method                            Not Safe        Safe
 Override public property                        Safe            Safe
 Override protected property                     Not Safe        Safe
 Override public method                          Not Safe        Safe
