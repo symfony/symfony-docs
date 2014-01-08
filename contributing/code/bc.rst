@@ -181,11 +181,34 @@ Change return type                                  Yes [1]_ [2]_   No
 .. [1] Should be avoided. When done, this change must be documented in the
        UGPRADE file.
 
-.. [2] The return type may only be changed to compatible types. **TODO define
-       type compatibility**
+.. [2] The return type may only be changed to compatible types. The following
+       type changes are allowed:
+
+       ===================  ==================================================================
+       Original Type        New Type
+       ===================  ==================================================================
+       boolean              any `scalar type`_ with equivalent `boolean values`_
+       string               any `scalar type`_ or object with equivalent `string values`_
+       integer              any `scalar type`_ with equivalent `integer values`_
+       float                any `scalar type`_ with equivalent `float values`_
+       array                instance of ``ArrayAccess``, ``Traversable`` and ``Countable``
+       ``ArrayAccess``      array
+       ``Traversable``      array
+       ``Countable``        array
+       ===================  ==================================================================
 
 .. [3] When changing the parent class, the original parent class must remain an
        ancestor of the class.
 
 .. [4] A type hint may only be added if passing a value with a different type
        previously generated a fatal error.
+
+.. _scalar type: http://php.net/manual/en/function.is-scalar.php
+
+.. _boolean values: http://php.net/manual/en/function.boolval.php
+
+.. _string values: http://www.php.net/manual/en/function.strval.php
+
+.. _integer values: http://www.php.net/manual/en/function.intval.php
+
+.. _float values: http://www.php.net/manual/en/function.floatval.php
