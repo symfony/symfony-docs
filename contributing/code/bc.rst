@@ -67,8 +67,8 @@ Add parameter default value                     Safe            Safe
 Allowed Changes
 ~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on
-Symfony code:
+This table tells you which changes you are allowed to do when working on the
+code of Symfony's interfaces:
 
 ==============================================  ==============  ==============
 Type of Change                                  Normal          API
@@ -163,8 +163,8 @@ Add parameter default value                     Safe            Safe
 Allowed Changes
 ~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on
-Symfony code:
+This table tells you which changes you are allowed to do when working on the
+code of Symfony's classes
 
 ==================================================  ==============  ==============
 Type of Change                                      Normal          API
