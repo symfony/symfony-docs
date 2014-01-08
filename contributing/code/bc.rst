@@ -207,7 +207,7 @@ Remove public method                                No              No
 Change name                                         No              No
 Reduce visibility                                   No              No
 Add parameter without a default value               No              No
-Add parameter with a default value                  Yes             Yes
+Add parameter with a default value                  Yes [1]_        No
 Remove parameter                                    No              No
 Add default value to a parameter                    Yes [1]_        No
 Remove default value of a parameter                 No              No
@@ -220,7 +220,7 @@ Remove protected method                             Yes [1]_        No
 Change name                                         No              No
 Reduce visibility                                   Yes [1]_        No
 Add parameter without a default value               Yes [1]_        No
-Add parameter with a default value                  Yes             Yes
+Add parameter with a default value                  Yes [1]_        No
 Remove parameter                                    Yes [1]_        No
 Add default value to a parameter                    Yes [1]_        No
 Remove default value of a parameter                 Yes [1]_        No
