@@ -15,11 +15,17 @@ the rules listed below.
     parts of it if we discover problems or limitations.
 
 
-Interfaces
-----------
+Using Symfony Code
+------------------
 
-Normal Interfaces
-~~~~~~~~~~~~~~~~~
+You are using Symfony in your projects? Stick to the guidelines in this section
+in order to guarantee smooth upgrades to all future 2.x versions.
+
+
+Using Our Interfaces
+~~~~~~~~~~~~~~~~~~~~
+
+### Normal Interfaces
 
 All interfaces in the ``Symfony`` namespace are **safe for use**. That means
 that:
@@ -37,8 +43,7 @@ Methods tagged with ``@api`` are treated as if they belonged to an API
 interface.
 
 
-API Interfaces
-~~~~~~~~~~~~~~
+### API Interfaces
 
 All interfaces tagged with ``@api`` are also **safe for implementation**. That
 means that:
@@ -46,8 +51,7 @@ means that:
 * You can safely implement the interface.
 
 
-Safe Operations
-~~~~~~~~~~~~~~~
+### Safe Operations
 
 The following table summarizes the safe operations when using our interfaces:
 
@@ -64,39 +68,10 @@ Add parameter default value                     Safe            Safe
 ==============================================  ==============  ==============
 
 
-Allowed Changes
-~~~~~~~~~~~~~~~
+Using Our Classes
+~~~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on the
-code of Symfony's interfaces:
-
-==============================================  ==============  ==============
-Type of Change                                  Normal          API
-==============================================  ==============  ==============
-Remove entirely                                 No              No
-Change name or namespace                        No              No
-Add parent interface                            Yes [2]_        No
-Remove parent interface                         No              No
-**Methods**
-Add method                                      Yes [2]_        No
-Remove method                                   No              No
-Change name                                     No              No
-Add parameter without a default value           No              No
-Add parameter with a default value              Yes [2]_        No
-Remove parameter                                Yes [3]_        Yes [3]_
-Add default value to a parameter                Yes [2]_        No
-Remove default value of a parameter             No              No
-Add type hint to a parameter                    No              No
-Remove type hint of a parameter                 Yes [2]_        No
-Change return type                              Yes [2]_ [4]_   No
-==============================================  ==============  ==============
-
-
-Classes
--------
-
-Normal Classes
-~~~~~~~~~~~~~~
+### Normal Classes
 
 All classes in the ``Symfony`` namespace are **safe for use**. That means that:
 
@@ -121,8 +96,7 @@ Properties and methods tagged with ``@api`` are treated as if they belonged
 to an API class.
 
 
-API Classes
-~~~~~~~~~~~
+### API Classes
 
 All classes tagged with ``@api`` are also **safe for extension**. That means
 that:
@@ -134,8 +108,7 @@ that:
 * You can safely override public or protected methods.
 
 
-Safe Operations
-~~~~~~~~~~~~~~~
+### Safe Operations
 
 The following table summarizes the safe operations when using our classes:
 
@@ -160,11 +133,46 @@ Add parameter default value                     Safe            Safe
 ==============================================  ==============  ==============
 
 
-Allowed Changes
-~~~~~~~~~~~~~~~
+Working on Symfony Code
+-----------------------
+
+Do you want to help us improve Symfony? That's great! However, please stick
+to the rules listed below in order to ensure smooth upgrades for our users.
+
+
+Changing Our Interfaces
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This table tells you which changes you are allowed to do when working on
+Symfony's interfaces:
+
+==============================================  ==============  ==============
+Type of Change                                  Normal          API
+==============================================  ==============  ==============
+Remove entirely                                 No              No
+Change name or namespace                        No              No
+Add parent interface                            Yes [2]_        No
+Remove parent interface                         No              No
+**Methods**
+Add method                                      Yes [2]_        No
+Remove method                                   No              No
+Change name                                     No              No
+Add parameter without a default value           No              No
+Add parameter with a default value              Yes [2]_        No
+Remove parameter                                Yes [3]_        Yes [3]_
+Add default value to a parameter                Yes [2]_        No
+Remove default value of a parameter             No              No
+Add type hint to a parameter                    No              No
+Remove type hint of a parameter                 Yes [2]_        No
+Change return type                              Yes [2]_ [4]_   No
+==============================================  ==============  ==============
+
+
+Changing Our Classes
+~~~~~~~~~~~~~~~~~~~~
 
 This table tells you which changes you are allowed to do when working on the
-code of Symfony's classes
+Symfony's classes
 
 ==================================================  ==============  ==============
 Type of Change                                      Normal          API
