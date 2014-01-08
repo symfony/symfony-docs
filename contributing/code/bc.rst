@@ -110,24 +110,12 @@ All classes in the ``Symfony`` namespace are **safe for use**. That means that:
 
 When extending the class:
 
-* You cannot safely use protected properties and methods. We may change or
-  remove them, but will document this in the UPGRADE file.
-
 * You can safely override public properties.
 
-* You cannot safely override protected properties. We may change or remove them,
-  but will document this in the UPGRADE file.
+However:
 
-* You cannot safely override public or protected methods. We may change them,
-  but will document this in the UPGRADE file.
-
-* You cannot safely add public or protected properties. We may add a property
-  with the same name.
-
-* You cannot safely add a new public or protected method. We may add a method
-  with the same name.
-
-* You cannot safely add parameters to overridden methods. We may do the same.
+* You cannot safely override methods in extending classes. The class may change,
+  but all changes will be documented in the UPGRADE file.
 
 Properties and methods tagged with ``@api`` are treated as if they belonged
 to an API class.
