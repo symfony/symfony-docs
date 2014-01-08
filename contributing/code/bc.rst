@@ -134,6 +134,7 @@ Override public property                        Safe            Safe
 Override protected property                     Not Safe [1]_   Safe
 Override public method                          Not Safe [1]_   Safe
 Override protected method                       Not Safe [1]_   Safe
+Add custom property                             Not Safe        Not Safe
 Add custom method                               Not Safe        Not Safe
 Add custom method parameter                     Not Safe [1]_   Safe
 Add parameter default value                     Safe            Safe
