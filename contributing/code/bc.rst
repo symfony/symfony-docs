@@ -147,8 +147,8 @@ Do you want to help us improve Symfony? That's great! However, please stick
 to the rules listed below in order to ensure smooth upgrades for our users.
 
 
-Changing Our Interfaces
-~~~~~~~~~~~~~~~~~~~~~~~
+Changing Interfaces
+~~~~~~~~~~~~~~~~~~~
 
 This table tells you which changes you are allowed to do when working on
 Symfony's interfaces:
@@ -175,11 +175,11 @@ Change return type                              Yes [2]_ [4]_   No
 ==============================================  ==============  ==============
 
 
-Changing Our Classes
-~~~~~~~~~~~~~~~~~~~~
+Changing Classes
+~~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on the
-Symfony's classes
+This table tells you which changes you are allowed to do when working on
+Symfony's classes:
 
 ==================================================  ==============  ==============
 Type of Change                                      Normal          API
