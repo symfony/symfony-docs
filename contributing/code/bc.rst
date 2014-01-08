@@ -3,11 +3,12 @@ Our Backwards Compatibility Promise
 
 As of Symfony 2.3, we promise you backwards compatibility for all further 2.x
 releases. Ensuring smooth upgrades of your projects is our first priority.
-However, backwards compatibility comes in many different flavors. This page
-lists which code changes are covered by our promise and to what degree.
+However, backwards compatibility comes in many different flavors.
 
-If you are contributing to Symfony, make sure that your code changes comply to
-the rules listed below.
+This page has two different target audiences: If you are using Symfony, it will
+tell you how to make sure that you will be able to upgrade smoothly to all
+future 2.x versions. If you are contributing, this page will tell you the rules
+you need to follow to ensure smooth upgrades for our users.
 
 .. note::
 
@@ -230,7 +231,7 @@ Change return type                                  Yes [2]_ [4]_   No
        however be documented in the UPGRADE file.
 
 .. [2] Should be avoided. When done, this change must be documented in the
-       UGPRADE file.
+       UPGRADE file.
 
 .. [3] Only the last parameter(s) of a method may be removed.
 
