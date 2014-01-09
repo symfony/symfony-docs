@@ -7,8 +7,8 @@ However, backwards compatibility comes in many different flavors.
 
 This page has two different target audiences: If you are using Symfony, it will
 tell you how to make sure that you will be able to upgrade smoothly to all
-future 2.x versions. If you are contributing, this page will tell you the rules
-you need to follow to ensure smooth upgrades for our users.
+future 2.x versions. If you are contributing to Symfony, this page will tell you
+the rules that you need to follow to ensure smooth upgrades for our users.
 
 .. note::
 
@@ -19,8 +19,8 @@ you need to follow to ensure smooth upgrades for our users.
 Using Symfony Code
 ------------------
 
-You are using Symfony in your projects? Stick to the guidelines in this section
-in order to guarantee smooth upgrades to all future 2.x versions.
+You are using Symfony in your projects? Then stick to the guidelines in this
+section in order to guarantee smooth upgrades to all future 2.x versions.
 
 
 Using Our Interfaces
@@ -58,7 +58,7 @@ Internal Interfaces
 ...................
 
 Interfaces or interface methods tagged with ``@internal`` are meant for internal
-use in Symfony only and should never be used nor implemented.
+use in Symfony only. You should never use nor implement them.
 
 
 Safe Operations
@@ -129,7 +129,7 @@ Internal Classes
 ................
 
 Classes, properties and class methods tagged with ``@internal`` are meant for
-internal use in Symfony only and should never be used nor extended.
+internal use in Symfony only. You should never use nor extend them.
 
 
 Safe Operations
