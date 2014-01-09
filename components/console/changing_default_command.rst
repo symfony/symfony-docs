@@ -1,5 +1,5 @@
 .. index::
-   single: Console; Changing the Default Command
+    single: Console; Changing the Default Command
 
 Changing the Default Command
 ============================
@@ -8,7 +8,7 @@ Changing the Default Command
     The :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
     method was introduced in version 2.5.
 
-By default the Application will always run the ``ListCommand``. In order to change
+will always run the ``ListCommand`` when no command name is passed. In order to change
 the default command you just need to pass the command name you want to run by
 default to the ``setDefaultCommand`` method::
 
@@ -45,7 +45,7 @@ Executing the application and changing the default Command::
     $application->setDefaultCommand($command->getName());
     $application->run();
 
-Test the new default console command by running the following
+Test the new default console command by running the following:
 
 .. code-block:: bash
 
@@ -59,7 +59,7 @@ This will print the following to the command line:
 
 .. tip::
 
-    The feature was a limitation since you cannot use the Command ``arguments``.
+    This feature has a limitation: you cannot use it with any Command arguments.
 
 Learn More!
 -----------
