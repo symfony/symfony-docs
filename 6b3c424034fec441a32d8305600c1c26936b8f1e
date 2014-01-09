@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-06T08:51:56Z
+
+:+1: (could you please add a `.. versionadded:: 2.4` box above the list saying that "The `JsonFileLoader` was introduced in Symfony 2.4."?)
+
+---------------------------------------------------------------------------
+
+by singles at 2014-01-06T11:40:43Z
+
+Yep, done.
