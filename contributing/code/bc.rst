@@ -64,7 +64,7 @@ Operation                                       Normal          API
 ==============================================  ==============  ==============
 Type hint against                               Safe            Safe
 Use method                                      Safe            Safe
-**When Implementing**
+**In Implementing Classes**
 Implement method                                Not Safe [1]_   Safe
 Add custom method                               Not Safe [1]_   Safe
 Add custom method parameter                     Not Safe [1]_   Safe
@@ -127,7 +127,7 @@ Create instance                                 Safe            Safe
 Extend                                          Safe            Safe
 Use public property                             Safe            Safe
 Use public method                               Safe            Safe
-**When Extending**
+**In Extending Classes**
 Use protected property                          Not Safe [1]_   Safe
 Use protected method                            Not Safe [1]_   Safe
 Override public property                        Safe            Safe
