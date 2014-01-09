@@ -54,6 +54,13 @@ means that:
 * You can safely implement the interface.
 
 
+Internal Interfaces
+...................
+
+Interfaces or interface methods tagged with ``@internal`` are meant for internal
+use in Symfony only and should never be used nor implemented.
+
+
 Safe Operations
 ...............
 
@@ -116,6 +123,13 @@ that:
 * You can safely override protected properties.
 
 * You can safely override public or protected methods.
+
+
+Internal Classes
+................
+
+Classes, properties and class methods tagged with ``@internal`` are meant for
+internal use in Symfony only and should never be used nor extended.
 
 
 Safe Operations
