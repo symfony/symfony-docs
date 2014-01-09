@@ -194,7 +194,8 @@ Add default value to a parameter                Yes [2]_        No
 Remove default value of a parameter             No              No
 Add type hint to a parameter                    No              No
 Remove type hint of a parameter                 Yes [2]_        No
-Change return type                              Yes [2]_ [4]_   No
+Change parameter type                           Yes [2]_ [4]_   No
+Change return type                              Yes [2]_ [5]_   No
 ==============================================  ==============  ==============
 
 
@@ -211,7 +212,7 @@ Remove entirely                                     No              No
 Make final                                          Yes [2]_        No
 Make abstract                                       No              No
 Change name or namespace                            No              No
-Change parent class                                 Yes [5]_        Yes [5]_
+Change parent class                                 Yes [6]_        Yes [6]_
 Add interface                                       Yes             Yes
 Remove interface                                    No              No
 **Public Properties**
@@ -237,9 +238,10 @@ Add parameter with a default value                  Yes [2]_        No
 Remove parameter                                    Yes [3]_        Yes [3]_
 Add default value to a parameter                    Yes [2]_        No
 Remove default value of a parameter                 No              No
-Add type hint to a parameter                        Yes [6]_        No
+Add type hint to a parameter                        Yes [7]_        No
 Remove type hint of a parameter                     Yes [2]_        No
-Change return type                                  Yes [2]_ [4]_   No
+Change parameter type                               Yes [2]_ [4]_   No
+Change return type                                  Yes [2]_ [5]_   No
 **Protected Methods**
 Add protected method                                Yes             Yes
 Remove protected method                             Yes [2]_        No
@@ -252,7 +254,8 @@ Add default value to a parameter                    Yes [2]_        No
 Remove default value of a parameter                 Yes [2]_        No
 Add type hint to a parameter                        Yes [2]_        No
 Remove type hint of a parameter                     Yes [2]_        No
-Change return type                                  Yes [2]_ [4]_   No
+Change parameter type                               Yes [2]_ [4]_   No
+Change return type                                  Yes [2]_ [5]_   No
 ==================================================  ==============  ==============
 
 
@@ -264,8 +267,22 @@ Change return type                                  Yes [2]_ [4]_   No
 
 .. [3] Only the last parameter(s) of a method may be removed.
 
-.. [4] The return type may only be changed to compatible types. The following
-       type changes are allowed:
+.. [4] The parameter type may only be changed to a compatible or less specific
+       type. The following type changes are allowed:
+
+       ===================  ==================================================================
+       Original Type        New Type
+       ===================  ==================================================================
+       boolean              any `scalar type`_ with equivalent `boolean values`_
+       string               any `scalar type`_ or object with equivalent `string values`_
+       integer              any `scalar type`_ with equivalent `integer values`_
+       float                any `scalar type`_ with equivalent `float values`_
+       class ``<C>``        any superclass or interface of ``<C>``
+       interface ``<I>``    any superinterface of ``<I>``
+       ===================  ==================================================================
+
+.. [5] The return type may only be changed to a compatible or more specific
+       type. The following type changes are allowed:
 
        ===================  ==================================================================
        Original Type        New Type
@@ -282,10 +299,10 @@ Change return type                                  Yes [2]_ [4]_   No
        interface ``<I>``    any subinterface or implementing class of ``<I>``
        ===================  ==================================================================
 
-.. [5] When changing the parent class, the original parent class must remain an
+.. [6] When changing the parent class, the original parent class must remain an
        ancestor of the class.
 
-.. [6] A type hint may only be added if passing a value with a different type
+.. [7] A type hint may only be added if passing a value with a different type
        previously generated a fatal error.
 
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
