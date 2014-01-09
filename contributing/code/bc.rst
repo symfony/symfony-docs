@@ -278,6 +278,8 @@ Change return type                                  Yes [2]_ [4]_   No
        ``ArrayAccess``      array
        ``Traversable``      array
        ``Countable``        array
+       class ``<C>``        any subclass of ``<C>``
+       interface ``<I>``    any subinterface or implementing class of ``<I>``
        ===================  ==================================================================
 
 .. [5] When changing the parent class, the original parent class must remain an
