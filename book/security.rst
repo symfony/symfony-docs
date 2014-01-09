@@ -151,6 +151,9 @@ that looks like the following:
 Let's look briefly at how security works and how each part of the configuration
 comes into play.
 
+.. versionadded:: 2.4
+    A new property was added to the firewall configuration, where you can make a restriction, called ``host``.
+
 How Security Works: Authentication and Authorization
 ----------------------------------------------------
 
