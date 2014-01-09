@@ -9,8 +9,9 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `required`_                                                       |
-| options     | - `label`_                                                          |
+| Inherited   | - `empty_data`_                                                     |
+| options     | - `required`_                                                       |
+|             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
@@ -81,6 +82,8 @@ Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
