@@ -98,6 +98,8 @@ Each part will be explained in the next section.
                 # Examples:
                 somename:
                     pattern: .*
+                    # restrict the firewall for a specific host
+                    host: admin\.example\.com
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
                     access_denied_handler: some.service.id
