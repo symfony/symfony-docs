@@ -71,6 +71,10 @@ Add custom method parameter                     Not Safe [1]_   Safe
 Add parameter default value                     Safe            Safe
 ==============================================  ==============  ==============
 
+If you need to do any of the things marked as "Not Safe" above, feel free to
+ask us whether the ``@api`` tag can be added on the respective Symfony code.
+For that, simply open a `new ticket on GitHub`_.
+
 
 Using Our Classes
 ~~~~~~~~~~~~~~~~~
@@ -139,6 +143,10 @@ Add custom method                               Not Safe        Not Safe
 Add custom method parameter                     Not Safe [1]_   Safe
 Add parameter default value                     Safe            Safe
 ==============================================  ==============  ==============
+
+If you need to do any of the things marked as "Not Safe" above, feel free to
+ask us whether the ``@api`` tag can be added on the respective Symfony code.
+For that, simply open a `new ticket on GitHub`_.
 
 
 Working on Symfony Code
@@ -273,3 +281,5 @@ Change return type                                  Yes [2]_ [4]_   No
 .. _integer values: http://www.php.net/manual/en/function.intval.php
 
 .. _float values: http://www.php.net/manual/en/function.floatval.php
+
+.. _new ticket on GitHub: https://github.com/symfony/symfony/issues/new
