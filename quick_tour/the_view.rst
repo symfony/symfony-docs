@@ -122,7 +122,7 @@ It is the same notation used to reference a regular template. The ``::`` part
 simply means that the controller element is empty, so the corresponding file
 is directly stored under the ``Resources/views/`` directory.
 
-Now, let's have a look at a simplified ``layout.html.twig``:
+Now, simplify the ``layout.html.twig`` template:
 
 .. code-block:: jinja
 

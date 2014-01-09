@@ -29,8 +29,8 @@ field.
 Customizing your Form based on the underlying Data
 --------------------------------------------------
 
-Before jumping right into dynamic form generation, let's have a quick review
-of what a bare form class looks like::
+Before jumping right into dynamic form generation, hold on and recall what
+a bare form class looks like::
 
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
@@ -226,7 +226,7 @@ How to Dynamically Generate Forms based on user Data
 
 Sometimes you want a form to be generated dynamically based not only on data
 from the form but also on something else - like some data from the current user.
-Suppose you have a social website where a user can only message people marked 
+Suppose you have a social website where a user can only message people marked
 as friends on the website. In this case, a "choice list" of whom to message
 should only contain users that are the current user's friends.
 

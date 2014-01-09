@@ -162,8 +162,8 @@ the mode of a file. The fourth argument is a boolean recursive option::
 Remove
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` let's you remove
-files, symlink, directories easily::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` is used to remove
+files, symlinks, directories easily::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 

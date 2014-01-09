@@ -77,7 +77,7 @@ Symfony2, there are basically two different scopes:
   it only applies to one specific object.
 
 Sometimes, you will find the need to apply an ACE only to a specific field of
-the object. Let's say you want the ID only to be viewable by an administrator,
+the object. Suppose you want the ID only to be viewable by an administrator,
 but not by your customer service. To solve this common problem, two more sub-scopes
 have been added:
 

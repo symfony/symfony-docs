@@ -148,8 +148,8 @@ that looks like the following:
 * All URLs *not* matching ``/admin/*`` are accessible by all users (and the
   user is never prompted to log in).
 
-Let's look briefly at how security works and how each part of the configuration
-comes into play.
+Read this short summary about how security works and how each part of the
+configuration comes into play.
 
 How Security Works: Authentication and Authorization
 ----------------------------------------------------
@@ -541,7 +541,7 @@ And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
 user back to the login form where the error can be displayed.
 
-Let's review the whole process:
+To review the whole process:
 
 #. The user tries to access a resource that is protected;
 #. The firewall initiates the authentication process by redirecting the

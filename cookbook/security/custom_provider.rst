@@ -33,7 +33,7 @@ which defines a method to check if the user is equal to the current user. This
 interface requires an :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo`
 method.
 
-Let's see this in action::
+This is how your ``WebserviceUser`` class looks in action::
 
     // src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
     namespace Acme\WebserviceUserBundle\Security\User;
