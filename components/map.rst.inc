@@ -20,6 +20,7 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/changing_default_command`
   * :doc:`/components/console/events`
   * :doc:`/components/console/helpers/index`
 
