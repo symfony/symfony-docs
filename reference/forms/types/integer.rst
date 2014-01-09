@@ -19,8 +19,9 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 |             | - `precision`_                                                        |
 |             | - `grouping`_                                                         |
 +-------------+-----------------------------------------------------------------------+
-| Inherited   | - `required`_                                                         |
-| options     | - `label`_                                                            |
+| Inherited   | - `empty_data`_                                                       |
+| options     | - `required`_                                                         |
+|             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `data`_                                                             |
 |             | - `read_only`_                                                        |
@@ -68,6 +69,8 @@ Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

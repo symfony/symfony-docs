@@ -10,6 +10,7 @@ Renders a ``textarea`` HTML element.
 | Rendered as | ``textarea`` tag                                                       |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `max_length`_                                                        |
+| options     | - `empty_data`_                                                        |
 | options     | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
@@ -32,6 +33,8 @@ Inherited Options
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
