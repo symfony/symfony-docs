@@ -124,4 +124,4 @@ path):
 .. seealso::
 
     For other usages of the parameter ``%`` syntax see
-    :doc:`Using Configuration Parameters </cookbook/using_configuration_parameters>`.
+    :doc:`Using Parameters Within A Dependency Injection Class </cookbook/using_parameters_in_dic>`.

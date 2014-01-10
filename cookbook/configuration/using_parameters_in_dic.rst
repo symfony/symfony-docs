@@ -1,75 +1,17 @@
 .. index::
-    single: Using Configuration Parameters
+    single: Using Parameters Within A Dependency Injection Class
 
-Using Configuration Parameters
-==============================
+Using Parameters Within A Dependency Injection Class
+----------------------------------------------------
 
-Parameters, such as ``kernel.root_dir`` (pointing to a path) or ``kernel.debug``
-(whether debug mode is enabled), are common in configuration. By wrapping the
-parameter name within 2 ``%`` characters, you indicate that this value should
-be replaced by the value of the parameter. When using Symfony, you can have
-parameters defined in a bundle and used only in that bundle and also parameters
-defined in a bundle and used in another. Usually they would have a name
-like ``demo_bundle.service_doer.local_parameter`` making explicit where this
-parameter comes from. If the parameter is global then it may not have a
-namespace, e.g. ``%some_global_option_here%``.
-
-Basic Usage
------------
-
-You can use parameters inside the ``parameters.yml`` file:
-
-.. code-block:: yaml
-
-    # app/config/parameters.yml
-    parameters:
-        payment_test_mode: "%kernel.root_dir%"
-
-Inside ``config.yml`` and other configuration files building larger
-strings:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        my_bundle:
-            local:
-                directory:  "%kernel.root_dir%/../web/media/image"
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            my-bundle="http://example.org/schema/dic/my_bundle">
-            <my-bundle:config>
-                <my-bundle:local directory="%kernel.root_dir%/../web/media/image" />
-            </my-bundle:config>
-        </container>
-
-    .. code-block:: php
-
-        $container->loadFromExtension('my_bundle', array(
-            'local' => array(
-                'directory' => '%kernel.root_dir%/../web/media/image',
-            ),
-        ));
-
-For more information on how parameters are used in Symfony please see
-:ref:`parameters <book-service-container-parameters>`.
-
-Besides these usages above you can use this syntax in routing files and handle
-parameters in special cases as discussed below.
-
-Using Parameters in your Bundle Configuration
----------------------------------------------
-
-If for instance, there is a use case in which you want to use the
-``%kernel.debug%`` debug mode parameter to make your bundle adapt its
-configuration depending on this. For this case you cannot use
-the syntax directly and expect this to work. The configuration handling
-will just treat this ``%kernel.debug%`` as a string. Consider
-this example with the AcmeDemoBundle::
+You have seen how to use configuration parameters within
+:ref:`Symfony service container <book-service-container-parameters>`.
+There are special cases such as when you want, for instance, to use the
+``%kernel.debug%`` parameter to make the services in your bundle enter
+debug mode. For this case there is more work to do in order
+to make the system understand the parameter value. By default
+your parameter ``%kernel.debug%`` will be treated as a
+simple string. Consider this example with the AcmeDemoBundle::
 
     // Inside Configuration class
     $rootNode
