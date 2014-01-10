@@ -34,7 +34,7 @@ that:
 
 * You can safely type hint against the interface.
 
-* You can safely use any of the methods provided by the interface.
+* You can safely call any of the methods provided by the interface.
 
 However:
 
@@ -70,7 +70,7 @@ The following table summarizes the safe operations when using our interfaces:
 Operation                                       Normal          API
 ==============================================  ==============  ==============
 Type hint against                               Safe            Safe
-Use method                                      Safe            Safe
+Call method                                     Safe            Safe
 **In Implementing Classes**
 Implement method                                Not Safe [1]_   Safe
 Add custom method                               Not Safe [1]_   Safe
@@ -97,7 +97,9 @@ All classes in the ``Symfony`` namespace are **safe for use**. That means that:
 
 * You can safely extend the class.
 
-* You can safely use public properties and methods.
+* You can safely access public properties.
+
+* You can safely call public methods.
 
 When extending the class:
 
@@ -118,11 +120,13 @@ API Classes
 All classes tagged with ``@api`` are also **safe for extension**. That means
 that:
 
-* You can safely use protected properties and methods.
+* You can safely access protected properties and methods.
+
+* You can safely call protected methods.
 
 * You can safely override protected properties.
 
-* You can safely override public or protected methods.
+* You can safely override public and protected methods.
 
 
 Internal Classes
@@ -143,11 +147,11 @@ Operation                                       Normal          API
 Type hint against                               Safe            Safe
 Create instance                                 Safe            Safe
 Extend                                          Safe            Safe
-Use public property                             Safe            Safe
-Use public method                               Safe            Safe
+Access public property                          Safe            Safe
+Call public method                              Safe            Safe
 **In Extending Classes**
-Use protected property                          Not Safe [1]_   Safe
-Use protected method                            Not Safe [1]_   Safe
+Access protected property                       Not Safe [1]_   Safe
+Call protected method                           Not Safe [1]_   Safe
 Override public property                        Safe            Safe
 Override protected property                     Not Safe [1]_   Safe
 Override public method                          Not Safe [1]_   Safe
