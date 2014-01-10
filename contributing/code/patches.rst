@@ -244,7 +244,7 @@ Check that all tests still pass and push your branch remotely:
 
 .. code-block:: bash
 
-    $ git push -f origin BRANCH_NAME
+    $ git push --force origin BRANCH_NAME
 
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
@@ -369,11 +369,11 @@ patch. Before re-submitting the patch, rebase with ``upstream/master`` or
 .. code-block:: bash
 
     $ git rebase -f upstream/master
-    $ git push -f origin BRANCH_NAME
+    $ git push --force origin BRANCH_NAME
 
 .. note::
 
-    when doing a ``push --force``, always specify the branch name explicitly
+    When doing a ``push --force``, always specify the branch name explicitly
     to avoid messing other branches in the repo (``--force`` tells Git that
     you really want to mess with things so do it carefully).
 
@@ -383,10 +383,9 @@ convert many commits to one commit. To do this, use the rebase command:
 .. code-block:: bash
 
     $ git rebase -i upstream/master
-    $ git push -f origin BRANCH_NAME
+    $ git push --force origin BRANCH_NAME
 
-The number 3 here must equal the amount of commits in your branch. After you
-type this command, an editor will popup showing a list of commits:
+After you type this command, an editor will popup showing a list of commits:
 
 .. code-block:: text
 
