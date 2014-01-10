@@ -61,6 +61,13 @@ Interfaces or interface methods tagged with ``@internal`` are meant for internal
 use in Symfony only. You should never use nor implement them.
 
 
+Deprecated Interfaces
+.....................
+
+Interfaces or interface methods tagged with ``@deprecated`` will be removed in
+a future Symfony version. You should never use nor implement them.
+
+
 Safe Operations
 ...............
 
@@ -134,6 +141,13 @@ Internal Classes
 
 Classes, properties and class methods tagged with ``@internal`` are meant for
 internal use in Symfony only. You should never use nor extend them.
+
+
+Deprecated Classes
+..................
+
+Classes, properties and class methods tagged with ``@deprecated`` will be
+removed in a future Symfony version. You should never use nor extend them.
 
 
 Safe Operations
