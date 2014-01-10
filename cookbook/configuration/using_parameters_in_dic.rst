@@ -1,11 +1,11 @@
 .. index::
-    single: Using Parameters Within A Dependency Injection Class
+    single: Using Parameters within a Dependency Injection Class
 
-Using Parameters Within A Dependency Injection Class
+Using Parameters within a Dependency Injection Class
 ----------------------------------------------------
 
 You have seen how to use configuration parameters within
-:ref:`Symfony service container <book-service-container-parameters>`.
+:ref:`Symfony service containers <book-service-container-parameters>`.
 There are special cases such as when you want, for instance, to use the
 ``%kernel.debug%`` parameter to make the services in your bundle enter
 debug mode. For this case there is more work to do in order
@@ -146,14 +146,14 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
 
 .. sidebar:: Setting the Default in the Extension
 
-There are some instances of ``%kernel.debug%`` usage within a ``Configurator``
-class in TwigBundle and AsseticBundle, however this is because the default
-parameter value is set by the Extension class. For example in AsseticBundle,
-you can find::
+    There are some instances of ``%kernel.debug%`` usage within a ``Configurator``
+    class in TwigBundle and AsseticBundle, however this is because the default
+    parameter value is set by the Extension class. For example in AsseticBundle,
+    you can find::
 
-    $container->setParameter('assetic.debug', $config['debug']);
+        $container->setParameter('assetic.debug', $config['debug']);
 
-The string ``%kernel.debug%`` passed here as an argument handles the
-interpreting job to the container which in turn does the evaluation.
-Both ways accomplish similar goals. AsseticBundle will not use
-anymore ``%kernel.debug%`` but rather the new ``%assetic.debug%`` parameter.
+    The string ``%kernel.debug%`` passed here as an argument handles the
+    interpreting job to the container which in turn does the evaluation.
+    Both ways accomplish similar goals. AsseticBundle will not use
+    anymore ``%kernel.debug%`` but rather the new ``%assetic.debug%`` parameter.
