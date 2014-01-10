@@ -38,4 +38,7 @@ Options
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
+Overridden Options
+------------------
+
 .. include:: /reference/forms/types/options/button_auto_initialize.rst.inc
