@@ -150,6 +150,13 @@ Classes, properties and class methods tagged with ``@deprecated`` will be
 removed in a future Symfony version. You should never use nor extend them.
 
 
+Test Classes
+............
+
+All classes located in the various ``*\\Tests\\`` namespaces are meant for
+internal use only. You should never create, extend or call them directly.
+
+
 Safe Operations
 ...............
 
