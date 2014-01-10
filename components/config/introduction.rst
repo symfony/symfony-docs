@@ -14,9 +14,9 @@ may be (YAML, XML, INI files, or for instance a database).
 
 .. caution::
 
-    ``IniFileLoader`` parses with the `parse_ini_file` function, therefore
-    it can only configure parameters as string values. For other
-    data types support (e.g. Boolean, integer, etc), the other loaders
+    The ``IniFileLoader`` parses with the :phpfunction:`parse_ini_file` function,
+    therefore, you can only set parameters to string values. To set parameters
+    to other data types (e.g. boolean, integer, etc), the other loaders
     are recommended.
 
 Installation
