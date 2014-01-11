@@ -51,7 +51,7 @@ Now, examine the results to see this closely:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            my-bundle="http://example.org/schema/dic/my_bundle">
+            xmlns:my-bundle="http://example.org/schema/dic/my_bundle">
 
             <my-bundle:config logging="true" />
             <!-- true, as expected -->

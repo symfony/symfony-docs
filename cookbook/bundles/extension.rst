@@ -91,7 +91,7 @@ The second method has several specific advantages:
 
 .. seealso::
 
-    For other usages of the parameter ``%`` syntax see
+    For parameter handling within a Dependency Injection class see
     :doc:`</cookbook/configuration/using_parameters_in_dic>`.
 
 .. index::
