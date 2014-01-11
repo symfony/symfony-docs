@@ -3,12 +3,13 @@ pattern
 
 **type**: ``string`` **default**: ``null``
 
-This option adds a ``pattern`` attribute to restrict the field input by a
-regular expression.
+This adds an HTML5 ``pattern`` attribute to restrict the field input by a
+given regular expression.
 
 .. caution:
 
-    This validation is client-side only.
+    The ``pattern`` attribute provides client-side validation for convenience
+    purposes only and cannot replace a reliable server-side validation.
 
 .. note:
 
