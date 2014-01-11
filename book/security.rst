@@ -151,10 +151,6 @@ that looks like the following:
 Let's look briefly at how security works and how each part of the configuration
 comes into play.
 
-.. versionadded:: 2.4
-    Support for restricting security firewalls to a specific host was added in
-    Symfony 2.4.
-
 How Security Works: Authentication and Authorization
 ----------------------------------------------------
 
