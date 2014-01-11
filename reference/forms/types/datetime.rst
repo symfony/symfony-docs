@@ -20,6 +20,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `widget`_                                                                 |
 |                      | - `input`_                                                                  |
 |                      | - `date_format`_                                                            |
+|                      | - `format`_                                                                 |
 |                      | - `hours`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `seconds`_                                                                |
@@ -98,6 +99,17 @@ Defines the ``format`` option that will be passed down to the date field.
 See the :ref:`date type's format option <reference-forms-type-date-format>`
 for more details.
 
+format
+~~~~~~
+
+**type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\DateTimeType::HTML5_FORMAT``
+
+If the ``widget`` option is set to ``single_text``, this option specifies the
+the format of the input, i.e. how Symfony will interpret the given input
+as a datetime string. It defaults to the `RFC 3339`_ format which is used
+by the HTML5 ``datetime`` field. Keeping the default will render a field of
+type ``datetime``.
+
 .. include:: /reference/forms/types/options/hours.rst.inc
 
 .. include:: /reference/forms/types/options/minutes.rst.inc
@@ -138,3 +150,5 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
+
+.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
