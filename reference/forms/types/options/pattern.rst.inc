@@ -9,7 +9,8 @@ given regular expression.
 .. caution:
 
     The ``pattern`` attribute provides client-side validation for convenience
-    purposes only and cannot replace a reliable server-side validation.
+    purposes only and must not be used as a replacement for reliable
+    server-side validation.
 
 .. note:
 
