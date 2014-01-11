@@ -6,10 +6,10 @@ method
 
 **type**: ``string`` **default**: ``POST``
 
-This option specifies the HTTP method used to submit the form's data. It's
-value is rendered as the ``method`` attribute of the ``form`` element and to
-perform some consistency checks when evaluating the form after submission.
-Possible values are:
+This option specifies the HTTP method used to submit the form's data. Its
+value is rendered as the ``method`` attribute of the ``form`` element and is
+used to decide whether to process the form submission in the
+``handleRequest()`` method after submission. Possible values are:
 
 * POST
 * GET
