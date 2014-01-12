@@ -96,7 +96,7 @@ strict
 **type**: ``boolean`` **default**: ``false``
 
 Will validate the email against a simple RegularExpression.
-If true, then the library (`egulias/email-validator`)[https://packagist.org/packages/egulias/email-validator] 
+If true, then the `EmailValidator <https://packagist.org/packages/egulias/email-validator>`_ library
 is required to perform an RFC compilant validation.
 
 message
