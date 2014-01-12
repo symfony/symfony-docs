@@ -7,7 +7,8 @@ cast to a string before being validated.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
+| Options        | - `strict`_                                                         |
+|                | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
 |                | - `checkHost`_                                                      |
 +----------------+---------------------------------------------------------------------+
@@ -88,6 +89,15 @@ Basic Usage
 
 Options
 -------
+
+strict
+~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+Will validate the email against a simple RegularExpression.
+If true, then the library (`egulias/email-validator`)[https://packagist.org/packages/egulias/email-validator] 
+is required to perform an RFC compilant validation.
 
 message
 ~~~~~~~
