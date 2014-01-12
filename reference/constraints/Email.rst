@@ -91,11 +91,13 @@ Options
 -------
 
 strict
-~~~~~~~
+~~~~~~
+.. versionadded:: 2.5
+    The ``strict`` option was introduced in Symfony 2.5.
 
 **type**: ``boolean`` **default**: ``false``
 
-Will validate the email against a simple RegularExpression.
+When false, the email will be validated against a simple RegularExpression.
 If true, then the `EmailValidator <https://packagist.org/packages/egulias/email-validator>`_ library
 is required to perform an RFC compilant validation.
 
