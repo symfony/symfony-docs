@@ -20,18 +20,20 @@ option.
 |             | - `preferred_choices`_                                                       |
 |             | - `empty_value`_                                                             |
 +-------------+------------------------------------------------------------------------------+
+| Overriden   | - `empty_data`_                                                              |
+| options     | - `compound`_                                                                |
+|             | - `error_bubbling`_                                                          |
++-------------+------------------------------------------------------------------------------+
 | Inherited   | - `required`_                                                                |
 | options     | - `label`_                                                                   |
 |             | - `label_attr`_                                                              |
 |             | - `data`_                                                                    |
 |             | - `read_only`_                                                               |
 |             | - `disabled`_                                                                |
-|             | - `error_bubbling`_                                                          |
 |             | - `error_mapping`_                                                           |
 |             | - `mapped`_                                                                  |
 |             | - `inherit_data`_                                                            |
 |             | - `by_reference`_                                                            |
-|             | - `empty_data`_                                                              |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                    |
 +-------------+------------------------------------------------------------------------------+
@@ -109,6 +111,27 @@ can be created to supply the choices.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
+Overriden options
+-----------------
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+
+compound
+~~~~~~~~
+
+**type**: `̀ boolean`` **default**: same value as ``expanded`` option
+
+This option specifies if a form is compound. The value is by default 
+overriden by the value of the ``expanded`` option.
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+Set that error on this field must be attached to the field instead of 
+the parent field (the form in most cases).
+
 Inherited options
 -----------------
 
@@ -126,8 +149,6 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
-
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
@@ -135,5 +156,3 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
