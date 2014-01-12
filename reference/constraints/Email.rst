@@ -99,7 +99,7 @@ strict
 **type**: ``boolean`` **default**: ``false``
 
 When false, the email will be validated against a simple Regular Expression.
-If true, then the `egulias/email-validator`_ library is required to perform an RFC compilant validation.
+If true, then the `EmailValidator`_ library is required to perform an RFC compliant validation.
 
 message
 ~~~~~~~
