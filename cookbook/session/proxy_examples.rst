@@ -10,10 +10,10 @@ is injected into the proxy and registered with the session storage driver::
 
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-    use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-    $proxy = new YourProxy(new PdoSessionStorage());
-    $session = new Session(new NativeSessionStorage($proxy));
+    $proxy = new YourProxy(new PdoSessionHandler());
+    $session = new Session(new NativeSessionStorage(array(), $proxy));
 
 Below, you'll learn two real examples that can be used for ``YourProxy``:
 encryption of session data and readonly guest session.
