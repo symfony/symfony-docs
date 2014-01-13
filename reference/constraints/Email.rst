@@ -98,8 +98,8 @@ strict
 
 **type**: ``boolean`` **default**: ``false``
 
-When false, the email will be validated against a simple Regular Expression.
-If true, then the `EmailValidator`_ library is required to perform an RFC compliant validation.
+When false, the email will be validated against a simple regular expression.
+If true, then the `egulias/email-validator`_ library is required to perform an RFC compliant validation.
 
 message
 ~~~~~~~
@@ -126,4 +126,4 @@ check the validity of the MX *or* the A *or* the AAAA record of the host
 of the given email.
 
 
-.. _EmailValidator: https://packagist.org/packages/egulias/email-validator
+.. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
