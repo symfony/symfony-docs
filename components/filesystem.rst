@@ -251,6 +251,15 @@ The ``file.txt`` file contains ``Hello World`` now.
 
 A desired file mode can be passed as the third argument.
 
+search
+~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::search` searches for a pattern
+in the specified path::
+
+    // return array of results matching the *.jpg pattern
+    $fs->search('/tmp/photos', '*.jpg');
+
 Error Handling
 --------------
 
