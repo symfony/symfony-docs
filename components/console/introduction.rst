@@ -494,4 +494,4 @@ Learn More!
 * :doc:`/components/console/events`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
-.. _ANSICON: https://github.com/adoxa/ansicon/downloads
+.. _ANSICON: https://github.com/adoxa/ansicon/releases
