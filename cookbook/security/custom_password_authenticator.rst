@@ -66,7 +66,7 @@ the user::
                 }
 
                 return new UsernamePasswordToken(
-                    $user->getUsername(),
+                    $user,
                     $user->getPassword(),
                     $providerKey,
                     $user->getRoles()
