@@ -53,7 +53,7 @@ behind adding either is basically the same, but with a slightly different syntax
 Including JavaScript Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To include JavaScript files, use the ``javascript`` tag in any template.
+To include JavaScript files, use the ``javascripts`` tag in any template.
 This will most commonly live in the ``javascripts`` block, if you're using
 the default block names from the Symfony Standard Distribution:
 
