@@ -1087,7 +1087,8 @@ authorization from inside a controller::
 .. versionadded:: 2.5
     The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException()` method creates a special :class:`Symfony\\Component\\Security\\Core\Exception\\AccessDeniedException`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException()`
+method creates a special :class:`Symfony\\Component\\Security\\Core\Exception\\AccessDeniedException`
 object, which ultimately triggers a 403 HTTP response inside Symfony.
 
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller using annotations::
