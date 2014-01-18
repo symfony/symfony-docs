@@ -125,4 +125,5 @@ checkHost
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX *or* the A *or* the AAAA record of the host
 of the given email.
+
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
