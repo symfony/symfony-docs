@@ -1344,17 +1344,6 @@ general, see Doctrine's `Lifecycle Events documentation`_.
     or subscriber and give it access to whatever resources you need. For
     more information, see :doc:`/cookbook/doctrine/event_listeners_subscribers`.
 
-Doctrine Extensions: Timestampable, Sluggable, etc.
----------------------------------------------------
-
-Doctrine is quite flexible, and a number of third-party extensions are available
-that allow you to easily perform repeated and common tasks on your entities.
-These include thing such as *Sluggable*, *Timestampable*, *Loggable*, *Translatable*,
-and *Tree*.
-
-For more information on how to find and use these extensions, see the cookbook
-article about :doc:`using common Doctrine extensions </cookbook/doctrine/common_extensions>`.
-
 .. _book-doctrine-field-types:
 
 Doctrine Field Types Reference
