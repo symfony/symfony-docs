@@ -109,6 +109,7 @@ error occurred:
 
     use Symfony\Component\Yaml\Exception\ParseException;
 
+    $yaml = new Parser();
     try {
         $value = $yaml->parse(file_get_contents('/path/to/file.yml'));
     } catch (ParseException $e) {
