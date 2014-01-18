@@ -728,64 +728,17 @@ a controller, do the following::
 
     $products = $query->getResult();
 
+The ``getResult()`` method returns an array of results.
+
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
 difference is that you need to think in terms of "objects" instead of rows
-in a database. For this reason, you select *from* ``AcmeStoreBundle:Product``
-and then alias it as ``p``.
-
-The ``getResult()`` method returns an array of results. If you're querying
-for just one object, you can use the ``getSingleResult()`` method instead::
-
-    $product = $query->getSingleResult();
-
-.. caution::
-
-    The ``getSingleResult()`` method throws a ``Doctrine\ORM\NoResultException``
-    exception if no results are returned and a ``Doctrine\ORM\NonUniqueResultException``
-    if *more* than one result is returned. If you use this method, you may
-    need to wrap it in a try-catch block and ensure that only one result is
-    returned (if you're querying on something that could feasibly return
-    more than one result)::
-
-        $query = $em->createQuery('SELECT ...')
-            ->setMaxResults(1);
-
-        try {
-            $product = $query->getSingleResult();
-        } catch (\Doctrine\Orm\NoResultException $e) {
-            $product = null;
-        }
-        // ...
+in a database. For this reason, you select *from* the ``AcmeStoreBundle:Product``
+*object* and then alias it as ``p``.
 
 The DQL syntax is incredibly powerful, allowing you to easily join between
 entities (the topic of :ref:`relations <book-doctrine-relations>` will be
 covered later), group, etc. For more information, see the official Doctrine
 `Doctrine Query Language`_ documentation.
-
-.. sidebar:: Setting Parameters
-
-    Take note of the ``setParameter()`` method. When working with Doctrine,
-    it's always a good idea to set any external values as "placeholders",
-    which was done in the above query:
-
-    .. code-block:: text
-
-        ... WHERE p.price > :price ...
-
-    You can then set the value of the ``price`` placeholder by calling the
-    ``setParameter()`` method::
-
-        ->setParameter('price', '19.99')
-
-    Using parameters instead of placing values directly in the query string
-    is done to prevent SQL injection attacks and should *always* be done.
-    If you're using multiple parameters, you can set their values at once
-    using the ``setParameters()`` method::
-
-        ->setParameters(array(
-            'price' => '19.99',
-            'name'  => 'Foo',
-        ))
 
 Using Doctrine's Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
