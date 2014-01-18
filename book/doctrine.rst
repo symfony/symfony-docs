@@ -1369,11 +1369,12 @@ that allow you to take different actions as objects go through their persistence
 lifecycle.
 
 For more information about Doctrine, see the *Doctrine* section of the
-:doc:`cookbook </cookbook/index>`, which includes the following articles:
+:doc:`cookbook </cookbook/index>`. Some usefull articles might be:
 
-* :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`
 * :doc:`/cookbook/doctrine/console`
+* :doc:`/bundles/DoctrineFixturesBundle/index`
+* :doc:`/bundles/DoctrineMongoDBBundle/index`
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`MongoDB`: http://www.mongodb.org/
