@@ -1265,7 +1265,7 @@ stages of the lifecycle of an entity (e.g. the entity is inserted, updated,
 deleted, etc).
 
 If you're using annotations for your metadata, start by enabling the lifecycle
-callbacks. This is not necessary if you're using YAML or XML for your mapping:
+callbacks. This is not necessary if you're using YAML or XML for your mapping.
 
 .. code-block:: php-annotations
 
@@ -1328,20 +1328,8 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
 Now, right before the entity is first persisted, Doctrine will automatically
 call this method and the ``createdAt`` field will be set to the current date.
-
-This can be repeated for any of the other lifecycle events, which include:
-
-* ``preRemove``
-* ``postRemove``
-* ``prePersist``
-* ``postPersist``
-* ``preUpdate``
-* ``postUpdate``
-* ``postLoad``
-* ``loadClassMetadata``
-
-For more information on what these lifecycle events mean and lifecycle callbacks
-in general, see Doctrine's `Lifecycle Events documentation`_
+For more information on other lifecycle events and lifecycle callbacks in
+general, see Doctrine's `Lifecycle Events documentation`_.
 
 .. sidebar:: Lifecycle Callbacks and Event Listeners
 
