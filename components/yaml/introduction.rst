@@ -108,6 +108,7 @@ error occurred:
 .. code-block:: php
 
     use Symfony\Component\Yaml\Exception\ParseException;
+    use Symfony\Component\Yaml\Parser;
 
     $yaml = new Parser();
     try {
