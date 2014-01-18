@@ -53,9 +53,7 @@ behind adding either is basically the same, but with a slightly different syntax
 Including JavaScript Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To include JavaScript files, use the ``javascripts`` tag in any template.
-This will most commonly live in the ``javascripts`` block, if you're using
-the default block names from the Symfony Standard Distribution:
+To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. configuration-block::
 
@@ -72,6 +70,22 @@ the default block names from the Symfony Standard Distribution:
         ) as $url): ?>
             <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
+
+.. note::
+
+    If you're using the default block names from the Symfony Standard Edition,
+    the ``javascripts`` tag will most commonly live in the ``javascripts``
+    block:
+
+    .. code-block:: html+jinja
+
+        {# ... #}
+        {% block javascripts %}
+            {% javascripts '@AcmeFooBundle/Resources/public/js/*' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+        {# ... #}
 
 .. tip::
 
@@ -95,9 +109,7 @@ Including CSS Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To bring in CSS stylesheets, you can use the same methodologies seen
-above, except with the ``stylesheets`` tag. If you're using the default
-block names from the Symfony Standard Distribution, this will usually live
-inside a ``stylesheets`` block:
+above, except with the ``stylesheets`` tag:
 
 .. configuration-block::
 
@@ -115,6 +127,22 @@ inside a ``stylesheets`` block:
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach; ?>
+
+.. note::
+
+    If you're using the default block names from the Symfony Standard Edition,
+    the ``stylesheets`` tag will most commonly live in the ``stylesheets``
+    block:
+
+    .. code-block:: html+jinja
+
+        {# ... #}
+        {% block stylesheets %}
+            {% stylesheets 'bundles/acme_foo/css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        {# ... #}
 
 But because Assetic changes the paths to your assets, this *will* break any
 background images (or other paths) that uses relative paths, unless you use
