@@ -1253,7 +1253,7 @@ Configuration
 
 Doctrine is highly configurable, though you probably won't ever need to worry
 about most of its options. To find out more about configuring Doctrine, see
-the Doctrine section of the :doc:`reference manual </reference/configuration/doctrine>`.
+the Doctrine section of the :doc:`config reference </reference/configuration/doctrine>`.
 
 Lifecycle Callbacks
 -------------------
