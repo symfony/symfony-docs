@@ -22,8 +22,8 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `delete_empty`_                                                           |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `label`_                                                                  |
-|             | - `label_attr`_                                                             |
-| options     | - `error_bubbling`_                                                         |
+| options     | - `label_attr`_                                                             |
+|             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
 |             | - `by_reference`_                                                           |
 |             | - `empty_data`_                                                             |

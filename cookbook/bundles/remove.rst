@@ -18,8 +18,8 @@ starting a project, but you'll probably want to eventually remove it.
 
 To disconnect the bundle from the framework, you should remove the bundle from
 the ``AppKernel::registerBundles()`` method. The bundle is normally found in
-the ``$bundles`` array but the AcmeDemoBundle is only registered in a
-development environment and you can find him in the if statement after::
+the ``$bundles`` array but the AcmeDemoBundle is only registered in the
+development environment and you can find it inside the if statement below::
 
     // app/AppKernel.php
 
@@ -96,8 +96,8 @@ rely on the bundle you are about to remove.
 .. tip::
 
     If one bundle relies on another, in most it means that it uses some services
-    from the bundle. Searching for a ``acme_demo`` string may help you spot
-    them.
+    from the bundle. Searching for the bundle alias string may help you spot
+    them (e.g. ``acme_demo`` for bundles depending on AcmeDemoBundle).
 
 .. tip::
 

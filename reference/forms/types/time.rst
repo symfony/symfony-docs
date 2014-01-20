@@ -17,6 +17,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `widget`_                                                                 |
 |                      | - `input`_                                                                  |
+|                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
 |                      | - `hours`_                                                                  |
 |                      | - `minutes`_                                                                |
@@ -83,12 +84,20 @@ widget
 
 The basic way in which this field should be rendered. Can be one of the following:
 
-* ``choice``: renders two (or three if `with_seconds`_ is true) select inputs.
+* ``choice``: renders one, two (default) or three select inputs (hour, minute,
+  second), depending on the `with_minutes`_ and `with_seconds`_ options.
 
-* ``text``: renders a two or three text inputs (hour, minute, second).
+* ``text``: renders one, two (default) or three text inputs (hour, minute,
+  second), depending on the `with_minutes`_ and `with_seconds`_ options.
 
-* ``single_text``: renders a single input of type text. User's input will
+* ``single_text``: renders a single input of type ``time``. User's input will
   be validated against the form ``hh:mm`` (or ``hh:mm:ss`` if using seconds).
+
+.. caution::
+
+    Combining the widget type ``single_text`` and the `with_minutes`_ option
+    set to ``false`` can cause unexpected behavior in the client as the input
+    type ``time`` might not support selecting an hour only.
 
 input
 ~~~~~
@@ -105,6 +114,8 @@ your underlying object. Valid values are:
 
 The value that comes back from the form will also be normalized back into
 this format.
+
+.. include:: /reference/forms/types/options/with_minutes.rst.inc
 
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
 

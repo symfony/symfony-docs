@@ -15,6 +15,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
 
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
@@ -40,6 +42,8 @@ on all fields.
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/block_name.rst.inc
+
+.. include:: /reference/forms/types/options/max_length.rst.inc
 
 inherit_data
 ------------
