@@ -35,7 +35,7 @@ Creating a basic Command
 To make a console command that greets you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
-    namespace Acme\DemoBundle\Command;
+    namespace Acme\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
@@ -86,9 +86,9 @@ an ``Application`` and adds commands to it::
 
     #!/usr/bin/env php
     <?php
-    // app/console
+    // application.php
 
-    use Acme\DemoBundle\Command\GreetCommand;
+    use Acme\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $application = new Application();
@@ -99,7 +99,7 @@ Test the new console command by running the following
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien
+    $ php application.php demo:greet Fabien
 
 This will print the following to the command line:
 
@@ -111,7 +111,7 @@ You can also use the ``--yell`` option to make everything uppercase:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien --yell
+    $ php application.php demo:greet Fabien --yell
 
 This prints::
 
@@ -267,8 +267,8 @@ The command can now be used in either of the following ways:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien
-    $ app/console demo:greet Fabien Potencier
+    $ php application.php demo:greet Fabien
+    $ php application.php demo:greet Fabien Potencier
 
 It is also possible to let an argument take a list of values (imagine you want
 to greet all your friends). For this it must be specified at the end of the
@@ -286,7 +286,7 @@ To use this, just specify as many names as you want:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien Ryan Bernhard
+    $ php application.php demo:greet Fabien Ryan Bernhard
 
 You can access the ``names`` argument as an array::
 
@@ -356,8 +356,8 @@ flag:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien
-    $ app/console demo:greet Fabien --iterations=5
+    $ php application.php demo:greet Fabien
+    $ php application.php demo:greet Fabien --iterations=5
 
 The first example will only print once, since ``iterations`` is empty and
 defaults to ``1`` (the last argument of ``addOption``). The second example
@@ -368,8 +368,8 @@ will work:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien --iterations=5 --yell
-    $ app/console demo:greet Fabien --yell --iterations=5
+    $ php application.php demo:greet Fabien --iterations=5 --yell
+    $ php application.php demo:greet Fabien --yell --iterations=5
 
 There are 4 option variants you can use:
 
@@ -415,9 +415,9 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
+    use Acme\Command\GreetCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
-    use Acme\DemoBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
@@ -444,9 +444,9 @@ You can test sending arguments and options to the command by passing them
 as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
+    use Acme\Command\GreetCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
-    use Acme\DemoBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
@@ -526,6 +526,7 @@ Learn More!
 
 * :doc:`/components/console/usage`
 * :doc:`/components/console/single_command_tool`
+* :doc:`/components/console/events`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/downloads
