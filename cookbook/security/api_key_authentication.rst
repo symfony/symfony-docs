@@ -414,7 +414,7 @@ of the user to make sure it's not out-of-date. But regardless of your requiremen
     // src/Acme/HelloBundle/Security/ApiKeyUserProvider.php
 
     // ...
-    class ApiKeyUserProvider extends UserProviderInterface
+    class ApiKeyUserProvider implements UserProviderInterface
     {
         // ...
 
