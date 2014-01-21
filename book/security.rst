@@ -1098,7 +1098,7 @@ Thanks to the SensioFrameworkExtraBundle, you can also secure your controller us
         // ...
     }
 
-For more information, see the 
+For more information, see the
 :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
 
 Securing other Services
@@ -2164,6 +2164,7 @@ Learn more from the Cookbook
 * :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
+* :doc:`How to Restrict Firewalls to a Specific Host </cookbook/security/host_restriction>`
 
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
