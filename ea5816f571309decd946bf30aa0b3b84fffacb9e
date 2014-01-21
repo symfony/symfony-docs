@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-06T21:08:37Z
+
+You're correct about the value type. In the Inherited Options sections, add a new thing at first which starts with: " These options inherit from the :doc:`checkbox </reference/forms/types/checkbox>` type:" and then document the value option
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-07T20:33:54Z
+
+@WouterJ The `value` option has it's own file now and I tweaked the content a little bit to also fit with radios.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-07T21:01:57Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-10T18:34:11Z
+
+Can you rebase this?
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-10T19:43:38Z
+
+@xabbuh Ups, that was a rebase on master by mistake. Mh, good question how to roll this back...
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-10T19:55:48Z
+
+@xabbuh Now the rebase should be okay.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-10T20:04:47Z
+
+:+1: great @bicpi, this should make life easier for @weaverryan since #3416 was merged in the meantime
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-10T23:22:23Z
+
+yes, it's succesfully rebased!
