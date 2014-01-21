@@ -740,8 +740,8 @@ address or username.
 Understanding serialize and how a User is Saved in the Session
 --------------------------------------------------------------
 
-If you're curious about the importance of the ``serialize`` method inside
-the User class or how the User object is serialized or deserialized, then
+If you're curious about the importance of the ``serialize()`` method inside
+the ``User`` class or how the User object is serialized or deserialized, then
 this section is for you. If not, feel free to skip this.
 
 Once the user is logged in, the entire User object is serialized into the
@@ -757,18 +757,17 @@ Even though this all happens automatically, there are a few important side-effec
 First, the :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
 methods have been added to allow the ``User`` class to be serialized
 to the session. This may or may not be needed depending on your setup,
-but it's probably a good idea. Only the ``id`` needs to be serialized,
+but it's probably a good idea. In theory, only the ``id`` needs to be serialized,
 because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
 method refreshes the user on each request by using the ``id`` (as explained
-above). In practice, this means that the User object is reloaded from the
-database on each request using the ``id`` from the serialized object. This
-makes sure all of the User's data is fresh.
-
+above). However in practice, this means that the User object is reloaded from
+the database on each request using the ``id`` from the serialized object.
+This makes sure all of the User's data is fresh.
 
 Symfony also uses the ``username``, ``salt``, and ``password`` to verify
 that the User has not changed between requests. Failing to serialize
 these may cause you to be logged out on each request. If your User implements
-:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
+the :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
 then instead of these properties being checked, your ``isEqualTo`` method
 is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface

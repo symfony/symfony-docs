@@ -7,7 +7,7 @@
 
         {
             "require": {
-                "...": "all the other dependencies...",
+                ...
                 "ircmaxell/password-compat": "~1.0.3"
             }
         }
