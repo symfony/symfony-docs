@@ -42,17 +42,7 @@ Example Usage
 Field Options
 -------------
 
-value
-~~~~~
-
-**type**: ``mixed`` **default**: ``1``
-
-The value that's actually used as the value for the checkbox. This does
-not affect the value that's set on your object.
-
-.. caution::
-
-    To make a checkbox checked by default, set the `data`_ option to ``true``.
+.. include:: /reference/forms/types/options/value.rst.inc
 
 Inherited options
 -----------------
