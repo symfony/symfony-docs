@@ -303,11 +303,11 @@ Using Lifecycle Callbacks
 .. caution::
 
     Using lifecycle callbacks is a limited technique that has some drawbacks.
-    If you want to remove the hard coded ``__DIR__`` reference inside
+    If you want to remove the hardcoded ``__DIR__`` reference inside
     the ``Document::getUploadRootDir()`` method, the best way is to start
-    using explicit :doc:`doctrine listeners </cookbook/doctrine/event_listeners_subscribers>`
-    where you will be able to inject kernel parameters such as
-    ``kernel.root_dir`` to be able to build absolute paths.
+    using explicit :doc:`doctrine listeners </cookbook/doctrine/event_listeners_subscribers>`.
+    There you will be able to inject kernel parameters such as ``kernel.root_dir``
+    to be able to build absolute paths.
 
 Even if this implementation works, it suffers from a major flaw: What if there
 is a problem when the entity is persisted? The file would have already moved
