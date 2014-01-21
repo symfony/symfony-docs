@@ -4,7 +4,7 @@
 Changing the Default Command
 ============================
 
-.. versionadded:: 2.5,
+.. versionadded:: 2.5
     The :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
     method was introduced in version 2.5.
 
