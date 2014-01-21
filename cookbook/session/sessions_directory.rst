@@ -31,6 +31,7 @@ to store session data. This is because of the following configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
             <framework:config>
+                <!-- handler_id set to null will use default session handler from php.ini -->
                 <framework:session handler-id="null" />
             </framework:config>
         </container>
@@ -40,6 +41,7 @@ to store session data. This is because of the following configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             'session' => array(
+                // handler_id set to null will use default session handler from php.ini
                 'handler-id' => null,
             ),
         ));
