@@ -45,8 +45,6 @@ on all fields.
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
