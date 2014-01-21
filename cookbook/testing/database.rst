@@ -49,7 +49,7 @@ Suppose the class you want to test looks like this::
         public function calculateTotalSalary($id)
         {
             $employeeRepository = $this->entityManager->getRepository('AcmeDemoBundle::Employee');
-            $employee = $userRepository->find($id);
+            $employee = $employeeRepository->find($id);
 
             return $employee->getSalary() + $employee->getBonus();
         }
@@ -62,7 +62,6 @@ it's easy to pass a mock object within a test::
 
     class SalaryCalculatorTest extends \PHPUnit_Framework_TestCase
     {
-
         public function testCalculateTotalSalary()
         {
             // First, mock the object to be used in the test
