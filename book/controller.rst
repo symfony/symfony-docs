@@ -449,6 +449,16 @@ perform a 301 (permanent) redirect, modify the second argument::
 .. index::
    single: Controller; Forwarding
 
+.. caution::
+
+    It is recommended according to the standard `RFC1616`_ that the redirect
+    target url be always an absolute URI. You can also pass the parameter
+    `UrlGeneratorInterface::ABSOLUTE_URL` explicitly to the ``generateUrl``
+    method although it is already the default. The absolute URI redirect
+    requirement is also implemented for you when you make use of the
+    redirect controllers via
+    ":doc:`/cookbook/routing/redirect_in_config`"
+
 Forwarding
 ~~~~~~~~~~
 
@@ -820,5 +830,8 @@ more.
 Learn more from the Cookbook
 ----------------------------
 
+* :doc:`/cookbook/routing/redirect_in_config`
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
+
+.. _`RFC2616`: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30
