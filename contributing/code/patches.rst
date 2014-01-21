@@ -200,7 +200,7 @@ When your patch is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
 * An explanation of the changes in the relevant ``CHANGELOG`` file(s) (the
- ``[BC BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
+  ``[BC BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
 
 * An explanation on how to upgrade an existing application in the relevant
   ``UPGRADE`` file(s) if the changes break backward compatibility or if you
@@ -396,9 +396,9 @@ type this command, an editor will popup showing a list of commits:
 
 To squash all commits into the first one, remove the word ``pick`` before the
 second and the last commits, and replace it by the word ``squash`` or just
- ``s``. When you save, Git will start rebasing, and if successful, will ask
- you to edit the commit message, which by default is a listing of the commit
- messages of all the commits. When you are finished, execute the push command.
+``s``. When you save, Git will start rebasing, and if successful, will ask
+you to edit the commit message, which by default is a listing of the commit
+messages of all the commits. When you are finished, execute the push command.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
