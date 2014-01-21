@@ -14,24 +14,70 @@ use Symfony's session management by using the PHP Bridge session.
 If the application has sets it's own PHP save handler, you can specify null
 for the ``handler_id``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    framework:
-        session:
-            storage_id: session.storage.php_bridge
-            handler_id: ~
+    .. code-block:: yaml
+
+        framework:
+            session:
+                storage_id: session.storage.php_bridge
+                handler_id: ~
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+
+            <framework:config>
+                <framework:session storage-id="session.storage.php_bridge"
+                    handler-id="null"
+                />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                'storage_id' => 'session.storage.php_bridge',
+                'handler_id' => null,
+        ));
 
 Otherwise, if the problem is simply that you cannot avoid the application
 starting the session with ``session_start()``, you can still make use of
 a Symfony based session save handler by specifying the save handler as in
 the example below:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    framework:
-        session:
-            storage_id: session.storage.php_bridge
-            handler_id: session.handler.native_file
+    .. code-block:: yaml
+
+        framework:
+            session:
+                storage_id: session.storage.php_bridge
+                handler_id: session.handler.native_file
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+
+            <framework:config>
+                <framework:session storage-id="session.storage.php_bridge"
+                    handler-id="session.storage.native_file"
+                />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                'storage_id' => 'session.storage.php_bridge',
+                'handler_id' => 'session.storage.native_file',
+        ));
 
 .. note::
 

@@ -22,7 +22,7 @@ can do this without creating a controller:
             path: /privacy
             defaults:
                 _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:privacy.html.twig'
+                template:    'AcmeBundle:Static:privacy.html.twig'
 
     .. code-block:: xml
 
@@ -92,9 +92,9 @@ other variables in your route, you can control exactly how your page is cached:
         acme_privacy:
             path: /privacy
             defaults:
-                _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:privacy.html.twig'
-                maxAge: 86400
+                _controller:  FrameworkBundle:Template:template
+                template:     'AcmeBundle:Static:privacy.html.twig'
+                maxAge:       86400
                 sharedMaxAge: 86400
 
     .. code-block:: xml

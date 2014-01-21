@@ -407,9 +407,7 @@ it with :ref:`dic-tags-form-type`.
                 class: Acme\DemoBundle\Form\Type\FriendMessageFormType
                 arguments: ["@security.context"]
                 tags:
-                    -
-                        name: form.type
-                        alias: acme_friend_message
+                    - { name: form.type, alias: acme_friend_message }
 
     .. code-block:: xml
 

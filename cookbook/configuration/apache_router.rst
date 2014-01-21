@@ -60,7 +60,7 @@ To test that it's working, let's create a very basic route for the AcmeDemoBundl
 
         # app/config/routing.yml
         hello:
-            path:  /hello/{name}
+            path: /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
 
     .. code-block:: xml

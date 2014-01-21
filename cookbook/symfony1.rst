@@ -168,7 +168,7 @@ AcmeDemoBundle is not defined in your ``composer.json`` file. Nonetheless are
 the files autoloaded. This is because you can tell composer to autoload files
 from specific directories without defining a dependency:
 
-.. code-block:: yaml
+.. code-block:: json
 
     "autoload": {
         "psr-0": { "": "src/" }

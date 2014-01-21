@@ -30,7 +30,7 @@ To do so, just create a new handler and configure it like this:
                 main:
                     type:     stream
                     path:     /var/log/symfony.log
-                    channels: [!doctrine]
+                    channels: ["!doctrine"]
                 doctrine:
                     type:     stream
                     path:     /var/log/doctrine.log
@@ -94,10 +94,10 @@ You can specify the configuration by many forms:
     channels: ~    # Include all the channels
 
     channels: foo  # Include only channel "foo"
-    channels: !foo # Include all channels, except "foo"
+    channels: "!foo" # Include all channels, except "foo"
 
     channels: [foo, bar]   # Include only channels "foo" and "bar"
-    channels: [!foo, !bar] # Include all channels, except "foo" and "bar"
+    channels: ["!foo", "!bar"] # Include all channels, except "foo" and "bar"
 
 Creating your own Channel
 -------------------------

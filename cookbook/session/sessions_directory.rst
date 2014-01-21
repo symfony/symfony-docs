@@ -16,7 +16,7 @@ to store session data. This is because of the following configuration:
         framework:
             session:
                 # handler_id set to null will use default session handler from php.ini
-                handler_id:  ~
+                handler_id: ~
 
     .. code-block:: xml
 
@@ -31,7 +31,7 @@ to store session data. This is because of the following configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
             <framework:config>
-                <!-- handler_id set to null will use default session handler from php.ini -->
+                <!-- handler-id set to null will use default session handler from php.ini -->
                 <framework:session handler-id="null" />
             </framework:config>
         </container>
@@ -42,7 +42,7 @@ to store session data. This is because of the following configuration:
         $container->loadFromExtension('framework', array(
             'session' => array(
                 // handler_id set to null will use default session handler from php.ini
-                'handler-id' => null,
+                'handler_id' => null,
             ),
         ));
 
@@ -123,8 +123,9 @@ session directory to ``app/sessions``:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
             <framework:config>
-                <framework:session handler-id="session.handler.native_file" />
-                <framework:session save-path="%kernel.root_dir%/sessions" />
+                <framework:session handler-id="session.handler.native_file"
+                    save-path="%kernel.root_dir%/sessions"
+                />
             </framework:config>
         </container>
 
@@ -133,8 +134,8 @@ session directory to ``app/sessions``:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             'session' => array(
-                'handler-id' => 'session.handler.native_file',
-                'save-path' => '%kernel.root_dir%/sessions',
+                'handler_id' => 'session.handler.native_file',
+                'save_path'  => '%kernel.root_dir%/sessions',
             ),
         ));
         
