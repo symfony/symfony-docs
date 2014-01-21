@@ -305,6 +305,29 @@ There is also an
 method, which you can use if you want to add an allowed value to the previously
 set allowed values.
 
+.. versionadded:: 2.5
+
+    The callback support for allowed values was introduced in Symfony 2.5.
+
+If you need to add some more logic to the value validation process, you can pass a callable
+as an allowed value::
+
+    // ...
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        // ...
+
+        $resolver->setAllowedValues(array(
+            'transport' => function($value) {
+                return false !== strpos($value, 'mail');
+            },
+        ));
+    }
+
+.. caution::
+
+    Note that using this together with ``addAllowedValues`` will not work.
+
 Configure allowed Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
