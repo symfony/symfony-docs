@@ -135,7 +135,7 @@ tag and a short description:
 .. code-block:: text
 
     .. versionadded:: 2.3
-        The ``askHiddenResponse`` method was added in Symfony 2.3.
+        The ``askHiddenResponse`` method was introduced in Symfony 2.3.
 
     You can also ask a question and hide the response. This is particularly...
 
