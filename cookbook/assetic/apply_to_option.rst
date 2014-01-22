@@ -20,9 +20,9 @@ An example configuration might look like this:
         assetic:
             filters:
                 coffee:
-                    bin: /usr/bin/coffee
-                    node: /usr/bin/node
-                    node_paths: [ /usr/lib/node_modules/ ]
+                    bin:        /usr/bin/coffee
+                    node:       /usr/bin/node
+                    node_paths: [/usr/lib/node_modules/]
 
     .. code-block:: xml
 
@@ -130,10 +130,10 @@ applied to all ``.coffee`` files:
         assetic:
             filters:
                 coffee:
-                    bin: /usr/bin/coffee
-                    node: /usr/bin/node
-                    node_paths: [ /usr/lib/node_modules/ ]
-                    apply_to: "\.coffee$"
+                    bin:        /usr/bin/coffee
+                    node:       /usr/bin/node
+                    node_paths: [/usr/lib/node_modules/]
+                    apply_to:   "\.coffee$"
 
     .. code-block:: xml
 

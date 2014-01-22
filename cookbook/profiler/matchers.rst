@@ -150,6 +150,7 @@ profiler to use this service as the matcher:
 
         <!-- app/config/config.xml -->
         <framework:config>
+            <!-- ... -->
             <framework:profiler
                 service="acme_demo.profiler.matcher.super_admin"
             />
@@ -159,6 +160,7 @@ profiler to use this service as the matcher:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
+            // ...
             'profiler' => array(
                 'service' => 'acme_demo.profiler.matcher.super_admin',
             ),

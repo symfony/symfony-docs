@@ -92,7 +92,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         doctrine:
             dbal:
                 types:
-                    custom_first: Acme\HelloBundle\Type\CustomFirst
+                    custom_first:  Acme\HelloBundle\Type\CustomFirst
                     custom_second: Acme\HelloBundle\Type\CustomSecond
 
     .. code-block:: xml
@@ -143,7 +143,7 @@ mapping type:
             dbal:
                 connections:
                     default:
-                        // Other connections parameters
+                        # other connections parameters
                         mapping_types:
                             enum: string
 
@@ -160,6 +160,7 @@ mapping type:
                 <doctrine:dbal>
                 <doctrine:dbal default-connection="default">
                     <doctrine:connection>
+                        <!-- other connections parameters -->
                         <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
                     </doctrine:connection>
                 </doctrine:dbal>
@@ -173,6 +174,7 @@ mapping type:
             'dbal' => array(
                 'connections' => array(
                     'default' => array(
+                        // other connection parameers
                         'mapping_types' => array(
                             'enum'  => 'string',
                         ),

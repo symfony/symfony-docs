@@ -30,7 +30,7 @@ a more permissive regex path.
             path:     /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
             requirements:
-                name: ".+"
+                name: .+
 
     .. code-block:: xml
 

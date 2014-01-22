@@ -14,9 +14,7 @@ to use HTTPS then you could use the following configuration:
         .. code-block:: yaml
 
             access_control:
-                - path: ^/secure
-                  roles: ROLE_ADMIN
-                  requires_channel: https
+                - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
 
         .. code-block:: xml
 
@@ -44,9 +42,7 @@ role:
         .. code-block:: yaml
 
             access_control:
-                - path: ^/login
-                  roles: IS_AUTHENTICATED_ANONYMOUSLY
-                  requires_channel: https
+                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         .. code-block:: xml
 

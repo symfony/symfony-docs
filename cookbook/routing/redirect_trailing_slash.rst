@@ -46,7 +46,6 @@ system, as explained below:
                 url: .*/$
                 _method: GET
 
-
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>

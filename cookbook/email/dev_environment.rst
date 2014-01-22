@@ -65,7 +65,7 @@ via the ``delivery_address`` option:
 
         # app/config/config_dev.yml
         swiftmailer:
-            delivery_address:  dev@example.com
+            delivery_address: dev@example.com
 
     .. code-block:: xml
 
@@ -76,8 +76,7 @@ via the ``delivery_address`` option:
             http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
-        <swiftmailer:config
-            delivery-address="dev@example.com" />
+        <swiftmailer:config delivery-address="dev@example.com" />
 
     .. code-block:: php
 
