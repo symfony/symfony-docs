@@ -75,8 +75,6 @@ to maintain. There are several problems that need to be addressed:
     tied to MySQL. Though not covered here, Symfony2 fully integrates `Doctrine`_,
     a library dedicated to database abstraction and mapping.
 
-Let's get to work on solving these problems and more.
-
 Isolating the Presentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -673,8 +671,8 @@ Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In the upcoming chapters, you'll learn more about how each piece of Symfony
-works and the recommended organization of a project. For now, let's see how
-migrating the blog from flat PHP to Symfony2 has improved life:
+works and the recommended organization of a project. For now, have a look
+at how migrating the blog from flat PHP to Symfony2 has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and

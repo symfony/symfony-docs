@@ -34,8 +34,8 @@ with a real object that implements that interface.
 Set up
 ------
 
-Let's use the following basic entities (which are incomplete for brevity)
-to explain how to set up and use the RTEL.
+This article uses the following two basic entities (which are incomplete for
+brevity) to explain how to set up and use the ``ResolveTargetEntityListener``.
 
 A Customer entity::
 
@@ -53,7 +53,7 @@ A Customer entity::
      */
     class Customer extends BaseCustomer implements InvoiceSubjectInterface
     {
-        // In our example, any methods defined in the InvoiceSubjectInterface
+        // In this example, any methods defined in the InvoiceSubjectInterface
         // are already implemented in the BaseCustomer
     }
 

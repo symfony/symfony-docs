@@ -52,8 +52,8 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
    your new project structure, config files, etc. Rename it to whatever you
    like.
 
-3. Checkout the Subversion repository that will host this project. Let's say it
-   is hosted on `Google code`_ and called ``myproject``:
+3. Checkout the Subversion repository that will host this project. Suppose
+   it is hosted on `Google code`_ and called ``myproject``:
 
    .. code-block:: bash
 
@@ -65,11 +65,11 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
         $ mv Symfony/* myproject/
 
-5. Let's now set the ignore rules. Not everything *should* be stored in your
-   Subversion repository. Some files (like the cache) are generated and
-   others (like the database configuration) are meant to be customized
-   on each machine. This makes use of the ``svn:ignore`` property, so that
-   specific files can be ignored.
+5. Now, set the ignore rules. Not everything *should* be stored in your Subversion
+   repository. Some files (like the cache) are generated and others (like
+   the database configuration) are meant to be customized on each machine.
+   This makes use of the ``svn:ignore`` property, so that specific files can
+   be ignored.
 
    .. code-block:: bash
 

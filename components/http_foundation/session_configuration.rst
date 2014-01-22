@@ -7,7 +7,7 @@ Configuring Sessions and Save Handlers
 
 This section deals with how to configure session management and fine tune it
 to your specific needs. This documentation covers save handlers, which
-store and retrieve session data, and configuring session behaviour.
+store and retrieve session data, and configuring session behavior.
 
 Save Handlers
 ~~~~~~~~~~~~~
@@ -57,7 +57,7 @@ Example usage::
 
     Native save handlers provide a quick solution to session storage, however, in complex systems
     where you need more control, custom save handlers may provide more freedom and flexibility.
-    Symfony2 provides several implementations which you may further customise as required.
+    Symfony2 provides several implementations which you may further customize as required.
 
 Custom Save Handlers
 --------------------

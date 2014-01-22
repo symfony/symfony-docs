@@ -100,7 +100,7 @@ is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.html.php`` file:
+Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 

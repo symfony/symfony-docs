@@ -44,7 +44,7 @@ entities, a ``Company`` and a ``Customer``::
 As you can see, each entity shares a few of the same fields: ``address``,
 ``zipcode``, ``city``, ``country``.
 
-Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
+Start with building two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
     namespace Acme\HelloBundle\Form\Type;
@@ -81,8 +81,8 @@ Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
     }
 
 Instead of including the duplicated fields ``address``, ``zipcode``, ``city``
-and ``country`` in both of these forms, we will create a third form for that.
-We will call this form simply ``LocationType``::
+and ``country`` in both of these forms, create a third form called ``LocationType``
+for that::
 
     // src/Acme/HelloBundle/Form/Type/LocationType.php
     namespace Acme\HelloBundle\Form\Type;
@@ -127,7 +127,7 @@ access the properties of the ``Customer`` instance instead. Easy, eh?
     can also (just like with any option) pass it in the third argument of
     ``$builder->add()``.
 
-Let's make this work by adding the location form to our two original forms::
+Finally, make this work by adding the location form to your two original forms::
 
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
     public function buildForm(FormBuilderInterface $builder, array $options)

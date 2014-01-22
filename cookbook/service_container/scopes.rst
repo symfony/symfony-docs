@@ -1,7 +1,7 @@
 .. index::
    single: DependencyInjection; Scopes
 
-How to work with Scopes
+How to Work with Scopes
 =======================
 
 This entry is all about scopes, a somewhat advanced topic related to the
@@ -42,12 +42,12 @@ when compiling the container. Read the sidebar below for more details.
 
     Imagine, however, that you need the ``request`` service in your ``my_mailer``
     service, maybe because you're reading the URL of the current request.
-    So, you add it as a constructor argument. Let's look at why this presents
-    a problem:
+    So, you add it as a constructor argument. There are several reasons why
+    this presents a problem:
 
-    * When requesting ``my_mailer``, an instance of ``my_mailer`` (let's call
-      it *MailerA*) is created and the ``request`` service (let's call it
-      *RequestA*) is passed to it. Life is good!
+    * When requesting ``my_mailer``, an instance of ``my_mailer`` (called
+      *MailerA*) is created and the ``request`` service (called *RequestA*)
+      is passed to it. Life is good!
 
     * You've now made a subrequest in Symfony, which is a fancy way of saying
       that you've called, for example, the ``{{ render(...) }}`` Twig function,
