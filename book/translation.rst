@@ -452,8 +452,8 @@ by the routing system using the special ``_locale`` parameter:
     .. code-block:: yaml
 
         contact:
-            path:      /{_locale}/contact
-            defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
+            path:     /{_locale}/contact
+            defaults: { _controller: AcmeDemoBundle:Contact:index, _locale: en }
             requirements:
                 _locale: en|fr|de
 
