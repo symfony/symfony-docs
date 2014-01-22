@@ -7,15 +7,15 @@ How to Use Voters to Check User Permissions
 In Symfony2 you can check the permission to access data by using the
 :doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming
 for many applications. A much easier solution is to work with custom voters,
-which are like simple conditional statements. Voters can be
-also be used to check for permission as a part or even the whole
-application: ":doc:`/cookbook/security/voters`".
+which are like simple conditional statements. Voters can also be used to
+check for permission to a part or even of the whole application:
+":doc:`/cookbook/security/voters`".
 
 .. tip::
 
-    Have a look at the chapter
+    Have a look at the
     :doc:`authorization </components/security/authorization>`
-    for a better understanding on voters.
+    chapter for a better understanding on voters.
 
 How Symfony Uses Voters
 -----------------------
@@ -25,7 +25,7 @@ In general, all registered custom voters will be called every time you ask
 Symfony about permissions (ACL). You can use one of three different
 approaches on how to handle the feedback from all voters: affirmative,
 consensus and unanimous. For more information have a look at
-":ref:`components-security-access-decision-manager`".
+":ref:`the section about access decision managers <components-security-access-decision-manager>`".
 
 The Voter Interface
 -------------------
@@ -37,7 +37,7 @@ which has this structure:
 .. include:: /cookbook/security/voter_interface.rst.inc
 
 In this example, it'll check if the user will have access to a specific
-object according to your custom conditions (e.g. he must be the owner of
+object according to your custom conditions (e.g. they must be the owner of
 the object). If the condition fails, you'll return
 ``VoterInterface::ACCESS_DENIED``, otherwise you'll return
 ``VoterInterface::ACCESS_GRANTED``. In case the responsibility for this decision
@@ -46,17 +46,17 @@ does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``
 Creating the Custom Voter
 -------------------------
 
-You could store your Voter to check permission for the view and edit action like the following::
+You could implement your Voter to check permission for the view and edit action like the following::
 
-    // src/Acme/DemoBundle/Security/Authorization/Entity/PostVoter.php
-    namespace Acme\DemoBundle\Security\Authorization\Entity;
+    // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
+    namespace Acme\DemoBundle\Security\Authorization\Voter;
 
     use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use Doctrine\Common\Util\ClassUtils;
+    use Acme\DemoBundle\Entity\Post;
 
     class PostVoter implements VoterInterface
     {
@@ -73,7 +73,9 @@ You could store your Voter to check permission for the view and edit action like
 
         public function supportsClass($obj)
         {
-            if ($obj instanceof 'Acme\DemoBundle\Entity\Post') return true;
+            if ($obj instanceof Post) {
+                return true;
+            }
 
             return false;
         }
@@ -137,16 +139,16 @@ Declaring the Voter as a Service
 --------------------------------
 
 To inject the voter into the security layer, you must declare it as a service
-and tag it as a 'security.voter':
+and tag it as a ``security.voter``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeBundle/Resources/config/services.yml
+        # src/Acme/DemoBundle/Resources/config/services.yml
         services:
             security.access.post_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Entity\PostVoter
+                class:      Acme\DemoBundle\Security\Authorization\Voter\PostVoter
                 public:     false
                 tags:
                    - { name: security.voter }
@@ -154,10 +156,12 @@ and tag it as a 'security.voter':
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services">
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
                 <service id="security.access.post_document_voter"
-                    class="Acme\DemoBundle\Security\Authorization\Document\PostVoter"
+                    class="Acme\DemoBundle\Security\Authorization\Voter\PostVoter"
                     public="false">
                     <tag name="security.voter" />
                 </service>
@@ -166,10 +170,11 @@ and tag it as a 'security.voter':
 
     .. code-block:: php
 
+        // src/Acme/DemoBundle/Resources/config/services.php
         $container
             ->register(
                     'security.access.post_document_voter',
-                    'Acme\DemoBundle\Security\Authorization\Document\PostVoter'
+                    'Acme\DemoBundle\Security\Authorization\Voter\PostVoter'
                 )
             ->addTag('security.voter')
         ;
@@ -177,7 +182,7 @@ and tag it as a 'security.voter':
 How to Use the Voter in a Controller
 ------------------------------------
 
-The registered voter will then always be asked as soon as the method 'isGranted'
+The registered voter will then always be asked as soon as the method ``isGranted()``
 from the security context is called.
 
 .. code-block:: php
@@ -185,10 +190,12 @@ from the security context is called.
     // src/Acme/DemoBundle/Controller/PostController.php
     namespace Acme\DemoBundle\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Acme\DemoBundle\Entity\Post;
 
-    class PostController
+    class PostController extends Controller
     {
 
         /**
