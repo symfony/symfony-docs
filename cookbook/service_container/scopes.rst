@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Scopes
+   single: DependencyInjection; Scopes
 
 How to work with Scopes
 =======================
@@ -12,16 +12,17 @@ This entry is all about scopes, a somewhat advanced topic related to the
 
     If you are trying to inject the ``request`` service, the simple solution
     is to inject the ``request_stack`` service instead and access the current
-    Request by calling the ``getCurrentRequest()`` method (see :ref:`book-container-request-stack`).
-    The rest of this entry talks about scopes in a theoretical and more advanced
-    way. If you're dealing with scopes for the ``request`` service, simply
-    inject ``request_stack``.
+    Request by calling the
+    :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
+    method (see :ref:`book-container-request-stack`). The rest of this entry
+    talks about scopes in a theoretical and more advanced way. If you're
+    dealing with scopes for the ``request`` service, simply inject ``request_stack``.
 
 Understanding Scopes
 --------------------
 
 The scope of a service controls how long an instance of a service is used
-by the container. The Dependency Injection component provides two generic
+by the container. The DependencyInjection component provides two generic
 scopes:
 
 - ``container`` (the default one): The same instance is used each time you
@@ -35,7 +36,7 @@ also defines a third scope: ``request``. This scope is tied to the request,
 meaning a new instance is created for each subrequest and is unavailable
 outside the request (for instance in the CLI).
 
-An Example: client Scope
+An Example: Client Scope
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Other than the ``request`` service (which has a simple solution, see the
@@ -92,13 +93,13 @@ when compiling the container. Read the sidebar below for more details.
     A service can of course depend on a service from a wider scope without
     any issue.
 
-Using a Service from a narrower Scope
+Using a Service from a Narrower Scope
 -------------------------------------
 
 There are several solutions to the scope problem:
 
-* A) Use setter injection if the dependency is "synchronized"; (see
-  :ref:`using-synchronized-service`).
+* A) Use setter injection if the dependency is ``synchronized`` (see
+  :ref:`using-synchronized-service`);
 
 * B) Put your service in the same scope as the dependency (or a narrower one). If
   you depend on the ``client_configuration`` service, this means putting your
@@ -107,13 +108,13 @@ There are several solutions to the scope problem:
 * C) Pass the entire container to your service and retrieve your dependency from
   the container each time you need it to be sure you have the right instance
   -- your service can live in the default ``container`` scope (see
-  :ref:`passing-container`);
+  :ref:`passing-container`).
 
 Each scenario is detailed in the following sections.
 
 .. _using-synchronized-service:
 
-A) Using a synchronized Service
+A) Using a Synchronized Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
@@ -133,6 +134,7 @@ marked as ``synchronized``:
                 class:        Acme\HelloBundle\Client\ClientConfiguration
                 scope:        client
                 synchronized: true
+                synthetic:    true
                 # ...
 
     .. code-block:: xml
@@ -150,6 +152,7 @@ marked as ``synchronized``:
                     id="client_configuration"
                     scope="client"
                     synchronized="true"
+                    synthetic="true"
                     class="Acme\HelloBundle\Client\ClientConfiguration"
                 />
             </services>
@@ -166,6 +169,7 @@ marked as ``synchronized``:
         );
         $definition->setScope('client');
         $definition->setSynchronized(true);
+        $definition->setSynthetic(true);
         $container->setDefinition('client_configuration', $definition);
 
 Now, if you inject this service using setter injection, there are no drawbacks
@@ -195,9 +199,9 @@ and everything works without any special code in your service or in your definit
         }
     }
 
-Whenever the ``client`` scope is entered or left, the service container will
-automatically call the ``setClientConfiguration()`` method with the current
-``client_configuration`` instance.
+Whenever the ``client`` scope is active, the service container will
+automatically call the ``setClientConfiguration()`` method when the
+``client_configuration`` service is set in the container.
 
 You might have noticed that the ``setClientConfiguration()`` method accepts
 ``null`` as a valid value for the ``client_configuration`` argument. That's

@@ -20,7 +20,7 @@ that Task, right inside the same form.
     including the ``ManyToMany`` association mapping definition on the Task's
     ``tags`` property.
 
-Let's start there: suppose that each ``Task`` belongs to multiple ``Tags``
+Let's start there: suppose that each ``Task`` belongs to multiple ``Tag``
 objects. Start by creating a simple ``Task`` class::
 
     // src/Acme/TaskBundle/Entity/Task.php
@@ -237,7 +237,7 @@ When the user submits the form, the submitted data for the ``tags`` field are
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
 on the ``tag`` field of the ``Task`` instance.
 
-The ``Tags`` collection is accessible naturally via ``$task->getTags()``
+The ``tags`` collection is accessible naturally via ``$task->getTags()``
 and can be persisted to the database or used however you need.
 
 So far, this works great, but this doesn't allow you to dynamically add new
@@ -267,7 +267,7 @@ Allowing "new" tags with the "prototype"
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
-Now let the user add as many tag forms as he needs directly in the browser.
+Now let the user add as many tag forms as they need directly in the browser.
 This will be done through a bit of JavaScript.
 
 The first thing you need to do is to let the form collection know that it will
@@ -349,27 +349,29 @@ will be show next):
 
 .. code-block:: javascript
 
-    // Get the ul that holds the collection of tags
-    var collectionHolder = $('ul.tags');
+    var $collectionHolder;
 
     // setup an "add a tag" link
     var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
     var $newLinkLi = $('<li></li>').append($addTagLink);
 
     jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('ul.tags');
+
         // add the "add a tag" anchor and li to the tags ul
-        collectionHolder.append($newLinkLi);
+        $collectionHolder.append($newLinkLi);
 
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
-        collectionHolder.data('index', collectionHolder.find(':input').length);
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
         $addTagLink.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
             e.preventDefault();
 
             // add a new tag form (see next code block)
-            addTagForm(collectionHolder, $newLinkLi);
+            addTagForm($collectionHolder, $newLinkLi);
         });
     });
 
@@ -384,19 +386,19 @@ one example:
 
 .. code-block:: javascript
 
-    function addTagForm(collectionHolder, $newLinkLi) {
+    function addTagForm($collectionHolder, $newLinkLi) {
         // Get the data-prototype explained earlier
-        var prototype = collectionHolder.data('prototype');
+        var prototype = $collectionHolder.data('prototype');
 
         // get the new index
-        var index = collectionHolder.data('index');
+        var index = $collectionHolder.data('index');
 
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
         var newForm = prototype.replace(/__name__/g, index);
 
         // increase the index with one for the next item
-        collectionHolder.data('index', index + 1);
+        $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
@@ -405,7 +407,7 @@ one example:
 
 .. note::
 
-    It is better to separate your javascript in real JavaScript files than
+    It is better to separate your JavaScript in real JavaScript files than
     to write it inside the HTML as is done here.
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
@@ -553,7 +555,7 @@ we talk about next!).
             }
         }
 
-    If you have a ``OneToMany`` relationship, then the workaround is similar,
+    If you have a one-to-many relationship, then the workaround is similar,
     except that you can simply call ``setTask`` from inside ``addTag``.
 
 .. _cookbook-form-collections-remove:
@@ -606,8 +608,11 @@ First, add a "delete this tag" link to each tag form:
 .. code-block:: javascript
 
     jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('ul.tags');
+        
         // add a delete link to all of the existing tag form li elements
-        collectionHolder.find('li').each(function() {
+        $collectionHolder.find('li').each(function() {
             addTagFormDeleteLink($(this));
         });
 
@@ -650,11 +655,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     ``Tag`` is properly removed.
 
     In Doctrine, you have two side of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a ``ManyToMany`` relation
+    inverse side. Normally in this case you'll have a many-to-many relation
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
 
-    But if you have an ``OneToMany`` relation or a ``ManyToMany`` with a
+    But if you have an one-to-many relation or a many-to-many with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
     you'll need to do more work for the removed tags to persist correctly.
 
@@ -663,7 +668,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
-
+        
+        use Doctrine\Common\Collections\ArrayCollection;
+        
         // ...
         public function editAction($id, Request $request)
         {
@@ -674,11 +681,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for is '.$id);
             }
 
-            $originalTags = array();
+            $originalTags = new ArrayCollection();
 
-            // Create an array of the current Tag objects in the database
+            // Create an ArrayCollection of the current Tag objects in the database
             foreach ($task->getTags() as $tag) {
-                $originalTags[] = $tag;
+                $originalTags->add($tag);
             }
 
             $editForm = $this->createForm(new TaskType(), $task);
@@ -687,27 +694,20 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
             if ($editForm->isValid()) {
 
-                // filter $originalTags to contain tags no longer present
-                foreach ($task->getTags() as $tag) {
-                    foreach ($originalTags as $key => $toDel) {
-                        if ($toDel->getId() === $tag->getId()) {
-                            unset($originalTags[$key]);
-                        }
-                    }
-                }
-
                 // remove the relationship between the tag and the Task
                 foreach ($originalTags as $tag) {
-                    // remove the Task from the Tag
-                    $tag->getTasks()->removeElement($task);
+                    if (false === $task->getTags()->contains($tag)) {
+                        // remove the Task from the Tag
+                        $tag->getTasks()->removeElement($task);
 
-                    // if it were a ManyToOne relationship, remove the relationship like this
-                    // $tag->setTask(null);
+                        // if it was a many-to-one relationship, remove the relationship like this
+                        // $tag->setTask(null);
 
-                    $em->persist($tag);
+                        $em->persist($tag);
 
-                    // if you wanted to delete the Tag entirely, you can also do that
-                    // $em->remove($tag);
+                        // if you wanted to delete the Tag entirely, you can also do that
+                        // $em->remove($tag);
+                    }
                 }
 
                 $em->persist($task);
@@ -721,7 +721,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         }
 
     As you can see, adding and removing the elements correctly can be tricky.
-    Unless you have a ManyToMany relationship where Task is the "owning" side,
+    Unless you have a many-to-many relationship where Task is the "owning" side,
     you'll need to do extra work to make sure that the relationship is properly
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.

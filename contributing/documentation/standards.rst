@@ -16,7 +16,7 @@ Sphinx
   shorthand);
 * Inline hyperlinks are **not** used. Separate the link and their target
   definition, which you add on the bottom of the page;
-* You should use a form of *you* instead of *we*.
+* Inline markup should be closed on the same line as the open-string;
 
 Example
 ~~~~~~~
@@ -26,8 +26,8 @@ Example
     Example
     =======
 
-    When you are working on the docs, you should follow the `Symfony Docs`_
-    standards.
+    When you are working on the docs, you should follow the
+    `Symfony Documentation`_ standards.
 
     Level 2
     -------
@@ -43,7 +43,7 @@ Example
 
         echo 'You cannot use the :: shortcut here';
 
-    .. _`Symfony Docs`: http://symfony.com/doc/current/contributing/documentation/standards.html
+    .. _`Symfony Documentation`: http://symfony.com/doc/current/contributing/documentation/standards.html
 
 Code Examples
 -------------
@@ -60,6 +60,11 @@ Code Examples
 * Description of the folded code: (optional)
   If you fold several lines: the description of the fold can be placed after the ``...``
   If you fold only part of a line: the description can be placed before the line;
+* If useful to the reader, a PHP code example should start with the namespace
+  declaration;
+* When referencing classes, be sure to show the ``use`` statements at the
+  top of your code block. You don't need to show *all* ``use`` statements
+  in every example, just show what is actually being used in the code block;
 * If useful, a ``codeblock`` should begin with a comment containing the filename
   of the file in the code block. Don't place a blank line after this comment,
   unless the next line is also a comment;
@@ -72,9 +77,9 @@ Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
 (and their orders) are:
 
-* **Configuration** (including services and routing): Yaml, Xml, Php
-* **Validation**: Yaml, Annotations, Xml, Php
-* **Doctrine Mapping**: Annotations, Yaml, Xml, Php
+* **Configuration** (including services and routing): YAML, XML, PHP
+* **Validation**: YAML, Annotations, XML, PHP
+* **Doctrine Mapping**: Annotations, YAML, XML, PHP
 
 Example
 ~~~~~~~
@@ -82,8 +87,11 @@ Example
 .. code-block:: php
 
     // src/Foo/Bar.php
+    namespace Foo;
 
+    use Acme\Demo\Cat;
     // ...
+
     class Bar
     {
         // ...
@@ -93,16 +101,40 @@ Example
             // set foo with a value of bar
             $foo = ...;
 
+            $cat = new Cat($foo);
+
             // ... check if $bar has the correct value
 
-            return $foo->baz($bar, ...);
+            return $cat->baz($bar, ...);
         }
     }
 
 .. caution::
 
-    In Yaml you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
+    In YAML you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
     but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
+
+Language Standards
+------------------
+
+* For sections, use the following capitalization rules:
+  `Capitalization of the first word, and all other words, except for closed-class words`_:
+
+    The Vitamins are in my Fresh California Raisins
+
+* Do not use `Serial (Oxford) Commas`_;
+* You should use a form of *you* instead of *we* (i.e. avoid the first person
+  point of view: use the second instead);
+* When referencing a hypothetical person, such as "a user with a session cookie", gender-neutral
+  pronouns (they/their/them) should be used. For example, instead of:
+
+     * he or she, use they
+     * him or her, use them
+     * his or her, use their
+     * his or hers, use theirs
+     * himself or herself, use themselves
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
+.. _`Capitalization of the first word, and all other words, except for closed-class words`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
+.. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma

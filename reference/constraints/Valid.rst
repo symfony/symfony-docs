@@ -13,6 +13,8 @@ object and all sub-objects associated with it.
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
 +----------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
+
 Basic Usage
 -----------
 
@@ -34,7 +36,7 @@ an ``Address`` instance in the ``$address`` property.
 .. code-block:: php
 
     // src/Acme/HelloBundle/Entity/Author.php
-    namespace Amce\HelloBundle\Entity;
+    namespace Acme\HelloBundle\Entity;
 
     class Author
     {

@@ -19,8 +19,11 @@ how the input and output of the data is handled.
 |             | - `precision`_                                                      |
 |             | - `grouping`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `required`_                                                       |
-| options     | - `label`_                                                          |
+| Inherited   | - `empty_data`_                                                     |
+| options     | - `required`_                                                       |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
+|             | - `data`_                                                           |
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
@@ -85,9 +88,15 @@ Inherited Options
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 

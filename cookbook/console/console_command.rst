@@ -5,16 +5,16 @@ How to create a Console Command
 ===============================
 
 The Console page of the Components section (:doc:`/components/console/introduction`) covers
-how to create a Console command. This cookbook article covers the differences
-when creating Console commands within the Symfony2 framework.
+how to create a console command. This cookbook article covers the differences
+when creating console commands within the Symfony2 framework.
 
 Automatically Registering Commands
 ----------------------------------
 
 To make the console commands available automatically with Symfony2, create a
-``Command`` directory inside your bundle and create a php file suffixed with
+``Command`` directory inside your bundle and create a PHP file suffixed with
 ``Command.php`` for each command that you want to provide. For example, if you
-want to extend the ``AcmeDemoBundle`` (available in the Symfony Standard
+want to extend the AcmeDemoBundle (available in the Symfony Standard
 Edition) to greet you from the command line, create ``GreetCommand.php`` and
 add the following to it::
 

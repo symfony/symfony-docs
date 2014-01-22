@@ -20,8 +20,8 @@ Installing a Symfony2 Distribution
 .. tip::
 
     First, check that you have installed and configured a Web server (such
-    as Apache) with PHP 5.3.8 or higher. For more information on Symfony2
-    requirements, see the :doc:`requirements reference </reference/requirements>`.
+    as Apache) with PHP. For more information on Symfony2 requirements, see the
+    :doc:`requirements reference </reference/requirements>`.
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -44,7 +44,7 @@ have curl installed, it's as easy as:
 
 .. code-block:: bash
 
-    curl -s https://getcomposer.org/installer | php
+    $ curl -s https://getcomposer.org/installer | php
 
 .. note::
 
@@ -57,12 +57,7 @@ Distribution:
 
 .. code-block:: bash
 
-    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.3.0
-
-.. tip::
-
-    For an exact version, replace "2.3.0" with the latest Symfony version.
-    For details, see the `Symfony Installation Page`_
+    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony dev-master
 
 .. tip::
 
@@ -109,10 +104,10 @@ one of the following commands (replacing ``###`` with your actual filename):
 .. code-block:: bash
 
     # for .tgz file
-    $ tar zxvf Symfony_Standard_Vendors_2.3.###.tgz
+    $ tar zxvf Symfony_Standard_Vendors_2.4.###.tgz
 
     # for a .zip file
-    $ unzip Symfony_Standard_Vendors_2.3.###.zip
+    $ unzip Symfony_Standard_Vendors_2.4.###.zip
 
 If you've downloaded "without vendors", you'll definitely need to read the
 next section.
@@ -140,7 +135,7 @@ Updating Vendors
 
 At this point, you've downloaded a fully-functional Symfony project in which
 you'll start to develop your own application. A Symfony project depends on
-a number of external libraries. These are downloaded into the `vendor/` directory
+a number of external libraries. These are downloaded into the ``vendor/`` directory
 of your project via a library called `Composer`_.
 
 Depending on how you downloaded Symfony, you may or may not need to update
@@ -151,7 +146,7 @@ Step 1: Get `Composer`_ (The great new PHP packaging system)
 
 .. code-block:: bash
 
-    curl -s http://getcomposer.org/installer | php
+    $ curl -s http://getcomposer.org/installer | php
 
 Make sure you download ``composer.phar`` in the same folder where
 the ``composer.json`` file is located (this is your Symfony project
@@ -174,13 +169,13 @@ Symfony itself - into the ``vendor/`` directory.
 
     .. code-block:: bash
 
-        php installer
-        php composer.phar install
+        $ php installer
+        $ php composer.phar install
 
 .. tip::
 
     When running ``php composer.phar install`` or ``php composer.phar update``,
-    composer will execute post install/update commands to clear the cache
+    Composer will execute post install/update commands to clear the cache
     and install assets. By default, the assets will be copied into your ``web``
     directory.
 
@@ -236,7 +231,7 @@ If there are any issues, correct them now before moving on.
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data' | grep -v root | head -1 | cut -d\  -f1`
         $ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
@@ -251,9 +246,9 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
-		$ sudo setfacl -R -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
-		$ sudo setfacl -dR -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data' | grep -v root | head -1 | cut -d\  -f1`
+		$ sudo setfacl -R -m u:"$APACHEUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+		$ sudo setfacl -dR -m u:"$APACHEUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 		
     **3. Without using ACL**
 
@@ -321,11 +316,11 @@ Using Source Control
 
 If you're using a version control system like ``Git`` or ``Subversion``, you
 can setup your version control system and begin committing your project to
-it as normal. The Symfony Standard edition *is* the starting point for your
+it as normal. The Symfony Standard Edition *is* the starting point for your
 new project.
 
 For specific instructions on how best to setup your project to be stored
-in git, see :doc:`/cookbook/workflow/new_project_git`.
+in Git, see :doc:`/cookbook/workflow/new_project_git`.
 
 Ignoring the ``vendor/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -341,7 +336,7 @@ file:
 
 Now, the vendor directory won't be committed to source control. This is fine
 (actually, it's great!) because when someone else clones or checks out the
-project, he/she can simply run the ``php composer.phar install`` script to
+project, they can simply run the ``php composer.phar install`` script to
 install all the necessary project dependencies.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs

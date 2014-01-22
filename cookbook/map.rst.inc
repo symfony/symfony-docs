@@ -78,6 +78,10 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * (service container) :doc:`/cookbook/service_container/event_listener`
 
+* :doc:`/cookbook/expression/index`
+
+  * :doc:`/cookbook/expression/expressions`
+
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/form_customization`
@@ -97,12 +101,15 @@
 
   * :doc:`/cookbook/logging/monolog`
   * :doc:`/cookbook/logging/monolog_email`
+  * :doc:`/cookbook/logging/monolog_console`
+  * :doc:`/cookbook/logging/monolog_regex_based_excludes`
   * :doc:`/cookbook/logging/channels_handlers`
 
 * :doc:`/cookbook/profiler/index`
 
   * :doc:`/cookbook/profiler/data_collector`
   * :doc:`/cookbook/profiler/matchers`
+  * :doc:`/cookbook/profiler/storage`
 
 * :doc:`/cookbook/request/index`
 
@@ -117,20 +124,26 @@
   * :doc:`/cookbook/routing/method_parameters`
   * :doc:`/cookbook/routing/service_container_parameters`
   * :doc:`/cookbook/routing/custom_route_loader`
+  * :doc:`/cookbook/routing/redirect_trailing_slash`
 
 * :doc:`/cookbook/security/index`
 
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
+  * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
+  * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/custom_password_authenticator`
+  * :doc:`/cookbook/security/api_key_authentication`
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
+  * :doc:`/cookbook/security/csrf_in_login_form`
 
 * **Serializer**
 

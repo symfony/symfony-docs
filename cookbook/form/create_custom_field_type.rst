@@ -16,7 +16,7 @@ Defining the Field Type
 
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
-will be called `GenderType` and the file will be stored in the default location
+will be called ``GenderType`` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 

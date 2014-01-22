@@ -68,7 +68,7 @@ stylesheets:
 
 .. note::
 
-    Windows users need to remember to update config to proper java location.
+    Windows users need to remember to update config to proper Java location.
     In Windows7 x64 bit by default it's ``C:\Program Files (x86)\Java\jre6\bin\java.exe``.
 
 You now have access to two new Assetic filters in your application:
@@ -156,12 +156,12 @@ apply this filter when debug mode is off.
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
-    enable it by adding the apply-to attribute to the filter configuration, for
-    example in the yui_js filter ``apply_to: "\.js$"``. To only have the filter
-    applied in production, add this to the config_prod file rather than the
+    enable it by adding the ``apply_to`` attribute to the filter configuration, for
+    example in the ``yui_js`` filter ``apply_to: "\.js$"``. To only have the filter
+    applied in production, add this to the ``config_prod`` file rather than the
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
-.. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/
+.. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
 .. _`deprecation process`: http://www.yuiblog.com/blog/2012/10/16/state-of-yui-compressor/

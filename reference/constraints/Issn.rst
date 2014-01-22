@@ -2,9 +2,9 @@ Issn
 ====
 
 .. versionadded:: 2.3
-    The ISSN validation is new in Symfony 2.3.
+    The Issn constraint was added in Symfony 2.3.
 
-Validates that a value is a valid `ISSN`_.
+Validates that a value is a valid `International Standard Serial Number (ISSN)`_.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
@@ -97,5 +97,5 @@ requireHyphen
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
 
-.. _`ISSN`: http://en.wikipedia.org/wiki/Issn
+.. _`International Standard Serial Number (ISSN)`: http://en.wikipedia.org/wiki/Issn
 

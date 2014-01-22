@@ -33,7 +33,7 @@ key in your firewall, along with the ``form_login`` key:
         security:
             firewalls:
                 your_firewall_name:
-                    http_basic:
+                    http_basic: ~
 
     .. code-block:: xml
 

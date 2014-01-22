@@ -7,7 +7,7 @@ FrameworkBundle Configuration ("framework")
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered.
 
-The ``FrameworkBundle`` contains most of the "base" framework functionality
+The FrameworkBundle contains most of the "base" framework functionality
 and can be configured under the ``framework`` key in your application configuration.
 This includes settings related to sessions, translation, forms, validation,
 routing and more.
@@ -128,7 +128,7 @@ Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
 .. versionadded:: 2.3
-    CIDR notation support was introduced, so you can whitelist whole
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
     subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
@@ -407,11 +407,6 @@ would be ``/images/logo.png?version=5``.
 
 profiler
 ~~~~~~~~
-
-.. versionadded:: 2.2
-    The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
-    could only be disabled by omitting the ``framework.profiler`` configuration
-    entirely.
 
 .. _profiler.enabled:
 

@@ -42,10 +42,10 @@ also load specific bundles based on the selected environment. For example,
 Symfony2 comes with the WebProfilerBundle (described below), enabled only
 in the ``dev`` and ``test`` environments.
 
-Symfony2 comes with two web-accessible front controllers: ``app_dev.php`` 
+Symfony2 comes with two web-accessible front controllers: ``app_dev.php``
 provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
 All web accesses to Symfony2 normally go through one of these front controllers.
-(The ``test`` environment is normally only used when running unit tests, and so 
+(The ``test`` environment is normally only used when running unit tests, and so
 doesn't have a dedicated front controller. The console tool also provides a
 front controller that can be used with any environment.)
 
@@ -165,7 +165,7 @@ an entry when you generated the ``AcmeHelloBundle``:
         $collection = new RouteCollection();
         $collection->addCollection(
             $loader->import('@AcmeHelloBundle/Resources/config/routing.php'),
-            '/',
+            '/'
         );
 
         return $collection;
@@ -555,7 +555,7 @@ You'll learn more about each of these directories in later chapters.
 
     When Symfony is loading, a special file - ``vendor/autoload.php`` - is
     included. This file is created by Composer and will autoload all
-    application files living in the `src/` folder as well as all
+    application files living in the ``src/`` folder as well as all
     third-party libraries mentioned in the ``composer.json`` file.
 
     Because of the autoloader, you never need to worry about using ``include``
@@ -839,7 +839,7 @@ format you prefer:
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony ``FrameworkBundle`` and includes configuration for the
+for the core Symfony FrameworkBundle and includes configuration for the
 routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.
@@ -853,7 +853,7 @@ options of each feature.
     three formats (YAML, XML and PHP). Each has its own advantages and
     disadvantages. The choice of which to use is up to you:
 
-    * *YAML*: Simple, clean and readable (learn more about yaml in
+    * *YAML*: Simple, clean and readable (learn more about YAML in
       ":doc:`/components/yaml/yaml_format`");
 
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
@@ -863,19 +863,19 @@ options of each feature.
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can dump the default configuration for a bundle in yaml to the console using
-the ``config:dump-reference`` command.  Here is an example of dumping the default
+You can dump the default configuration for a bundle in YAML to the console using
+the ``config:dump-reference`` command. Here is an example of dumping the default
 FrameworkBundle configuration:
 
-.. code-block:: text
+.. code-block:: bash
 
-    app/console config:dump-reference FrameworkBundle
+    $ app/console config:dump-reference FrameworkBundle
 
 The extension alias (configuration key) can also be used:
 
-.. code-block:: text
+.. code-block:: bash
 
-    app/console config:dump-reference framework
+    $ app/console config:dump-reference framework
 
 .. note::
 

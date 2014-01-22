@@ -4,8 +4,8 @@ Isbn
 .. versionadded:: 2.3
     The Isbn constraint was added in Symfony 2.3.
 
-This constraint validates that an ISBN (International Standard Book Numbers)
-number is either a valid ISBN-10, a valid ISBN-13 or both.
+This constraint validates that an `International Standard Book Number (ISBN)`_
+is either a valid ISBN-10, a valid ISBN-13 or both.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                |
@@ -98,7 +98,7 @@ Available Options
 isbn10
 ~~~~~~
 
-**type**: ``boolean`` [:ref:`default option<validation-default-option>`]
+**type**: ``boolean``
 
 If this required option is set to ``true`` the constraint will check if the
 code is a valid ISBN-10 code.
@@ -106,7 +106,7 @@ code is a valid ISBN-10 code.
 isbn13
 ~~~~~~
 
-**type**: ``boolean`` [:ref:`default option<validation-default-option>`]
+**type**: ``boolean``
 
 If this required option is set to ``true`` the constraint will check if the
 code is a valid ISBN-13 code.
@@ -134,3 +134,5 @@ bothIsbnMessage
 
 The message that will be shown if both the `isbn10`_ and `isbn13`_ options
 are true and the given value does not pass the ISBN-13 nor the ISBN-13 check.
+
+.. _`International Standard Book Number (ISBN)`: http://en.wikipedia.org/wiki/Isbn

@@ -10,4 +10,9 @@ This is superficial and independent from validation. At best, if you let Symfony
 guess your field type, then the value of this option will be guessed from
 your validation information.
 
+.. note::
+
+    The required option also affects how empty data for each field is
+    handled. For more details, see the `empty_data`_ option.
+
 .. _`HTML5 required attribute`: http://diveintohtml5.info/forms.html

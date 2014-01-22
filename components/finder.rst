@@ -5,7 +5,7 @@
 The Finder Component
 ====================
 
-   The Finder Component finds files and directories via an intuitive fluent
+   The Finder component finds files and directories via an intuitive fluent
    interface.
 
 Installation
@@ -81,9 +81,6 @@ Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
-
-.. versionadded:: 2.2
-   Wildcard support was added in version 2.2.
 
 Use wildcard characters to search in the directories matching a pattern::
 
@@ -206,9 +203,6 @@ The ``notContains()`` method excludes files containing given pattern::
 Path
 ~~~~
 
-.. versionadded:: 2.2
-   The ``path()`` and ``notPath()`` methods were added in version 2.2.
-
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
@@ -260,8 +254,8 @@ Restrict files by last modified dates with the
 
     $finder->date('since yesterday');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='. You can also use ``since`` or ``after`` as an alias for ``>``, and
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
 ``until`` or ``before`` as an alias for ``<``.
 
 The target value can be any date supported by the `strtotime`_ function.

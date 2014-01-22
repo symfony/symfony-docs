@@ -5,7 +5,7 @@ Security
 ========
 
 Security is a two-step process whose goal is to prevent a user from accessing
-a resource that he/she should not have access to.
+a resource that they should not have access to.
 
 In the first step of the process, the security system identifies who the user
 is by requiring the user to submit some sort of identification. This is called
@@ -31,7 +31,7 @@ application with HTTP Basic authentication.
 Basic Example: HTTP Authentication
 ----------------------------------
 
-The security component can be configured via your application configuration.
+The Security component can be configured via your application configuration.
 In fact, most standard security setups are just a matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
 matching ``/admin/*`` and to ask the user for credentials using basic HTTP
@@ -165,7 +165,7 @@ Firewalls (Authentication)
 
 When a user makes a request to a URL that's protected by a firewall, the
 security system is activated. The job of the firewall is to determine whether
-or not the user needs to be authenticated, and if he does, to send a response
+or not the user needs to be authenticated, and if they do, to send a response
 back to the user initiating the authentication process.
 
 A firewall is activated when the URL of an incoming request matches the configured
@@ -217,7 +217,7 @@ If the credentials are valid, the original request can be re-tried.
    :align: center
 
 In this example, the user ``ryan`` successfully authenticates with the firewall.
-But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, he's still denied
+But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, they're still denied
 access to ``/admin/foo``. Ultimately, this means that the user will see some
 sort of message indicating that access has been denied.
 
@@ -319,7 +319,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="secured_area" pattern="^/">
                     <anonymous />
-                    <form-login login_path="login" check_path="login_check" />
+                    <form-login login-path="login" check-path="login_check" />
                 </firewall>
             </config>
         </srv:container>
@@ -425,13 +425,13 @@ Next, create the controller that will display the login form::
     namespace Acme\SecurityBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\SecurityContext;
 
     class SecurityController extends Controller
     {
-        public function loginAction()
+        public function loginAction(Request $request)
         {
-            $request = $this->getRequest();
             $session = $request->getSession();
 
             // get the login error if there is one
@@ -514,6 +514,11 @@ Finally, create the corresponding template:
 
             <button type="submit">login</button>
         </form>
+
+.. caution::
+
+    This login form is currently not protected against CSRF attacks. Read
+    :doc:`/cookbook/security/csrf_in_login_form` on how to protect your login form.
 
 .. tip::
 
@@ -656,7 +661,7 @@ see :doc:`/cookbook/security/form_login`.
                 ),
             ),
 
-    **3. Be sure ``/login_check`` is behind a firewall**
+    **3. Be sure /login_check is behind a firewall**
 
     Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
     is behind the firewall you're using for your form login (in this example,
@@ -672,6 +677,13 @@ see :doc:`/cookbook/security/form_login`.
     to explicitly specify the same :ref:`reference-security-firewall-context`
     for different firewalls. But usually for most applications, having one
     main firewall is enough.
+
+    **5. Routing error pages are not covered by firewalls**
+
+    As Routing is done *before* security, Routing error pages are not covered
+    by any firewall. This means you can't check for security or even access
+    the user object on these pages. See :doc:`/cookbook/controller/error_pages`
+    for more details.
 
 Authorization
 -------------
@@ -781,7 +793,7 @@ Take the following ``access_control`` entries as an example:
             # ...
             access_control:
                 - { path: ^/admin, roles: ROLE_USER_IP, ip: 127.0.0.1 }
-                - { path: ^/admin, roles: ROLE_USER_HOST, host: symfony.com }
+                - { path: ^/admin, roles: ROLE_USER_HOST, host: symfony\.com$ }
                 - { path: ^/admin, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
                 - { path: ^/admin, roles: ROLE_USER }
 
@@ -789,7 +801,7 @@ Take the following ``access_control`` entries as an example:
 
             <access-control>
                 <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
-                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony.com" />
+                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
                 <rule path="^/admin" role="ROLE_USER_METHOD" method="POST, PUT" />
                 <rule path="^/admin" role="ROLE_USER" />
             </access-control>
@@ -805,7 +817,7 @@ Take the following ``access_control`` entries as an example:
                 array(
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_HOST',
-                    'host' => 'symfony.com',
+                    'host' => 'symfony\.com$',
                 ),
                 array(
                     'path' => '^/admin',
@@ -864,6 +876,8 @@ options:
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown);
 
+* ``allow_if`` If the expression returns false, then access is denied;
+
 * ``requires_channel`` If the incoming request's channel (e.g. ``http``)
   does not match this value (e.g. ``https``), the user will be redirected
   (e.g. redirected from ``http`` to ``https``, or vice versa).
@@ -893,6 +907,14 @@ the trusted reverse proxy cache.
     Version 2.3 allows multiple IP addresses in a single rule with the ``ips: [a, b]``
     construct.  Prior to 2.3, users should create one rule per IP address to match and
     use the ``ip`` key instead of ``ips``.
+
+.. caution::
+
+    As you'll read in the explanation below the example, the ``ip`` option
+    does not restrict to a specific IP address. Instead, using the ``ip``
+    key means that the ``access_control`` entry will only match this IP address,
+    and users accessing it from a different IP address will continue down
+    the ``access_control`` list.
 
 Here is an example of how you might secure all ESI routes that start with a
 given prefix, ``/esi``, from outside access:
@@ -951,13 +973,67 @@ address):
 
 * The second access rule is not examined as the first rule matched.
 
+.. _book-security-allow-if:
+
+Securing by an Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.4
+    The ``allow_if`` functionality was introduced in Symfony 2.4.
+
+Once an ``access_control`` entry is matched, you can deny access via the
+``roles`` key or use more complex logic with an expression in the ``allow_if``
+key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                -
+                    path: ^/_internal/secure
+                    allow_if: "'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')"
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal/secure"
+                    allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array(
+                    'path' => '^/_internal/secure',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
+                ),
+            ),
+
+In this case, when the user tries to access any URL starting with ``/_internal/secure``,
+they will only be granted access if the IP address is ``127.0.0.1`` or if
+the user has the ``ROLE_ADMIN`` role.
+
+Inside the expression, you have access to a number of different variables
+and functions including ``request``, which is the Symfony
+:class:`Symfony\\Component\\HttpFoundation\\Request` object (see
+:ref:`component-http-foundation-request`).
+
+For a list of the other functions and variables, see
+:ref:`functions and variables <book-security-expression-variables>`.
+
 .. _book-security-securing-channel:
 
-Securing by Channel
-~~~~~~~~~~~~~~~~~~~
+Forcing a Channel (http, https)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also require a user to access a URL via SSL; just use the
-``requires_channel`` argument in any ``access_control`` entries:
+``requires_channel`` argument in any ``access_control`` entries. If this
+``access_control`` is matched and the request is using the ``http`` channel,
+the user will be redirected to ``https``:
 
 .. configuration-block::
 
@@ -1009,21 +1085,21 @@ authorization from inside a controller::
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
-which can secure your controller using annotations::
+Thanks to the SensioFrameworkExtraBundle, you can also secure your controller using annotations::
 
     // ...
-    use JMS\SecurityExtraBundle\Annotation\Secure;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function helloAction($name)
     {
         // ...
     }
 
-For more information, see the `JMSSecurityExtraBundle`_ documentation.
+For more information, see the
+:doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1034,18 +1110,18 @@ the one seen in the previous section. For example, suppose you have a service
 You can restrict use of this class - no matter where it's being used from -
 to users that have a specific role.
 
-For more information on how you can use the security component to secure
+For more information on how you can use the Security component to secure
 different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
 
 Access Control Lists (ACLs): Securing Individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit his own comments, but not
+posts. Now, you want a user to be able to edit their own comments, but not
 those of other users. Also, as the admin user, you yourself want to be able
 to edit *all* comments.
 
-The security component comes with an optional access control list (ACL) system
+The Security component comes with an optional access control list (ACL) system
 that you can use when you need to control access to individual instances
 of an object in your system. *Without* ACL, you can secure your system so that
 only certain users can edit blog comments in general. But *with* ACL, you
@@ -1262,7 +1338,7 @@ in plain text (whether those users are stored in a configuration file or in
 a database somewhere). Of course, in a real application, you'll want to encode
 your users' passwords for security reasons. This is easily accomplished by
 mapping your User class to one of several built-in "encoders". For example,
-to store your users in memory, but obscure their passwords via ``sha1``,
+to store your users in memory, but obscure their passwords via ``bcrypt``,
 do the following:
 
 .. configuration-block::
@@ -1276,14 +1352,17 @@ do the following:
                 in_memory:
                     memory:
                         users:
-                            ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
-                            admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
+                            ryan:
+                                password: $2a$12$w/aHvnC/XNeDVrrl65b3dept8QcKqpADxUlbraVXXsC03Jam5hvoO
+                                roles: 'ROLE_USER'
+                            admin:
+                                password: $2a$12$HmOsqRDJK0HuMDQ5Fb2.AOLMQHyNHGD0seyjU3lEVusjT72QQEIpW
+                                roles: 'ROLE_ADMIN'
 
             encoders:
                 Symfony\Component\Security\Core\User\User:
-                    algorithm: sha1
-                    iterations: 1
-                    encode_as_base64: false
+                    algorithm: bcrypt
+                    cost: 12
 
     .. code-block:: xml
 
@@ -1293,18 +1372,18 @@ do the following:
             <provider name="in_memory">
                 <memory>
                     <user name="ryan"
-                        password="bb87a29949f3a1ee0559f8a57357487151281386"
+                        password="$2a$12$w/aHvnC/XNeDVrrl65b3dept8QcKqpADxUlbraVXXsC03Jam5hvoO"
                         roles="ROLE_USER" />
                     <user name="admin"
-                        password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620"
+                        password="$2a$12$HmOsqRDJK0HuMDQ5Fb2.AOLMQHyNHGD0seyjU3lEVusjT72QQEIpW"
                         roles="ROLE_ADMIN" />
                 </memory>
             </provider>
 
             <encoder class="Symfony\Component\Security\Core\User\User"
-                algorithm="sha1"
-                iterations="1"
-                encode_as_base64="false" />
+                algorithm="bcrypt"
+                cost="12"
+            />
         </config>
 
     .. code-block:: php
@@ -1317,11 +1396,11 @@ do the following:
                     'memory' => array(
                         'users' => array(
                             'ryan' => array(
-                                'password' => 'bb87a29949f3a1ee0559f8a57357487151281386',
+                                'password' => '$2a$12$w/aHvnC/XNeDVrrl65b3dept8QcKqpADxUlbraVXXsC03Jam5hvoO',
                                 'roles' => 'ROLE_USER',
                             ),
                             'admin' => array(
-                                'password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620',
+                                'password' => '$2a$12$HmOsqRDJK0HuMDQ5Fb2.AOLMQHyNHGD0seyjU3lEVusjT72QQEIpW',
                                 'roles' => 'ROLE_ADMIN',
                             ),
                         ),
@@ -1330,72 +1409,32 @@ do the following:
             ),
             'encoders' => array(
                 'Symfony\Component\Security\Core\User\User' => array(
-                    'algorithm'         => 'sha1',
-                    'iterations'        => 1,
-                    'encode_as_base64'  => false,
+                    'algorithm'         => 'bcrypt',
+                    'iterations'        => 12,
                 ),
             ),
         ));
 
-By setting the ``iterations`` to ``1`` and the ``encode_as_base64`` to false,
-the password is simply run through the ``sha1`` algorithm one time and without
-any extra encoding. You can now calculate the hashed password either programmatically
-(e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
-
-If you're creating your users dynamically (and storing them in a database),
-you can use even tougher hashing algorithms and then rely on an actual password
-encoder object to help you encode passwords. For example, suppose your User
-object is ``Acme\UserBundle\Entity\User`` (like in the above example). First,
-configure the encoder for that user:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            # ...
-
-            encoders:
-                Acme\UserBundle\Entity\User: sha512
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-
-            <encoder class="Acme\UserBundle\Entity\User" algorithm="sha512" />
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-            'encoders' => array(
-                'Acme\UserBundle\Entity\User' => 'sha512',
-            ),
-        ));
-
-In this case, you're using the stronger ``sha512`` algorithm. Also, since
-you've simply specified the algorithm (``sha512``) as a string, the system
-will default to hashing your password 5000 times in a row and then encoding
-it as base64. In other words, the password has been greatly obfuscated so
-that the hashed password can't be decoded (i.e. you can't determine the password
-from the hashed password).
-
 .. versionadded:: 2.2
-    As of Symfony 2.2 you can also use the :ref:`PBKDF2 <reference-security-pbkdf2>`
-    and :ref:`BCrypt <reference-security-bcrypt>` password encoders.
+    The BCrypt encoder was introduced in Symfony 2.2.
+
+You can now calculate the hashed password either programmatically
+(e.g. ``password_hash('ryanpass', PASSWORD_BCRYPT, array('cost' => 12));``)
+or via some online tool.
+
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
+
+Supported algorithms for this method depend on your PHP version. A full list
+is available by calling the PHP function :phpfunction:`hash_algos`.
 
 Determining the Hashed Password
 ...............................
 
-If you have some sort of registration form for users, you'll need to be able
-to determine the hashed password so that you can set it on your user. No
-matter what algorithm you configure for your user object, the hashed password
-can always be determined in the following way from a controller::
+If you're storing users in the database and you have some sort of registration
+form for users, you'll need to be able to determine the hashed password so
+that you can set it on your user before inserting it. No matter what algorithm
+you configure for your user object, the hashed password can always be determined
+in the following way from a controller::
 
     $factory = $this->get('security.encoder_factory');
     $user = new Acme\UserBundle\Entity\User();
@@ -1403,6 +1442,10 @@ can always be determined in the following way from a controller::
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword('ryanpass', $user->getSalt());
     $user->setPassword($password);
+
+In order for this to work, just make sure that you have the encoder for your
+user class (e.g. ``Acme\UserBundle\Entity\User``) configured under the ``encoders``
+key in ``app/config/security.yml``.
 
 .. caution::
 
@@ -1529,59 +1572,6 @@ Now, all authentication mechanisms will use the ``chain_provider``, since
 it's the first specified. The ``chain_provider`` will, in turn, try to load
 the user from both the ``in_memory`` and ``user_db`` providers.
 
-.. tip::
-
-    If you have no reasons to separate your ``in_memory`` users from your
-    ``user_db`` users, you can accomplish this even more easily by combining
-    the two sources into a single provider:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/security.yml
-            security:
-                providers:
-                    main_provider:
-                        memory:
-                            users:
-                                foo: { password: test }
-                        entity:
-                            class: Acme\UserBundle\Entity\User,
-                            property: username
-
-        .. code-block:: xml
-
-            <!-- app/config/security.xml -->
-            <config>
-                <provider name=="main_provider">
-                    <memory>
-                        <user name="foo" password="test" />
-                    </memory>
-
-                    <entity class="Acme\UserBundle\Entity\User"
-                        property="username" />
-                </provider>
-            </config>
-
-        .. code-block:: php
-
-            // app/config/security.php
-            $container->loadFromExtension('security', array(
-                'providers' => array(
-                    'main_provider' => array(
-                        'memory' => array(
-                            'users' => array(
-                                'foo' => array('password' => 'test'),
-                            ),
-                        ),
-                        'entity' => array(
-                        'class' => 'Acme\UserBundle\Entity\User',
-                        'property' => 'username'),
-                    ),
-                ),
-            ));
-
 You can also configure the firewall or individual authentication mechanisms
 to use a specific provider. Again, unless a provider is specified explicitly,
 the first provider is always used:
@@ -1642,7 +1632,7 @@ Roles
 
 The idea of a "role" is key to the authorization process. Each user is assigned
 a set of roles and then each resource requires one or more roles. If the user
-has the required roles, access is granted. Otherwise access is denied.
+has any one of the required roles, access is granted. Otherwise access is denied.
 
 Roles are pretty simple, and are basically strings that you can invent and
 use as needed (though roles are objects internally). For example, if you
@@ -1655,6 +1645,8 @@ doesn't need to be defined anywhere - you can just start using it.
     All roles **must** begin with the ``ROLE_`` prefix to be managed by
     Symfony2. If you define your own roles with a dedicated ``Role`` class
     (more advanced), don't use the ``ROLE_`` prefix.
+
+.. _book-security-role-hierarchy:
 
 Hierarchical Roles
 ~~~~~~~~~~~~~~~~~~
@@ -1696,6 +1688,208 @@ rules by creating a role hierarchy:
 In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+
+Access Control
+--------------
+
+Now that you have a User and Roles, you can go further than URL-pattern based
+authorization.
+
+.. _book-security-securing-controller:
+
+Access Control in Controllers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Protecting your application based on URL patterns is easy, but may not be
+fine-grained enough in certain cases. When necessary, you can easily force
+authorization from inside a controller::
+
+    // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    public function helloAction($name)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        // ...
+    }
+
+.. caution::
+
+    A firewall must be active or an exception will be thrown when the ``isGranted()``
+    method is called. It's almost always a good idea to have a main firewall that
+    covers all URLs (as is shown in this chapter).
+
+.. _book-security-expressions:
+
+Complex Access Controls with Expressions
+----------------------------------------
+
+.. versionadded:: 2.4
+    The expression functionality was introduced in Symfony 2.4.
+
+In addition to a role like ``ROLE_ADMIN``, the ``isGranted`` method also
+accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
+
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Symfony\Component\ExpressionLanguage\Expression;
+    // ...
+
+    public function indexAction()
+    {
+        if (!$this->get('security.context')->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))) {
+            throw new AccessDeniedException();
+        }
+
+        // ...
+    }
+
+In this example, if the current user has ``ROLE_ADMIN`` or if the current
+user object's ``isSuperAdmin()`` method returns ``true``, then access will
+be granted (note: your User object may not have an ``isSuperAdmin`` method,
+that method is invented for this example).
+
+This uses an expression and you can learn more about the expression language
+syntax, see :doc:`/components/expression_language/syntax`.
+
+.. _book-security-expression-variables:
+
+Inside the expression, you have access to a number of variables:
+
+* ``user`` The user object (or the string ``anon`` if you're not authenticated);
+* ``roles`` The array of roles the user has, including from the
+  :ref:`role hierarchy <book-security-role-hierarchy>` but not including
+  the ``IS_AUTHENTICATED_*`` attributes (see the functions below);
+* ``object``: The object (if any) that's passed as the second argument to
+  ``isGranted`` ;
+* ``token`` The token object;
+* ``trust_resolver``: The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
+   object: you'll probably use the ``is_*`` functions below instead.
+
+Additionally, you have access to a number of functions inside the expression:
+
+* ``is_authenticated``: Returns ``true`` if the user is authenticated via "remember-me"
+  or authenticated "fully" - i.e. returns true if the user is "logged in";
+* ``is_anonymous``: Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with
+  the ``isGranted`` function;
+* ``is_remember_me``: Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``,
+  see below;
+* ``is_fully_authenticated``: Similar, but not equal to ``IS_AUTHENTICATED_FULLY``,
+  see below;
+* ``has_role``: Checks to see if the user has the given role - equivalent
+  to an expression like ``'ROLE_ADMIN' in roles``.
+
+.. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
+
+    The ``is_remember_me`` and ``is_authenticated_fully`` functions are *similar*
+    to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
+    with the ``isGranted`` function - but they are **not** the same. The
+    following shows the difference::
+
+        use Symfony\Component\ExpressionLanguage\Expression;
+        // ...
+
+        $sc = $this->get('security.context');
+        $access1 = $sc->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $access2 = $sc->isGranted(new Expression(
+            'is_remember_me() or is_fully_authenticated()'
+        ));
+
+    Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
+    behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,
+    the ``is_remember_me`` function *only* returns true if the user is authenticated
+    via a remember-me cookie and ``is_fully_authenticated`` *only* returns
+    true if the user has actually logged in during this session (i.e. is
+    full-fledged).
+
+Access Control in Other Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In fact, anything in Symfony can be protected using a strategy similar to
+the one seen in the previous section. For example, suppose you have a service
+(i.e. a PHP class) whose job is to send emails from one user to another.
+You can restrict use of this class - no matter where it's being used from -
+to users that have a specific role.
+
+For more information on how you can use the Security component to secure
+different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
+
+.. _book-security-template:
+
+Access Control in Templates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to check if the current user has a role inside a template, use
+the built-in helper function:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+.. note::
+
+    If you use this function and are *not* at a URL behind a firewall
+    active, an exception will be thrown. Again, it's almost always a good
+    idea to have a main firewall that covers all URLs (as has been shown
+    in this chapter).
+
+.. _book-security-template-expression:
+
+.. versionadded:: 2.4
+    The ``expression`` functionality was introduced in Symfony 2.4.
+
+You can also use expressions inside your templates:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted(expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        )) %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+For more details on expressions and security, see :ref:`book-security-expressions`.
+
+Access Control Lists (ACLs): Securing Individual Database Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine you are designing a blog system where your users can comment on your
+posts. Now, you want a user to be able to edit their own comments, but not
+those of other users. Also, as the admin user, you yourself want to be able
+to edit *all* comments.
+
+The Security component comes with an optional access control list (ACL) system
+that you can use when you need to control access to individual instances
+of an object in your system. *Without* ACL, you can secure your system so that
+only certain users can edit blog comments in general. But *with* ACL, you
+can restrict or allow access on a comment-by-comment basis.
+
+For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
 
 .. _book-security-logging-out:
 
@@ -1800,181 +1994,10 @@ a route so that you can use it to generate the URL:
 
         return $collection;
 
-Once the user has been logged out, he will be redirected to whatever path
+Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
 :doc:`Security Configuration Reference </reference/configuration/security>`.
-
-.. _book-security-template:
-
-Access Control in Templates
----------------------------
-
-If you want to check if the current user has a role inside a template, use
-the built-in helper function:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="...">Delete</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
-            <a href="...">Delete</a>
-        <?php endif; ?>
-
-.. note::
-
-    If you use this function and are *not* at a URL where there is a firewall
-    active, an exception will be thrown. Again, it's almost always a good
-    idea to have a main firewall that covers all URLs (as has been shown
-    in this chapter).
-
-Access Control in Controllers
------------------------------
-
-If you want to check if the current user has a role in your controller, use
-the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
-method of the security context::
-
-    public function indexAction()
-    {
-        // show different content to admin users
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            // ... load admin content here
-        }
-
-        // ... load other regular content here
-    }
-
-.. note::
-
-    A firewall must be active or an exception will be thrown when the ``isGranted``
-    method is called. See the note above about templates for more details.
-
-Impersonating a User
---------------------
-
-Sometimes, it's useful to be able to switch from one user to another without
-having to log out and log in again (for instance when you are debugging or trying
-to understand a bug a user sees that you can't reproduce). This can be easily
-done by activating the ``switch_user`` firewall listener:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                main:
-                    # ...
-                    switch_user: true
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <!-- ... -->
-                <switch-user />
-            </firewall>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main'=> array(
-                    // ...
-                    'switch_user' => true
-                ),
-            ),
-        ));
-
-To switch to another user, just add a query string with the ``_switch_user``
-parameter and the username as the value to the current URL:
-
-.. code-block:: text
-
-    http://example.com/somewhere?_switch_user=thomas
-
-To switch back to the original user, use the special ``_exit`` username:
-
-.. code-block:: text
-
-    http://example.com/somewhere?_switch_user=_exit
-
-During impersonation, the user is provided with a special role called
-``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
-to show a link to exit impersonation:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-            <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <a
-                href="<?php echo $view['router']->generate('homepage', array(
-                    '_switch_user' => '_exit',
-                ) ?>"
-            >
-                Exit impersonation
-            </a>
-        <?php endif; ?>
-
-Of course, this feature needs to be made available to a small group of users.
-By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
-role. The name of this role can be modified via the ``role`` setting. For
-extra security, you can also change the query parameter name via the ``parameter``
-setting:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                main:
-                    # ...
-                    switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <firewall>
-                <!-- ... -->
-                <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user" />
-            </firewall>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main'=> array(
-                    // ...
-                    'switch_user' => array(
-                        'role' => 'ROLE_ADMIN',
-                        'parameter' => '_want_to_be_this_user',
-                    ),
-                ),
-            ),
-        ));
 
 Stateless Authentication
 ------------------------
@@ -2023,10 +2046,7 @@ cookie will be ever created by Symfony2):
 Utilities
 ---------
 
-.. versionadded:: 2.2
-    The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
-
-The Symfony Security Component comes with a collection of nice utilities related
+The Symfony Security component comes with a collection of nice utilities related
 to security. These utilities are used by Symfony, but you should also use
 them if you want to solve the problem they address.
 
@@ -2079,7 +2099,7 @@ Final Words
 -----------
 
 Security can be a deep and complex issue to solve correctly in your application.
-Fortunately, Symfony's security component follows a well-proven security
+Fortunately, Symfony's Security component follows a well-proven security
 model based around *authentication* and *authorization*. Authentication,
 which always happens first, is handled by a firewall whose job is to determine
 the identity of the user through several different methods (e.g. HTTP authentication,
@@ -2099,12 +2119,12 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
+* :doc:`Impersonating a User </cookbook/security/impersonating_user>`
 * :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
+* :doc:`How to Restrict Firewalls to a Specific Host </cookbook/security/host_restriction>`
 
-.. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
-.. _`functions-online.com`: http://www.functions-online.com/sha1.html
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack

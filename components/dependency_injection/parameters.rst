@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Parameters
+   single: DependencyInjection; Parameters
 
 Introduction to Parameters
 ==========================
@@ -60,7 +60,7 @@ One use for this is to inject the values into your services. This allows
 you to configure different versions of services between applications or multiple
 services based on the same class but configured differently within a single
 application. You could inject the choice of mail transport into the ``Mailer``
-class directly but by making it a parameter. This makes it easier to change
+class directly. But declaring it as a parameter makes it easier to change
 rather than being tied up and hidden with the service definition:
 
 .. configuration-block::
@@ -250,7 +250,7 @@ Constants as Parameters
 -----------------------
 
 The container also has support for setting PHP constants as parameters. To
-take advantage of this feature, map the name of your constant  to a parameter
+take advantage of this feature, map the name of your constant to a parameter
 key, and define the type as ``constant``.
 
 .. configuration-block::
@@ -275,7 +275,7 @@ key, and define the type as ``constant``.
 
 .. note::
 
-    This does not work for Yaml configuration. If you're using Yaml, you can
+    This does not work for YAML configuration. If you're using YAML, you can
     import an XML file to take advantage of this functionality:
 
     .. configuration-block::
@@ -316,7 +316,7 @@ To disable this behavior, use the ``string`` type:
 
 .. note::
 
-    This is not available for Yaml and PHP, because they already have built-in
+    This is not available for YAML and PHP, because they already have built-in
     support for the PHP keywords.
 
 Syntax for Referencing Services
@@ -327,23 +327,23 @@ each format. You can configure the behavior if the referenced service does
 not exist. By default, an exception is thrown when a non-existent service
 is referenced.
 
-Yaml
+YAML
 ~~~~
 
-Start the string with  ``@`` or ``@?`` to reference a service in Yaml.
+Start the string with  ``@`` or ``@?`` to reference a service in YAML.
 
 * ``@mailer`` references the ``mailer`` service. If the service does not
-  exists, an exception will be thrown;
+  exist, an exception will be thrown;
 * ``@?mailer`` references the ``mailer`` service. If the service does not
-  exists, it will be ignored;
+  exist, it will be ignored;
 
 .. tip::
 
-    Use ``@@`` to escape the ``@`` symbol in Yaml. ``@@mailer`` will be
+    Use ``@@`` to escape the ``@`` symbol in YAML. ``@@mailer`` will be
     converted into the string ``"@mailer"`` instead of referencing the
     ``mailer`` service.
 
-Xml
+XML
 ~~~
 
 In XML, use the ``service`` type. The behavior if the service does not exist
@@ -352,7 +352,7 @@ is thrown. Valid values for ``on-invalid`` are ``null`` (uses ``null`` in place
 of the missing service) or ``ignored`` (very similar, except if used on a
 method call, the method call is removed).
 
-Php
+PHP
 ~~~
 
 In PHP, you can use the

@@ -4,11 +4,11 @@
 How to implement your own Voter to blacklist IP Addresses
 =========================================================
 
-The Symfony2 security component provides several layers to authorize users.
-One of the layers is called a `voter`. A voter is a dedicated class that checks
-if the user has the rights to be connected to the application. For instance,
-Symfony2 provides a layer that checks if the user is fully authorized or if
-it has some expected roles.
+The Symfony2 Security component provides several layers to authorize users.
+One of the layers is called a "voter". A voter is a dedicated class that checks
+if the user has the rights to connect to the application or access a specific
+resource/URL. For instance, Symfony2 provides a layer that checks if the user
+is fully authorized or if it has some expected roles.
 
 It is sometimes useful to create a custom voter to handle a specific case not
 handled by the framework. In this section, you'll learn how to create a voter
@@ -24,7 +24,7 @@ which requires the following three methods:
 .. include:: /cookbook/security/voter_interface.rst.inc
 
 In this example, you'll check if the user's IP address matches against a list of
-blacklisted addresses. If the user's IP is blacklisted, you'll return
+blacklisted addresses and "something" will be the application. If the user's IP is blacklisted, you'll return
 ``VoterInterface::ACCESS_DENIED``, otherwise you'll return
 ``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
 access, not to grant access.
@@ -40,15 +40,18 @@ and compare the IP address against a set of blacklisted IP addresses:
     // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\DependencyInjection\ContainerInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
     class ClientIpVoter implements VoterInterface
     {
-        public function __construct(ContainerInterface $container, array $blacklistedIp = array())
+        protected $requestStack;
+        private $blacklistedIp;
+
+        public function __construct(RequestStack $requestStack, array $blacklistedIp = array())
         {
-            $this->container     = $container;
+            $this->requestStack  = $requestStack;
             $this->blacklistedIp = $blacklistedIp;
         }
 
@@ -66,7 +69,7 @@ and compare the IP address against a set of blacklisted IP addresses:
 
         public function vote(TokenInterface $token, $object, array $attributes)
         {
-            $request = $this->container->get('request');
+            $request = $this->requestStack->getCurrentRequest();
             if (in_array($request->getClientIp(), $this->blacklistedIp)) {
                 return VoterInterface::ACCESS_DENIED;
             }
@@ -93,7 +96,7 @@ Declaring the Voter as a Service
 --------------------------------
 
 To inject the voter into the security layer, you must declare it as a service,
-and tag it as a "security.voter":
+and tag it as a ``security.voter``:
 
 .. configuration-block::
 
@@ -103,7 +106,7 @@ and tag it as a "security.voter":
         services:
             security.access.blacklist_voter:
                 class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments:  ["@service_container", [123.123.123.123, 171.171.171.171]]
+                arguments:  ["@request_stack", [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
                     - { name: security.voter }
@@ -113,7 +116,7 @@ and tag it as a "security.voter":
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
                  class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
-            <argument type="service" id="service_container" strict="false" />
+            <argument type="service" id="request_stack" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
                 <argument>171.171.171.171</argument>
@@ -130,7 +133,7 @@ and tag it as a "security.voter":
         $definition = new Definition(
             'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
-                new Reference('service_container'),
+                new Reference('request_stack'),
                 array('123.123.123.123', '171.171.171.171'),
             ),
         );

@@ -185,9 +185,9 @@ will convert the pattern given in the `pattern`_ option into an HTML5 compatible
 pattern. This means that the delimiters are removed (e.g. ``/[a-z]+/`` becomes ``[a-z]+``).
 
 However, there are some other incompatibilities between both patterns which
-cannot be fixed by the constraint. For instance, the html5 pattern attribute
+cannot be fixed by the constraint. For instance, the HTML5 ``pattern`` attribute
 does not support flags. If you have a pattern like ``/[a-z]+/i`` you need to
-specify the html5 compatible pattern in the ``htmlPattern`` option:
+specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
 
@@ -271,6 +271,6 @@ string does **not** match the `pattern`_ regular expression.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not valid``
+**type**: ``string`` **default**: ``This value is not valid.``
 
 This is the message that will be shown if this validator fails.

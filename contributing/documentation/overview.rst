@@ -29,17 +29,17 @@ Consistent with Symfony's source code, the documentation repository is split int
 multiple branches, corresponding to the different versions of Symfony itself.
 The ``master`` branch holds the documentation for the development branch of the code.
 
-Unless you're documenting a feature that was introduced *after* Symfony 2.2
-(e.g. in Symfony 2.3), your changes should always be based on the 2.2 branch.
-To do this checkout the 2.2 branch before the next step:
+Unless you're documenting a feature that was introduced *after* Symfony 2.3
+(e.g. in Symfony 2.4), your changes should always be based on the 2.3 branch.
+To do this checkout the 2.3 branch before the next step:
 
 .. code-block:: bash
 
-    $ git checkout 2.2
+    $ git checkout 2.3
 
 .. tip::
 
-    Your base branch (e.g. 2.2) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
+    Your base branch (e.g. 2.3) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
     that you'll use later.
 
 Next, create a dedicated branch for your changes (for organization):
@@ -57,8 +57,8 @@ Creating a Pull Request
 Following the example, the pull request will default to be between your
 ``improving_foo_and_bar`` branch and the ``symfony-docs`` ``master`` branch.
 
-If you have made your changes based on the 2.2 branch then you need to change
-the base branch to be 2.2 on the preview page by clicking the ``edit`` button
+If you have made your changes based on the 2.3 branch then you need to change
+the base branch to be 2.3 on the preview page by clicking the ``edit`` button
 on the top left:
 
 .. image:: /images/docs-pull-request-change-base.png
@@ -66,8 +66,8 @@ on the top left:
 
 .. note::
 
-  All changes made to a branch (e.g. 2.2) will be merged up to each "newer"
-  branch (e.g. 2.3, master, etc) for the next release on a weekly basis.
+  All changes made to a branch (e.g. 2.3) will be merged up to each "newer"
+  branch (e.g. 2.4, master, etc) for the next release on a weekly basis.
 
 GitHub covers the topic of `pull requests`_ in detail.
 
@@ -135,7 +135,7 @@ tag and a short description:
 .. code-block:: text
 
     .. versionadded:: 2.3
-        The ``askHiddenResponse`` method was added in Symfony 2.3.
+        The ``askHiddenResponse`` method was introduced in Symfony 2.3.
 
     You can also ask a question and hide the response. This is particularly...
 
@@ -177,10 +177,6 @@ Translating
 -----------
 
 Read the dedicated :doc:`document <translations>`.
-
-.. _`fork`: https://help.github.com/articles/fork-a-repo
-.. _`pull requests`: https://help.github.com/articles/using-pull-requests
-.. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
 
 Managing Releases
 -----------------
@@ -226,4 +222,7 @@ happens, the following items are done:
   For example, in installation chapters, we reference the version you should
   use for installation. As an example, see the changes made in `PR #2688`_.
 
-.. _`PR #2688`: https://github.com/symfony/symfony-docs/pull/2688
+.. _`fork`:                       https://help.github.com/articles/fork-a-repo
+.. _`pull requests`:              https://help.github.com/articles/using-pull-requests
+.. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
+.. _`PR #2688`:                   https://github.com/symfony/symfony-docs/pull/2688

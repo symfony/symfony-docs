@@ -11,8 +11,8 @@ learning the most important features of the form library along the way.
 
 .. note::
 
-   The Symfony form component is a standalone library that can be used outside
-   of Symfony2 projects. For more information, see the `Symfony2 Form Component`_
+   The Symfony Form component is a standalone library that can be used outside
+   of Symfony2 projects. For more information, see the `Symfony2 Form component`_
    on Github.
 
 .. index::
@@ -186,7 +186,7 @@ it into a format that's suitable for being rendered in an HTML form.
    The form system is smart enough to access the value of the protected
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
-   "setter" method so that the form component can get and put data onto the
+   "setter" method so that the Form component can get and put data onto the
    property. For a Boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
@@ -420,6 +420,22 @@ corresponding errors printed out with the form.
    but are being prevented by your browser from, for example, submitting
    blank fields.
 
+   .. configuration-block::
+
+       .. code-block:: html+jinja
+
+           {# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}
+
+           {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+       .. code-block:: html+php
+
+           <!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php -->
+
+           <?php echo $view['form']->form($form, array(
+               'attr' => array('novalidate' => 'novalidate'),
+           )) ?>
+
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter </book/validation>`.
 
@@ -461,14 +477,10 @@ Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was added in Symfony 2.3,
-    although setting it to an empty array achieved the same result in previous
-    versions.
+    The ability to set ``validation_groups`` to false was added in Symfony 2.3.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
-these cases, you can skip the call to :method:`Symfony\\Component\\Form\\FormInterface::isValid`
-in your controller. If this is not possible, you can alternatively set the
-``validation_groups`` option to ``false`` or an empty array::
+these cases you can set the ``validation_groups`` option to ``false``::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -481,9 +493,8 @@ in your controller. If this is not possible, you can alternatively set the
 
 Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
-fields were submitted. If you want to suppress validation completely, remove
-the :method:`Symfony\\Component\\Form\\FormInterface::isValid` call from your
-controller.
+fields were submitted. If you want to suppress validation, you can use the
+:ref:`POST_SUBMIT event <cookbook-dynamic-form-modification-suppressing-form-validation>`
 
 .. index::
    single: Forms; Validation groups based on submitted data
@@ -773,7 +784,7 @@ output can be customized on many different levels.
 
         .. code-block:: html+php
 
-            <?php echo $view['form']->get('value')->getTask() ?>
+            <?php echo $form->vars['value']->getTask() ?>
 
 .. index::
    single: Forms; Rendering each field by hand
@@ -879,7 +890,7 @@ to get the ``id``:
 
     .. code-block:: html+php
 
-        <?php echo $form['task']->get('id') ?>
+        <?php echo $form['task']->vars['id']?>
 
 To get the value used for the form field's name attribute you need to use
 the ``full_name`` value:
@@ -892,7 +903,7 @@ the ``full_name`` value:
 
     .. code-block:: html+php
 
-        <?php echo $form['task']->get('full_name') ?>
+        <?php echo $form['task']->vars['full_name'] ?>
 
 Twig Template Function Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -995,7 +1006,8 @@ that will house the logic for building the task form::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('task')
+            $builder
+                ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
                 ->add('save', 'submit');
         }
@@ -1073,7 +1085,7 @@ the choice is ultimately up to you.
     The field data can be accessed in a controller with::
 
         $form->get('dueDate')->getData();
-        
+
     In addition, the data of an unmapped field can also be modified directly::
 
         $form->get('dueDate')->setData(new \DateTime());
@@ -1197,7 +1209,7 @@ Embedded Forms
 Often, you'll want to build a form that will include fields from many different
 objects. For example, a registration form may contain data belonging to
 a ``User`` object as well as many ``Address`` objects. Fortunately, this
-is easy and natural with the form component.
+is easy and natural with the Form component.
 
 Embedding a Single Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1344,7 +1356,7 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and  the :doc:`collection </reference/forms/types/collection>` field type reference.
+entry and the :doc:`collection </reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1399,7 +1411,7 @@ do this, create a new template file that will store the new markup:
         </div>
 
 The ``form_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the form component to use your new ``form_row``
+``form_row`` function. To tell the Form component to use your new ``form_row``
 fragment defined above, add the following to the top of the template that
 renders the form:
 
@@ -1459,7 +1471,7 @@ Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
 In Symfony, every part of a form that is rendered - HTML form elements, errors,
-labels, etc - is defined in a base theme, which is a collection of blocks
+labels, etc. - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
 In Twig, every block needed is defined in a single template file (`form_div_layout.html.twig`_)
@@ -1875,9 +1887,9 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
 
-.. _`Symfony2 Form Component`: https://github.com/symfony/Form
+.. _`Symfony2 Form component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
-.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/2.2/src/Symfony/Bridge/Twig
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`view on GitHub`: https://github.com/symfony/symfony/tree/2.2/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
+.. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form

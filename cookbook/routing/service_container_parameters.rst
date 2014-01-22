@@ -18,16 +18,17 @@ inside your routing configuration:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         contact:
             path:     /{_locale}/contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
             requirements:
-                _locale: %acme_demo.locales%
+                _locale: "%acme_demo.locales%"
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
@@ -40,6 +41,7 @@ inside your routing configuration:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -82,14 +84,15 @@ path):
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         some_route:
             path:     /%acme_demo.route_prefix%/contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
@@ -101,6 +104,7 @@ path):
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -114,9 +118,9 @@ path):
 .. note::
 
     Just like in normal service container configuration files, if you actually
-    need a ``%`` in  your route, you can escape the percent sign by doubling
+    need a ``%`` in your route, you can escape the percent sign by doubling
     it, e.g. ``/score-50%%``, which would resolve to ``/score-50%``.
-    
+
     However, as the ``%`` characters included in any URL are automatically encoded,
     the resulting URL of this example would be ``/score-50%25`` (``%25`` is the
     result of encoding the ``%`` character).

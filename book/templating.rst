@@ -375,11 +375,6 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
-.. versionadded:: 2.2
-    Namespaced path support was added in 2.2, allowing for template names
-    like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
-    for more details.
-
 By default, templates can live in two different locations:
 
 * ``app/Resources/views/``: The applications ``views`` directory can contain
@@ -571,10 +566,6 @@ you set `with_context`_ to false).
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
-
-.. versionadded:: 2.2
-    The `include() function`_ is a new Twig feature that's available in Symfony
-    2.2. Prior, the `{% include %} tag`_ tag was used.
 
 .. index::
    single: Templating; Embedding action
@@ -781,9 +772,6 @@ in your application configuration:
                 ),
             ),
         ));
-
-.. versionadded:: 2.2
-    Default templates per render function was added in Symfony 2.2
 
 You can define default templates per ``render`` function (which will override
 any global default template that is defined):
@@ -1088,7 +1076,7 @@ Global Template Variables
 -------------------------
 
 During each request, Symfony2 will set a global template variable ``app``
-in both Twig and PHP template engines by default.  The ``app`` variable
+in both Twig and PHP template engines by default. The ``app`` variable
 is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
@@ -1275,10 +1263,10 @@ Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since the Symfony2 framework itself is just a bundle, core templates can be
-overridden in the same way. For example, the core ``TwigBundle`` contains
+overridden in the same way. For example, the core TwigBundle contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the
-``TwigBundle`` to, you guessed it, the
+TwigBundle to, you guessed it, the
 ``app/Resources/TwigBundle/views/Exception`` directory.
 
 .. index::
@@ -1359,9 +1347,9 @@ this classic example:
 
         Hello <?php echo $name ?>
 
-Imagine that the user enters the following code as his/her name:
+Imagine the user enters the following code for their name:
 
-.. code-block:: text
+.. code-block:: html
 
     <script>alert('hello!')</script>
 

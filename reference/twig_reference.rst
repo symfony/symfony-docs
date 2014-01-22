@@ -17,9 +17,8 @@ There may also be tags in bundles you use that aren't listed here.
 Functions
 ---------
 
-.. versionadded:: 2.2
-    The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
-    the ``{% render %}`` tag was used and had a different signature.
+.. versionadded:: 2.4
+    The ``expression`` function was introduced in Symfony 2.4.
 
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
@@ -89,12 +88,12 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute URL                                    |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``expression(expression)``                         | Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in Twig. See        |
+|                                                    | ":ref:`Template Expressions <book-security-template-expression>`".                         |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
 
 Filters
 -------
-
-.. versionadded:: 2.1
-    The ``humanize`` filter was added in Symfony 2.1
 
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Filter Syntax                                                                   | Usage                                                             |
@@ -111,7 +110,7 @@ Filters
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_encode(inline = 0)``                                            | This will transform the variable text into a YAML syntax.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| ``variable|yaml_dump``                                                          | This will render a yaml syntax with their type.                   |
+| ``variable|yaml_dump``                                                          | This will render a YAML syntax with their type.                   |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``classname|abbr_class``                                                        | This will render an ``abbr`` element with the short name of a     |
 |                                                                                 | PHP class.                                                        |
@@ -188,8 +187,8 @@ Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong to the
   Twig core. You can read more in `the official Twig Extensions documentation`_;
-* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and 
-  ``{% image %}`` tags. You can read more about them in 
+* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
+  ``{% image %}`` tags. You can read more about them in
   :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
 
 .. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html

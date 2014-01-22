@@ -23,7 +23,7 @@ You can change where the login form redirects after a successful login using
 the various config options. By default the form will redirect to the URL the
 user requested (i.e. the URL which triggered the login form being shown).
 For example, if the user requested ``http://www.example.com/admin/post/18/edit``,
-then after she successfully logs in, she will eventually be sent back to
+then after they successfully log in, they will eventually be sent back to
 ``http://www.example.com/admin/post/18/edit``.
 This is done by storing the requested URL in the session.
 If no URL is present in the session (perhaps the user went
@@ -33,8 +33,8 @@ in several ways.
 
 .. note::
 
-    As mentioned, by default the user is redirected back to the page he originally
-    requested. Sometimes, this can cause problems, like if a background AJAX
+    As mentioned, by default the user is redirected back to the page originally
+    requested. Sometimes, this can cause problems, like if a background Ajax
     request "appears" to be the last visited URL, causing the user to be
     redirected there. For information on controlling this behavior, see
     :doc:`/cookbook/security/target_path`.

@@ -1,9 +1,6 @@
 CardScheme
 ==========
 
-.. versionadded:: 2.2
-    The CardScheme validation is new in Symfony 2.2.
-
 This constraint ensures that a credit card number is valid for a given credit card
 company. It can be used to validate the number before trying to initiate a payment
 through a payment gateway.
@@ -123,7 +120,7 @@ For more information about the used schemes, see `Wikipedia: Issuer identificati
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``Unsupported card type or invalid card number``
+**type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
 

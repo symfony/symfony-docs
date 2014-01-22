@@ -4,6 +4,15 @@
 How to create a custom Authentication Provider
 ==============================================
 
+.. tip::
+
+    Creating a custom authentication system is hard, and this entry will walk
+    you through that process. But depending on your needs, you may be able
+    to solve your problem in a simpler way using these documents:
+
+    * :doc:`/cookbook/security/custom_password_authenticator`
+    * :doc:`/cookbook/security/api_key_authentication`
+
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony2 makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
@@ -78,7 +87,7 @@ provider.
 
 .. note::
 
-    The ``WsseUserToken`` class extends the security component's
+    The ``WsseUserToken`` class extends the Security component's
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`
     class, which provides basic token functionality. Implement the
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
@@ -168,7 +177,7 @@ set an authenticated token in the security context if successful.
 .. versionadded:: 2.4
     Support for HTTP status code constants was added in Symfony 2.4.
 
-This listener checks the request for the expected `X-WSSE` header, matches
+This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
@@ -181,9 +190,16 @@ a 403 Response is returned.
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`
     class, is a very useful base class which provides commonly needed functionality
     for security extensions. This includes maintaining the token in the session,
-    providing success / failure handlers, login form urls, and more. As WSSE
+    providing success / failure handlers, login form URLs, and more. As WSSE
     does not require maintaining authentication sessions or login forms, it
     won't be used for this example.
+
+.. note::
+
+    Returning prematurely from the listener is relevant only if you want to chain
+    authentication providers (for example to allow anonymous users). If you want
+    to forbid access to anonymous users and have a nice 403 error, you should set
+    the status code of the response before returning.
 
 The Authentication Provider
 ---------------------------
@@ -230,6 +246,12 @@ the ``PasswordDigest`` header value matches with the user's password.
             throw new AuthenticationException('The WSSE authentication failed.');
         }
 
+        /**
+         * This function is specific to Wsse authentication and is only used to help this example
+         *
+         * For more information specific to the logic here, see
+         * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129
+         */
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
             // Check created time is not in the future
@@ -242,7 +264,8 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
-            // Validate nonce is unique within 5 minutes
+            // Validate that the nonce is *not* used in the last 5 minutes
+            // if it has, this could be a replay attack
             if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 > time()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
@@ -277,8 +300,8 @@ The Factory
 
 You have created a custom token, custom listener, and custom provider. Now
 you need to tie them all together. How do you make your provider available
-to your security configuration? The answer is by using a ``factory``. A factory
-is where you hook into the security component, telling it the name of your
+to your security configuration? The answer is by using a *factory*. A factory
+is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
@@ -487,7 +510,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
             ),
         ));
 
-Congratulations!  You have written your very own custom security authentication
+Congratulations! You have written your very own custom security authentication
 provider!
 
 A Little Extra
@@ -524,7 +547,7 @@ the ``addConfiguration`` method.
     }
 
 Now, in the ``create`` method of the factory, the ``$config`` argument will
-contain a 'lifetime' key, set to 5 minutes (300 seconds) unless otherwise
+contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
 in order to put it to use.
 
@@ -555,7 +578,7 @@ in order to put it to use.
     should use instead of the hard-coded 300 seconds. These two steps are
     not shown here.
 
-The lifetime of each wsse request is now configurable, and can be
+The lifetime of each WSSE request is now configurable, and can be
 set to any desirable value per firewall.
 
 .. configuration-block::

@@ -15,7 +15,10 @@ A simple, non-responsive button.
 | Options              | - `attr`_                                                            |
 |                      | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
+|                      | - `label_attr`_                                                      |
 |                      | - `translation_domain`_                                              |
++----------------------+----------------------------------------------------------------------+
+| Overridden Options   | - `auto_initialize`                                                  |
 +----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
@@ -31,4 +34,11 @@ Options
 
 .. include:: /reference/forms/types/options/button_label.rst.inc
 
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/button_auto_initialize.rst.inc

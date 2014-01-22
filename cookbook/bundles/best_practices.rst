@@ -56,7 +56,7 @@ class name.
 .. note::
 
     Symfony2 core Bundles do not prefix the Bundle class with ``Symfony``
-    and always add a ``Bundle`` subnamespace; for example:
+    and always add a ``Bundle`` sub-namespace; for example:
     :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
 Each bundle has an alias, which is the lower-cased short version of the bundle
@@ -154,7 +154,7 @@ All classes and files must follow the Symfony2 coding
 Some classes should be seen as facades and should be as short as possible, like
 Commands, Helpers, Listeners, and Controllers.
 
-Classes that connect to the Event Dispatcher should be suffixed with
+Classes that connect to the event dispatcher should be suffixed with
 ``Listener``.
 
 Exceptions classes should be stored in an ``Exception`` sub-namespace.
@@ -290,4 +290,4 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/bundles/extension`
 
-.. _standards: http://symfony.com/PSR0
+.. _standards: http://www.php-fig.org/psr/psr-0/

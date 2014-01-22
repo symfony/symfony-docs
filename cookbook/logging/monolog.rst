@@ -10,7 +10,7 @@ inspired by the Python LogBook library.
 Usage
 -----
 
-To log a message simply get the logger service from the container in
+To log a message simply get the ``logger`` service from the container in
 your controller::
 
     public function indexAction()
@@ -23,8 +23,7 @@ your controller::
     }
 
 The ``logger`` service has different methods for different logging levels.
-See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
-on which methods are available.
+See LoggerInterface_ for details on which methods are available.
 
 Handlers and Channels: Writing logs to different Locations
 ----------------------------------------------------------
@@ -46,8 +45,8 @@ The basic handler is the ``StreamHandler`` which writes logs in a stream
 Monolog comes also with a powerful built-in handler for the logging in
 prod environment: ``FingersCrossedHandler``. It allows you to store the
 messages in a buffer and to log them only if a message reaches the
-action level (ERROR in the configuration provided in the standard
-edition) by forwarding the messages to another handler.
+action level (``error`` in the configuration provided in the Standard
+Edition) by forwarding the messages to another handler.
 
 Using several handlers
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -351,3 +350,4 @@ using a processor.
     handler level instead of globally.
 
 .. _Monolog: https://github.com/Seldaek/monolog
+.. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php

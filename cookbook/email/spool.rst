@@ -4,16 +4,16 @@
 How to Spool Emails
 ===================
 
-When you are using the ``SwiftmailerBundle`` to send an email from a Symfony2
+When you are using the SwiftmailerBundle to send an email from a Symfony2
 application, it will default to sending the email immediately. You may, however,
-want to avoid the performance hit of the communication between ``Swiftmailer``
+want to avoid the performance hit of the communication between Swift Mailer
 and the email transport, which could cause the user to wait for the next
 page to load while the email is sending. This can be avoided by choosing
-to "spool" the emails instead of sending them directly. This means that ``Swiftmailer``
+to "spool" the emails instead of sending them directly. This means that Swift Mailer
 does not attempt to send the email but instead saves the message to somewhere
 such as a file. Another process can then read from the spool and take care
 of sending the emails in the spool. Currently only spooling to file or memory is supported
-by ``Swiftmailer``.
+by Swift Mailer.
 
 Spool using memory
 ------------------

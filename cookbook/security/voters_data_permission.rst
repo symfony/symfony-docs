@@ -202,10 +202,6 @@ from the security context is called.
                 throw new AccessDeniedException('Unauthorised access!');
             }
 
-            $product = $this->getDoctrine()
-                ->getRepository('AcmeStoreBundle:Post')
-                ->find($id);
-
             return new Response('<h1>'.$post->getName().'</h1>');
         }
     }

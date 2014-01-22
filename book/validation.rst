@@ -113,8 +113,9 @@ Next, to actually validate an ``Author`` object, use the ``validate`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify whether or not the data on the object satisfies those
-constraints. If validation fails, an array of errors is returned. Take this
-simple example from inside a controller::
+constraints. If validation fails, a non-empty list of errors
+(class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) is
+returned. Take this simple example from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
@@ -129,7 +130,14 @@ simple example from inside a controller::
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
-            return new Response(print_r($errors, true));
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging
+             */
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
         }
 
         return new Response('The author is valid! Yes!');
@@ -161,7 +169,7 @@ You could also pass the collection of errors into a template.
         return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
             'errors' => $errors,
         ));
-    } 
+    }
 
 Inside the template, you can output the list of errors exactly as needed:
 
@@ -685,7 +693,7 @@ on that class. To do this, you can organize each constraint into one or more
 constraints.
 
 For example, suppose you have a ``User`` class, which is used both when a
-user registers and when a user updates his/her contact information later:
+user registers and when a user updates their contact information later:
 
 .. configuration-block::
 
@@ -1064,7 +1072,7 @@ Now, change the ``User`` class to implement
 add the
 :method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
 which should return an array of groups to use. Also, add the
-``@Assert\GroupSequenceProvider`` annotation to the class. If you imagine
+``@Assert\GroupSequenceProvider`` annotation to the class (or ``group_sequence_provider: true`` to the YAML). If you imagine
 that a method called ``isPremium`` returns true if the user is a premium member,
 then your code might look like this::
 
@@ -1140,7 +1148,7 @@ section .
 The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
-which holds the error message on its `getMessage` method.
+which holds the error message on its ``getMessage`` method.
 
 Final Thoughts
 --------------

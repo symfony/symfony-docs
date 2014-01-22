@@ -104,7 +104,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option <validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
@@ -112,7 +112,7 @@ value is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option <validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.

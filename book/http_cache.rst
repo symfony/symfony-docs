@@ -301,9 +301,11 @@ The ``Cache-Control`` header is unique in that it contains not one, but various
 pieces of information about the cacheability of a response. Each piece of
 information is separated by a comma:
 
-     Cache-Control: private, max-age=0, must-revalidate
+.. code-block:: text
 
-     Cache-Control: max-age=3600, must-revalidate
+    Cache-Control: private, max-age=0, must-revalidate
+
+    Cache-Control: max-age=3600, must-revalidate
 
 Symfony provides an abstraction around the ``Cache-Control`` header to make
 its creation more manageable::
@@ -385,7 +387,7 @@ header when none is set by the developer by following these rules:
 * If ``Cache-Control`` is empty (but one of the other cache headers is present),
   its value is set to ``private, must-revalidate``;
 
-* But if at least one ``Cache-Control`` directive is set, and no 'public' or
+* But if at least one ``Cache-Control`` directive is set, and no ``public`` or
   ``private`` directives have been explicitly added, Symfony2 adds the
   ``private`` directive automatically (except when ``s-maxage`` is set).
 
@@ -474,7 +476,7 @@ The resulting HTTP header will look like this:
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to
 send the ``Date`` header. Consequently the cache (e.g. the browser) might
-need to rely onto his local clock to evaluate the ``Expires`` header making
+need to rely on the local clock to evaluate the ``Expires`` header making
 the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
 servers should not send ``Expires`` dates more than one year in the future."
@@ -557,12 +559,14 @@ each ``ETag`` must be unique across all representations of the same resource.
 
 To see a simple implementation, generate the ETag as the md5 of the content::
 
-    public function indexAction()
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction(Request $request)
     {
         $response = $this->render('MyBundle:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
         $response->setPublic(); // make sure the response is public/cacheable
-        $response->isNotModified($this->getRequest());
+        $response->isNotModified($request);
 
         return $response;
     }
@@ -604,7 +608,9 @@ For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
 header value::
 
-    public function showAction($articleSlug)
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function showAction($articleSlug, Request $request)
     {
         // ...
 
@@ -617,7 +623,7 @@ header value::
         // Set response as public. Otherwise it will be private by default.
         $response->setPublic();
 
-        if ($response->isNotModified($this->getRequest())) {
+        if ($response->isNotModified($request)) {
             return $response;
         }
 
@@ -653,8 +659,9 @@ the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
 
-    public function showAction($articleSlug)
+    public function showAction($articleSlug, Request $request)
     {
         // Get the minimum information to compute
         // the ETag or the Last-Modified value
@@ -662,7 +669,7 @@ exposing a simple and efficient pattern::
         // a database or a key-value store for instance)
         $article = ...;
 
-        // create a Response with a ETag and/or a Last-Modified header
+        // create a Response with an ETag and/or a Last-Modified header
         $response = new Response();
         $response->setETag($article->computeETag());
         $response->setLastModified($article->getPublishedAt());
@@ -671,20 +678,20 @@ exposing a simple and efficient pattern::
         $response->setPublic();
 
         // Check that the Response is not modified for the given Request
-        if ($response->isNotModified($this->getRequest())) {
+        if ($response->isNotModified($request)) {
             // return the 304 Response immediately
             return $response;
-        } else {
-            // do more work here - like retrieving more data
-            $comments = ...;
-
-            // or render a template with the $response you've already started
-            return $this->render(
-                'MyBundle:MyController:article.html.twig',
-                array('article' => $article, 'comments' => $comments),
-                $response
-            );
         }
+
+        // do more work here - like retrieving more data
+        $comments = ...;
+
+        // or render a template with the $response you've already started
+        return $this->render(
+            'MyBundle:MyController:article.html.twig',
+            array('article' => $article, 'comments' => $comments),
+            $response
+        );
     }
 
 When the ``Response`` is not modified, the ``isNotModified()`` automatically sets
@@ -904,12 +911,12 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
         <?php echo $view['actions']->render(
             new ControllerReference('...:news', array('max' => 5)),
-            array('renderer' => 'esi'))
+            array('strategy' => 'esi'))
         ?>
 
         <?php echo $view['actions']->render(
             $view['router']->generate('latest_news', array('max' => 5), true),
-            array('renderer' => 'esi'),
+            array('strategy' => 'esi'),
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi`` Twig function), you
@@ -951,8 +958,9 @@ component cache will only last for 60 seconds.
 When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of
 the rest of the page. Symfony2 takes care of generating a unique URL for any
-controller reference and it is able to route them properly thanks to a
-listener that must be enabled in your configuration:
+controller reference and it is able to route them properly thanks to the
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\FragmentListener`
+that must be enabled in your configuration:
 
 .. configuration-block::
 
@@ -1058,10 +1066,10 @@ Here is how you can configure the Symfony2 reverse proxy to support the
             }
 
             $response = new Response();
-            if (!$this->getStore()->purge($request->getUri())) {
-                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not purged');
-            } else {
+            if ($this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(Response::HTTP_OK, 'Purged');
+            } else {
+                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not purged');
             }
 
             return $response;
@@ -1099,6 +1107,6 @@ Learn more from the Cookbook
 .. _`validation model`: http://tools.ietf.org/html/rfc2616#section-13.3
 .. _`RFC 2616`: http://tools.ietf.org/html/rfc2616
 .. _`HTTP Bis`: http://tools.ietf.org/wg/httpbis/
-.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-12
-.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-12
+.. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional
+.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache
 .. _`ESI`: http://www.w3.org/TR/esi-lang

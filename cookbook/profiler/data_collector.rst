@@ -105,7 +105,7 @@ configuration, and tag it with ``data_collector``:
 Adding Web Profiler Templates
 -----------------------------
 
-When you want to display the data collected by your Data Collector in the web
+When you want to display the data collected by your data collector in the web
 debug toolbar or the web profiler, create a Twig template following this
 skeleton:
 
@@ -137,10 +137,18 @@ All blocks have access to the ``collector`` object.
 
 .. tip::
 
-    Built-in templates use a base64 encoded image for the toolbar (``<img
-    src="data:image/png;base64,..."``). You can easily calculate the
-    base64 value for an image with this little script: ``echo
-    base64_encode(file_get_contents($_SERVER['argv'][1]));``.
+    Built-in templates use a base64 encoded image for the toolbar:
+
+    .. code-block:: html
+
+        <img src="data:image/png;base64,..." />
+
+    You can easily calculate the base64 value for an image with this
+    little script::
+
+        #!/usr/bin/env php
+        <?php
+        echo base64_encode(file_get_contents($_SERVER['argv'][1]));
 
 To enable the template, add a ``template`` attribute to the ``data_collector``
 tag in your configuration. For example, assuming your template is in some

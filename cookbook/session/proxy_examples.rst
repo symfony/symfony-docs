@@ -39,7 +39,7 @@ and decrypt the session as required::
 
         public function read($id)
         {
-            $data = parent::write($id, $data);
+            $data = parent::read($id);
 
             return mcrypt_decrypt(\MCRYPT_3DES, $this->key, $data);
         }

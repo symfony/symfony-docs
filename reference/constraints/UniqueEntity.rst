@@ -160,8 +160,8 @@ errorPath
 
 **type**: ``string`` **default**: The name of the first field in `fields`_
 
-If the entity violates constraint the error message is bound to the first
-field in `fields`_. If there are more than one fields, you may want to map
+If the entity violates the constraint the error message is bound to the first
+field in `fields`_. If there is more than one field, you may want to map
 the error message to another field.
 
 Consider this example:
@@ -217,7 +217,7 @@ Consider this example:
 
             <class name="Acme\AdministrationBundle\Entity\Service">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
-                    <option name="field">
+                    <option name="fields">
                         <value>host</value>
                         <value>port</value>
                     </option>

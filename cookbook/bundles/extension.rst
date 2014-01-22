@@ -11,7 +11,7 @@ you'll see a number of different configuration "namespaces", such as ``framework
 you to configure things at a high level and then let the bundle make all the
 low-level, complex changes that result.
 
-For example, the following tells the ``FrameworkBundle`` to enable the form
+For example, the following tells the FrameworkBundle to enable the form
 integration, which involves the defining of quite a few services as well
 as integration of other related components:
 
@@ -62,7 +62,7 @@ When you create a bundle, you have two choices on how to handle configuration:
 The second option - which you'll learn about in this article - is much more
 flexible, but also requires more time to setup. If you're wondering which
 method you should use, it's probably a good idea to start with method #1,
-and then change to #2 later if you need to. If you plan to distribute your 
+and then change to #2 later if you need to. If you plan to distribute your
 bundle, the second option is recommended.
 
 The second method has several specific advantages:
@@ -70,7 +70,7 @@ The second method has several specific advantages:
 * Much more powerful than simply defining parameters: a specific option value
   might trigger the creation of many service definitions;
 
-* Ability to have configuration hierarchy
+* Ability to have configuration hierarchy;
 
 * Smart merging when several configuration files (e.g. ``config_dev.yml``
   and ``config.yml``) override each other's configuration;
@@ -91,7 +91,7 @@ The second method has several specific advantages:
 
 .. index::
    single: Bundle; Extension
-   single: Dependency Injection; Extension
+   single: DependencyInjection; Extension
 
 Creating an Extension Class
 ---------------------------
@@ -176,6 +176,52 @@ You can begin specifying configuration under this namespace immediately:
     appear), the ``load()`` method will be called and passed an empty ``$configs``
     array. You can still provide some sensible defaults for your bundle if
     you want.
+
+Registering the Extension Class
+-------------------------------
+
+An Extension class will automatically be registered by Symfony2 when
+following these simple conventions:
+
+* The extension must be stored in the ``DependencyInjection`` sub-namespace;
+
+* The extension must be named after the bundle name and suffixed with
+  ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
+
+* The extension *should* provide an XSD schema (but will be registered automatically
+  regardless).
+
+Manually Registering an Extension Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When not following the conventions, you will have to manually register your
+extension. To manually register an extension class override the
+:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
+method in your bundle::
+
+    // ...
+    use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
+
+    class AcmeHelloBundle extends Bundle
+    {
+        public function build(ContainerBuilder $container)
+        {
+            parent::build($container);
+
+            // register extensions that do not follow the conventions manually
+            $container->registerExtension(new UnconventionalExtensionClass());
+        }
+    }
+
+In this case, the extension class must also implement a ``getAlias()`` method
+and return a unique alias named after the bundle (e.g. ``acme_hello``). This
+is required because the class name doesn't follow the conventions by ending
+in ``Extension``.
+
+Additionally, the ``load()`` method of your extension will *only* be called
+if the user specifies the ``acme_hello`` alias in at least one configuration
+file. Once again, this is because the Extension class doesn't follow the
+conventions set out above, so nothing happens automatically.
 
 Parsing the ``$configs`` Array
 ------------------------------
@@ -494,7 +540,7 @@ configuration arrays together.
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
 normalization and advanced merging. You can read more about this in
-:doc:`the Config Component documentation </components/config/definition>`.
+:doc:`the Config component documentation </components/config/definition>`.
 You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 
@@ -504,7 +550,7 @@ Modifying the configuration of another Bundle
 If you have multiple bundles that depend on each other, it may be useful
 to allow one ``Extension`` class to modify the configuration passed to another
 bundle's ``Extension`` class, as if the end-developer has actually placed that
-configuration in his/her ``app/config/config.yml`` file.
+configuration in their ``app/config/config.yml`` file.
 
 For more details, see :doc:`/cookbook/bundles/prepend_extension`.
 
@@ -512,11 +558,11 @@ Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``config:dump-reference`` command allows a bundle's default configuration to
-be output to the console in yaml.
+be output to the console in YAML.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
-``__construct()`` it will work automatically.  If you have something
+``__construct()`` it will work automatically. If you have something
 different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
 method and return an instance of your
@@ -552,52 +598,11 @@ Comments and examples can be added to your configuration nodes using the
         }
     }
 
-This text appears as yaml comments in the output of the ``config:dump-reference``
+This text appears as YAML comments in the output of the ``config:dump-reference``
 command.
 
 .. index::
    pair: Convention; Configuration
-
-Extension Conventions
----------------------
-
-When creating an extension, follow these simple conventions:
-
-* The extension must be stored in the ``DependencyInjection`` sub-namespace;
-
-* The extension must be named after the bundle name and suffixed with
-  ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
-
-* The extension should provide an XSD schema.
-
-If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the
-:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
-method in your bundle::
-
-    // ...
-    use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
-
-    class AcmeHelloBundle extends Bundle
-    {
-        public function build(ContainerBuilder $container)
-        {
-            parent::build($container);
-
-            // register extensions that do not follow the conventions manually
-            $container->registerExtension(new UnconventionalExtensionClass());
-        }
-    }
-
-In this case, the extension class must also implement a ``getAlias()`` method
-and return a unique alias named after the bundle (e.g. ``acme_hello``). This
-is required because the class name doesn't follow the standards by ending
-in ``Extension``.
-
-Additionally, the ``load()`` method of your extension will *only* be called
-if the user specifies the ``acme_hello`` alias in at least one configuration
-file. Once again, this is because the Extension class doesn't follow the
-standards set out above, so nothing happens automatically.
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php

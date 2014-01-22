@@ -45,6 +45,13 @@ Security Identities
 This is analog to the object identity, but represents a user, or a role in
 your application. Each role, or user has its own security identity.
 
+.. versionadded:: 2.5
+    For users, the security identity is based on the username. This means that,
+    if for any reason, a user's username was to change, you must ensure its
+    security identity is updated too. The
+    :method:`MutableAclProvider::updateUserSecurityIdentity() <Symfony\\Component\\Security\\Acl\\Dbal\\MutableAclProvider::updateUserSecurityIdentity>`
+    method is there to handle the update, it was introduced in Symfony 2.5.
+
 Database Table Structure
 ------------------------
 
@@ -53,8 +60,10 @@ tables are ordered from least rows to most rows in a typical application:
 
 - *acl_security_identities*: This table records all security identities (SID)
   which hold ACEs. The default implementation ships with two security
-  identities: ``RoleSecurityIdentity``, and ``UserSecurityIdentity``
-- *acl_classes*: This table maps class names to a unique id which can be
+  identities:
+  :class:`Symfony\\Component\\Security\\Acl\\Domain\\RoleSecurityIdentity` and
+  :class:`Symfony\\Component\\Security\\Acl\\Domain\\UserSecurityIdentity`.
+- *acl_classes*: This table maps class names to a unique ID which can be
   referenced from other tables.
 - *acl_object_identities*: Each row in this table represents a single domain
   object instance.
@@ -173,12 +182,13 @@ Process for Reaching Authorization Decisions
 The ACL class provides two methods for determining whether a security identity
 has the required bitmasks, ``isGranted`` and ``isFieldGranted``. When the ACL
 receives an authorization request through one of these methods, it delegates
-this request to an implementation of PermissionGrantingStrategy. This allows
-you to replace the way access decisions are reached without actually modifying
-the ACL class itself.
+this request to an implementation of
+:class:`Symfony\\Component\\Security\\Acl\\Domain\\PermissionGrantingStrategy`.
+This allows you to replace the way access decisions are reached without actually
+modifying the ACL class itself.
 
-The PermissionGrantingStrategy first checks all your object-scope ACEs if none
-is applicable, the class-scope ACEs will be checked, if none is applicable,
+The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If none
+is applicable, the class-scope ACEs will be checked. If none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.
 

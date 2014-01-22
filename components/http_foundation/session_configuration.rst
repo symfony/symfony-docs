@@ -12,11 +12,11 @@ store and retrieve session data, and configuring session behaviour.
 Save Handlers
 ~~~~~~~~~~~~~
 
-The PHP session workflow has 6 possible operations that may occur.  The normal
+The PHP session workflow has 6 possible operations that may occur. The normal
 session follows `open`, `read`, `write` and `close`, with the possibility of
 `destroy` and `gc` (garbage collection which will expire any old sessions: `gc`
 is called randomly according to PHP's configuration and if called, it is invoked
-after the `open` operation).  You can read more about this at
+after the `open` operation). You can read more about this at
 `php.net/session.customhandler`_
 
 Native PHP Save Handlers
@@ -28,11 +28,12 @@ PHP or provided by PHP extensions, such as PHP-Sqlite, PHP-Memcached and so on.
 All native save handlers are internal to PHP and as such, have no public facing API.
 They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
-docblock of the ``setOptions()`` method of each class.
+the docblock of the ``setOptions()`` method of each class. For instance, the one
+provided by the Memcached extension can be found on `php.net/memcached.setoption`_
 
 While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
-activate these in the same way as custom handlers.
+activate these in the same way as it does for custom handlers.
 
 Symfony2 provides drivers for the following native save handler as an example:
 
@@ -61,7 +62,7 @@ Example usage::
 Custom Save Handlers
 --------------------
 
-Custom handlers are those which completely replace PHP's built in session save
+Custom handlers are those which completely replace PHP's built-in session save
 handlers by providing six callback functions which PHP calls internally at
 various points in the session workflow.
 
@@ -119,7 +120,7 @@ be securely controlled from the server side.
 
     The ``cookie_lifetime`` setting is the number of seconds the cookie should live
     for, it is not a Unix timestamp. The resulting session cookie will be stamped
-    with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
+    with an expiry time of ``time()`` + ``cookie_lifetime`` where the time is taken
     from the server.
 
 Configuring Garbage Collection
@@ -132,7 +133,7 @@ of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
 
 If the garbage collection handler is invoked, PHP will pass the value stored in
 the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
-that any stored session that was saved more than ``maxlifetime`` ago should be
+that any stored session that was saved more than ``gc_maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
@@ -173,8 +174,8 @@ example, it is common for banking applications to log the user out after just
 5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
 appropriate because that can be manipulated by the client, so we must do the expiry
 on the server side. The easiest way is to implement this via garbage collection
-which runs reasonably frequently. The cookie ``lifetime`` would be set to a
-relatively high value, and the garbage collection ``maxlifetime`` would be set
+which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
+relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
 The other option is to specifically checking if a session has expired after the
@@ -234,6 +235,11 @@ PHP 5.4 functionality if it is available.
 Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
 
+A Save Handler Proxy is basically a wrapper around a Save Handler that was
+introduced to support seamlessly the migration from PHP 5.3 to PHP 5.4+. It
+further creates an extension point from where custom logic can be added that
+works independently of which handler is being wrapped inside.
+
 There are two kinds of save handler class proxies which inherit from
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractProxy`:
 they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
@@ -258,8 +264,9 @@ without knowledge of the specific save handler.
 
 .. note::
 
-    Before PHP 5.4, you can only proxy user-land save handlers but not 
+    Before PHP 5.4, you can only proxy user-land save handlers but not
     native PHP save handlers.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration
+.. _`php.net/memcached.setoption`: http://php.net/memcached.setoption

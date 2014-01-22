@@ -5,7 +5,7 @@
 The Routing Component
 =====================
 
-   The Routing Component maps an HTTP request to a set of configuration
+   The Routing component maps an HTTP request to a set of configuration
    variables.
 
 Installation
@@ -85,16 +85,13 @@ placeholders as regular expressions.
 4. An array of options. These contain internal settings for the route and
 are the least commonly needed.
 
-5. A host. This is matched against the host of the request.  See
+5. A host. This is matched against the host of the request. See
    :doc:`/components/routing/hostname_pattern` for more details.
 
 6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
 
 7. An array of methods. These enforce a certain HTTP request method (``HEAD``,
    ``GET``, ``POST``, ...).
-
-.. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
 
 Take the following route, which combines several of these ideas::
 
@@ -127,7 +124,7 @@ does *not* match, because "foo" fails the month wildcard.
 
 .. tip::
 
-    If you want to match all urls which start with a certain path and end in an
+    If you want to match all URLs which start with a certain path and end in an
     arbitrary suffix you can use the following route definition::
 
         $route = new Route(
@@ -159,10 +156,6 @@ the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
     );
 
     $rootCollection->addCollection($subCollection);
-
-.. versionadded:: 2.2
-    The ``addPrefix`` method is added in Symfony2.2. This was part of the
-    ``addCollection`` method in older versions.
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -265,7 +258,7 @@ other loaders that work the same way:
 * :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
 
 If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
-have to provide the name of a php file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
+have to provide the name of a PHP file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
 
     // RouteProvider.php
     use Symfony\Component\Routing\RouteCollection;

@@ -84,13 +84,13 @@ the class.
 
     If you want to integrate this User within the security system, you need
     to implement the :ref:`UserInterface <book-security-user-entity>` of the
-    security component.
+    Security component.
 
 .. _cookbook-registration-password-max:
 
 .. sidebar:: Why the 4096 Password Limit?
 
-    Notice that the ``plainPassword`` has a max length of ``4096`` characters.
+    Notice that the ``plainPassword`` field has a max length of 4096 characters.
     For security purposes (`CVE-2013-5750`_), Symfony limits the plain password
     length to 4096 characters when encoding it. Adding this constraint makes
     sure that your form will give a validation error if anyone tries a super-long
@@ -139,12 +139,12 @@ Next, create the form for the ``User`` model::
     }
 
 There are just two fields: ``email`` and ``plainPassword`` (repeated to confirm
-the entered password). The ``data_class`` option tells the form the name of
-data class (i.e. your ``User`` entity).
+the entered password). The ``data_class`` option tells the form the name of the
+underlying data class (i.e. your ``User`` entity).
 
 .. tip::
 
-    To explore more things about the form component, read :doc:`/book/forms`.
+    To explore more things about the Form component, read :doc:`/book/forms`.
 
 Embedding the User form into a Registration Form
 ------------------------------------------------
@@ -224,7 +224,7 @@ Next, create the form for this ``Registration`` model::
         }
     }
 
-You don't need to use special method for embedding the ``UserType`` form.
+You don't need to use a special method for embedding the ``UserType`` form.
 A form is a field, too - so you can add this like any other field, with the
 expectation that the ``Registration.user`` property will hold an instance
 of the ``User`` class.
@@ -260,14 +260,14 @@ controller for displaying the registration form::
         }
     }
 
-and its template:
+And its template:
 
 .. code-block:: html+jinja
 
     {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
     {{ form(form) }}
 
-Next, create the controller which handles the form submission.  This performs
+Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database::
 
     public function createAction(Request $request)
@@ -306,12 +306,12 @@ Next, update your routes. If you're placing your routes inside your bundle
 
         # src/Acme/AccountBundle/Resources/config/routing.yml
         account_register:
-           pattern:  /register
-           defaults: { _controller: AcmeAccountBundle:Account:register }
+            path:     /register
+            defaults: { _controller: AcmeAccountBundle:Account:register }
    
         account_create:
-           pattern:  /register/create
-           defaults: { _controller: AcmeAccountBundle:Account:create }
+            path:     /register/create
+            defaults: { _controller: AcmeAccountBundle:Account:create }
 
     .. code-block:: xml
 
@@ -351,6 +351,8 @@ Update your Database Schema
 
 Of course, since you've added a ``User`` entity during this tutorial, make
 sure that your database schema has been updated properly:
+
+.. code-block:: bash
 
    $ php app/console doctrine:schema:update --force
 

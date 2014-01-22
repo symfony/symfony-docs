@@ -1,8 +1,8 @@
 .. index::
    single: Security; Configuration reference
 
-Security Configuration Reference
-================================
+SecurityBundle Configuration ("security")
+=========================================
 
 The security system is one of the most powerful parts of Symfony2, and can
 largely be controlled via its configuration.
@@ -12,6 +12,10 @@ Full Default Configuration
 
 The following is the full default configuration for the security system.
 Each part will be explained in the next section.
+
+.. versionadded:: 2.4
+    Support for restricting security firewalls to a specific host was introduced in
+    Symfony 2.4.
 
 .. configuration-block::
 
@@ -98,6 +102,8 @@ Each part will be explained in the next section.
                 # Examples:
                 somename:
                     pattern: .*
+                    # restrict the firewall to a specific host
+                    host: admin\.example\.com
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
                     access_denied_handler: some.service.id
@@ -117,7 +123,7 @@ Each part will be explained in the next section.
                         # submit the login form here
                         check_path: /login_check
 
-                        # the user is redirected here when he/she needs to log in
+                        # the user is redirected here when they need to log in
                         login_path: /login
 
                         # if true, forward the user to the login form instead of redirecting
@@ -237,7 +243,7 @@ The Login Form and Process
 
 *   ``login_path`` (type: ``string``, default: ``/login``)
     This is the route or path that the user will be redirected to (unless
-    ``use_forward`` is set to ``true``) when he/she tries to access a
+    ``use_forward`` is set to ``true``) when they try to access a
     protected resource but isn't fully authenticated.
 
     This path **must** be accessible by a normal, un-authenticated user, else
@@ -284,9 +290,6 @@ Redirecting after Login
 Using the PBKDF2 encoder: Security and Speed
 --------------------------------------------
 
-.. versionadded:: 2.2
-    The PBKDF2 password encoder was added in Symfony 2.2.
-
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
 
@@ -308,9 +311,6 @@ Using the BCrypt Password Encoder
 
     To use this encoder, you either need to use PHP Version 5.5 or install
     the `ircmaxell/password-compat`_ library via Composer.
-
-.. versionadded:: 2.2
-    The BCrypt password encoder was added in Symfony 2.2.
 
 .. configuration-block::
 

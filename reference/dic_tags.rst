@@ -25,9 +25,9 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.formula_resource`_       | Adds a resource to the current asset manager                              |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.php`_         | Remove this service if php templating is disabled                         |
+| `assetic.templating.php`_         | Remove this service if PHP templating is disabled                         |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `assetic.templating.twig`_        | Remove this service if twig templating is disabled                        |
+| `assetic.templating.twig`_        | Remove this service if Twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `console.command`_                | Add a command                                                             |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -67,7 +67,7 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
 +-----------------------------------+---------------------------------------------------------------------------+
-| `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
+| `swiftmailer.default.plugin`_     | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -215,7 +215,7 @@ assetic.formula_loader
 A Formula loader is a class implementing
 ``Assetic\\Factory\Loader\\FormulaLoaderInterface`` interface. This class
 is responsible for loading assets from a particular kind of resources (for
-instance, twig template). Assetic ships loaders for php and twig templates.
+instance, twig template). Assetic ships loaders for PHP and Twig templates.
 
 An ``alias`` attribute defines the name of the loader.
 
@@ -224,13 +224,13 @@ assetic.formula_resource
 
 **Purpose**: Adds a resource to the current asset manager
 
-A resource is something formulae can be loaded from. For instance, twig
+A resource is something formulae can be loaded from. For instance, Twig
 templates are resources.
 
 assetic.templating.php
 ----------------------
 
-**Purpose**: Remove this service if php templating is disabled
+**Purpose**: Remove this service if PHP templating is disabled
 
 The tagged service will be removed from the container if the
 ``framework.templating.engines`` config section does not contain php.
@@ -238,10 +238,10 @@ The tagged service will be removed from the container if the
 assetic.templating.twig
 -----------------------
 
-**Purpose**: Remove this service if twig templating is disabled
+**Purpose**: Remove this service if Twig templating is disabled
 
 The tagged service will be removed from the container if
-``framework.templating.engines`` config section does not contain twig.
+``framework.templating.engines`` config section does not contain ``twig``.
 
 console.command
 ---------------
@@ -360,7 +360,7 @@ To add your own form type guesser, create a class that implements the
 tag its service definition with ``form.type_guesser`` (it has no options).
 
 To see an example of how this class might look, see the ``ValidatorTypeGuesser``
-class in the ``Form`` component.
+class in the Form component.
 
 kernel.cache_clearer
 --------------------
@@ -663,6 +663,12 @@ channel when injecting the logger in a service.
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->register('my_service', $definition);
 
+.. tip::
+
+    If you use MonologBundle 2.4 or higher, you can configure custom channels
+    in the configuration and retrieve the corresponding logger service from
+    the service container directly (see :ref:`cookbook-monolog-channels-config`).
+
 .. _dic_tags-monolog-processor:
 
 monolog.processor
@@ -847,14 +853,20 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
 For more details, see :doc:`/cookbook/serializer`.
 
-swiftmailer.plugin
-------------------
+swiftmailer.default.plugin
+--------------------------
 
 **Purpose**: Register a custom SwiftMailer Plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.plugin`` (it has no options).
+it with ``swiftmailer.default.plugin`` (it has no options). 
+
+.. note::
+
+    ``default`` in this tag is the name of the mailer. If you have multiple
+    mailers configured or have changed the default mailer name for some reason,
+    you should change it to the name of your mailer in order to use this tag.
 
 A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
 For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
@@ -1216,6 +1228,6 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.2/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
 .. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders

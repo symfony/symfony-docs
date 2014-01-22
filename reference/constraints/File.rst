@@ -177,19 +177,19 @@ If set, the validator will check that the mime type of the underlying file
 is equal to the given mime type (if a string) or exists in the collection
 of given mime types (if an array).
 
-You can find a list of existing mime types on the `IANA website`_
+You can find a list of existing mime types on the `IANA website`_.
 
 maxSizeMessage
 ~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The file is too large ({{ size }}). Allowed maximum size is {{ limit }}``
+**type**: ``string`` **default**: ``The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.``
 
 The message displayed if the file is larger than the `maxSize`_ option.
 
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}``
+**type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
 
 The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
@@ -197,7 +197,7 @@ per the `mimeTypes`_ option.
 notFoundMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The file could not be found``
+**type**: ``string`` **default**: ``The file could not be found.``
 
 The message displayed if no file can be found at the given path. This error
 is only likely if the underlying value is a string path, as a ``File`` object
@@ -206,7 +206,7 @@ cannot be constructed with an invalid file path.
 notReadableMessage
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The file is not readable``
+**type**: ``string`` **default**: ``The file is not readable.``
 
 The message displayed if the file exists, but the PHP ``is_readable`` function
 fails when passed the path to the file.
@@ -214,7 +214,7 @@ fails when passed the path to the file.
 uploadIniSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The file is too large. Allowed maximum size is {{ limit }}``
+**type**: ``string`` **default**: ``The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.``
 
 The message that is displayed if the uploaded file is larger than the ``upload_max_filesize``
 ``php.ini`` setting.
@@ -222,7 +222,7 @@ The message that is displayed if the uploaded file is larger than the ``upload_m
 uploadFormSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The file is too large``
+**type**: ``string`` **default**: ``The file is too large.``
 
 The message that is displayed if the uploaded file is larger than allowed
 by the HTML file input field.
@@ -230,7 +230,7 @@ by the HTML file input field.
 uploadErrorMessage
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The file could not be uploaded``
+**type**: ``string`` **default**: ``The file could not be uploaded.``
 
 The message that is displayed if the uploaded file could not be uploaded
 for some unknown reason, such as the file upload failed or it couldn't be written

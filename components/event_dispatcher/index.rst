@@ -1,5 +1,5 @@
-Event Dispatcher
-================
+EventDispatcher
+===============
 
 .. toctree::
     :maxdepth: 2

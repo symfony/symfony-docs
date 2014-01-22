@@ -4,7 +4,7 @@
 The Filesystem Component
 ========================
 
-    The Filesystem components provides basic utilities for the filesystem.
+    The Filesystem component provides basic utilities for the filesystem.
 
 Installation
 ------------
@@ -65,7 +65,7 @@ Exists
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
-presence of all files or directories and returns false if a file is missing::
+presence of all files or directories and returns ``false`` if a file is missing::
 
     // this directory exists, return true
     $fs->exists('/tmp/photos');
@@ -222,7 +222,7 @@ isAbsolutePath
 ~~~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsolutePath` returns
-``true`` if the given path is absolute, false otherwise::
+``true`` if the given path is absolute, ``false`` otherwise::
 
     // return true
     $fs->isAbsolutePath('/tmp');

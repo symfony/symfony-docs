@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Factories
+   single: DependencyInjection; Factories
 
 Using a Factory to Create Services
 ==================================
@@ -12,7 +12,7 @@ For this situation, you can use a factory to create the object and tell the
 service container to call a method on the factory rather than directly instantiating
 the class.
 
-Suppose you have a factory that configures and returns a new NewsletterManager
+Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object::
 
     class NewsletterFactory
@@ -125,7 +125,7 @@ factory itself as a service:
 
         $container->setDefinition('newsletter_factory', new Definition(
             '%newsletter_factory.class%'
-        ))
+        ));
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%'
         ))->setFactoryService(
@@ -193,7 +193,7 @@ in the previous example takes the ``templating`` service as an argument:
 
         $container->setDefinition('newsletter_factory', new Definition(
             '%newsletter_factory.class%'
-        ))
+        ));
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
             array(new Reference('templating'))

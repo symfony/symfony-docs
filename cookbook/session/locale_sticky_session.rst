@@ -4,14 +4,14 @@
 Making the Locale "Sticky" during a User's Session
 ==================================================
 
-Prior to Symfony 2.1, the locale was stored in a session called ``_locale``.
+Prior to Symfony 2.1, the locale was stored in a session attribute called ``_locale``.
 Since 2.1, it is stored in the Request, which means that it's not "sticky"
 during a user's request. In this article, you'll learn how to make the locale
 of a user "sticky" so that once it's set, that same locale will be used for
 every subsequent request.
 
-Creating LocaleListener
------------------------
+Creating a LocaleListener
+-------------------------
 
 To simulate that the locale is stored in a session, you need to create and
 register a :doc:`new event listener </cookbook/service_container/event_listener>`.
@@ -100,4 +100,9 @@ use the :method:`Request::getLocale <Symfony\\Component\\HttpFoundation\\Request
 method::
 
     // from a controller...
-    $locale = $this->getRequest()->getLocale();
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function indexAction(Request $request)
+    {
+        $locale = $request->getLocale();
+    }

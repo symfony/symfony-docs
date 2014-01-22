@@ -17,16 +17,13 @@ what URL it should use when generating URLs.
 There are two ways of configuring the request context: at the application level
 and per Command.
 
-Configuring the Request Context globally
+Configuring the Request Context Globally
 ----------------------------------------
-
-.. versionadded: 2.2
-    The ``base_url`` parameter is available since Symfony 2.2
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
-(localhost) and scheme (http). Starting with Symfony 2.2 you can also configure
-the base path if Symfony is not running in the root directory.
+(localhost) and scheme (http). You can also configure the base path if Symfony
+is not running in the root directory.
 
 Note that this does not impact URLs generated via normal web requests, since those
 will override the defaults.
@@ -67,7 +64,7 @@ Configuring the Request Context per Command
 -------------------------------------------
 
 To change it only in one command you can simply fetch the Request Context
-service and override its settings::
+from the ``router`` service and override its settings::
 
    // src/Acme/DemoBundle/Command/DemoCommand.php
 
@@ -92,7 +89,7 @@ Sending emails in a console command works the same way as described in the
 :doc:`/cookbook/email/email` cookbook except if memory spooling is used.
 
 When using memory spooling (see the :doc:`/cookbook/email/spool` cookbook for more
-information), you must be aware that because of how symfony handles console
+information), you must be aware that because of how Symfony handles console
 commands, emails are not sent automatically. You must take care of flushing
 the queue yourself. Use the following code to send emails inside your
 console command::

@@ -246,7 +246,7 @@ have all the request information at your fingertips::
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
-the user is connecting via a secured connection (i.e. ``https``).
+the user is connecting via a secured connection (i.e. HTTPS).
 
 .. sidebar:: ParameterBags and Request attributes
 
@@ -296,7 +296,7 @@ and create the appropriate response based on your application logic*.
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called ``HttpFoundation``. This component can be
+    included with Symfony called HttpFoundation. This component can be
     used entirely independently of Symfony and also provides classes for handling
     sessions and file uploads.
 
@@ -555,7 +555,7 @@ So then, what *is* the Symfony2 *Framework*? The *Symfony2 Framework* is
 a PHP library that accomplishes two distinct tasks:
 
 #. Provides a selection of components (i.e. the Symfony2 Components) and
-   third-party libraries (e.g. `Swiftmailer`_ for sending emails);
+   third-party libraries (e.g. `Swift Mailer`_ for sending emails);
 
 #. Provides sensible configuration and a "glue" library that ties all of these
    pieces together.
@@ -581,4 +581,4 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`Validator`: https://github.com/symfony/Validator
 .. _`Security`: https://github.com/symfony/Security
 .. _`Translation`: https://github.com/symfony/Translation
-.. _`Swiftmailer`: http://swiftmailer.org/
+.. _`Swift Mailer`: http://swiftmailer.org/

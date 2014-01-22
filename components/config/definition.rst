@@ -12,7 +12,7 @@ and their structure can be validated using the "Definition" part of the Config
 Component. Configuration values are usually expected to show some kind of
 hierarchy. Also, values should be of a certain type, be restricted in number
 or be one of a given set of values. For example, the following configuration
-(in Yaml) shows a clear hierarchy and some validation rules that should be
+(in YAML) shows a clear hierarchy and some validation rules that should be
 applied to it (like: "the value for ``auto_connect`` must be a boolean value"):
 
 .. code-block:: yaml
@@ -99,7 +99,7 @@ node definition. Node type are available for:
 
 * scalar
 * boolean
-* integer (new in 2.2)
+* integer
 * float
 * enum
 * array
@@ -110,9 +110,6 @@ and are created with ``node($name, $type)`` or their associated shortcut
 
 Numeric node constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The numeric (float and integer) nodes are new in 2.2
 
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
@@ -287,9 +284,6 @@ has a certain value:
 Optional Sections
 -----------------
 
-.. versionadded:: 2.2
-    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
-
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled` and
@@ -393,10 +387,10 @@ Normalization
 When the config files are processed they are first normalized, then merged
 and finally the tree is used to validate the resulting array. The normalization
 process is used to remove some of the differences that result from different
-configuration formats, mainly the differences between Yaml and XML.
+configuration formats, mainly the differences between YAML and XML.
 
-The separator used in keys is typically ``_`` in Yaml and ``-`` in XML. For
-example, ``auto_connect`` in Yaml and ``auto-connect``. The normalization would
+The separator used in keys is typically ``_`` in YAML and ``-`` in XML. For
+example, ``auto_connect`` in YAML and ``auto-connect``. The normalization would
 make both of these ``auto_connect``.
 
 .. caution::
@@ -404,8 +398,8 @@ make both of these ``auto_connect``.
     The target key will not be altered if it's mixed like
     ``foo-bar_moo`` or if it already exists.
 
-Another difference between Yaml and XML is in the way arrays of values may
-be represented. In Yaml you may have:
+Another difference between YAML and XML is in the way arrays of values may
+be represented. In YAML you may have:
 
 .. code-block:: yaml
 
@@ -444,7 +438,7 @@ a second argument::
         ->end()
     ;
 
-As well as fixing this, ``fixXmlConfig`` ensures that single xml elements
+As well as fixing this, ``fixXmlConfig`` ensures that single XML elements
 are still turned into an array. So you may have:
 
 .. code-block:: xml

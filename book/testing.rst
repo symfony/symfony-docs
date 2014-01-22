@@ -485,7 +485,7 @@ Redirecting
 
 When a request returns a redirect response, the client does not follow
 it automatically. You can examine the response and force a redirection
-afterwards  with the ``followRedirect()`` method::
+afterwards with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
 
@@ -581,8 +581,7 @@ The Crawler can extract information from the nodes::
     $info = $crawler->extract(array('_text', 'href'));
 
     // Executes a lambda for each node and return an array of results
-    $data = $crawler->each(function ($node, $i)
-    {
+    $data = $crawler->each(function ($node, $i) {
         return $node->attr('href');
     });
 
@@ -703,7 +702,7 @@ The Client used by functional tests creates a Kernel that runs in a special
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
 
-For example, by default, the swiftmailer is configured to *not* actually
+For example, by default, the Swift Mailer is configured to *not* actually
 deliver emails in the ``test`` environment. You can see this under the ``swiftmailer``
 configuration option:
 

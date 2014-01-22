@@ -6,7 +6,7 @@ repeated Field Type
 
 This is a special field "group", that creates two identical fields whose
 values must match (or a validation error is thrown). The most common use
-is when you need the user to repeat his or her password or email to verify
+is when you need the user to repeat their password or email to verify
 accuracy.
 
 +-------------+------------------------------------------------------------------------+
@@ -22,8 +22,9 @@ accuracy.
 | Overridden  | - `error_bubbling`_                                                    |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `invalid_message`_                                                   |
-| options     | - `invalid_message_parameters`_                                        |
+| Inherited   | - `data`_                                                              |
+| options     | - `invalid_message`_                                                   |
+|             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
 |             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
@@ -181,6 +182,8 @@ Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

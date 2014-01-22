@@ -1,5 +1,5 @@
 .. index::
-    single: Class Loader; MapClassLoader
+    single: ClassLoader; MapClassLoader
     
 MapClassLoader
 ==============
@@ -36,4 +36,4 @@ an instance of the ``MapClassLoader`` class::
     
     $loader->register();
 
-.. _PSR-0: http://symfony.com/PSR0
+.. _PSR-0: http://www.php-fig.org/psr/psr-0/

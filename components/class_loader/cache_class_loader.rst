@@ -1,8 +1,8 @@
 .. index::
     single: APC; ApcClassLoader
-    single: Class Loader; ApcClassLoader
-    single: Class Loader; Cache
-    single: Class Loader; XcacheClassLoader
+    single: ClassLoader; ApcClassLoader
+    single: ClassLoader; Cache
+    single: ClassLoader; XcacheClassLoader
     single: XCache; XcacheClassLoader
     
 Cache a Class Loader
@@ -12,7 +12,7 @@ Introduction
 ------------
 
 Finding the file for a particular class can be an expensive task. Luckily,
-the Class Loader Component comes with two classes to cache the mapping
+the ClassLoader component comes with two classes to cache the mapping
 from a class to its containing file. Both the :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader`
 and the :class:`Symfony\\Component\\ClassLoader\\XcacheClassLoader` wrap
 around an object which implements a ``findFile()`` method to find the file
@@ -20,8 +20,8 @@ for a class.
 
 .. note::
 
-  Both the ``ApcClassLoader`` and the ``XcacheClassLoader`` can be used
-  to cache Composer's `autoloader`_.
+    Both the ``ApcClassLoader`` and the ``XcacheClassLoader`` can be used
+    to cache Composer's `autoloader`_.
 
 ApcClassLoader
 --------------

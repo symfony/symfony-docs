@@ -20,10 +20,11 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/changing_default_command`
   * :doc:`/components/console/events`
   * :doc:`/components/console/helpers/index`
 
-* **CSS Selector**
+* **CssSelector**
 
   * :doc:`/components/css_selector`
 
@@ -46,7 +47,7 @@
   * :doc:`/components/dependency_injection/lazy_services`
   * :doc:`/components/dependency_injection/workflow`
 
-* **DOM Crawler**
+* **DomCrawler**
 
   * :doc:`/components/dom_crawler`
 
@@ -56,6 +57,13 @@
   * :doc:`/components/event_dispatcher/container_aware_dispatcher`
   * :doc:`/components/event_dispatcher/generic_event`
   * :doc:`/components/event_dispatcher/immutable_dispatcher`
+
+* :doc:`/components/expression_language/index`
+
+  * :doc:`/components/expression_language/introduction`
+  * :doc:`/components/expression_language/syntax`
+  * :doc:`/components/expression_language/extending`
+  * :doc:`/components/expression_language/caching`
 
 * **Filesystem**
 
@@ -86,7 +94,7 @@
 
   * :doc:`/components/intl`
 
-* **Options Resolver**
+* **OptionsResolver**
 
   * :doc:`/components/options_resolver`
 
@@ -121,6 +129,11 @@
 * :doc:`/components/templating/index`
 
   * :doc:`/components/templating/introduction`
+
+* :doc:`/components/translation/index`
+
+  * :doc:`/components/translation/introduction`
+  * :doc:`/components/translation/usage`
 
 * :doc:`/components/yaml/index`
 

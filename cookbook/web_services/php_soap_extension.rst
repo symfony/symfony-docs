@@ -113,12 +113,12 @@ methods control `output buffering`_ which allows you to "trap" the echoed
 output of ``$server->handle()``. This is necessary because Symfony expects
 your controller to return a ``Response`` object with the output as its "content".
 You must also remember to set the "Content-Type" header to "text/xml", as
-this is what the client  will expect. So, you use ``ob_start()`` to start
+this is what the client will expect. So, you use ``ob_start()`` to start
 buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
 into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
-Below is an example calling the service using `NuSOAP`_ client. This example
+Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 

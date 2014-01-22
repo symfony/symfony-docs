@@ -6,7 +6,7 @@
 The HttpFoundation Component
 ============================
 
-    The HttpFoundation Component defines an object-oriented layer for the HTTP
+    The HttpFoundation component defines an object-oriented layer for the HTTP
     specification.
 
 In PHP, the request is represented by some global variables (``$_GET``,
@@ -61,7 +61,7 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
-* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below <component-foundation-attributes>`)
+* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below <component-foundation-attributes>`);
 
 * ``files``: equivalent of ``$_FILES``;
 
@@ -109,7 +109,7 @@ methods to retrieve and update its data:
   parameter by name;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`: Returns
-  true if the parameter is defined;
+  ``true`` if the parameter is defined;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`: Removes
   a parameter.
@@ -248,9 +248,6 @@ by using the following methods:
   .. versionadded:: 2.4
       The ``getEncodings()`` method was added in Symfony 2.4.
 
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
-
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
 :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` utility class::
@@ -351,7 +348,7 @@ Sending the response to the client is then as simple as calling
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
-The response cookies can be manipulated though the ``headers`` public
+The response cookies can be manipulated through the ``headers`` public
 attribute::
 
     use Symfony\Component\HttpFoundation\Cookie;
@@ -465,10 +462,6 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
-.. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
-    class was added in Symfony 2.2.
-
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 
@@ -484,7 +477,7 @@ whether or not the ``X-Sendfile-Type`` header should be trusted and call
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
 if it should::
 
-    $response::trustXSendfileTypeHeader();
+    BinaryFileResponse::trustXSendfileTypeHeader();
 
 You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
 

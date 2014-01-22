@@ -42,7 +42,7 @@ Configuration
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             constraints:
-                - Callback: validate
+                - Callback: [validate]
 
     .. code-block:: php-annotations
 

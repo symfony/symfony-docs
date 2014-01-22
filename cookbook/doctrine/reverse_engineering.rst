@@ -97,7 +97,7 @@ entity classes by executing the following two commands.
     $ php app/console doctrine:generate:entities AcmeBlogBundle
 
 The first command generates entity classes with annotation mappings. But
-if you want to use yml or xml mapping instead of annotations, you should
+if you want to use YAML or XML mapping instead of annotations, you should
 execute the second command only.
 
 .. tip::
@@ -167,9 +167,9 @@ entity in the ``BlogComment`` entity class.
 
 .. note::
 
-    If you want to have a ``oneToMany`` relationship, you will need to add
-    it manually into the entity or to the generated ``xml`` or ``yml`` files.
-    Add a section on the specific entities for ``oneToMany`` defining the
+    If you want to have a one-to-many relationship, you will need to add
+    it manually into the entity or to the generated XML or YAML files.
+    Add a section on the specific entities for one-to-many defining the
     ``inversedBy`` and the ``mappedBy`` pieces.
 
 The generated entities are now ready to be used. Have fun!

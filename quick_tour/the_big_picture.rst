@@ -61,12 +61,11 @@ have a ``Symfony/`` directory that looks like this:
 .. note::
 
     If you are familiar with `Composer`_, you can download Composer and then
-    run the following command instead of downloading the archive (replacing
-    ``2.3.0`` with the latest Symfony release like ``2.3.1``):
+    run the following command instead of downloading the archive:
 
     .. code-block:: bash
 
-        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.3.0
+        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.4.*
 
 .. _`quick-tour-big-picture-built-in-server`:
 
@@ -298,7 +297,7 @@ return the contents of a JPG image with a ``Content-Type`` header of ``image/jpg
 
 The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
 *logical name* and it references the ``Resources/views/Welcome/index.html.twig``
-file inside the ``AcmeDemoBundle`` (located at ``src/Acme/DemoBundle``).
+file inside the AcmeDemoBundle (located at ``src/Acme/DemoBundle``).
 The `Bundles`_ section below will explain why this is useful.
 
 Now, take a look at the routing configuration again and find the ``_demo``

@@ -31,10 +31,12 @@ the following to your command::
         return;
     }
 
-In this case, the user will be asked "Continue with this action?", and will return
-``true`` if the user answers with ``y`` or false in any other case. The third
-argument to ``askConfirmation`` is the default value to return if the user doesn't
-enter any input.
+In this case, the user will be asked "Continue with this action?", and will
+return ``true`` if the user answers with ``y`` or ``false`` if the user answers
+with ``n``. The third argument to
+:method:`Symfony\\Component\\Console\\Helper\\DialogHelper::askConfirmation`
+is the default value to return if the user doesn't enter any input. Any other
+input will ask the same question again.
 
 Asking the User for Information
 -------------------------------
@@ -49,15 +51,12 @@ if you want to know a bundle name, you can add this to your command::
         'AcmeDemoBundle'
     );
 
-The user will be asked "Please enter the name of the bundle". She can type
-some name which will be returned by the ``ask`` method. If she leaves it empty,
+The user will be asked "Please enter the name of the bundle". They can type
+some name which will be returned by the ``ask`` method. If they leave it empty,
 the default value (``AcmeDemoBundle`` here) is returned.
 
 Autocompletion
 ~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    Autocompletion for questions was added in Symfony 2.2.
 
 You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
@@ -73,9 +72,6 @@ will be autocompleted as the user types::
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The ``askHiddenResponse`` method was added in Symfony 2.2.
 
 You can also ask a question and hide the response. This is particularly
 convenient for passwords::
@@ -138,14 +134,11 @@ function should also return the value of the user's input if the validation was 
 You can set the max number of times to ask in the ``$attempts`` argument.
 If you reach this max number it will use the default value, which is given
 in the last argument. Using ``false`` means the amount of attempts is infinite.
-The user will be asked as long as he provides an invalid answer and will only
-be able to proceed if her input is valid.
+The user will be asked as long as they provide an invalid answer and will only
+be able to proceed if their input is valid.
 
-Hiding the User's Response
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
+Validating a Hidden Response
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also ask and validate a hidden response::
 
@@ -170,10 +163,6 @@ some reason, pass true as the fifth argument.
 
 Let the user choose from a list of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.2
-    The :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select` method
-    was added in Symfony 2.2.
 
 If you have a predefined set of answers the user can choose from, you
 could use the ``ask`` method described above or, to make sure the user
@@ -202,7 +191,7 @@ The option which should be selected by default is provided with the fourth
 argument. The default is ``null``, which means that no option is the default one.
 
 If the user enters an invalid string, an error message is shown and the user
-is asked to provide the answer another time, until she enters a valid string
+is asked to provide the answer another time, until they enter a valid string
 or the maximum attempts is reached (which you can define in the fifth
 argument). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth argument.

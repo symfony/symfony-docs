@@ -47,7 +47,7 @@ to take some manual steps after transferring the files (see `Common Post-Deploym
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
-If you're using source control (e.g. git or svn), you can simplify by having
+If you're using source control (e.g. Git or SVN), you can simplify by having
 your live installation also be a copy of your repository. When you're ready
 to upgrade it is as simple as fetching the latest updates from your source
 control system.
@@ -84,7 +84,7 @@ B) Update your vendors
 Your vendors can be updated before transferring your source code (i.e.
 update the ``vendor/`` directory, then transfer that with your source
 code) or afterwards on the server. Either way, just update your vendors
-as your normally do:
+as you normally do:
 
 .. code-block:: bash
 
@@ -93,7 +93,7 @@ as your normally do:
 .. tip::
 
     The ``--optimize-autoloader`` flag makes Composer's autoloader more
-    performant by building a "class map". The ``--no-dev`` flag 
+    performant by building a "class map". The ``--no-dev`` flag
     ensures that development packages are not installed in the production
     environment.
 

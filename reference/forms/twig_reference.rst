@@ -48,7 +48,7 @@ the other helpers to render individual parts of the form instead:
         {{ form_row(form.name) }}
         {{ form_row(form.dueDate) }}
 
-        <input type="submit" value="Submit me"/>
+        {{ form_row(form.submit, { 'label': 'Submit me' }) }}
     {{ form_end(form) }}
 
 .. _reference-forms-twig-start:
@@ -248,7 +248,7 @@ to see what options you have available.
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the form component calls ``buildView`` and ``buildViewBottomUp``
+    object of your form when the Form component calls ``buildView`` and ``buildViewBottomUp``
     on each "node" of your form tree. To see what "view" variables a particularly
     field has, find the source code for the form field (and its parent fields)
     and look at the above two functions.

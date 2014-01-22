@@ -50,7 +50,7 @@ Then you can constrain this method with ``True``.
         Acme\BlogBundle\Entity\Author:
             getters:
                 tokenValid:
-                    - "True": { message: "The token is invalid." }
+                    - 'True': { message: "The token is invalid." }
 
     .. code-block:: php-annotations
 
@@ -116,12 +116,17 @@ Then you can constrain this method with ``True``.
 
 If the ``isTokenValid()`` returns false, the validation will fail.
 
+.. caution::
+
+    When using YAML, be sure to surround ``True`` with quotes (``'True'``)
+    or else YAML will convert this into a ``true`` Boolean value.
+
 Options
 -------
 
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be true``
+**type**: ``string`` **default**: ``This value should be true.``
 
 This message is shown if the underlying data is not true.

@@ -9,8 +9,12 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `required`_                                                       |
-| options     | - `label`_                                                          |
+| Options     | - `multiple`_                                                       |
++-------------+---------------------------------------------------------------------+
+| Inherited   | - `empty_data`_                                                     |
+| options     | - `required`_                                                       |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
 |             | - `read_only`_                                                      |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
@@ -76,14 +80,28 @@ before using it directly.
 Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example of
 how to manage a file upload associated with a Doctrine entity.
 
+Field Options
+-------------
+
+multiple
+~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+When set to true, the user will be able to upload multiple files at the same time.
+
 Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 

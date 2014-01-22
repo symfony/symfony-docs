@@ -169,12 +169,12 @@ the above example, the ``allowMissingFields`` option was set to true, meaning
 that if either of the ``personal_email`` or ``short_bio`` elements were missing
 from the ``$personalData`` property, no validation error would occur.
 
+Required and Optional Field Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. versionadded:: 2.3
     The ``Required`` and ``Optional`` constraints were moved to the namespace
     ``Symfony\Component\Validator\Constraints\`` in Symfony 2.3.
-
-Required and Optional Field Constraints
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Constraints for fields within a collection can be wrapped in the ``Required`` or
 ``Optional`` constraint to control whether they should always be applied (``Required``)
@@ -306,7 +306,7 @@ error will be returned. If set to ``true``, extra fields are ok.
 extraFieldsMessage
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``The fields {{ fields }} were not expected``
+**type**: ``Boolean`` **default**: ``The fields {{ fields }} were not expected.``
 
 The message shown if `allowExtraFields`_ is false and an extra field is detected.
 
@@ -323,7 +323,7 @@ option are not present in the underlying collection.
 missingFieldsMessage
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``The fields {{ fields }} are missing``
+**type**: ``Boolean`` **default**: ``The fields {{ fields }} are missing.``
 
 The message shown if `allowMissingFields`_ is false and one or more fields
 are missing from the underlying collection.

@@ -4,7 +4,7 @@
 The Firewall and Security Context
 =================================
 
-Central to the Security Component is the security context, which is an instance
+Central to the Security component is the security context, which is an instance
 of :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`. When all
 steps in the process of authenticating the user have been taken successfully,
 you can ask the security context if the authenticated user has access to a
@@ -74,7 +74,7 @@ with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKe
     $dispatcher->addListener(KernelEvents::REQUEST, array($firewall, 'onKernelRequest');
 
 The firewall is registered to listen to the ``kernel.request`` event that
-will be dispatched by the ``HttpKernel`` at the beginning of each request
+will be dispatched by the HttpKernel at the beginning of each request
 it processes. This way, the firewall may prevent the user from going any
 further than allowed.
 
@@ -101,7 +101,7 @@ firewall map will jump in.
 
 The exception listener determines what happens next, based on the arguments
 it received when it was created. It may start the authentication procedure,
-perhaps ask the user to supply his credentials again (when he has only been
+perhaps ask the user to supply their credentials again (when they have only been
 authenticated based on a "remember-me" cookie), or transform the exception
 into an :class:`Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException`,
 which will eventually result in an "HTTP/1.1 403: Access Denied" response.
@@ -119,7 +119,7 @@ object and the exception by which the exception listener was triggered.
 The method should return a :class:`Symfony\\Component\\HttpFoundation\\Response`
 object. This could be, for instance, the page containing the login form or,
 in the case of Basic HTTP authentication, a response with a ``WWW-Authenticate``
-header, which will prompt the user to supply his username and password.
+header, which will prompt the user to supply their username and password.
 
 Flow: Firewall, Authentication, Authorization
 ---------------------------------------------
@@ -127,11 +127,11 @@ Flow: Firewall, Authentication, Authorization
 Hopefully you can now see a little bit about how the "flow" of the security
 context works:
 
-#. the Firewall is registered as a listener on the ``kernel.request`` event;
-#. at the beginning of the request, the Firewall checks the firewall map
+#. The Firewall is registered as a listener on the ``kernel.request`` event;
+#. At the beginning of the request, the Firewall checks the firewall map
    to see if any firewall should be active for this URL;
-#. If a firewall is found in the map for this URL, its listeners are notified
-#. each listener checks to see if the current request contains any authentication
+#. If a firewall is found in the map for this URL, its listeners are notified;
+#. Each listener checks to see if the current request contains any authentication
    information - a listener may (a) authenticate a user, (b) throw an
    ``AuthenticationException``, or (c) do nothing (because there is no
    authentication information on the request);

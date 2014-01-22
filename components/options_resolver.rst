@@ -1,11 +1,11 @@
 .. index::
-    single: Options Resolver
+    single: OptionsResolver
     single: Components; OptionsResolver
 
 The OptionsResolver Component
 =============================
 
-    The OptionsResolver Component helps you configure objects with option
+    The OptionsResolver component helps you configure objects with option
     arrays. It supports default values, option constraints and lazy options.
 
 Installation
@@ -177,21 +177,12 @@ override this default. You don't need to configure ``username`` as an optional
 option. The ``OptionsResolver`` already knows that options with a default
 value are optional.
 
-The ``OptionsResolver`` component also has an
-:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::replaceDefaults`
-method. This can be used to override the previous default value. The closure
-that is passed has 2 parameters:
-
-* ``$options`` (an :class:`Symfony\\Component\\OptionsResolver\\Options`
-  instance), with all the default options
-* ``$value``, the previous set default value
-
 Default Values that depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you add a ``port`` option to the ``Mailer`` class, whose default
 value you guess based on the host. You can do that easily by using a
-Closure as the default value::
+closure as the default value::
 
     use Symfony\Component\OptionsResolver\Options;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -214,8 +205,82 @@ Closure as the default value::
 
 .. caution::
 
-    The first argument of the Closure must be typehinted as ``Options``,
+    The first argument of the closure must be typehinted as ``Options``,
     otherwise it is considered as the value.
+
+Overwriting Default Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A previously set default value can be overwritten by invoking
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefaults`
+again. When using a closure as the new value it is passed 2 arguments:
+
+* ``$options``: an :class:`Symfony\\Component\\OptionsResolver\\Options`
+  instance with all the other default options
+* ``$previousValue``: the previous set default value
+
+.. code-block:: php
+
+    use Symfony\Component\OptionsResolver\Options;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    // ...
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        // ...
+        $resolver->setDefaults(array(
+            'encryption' => 'ssl',
+            'host' => 'localhost',
+        ));
+
+        // ...
+        $resolver->setDefaults(array(
+            'encryption' => 'tls', // simple overwrite
+            'host' => function (Options $options, $previousValue) {
+                return 'localhost' == $previousValue ? '127.0.0.1' : $previousValue;
+            },
+        ));
+    }
+
+.. tip::
+
+    If the previous default value is calculated by an expensive closure and
+    you don't need access to it, you can use the
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::replaceDefaults`
+    method instead. It acts like ``setDefaults`` but simply erases the
+    previous value to improve performance. This means that the previous
+    default value is not available when overwriting with another closure::
+
+        use Symfony\Component\OptionsResolver\Options;
+        use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+        // ...
+        protected function setDefaultOptions(OptionsResolverInterface $resolver)
+        {
+            // ...
+            $resolver->setDefaults(array(
+                'encryption' => 'ssl',
+                'heavy' => function (Options $options) {
+                    // Some heavy calculations to create the $result
+
+                    return $result;
+                },
+            ));
+
+            $resolver->replaceDefaults(array(
+                'encryption' => 'tls', // simple overwrite
+                'heavy' => function (Options $options) {
+                    // $previousValue not available
+                    // ...
+
+                    return $someOtherResult;
+                },
+            ));
+        }
+
+.. note::
+
+    Existing option keys that you do not mention when overwriting are preserved.
 
 Configure allowed Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -240,6 +305,29 @@ There is also an
 method, which you can use if you want to add an allowed value to the previously
 set allowed values.
 
+.. versionadded:: 2.5
+
+    The callback support for allowed values was introduced in Symfony 2.5.
+
+If you need to add some more logic to the value validation process, you can pass a callable
+as an allowed value::
+
+    // ...
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        // ...
+
+        $resolver->setAllowedValues(array(
+            'transport' => function($value) {
+                return false !== strpos($value, 'mail');
+            },
+        ));
+    }
+
+.. caution::
+
+    Note that using this together with ``addAllowedValues`` will not work.
+
 Configure allowed Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -257,7 +345,7 @@ be anything, but it must be an integer. You can configure these types by calling
         ));
     }
 
-Possible types are the ones associated with the ``is_*`` php functions or a
+Possible types are the ones associated with the ``is_*`` PHP functions or a
 class name. You can also pass an array of types as the value. For instance,
 ``array('null', 'string')`` allows ``port`` to be ``null`` or a ``string``.
 
@@ -270,7 +358,7 @@ Normalize the Options
 
 Some values need to be normalized before you can use them. For instance,
 pretend that the ``host`` should always start with ``http://``. To do that,
-you can write normalizers. These Closures will be executed after all options
+you can write normalizers. These closures will be executed after all options
 are passed and should return the normalized value. You can configure these
 normalizers by calling
 :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizers`::

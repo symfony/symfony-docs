@@ -26,13 +26,15 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `years`_                                                                  |
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
+|                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
 |                      | - `model_timezone`_                                                         |
 |                      | - `view_timezone`_                                                          |
 |                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `invalid_message`_                                                        |
-| options              | - `invalid_message_parameters`_                                             |
+| Inherited            | - `data`_                                                                   |
+| options              | - `invalid_message`_                                                        |
+|                      | - `invalid_message_parameters`_                                             |
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
@@ -108,6 +110,8 @@ for more details.
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
+.. include:: /reference/forms/types/options/with_minutes.rst.inc
+
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
 
 .. include:: /reference/forms/types/options/model_timezone.rst.inc
@@ -120,6 +124,8 @@ Inherited options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

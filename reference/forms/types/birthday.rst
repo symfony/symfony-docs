@@ -24,12 +24,13 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Inherited Options    | - `widget`_                                                                   |
 |                      | - `input`_                                                                    |
-|                      | - `empty_value`_                                                              |  
+|                      | - `empty_value`_                                                              |
 |                      | - `months`_                                                                   |
 |                      | - `days`_                                                                     |
 |                      | - `format`_                                                                   |
 |                      | - `model_timezone`_                                                           |
 |                      | - `view_timezone`_                                                            |
+|                      | - `data`_                                                                     |
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
 |                      | - `read_only`_                                                                |
@@ -50,7 +51,7 @@ years
 
 **type**: ``array`` **default**: 120 years ago to the current year
 
-List of years available to the year field type.  This option is only
+List of years available to the year field type. This option is only
 relevant when the ``widget`` option is set to ``choice``.
 
 Inherited options
@@ -75,6 +76,8 @@ These options inherit from the :doc:`date </reference/forms/types/date>` type:
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
