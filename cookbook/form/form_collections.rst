@@ -20,8 +20,8 @@ that Task, right inside the same form.
     including the ``ManyToMany`` association mapping definition on the Task's
     ``tags`` property.
 
-Let's start there: suppose that each ``Task`` belongs to multiple ``Tag``
-objects. Start by creating a simple ``Task`` class::
+First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
+by creating a simple ``Task`` class::
 
     // src/Acme/TaskBundle/Entity/Task.php
     namespace Acme\TaskBundle\Entity;
@@ -77,8 +77,7 @@ objects::
     The ``name`` property is public here, but it can just as easily be protected
     or private (but then it would need ``getName`` and ``setName`` methods).
 
-Now let's get to the forms. Create a form class so that a ``Tag`` object
-can be modified by the user::
+Then, create a form class so that a ``Tag`` object can be modified by the user::
 
     // src/Acme/TaskBundle/Form/Type/TagType.php
     namespace Acme\TaskBundle\Form\Type;

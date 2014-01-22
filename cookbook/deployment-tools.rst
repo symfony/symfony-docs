@@ -34,7 +34,7 @@ How to deploy a Symfony2 application
 
 There are several ways you can deploy a Symfony2 application.
 
-Let's start with a few basic deployment strategies and build up from there.
+Start with a few basic deployment strategies and build up from there.
 
 Basic File Transfer
 ~~~~~~~~~~~~~~~~~~~

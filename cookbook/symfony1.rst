@@ -50,8 +50,8 @@ directory is a bit like the ``plugins`` directory in symfony1, but much more
 flexible. Additionally, while *your* bundles will live in the ``src/`` directory,
 third-party bundles will live somewhere in the ``vendor/`` directory.
 
-To get a better picture of the ``src/`` directory, let's first think of a
-symfony1 application. First, part of your code likely lives inside one or
+To get a better picture of the ``src/`` directory, first think of the structure
+of a symfony1 application. First, part of your code likely lives inside one or
 more applications. Most commonly these include modules, but could also include
 any other PHP classes you put in your application. You may have also created
 a ``schema.yml`` file in the ``config`` directory of your project and built
