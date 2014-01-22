@@ -23,3 +23,4 @@ application
 is granted or not
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access
 the application
+
