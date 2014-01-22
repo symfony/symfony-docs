@@ -128,7 +128,7 @@ Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
 .. versionadded:: 2.3
-    CIDR notation support was introduced, so you can whitelist whole
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
     subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::

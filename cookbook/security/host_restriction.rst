@@ -5,7 +5,7 @@ How to Restrict Firewalls to a Specific Host
 ============================================
 
 .. versionadded:: 2.4
-    Support for restricting security firewalls to a specific host was added in
+    Support for restricting security firewalls to a specific host was introduced in
     Symfony 2.4.
 
 When using the Security component, you can create firewalls that match certain

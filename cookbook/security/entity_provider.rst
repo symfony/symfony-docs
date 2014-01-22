@@ -32,7 +32,7 @@ The Data Model
 --------------
 
 For the purpose of this cookbook, the ``AcmeUserBundle`` bundle contains a
-``User`` entity class with the following fields: ``id``, ``username``, ``salt``,
+``User`` entity class with the following fields: ``id``, ``username``,
 ``password``, ``email`` and ``isActive``. The ``isActive`` field tells whether
 or not the user account is active.
 
@@ -78,11 +78,6 @@ focus on the most important methods that come from the
         private $username;
 
         /**
-         * @ORM\Column(type="string", length=32)
-         */
-        private $salt;
-
-        /**
          * @ORM\Column(type="string", length=64)
          */
         private $password;
@@ -100,7 +95,8 @@ focus on the most important methods that come from the
         public function __construct()
         {
             $this->isActive = true;
-            $this->salt = md5(uniqid(null, true));
+            // may not be needed, see section on salt below
+            // $this->salt = md5(uniqid(null, true));
         }
 
         /**
@@ -116,7 +112,9 @@ focus on the most important methods that come from the
          */
         public function getSalt()
         {
-            return $this->salt;
+            // you *may* need a real salt depending on your encoder
+            // see section on salt below
+            return null;
         }
 
         /**
@@ -150,8 +148,9 @@ focus on the most important methods that come from the
             return serialize(array(
                 $this->id,
                 $this->username,
-                $this->salt,
                 $this->password,
+                // see section on salt below
+                // $this->salt,
             ));
         }
 
@@ -163,8 +162,9 @@ focus on the most important methods that come from the
             list (
                 $this->id,
                 $this->username,
-                $this->salt,
                 $this->password,
+                // see section on salt below
+                // $this->salt
             ) = unserialize($serialized);
         }
     }
@@ -226,16 +226,30 @@ user records and encode their password, see :ref:`book-security-encoding-user-pa
 
 .. code-block:: bash
 
-    $ mysql> SELECT * FROM acme_users;
-    +----+----------+------+------------------------------------------+--------------------+-----------+
-    | id | username | salt | password                                 | email              | is_active |
-    +----+----------+------+------------------------------------------+--------------------+-----------+
-    |  1 | admin    |      | d033e22ae348aeb5660fc2140aec35850c4da997 | admin@example.com  |         1 |
-    +----+----------+------+------------------------------------------+--------------------+-----------+
+    $ mysql> select * from acme_users;
+    +----+----------+------------------------------------------+--------------------+-----------+
+    | id | username | password                                 | email              | is_active |
+    +----+----------+------------------------------------------+--------------------+-----------+
+    |  1 | admin    | d033e22ae348aeb5660fc2140aec35850c4da997 | admin@example.com  |         1 |
+    +----+----------+------------------------------------------+--------------------+-----------+
 
 The next part will focus on how to authenticate one of these users
 thanks to the Doctrine entity user provider and a couple of lines of
 configuration.
+
+.. sidebar:: Do you need to use a Salt?
+
+    Yes. Hashing a password with a salt is a necessary step so that encoded
+    passwords can't be decoded. However, some encoders - like Bcrypt - have
+    a built-in salt mechanism. If you configure ``bcrypt`` as your encoder
+    in ``security.yml`` (see the next section), then ``getSalt()`` should
+    return ``null``, so that Bcrypt generates the salt itself.
+
+    However, if you use an encoder that does *not* have a built-in salting
+    ability (e.g. ``sha512``), you *must* (from a security perspective) generate
+    your own, random salt, store it on a ``salt`` property that is saved to
+    the database, and return it from ``getSalt()``. Some of the code needed
+    is commented out in the above example.
 
 Authenticating Someone against a Database
 -----------------------------------------
@@ -257,9 +271,7 @@ then be checked against your User entity records in the database:
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
-                    algorithm:        sha1
-                    encode_as_base64: false
-                    iterations:       1
+                    algorithm: bcrypt
 
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
@@ -282,9 +294,7 @@ then be checked against your User entity records in the database:
         <!-- app/config/security.xml -->
         <config>
             <encoder class="Acme\UserBundle\Entity\User"
-                algorithm="sha1"
-                encode-as-base64="false"
-                iterations="1"
+                algorithm="bcrypt"
             />
 
             <role id="ROLE_ADMIN">ROLE_USER</role>
@@ -307,9 +317,7 @@ then be checked against your User entity records in the database:
         $container->loadFromExtension('security', array(
             'encoders' => array(
                 'Acme\UserBundle\Entity\User' => array(
-                    'algorithm'         => 'sha1',
-                    'encode_as_base64'  => false,
-                    'iterations'        => 1,
+                    'algorithm' => 'bcrypt',
                 ),
             ),
             'role_hierarchy' => array(
@@ -335,11 +343,13 @@ then be checked against your User entity records in the database:
             ),
         ));
 
-The ``encoders`` section associates the ``sha1`` password encoder to the entity
+The ``encoders`` section associates the ``bcrypt`` password encoder to the entity
 class. This means that Symfony will expect the password that's stored in
-the database to be encoded using this algorithm. For details on how to create
+the database to be encoded using this encoder. For details on how to create
 a new User object with a properly encoded password, see the
 :ref:`book-security-encoding-user-password` section of the security chapter.
+
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
 The ``providers`` section defines an ``administrators`` user provider. A
 user provider is a "source" of where users are loaded during authentication.
@@ -749,3 +759,45 @@ fetch the user and their associated roles with a single query::
 The ``QueryBuilder::leftJoin()`` method joins and fetches related roles from
 the ``AcmeUserBundle:User`` model class when a user is retrieved by their email
 address or username.
+
+.. _`cookbook-security-serialize-equatable`:
+
+Understanding serialize and how a User is Saved in the Session
+--------------------------------------------------------------
+
+If you're curious about the importance of the ``serialize()`` method inside
+the ``User`` class or how the User object is serialized or deserialized, then
+this section is for you. If not, feel free to skip this.
+
+Once the user is logged in, the entire User object is serialized into the
+session. On the next request, the User object is deserialized. Then, value
+of the ``id`` property is used to re-query for a fresh User object from the
+database. Finally, the fresh User object is compared in some way to the deserialized
+User object to make sure that they represent the same user. For example, if
+the ``username`` on the 2 User objects doesn't match for some reason, then
+the user will be logged out for security reasons.
+
+Even though this all happens automatically, there are a few important side-effects.
+
+First, the :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
+methods have been added to allow the ``User`` class to be serialized
+to the session. This may or may not be needed depending on your setup,
+but it's probably a good idea. In theory, only the ``id`` needs to be serialized,
+because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
+method refreshes the user on each request by using the ``id`` (as explained
+above). However in practice, this means that the User object is reloaded from
+the database on each request using the ``id`` from the serialized object.
+This makes sure all of the User's data is fresh.
+
+Symfony also uses the ``username``, ``salt``, and ``password`` to verify
+that the User has not changed between requests. Failing to serialize
+these may cause you to be logged out on each request. If your User implements
+the :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`,
+then instead of these properties being checked, your ``isEqualTo`` method
+is simply called, and you can check whatever properties you want. Unless
+you understand this, you probably *won't* need to implement this interface
+or worry about it.
+
+.. versionadded:: 2.1
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
+    and the ``EquatableInterface`` was added in its place.

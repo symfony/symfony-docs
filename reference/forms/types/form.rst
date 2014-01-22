@@ -45,8 +45,17 @@ on all fields.
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
-inherit_data
-------------
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
-See :doc:`/cookbook/form/inherit_data_option`.
+.. include:: /reference/forms/types/options/by_reference.rst.inc
+
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
