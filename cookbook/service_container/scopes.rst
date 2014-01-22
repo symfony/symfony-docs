@@ -45,7 +45,7 @@ scope other than ``container`` and ``prototype``. But for the purposes of
 this entry, imagine there is another scope ``client`` and a service ``client_configuration``
 that belongs to it. This is not a common situation, but the idea is that
 you may enter and exit multiple ``client`` scopes during a request, and each
-has its own ``client_configuration`` service. 
+has its own ``client_configuration`` service.
 
 Scopes add a constraint on the dependencies of a service: a service cannot
 depend on services from a narrower scope. For example, if you create a generic
@@ -274,7 +274,7 @@ argument is the ``ClientConfiguration`` object:
             my_mailer:
                 class: Acme\HelloBundle\Mail\Mailer
                 scope: client
-                arguments: [@client_configuration]
+                arguments: ["@client_configuration"]
 
     .. code-block:: xml
 
