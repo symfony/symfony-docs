@@ -11,7 +11,7 @@ various things and enforce some metrics.
 
 The Symfony2 :ref:`Profiler <internals-profiler>` gathers a lot of data for
 each request. Use this data to check the number of database calls, the time
-spent in the framework, ... But before writing assertions, enable the profiler
+spent in the framework, etc. But before writing assertions, enable the profiler
 and check that the profiler is indeed available (it is enabled by default in
 the ``test`` environment)::
 
