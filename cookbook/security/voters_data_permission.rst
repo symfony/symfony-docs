@@ -51,7 +51,7 @@ You could store your Voter to check permission for the view and edit action like
     // src/Acme/DemoBundle/Security/Authorization/Entity/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Entity;
 
-    use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
+    use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -60,23 +60,20 @@ You could store your Voter to check permission for the view and edit action like
 
     class PostVoter implements VoterInterface
     {
+        const VIEW = 'view';
+        const EDIT = 'edit';
+
         public function supportsAttribute($attribute)
         {
             return in_array($attribute, array(
-                'view',
-                'edit',
+                self::VIEW,
+                self::EDIT,
             ));
         }
 
         public function supportsClass($obj)
         {
-            $array = array('Acme\DemoBundle\Entity\Post');
-
-            foreach ($array as $item) {
-                if ($obj instanceof $item))
-                    return true;
-                }
-            }
+            if ($obj instanceof 'Acme\DemoBundle\Entity\Post') return true;
 
             return false;
         }
@@ -84,9 +81,14 @@ You could store your Voter to check permission for the view and edit action like
         /** @var \Acme\DemoBundle\Entity\Post $post */
         public function vote(TokenInterface $token, $post, array $attributes)
         {
+            // check if class of this object is supported by this voter
+            if (!$this->supportsClass($post)) {
+                return VoterInterface::ACCESS_ABSTAIN;
+            }
+
             // check if voter is used correct, only allow one attribute for a check
             if(count($attributes) !== 1 || !is_string($attributes[0])) {
-                throw new PreconditionFailedHttpException(
+                throw new InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
             }
@@ -96,11 +98,6 @@ You could store your Voter to check permission for the view and edit action like
 
             // get current logged in user
             $user = $token->getUser();
-
-            // check if class of this object is supported by this voter
-            if (!$this->supportsClass($post)) {
-                return VoterInterface::ACCESS_ABSTAIN;
-            }
 
             // check if the given attribute is covered by this voter
             if (!$this->supportsAttribute($attribute)) {
@@ -128,12 +125,6 @@ You could store your Voter to check permission for the view and edit action like
                         return VoterInterface::ACCESS_GRANTED;
                     }
                     break;
-
-                default:
-                    // otherwise throw an exception, which will break the request
-                    throw new PreconditionFailedHttpException(
-                        'The Attribute "'.$attribute.'" was not found.'
-                    );
             }
 
         }
@@ -146,7 +137,7 @@ Declaring the Voter as a Service
 --------------------------------
 
 To inject the voter into the security layer, you must declare it as a service
-and tag it as a ´security.voter´:
+and tag it as a 'security.voter':
 
 .. configuration-block::
 
@@ -185,8 +176,9 @@ and tag it as a ´security.voter´:
 
 How to Use the Voter in a Controller
 ------------------------------------
-The registered voter will then always be asked as soon the method isGranted from
-the security context is called.
+
+The registered voter will then always be asked as soon as the method 'isGranted'
+from the security context is called.
 
 .. code-block:: php
 
@@ -198,7 +190,12 @@ the security context is called.
 
     class PostController
     {
-        public function showAction($id)
+
+        /**
+         * @Route("/blog/{id}")
+         * @ParamConverter("post", class="SensioBlogBundle:Post")
+         */
+        public function showAction(Post $post)
         {
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
