@@ -46,15 +46,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/value.rst.inc
 
-Overriden options
------------------
-
-.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/checkbox_compound.rst.inc
-
-Overriden options
------------------
+Overridden options
+------------------
 
 .. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 

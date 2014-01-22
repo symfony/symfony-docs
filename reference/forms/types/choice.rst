@@ -20,7 +20,7 @@ option.
 |             | - `preferred_choices`_                                                       |
 |             | - `empty_value`_                                                             |
 +-------------+------------------------------------------------------------------------------+
-| Overriden   | - `empty_data`_                                                              |
+| Overridden  | - `empty_data`_                                                              |
 | options     | - `compound`_                                                                |
 |             | - `error_bubbling`_                                                          |
 +-------------+------------------------------------------------------------------------------+
@@ -111,15 +111,15 @@ can be created to supply the choices.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-Overriden options
------------------
+Overridden options
+------------------
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
 
 compound
 ~~~~~~~~
 
-**type**: `̀ boolean`` **default**: same value as ``expanded`` option
+**type**: ``boolean`` **default**: same value as ``expanded`` option
 
 This option specifies if a form is compound. The value is by default 
 overriden by the value of the ``expanded`` option.
