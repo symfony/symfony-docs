@@ -795,13 +795,13 @@ Gateway caches are a great way to make your website perform better. But they
 have one limitation: they can only cache whole pages. If you can't cache
 whole pages or if parts of a page has "more" dynamic parts, you are out of
 luck. Fortunately, Symfony2 provides a solution for these cases, based on a
-technology called `ESI`_, or Edge Side Includes. Akamaï wrote this specification
+technology called `ESI`_, or Edge Side Includes. Akamai wrote this specification
 almost 10 years ago, and it allows specific parts of a page to have a different
 caching strategy than the main page.
 
 The ESI specification describes tags you can embed in your pages to communicate
 with the gateway cache. Only one tag is implemented in Symfony2, ``include``,
-as this is the only useful one outside of Akamaï context:
+as this is the only useful one outside of Akamai context:
 
 .. code-block:: html
 
@@ -936,7 +936,7 @@ used ``render``.
 
 .. note::
 
-    Symfony2 detects if a gateway cache supports ESI via another Akamaï
+    Symfony2 detects if a gateway cache supports ESI via another Akamai
     specification that is supported out of the box by the Symfony2 reverse
     proxy.
 
