@@ -155,6 +155,7 @@ and tag it as a ``security.voter``:
 
     .. code-block:: xml
 
+        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
