@@ -392,7 +392,7 @@ key ``Symfony2 is great``. To find the French translation, Symfony actually
 checks translation resources for several different locales:
 
 1. First, Symfony looks for the translation in a ``fr_FR`` translation resource
-   (e.g. ``messages.fr_FR.xfliff``);
+   (e.g. ``messages.fr_FR.xliff``);
 
 2. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
    resource (e.g. ``messages.fr.xliff``);
