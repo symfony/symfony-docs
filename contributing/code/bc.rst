@@ -1,8 +1,8 @@
 Our Backwards Compatibility Promise
 ===================================
 
-As of Symfony 2.3, we promise you backwards compatibility for all further 2.x
-releases. Ensuring smooth upgrades of your projects is our first priority.
+As of Symfony 2.3, we promise you backwards compatibility (BC) for all further
+2.x releases. Ensuring smooth upgrades of your projects is our first priority.
 However, backwards compatibility comes in many different flavors.
 
 This page has two different target audiences: If you are using Symfony, it will
@@ -26,53 +26,24 @@ section in order to guarantee smooth upgrades to all future 2.x versions.
 Using Our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
 
-Normal Interfaces
-.................
+In Symfony, we distinguish between regular and API interfaces. API interfaces
+are marked with an ``@api`` tag in their source code. For example::
 
-All interfaces in the ``Symfony`` namespace are **safe for use**. That means
-that:
+    /**
+     * HttpKernelInterface handles a Request to convert it to a Response.
+     *
+     * @author Fabien Potencier <fabien@symfony.com>
+     *
+     * @api
+     */
+    interface HttpKernelInterface
+    {
 
-* You can type hint against the interface.
-
-* You can call any of the methods provided by the interface.
-
-However:
-
-* You cannot implement the interface. The interface may change, but all changes
-  will be documented in the UPGRADE file.
-
-
-API Interfaces
-..............
-
-All interfaces tagged with ``@api`` are also **safe for implementation**. That
-means that:
-
-* You can implement the interface.
-
-
-Internal Interfaces
-...................
-
-Interfaces or interface methods tagged with ``@internal`` are meant for internal
-use in Symfony only. You should never use nor implement them.
-
-
-Deprecated Interfaces
-.....................
-
-Interfaces or interface methods tagged with ``@deprecated`` will be removed in
-a future Symfony version. You should never use nor implement them.
-
-
-Guarantee Details
-.................
-
-When using our interfaces, we guarantee full backwards compatibility for the
+When using these interfaces, we guarantee full backwards compatibility for the
 following use cases:
 
 ==============================================  ==============  ==============
-Use Case                                        Normal          API
+Use Case                                        Regular         API
 ==============================================  ==============  ==============
 Type hint against                               Yes             Yes
 Call method                                     Yes             Yes
@@ -83,87 +54,37 @@ Add custom method parameter                     No [1]_         Yes
 Add parameter default value                     Yes             Yes
 ==============================================  ==============  ==============
 
-If you need to do any of the things marked with "No" above, feel free to
-ask us whether the ``@api`` tag can be added on the respective Symfony code.
-For that, simply open a `new ticket on GitHub`_.
+.. note::
+
+    If you need to do any of the things marked with "No" above, feel free to
+    ask us whether the ``@api`` tag can be added on the respective Symfony code.
+    For that, simply open a `new ticket on GitHub`_.
+
+Interfaces or interface methods tagged with ``@internal`` should never be
+implemented or used.
 
 
 Using Our Classes
 ~~~~~~~~~~~~~~~~~
 
-Normal Classes
-..............
+Just like with interfaces, we also distinguish between regular and API classes.
+Like API interfaces, API classes are marked with an ``@api`` tag::
 
-All classes in the ``Symfony`` namespace are **safe for use**. That means that:
+    /**
+     * Request represents an HTTP request.
+     *
+     * @author Fabien Potencier <fabien@symfony.com>
+     *
+     * @api
+     */
+    class Request
+    {
 
-* You can type hint against the class' name.
-
-* You can create new instances.
-
-* You can extend the class.
-
-* You can access public properties.
-
-* You can call public methods.
-
-When extending the class:
-
-* You can override public properties.
-
-However:
-
-* You cannot override methods in extending classes. The class may change, but
-  all changes will be documented in the UPGRADE file.
-
-
-API Classes
-...........
-
-All classes tagged with ``@api`` are also **safe for extension**. That means
-that:
-
-* You can access protected properties and methods.
-
-* You can call protected methods.
-
-* You can override protected properties.
-
-* You can override public and protected methods.
-
-Properties and methods tagged with ``@api`` are treated as if they belonged
-to an API class. That means that you can call or override them regardless of
-whether their class has the ``@api`` tag or not.
-
-
-Internal Classes
-................
-
-Classes, properties and methods tagged with ``@internal`` are meant for internal
-use in Symfony only. You should never use nor extend them.
-
-
-Deprecated Classes
-..................
-
-Classes, properties and methods tagged with ``@deprecated`` will be removed in
-a future Symfony version. You should never use nor extend them.
-
-
-Test Classes
-............
-
-All classes located in the various ``*\\Tests\\`` namespaces are meant for
-internal use only. You should never create, extend or call them directly.
-
-
-Guarantee Details
-.................
-
-When using our classes, we guarantee full backwards compatibility for the
+When using these classes, we guarantee full backwards compatibility for the
 following use cases:
 
 ==============================================  ==============  ==============
-Use Case                                        Normal          API
+Use Case                                        Regular         API
 ==============================================  ==============  ==============
 Type hint against                               Yes             Yes
 Create instance                                 Yes             Yes
@@ -183,9 +104,20 @@ Add custom method parameter                     No [1]_         Yes
 Add parameter default value                     Yes             Yes
 ==============================================  ==============  ==============
 
-If you need to do any of the things marked with "No" above, feel free to
-ask us whether the ``@api`` tag can be added on the respective Symfony code.
-For that, simply open a `new ticket on GitHub`_.
+.. note::
+
+    If you need to do any of the things marked with "No" above, feel free to
+    ask us whether the ``@api`` tag can be added on the respective Symfony code.
+    For that, simply open a `new ticket on GitHub`_.
+
+In some cases, only specific properties and methods are tagged with the ``@api``
+tag, even though their class is not. In these cases, we guarantee full backwards
+compatibility for the tagged properties and methods (as indicated in the column
+"API" above), but not for the rest of the class.
+
+Classes, properties and methods tagged with ``@internal`` should never be
+created, extended or called directly. The same applies to all classes located in
+the various ``*\\Tests\\`` namespaces.
 
 
 Working on Symfony Code
@@ -202,7 +134,7 @@ This table tells you which changes you are allowed to do when working on
 Symfony's interfaces:
 
 ==============================================  ==============  ==============
-Type of Change                                  Normal          API
+Type of Change                                  Regular         API
 ==============================================  ==============  ==============
 Remove entirely                                 No              No
 Change name or namespace                        No              No
@@ -231,7 +163,7 @@ This table tells you which changes you are allowed to do when working on
 Symfony's classes:
 
 ==================================================  ==============  ==============
-Type of Change                                      Normal          API
+Type of Change                                      Regular         API
 ==================================================  ==============  ==============
 Remove entirely                                     No              No
 Make final                                          Yes [2]_        No
