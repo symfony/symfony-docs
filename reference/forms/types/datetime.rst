@@ -107,8 +107,8 @@ format
 If the ``widget`` option is set to ``single_text``, this option specifies the
 the format of the input, i.e. how Symfony will interpret the given input
 as a datetime string. It defaults to the `RFC 3339`_ format which is used
-by the HTML5 ``datetime`` field. Keeping the default will render a field of
-type ``datetime``.
+by the HTML5 ``datetime`` field. Keeping the default value will cause the
+field to be rendered as an ``input`` field with ``type="datetime"``.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 
