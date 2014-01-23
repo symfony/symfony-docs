@@ -614,22 +614,13 @@ your application. Assume that you have a sport meetup creation controller::
     namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Symfony\Component\HttpFoundation\Request;
     use Acme\DemoBundle\Entity\SportMeetup;
     use Acme\DemoBundle\Form\Type\SportMeetupType;
     // ...
 
-    /**
-     * @Route("/meetup")
-     */
     class MeetupController extends Controller
     {
-        /**
-         * @Route("/create", name="meetup_create")
-         * @Template
-         */
         public function createAction(Request $request)
         {
             $meetup = new SportMeetup();
@@ -639,15 +630,17 @@ your application. Assume that you have a sport meetup creation controller::
                 // ... save the meetup, redirect etc.
             }
 
-            return array('form' => $form->createView());
+            return $this->render(
+                'AcmeDemoBundle:Meetup:create.html.twig',
+                array('form' => $form->createView())
+            );
         }
 
         // ...
     }
 
 The associated template uses some JavaScript to update the ``position`` form
-field according to the current selection in the ``sport`` field. To ease things
-it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
+field according to the current selection in the ``sport`` field:
 
 .. configuration-block::
 
@@ -660,31 +653,7 @@ it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
             {# ... #}
         {{ form_end(form) }}
 
-        {# ... Include jQuery and scripts from FOSJsRoutingBundle ... #}
-        <script>
-        $(function(){
-            // When sport gets selected ...
-            $('#meetup_sport').change(function(){
-                var $position = $('#meetup_position');
-                // Remove current position options except first "empty_value" option
-                $position.find('option:not(:first)').remove();
-                var sportId = $(this).val();
-                if (sportId) {
-                    // Issue AJAX call fetching positions for selected sport as JSON
-                    $.getJSON(
-                        // FOSJsRoutingBundle generates route including selected sport ID
-                        Routing.generate('meetup_positions_by_sport', {id: sportId}),
-                        function(positions) {
-                            // Append fetched positions associated with selected sport
-                            $.each(positions, function(key, position){
-                                $position.append(new Option(position[1], position[0]));
-                            });
-                        }
-                    );
-                }
-            });
-        });
-        </script>
+        .. include:: /cookbook/form/dynamic_form_modification_ajax_js.rst.inc
 
     .. code-block:: html+php
 
@@ -695,72 +664,11 @@ it makes use of `jQuery`_ library and the `FOSJsRoutingBundle`_:
             <!-- ... -->
         <?php echo $view['form']->end($form) ?>
 
-        <!-- ... Include jQuery and scripts from FOSJsRoutingBundle ... -->
-        <script>
-        $(function(){
-            // When sport gets selected ...
-            $('#meetup_sport').change(function(){
-                var $position = $('#meetup_position');
-                // Remove current position options except first "empty_value" option
-                $position.find('option:not(:first)').remove();
-                var sportId = $(this).val();
-                if (sportId) {
-                    // Issue AJAX call fetching positions for selected sport as JSON
-                    $.getJSON(
-                        // FOSJsRoutingBundle generates route including selected sport ID
-                        Routing.generate('meetup_positions_by_sport', {id: sportId}),
-                        function(positions) {
-                            // Append fetched positions associated with selected sport
-                            $.each(positions, function(key, position){
-                                $position.append(new Option(position[1], position[0]));
-                            });
-                        }
-                    );
-                }
-            });
-        });
-        </script>
+        .. include:: /cookbook/form/dynamic_form_modification_ajax_js.rst.inc
 
-The last piece is implementing a controller for the
-``meetup_positions_by_sport`` route returning the positions as JSON according
-to the currently selected sport. To ease things again the controller makes use
-of the :doc:`@ParamConverter </bundles/SensioFrameworkExtraBundle/annotations/converters>`
-listener to convert the submitted sport ID into a ``Sport`` object::
-
-    // src/Acme/DemoBundle/Controller/MeetupController.php
-    namespace Acme\DemoBundle\Controller;
-
-    // ...
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-    use Symfony\Component\HttpFoundation\JsonResponse;
-    use Acme\DemoBundle\Entity\Sport;
-
-    /**
-     * @Route("/meetup")
-     */
-    class MeetupController extends Controller
-    {
-        // ...
-
-        /**
-         * @Route("/{id}/positions.json", name="meetup_positions_by_sport", options={"expose"=true})
-         */
-        public function positionsBySportAction(Sport $sport)
-        {
-            $result = array();
-            foreach ($sport->getAvailablePositions() as $position) {
-                $result[] = array($position->getId(), $position->getName());
-            }
-
-            return new JsonResponse($result);
-        }
-    }
-
-.. note::
-
-    The returned JSON should not be created from an associative array
-    (``$result[$position->getId()] = $position->getName())``) as the iterating
-    order in JavaScript is undefined and may vary in different browsers.
+The major benefit of submitting the whole form to just extract the updated
+``position`` field is that no additional server-side code is needed; all the
+code from above to generate the submitted form can be reused.
 
 .. _cookbook-dynamic-form-modification-suppressing-form-validation:
 
@@ -793,6 +701,3 @@ all of this, use a listener::
 
     By doing this, you may accidentally disable something more than just form
     validation, since the ``POST_SUBMIT`` event may have other listeners.
-
-.. _`jQuery`: http://jquery.com
-.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
