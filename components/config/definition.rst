@@ -399,7 +399,7 @@ process is used to remove some of the differences that result from different
 configuration formats, mainly the differences between YAML and XML.
 
 The separator used in keys is typically ``_`` in YAML and ``-`` in XML. For
-example, ``auto_connect`` in YAML and ``auto-connect``. The normalization would
+example, ``auto_connect`` in YAML and ``auto-connect`` in XML. The normalization would
 make both of these ``auto_connect``.
 
 .. caution::
