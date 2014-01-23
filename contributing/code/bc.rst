@@ -32,17 +32,14 @@ Normal Interfaces
 All interfaces in the ``Symfony`` namespace are **safe for use**. That means
 that:
 
-* You can safely type hint against the interface.
+* You can type hint against the interface.
 
-* You can safely call any of the methods provided by the interface.
+* You can call any of the methods provided by the interface.
 
 However:
 
-* You cannot safely implement the interface. The interface may change, but all
-  changes will be documented in the UPGRADE file.
-
-Methods tagged with ``@api`` are treated as if they belonged to an API
-interface.
+* You cannot implement the interface. The interface may change, but all changes
+  will be documented in the UPGRADE file.
 
 
 API Interfaces
@@ -51,7 +48,7 @@ API Interfaces
 All interfaces tagged with ``@api`` are also **safe for implementation**. That
 means that:
 
-* You can safely implement the interface.
+* You can implement the interface.
 
 
 Internal Interfaces
@@ -68,24 +65,25 @@ Interfaces or interface methods tagged with ``@deprecated`` will be removed in
 a future Symfony version. You should never use nor implement them.
 
 
-Safe Operations
-...............
+Guarantee Details
+.................
 
-The following table summarizes the safe operations when using our interfaces:
+When using our interfaces, we guarantee full backwards compatibility for the
+following use cases:
 
 ==============================================  ==============  ==============
-Operation                                       Normal          API
+Use Case                                        Normal          API
 ==============================================  ==============  ==============
-Type hint against                               Safe            Safe
-Call method                                     Safe            Safe
+Type hint against                               Yes             Yes
+Call method                                     Yes             Yes
 **In Implementing Classes**
-Implement method                                Not Safe [1]_   Safe
-Add custom method                               Not Safe [1]_   Safe
-Add custom method parameter                     Not Safe [1]_   Safe
-Add parameter default value                     Safe            Safe
+Implement method                                No [1]_         Yes
+Add custom method                               No [1]_         Yes
+Add custom method parameter                     No [1]_         Yes
+Add parameter default value                     Yes             Yes
 ==============================================  ==============  ==============
 
-If you need to do any of the things marked as "Not Safe" above, feel free to
+If you need to do any of the things marked with "No" above, feel free to
 ask us whether the ``@api`` tag can be added on the respective Symfony code.
 For that, simply open a `new ticket on GitHub`_.
 
@@ -98,27 +96,24 @@ Normal Classes
 
 All classes in the ``Symfony`` namespace are **safe for use**. That means that:
 
-* You can safely type hint against the class' name.
+* You can type hint against the class' name.
 
-* You can safely create new instances.
+* You can create new instances.
 
-* You can safely extend the class.
+* You can extend the class.
 
-* You can safely access public properties.
+* You can access public properties.
 
-* You can safely call public methods.
+* You can call public methods.
 
 When extending the class:
 
-* You can safely override public properties.
+* You can override public properties.
 
 However:
 
-* You cannot safely override methods in extending classes. The class may change,
-  but all changes will be documented in the UPGRADE file.
-
-Properties and methods tagged with ``@api`` are treated as if they belonged
-to an API class.
+* You cannot override methods in extending classes. The class may change, but
+  all changes will be documented in the UPGRADE file.
 
 
 API Classes
@@ -127,27 +122,31 @@ API Classes
 All classes tagged with ``@api`` are also **safe for extension**. That means
 that:
 
-* You can safely access protected properties and methods.
+* You can access protected properties and methods.
 
-* You can safely call protected methods.
+* You can call protected methods.
 
-* You can safely override protected properties.
+* You can override protected properties.
 
-* You can safely override public and protected methods.
+* You can override public and protected methods.
+
+Properties and methods tagged with ``@api`` are treated as if they belonged
+to an API class. That means that you can call or override them regardless of
+whether their class has the ``@api`` tag or not.
 
 
 Internal Classes
 ................
 
-Classes, properties and class methods tagged with ``@internal`` are meant for
-internal use in Symfony only. You should never use nor extend them.
+Classes, properties and methods tagged with ``@internal`` are meant for internal
+use in Symfony only. You should never use nor extend them.
 
 
 Deprecated Classes
 ..................
 
-Classes, properties and class methods tagged with ``@deprecated`` will be
-removed in a future Symfony version. You should never use nor extend them.
+Classes, properties and methods tagged with ``@deprecated`` will be removed in
+a future Symfony version. You should never use nor extend them.
 
 
 Test Classes
@@ -157,33 +156,34 @@ All classes located in the various ``*\\Tests\\`` namespaces are meant for
 internal use only. You should never create, extend or call them directly.
 
 
-Safe Operations
-...............
+Guarantee Details
+.................
 
-The following table summarizes the safe operations when using our classes:
+When using our classes, we guarantee full backwards compatibility for the
+following use cases:
 
 ==============================================  ==============  ==============
-Operation                                       Normal          API
+Use Case                                        Normal          API
 ==============================================  ==============  ==============
-Type hint against                               Safe            Safe
-Create instance                                 Safe            Safe
-Extend                                          Safe            Safe
-Access public property                          Safe            Safe
-Call public method                              Safe            Safe
+Type hint against                               Yes             Yes
+Create instance                                 Yes             Yes
+Extend                                          Yes             Yes
+Access public property                          Yes             Yes
+Call public method                              Yes             Yes
 **In Extending Classes**
-Access protected property                       Not Safe [1]_   Safe
-Call protected method                           Not Safe [1]_   Safe
-Override public property                        Safe            Safe
-Override protected property                     Not Safe [1]_   Safe
-Override public method                          Not Safe [1]_   Safe
-Override protected method                       Not Safe [1]_   Safe
-Add custom property                             Not Safe        Not Safe
-Add custom method                               Not Safe        Not Safe
-Add custom method parameter                     Not Safe [1]_   Safe
-Add parameter default value                     Safe            Safe
+Access protected property                       No [1]_         Yes
+Call protected method                           No [1]_         Yes
+Override public property                        Yes             Yes
+Override protected property                     No [1]_         Yes
+Override public method                          No [1]_         Yes
+Override protected method                       No [1]_         Yes
+Add custom property                             No              No
+Add custom method                               No              No
+Add custom method parameter                     No [1]_         Yes
+Add parameter default value                     Yes             Yes
 ==============================================  ==============  ==============
 
-If you need to do any of the things marked as "Not Safe" above, feel free to
+If you need to do any of the things marked with "No" above, feel free to
 ask us whether the ``@api`` tag can be added on the respective Symfony code.
 For that, simply open a `new ticket on GitHub`_.
 
