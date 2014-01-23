@@ -39,8 +39,14 @@ are marked with an ``@api`` tag in their source code. For example::
     interface HttpKernelInterface
     {
 
-When using these interfaces, we guarantee full backwards compatibility for the
-following use cases:
+In simple words, the difference between regular and API interfaces is that you
+can implement API interfaces yourself and we will guarantee full backwards
+compatibility. The same is not true for regular interfaces: We may, for example,
+add an optional parameter or a new method to them and thus break your own
+implementation.
+
+In detail, we guarantee full backwards compatibility for the following use
+cases:
 
 ==============================================  ==============  ==============
 Use Case                                        Regular         API
@@ -80,8 +86,13 @@ Like API interfaces, API classes are marked with an ``@api`` tag::
     class Request
     {
 
-When using these classes, we guarantee full backwards compatibility for the
-following use cases:
+The difference between regular and API classes is that we guarantee full
+backwards compatibility if you extend an API class and override its methods,
+but not for regular classes. In regular classes, we may for example add an
+optional parameter to a method and thus break your overridden method.
+
+Again, here are the details about which use cases we guarantee full backwards
+compatibility for:
 
 ==============================================  ==============  ==============
 Use Case                                        Regular         API
