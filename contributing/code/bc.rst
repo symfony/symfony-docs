@@ -1,33 +1,42 @@
 Our Backwards Compatibility Promise
 ===================================
 
-As of Symfony 2.3, we promise you backwards compatibility (BC) for all further
-2.x releases. Ensuring smooth upgrades of your projects is our first priority.
-However, backwards compatibility comes in many different flavors.
+If you are using Symfony, we promise you backwards compatibility (BC) for all
+major releases (2.x, 3.x, ...). Ensuring smooth upgrades of your projects is our
+first priority. However, backwards compatibility comes in many different flavors.
+
+.. note::
+
+    This promise was introduced with Symfony 2.3 and does not apply to previous
+    versions of Symfony.
 
 This page has two different target audiences: If you are using Symfony, it will
 tell you how to make sure that you will be able to upgrade smoothly to all
 future 2.x versions. If you are contributing to Symfony, this page will tell you
 the rules that you need to follow to ensure smooth upgrades for our users.
 
-.. note::
-
-    This promise is in trial until April 15th, 2014. Until then, we may change
-    parts of it if we discover problems or limitations.
-
-
 Using Symfony Code
 ------------------
 
-You are using Symfony in your projects? Then stick to the guidelines in this
-section in order to guarantee smooth upgrades to all future 2.x versions.
-
+If you are using Symfony in your projects, the following guidelines will help
+you to ensure smooth upgrades to all future minor releases of Symfony (such as
+2.5, 2.6 and so on).
 
 Using Our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
 
-In Symfony, we distinguish between regular and API interfaces. API interfaces
-are marked with an ``@api`` tag in their source code. For example::
+All interfaces shipped with Symfony can be used in type hints. You can also call
+any of the methods that they declare. We guarantee that we won't break code that
+sticks to these rules.
+
+.. note::
+
+    The exception to this rule are interfaces tagged with ``@internal``. Such
+    interfaces should never be used or implemented.
+
+If you want to implement an interface, you should first make sure that the
+interface is an API interface. You can recognize API interfaces by the ``@api``
+tag in their source code::
 
     /**
      * HttpKernelInterface handles a Request to convert it to a Response.
@@ -39,39 +48,50 @@ are marked with an ``@api`` tag in their source code. For example::
     interface HttpKernelInterface
     {
 
-In simple words, the difference between regular and API interfaces is that you
-can implement API interfaces yourself and we will guarantee full backwards
-compatibility. The same is not true for regular interfaces: We may, for example,
-add an optional parameter or a new method to them and thus break your own
-implementation.
+If you implement an API interface, we promise that we won't ever break your
+code. Regular interfaces, by contrast, should never be implemented, because if
+we add a new method to the interface or add a new optional parameter to the
+signature of a method, we would generate a fatal error in your application.
 
-In detail, we guarantee full backwards compatibility for the following use
-cases:
+The following table explains in detail which use cases are covered by our
+backwards compatibility promise:
 
-==============================================  ==============  ==============
-Use Case                                        Regular         API
-==============================================  ==============  ==============
-Type hint against                               Yes             Yes
-Call method                                     Yes             Yes
-**In Implementing Classes**
-Implement method                                No [1]_         Yes
-Add custom method                               No [1]_         Yes
-Add custom method parameter                     No [1]_         Yes
-Add parameter default value                     Yes             Yes
-==============================================  ==============  ==============
++-----------------------------------------------+---------------+---------------+
+| Use Case                                      | Regular       | API           |
++-----------------------------------------------+---------------+---------------+
+| If you...                                     | Then we guarantee BC...       |
++===============================================+===============+===============+
+| Type hint against the interface               | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Call a method                                 | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| **If you implement the interface and...**     | **Then we guarantee BC...**   |
++-----------------------------------------------+---------------+---------------+
+| Implement a method                            | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Add a parameter to an implemented method      | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Add a default value to a parameter            | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
 
 .. note::
 
-    If you need to do any of the things marked with "No" above, feel free to
-    ask us whether the ``@api`` tag can be added on the respective Symfony code.
-    For that, simply open a `new ticket on GitHub`_.
-
-Interfaces or interface methods tagged with ``@internal`` should never be
-implemented or used.
-
+    If you think that one of our regular interfaces should have an ``@api`` tag,
+    put your request into a `new ticket on GitHub`_. We will then evaluate
+    whether we can add the tag or not.
 
 Using Our Classes
 ~~~~~~~~~~~~~~~~~
+
+All classes provided by Symfony may be instantiated and accessed through their
+public methods and properties.
+
+.. note::
+
+    Classes, properties and methods that bear the tag ``@internal`` as well as
+    the classes located in the various ``*\\Tests\\`` namespaces are an
+    exception to this rule. They are meant for internal use only and should not
+    be accessed by your own code.
 
 Just like with interfaces, we also distinguish between regular and API classes.
 Like API interfaces, API classes are marked with an ``@api`` tag::
@@ -87,56 +107,68 @@ Like API interfaces, API classes are marked with an ``@api`` tag::
     {
 
 The difference between regular and API classes is that we guarantee full
-backwards compatibility if you extend an API class and override its methods,
-but not for regular classes. In regular classes, we may for example add an
-optional parameter to a method and thus break your overridden method.
-
-Again, here are the details about which use cases we guarantee full backwards
-compatibility for:
-
-==============================================  ==============  ==============
-Use Case                                        Regular         API
-==============================================  ==============  ==============
-Type hint against                               Yes             Yes
-Create instance                                 Yes             Yes
-Extend                                          Yes             Yes
-Access public property                          Yes             Yes
-Call public method                              Yes             Yes
-**In Extending Classes**
-Access protected property                       No [1]_         Yes
-Call protected method                           No [1]_         Yes
-Override public property                        Yes             Yes
-Override protected property                     No [1]_         Yes
-Override public method                          No [1]_         Yes
-Override protected method                       No [1]_         Yes
-Add custom property                             No              No
-Add custom method                               No              No
-Add custom method parameter                     No [1]_         Yes
-Add parameter default value                     Yes             Yes
-==============================================  ==============  ==============
-
-.. note::
-
-    If you need to do any of the things marked with "No" above, feel free to
-    ask us whether the ``@api`` tag can be added on the respective Symfony code.
-    For that, simply open a `new ticket on GitHub`_.
+backwards compatibility if you extend an API class and override its methods. We
+can't give the same promise for regular classes, because there we may, for
+example, add an optional parameter to a method. Consequently, the signature of
+your overridden method won't match anymore and generate a fatal error.
 
 In some cases, only specific properties and methods are tagged with the ``@api``
 tag, even though their class is not. In these cases, we guarantee full backwards
 compatibility for the tagged properties and methods (as indicated in the column
-"API" above), but not for the rest of the class.
+"API" below), but not for the rest of the class.
 
-Classes, properties and methods tagged with ``@internal`` should never be
-created, extended or called directly. The same applies to all classes located in
-the various ``*\\Tests\\`` namespaces.
+To be on the safe side, check the following table to know which use cases are
+covered by our backwards compatibility promise:
 
++-----------------------------------------------+---------------+---------------+
+| Use Case                                      | Regular       | API           |
++-----------------------------------------------+---------------+---------------+
+| If you...                                     | Then we guarantee BC...       |
++===============================================+===============+===============+
+| Type hint against the class                   | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Create a new instance                         | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Extend the class                              | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Access a public property                      | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Call a public method                          | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| **If you extend the class and...**            | **Then we guarantee BC...**   |
++-----------------------------------------------+---------------+---------------+
+| Access a protected property                   | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Call a protected methods                      | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Override a public property                    | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Override a protected property                 | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Override a public method                      | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Override a protected method                   | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Add a new property                            | No            | No            |
++-----------------------------------------------+---------------+---------------+
+| Add a new method                              | No            | No            |
++-----------------------------------------------+---------------+---------------+
+| Add a parameter to an overridden method       | No [1]_       | Yes           |
++-----------------------------------------------+---------------+---------------+
+| Add a default value to a parameter            | Yes           | Yes           |
++-----------------------------------------------+---------------+---------------+
+
+.. note::
+
+    If you think that one of our regular classes should have an ``@api`` tag,
+    put your request into a `new ticket on GitHub`_. We will then evaluate
+    whether we can add the tag or not.
 
 Working on Symfony Code
 -----------------------
 
 Do you want to help us improve Symfony? That's great! However, please stick
 to the rules listed below in order to ensure smooth upgrades for our users.
-
 
 Changing Interfaces
 ~~~~~~~~~~~~~~~~~~~
@@ -165,7 +197,6 @@ Remove type hint of a parameter                 Yes [2]_        No
 Change parameter type                           Yes [2]_ [4]_   No
 Change return type                              Yes [2]_ [5]_   No
 ==============================================  ==============  ==============
-
 
 Changing Classes
 ~~~~~~~~~~~~~~~~
@@ -225,7 +256,6 @@ Remove type hint of a parameter                     Yes [2]_        No
 Change parameter type                               Yes [2]_ [4]_   No
 Change return type                                  Yes [2]_ [5]_   No
 ==================================================  ==============  ==============
-
 
 .. [1] Your code may be broken by changes in the Symfony code. Such changes will
        however be documented in the UPGRADE file.
