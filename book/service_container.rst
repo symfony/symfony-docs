@@ -103,7 +103,34 @@ for you. In order for this to work, you must *teach* the container how to
 create the ``Mailer`` service. This is done via configuration, which can
 be specified in YAML, XML or PHP:
 
-.. include includes/_service_container_my_mailer.rst.inc
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            my_mailer:
+                class:        Acme\HelloBundle\Mailer
+                arguments:    [sendmail]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+            <service id="my_mailer" class="Acme\HelloBundle\Mailer">
+                <argument>sendmail</argument>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->setDefinition('my_mailer', new Definition(
+            'Acme\HelloBundle\Mailer',
+            array('sendmail')
+        ));
 
 .. note::
 
