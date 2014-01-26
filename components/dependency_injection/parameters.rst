@@ -295,7 +295,7 @@ keywords (respectively ``true``, ``false`` and ``null``):
 .. code-block:: xml
 
     <parameters>
-        <parameter key="mailer.send_all_in_once">false</parameters>
+        <parameter key="mailer.send_all_in_once">false</parameter>
     </parameters>
 
     <!-- after parsing
