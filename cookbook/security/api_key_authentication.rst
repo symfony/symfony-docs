@@ -145,7 +145,7 @@ The ``$userProvider`` might look something like this::
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
-    class ApiKeyUserProvider extends UserProviderInterface
+    class ApiKeyUserProvider implements UserProviderInterface
     {
         public function getUsernameForApiKey($apiKey)
         {
