@@ -38,7 +38,7 @@ value and then a User object is created::
     {
         protected $userProvider;
 
-        public function __construct(ApiKeyUserProviderInterface $userProvider)
+        public function __construct(ApiKeyUserProvider $userProvider)
         {
             $this->userProvider = $userProvider;
         }
