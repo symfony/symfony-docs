@@ -129,7 +129,7 @@ method on the normalizer definition::
 Deserializing an Object
 -----------------------
 
-Let's see now how to do the exactly the opposite. This time, the information
+Let's see now how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
     $data = <<<EOF
