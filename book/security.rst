@@ -1695,8 +1695,6 @@ Access Control
 Now that you have a User and Roles, you can go further than URL-pattern based
 authorization.
 
-.. _book-security-securing-controller:
-
 Access Control in Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
