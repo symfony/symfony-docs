@@ -371,6 +371,12 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
                 // do whatever you want to generate a unique name
                 $filename = sha1(uniqid(mt_rand(), true));
                 $this->path = $filename.'.'.$this->getFile()->guessExtension();
+                // Note: is you choose to use EvensubScribers, this change has no effect un database Update
+                // the 'initial' value set in {@link self::setFile()} is used instead. As this occurs
+                // inside EntityManager#flush() and changeSets are not tracked.
+                // use \Doctrine\Common\Persistence\Event\PreUpdateEventArgs $args as the handler fn param and
+                // $args->setNewValue('path', $filename);
+                // source: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
             }
         }
 
