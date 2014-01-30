@@ -1,156 +1,94 @@
 The Big Picture
 ===============
 
-Start using Symfony2 in 10 minutes! This chapter will walk you through some
-of the most important concepts behind Symfony2 and explain how you can get
-started quickly by showing you a simple project in action.
+This chapter will teach you how to develop a simple Symfony2 project in 10
+minutes! If you've used a web framework before, you should feel right at home
+with Symfony2. If not, welcome to a whole new way of developing web applications.
 
-If you've used a web framework before, you should feel right at home with
-Symfony2. If not, welcome to a whole new way of developing web applications!
+Installing Symfony2
+-------------------
 
-.. tip::
-
-    Want to learn why and when you need to use a framework? Read the "`Symfony
-    in 5 minutes`_" document.
-
-Downloading Symfony2
---------------------
-
-First, check that you have installed and configured a Web server (such as
-Apache) with PHP 5.3.3 or higher.
-
-.. tip::
-
-    If you have PHP 5.4, you could use the built-in web server to start trying
-    things out. We'll tell you how to start the built-in web server
-    :ref:`after downloading Symfony<quick-tour-big-picture-built-in-server>`.
-
-Ready? Start by downloading the "`Symfony2 Standard Edition`_": a Symfony
-:term:`distribution` that is preconfigured for the most common use cases and
-also contains some code that demonstrates how to use Symfony2 (get the archive
-with the *vendors* included to get started even faster).
-
-After unpacking the archive under your web server root directory (if you'll
-use the built-in PHP web server, you can unpack it anywhere), you should
-have a ``Symfony/`` directory that looks like this:
-
-.. code-block:: text
-
-    www/ <- your web root directory
-        Symfony/ <- the unpacked archive
-            app/
-                cache/
-                config/
-                logs/
-                Resources/
-            bin/
-            src/
-                Acme/
-                    DemoBundle/
-                        Controller/
-                        Resources/
-                        ...
-            vendor/
-                symfony/
-                doctrine/
-                ...
-            web/
-                app.php
-                ...
-
-.. note::
-
-    If you are familiar with `Composer`_, you can download Composer and then
-    run the following command instead of downloading the archive:
-
-    .. code-block:: bash
-
-        $ php composer.phar create-project symfony/framework-standard-edition Symfony 2.4.*
-
-.. _`quick-tour-big-picture-built-in-server`:
-
-If you have PHP 5.4, you can use the built-in web server:
+First, check that the PHP version installed on your computer meets the Symfony2
+requirements: 5.3.3 or higher. Then, open a command console and execute the
+following command to install the latest version of Symfony2 in the ``myproject/``
+directory:
 
 .. code-block:: bash
 
-    # check your PHP CLI configuration
+    $ composer create-project symfony/framework-standard-edition myproject/ ~2.4
+
+.. note::
+
+    `Composer <https://getcomposer.org/>` is the package manager used by modern
+    PHP applications and the only recommended way to install Symfony2. To
+    install Composer on your Linux or Mac system, execute the following commands:
+
+    .. code-block:: bash
+
+        $ curl -sS https://getcomposer.org/installer | php
+        $ sudo mv composer.phar /usr/local/bin/composer
+
+    To install Composer on a Windows system, download the executable installer
+    from `getcomposer.org/download <http://getcomposer.org/download>`.
+
+Beware that the first time you install Symfony2, it may take a few minutes to
+download all its components. At the end of the installation process, the
+installer will ask you to provide some configuration options for the Symfony2
+project. For this first project you can safely ignore this configuration by
+pressing the ``<Enter>`` key repeatedly.
+
+.. The following GIF is only useful if the user can "click" on it
+.. to activate the animation. Otherwise, it shouldn't be included
+.. because it's too long and it doesn't make sense to see it half-started.
+.. image:: /images/quick_tour/installing_symfony2.gif
+   :align: center
+   :alt:   Installing Symfony2 on the command console
+
+Running Symfony2
+----------------
+
+Before running Symfony2 for the first time, execute the following command to
+make sure that your system meets all the technical requirements:
+
+.. code-block:: bash
+
+    $ cd myproject/
     $ php app/check.php
 
-    # run the built-in web server
+Fix any error reported by the command and then, use the PHP built-in web server
+to run Symfony:
+
+.. code-block:: bash
+
     $ php app/console server:run
 
-Then the URL to your application will be "http://localhost:8000/app_dev.php"
+Open your browser and access to the ``http://localhost:8000/`` URL to see the
+Welcome page of Symfony2:
 
-The built-in server should be used only for development purpose, but it
-can help you to start your project quickly and easily.
-
-If you're using a traditional web server like Apache, your URL depends on
-your configuration. If you've unzipped Symfony under your web root into a
-``Symfony`` directory, then the URL to your application will be:
-"http://localhost/Symfony/web/app_dev.php".
-
-.. note::
-
-    Read more in our :doc:`/cookbook/configuration/web_server_configuration`
-    section.
-
-Checking the Configuration
---------------------------
-
-Symfony2 comes with a visual server configuration tester to help avoid some
-headaches that come from Web server or PHP misconfiguration. Use the following
-URL to see the diagnostics for your machine:
-
-.. code-block:: text
-
-    http://localhost/config.php
-
-.. note::
-
-    All of the example URLs assume you've setup your web server to point
-    directly to the ``web/`` directory of your new project, which is different
-    and a bit more advanced than the process shown above. So, the URL on your
-    machine will vary - e.g. ``http://localhost:8000/config.php``
-    or ``http://localhost/Symfony/web/config.php``. See the
-    :ref:`above section<quick-tour-big-picture-built-in-server>` for details
-    on what your URL should be and use it below in all of the examples.
-
-If there are any outstanding issues listed, correct them. You might also tweak
-your configuration by following any given recommendations. When everything is
-fine, click on "*Bypass configuration and go to the Welcome page*" to request
-your first "real" Symfony2 webpage:
-
-.. code-block:: text
-
-    http://localhost/app_dev.php/
-
-Symfony2 should welcome and congratulate you for your hard work so far!
-
-.. image:: /images/quick_tour/welcome.png
+.. image:: /images/quick_tour/symfony2_welcome_page.png
    :align: center
+   :alt:   Symfony2 Welcome Page
+
+The built-in web server is available for PHP 5.4.0 or higher. If you have an
+older version of PHP or if you prefer a traditional web server such as Apache
+or Nginx, read the :doc:`/cookbook/configuration/web_server_configuration`
+article.
 
 Understanding the Fundamentals
 ------------------------------
 
-One of the main goals of a framework is to ensure `Separation of Concerns`_.
-This keeps your code organized and allows your application to evolve easily
-over time by avoiding the mixing of database calls, HTML tags, and business
-logic in the same script. To achieve this goal with Symfony, you'll first
-need to learn a few fundamental concepts and terms.
+One of the main goals of a framework is to keep your code organized and allow
+your application to evolve easily over time by avoiding the mixing of database
+calls, HTML tags, and business logic in the same script. To achieve this goal
+with Symfony, you'll first need to learn a few fundamental concepts and terms.
 
-.. tip::
-
-    Want proof that using a framework is better than mixing everything
-    in the same script? Read the ":doc:`/book/from_flat_php_to_symfony2`"
-    chapter of the book.
-
-The distribution comes with some sample code that you can use to learn more
-about the main Symfony2 concepts. Go to the following URL to be greeted by
-Symfony2 (replace *Fabien* with your first name):
+Symfony comes with some sample code that you can use to learn more about its
+main concepts. Go to the following URL to be greeted by Symfony2 (replace
+*Fabien* with your first name):
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/demo/hello/Fabien
+    http://localhost:8000/app_dev.php/demo/hello/Fabien
 
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
