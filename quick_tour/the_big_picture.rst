@@ -146,17 +146,17 @@ will be executed. In the next section, you'll learn exactly what that means.
 .. tip::
 
     In addition to YAML format, routes can be configured in XML or PHP files
-    and even as annotations on PHP classes. This flexibility is one of the main 
+    and even embedded in PHP annotations. This flexibility is one of the main 
     features of Symfony2, a framework that never imposes you a particular
     configuration format.
 
 Controllers
 ~~~~~~~~~~~
 
-A controller is a fancy name for a PHP function or method that handles incoming
-*requests* and returns *responses* (often HTML code). Instead of using the
-PHP global variables and functions (like ``$_GET`` or ``header()``) to manage
-these HTTP messages, Symfony uses objects: :ref:`Request<component-http-foundation-request>`
+A controller is a PHP function or method that handles incoming *requests* and
+returns *responses* (often HTML code). Instead of using the PHP global variables
+and functions (like ``$_GET`` or ``header()``) to manage these HTTP messages
+Symfony uses objects: :ref:`Request<component-http-foundation-request>`
 and :ref:`Response<component-http-foundation-response>`. The simplest possible
 controller might create the response by hand, based on the request::
 
@@ -164,17 +164,7 @@ controller might create the response by hand, based on the request::
 
     $name = $request->query->get('name');
 
-    return new Response('Hello '.$name, Response::HTTP_OK, array('Content-Type' => 'text/plain'));
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
-
-.. note::
-
-    Symfony2 embraces the HTTP Specification, which are the rules that govern
-    all communication on the Web. Read the ":doc:`/book/http_fundamentals`"
-    chapter of the book to learn more about this and the added power that
-    this brings.
+    return new Response('Hello '.$name);
 
 Symfony2 chooses the controller based on the ``_controller`` value from the
 routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
@@ -198,15 +188,15 @@ the ``Acme\DemoBundle\Controller\WelcomeController`` class::
 
     You could have used the full class and method name -
     ``Acme\DemoBundle\Controller\WelcomeController::indexAction`` - for the
-    ``_controller`` value. But if you follow some simple conventions, the
-    logical name is shorter and allows for more flexibility.
+    ``_controller`` value. But using the logical name is shorter and allows
+    for more flexibility.
 
 The ``WelcomeController`` class extends the built-in ``Controller`` class,
 which provides useful shortcut methods, like the
 :ref:`render()<controller-rendering-templates>` method that loads and renders
 a template (``AcmeDemoBundle:Welcome:index.html.twig``). The returned value
-is a Response object populated with the rendered content. So, if the need
-arises, the Response can be tweaked before it is sent to the browser::
+is a ``Response`` object populated with the rendered content. So, if the need
+arises, the ``Response`` can be tweaked before it is sent to the browser::
 
     public function indexAction()
     {
@@ -220,13 +210,6 @@ No matter how you do it, the end goal of your controller is always to return
 the ``Response`` object that should be delivered back to the user. This ``Response``
 object can be populated with HTML code, represent a client redirect, or even
 return the contents of a JPG image with a ``Content-Type`` header of ``image/jpg``.
-
-.. tip::
-
-    Extending the ``Controller`` base class is optional. As a matter of fact,
-    a controller can be a plain PHP function or even a PHP closure.
-    ":doc:`The Controller</book/controller>`" chapter of the book tells you
-    everything about Symfony2 controllers.
 
 The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
 *logical name* and it references the ``Resources/views/Welcome/index.html.twig``
@@ -245,9 +228,8 @@ key:
         type:     annotation
         prefix:   /demo
 
-Symfony2 can read/import the routing information from different files written
-in YAML, XML, PHP, or even embedded in PHP annotations. Here, the file's
-*logical name* is ``@AcmeDemoBundle/Controller/DemoController.php`` and refers
+The *logical name* of the file containing the ``_demo`` routes is
+``@AcmeDemoBundle/Controller/DemoController.php`` and refers
 to the ``src/Acme/DemoBundle/Controller/DemoController.php`` file. In this
 file, routes are defined as annotations on action methods::
 
@@ -269,30 +251,18 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@Route()`` annotation defines a new route with a path of
-``/hello/{name}`` that executes the ``helloAction`` method when matched. A
-string enclosed in curly brackets like ``{name}`` is called a placeholder. As
-you can see, its value can be retrieved through the ``$name`` method argument.
-
-.. note::
-
-    Even if annotations are not natively supported by PHP, you can use them
-    in Symfony2 as a convenient way to configure the framework behavior and
-    keep the configuration next to the code.
+The ``@Route()`` annotation creates a new route matching the ``/hello/{name}`` 
+path to the ``helloAction()`` method. Any string enclosed in curly brackets,
+like ``{name}``, is considered a variable that can be directly retrieved as a
+method argument with the same name.
 
 If you take a closer look at the controller code, you can see that instead of
 rendering a template and returning a ``Response`` object like before, it
 just returns an array of parameters. The ``@Template()`` annotation tells
-Symfony to render the template for you, passing in each variable of the array
-to the template. The name of the template that's rendered follows the name
+Symfony to render the template for you, passing to it each variable of the
+returned array. The name of the template that's rendered follows the name
 of the controller. So, in this example, the ``AcmeDemoBundle:Demo:hello.html.twig``
 template is rendered (located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
-
-.. tip::
-
-    The ``@Route()`` and ``@Template()`` annotations are more powerful than
-    the simple examples shown in this tutorial. Learn more about "`annotations in controllers`_"
-    in the official documentation.
 
 Templates
 ~~~~~~~~~
