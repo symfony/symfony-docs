@@ -25,6 +25,13 @@ and set a parameter in the container with::
 
     $container->setParameter('mailer.transport', 'sendmail');
 
+.. caution::
+
+    The used ``.`` notation is just a
+    :ref:`Symfony convention <service-naming-conventions>` to make parameters
+    easier to read. Parameters are just flat key-value elements, they can't be
+    inherited.
+
 .. note::
 
     You can only set a parameter before the container is compiled. To learn
@@ -190,9 +197,9 @@ making the class of a service a parameter:
 Array Parameters
 ----------------
 
-Parameters do not need to be flat strings, they can also be arrays. For the XML
-format, you need to use the ``type="collection"`` attribute for all parameters that are
-arrays.
+Parameters do not need to be flat strings, they can also contain array values.
+For the XML format, you need to use the ``type="collection"`` attribute for
+all parameters that are arrays.
 
 .. configuration-block::
 
