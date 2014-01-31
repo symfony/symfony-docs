@@ -62,8 +62,8 @@ to run Symfony:
 
     $ php app/console server:run
 
-Open your browser and access to the ``http://localhost:8000/`` URL to see the
-Welcome page of Symfony2:
+Open your browser and access to the ``http://localhost:8000/app_dev.php`` URL to
+see the Welcome page of Symfony2:
 
 .. image:: /images/quick_tour/symfony2_welcome_page.png
    :align: center
@@ -95,10 +95,10 @@ main concepts. Go to the following URL to be greeted by Symfony2 (replace
 
 What's going on here? Have a look at each part of the URL:
 
-* ``app_dev.php``: This is a :term:`front controller`. It is the unique entry
+* ``app_dev.php``: this is a :term:`front controller`. It is the unique entry
   point of the application and it responds to all user requests;
 
-* ``/demo/hello/Fabien``: This is the *virtual path* to the resource the user
+* ``/demo/hello/Fabien``: this is the *virtual path* to the resource the user
   wants to access.
 
 Your responsibility as a developer is to write the code that maps the user's
@@ -108,13 +108,9 @@ Your responsibility as a developer is to write the code that maps the user's
 Routing
 ~~~~~~~
 
-Symfony2 routes the request to the code that handles it by trying to match the
-requested URL (i.e. the virtual path) against some configured paths. By default,
-these paths (called routes) are defined in the ``app/config/routing.yml`` configuration
-file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
-indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
-configuration file is also loaded. In the Standard Edition, the routes to
-these "demo" pages are imported from this file:
+Symfony2 routes the request to the code that handles it by matching the
+requested URL (i.e. the virtual path) against some configured paths. The demo
+paths are defined in the ``app/config/routing_dev.yml`` configuration file:
 
 .. code-block:: yaml
 
@@ -125,13 +121,14 @@ these "demo" pages are imported from this file:
     _acme_demo:
         resource: "@AcmeDemoBundle/Resources/config/routing.yml"
 
-This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
+The ``_acme_demo`` routes are imported from a ``routing.yml`` file that lives
+inside the AcmeDemoBundle:
 
 .. code-block:: yaml
 
     # src/Acme/DemoBundle/Resources/config/routing.yml
     _welcome:
-        path:  /
+        path:     /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     _demo:
@@ -148,12 +145,10 @@ will be executed. In the next section, you'll learn exactly what that means.
 
 .. tip::
 
-    The Symfony2 Standard Edition uses :doc:`YAML</components/yaml/yaml_format>`
-    for its configuration files, but Symfony2 also supports XML, PHP, and
-    annotations natively. The different formats are compatible and may be
-    used interchangeably within an application. Also, the performance of
-    your application does not depend on the configuration format you choose
-    as everything is cached on the very first request.
+    In addition to YAML format, routes can be configured in XML or PHP files
+    and even as annotations on PHP classes. This flexibility is one of the main 
+    features of Symfony2, a framework that never imposes you a particular
+    configuration format.
 
 Controllers
 ~~~~~~~~~~~
