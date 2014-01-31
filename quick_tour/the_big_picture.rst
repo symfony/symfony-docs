@@ -146,7 +146,7 @@ will be executed. In the next section, you'll learn exactly what that means.
 .. tip::
 
     In addition to YAML format, routes can be configured in XML or PHP files
-    and even embedded in PHP annotations. This flexibility is one of the main 
+    and even embedded in PHP annotations. This flexibility is one of the main
     features of Symfony2, a framework that never imposes you a particular
     configuration format.
 
@@ -251,7 +251,7 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@Route()`` annotation creates a new route matching the ``/hello/{name}`` 
+The ``@Route()`` annotation creates a new route matching the ``/hello/{name}``
 path to the ``helloAction()`` method. Any string enclosed in curly brackets,
 like ``{name}``, is considered a variable that can be directly retrieved as a
 method argument with the same name.
@@ -281,9 +281,9 @@ template (or ``AcmeDemoBundle:Demo:hello.html.twig`` if you use the logical name
         <h1>Hello {{ name }}!</h1>
     {% endblock %}
 
-By default, Symfony2 uses `Twig`_ as its template engine but you can also use
-traditional PHP templates if you choose. The next chapter will introduce how
-templates work in Symfony2.
+By default, Symfony2 uses `Twig <http://twig.sensiolabs.org/>` as its template
+engine but you can also use traditional PHP templates if you choose. The next
+chapter will introduce how templates work in Symfony2.
 
 Bundles
 ~~~~~~~
@@ -309,26 +309,15 @@ Symfony2 developer's best friend!
 .. image:: /images/quick_tour/web_debug_toolbar.png
    :align: center
 
-But what you see initially is only the tip of the iceberg; click on the
-hexadecimal number (the session token) to reveal yet another very useful
-Symfony2 debugging tool: the profiler.
+But what you see initially is only the tip of the iceberg; click on any of the
+bar sections to open the profiler and get much more detailed information about
+the request, the query parameters, security details, and database queries:
 
 .. image:: /images/quick_tour/profiler.png
    :align: center
 
-.. note::
-
-    You can also get more information quickly by hovering over the items
-    on the Web Debug Toolbar, or clicking them to go to their respective
-    pages in the profiler.
-
-When loaded and enabled (by default in the ``dev`` :ref:`environment<quick-tour-big-picture-environments-intro>`),
-the Profiler provides a web interface for a *huge* amount of information recorded
-on each request, including logs, a timeline of the request, GET or POST parameters,
-security details, database queries and more!
- 
-Of course, it would be unwise to have these tools enabled when you deploy
-your application, so by default, the profiler is not enabled in the ``prod``
+Of course, it would be unwise to have this tool enabled when you deploy your
+application, so by default, the profiler is not enabled in the ``prod``
 environment.
 
 .. _quick-tour-big-picture-environments-intro:
@@ -338,7 +327,7 @@ So what *is* an environment? An :term:`Environment` is a simple string (e.g.
 to run your application.
 
 Typically, you put your common configuration in ``config.yml`` and override
-where necessary in the configuration for each environment. For example:
+where necessary in the specific configuration file for each environment:
 
 .. code-block:: yaml
 
@@ -356,33 +345,24 @@ enabling the web debug toolbar.
 
 When you visit the ``app_dev.php`` file in your browser, you're executing
 your Symfony application in the ``dev`` environment. To visit your application
-in the ``prod`` environment, visit the ``app.php`` file instead. The demo
-routes in our application are only available in the ``dev`` environment, but
-if those routes were available in the ``prod`` environment, you would be able
-to visit them in the ``prod`` environment by going to:
+in the ``prod`` environment, visit the ``app.php`` file instead.
 
-.. code-block:: text
+The demo routes in our application are only available in the ``dev`` environment.
+Therefore, if you try to access the ``http://localhost/app.php/demo/hello/Fabien``
+URL, you'll get a 404 error.
 
-    http://localhost/app.php/demo/hello/Fabien
+.. tip::
 
-If instead of using php's built-in webserver, you use Apache with ``mod_rewrite``
-enabled and take advantage of the ``.htaccess`` file Symfony2 provides
-in ``web/``, you can even omit the ``app.php`` part of the URL. The default
-``.htaccess`` points all requests to the ``app.php`` front controller:
+    If instead of using PHP built-in webserver, you use Apache with ``mod_rewrite``
+    enabled and take advantage of the ``.htaccess`` file Symfony2 provides
+    in ``web/``, you can even omit the ``app.php`` part of the URL. The default
+    ``.htaccess`` points all requests to the ``app.php`` front controller:
 
-.. code-block:: text
+    .. code-block:: text
 
-    http://localhost/demo/hello/Fabien
+        http://localhost/demo/hello/Fabien
 
-.. note::
-
-    Note that the two URLs above are provided here only as **examples** of
-    how a URL looks like when the ``prod`` front controller is used. If you
-    actually try them in an out-of-the-box installation of *Symfony Standard Edition*,
-    you will get a 404 error since the *AcmeDemoBundle* is enabled only in
-    the ``dev`` environment and its routes imported from ``app/config/routing_dev.yml``.
-
-For more details on environments, see ":ref:`Environments & Front Controllers<page-creation-environments>`".
+For more details on environments, see ":ref:`Environments & Front Controllers<page-creation-environments>`" article.
 
 Final Thoughts
 --------------
@@ -392,11 +372,3 @@ hard, was it? There's a lot more to explore, but you should already see how
 Symfony2 makes it really easy to implement web sites better and faster. If you
 are eager to learn more about Symfony2, dive into the next section:
 ":doc:`The View<the_view>`".
-
-.. _Symfony2 Standard Edition:      http://symfony.com/download
-.. _Symfony in 5 minutes:           http://symfony.com/symfony-in-five-minutes
-.. _`Composer`:                     http://getcomposer.org/
-.. _Separation of Concerns:         http://en.wikipedia.org/wiki/Separation_of_concerns
-.. _annotations in controllers:     http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
-.. _Twig:                           http://twig.sensiolabs.org/
-.. _`Symfony Installation Page`:    http://symfony.com/download
