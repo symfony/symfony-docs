@@ -65,7 +65,7 @@ to run Symfony:
 Open your browser and access to the ``http://localhost:8000/app_dev.php`` URL to
 see the Welcome page of Symfony2:
 
-.. image:: /images/quick_tour/symfony2_welcome_page.png
+.. image:: /images/quick_tour/welcome.png
    :align: center
    :alt:   Symfony2 Welcome Page
 
@@ -293,7 +293,7 @@ have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
-of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
+of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
 more about bundles in the :doc:`last chapter of this tutorial</quick_tour/the_architecture>`.
 
 .. _quick-tour-big-picture-environments:
