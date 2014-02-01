@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-01-15T16:38:42Z
+
+That's interesting. It looks more like a Sf bug than a documentation bug. The `TokenInterface` accepts a `string` as the first argument of construct and handles it properly. Indeed the `getUser()` function of the `Controller` will not return the string.
+
+And just as a side note: when you propose a PR please stick to this format as it will make it easier for the team:  http://symfony.com/doc/current/contributing/documentation/overview.html#pull-request-format
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-01T18:37:13Z
+
+Hey Piotr!
+
+Yes, I think you're right. As @mtrojanowski mentioned, it's tricky because the user can either be a string OR an object that implements `UserInterface`. However, in practice, other than the "anonymous user" (which uses `anon` as the user), the users are always objects.
+
+What makes this even a little trickier is that during the authentication process, you will create 2 tokens. The first one (done here in `createToken`) is temporary and meant to exist just to help figure out if the credentials are correct. The username here is a string (and then we use it to look up the string username in the database, for example). Later, we create the 2nd token (done in `authenticateToken`). As you mentioned, @piotras-s, this is the one that actually gets stored in the `security.context` and whatever user we set here becomes the user we get with the `getUser` method on the controller (or by going to the `security.context` service directly).
+
+That's all just a nice long way of saying that this change seems 100% right to me. At this point, we need a token with the user *object*. It's technically correct to use a string, but then we can't access any of our nice User object information later, which is not the intention.
+
+Cheers and thanks!
