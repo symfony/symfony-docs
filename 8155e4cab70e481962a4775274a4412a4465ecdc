@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-01-13T14:34:33Z
+
+Hi Adam!
+
+Nice founding. :+1: It's interesting how such things manage to stay hidden for so long (the name of the class was changed back in 2.1.!)
+
+One thing about the PR. If you could have a look at this section: http://symfony.com/doc/current/contributing/documentation/overview.html#pull-request-format on how to add the information about your PR. The merging guys will have much easier work thanks to this.
+
+---------------------------------------------------------------------------
+
+by AZielinski at 2014-01-13T15:08:33Z
+
+Hi
+
+Thanks for the information on pull request format, I didn't know about it :) I already updated the PR message
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-01-13T15:18:37Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-13T15:24:53Z
+
+Thank you! Since it applies to 2.1, it should have been merged in that branch. However, 2.0, 2.1 and 2.2 are deprecated and will not be updated anymore. So this PR should be merged into 2.3, not 2.4.
+
+We can cherry pick this quite easily into the correct branch, but it'll be a little bit easier if you did this right the next time :) So 2.3 (the oldest maintained branch) for typo fixes or a specific version (not lower than 2.3) for new features or occurences of new typos.
