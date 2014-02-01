@@ -99,10 +99,10 @@ part by the value of your ``getName()`` method. For more information, see
 
 In this case, since the parent field is ``choice``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``choice``
-type. But for the sake of this example, let's suppose that when your field
-is "expanded" (i.e. radio buttons or checkboxes, instead of a select field),
-you want to always render it in a ``ul`` element. In your form theme template
-(see above link for details), create a ``gender_widget`` block to handle this:
+type. But for the sake of this example, suppose that when your field is "expanded"
+(i.e. radio buttons or checkboxes, instead of a select field), you want to
+always render it in a ``ul`` element. In your form theme template (see above
+link for details), create a ``gender_widget`` block to handle this:
 
 .. configuration-block::
 

@@ -37,7 +37,7 @@ it in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <!-- ... -->
             <framework:serializer enabled="true" />
         </framework:config>

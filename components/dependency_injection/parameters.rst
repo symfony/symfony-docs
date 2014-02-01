@@ -134,8 +134,8 @@ making the class of a service a parameter:
 
         services:
             mailer:
-                class:     '%mailer.class%'
-                arguments: ['%mailer.transport%']
+                class:     "%mailer.class%"
+                arguments: ["%mailer.transport%"]
 
     .. code-block:: xml
 

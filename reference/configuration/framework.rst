@@ -172,10 +172,12 @@ name which is defined in the ``php.ini`` with the ``session.name`` directive.
 cookie_lifetime
 ...............
 
-**type**: ``integer`` **default**: ``0``
+**type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. By default it will use
-``0``, which means the cookie is valid for the length of the browser session.
+This determines the lifetime of the session - in seconds. It will use ``null`` by 
+default, which means ``session.cookie_lifetime`` value from ``php.ini`` will be used.
+Setting this value to ``0`` means the cookie is valid for the length of the browser 
+session.
 
 cookie_path
 ...........

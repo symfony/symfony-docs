@@ -60,7 +60,7 @@ Then you can define it as a service as follows:
 
         services:
             acme.hello.controller:
-                class:     "%acme.controller.hello.class%"
+                class: "%acme.controller.hello.class%"
 
     .. code-block:: xml
 
@@ -112,8 +112,8 @@ the route ``_controller`` value:
 
         # app/config/routing.yml
         hello:
-            path:         /hello
-            defaults:     { _controller: acme.hello.controller:indexAction }
+            path:     /hello
+            defaults: { _controller: acme.hello.controller:indexAction }
 
     .. code-block:: xml
 

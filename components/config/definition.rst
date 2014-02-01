@@ -21,14 +21,14 @@ applied to it (like: "the value for ``auto_connect`` must be a boolean value"):
     default_connection: mysql
     connections:
         mysql:
-            host: localhost
-            driver: mysql
+            host:     localhost
+            driver:   mysql
             username: user
             password: pass
         sqlite:
-            host: localhost
-            driver: sqlite
-            memory: true
+            host:     localhost
+            driver:   sqlite
+            memory:   true
             username: user
             password: pass
 
@@ -470,9 +470,9 @@ in this config:
 .. code-block:: yaml
 
     connection:
-        name: my_mysql_connection
-        host: localhost
-        driver: mysql
+        name:     my_mysql_connection
+        host:     localhost
+        driver:   mysql
         username: user
         password: pass
 

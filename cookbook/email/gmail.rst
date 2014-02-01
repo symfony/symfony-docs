@@ -59,7 +59,7 @@ You're done!
 
         # app/config/parameters.yml
         parameters:
-            ...
+            # ...
             mailer_transport: gmail
             mailer_host:      ~
             mailer_user:      your_gmail_username

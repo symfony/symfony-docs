@@ -681,8 +681,8 @@ extra data in the records. A processor receives the record as an argument and
 must return it after adding some extra data in the ``extra`` attribute of
 the record.
 
-Let's see how you can use the built-in ``IntrospectionProcessor`` to add
-the file, the line, the class and the method where the logger was triggered.
+The built-in ``IntrospectionProcessor`` can be used to add the file, the line,
+the class and the method where the logger was triggered.
 
 You can add a processor globally:
 

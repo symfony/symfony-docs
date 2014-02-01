@@ -55,10 +55,10 @@ configuration file (``config.yml``):
 
     propel:
         dbal:
-            driver:     "%database_driver%"
-            user:       "%database_user%"
-            password:   "%database_password%"
-            dsn:        "%database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%"
+            driver:   "%database_driver%"
+            user:     "%database_user%"
+            password: "%database_password%"
+            dsn:      "%database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%"
 
 Now that Propel knows about your database, Symfony2 can create the database for
 you:

@@ -1,7 +1,7 @@
 .. index::
    single: DependencyInjection; Scopes
 
-How to work with Scopes
+How to Work with Scopes
 =======================
 
 This entry is all about scopes, a somewhat advanced topic related to the
@@ -64,7 +64,7 @@ when compiling the container. Read the sidebar below for more details.
     Imagine, however, that you need the ``client_configuration`` service
     in your ``my_mailer`` service, maybe because you're reading some details
     from it, such as what the "sender" address should be. You add it as a
-    constructor argument. Let's look at why this presents a problem:
+    constructor argument. There are several reasons why this presents a problem:
 
     * When requesting ``my_mailer``, an instance of ``my_mailer`` (called
       *MailerA* here) is created and the ``client_configuration`` service (
@@ -218,7 +218,7 @@ your code. This should also be taken into account when declaring your service:
             my_mailer:
                 class: Acme\HelloBundle\Mail\Mailer
                 calls:
-                    - [setClientConfiguration, ['@?client_configuration=']]
+                    - [setClientConfiguration, ["@?client_configuration="]]
 
     .. code-block:: xml
 
@@ -348,6 +348,7 @@ The service config for this class would look something like this:
         parameters:
             # ...
             my_mailer.class: Acme\HelloBundle\Mail\Mailer
+
         services:
             my_mailer:
                 class:     "%my_mailer.class%"

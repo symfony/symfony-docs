@@ -447,11 +447,11 @@ form is rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
-                <twig:form>
-                    <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
-                </twig:form>
-                <!-- ... -->
+        <twig:config>
+            <twig:form>
+                <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
+            </twig:form>
+            <!-- ... -->
         </twig:config>
 
     .. code-block:: php
@@ -484,11 +484,11 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
-                <twig:form>
-                    <resource>form_table_layout.html.twig</resource>
-                </twig:form>
-                <!-- ... -->
+        <twig:config>
+            <twig:form>
+                <resource>form_table_layout.html.twig</resource>
+            </twig:form>
+            <!-- ... -->
         </twig:config>
 
     .. code-block:: php
@@ -536,7 +536,7 @@ form is rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <framework:templating>
                 <framework:form>
                     <resource>AcmeDemoBundle:Form</resource>
@@ -579,7 +579,7 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <framework:templating>
                 <framework:form>
                     <resource>FrameworkBundle:FormTable</resource>

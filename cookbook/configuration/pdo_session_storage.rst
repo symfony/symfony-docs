@@ -22,7 +22,7 @@ configuration format of your choice):
         framework:
             session:
                 # ...
-                handler_id:     session.handler.pdo
+                handler_id: session.handler.pdo
 
         parameters:
             pdo.db_options:

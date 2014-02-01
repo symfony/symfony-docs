@@ -75,6 +75,7 @@ your JavaScripts:
 
         <!-- app/config/config.xml -->
         <assetic:config>
+            <!-- bin: the path to the uglifyjs executable -->
             <assetic:filter
                 name="uglifyjs2"
                 bin="/usr/local/bin/uglifyjs" />
@@ -86,6 +87,7 @@ your JavaScripts:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'uglifyjs2' => array(
+                    // the path to the uglifyjs executable
                     'bin' => '/usr/local/bin/uglifyjs',
                 ),
             ),

@@ -90,7 +90,7 @@ that will invalidate the cache for a given resource:
 
     sub vcl_recv {
         /*
-        Varnish default behaviour doesn't support PURGE.
+        Varnish default behavior doesn't support PURGE.
         Match the PURGE request and immediately do a cache lookup,
         otherwise Varnish will directly pipe the request to the backend
         and bypass the cache

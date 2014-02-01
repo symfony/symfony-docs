@@ -45,7 +45,7 @@ authentication (i.e. the old-school username/password box):
         security:
             firewalls:
                 secured_area:
-                    pattern:    ^/
+                    pattern:   ^/
                     anonymous: ~
                     http_basic:
                         realm: "Secured Demo Area"
@@ -148,8 +148,8 @@ that looks like the following:
 * All URLs *not* matching ``/admin/*`` are accessible by all users (and the
   user is never prompted to log in).
 
-Let's look briefly at how security works and how each part of the configuration
-comes into play.
+Read this short summary about how security works and how each part of the
+configuration comes into play.
 
 How Security Works: Authentication and Authorization
 ----------------------------------------------------
@@ -300,11 +300,11 @@ First, enable form login under your firewall:
         security:
             firewalls:
                 secured_area:
-                    pattern:    ^/
+                    pattern:   ^/
                     anonymous: ~
                     form_login:
-                        login_path:  login
-                        check_path:  login_check
+                        login_path: login
+                        check_path: login_check
 
     .. code-block:: xml
 
@@ -373,10 +373,10 @@ submission (i.e.  ``/login_check``):
 
         # app/config/routing.yml
         login:
-            path:   /login
-            defaults:  { _controller: AcmeSecurityBundle:Security:login }
+            path:     /login
+            defaults: { _controller: AcmeSecurityBundle:Security:login }
         login_check:
-            path:   /login_check
+            path: /login_check
 
     .. code-block:: xml
 
@@ -537,7 +537,7 @@ And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
 user back to the login form where the error can be displayed.
 
-Let's review the whole process:
+To review the whole process:
 
 #. The user tries to access a resource that is protected;
 #. The firewall initiates the authentication process by redirecting the
@@ -633,8 +633,8 @@ see :doc:`/cookbook/security/form_login`.
 
             firewalls:
                 login_firewall:
-                    pattern:    ^/login$
-                    anonymous:  ~
+                    pattern:   ^/login$
+                    anonymous: ~
                 secured_area:
                     pattern:    ^/
                     form_login: ~
@@ -1211,13 +1211,14 @@ aren't stored anywhere in a database. The actual user object is provided
 by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
 
 .. tip::
+
     Any user provider can load users directly from configuration by specifying
     the ``users`` configuration parameter and listing the users beneath it.
 
 .. caution::
 
     If your username is completely numeric (e.g. ``77``) or contains a dash
-    (e.g. ``user-name``), you should use that alternative syntax when specifying
+    (e.g. ``user-name``), you should use an alternative syntax when specifying
     users in YAML:
 
     .. code-block:: yaml

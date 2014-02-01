@@ -27,7 +27,7 @@ You can install the component in 2 different ways:
     configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.
 
-    To enable ANSI colour support for Windows, please install `ANSICON`_.
+    To enable ANSI color support for Windows, please install `ANSICON`_.
 
 Creating a basic Command
 ------------------------
@@ -529,4 +529,4 @@ Learn More!
 * :doc:`/components/console/events`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
-.. _ANSICON: https://github.com/adoxa/ansicon/downloads
+.. _ANSICON: https://github.com/adoxa/ansicon/releases
