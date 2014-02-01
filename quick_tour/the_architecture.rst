@@ -1,23 +1,20 @@
 The Architecture
 ================
 
-You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. Because it
-makes Symfony2 stand apart from the framework crowd, let's dive into the
-architecture now.
+The first three parts of this tutorial didn't look too deeply at the
+architecture of the framework. Because it makes Symfony2 stand apart from the
+framework crowd, let's dive into the architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
 
 The directory structure of a Symfony2 :term:`application` is rather flexible,
-but the directory structure of the *Standard Edition* distribution reflects
-the typical and recommended structure of a Symfony2 application:
+but the recommended structure is as follows:
 
-* ``app/``:    The application configuration;
-* ``src/``:    The project's PHP code;
-* ``vendor/``: The third-party dependencies;
-* ``web/``:    The web root directory.
+* ``app/``:    the application configuration;
+* ``src/``:    the project's PHP code;
+* ``vendor/``: the third-party dependencies;
+* ``web/``:    the web root directory.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -36,11 +33,9 @@ lives::
     $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-The kernel first requires the ``bootstrap.php.cache`` file, which bootstraps
-the framework and registers the autoloader (see below).
-
-Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
-bootstrap the application.
+The controller first requires the ``bootstrap.php.cache`` file, which bootstraps
+the framework and registers the autoloader (see below). Then, it uses a kernel
+class, ``AppKernel`` in this case, to bootstrap the application.
 
 .. _the-app-dir:
 
@@ -64,11 +59,6 @@ you can extend the autoloader in the ``app/autoload.php`` file. All dependencies
 are stored under the ``vendor/`` directory, but this is just a convention.
 You can store them wherever you want, globally on your server or locally
 in your projects.
-
-.. note::
-
-    If you want to learn more about Composer's autoloader, read `Composer-Autoloader`_.
-    Symfony also has an autoloading component - read ":doc:`/components/class_loader/class_loader`".
 
 Understanding the Bundle System
 -------------------------------
@@ -296,8 +286,9 @@ each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``app/cache/`` directory. In the development
 environment, Symfony2 is smart enough to flush the cache when you change a
-file. But in the production environment, it is your responsibility to clear
-the cache when you update your code or change its configuration.
+file. But in the production environment, to speed things up, it is your
+responsibility to clear the cache when you update your code or change its
+configuration.
 
 When developing a web application, things can go wrong in many ways. The log
 files in the ``app/logs/`` directory tell you everything about the requests
@@ -336,4 +327,3 @@ topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
 .. _Composer:   http://getcomposer.org
-.. _`Composer-Autoloader`: http://getcomposer.org/doc/01-basic-usage.md#autoloading
