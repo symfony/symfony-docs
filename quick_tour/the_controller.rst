@@ -28,8 +28,8 @@ in Symfony2 is straightforward. Tweak the route by adding a default value of
         return array('name' => $name);
     }
 
-By using the request format (as defined by the ``_format`` value), Symfony2
-automatically selects the right template, here ``hello.xml.twig``:
+By using the request format (as defined by the special ``_format`` variable),
+Symfony2 automatically selects the right template, here ``hello.xml.twig``:
 
 .. code-block:: xml+php
 
@@ -41,7 +41,7 @@ automatically selects the right template, here ``hello.xml.twig``:
 That's all there is to it. For standard formats, Symfony2 will also
 automatically choose the best ``Content-Type`` header for the response. If
 you want to support different formats for a single action, use the ``{_format}``
-placeholder in the route path instead::
+variable in the route path instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -50,7 +50,12 @@ placeholder in the route path instead::
     // ...
 
     /**
-     * @Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
+     * @Route(
+     *     "/hello/{name}.{_format}",
+     *     defaults = {"_format"="html"},
+     *     requirements = {"_format"="html|xml|json"},
+     *     name = "_demo_hello"
+     * )
      * @Template()
      */
     public function helloAction($name)
@@ -58,10 +63,10 @@ placeholder in the route path instead::
         return array('name' => $name);
     }
 
-The controller will now be called for URLs like ``/demo/hello/Fabien.xml`` or
+The controller will now match URLs like ``/demo/hello/Fabien.xml`` or
 ``/demo/hello/Fabien.json``.
 
-The ``requirements`` entry defines regular expressions that placeholders must
+The ``requirements`` entry defines regular expressions that variables must
 match. In this example, if you try to request the ``/demo/hello/Fabien.js``
 resource, you will get a 404 HTTP error, as it does not match the ``_format``
 requirement.
@@ -78,21 +83,16 @@ The ``generateUrl()`` is the same method as the ``path()`` function used in the
 templates. It takes the route name and an array of parameters as arguments and
 returns the associated friendly URL.
 
-You can also easily forward the action to another one with the ``forward()``
-method. Internally, Symfony makes a "sub-request", and returns the ``Response``
-object from that sub-request::
+You can also forward internally the action to another one with the ``forward()``
+method::
 
-    $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
-
-    // ... do something with the response or return it directly
+    return $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
 Getting information from the Request
 ------------------------------------
 
-Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object. The framework injects the ``Request`` object in the
-controller if a variable is type hinted with
-`Symfony\Component\HttpFoundation\Request`::
+Symfony automatically injects the ``Request`` object when the controller defines
+a variable type hinted with `Symfony\Component\HttpFoundation\Request`::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -102,7 +102,7 @@ controller if a variable is type hinted with
 
         $request->getPreferredLanguage(array('en', 'fr'));
 
-        $request->query->get('page'); // get a $_GET parameter
+        $request->query->get('page');   // get a $_GET parameter
 
         $request->request->get('page'); // get a $_POST parameter
     }
@@ -136,94 +136,25 @@ from any controller::
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
-        // in another controller for another request
+        // get the value of a session attribute
         $foo = $session->get('foo');
 
-        // use a default value if the key doesn't exist
+        // use a default value if the attribute doesn't exist
         $filters = $session->get('filters', array());
     }
 
-You can also store small messages that will only be available for the very
-next request::
+You can also store "flash messages" that will auto-delete after the next request.
+They are useful for instance when you need to set a success message before
+redirecting the user to another page (which will then show the message)::
 
     // store a message for the very next request (in a controller)
     $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
     // display any messages back in the next request (in a template)
 
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div>{{ flashMessage }}</div>
+    {% if app.session.flashbag.has('notice') %}
+        <div>{{ app.session.flashbag.get('notice') }}</div>
     {% endfor %}
-
-This is useful when you need to set a success message before redirecting
-the user to another page (which will then show the message). Please note that
-when you use has() instead of get(), the flash message will not be cleared and
-thus remains available during the following requests.
-
-Securing Resources
-------------------
-
-The Symfony Standard Edition comes with a simple security configuration that
-fits most common needs:
-
-.. code-block:: yaml
-
-    # app/config/security.yml
-    security:
-        encoders:
-            Symfony\Component\Security\Core\User\User: plaintext
-
-        role_hierarchy:
-            ROLE_ADMIN:       ROLE_USER
-            ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
-        providers:
-            in_memory:
-                memory:
-                    users:
-                        user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                        admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-
-        firewalls:
-            dev:
-                pattern:  ^/(_(profiler|wdt)|css|images|js)/
-                security: false
-
-            login:
-                pattern:  ^/demo/secured/login$
-                security: false
-
-            secured_area:
-                pattern:    ^/demo/secured/
-                form_login:
-                    check_path: /demo/secured/login_check
-                    login_path: /demo/secured/login
-                logout:
-                    path:   /demo/secured/logout
-                    target: /demo/
-
-This configuration requires users to log in for any URL starting with
-``/demo/secured/`` and defines two valid users: ``user`` and ``admin``.
-Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
-``ROLE_USER`` role as well (see the ``role_hierarchy`` setting).
-
-.. tip::
-
-    For readability, passwords are stored in clear text in this simple
-    configuration, but you can use any hashing algorithm by tweaking the
-    ``encoders`` section.
-
-Going to the ``http://localhost/app_dev.php/demo/secured/hello``
-URL will automatically redirect you to the login form because this resource is
-protected by a ``firewall``.
-
-.. note::
-
-    The Symfony2 security layer is very flexible and comes with many different
-    user providers (like one for the Doctrine ORM) and authentication providers
-    (like HTTP basic, HTTP digest, or X509 certificates). Read the
-    ":doc:`/book/security`" chapter of the book for more information
-    on how to use and configure them.
 
 Caching Resources
 -----------------
@@ -247,19 +178,10 @@ convenient ``@Cache()`` annotation::
         return array('name' => $name);
     }
 
-In this example, the resource will be cached for a day. But you can also use
-validation instead of expiration or a combination of both if that fits your
-needs better.
-
-Resource caching is managed by the Symfony2 built-in reverse proxy. But because
-caching is managed using regular HTTP cache headers, you can replace the
-built-in reverse proxy with Varnish or Squid and easily scale your application.
-
-.. note::
-
-    But what if you cannot cache whole pages? Symfony2 still has the solution
-    via Edge Side Includes (ESI), which are supported natively. Learn more by
-    reading the ":doc:`/book/http_cache`" chapter of the book.
+In this example, the resource will be cached for a day (``86400`` seconds).
+Resource caching is managed by Symfony2 itself. But because caching is managed
+using standard HTTP cache headers, you can use Varnish or Squid without having
+to modify a single line of code in your application.
 
 Final Thoughts
 --------------
