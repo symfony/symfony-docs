@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-17T15:52:02Z
+
++1 to move the note to a note directive after the example, showing the javascritps block.
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-18T15:26:33Z
+
+@WouterJ I've moved it to a note and likewise for `stylesheets`. Also changed "Standard Distribution" to "Standard Edition".
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-18T16:42:53Z
+
+@bicpi you should also add the PHP format. (see the templating component docs for a PHP example of blocks)
+
+And -1 for Standard Distribution to Standard Edition, it's the Standard Distribution of Symfony, which is called the Standard Edition.
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-18T18:02:19Z
+
+@WouterJ I'm a bit confused about the Distribution/Edition thing now. I thought the only official Symfony Distribution is the Standard Edition (on the Download page) and the note talks about the Twig blocks in this Standard Edition. I wanted to include the PHP example, but the Standard Edition does not provide a base PHP template - in this case it would not make sense to add PHP samples.
