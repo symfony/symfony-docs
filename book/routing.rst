@@ -428,6 +428,13 @@ match, giving the ``page`` parameter a value of ``2``. Perfect.
 | /blog/2            | blog  | {page} = 2            |
 +--------------------+-------+-----------------------+
 
+.. caution::
+
+    Of course, you can have more than one optional placeholder (e.g. ``/blog/{slug}/{page}``),
+    but everything after an optional placeholder must be optional. For example,
+    ``/{page}/blog`` is a valid path, but ``page`` will always be required
+    (i.e. simply ``/blog`` will not match this route).
+
 .. tip::
 
     Routes with optional parameters at the end will not match on requests

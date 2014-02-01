@@ -59,3 +59,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+.. include:: /reference/forms/types/options/extra_fields_message.rst.inc
+
+.. include:: /reference/forms/types/options/post_max_size_message.rst.inc
+
+.. include:: /reference/forms/types/options/pattern.rst.inc

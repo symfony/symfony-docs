@@ -62,7 +62,7 @@ The service config for these classes would look something like this:
             my_email_formatter:
                 # ...
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class: "%newsletter_manager.class%"
                 calls:
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]
@@ -196,7 +196,7 @@ a parent for a service.
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:  "%newsletter_manager.class%"
                 parent: mail_manager
 
             greeting_card_manager:
@@ -321,13 +321,13 @@ to the ``NewsletterManager`` class, the config would look like this:
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:  "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
                     - [setMailer, ["@my_alternative_mailer"]]
 
             greeting_card_manager:
-                class:     "%greeting_card_manager.class%"
+                class:  "%greeting_card_manager.class%"
                 parent: mail_manager
 
     .. code-block:: xml

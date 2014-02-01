@@ -59,7 +59,7 @@ Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
 Generating mod_rewrite rules
 ----------------------------
 
-To test that it's working, let's create a very basic route for the AcmeDemoBundle:
+To test that it's working, create a very basic route for the AcmeDemoBundle:
 
 .. configuration-block::
 
@@ -67,7 +67,7 @@ To test that it's working, let's create a very basic route for the AcmeDemoBundl
 
         # app/config/routing.yml
         hello:
-            path:  /hello/{name}
+            path: /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
 
     .. code-block:: xml

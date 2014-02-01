@@ -202,9 +202,9 @@ Instead, you only need to add a few extra lines to the routing configuration:
         return $collection;
 
 The important part here is the ``type`` key. Its value should be "extra".
-This is the type which our ``ExtraLoader`` supports and this will make sure
+This is the type which the ``ExtraLoader`` supports and this will make sure
 its ``load()`` method gets called. The ``resource`` key is insignificant
-for the ``ExtraLoader``, so we set it to ".".
+for the ``ExtraLoader``, so it is set to ".".
 
 .. note::
 

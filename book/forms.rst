@@ -281,7 +281,7 @@ Submitting Forms with Multiple Buttons
 
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
-Let's add a second button with the caption "Save and add" to our form::
+To do this, add a second button with the caption "Save and add" to your form::
 
     $form = $this->createFormBuilder($task)
         ->add('task', 'text')
@@ -552,8 +552,8 @@ Groups based on the Clicked Button
 When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,
 consider a form in a wizard that lets you advance to the next step or go back
-to the previous step. Let's assume also that when returning to the previous
-step, the data of the form should be saved, but not validated.
+to the previous step. Also assume that when returning to the previous step,
+the data of the form should be saved, but not validated.
 
 First, we need to add the two buttons to the form::
 

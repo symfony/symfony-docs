@@ -99,7 +99,6 @@ for ``acme_hello`` is set to ``non_default``:
     .. code-block:: yaml
 
         # app/config/config.yml
-
         acme_something:
             # ...
             use_acme_goodbye: false
@@ -112,7 +111,6 @@ for ``acme_hello`` is set to ``non_default``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <acme-something:config use-acme-goodbye="false">
             <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
         </acme-something:config>
@@ -122,7 +120,6 @@ for ``acme_hello`` is set to ``non_default``:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('acme_something', array(
             ...,
             'use_acme_goodbye' => false,

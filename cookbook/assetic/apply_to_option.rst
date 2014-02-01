@@ -6,7 +6,7 @@ How to Apply an Assetic Filter to a Specific File Extension
 
 Assetic filters can be applied to individual files, groups of files or even,
 as you'll see here, files that have a specific extension. To show you how
-to handle each option, let's suppose that you want to use Assetic's CoffeeScript
+to handle each option, suppose that you want to use Assetic's CoffeeScript
 filter, which compiles CoffeeScript files into JavaScript.
 
 The main configuration is just the paths to coffee, node and node_modules.
@@ -20,9 +20,9 @@ An example configuration might look like this:
         assetic:
             filters:
                 coffee:
-                    bin: /usr/bin/coffee
-                    node: /usr/bin/node
-                    node_paths: [ /usr/lib/node_modules/ ]
+                    bin:        /usr/bin/coffee
+                    node:       /usr/bin/node
+                    node_paths: [/usr/lib/node_modules/]
 
     .. code-block:: xml
 
@@ -130,10 +130,10 @@ applied to all ``.coffee`` files:
         assetic:
             filters:
                 coffee:
-                    bin: /usr/bin/coffee
-                    node: /usr/bin/node
-                    node_paths: [ /usr/lib/node_modules/ ]
-                    apply_to: "\.coffee$"
+                    bin:        /usr/bin/coffee
+                    node:       /usr/bin/node
+                    node_paths: [/usr/lib/node_modules/]
+                    apply_to:   "\.coffee$"
 
     .. code-block:: xml
 

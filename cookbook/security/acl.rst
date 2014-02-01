@@ -87,8 +87,8 @@ Fortunately, there is a task for this. Simply run the following command:
 Getting Started
 ---------------
 
-Coming back to the small example from the beginning, let's implement ACL for
-it.
+Coming back to the small example from the beginning, you can now implement
+ACL for it.
 
 Creating an ACL, and adding an ACE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -25,7 +25,7 @@ In order to set up a basic routing system you need three parts:
 * A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information about the request
 * A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the request to a single route
 
-Let's see a quick example. Notice that this assumes that you've already configured
+Here is a quick example. Notice that this assumes that you've already configured
 your autoloader to load the Routing component::
 
     use Symfony\Component\Routing\Matcher\UrlMatcher;

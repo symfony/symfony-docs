@@ -118,9 +118,9 @@ configuration:
         doctrine:
             # ...
             dbal:
-                host: localhost
-                dbname: testdb
-                user: testdb
+                host:     localhost
+                dbname:   testdb
+                user:     testdb
                 password: testdb
 
     .. code-block:: xml

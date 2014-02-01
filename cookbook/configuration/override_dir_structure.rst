@@ -51,7 +51,7 @@ the location of the cache directory to ``app/{environment}/cache``.
 .. caution::
 
     You should keep the ``cache`` directory different for each environment,
-    otherwise some unexpected behaviour may happen. Each environment generates
+    otherwise some unexpected behavior may happen. Each environment generates
     its own cached config files, and so each needs its own directory to store
     those cache files.
 

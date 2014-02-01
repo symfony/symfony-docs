@@ -155,7 +155,7 @@ Symfony2 (replace *Fabien* with your first name):
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
 
-What's going on here? Let's dissect the URL:
+What's going on here? Have a look at each part of the URL:
 
 * ``app_dev.php``: This is a :term:`front controller`. It is the unique entry
   point of the application and it responds to all user requests;

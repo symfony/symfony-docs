@@ -64,6 +64,7 @@ easily and transparently:
 
         imports:
             - { resource: config.yml }
+
         # ...
 
     .. code-block:: xml
@@ -71,11 +72,13 @@ easily and transparently:
         <imports>
             <import resource="config.xml" />
         </imports>
+
         <!-- ... -->
 
     .. code-block:: php
 
         $loader->import('config.php');
+
         // ...
 
 To share common configuration, each environment's configuration file
@@ -188,12 +191,12 @@ environment by using this code and changing the environment string.
 
             doctrine:
                dbal:
-                   logging:  "%kernel.debug%"
+                   logging: "%kernel.debug%"
                    # ...
 
         .. code-block:: xml
 
-            <doctrine:dbal logging="%kernel.debug%" ... />
+            <doctrine:dbal logging="%kernel.debug%" />
 
         .. code-block:: php
 

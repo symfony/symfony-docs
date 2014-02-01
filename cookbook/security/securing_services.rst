@@ -158,8 +158,8 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        # ...
 
+        # ...
         services:
             newsletter_manager:
                 # ...
@@ -243,16 +243,15 @@ documentation.
 
         .. code-block:: xml
 
+            <!-- app/config/config.xml -->
             <?xml version="1.0" ?>
-
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:acme_hello="http://www.example.com/symfony/schema/"
+                xmlns:jms-security-extra="http://example.org/schema/dic/jms_security_extra"
                 xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
-                <!-- app/config/config.xml -->
-
-                <jms_security_extra secure_controllers="true" secure_all_services="true" />
+                <!-- ... -->
+                <jms-security-extra:config secure-controllers="true" secure-all-services="true" />
 
             </srv:container>
 
@@ -261,7 +260,6 @@ documentation.
             // app/config/config.php
             $container->loadFromExtension('jms_security_extra', array(
                 // ...
-
                 'secure_all_services' => true,
             ));
 
