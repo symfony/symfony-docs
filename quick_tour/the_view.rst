@@ -3,31 +3,26 @@ The View
 
 After reading the first part of this tutorial, you have decided that Symfony2
 was worth another 10 minutes. Great choice! In this second part, you will
-learn more about the Symfony2 template engine, `Twig`_. Twig is a flexible,
+learn more about `Twig`_, the Symfony2 template engine. Twig is a flexible,
 fast, and secure template engine for PHP. It makes your templates more
 readable and concise; it also makes them more friendly for web designers.
-
-.. note::
-
-    Instead of Twig, you can also use :doc:`PHP </cookbook/templating/PHP>`
-    for your templates. Both template engines are supported by Symfony2.
 
 Getting familiar with Twig
 --------------------------
 
-.. tip::
+The official Twig `documentation`_ is the best resource to learn everything
+abut this new template engine. This section just gives you a quick overview of
+its main concepts.
 
-    If you want to learn Twig, it's highly recommended you read its official
-    `documentation`_. This section is just a quick overview of the main
-    concepts.
+A Twig template is a text file that can generate any type of content (HTML, CSS,
+JavaScript, XML, CSV, LaTeX, ...). Twig defines three kinds of delimiters:
 
-A Twig template is a text file that can generate any type of content (HTML,
-XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
+* ``{{ ... }}``: prints the content of a variable or the result of an expression;
 
-* ``{{ ... }}``: Prints a variable or the result of an expression;
+* ``{% ... %}``: controls the logic of the template; it is used to execute
+  ``for`` loops and ``if`` statements, for example;
 
-* ``{% ... %}``: Controls the logic of the template; it is used to execute
-  ``for`` loops and ``if`` statements, for example.
+* ``{# ... #}``: allows to include comments inside templates.
 
 Below is a minimal template that illustrates a few basics, using two variables
 ``page_title`` and ``navigation``, which would be passed into the template:
@@ -49,10 +44,6 @@ Below is a minimal template that illustrates a few basics, using two variables
             </ul>
         </body>
     </html>
-
-.. tip::
-
-   Comments can be included inside templates using the ``{# ... #}`` delimiter.
 
 To render a template in Symfony, use the ``render`` method from within a controller
 and pass it any variables needed in the template::
@@ -87,24 +78,17 @@ variable with the dot (``.``) notation:
     {# pass arguments to a method #}
     {{ user.date('Y-m-d') }}
 
-.. note::
-
-    It's important to know that the curly braces are not part of the variable
-    but the print statement. If you access variables inside tags don't put the
-    braces around.
-
 Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, you think about this problem
-differently: a template can be decorated by another one. This works exactly
-the same as PHP classes: template inheritance allows you to build a base
-"layout" template that contains all the common elements of your site and
-defines "blocks" that child templates can override.
+well-known header and footer. Twig solves this problem elegantly with a concept
+called "template inheritance". This feature allows you to build a base "layout"
+template that contains all the common elements of your site and defines "blocks"
+that child templates can override.
 
-The ``hello.html.twig`` template inherits from ``layout.html.twig``, thanks to
-the ``extends`` tag:
+The ``hello.html.twig`` template uses the ``extends`` tag to indicate that it
+inherits from the common ``layout.html.twig`` template:
 
 .. code-block:: html+jinja
 
@@ -120,24 +104,24 @@ the ``extends`` tag:
 The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it?
 It is the same notation used to reference a regular template. The ``::`` part
 simply means that the controller element is empty, so the corresponding file
-is directly stored under the ``Resources/views/`` directory.
+is directly stored under the ``Resources/views/`` directory of the bundle.
 
 Now, simplify the ``layout.html.twig`` template:
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/layout.html.twig #}
-    <div class="symfony-content">
+    <div>
         {% block content %}
         {% endblock %}
     </div>
 
 The ``{% block %}`` tags define blocks that child templates can fill in. All
-the block tag does is to tell the template engine that a child template may
-override those portions of the template.
+the ``{% block %}`` tag does is to tell the template engine that a child
+template may override those portions of the template.
 
 In this example, the ``hello.html.twig`` template overrides the ``content``
-block, meaning that the "Hello Fabien" text is rendered inside the ``div.symfony-content``
+block, meaning that the "Hello Fabien" text is rendered inside the ``<div>``
 element.
 
 Using Tags, Filters, and Functions
@@ -203,7 +187,7 @@ new request) and are made available to the controller::
             $object = ...;
 
             return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array(
-                'name' => $name,
+                'name'   => $name,
                 'object' => $object,
             ));
         }
@@ -214,8 +198,8 @@ new request) and are made available to the controller::
 Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Speaking of web applications, creating links between pages is a must. Instead
-of hardcoding URLs in templates, the ``path`` function knows how to generate
+Creating links between pages is a must for web applications. Instead of
+hardcoding URLs in templates, the ``path`` function knows how to generate
 URLs based on the routing configuration. That way, all your URLs can be easily
 updated by just changing the configuration:
 
@@ -225,7 +209,7 @@ updated by just changing the configuration:
 
 The ``path`` function takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
-and the parameters are the values of the placeholders defined in the route
+and the parameters are the values of the variables defined in the route
 pattern::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
@@ -245,8 +229,9 @@ pattern::
 
 .. tip::
 
-    The ``url`` function generates *absolute* URLs: ``{{ url('_demo_hello', {
-    'name': 'Thomas'}) }}``.
+    The ``url`` function is very similar to the ``path`` function, but generates
+    *absolute* URLs, which is very handy when rendering emails and RSS files:
+    ``{{ url('_demo_hello', {'name': 'Thomas'}) }}``.
 
 Including Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,13 +249,6 @@ The ``asset`` function's main purpose is to make your application more portable.
 Thanks to this function, you can move the application root directory anywhere
 under your web root directory without changing anything in your template's
 code.
-
-Escaping Variables
-------------------
-
-Twig is configured to automatically escape all output by default. Read Twig
-`documentation`_ to learn more about output escaping and the Escaper
-extension.
 
 Final Thoughts
 --------------
