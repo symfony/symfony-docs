@@ -144,13 +144,17 @@ Here's an example of how this might look::
                 return new WebserviceUser($username, $password, $salt, $roles);
             }
 
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UsernameNotFoundException(
+                sprintf('Username "%s" does not exist.', $username)
+            );
         }
 
         public function refreshUser(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
-                throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+                throw new UnsupportedUserException(
+                    sprintf('Instances of "%s" are not supported.', get_class($user))
+                );
             }
 
             return $this->loadUserByUsername($user->getUsername());
@@ -221,7 +225,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
     .. code-block:: yaml
 
-        // app/config/security.yml
+        # app/config/security.yml
         security:
             providers:
                 webservice:
