@@ -191,7 +191,7 @@ interface and have an event method for each event it subscribes to::
         public function index(LifecycleEventArgs $args)
         {
             $entity = $args->getEntity();
-            $em = $args->getManager();
+            $em = $args->getEntityManager();
 
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
