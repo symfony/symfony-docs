@@ -108,7 +108,9 @@ error occurred:
 .. code-block:: php
 
     use Symfony\Component\Yaml\Exception\ParseException;
+    use Symfony\Component\Yaml\Parser;
 
+    $yaml = new Parser();
     try {
         $value = $yaml->parse(file_get_contents('/path/to/file.yml'));
     } catch (ParseException $e) {
