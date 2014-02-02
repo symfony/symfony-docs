@@ -1072,18 +1072,24 @@ fine-grained enough in certain cases. When necessary, you can easily force
 authorization from inside a controller::
 
     // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
+            throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
         // ...
     }
 
 .. _book-security-securing-controller-annotations:
+
+.. versionadded:: 2.5
+    The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
+
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException()`
+method creates a special :class:`Symfony\\Component\\Security\\Core\Exception\\AccessDeniedException`
+object, which ultimately triggers a 403 HTTP response inside Symfony.
 
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller using annotations::
 
