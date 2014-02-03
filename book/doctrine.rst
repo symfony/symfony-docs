@@ -720,46 +720,12 @@ instead of querying for rows on a table (e.g. ``product``).
 When querying in Doctrine, you have two options: writing pure Doctrine queries
 or using Doctrine's Query Builder.
 
-Querying for Objects with DQL
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Querying for Objects Using Doctrine's Query Builder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Imagine that you want to query for products, but only return products that
-cost more than ``19.99``, ordered from cheapest to most expensive. From inside
-a controller, do the following::
-
-    $em = $this->getDoctrine()->getManager();
-    $query = $em->createQuery(
-        'SELECT p
-        FROM AcmeStoreBundle:Product p
-        WHERE p.price > :price
-        ORDER BY p.price ASC'
-    )->setParameter('price', '19.99');
-
-    $products = $query->getResult();
-
-The ``getResult()`` method returns an array of results. To get only one
-result, you can use ``getSingleResult()`` (which throws exception there is no
-result) or ``getOneOrNullResult()``::
-
-    $product = $query->getOneOrNullResult();
-
-If you're comfortable with SQL, then DQL should feel very natural. The biggest
-difference is that you need to think in terms of "objects" instead of rows
-in a database. For this reason, you select *from* the ``AcmeStoreBundle:Product``
-*object* and then alias it as ``p``.
-
-The DQL syntax is incredibly powerful, allowing you to easily join between
-entities (the topic of :ref:`relations <book-doctrine-relations>` will be
-covered later), group, etc. For more information, see the official Doctrine
-`Doctrine Query Language`_ documentation.
-
-Using Doctrine's Query Builder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of writing the queries directly, you can alternatively use Doctrine's
-``QueryBuilder`` to do the same job using a nice, object-oriented interface.
-If you use an IDE, you can also take advantage of auto-completion as you
-type the method names. From inside a controller::
+cost more than ``19.99``, ordered from cheapest to most expensive. You can use
+Doctrine's ``QueryBuilder`` for this::
 
     $repository = $this->getDoctrine()
         ->getRepository('AcmeStoreBundle:Product');
@@ -774,11 +740,43 @@ type the method names. From inside a controller::
 
 The ``QueryBuilder`` object contains every method necessary to build your
 query. By calling the ``getQuery()`` method, the query builder returns a
-normal ``Query`` object, which is the same object you built directly in the
-previous section.
+normal ``Query`` object, which can be used to get the result of the query.
+
+The ``getResult()`` method returns an array of results. To get only one
+result, you can use ``getSingleResult()`` (which throws exception there is no
+result) or ``getOneOrNullResult()``::
+
+    $product = $query->getOneOrNullResult();
 
 For more information on Doctrine's Query Builder, consult Doctrine's
 `Query Builder`_ documentation.
+
+Querying for Objects with DQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of using the ``QueryBuilder``, you can alternatively write the queries
+directly using DQL::
+
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+        'SELECT p
+        FROM AcmeStoreBundle:Product p
+        WHERE p.price > :price
+        ORDER BY p.price ASC'
+    )->setParameter('price', '19.99');
+
+    $products = $query->getResult();
+
+If you're comfortable with SQL, then DQL should feel very natural. The biggest
+difference is that you need to think in terms of "objects" instead of rows
+in a database. For this reason, you select *from* the ``AcmeStoreBundle:Product``
+*object* and then alias it as ``p`` (as you see, this is equal to what you
+already did in the previous section).
+
+The DQL syntax is incredibly powerful, allowing you to easily join between
+entities (the topic of :ref:`relations <book-doctrine-relations>` will be
+covered later), group, etc. For more information, see the official Doctrine
+`Doctrine Query Language`_ documentation.
 
 Custom Repository Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
