@@ -1345,8 +1345,10 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
 Now, right before the entity is first persisted, Doctrine will automatically
 call this method and the ``createdAt`` field will be set to the current date.
-For more information on other lifecycle events and lifecycle callbacks in
-general, see Doctrine's `Lifecycle Events documentation`_.
+
+There are several other lifecycle events that you can hook into. For more
+information on other lifecycle events and lifecycle callbacks in general, see
+Doctrine's `Lifecycle Events documentation`_.
 
 .. sidebar:: Lifecycle Callbacks and Event Listeners
 
