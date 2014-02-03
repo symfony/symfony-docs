@@ -1389,8 +1389,11 @@ powerful, allowing you to create complex queries and subscribe to events
 that allow you to take different actions as objects go through their persistence
 lifecycle.
 
+Learn More
+~~~~~~~~~~
+
 For more information about Doctrine, see the *Doctrine* section of the
-:doc:`cookbook </cookbook/index>`. Some usefull articles might be:
+:doc:`cookbook </cookbook/index>`. Some useful articles might be:
 
 * :doc:`/cookbook/doctrine/common_extensions`
 * :doc:`/cookbook/doctrine/console`
