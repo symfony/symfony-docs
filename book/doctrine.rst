@@ -1370,8 +1370,10 @@ Doctrine Field Types Reference
 
 Doctrine comes with a large number of field types available. Each of these
 maps a PHP data type to a specific column type in whatever database you're
-using. To see a list of all available types and more information, see
-Doctrine's `Mapping Types documentation`_.
+using. For each field type, the ``Column`` can be configured further, setting
+the ``length``, ``nullable`` behavior, ``name`` and other options. To see a
+list of all available types and more information, see Doctrine's
+`Mapping Types documentation`_.
 
 Summary
 -------
@@ -1401,7 +1403,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
-.. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#doctrine-mapping-types
+.. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mappings
 .. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
 .. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
