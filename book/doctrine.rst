@@ -519,13 +519,12 @@ of the bundle:
 
 .. tip::
 
-    This page shows working with Doctrine within a controller. You may also
-    want to work with Doctrine elsewhere in your application. The
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine`
-    method of the controller returns the ``doctrine`` service, you can work with
-    this in the same way elsewhere by injecting this into your own
-    services. See :doc:`/book/service_container` for more on creating
-    your own services.
+    This article shows working with Doctrine from within a controller by using
+    the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine`
+    method of the controller. This method is a shortcut to get the
+    ``doctrine`` service. You can work with Doctrine anywhere else
+    by injecting that service in the service. See
+    :doc:`/book/service_container` for more on creating your own services.
 
 Take a look at the previous example in more detail:
 
