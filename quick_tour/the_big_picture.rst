@@ -9,8 +9,8 @@ Installing Symfony2
 -------------------
 
 First, check that the PHP version installed on your computer meets the Symfony2
-requirements: 5.3.3 or higher. Then, open a command console and execute the
-following command to install the latest version of Symfony2 in the ``myproject/``
+requirements: 5.3.3 or higher. Then, open a console and execute the following
+command to install the latest version of Symfony2 in the ``myproject/``
 directory:
 
 .. code-block:: bash
@@ -145,7 +145,7 @@ will be executed. In the next section, you'll learn exactly what that means.
 
 .. tip::
 
-    In addition to YAML format, routes can be configured in XML or PHP files
+    In addition to YAML files, routes can be configured in XML or PHP files
     and even embedded in PHP annotations. This flexibility is one of the main
     features of Symfony2, a framework that never imposes you a particular
     configuration format.
@@ -162,7 +162,7 @@ controller might create the response by hand, based on the request::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    $name = $request->query->get('name');
+    $name = $request->get('name');
 
     return new Response('Hello '.$name);
 
@@ -322,11 +322,13 @@ environment.
 
 .. _quick-tour-big-picture-environments-intro:
 
-So what *is* an environment? An :term:`Environment` is a simple string (e.g.
-``dev`` or ``prod``) that represents a group of configuration that's used
-to run your application.
+So what *is* an environment? An :term:`Environment` represents a group of
+configuration that's used to run your application. Symfony2 defines by default
+two environments: ``dev`` (suited for when developing the application locally)
+and ``prod`` (optimized for when executing the application on production).
 
-Typically, you put your common configuration in ``config.yml`` and override
+Typically, the environments share a large amount of configuration options. For
+that reason, you put your common configuration in ``config.yml`` and override
 where necessary in the specific configuration file for each environment:
 
 .. code-block:: yaml
@@ -340,8 +342,8 @@ where necessary in the specific configuration file for each environment:
         intercept_redirects: false
 
 In this example, the ``dev`` environment loads the ``config_dev.yml`` configuration
-file, which itself imports the global ``config.yml`` file and then modifies it by
-enabling the web debug toolbar.
+file, which itself imports the common ``config.yml`` file and then modifies it
+by enabling the web debug toolbar.
 
 When you visit the ``app_dev.php`` file in your browser, you're executing
 your Symfony application in the ``dev`` environment. To visit your application
