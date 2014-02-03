@@ -737,7 +737,11 @@ a controller, do the following::
 
     $products = $query->getResult();
 
-The ``getResult()`` method returns an array of results.
+The ``getResult()`` method returns an array of results. To get only one
+result, you can use ``getSingleResult()`` (which throws exception there is no
+result) or ``getOneOrNullResult()``::
+
+    $product = $query->getOneOrNullResult();
 
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
 difference is that you need to think in terms of "objects" instead of rows
