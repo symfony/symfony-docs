@@ -158,7 +158,7 @@ entity), you should check for the entity's class type in your method
 
     Starting from version 2.4 Doctrine has a feature called `Entity Listeners`_
     which is a lifecycle listener class used for an entity. You can read about
-    it in Doctrine documentation.
+    it in the Doctrine documentation.
 
 Creating the Subscriber Class
 -----------------------------
