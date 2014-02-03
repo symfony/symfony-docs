@@ -54,7 +54,10 @@ below renders the ``index.html.php`` template::
     // ...
     public function indexAction($name)
     {
-        return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
+        return $this->render(
+            'AcmeHelloBundle:Hello:index.html.php',
+            array('name' => $name)
+        );
     }
 
 You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
