@@ -1,26 +1,25 @@
 The View
 ========
 
-After reading the first part of this tutorial, you have decided that Symfony2
-was worth another 10 minutes. Great choice! In this second part, you will
-learn more about `Twig`_, the Symfony2 template engine. Twig is a flexible,
-fast, and secure template engine for PHP. It makes your templates more
-readable and concise; it also makes them more friendly for web designers.
+In this second chapter, you will learn more about `Twig`_, the fast, flexible,
+and secure template engine for PHP. Twig makes your templates more readable and
+concise; it also makes them more friendly for web designers.
 
 Getting familiar with Twig
 --------------------------
 
-The official Twig `documentation`_ is the best resource to learn everything
-abut this new template engine. This section just gives you a quick overview of
+The official `Twig documentation`_ is the best resource to learn everything
+about this new template engine. This section just gives you a quick overview of
 its main concepts.
 
 A Twig template is a text file that can generate any type of content (HTML, CSS,
-JavaScript, XML, CSV, LaTeX, ...). Twig defines three kinds of delimiters:
+JavaScript, XML, CSV, LaTeX, ...). Twig elements are separated from the rest of
+the template contents using any of these delimiters:
 
 * ``{{ ... }}``: prints the content of a variable or the result of an expression;
 
-* ``{% ... %}``: controls the logic of the template; it is used to execute
-  ``for`` loops and ``if`` statements, for example;
+* ``{% ... %}``: controls the logic of the template; it is used for example to
+  execute ``for`` loops and ``if`` statements;
 
 * ``{# ... #}``: allows to include comments inside templates.
 
@@ -32,21 +31,21 @@ Below is a minimal template that illustrates a few basics, using two variables
     <!DOCTYPE html>
     <html>
         <head>
-            <title>My Webpage</title>
+            <title>{{ page_title }}</title>
         </head>
         <body>
             <h1>{{ page_title }}</h1>
 
             <ul id="navigation">
                 {% for item in navigation %}
-                    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+                    <li><a href="{{ item.url }}">{{ item.label }}</a></li>
                 {% endfor %}
             </ul>
         </body>
     </html>
 
 To render a template in Symfony, use the ``render`` method from within a controller
-and pass it any variables needed in the template::
+and pass the variables needed as an array using the optional second argument::
 
     $this->render('AcmeDemoBundle:Demo:hello.html.twig', array(
         'name' => $name,
@@ -54,29 +53,31 @@ and pass it any variables needed in the template::
 
 Variables passed to a template can be strings, arrays, or even objects. Twig
 abstracts the difference between them and lets you access "attributes" of a
-variable with the dot (``.``) notation:
+variable with the dot (``.``) notation. The following code listing shows how to
+display the content of a variable depending on the type of variable passed by
+the controller:
 
 .. code-block:: jinja
 
+    {# 1. Simple variables #}
     {# array('name' => 'Fabien') #}
     {{ name }}
 
+    {# 2. Arrays #}
     {# array('user' => array('name' => 'Fabien')) #}
     {{ user.name }}
 
-    {# force array lookup #}
+    {# alternative syntax for arrays #}
     {{ user['name'] }}
 
+    {# 3. Objects #}
     {# array('user' => new User('Fabien')) #}
     {{ user.name }}
     {{ user.getName }}
 
-    {# force method name lookup #}
+    {# alternative syntax for objects #}
     {{ user.name() }}
     {{ user.getName() }}
-
-    {# pass arguments to a method #}
-    {{ user.date('Y-m-d') }}
 
 Decorating Templates
 --------------------
@@ -116,28 +117,38 @@ Now, simplify the ``layout.html.twig`` template:
         {% endblock %}
     </div>
 
-The ``{% block %}`` tags define blocks that child templates can fill in. All
-the ``{% block %}`` tag does is to tell the template engine that a child
-template may override those portions of the template.
-
-In this example, the ``hello.html.twig`` template overrides the ``content``
-block, meaning that the "Hello Fabien" text is rendered inside the ``<div>``
-element.
+The ``{% block %}`` tags tell the template engine that a child template may
+override those portions of the template. In this example, the ``hello.html.twig``
+template overrides the ``content`` block, meaning that the "Hello Fabien" text
+is rendered inside the ``<div>`` element.
 
 Using Tags, Filters, and Functions
 ----------------------------------
 
 One of the best feature of Twig is its extensibility via tags, filters, and
-functions. Symfony2 comes bundled with many of these built-in to ease the
-work of the template designer.
+functions. Take a look at the following sample template that uses filters
+extensively to modify the information before displaying it to the user:
+
+.. code-block:: jinja
+
+    <h1>{{ article.title|trim|capitalize }}</h1>
+
+    <p>{{ article.content|striptags|slice(0, 1024) }}</p>
+
+    <p>Tags: {{ article.tags|sort|join(", ") }}</p>
+
+    <p>Next article will be published on {{ 'next Monday'|date('M j, Y')}}</p>
+
+Don't forget to check out the official `Twig documentation`_ to learn everything
+about filters, functions and tags.
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The best way to share a snippet of code between several distinct templates is
-to create a new template that can then be included from other templates.
+The best way to share a snippet of code between several templates is to create a
+new template fragment that can then be included from other templates.
 
-Create an ``embedded.html.twig`` template:
+First, create an ``embedded.html.twig`` template:
 
 .. code-block:: jinja
 
@@ -163,32 +174,31 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-Suppose you've created a ``fancyAction`` controller method, and you want to
-"render" it inside the ``index`` template, which means including the result
-(e.g. ``HTML``) of the controller. To do this, use the ``render`` function:
+Suppose you've created a ``topArticlesAction`` controller method to display the
+most popular articles of your website. If you want to "render" the result of
+that method (e.g. ``HTML``) inside the ``index`` template, use the ``render``
+function:
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {{ render(controller("AcmeDemoBundle:Demo:fancy", {'name': name, 'color': 'green'})) }}
+    {{ render(controller("AcmeDemoBundle:Demo:topArticles", {'num': 10})) }}
 
-Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
-of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
-simulated request variables (as if the ``fancyAction`` were handling a whole
-new request) and are made available to the controller::
+Here, the ``AcmeDemoBundle:Demo:topArticles`` string refers to the
+``topArticlesAction`` action of the ``Demo`` controller, and the ``num``
+argument is made available to the controller::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
     class DemoController extends Controller
     {
-        public function fancyAction($name, $color)
+        public function topArticlesAction($num)
         {
-            // create some object, based on the $color variable
-            $object = ...;
+            // look for the $num most popular articles in the database
+            $articles = ...;
 
-            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array(
-                'name'   => $name,
-                'object' => $object,
+            return $this->render('AcmeDemoBundle:Demo:topArticles.html.twig', array(
+                'articles' => $articles,
             ));
         }
 
@@ -208,9 +218,8 @@ updated by just changing the configuration:
     <a href="{{ path('_demo_hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
 The ``path`` function takes the route name and an array of parameters as
-arguments. The route name is the main key under which routes are referenced
-and the parameters are the values of the variables defined in the route
-pattern::
+arguments. The route name is the key under which routes are defined and the
+parameters are the values of the variables defined in the route pattern::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -267,5 +276,5 @@ But I'm getting ahead of myself. First, you need to learn more about the control
 and that's exactly the topic of the :doc:`next part of this tutorial <the_controller>`.
 Ready for another 10 minutes with Symfony2?
 
-.. _Twig:          http://twig.sensiolabs.org/
-.. _documentation: http://twig.sensiolabs.org/documentation
+.. _Twig:               http://twig.sensiolabs.org/
+.. _Twig documentation: http://twig.sensiolabs.org/documentation
