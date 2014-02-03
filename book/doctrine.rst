@@ -742,6 +742,12 @@ The ``QueryBuilder`` object contains every method necessary to build your
 query. By calling the ``getQuery()`` method, the query builder returns a
 normal ``Query`` object, which can be used to get the result of the query.
 
+.. tip::
+
+    Take note of the ``setParameter()`` method. When working with Doctrine,
+    it's always a good idea to set any external values as "placeholders"
+    (``:price`` in the example above) as it prevents SQL injection attacks.
+
 The ``getResult()`` method returns an array of results. To get only one
 result, you can use ``getSingleResult()`` (which throws exception there is no
 result) or ``getOneOrNullResult()``::
