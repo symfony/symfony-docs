@@ -768,13 +768,13 @@ is used to enforce access.
 Each ``access_control`` has several options that configure two different
 things:
 
-* (a) :ref:`should the incoming request match this access control entry <security-book-access-control-matching-options>`
-* (b) :ref:`once it matches, should some sort of access restriction be enforced <security-book-access-control-enforcement-options>`:
+#. :ref:`should the incoming request match this access control entry <security-book-access-control-matching-options>`
+#. :ref:`once it matches, should some sort of access restriction be enforced <security-book-access-control-enforcement-options>`:
 
 .. _security-book-access-control-matching-options:
 
-(a) Matching Options
-....................
+1. Matching Options
+...................
 
 Symfony2 creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
 for each ``access_control`` entry, which determines whether or not a given
@@ -869,8 +869,8 @@ will match any ``ip``, ``host`` or ``method``:
 
 .. _security-book-access-control-enforcement-options:
 
-(b) Access Enforcement
-......................
+2. Access Enforcement
+.....................
 
 Once Symfony2 has decided which ``access_control`` entry matches (if any),
 it then *enforces* access restrictions based on the ``roles`` and ``requires_channel``
