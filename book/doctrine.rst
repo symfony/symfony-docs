@@ -783,7 +783,7 @@ Custom Repository Classes
 
 In the previous sections, you began constructing and using more complex queries
 from inside a controller. In order to isolate, test and reuse these queries,
-it's a good practise to create a custom repository class for your entity and
+it's a good practice to create a custom repository class for your entity and
 add methods with your query logic there.
 
 To do this, add the name of the repository class to your mapping definition:
