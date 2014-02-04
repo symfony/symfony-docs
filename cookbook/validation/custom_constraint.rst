@@ -65,7 +65,10 @@ The validator class is also simple, and only has one required method ``validate(
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-                $this->context->addViolation($constraint->message, array('%string%' => $value));
+                $this->context->addViolation(
+                    $constraint->message,
+                    array('%string%' => $value)
+                );
             }
         }
     }
@@ -216,7 +219,12 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-                $this->context->addViolationAt('foo', $constraint->message, array(), null);
+                $this->context->addViolationAt(
+                    'foo',
+                    $constraint->message,
+                    array(),
+                    null
+                );
             }
         }
     }

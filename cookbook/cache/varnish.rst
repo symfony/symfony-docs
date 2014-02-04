@@ -19,7 +19,7 @@ As seen previously, Symfony2 is smart enough to detect whether it talks to a
 reverse proxy that understands ESI or not. It works out of the box when you
 use the Symfony2 reverse proxy, but you need a special configuration to make
 it work with Varnish. Thankfully, Symfony2 relies on yet another standard
-written by Akamaï (`Edge Architecture`_), so the configuration tips in this
+written by Akamai (`Edge Architecture`_), so the configuration tips in this
 chapter can be useful even if you don't use Symfony2.
 
 .. note::

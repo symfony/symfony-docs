@@ -12,8 +12,8 @@ helper set, which you can get by calling
     $dialog = $this->getHelperSet()->get('dialog');
 
 All the methods inside the Dialog Helper have an
-:class:`Symfony\\Component\\Console\\Output\\OutputInterface` as first the
-argument, the question as the second argument and the default value as last
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface` as the first
+argument, the question as the second argument and the default value as the last
 argument.
 
 Asking the User for confirmation
@@ -52,8 +52,9 @@ if you want to know a bundle name, you can add this to your command::
     );
 
 The user will be asked "Please enter the name of the bundle". They can type
-some name which will be returned by the ``ask`` method. If they leave it empty,
-the default value (``AcmeDemoBundle`` here) is returned.
+some name which will be returned by the
+:method:`Symfony\\Component\\Console\\Helper\\DialogHelper::ask` method.
+If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
 
 Autocompletion
 ~~~~~~~~~~~~~~
@@ -235,9 +236,12 @@ this set the seventh argument to ``true``::
         return $colors[$c];
     }, $selected);
 
-    $output->writeln('You have just selected: ' . implode(', ', $selectedColors));
+    $output->writeln(
+        'You have just selected: ' . implode(', ', $selectedColors)
+    );
 
-Now, when the user enters ``1,2``, the result will be: ``You have just selected: blue, yellow``.
+Now, when the user enters ``1,2``, the result will be:
+``You have just selected: blue, yellow``.
 
 Testing a Command which expects input
 -------------------------------------
