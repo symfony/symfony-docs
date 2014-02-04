@@ -38,7 +38,7 @@ value and then a User object is created::
     {
         protected $userProvider;
 
-        public function __construct(ApiKeyUserProviderInterface $userProvider)
+        public function __construct(ApiKeyUserProvider $userProvider)
         {
             $this->userProvider = $userProvider;
         }
@@ -59,7 +59,7 @@ value and then a User object is created::
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
             $apiKey = $token->getCredentials();
-            $username = $this->userProvider->getUsernameForApiKey($apiKey)
+            $username = $this->userProvider->getUsernameForApiKey($apiKey);
 
             if (!$username) {
                 throw new AuthenticationException(
