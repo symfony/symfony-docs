@@ -5,7 +5,7 @@ How to Choose the Password Encoder Algorithm Dynamically
 ========================================================
 
 .. versionadded:: 2.5
-    Named encoders were introduced in Symfony 2.5
+    Named encoders were introduced in Symfony 2.5.
 
 Usually, the same password encoder is used for all users by configuring it
 to apply to all instances of a specific class:
@@ -19,12 +19,20 @@ to apply to all instances of a specific class:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-            <encoder class="Symfony\Component\Security\Core\User\User"
-                algorithm="sha512"
-            />
-        </config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <config>
+                <!-- ... -->
+                <encoder class="Symfony\Component\Security\Core\User\User"
+                    algorithm="sha512"
+                />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -33,12 +41,12 @@ to apply to all instances of a specific class:
             // ...
             'encoders' => array(
                 'Symfony\Component\Security\Core\User\User' => array(
-                    'algorithm'         => 'sha512',
+                    'algorithm' => 'sha512',
                 ),
             ),
         ));
 
-Another option is to use a "named" encoder, and then select which encoder
+Another option is to use a "named" encoder and then select which encoder
 you want to use dynamically.
 
 In the previous example, you've set the ``sha512`` algorithm for ``Acme\UserBundle\Entity\User``.
@@ -63,7 +71,11 @@ named encoders:
         <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
 
             <config>
                 <!-- ... -->
