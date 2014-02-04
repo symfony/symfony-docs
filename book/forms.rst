@@ -48,6 +48,7 @@ going to need to build a form. But before you begin, first focus on the generic
         {
             return $this->dueDate;
         }
+        
         public function setDueDate(\DateTime $dueDate = null)
         {
             $this->dueDate = $dueDate;
