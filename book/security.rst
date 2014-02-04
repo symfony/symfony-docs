@@ -1434,78 +1434,10 @@ or via some online tool.
 Supported algorithms for this method depend on your PHP version. A full list
 is available by calling the PHP function :phpfunction:`hash_algos`.
 
-Named encoders
-..............
+.. tip::
 
-.. versionadded:: 2.5
-    Named encoders were introduced in Symfony 2.5
-
-Another option is to set the encoder dynamically on an instance basis.
-In the previous example, you've set the ``sha512`` algorithm for ``Acme\UserBundle\Entity\User``.
-This may be secure enough for a regular user, but what if you want your admins to have
-a stronger algorithm? Let's say ``bcrypt``. This can be done with named encoders:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            # ...
-            encoders:
-                harsh:
-                    algorithm: bcrypt
-                    cost: 15
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services">
-
-            <config>
-                <!-- ... -->
-                <encoder class="harsh"
-                    algorithm="bcrypt"
-                    cost="15" />
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-            'encoders' => array(
-                'harsh' => array(
-                    'algorithm' => 'bcrypt',
-                    'cost'      => '15'
-                ),
-            ),
-        ));
-
-Now you've created an encoder named ``harsh``. In order for a ``User`` instance to use it,
-It must implement ``EncoderAwareInterface`` and have a method ``getEncoderName`` which returns the
-name of the encoder to use::
-
-    // src/Acme/UserBundle/Entity/User.php
-    namespace Acme\UserBundle\Entity;
-
-    use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
-
-    class User implements UserInterface, EncoderAwareInterface
-    {
-        public function getEncoderName()
-        {
-            if ($this->isAdmin()) {
-                return 'harsh';
-            }
-            
-            return null; // use the default encoder
-        }
-    }
+    It's also possible to use different hashing algorithms on a user-by-user
+    basis. See :doc:`/cookbook/security/named-encoders` for more details.
 
 Determining the Hashed Password
 ...............................
