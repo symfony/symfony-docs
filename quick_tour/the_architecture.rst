@@ -33,9 +33,10 @@ lives::
     $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-The controller first requires the ``bootstrap.php.cache`` file, which bootstraps
-the framework and registers the autoloader (see below). Then, it uses a kernel
-class, ``AppKernel`` in this case, to bootstrap the application.
+The controller first bootstraps the application using a kernel class (``AppKernel``
+in this case). Then, it creates the ``Request`` object using the PHP's global
+variables and passes it to the kernel. The last step is to send back to the user
+the response contents returned by the kernel.
 
 .. _the-app-dir:
 
@@ -54,8 +55,7 @@ This class must implement two methods:
   (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
-can use any PHP classes without doing anything at all! If you need more flexibility,
-you can extend the autoloader in the ``app/autoload.php`` file. All dependencies
+can use any PHP classes without doing anything at all! All dependencies
 are stored under the ``vendor/`` directory, but this is just a convention.
 You can store them wherever you want, globally on your server or locally
 in your projects.
@@ -69,12 +69,13 @@ Symfony2, the :term:`bundle` system.
 A bundle is kind of like a plugin in other software. So why is it called a
 *bundle* and not a *plugin*? This is because *everything* is a bundle in
 Symfony2, from the core framework features to the code you write for your
-application. Bundles are first-class citizens in Symfony2. This gives you
-the flexibility to use pre-built features packaged in third-party bundles
-or to distribute your own bundles. It makes it easy to pick and choose which
-features to enable in your application and optimize them the way you want.
-And at the end of the day, your application code is just as *important* as
-the core framework itself.
+application.
+
+Bundles are first-class citizens in Symfony2. This gives you the flexibility
+to use pre-built features packaged in third-party bundles or to distribute your
+own bundles. It makes it easy to pick and choose which features to enable in
+your application and optimize them the way you want. And at the end of the day,
+your application code is just as *important* as the core framework itself.
 
 Registering a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -109,14 +110,14 @@ a single ``Bundle`` class that describes it::
 
 In addition to the AcmeDemoBundle that was already talked about, notice
 that the kernel also enables other bundles such as the FrameworkBundle,
-DoctrineBundle, SwiftmailerBundle, and AsseticBundle bundle.
-They are all part of the core framework.
+DoctrineBundle, SwiftmailerBundle, and AsseticBundle bundle. They are all part
+of the core framework.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
 
 Each bundle can be customized via configuration files written in YAML, XML, or
-PHP. Have a look at the default configuration:
+PHP. Have a look at the default Symfony configuration:
 
 .. code-block:: yaml
 
@@ -181,9 +182,9 @@ PHP. Have a look at the default configuration:
         password:  "%mailer_password%"
         spool:     { type: memory }
 
-Each entry like ``framework`` defines the configuration for a specific bundle.
-For example, ``framework`` configures the FrameworkBundle while ``swiftmailer``
-configures the SwiftmailerBundle.
+Each first level entry like ``framework``, ``twig`` or ``doctrine`` defines the
+configuration for a specific bundle. For example, ``framework`` configures the
+FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file. For example, the ``dev`` environment loads the
