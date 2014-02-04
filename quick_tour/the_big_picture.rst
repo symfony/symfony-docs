@@ -1,7 +1,7 @@
 The Big Picture
 ===============
 
-This chapter will teach you how to develop a simple Symfony2 project in 10
+This first part will teach you how to develop a simple Symfony2 project in 10
 minutes! If you've used a web framework before, you should feel right at home
 with Symfony2. If not, welcome to a whole new way of developing web applications.
 
@@ -282,8 +282,9 @@ template (or ``AcmeDemoBundle:Demo:hello.html.twig`` if you use the logical name
     {% endblock %}
 
 By default, Symfony2 uses `Twig <http://twig.sensiolabs.org/>` as its template
-engine but you can also use traditional PHP templates if you choose. The next
-chapter will introduce how templates work in Symfony2.
+engine but you can also use traditional PHP templates if you choose. The
+:doc:`second part of this tutorial</quick_tour/the_view>` will introduce how
+templates work in Symfony2.
 
 Bundles
 ~~~~~~~
@@ -294,7 +295,7 @@ bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
 of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
-more about bundles in the :doc:`last chapter of this tutorial</quick_tour/the_architecture>`.
+more about bundles in the :doc:`last part of this tutorial</quick_tour/the_architecture>`.
 
 .. _quick-tour-big-picture-environments:
 

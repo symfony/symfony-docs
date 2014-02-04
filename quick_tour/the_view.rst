@@ -1,7 +1,7 @@
 The View
 ========
 
-In this second chapter, you will learn more about `Twig`_, the fast, flexible,
+In this second part, you will learn more about `Twig`_, the fast, flexible,
 and secure template engine for PHP. Twig makes your templates more readable and
 concise; it also makes them more friendly for web designers.
 
