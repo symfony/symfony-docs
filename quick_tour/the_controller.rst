@@ -52,8 +52,8 @@ variable in the route path instead::
     /**
      * @Route(
      *     "/hello/{name}.{_format}",
-     *     defaults = {"_format"="html"},
-     *     requirements = {"_format"="html|xml|json"},
+     *     defaults = { "_format" = "html" },
+     *     requirements = { "_format" = "html|xml|json" },
      *     name = "_demo_hello"
      * )
      * @Template()
@@ -87,6 +87,20 @@ You can also forward internally the action to another one with the ``forward()``
 method::
 
     return $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
+
+Displaying error pages
+----------------------
+
+Errors will inevitably happen during the execution of every web application.
+In the case of ``404`` errors, Symfony includes a handy shortcut that you can
+use on your controllers::
+
+    throw $this->createNotFoundException();
+
+For ``500`` errors, just throw a regular PHP exception inside the controller and
+Symfony will transform it in a proper ``500`` error page::
+
+    throw new \Exception('Something went wrong!');
 
 Getting information from the Request
 ------------------------------------
@@ -140,7 +154,7 @@ from any controller::
         $foo = $session->get('foo');
 
         // use a default value if the attribute doesn't exist
-        $filters = $session->get('filters', array());
+        $foo = $session->get('foo', 'default_value');
     }
 
 You can also store "flash messages" that will auto-delete after the next request.
@@ -150,11 +164,8 @@ redirecting the user to another page (which will then show the message)::
     // store a message for the very next request (in a controller)
     $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
-    // display any messages back in the next request (in a template)
-
-    {% if app.session.flashbag.has('notice') %}
-        <div>{{ app.session.flashbag.get('notice') }}</div>
-    {% endfor %}
+    // display the flash message in the template
+    <div>{{ app.session.flashbag.get('notice') }}</div>
 
 Caching Resources
 -----------------
