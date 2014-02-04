@@ -441,30 +441,31 @@ which returns a boolean value::
 EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``EventDispatcher`` always injects a reference to itself in the passed event
-object. This means that all listeners have direct access to the
-``EventDispatcher`` object that notified the listener via the passed ``Event``
-object's :method:`Symfony\\Component\\EventDispatcher\\Event::getDispatcher`
-method.
+.. versionadded:: 2.4
+    Since Symfony 2.4 the current event name and the ``EventDispatcher``
+    itself are passed to the listeners as additional arguments.
 
-This can lead to some advanced applications of the ``EventDispatcher`` including
-letting listeners dispatch other events, event chaining or even lazy loading of
-more listeners into the dispatcher object. Examples follow:
+The ``EventDispatcher`` always passes the dispatched event, the event's name
+and a reference to itself to the listeners. This can be used in some advanced
+usages of the ``EventDispatcher`` like dispatching other events in listeners,
+event chaining or even lazy loading of more listeners into the dispatcher
+object as shown in the following examples.
 
 Lazy loading listeners::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
     use Acme\StoreBundle\Event\StoreSubscriber;
 
     class Foo
     {
         private $started = false;
 
-        public function myLazyListener(Event $event)
+        public function myLazyListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
             if (false === $this->started) {
                 $subscriber = new StoreSubscriber();
-                $event->getDispatcher()->addSubscriber($subscriber);
+                $dispatcher->addSubscriber($subscriber);
             }
 
             $this->started = true;
@@ -476,12 +477,13 @@ Lazy loading listeners::
 Dispatching another event from within a listener::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
     class Foo
     {
-        public function myFooListener(Event $event)
+        public function myFooListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            $event->getDispatcher()->dispatch('log', $event);
+            $dispatcher->dispatch('log', $event);
 
             // ... more code
         }
