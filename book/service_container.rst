@@ -103,7 +103,7 @@ for you. In order for this to work, you must *teach* the container how to
 create the ``Mailer`` service. This is done via configuration, which can
 be specified in YAML, XML or PHP:
 
-.. include includes/_service_container_my_mailer.rst.inc
+.. include:: includes/_service_container_my_mailer.rst.inc
 
 .. note::
 
@@ -643,7 +643,7 @@ which has a ``getMailerMethod()`` method on it, which will return a string
 like ``sendmail`` based on some configuration. Remember that the first argument
 to the ``my_mailer`` service is the simple string ``sendmail``:
 
-.. include includes/_service_container_my_mailer.rst.inc
+.. include:: includes/_service_container_my_mailer.rst.inc
 
 But instead of hardcoding this, how could we get this value from the ``getMailerMethod()``
 of the new ``mailer_configuration`` service? One way is to use an expression:
@@ -874,7 +874,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
         # src/Acme/HelloBundle/Resources/config/services.yml
         services:
             newsletter_manager:
-                class:     "Acme\HelloBundle\Newsletter\NewsletterManager"
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@request_stack"]
 
     .. code-block:: xml

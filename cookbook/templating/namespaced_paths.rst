@@ -77,4 +77,4 @@ called ``sidebar.twig`` in that directory, you can use it easily:
 
 .. code-block:: jinja
 
-    {% include '@foo_bar/side.bar.twig' %}
+    {% include '@foo_bar/sidebar.twig' %}

@@ -272,7 +272,7 @@ the validation and saves the data into the database::
 
     public function createAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
