@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-21T08:18:22Z
+
+Could you please add the [PR format](http://symfony.com/doc/current/contributing/documentation/overview.html#pull-request-format) to your PR description?
+
+---------------------------------------------------------------------------
+
+by vmattila at 2014-01-22T02:46:52Z
+
+Great thanks! I made the fixes, even I'm afraid I did not fully figure out the meaning of the PR Format's lines Doc fix / New docs.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-01-22T11:10:39Z
+
+``Doc fix`` means fixing existing doc (typos, wrong explanation, ...). ``New doc`` means you are documented a new feature ("new" being related to what the doc contains, not to the fact that the code was just merged or is available but undocumented since 2 years)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-03T03:27:59Z
+
+Hey Ville!
+
+This is a great missing piece of documentation to cover - thanks for opening the PR! There are just a few comments remaining - can you make those tweaks?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by vmattila at 2014-02-03T07:58:03Z
+
+Yes, they are now fixed!
