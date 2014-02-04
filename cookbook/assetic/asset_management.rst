@@ -270,6 +270,79 @@ combine third party assets, such as jQuery, with your own into a single file:
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
+Using Named Assets
+~~~~~~~~~~~~~~~~~~
+
+AsseticBundle configuration directives allow you to define named asset sets.
+You can do so by defining the input files, filters and output files in your
+configuration under the ``assetic`` section. Read more in the
+:doc:`assetic config reference </reference/configuration/assetic>`.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            assets:
+                jquery_and_ui:
+                    inputs:
+                        - '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js'
+                        - '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+
+            <assetic:config>
+                <assetic:asset name="jquery_and_ui">
+                    <assetic:input>@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js</assetic:input>
+                    <assetic:input>@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js</assetic:input>
+                </assetic:asset>
+            </assetic:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'assets' => array(
+                'jquery_and_ui' => array(
+                    'inputs' => array(
+                        '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
+                        '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js',
+                    ),
+                ),
+            ),
+        );
+
+After you have defined the named assets, you can reference them in your templates
+with the ``@named_asset`` notation:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% javascripts
+            '@jquery_and_ui'
+            '@AcmeFooBundle/Resources/public/js/*' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->javascripts(
+            array(
+                '@jquery_and_ui',
+                '@AcmeFooBundle/Resources/public/js/*',
+            )
+        ) as $url): ?>
+            <script src="<?php echo $view->escape($url) ?>"></script>
+        <?php endforeach; ?>
+
 .. _cookbook-assetic-filters:
 
 Filters
