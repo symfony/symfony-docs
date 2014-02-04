@@ -874,7 +874,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
         # src/Acme/HelloBundle/Resources/config/services.yml
         services:
             newsletter_manager:
-                class:     "Acme\HelloBundle\Newsletter\NewsletterManager"
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@request_stack"]
 
     .. code-block:: xml
