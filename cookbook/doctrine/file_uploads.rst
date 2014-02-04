@@ -371,12 +371,6 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
                 // do whatever you want to generate a unique name
                 $filename = sha1(uniqid(mt_rand(), true));
                 $this->path = $filename.'.'.$this->getFile()->guessExtension();
-                // Note: is you choose to use EvensubScribers, this change has no effect un database Update
-                // the 'initial' value set in {@link self::setFile()} is used instead. As this occurs
-                // inside EntityManager#flush() and changeSets are not tracked.
-                // use \Doctrine\Common\Persistence\Event\PreUpdateEventArgs $args as the handler fn param and
-                // $args->setNewValue('path', $filename);
-                // source: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
             }
         }
 
@@ -415,6 +409,16 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
             }
         }
     }
+
+.. caution::
+
+    When using Doctrine EvensubScribers' preUpdate(\Doctrine\Common\Persistence\Event\PreUpdateEventArgs $args) 
+    callback instead of lifecycle callbacks you also need to invoke, ``$args->setNewValue('path', $filename);`` 
+    as at this point changeSets are not updated and the ``path`` change just made won't have effect 
+    in the data base record.
+    For full reference on preUpdate event restrictions, see `preUpdate`_ in the in the Doctrine Events documentation.
+
+.. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
 
 The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
