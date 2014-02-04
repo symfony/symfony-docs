@@ -24,7 +24,7 @@ method:
 
     .. code-block:: php
 
-        <?php echo $view['form']->row($form['age']) }} ?>
+        <?php echo $view['form']->row($form['age']); ?>
 
 You can also render each of the three parts of the field individually:
 
