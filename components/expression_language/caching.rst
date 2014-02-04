@@ -63,7 +63,9 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
     use Symfony\Component\ExpressionLanguage\SerializedParsedExpression;
     // ...
 
-    $expression = new SerializedParsedExpression(serialize($language->parse('1 + 4')));
+    $expression = new SerializedParsedExpression(
+        serialize($language->parse('1 + 4'))
+    );
 
     echo $language->evaluate($expression); // prints 5
 
