@@ -785,9 +785,40 @@ to just one field) are rendered separately, usually at the top of your form:
         <?php echo $view['form']->render($form); ?>
 
 To customize *only* the markup used for these errors, follow the same directions
-as above, but now call the block ``form_errors`` (Twig) / the file ``form_errors.html.php``
-(PHP). Now, when errors for the ``form`` type are rendered, your customized
-fragment will be used instead of the default ``form_errors``.
+as above, but now check if the ``compound`` attribute is set to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# form_errors.html.twig #}
+        {% block form_errors %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                    {% if compound %}
+                        <ul>
+                            {% for error in errors %}
+                                <li>{{ error.message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endif %}
+            {% endspaceless %}
+        {% endblock form_errors %}
+
+    .. code-block:: html+php
+
+        <!-- form_errors.html.php -->
+        <?php if ($errors): ?>
+            <?php if ($compound): ?>
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo $error->getMessage() ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        <?php endif ?>
+
 
 Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
