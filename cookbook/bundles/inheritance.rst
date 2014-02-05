@@ -34,6 +34,10 @@ simply by creating a file with the same name.
 
 .. note::
 
+    It´s important in AppKernel.php register your own bundle after bundle you want to override.
+    
+.. note::
+
     Despite the method name, there is no parent/child relationship between
     the bundles, it is just a way to extend and override an existing bundle.
 
