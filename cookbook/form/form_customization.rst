@@ -771,8 +771,17 @@ and customize the ``form_errors`` fragment.
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 You can also customize the error output for just one specific field type.
-For example, certain errors that are more global to your form (i.e. not specific
-to just one field) are rendered separately, usually at the top of your form:
+To customize *only* the markup used for these errors, follow the same directions
+as above but put the contents in a relative ``_errors`` block (or file in case
+of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
+
+.. tip::
+
+    See :ref:`form-template-blocks` to find out which specific block or file you 
+    have to customize.
+
+Certain errors that are more global to your form (i.e. not specific to just one 
+field) are rendered separately, usually at the top of your form:
 
 .. configuration-block::
 
