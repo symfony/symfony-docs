@@ -1437,7 +1437,7 @@ is available by calling the PHP function :phpfunction:`hash_algos`.
 .. tip::
 
     It's also possible to use different hashing algorithms on a user-by-user
-    basis. See :doc:`/cookbook/security/named-encoders` for more details.
+    basis. See :doc:`/cookbook/security/named_encoders` for more details.
 
 Determining the Hashed Password
 ...............................
