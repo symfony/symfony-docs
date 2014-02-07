@@ -123,7 +123,7 @@ the event listener might look like the following::
             // check if the Product object is "new"
             // If no data is passed to the form, the data is "null".
             // This should be considered a new "Product"
-            if (!$product || null !== $product->getId()) {
+            if (!$product || null === $product->getId()) {
                 $form->add('name', 'text');
             }
         });
@@ -207,7 +207,7 @@ class::
             $product = $event->getData();
             $form = $event->getForm();
 
-            if (!$product || null !== $product->getId()) {
+            if (!$product || null === $product->getId()) {
                 $form->add('name', 'text');
             }
         }
