@@ -286,8 +286,24 @@ PHP callable that is able to create an instance of your ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    Request::setFactory(function (array $query = array(), array $request = array(), array $attributes = array(), array $cookies = array(), array $files = array(), array $server = array(), $content = null) {
-        return SpecialRequest::create($query, $request, $attributes, $cookies, $files, $server, $content);
+    Request::setFactory(function (
+        array $query = array(),
+        array $request = array(),
+        array $attributes = array(),
+        array $cookies = array(),
+        array $files = array(),
+        array $server = array(),
+        $content = null
+    ) {
+        return SpecialRequest::create(
+            $query,
+            $request,
+            $attributes,
+            $cookies,
+            $files,
+            $server,
+            $content
+        );
     });
 
     $request = Request::createFromGlobals();
