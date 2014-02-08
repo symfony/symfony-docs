@@ -259,7 +259,8 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     }
 
     // accepts items are sorted by descending quality
-    $accepts = AcceptHeader::fromString($request->headers->get('Accept'))->all();
+    $accepts = AcceptHeader::fromString($request->headers->get('Accept'))
+        ->all();
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -432,7 +433,10 @@ abstracts the hard work behind a simple API::
 
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-    $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+    $d = $response->headers->makeDisposition(
+        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        'foo.pdf'
+    );
 
     $response->headers->set('Content-Disposition', $d);
 
@@ -460,7 +464,10 @@ if it should::
 You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
 
     $response->headers->set('Content-Type', 'text/plain');
-    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
+    $response->setContentDisposition(
+        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        'filename.txt'
+    );
 
 .. _component-http-foundation-json-response:
 

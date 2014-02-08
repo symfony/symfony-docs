@@ -610,7 +610,9 @@ a built-in ControllerResolver that can be used to create a working example::
     $routes = new RouteCollection();
     $routes->add('hello', new Route('/hello/{name}', array(
             '_controller' => function (Request $request) {
-                return new Response(sprintf("Hello %s", $request->get('name')));
+                return new Response(
+                    sprintf("Hello %s", $request->get('name'))
+                );
             }
         )
     ));

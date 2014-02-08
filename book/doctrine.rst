@@ -622,8 +622,10 @@ Once you have your repository, you have access to all sorts of helpful methods::
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
 to easily fetch objects based on multiple conditions::
 
-    // query for one product matching by name and price
-    $product = $repository->findOneBy(array('name' => 'foo', 'price' => 19.99));
+    // query for one product matching be name and price
+    $product = $repository->findOneBy(
+        array('name' => 'foo', 'price' => 19.99)
+    );
 
     // query for all products matching the name, ordered by price
     $products = $repository->findBy(
@@ -1144,7 +1146,8 @@ Now you can see this new code in action! Imagine you're inside a controller::
             $em->flush();
 
             return new Response(
-                'Created product id: '.$product->getId().' and category id: '.$category->getId()
+                'Created product id: '.$product->getId()
+                .' and category id: '.$category->getId()
             );
         }
     }
@@ -1478,8 +1481,8 @@ and ``nullable``. Take a few examples:
         protected $name;
 
         /**
-         * A string field of length 150 that persists to an "email_address" column
-         * and has a unique index.
+         * A string field of length 150 that persists to an
+         * "email_address" column and has a unique index.
          *
          * @ORM\Column(name="email_address", unique=true, length=150)
          */
@@ -1489,13 +1492,14 @@ and ``nullable``. Take a few examples:
 
         fields:
             # A string field length 255 that cannot be null
-            # (reflecting the default values for the "length" and *nullable* options)
-            # type attribute is necessary in YAML definitions
+            # (reflecting the default values for the "length"
+            # and *nullable* options) type attribute is
+            # necessary in YAML definitions
             name:
                 type: string
 
-            # A string field of length 150 that persists to an "email_address" column
-            # and has a unique index.
+            # A string field of length 150 that persists to
+            # an "email_address" column and has a unique index.
             email:
                 type: string
                 column: email_address
@@ -1506,8 +1510,9 @@ and ``nullable``. Take a few examples:
 
         <!--
             A string field length 255 that cannot be null
-            (reflecting the default values for the "length" and *nullable* options)
-            type attribute is necessary in XML definitions
+            (reflecting the default values for the "length"
+            and *nullable* options) type attribute is
+            necessary in XML definitions
         -->
         <field name="name" type="string" />
         <field name="email"
