@@ -1253,8 +1253,8 @@ following method to the ``ProductRepository`` class::
     public function findOneByIdJoinedToCategory($id)
     {
         $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, c FROM AcmeStoreBundle:Product p
+            ->createQuery(
+                'SELECT p, c FROM AcmeStoreBundle:Product p
                 JOIN p.category c
                 WHERE p.id = :id'
             )->setParameter('id', $id);
