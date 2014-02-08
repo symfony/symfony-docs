@@ -44,31 +44,25 @@ git repository:
    in which case, you can find more information here: `Github .gitignore`_
    This way you can exclude files/folders often used by your IDE for all of your projects.
 
-4. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
-   The ``parameters.yml`` file is ignored by Git (see above) so that machine-specific
-   settings like database passwords aren't committed. By creating the ``parameters.yml.dist``
-   file, new developers can quickly clone the project, copy this file to
-   ``parameters.yml``, customize it, and start developing.
-
-5. Initialize your Git repository:
+4. Initialize your Git repository:
 
    .. code-block:: bash
 
         $ git init
 
-6. Add all of the initial files to Git:
+5. Add all of the initial files to Git:
 
    .. code-block:: bash
 
         $ git add .
 
-7. Create an initial commit with your started project:
+6. Create an initial commit with your started project:
 
    .. code-block:: bash
 
         $ git commit -m "Initial commit"
 
-8. Finally, download all of the third-party vendor libraries by
+7. Finally, download all of the third-party vendor libraries by
    executing Composer. For details, see :ref:`installation-updating-vendors`.
 
 At this point, you have a fully-functional Symfony2 project that's correctly
