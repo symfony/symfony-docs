@@ -94,10 +94,10 @@ main concepts. Go to the following URL to be greeted by Symfony2 (replace
 
 What's going on here? Have a look at each part of the URL:
 
-* ``app_dev.php``: this is a :term:`front controller`. It is the unique entry
+* ``app_dev.php``: This is a :term:`front controller`. It is the unique entry
   point of the application and it responds to all user requests;
 
-* ``/demo/hello/Fabien``: this is the *virtual path* to the resource the user
+* ``/demo/hello/Fabien``: This is the *virtual path* to the resource the user
   wants to access.
 
 Your responsibility as a developer is to write the code that maps the user's
