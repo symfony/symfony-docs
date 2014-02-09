@@ -326,7 +326,7 @@ What *is* an environment?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An :term:`Environment` represents a group of configuration that's used to run
-your application. Symfony2 defines by default two environments: ``dev``
+your application. Symfony2 defines two environments by default: ``dev``
 (suited for when developing the application locally) and ``prod`` (optimized
 for when executing the application on production).
 
