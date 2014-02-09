@@ -61,7 +61,7 @@ to run Symfony:
 
     $ php app/console server:run
 
-Open your browser and access to the ``http://localhost:8000/app_dev.php`` URL to
+Open your browser and access to the ``http://localhost:8000`` URL to
 see the Welcome page of Symfony2:
 
 .. image:: /images/quick_tour/welcome.png
@@ -87,7 +87,7 @@ main concepts. Go to the following URL to be greeted by Symfony2 (replace
 
 .. code-block:: text
 
-    http://localhost:8000/app_dev.php/demo/hello/Fabien
+    http://localhost:8000/demo/hello/Fabien
 
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
