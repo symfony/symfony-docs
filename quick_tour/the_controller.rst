@@ -88,7 +88,7 @@ method::
 
     return $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
-Displaying error pages
+Displaying Error Pages
 ----------------------
 
 Errors will inevitably happen during the execution of every web application.
