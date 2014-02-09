@@ -19,17 +19,16 @@ directory:
 
 .. note::
 
-    `Composer <https://getcomposer.org/>` is the package manager used by modern
-    PHP applications and the only recommended way to install Symfony2. To
-    install Composer on your Linux or Mac system, execute the following commands:
+    `Composer`_ is the package manager used by modern PHP applications and the
+    only recommended way to install Symfony2. To install Composer on your
+    Linux or Mac system, execute the following commands:
 
     .. code-block:: bash
 
         $ curl -sS https://getcomposer.org/installer | php
         $ sudo mv composer.phar /usr/local/bin/composer
 
-    To install Composer on a Windows system, download the executable installer
-    from `getcomposer.org/download <http://getcomposer.org/download>`.
+    To install Composer on a Windows system, download the `executable installer`_.
 
 Beware that the first time you install Symfony2, it may take a few minutes to
 download all its components. At the end of the installation process, the
@@ -281,8 +280,8 @@ template (or ``AcmeDemoBundle:Demo:hello.html.twig`` if you use the logical name
         <h1>Hello {{ name }}!</h1>
     {% endblock %}
 
-By default, Symfony2 uses `Twig <http://twig.sensiolabs.org/>` as its template
-engine but you can also use traditional PHP templates if you choose. The
+By default, Symfony2 uses `Twig`_ as its template engine but you can also use
+traditional PHP templates if you choose. The
 :doc:`second part of this tutorial</quick_tour/the_view>` will introduce how
 templates work in Symfony2.
 
@@ -375,3 +374,7 @@ hard, was it? There's a lot more to explore, but you should already see how
 Symfony2 makes it really easy to implement web sites better and faster. If you
 are eager to learn more about Symfony2, dive into the next section:
 ":doc:`The View<the_view>`".
+
+.. _Composer:             https://getcomposer.org/
+.. _executable installer: http://getcomposer.org/download
+.. _Twig:                 http://twig.sensiolabs.org/
