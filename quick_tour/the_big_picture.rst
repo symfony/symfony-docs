@@ -293,7 +293,7 @@ have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
-of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
+of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
 more about bundles in the :doc:`last part of this tutorial</quick_tour/the_architecture>`.
 
 .. _quick-tour-big-picture-environments:
