@@ -78,7 +78,7 @@ Understanding the Fundamentals
 
 One of the main goals of a framework is to keep your code organized and allow
 your application to evolve easily over time by avoiding the mixing of database
-calls, HTML tags, and business logic in the same script. To achieve this goal
+calls, HTML tags and business logic in the same script. To achieve this goal
 with Symfony, you'll first need to learn a few fundamental concepts and terms.
 
 Symfony comes with some sample code that you can use to learn more about its
