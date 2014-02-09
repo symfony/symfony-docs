@@ -36,13 +36,6 @@ installer will ask you to provide some configuration options for the Symfony2
 project. For this first project you can safely ignore this configuration by
 pressing the ``<Enter>`` key repeatedly.
 
-.. The following GIF is only useful if the user can "click" on it
-.. to activate the animation. Otherwise, it shouldn't be included
-.. because it's too long and it doesn't make sense to see it half-started.
-.. image:: /images/quick_tour/installing_symfony2.gif
-   :align: center
-   :alt:   Installing Symfony2 on the command console
-
 Running Symfony2
 ----------------
 
