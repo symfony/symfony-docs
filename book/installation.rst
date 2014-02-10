@@ -274,7 +274,7 @@ If there are any issues, correct them now before moving on.
     typing commands when setting up new projects. This is done by editing your
     Apache configuration file ``httpd.conf`` and update the user and group values
     from ``www-data`` to your CLI user. Obviously, this is only recommended in dev
-    environnement.
+    environment.
 
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
