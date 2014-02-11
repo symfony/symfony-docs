@@ -213,7 +213,11 @@ exception in ``refreshUser()``.
 Handling Exceptions
 -------------------
 
-In order for you're ``ApiKeyAuthentication`` to correctly display a 403 http status when either bad credentials, or authentication fails you will need to implement the ``AuthenticationFailureHandlerInterface`` on your Authenticator. This will provide a method ``onAuthenticationFailure`` which you can then return a ``Response`` with.
+In order for you're ``ApiKeyAuthentication`` to correctly display a 403
+http status when either bad credentials, or authentication fails you will 
+need to implement the ``AuthenticationFailureHandlerInterface`` on your 
+Authenticator. This will provide a method ``onAuthenticationFailure`` which 
+you can then return a ``Response`` with.
 
     // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
     namespace Acme\HelloBundle\Security;
