@@ -12,7 +12,7 @@ or ``Europe/Istanbul``.
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
 ``choice_list`` option as the field type automatically uses a large list
-of locales. You *can* specify either of these options manually, but then
+of timezones. You *can* specify either of these options manually, but then
 you should just use the ``choice`` type directly.
 
 +-------------+------------------------------------------------------------------------+
