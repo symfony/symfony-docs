@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-20T06:49:43Z
+
+Ironically, your PR title also need a typo fox .. fix :wink:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-03T03:25:07Z
+
+@xabbuh you're right with `an acme_demo string` - I've fixed that, thanks :). But I don't understand your other comment:
+
+>
+do you think it's better to use acme_demo here instead of the more generic tip?
+
+The last change before this PR was sha: a4d804d0e89cde420246bca08d3d7bbdf6d41eaf
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-03T10:17:06Z
+
+>> do you think it's better to use acme_demo here instead of the more generic tip?
+
+> The last change before this PR was sha: a4d804d
+
+Yes, I see. But you revert @cordoval's change and I was wondering if that was intended.
