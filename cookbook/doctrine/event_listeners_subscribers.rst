@@ -156,9 +156,9 @@ entity), you should check for the entity's class type in your method
 
 .. tip::
 
-    Starting from version 2.4 Doctrine has a feature called `Entity Listeners`_
-    which is a lifecycle listener class used for an entity. You can read about
-    it in the Doctrine documentation.
+    In Doctrine 2.4, a feature called Entity Listeners was introduced.
+    It is a lifecycle listener class used for an entity. You can read
+    about it in `the Doctrine Documentation`_.
 
 Creating the Subscriber Class
 -----------------------------
@@ -217,4 +217,4 @@ interface and have an event method for each event it subscribes to::
 For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
-.. _`Entity Listeners`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners
+.. _`the Doctrine Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners
