@@ -10,6 +10,10 @@ How to Choose the Password Encoder Algorithm Dynamically
 Usually, the same password encoder is used for all users by configuring it
 to apply to all instances of a specific class:
 
+.. configuration-block::
+
+    .. code-block:: yaml
+
         # app/config/security.yml
         security:
             # ...
@@ -117,7 +121,7 @@ the name of the encoder to use::
             if ($this->isAdmin()) {
                 return 'harsh';
             }
-            
+
             return null; // use the default encoder
         }
     }
