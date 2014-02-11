@@ -30,7 +30,7 @@ and set a parameter in the container with::
     The used ``.`` notation is just a
     :ref:`Symfony convention <service-naming-conventions>` to make parameters
     easier to read. Parameters are just flat key-value elements, they can't be
-    inherited.
+    organized into a nested array
 
 .. note::
 
