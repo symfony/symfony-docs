@@ -1351,7 +1351,7 @@ Absolute URLs can also be generated.
 
     .. code-block:: html+jinja
 
-        <a href="{{ url('blog_show', {'slug': 'my-blog-post'}) }}">
+        <a href="{{ url('blog_show', {'slug': 'my-blog-post'}, true) }}">
           Read this blog post.
         </a>
 
