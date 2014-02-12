@@ -70,7 +70,7 @@ by going to the following URL:
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/hello/Symfony
+    http://localhost/app_dev.php/demo/hello/Symfony
 
 Actually, you'll be able to replace ``Symfony`` with any other name to be
 greeted. To create the page, follow the simple two-step process.
