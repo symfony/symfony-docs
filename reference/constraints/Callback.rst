@@ -160,7 +160,7 @@ your validation function is ``Vendor\Package\Validator::validate()``::
 
     class Validator
     {
-        public function validate($object, ExecutionContextInterface $context)
+        public static function validate($object, ExecutionContextInterface $context)
         {
             // ...
         }
