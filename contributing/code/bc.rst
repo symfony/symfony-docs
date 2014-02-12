@@ -110,7 +110,7 @@ The difference between regular and API classes is that we guarantee full
 backwards compatibility if you extend an API class and override its methods. We
 can't give the same promise for regular classes, because there we may, for
 example, add an optional parameter to a method. Consequently, the signature of
-your overridden method won't match anymore and generate a fatal error.
+your overridden method wouldn't match anymore and generate a fatal error.
 
 In some cases, only specific properties and methods are tagged with the ``@api``
 tag, even though their class is not. In these cases, we guarantee full backwards
