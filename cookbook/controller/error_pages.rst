@@ -110,3 +110,24 @@ Symfony uses the following algorithm to determine which template to use:
     customized in the same way by creating templates such as
     ``exception.html.twig`` for the standard HTML exception page or
     ``exception.json.twig`` for the JSON exception page.
+
+Testing Error Pages during development
+--------------------------------------
+
+The default exception controller,
+``Symfony\Bundle\TwigBundle\Controller\ExceptionController``, which is
+part of the TwigBundle will show
+*exception* pages when you're in ``kernel.debug`` mode and *error*
+pages otherwise. Thus, your end users will typically see the *error*
+pages.
+
+But setting ``kernel.debug`` to ``false`` during development to write
+or test your custom error pages is impractical as it stops Symfony2 from
+recompiling the Twig templates, among other things.
+
+To help you with that, `webfactory/exceptions-bundle`_ contains a
+simple test controller that you can use to trigger custom exceptions. At
+the same time, it will make the `ExceptionController` display the
+corresponding *error* pages also in ``kernel.debug`` mode.
+
+.. _`webfactory/exceptions-bundle`: https://github.com/webfactory/exceptions-bundle
