@@ -311,7 +311,7 @@ use explicit math intervals:
 
 .. code-block:: text
 
-    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
+    '{0} There are no apples|{1} There is one apple|[1,19] There are %count% apples|[20,Inf] There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
