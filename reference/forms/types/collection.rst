@@ -365,4 +365,4 @@ error_bubbling
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/type/options/cascade_validation.rst.inc
+.. include:: /reference/forms/types/options/cascade_validation.rst.inc
