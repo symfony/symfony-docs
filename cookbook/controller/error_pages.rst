@@ -29,13 +29,30 @@ control you need:
     which allows complete control over exception handling. For more
     information, see :ref:`kernel-kernel.exception`.
 
+The default ``ExceptionController`` will either display an
+*exception* or *error* page, depending on the setting of the ``kernel
+.debug`` flag. While *exception* pages give you a lot of helpful
+information during development, *error* pages are meant to be
+shown to the end-user.
+
+.. sidebar:: Testing error pages during development
+
+    Setting ``kernel.debug`` to ``false`` in order to see your
+    error pages during development is impractical as it also stops
+    Symfony2 from recompiling your twig templates, among other things.
+
+    The third-party `webfactory/exceptions-bundle`_ provides a special
+    test controller that allows you to display your custom error
+    pages for arbitrary HTTP status codes even with ``kernel
+    .debug`` set to ``true``.
+
 All of the error templates live inside the TwigBundle. To override the
 templates, simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
 :ref:`overriding-bundle-templates`.
 
-For example, to override the default error template that's shown to the
-end-user, create a new template located at
+For example, to override the default error template, create a new
+template located at
 ``app/Resources/TwigBundle/views/Exception/error.html.twig``:
 
 .. code-block:: html+jinja
@@ -110,24 +127,5 @@ Symfony uses the following algorithm to determine which template to use:
     customized in the same way by creating templates such as
     ``exception.html.twig`` for the standard HTML exception page or
     ``exception.json.twig`` for the JSON exception page.
-
-Testing Error Pages during development
---------------------------------------
-
-The default exception controller,
-``Symfony\Bundle\TwigBundle\Controller\ExceptionController``, which is
-part of the TwigBundle will show
-*exception* pages when you're in ``kernel.debug`` mode and *error*
-pages otherwise. Thus, your end users will typically see the *error*
-pages.
-
-But setting ``kernel.debug`` to ``false`` during development to write
-or test your custom error pages is impractical as it stops Symfony2 from
-recompiling the Twig templates, among other things.
-
-To help you with that, `webfactory/exceptions-bundle`_ contains a
-simple test controller that you can use to trigger custom exceptions. At
-the same time, it will make the `ExceptionController` display the
-corresponding *error* pages also in ``kernel.debug`` mode.
 
 .. _`webfactory/exceptions-bundle`: https://github.com/webfactory/exceptions-bundle
