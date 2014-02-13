@@ -30,21 +30,21 @@ control you need:
     information, see :ref:`kernel-kernel.exception`.
 
 The default ``ExceptionController`` will either display an
-*exception* or *error* page, depending on the setting of the ``kernel
-.debug`` flag. While *exception* pages give you a lot of helpful
+*exception* or *error* page, depending on the setting of the ``kernel.debug``
+flag. While *exception* pages give you a lot of helpful
 information during development, *error* pages are meant to be
 shown to the end-user.
 
-.. sidebar:: Testing error pages during development
+.. sidebar:: Testing Error Pages during Development
 
-    Setting ``kernel.debug`` to ``false`` in order to see your
-    error pages during development is impractical as it also stops
+    You should not set ``kernel.debug`` to ``false`` in order to see your
+    error pages during development. This will also stop
     Symfony2 from recompiling your twig templates, among other things.
 
     The third-party `webfactory/exceptions-bundle`_ provides a special
     test controller that allows you to display your custom error
-    pages for arbitrary HTTP status codes even with ``kernel
-    .debug`` set to ``true``.
+    pages for arbitrary HTTP status codes even with 
+    ``kernel.debug`` set to ``true``.
 
 All of the error templates live inside the TwigBundle. To override the
 templates, simply rely on the standard method for overriding templates that
