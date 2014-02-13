@@ -115,14 +115,14 @@ above, except with the ``stylesheets`` tag:
 
     .. code-block:: html+jinja
 
-        {% stylesheets 'bundles/acme_foo/css/*' filter='cssrewrite' %}
+        {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->stylesheets(
-            array('bundles/acme_foo/css/*'),
+            array('@AcmeFooBundle/Resources/public/css/*'),
             array('cssrewrite')
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
@@ -138,7 +138,7 @@ above, except with the ``stylesheets`` tag:
 
         {# ... #}
         {% block stylesheets %}
-            {% stylesheets 'bundles/acme_foo/css/*' filter='cssrewrite' %}
+            {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
