@@ -62,6 +62,7 @@
   * :doc:`/cookbook/doctrine/resolve_target_entity`
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
+  * :doc:`/cookbook/doctrine/console`
 
 * :doc:`/cookbook/email/index`
 
