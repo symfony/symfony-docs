@@ -76,11 +76,7 @@ backwards compatibility promise:
 | Add a default value to a parameter            | Yes           | Yes           |
 +-----------------------------------------------+---------------+---------------+
 
-.. note::
-
-    If you think that one of our regular interfaces should have an ``@api`` tag,
-    put your request into a `new ticket on GitHub`_. We will then evaluate
-    whether we can add the tag or not.
+.. include:: _api_tagging.rst.inc
 
 Using Our Classes
 ~~~~~~~~~~~~~~~~~
@@ -162,11 +158,7 @@ covered by our backwards compatibility promise:
 | Add a default value to a parameter            | Yes           | Yes           |
 +-----------------------------------------------+---------------+---------------+
 
-.. note::
-
-    If you think that one of our regular classes should have an ``@api`` tag,
-    put your request into a `new ticket on GitHub`_. We will then evaluate
-    whether we can add the tag or not.
+.. include:: _api_tagging.rst.inc
 
 Working on Symfony Code
 -----------------------
@@ -312,4 +304,3 @@ Change return type                                  Yes [2]_ [5]_   No
 .. _string values: http://www.php.net/manual/en/function.strval.php
 .. _integer values: http://www.php.net/manual/en/function.intval.php
 .. _float values: http://www.php.net/manual/en/function.floatval.php
-.. _new ticket on GitHub: https://github.com/symfony/symfony/issues/new
