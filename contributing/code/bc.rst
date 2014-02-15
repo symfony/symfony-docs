@@ -2,10 +2,10 @@ Our Backwards Compatibility Promise
 ===================================
 
 If you are using Symfony, we promise you backwards compatibility (BC) for all
-major releases (2.x, 3.x, ...). Ensuring smooth upgrades of your projects is our
+minor releases (2.5, 2.6, etc.). Ensuring smooth upgrades of your projects is our
 first priority. However, backwards compatibility comes in many different flavors.
 
-.. note::
+.. caution::
 
     This promise was introduced with Symfony 2.3 and does not apply to previous
     versions of Symfony.
@@ -29,10 +29,10 @@ All interfaces shipped with Symfony can be used in type hints. You can also call
 any of the methods that they declare. We guarantee that we won't break code that
 sticks to these rules.
 
-.. note::
+.. caution::
 
     The exception to this rule are interfaces tagged with ``@internal``. Such
-    interfaces should never be used or implemented.
+    interfaces should *never* be used or implemented.
 
 If you want to implement an interface, you should first make sure that the
 interface is an API interface. You can recognize API interfaces by the ``@api``
@@ -47,6 +47,8 @@ tag in their source code::
      */
     interface HttpKernelInterface
     {
+        // ...
+    }
 
 If you implement an API interface, we promise that we won't ever break your
 code. Regular interfaces, by contrast, should never be implemented, because if
@@ -86,12 +88,12 @@ Using Our Classes
 All classes provided by Symfony may be instantiated and accessed through their
 public methods and properties.
 
-.. note::
+.. caution::
 
     Classes, properties and methods that bear the tag ``@internal`` as well as
     the classes located in the various ``*\\Tests\\`` namespaces are an
-    exception to this rule. They are meant for internal use only and should not
-    be accessed by your own code.
+    exception to this rule. They are meant for internal use only and should
+    *never* be accessed by your own code.
 
 Just like with interfaces, we also distinguish between regular and API classes.
 Like API interfaces, API classes are marked with an ``@api`` tag::
@@ -105,6 +107,8 @@ Like API interfaces, API classes are marked with an ``@api`` tag::
      */
     class Request
     {
+        // ...
+    }
 
 The difference between regular and API classes is that we guarantee full
 backwards compatibility if you extend an API class and override its methods. We
@@ -304,13 +308,8 @@ Change return type                                  Yes [2]_ [5]_   No
        previously generated a fatal error.
 
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
-
 .. _boolean values: http://php.net/manual/en/function.boolval.php
-
 .. _string values: http://www.php.net/manual/en/function.strval.php
-
 .. _integer values: http://www.php.net/manual/en/function.intval.php
-
 .. _float values: http://www.php.net/manual/en/function.floatval.php
-
 .. _new ticket on GitHub: https://github.com/symfony/symfony/issues/new
