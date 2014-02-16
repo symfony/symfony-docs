@@ -646,7 +646,7 @@ your controller).
    :align: center
 
 To execute a sub request, use ``HttpKernel::handle``, but change the second
-arguments as follows::
+argument as follows::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\HttpKernelInterface;
