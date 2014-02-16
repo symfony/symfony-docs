@@ -21,7 +21,7 @@ the template contents using any of these delimiters:
 * ``{% ... %}``: controls the logic of the template; it is used for example to
   execute ``for`` loops and ``if`` statements;
 
-* ``{# ... #}``: allows to include comments inside templates.
+* ``{# ... #}``: allows including comments inside templates.
 
 Below is a minimal template that illustrates a few basics, using two variables
 ``page_title`` and ``navigation``, which would be passed into the template:
