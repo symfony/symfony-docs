@@ -114,8 +114,7 @@ paths are defined in the ``app/config/routing_dev.yml`` configuration file:
     _acme_demo:
         resource: "@AcmeDemoBundle/Resources/config/routing.yml"
 
-The ``_acme_demo`` routes are imported from a ``routing.yml`` file that lives
-inside the AcmeDemoBundle:
+This imports a ``routing.yml`` file that lives inside the AcmeDemoBundle:
 
 .. code-block:: yaml
 
