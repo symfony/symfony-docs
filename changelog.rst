@@ -1,17 +1,17 @@
 .. index::
-	single: CHANGELOG
+    single: CHANGELOG
 
 The Documentation Changelog
 ===========================
 
-This documentation is under current development: All new features needs new
-documentation and bugs/typos get fixed. This article holds all important
-changes of the documentation.
+This documentation is always changing: All new features need new documentation
+and bugs/typos get fixed. This article holds all important changes of the
+documentation.
 
 .. tip::
 
-	Do you also want to participate in the Symfony Documentation? Take a look
-	at the ":doc:`/contributing/documentation`" article.
+    Do you also want to participate in the Symfony Documentation? Take a look
+    at the ":doc:`/contributing/documentation`" article.
 
 January, 2014
 -------------
