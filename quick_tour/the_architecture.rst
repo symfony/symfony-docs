@@ -1,9 +1,11 @@
 The Architecture
 ================
 
-The first three parts of this tutorial didn't look too deeply at the
-architecture of the framework. Because it makes Symfony2 stand apart from the
-framework crowd, let's dive into the architecture now.
+You are my hero! Who would have thought that you would still be here after the
+first three parts? Your efforts will be well rewarded soon. The first three
+parts didn't look too deeply at the architecture of the framework. Because it
+makes Symfony2 stand apart from the framework crowd, let's dive into the
+architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
