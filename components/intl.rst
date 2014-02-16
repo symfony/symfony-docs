@@ -78,7 +78,7 @@ code::
 
     These versions are important when you deploy your application to a **server with
     a lower ICU version** than your development machines, because deployment will
-    fail if
+    fail if:
 
     * the development machines are compiled with ICU 4.4 or higher, but the
       server is compiled with a lower ICU version than 4.4;
