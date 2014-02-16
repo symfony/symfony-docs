@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-08T14:19:53Z
+
+-1, this will properbly confuse people. It's not a common known feature of PHP. I prefer to put the variables outside the quotes instead
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-02-08T14:40:33Z
+
+does symfony avoid this syntax all the time on its source code? I never saw a discussion on this but interested in learning the reason.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-02-08T14:54:23Z
+
+I personally like to wrap interpolated variables just to be on the safe side, but I agree that it might confuse people who are new to PHP as in most books/etc. I read/checked interpolation is actually quite a common reference.
+
+As someone who just recently read all the book, cookbook and most of the components, as far as I can remember I think is the only page I saw interpolated variables in the documentation.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-08T15:21:49Z
+
+In the rest of the docs, we use `"A string with a".$variable.", yeah!"`. Let's use it here too
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-02-08T15:31:40Z
+
+Yes, most of code examples use concatenation. This PR should be closed then.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-08T16:02:20Z
+
+well, if you can update this PR to change it to concatenation, it'll be better :) (otherwise, you can hit the close button yourself and create an issue, so someone else can do it)
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-02-08T20:33:45Z
+
+I also removed newline character on last echo statement as I could not thing of good reason why this one has a it and other foreach loops doesn't.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-08T23:54:46Z
+
+I think the Symfony standard is to use single quotes instead of double quotes.
