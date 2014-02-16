@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by colinodell at 2014-02-05T22:38:45Z
+
+The functionality has been part of [doctrine/doctrine-bundle](https://github.com/doctrine/DoctrineBundle) since 1.0.0 ([source](https://github.com/doctrine/DoctrineBundle/blob/v1.0.0/DependencyInjection/DoctrineExtension.php#L342)), but wasn't mentioned in a relevant area of the documentation.
