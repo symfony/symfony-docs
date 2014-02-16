@@ -140,15 +140,15 @@ will be executed. In the next section, you'll learn exactly what that means.
 
     In addition to YAML files, routes can be configured in XML or PHP files
     and even embedded in PHP annotations. This flexibility is one of the main
-    features of Symfony2, a framework that never imposes you a particular
-    configuration format.
+    features of Symfony2, a framework that never imposes a particular
+    configuration format on you.
 
 Controllers
 ~~~~~~~~~~~
 
 A controller is a PHP function or method that handles incoming *requests* and
 returns *responses* (often HTML code). Instead of using the PHP global variables
-and functions (like ``$_GET`` or ``header()``) to manage these HTTP messages
+and functions (like ``$_GET`` or ``header()``) to manage these HTTP messages,
 Symfony uses objects: :ref:`Request<component-http-foundation-request>`
 and :ref:`Response<component-http-foundation-response>`. The simplest possible
 controller might create the response by hand, based on the request::
