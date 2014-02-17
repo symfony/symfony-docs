@@ -552,7 +552,8 @@ them for you. Here's the same sample application, now built in Symfony2::
     {
         public function listAction()
         {
-            $posts = $this->get('doctrine')->getManager()
+            $posts = $this->get('doctrine')
+                ->getManager()
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
@@ -567,8 +568,7 @@ them for you. Here's the same sample application, now built in Symfony2::
             $post = $this->get('doctrine')
                 ->getManager()
                 ->getRepository('AcmeBlogBundle:Post')
-                ->find($id)
-            ;
+                ->find($id);
 
             if (!$post) {
                 // cause the 404 page not found to be displayed
