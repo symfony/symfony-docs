@@ -41,7 +41,7 @@ shown to the end-user.
     error pages during development. This will also stop
     Symfony2 from recompiling your twig templates, among other things.
 
-    The third-party `webfactory/exceptions-bundle`_ provides a special
+    The third-party `WebfactoryExceptionsBundle`_ provides a special
     test controller that allows you to display your custom error
     pages for arbitrary HTTP status codes even with 
     ``kernel.debug`` set to ``true``.
@@ -128,4 +128,4 @@ Symfony uses the following algorithm to determine which template to use:
     ``exception.html.twig`` for the standard HTML exception page or
     ``exception.json.twig`` for the JSON exception page.
 
-.. _`webfactory/exceptions-bundle`: https://github.com/webfactory/exceptions-bundle
+.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
