@@ -73,6 +73,33 @@ to render the template originally) inside the template to render another templat
         <?php echo $view->render('hello.php', array('firstname' => $name)) ?>
     <?php endforeach ?>
 
+Global Variables
+----------------
+
+Sometimes, you need to set a variable which is available in all templates
+rendered by an engine (like the ``$app`` variable when using the Symfony2
+framework). These variables can be set by using the
+:method:`Symfony\\Component\\Templating\\PhpEngine::addGlobal` method and they
+can be accessed in the template as normal variables::
+
+    $templating->addGlobal('ga_tracking', 'UA-xxxxx-x');
+
+In a template:
+
+.. code-block:: html+php
+
+    <p>The google tracking code is: <?php echo $ga_tracking ?></p>
+
+.. caution::
+
+    The global variables cannot be called ``this`` or ``view``, since they are
+    already used by the PHP engine.
+
+.. note::
+
+    The global variables can be overriden by a local variable in the template
+    with the same name.
+
 Output Escaping
 ---------------
 
