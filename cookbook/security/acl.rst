@@ -90,6 +90,10 @@ Getting Started
 Coming back to the small example from the beginning, you can now implement
 ACL for it.
 
+Once the ACL is created, you can grant access to objects by creating an
+Access Control Entity (ACE) to solidify the relationship between the entity
+and your user.
+
 Creating an ACL, and adding an ACE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
