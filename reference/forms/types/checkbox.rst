@@ -81,8 +81,4 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 Form Variables
 --------------
 
-======== ============ ============================================
-Variable Type         Usage                                       
-======== ============ ============================================
-checked  ``Boolean``  Whether or not the current input is checked.
-======== ============ ============================================
+.. include:: /reference/forms/types/variables/check_or_radio_table.rst.inc
