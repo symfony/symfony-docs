@@ -151,4 +151,9 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
+Field Variables
+---------------
+
+.. include:: /reference/forms/types/variables/date_table.rst.inc
+
 .. _`RFC 3339`: http://tools.ietf.org/html/rfc3339

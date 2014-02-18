@@ -154,3 +154,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+Field Variables
+---------------
+
+.. include:: /reference/forms/types/variables/date_table.rst.inc
