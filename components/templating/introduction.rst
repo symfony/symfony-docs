@@ -161,4 +161,41 @@ The ``Helper`` has one required method:
 :method:`Symfony\\Component\\Templating\\Helper\\HelperInterface::getName`.
 This is the name that is used to get the helper from the ``$view`` object.
 
+Creating a Custom Engine
+------------------------
+
+Besides providing a PHP templating engine, you can also create your own engine
+using the Templating component. To do that, create a new class which
+implements the :class:`Symfony\\Component\\Templating\\EngineInterface`
+interface. This interface requires 3 method:
+
+* :method:`render($name, array $parameters = array()) <Symfony\\Component\\Templating\\EngineInterface::render>`
+  - Renders a template
+* :method:`exists($name) <Symfony\\Component\\Templating\\EngineInterface::exists>`
+  - Checks if the template exists
+* :method:`supports($name) <Symfony\\Component\\Templating\\EngineInterface::supports>`
+  - Checks if the given template can be handled by this engine.
+
+Using Multiple Engines
+----------------------
+
+It is possible to use multiple engines at the same time using the
+:class:`Symfony\\Component\\Templating\\DelegatingEngine` class. This class
+takes a list of engines and acts just like a normal templating engine. The
+only difference is that it delegates the calls to one of the other engines. To
+choose which one to use for the template, the
+:method:`EngineInterface::supports() <Symfony\\Component\\Templating\\EngineInterface::supports>`
+method is used.
+
+.. code-block:: php
+
+    use Acme\Templating\CustomEngine;
+    use Symfony\Component\Templating\PhpEngine;
+    use Symfony\Component\Templating\DelegatingEngine;
+
+    $templating = new DelegatingEngine(array(
+        new PhpEngine(...),
+        new CustomEngine(...)
+    ));
+
 .. _Packagist: https://packagist.org/packages/symfony/templating
