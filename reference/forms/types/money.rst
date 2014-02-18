@@ -112,4 +112,13 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
+Form Variables
+--------------
+
+============= ========== ==============================================================
+Variable      Type       Usage                                       
+============= ========== ==============================================================
+money_pattern ``string`` The format to use to display the money, including the currency
+============= ========== ==============================================================
+
 .. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217
