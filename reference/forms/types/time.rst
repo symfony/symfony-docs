@@ -167,7 +167,18 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
-Field Variables
----------------
+Form Variables
+--------------
 
-.. include:: /reference/forms/types/variables/date_table.rst.inc
++--------------+-------------+----------------------------------------------------------------------+
+| Variable     | Type        | Usage                                                                |
++==============+=============+======================================================================+
+| widget       | ``mixed``   | The value of the `widget`_ option.                                   |
++--------------+-------------+----------------------------------------------------------------------+
+| with_minutes | ``Boolean`` | The value of the `with_minutes`_ option.                             |
++--------------+-------------+----------------------------------------------------------------------+
+| with_seconds | ``Boolean`` | The value of the `with_seconds`_ option.                             |
++--------------+-------------+----------------------------------------------------------------------+
+| type         | ``string``  | Only present when widget is ``single_text`` and HTML5 is activated,  |
+|              |             | contains the input type to use (``datetime``, ``date`` or ``time``). |
++--------------+-------------+----------------------------------------------------------------------+
