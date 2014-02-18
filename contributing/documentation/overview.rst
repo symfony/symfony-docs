@@ -202,7 +202,7 @@ For this example, suppose version 2.1 has just reached its end of maintenance:
 
 * All branches still under maintenance (e.g. 2.2 and higher) are updated
   to reflect that pull requests should start from the now-oldest maintained
-  version (e.g. 2.2).
+  version (e.g. 2.2) - including the details in the README file.
 
 * Remove all ``versionadded`` directives - and any other notes related to features
   changing or being new - for the version (e.g. 2.1) from the master branch.

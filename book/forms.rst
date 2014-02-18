@@ -645,7 +645,8 @@ the documentation for each type.
         ))
 
     The label for a field can also be set in the template rendering the
-    form, see below.
+    form, see below. If you don't need a label associated to your input,
+    you can disable it by setting its value to ``false``.
 
 .. index::
    single: Forms; Field type guessing

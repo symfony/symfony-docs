@@ -133,6 +133,8 @@ Naming Conventions
 * Don't forget to look at the more verbose :doc:`conventions` document for
   more subjective naming considerations.
 
+.. _service-naming-conventions:
+
 Service Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

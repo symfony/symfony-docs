@@ -603,6 +603,7 @@ a built-in ControllerResolver that can be used to create a working example::
     use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+    use Symfony\Component\HttpKernel\EventListener\RouterListener;
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
     use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -611,7 +612,9 @@ a built-in ControllerResolver that can be used to create a working example::
     $routes = new RouteCollection();
     $routes->add('hello', new Route('/hello/{name}', array(
             '_controller' => function (Request $request) {
-                return new Response(sprintf("Hello %s", $request->get('name')));
+                return new Response(
+                    sprintf("Hello %s", $request->get('name'))
+                );
             }
         )
     ));
@@ -647,7 +650,7 @@ your controller).
    :align: center
 
 To execute a sub request, use ``HttpKernel::handle``, but change the second
-arguments as follows::
+argument as follows::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\HttpKernelInterface;
