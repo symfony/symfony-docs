@@ -112,7 +112,7 @@ a single ``Bundle`` class that describes it::
 
 In addition to the AcmeDemoBundle that was already talked about, notice
 that the kernel also enables other bundles such as the FrameworkBundle,
-DoctrineBundle, SwiftmailerBundle, and AsseticBundle bundle. They are all part
+DoctrineBundle, SwiftmailerBundle and AsseticBundle bundle. They are all part
 of the core framework.
 
 Configuring a Bundle
