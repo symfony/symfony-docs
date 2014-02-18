@@ -52,6 +52,12 @@ the ``views/hello.php`` file and returns the output text. The second argument
 of ``render`` is an array of variables to use in the template. In this
 example, the result will be ``Hello, Fabien!``.
 
+.. note::
+
+    Templates will be cached in the memory of the engine. This means that if
+    you render the same template multiple times in the same request, the
+    template will only be loaded once from the file system.
+
 The ``$view`` variable
 ----------------------
 
