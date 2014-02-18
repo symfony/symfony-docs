@@ -34,11 +34,6 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
 
-Variables
----------
-
-.. include:: /reference/forms/types/variables/checked.rst.inc
-
 Inherited Options
 -----------------
 
@@ -68,3 +63,12 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+Form Variables
+--------------
+
+======== ============ ============================================
+Variable Type         Usage                                       
+======== ============ ============================================
+checked  ``Boolean``  Whether or not the current input is checked.
+======== ============ ============================================
