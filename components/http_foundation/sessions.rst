@@ -28,7 +28,7 @@ Quick example::
 
     // retrieve messages
     foreach ($session->getFlashBag()->get('notice', array()) as $message) {
-        echo "<div class='flash-notice'>$message</div>";
+        echo '<div class="flash-notice">'.$message.'</div>';
     }
 
 .. note::
@@ -254,7 +254,7 @@ has a simple API
   Adds a flash message to the stack of specified type;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::set`:
-  Sets flashes by type; This method conveniently takes both singles messages as
+  Sets flashes by type; This method conveniently takes both single messages as
   a ``string`` or multiple messages in an ``array``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::get`:
@@ -308,18 +308,18 @@ Simple, display one type of message::
 
     // display warnings
     foreach ($session->getFlashBag()->get('warning', array()) as $message) {
-        echo "<div class='flash-warning'>$message</div>";
+        echo '<div class="flash-warning">'.$message.'</div>';
     }
 
     // display errors
     foreach ($session->getFlashBag()->get('error', array()) as $message) {
-        echo "<div class='flash-error'>$message</div>";
+        echo '<div class="flash-error">'.$message.'</div>';
     }
 
 Compact method to process display all flashes at once::
 
     foreach ($session->getFlashBag()->all() as $type => $messages) {
         foreach ($messages as $message) {
-            echo "<div class='flash-$type'>$message</div>\n";
+            echo '<div class="flash-'.$type.'">'.$message.'</div>';
         }
     }

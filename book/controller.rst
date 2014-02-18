@@ -513,7 +513,10 @@ value to each variable.
         $subRequest = $request->duplicate(array(), null, $path);
 
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+        $response = $httpKernel->handle(
+            $subRequest,
+            HttpKernelInterface::SUB_REQUEST
+        );
 
 .. index::
    single: Controller; Rendering templates
@@ -579,7 +582,8 @@ The Symfony templating engine is explained in great detail in the
             'AcmeHelloBundle:Hello/Greetings:index.html.twig',
             array('name' => $name)
         );
-        // index.html.twig found in Resources/views/Hello/Greetings is rendered.
+        // index.html.twig found in Resources/views/Hello/Greetings
+        // is rendered.
 
 .. index::
    single: Controller; Accessing services

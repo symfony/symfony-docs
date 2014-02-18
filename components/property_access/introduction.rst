@@ -346,7 +346,7 @@ configured to enable extra features. To do that you could use the
 :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
 
     // ...
-    $accessorBuilder = PropertyAccess::getPropertyAccessorBuilder();
+    $accessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
 
     // Enable magic __call
     $accessorBuilder->enableMagicCall();
@@ -361,7 +361,7 @@ configured to enable extra features. To do that you could use the
     $accessor = $accessorBuilder->getPropertyAccessor();
 
     // Or all in one
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 

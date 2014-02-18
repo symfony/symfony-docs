@@ -78,7 +78,7 @@ code::
 
     These versions are important when you deploy your application to a **server with
     a lower ICU version** than your development machines, because deployment will
-    fail if
+    fail if:
 
     * the development machines are compiled with ICU 4.4 or higher, but the
       server is compiled with a lower ICU version than 4.4;
@@ -282,7 +282,12 @@ multi-valued entries (arrays), the values of the more specific and the fallback
 locale will be merged. In order to suppress this behavior, the last parameter
 ``$fallback`` can be set to ``false``::
 
-    echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'), false);
+    echo $reader->readEntry(
+        '/path/to/bundle',
+        'en',
+        array('Data', 'entry1'),
+        false
+    );
 
 Accessing ICU Data
 ------------------
