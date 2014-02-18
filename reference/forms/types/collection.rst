@@ -366,3 +366,13 @@ error_bubbling
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/cascade_validation.rst.inc
+
+Field Variables
+---------------
+
+============ =========== ========================================
+Variable     Type        Usage
+============ =========== ========================================
+allow_add    ``Boolean`` The value of the `allow_add`_ option.
+allow_delete ``Boolean`` The value of the `allow_delete`_ option.
+============ =========== ========================================
