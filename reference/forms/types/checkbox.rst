@@ -13,6 +13,8 @@ if the box is unchecked, the value will be set to false.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
+| Variables   | - `checked`_                                                           |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `empty_data`_                                                        |
 | options     | - `compound`_                                                          |
 +-------------+------------------------------------------------------------------------+
@@ -45,6 +47,11 @@ Field Options
 -------------
 
 .. include:: /reference/forms/types/options/value.rst.inc
+
+Variables
+---------
+
+.. include:: /reference/forms/types/variables/checked.rst.inc
 
 Overridden options
 ------------------

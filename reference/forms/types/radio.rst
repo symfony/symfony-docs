@@ -15,6 +15,8 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
 +-------------+---------------------------------------------------------------------+
+| Variables   | - `checked`_                                                        |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `value`_                                                          |
 | options     | - `data`_                                                           |
 |             | - `empty_data`_                                                     |
@@ -31,6 +33,11 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
+
+Variables
+---------
+
+.. include:: /reference/forms/types/variables/checked.rst.inc
 
 Inherited Options
 -----------------
