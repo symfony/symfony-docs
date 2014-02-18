@@ -192,6 +192,24 @@ good idea to include this in your form tag:
 
     <form action="{{ path('form_submit') }}" method="post" {{ form_enctype(form) }}>
 
+Form Tests Reference
+--------------------
+
+Tests can be executed by using the ``is`` operator in Twig to create a
+condition. Read `the Twig documentation`_ for more information.
+
+.. _form-twig-selectedchoice:
+
+selectedchoice(selected_value)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This test will check if the current choice is equal to the ``selected_value``
+or if the current choice is in the array (when ``selected_value`` is an array).
+
+.. code-block:: jinja
+
+    <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
+
 .. _`twig-reference-form-variables`:
 
 More about Form Variables
@@ -357,3 +375,4 @@ object:
 +------------------------+-------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`the Twig documentation`: http://twig.sensiolabs.org/doc/templates.html#test-operator
