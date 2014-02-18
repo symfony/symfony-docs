@@ -83,30 +83,33 @@ The ``generateUrl()`` is the same method as the ``path()`` function used in the
 templates. It takes the route name and an array of parameters as arguments and
 returns the associated friendly URL.
 
-You can also forward internally the action to another one with the ``forward()``
+You can also internally forward the action to another using the ``forward()``
 method::
 
-    return $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
+    return $this->forward('AcmeDemoBundle:Hello:fancy', array(
+        'name'  => $name,
+        'color' => 'green'
+    ));
 
 Displaying Error Pages
 ----------------------
 
 Errors will inevitably happen during the execution of every web application.
 In the case of ``404`` errors, Symfony includes a handy shortcut that you can
-use on your controllers::
+use in your controllers::
 
     throw $this->createNotFoundException();
 
 For ``500`` errors, just throw a regular PHP exception inside the controller and
-Symfony will transform it in a proper ``500`` error page::
+Symfony will transform it into a proper ``500`` error page::
 
     throw new \Exception('Something went wrong!');
 
 Getting information from the Request
 ------------------------------------
 
-Symfony automatically injects the ``Request`` object when the controller defines
-a variable type hinted with `Symfony\Component\HttpFoundation\Request`::
+Symfony automatically injects the ``Request`` object when the controller has an
+argument that's type hinted with ``Symfony\Component\HttpFoundation\Request`::
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -158,8 +161,8 @@ from any controller::
     }
 
 You can also store "flash messages" that will auto-delete after the next request.
-They are useful for instance when you need to set a success message before
-redirecting the user to another page (which will then show the message)::
+They are useful when you need to set a success message before redirecting the
+user to another page (which will then show the message)::
 
     // store a message for the very next request (in a controller)
     $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
