@@ -282,7 +282,12 @@ multi-valued entries (arrays), the values of the more specific and the fallback
 locale will be merged. In order to suppress this behavior, the last parameter
 ``$fallback`` can be set to ``false``::
 
-    echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'), false);
+    echo $reader->readEntry(
+        '/path/to/bundle',
+        'en',
+        array('Data', 'entry1'),
+        false
+    );
 
 Accessing ICU Data
 ------------------
