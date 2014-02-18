@@ -73,14 +73,12 @@ You could implement your Voter to check permission for the view and edit action 
 
         public function supportsClass($obj)
         {
-            if ($obj instanceof Post) {
-                return true;
-            }
-
-            return false;
+            return $obj instanceof Post;
         }
 
-        /** @var \Acme\DemoBundle\Entity\Post $post */
+        /**
+         * @var \Acme\DemoBundle\Entity\Post $post
+         */
         public function vote(TokenInterface $token, $post, array $attributes)
         {
             // check if class of this object is supported by this voter
@@ -89,7 +87,7 @@ You could implement your Voter to check permission for the view and edit action 
             }
 
             // check if voter is used correct, only allow one attribute for a check
-            if(count($attributes) !== 1 || !is_string($attributes[0])) {
+            if(1 !== count($attributes) || !is_string($attributes[0])) {
                 throw new InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
@@ -176,7 +174,7 @@ and tag it as a ``security.voter``:
             ->register(
                     'security.access.post_document_voter',
                     'Acme\DemoBundle\Security\Authorization\Voter\PostVoter'
-                )
+            )
             ->addTag('security.voter')
         ;
 
@@ -194,11 +192,12 @@ from the security context is called.
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
     use Acme\DemoBundle\Entity\Post;
 
     class PostController extends Controller
     {
-
         /**
          * @Route("/blog/{id}")
          * @ParamConverter("post", class="SensioBlogBundle:Post")

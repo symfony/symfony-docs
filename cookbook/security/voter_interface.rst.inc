@@ -18,9 +18,9 @@ method must implement the business logic that verifies whether or not the
 user is granted access. This method must return one of the following values:
 
 * ``VoterInterface::ACCESS_GRANTED``: The user is allowed to access the
-application
+  application
 * ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if the user
-is granted or not
+  is granted or not
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access
-the application
+  the application
 
