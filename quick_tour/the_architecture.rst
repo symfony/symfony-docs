@@ -37,8 +37,8 @@ lives::
 
 The controller first bootstraps the application using a kernel class (``AppKernel``
 in this case). Then, it creates the ``Request`` object using the PHP's global
-variables and passes it to the kernel. The last step is to send back to the user
-the response contents returned by the kernel.
+variables and passes it to the kernel. The last step is to send the response
+contents returned by the kernel back to the user.
 
 .. _the-app-dir:
 
@@ -57,7 +57,7 @@ This class must implement two methods:
   (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
-can use any PHP classes without doing anything at all! All dependencies
+can use any PHP class without doing anything at all! All dependencies
 are stored under the ``vendor/`` directory, but this is just a convention.
 You can store them wherever you want, globally on your server or locally
 in your projects.
