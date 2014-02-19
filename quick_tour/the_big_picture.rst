@@ -50,7 +50,7 @@ make sure that your system meets all the technical requirements:
     $ cd myproject/
     $ php app/check.php
 
-Fix any error reported by the command and then, use the PHP built-in web server
+Fix any error reported by the command and then use the PHP built-in web server
 to run Symfony:
 
 .. code-block:: bash
@@ -59,12 +59,12 @@ to run Symfony:
 
 If you get the error `There are no commands defined in the "server" namespace.`,
 then you are probably using PHP 5.3. That's ok! But the built-in web server is
-available for PHP 5.4.0 or higher. If you have an older version of PHP or if you
-prefer a traditional web server such as Apache or Nginx, read the
+only available for PHP 5.4.0 or higher. If you have an older version of PHP or
+if you prefer a traditional web server such as Apache or Nginx, read the
 :doc:`/cookbook/configuration/web_server_configuration` article.
 
-Open your browser and access to the ``http://localhost:8000`` URL to
-see the Welcome page of Symfony2:
+Open your browser and access the ``http://localhost:8000`` URL to see the
+Welcome page of Symfony2:
 
 .. image:: /images/quick_tour/welcome.png
    :align: center
@@ -73,7 +73,7 @@ see the Welcome page of Symfony2:
 Understanding the Fundamentals
 ------------------------------
 
-One of the main goals of a framework is to keep your code organized and allow
+One of the main goals of a framework is to keep your code organized and to allow
 your application to evolve easily over time by avoiding the mixing of database
 calls, HTML tags and business logic in the same script. To achieve this goal
 with Symfony, you'll first need to learn a few fundamental concepts and terms.
@@ -141,8 +141,8 @@ will be executed. In the next section, you'll learn exactly what that means.
 .. tip::
 
     In addition to YAML files, routes can be configured in XML or PHP files
-    and even embedded in PHP annotations. This flexibility is one of the main
-    features of Symfony2, a framework that never imposes a particular
+    and can even be embedded in PHP annotations. This flexibility is one of the
+    main features of Symfony2, a framework that never imposes a particular
     configuration format on you.
 
 Controllers
@@ -151,8 +151,8 @@ Controllers
 A controller is a PHP function or method that handles incoming *requests* and
 returns *responses* (often HTML code). Instead of using the PHP global variables
 and functions (like ``$_GET`` or ``header()``) to manage these HTTP messages,
-Symfony uses objects: :ref:`Request<component-http-foundation-request>`
-and :ref:`Response<component-http-foundation-response>`. The simplest possible
+Symfony uses objects: :ref:`Request <component-http-foundation-request>`
+and :ref:`Response <component-http-foundation-response>`. The simplest possible
 controller might create the response by hand, based on the request::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -318,17 +318,17 @@ environment.
 
 .. _quick-tour-big-picture-environments-intro:
 
-What *is* an environment?
-~~~~~~~~~~~~~~~~~~~~~~~~~
+What Is an environment?
+~~~~~~~~~~~~~~~~~~~~~~~
 
-An :term:`Environment` represents a group of configuration that's used to run
+An :term:`Environment` represents a group of configurations that's used to run
 your application. Symfony2 defines two environments by default: ``dev``
 (suited for when developing the application locally) and ``prod`` (optimized
 for when executing the application on production).
 
 Typically, the environments share a large amount of configuration options. For
 that reason, you put your common configuration in ``config.yml`` and override
-where necessary in the specific configuration file for each environment:
+the specific configuration file for each environment where necessary:
 
 .. code-block:: yaml
 
@@ -354,16 +354,18 @@ URL, you'll get a 404 error.
 
 .. tip::
 
-    If instead of using PHP built-in webserver, you use Apache with ``mod_rewrite``
-    enabled and take advantage of the ``.htaccess`` file Symfony2 provides
-    in ``web/``, you can even omit the ``app.php`` part of the URL. The default
-    ``.htaccess`` points all requests to the ``app.php`` front controller:
+    If instead of using PHP's built-in webserver, you use Apache with
+    ``mod_rewrite`` enabled and take advantage of the ``.htaccess`` file
+    Symfony2 provides in ``web/``, you can even omit the ``app.php`` part of the
+    URL. The default ``.htaccess`` points all requests to the ``app.php`` front
+    controller:
 
     .. code-block:: text
 
         http://localhost/demo/hello/Fabien
 
-For more details on environments, see ":ref:`Environments & Front Controllers<page-creation-environments>`" article.
+For more details on environments, see
+":ref:`Environments & Front Controllers <page-creation-environments>`" article.
 
 Final Thoughts
 --------------

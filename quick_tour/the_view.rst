@@ -56,8 +56,8 @@ and pass the variables needed as an array using the optional second argument::
 Variables passed to a template can be strings, arrays, or even objects. Twig
 abstracts the difference between them and lets you access "attributes" of a
 variable with the dot (``.``) notation. The following code listing shows how to
-display the content of a variable depending on the type of variable passed by
-the controller:
+display the content of a variable depending on the type of the variable passed
+by the controller:
 
 .. code-block:: jinja
 
