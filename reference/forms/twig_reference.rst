@@ -319,7 +319,7 @@ object:
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
 +========================+=====================================================================================+
-| ``form``               | The current FormView instance                                                       |
+| ``form``               | The current ``FormView`` instance                                                   |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``id``                 | The ``id`` HTML attribute to be rendered                                            |
 +------------------------+-------------------------------------------------------------------------------------+
@@ -331,8 +331,8 @@ object:
 | ``errors``             | An array of any errors attached to *this* specific field                            |
 |                        | (e.g. ``form.title.errors``).                                                       |
 |                        | Note that you can't use ``form.errors`` to determine if a form is valid,            |
-|                        | since this only returns "global" errors: some individual fields may have errors     |
-|                        | Instead, use the ``valid`` option                                                   |
+|                        | since this only returns "global" errors: some individual fields may have errors.    |
+|                        | Instead, use the ``valid`` option.                                                  |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``valid``              | Returns ``true`` or ``false`` depending on whether the whole form is valid          |
 +------------------------+-------------------------------------------------------------------------------------+
@@ -365,13 +365,13 @@ object:
 +------------------------+-------------------------------------------------------------------------------------+
 | ``translation_domain`` | The domain of the translations for this form                                        |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``cache_key``          | An unique key which is used for caching                                             |
+| ``cache_key``          | A unique key which is used for caching                                              |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``data``               | The normalized data of the type                                                     |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``method``             | The method of the current form (POST, GET, etc)                                     |
+| ``method``             | The method of the current form (POST, GET, etc.)                                    |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``action``             | The action of the current form (POST, GET, etc)                                     |
+| ``action``             | The action of the current form                                                      |
 +------------------------+-------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

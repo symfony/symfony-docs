@@ -160,22 +160,29 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 Field Variables
 ---------------
 
-====================== ============ ================================================================
-Variable               Type         Usage
-====================== ============ ================================================================
-multiple               ``Boolean``  The value of the `multiple`_ option.
-expanded               ``Boolean``  The value of the `expanded`_ option.
-preferred_choices      ``array``    A nested array containing the ``ChoiceView`` objects of
-                                    choices which should be presented to the user with priority.
-choices                ``array``    A nested array containing the ``ChoiceView`` objects of
-                                    the remaining choices.
-separator              ``string``   The seperator to use between choice groups.
-empty_value            ``mixed``    The empty value if not already in the list, otherwise
-                                    ``null``.
-is_selected            ``callable`` A callable which takes a ``ChoiceView`` and the selected value(s)
-                                    and returns whether the choice is in the selected value(s).
-empty_value_in_choices ``Boolean``  Whether the empty value is in the choice list.
-====================== ============ ================================================================
++------------------------+--------------+-------------------------------------------------------------------+
+| Variable               | Type         | Usage                                                             |
++========================+==============+===================================================================+
+| multiple               | ``Boolean``  | The value of the `multiple`_ option.                              |
++------------------------+--------------+-------------------------------------------------------------------+
+| expanded               | ``Boolean``  | The value of the `expanded`_ option.                              |
++------------------------+--------------+-------------------------------------------------------------------+
+| preferred_choices      | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
+|                        |              | choices which should be presented to the user with priority.      |
++------------------------+--------------+-------------------------------------------------------------------+
+| choices                | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
+|                        |              | the remaining choices.                                            |
++------------------------+--------------+-------------------------------------------------------------------+
+| separator              | ``string``   | The seperator to use between choice groups.                       |
++------------------------+--------------+-------------------------------------------------------------------+
+| empty_value            | ``mixed``    | The empty value if not already in the list, otherwise             |
+|                        |              | ``null``.                                                         |
++------------------------+--------------+-------------------------------------------------------------------+
+| is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
+|                        |              | and returns whether the choice is in the selected value(s).       |
++------------------------+--------------+-------------------------------------------------------------------+
+| empty_value_in_choices | ``Boolean``  | Whether the empty value is in the choice list.                    |
++------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::
 
