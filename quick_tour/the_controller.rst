@@ -167,7 +167,9 @@ user to another page (which will then show the message)::
     // store a message for the very next request (in a controller)
     $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
-    // display the flash message in the template
+.. code-block:: html+jinja
+
+    {# display the flash message in the template #}
     <div>{{ app.session.flashbag.get('notice') }}</div>
 
 Caching Resources
