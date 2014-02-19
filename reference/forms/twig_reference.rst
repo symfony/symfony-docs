@@ -319,14 +319,14 @@ object:
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
 +========================+=====================================================================================+
-| ``form``               | The current ``FormView`` instance                                                   |
+| ``form``               | The current ``FormView`` instance.                                                  |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``id``                 | The ``id`` HTML attribute to be rendered                                            |
+| ``id``                 | The ``id`` HTML attribute to be rendered.                                           |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``name``               | The name of the field (e.g. ``title``) - but not the ``name``                       |
-|                        | HTML attribute, which is ``full_name``                                              |
+|                        | HTML attribute, which is ``full_name``.                                             |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``full_name``          | The ``name`` HTML attribute to be rendered                                          |
+| ``full_name``          | The ``name`` HTML attribute to be rendered.                                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``errors``             | An array of any errors attached to *this* specific field                            |
 |                        | (e.g. ``form.title.errors``).                                                       |
@@ -334,44 +334,44 @@ object:
 |                        | since this only returns "global" errors: some individual fields may have errors.    |
 |                        | Instead, use the ``valid`` option.                                                  |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``valid``              | Returns ``true`` or ``false`` depending on whether the whole form is valid          |
+| ``valid``              | Returns ``true`` or ``false`` depending on whether the whole form is valid.         |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute)  |
+| ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute). |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field                          |
+| ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field                          |
+| ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
 |                        | validation. Additionally, a ``required`` class is added to the label.               |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element                                  |
+| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element.                                 |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``pattern``            | Adds a ``pattern`` HTML attribute to the element                                    |
+| ``pattern``            | Adds a ``pattern`` HTML attribute to the element.                                   |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``label``              | The string label that will be rendered                                              |
+| ``label``              | The string label that will be rendered.                                             |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``multipart``          | If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.        |
 |                        | This only applies to the root form element.                                         |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``attr``               | A key-value array that will be rendered as HTML attributes on the field             |
+| ``attr``               | A key-value array that will be rendered as HTML attributes on the field.            |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``label_attr``         | A key-value array that will be rendered as HTML attributes on the label             |
+| ``label_attr``         | A key-value array that will be rendered as HTML attributes on the label.            |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``compound``           | Whether or not a field is actually a holder for a group of children fields          |
-|                        | (for example, a ``choice`` field, which is actually a group of checkboxes           |
+|                        | (for example, a ``choice`` field, which is actually a group of checkboxes.          |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``block_prefixes``     | An array of all the names of the parent types                                       |
+| ``block_prefixes``     | An array of all the names of the parent types.                                      |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``translation_domain`` | The domain of the translations for this form                                        |
+| ``translation_domain`` | The domain of the translations for this form.                                       |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``cache_key``          | A unique key which is used for caching                                              |
+| ``cache_key``          | A unique key which is used for caching.                                             |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``data``               | The normalized data of the type                                                     |
+| ``data``               | The normalized data of the type.                                                    |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``method``             | The method of the current form (POST, GET, etc.)                                    |
+| ``method``             | The method of the current form (POST, GET, etc.).                                   |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``action``             | The action of the current form                                                      |
+| ``action``             | The action of the current form.                                                     |
 +------------------------+-------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
