@@ -192,18 +192,14 @@ from the security context is called.
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-    use Acme\DemoBundle\Entity\Post;
 
     class PostController extends Controller
     {
-        /**
-         * @Route("/blog/{id}")
-         * @ParamConverter("post", class="SensioBlogBundle:Post")
-         */
-        public function showAction(Post $post)
+        public function showAction()
         {
+            // get a Post instance
+            $post = ...;
+
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
