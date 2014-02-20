@@ -323,7 +323,7 @@ returns a ``Crawler`` instance.
 .. tip::
 
     Hardcoding the request URLs is a best practice for functional tests. If the
-    test generates URLS using the Symfony router, it won't detect any change
+    test generates URLs using the Symfony router, it won't detect any change
     made to the application URLs which may impact the end users.
 
 Use the Crawler to find DOM elements in the Response. These elements can then
