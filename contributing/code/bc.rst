@@ -1,26 +1,44 @@
 Our Backwards Compatibility Promise
 ===================================
 
-If you are using Symfony, we promise you backwards compatibility (BC) for all
-minor releases (2.5, 2.6, etc.). Ensuring smooth upgrades of your projects is our
-first priority. However, backwards compatibility comes in many different flavors.
+Ensuring smooth upgrades of your projects is our first priority. That's why
+we promise you backwards compatibility (BC) for all minor Symfony releases.
+
+You probably recognize this strategy as `Semantic Versioning`_. In short, 
+Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
+allowed to break backwards compatibility. Minor releases (such as 2.5, 2.6 etc.)
+may introduce new features, but must do so without breaking the existing API of
+that release branch (2.x in the previous example).
 
 .. caution::
 
     This promise was introduced with Symfony 2.3 and does not apply to previous
     versions of Symfony.
 
-This page has two different target audiences: If you are using Symfony, it will
-tell you how to make sure that you will be able to upgrade smoothly to all
-future 2.x versions. If you are contributing to Symfony, this page will tell you
-the rules that you need to follow to ensure smooth upgrades for our users.
+However, backwards compatibility comes in many different flavors. In fact, almost
+every change that we make to the framework can potentially break an application.
+For example, if we add a new method to a class, this will break an application
+which extended this class and added the same method, but with a different
+method signature.
+
+Also, not every BC break has the same impact on application code. While some BC
+breaks require you to make significant changes to your classes or your
+architecture, others are fixed as easily as changing the name of a method.
+
+That's why we created this page for you. The section "Using Symfony Code" will
+tell you how you can ensure that your application won't break completely when
+upgrading to a newer version of the same major release branch.
+
+The second section, "Working on Symfony Code", is targeted at Symfony
+contributors. This section lists detailed rules that every contributor needs to
+follow to ensure smooth upgrades for our users.
 
 Using Symfony Code
 ------------------
 
 If you are using Symfony in your projects, the following guidelines will help
-you to ensure smooth upgrades to all future minor releases of Symfony (such as
-2.5, 2.6 and so on).
+you to ensure smooth upgrades to all future minor releases of your Symfony
+version.
 
 Using Our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
@@ -299,6 +317,7 @@ Change return type                                  Yes [2]_ [5]_   No
 .. [7] A type hint may only be added if passing a value with a different type
        previously generated a fatal error.
 
+.. _Semantic Versioning: http://semver.org/
 .. _scalar type: http://php.net/manual/en/function.is-scalar.php
 .. _boolean values: http://php.net/manual/en/function.boolval.php
 .. _string values: http://www.php.net/manual/en/function.strval.php
