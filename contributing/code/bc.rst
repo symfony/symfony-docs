@@ -4,7 +4,7 @@ Our Backwards Compatibility Promise
 Ensuring smooth upgrades of your projects is our first priority. That's why
 we promise you backwards compatibility (BC) for all minor Symfony releases.
 
-You probably recognize this strategy as `Semantic Versioning`_. In short, 
+You probably recognize this strategy as `Semantic Versioning`_. In short,
 Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
 allowed to break backwards compatibility. Minor releases (such as 2.5, 2.6 etc.)
 may introduce new features, but must do so without breaking the existing API of
@@ -211,21 +211,22 @@ Type of Change                                  Regular         API
 ==============================================  ==============  ==============
 Remove entirely                                 No              No
 Change name or namespace                        No              No
-Add parent interface                            Yes [2]_        No
+Add parent interface                            Yes [2]_        Yes [3]_
 Remove parent interface                         No              No
 **Methods**
 Add method                                      Yes [2]_        No
 Remove method                                   No              No
 Change name                                     No              No
+Move to parent interface                        Yes             Yes
 Add argument without a default value            No              No
 Add argument with a default value               Yes [2]_        No
-Remove argument                                 Yes [3]_        Yes [3]_
+Remove argument                                 Yes [4]_        Yes [4]_
 Add default value to an argument                Yes [2]_        No
 Remove default value of an argument             No              No
 Add type hint to an argument                    No              No
 Remove type hint of an argument                 Yes [2]_        No
-Change argument type                            Yes [2]_ [4]_   No
-Change return type                              Yes [2]_ [5]_   No
+Change argument type                            Yes [2]_ [5]_   No
+Change return type                              Yes [2]_ [6]_   No
 ==============================================  ==============  ==============
 
 Changing Classes
@@ -241,17 +242,19 @@ Remove entirely                                     No              No
 Make final                                          Yes [2]_        No
 Make abstract                                       No              No
 Change name or namespace                            No              No
-Change parent class                                 Yes [6]_        Yes [6]_
+Change parent class                                 Yes [7]_        Yes [7]_
 Add interface                                       Yes             Yes
 Remove interface                                    No              No
 **Public Properties**
 Add public property                                 Yes             Yes
 Remove public property                              No              No
 Reduce visibility                                   No              No
+Move to parent class                                Yes             Yes
 **Protected Properties**
 Add protected property                              Yes             Yes
 Remove protected property                           Yes [2]_        No
 Reduce visibility                                   Yes [2]_        No
+Move to parent class                                Yes             Yes
 **Private Properties**
 Add private property                                Yes             Yes
 Remove private property                             Yes             Yes
@@ -260,34 +263,37 @@ Add constructor without mandatory arguments         Yes [2]_        Yes [2]_
 Remove constructor                                  Yes [2]_        No
 Reduce visibility of a public constructor           No              No
 Reduce visibility of a protected constructor        Yes [2]_        No
+Move to parent class                                Yes             Yes
 **Public Methods**
 Add public method                                   Yes             Yes
 Remove public method                                No              No
 Change name                                         No              No
 Reduce visibility                                   No              No
+Move to parent class                                Yes             Yes
 Add argument without a default value                No              No
 Add argument with a default value                   Yes [2]_        No
-Remove argument                                     Yes [3]_        Yes [3]_
+Remove argument                                     Yes [4]_        Yes [4]_
 Add default value to an argument                    Yes [2]_        No
 Remove default value of an argument                 No              No
-Add type hint to an argument                        Yes [7]_        No
+Add type hint to an argument                        Yes [8]_        No
 Remove type hint of an argument                     Yes [2]_        No
-Change argument type                                Yes [2]_ [4]_   No
-Change return type                                  Yes [2]_ [5]_   No
+Change argument type                                Yes [2]_ [5]_   No
+Change return type                                  Yes [2]_ [6]_   No
 **Protected Methods**
 Add protected method                                Yes             Yes
 Remove protected method                             Yes [2]_        No
 Change name                                         No              No
 Reduce visibility                                   Yes [2]_        No
+Move to parent class                                Yes             Yes
 Add argument without a default value                Yes [2]_        No
 Add argument with a default value                   Yes [2]_        No
-Remove argument                                     Yes [3]_        Yes [3]_
+Remove argument                                     Yes [4]_        Yes [4]_
 Add default value to an argument                    Yes [2]_        No
 Remove default value of an argument                 Yes [2]_        No
 Add type hint to an argument                        Yes [2]_        No
 Remove type hint of an argument                     Yes [2]_        No
-Change argument type                                Yes [2]_ [4]_   No
-Change return type                                  Yes [2]_ [5]_   No
+Change argument type                                Yes [2]_ [5]_   No
+Change return type                                  Yes [2]_ [6]_   No
 **Private Methods**
 Add private method                                  Yes             Yes
 Remove private method                               Yes             Yes
@@ -310,10 +316,13 @@ Change return type                                  Yes             Yes
 .. [2] Should be avoided. When done, this change must be documented in the
        UPGRADE file.
 
-.. [3] Only the last argument(s) of a method may be removed, as PHP does not
+.. [3] The added parent interface must not introduce any new methods that don't
+       exist in the interface already.
+
+.. [4] Only the last argument(s) of a method may be removed, as PHP does not
        care about additional arguments that you pass to a method.
 
-.. [4] The argument type may only be changed to a compatible or less specific
+.. [5] The argument type may only be changed to a compatible or less specific
        type. The following type changes are allowed:
 
        ===================  ==================================================================
@@ -327,7 +336,7 @@ Change return type                                  Yes             Yes
        interface ``<I>``    any superinterface of ``<I>``
        ===================  ==================================================================
 
-.. [5] The return type may only be changed to a compatible or more specific
+.. [6] The return type may only be changed to a compatible or more specific
        type. The following type changes are allowed:
 
        ===================  ==================================================================
@@ -345,10 +354,10 @@ Change return type                                  Yes             Yes
        interface ``<I>``    any subinterface or implementing class of ``<I>``
        ===================  ==================================================================
 
-.. [6] When changing the parent class, the original parent class must remain an
+.. [7] When changing the parent class, the original parent class must remain an
        ancestor of the class.
 
-.. [7] A type hint may only be added if passing a value with a different type
+.. [8] A type hint may only be added if passing a value with a different type
        previously generated a fatal error.
 
 .. _Semantic Versioning: http://semver.org/
