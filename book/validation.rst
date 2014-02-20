@@ -809,10 +809,11 @@ user registers and when a user updates their contact information later:
 
 With this configuration, there are three validation groups:
 
-* ``User`` - contains the constraints that belong to no other group;
+* ``Default`` - contains the constraints in the current class and all
+  referenced classes that belong to no other group;
 
-* ``Default`` - equivalent to the ``User`` group (This group is useful for
-  :ref:`book-validation-group-sequence`);
+* ``User`` - equivalent to all constraints of the ``User`` object in the
+  ``Default`` group;
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
