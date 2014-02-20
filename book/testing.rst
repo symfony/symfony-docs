@@ -320,6 +320,12 @@ into your Symfony2 application::
 The ``request()`` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
 
+.. tip::
+
+    Hardcoding the request URLs is a best practice for functional tests. If the
+    test generates URLS using the Symfony router, it won't detect any change
+    made to the application URLs which may impact the end users.
+
 Use the Crawler to find DOM elements in the Response. These elements can then
 be used to click on links and submit forms::
 
