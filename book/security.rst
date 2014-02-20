@@ -34,7 +34,7 @@ Basic Example: HTTP Authentication
 The Security component can be configured via your application configuration.
 In fact, most standard security setups are just a matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
-matching ``/admin/*`` and to ask the user for credentials using basic HTTP
+matching ``/admin*`` and to ask the user for credentials using basic HTTP
 authentication (i.e. the old-school username/password box):
 
 .. configuration-block::
@@ -143,9 +143,9 @@ that looks like the following:
 
 * There are two users in the system (``ryan`` and ``admin``);
 * Users authenticate themselves via the basic HTTP authentication prompt;
-* Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
+* Any URL matching ``/admin*`` is secured, and only the ``admin`` user
   can access it;
-* All URLs *not* matching ``/admin/*`` are accessible by all users (and the
+* All URLs *not* matching ``/admin*`` are accessible by all users (and the
   user is never prompted to log in).
 
 Read this short summary about how security works and how each part of the
@@ -193,7 +193,7 @@ Access Controls (Authorization)
 If a user requests ``/admin/foo``, however, the process behaves differently.
 This is because of the ``access_control`` configuration section that says
 that any URL matching the regular expression pattern ``^/admin`` (i.e. ``/admin``
-or anything matching ``/admin/*``) requires the ``ROLE_ADMIN`` role. Roles
+or anything matching ``/admin*``) requires the ``ROLE_ADMIN`` role. Roles
 are the basis for most authorization: a user can access ``/admin/foo`` only
 if it has the ``ROLE_ADMIN`` role.
 

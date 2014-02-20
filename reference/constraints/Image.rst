@@ -155,7 +155,7 @@ mimeTypes
 
 **type**: ``array`` or ``string`` **default**: ``image/*``
 
-You can find a list of existing image mime types on the `IANA website`_
+You can find a list of existing image mime types on the `IANA website`_.
 
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~

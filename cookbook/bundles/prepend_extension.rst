@@ -79,10 +79,10 @@ in case a specific other Bundle is not registered::
 
         // process the configuration of AcmeHelloExtension
         $configs = $container->getExtensionConfig($this->getAlias());
-        // use the Configuration class to generate a config array with the settings ``acme_hello``
+        // use the Configuration class to generate a config array with the settings "acme_hello"
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        // check if entity_manager_name is set in the ``acme_hello`` configuration
+        // check if entity_manager_name is set in the "acme_hello" configuration
         if (isset($config['entity_manager_name'])) {
             // prepend the acme_something settings with the entity_manager_name
             $config = array('entity_manager_name' => $config['entity_manager_name']);

@@ -181,7 +181,7 @@ can override the translations from any translation file, as long as it is in
 
 .. caution::
 
-    The last translation file always wins. That mean that you need to make
+    The last translation file always wins. That means that you need to make
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
 

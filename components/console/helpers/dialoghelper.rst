@@ -277,7 +277,7 @@ from the command line, you need to overwrite the HelperSet used by the command::
         return $stream;
     }
 
-By setting the inputStream of the ``DialogHelper``, you imitate what the
+By setting the input stream of the ``DialogHelper``, you imitate what the
 console would do internally with all user input through the cli. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.

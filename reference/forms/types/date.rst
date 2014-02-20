@@ -41,7 +41,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 |                      | - `inherit_data`_                                                           |
 |                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | ``field`` (if text), ``form`` otherwise                                     |
+| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+

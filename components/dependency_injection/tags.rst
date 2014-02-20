@@ -235,6 +235,18 @@ To answer this, change the service declaration:
             <tag name="acme_mailer.transport" alias="bar" />
         </service>
 
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
+        $definitionSmtp->addTag('acme_mailer.transport', array('alias' => 'foo'));
+        $container->setDefinition('acme_mailer.transport.smtp', $definitionSmtp);
+
+        $definitionSendmail = new Definition('\Swift_SendmailTransport');
+        $definitionSendmail->addTag('acme_mailer.transport', array('alias' => 'bar'));
+        $container->setDefinition('acme_mailer.transport.sendmail', $definitionSendmail);
+
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 

@@ -985,9 +985,9 @@ entity and a new constraint group called ``Premium``:
         Acme\DemoBundle\Entity\User:
             properties:
                 name:
-                    - NotBlank
+                    - NotBlank: ~
                 creditCard:
-                    - CardScheme
+                    - CardScheme:
                         schemes: [VISA]
                         groups: [Premium]
 

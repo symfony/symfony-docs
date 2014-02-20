@@ -160,7 +160,7 @@ you need is the JavaScript:
             {# ... #}
 
             {# store the prototype on the data-prototype attribute #}
-            <ul id="email-fields-list" data-prototype="{{ form_widget(form.emails.vars.prototype) | e }}">
+            <ul id="email-fields-list" data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
             {% for emailField in form.emails %}
                 <li>
                     {{ form_errors(emailField) }}
@@ -176,7 +176,7 @@ you need is the JavaScript:
 
         <script type="text/javascript">
             // keep track of how many email fields have been rendered
-            var emailCount = '{{ form.emails | length }}';
+            var emailCount = '{{ form.emails|length }}';
 
             jQuery(document).ready(function() {
                 jQuery('#add-another-email').click(function() {
