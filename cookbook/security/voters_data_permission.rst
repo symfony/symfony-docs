@@ -7,25 +7,31 @@ How to Use Voters to Check User Permissions
 In Symfony2 you can check the permission to access data by using the
 :doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming
 for many applications. A much easier solution is to work with custom voters,
-which are like simple conditional statements. Voters can also be used to
-check for permission to a part or even of the whole application:
-":doc:`/cookbook/security/voters`".
+which are like simple conditional statements.
+
+.. seealso::
+
+    Voters can also be used in other ways, like, for example, blacklisting IP
+    addresses from the entire application: ":doc:`/cookbook/security/voters`".
 
 .. tip::
 
-    Have a look at the
+    Take a look at the
     :doc:`authorization </components/security/authorization>`
-    chapter for a better understanding on voters.
+    chapter for an even deeper understanding on voters.
 
 How Symfony Uses Voters
 -----------------------
 
 In order to use voters, you have to understand how Symfony works with them.
-In general, all registered custom voters will be called every time you ask
-Symfony about permissions (ACL). You can use one of three different
-approaches on how to handle the feedback from all voters: affirmative,
-consensus and unanimous. For more information have a look at
-":ref:`the section about access decision managers <components-security-access-decision-manager>`".
+All voters are called each time you use the ``isGranted()`` method on Symfony's
+security context (i.e. the ``security.context`` service). Each decides if
+the current user should have access to some resource.
+
+Ultimately, Symfony uses one of three different approaches on what to do
+with the feedback from all voters: affirmative, consensus and unanimous.
+
+For more information take a look at ":ref:`the section about access decision managers <components-security-access-decision-manager>`".
 
 The Voter Interface
 -------------------
@@ -36,7 +42,7 @@ which has this structure:
 
 .. include:: /cookbook/security/voter_interface.rst.inc
 
-In this example, it'll check if the user will have access to a specific
+In this example, the voter will check if the user has access to a specific
 object according to your custom conditions (e.g. they must be the owner of
 the object). If the condition fails, you'll return
 ``VoterInterface::ACCESS_DENIED``, otherwise you'll return
@@ -46,7 +52,8 @@ does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``
 Creating the Custom Voter
 -------------------------
 
-You could implement your Voter to check permission for the view and edit action like the following::
+The goal is to create a voter that checks to see if a user has access to
+view or edit a particular object. Here's an example implementation:
 
     // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
@@ -87,7 +94,8 @@ You could implement your Voter to check permission for the view and edit action 
             }
 
             // check if voter is used correct, only allow one attribute for a check
-            if(1 !== count($attributes) || !is_string($attributes[0])) {
+            // this isn't a requirement, it's just the way we want our voter to work
+            if(1 !== count($attributes)) {
                 throw new InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
@@ -104,14 +112,14 @@ You could implement your Voter to check permission for the view and edit action 
                 return VoterInterface::ACCESS_ABSTAIN;
             }
 
-            // check if given user is instance of user interface
+            // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
                 return VoterInterface::ACCESS_DENIED;
             }
 
             switch($attribute) {
                 case 'view':
-                    // the data object could have for e.g. a method isPrivate()
+                    // the data object could have for example a method isPrivate()
                     // which checks the Boolean attribute $private
                     if (!$post->isPrivate()) {
                         return VoterInterface::ACCESS_GRANTED;
@@ -126,7 +134,6 @@ You could implement your Voter to check permission for the view and edit action 
                     }
                     break;
             }
-
         }
     }
 
@@ -137,7 +144,7 @@ Declaring the Voter as a Service
 --------------------------------
 
 To inject the voter into the security layer, you must declare it as a service
-and tag it as a ``security.voter``:
+and tag it with ``security.voter``:
 
 .. configuration-block::
 
@@ -212,3 +219,5 @@ from the security context is called.
             return new Response('<h1>'.$post->getName().'</h1>');
         }
     }
+
+It's that easy!
