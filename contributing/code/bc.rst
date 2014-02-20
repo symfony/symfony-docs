@@ -3,7 +3,6 @@ Our Backwards Compatibility Promise
 
 Ensuring smooth upgrades of your projects is our first priority. That's why
 we promise you backwards compatibility (BC) for all minor Symfony releases.
-
 You probably recognize this strategy as `Semantic Versioning`_. In short,
 Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
 allowed to break backwards compatibility. Minor releases (such as 2.5, 2.6 etc.)
