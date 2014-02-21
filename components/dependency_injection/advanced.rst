@@ -142,7 +142,7 @@ service by asking for the ``bar`` service like this::
 
     $container->get('bar'); // Would return the foo service
 
-.. note::
+.. tip::
 
     In YAML, you can also use a shortcut to alias a service:
 
@@ -181,5 +181,5 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
         $container->setDefinition('foo', $definition);
 
-Notice that Symfony will internally call the PHP statement ``require_once``
+Notice that Symfony will internally call the PHP statement ``require_once``,
 which means that your file will be included only once per request.

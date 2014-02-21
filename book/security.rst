@@ -34,7 +34,7 @@ Basic Example: HTTP Authentication
 The Security component can be configured via your application configuration.
 In fact, most standard security setups are just a matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
-matching ``/admin*`` and to ask the user for credentials using basic HTTP
+matching ``/admin/*`` and to ask the user for credentials using basic HTTP
 authentication (i.e. the old-school username/password box):
 
 .. configuration-block::
@@ -51,7 +51,9 @@ authentication (i.e. the old-school username/password box):
                         realm: "Secured Demo Area"
 
             access_control:
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: ^/admin/, roles: ROLE_ADMIN }
+                # Include the following line to also secure the /admin path itself
+                # - { path: ^/admin$, roles: ROLE_ADMIN }
 
             providers:
                 in_memory:
@@ -79,7 +81,9 @@ authentication (i.e. the old-school username/password box):
                 </firewall>
 
                 <access-control>
-                    <rule path="^/admin" role="ROLE_ADMIN" />
+                    <rule path="^/admin/" role="ROLE_ADMIN" />
+                    <!-- Include the following line to also secure the /admin path itself -->
+                    <!-- <rule path="^/admin$" role="ROLE_ADMIN" /> -->
                 </access-control>
 
                 <provider name="in_memory">
@@ -108,7 +112,9 @@ authentication (i.e. the old-school username/password box):
                 ),
             ),
             'access_control' => array(
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+                array('path' => '^/admin/', 'role' => 'ROLE_ADMIN'),
+                // Include the following line to also secure the /admin path itself
+                // array('path' => '^/admin$', 'role' => 'ROLE_ADMIN'),
             ),
             'providers' => array(
                 'in_memory' => array(
@@ -143,9 +149,9 @@ that looks like the following:
 
 * There are two users in the system (``ryan`` and ``admin``);
 * Users authenticate themselves via the basic HTTP authentication prompt;
-* Any URL matching ``/admin*`` is secured, and only the ``admin`` user
+* Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
   can access it;
-* All URLs *not* matching ``/admin*`` are accessible by all users (and the
+* All URLs *not* matching ``/admin/*`` are accessible by all users (and the
   user is never prompted to log in).
 
 Read this short summary about how security works and how each part of the
@@ -193,7 +199,7 @@ Access Controls (Authorization)
 If a user requests ``/admin/foo``, however, the process behaves differently.
 This is because of the ``access_control`` configuration section that says
 that any URL matching the regular expression pattern ``^/admin`` (i.e. ``/admin``
-or anything matching ``/admin*``) requires the ``ROLE_ADMIN`` role. Roles
+or anything matching ``/admin/*``) requires the ``ROLE_ADMIN`` role. Roles
 are the basis for most authorization: a user can access ``/admin/foo`` only
 if it has the ``ROLE_ADMIN`` role.
 
