@@ -144,3 +144,26 @@ set.
     float (e.g. you want a float to be greater than ``5``, ``4.512313`` is not valid
     but ``length(4.512314) > length(5)`` is, so the pattern will success). In
     this case, the value should be set to ``null`` with a ``MEDIUM_CONFIDENCE``.
+
+Registering a Type Guesser
+--------------------------
+
+The last thing you need to do is registering your custom type guesser by using
+:method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuesser` or
+:method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuessers`::
+
+    use Symfony\Component\Form\Forms;
+    use Acme\Form\PHPDocTypeGuesser;
+
+    $formFactory = Forms::createFormFactoryBuilder()
+        // ...
+        ->addTypeGuesser(new PHPDocTypeGuesser())
+        ->getFormFactory();
+
+    // ...
+
+.. note::
+
+    When you use the full stack framework, you need to register your type
+    guesser and tag it with ``form.type_guesser``. For more information see
+    :ref:`the tag reference <reference-dic-type_guesser>`.
