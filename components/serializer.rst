@@ -62,6 +62,7 @@ exists in your project::
     {
         private $age;
         private $name;
+        private $sportsman;
 
         // Getters
         public function getName()
@@ -74,6 +75,12 @@ exists in your project::
             return $this->age;
         }
 
+        // Issers
+        public function isSportsman()
+        {
+            return $this->sportsman;
+        }
+
         // Setters
         public function setName($name)
         {
@@ -84,6 +91,11 @@ exists in your project::
         {
             $this->age = $age;
         }
+
+        public function setSportsman($sportsman)
+        {
+            $this->sportsman = $sportsman;
+        }
     }
 
 Now, if you want to serialize this object into JSON, you only need to
@@ -92,10 +104,11 @@ use the Serializer service created before::
     $person = new Acme\Person();
     $person->setName('foo');
     $person->setAge(99);
+    $person->setSportsman(false);
 
     $jsonContent = $serializer->serialize($person, 'json');
 
-    // $jsonContent contains {"name":"foo","age":99}
+    // $jsonContent contains {"name":"foo","age":99,"sportsman":false}
 
     echo $jsonContent; // or return it in a Response
 
@@ -124,7 +137,7 @@ method on the normalizer definition::
     $encoder = new JsonEncoder();
 
     $serializer = new Serializer(array($normalizer), array($encoder));
-    $serializer->serialize($person, 'json'); // Output: {"name":"foo"}
+    $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsman":false}
 
 Deserializing an Object
 -----------------------
@@ -136,6 +149,7 @@ of the ``Person`` class would be encoded in XML format::
     <person>
         <name>foo</name>
         <age>99</age>
+        <sportsman>false</sportsman>
     </person>
     EOF;
 
@@ -180,6 +194,18 @@ method on the normalizer definition::
 
 As a final result, the deserializer uses the ``first_name`` attribute as if
 it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
+
+Serializing Boolean Attributes
+------------------------------
+
+.. versionadded:: 2.5
+    Support for ``is*`` accessors in
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
+    was introduced in Symfony 2.5.
+
+If you are using isser methods (methods prefixed by ``is``, like
+``Acme\Person::isSportsman()``), the Serializer component will automatically
+detect and use it to serialize related attributes.
 
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
