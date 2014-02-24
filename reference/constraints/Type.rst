@@ -112,6 +112,23 @@ as determined by PHP's ``is_`` functions.
 * `scalar <http://php.net/is_scalar>`_
 * `string <http://php.net/is_string>`_
 
+Also, you can use ``ctype_`` functions from corresponding `built-in PHP extension <http://php.net/book.ctype.php>`_.
+Consider `a list of ctype functions <http://php.net/ref.ctype.php>`_:
+
+* `alnum <http://php.net/function.ctype-alnum.php>`_
+* `alpha <http://php.net/function.ctype-alpha.php>`_
+* `cntrl <http://php.net/function.ctype-cntrl.php>`_
+* `digit <http://php.net/function.ctype-digit.php>`_
+* `graph <http://php.net/function.ctype-graph.php>`_
+* `lower <http://php.net/function.ctype-lower.php>`_
+* `print <http://php.net/function.ctype-print.php>`_
+* `punct <http://php.net/function.ctype-punct.php>`_
+* `space <http://php.net/function.ctype-space.php>`_
+* `upper <http://php.net/function.ctype-upper.php>`_
+* `xdigit <http://php.net/function.ctype-xdigit.php>`_
+
+Make sure that proper `locale <http://php.net/function.setlocale.php>`_ is set before using one of those.
+
 message
 ~~~~~~~
 
