@@ -11,13 +11,12 @@ Understanding the Directory Structure
 -------------------------------------
 
 The directory structure of a Symfony2 :term:`application` is rather flexible,
-but the directory structure of the *Standard Edition* distribution reflects
-the typical and recommended structure of a Symfony2 application:
+but the recommended structure is as follows:
 
-* ``app/``:    The application configuration;
-* ``src/``:    The project's PHP code;
-* ``vendor/``: The third-party dependencies;
-* ``web/``:    The web root directory.
+* ``app/``:    the application configuration;
+* ``src/``:    the project's PHP code;
+* ``vendor/``: the third-party dependencies;
+* ``web/``:    the web root directory.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -36,11 +35,10 @@ lives::
     $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-The kernel first requires the ``bootstrap.php.cache`` file, which bootstraps
-the framework and registers the autoloader (see below).
-
-Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
-bootstrap the application.
+The controller first bootstraps the application using a kernel class (``AppKernel``
+in this case). Then, it creates the ``Request`` object using the PHP's global
+variables and passes it to the kernel. The last step is to send the response
+contents returned by the kernel back to the user.
 
 .. _the-app-dir:
 
@@ -59,16 +57,10 @@ This class must implement two methods:
   (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
-can use any PHP classes without doing anything at all! If you need more flexibility,
-you can extend the autoloader in the ``app/autoload.php`` file. All dependencies
+can use any PHP class without doing anything at all! All dependencies
 are stored under the ``vendor/`` directory, but this is just a convention.
 You can store them wherever you want, globally on your server or locally
 in your projects.
-
-.. note::
-
-    If you want to learn more about Composer's autoloader, read `Composer-Autoloader`_.
-    Symfony also has an autoloading component - read ":doc:`/components/class_loader/class_loader`".
 
 Understanding the Bundle System
 -------------------------------
@@ -79,12 +71,13 @@ Symfony2, the :term:`bundle` system.
 A bundle is kind of like a plugin in other software. So why is it called a
 *bundle* and not a *plugin*? This is because *everything* is a bundle in
 Symfony2, from the core framework features to the code you write for your
-application. Bundles are first-class citizens in Symfony2. This gives you
-the flexibility to use pre-built features packaged in third-party bundles
-or to distribute your own bundles. It makes it easy to pick and choose which
-features to enable in your application and optimize them the way you want.
-And at the end of the day, your application code is just as *important* as
-the core framework itself.
+application.
+
+Bundles are first-class citizens in Symfony2. This gives you the flexibility
+to use pre-built features packaged in third-party bundles or to distribute your
+own bundles. It makes it easy to pick and choose which features to enable in
+your application and optimize them the way you want. And at the end of the day,
+your application code is just as *important* as the core framework itself.
 
 Registering a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -119,14 +112,14 @@ a single ``Bundle`` class that describes it::
 
 In addition to the AcmeDemoBundle that was already talked about, notice
 that the kernel also enables other bundles such as the FrameworkBundle,
-DoctrineBundle, SwiftmailerBundle, and AsseticBundle bundle.
-They are all part of the core framework.
+DoctrineBundle, SwiftmailerBundle and AsseticBundle bundle. They are all part
+of the core framework.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
 
 Each bundle can be customized via configuration files written in YAML, XML, or
-PHP. Have a look at the default configuration:
+PHP. Have a look at the default Symfony configuration:
 
 .. code-block:: yaml
 
@@ -191,9 +184,9 @@ PHP. Have a look at the default configuration:
         password:  "%mailer_password%"
         spool:     { type: memory }
 
-Each entry like ``framework`` defines the configuration for a specific bundle.
-For example, ``framework`` configures the FrameworkBundle while ``swiftmailer``
-configures the SwiftmailerBundle.
+Each first level entry like ``framework``, ``twig`` or ``doctrine`` defines the
+configuration for a specific bundle. For example, ``framework`` configures the
+FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file. For example, the ``dev`` environment loads the
@@ -268,7 +261,7 @@ Extending Bundles
 
 If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
 to "override" files, controllers or templates. For example, you can create
-a bundle - ``AcmeNewBundle`` - and specify that it overrides AcmeDemoBundle.
+a bundle - AcmeNewBundle - and specify that it overrides AcmeDemoBundle.
 When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
 first look for the ``WelcomeController`` class in AcmeNewBundle and, if
 it doesn't exist, then look inside AcmeDemoBundle. This means that one bundle
@@ -296,8 +289,9 @@ each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``app/cache/`` directory. In the development
 environment, Symfony2 is smart enough to flush the cache when you change a
-file. But in the production environment, it is your responsibility to clear
-the cache when you update your code or change its configuration.
+file. But in the production environment, to speed things up, it is your
+responsibility to clear the cache when you update your code or change its
+configuration.
 
 When developing a web application, things can go wrong in many ways. The log
 files in the ``app/logs/`` directory tell you everything about the requests
@@ -336,4 +330,3 @@ topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
 .. _Composer:   http://getcomposer.org
-.. _`Composer-Autoloader`: http://getcomposer.org/doc/01-basic-usage.md#autoloading
