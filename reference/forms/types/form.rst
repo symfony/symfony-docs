@@ -4,10 +4,45 @@
 form Field Type
 ===============
 
-See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`.
-
 The ``form`` type predefines a couple of options that are then available
-on all fields.
+on all types for which ``form`` is the parent type.
+
++---------+--------------------------------------------------------------------+
+| Options | - `compound`_                                                      |
+|         | - `data`_                                                          |
+|         | - `data_class`_                                                    |
+|         | - `empty_data`_                                                    |
+|         | - `required`_                                                      |
+|         | - `label`_                                                         |
+|         | - `label_attr`_                                                    |
+|         | - `constraints`_                                                   |
+|         | - `cascade_validation`_                                            |
+|         | - `read_only`_                                                     |
+|         | - `disabled`_                                                      |
+|         | - `trim`_                                                          |
+|         | - `mapped`_                                                        |
+|         | - `property_path`_                                                 |
+|         | - `attr`_                                                          |
+|         | - `translation_domain`_                                            |
+|         | - `block_name`_                                                    |
+|         | - `max_length`_                                                    |
+|         | - `by_reference`_                                                  |
+|         | - `error_bubbling`_                                                |
+|         | - `inherit_data`_                                                  |
+|         | - `error_mapping`_                                                 |
+|         | - `invalid_message`_                                               |
+|         | - `invalid_message_parameters`_                                    |
+|         | - `extra_fields_message`_                                          |
+|         | - `post_max_size_message`_                                         |
+|         | - `pattern`_                                                       |
++---------+--------------------------------------------------------------------+
+| Parent  | none                                                               |
++---------+--------------------------------------------------------------------+
+| Class   | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
++---------+--------------------------------------------------------------------+
+
+Options
+-------
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
