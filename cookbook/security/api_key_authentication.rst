@@ -210,11 +210,11 @@ exception in ``refreshUser()``.
     If you *do* want to store authentication data in the session so that
     the key doesn't need to be sent on every request, see :ref:`cookbook-security-api-key-session`.
 
-Handling Exceptions
--------------------
+Handling Authentication Failure
+-------------------------------
 
-In order for you're ``ApiKeyAuthentication`` to correctly display a 403
-http status when either bad credentials, or authentication fails you will 
+In order for your ``ApiKeyAuthentication`` to correctly display a 403
+http status when either bad credentials, or authentication fails - you will 
 need to implement the ``AuthenticationFailureHandlerInterface`` on your 
 Authenticator. This will provide a method ``onAuthenticationFailure`` which 
 you can then return a ``Response`` with.
