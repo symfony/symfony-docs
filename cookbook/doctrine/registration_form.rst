@@ -216,6 +216,7 @@ Next, create the form for this ``Registration`` model::
                 'checkbox',
                 array('property_path' => 'termsAccepted')
             );
+            $builder->add('Register', 'submit');
         }
 
         public function getName()
@@ -239,7 +240,6 @@ controller for displaying the registration form::
     namespace Acme\AccountBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Response;
 
     use Acme\AccountBundle\Form\Type\RegistrationType;
     use Acme\AccountBundle\Form\Model\Registration;
@@ -269,6 +269,9 @@ And its template:
 
 Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database::
+
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
 
     public function createAction(Request $request)
     {
