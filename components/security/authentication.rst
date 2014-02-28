@@ -249,8 +249,8 @@ which should be used to encode this user's password::
     // check if the password is valid:
 
     $validPassword = $encoder->isPasswordValid(
+        $encodedPassword,
         $user->getPassword(),
-        $password,
         $user->getSalt());
 
 .. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
