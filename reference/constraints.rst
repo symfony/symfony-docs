@@ -18,6 +18,7 @@ Validation Constraints Reference
    constraints/Url
    constraints/Regex
    constraints/Ip
+   constraints/Uuid
 
    constraints/Range
 
