@@ -1,8 +1,8 @@
 Uuid
-==
+====
 
 .. versionadded:: 2.5
-    The Uuid constraint was added in Symfony 2.5.
+    The Uuid constraint was introduced in Symfony 2.5.
 
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
 By default, this will validate the format according to the RFC's guidelines, but this can
@@ -97,12 +97,12 @@ strict
 **type**: ``boolean`` **default**: ``true``
 
 If this option is set to ``true`` the constraint will check if the UUID is formatted per the
-RFC's input format rules: ``216fff40-98d9-11e3-a5e2-0800200c9a66``.  Setting this to ``false``
-will allow alternate input formats like::
+RFC's input format rules: ``216fff40-98d9-11e3-a5e2-0800200c9a66``. Setting this to ``false``
+will allow alternate input formats like:
 
-  216f-ff40-98d9-11e3-a5e2-0800-200c-9a66
-  {216fff40-98d9-11e3-a5e2-0800200c9a66}
-  216fff4098d911e3a5e20800200c9a66
+* ``216f-ff40-98d9-11e3-a5e2-0800-200c-9a66``
+* ``{216fff40-98d9-11e3-a5e2-0800200c9a66}``
+* ``216fff4098d911e3a5e20800200c9a66``
 
 versions
 ~~~~~~~~
@@ -123,4 +123,3 @@ All five versions are allowed by default.
 .. _`Universally unique identifier (UUID)`: http://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: http://tools.ietf.org/html/rfc4122
 .. _`UUID versions`: http://en.wikipedia.org/wiki/Universally_unique_identifier#Variants_and_versions
-
