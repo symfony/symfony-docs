@@ -71,9 +71,12 @@ Register Commands in the Service Container
    Support for registering commands in the service container was added in
    version 2.4.
 
-Instead of putting your command in the ``Command`` directory and having Symfony
-auto-discover it for you, you can register commands in the service container
-using the ``console.command`` tag:
+By default, Symfony will take a look in the ``Command`` directory of you
+bundles and automatically register your commands. For the ones implementing
+the ``ContainerAwareCommand`` interface, Symfony will even inject the container.
+
+If you wan to, you can instead register them as services in the container using
+the ``console.command`` tag:
 
 .. configuration-block::
 
@@ -111,9 +114,20 @@ using the ``console.command`` tag:
 
 .. tip::
 
-    Registering your command as a service gives you more control over its
-    location and the services that are injected into it. But, there are no
-    functional advantages, so you don't need to register your command as a service.
+    Command as a service can be usefull in few situations:
+     * if you need your commands to be defined somewhere else than ``Command``
+     * if you need to access services or configuration parameters in the
+       ``configure`` method
+
+    For example, Imagine you want to provide a default value for the ``name``
+    option. You could hard code a string and pass it as the 4th argument of
+    ``addArgument``, or you could allow the user to set the default value in the
+    configuration.
+
+    With a ``ContainerAwareCommand`` you wouldn't be able to retrieve the
+    configuration parameter, because the ``configure`` method is called in the
+    command's constructor. The only solution is to inject them through its
+    constructor.
 
 Getting Services from the Service Container
 -------------------------------------------
