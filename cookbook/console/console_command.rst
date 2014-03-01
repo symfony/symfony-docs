@@ -118,6 +118,11 @@ the ``console.command`` tag:
 
     * if you need your commands to be defined somewhere else than in the
       ``Command`` folder;
+    * if you need to register the command conditionally (depending on the
+      environment or presence of some dependencies);
+    * ou want to reuse the command with a different service or different
+      configuration, without having to extend the command - you could just
+      define a second service with the same class;
     * if you need to access services or configuration parameters in the
       ``configure`` method.
 
