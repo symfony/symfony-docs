@@ -75,7 +75,7 @@ By default, Symfony will take a look in the ``Command`` directory of you
 bundles and automatically register your commands. For the ones implementing
 the ``ContainerAwareCommand`` interface, Symfony will even inject the container.
 
-If you wan to, you can instead register them as services in the container using
+If you want to, you can instead register them as services in the container using
 the ``console.command`` tag:
 
 .. configuration-block::
@@ -115,11 +115,12 @@ the ``console.command`` tag:
 .. tip::
 
     Command as a service can be usefull in few situations:
-     * if you need your commands to be defined somewhere else than ``Command``
-     * if you need to access services or configuration parameters in the
-       ``configure`` method
 
-    For example, Imagine you want to provide a default value for the ``name``
+    * If you need your commands to be defined somewhere else than ``Command``;
+    * if you need to access services or configuration parameters in the
+      ``configure`` method.
+
+    For example, imagine you want to provide a default value for the ``name``
     option. You could hard code a string and pass it as the 4th argument of
     ``addArgument``, or you could allow the user to set the default value in the
     configuration.
