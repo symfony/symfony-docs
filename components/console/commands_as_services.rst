@@ -61,8 +61,8 @@ defining it with the ``console.command`` tag:
             ->addTag('console.command')
         ;
 
-Use Case: Using Dependencies and Parameters to Set Default Values for Options
------------------------------------------------------------------------------
+Using Dependencies and Parameters to Set Default Values for Options
+-------------------------------------------------------------------
 
 Imagine you want to provide a default value for the ``name``option. You could
 pass one of the following as the 5th argument of ``addOption()``:
@@ -111,3 +111,9 @@ constructor. The only solution is to inject them through it::
             $output->writeln($name);
         }
     }
+
+.. caution::
+
+    When running the console, every commands are instanciated, which means every
+    ``configure()`` methods are called. Be careful with database queries, as
+    this could impact performances.
