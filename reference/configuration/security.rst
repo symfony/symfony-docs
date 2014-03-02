@@ -372,18 +372,20 @@ persisting the encoded password alone is enough.
     All the encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
 
-If you are using PHP Version 5.5 you can use the `password_hash`_ function to
-generate encoded passwords. For example in your user entity you may wish to
-modify your setPassword method to the following::
+.. tip:: 
 
-    // ...
+    As of PHP 5.5 you can use the :phpfunction:`password_hash` function to 
+    generate encoded passwords. For example in your user entity you may wish
+    to modify your setPassword method to the following::
 
-    // Set encrypted password
-    public function setPassword($plaintext)
-    {
-        $options = ['cost' => 15];
-        $this->password = password_hash($plaintext, PASSWORD_BCRYPT, $options);
-    }    
+        // ...
+
+        // Set encrypted password
+        public function setPassword($plaintext)
+        {
+            $options = array('cost' => 15);
+            $this->password = password_hash($plaintext, PASSWORD_BCRYPT, $options);
+        }    
 
 .. _reference-security-firewall-context:
 
@@ -487,4 +489,3 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
-.. _`password_hash`: http://ca2.php.net/password_hash
