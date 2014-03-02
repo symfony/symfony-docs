@@ -374,6 +374,18 @@ persisting the encoded password alone is enough.
 
     .. _reference-security-firewall-context:
 
+If you are using PHP Version 5.5 you can use the `password_hash`_ function to
+generate encoded passwords. For example in your user entity you may wish to
+modify your setPassword method to the following::
+
+    // ...
+
+    // Set encrypted password
+    public function setPassword($password)
+    {
+        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 15));
+    }    
+
 Firewall Context
 ----------------
 
@@ -474,3 +486,4 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
+.. _`password_hash`: http://ca2.php.net/password_hash
