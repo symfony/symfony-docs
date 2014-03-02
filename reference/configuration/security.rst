@@ -379,9 +379,10 @@ modify your setPassword method to the following::
     // ...
 
     // Set encrypted password
-    public function setPassword($password)
+    public function setPassword($plaintext)
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 15));
+        $options = ['cost' => 15];
+        $this->password = password_hash($plaintext, PASSWORD_BCRYPT, $options);
     }    
 
 .. _reference-security-firewall-context:
