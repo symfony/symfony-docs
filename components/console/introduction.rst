@@ -527,6 +527,7 @@ Learn More!
 * :doc:`/components/console/usage`
 * :doc:`/components/console/single_command_tool`
 * :doc:`/components/console/events`
+* :doc:`/components/console/commands_as_services`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
