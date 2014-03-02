@@ -376,7 +376,7 @@ persisting the encoded password alone is enough.
 
     As of PHP 5.5 you can use the :phpfunction:`password_hash` function to 
     generate encoded passwords. For example in your user entity you may wish
-    to modify your setPassword method to the following::
+    to modify your ``setPassword`` method to the following::
 
         // ...
 
