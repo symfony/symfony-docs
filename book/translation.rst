@@ -649,6 +649,39 @@ The translation of database content should be handled by Doctrine through
 the `Translatable Extension`_. For more information, see the documentation
 for that library.
 
+Debugging Translations
+----------------------
+
+.. versionadded:: 2.5
+    The ``translation:debug`` command was introduced in Symfony 2.5.
+
+When maintaining a bundle, you may use or remove the usage of a translation
+message without updating all message catalogues. The ``translation:debug``
+command helps you finding these missing or unused translation messages for a
+given locale. It shows you a table with the result when translating the
+message in the given locale and the result when the fallback would be used.
+On top of that, it also shows you when the translation is the same as the
+fallback translation (this could indicate that the message was not correctly
+translated). To inspect all messages in the ``en`` locale for the AcmeDemoBundle, run:
+
+.. code-block:: bash
+
+    $ php app/console translation:debug en AcmeDemoBundle
+
+By default all domains are inspected, but it is possible to specify a single domain:
+
+.. code-block:: bash
+
+    $ php app/console translation:debug en AcmeDemoBundle --domain=messages
+
+You can also display only the unused or only the missing messages, by using
+the ``--only-unused`` or ``--only-missing`` switches:
+
+.. code-block:: bash
+
+    $ php app/console translation:debug en AcmeDemoBundle --only-unused
+    $ php app/console translation:debug en AcmeDemoBundle --only-missing
+
 Summary
 -------
 
