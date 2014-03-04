@@ -644,7 +644,7 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
 As the profiler adds some overhead, you might want to enable it only under
 certain circumstances in the production environment. The ``only_exceptions``
-settings limits profiling to 500 pages, but what if you want to get
+settings limits profiling to exceptions, but what if you want to get
 information when the client IP comes from a specific address, or for a limited
 portion of the website? You can use a Profiler Matcher, learn more about that
 in ":doc:`/cookbook/profiler/matchers`".
