@@ -62,3 +62,7 @@ on all fields.
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
 
 .. include:: /reference/forms/types/options/pattern.rst.inc
+
+.. include:: /reference/forms/types/options/action.rst.inc
+
+.. include:: /reference/forms/types/options/method.rst.inc
