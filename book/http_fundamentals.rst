@@ -538,7 +538,7 @@ regardless of how your project is developed. To name a few:
 * `Security`_ - A powerful library for handling all types of security inside
   an application;
 
-* `Translation`_ A framework for translating strings in your application.
+* `Translation`_ - A framework for translating strings in your application.
 
 Each and every one of these components is decoupled and can be used in *any*
 PHP project, regardless of whether or not you use the Symfony2 framework.
