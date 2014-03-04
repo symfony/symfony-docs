@@ -12,7 +12,7 @@ which are like simple conditional statements.
 .. seealso::
 
     Voters can also be used in other ways, like, for example, blacklisting IP
-    addresses from the entire application: ":doc:`/cookbook/security/voters`".
+    addresses from the entire application: :doc:`/cookbook/security/voters`.
 
 .. tip::
 
@@ -25,13 +25,14 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-security context (i.e. the ``security.context`` service). Each decides if
-the current user should have access to some resource.
+security context (i.e. the ``security.context`` service). Each one decides
+if the current user should have access to some resource.
 
 Ultimately, Symfony uses one of three different approaches on what to do
 with the feedback from all voters: affirmative, consensus and unanimous.
 
-For more information take a look at ":ref:`the section about access decision managers <components-security-access-decision-manager>`".
+For more information take a look at
+:ref:`the section about access decision managers <components-security-access-decision-manager>`.
 
 The Voter Interface
 -------------------
@@ -52,8 +53,8 @@ does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``
 Creating the Custom Voter
 -------------------------
 
-The goal is to create a voter that checks to see if a user has access to
-view or edit a particular object. Here's an example implementation:
+The goal is to create a voter that checks if a user has access to view or
+edit a particular object. Here's an example implementation:
 
     // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
@@ -93,8 +94,9 @@ view or edit a particular object. Here's an example implementation:
                 return VoterInterface::ACCESS_ABSTAIN;
             }
 
-            // check if voter is used correct, only allow one attribute for a check
-            // this isn't a requirement, it's just the way we want our voter to work
+            // check if the voter is used correct, only allow one attribute
+            // this isn't a requirement, it's just one easy way for you to
+            // design your voter
             if(1 !== count($attributes)) {
                 throw new InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
