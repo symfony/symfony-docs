@@ -9,13 +9,17 @@ See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`.
 The ``form`` type predefines a couple of options that are then available
 on all fields.
 
-.. include:: /reference/forms/types/options/compound.rst.inc
-
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
 
+.. include:: /reference/forms/types/options/action.rst.inc
+
+.. include:: /reference/forms/types/options/method.rst.inc
+
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+
+.. include:: /reference/forms/types/options/compound.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -62,7 +66,3 @@ on all fields.
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
 
 .. include:: /reference/forms/types/options/pattern.rst.inc
-
-.. include:: /reference/forms/types/options/action.rst.inc
-
-.. include:: /reference/forms/types/options/method.rst.inc

@@ -26,6 +26,8 @@ used to decide whether to process the form submission in the
 
 .. note:
 
-    Only the PATCH method allows submitting partial data without that missing
-    fields are set to ``null`` in the underlying data (preserving default
-    values, if any).
+    The PATCH method allows submitting partial data. In other words, if the
+    submitted form data is missing certain fields, those will be ignored
+    and the default values (if any) will be used. With all other HTTP methods,
+    if the submitted form data is missing some fields, those fields are set
+    to ``null``.
