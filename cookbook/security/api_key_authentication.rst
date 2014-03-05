@@ -213,17 +213,20 @@ exception in ``refreshUser()``.
 Handling Authentication Failure
 -------------------------------
 
-In order for your ``ApiKeyAuthentication`` to correctly display a 403
-http status when either bad credentials, or authentication fails - you will 
-need to implement the ``AuthenticationFailureHandlerInterface`` on your 
+In order for you're ``ApiKeyAuthentication`` to correctly display a 403
+http status when either bad credentials or authentication fails you will 
+need to implement the :class:`Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` on your 
 Authenticator. This will provide a method ``onAuthenticationFailure`` which 
-you can then return a ``Response`` with.
+you can use to create an error ``Response``.
 
     // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
     namespace Acme\HelloBundle\Security;
 
+    use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
+    use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
     {
