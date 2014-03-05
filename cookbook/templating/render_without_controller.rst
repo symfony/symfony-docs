@@ -91,7 +91,7 @@ other variables in your route, you can control exactly how your page is cached:
                 _controller:  FrameworkBundle:Template:template
                 template:     'AcmeBundle:Static:privacy.html.twig'
                 maxAge:       86400
-                sharedMaxAge: 86400
+                sharedAge:    86400
 
     .. code-block:: xml
 
