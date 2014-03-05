@@ -118,22 +118,23 @@ This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
 cast into a string and so must have a ``__toString()`` method.
 
-Note: ``property`` is the property path used to display the option. So you 
-can use anything supported by the :doc:`PropertyAccessor component</components/property_access/introduction>`
+.. note::
 
-Usage sample:
+    The ``property`` option is the property path used to display the option. So you 
+    can use anything supported by the :doc:`PropertyAccessor component</components/property_access/introduction>`
 
-    $builder->add('gender', 'entity', array(
-        'class' => 'MyBundle:Gender',
-        'property' => 'translations[en].name',
-        'query_builder' => function(EntityRepository $er) {
-            return $er->createQueryBuilder('g')
-               ->join('g.translations', 't')
-               ->where('t.locale = :locale')
-               ->orderBy('t.name', 'ASC')
-               ->setParameter('locale', 'en');
-        },
-    ));
+    Usage sample::
+
+        $builder->add('gender', 'entity', array(
+           'class' => 'MyBundle:Gender',
+           'property' => 'translations[en].name',
+           'query_builder' => function(EntityRepository $er) {
+               return $er->createQueryBuilder('g')
+                  ->join('g.translations', 't', 'WITH', 't.locale = :locale')
+                  ->orderBy('t.name', 'ASC')
+                  ->setParameter('locale', 'en');
+           },
+        ));
 
 group_by
 ~~~~~~~~
