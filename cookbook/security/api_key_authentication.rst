@@ -213,7 +213,7 @@ exception in ``refreshUser()``.
 Handling Authentication Failure
 -------------------------------
 
-In order for you're ``ApiKeyAuthentication`` to correctly display a 403
+In order for your ``ApiKeyAuthentication`` to correctly display a 403
 http status when either bad credentials or authentication fails you will 
 need to implement the :class:`Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` on your 
 Authenticator. This will provide a method ``onAuthenticationFailure`` which 
