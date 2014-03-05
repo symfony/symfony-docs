@@ -99,8 +99,8 @@ cast into a string and so must have a ``__toString()`` method.
 .. note::
 
     The ``property`` option is the property path used to display the option. So you 
-    can use anything supported by the :
-    doc:`PropertyAccessor component </components/property_access/introduction>`
+    can use anything supported by the
+    :doc:`PropertyAccessor component </components/property_access/introduction>`
 
     Usage sample::
 
