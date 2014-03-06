@@ -343,6 +343,16 @@ Start the string with  ``@`` or ``@?`` to reference a service in YAML.
 * ``@?mailer`` references the ``mailer`` service. If the service does not
   exist, it will be ignored;
 
+.. code-block:: yaml
+
+    # app/config/config.yml
+    parameters:
+        # if 'my_mailer' service isn't defined, an exception will be raised
+        foo: @my_mailer
+
+        # if 'my_logger' service isn't defined, 'bar' will be null
+        bar: @?my_logger
+
 .. tip::
 
     Use ``@@`` to escape the ``@`` symbol in YAML. ``@@mailer`` will be
@@ -358,6 +368,17 @@ is thrown. Valid values for ``on-invalid`` are ``null`` (uses ``null`` in place
 of the missing service) or ``ignored`` (very similar, except if used on a
 method call, the method call is removed).
 
+.. code-block:: xml
+
+    <!-- app/config/config.xml -->
+    <parameters>
+        <!-- if 'my_mailer' service isn't defined, an exception will be raised -->
+        <parameter key="foo" type="service" id="my_mailer" />
+
+        <!-- if 'my_logger' service isn't defined, 'bar' will be null -->
+        <parameter key="bar" type="service" id="my_logger" on-invalid="null" />
+    </parameters>
+
 PHP
 ~~~
 
@@ -366,3 +387,16 @@ In PHP, you can use the
 a service. The invalid behavior is configured using the second constructor
 argument and constants from
 :class:`Symfony\\Component\\DependencyInjection\\ContainerInterface`.
+
+.. code-block:: php
+
+    // app/config/config.php
+    use Symfony\Component\DependencyInjection\Reference;
+
+    // if 'my_mailer' service isn't defined, an exception will be raised
+    $container->setParameter('foo', new Reference('my_mailer'));
+
+    // if 'my_logger' service isn't defined, 'bar' will be null
+    $container->setParameter('bar', new Reference('my_logger',
+        ContainerInterface::NULL_ON_INVALID_REFERENCE
+    ));
