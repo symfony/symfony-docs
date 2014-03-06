@@ -4,8 +4,15 @@ The Release Process
 This document explains the Symfony release process (Symfony being the code
 hosted on the main ``symfony/symfony`` `Git repository`_).
 
-Symfony manages its releases through a *time-based model*; a new Symfony
-release comes out every *six months*: one in *May* and one in *November*.
+Symfony manages its releases through a *time-based model*; a new Symfony minor
+version comes out every *six months*: one in *May* and one in *November*.
+
+.. tip::
+
+    The meaning of "minor" comes from the `Semantic Versioning`_ strategy.
+
+Each minor version sticks to the same very well-defined process where we start
+with a development period, followed by a maintenance period.
 
 .. note::
 
@@ -18,7 +25,7 @@ release comes out every *six months*: one in *May* and one in *November*.
 Development
 -----------
 
-The six-months period is divided into two phases:
+The first six-month period is divided into two phases:
 
 * *Development*: *Four months* to add new features and to enhance existing
   ones;
@@ -36,8 +43,8 @@ final release.
 Maintenance
 -----------
 
-Each Symfony version is maintained for a fixed period of time, depending on
-the type of the release. We have two maintenance periods:
+Each Symfony minor version is maintained for a fixed period of time, depending
+on the type of the release. We have two maintenance periods:
 
 * *Bug fixes and security fixes*: During this period, all issues can be fixed.
   The end of this period is referenced as being the *end of maintenance* of a
@@ -47,17 +54,17 @@ the type of the release. We have two maintenance periods:
   be fixed. The end of this period is referenced as being the *end of
   life* of a release.
 
-Standard Releases
+Standard Versions
 ~~~~~~~~~~~~~~~~~
 
-A standard release is maintained for an *eight month* period for bug fixes,
-and for a *fourteen month* period for security issue fixes.
+A standard minor version is maintained for an *eight month* period for bug
+fixes, and for a *fourteen month* period for security issue fixes.
 
-Long Term Support Releases
+Long Term Support Versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Every two years, a new Long Term Support Release (aka LTS release) is
-published. Each LTS release is supported for a *three year* period for bug
+Every two years, a new Long Term Support Version (aka LTS version) is
+published. Each LTS version is supported for a *three year* period for bug
 fixes, and for a *four year* period for security issue fixes.
 
 .. note::
@@ -109,17 +116,26 @@ This results in very predictable dates and maintenance periods:
     use the online `timeline calculator`_. You can also get all data as a JSON
     string via a URL like `http://symfony.com/roadmap.json?version=2.x`.
 
+.. tip::
+
+    Whenever an important event related to Symfony versions happens (a version
+    reaches end of maintenance or a new patch version is released for
+    instance), you can automatically receive an email notification if you
+    subscribed on the `roadmap notification`_ page.
+
 Backward Compatibility
 ----------------------
 
-After the release of Symfony 2.3, backward compatibility will be kept at all
-cost. If it is not possible, the feature, the enhancement, or the bug fix will
-be scheduled for the next major version: Symfony 3.0.
+Our `Backwards Compatibility Promise`_ is very strict and allows developers to
+upgrade with confidence from one minor version of Symfony to the next one.
+
+Whenever keeping backward compatibility is not possible, the feature, the
+enhancement, or the bug fix will be scheduled for the next major version.
 
 .. note::
 
-    The work on Symfony 3.0 will start whenever enough major features breaking
-    backward compatibility are waiting on the todo-list.
+    The work on a new major version of Symfony starts whenever enough major
+    features breaking backward compatibility are waiting on the todo-list.
 
 Deprecations
 ------------
@@ -154,11 +170,12 @@ for the next cycle.
 
 The dual maintenance mode was adopted to make every Symfony user happy. Fast
 movers, who want to work with the latest and the greatest, use the standard
-releases: a new version is published every six months, and there is a two
-months period to upgrade. Companies wanting more stability use the LTS
-releases: a new version is published every two years and there is a year to
-upgrade.
+version: a new version is published every six months, and there is a two months
+period to upgrade. Companies wanting more stability use the LTS versions: a new
+version is published every two years and there is a year to upgrade.
 
+.. _Semantic Versioning: http://semver.org/
 .. _Git repository: https://github.com/symfony/symfony
 .. _SensioLabs:     http://sensiolabs.com/
-.. _`timeline calculator`: http://symfony.com/roadmap
+.. _roadmap notification: http://symfony.com/roadmap
+.. _timeline calculator: http://symfony.com/roadmap
