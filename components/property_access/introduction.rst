@@ -322,7 +322,7 @@ You can also mix objects and arrays::
 
         public function setChildren($children)
         {
-            return $this->children;
+            $this->children = $children;
         }
 
         public function getChildren()

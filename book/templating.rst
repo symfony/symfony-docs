@@ -1039,14 +1039,14 @@ stylesheets and JavaScripts that you'll need throughout your site:
             {# ... #}
 
             {% block stylesheets %}
-                <link href="{{ asset('/css/main.css') }}" rel="stylesheet" />
+                <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
             {% endblock %}
         </head>
         <body>
             {# ... #}
 
             {% block javascripts %}
-                <script src="{{ asset('/js/main.js') }}"></script>
+                <script src="{{ asset('js/main.js') }}"></script>
             {% endblock %}
         </body>
     </html>
@@ -1064,7 +1064,7 @@ page. From inside that contact page's template, do the following:
     {% block stylesheets %}
         {{ parent() }}
 
-        <link href="{{ asset('/css/contact.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
     {% endblock %}
 
     {# ... #}
@@ -1329,7 +1329,7 @@ covered:
           {% endfor %}
       {% endblock %}
 
-Notice that this template extends the section template -(``AcmeBlogBundle::layout.html.twig``)
+Notice that this template extends the section template (``AcmeBlogBundle::layout.html.twig``)
 which in-turn extends the base application layout (``::base.html.twig``).
 This is the common three-level inheritance model.
 
