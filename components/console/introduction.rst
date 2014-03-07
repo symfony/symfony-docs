@@ -225,8 +225,8 @@ verbosity levels::
     }
 
 When the quiet level is used, all output is suppressed as the default
-:method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output\\Output::write>`
-method returns without actually printing.
+:method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
+without actually printing.
 
 .. tip::
 
@@ -321,13 +321,13 @@ Unlike arguments, options are not ordered (meaning you can specify them in any
 order) and are specified with two dashes (e.g. ``--yell`` - you can also
 declare a one-letter shortcut that you can call with a single dash like
 ``-y``). Options are *always* optional, and can be setup to accept a value
-(e.g. ``dir=src``) or simply as a boolean flag without a value (e.g.
-``yell``).
+(e.g. ``--dir=src``) or simply as a boolean flag without a value (e.g.
+``--yell``).
 
 .. tip::
 
     It is also possible to make an option *optionally* accept a value (so that
-    ``--yell`` or ``yell=loud`` work). Options can also be configured to
+    ``--yell`` or ``--yell=loud`` work). Options can also be configured to
     accept an array of values.
 
 For example, add a new option to the command that can be used to specify
@@ -379,7 +379,7 @@ Option                       Value
 InputOption::VALUE_IS_ARRAY  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
 InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
 InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), the option itself is still optional
-InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
+InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``--yell`` or ``--yell=loud``)
 ===========================  =====================================================================================
 
 You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:

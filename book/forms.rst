@@ -495,7 +495,7 @@ these cases you can set the ``validation_groups`` option to ``false``::
 Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
 fields were submitted. If you want to suppress validation, you can use the
-:ref:`POST_SUBMIT event <cookbook-dynamic-form-modification-suppressing-form-validation>`
+:ref:`POST_SUBMIT event <cookbook-dynamic-form-modification-suppressing-form-validation>`.
 
 .. index::
    single: Forms; Validation groups based on submitted data
@@ -1811,7 +1811,7 @@ an array.
 
         $this->get('request')->request->get('name');
 
-    Be advised, however, that in most cases using the getData() method is
+    Be advised, however, that in most cases using the ``getData()`` method is
     a better choice, since it returns the data (usually an object) after
     it's been transformed by the form framework.
 
@@ -1853,7 +1853,7 @@ but here's a short example:
 
 .. tip::
 
-    If you are using Validation Groups, you need to either reference the
+    If you are using validation groups, you need to either reference the
     ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
 

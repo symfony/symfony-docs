@@ -104,7 +104,7 @@ Add a method call with::
 
    $definition->addMethodCall($method, $arguments);
 
-Where ``$method`` is the method name and $arguments is an array of the arguments
+Where ``$method`` is the method name and ``$arguments`` is an array of the arguments
 to call the method with. The arguments can be strings, arrays, parameters or
 service ids as with the constructor arguments.
 

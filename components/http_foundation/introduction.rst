@@ -261,7 +261,7 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
         $quality = $item->getQuality();
     }
 
-    // accepts items are sorted by descending quality
+    // Accept header items are sorted by descending quality
     $accepts = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
 
@@ -420,7 +420,7 @@ method::
         $response->send();
     }
 
-If the Response is not modified, it sets the status code to 304 and remove the
+If the Response is not modified, it sets the status code to 304 and removes the
 actual response content.
 
 Redirecting the User

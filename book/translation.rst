@@ -546,8 +546,8 @@ use somewhere in your application::
     }
 
 Add constraints though any of the supported methods. Set the message option to the
-translation source text. For example, to guarantee that the $name property is not
-empty, add the following:
+translation source text. For example, to guarantee that the ``$name`` property is
+not empty, add the following:
 
 .. configuration-block::
 
@@ -646,8 +646,8 @@ Translating Database Content
 ----------------------------
 
 The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_. For more information, see the documentation
-for that library.
+the `Translatable Extension`_ or the `Translatable Bahavior`_ (PHP 5.4+).
+For more information, see the documentation for thes libraries.
 
 Summary
 -------
@@ -672,3 +672,4 @@ steps:
 .. _`ISO 3166-1 alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
+.. _`Translatable Bahavior`: https://github.com/KnpLabs/DoctrineBehaviors
