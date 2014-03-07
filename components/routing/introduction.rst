@@ -73,17 +73,17 @@ Defining routes
 A full route definition can contain up to seven parts:
 
 1. The URL path route. This is matched against the URL passed to the `RequestContext`,
-and can contain named wildcard placeholders (e.g. ``{placeholders}``)
-to match dynamic parts in the URL.
+   and can contain named wildcard placeholders (e.g. ``{placeholders}``)
+   to match dynamic parts in the URL.
 
 2. An array of default values. This contains an array of arbitrary values
-that will be returned when the request matches the route.
+   that will be returned when the request matches the route.
 
 3. An array of requirements. These define constraints for the values of the
-placeholders as regular expressions.
+   placeholders as regular expressions.
 
 4. An array of options. These contain internal settings for the route and
-are the least commonly needed.
+   are the least commonly needed.
 
 5. A host. This is matched against the host of the request. See
    :doc:`/components/routing/hostname_pattern` for more details.

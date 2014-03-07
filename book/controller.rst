@@ -470,7 +470,7 @@ object that's returned from that controller::
         return $response;
     }
 
-Notice that the `forward()` method uses the same string representation of
+Notice that the ``forward()`` method uses the same string representation of
 the controller used in the routing configuration. In this case, the target
 controller class will be ``HelloController`` inside some ``AcmeHelloBundle``.
 The array passed to the method becomes the arguments on the resulting controller.
@@ -786,7 +786,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object. The framework injects the ``Request`` object in the
 controller if a variable is type-hinted with
-`Symfony\Component\HttpFoundation\Request`::
+:class:`Symfony\\Component\\HttpFoundation\\Request`::
 
     use Symfony\Component\HttpFoundation\Request;
 

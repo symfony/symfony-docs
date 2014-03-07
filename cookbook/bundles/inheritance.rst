@@ -12,7 +12,7 @@ things like controllers, templates, and other files in a bundle's
 
 For example, suppose that you're installing the `FOSUserBundle`_, but you
 want to override its base ``layout.html.twig`` template, as well as one of
-its controllers. Suppose also that you have your own ``AcmeUserBundle``
+its controllers. Suppose also that you have your own AcmeUserBundle
 where you want the overridden files to live. Start by registering the FOSUserBundle
 as the "parent" of your bundle::
 

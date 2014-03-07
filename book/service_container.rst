@@ -980,12 +980,10 @@ with ``twig.extension`` and automatically registers them as extensions.
 Tags, then, are a way to tell Symfony2 or other third-party bundles that
 your service should be registered or used in some special way by the bundle.
 
-The following is a list of tags available with the core Symfony2 bundles.
-Each of these has a different effect on your service and many tags require
-additional arguments (beyond just the ``name`` parameter).
-
 For a list of all the tags available in the core Symfony Framework, check
-out :doc:`/reference/dic_tags`.
+out :doc:`/reference/dic_tags`. Each of these has a different effect on your
+service and many tags require additional arguments (beyond just the ``name``
+parameter).
 
 Debugging Services
 ------------------
