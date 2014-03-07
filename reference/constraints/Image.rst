@@ -27,9 +27,9 @@ the documentation on this constraint.
 |                | - `minHeightMessage`_                                                |
 |                | - See :doc:`File</reference/constraints/File>` for inherited options |
 +----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`            |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Image`           |
 +----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`   |
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ImageValidator`  |
 +----------------+----------------------------------------------------------------------+
 
 Basic Usage
