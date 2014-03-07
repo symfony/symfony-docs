@@ -68,6 +68,7 @@
 
   * :doc:`/cookbook/email/email`
   * :doc:`/cookbook/email/gmail`
+  * :doc:`/cookbook/email/cloud`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
   * :doc:`/cookbook/email/testing`

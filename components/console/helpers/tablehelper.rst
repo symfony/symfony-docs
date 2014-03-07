@@ -11,7 +11,7 @@ When building a console application it may be useful to display tabular data:
 
 .. image:: /images/components/console/table.png
 
-To display table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
+To display a table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
 set headers, rows and render::
 
     $table = $app->getHelperSet()->get('table');

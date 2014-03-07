@@ -6,6 +6,15 @@ label
 Sets the label that will be used when rendering the field. Setting to false
 will suppress the label. The label can also be directly set inside the template:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {{ form_label(form.name, 'Your name') }}
+    .. code-block:: jinja
+
+        {{ form_label(form.name, 'Your name') }}
+
+    .. code-block:: php
+
+        echo $view['form']->label(
+            $form['name'],
+            'Your name'
+        );

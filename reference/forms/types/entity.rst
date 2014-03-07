@@ -125,7 +125,7 @@ group_by
 
 This is a property path (e.g. ``author.name``) used to organize the
 available choices in groups. It only works when rendered as a select tag
-and does so by adding optgroup tags around options. Choices that do not
+and does so by adding ``optgroup`` elements around options. Choices that do not
 return a value for this property path are rendered directly under the
 select tag, without a surrounding optgroup.
 

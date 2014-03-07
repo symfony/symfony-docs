@@ -11,7 +11,7 @@ Renders a ``textarea`` HTML element.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `max_length`_                                                        |
 | options     | - `empty_data`_                                                        |
-| options     | - `required`_                                                          |
+|             | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `trim`_                                                              |
