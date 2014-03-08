@@ -346,7 +346,6 @@ Start the string with  ``@`` or ``@?`` to reference a service in YAML.
 
 .. code-block:: yaml
 
-    # app/config/config.yml
     parameters:
         # if 'my_mailer' service isn't defined, an exception will be raised
         foo: @my_mailer
@@ -371,7 +370,6 @@ method call, the method call is removed).
 
 .. code-block:: xml
 
-    <!-- app/config/config.xml -->
     <parameters>
         <!-- if 'my_mailer' service isn't defined, an exception will be raised -->
         <parameter key="foo" type="service" id="my_mailer" />
@@ -391,7 +389,6 @@ argument and constants from
 
 .. code-block:: php
 
-    // app/config/config.php
     use Symfony\Component\DependencyInjection\Reference;
 
     // if 'my_mailer' service isn't defined, an exception will be raised
