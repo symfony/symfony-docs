@@ -22,7 +22,7 @@ invoked after the ``open`` operation). You can read more about this at
 Native PHP Save Handlers
 ------------------------
 
-So-called *native* handlers, are save handlers which are either compiled into
+So-called native handlers, are save handlers which are either compiled into
 PHP or provided by PHP extensions, such as PHP-Sqlite, PHP-Memcached and so on.
 
 All native save handlers are internal to PHP and as such, have no public facing API.
