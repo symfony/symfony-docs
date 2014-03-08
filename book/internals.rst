@@ -518,13 +518,16 @@ Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find`
 method to access tokens based on some criteria::
 
     // get the latest 10 tokens
-    $tokens = $container->get('profiler')->find('', '', 10);
+    $tokens = $container->get('profiler')->find('', '', 10, '', '');
 
     // get the latest 10 tokens for all URL containing /admin/
-    $tokens = $container->get('profiler')->find('', '/admin/', 10);
+    $tokens = $container->get('profiler')->find('', '/admin/', 10, '', '');
 
     // get the latest 10 tokens for local requests
-    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
+    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, '', '');
+
+    // get the latest 10 tokens for requests that happened between 2 and 4 days ago
+    $tokens = $container->get('profiler')->find('', '', 10, '4 days ago', '2 days ago');
 
 If you want to manipulate profiling data on a different machine than the one
 where the information were generated, use the
