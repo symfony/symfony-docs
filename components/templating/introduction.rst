@@ -166,8 +166,8 @@ Creating a Custom Engine
 
 Besides providing a PHP templating engine, you can also create your own engine
 using the Templating component. To do that, create a new class which
-implements the :class:`Symfony\\Component\\Templating\\EngineInterface`
-interface. This interface requires 3 method:
+implements the :class:`Symfony\\Component\\Templating\\EngineInterface`. This
+requires 3 method:
 
 * :method:`render($name, array $parameters = array()) <Symfony\\Component\\Templating\\EngineInterface::render>`
   - Renders a template
