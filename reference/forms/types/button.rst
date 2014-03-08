@@ -12,8 +12,8 @@ A simple, non-responsive button.
 +----------------------+----------------------------------------------------------------------+
 | Rendered as          | ``button`` tag                                                       |
 +----------------------+----------------------------------------------------------------------+
-| Options              | - `attr`_                                                            |
-|                      | - `disabled`_                                                        |
+| Inherited            | - `attr`_                                                            |
+| options              | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
 |                      | - `translation_domain`_                                              |
 +----------------------+----------------------------------------------------------------------+
@@ -24,8 +24,14 @@ A simple, non-responsive button.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |
 +----------------------+----------------------------------------------------------------------+
 
-Options
--------
+Inherited options
+-----------------
+
+The following options are defined in the
+:class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BaseType` class.
+The ``BaseType`` class is the parent class for both the ``button`` type and
+the :doc:`form type </reference/forms/types/form>`, but it is not part of
+the form type tree (i.e. it can not be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/button_attr.rst.inc
 
