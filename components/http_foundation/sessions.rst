@@ -93,13 +93,13 @@ Session attributes
   Gets an attribute by key;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::all`:
-  Gets all attributes as an array of key => value;
+  Gets all attributes as a key-value array;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`:
   Returns true if the attribute exists;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`:
-  Sets multiple attributes at once: takes a keyed array and sets each key => value pair;
+  Sets multiple attributes at once: takes a keyed array and sets each key-value pair;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`:
   Deletes an attribute by key;
@@ -172,7 +172,7 @@ and remember me login settings or other user based state information.
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
   This implementation allows for attributes to be stored in a structured namespace.
 
-Any plain `key => value` storage system is limited in the extent to which
+Any plain key-value storage system is limited in the extent to which
 complex data can be stored since each key must be unique. You can achieve
 namespacing by introducing a naming convention to the keys so different parts of
 your application could operate without clashing. For example, `module1.foo` and
@@ -208,7 +208,7 @@ has a simple API
   Gets an attribute by key;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`:
-  Gets all attributes as an array of key => value;
+  Gets all attributes as a key-value array;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`:
   Returns true if the attribute exists;
@@ -217,7 +217,7 @@ has a simple API
   Returns an array of stored attribute keys;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`:
-  Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+  Sets multiple attributes at once: takes a keyed array and sets each key-value pair.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`:
   Deletes an attribute by key;

@@ -239,7 +239,7 @@ To provide more flexibility, a bundle can provide configurable settings by
 using the Symfony2 built-in mechanisms.
 
 For simple configuration settings, rely on the default ``parameters`` entry of
-the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
+the Symfony2 configuration. Symfony2 parameters are simple key-value pairs; a
 value being any valid PHP value. Each parameter name should start with the
 bundle alias, though this is just a best-practice suggestion. The rest of the
 parameter name will use a period (``.``) to separate different parts (e.g.
