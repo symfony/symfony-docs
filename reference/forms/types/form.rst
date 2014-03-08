@@ -36,6 +36,7 @@ on all types for which ``form`` is the parent type.
 |           | - `label`_                                                         |
 |           | - `attr`_                                                          |
 |           | - `translation_domain`_                                            |
+|           | - `auto_initialize`_                                               |
 +-----------+--------------------------------------------------------------------+
 | Parent    | none                                                               |
 +-----------+--------------------------------------------------------------------+
@@ -121,3 +122,5 @@ of the form type tree (i.e. it can not be used as a form type on its own).
 .. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/auto_initialize.rst.inc
