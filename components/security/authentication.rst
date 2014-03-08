@@ -204,7 +204,7 @@ own, it just needs to follow these rules:
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::isPasswordValid`
    must first of all make sure the password is not too long, i.e. the password length is no longer
    than 4096 characters. This is for security reasons (see `CVE-2013-5750`_), and you can use the
-   :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`_
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`
    method for this check:
 
        use Symfony\Component\Security\Core\Exception\BadCredentialsException;
