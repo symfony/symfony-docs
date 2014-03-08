@@ -172,7 +172,7 @@ and remember me login settings or other user based state information.
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
   This implementation allows for attributes to be stored in a structured namespace.
 
-Any plain ``key => value`` storage system is limited in the extent to which
+Any plain key-value storage system is limited in the extent to which
 complex data can be stored since each key must be unique. You can achieve
 namespacing by introducing a naming convention to the keys so different parts of
 your application could operate without clashing. For example, ``module1.foo`` and
