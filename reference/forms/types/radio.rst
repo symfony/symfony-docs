@@ -15,6 +15,8 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
 +-------------+---------------------------------------------------------------------+
+| Variables   | - `checked`_                                                        |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `value`_                                                          |
 | options     | - `data`_                                                           |
 |             | - `empty_data`_                                                     |
@@ -61,3 +63,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+Form Variables
+--------------
+
+.. include:: /reference/forms/types/variables/check_or_radio_table.rst.inc
