@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-13T17:18:14Z
+
++1, I like having references to 3rd party bundles to help with common tasks.
+
+However, I'd like to have this in a `.. sidebar::` instead.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-13T18:09:11Z
+
+Maybe it's better if we make the section a bit shorter. Among the lines of:
+
+In the development environment, the `ExceptionController` of the TwigBundle is used instead of error pages. When testing your code in the production environment, the twig templates cache won't be updated, this means it's hard to test your custom error pages. Luckily, the `webfactory/exceptions-bundle`_ solves this issue by providing a test controller.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-02-13T22:12:50Z
+
+Fixed
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-02-17T12:55:48Z
+
+@xabbuh You're right, the bundle name is better than the composer vendor/package combo.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-03-08T22:20:34Z
+
+*bump*
