@@ -4,7 +4,7 @@
     {
         public function supportsAttribute($attribute);
         public function supportsClass($class);
-        public function vote(TokenInterface $token, $post, array $attributes);
+        public function vote(TokenInterface $token, $object, array $attributes);
     }
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::supportsAttribute`
