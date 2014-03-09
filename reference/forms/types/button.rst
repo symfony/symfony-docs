@@ -17,8 +17,6 @@ A simple, non-responsive button.
 |                      | - `label`_                                                           |
 |                      | - `translation_domain`_                                              |
 +----------------------+----------------------------------------------------------------------+
-| Overridden options   | - `auto_initialize`_                                                 |
-+----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |
@@ -40,8 +38,3 @@ the form type tree (i.e. it can not be used as a form type on its own).
 .. include:: /reference/forms/types/options/button_label.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
-
-Overridden Options
-------------------
-
-.. include:: /reference/forms/types/options/button_auto_initialize.rst.inc
