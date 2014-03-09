@@ -29,13 +29,30 @@ control you need:
     which allows complete control over exception handling. For more
     information, see :ref:`kernel-kernel.exception`.
 
+The default ``ExceptionController`` will either display an
+*exception* or *error* page, depending on the setting of the ``kernel.debug``
+flag. While *exception* pages give you a lot of helpful
+information during development, *error* pages are meant to be
+shown to the end-user.
+
+.. sidebar:: Testing Error Pages during Development
+
+    You should not set ``kernel.debug`` to ``false`` in order to see your
+    error pages during development. This will also stop
+    Symfony2 from recompiling your twig templates, among other things.
+
+    The third-party `WebfactoryExceptionsBundle`_ provides a special
+    test controller that allows you to display your custom error
+    pages for arbitrary HTTP status codes even with 
+    ``kernel.debug`` set to ``true``.
+
 All of the error templates live inside the TwigBundle. To override the
 templates, simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
 :ref:`overriding-bundle-templates`.
 
-For example, to override the default error template that's shown to the
-end-user, create a new template located at
+For example, to override the default error template, create a new
+template located at
 ``app/Resources/TwigBundle/views/Exception/error.html.twig``:
 
 .. code-block:: html+jinja
@@ -110,3 +127,5 @@ Symfony uses the following algorithm to determine which template to use:
     customized in the same way by creating templates such as
     ``exception.html.twig`` for the standard HTML exception page or
     ``exception.json.twig`` for the JSON exception page.
+
+.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
