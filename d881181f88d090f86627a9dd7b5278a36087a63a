@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-02-18T21:14:55Z
+
+Very nice . good job.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-08T18:10:03Z
+
+This is great! But, the tables are a little bit inconsistent - some using all `===` (collection) and others not (date). @WouterJ I don't think this was on purpose, but let me know - I'm not usually the one who finds things like this ;).
+
+Then we'll merge it in - it's awesome!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-08T18:28:15Z
+
+> @WouterJ I don't think this was on purpose, but let me know - I'm not usually the one who finds things like this ;).
+
+Hehe, it's not inconsistent if you know the idea behind it :) So let me explain it: I always prefer to use the `===` format for tables, but there is one drawback on this format: It doesn't allow to create multiline rows, since each new line is a new row. If a table needs multilines, I switch to the `+---+` notation.
+
+I think we should just merge this in and if you think we should always be consistent, I'll create another PR updating `===` to `+--+` in the docs.
+
+Btw, funny you missed this inconsistency completely when reviewing #3438 :wink:
