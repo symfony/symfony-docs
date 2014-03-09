@@ -14,14 +14,12 @@ the ``ContainerAwareCommand`` interface, Symfony will even inject the container.
 While making life easier, this default implementation has some drawbacks in some
 situations:
 
-* What if you want your command to be defined elsewhere than in the ``Command``
-  directory?
-* what if you want to conditionally register your command, depending on the
-  current environment or on the availability of some dependencies?
-* what if you need to access dependencies before the ``setContainer()`` is
-  called (for example in the ``configure()`` method)?
-* what if you want to reuse a command many times, but with different
-  dependencies or parameters?
+* Define the command elsewhere than in the ``Command`` directory;
+* Conditionally register your command, depending on the current environment or
+  on the availability of some dependencies;
+* Access dependencies before the ``setContainer()`` is called (for example in
+  the ``configure()`` method);
+* Reuse a command many times, but with different dependencies or parameters
 
 To solve those problems, you can register your command as a service by simply
 defining it with the ``console.command`` tag:
@@ -73,7 +71,7 @@ pass one of the following as the 5th argument of ``addOption()``:
 
 With a ``ContainerAwareCommand`` you wouldn't be able to retrieve the
 configuration parameter, because the ``configure()`` method is called in the
-constructor. The only solution is to inject them through it::
+constructor. The only solution is to inject them::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
@@ -114,6 +112,6 @@ constructor. The only solution is to inject them through it::
 
 .. caution::
 
-    When running the console, every commands are instanciated, which means every
-    ``configure()`` methods are called. Be careful with database queries, as
-    this could impact performances.
+    When running the console, every command is instantiated, which means every
+    ``configure()`` method is called. Be careful with database queries, as
+    they could impact performance.
