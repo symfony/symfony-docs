@@ -105,7 +105,7 @@ other variables in your route, you can control exactly how your page is cached:
                 <default key="_controller">FrameworkBundle:Template:template</default>
                 <default key="template">AcmeBundle:Static:privacy.html.twig</default>
                 <default key="maxAge">86400</default>
-                <default key="sharedMaxAge">86400</default>
+                <default key="sharedAge">86400</default>
             </route>
         </routes>
 
@@ -119,15 +119,15 @@ other variables in your route, you can control exactly how your page is cached:
             '_controller'  => 'FrameworkBundle:Template:template',
             'template'     => 'AcmeBundle:Static:privacy.html.twig',
             'maxAge'       => 86400,
-            'sharedMaxAge' => 86400,
+            'sharedAge' => 86400,
         )));
 
         return $collection;
 
-The ``maxAge`` and ``sharedMaxAge`` values are used to modify the Response
+The ``maxAge`` and ``sharedAge`` values are used to modify the Response
 object created in the controller. For more information on caching, see
 :doc:`/book/http_cache`.
 
 There is also a ``private`` variable (not shown here). By default, the Response
-will be made public, as long as ``maxAge`` or ``sharedMaxAge`` are passed.
+will be made public, as long as ``maxAge`` or ``sharedAge`` are passed.
 If set to ``true``, the Response will be marked as private.
