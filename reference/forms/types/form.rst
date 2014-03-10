@@ -17,6 +17,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
 
+.. _reference-form-option-required:
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
@@ -43,6 +45,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/block_name.rst.inc
 
+.. _reference-form-option-max_length:
+
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
@@ -60,6 +64,8 @@ on all fields.
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
 
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
+
+.. _reference-form-option-pattern:
 
 .. include:: /reference/forms/types/options/pattern.rst.inc
 

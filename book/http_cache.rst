@@ -572,9 +572,16 @@ To see a simple implementation, generate the ETag as the md5 of the content::
     }
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
-method compares the ``ETag`` sent with the ``Request`` with the one set
-on the ``Response``. If the two match, the method automatically sets the
-``Response`` status code to 304.
+method compares the ``If-None-Match`` sent with the ``Request`` with the
+``ETag`` header set on the ``Response``. If the two match, the method
+automatically sets the ``Response`` status code to 304.
+
+.. note::
+
+    The ``If-None-Match`` request header equals the ``ETag`` header of the
+    last response sent to the client for the particular resource. This is
+    how the client and server communicate with each other and decide whether
+    or not the resource has been updated since it was cached.
 
 This algorithm is simple enough and very generic, but you need to create the
 whole ``Response`` before being able to compute the ETag, which is sub-optimal.

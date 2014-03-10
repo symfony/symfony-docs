@@ -198,8 +198,36 @@ own, it just needs to follow these rules:
 
 #. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
 
-#. ``$this->checkPasswordLength($raw);`` must be the first code executed in
-   ``encodePassword()`` and ``isPasswordValid()`` (see `CVE-2013-5750`_).
+#. The implementations of
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::encodePassword`
+   and
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::isPasswordValid`
+   must first of all make sure the password is not too long, i.e. the password length is no longer
+   than 4096 characters. This is for security reasons (see `CVE-2013-5750`_), and you can use the
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`_
+   method for this check:
+
+       use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+
+       class FoobarEncoder extends BasePasswordEncoder
+       {
+           public function encodePassword($raw, $salt)
+           {
+               if ($this->isPasswordTooLong($raw)) {
+                   throw new BadCredentialsException('Invalid password.');
+               }
+
+               // ...
+           }
+
+           public function isPasswordValid($encoded, $raw, $salt)
+           {
+               if ($this->isPasswordTooLong($raw)) {
+                   return false;
+               }
+
+               // ...
+       }
 
 Using Password Encoders
 ~~~~~~~~~~~~~~~~~~~~~~~

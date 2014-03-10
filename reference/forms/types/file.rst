@@ -115,3 +115,12 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+Form Variables
+--------------
+
+======== ========== ===============================================================================
+Variable Type       Usage                                       
+======== ========== ===============================================================================
+type     ``string`` The type variable is set to ``file``, in order to render as a file input field.
+======== ========== ===============================================================================
