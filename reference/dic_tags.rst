@@ -847,7 +847,7 @@ swiftmailer.default.plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.default.plugin`` (it has no options). 
+it with ``swiftmailer.default.plugin`` (it has no options).
 
 .. note::
 
@@ -901,7 +901,7 @@ translation.loader
 
 **Purpose**: To register a custom service that loads translations
 
-By default, translations are loaded form the filesystem in a variety of different
+By default, translations are loaded from the filesystem in a variety of different
 formats (YAML, XLIFF, PHP, etc). If you need to load translations from some
 other source, first create a class that implements the
 :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface::
