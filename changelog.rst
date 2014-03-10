@@ -21,12 +21,16 @@ New Documentation
 ~~~~~~~~~~~~~~~~~
 
 - `d52f3f8 <https://github.com/symfony/symfony-docs/commit/d52f3f8a146356e9e114474e820f8ec6ac5f2374>`_ #3454 [Security] Add host option (ghostika)
+- `11e079b <https://github.com/symfony/symfony-docs/commit/11e079b32e006fdd3e219dd24b3ed41e94cc38ce>`_ #3446 [WCM] Documented deprecation of the apache router. (jakzal)
+- `0a0bf4c <https://github.com/symfony/symfony-docs/commit/0a0bf4c196c789edb337a6c27811f7e05098d387>`_ #3437 Add info about callback in options resolver (marekkalnik)
+- `6db5f23 <https://github.com/symfony/symfony-docs/commit/6db5f233c71a4bf8de0fdf1bbc1c4674b7d3316c>`_ #3426 New Feature: Change the Default Command in the Console component (danielcsgomes)
 - `6b3c424 <https://github.com/symfony/symfony-docs/commit/6b3c424034fec441a32d8305600c1c26936b8f1e>`_ #3428 Translation - Added info about JsonFileLoader added in 2.4 (singles)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 - `fb22fa0 <https://github.com/symfony/symfony-docs/commit/fb22fa094fe7cf14e6499836f701c87de4886149>`_ #3456 remove duplicate label (xabbuh)
+- `a87fe18 <https://github.com/symfony/symfony-docs/commit/a87fe18083c34238f500b49d30f340efd784dea6>`_ #3470 Fixed typo (danielcsgomes)
 - `c205bc6 <https://github.com/symfony/symfony-docs/commit/c205bc6798bac34741f2d4d91450aac75ab14b93>`_ #3468 enclose YAML string with double quotes to fix syntax highlighting (xabbuh)
 - `89963cc <https://github.com/symfony/symfony-docs/commit/89963cc246263e7e7cdecd3cad1f019ff9cb28a5>`_ #3463 Fix typos in cookbook/testing/database (ifdattic)
 - `e0a52ec <https://github.com/symfony/symfony-docs/commit/e0a52ecf0cbcf1b5aa029f323588880080f5c6f3>`_ #3460 remove confusing outdated note on interactive rebasing (xabbuh)
@@ -50,6 +54,7 @@ Minor Documentation Changes
 - `f285d93 <https://github.com/symfony/symfony-docs/commit/f285d930377d8cbaedccc3ad46853fa72ee6439d>`_ #3451 some language tweaks (AE, third-person perspective) (xabbuh)
 - `b9bbe5d <https://github.com/symfony/symfony-docs/commit/b9bbe5d5f8cb427f1a52e839f23a0f286da1a010>`_ #3499 Fix YAML syntax highlight + remove trailing whitespace (ifdattic)
 - `2b7e0f6 <https://github.com/symfony/symfony-docs/commit/2b7e0f6f2f9982e600918f447852a6f4c60966a1>`_ #3497 Fix highlighting (WouterJ)
+- `2746067 <https://github.com/symfony/symfony-docs/commit/27460671c635a898912b931620adaa1cc1cd64f9>`_ #3472 Fixed `````versionadded````` inconsistencies in Symfony 2.5+ (danielcsgomes)
 - `a535ae0 <https://github.com/symfony/symfony-docs/commit/a535ae0383a2a6715021681980877b0205dc3281>`_ #3471 Fixed `````versionadded````` inconsistencies in Symfony 2.3 (danielcsgomes)
 - `f077a8e <https://github.com/symfony/symfony-docs/commit/f077a8e71c4973e7775db8c9fb548a0866d21131>`_ #3465 change wording in versionadded example to be consistent with what we use... (xabbuh)
 - `f9f7548 <https://github.com/symfony/symfony-docs/commit/f9f7548c7a53e62564b30d7e945a9b52b3f358db>`_ #3462 Replace ... with etc (ifdattic)
@@ -76,6 +81,8 @@ New Documentation
 - `9676f2c <https://github.com/symfony/symfony-docs/commit/9676f2c61156e80503639762de0b339d1aeabb6d>`_ #3523 [Components][EventDispatcher] describe that the event name and the event dispatcher are passed to even... (xabbuh)
 - `5c367b4 <https://github.com/symfony/symfony-docs/commit/5c367b4dfa5c3adc8993702b1ae8f686c74419c8>`_ #3517 Fixed OptionsResolver component docs (WouterJ)
 - `527c8b6 <https://github.com/symfony/symfony-docs/commit/527c8b6d9042bc8719c5dbe2c1c68a57feeb6eb7>`_ #3496 Added a section about using named assets (vmattila)
+- `8ccfe85 <https://github.com/symfony/symfony-docs/commit/8ccfe8559b18fc941768ab88fbaed7ff32a2aa9a>`_ #3491 Added doc for named encoders (tamirvs)
+- `46377b2 <https://github.com/symfony/symfony-docs/commit/46377b29e8f72f5093b588ef1ee767d42bc559ad>`_ #3486 Documenting createAccessDeniedException() method (klaussilveira)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -86,6 +93,7 @@ Fixed Documentation
 - `de71a51 <https://github.com/symfony/symfony-docs/commit/de71a5143f6d30fff7e890cea250d047a63916d2>`_ #3551 [Cookbook][Dynamic Form Modification] Fix sample code (rybakit)
 - `143db2f <https://github.com/symfony/symfony-docs/commit/143db2f75caa9ef6d7e1c230d0ac9d59c17fde5f>`_ #3550 Update introduction.rst (taavit)
 - `384538b <https://github.com/symfony/symfony-docs/commit/384538bcb030c4ae6f8df06840ccd725fca28661>`_ #3549 Fixed createPropertyAccessorBuilder usage (antonbabenko)
+- `642e776 <https://github.com/symfony/symfony-docs/commit/642e7768952225b06834acb47496a593b4b7d162>`_ #3544 Fix build errors (xabbuh)
 - `d275302 <https://github.com/symfony/symfony-docs/commit/d27530241cf75de4846fe9040bc6ce2235b924f3>`_ #3541 Update generic_event.rst (Lumbendil)
 - `819949c <https://github.com/symfony/symfony-docs/commit/819949cce72a4253ef9a4df6f7d260f83d08e5c6>`_ #3537 Add missing variable assignment (colinodell)
 - `d7e8262 <https://github.com/symfony/symfony-docs/commit/d7e8262a350b7fa40f34a89b7d3796b06c660db2>`_ #3535 fix form type name. (yositani2002)
@@ -119,6 +127,7 @@ Minor Documentation Changes
 - `6a2a55b <https://github.com/symfony/symfony-docs/commit/6a2a55b2ebf898f20081c4e627f21f700b4fee85>`_ #3579 Fix build errors (xabbuh)
 - `dce2e23 <https://github.com/symfony/symfony-docs/commit/dce2e23b4407bb7c468ba2d970981a97b4801d34>`_ #3532 Added tip for Entity Listeners (slavafomin)
 - `73adf8b <https://github.com/symfony/symfony-docs/commit/73adf8b6f3d9e55addd19363a3ce010429ce3f05>`_ #3528 Clarify service parameters usages (WouterJ)
+- `7e75b64 <https://github.com/symfony/symfony-docs/commit/7e75b64a34659f48e07bb53b34264ed3fb827530>`_ #3533 Moving the new named algorithms into their own cookbook entry (weaverryan)
 - `f634600 <https://github.com/symfony/symfony-docs/commit/f634600ce3dcb5fa4a18567faa67bc8e2a29dd29>`_ #3531 Remove horizontal scrolling in code block (ifdattic)
 - `9ba4fa7 <https://github.com/symfony/symfony-docs/commit/9ba4fa7d35bfc02cab66e1f7f595a39c6ddf3e2a>`_ #3527 Changes to components domcrawler (ifdattic)
 - `8973c81 <https://github.com/symfony/symfony-docs/commit/8973c812c57dca77037da16eb72f3c7c565ef73a>`_ #3526 Changes for Console component (ifdattic)
