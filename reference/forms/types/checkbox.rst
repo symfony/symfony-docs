@@ -13,6 +13,8 @@ if the box is unchecked, the value will be set to false.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
+| Variables   | - `checked`_                                                           |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `empty_data`_                                                        |
 | options     | - `compound`_                                                          |
 +-------------+------------------------------------------------------------------------+
@@ -75,3 +77,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+Form Variables
+--------------
+
+.. include:: /reference/forms/types/variables/check_or_radio_table.rst.inc

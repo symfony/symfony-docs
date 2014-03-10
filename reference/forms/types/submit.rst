@@ -44,3 +44,12 @@ Inherited options
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
+
+Form Variables
+--------------
+
+======== =========== ==============================================================
+Variable Type        Usage                                       
+======== =========== ==============================================================
+clicked  ``Boolean`` Whether the button is clicked or not.
+======== =========== ==============================================================

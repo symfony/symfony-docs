@@ -151,4 +151,16 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
+Field Variables
+---------------
+
++----------+------------+----------------------------------------------------------------------+
+| Variable | Type       | Usage                                                                |
++==========+============+======================================================================+
+| widget   | ``mixed``  | The value of the `widget`_ option.                                   |
++----------+------------+----------------------------------------------------------------------+
+| type     | ``string`` | Only present when widget is ``single_text`` and HTML5 is activated,  |
+|          |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
++----------+------------+----------------------------------------------------------------------+
+
 .. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
