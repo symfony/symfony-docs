@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-03T11:17:15Z
+
+The ProgressBar is not a helper, so I wouldn't put it in the helpers section.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-03-03T11:21:12Z
+
+@WouterJ It is a helper in the broad sense of the term (and it is in the `Helper` sub-namespace). One mistake we did with helpers is indeed to think of them as only being classes that implements ``HelperInterface``. And of course, that was wrong for many reasons (reusability, statefullness, ...). So, I'm fixing this one step at a time. The next PR will be about the table helper, where I've done the exact same change: we will have a Table class under the Helper namespace (and I also have another PR for the question/dialog helper).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-03T14:03:04Z
+
+@fabpot thank you for the explaination. I agree, I was just still thinking in the "old" way :)
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-03T15:56:29Z
+
+:+1: good to ship boss
