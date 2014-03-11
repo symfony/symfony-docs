@@ -127,7 +127,7 @@ Consider `a list of ctype functions <http://php.net/ref.ctype.php>`_:
 * `upper <http://php.net/function.ctype-upper.php>`_
 * `xdigit <http://php.net/function.ctype-xdigit.php>`_
 
-Make sure that proper `locale <http://php.net/function.setlocale.php>`_ is set before using one of those.
+Make sure that the proper `locale <http://php.net/function.setlocale.php>`_ is set before using one of these.
 
 message
 ~~~~~~~
