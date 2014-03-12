@@ -9,6 +9,7 @@ object and all sub-objects associated with it.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
+|                | - `message`_                                                       |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
 +----------------+---------------------------------------------------------------------+
@@ -265,3 +266,10 @@ traverse
 If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is set
 to ``true``.
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be true.``
+
+This is the message that will be shown if the value is false.
