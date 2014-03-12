@@ -212,6 +212,8 @@ to check your configuration:
 
 If there are any issues, correct them now before moving on.
 
+.. _book-installation-permissions:
+
 .. sidebar:: Setting up Permissions
 
     One common issue is that the ``app/cache`` and ``app/logs`` directories
