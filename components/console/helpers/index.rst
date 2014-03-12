@@ -11,6 +11,7 @@ The Console Helpers
     formatterhelper
     progressbar
     progresshelper
+    table
     tablehelper
 
 The Console component comes with some useful helpers. These helpers contain
