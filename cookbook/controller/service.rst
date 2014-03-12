@@ -96,7 +96,7 @@ To refer to a controller that's defined as a service, use the single colon (:)
 notation. For example, to forward to the ``indexAction()`` method of the service
 defined above with the id ``acme.hello.controller``::
 
-    $this->forward('acme.hello.controller:indexAction');
+    $this->forward('acme.hello.controller:indexAction', array('name' => $name));
 
 .. note::
 
