@@ -51,7 +51,7 @@ finish. It's easy to achieve if you embed the token in the error message::
 
     $this->assertLessThan(
         30,
-        $profile->get('db')->getQueryCount(),
+        $profile->getCollector('db')->getQueryCount(),
         sprintf(
             'Checks that query count is less than 30 (token %s)',
             $profile->getToken()
