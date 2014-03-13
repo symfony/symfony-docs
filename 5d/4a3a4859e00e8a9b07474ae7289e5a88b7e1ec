@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2013-12-26T18:16:43Z
+
+Hey Philipp!
+
+Yea, I'm glad you've caught this. What's happening is that this text is from a VERY old, pre 2.0 version of Symfony I believe - back when the best-practice for bundles was different, and I think we even had vendor bundles stored in `src/`. Can you re-read this entire section and make as many changes as you want. Don't worry about thinking that something is right for some reason - it's definitely out-dated, so if you can explain things how they actually work today (even if that changes pretty much everything), that's best!
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-02T09:27:32Z
+
+@weaverryan Sorry, closed by mistake...and re-opened ;-) I've done some tweaks to the section, replacing the notice about how to execute vendor tests (why testing vendor code from within a custom project? It would also need to install the composer deps for the vendor libs) by a notice how to add a non-standard (but custom) test directory.
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-02T12:49:02Z
+
+Btw, many thanks @WouterJ for all of your reviews!
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-03-13T07:26:39Z
+
+@weaverryan Anything I can still do for this PR? It's just because I stumbled over it again recently ;-)
