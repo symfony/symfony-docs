@@ -21,7 +21,7 @@ it has its own excellent `documentation`_.
     needed to test the Symfony core code itself.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the `Tests/` subdirectory of your bundles. If you follow
+that should live in the ``Tests/`` subdirectory of your bundles. If you follow
 this rule, then you can run all of your application's tests with the following
 command:
 
@@ -771,47 +771,70 @@ PHPUnit Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each application has its own PHPUnit configuration, stored in the
-``phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create a ``phpunit.xml`` file to tweak the configuration for your local machine.
+``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
+create an ``app/phpunit.xml`` file to setup a configuration for your local
+machine only.
 
 .. tip::
 
-    Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
+    Store the ``phpunit.xml.dist`` file in your code repository and ignore the
     ``phpunit.xml`` file.
 
-By default, only the tests stored in "standard" bundles are run by the
-``phpunit`` command (standard being tests in the ``src/*/Bundle/Tests`` or
-``src/*/Bundle/*Bundle/Tests`` directories) But you can easily add more
-directories. For instance, the following configuration adds the tests from
-the installed third-party bundles:
+By default, only the tests from your own custom bundles stored in the standard
+directories ``src/*/*Bundle/Tests`` or ``src/*/Bundle/*Bundle/Tests`` are run
+by the ``phpunit`` command, as configured in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
-    <!-- hello/phpunit.xml.dist -->
-    <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>../src/*/*Bundle/Tests</directory>
-            <directory>../src/Acme/Bundle/*Bundle/Tests</directory>
-        </testsuite>
-    </testsuites>
+    <!-- app/phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <testsuites>
+            <testsuite name="Project Test Suite">
+                <directory>../src/*/*Bundle/Tests</directory>
+                <directory>../src/*/Bundle/*Bundle/Tests</directory>
+            </testsuite>
+        </testsuites>
+        <!-- ... -->
+    </phpunit>
+
+But you can easily add more directories. For instance, the following
+configuration adds tests from a custom ``lib/tests`` directory:
+
+.. code-block:: xml
+
+    <!-- app/phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <testsuites>
+            <testsuite name="Project Test Suite">
+                <!-- ... --->
+                <directory>../lib/tests</directory>
+            </testsuite>
+        </testsuites>
+        <!-- ... --->
+    </phpunit>
 
 To include other directories in the code coverage, also edit the ``<filter>``
 section:
 
 .. code-block:: xml
 
-    <!-- ... -->
-    <filter>
-        <whitelist>
-            <directory>../src</directory>
-            <exclude>
-                <directory>../src/*/*Bundle/Resources</directory>
-                <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/Acme/Bundle/*Bundle/Resources</directory>
-                <directory>../src/Acme/Bundle/*Bundle/Tests</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+    <!-- app/phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <filter>
+            <whitelist>
+                <!-- ... -->
+                <directory>../lib</directory>
+                <exclude>
+                    <!-- ... -->
+                    <directory>../lib/tests</directory>
+                </exclude>
+            </whitelist>
+        </filter>
+        <!-- ... --->
+    </phpunit>
 
 Learn more
 ----------
