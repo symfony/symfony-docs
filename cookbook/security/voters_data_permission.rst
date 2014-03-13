@@ -54,7 +54,9 @@ Creating the Custom Voter
 -------------------------
 
 The goal is to create a voter that checks if a user has access to view or
-edit a particular object. Here's an example implementation::
+edit a particular object. Here's an example implementation:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
