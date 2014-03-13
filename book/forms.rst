@@ -1348,7 +1348,7 @@ are used to construct an instance of ``Category``, which is then set on the
 ``category`` field of the ``Task`` instance.
 
 The ``Category`` instance is accessible naturally via ``$task->getCategory()``
-and can be persisted to the database or used however you need.
+and can be persisted to the database or used whenever you need.
 
 Embedding a Collection of Forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
