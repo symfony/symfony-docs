@@ -214,10 +214,12 @@ Handling Authentication Failure
 -------------------------------
 
 In order for your ``ApiKeyAuthentication`` to correctly display a 403
-http status when either bad credentials or authentication fails you will 
-need to implement the :class:`Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` on your 
-Authenticator. This will provide a method ``onAuthenticationFailure`` which 
+http status when either bad credentials or authentication fails you will
+need to implement the :class:`Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` on your
+Authenticator. This will provide a method ``onAuthenticationFailure`` which
 you can use to create an error ``Response``.
+
+.. code-block:: php
 
     // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
     namespace Acme\HelloBundle\Security;
