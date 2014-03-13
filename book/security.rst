@@ -51,7 +51,9 @@ authentication (i.e. the old-school username/password box):
                         realm: "Secured Demo Area"
 
             access_control:
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: ^/admin/, roles: ROLE_ADMIN }
+                # Include the following line to also secure the /admin path itself
+                # - { path: ^/admin$, roles: ROLE_ADMIN }
 
             providers:
                 in_memory:
@@ -79,7 +81,9 @@ authentication (i.e. the old-school username/password box):
                 </firewall>
 
                 <access-control>
-                    <rule path="^/admin" role="ROLE_ADMIN" />
+                    <rule path="^/admin/" role="ROLE_ADMIN" />
+                    <!-- Include the following line to also secure the /admin path itself -->
+                    <!-- <rule path="^/admin$" role="ROLE_ADMIN" /> -->
                 </access-control>
 
                 <provider name="in_memory">
@@ -108,7 +112,9 @@ authentication (i.e. the old-school username/password box):
                 ),
             ),
             'access_control' => array(
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+                array('path' => '^/admin/', 'role' => 'ROLE_ADMIN'),
+                // Include the following line to also secure the /admin path itself
+                // array('path' => '^/admin$', 'role' => 'ROLE_ADMIN'),
             ),
             'providers' => array(
                 'in_memory' => array(

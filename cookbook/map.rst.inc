@@ -62,11 +62,13 @@
   * :doc:`/cookbook/doctrine/resolve_target_entity`
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
+  * :doc:`/cookbook/doctrine/console`
 
 * :doc:`/cookbook/email/index`
 
   * :doc:`/cookbook/email/email`
   * :doc:`/cookbook/email/gmail`
+  * :doc:`/cookbook/email/cloud`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
   * :doc:`/cookbook/email/testing`
@@ -132,6 +134,7 @@
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
   * :doc:`/cookbook/security/voters`
+  * :doc:`/cookbook/security/voters_data_permission`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`

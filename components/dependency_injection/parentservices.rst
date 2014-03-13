@@ -68,7 +68,7 @@ The service config for these classes would look something like this:
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             greeting_card_manager:
-                class:     "%greeting_card_manager.class%"
+                class: "%greeting_card_manager.class%"
                 calls:
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]

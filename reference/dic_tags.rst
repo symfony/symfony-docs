@@ -346,6 +346,8 @@ The ``alias`` key of the tag is the type of field that this extension should
 be applied to. For example, to apply the extension to any form/field, use the
 "form" value.
 
+.. _reference-dic-type_guesser:
+
 form.type_guesser
 -----------------
 
@@ -353,14 +355,13 @@ form.type_guesser
 
 This tag allows you to add your own logic to the :ref:`Form Guessing <book-forms-field-guessing>`
 process. By default, form guessing is done by "guessers" based on the validation
-metadata and Doctrine metadata (if you're using Doctrine).
+metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
+(if you're using Propel).
 
-To add your own form type guesser, create a class that implements the
-:class:`Symfony\\Component\\Form\\FormTypeGuesserInterface` interface. Next,
-tag its service definition with ``form.type_guesser`` (it has no options).
+.. seelalso::
 
-To see an example of how this class might look, see the ``ValidatorTypeGuesser``
-class in the Form component.
+    For information on how to create your own type guesser, see
+    :doc:`/components/form/type_guesser`.
 
 kernel.cache_clearer
 --------------------

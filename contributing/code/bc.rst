@@ -238,7 +238,7 @@ Symfony's classes:
 Type of Change                                      Regular         API
 ==================================================  ==============  ==============
 Remove entirely                                     No              No
-Make final                                          Yes [2]_        No
+Make final                                          No              No
 Make abstract                                       No              No
 Change name or namespace                            No              No
 Change parent class                                 Yes [7]_        Yes [7]_

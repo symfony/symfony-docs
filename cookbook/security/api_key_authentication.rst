@@ -210,6 +210,34 @@ exception in ``refreshUser()``.
     If you *do* want to store authentication data in the session so that
     the key doesn't need to be sent on every request, see :ref:`cookbook-security-api-key-session`.
 
+Handling Authentication Failure
+-------------------------------
+
+In order for your ``ApiKeyAuthentication`` to correctly display a 403
+http status when either bad credentials or authentication fails you will 
+need to implement the :class:`Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface` on your 
+Authenticator. This will provide a method ``onAuthenticationFailure`` which 
+you can use to create an error ``Response``.
+
+    // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
+    namespace Acme\HelloBundle\Security;
+
+    use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
+    use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
+
+    class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
+    {
+        //...
+
+        public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+        {
+            return new Response("Authentication Failed.", 403);
+        }
+    }
+
 .. _cookbook-security-api-key-config:
 
 Configuration

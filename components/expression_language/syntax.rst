@@ -176,7 +176,10 @@ Comparison Operators
     To test if a string does *not* match a regex, use the logical ``not``
     operator in combination with the ``matches`` operator::
 
-        $language->evaluate('not "foo" matches "/bar/"'); // returns true
+        $language->evaluate('not ("foo" matches "/bar/")'); // returns true
+
+    You must use parenthesis because the unary operator ``not`` has precedence
+    over the binary operator ``matches``.
 
 Examples::
 

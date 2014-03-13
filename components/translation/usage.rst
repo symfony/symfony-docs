@@ -95,7 +95,7 @@ The second step is done by creating message catalogs that define the translation
 for any number of different locales.
 
 Creating Translations
-=====================
+---------------------
 
 The act of creating translation files is an important part of "localization"
 (often abbreviated `L10n`_). Translation files consist of a series of

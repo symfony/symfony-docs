@@ -807,11 +807,13 @@ user registers and when a user updates their contact information later:
             }
         }
 
-With this configuration, there are two validation groups:
+With this configuration, there are three validation groups:
 
-* ``User`` - contains the constraints that belong to no other group,
-  and is considered the ``Default`` group. (This group is useful for
-  :ref:`book-validation-group-sequence`);
+* ``Default`` - contains the constraints in the current class and all
+  referenced classes that belong to no other group;
+
+* ``User`` - equivalent to all constraints of the ``User`` object in the
+  ``Default`` group;
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
@@ -837,13 +839,8 @@ Group Sequence
 --------------
 
 In some cases, you want to validate your groups by steps. To do this, you can
-use the ``GroupSequence`` feature. In the case, an object defines a group sequence,
-and then the groups in the group sequence are validated in order.
-
-.. tip::
-
-    Group sequences cannot contain the group ``Default``, as this would create
-    a loop. Instead, use the group ``{ClassName}`` (e.g. ``User``).
+use the ``GroupSequence`` feature. In this case, an object defines a group sequence
+, which determines the order groups should be validated.
 
 For example, suppose you have a ``User`` class and want to validate that the
 username and the password are different only if all other validation passes
@@ -968,6 +965,20 @@ In this example, it will first validate all constraints in the group ``User``
 (which is the same as the ``Default`` group). Only if all constraints in
 that group are valid, the second group, ``Strict``, will be validated.
 
+.. caution::
+
+    As you have already seen in the previous section, the ``Default`` group
+    and the group containing the class name (e.g. ``User``) were identical.
+    However, when using Group Sequences, they are no longer identical. The
+    ``Default`` group will now reference the group sequence, instead of all
+    constraints that do not belong to any group.
+
+    This means that you have to use the ``{ClassName}`` (e.g. ``User``) group
+    when specifing a group sequence. When using ``Default``, you get an
+    infinite recursion (as the ``Default`` groups references the group
+    sequence, which will contain the ``Default`` group which references the
+    same group sequence, ...).
+
 Group Sequence Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -985,9 +996,9 @@ entity and a new constraint group called ``Premium``:
         Acme\DemoBundle\Entity\User:
             properties:
                 name:
-                    - NotBlank
+                    - NotBlank: ~
                 creditCard:
-                    - CardScheme
+                    - CardScheme:
                         schemes: [VISA]
                         groups: [Premium]
 

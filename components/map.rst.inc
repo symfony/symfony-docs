@@ -28,9 +28,10 @@
 
   * :doc:`/components/css_selector`
 
-* **Debug**
+* :doc:`/components/debug/index`
 
-  * :doc:`/components/debug`
+  * :doc:`/components/debug/introduction`
+  * :doc:`/components/debug/class_loader`
 
 * :doc:`/components/dependency_injection/index`
 
@@ -76,6 +77,7 @@
 * :doc:`/components/form/index`
 
   * :doc:`/components/form/introduction`
+  * :doc:`/components/form/type_guesser`
 
 * :doc:`/components/http_foundation/index`
 

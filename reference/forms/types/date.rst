@@ -41,7 +41,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 |                      | - `inherit_data`_                                                           |
 |                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | ``field`` (if text), ``form`` otherwise                                     |
+| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -154,3 +154,17 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+Field Variables
+---------------
+
++--------------+------------+----------------------------------------------------------------------+
+| Variable     | Type       | Usage                                                                |
++==============+============+======================================================================+
+| widget       | ``mixed``  | The value of the `widget`_ option.                                   |
++--------------+------------+----------------------------------------------------------------------+
+| type         | ``string`` | Only present when widget is ``single_text`` and HTML5 is activated,  |
+|              |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
++--------------+------------+----------------------------------------------------------------------+
+| date_pattern | ``string`` | A string with the date format to use.                                |
++--------------+------------+----------------------------------------------------------------------+

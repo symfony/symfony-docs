@@ -7,11 +7,18 @@ Table Helper
 .. versionadded:: 2.3
     The ``table`` helper was added in Symfony 2.3.
 
+.. caution::
+
+    The Table Helper was deprecated in Symfony 2.5 and will be removed in
+    Symfony 3.0. You should now use the
+    :doc:`Table </components/console/helpers/table>` class instead which is
+    more powerful.
+
 When building a console application it may be useful to display tabular data:
 
 .. image:: /images/components/console/table.png
 
-To display table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
+To display a table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
 set headers, rows and render::
 
     $table = $app->getHelperSet()->get('table');
