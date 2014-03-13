@@ -657,16 +657,140 @@ Debugging Translations
 
 When maintaining a bundle, you may use or remove the usage of a translation
 message without updating all message catalogues. The ``translation:debug``
-command helps you finding these missing or unused translation messages for a
+command helps you to find these missing or unused translation messages for a
 given locale. It shows you a table with the result when translating the
 message in the given locale and the result when the fallback would be used.
 On top of that, it also shows you when the translation is the same as the
 fallback translation (this could indicate that the message was not correctly
-translated). To inspect all messages in the ``en`` locale for the AcmeDemoBundle, run:
+translated).
+
+Thanks to the messages extractors, the command will detect the translation
+tag or filter usages in Twig templates:
+
+.. code-block:: jinja
+
+    {% trans %}Symfony2 is great{% endtrans %}
+
+    {{ 'Symfony2 is great'|trans }}
+
+It will also detect the following translator usages in PHP templates:
+
+.. code-block:: php
+
+    $view['translator']->trans("Symfony2 is great");
+
+    $view['translator']->trans(‘Symfony2 is great’);
+
+Supposing your application default_locale is French ``fr`` and you have enabled
+the translator in your configuration with English ``en`` as fallback locale.
+
+See :ref:`book-translation-configuration` and :ref:`book-translation-fallback` for details
+about how to configure these.
+
+You are working on the AcmeDemoBundle and the translation file for the ``messages`` domain
+in the ``fr`` locale contains:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- messages.fr.xliff -->
+        <?xml version="1.0"?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>Symfony2 is great</source>
+                        <target>J'aime Symfony2</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: php
+
+        // messages.fr.php
+        return array(
+            'Symfony2 is great' => 'J\'aime Symfony2',
+        );
+
+    .. code-block:: yaml
+
+        # messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
+
+and for the ``en`` locale:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- messages.en.xliff -->
+        <?xml version="1.0"?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>Symfony2 is great</source>
+                        <target>Symfony2 is great</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: php
+
+        // messages.en.php
+        return array(
+            'Symfony2 is great' => 'Symfony2 is great',
+        );
+
+    .. code-block:: yaml
+
+        # messages.en.yml
+        Symfony2 is great: Symfony2 is great
+
+To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
 .. code-block:: bash
 
-    $ php app/console translation:debug en AcmeDemoBundle
+    $ php app/console translation:debug fr AcmeDemoBundle
+
+You will get this output:
+
+.. image:: /images/book/translation/debug_1.png
+    :align: center
+
+It indicates the message with id ``Symfony2 is great`` is unused because it is translated
+but we don’t use it in any template yet.
+
+Now, if you translate the message in one of your templates, you will get this output:
+
+.. image:: /images/book/translation/debug_2.png
+    :align: center
+
+The state is empty which means the message is translated in the ``fr`` locale and used in one or more templates.
+Moreover, we see the translation is different than the ``en`` one.
+
+If you delete the message ``Symfony2 is great`` from your translation file for the ``fr`` locale
+and run the command, you will get:
+
+.. image:: /images/book/translation/debug_3.png
+    :align: center
+
+The state indicates the message is missing because it is not translated in the ``fr`` locale
+but it is still used in the template.
+Moreover, we see the message in the ``fr`` locale equals to the message in the ``en`` locale.
+This is a special case because the untranslated message id equals its translation in the ``en`` locale.
+
+If you copy the content of the translation file in the ``en`` locale, to the translation file
+in the ``fr`` locale and run the command, you will get:
+
+.. image:: /images/book/translation/debug_4.png
+    :align: center
+
+We observe the translations of the message are identical in the ``fr`` and ``en`` locales
+which means this message was probably copied from French to English or vice versa (which is the case).
 
 By default all domains are inspected, but it is possible to specify a single domain:
 
@@ -674,8 +798,8 @@ By default all domains are inspected, but it is possible to specify a single dom
 
     $ php app/console translation:debug en AcmeDemoBundle --domain=messages
 
-You can also display only the unused or only the missing messages, by using
-the ``--only-unused`` or ``--only-missing`` switches:
+When bundles have a lot of messages, it is useful to display only the unused
+or only the missing messages, by using the ``--only-unused`` or ``--only-missing`` switches:
 
 .. code-block:: bash
 
