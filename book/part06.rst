@@ -164,7 +164,7 @@ Let's conclude with the new version of our framework::
     use Symfony\Component\Routing;
     use Symfony\Component\HttpKernel;
 
-    function render_template($request)
+    function render_template(Request $request)
     {
         extract($request->attributes->all());
         ob_start();
