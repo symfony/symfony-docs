@@ -47,6 +47,23 @@ You can also specify a URL to use in the second parameter of the constructor::
 
 Now URLs are rendered like ``http://cdn.example.com/images/logo.png``.
 
+.. versionadded:: 2.5
+    Absolute URLs for assets were introduced in Symfony 2.5.
+
+You can also use the third argument of the helper to force an absolute URL:
+
+.. code-block:: html+php
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>">
+   <!-- renders as:
+   <img src="http://yourwebsite.com/foo/bar/images/logo.png">
+   -->
+
+.. note::
+
+    If you already set a URL in the constructor, using the third argument of
+    ``getUrl`` will not affect the generated URL.
+
 Versioning
 ----------
 
