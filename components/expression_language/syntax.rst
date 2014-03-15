@@ -31,25 +31,38 @@ access properties and call methods on the object.
 Accessing Public Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Public properties on objects can be accessed by using the ``.`` syntax, similar
+Public properties or properties with public getter methods on objects can be accessed by using the ``.`` syntax, similar
 to JavaScript::
 
     class Apple
     {
         public $variety;
+
+        protected $color;
+
+        public function getColor()
+        {
+            return $this->color;
+        }
+
+        public function setColor($color)
+        {
+            $this->color = $color;
+        }
     }
 
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
+    $apple->setColor('Red');
 
     echo $language->evaluate(
-        'fruit.variety',
+        'This fruit.variety apple is fruit.color',
         array(
             'fruit' => $apple,
         )
     );
 
-This will print ``Honeycrisp``.
+This will print ``This Honeycrisp apple is Red``.
 
 Calling Methods
 ~~~~~~~~~~~~~~~
