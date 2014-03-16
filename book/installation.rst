@@ -162,6 +162,17 @@ If there are any issues, correct them now before moving on.
 
         $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        
+    .. tip::
+        
+        Be careful : on Mac OS X systems, you will probably have to replace the www-data user by _www (default apache user).
+        Moreover, if you use a package manager such as homebrew or macports, make sure your chmod command is not replaced.
+        In such case, you have to call it from the system root directory as follows :
+    
+    .. code-block:: bash
+    
+        $ sudo /bin/chmod +a "_www allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo /bin/chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
     
     **2. Using Acl on a system that does not support chmod +a**
 
