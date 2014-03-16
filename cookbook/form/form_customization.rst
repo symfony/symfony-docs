@@ -794,13 +794,9 @@ field) are rendered separately, usually at the top of your form:
         <?php echo $view['form']->render($form); ?>
 
 To customize *only* the markup used for these errors, follow the same directions
-as above, but now check if the ``compound`` variable is set to ``true``. 
-
-.. tip::
-
-    If the ``compound`` variable is ``true``, it means that what's being 
-    currently rendered is a collection of fields (e.g. a whole form), and not 
-    just an individual field.
+as above, but now check if the ``compound`` variable is set to ``true``. If it
+is ``true``, it means that what's being currently rendered is a collection of 
+fields (e.g. a whole form), and not just an individual field.
 
 .. configuration-block::
 
@@ -817,7 +813,7 @@ as above, but now check if the ``compound`` variable is set to ``true``.
                             {% endfor %}
                         </ul>
                     {% else %}
-                        {# display the errors for a single field #}
+                        {# ... display the errors for a single field #}
                     {% endif %}
                 {% endif %}
             {% endspaceless %}
@@ -834,7 +830,7 @@ as above, but now check if the ``compound`` variable is set to ``true``.
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <?php // render the errors for a single field ?>
+                <!-- ... render the errors for a single field -->
             <?php endif; ?>
         <?php endif ?>
 
