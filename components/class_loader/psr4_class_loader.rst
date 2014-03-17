@@ -18,15 +18,15 @@ Libraries that follow the `PSR-4`_ standard can be loaded with the ``Psr4ClassLo
 
 .. tip::
 
-    All Symfony Components follow PSR-4.
+    All Symfony components follow PSR-4.
 
 Usage
 -----
 
 The following example demonstrates how you can use the
 :class:`Symfony\\Component\\ClassLoader\\Psr4ClassLoader` autoloader to use
-Symfony's Yaml component. Imagine, you downloaded both the ``ClassLoader`` and
-``Yaml`` component as ZIP packages and unpacked them to a ``libs`` directory.
+Symfony's Yaml component. Imagine, you downloaded both the ClassLoader and
+Yaml component as ZIP packages and unpacked them to a ``libs`` directory.
 The directory structure will look like this:
 
 .. code-block:: text
