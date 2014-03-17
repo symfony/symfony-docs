@@ -39,7 +39,7 @@ The directory structure will look like this:
             Yaml.php
             ...
     config.yml
-    test.php
+    demo.php
 
 In ``demo.php`` you are going to parse the ``config.yml`` file. To do that, you
 first need to configure the ``Psr4ClassLoader``:
@@ -55,13 +55,13 @@ first need to configure the ``Psr4ClassLoader``:
     $loader->addPrefix('Symfony\\Component\\Yaml\\', __DIR__.'/lib/Yaml');
     $loader->register();
 
-    $data = Yaml::parse(__DIR__.'/demo.yml');
+    $data = Yaml::parse(__DIR__.'/config.yml');
 
 First of all, the class loader is loaded manually using a ``require``
 statement, since there is no autoload mechanism yet. With the
 :method:`Symfony\Component\ClassLoader\Psr4ClassLoader::addPrefix` call, you
 tell the class loader where to look for classes with the
 ``Symfony\Component\Yaml\`` namespace prefix. After registering the autoloader,
-the Yaml component is ready to use.
+the Yaml component is ready to be used.
 
 .. _PSR-4: http://www.php-fig.org/psr/psr-4/
