@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-26T22:33:59Z
+
+Hey Gildas!
+
+Looks like this feature was merged (congrats!). Can you rebase this and make any updates it may need?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by gquemener at 2014-02-27T09:03:09Z
+
+Hello @weaverryan!
+
+I've rebased/squashed, and the doc is up-to-date AFAIC (I will update the french doc, when this got merged :))
+
+Regards.
+
+---------------------------------------------------------------------------
+
+by gquemener at 2014-03-04T23:02:12Z
+
+I've rephrased the discussed sentence. Should be good to merge now.
