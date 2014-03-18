@@ -112,6 +112,20 @@ This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
 cast into a string and so must have a ``__toString()`` method.
 
+.. note::
+
+    The ``property`` option is the property path used to display the option. So you 
+    can use anything supported by the
+    :doc:`PropertyAccessor component </components/property_access/introduction>`
+
+    For example, if the translations property is actually an associative array of 
+    objects, each with a name property, then you could do this::
+
+        $builder->add('gender', 'entity', array(
+           'class' => 'MyBundle:Gender',
+           'property' => 'translations[en].name',
+        ));
+
 group_by
 ~~~~~~~~
 
