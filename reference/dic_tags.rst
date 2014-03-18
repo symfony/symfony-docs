@@ -344,7 +344,7 @@ process. By default, form guessing is done by "guessers" based on the validation
 metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
 (if you're using Propel).
 
-.. seelalso::
+.. seealso::
 
     For information on how to create your own type guesser, see
     :doc:`/components/form/type_guesser`.
@@ -847,7 +847,7 @@ swiftmailer.default.plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.default.plugin`` (it has no options). 
+it with ``swiftmailer.default.plugin`` (it has no options).
 
 .. note::
 

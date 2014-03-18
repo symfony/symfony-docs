@@ -74,7 +74,7 @@ that the type guesser cannot guess the type.
 
 The ``TypeGuess`` constructor requires 3 options:
 
-* The type name (one of the :doc:`form types </reference/forms/types`);
+* The type name (one of the :doc:`form types </reference/forms/types>`);
 * Additional options (for instance, when the type is ``entity``, you also
   want to set the ``class`` option). If no types are guessed, this should be
   set to an empty array;
