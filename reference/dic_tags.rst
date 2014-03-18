@@ -358,7 +358,7 @@ process. By default, form guessing is done by "guessers" based on the validation
 metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
 (if you're using Propel).
 
-.. seelalso::
+.. seealso::
 
     For information on how to create your own type guesser, see
     :doc:`/components/form/type_guesser`.
@@ -420,7 +420,8 @@ kernel.cache_warmer
 **Purpose**: Register your service to be called during the cache warming process
 
 Cache warming occurs whenever you run the ``cache:warmup`` or ``cache:clear``
-task (unless you pass ``--no-warmup`` to ``cache:clear``). The purpose is
+task (unless you pass ``--no-warmup`` to ``cache:clear``). It is also run when
+handling the request, if it wasn't done by one of the commands yet. The purpose is
 to initialize any cache that will be needed by the application and prevent
 the first user from any significant "cache hit" where the cache is generated
 dynamically.
@@ -437,7 +438,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
     {
         public function warmUp($cacheDir)
         {
-            // do some sort of operations to "warm" your cache
+            // ... do some sort of operations to "warm" your cache
         }
 
         public function isOptional()
@@ -447,8 +448,9 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
     }
 
 The ``isOptional`` method should return true if it's possible to use the
-application without calling this cache warmer. In Symfony 2.0, optional warmers
-are always executed anyways, so this function has no real effect.
+application without calling this cache warmer. In Symfony, optional warmers
+are always executed by default (you can change this by using the
+``--no-optional-warmers`` option when executing the command).
 
 To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
 
@@ -861,7 +863,7 @@ swiftmailer.default.plugin
 
 If you're using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.default.plugin`` (it has no options). 
+it with ``swiftmailer.default.plugin`` (it has no options).
 
 .. note::
 

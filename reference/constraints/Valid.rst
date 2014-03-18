@@ -9,7 +9,7 @@ object and all sub-objects associated with it.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
-|                | - `message`_                                                       |
+|                | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
 +----------------+---------------------------------------------------------------------+

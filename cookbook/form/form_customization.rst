@@ -771,8 +771,17 @@ and customize the ``form_errors`` fragment.
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 You can also customize the error output for just one specific field type.
-For example, certain errors that are more global to your form (i.e. not specific
-to just one field) are rendered separately, usually at the top of your form:
+To customize *only* the markup used for these errors, follow the same directions
+as above but put the contents in a relative ``_errors`` block (or file in case
+of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
+
+.. tip::
+
+    See :ref:`form-template-blocks` to find out which specific block or file you 
+    have to customize.
+
+Certain errors that are more global to your form (i.e. not specific to just one 
+field) are rendered separately, usually at the top of your form:
 
 .. configuration-block::
 
@@ -785,9 +794,46 @@ to just one field) are rendered separately, usually at the top of your form:
         <?php echo $view['form']->render($form); ?>
 
 To customize *only* the markup used for these errors, follow the same directions
-as above, but now call the block ``form_errors`` (Twig) / the file ``form_errors.html.php``
-(PHP). Now, when errors for the ``form`` type are rendered, your customized
-fragment will be used instead of the default ``form_errors``.
+as above, but now check if the ``compound`` variable is set to ``true``. If it
+is ``true``, it means that what's being currently rendered is a collection of 
+fields (e.g. a whole form), and not just an individual field.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# form_errors.html.twig #}
+        {% block form_errors %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                    {% if compound %}
+                        <ul>
+                            {% for error in errors %}
+                                <li>{{ error.message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        {# ... display the errors for a single field #}
+                    {% endif %}
+                {% endif %}
+            {% endspaceless %}
+        {% endblock form_errors %}
+
+    .. code-block:: html+php
+
+        <!-- form_errors.html.php -->
+        <?php if ($errors): ?>
+            <?php if ($compound): ?>
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo $error->getMessage() ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <!-- ... render the errors for a single field -->
+            <?php endif; ?>
+        <?php endif ?>
+
 
 Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

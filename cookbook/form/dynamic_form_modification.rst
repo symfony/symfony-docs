@@ -471,6 +471,7 @@ sport like this::
     // src/Acme/DemoBundle/Form/Type/SportMeetupType.php
     namespace Acme\DemoBundle\Form\Type;
 
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
@@ -481,7 +482,10 @@ sport like this::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('sport', 'entity', array(...))
+                ->add('sport', 'entity', array(
+                    'class'       => 'AcmeDemoBundle:Sport',
+                    'empty_value' => '',
+                ))
             ;
 
             $builder->addEventListener(
@@ -492,12 +496,19 @@ sport like this::
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
-                    $positions = $data->getSport()->getAvailablePositions();
+                    $sport = $data->getSport();
+                    $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
-                    $form->add('position', 'entity', array('choices' => $positions));
+                    $form->add('position', 'entity', array(
+                        'class'       => 'AcmeDemoBundle:Position',
+                        'empty_value' => '',
+                        'choices'     => $positions,
+                    ));
                 }
             );
         }
+
+        // ...
     }
 
 When you're building this form to display to the user for the first time,
@@ -530,21 +541,28 @@ The type would now look like::
     namespace Acme\DemoBundle\Form\Type;
 
     // ...
-    use Acme\DemoBundle\Entity\Sport;
     use Symfony\Component\Form\FormInterface;
+    use Acme\DemoBundle\Entity\Sport;
 
     class SportMeetupType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('sport', 'entity', array(...))
+                ->add('sport', 'entity', array(
+                    'class'       => 'AcmeDemoBundle:Sport',
+                    'empty_value' => '',
+                ));
             ;
 
-            $formModifier = function(FormInterface $form, Sport $sport) {
-                $positions = $sport->getAvailablePositions();
+            $formModifier = function(FormInterface $form, Sport $sport = null) {
+                $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
-                $form->add('position', 'entity', array('choices' => $positions));
+                $form->add('position', 'entity', array(
+                    'class'       => 'AcmeDemoBundle:Position',
+                    'empty_value' => '',
+                    'choices'     => $positions,
+                ));
             };
 
             $builder->addEventListener(
@@ -570,17 +588,78 @@ The type would now look like::
                 }
             );
         }
+
+        // ...
     }
 
-You can see that you need to listen on these two events and have different callbacks
-only because in two different scenarios, the data that you can use is available in different events.
-Other than that, the listeners always perform exactly the same things on a given form.
+You can see that you need to listen on these two events and have different
+callbacks only because in two different scenarios, the data that you can use is
+available in different events. Other than that, the listeners always perform
+exactly the same things on a given form.
 
-One piece that may still be missing is the client-side updating of your form
-after the sport is selected. This should be handled by making an AJAX call
-back to your application. In that controller, you can submit your form, but
-instead of processing it, simply use the submitted form to render the updated
-fields. The response from the AJAX call can then be used to update the view.
+One piece that is still missing is the client-side updating of your form after
+the sport is selected. This should be handled by making an AJAX call back to
+your application. Assume that you have a sport meetup creation controller::
+
+    // src/Acme/DemoBundle/Controller/MeetupController.php
+    namespace Acme\DemoBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
+    use Acme\DemoBundle\Entity\SportMeetup;
+    use Acme\DemoBundle\Form\Type\SportMeetupType;
+    // ...
+
+    class MeetupController extends Controller
+    {
+        public function createAction(Request $request)
+        {
+            $meetup = new SportMeetup();
+            $form = $this->createForm(new SportMeetupType(), $meetup);
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // ... save the meetup, redirect etc.
+            }
+
+            return $this->render(
+                'AcmeDemoBundle:Meetup:create.html.twig',
+                array('form' => $form->createView())
+            );
+        }
+
+        // ...
+    }
+
+The associated template uses some JavaScript to update the ``position`` form
+field according to the current selection in the ``sport`` field:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# src/Acme/DemoBundle/Resources/views/Meetup/create.html.twig #}
+        {{ form_start(form) }}
+            {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
+            {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
+            {# ... #}
+        {{ form_end(form) }}
+
+        .. include:: /cookbook/form/dynamic_form_modification_ajax_js.rst.inc
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/DemoBundle/Resources/views/Meetup/create.html.php -->
+        <?php echo $view['form']->start($form) ?>
+            <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
+            <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->
+            <!-- ... -->
+        <?php echo $view['form']->end($form) ?>
+
+        .. include:: /cookbook/form/dynamic_form_modification_ajax_js.rst.inc
+
+The major benefit of submitting the whole form to just extract the updated
+``position`` field is that no additional server-side code is needed; all the
+code from above to generate the submitted form can be reused.
 
 .. _cookbook-dynamic-form-modification-suppressing-form-validation:
 

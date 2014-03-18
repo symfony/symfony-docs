@@ -138,22 +138,23 @@ Using Prefixes
 
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
-This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements, default options and host to all routes of a subtree with
-the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
+This way you can build a tree of routes. Additionally you can define a prefix
+and default values for the parameters, requirements, options, schemes and the
+host to all routes of a subtree using methods provided by the
+``RouteCollection`` class::
 
     $rootCollection = new RouteCollection();
 
     $subCollection = new RouteCollection();
     $subCollection->add(...);
     $subCollection->add(...);
-    $subCollection->addPrefix(
-        '/prefix', // prefix
-        array(), // requirements
-        array(), // options
-        'admin.example.com', // host
-        array('https') // schemes
-    );
+    $subCollection->addPrefix('/prefix');
+    $subCollection->addDefaults(array(...));
+    $subCollection->addRequirements(array(...));
+    $subCollection->addOptions(array(...));
+    $subCollection->setHost('admin.example.com');
+    $subCollection->setMethods(array('POST'));
+    $subCollection->setSchemes(array('https'));
 
     $rootCollection->addCollection($subCollection);
 
@@ -170,7 +171,9 @@ with this class via its constructor::
         $host = 'localhost',
         $scheme = 'http',
         $httpPort = 80,
-        $httpsPort = 443
+        $httpsPort = 443,
+        $path = '/',
+        $queryString = ''
     )
 
 .. _components-routing-http-foundation:
