@@ -89,6 +89,11 @@ The second method has several specific advantages:
     supported configuration settings for which backward compatibility will
     be maintained.
 
+.. seealso::
+
+    For parameter handling within a Dependency Injection class see
+    :doc:`</cookbook/configuration/using_parameters_in_dic>`.
+
 .. index::
    single: Bundle; Extension
    single: DependencyInjection; Extension
