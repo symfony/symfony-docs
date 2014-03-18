@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-03-14T14:27:40Z
+
+you also need to add the new argument in the reference of Twig functions provided by Symfony: https://github.com/symfony/symfony-docs/blob/master/reference/twig_reference.rst
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-03-14T17:49:56Z
+
+PR updated, comments addressed.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-15T09:10:19Z
+
+upstream PR merged now
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-03-17T17:43:57Z
+
+Comments addressed, PR updated
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-17T17:50:37Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-03-17T17:54:32Z
+
+PR title updated (code has been merged)
