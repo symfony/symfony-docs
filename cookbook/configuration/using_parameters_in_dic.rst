@@ -156,4 +156,4 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
     The string ``%kernel.debug%`` passed here as an argument handles the
     interpreting job to the container which in turn does the evaluation.
     Both ways accomplish similar goals. AsseticBundle will not use
-    anymore ``%kernel.debug%`` but rather the new ``%assetic.debug%`` parameter.
+    ``%kernel.debug%`` but rather the new ``%assetic.debug%`` parameter.
