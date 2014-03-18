@@ -1,5 +1,5 @@
 .. index::
-   single: Web Server
+    single: Web Server
 
 Configuring a web server
 ========================

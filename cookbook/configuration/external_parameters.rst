@@ -1,5 +1,5 @@
 .. index::
-   single: Environments; External parameters
+    single: Environments; External parameters
 
 How to Set External Parameters in the Service Container
 =======================================================
