@@ -1,0 +1,93 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-04T17:22:37Z
+
+Wow, you are also heavily contributing to the docs? :wink: FYI, the License row is not needed in the doc PR format.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-04T17:46:33Z
+
+Why do you not use the ParameterBag inside the extension to resolve the value of a parameter?
+
+````php
+class AcmeDemoExtension // ...
+{
+    public function load(...)
+    {
+        // ...
+       $config = $this->processConfiguration(...);
+
+        $container->setParameter(
+            'acme_demo.logging',
+            $container->getParameterBag()->resolveValue($config['logging'])
+        );
+    }
+}
+````
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-05T03:22:58Z
+
+@WouterJ about the using the resolveValue method at that point is already resolved.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-05T08:03:13Z
+
+@cordoval, what do you mean? You can use it at any time to resolve the string into a parameter value, if the syntax is correct.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-06T04:46:23Z
+
+@WouterJ about the `resolveValue` I am still not sure, AsseticBundle and TwigBundle don't use it. No?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-01-09T03:34:27Z
+
+Hey Luis!
+
+I think you did some nice writing on this entry, thanks for starting it! But, I want to make it much smaller. Imo, this entry is too large for the small question that it's answering. After reading it, I don't think we should talk about how parameters are used or what they are at all. The point of this article, and what I think we should rename it to, is "How to use Parameters (e.g. kernel.debug) within a DependencyInjection Extension Class". Then, I think we should show them the answer directly.
+
+This comment comes after my line-comments above - I don't think we need to worry about those anymore because I think these sections should be removed.
+
+What do you think?
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-10T19:10:13Z
+
+@weaverryan agree, working on this right now
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-10T21:13:43Z
+
+@weaverryan :ship:  :it: boss
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-11T10:27:22Z
+
+bump :baby:
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-30T11:48:28Z
+
+bump @weaverryan @WouterJ
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-30T12:43:41Z
+
+there is not much to bump me for.. I've reviewed it. Now, you only need to be patient. Believe me, you're PR isn't lost, ryan just didn't had the time to review it (with such big changes, it'll take longer to review and thus longer to merge)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-01T17:43:32Z
+
+Yep, I'll review this shortly - I need to merge in some smaller PR's first :)
