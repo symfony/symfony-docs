@@ -1,6 +1,6 @@
 .. index::
-   single: How front controller, ``AppKernel`` and environments
-   work together
+    single: How the front controller, ``AppKernel`` and environments
+    work together
 
 Understanding how the Front Controller, Kernel and Environments work together
 =============================================================================
