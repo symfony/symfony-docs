@@ -1193,29 +1193,6 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
     For more information, see the documentation for that bundle.
 
 .. index::
-   single: Routing; Absolute URLs
-
-Generating Absolute URLs
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-By default, the router will generate relative URLs (e.g. ``/blog``). To generate
-an absolute URL, simply pass ``true`` to the third argument of the ``generate()``
-method::
-
-    $this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'), true);
-    // http://www.example.com/blog/my-blog-post
-
-.. note::
-
-    The host that's used when generating an absolute URL is the host of
-    the current ``Request`` object. This is detected automatically based
-    on server information supplied by PHP. When generating absolute URLs for
-    scripts run from the command line, you'll need to manually set the desired
-    host on the ``RequestContext`` object::
-
-        $this->get('router')->getContext()->setHost('www.example.com');
-
-.. index::
    single: Routing; Generating URLs in a template
 
 Generating URLs with Query Strings
@@ -1227,7 +1204,7 @@ But if you pass extra ones, they will be added to the URI as a query string::
     $this->get('router')->generate('blog', array('page' => 2, 'category' => 'Symfony'));
     // /blog/2?category=Symfony
 
-Generating URLs from a template
+Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The most common place to generate a URL is from within a template when linking
@@ -1250,7 +1227,20 @@ a template helper function:
             Read this blog post.
         </a>
 
-Absolute URLs can also be generated.
+.. index::
+   single: Routing; Absolute URLs
+
+Generating Absolute URLs
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the router will generate relative URLs (e.g. ``/blog``). From
+a controller, simply pass ``true`` to the third argument of the ``generateUrl()``
+method::
+
+    $this->getgenerateUrl('blog_show', array('slug' => 'my-blog-post'), true);
+    // http://www.example.com/blog/my-blog-post
+
+From a template, it looks like this:
 
 .. configuration-block::
 
@@ -1267,6 +1257,14 @@ Absolute URLs can also be generated.
         ), true) ?>">
             Read this blog post.
         </a>
+
+.. note::
+
+    The host that's used when generating an absolute URL is the host of
+    the current ``Request`` object. This is detected automatically. But if
+    you generate absolute URLs for scripts run from the command line, this
+    won't work. But don't worry! Just see :doc:`/cookbook/console/sending_emails`
+    for details.
 
 Summary
 -------
