@@ -1,5 +1,5 @@
 .. index::
-   single: Apache Router
+    single: Apache Router
 
 How to use the Apache Router
 ============================

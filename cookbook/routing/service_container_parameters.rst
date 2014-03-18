@@ -124,3 +124,8 @@ path):
     However, as the ``%`` characters included in any URL are automatically encoded,
     the resulting URL of this example would be ``/score-50%25`` (``%25`` is the
     result of encoding the ``%`` character).
+
+.. seealso::
+
+    For parameter handling within a Dependency Injection class see
+    :doc:`</cookbook/configuration/using_parameters_in_dic>`.
