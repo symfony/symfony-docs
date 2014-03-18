@@ -281,6 +281,34 @@ You can access the `pid`_ of a running process with the
     you may have to prefix your commands with `exec`_. Please read
     `Symfony Issue#5759`_ to understand why this is happening.
 
+Disabling Output
+----------------
+
+.. versionadded:: 2.5
+    The :method:`Symfony\\Component\\Process\\Process::disableOutput` and
+    :method:`Symfony\\Component\\Process\\Process::enableOutput` methods were
+    introduced in Symfony 2.5.
+
+As standard output and error output are always fetched from the underlying process,
+it might be convenient to disable output in some cases to save memory.
+Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
+:method:`Symfony\\Component\\Process\\Process::enableOutput` to toggle this feature::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('/usr/bin/php worker.php');
+    $process->disableOutput();
+    $process->run();
+
+.. caution::
+
+    You can not enable or disable the output while the process is running.
+
+    If you disable the output, you cannot access ``getOutput``,
+    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
+    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
+    methods or use ``setIdleTimeout``.
+
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: http://en.wikipedia.org/wiki/Exec_(operating_system)
