@@ -108,7 +108,7 @@ Creating an ACL, and adding an ACE
     use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
     use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
-    class BlogController
+    class BlogController extends Controller
     {
         // ...
 
