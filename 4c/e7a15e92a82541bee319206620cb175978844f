@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-02-05T16:04:27Z
+
+While inspecting this issue I started to wander if this fragment is adequate (same file, line 773):
+
+````
+  You can also customize the error output for just one specific field type.
+  For example, certain errors that are more global to your form (i.e. not specific
+  to just one field) are rendered separately, usually at the top of your form:
+````
+
+The first sentence suggests that you can customize the errors for each field type separately, but I don't think this is the case. Can anyone confirm if it's possible or is the sentence a bit misleading?
+
+---------------------------------------------------------------------------
+
+by stof at 2014-02-05T16:40:28Z
+
+@mtrojanowski you can. It works exactly the same way than customizing the widget of a field (except that the block name ends with ``_errors`` instead of ``_widget``)
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-02-05T18:23:10Z
+
+@stof thanks. It's good to know. Maybe it's worth mentioning it in the docs implicitly. Now I think it's a bit to vague. I'll think of something and add to the PR.
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-02-05T22:40:20Z
+
+Added the note on how to customize errors for different field types. In fact I found this information in a sidebar a few sections above ("Knowing which block to customize"). Nevertheless I think it's better that all the information about the error customization is in one place (even if some of the information is doubled in the article).
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-02-20T21:12:56Z
+
+Took me a while but finally fixed the code according to the comments :)
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-03-16T17:40:54Z
+
+Applied the changes proposed by Wouter. As for the colons and semicolons in PHP templates I understand that I don't have to change anything there, right?
