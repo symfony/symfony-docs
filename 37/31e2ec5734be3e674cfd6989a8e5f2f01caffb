@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-16T21:41:45Z
+
+Looks great! I've decorated your PR a bit with some comments, if you don't understand what I said, need some help or disagree with me, you shouldn't be afraid to comment on it :)
+
+The new document should also be added in the components/map.rst.inc file, this content is shown when viewing http://symfony.com/doc/current/components/index.html
+
+---------------------------------------------------------------------------
+
+by derrabus at 2014-03-16T22:22:06Z
+
+Thanks a lot for your help. I will adjust my documentation. :-)
