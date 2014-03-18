@@ -124,17 +124,12 @@ cast into a string and so must have a ``__toString()`` method.
     can use anything supported by the
     :doc:`PropertyAccessor component </components/property_access/introduction>`
 
-    Usage sample::
+    For example, if the translations property is actually an associative array of 
+    objects, each with a name property, then you could do this::
 
         $builder->add('gender', 'entity', array(
            'class' => 'MyBundle:Gender',
            'property' => 'translations[en].name',
-           'query_builder' => function(EntityRepository $er) {
-               return $er->createQueryBuilder('g')
-                  ->join('g.translations', 't', 'WITH', 't.locale = :locale')
-                  ->orderBy('t.name', 'ASC')
-                  ->setParameter('locale', 'en');
-           },
         ));
 
 group_by
