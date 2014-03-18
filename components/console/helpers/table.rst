@@ -103,8 +103,6 @@ which outputs:
 
 If the built-in styles do not fit your need, define your own::
 
-.. code-block:: php
-
     use Symfony\Component\Helper\TableStyle;
 
     // by default, this is based on the default style
