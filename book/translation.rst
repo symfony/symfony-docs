@@ -693,8 +693,9 @@ It will also detect the following translator usages in PHP templates:
     which means this example won't be analyzed:
 
     .. code-block:: jinja
-       {% set message = 'Symfony2 is great' %}
-       {{ message|trans }}
+
+        {% set message = 'Symfony2 is great' %}
+        {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured ``en`` as the fallback locale
 (see :ref:`book-translation-configuration` and :ref:`book-translation-fallback` for how to configure these).
