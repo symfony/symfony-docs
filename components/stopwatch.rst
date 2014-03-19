@@ -69,13 +69,13 @@ call::
 In addition to periods, you can get other useful information from the event object.
 For example::
 
-    $event->getCategory();      // Returns the category the event was started in
-    $event->getOrigin();        // Returns the event start time in milliseconds
-    $event->ensureStopped();    // Stops all periods not already stopped
-    $event->getStartTime();     // Returns the start time of the very first period
-    $event->getEndTime();       // Returns the end time of the very last period
-    $event->getDuration();      // Returns the event duration, including all periods
-    $event->getMemory();        // Returns the max memory usage of all periods
+    $event->getCategory();   // Returns the category the event was started in
+    $event->getOrigin();     // Returns the event start time in milliseconds
+    $event->ensureStopped(); // Stops all periods not already stopped
+    $event->getStartTime();  // Returns the start time of the very first period
+    $event->getEndTime();    // Returns the end time of the very last period
+    $event->getDuration();   // Returns the event duration, including all periods
+    $event->getMemory();     // Returns the max memory usage of all periods
 
 Sections
 --------

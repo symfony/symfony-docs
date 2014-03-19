@@ -186,7 +186,7 @@ JMSSerializer
 
 A popular third-party library, `JMS serializer`_, provides a more
 sophisticated albeit more complex solution. This library includes the
-ability to configure how your objects should be serialize/deserialized via
+ability to configure how your objects should be serialized/deserialized via
 annotations (as well as YAML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 

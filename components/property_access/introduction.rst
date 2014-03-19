@@ -196,7 +196,9 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
-                return isset($this->children[$property]) ? $this->children[$property] : null;
+                return isset($this->children[$property])
+                    ? $this->children[$property]
+                    : null;
             } elseif ('set' === substr($name, 0, 3)) {
                 $value = 1 == count($args) ? $args[0] : null;
                 $this->children[$property] = $value;
@@ -289,7 +291,9 @@ see `Enable other Features`_.
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
-                return isset($this->children[$property]) ? $this->children[$property] : null;
+                return isset($this->children[$property])
+                    ? $this->children[$property]
+                    : null;
             } elseif ('set' === substr($name, 0, 3)) {
                 $value = 1 == count($args) ? $args[0] : null;
                 $this->children[$property] = $value;
@@ -307,7 +311,7 @@ see `Enable other Features`_.
 
     $accessor->setValue($person, 'wouter', array(...));
 
-    echo $person->getWouter() // array(...)
+    echo $person->getWouter(); // array(...)
 
 Mixing Objects and Arrays
 -------------------------
