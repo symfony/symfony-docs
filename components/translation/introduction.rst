@@ -190,7 +190,12 @@ loaded like this::
 
     $translator->addResource('xliff', 'messages.fr.xliff', 'fr_FR');
     $translator->addResource('xliff', 'admin.fr.xliff', 'fr_FR', 'admin');
-    $translator->addResource('xliff', 'navigation.fr.xliff', 'fr_FR', 'navigation');
+    $translator->addResource(
+        'xliff',
+        'navigation.fr.xliff',
+        'fr_FR',
+        'navigation'
+    );
 
 When translating strings that are not in the default domain (``messages``),
 you must specify the domain as the third argument of ``trans()``::

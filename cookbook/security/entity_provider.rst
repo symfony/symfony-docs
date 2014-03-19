@@ -629,7 +629,7 @@ of the application::
     use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * @ORM\Table(name="acme_roles")
+     * @ORM\Table(name="acme_role")
      * @ORM\Entity()
      */
     class Role implements RoleInterface

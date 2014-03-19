@@ -172,7 +172,10 @@ Event):
 #. Listeners of the ``kernel.response`` event can manipulate the ``Response``
    (content and headers);
 
-#. The Response is returned.
+#. The Response is returned;
+
+#. Listeners of the ``kernel.terminate`` event can perform tasks after the
+   Response has been served.
 
 If an Exception is thrown during processing, the ``kernel.exception`` is
 notified and listeners are given a chance to convert the Exception to a
@@ -366,6 +369,8 @@ The FrameworkBundle registers several listeners:
 
 ``kernel.terminate`` Event
 ..........................
+
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
 
 The purpose of this event is to perform "heavier" tasks after the response
 was already served to the client.
@@ -647,7 +652,7 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
 As the profiler adds some overhead, you might want to enable it only under
 certain circumstances in the production environment. The ``only_exceptions``
-settings limits profiling to 500 pages, but what if you want to get
+settings limits profiling to exceptions, but what if you want to get
 information when the client IP comes from a specific address, or for a limited
 portion of the website? You can use a Profiler Matcher, learn more about that
 in ":doc:`/cookbook/profiler/matchers`".

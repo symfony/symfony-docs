@@ -526,11 +526,9 @@ the application whether or not the cached response is still valid. If the
 cache *is* still valid, your application should return a 304 status code
 and no content. This tells the cache that it's ok to return the cached response.
 
-Under this model, you mainly save bandwidth as the representation is not
-sent twice to the same client (a 304 response is sent instead). But if you
-design your application carefully, you might be able to get the bare minimum
-data needed to send a 304 response and save CPU also (see below for an implementation
-example).
+Under this model, you only save CPU if you're able to determine that the
+cached response is still valid by doing *less* work than generating the whole
+page again (see below for an implementation example).
 
 .. tip::
 
@@ -578,10 +576,10 @@ automatically sets the ``Response`` status code to 304.
 
 .. note::
 
-    The ``If-None-Match`` request header equals the ``ETag`` header of the
-    last response sent to the client for the particular resource. This is
-    how the client and server communicate with each other and decide whether
-    or not the resource has been updated since it was cached.
+    The cache sets the ``If-None-Match`` header on the request to the ``ETag``
+    of the original cached response before sending the request back to the
+    app. This is how the cache and server communicate with each other and
+    decide whether or not the resource has been updated since it was cached.
 
 This algorithm is simple enough and very generic, but you need to create the
 whole ``Response`` before being able to compute the ETag, which is sub-optimal.
@@ -646,10 +644,10 @@ the ``Response`` will be set to a 304 status code.
 
 .. note::
 
-    The ``If-Modified-Since`` request header equals the ``Last-Modified``
-    header of the last response sent to the client for the particular resource.
-    This is how the client and server communicate with each other and decide
-    whether or not the resource has been updated since it was cached.
+    The cache sets the ``If-Modified-Since`` header on the request to the ``Last-Modified``
+    of the original cached response before sending the request back to the
+    app. This is how the cache and server communicate with each other and
+    decide whether or not the resource has been updated since it was cached.
 
 .. index::
    single: Cache; Conditional get

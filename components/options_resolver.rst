@@ -107,7 +107,8 @@ the ``OptionsResolver`` class::
 
         protected function configureOptions(OptionsResolverInterface $resolver)
         {
-            // ... configure the resolver, you will learn this in the sections below
+            // ... configure the resolver, you will learn this
+            // in the sections below
         }
     }
 
@@ -256,7 +257,9 @@ again. When using a closure as the new value it is passed 2 arguments:
         $resolver->setDefaults(array(
             'encryption' => 'tls', // simple overwrite
             'host' => function (Options $options, $previousValue) {
-                return 'localhost' == $previousValue ? '127.0.0.1' : $previousValue;
+                return 'localhost' == $previousValue
+                    ? '127.0.0.1'
+                    : $previousValue;
             },
         ));
     }

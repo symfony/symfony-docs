@@ -174,9 +174,9 @@ cookie_lifetime
 
 **type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. It will use ``null`` by 
+This determines the lifetime of the session - in seconds. It will use ``null`` by
 default, which means ``session.cookie_lifetime`` value from ``php.ini`` will be used.
-Setting this value to ``0`` means the cookie is valid for the length of the browser 
+Setting this value to ``0`` means the cookie is valid for the length of the browser
 session.
 
 cookie_path
@@ -207,7 +207,7 @@ cookie_httponly
 
 **type**: ``Boolean`` **default**: ``false``
 
-This determines whether cookies should only accessible through the HTTP protocol.
+This determines whether cookies should only be accessible through the HTTP protocol.
 This means that the cookie won't be accessible by scripting languages, such
 as JavaScript. This setting can effectively help to reduce identity theft
 through XSS attacks.
