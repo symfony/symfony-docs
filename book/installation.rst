@@ -269,6 +269,15 @@ If there are any issues, correct them now before moving on.
 
     Note that using the ACL is recommended when you have access to them
     on your server because changing the umask is not thread-safe.
+    
+    **4. Use the same user for the CLI and the web server**
+
+    In development environments, it is a common practice to use the same unix
+    user for the CLI and the web server because it avoids any of these permissions
+    issues when setting up new projects. This can be done by editing your web server
+    configuration (e.g. commonly httpd.conf or apache2.conf for Apache) and setting
+    its user to be the same as your CLI user (e.g. for Apache, update the User
+    and Group values).
 
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
