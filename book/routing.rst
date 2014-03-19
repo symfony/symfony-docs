@@ -1237,7 +1237,7 @@ By default, the router will generate relative URLs (e.g. ``/blog``). From
 a controller, simply pass ``true`` to the third argument of the ``generateUrl()``
 method::
 
-    $this->getgenerateUrl('blog_show', array('slug' => 'my-blog-post'), true);
+    $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
 
 From a template, it looks like this:
