@@ -24,7 +24,9 @@ display the content of the slot on that place:
     <!doctype html>
     <html>
         <head>
-            <title><?php $view['slots']->output('title', 'Default title') ?></title>
+            <title>
+                <?php $view['slots']->output('title', 'Default title') ?>
+            </title>
         </head>
         <body>
             <?php $view['slots']->output('_content') ?>
