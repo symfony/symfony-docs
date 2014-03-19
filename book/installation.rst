@@ -272,11 +272,10 @@ If there are any issues, correct them now before moving on.
 
     In development environments, it is a common practice to use the same unix
     user for the CLI and the web server because it avoids any of these permissions
-    issues when setting up new projects. This is done by editing your Apache
-    configuration file ``httpd.conf`` and updating the User and Group values
-    from ``www-data`` to your CLI user. Obviously, this is only recommended in
-    development environment as you do not want to give Apache full control over
-    your whole production system.
+    issues when setting up new projects. This can be done by editing your web server
+    configuration (e.g. commonly httpd.conf or apache2.conf for Apache) and setting
+    its user to be the same as your CLI user (e.g. for Apache, update the User
+    and Group values).
 
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
