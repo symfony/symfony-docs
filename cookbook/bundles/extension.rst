@@ -92,7 +92,7 @@ The second method has several specific advantages:
 .. seealso::
 
     For parameter handling within a Dependency Injection class see
-    :doc:`</cookbook/configuration/using_parameters_in_dic>`.
+    :doc:`/cookbook/configuration/using_parameters_in_dic`.
 
 .. index::
    single: Bundle; Extension
