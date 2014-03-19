@@ -903,7 +903,7 @@ translation.loader
 
 **Purpose**: To register a custom service that loads translations
 
-By default, translations are loaded form the filesystem in a variety of different
+By default, translations are loaded from the filesystem in a variety of different
 formats (YAML, XLIFF, PHP, etc). If you need to load translations from some
 other source, first create a class that implements the
 :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface::
