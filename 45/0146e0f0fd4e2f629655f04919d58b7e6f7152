@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-14T15:00:46Z
+
+Thank you for submitting such a detailed documentation!
+
+---------------------------------------------------------------------------
+
+by danez at 2014-03-14T15:10:18Z
+
+I changed everything you mentioned in new commit. (to see the actual fixes) I can squash the commits before merging if desired.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-14T15:12:42Z
+
+except from https://github.com/symfony/symfony-docs/pull/3681#discussion_r10610531, I'm :+1: !
+
+---------------------------------------------------------------------------
+
+by danez at 2014-03-14T15:25:20Z
+
+Ok the redirect is now also there.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-18T12:51:13Z
+
+@danez Looks great - I just added one tiny comment :).
+
+---------------------------------------------------------------------------
+
+by danez at 2014-03-18T21:59:42Z
+
+ok I also squashed them together.
