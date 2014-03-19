@@ -155,7 +155,6 @@ making the class of a service a parameter:
             <service id="mailer" class="%mailer.class%">
                 <argument>%mailer.transport%</argument>
             </service>
-
         </services>
 
     .. code-block:: php
