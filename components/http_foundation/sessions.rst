@@ -121,7 +121,7 @@ an array. A few methods exist for "Bag" management:
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
   This is just a shortcut for convenience.
 
-Session meta-data
+Session metadata
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
@@ -132,8 +132,8 @@ Session Data Management
 
 PHP's session management requires the use of the ``$_SESSION`` super-global,
 however, this interferes somewhat with code testability and encapsulation in a
-OOP paradigm. To help overcome this, Symfony2 uses 'session bags' linked to the
-session to encapsulate a specific dataset of 'attributes' or 'flash messages'.
+OOP paradigm. To help overcome this, Symfony2 uses *session bags* linked to the
+session to encapsulate a specific dataset of attributes or flash messages.
 
 This approach also mitigates namespace pollution within the ``$_SESSION``
 super-global because each bag stores all its data under a unique namespace.
@@ -141,7 +141,7 @@ This allows Symfony2 to peacefully co-exist with other applications or libraries
 that might use the ``$_SESSION`` super-global and all data remains completely
 compatible with Symfony2's session management.
 
-Symfony2 provides 2 kinds of storage bags, with two separate implementations.
+Symfony2 provides two kinds of storage bags, with two separate implementations.
 Everything is written against interfaces so you may extend or create your own
 bag types if necessary.
 
@@ -172,11 +172,11 @@ and remember me login settings or other user based state information.
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
   This implementation allows for attributes to be stored in a structured namespace.
 
-Any plain `key => value` storage system is limited in the extent to which
+Any plain key-value storage system is limited in the extent to which
 complex data can be stored since each key must be unique. You can achieve
 namespacing by introducing a naming convention to the keys so different parts of
-your application could operate without clashing. For example, `module1.foo` and
-`module2.foo`. However, sometimes this is not very practical when the attributes
+your application could operate without clashing. For example, ``module1.foo`` and
+``module2.foo``. However, sometimes this is not very practical when the attributes
 data is an array, for example a set of tokens. In this case, managing the array
 becomes a burden because you have to retrieve the array then process it and
 store it again::
