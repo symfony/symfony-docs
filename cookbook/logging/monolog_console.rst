@@ -12,6 +12,11 @@ It is possible to use the console to print messages for certain
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance that
 is passed when a command gets executed.
 
+.. seealso::
+    Alternatively, you can use the
+    :doc:`standalone PSR-3 logger </components/console/logger>` provided with
+    the console component.
+
 When a lot of logging has to happen, it's cumbersome to print information
 depending on the verbosity settings (``-v``, ``-vv``, ``-vvv``) because the
 calls need to be wrapped in conditions. The code quickly gets verbose or dirty.
