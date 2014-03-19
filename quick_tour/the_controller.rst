@@ -109,7 +109,7 @@ Getting information from the Request
 ------------------------------------
 
 Symfony automatically injects the ``Request`` object when the controller has an
-argument that's type hinted with ``Symfony\Component\HttpFoundation\Request`::
+argument that's type hinted with ``Symfony\Component\HttpFoundation\Request``::
 
     use Symfony\Component\HttpFoundation\Request;
 
