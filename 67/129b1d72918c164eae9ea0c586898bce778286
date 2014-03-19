@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-26T16:56:51Z
+
+We may need to seperate it a bit more: As of 2.3, the form type is extracted in a `FormType` and a `BaseType` (not included in the form tree), the `FormType` extends the `BaseType`.
+This is done, because the form buttons use the `BaseType` and not the `FormType`.
+
+So we can't say, these options are available on every field. And we may need to make a difference between options of the `BaseType` and options of the `FormType`, in cases someone wants to create a custom button.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-27T14:47:19Z
+
+You're right. This also applies to the ``ButtonType`` docs. But I'm not sure if it is a good idea to create separate docs for the ``BaseType`` and reference its options via a `inherited options` section since ``BaseType`` is no real form type that can be used.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-27T14:58:36Z
+
+No, I think we should split the Form Type article. Or add something like `(BaseType)` to the options used by the base type with a little explaination in the beginning why there is a difference between `BaseType` and `FormType` options.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-27T15:00:59Z
+
+We can go that way. But then the same should be documented for the ``ButtonType``. What do you think?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-08T09:52:48Z
+
+I added an additional table to the ``form`` type listing the options inherited from the ``BaseType`` class and added a note to the ``button`` type reference.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-08T10:40:32Z
+
+I also added docs for the ``auto_initialize`` option.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-19T02:25:24Z
+
+@xabbuh I think I'm happy with this now :). Can you rebase for me?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-19T08:08:37Z
+
+@weaverryan Of course, here you are.
