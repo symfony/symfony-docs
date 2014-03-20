@@ -35,7 +35,7 @@ Creating a basic Command
 To make a console command that greets you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
-    namespace Acme\Command;
+    namespace Acme\Console\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
@@ -88,7 +88,7 @@ an ``Application`` and adds commands to it::
     <?php
     // application.php
 
-    use Acme\Command\GreetCommand;
+    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $application = new Application();
@@ -380,7 +380,7 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    use Acme\Command\GreetCommand;
+    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
@@ -409,7 +409,7 @@ You can test sending arguments and options to the command by passing them
 as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
-    use Acme\Command\GreetCommand;
+    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
