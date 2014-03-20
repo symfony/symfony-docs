@@ -12,7 +12,7 @@ will always run the ``ListCommand`` when no command name is passed. In order to 
 the default command you just need to pass the command name you want to run by
 default to the ``setDefaultCommand`` method::
 
-    namespace Acme\Command;
+    namespace Acme\Console\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
@@ -36,7 +36,7 @@ Executing the application and changing the default Command::
 
     // application.php
 
-    use Acme\Command\HelloWorldCommand;
+    use Acme\Console\Command\HelloWorldCommand;
     use Symfony\Component\Console\Application;
 
     $command = new HelloWorldCommand();
