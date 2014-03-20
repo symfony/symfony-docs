@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2013-12-15T10:24:24Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2013-12-15T10:25:00Z
+
+Maybe it's better to use symlinks than moving the bundle references around.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2013-12-15T10:56:55Z
+
+Well, that'll be replaced by using sparse checkout, I just couldn't get it working yesterday.
+
+---------------------------------------------------------------------------
+
+by tvlooy at 2013-12-15T21:05:15Z
+
+@WouterJ I'm unable to open a PR to your fork. Can you pull this? https://github.com/tvlooy/symfony-docs/commit/b0e54128180bfdf3cca238c8696ac01a36875df8 That should work.
+
+FYI, I also tried with git-archive, which is able to download a directory from a repository but unfortunately GitHub doesn't allow git-archive requests. And I also tried with the SVN support which works too, but for some reason it downloads the directory for all tags and  branches. So, you end up with a much much bigger download. Anyway, git sparse checkout work :-)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2013-12-16T07:00:53Z
+
+Thank you @tvlooy! It all works perfect
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2013-12-26T16:36:22Z
+
+:thumbsup: I really like this idea - so let's get it done!
+
+Thanks Wouter!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-01T10:46:43Z
+
+I've updated the docs for this new PR. It should be ready now!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-09T14:57:32Z
+
+ping @weaverryan I know you're busy, but I really want to move on with this idea.
