@@ -116,7 +116,7 @@ the event listener might look like the following::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $product = $event->getData();
             $form = $event->getForm();
 
@@ -147,7 +147,8 @@ the event listener might look like the following::
                 $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
             }
 
-            public function onPreSetData(FormEvent $event){
+            public function onPreSetData(FormEvent $event)
+            {
                 // ...
             }
         }
@@ -253,7 +254,7 @@ Using an event listener, your form might look like this::
                 ->add('subject', 'text')
                 ->add('body', 'textarea')
             ;
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 // ... add a choice list of friends of the current application user
             });
         }
@@ -656,7 +657,7 @@ field according to the current selection in the ``sport`` field:
         <script>
         var $sport = $('#meetup_sport');
         // When sport gets selected ...
-        $sport.change(function(){
+        $sport.change(function() {
           // ... retrieve the corresponding form.
           var $form = $(this).closest('form');
           // Simulate form data, but only include the selected sport value.
@@ -691,7 +692,7 @@ field according to the current selection in the ``sport`` field:
         <script>
         var $sport = $('#meetup_sport');
         // When sport gets selected ...
-        $sport.change(function(){
+        $sport.change(function() {
           // ... retrieve the corresponding form.
           var $form = $(this).closest('form');
           // Simulate form data, but only include the selected sport value.
