@@ -24,6 +24,10 @@ Example: on a registration form, you have a "country" field and a "state"
 field which should populate dynamically based on the value in the "country"
 field.
 
+If you wish to learn more about the basics behind form events, you can
+take a look at the :doc:`Form Events </components/form/form_events>`
+documentation.
+
 .. _cookbook-form-events-underlying-data:
 
 Customizing your Form based on the underlying Data
@@ -133,25 +137,6 @@ the event listener might look like the following::
     The ability to pass a string into
     :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
     was added in Symfony 2.2.
-
-.. note::
-    You can of course use any callback type instead of a closure, e.g. a method
-    call on the ``ProductType`` object itself for better readability::
-
-        // ...
-        class ProductType extends AbstractType
-        {
-            public function buildForm(FormBuilderInterface $builder, array $options)
-            {
-                // ...
-                $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
-            }
-
-            public function onPreSetData(FormEvent $event)
-            {
-                // ...
-            }
-        }
 
 .. note::
 
