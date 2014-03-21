@@ -20,8 +20,10 @@ form type.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `maxSize`_                                                        |
+|                | - `minSize`_                                                        |
 |                | - `mimeTypes`_                                                      |
 |                | - `maxSizeMessage`_                                                 |
+|                | - `minSizeMessage`_                                                 |
 |                | - `mimeTypesMessage`_                                               |
 |                | - `notFoundMessage`_                                                |
 |                | - `notReadableMessage`_                                             |
@@ -78,7 +80,7 @@ below a certain file size and a valid PDF, add the following:
                         maxSize: 1024k
                         mimeTypes: [application/pdf, application/x-pdf]
                         mimeTypesMessage: Please upload a valid PDF
-                        
+
 
     .. code-block:: php-annotations
 
@@ -168,6 +170,23 @@ to be valid. The size of the file can be given in one of the following formats:
 * **megabytes**: To specify the ``maxSize`` in megabytes, pass a number and
   suffix it with a capital "M" (e.g. ``4M``).
 
+minSize
+~~~~~~~
+
+**type**: ``mixed``
+
+If set, the size of the underlying file must be above this file size in order
+to be valid. The size of the file can be given in one of the following formats:
+
+* **bytes**: To specify the ``minSize`` in bytes, pass a value that is entirely
+  numeric (e.g. ``4096``);
+
+* **kilobytes**: To specify the ``minSize`` in kilobytes, pass a number and
+  suffix it with a lowercase "k" (e.g. ``200k``);
+
+* **megabytes**: To specify the ``minSize`` in megabytes, pass a number and
+  suffix it with a capital "M" (e.g. ``4M``).
+
 mimeTypes
 ~~~~~~~~~
 
@@ -185,6 +204,13 @@ maxSizeMessage
 **type**: ``string`` **default**: ``The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.``
 
 The message displayed if the file is larger than the `maxSize`_ option.
+
+minSizeMessage
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The file is too small ({{ size }} {{ suffix }}). Allowed minimum size is {{ limit }} {{ suffix }}.``
+
+The message displayed if the file is smaller than the `minSize`_ option.
 
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
