@@ -410,15 +410,22 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         }
     }
 
-.. caution::
+When using a Doctrine event listener or subscriber, when you make changes 
+to your entity, the preUpdate() callback must have an extra line of code to 
+tell Doctrine about the change::
 
-    When using Doctrine EvensubScribers' preUpdate(\Doctrine\Common\Persistence\Event\PreUpdateEventArgs $args) 
-    callback instead of lifecycle callbacks you also need to invoke, ``$args->setNewValue('path', $filename);`` 
-    as at this point changeSets are not updated and the ``path`` change just made won't have effect 
-    in the data base record.
-    For full reference on preUpdate event restrictions, see `preUpdate`_ in the in the Doctrine Events documentation.
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        // do all the file uploading logic
+        // ...
+        $entity->setFilename($newFilename);
+        $args->setNewValue('filename', $newFilename);
+    }    
+    
+For full reference on preUpdate event restrictions, see `preUpdate`_ in the 
+Doctrine Events documentation.
 
-.. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
 
 The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
@@ -556,3 +563,5 @@ You'll notice in this case that you need to do a little bit more work in
 order to remove the file. Before it's removed, you must store the file path
 (since it depends on the id). Then, once the object has been fully removed
 from the database, you can safely delete the file (in ``PostRemove``).
+
+.. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
