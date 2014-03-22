@@ -181,11 +181,15 @@ method on the normalizer definition::
 As a final result, the deserializer uses the ``first_name`` attribute as if
 it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
 
-Using Callbacks to Serialize DateTime Objects
----------------------------------------------
+Using Callbacks to Serialize Properties With Object Instances
+-------------------------------------------------------------
 
-If you have DateTime type fields or need special formatting needs when deserializing
-a particular property from your object you can use the callbacks feature::
+When serializing you can set a callback to format a specific object property.
+
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+    use Acme\Person;
 
     $encoder = new JsonEncoder();
     $normalizer = new GetSetMethodNormalizer();
@@ -200,7 +204,7 @@ a particular property from your object you can use the callbacks feature::
 
     $serializer = new Serializer(array($normalizer), array($encoder));
 
-    $person = new Acme\Person();
+    $person = new Person();
     $person->setName('cordoval');
     $person->setAge(34);
     $person->setCreatedAt(new \DateTime('now'));
