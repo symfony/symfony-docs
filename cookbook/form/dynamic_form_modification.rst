@@ -116,7 +116,7 @@ the event listener might look like the following::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
             $product = $event->getData();
             $form = $event->getForm();
 
@@ -142,7 +142,8 @@ the event listener might look like the following::
                 $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
             }
 
-            public function onPreSetData(FormEvent $event){
+            public function onPreSetData(FormEvent $event)
+            {
                 // ...
             }
         }
@@ -248,7 +249,7 @@ Using an event listener, your form might look like this::
                 ->add('subject', 'text')
                 ->add('body', 'textarea')
             ;
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 // ... add a choice list of friends of the current application user
             });
         }
@@ -644,7 +645,31 @@ field according to the current selection in the ``sport`` field:
             {# ... #}
         {{ form_end(form) }}
 
-        .. include:: /cookbook/form/dynamic_form_modification_ajax_js.rst.inc
+        <script>
+        var $sport = $('#meetup_sport');
+        // When sport gets selected ...
+        $sport.change(function() {
+          // ... retrieve the corresponding form.
+          var $form = $(this).closest('form');
+          // Simulate form data, but only include the selected sport value.
+          var data = {};
+          data[$sport.attr('name')] = $sport.val();
+          // Submit data via AJAX to the form's action path.
+          $.ajax({
+            url : $form.attr('action'),
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+              // Replace current position field ...
+              $('#meetup_position').replaceWith(
+                // ... with the returned one from the AJAX response.
+                $(html).find('#meetup_position')
+              );
+              // Position field now displays the appropriate positions.
+            }
+          });
+        });
+        </script>
 
     .. code-block:: html+php
 
@@ -655,7 +680,31 @@ field according to the current selection in the ``sport`` field:
             <!-- ... -->
         <?php echo $view['form']->end($form) ?>
 
-        .. include:: /cookbook/form/dynamic_form_modification_ajax_js.rst.inc
+        <script>
+        var $sport = $('#meetup_sport');
+        // When sport gets selected ...
+        $sport.change(function() {
+          // ... retrieve the corresponding form.
+          var $form = $(this).closest('form');
+          // Simulate form data, but only include the selected sport value.
+          var data = {};
+          data[$sport.attr('name')] = $sport.val();
+          // Submit data via AJAX to the form's action path.
+          $.ajax({
+            url : $form.attr('action'),
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+              // Replace current position field ...
+              $('#meetup_position').replaceWith(
+                // ... with the returned one from the AJAX response.
+                $(html).find('#meetup_position')
+              );
+              // Position field now displays the appropriate positions.
+            }
+          });
+        });
+        </script>
 
 The major benefit of submitting the whole form to just extract the updated
 ``position`` field is that no additional server-side code is needed; all the
