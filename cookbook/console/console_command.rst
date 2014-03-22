@@ -62,6 +62,15 @@ This command will now automatically be available to run:
 
     $ app/console demo:greet Fabien
 
+.. _cookbook-console-dic:
+
+Register Commands in the Service Container
+-------------------------------------------
+
+Just like controllers, commands can be declared as services. See the
+:doc:`dedicated cookbook entry </cookbook/console/commands_as_services>`
+for details.
+
 Getting Services from the Service Container
 -------------------------------------------
 

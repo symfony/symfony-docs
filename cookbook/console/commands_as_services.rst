@@ -8,21 +8,22 @@ How to Define Commands as Services
    Support for registering commands in the service container was introduced in
    version 2.4.
 
-By default, Symfony will take a look in the ``Command`` directory of your
-bundles and automatically register your commands. For the ones implementing
-the ``ContainerAwareCommand`` interface, Symfony will even inject the container.
-While making life easier, this default implementation has some drawbacks in some
-situations:
+By default, Symfony will take a look in the ``Command`` directory of each
+bundle and automatically register your commands. If a command extends the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
+Symfony will even inject the container.
+While making life easier, this has some limitations:
 
-* Define the command elsewhere than in the ``Command`` directory;
-* Conditionally register your command, depending on the current environment or
-  on the availability of some dependencies;
-* Access dependencies before the ``setContainer()`` is called (for example in
-  the ``configure()`` method);
-* Reuse a command many times, but with different dependencies or parameters
+* Your command must live in the ``Command`` directory;
+* There's no way to conditionally register your service based on the environment
+  or availability of some dependencies;
+* You can't access the container in the ``configure()`` method (because
+  ``setContainer`` hasn't been called yet);
+* You can't use the same class to create many commands (i.e. each with
+  different configuration).
 
-To solve those problems, you can register your command as a service by simply
-defining it with the ``console.command`` tag:
+To solve these problems, you can register your command as a service and tag it
+with ``console.command``:
 
 .. configuration-block::
 
@@ -62,16 +63,17 @@ defining it with the ``console.command`` tag:
 Using Dependencies and Parameters to Set Default Values for Options
 -------------------------------------------------------------------
 
-Imagine you want to provide a default value for the ``name``option. You could
+Imagine you want to provide a default value for the ``name`` option. You could
 pass one of the following as the 5th argument of ``addOption()``:
 
-* an hardcoded string;
-* a value coming from the configuration (allows the user to change it easily);
+* a hardcoded string;
+* a container parameter (e.g. something from parameters.yml);
 * a value computed by a service (e.g. a repository).
 
-With a ``ContainerAwareCommand`` you wouldn't be able to retrieve the
-configuration parameter, because the ``configure()`` method is called in the
-constructor. The only solution is to inject them::
+By extending ``ContainerAwareCommand``, only the first is possible, because you
+can't access the container inside the ``configure()`` method. Instead, inject
+any parameter or service you need into the constructor. For example, suppose you
+have some ``NameRepository`` service that you'll use to get your default value::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
@@ -110,8 +112,11 @@ constructor. The only solution is to inject them::
         }
     }
 
+Now, just update the arguments of your service configuration like normal to
+inject the ``NameRepository``. Great, you now have a dynamic default value!
+
 .. caution::
 
-    When running the console, every command is instantiated, which means every
-    ``configure()`` method is called. Be careful with database queries, as
-    they could impact performance.
+    Be careful not to actually do any work in ``configure`` (e.g. make database
+    queries), as your code will be run, even if you're using the console to
+    execute a different command.
