@@ -128,6 +128,10 @@
   * :doc:`/components/translation/introduction`
   * :doc:`/components/translation/usage`
 
+* :doc:`/components/validator/index`
+
+  * :doc:`/components/validator/introduction`
+
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`
