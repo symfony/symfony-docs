@@ -181,6 +181,33 @@ method on the normalizer definition::
 As a final result, the deserializer uses the ``first_name`` attribute as if
 it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
 
+Using Callbacks to Serialize DateTime Objects
+---------------------------------------------
+
+If you have DateTime type fields or need special formatting needs when deserializing
+a particular property from your object you can use the callbacks feature::
+
+    $encoder = new JsonEncoder();
+    $normalizer = new GetSetMethodNormalizer();
+
+    $callback = function ($dateTime) {
+        return $dateTime instanceof \DateTime
+            ? $dateTime->format(\DateTime::ISO8601)
+            : '';
+    }
+
+    $normalizer->setCallbacks(array('createdAt' => $callback));
+
+    $serializer = new Serializer(array($normalizer), array($encoder));
+
+    $person = new Acme\Person();
+    $person->setName('cordoval');
+    $person->setAge(34);
+    $person->setCreatedAt(new \DateTime('now'));
+
+    $serializer->serialize($person, 'json');
+    // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
 JMSSerializer
 -------------
 
