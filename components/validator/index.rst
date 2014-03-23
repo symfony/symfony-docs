@@ -5,3 +5,4 @@ Validator
     :maxdepth: 2
 
     introduction
+    resources

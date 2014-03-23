@@ -138,6 +138,7 @@
 * :doc:`/components/validator/index`
 
   * :doc:`/components/validator/introduction`
+  * :doc:`/components/validator/resources`
 
 * :doc:`/components/yaml/index`
 
