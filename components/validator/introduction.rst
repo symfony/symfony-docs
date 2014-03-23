@@ -69,8 +69,8 @@ What things you can configure will be documented in the following sections.
 Sections
 --------
 
-* :doc:`/components/validator/loading_resources`
-* :doc:`/components/validator/defining_metadata`
+* :doc:`/components/validator/resources`
+* :doc:`/components/validator/metadata`
 * :doc:`/components/validator/validating_values`
 
 .. _`JSR-303 Bean Validation specification`: http://jcp.org/en/jsr/detail?id=303
