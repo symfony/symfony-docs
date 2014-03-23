@@ -37,9 +37,40 @@ to validate a string against a specific length, the only code you need is::
         }
     }
 
+Retrieving a Validator Instance
+-------------------------------
+
+The :class:`Symfony\\Component\\Validator\\Validator` class is the main access
+point of the Validator component. To create a new instance of this class, it
+is recomment to use the :class:`Symfony\\Component\Validator\Validation`
+class.
+
+You can get the ``Validator`` with the default configuration by calling 
+:method:`Validation::createValidator() <Symfony\\Component\\Validator\\Validation::createValidator>`::
+
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidator();
+
+However, a lot of things can be customized. To configure the ``Validator``
+class, you can use the :class:`Symfony\\Component\\Validator\\ValidatorBuilder`.
+This class can be retrieved by using the 
+:method:`Validation::createValidatorBuilder() <Symfony\\Component\\Validator\\Validation::createValidatorBuilder>`
+method::
+
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidatorBuilder()
+        // ... build a custom instance of the Validator
+        ->getValidator();
+
+What things you can configure will be documented in the following sections.
+
 Sections
 --------
 
-* :doc:`/components/validator/configuration`
+* :doc:`/components/validator/loading_resources`
+* :doc:`/components/validator/defining_metadata`
+* :doc:`/components/validator/validating_values`
 
 .. _`JSR-303 Bean Validation specification`: http://jcp.org/en/jsr/detail?id=303
