@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2014-03-19T15:26:32Z
+
+@cordoval thanks, fixed.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-03-19T15:36:19Z
+
+@cordoval done.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-19T15:48:55Z
+
+Thank you for creating this. I've decorated it a bit more, after you fixed those, I think it's fine! :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-19T16:02:14Z
+
+Fyi, I removed `[WCM]` since the PR was merged.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-03-19T16:18:37Z
+
+@WouterJ @cordoval thanks for the review. All should be fixed.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-20T06:55:55Z
+
+Can you please wrap lines after the first word that crosses the 72nd character?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-03-23T07:31:22Z
+
+Changes done.
