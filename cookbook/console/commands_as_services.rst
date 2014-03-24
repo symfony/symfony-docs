@@ -6,7 +6,7 @@ How to Define Commands as Services
 
 .. versionadded:: 2.4
    Support for registering commands in the service container was introduced in
-   version 2.4.
+   Symfony 2.4.
 
 By default, Symfony will take a look in the ``Command`` directory of each
 bundle and automatically register your commands. If a command extends the

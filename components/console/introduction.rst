@@ -203,7 +203,7 @@ level. For example::
    :method:`Symfony\\Component\\Console\\Output\\Output::isVerbose`,
    :method:`Symfony\\Component\\Console\\Output\\Output::isVeryVerbose` and
    :method:`Symfony\\Component\\Console\\Output\\Output::isDebug`
-   methods were introduced in version 2.4
+   methods were introduced in Symfony 2.4
 
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
