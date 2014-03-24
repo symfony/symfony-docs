@@ -720,7 +720,7 @@ Adding a Host Requirement
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
+    Host matching support was introduced in Symfony 2.2
 
 You can also match on the HTTP *host* of the incoming request. For more
 information, see :doc:`/components/routing/hostname_pattern` in the Routing
@@ -1075,7 +1075,7 @@ Adding a Host requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
+    Host matching support was introduced in Symfony 2.2
 
 You can set the host regex on imported routes. For more information, see
 :ref:`component-routing-host-imported`.

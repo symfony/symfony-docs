@@ -800,4 +800,4 @@ or worry about it.
 
 .. versionadded:: 2.1
     In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
-    and the ``EquatableInterface`` was added in its place.
+    and the ``EquatableInterface`` was introduced in its place.

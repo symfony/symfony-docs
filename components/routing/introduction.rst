@@ -94,7 +94,7 @@ A full route definition can contain up to seven parts:
    ``GET``, ``POST``, ...).
 
 .. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
+    Host matching support was introduced in Symfony 2.2
 
 Take the following route, which combines several of these ideas::
 

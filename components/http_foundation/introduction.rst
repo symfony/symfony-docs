@@ -450,7 +450,7 @@ abstracts the hard work behind a simple API::
 
 .. versionadded:: 2.2
     The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
-    class was added in Symfony 2.2.
+    class was introduced in Symfony 2.2.
 
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::

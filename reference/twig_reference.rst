@@ -94,7 +94,7 @@ Filters
 -------
 
 .. versionadded:: 2.1
-    The ``humanize`` filter was added in Symfony 2.1
+    The ``humanize`` filter was introduced in Symfony 2.1
 
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Filter Syntax                                                                   | Usage                                                             |

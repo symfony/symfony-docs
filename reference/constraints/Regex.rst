@@ -178,7 +178,7 @@ htmlPattern
 ~~~~~~~~~~~
 
 .. versionadded:: 2.1
-    The ``htmlPattern`` option was added in Symfony 2.1
+    The ``htmlPattern`` option was introduced in Symfony 2.1
 
 **type**: ``string|Boolean`` **default**: null
 
