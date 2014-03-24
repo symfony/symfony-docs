@@ -1,0 +1,160 @@
+---------------------------------------------------------------------------
+
+by lsmith77 at 2014-03-01T14:32:12Z
+
+another use case are commands that depend on optional dependencies:
+https://github.com/doctrine/DoctrinePHPCRBundle/blob/master/DoctrinePHPCRBundle.php#L55
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-01T14:57:46Z
+
+@lsmith77 how about, in the list, the following point:
+
+    * if you need to register the command conditionally (depending on the environment
+      or presence of some dependencies)
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-03-01T16:07:32Z
+
+another use case: you want to reuse the command with a different service or different configuration, without having to extend the command - you could just define a second service with the same class.
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-01T19:02:32Z
+
+@dbu I've got nothing to change in your wording!
+
+The more use cases we gather, the more I think an entire cookbook should be dedicated to those.
+How about we refrase the note to:
+
+    There are many use cases for commands as services. Have a look in the following cookbook
+    to see some of these.
+
+And then we create a new page with code samples?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-01T19:22:20Z
+
+Hmm, we can do 2 things imo:
+
+- Move the complete "Commands as Services" into a new article in a cookbook. Explain *how* to use it and *when* to use it.
+- Change this `.. tip::` into a `.. sidebar::`, title it with "When to use Commands as Services" and describe the usecases.
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-01T20:14:39Z
+
+Alright! I'll prepare that.
+Meanwhile, maybe we could reopen @cordoval's debate, so we could also expose arguments in the article on when to use service locator?
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-01T20:19:06Z
+
+I refer anyone to my friend's (@pmjones) book :baby: Modernizing PHP Legacy Applications in case you want to learn about how they evolved over time and their relation with Dependency Injection.
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-01T22:16:45Z
+
+The current implementation makes it easier for developers: they just need to create the command in the `Command` folder and it's automagically registered. If they implement the `ContainerAwareInterface`, the container is automagically injected.
+
+It's OK to use service locator in commands because:
+
+1. they're highly coupled to Symfony anyway (no reusability concerns)
+2. they're just input controllers (no business logic, which means no need for unit test)
+
+However, with the current implementation there are some drawbacks:
+
+1. commands should be located in the `Command` directory
+2. you don't have control on their construction
+3. the service container isn't available in the `setName` and `configure` methods
+
+The point of this documentation is to guide developers on the service path only if they're limited by the default implementation.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-01T22:33:17Z
+
+No need to unit test, thus service locator is OK seems wrong to me. The reason is that Commands are just Controllers: Tiny layers between the UI (terminal in case of commands) and the services. Because they are a layer before the services, it isn't that good to make it a service too.
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-01T22:46:11Z
+
+The extraction is done. I've created only one use case section, as it was the only one I fully grasped, but I've created a list of situations where the default implementation isn't enough.
+
+LAter on, if @lsmith77 and @dbu want to they could easily add new sections to describe more precisely their use cases with code samples :) .
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-02T10:48:10Z
+
+Thank you @WouterJ for your amazing feedbacks :)
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-03-02T11:09:22Z
+
+i did not read all on this thread, so maybe this is already taken into account:
+
+about the location of commands to be autodetected: the Command namespace is just a default location that makes the default bundle class autodetect them. see for example https://github.com/doctrine/DoctrinePHPCRBundle/blob/master/DoctrinePHPCRBundle.php#L55
+so while a service is another solution for this, you can actually register commands from non-standard namespaces in the bundle class.
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-02T11:36:36Z
+
+I've found a drawback in calling services from `configure`, thanks to @tucksaun: https://github.com/gnugat/tempo-simple/issues/3. I'll add it in the doc.
+
+@dbu: It's been already taken into account indeed, but we haven't created a whole section for it yet. Is there really any use case for this? For example why didn't you put the PHPCR commands in the `Command` folder?
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-03-02T11:40:30Z
+
+most commands are in that folder, but there are a few that depend on optional dependencies (extending a command from an optional library). if we include them when their dependency is not present, we break the console.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-02T12:18:20Z
+
+@gnugat I wouldn't create a section for each usecase. Just show one example (like you did now) and list the other usecases.
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-02T16:28:14Z
+
+Ok, then I guess this is it :) .
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-09T19:15:45Z
+
+@dbu's comment made me think that the console documentation is the wrong place for commands as services as described in this article.
+The facts that commands from the bundle's `Command` folder are automatically registered, and the need for a `console` tag in the DIC's configuration show that this article belongs to the full stack framework documentation: either the book or a new cookbook.
+
+Also, as said by @dbu's, I should mention `Bundle::registerCommands`.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-09T19:31:28Z
+
+@gnugat it is indeed. Never saw you created it in the components and not the cookbook :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-10T03:26:46Z
+
+Love the entry @gnugat! I just dropped in some comments, and yes, I also agree with you that this should be moved to the cookbook. But after the move and these tweaks, I'm very happy with this!
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by gnugat at 2014-03-22T17:21:23Z
+
+I've moved back the article in the cookbooks, added a reference to it in te `console_command` article, and I've taken into account @weaverryan's feedback
