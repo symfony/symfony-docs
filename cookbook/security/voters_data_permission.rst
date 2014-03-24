@@ -66,7 +66,6 @@ edit a particular object. Here's an example implementation:
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use Acme\DemoBundle\Entity\Post;
 
     class PostVoter implements VoterInterface
     {
@@ -81,9 +80,11 @@ edit a particular object. Here's an example implementation:
             ));
         }
 
-        public function supportsClass($obj)
+        public function supportsClass($class)
         {
-            return $obj instanceof Post;
+            $supportedClass = 'Acme\DemoBundle\Entity\Post';
+
+            return $supportedClass === $class || is_subclass_of($class, $supportedClass);
         }
 
         /**
@@ -92,7 +93,7 @@ edit a particular object. Here's an example implementation:
         public function vote(TokenInterface $token, $post, array $attributes)
         {
             // check if class of this object is supported by this voter
-            if (!$this->supportsClass($post)) {
+            if (!$this->supportsClass(get_class($post))) {
                 return VoterInterface::ACCESS_ABSTAIN;
             }
 

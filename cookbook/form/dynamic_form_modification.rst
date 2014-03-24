@@ -99,7 +99,7 @@ creating that particular field is delegated to an event listener::
         {
             $builder->add('price');
 
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 // ... adding the name field if needed
             });
         }
@@ -116,7 +116,7 @@ the event listener might look like the following::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $product = $event->getData();
             $form = $event->getForm();
 
@@ -249,7 +249,7 @@ Using an event listener, your form might look like this::
                 ->add('subject', 'text')
                 ->add('body', 'textarea')
             ;
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 // ... add a choice list of friends of the current application user
             });
         }
@@ -325,13 +325,13 @@ and fill in the listener logic::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) use ($user) {
+                function (FormEvent $event) use ($user) {
                     $form = $event->getForm();
 
                     $formOptions = array(
                         'class' => 'Acme\DemoBundle\Entity\User',
                         'property' => 'fullName',
-                        'query_builder' => function(EntityRepository $er) use ($user) {
+                        'query_builder' => function (EntityRepository $er) use ($user) {
                             // build a custom query
                             // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
 
@@ -491,7 +491,7 @@ sport like this::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) {
+                function (FormEvent $event) {
                     $form = $event->getForm();
 
                     // this would be your entity, i.e. SportMeetup
@@ -556,7 +556,7 @@ The type would now look like::
                 ));
             ;
 
-            $formModifier = function(FormInterface $form, Sport $sport = null) {
+            $formModifier = function (FormInterface $form, Sport $sport = null) {
                 $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', 'entity', array(
@@ -568,7 +568,7 @@ The type would now look like::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function(FormEvent $event) use ($formModifier) {
+                function (FormEvent $event) use ($formModifier) {
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
@@ -578,7 +578,7 @@ The type would now look like::
 
             $builder->get('sport')->addEventListener(
                 FormEvents::POST_SUBMIT,
-                function(FormEvent $event) use ($formModifier) {
+                function (FormEvent $event) use ($formModifier) {
                     // It's important here to fetch $event->getForm()->getData(), as
                     // $event->getData() will get you the client data (that is, the ID)
                     $sport = $event->getForm()->getData();
@@ -730,7 +730,7 @@ all of this, use a listener::
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function($event) {
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function ($event) {
             $event->stopPropagation();
         }, 900); // Always set a higher priority than ValidationListener
 
