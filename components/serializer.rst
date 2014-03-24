@@ -181,15 +181,15 @@ method on the normalizer definition::
 As a final result, the deserializer uses the ``first_name`` attribute as if
 it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
 
-Using Callbacks to Serialize Properties With Object Instances
+Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
 
-When serializing you can set a callback to format a specific object property.
+When serializing, you can set a callback to format a specific object property::
 
+    use Acme\Person;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
     use Symfony\Component\Serializer\Serializer;
-    use Acme\Person;
 
     $encoder = new JsonEncoder();
     $normalizer = new GetSetMethodNormalizer();
