@@ -142,7 +142,7 @@ method::
 
     $roleVoter = new RoleVoter('ROLE_');
 
-    $roleVoter->vote($token, $object, 'ROLE_ADMIN');
+    $roleVoter->vote($token, $object, array('ROLE_ADMIN'));
 
 RoleHierarchyVoter
 ~~~~~~~~~~~~~~~~~~
