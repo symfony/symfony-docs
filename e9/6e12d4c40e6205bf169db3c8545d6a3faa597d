@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by bicpi at 2013-12-01T07:00:49Z
+
+Thanks @xabbuh and @WouterJ for your feedback, I've implemented the most of it, except "email" vs. "e-mail", see also #3237 - "email" seems to be used more in the docs and in general.
+
+I've also applied the changes to the Gmail cookbook, where applicable:
+* heading notation
+* full XML configuration
+* single/double quotes in PHP
+* typo
+
+---------------------------------------------------------------------------
+
+by bicpi at 2013-12-03T06:52:28Z
+
+Any agreement on the *email* vs. *e-mail* topic?
+
+Currently, *e-mail* is only used 5x throughout the docs - would be an easy fix.
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-04T05:28:26Z
+
+After some more research, the unhyphenated *email* form is more common, can we agree on this?

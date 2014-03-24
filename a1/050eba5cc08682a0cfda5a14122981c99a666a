@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-03T11:40:00Z
+
+> Do we need a PHP version of the create.html.twig which would mainly contain redundant JavaScript?
+
+yes
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-04T05:04:02Z
+
+Thanks for the review, issues are fixed now. Remaining question is if it's ok to use FOSJsRoutingBundle.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-01-08T19:25:05Z
+
+@bicpi I vote yes to FOSJsRoutingBundle. I would like to see more instances where we basically say "this isn't core, but it's the standard tool people use to solve X". Obviously, we need to be careful to promote bundles that are agreed-upon. Fortunately, the FOS* bundles have kind of already gone through that process and are company-agnostic. So, I think it's an easy win to include it. Good proposal.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-01-09T16:31:49Z
+
+@weaverryan For FOSJsRoutingBundle, I think it is fine to recommend it: https://github.com/symfony/symfony-docs/issues/796
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-01-21T02:46:52Z
+
+@bicpi I think this is ready to merge if you find some time for this last round of tweaks. I'm trying to get things perfect so that I can just hit the big merge button without making un-PR'ed commits of my own :).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-23T05:56:44Z
+
+I've updated this PR to the approach of submitting the whole form via AJAX. This means no JSON and no FOSJsRoutingBundle. I've also removed the ParamConverter, Route and Template annotations. Everything is reduced to the bare minimum now :-)
+
+Please let me now if I can improve the naming schema for the `rst.inc` file or if we need a subfolder then for this cookbook or if if it doesn't make sense at all to create a partial for the (now greatly reduced) JS code - no problem to update this again.
+
+Also, do we need a more detailed note at the end, maybe mentioning that the validation for AJAX form submission needs to fail?
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-03-16T19:19:44Z
+
+@weaverryan Found another old but ready-to-merge PR, any further suggestions for this?

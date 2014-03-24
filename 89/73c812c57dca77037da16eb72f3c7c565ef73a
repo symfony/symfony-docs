@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-01-30T09:03:30Z
+
+I also noticed that `:method:` generated URLs for example send to http://api.symfony.com/2.3/Symfony/Component/Console/Helper/DialogHelper.html#askConfirmation%28%29 while the correct anchor URL for method is http://api.symfony.com/2.3/Symfony/Component/Console/Helper/DialogHelper.html#method_askConfirmation
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-30T09:55:13Z
+
+For the broken method URLs see #2156.
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-01-30T10:05:32Z
+
+:+1: for the commit

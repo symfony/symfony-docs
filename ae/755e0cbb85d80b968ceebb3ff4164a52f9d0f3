@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-03T15:24:56Z
+
+nice, is the bot usage documented somewhere? Thanks man!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-03T15:25:31Z
+
+@cordoval you mean how to use the bot?
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-03T15:28:43Z
+
+precisely @WouterJ (pronounced Wauter) :baby:
+
+---------------------------------------------------------------------------
+
+by mitom at 2014-03-03T15:29:55Z
+
+@cordoval you can find about how to improve it's results/contribute in it's [repository](https://github.com/mitom/symfony-doc-bot)
+
+About how to use it, well typing `!sf` in #symfony would get you this very [helpful message](https://github.com/mitom/symfony-doc-bot/blob/master/cloudbot/symfony.py#L8)
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-03T15:33:11Z
+
+:baby: I will take a look at the state of @jakzal's bot then I want to keep my brain in PHP, but thanks!
+
+---------------------------------------------------------------------------
+
+by stof at 2014-03-03T16:19:04Z
+
+@WouterJ you should probably check other sidebars as well to verify they have an anchor
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-03T17:04:07Z
+
+@stof I believe almost none has one. However, most sidebars contain "side information". This one contains actually really important information, so I decided to add it (well, @mitom told me to do it :P).
+
+But feel free to add more anchors if you think it'll be used much.

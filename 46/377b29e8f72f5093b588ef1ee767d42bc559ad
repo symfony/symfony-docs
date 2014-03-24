@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-17T14:30:58Z
+
+Can you please add a ``versionadded`` directive for the new helper method?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-17T15:45:48Z
+
+Can you please add the [PR format](http://symfony.com/doc/current/contributing/documentation/overview.html#pull-request-format) to your PR description?
+
+---------------------------------------------------------------------------
+
+by klaussilveira at 2014-01-17T17:07:16Z
+
+Done! :+1:

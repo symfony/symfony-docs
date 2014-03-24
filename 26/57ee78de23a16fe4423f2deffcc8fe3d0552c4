@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-22T11:06:40Z
+
+:+1: Great work! But I am wondering if this article should be moved to the cookbook.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-22T11:08:22Z
+
+> But I am wondering if this article should be moved to the cookbook.
+
+It's independent of the framework and very usefull if you are using the form component standalone.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-22T11:09:53Z
+
+> It's independent of the framework and very usefull if you are using the form component standalone.
+
+Actually, this also applies to a lot of cookbook articles, doesn't it?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-22T11:32:40Z
+
+> this also applies to a lot of cookbook articles, doesn't it?
+
+Only a few are fully framework independant and I really want to move them to the components section
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-09T15:12:24Z
+
+Thank you, @weaverryan @xabbuh @ggam. I've fixed all of your comments.

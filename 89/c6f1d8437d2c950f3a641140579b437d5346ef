@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------
+
+by webmozart at 2014-01-10T08:55:48Z
+
+@fabpot I just realized an important consequence implied by the current wording. Currently, we tag some methods with `@api` and some not, even if their containing class is tagged with `@api`. With the current text, however, all public and protected methods of an API class are implicitly API methods as well, so tagging them with `@api` becomes obsolete.
+
+Is this desired?
+
+---------------------------------------------------------------------------
+
+by Crell at 2014-01-22T00:42:24Z
+
+Are constructors treated the same as any other method, or are they special in some way? (Either more or less restrictive.)  In many cases and APIs, I understand the intent is that a constructor is never "promised" because client code isn't supposed to deal with it anyway, only the DIC.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-01-22T07:05:05Z
+
+Constructors are always safe to use (see Safe Operations for classes, "Create instance"), unless they are marked with `@internal` (which could be the case if you're supposed to use a builder object instead).
+
+You're however *not* safe to add a constructor in an extending class if *no* constructor exists in the parent class (this falls under "Add custom method"). The reason is that we may introduce a constructor ourselves, which breaks your own constructor that isn't calling `parent::__construct()`. The fix is simple (just add that statement), but it's still a BC break.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-01-22T08:17:08Z
+
+For the Drupal discussion, see https://drupal.org/node/2178659
+
+---------------------------------------------------------------------------
+
+by Crell at 2014-01-22T17:26:57Z
+
+Wording suggestion from the Drupal thread: "guaranteed / not guaranteed" rather than "safe / not safe".  "not safe" sounds very scary.  (Unless being scary is the point, but I doubt that.)
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-01-23T08:57:19Z
+
+I tried to simplify the "Using Symfony" part a bit. Feedback welcome.
+
+ping @fabpot ;)
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-01-24T14:43:44Z
+
+@fabpot I addressed your comments in my latest commit. Could you give me more feedback?
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-02-11T15:22:38Z
+
+ping @fabpot
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-02-12T10:14:29Z
+
+For reference, the Drupal guys [seem to be happy so far](https://drupal.org/comment/8423969#comment-8423969) with the current revision.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-02-14T21:55:38Z
+
+@fabpot What can we do to move this PR further?
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-02-19T22:52:40Z
+
+ping @fabpot (I should create a web service that does the pinging automatically... ;))
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-02-20T06:18:46Z
+
+@webmozart pinging has little effect as it gets lots pretty fast in my flow of emails ;)
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-02-20T06:49:30Z
+
+@webmozart The document looks very good to me; I've made some comments about minor changes.
+
+Thank you so much for taking time to thoroughly document what BC means for us. I'm very happy with the result and it will make discussion about future changes so much easier.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-02-20T07:30:24Z
+
+Thanks @fabpot for the comments! I will adapt the document later today.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-02-20T10:23:18Z
+
+@fabpot I adapted the document now. Any more feedback?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-02-20T19:58:45Z
+
+@webmozart Looks good to me

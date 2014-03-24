@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-10T09:11:06Z
+
+I think it was better to link to the [cookbook article](http://symfony.com/doc/current/cookbook/security/host_restriction.html).
+
+---------------------------------------------------------------------------
+
+by ghostika at 2014-01-10T09:47:19Z
+
+Actually I didn't found this cookbook entry, when I search for the solution, but at least on the config page, this option should be shown.
+You mean, extend the security page line and add also the link?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-10T10:06:55Z
+
+In the book article I'd add a section mentioning that you can restrict a firewall to a host and link this to the cookbook article (or even better add it to the existing list of related cookbook articles).
+
+In the config reference you can keep it as you did it but please add a ``versionadded`` directive.
+
+---------------------------------------------------------------------------
+
+by ghostika at 2014-01-11T19:26:42Z
+
+I updated it with your suggestions
+
+---------------------------------------------------------------------------
+
+by ghostika at 2014-01-11T19:53:28Z
+
+I copied that one out from the referenced cookbook entry, so I changed the word to "introduced" there also.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-11T19:55:21Z
+
+:+1: We just decided quite recently to use this wording. So, thank you very much to adapt this in the cookbook entry!
+
+---------------------------------------------------------------------------
+
+by ghostika at 2014-01-11T20:02:37Z
+
+Then I will look out for this in the future.

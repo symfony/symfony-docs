@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by bicpi at 2014-03-11T07:05:49Z
+
+@weaverryan Oh, thanks for verifying this fix, can't remember how that fluid usage slipped in... ;-)
+
+But I've found another issue: The *versionadded* note below the `addPrefix()` example says that the `addPrefix()` method was added in Symfony 2.2. Mh, actually I foud that it existed since Symfony 2.0 and it was possible to add a prefix with this method or the `addCollection()` method. Currently I've removed this note in this PR, because listing all the methods that were new to 2.2 and then to 2.3 ()host, schemes, method etc.) did not seem to be a good option. What do you think?

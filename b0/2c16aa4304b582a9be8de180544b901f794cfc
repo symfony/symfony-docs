@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-26T21:03:43Z
+
+@samsamm777 Sorry for the delay - I missed this PR for some reason when I was going through. First, it's a great - this is a very important detail and you've explained it well. I just had one small suggestion on a header change, but that's it. Also, it's outside of the scope, but if you also wanted to document the very similar `AuthenticationSuccessHandlerInterface`, that would be awesome :). Otherwise, I'll open up a separate issue about it.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by samsamm777 at 2014-02-26T22:15:19Z
+
+@weaverryan Thanks for the feedback - all great! I've made the amendment you recommended. I'll have a look at the other interface as well and post a separate PR for that in the near future.
+
+---------------------------------------------------------------------------
+
+by samsamm777 at 2014-03-05T16:49:13Z
+
+@xabbuh Updated with those recommendations you have made.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-08T18:07:05Z
+
+@samsamm777 can I ask one more favor please :). Can you rebase against the symfony master? It seems your out of date, which wouldn't cause problems merging, except that I also need to switch the branch to go into 2.4 (not master). I'd do it myself, but if you do it, then we can properly merge this PR and save the conversation into git notes. In other words, it's more awesome if you do it ;).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by samsamm777 at 2014-03-09T01:58:22Z
+
+@weaverryan Rebased from master. Hope I did it right! Let me know if there's anything else you need.

@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-01-14T12:44:09Z
+
+Just one thing - as it is a fix for the 2.3. version you should request to merge it with the 2.3. branch not the master branch.
+
+---------------------------------------------------------------------------
+
+by tyomo4ka at 2014-01-14T13:00:16Z
+
+@mtrojanowski Oops :) Sure. Will close this PR and open new. I can't change base branch for PR on GH. Am I wrong?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-14T13:06:34Z
+
+No, you can't. But I guess @weaverryan can safely cherry pick this small commit.
+
+---------------------------------------------------------------------------
+
+by tyomo4ka at 2014-01-14T15:23:24Z
+
+@WouterJ Updated. Can you cherry-pick it in 2.3 branch. Or it is better to close this PR and open new based on 2.3?
+
+@mtrojanowski @xabbuh Thanks for notices. This is my first attempt to contribute to doc BTW ;)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-14T16:42:59Z
+
+@tyomo4ka just leave this PR as it is now. We just said it so you know how to do it correctly the next time.
+
+Btw, I'm not the merger for the docs, that's @weaverryan :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-01T18:20:15Z
+
+Hey Artem!

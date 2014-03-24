@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-12T11:00:21Z
+
+Thank you for your work. 2 tips from me (for the next time):
+- We can easily cherry pick commits into other branches, you don't need to create a new PR for that. @bicpi just told it you, so you do it right the next time :)
+- Always create a new branch when editing something (when editing a file from this repo of a specific branch, you'll always create a patch-N branch in your own fork). When doing this, you can create multiple PRs at the same time.

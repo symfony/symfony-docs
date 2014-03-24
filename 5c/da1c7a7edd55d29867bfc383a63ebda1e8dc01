@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2013-12-11T07:10:48Z
+
+:+1: :baby:
+
+---------------------------------------------------------------------------
+
+by tucksaun at 2014-03-04T07:37:53Z
+
+should not cookbook/testing/doctrine.rst be modified too?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-04T08:27:42Z
+
+@weaverryan this feature is merged
+
+---------------------------------------------------------------------------
+
+by johnkary at 2014-03-05T04:30:22Z
+
+@tucksaun Thanks, nice catch. I have added changes to cookbook/testing/doctrine.rst and also rebased against latest master.

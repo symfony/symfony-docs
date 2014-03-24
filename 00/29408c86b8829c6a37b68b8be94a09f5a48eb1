@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-16T20:18:35Z
+
+Thank you @xabbuh !
+
+For some reason, my editor decided it was better to use tabs in reSt documents...
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-18T19:22:05Z
+
+I don't see any issues with this. Certainly we could potentially make some improvements, but it's a great start and @WouterJ has a script that's able to generate all of this automatically (so we get the CHANGELOG basically for free).
+
+Thanks @WouterJ for taking this on! I'll merge it in now

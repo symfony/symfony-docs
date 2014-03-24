@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-03T18:39:24Z
+
+Thank you for submitting the fix!
+
+It should be merged into 2.3 (2.0, 2.1 and 2.2 are deprecated and no longer maintained). You don't have to create your PR again, @weaverryan (who will merge your PR) can cherry pick it quite easily in the correct branch.

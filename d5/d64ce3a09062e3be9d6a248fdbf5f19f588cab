@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-01-21T03:04:23Z
+
+PATCH also has a special property in that if any fields are missing from the submit, those won't be removed: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/HttpFoundation/HttpFoundationRequestHandler.php#L80
+
+That uses the 2nd argument of the `submit` method, which is also not something we mention in the docs, but which is probably out of the scope here.
+
+@bicpi Can you add a quick note about the PATCH behavior? Then, if you're ready, I'd like to merge this!
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-21T08:27:21Z
+
+And this needs a rebase btw
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-23T06:24:37Z
+
+Rebase done, will work on the missing update soon.
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-01-24T20:39:06Z
+
+@weaverryan Added a note about the PATCH method, hope that it's well drafted.

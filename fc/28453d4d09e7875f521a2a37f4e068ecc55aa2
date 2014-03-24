@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by stof at 2013-10-05T08:32:22Z
+
+This chapter should be moved to the doc of the Debug component, and the page in the ClassLoader component should mention that the class is deprecated as of 2.4 and extends the new DebugClassLoader.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2013-10-05T11:32:28Z
+
+Thanks for your feedback, @stof. I moved the chapter, but left the deprecated one with a note.
+
+What did you mean with `[...] and extends the new DebugClassLoader`?
+
+---------------------------------------------------------------------------
+
+by stof at 2013-10-05T11:59:49Z
+
+@xabbuh As the deprecated class extends the new one in the Debug component, using it requires installing the Debug component
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2013-10-05T12:30:10Z
+
+Maybe I am totally wrong, but looking at the source code I don't see, how the class from THW Claas Loader component extends the one from the Debug component.
+
+---------------------------------------------------------------------------
+
+by stof at 2013-10-05T13:24:12Z
+
+ah sorry, it has been copied, not extended, to keep a full BC. I should have checked before commenting
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-05T17:08:03Z
+
+@xabbuh Can you rebase please? Then I'll get this merged!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-05T17:16:18Z
+
+@weaverryan Done. Please notice that this needs to be merge into the ``2.4`` branch but not in the master branch.

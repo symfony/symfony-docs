@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-01-20T04:03:44Z
+
+Ping @cordoval! :)
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-20T04:05:12Z
+
+I will correct this now @weaverryan thanks, I will demo Gush usage in doing this :baby:
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-20T04:17:35Z
+
+```bash
+~ gsh p:squash 3419                                             Luiss-MacBook-Pro-3 [21:16:36]
+OUT > Fetching origin
+ERR > From github.com:symfony/symfony-docs
+   42c80d1..67b7bbd  2.3        -> origin/2.3
+ERR >    bede4c3..5ba2227  2.4        -> origin/2.4
+ERR >    6db5f23..c6ac96c  master     -> origin/master
+ERR >  * [new branch]      remove-typo -> origin/remove-typo
+OUT > Fetching cordoval
+ERR > Already on '3363-doctrine-file-upload-example-uses-dir'
+OUT > Your branch is up-to-date with 'cordoval/3363-doctrine-file-upload-example-uses-dir'.
+OUT > [3363-doctrine-file-upload-example-uses-dir 1620ed8] 3363-doctrine-file-upload-example-uses-dir
+ 1 file changed, 9 insertions(+)
+ERR > To git@github.com:cordoval/symfony-docs.git
+ERR >  + b50519a...1620ed8 3363-doctrine-file-upload-example-uses-dir -> 3363-doctrine-file-upload-example-uses-dir (forced update)
+OUT > Branch 3363-doctrine-file-upload-example-uses-dir set up to track remote branch 3363-doctrine-file-upload-example-uses-dir from cordoval.
+```
+
+:baby:
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-20T04:19:13Z
+
+right back at ya @weaverryan pong :baby:

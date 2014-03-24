@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-11T18:15:32Z
+
+:)
+
+For the next time: You can go to your fork and the correct branch and then update the file in that branch. Then you previous PR gets updated.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-02-11T18:17:40Z
+
+you could also use ```gush p:create --base=2.3``` to avoid issues maybe
+
+why you did not correct the other typo? fefault?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-11T18:19:55Z
+
+@cordoval see the 2 comments on your typo.

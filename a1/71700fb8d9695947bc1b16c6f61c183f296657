@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-16T15:18:26Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-20T21:21:38Z
+
+as you can see in https://github.com/symfony/symfony-docs/pull/3495/files , this is also wrong on line 417. Can you please fix that too?
+
+---------------------------------------------------------------------------
+
+by skowi at 2014-01-21T08:03:06Z
+
+Fixed. Sorry I missed that.

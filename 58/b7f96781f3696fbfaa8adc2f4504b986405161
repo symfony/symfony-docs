@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by bicpi at 2014-02-22T09:08:14Z
+
+For the expiration model, there's a note below the code, I may add a similiar one for the validation model?
+
+*The If-Modified-Since request header equals the Last-Modified header of the last response sent to the client for the particular resource. This is how the client and server communicate with each other and decide whether or not the resource has been updated since it was cached.*
+
+---------------------------------------------------------------------------
+
+by bicpi at 2014-02-23T07:13:25Z
+
+I've added the above mentioned tip for the validation model, i.e. the equivalent tip that is used for the expiration model [in the next section](http://symfony.com/doc/2.3/book/http_cache.html#validation-with-the-last-modified-header).

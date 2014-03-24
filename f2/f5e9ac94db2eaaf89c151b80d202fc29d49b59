@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-04T17:50:21Z
+
+Thank you!
+
+@weaverryan this should be merged into 2.3
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2014-01-04T17:59:27Z
+
+@WouterJ I pushed a new commit taking all your comments into account.
+
+PS: I also noticed several uses of the single backtick instead of the double one.
+Would you like me to provide an additional PR (or additional commit, (squashed or not?) in the current one) fixing this for this page? (I don't really feel like going through the whole doc to be frank, but as long as I'm updating this page, I could fix the small things along the way too)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-04T18:18:40Z
+
+@lemoinem well, the single backticks also have there usage in Sphinx (that's why code blocks are put in double backticks).
+
+They are used for all roles, including references: (some examples)
+
+````rst
+`Some link <http://symfony.com>`_ and :doc:`A doc link`, some :ref:`reference` and some `Labeled link`_
+
+.. _`Labeled link`: http://...
+````
+
+So if you are sure the single backtick is wrong: Yes please fix it (you can do that in this PR). If you are not so sure, you can first ask me or someone else with understanding of Sphinx
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2014-01-04T18:30:53Z
+
+@WouterJ Yes, I noticed that too. Here is an additional commit with the fixes. Don't hesitate to tell me if you think I've missed any or if I changed anything that shouldn't have been.
+
+I also took the liberty to add two reference links (PSR-1 & PSR-2). I though it could be useful.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-04T18:34:08Z
+
+@lemoinem thank you for fixing all these bad syntaxes!
+
+Could you please, as a last question, change 2.2 into 2.3, since 2.2 is deprecated? (you don't have to do this, otherwise I'll submit a PR)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-04T18:36:26Z
+
+Great, lovely fixes (and really quick)!
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by lemoinem at 2014-01-04T18:37:19Z
+
+@WouterJ You're welcome! I'm happy to help!
+Here you go. I replaced the PSR links and the 2.2 mentions (grep doesn't give me any result for 2.2, so I don't think I missed anything).
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-01-05T00:50:27Z
+
+:+1:

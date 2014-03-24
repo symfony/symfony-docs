@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-12T16:42:20Z
+
+It is indeed not rendered nicely. However, the thing you changed here is not the problem. `::` is a shortcut for `.. code-block:: php` (since `php` is set as the default language on symfony.com).
+
+The real problem is the indentation level of the code block: It's indented by 5 spaces, instead of 4. Can you please update this PR to put back the `::` and change the indentation?
+
+Thank you!
+
+---------------------------------------------------------------------------
+
+by rvanlaarhoven at 2014-03-12T16:53:20Z
+
+Are you sure? the indention is 4 spaces.
+Only in the diff it's 5, but that's because of the + & -'s
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-12T16:55:50Z
+
+I'm sure this is not going to fix it :) However the indentation seems correct indeed. This needs some more investigation.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-12T17:48:37Z
+
+Don't know why but I can confirm that the ``code-block`` directive fixes the issue.

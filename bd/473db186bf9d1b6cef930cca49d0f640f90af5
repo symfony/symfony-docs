@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-18T19:38:48Z
+
+Hey Tony!
+
+Sorry for spamming you with comments - but I like the addition - so let's get it merged in :).
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by tony-co at 2014-02-18T20:43:06Z
+
+Thanks @weaverryan for the comments, it's good spam anyway!
+I made those changes, it's ready for merge.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-02-18T22:07:06Z
+
+Fews issue:
+
+* Not everyone uses Apache2 (I use nginx + PHP-FPM for instance)
+* My Apache2 config is not `httpd.conf` it's `apache2.conf` (I also have Apache2)
+*
+
+  > Obviously, this is only recommended in development environment as you do not want to give Apache full control over your whole production system.
+
+  Why did you said that? We are just talking about php file. All our infrasture a SensioLabs uses the same user for php-frpm and the CLI. Everything is **much** more simple. For exemple, we have an `insight` user. the FPM pool run with the `insight` user, all crons, workers uses also this user. And when we connect (ssh) to a server, we use the `insight` user. So for me, this sentence is very wrong and useless.
+
+---------------------------------------------------------------------------
+
+by tony-co at 2014-02-19T17:14:38Z
+
+@lyrixx Concerning points 1 and 2, I could rephrase and tell the user to check his web server documentation (Apache/Nginx).
+Then point 3, I don't know. It could lead to bad practices but you made some good points.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-26T20:57:14Z
+
+Yea, I think we should rephrase to tell the user to check their web server - like you mentioned @tony-co.
+
+About point 3, is it true (or not true) that using the same user for many things means that if one thing were compromised (e.g. your web server, or some security hole in your web app itself that allows people to access files or run a command) that things are worse because the attacker can access more parts of your system? Or is this not really a big concern? For me, that's the part (if it makes sense) that I wanted to warn people about. But @lyrixx you're saying that you do this on purpose, and I'll admit that your setup does indeed sound very simple - I like that :).
+
+So, do we or don't we recommend using the same user in production? Or do we need to involve others that know more? I know that I don't know :).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-26T21:22:37Z
+
+I don't agree with @lyrixx. I don't want the webserver user to be able to write anywhere than in some dedicated directories (like cache, log, etc.). I don't want my webserver for example to be able to delete my entire application or to add new files to the web directory which would then be served by it.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-02-26T21:54:43Z
+
+I think we could omit everything about production. It's simpler, and error-proof ;)
+
+@xabbuh Deleting .php file is useless for an attacker. Accessing your databases and other credentials is really more important. Give me an access to your server with `www-data` and you will see ;)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-02-26T22:02:07Z
+
+@lyrixx Depends on what he wants to achieve. Nonetheless, is he not only able to delete files but also can create new files if he got write permissions. Of course, that's no the only thing you have to take care of.
+
+---------------------------------------------------------------------------
+
+by tony-co at 2014-03-19T11:11:27Z
+
+ping @weaverryan

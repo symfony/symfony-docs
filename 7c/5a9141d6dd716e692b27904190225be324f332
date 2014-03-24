@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2013-12-20T10:05:17Z
+
+Good point!
+
+We need to rewrite it a bit, so the text is generic (it doesn't talk about any format in favor). Then we can change the example to a configuration block, which shows all possible formats.
+
+I'll take a look at the configuration for the other formats, if you could rewrite the text it would be awesome! (maybe some other docguy will help you with that)
+
+---------------------------------------------------------------------------
+
+by karptonite at 2013-12-20T13:56:38Z
+
+Most of that code example has to be in PHP, actually--the Group Sequence Provider itself is a method implemented by the Entity. A new configuration block just for indicating that there is a group sequence provider seems like overkill. Maybe it can be pulled into the configuration block above?

@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-08T08:44:24Z
+
+Can you change that also in the XML and PHP example? By the way, this should be merged into the 2.3 branch. Don't know if @weaverryan can cerry pick this commit or if it was better open a new pull request against the right branch.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-08T14:10:30Z
+
+I can patch to a different branch as long as it patches cleanly - so we can assume it's not a problem - thanks @xabbuh :)
+
+---------------------------------------------------------------------------
+
+by 94noni at 2014-03-09T13:02:44Z
+
+ping @xabbuh

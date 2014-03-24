@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-27T14:16:19Z
+
+Hey Michele!
+
+Can you explain this a bit more? I'll admit that ACL is not my strongpoint, and I can read the `setfacl` manual that you quoted, but I'm still not really sure what this would change :). Did the original command cause you problems? Was it doing something extra it didn't need to?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-02-27T14:37:41Z
+
+I think the explanation falls into these paragraphs:
+
+```
+ AUTOMATICALLY CREATED ENTRIES
+       Initially,  files  and  directories  contain  only  the  three base ACL
+       entries for the owner, the group, and others. There are some rules that
+       need to be satisfied in order for an ACL to be valid:
+
+       *   The three base entries cannot be removed. There must be exactly one
+           entry of each of these base entry types.
+
+       *   Whenever an ACL contains named user entries or named group objects,
+           it must also contain an effective rights mask.
+
+       *   Whenever an ACL contains any Default ACL entries, the three Default
+           ACL base entries (default owner, default group, and default others)
+           must also exist.
+
+       *   Whenever  a  Default ACL contains named user entries or named group
+           objects, it must also contain a default effective rights mask.
+
+       To help the user ensure  these  rules,  setfacl  creates  entries  from
+       existing entries under the following conditions:
+
+       *   If  an  ACL contains named user or named group entries, and no mask
+           entry exists, a mask entry containing the same permissions  as  the
+           group  entry is created. Unless the -n option is given, the permis-
+           sions of the mask entry are further adjusted to include  the  union
+           of  all  permissions affected by the mask entry. (See the -n option
+           description).
+
+       *   If a Default ACL entry is created, and the Default ACL contains  no
+           owner, owning group, or others entry, a copy of the ACL owner, own-
+           ing group, or others entry is added to the Default ACL.
+
+       *   If a Default  ACL  contains  named  user  entries  or  named  group
+           entries, and no mask entry exists, a mask entry containing the same
+           permissions as the default Default  ACL’s  group  entry  is  added.
+           Unless  the  -n  option is given, the permissions of the mask entry
+           are further adjusted to inclu  de  the  union  of  all  permissions
+           affected by the mask entry. (See the -n option description).
+```
+
+so in a way trying to avoid automatic adjustment of the effective permissions of the mask. But yeah we need an expert opinion.
+
+---------------------------------------------------------------------------
+
+by MicheleOnGit at 2014-02-27T15:01:44Z
+
+If the main goal of documentation ACL hints is to prepare directories to work in any condition, it should be better to have ACL winning on mask options.
+You can say that anything in the involved directories at first installation time should not be covered by particular mask settings, but what if something in our applications creates files at runtime with particular ones?
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-02-27T15:04:06Z
+
+yes I agree, we should merge this
+
+---------------------------------------------------------------------------
+
+by MicheleOnGit at 2014-03-04T09:02:22Z
+
+@weaverryan an example of software that would write umasks while running is sqlite, so it could happen to have resources covered by an umask into the cache directory.
+This is an example scenario where I would prefer to have an ACL setted to ignore it.
+
+---------------------------------------------------------------------------
+
+by MicheleOnGit at 2014-03-10T10:01:04Z
+
+Using everyday a Debian derivate distro instead of Appleish products mwould make ACL problems more evident.

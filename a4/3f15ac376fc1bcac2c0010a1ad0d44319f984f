@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-29T06:59:44Z
+
+This change should not be the problem, but I can't see what is the problem in this example...
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-01-29T07:49:59Z
+
+If you take a look at the rendered version online you'll see that this code is missing SH. Double quotes are messing up with SH for YAML in this case I don't know why.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-29T12:38:09Z
+
+@iamdto yes, I see that the highlighting is broken. However, double quotes are just valid Yaml 1.0, so that shouldn't be the problem. Have you tested it without it and did you discover that changing this will fix the highlighting?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-29T12:46:23Z
+
+I don't know why but @iamdto is right that this change fixes the syntax highlighting.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-01-29T12:55:23Z
+
+@WouterJ double quotes are fine, but ``\`` needs to be escaped in double quoted strings (like in double quoted PHP strings). It may explain why the highlighting is broken
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-29T12:57:08Z
+
+Ah, thank you @stof  I was wrong: :+1:  :)
+
+Thank you for your fix & research @iamdto
+
+---------------------------------------------------------------------------
+
+by stof at 2014-01-29T13:02:12Z
+
+and note that it is even a matter of making the code example valid, because ``\N`` is a special char in Yaml (see https://github.com/symfony/Yaml/blob/master/Unescaper.php#L67 for the complete list)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-29T13:21:23Z
+
+Good to know. Thanks @stof!
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-01-29T15:36:35Z
+
+Thank @WouterJ and @xabbuh for the review, and @stof for the insight :+1:
