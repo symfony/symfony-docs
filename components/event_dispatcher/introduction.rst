@@ -442,7 +442,7 @@ EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.4
-    Since Symfony 2.4 the current event name and the ``EventDispatcher``
+    Since Symfony 2.4, the current event name and the ``EventDispatcher``
     itself are passed to the listeners as additional arguments.
 
 The ``EventDispatcher`` always passes the dispatched event, the event's name

@@ -285,7 +285,7 @@ interface to construct the response that needs to be returned to the client::
     $response->send();
 
 .. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating

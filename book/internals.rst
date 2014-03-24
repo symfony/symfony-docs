@@ -427,7 +427,7 @@ and set a new ``Exception`` object, or do nothing::
         );
 
     .. versionadded:: 2.4
-        Support for HTTP status code constants was added in Symfony 2.4.
+        Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. seealso::
 

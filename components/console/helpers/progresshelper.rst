@@ -11,7 +11,7 @@ Progress Helper
     The ``setCurrent`` method was added in Symfony 2.3.
 
 .. versionadded:: 2.4
-    The ``clear`` method was added in Symfony 2.4.
+    The ``clear`` method was introduced in Symfony 2.4.
 
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
