@@ -410,22 +410,13 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         }
     }
 
-When using a Doctrine event listener or subscriber, when you make changes 
-to your entity, the preUpdate() callback must have an extra line of code to 
-tell Doctrine about the change::
+.. caution::
 
-    public function preUpdate(PreUpdateEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        // do all the file uploading logic
-        // ...
-        $entity->setFilename($newFilename);
-        $args->setNewValue('filename', $newFilename);
-    }    
-    
-For full reference on preUpdate event restrictions, see `preUpdate`_ in the 
-Doctrine Events documentation.
-
+   If changes to your entity are handled by a Doctrine event listener or event 
+   subscriber, the ``preUpdate()`` callback must notify Doctrine about the changes 
+   being done.
+   For full reference on preUpdate event restrictions, see `preUpdate`_ in the 
+   Doctrine Events documentation.
 
 The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
