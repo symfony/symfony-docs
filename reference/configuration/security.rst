@@ -285,7 +285,7 @@ Using the PBKDF2 encoder: Security and Speed
 --------------------------------------------
 
 .. versionadded:: 2.2
-    The PBKDF2 password encoder was added in Symfony 2.2.
+    The PBKDF2 password encoder was introduced in Symfony 2.2.
 
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
@@ -310,7 +310,7 @@ Using the BCrypt Password Encoder
     the `ircmaxell/password-compat`_ library via Composer.
 
 .. versionadded:: 2.2
-    The BCrypt password encoder was added in Symfony 2.2.
+    The BCrypt password encoder was introduced in Symfony 2.2.
 
 .. configuration-block::
 

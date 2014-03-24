@@ -60,7 +60,7 @@ Autocompletion
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    Autocompletion for questions was added in Symfony 2.2.
+    Autocompletion for questions was introduced in Symfony 2.2.
 
 You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
@@ -78,7 +78,7 @@ Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The ``askHiddenResponse`` method was added in Symfony 2.2.
+    The ``askHiddenResponse`` method was introduced in Symfony 2.2.
 
 You can also ask a question and hide the response. This is particularly
 convenient for passwords::
@@ -148,7 +148,7 @@ Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
+    The ``askHiddenResponseAndValidate`` method was introduced in Symfony 2.2.
 
 You can also ask and validate a hidden response::
 
@@ -176,7 +176,7 @@ Let the user choose from a list of Answers
 
 .. versionadded:: 2.2
     The :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select` method
-    was added in Symfony 2.2.
+    was introduced in Symfony 2.2.
 
 If you have a predefined set of answers the user can choose from, you
 could use the ``ask`` method described above or, to make sure the user
@@ -211,7 +211,7 @@ argument). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth argument.
 
 .. versionadded:: 2.3
-    Multiselect support was added in Symfony 2.3.
+    Multiselect support was introduced in Symfony 2.3.
 
 Multiple Choices
 ................

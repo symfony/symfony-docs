@@ -376,7 +376,7 @@ Template Naming and Locations
 -----------------------------
 
 .. versionadded:: 2.2
-    Namespaced path support was added in 2.2, allowing for template names
+    Namespaced path support was introduced in 2.2, allowing for template names
     like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
     for more details.
 
@@ -677,7 +677,7 @@ Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
-    hinclude.js support was added in Symfony 2.1
+    hinclude.js support was introduced in Symfony 2.1
 
 Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
@@ -786,7 +786,7 @@ in your application configuration:
         ));
 
 .. versionadded:: 2.2
-    Default templates per render function was added in Symfony 2.2
+    Default templates per render function was introduced in Symfony 2.2
 
 You can define default templates per ``render`` function (which will override
 any global default template that is defined):

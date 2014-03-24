@@ -132,7 +132,7 @@ the event listener might look like the following::
 .. versionadded:: 2.2
     The ability to pass a string into
     :method:`FormInterface::add <Symfony\\Component\\Form\\FormInterface::add>`
-    was added in Symfony 2.2.
+    was introduced in Symfony 2.2.
 
 .. note::
     You can of course use any callback type instead of a closure, e.g. a method

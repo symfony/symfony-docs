@@ -83,7 +83,7 @@ Search in several locations by chaining calls to
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
 .. versionadded:: 2.2
-   Wildcard support was added in version 2.2.
+   Wildcard support was introduced in version 2.2.
 
 Use wildcard characters to search in the directories matching a pattern::
 
@@ -98,7 +98,7 @@ Exclude directories from matching with the
 
 .. versionadded:: 2.3
    The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
-   method was added in Symfony 2.3.
+   method was introduced in Symfony 2.3.
 
 It's also possible to ignore directories that you don't have permission to read::
 

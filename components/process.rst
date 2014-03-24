@@ -65,7 +65,7 @@ anonymous function to the
     });
 
 .. versionadded:: 2.1
-    The non-blocking feature was added in 2.1.
+    The non-blocking feature was introduced in 2.1.
 
 Running Processes Asynchronously
 --------------------------------
@@ -112,7 +112,7 @@ Stopping a Process
 ------------------
 
 .. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was added in Symfony 2.3.
+    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
@@ -152,7 +152,7 @@ To make your code work better on all platforms, you might want to use the
 
 .. versionadded:: 2.3
     The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
@@ -214,7 +214,7 @@ Process Signals
 ---------------
 
 .. versionadded:: 2.3
-    The ``signal`` method was added in Symfony 2.3.
+    The ``signal`` method was introduced in Symfony 2.3.
 
 When running a program asynchronously, you can send it posix signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
@@ -240,7 +240,7 @@ Process Pid
 -----------
 
 .. versionadded:: 2.3
-    The ``getPid`` method was added in Symfony 2.3.
+    The ``getPid`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method.
