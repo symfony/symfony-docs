@@ -7,7 +7,7 @@ Loading Resources
 The Validator uses metadata to validate a value. This metadata defines how a
 class, array or any other value should be validated. When validating a class,
 each class contains its own specific metadata. When validating another value,
-the metadata to passed to the validate methods.
+the metadata must be passed to the validate methods.
 
 Class metadata should be defined somewhere in a configuration file, or in the
 class itself. The ``Validator`` needs to be able to retrieve this metadata
@@ -20,7 +20,7 @@ from the file or class. To do that, it uses a set of loaders.
 The StaticMethodLoader
 ----------------------
 
-The easiest loader is the
+The most basic loader is the
 :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\StaticMethodLoader`.
 This loader will call a static method of the class in order to get the
 metadata for that class. The name of the method is configured using the
@@ -34,7 +34,7 @@ method of the Validator builder::
         ->getValidator();
 
 Now, the retrieved ``Validator`` tries to find the ``loadValidatorMetadata()``
-method of the validated class to load its metadata.
+method of the class to validate to load its metadata.
 
 .. tip::
 
@@ -70,8 +70,9 @@ The AnnotationLoader
 
 At last, the component provides an
 :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AnnotationLoader`.
-This loader will parse the annotations of a class. Annotations are placed in
-PHPdoc comments (`/** ... */`) and start with an ``@``. For instance::
+This loader uses an annotation reader to parse the annotations of a class.
+Annotations are placed in doc block comments (`/** ... */`) and start with an
+``@``. For instance::
 
     // ...
 
@@ -97,7 +98,7 @@ To disable the annotation loader after it was enabled, call
 .. note::
 
     In order to use the annotation loader, you should have installed the
-    ``doctrine/annotations`` and ``doctrine/cache`` packages of Packagist.
+    ``doctrine/annotations`` and ``doctrine/cache`` packages from Packagist.
 
 Using Multiple Loaders
 ----------------------
@@ -121,9 +122,9 @@ multiple mappings::
 Caching
 -------
 
-Using many loaders to load metadata from different places is very easy for the
-developer, but it can easily slow down your application since each file needs
-to be parsed, validated and converted to a
+Using many loaders to load metadata from different places is very easy when
+creating the metadata, but it can easily slow down your application since each
+file needs to be parsed, validated and converted to a
 :class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata` instance. To
 solve this problems, you can configure a cacher which will be used to cache
 the ``ClassMetadata`` after it was loaded.
@@ -135,10 +136,11 @@ implements :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface
 
 .. note::
 
-    The loader already use a singleton load mechanism. That means that they
-    will only load and parse a file once and put that in a property, which
-    will be used on the next time. However, the Validator still needs to
-    merge all metadata of one class from every loader when it is requested.
+    The loaders already use a singleton load mechanism. That means that the
+    loaders will only load and parse a file once and put that in a property,
+    which will then be used the next time it is asked for metadata. However,
+    the Validator still needs to merge all metadata of one class from every
+    loader when it is requested.
 
 To set a cacher, call the
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMetadataCache` of
@@ -176,5 +178,5 @@ this custom implementation using
 .. caution::
 
     Since you are using a custom metadata factory, you can't configure loaders
-    and cachers using the helper methods anymore. You now have to inject them
-    into your custom metadata factory yourself.
+    and cachers using the ``add*Mapping()`` methods anymore. You now have to
+    inject them into your custom metadata factory yourself.
