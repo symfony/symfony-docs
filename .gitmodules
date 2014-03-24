@@ -1,0 +1,3 @@
+[submodule "sphinx-php"]
+	path = _exts
+	url = http://github.com/fabpot/sphinx-php
