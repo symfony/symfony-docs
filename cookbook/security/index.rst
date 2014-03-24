@@ -13,6 +13,7 @@ Security
     acl_advanced
     force_https
     host_restriction
+    firewall_restriction
     form_login
     securing_services
     custom_provider
