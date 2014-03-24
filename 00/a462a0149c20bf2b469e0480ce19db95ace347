@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-19T02:42:43Z
+
+... and yet another perfect PR, except that this one no longer merges cleanly :). @ifdattic can you rebase for me?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-03-21T17:17:34Z
+
+@weaverryan rebased, should work now
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-21T17:25:44Z
+
+indeed, PR can now be merged
