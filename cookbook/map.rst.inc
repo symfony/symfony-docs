@@ -81,6 +81,10 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * (service container) :doc:`/cookbook/service_container/event_listener`
 
+* :doc:`/cookbook/expression/index`
+
+  * :doc:`/cookbook/expression/expressions`
+
 * :doc:`/cookbook/form/index`
 
   * :doc:`/cookbook/form/form_customization`
@@ -100,6 +104,7 @@
 
   * :doc:`/cookbook/logging/monolog`
   * :doc:`/cookbook/logging/monolog_email`
+  * :doc:`/cookbook/logging/monolog_console`
   * :doc:`/cookbook/logging/monolog_regex_based_excludes`
   * :doc:`/cookbook/logging/channels_handlers`
 
@@ -134,9 +139,12 @@
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
+  * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/custom_password_authenticator`
+  * :doc:`/cookbook/security/api_key_authentication`
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
@@ -157,6 +165,7 @@
   * :doc:`/cookbook/session/locale_sticky_session`
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
+  * :doc:`/cookbook/session/limit_metadata_writes`
 
 * **symfony1**
 

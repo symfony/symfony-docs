@@ -418,12 +418,8 @@ submission (i.e.  ``/login_check``):
 
     You will *not* need to implement a controller for the ``/login_check``
     URL as the firewall will automatically catch and process any form submitted
-    to this URL.
-
-.. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``
-    and ``check_path``. These keys can be route names (as shown in this example)
-    or URLs that have routes configured for them.
+    to this URL. However, you *must* have a route (as shown here) for this
+    URL, as well as one for your logout path (see :ref:`book-security-logging-out`).
 
 Notice that the name of the ``login`` route matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
@@ -886,6 +882,8 @@ options:
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown);
 
+* ``allow_if`` If the expression returns false, then access is denied;
+
 * ``requires_channel`` If the incoming request's channel (e.g. ``http``)
   does not match this value (e.g. ``https``), the user will be redirected
   (e.g. redirected from ``http`` to ``https``, or vice versa).
@@ -981,6 +979,58 @@ address):
 
 * The second access rule is not examined as the first rule matched.
 
+.. _book-security-allow-if:
+
+Securing by an Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.4
+    The ``allow_if`` functionality was introduced in Symfony 2.4.
+
+Once an ``access_control`` entry is matched, you can deny access via the
+``roles`` key or use more complex logic with an expression in the ``allow_if``
+key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                -
+                    path: ^/_internal/secure
+                    allow_if: "'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')"
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal/secure"
+                    allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array(
+                    'path' => '^/_internal/secure',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
+                ),
+            ),
+
+In this case, when the user tries to access any URL starting with ``/_internal/secure``,
+they will only be granted access if the IP address is ``127.0.0.1`` or if
+the user has the ``ROLE_ADMIN`` role.
+
+Inside the expression, you have access to a number of different variables
+and functions including ``request``, which is the Symfony
+:class:`Symfony\\Component\\HttpFoundation\\Request` object (see
+:ref:`component-http-foundation-request`).
+
+For a list of the other functions and variables, see
+:ref:`functions and variables <book-security-expression-variables>`.
+
 .. _book-security-securing-channel:
 
 Forcing a Channel (http, https)
@@ -1017,6 +1067,73 @@ the user will be redirected to ``https``:
                     'requires_channel' => 'https',
                 ),
             ),
+
+.. _book-security-securing-controller:
+
+Securing a Controller
+~~~~~~~~~~~~~~~~~~~~~
+
+Protecting your application based on URL patterns is easy, but may not be
+fine-grained enough in certain cases. When necessary, you can easily force
+authorization from inside a controller::
+
+    // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    public function helloAction($name)
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        // ...
+    }
+
+.. _book-security-securing-controller-annotations:
+
+Thanks to the SensioFrameworkExtraBundle, you can also secure your controller using annotations::
+
+    // ...
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function helloAction($name)
+    {
+        // ...
+    }
+
+For more information, see the
+:doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
+
+Securing other Services
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In fact, anything in Symfony can be protected using a strategy similar to
+the one seen in the previous section. For example, suppose you have a service
+(i.e. a PHP class) whose job is to send emails from one user to another.
+You can restrict use of this class - no matter where it's being used from -
+to users that have a specific role.
+
+For more information on how you can use the Security component to secure
+different services and methods in your application, see :doc:`/cookbook/security/securing_services`.
+
+Access Control Lists (ACLs): Securing Individual Database Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine you are designing a blog system where your users can comment on your
+posts. Now, you want a user to be able to edit their own comments, but not
+those of other users. Also, as the admin user, you yourself want to be able
+to edit *all* comments.
+
+The Security component comes with an optional access control list (ACL) system
+that you can use when you need to control access to individual instances
+of an object in your system. *Without* ACL, you can secure your system so that
+only certain users can edit blog comments in general. But *with* ACL, you
+can restrict or allow access on a comment-by-comment basis.
+
+For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
 
 Users
 -----
@@ -1540,6 +1657,8 @@ doesn't need to be defined anywhere - you can just start using it.
     Symfony2. If you define your own roles with a dedicated ``Role`` class
     (more advanced), don't use the ``ROLE_`` prefix.
 
+.. _book-security-role-hierarchy:
+
 Hierarchical Roles
 ~~~~~~~~~~~~~~~~~~
 
@@ -1587,8 +1706,6 @@ Access Control
 Now that you have a User and Roles, you can go further than URL-pattern based
 authorization.
 
-.. _book-security-securing-controller:
-
 Access Control in Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1614,21 +1731,90 @@ authorization from inside a controller::
     method is called. It's almost always a good idea to have a main firewall that
     covers all URLs (as is shown in this chapter).
 
-.. _book-security-securing-controller-annotations:
+.. _book-security-expressions:
 
-You can also choose to install and use the optional `JMSSecurityExtraBundle`_,
-which can secure your controller using annotations::
+Complex Access Controls with Expressions
+----------------------------------------
 
+.. versionadded:: 2.4
+    The expression functionality was introduced in Symfony 2.4.
+
+In addition to a role like ``ROLE_ADMIN``, the ``isGranted`` method also
+accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
+
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Symfony\Component\ExpressionLanguage\Expression;
     // ...
-    use JMS\SecurityExtraBundle\Annotation\Secure;
 
-    /**
-     * @Secure(roles="ROLE_ADMIN")
-     */
-    public function helloAction($name)
+    public function indexAction()
     {
+        if (!$this->get('security.context')->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))) {
+            throw new AccessDeniedException();
+        }
+
         // ...
     }
+
+In this example, if the current user has ``ROLE_ADMIN`` or if the current
+user object's ``isSuperAdmin()`` method returns ``true``, then access will
+be granted (note: your User object may not have an ``isSuperAdmin`` method,
+that method is invented for this example).
+
+This uses an expression and you can learn more about the expression language
+syntax, see :doc:`/components/expression_language/syntax`.
+
+.. _book-security-expression-variables:
+
+Inside the expression, you have access to a number of variables:
+
+* ``user`` The user object (or the string ``anon`` if you're not authenticated);
+* ``roles`` The array of roles the user has, including from the
+  :ref:`role hierarchy <book-security-role-hierarchy>` but not including
+  the ``IS_AUTHENTICATED_*`` attributes (see the functions below);
+* ``object``: The object (if any) that's passed as the second argument to
+  ``isGranted`` ;
+* ``token`` The token object;
+* ``trust_resolver``: The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
+   object: you'll probably use the ``is_*`` functions below instead.
+
+Additionally, you have access to a number of functions inside the expression:
+
+* ``is_authenticated``: Returns ``true`` if the user is authenticated via "remember-me"
+  or authenticated "fully" - i.e. returns true if the user is "logged in";
+* ``is_anonymous``: Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with
+  the ``isGranted`` function;
+* ``is_remember_me``: Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``,
+  see below;
+* ``is_fully_authenticated``: Similar, but not equal to ``IS_AUTHENTICATED_FULLY``,
+  see below;
+* ``has_role``: Checks to see if the user has the given role - equivalent
+  to an expression like ``'ROLE_ADMIN' in roles``.
+
+.. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
+
+    The ``is_remember_me`` and ``is_authenticated_fully`` functions are *similar*
+    to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
+    with the ``isGranted`` function - but they are **not** the same. The
+    following shows the difference::
+
+        use Symfony\Component\ExpressionLanguage\Expression;
+        // ...
+
+        $sc = $this->get('security.context');
+        $access1 = $sc->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $access2 = $sc->isGranted(new Expression(
+            'is_remember_me() or is_fully_authenticated()'
+        ));
+
+    Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
+    behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,
+    the ``is_remember_me`` function *only* returns true if the user is authenticated
+    via a remember-me cookie and ``is_fully_authenticated`` *only* returns
+    true if the user has actually logged in during this session (i.e. is
+    full-fledged).
 
 Access Control in Other Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1671,6 +1857,33 @@ the built-in helper function:
     idea to have a main firewall that covers all URLs (as has been shown
     in this chapter).
 
+.. _book-security-template-expression:
+
+.. versionadded:: 2.4
+    The ``expression`` functionality was introduced in Symfony 2.4.
+
+You can also use expressions inside your templates:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted(expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        )) %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ))): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+For more details on expressions and security, see :ref:`book-security-expressions`.
+
 Access Control Lists (ACLs): Securing Individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1686,6 +1899,8 @@ only certain users can edit blog comments in general. But *with* ACL, you
 can restrict or allow access on a comment-by-comment basis.
 
 For more information, see the cookbook article: :doc:`/cookbook/security/acl`.
+
+.. _book-security-logging-out:
 
 Logging Out
 -----------
@@ -1787,11 +2002,6 @@ a route so that you can use it to generate the URL:
         $collection->add('logout', new Route('/logout', array()));
 
         return $collection;
-
-.. caution::
-
-    As of Symfony 2.1, you *must* have a route that corresponds to your logout
-    path. Without this route, logging out will not work.
 
 Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``). For
@@ -1925,8 +2135,8 @@ Learn more from the Cookbook
 * :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
+* :doc:`How to Restrict Firewalls to a Specific Host </cookbook/security/host_restriction>`
 
-.. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.2
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack

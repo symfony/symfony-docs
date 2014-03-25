@@ -32,11 +32,16 @@ table rendering: using named layouts or by customizing rendering options.
 Customize Table Layout using Named Layouts
 ------------------------------------------
 
-The Table helper ships with two preconfigured table layouts:
+.. versionadded:: 2.4
+    The ``TableHelper::LAYOUT_COMPACT`` layout was added in Symfony 2.4.
+
+The Table helper ships with three preconfigured table layouts:
 
 * ``TableHelper::LAYOUT_DEFAULT``
 
 * ``TableHelper::LAYOUT_BORDERLESS``
+
+* ``TableHelper::LAYOUT_COMPACT``
 
 Layout can be set using :method:`Symfony\\Component\\Console\\Helper\\TableHelper::setLayout` method.
 

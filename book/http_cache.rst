@@ -1072,14 +1072,17 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 
             $response = new Response();
             if ($this->getStore()->purge($request->getUri())) {
-                $response->setStatusCode(200, 'Purged');
+                $response->setStatusCode(Response::HTTP_OK, 'Purged');
             } else {
-                $response->setStatusCode(404, 'Not purged');
+                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not purged');
             }
 
             return $response;
         }
     }
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 .. caution::
 

@@ -29,6 +29,8 @@ may also be tags in other bundles you use that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `assetic.templating.twig`_        | Remove this service if Twig templating is disabled                        |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `console.command`_                | Add a command                                                             |
++-----------------------------------+---------------------------------------------------------------------------+
 | `data_collector`_                 | Create a class that collects custom data for the profiler                 |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `doctrine.event_listener`_        | Add a Doctrine event listener                                             |
@@ -240,6 +242,18 @@ assetic.templating.twig
 
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain ``twig``.
+
+console.command
+---------------
+
+.. versionadded:: 2.4
+   Support for registering commands in the service container was added in
+   version 2.4.
+
+**Purpose**: Add a command to the application
+
+For details on registering your own commands in the service container, read
+:ref:`the cookbook article<cookbook-console-dic>`.
 
 data_collector
 --------------
@@ -463,9 +477,9 @@ To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
             ->addTag('kernel.cache_warmer', array('priority' => 0))
         ;
 
-The ``priority`` value is optional, and defaults to 0. This value can be
-from -255 to 255, and the warmers will be executed in the order of their
-priority.
+The ``priority`` value is optional, and defaults to 0. The core Symfony
+listeners priorities varies from -1024 to 1024, and the warmers will be
+executed in the order of their priority.
 
 .. _dic-tags-kernel-event-listener:
 
@@ -976,9 +990,6 @@ translation.extractor
 
 **Purpose**: To register a custom service that extracts messages from a file
 
-.. versionadded:: 2.1
-   The ability to add message extractors is new in Symfony 2.1.
-
 When executing the ``translation:update`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony2 framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
@@ -1046,9 +1057,6 @@ translation.dumper
 ------------------
 
 **Purpose**: To register a custom service that dumps messages to a file
-
-.. versionadded:: 2.1
-   The ability to add message dumpers is new in Symfony 2.1.
 
 After an `Extractor <translation.extractor>`_ has extracted all messages from
 the templates, the dumpers are executed to dump the messages to a translation

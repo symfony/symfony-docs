@@ -1834,11 +1834,6 @@ The answer is to setup the constraints yourself, and attach them to the individu
 fields. The overall approach is covered a bit more in the :ref:`validation chapter <book-validation-raw-values>`,
 but here's a short example:
 
-.. versionadded:: 2.1
-   The ``constraints`` option, which accepts a single constraint or an array
-   of constraints (before 2.1, the option was called ``validation_constraint``,
-   and only accepted a single constraint) is new to Symfony 2.1.
-
 .. code-block:: php
 
     use Symfony\Component\Validator\Constraints\Length;

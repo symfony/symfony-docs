@@ -4,6 +4,15 @@
 How to create a custom Authentication Provider
 ==============================================
 
+.. tip::
+
+    Creating a custom authentication system is hard, and this entry will walk
+    you through that process. But depending on your needs, you may be able
+    to solve your problem in a simpler way using these documents:
+
+    * :doc:`/cookbook/security/custom_password_authenticator`
+    * :doc:`/cookbook/security/api_key_authentication`
+
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony2 makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
@@ -153,17 +162,20 @@ set an authenticated token in the security context if successful.
 
                 // Deny authentication with a '403 Forbidden' HTTP response
                 $response = new Response();
-                $response->setStatusCode(403);
+                $response->setStatusCode(Response::HTTP_FORBIDDEN);
                 $event->setResponse($response);
 
             }
 
             // By default deny authorization
             $response = new Response();
-            $response->setStatusCode(403);
+            $response->setStatusCode(Response::HTTP_FORBIDDEN);
             $event->setResponse($response);
         }
     }
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was added in Symfony 2.4.
 
 This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
