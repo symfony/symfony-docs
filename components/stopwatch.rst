@@ -32,7 +32,7 @@ microtime by yourself. Instead, use the simple
     $event = $stopwatch->stop('eventName');
 
 .. versionadded:: 2.5
-    The ``getEvent()`` method was introduced
+    The ``getEvent()`` method was introduced in Symfony 2.5
 
 The :class:`Symfony\\Component\\Stopwatch\StopwatchEvent` object can be retrieved from the 
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
