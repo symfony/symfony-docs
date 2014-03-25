@@ -38,7 +38,8 @@ The :class:`Symfony\\Component\\Stopwatch\StopwatchEvent` object can be retrieve
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`, 
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods.
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods. 
+The latter should be used when you need to retrieve the duration of an event while it is still running.
 
 You can also provide a category name to an event::
 
