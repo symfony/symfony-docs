@@ -461,7 +461,7 @@ To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
         ;
 
 The ``priority`` value is optional, and defaults to 0. The core Symfony
-listeners priorities varies from -1024 to 1024, and the warmers will be
+listeners priorities vary from -1024 to 1024 and the warmers will be
 executed in the order of their priority.
 
 .. _dic-tags-kernel-event-listener:
