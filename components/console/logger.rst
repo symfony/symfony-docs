@@ -62,7 +62,7 @@ You can rely on the logger to use this dependency inside a command::
         {
             $logger = new ConsoleLogger($output);
 
-            $myDependency = MyDependency($logger);
+            $myDependency = new MyDependency($logger);
             $myDependency->doStuff();
         }
     }
@@ -99,7 +99,7 @@ level. This behavior is configurable through the third parameter of the
 constructor::
 
     // ...
-    private $formatLevelMap = array(
+    $formatLevelMap = array(
         LogLevel::CRITICAL => self::INFO,
         LogLevel::DEBUG    => self::ERROR,
     );
