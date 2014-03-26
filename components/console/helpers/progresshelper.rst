@@ -5,10 +5,10 @@ Progress Helper
 ===============
 
 .. versionadded:: 2.2
-    The ``progress`` helper was added in Symfony 2.2.
+    The ``progress`` helper was introduced in Symfony 2.2.
 
 .. versionadded:: 2.3
-    The ``setCurrent`` method was added in Symfony 2.3.
+    The ``setCurrent`` method was introduced in Symfony 2.3.
 
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
