@@ -9,7 +9,7 @@ Using the Logger
     introduced in Symfony 2.5.
 
 The Console component comes with a standalone logger complying with the
-`PSR-3_` standard. Depending on the verbosity setting, log messages will
+`PSR-3`_ standard. Depending on the verbosity setting, log messages will
 be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance passed as a parameter to the constructor.
 
