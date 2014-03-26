@@ -9,10 +9,9 @@ Using the Logger
     introduced in Symfony 2.5.
 
 The Console component comes with a standalone logger complying with the
-`PSR-3_` standard.
-Depending of the verbosity setting, log messages will be sent to the
-:class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance
-passed as a parameter to the constructor.
+`PSR-3_` standard. Depending on the verbosity setting, log messages will
+be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
+instance passed as a parameter to the constructor.
 
 The logger does not have any external dependency except ``php-fig/log``.
 This is useful for console applications and commands needing a lightweight
@@ -76,7 +75,8 @@ Verbosity
 ---------
 
 Depending on the verbosity level that the command is run, messages may or
-may not be sent to the ``Symfony\\Component\\Console\\Output\\OutputInterface`` instance.
+may not be sent to the ``Symfony\\Component\\Console\\Output\\OutputInterface``
+instance.
 
 By default, the console logger behaves like the
 :doc:`Monolog's Console Handler </cookbook/logging/monolog_console>`.
