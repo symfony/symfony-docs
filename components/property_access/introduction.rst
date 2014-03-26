@@ -212,7 +212,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     echo $accessor->getValue($person, 'wouter'); // array(...)
 
 .. versionadded:: 2.3
-    The use of magic ``__call()`` method was added in Symfony 2.3.
+    The use of magic ``__call()`` method was introduced in Symfony 2.3.
 
 .. caution::
 

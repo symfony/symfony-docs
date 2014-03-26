@@ -5,7 +5,7 @@ Table Helper
 ============
 
 .. versionadded:: 2.3
-    The ``table`` helper was added in Symfony 2.3.
+    The ``table`` helper was introduced in Symfony 2.3.
 
 .. caution::
 
