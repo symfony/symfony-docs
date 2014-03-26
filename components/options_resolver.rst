@@ -328,7 +328,6 @@ method, which you can use if you want to add an allowed value to the previously
 configured allowed values.
 
 .. versionadded:: 2.5
-
     The callback support for allowed values was introduced in Symfony 2.5.
 
 If you need to add some more logic to the value validation process, you can pass a callable
