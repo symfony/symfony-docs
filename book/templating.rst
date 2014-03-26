@@ -376,7 +376,7 @@ Template Naming and Locations
 -----------------------------
 
 .. versionadded:: 2.2
-    Namespaced path support was added in 2.2, allowing for template names
+    Namespaced path support was introduced in 2.2, allowing for template names
     like ``@AcmeDemo/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
     for more details.
 
@@ -783,7 +783,7 @@ in your application configuration:
         ));
 
 .. versionadded:: 2.2
-    Default templates per render function was added in Symfony 2.2
+    Default templates per render function was introduced in Symfony 2.2
 
 You can define default templates per ``render`` function (which will override
 any global default template that is defined):

@@ -67,7 +67,7 @@ Request Handling
 ~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ``handleRequest()`` method was added in Symfony 2.3.
+    The ``handleRequest()`` method was introduced in Symfony 2.3.
 
 To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method::

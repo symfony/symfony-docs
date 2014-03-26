@@ -108,7 +108,7 @@ Ignoring Attributes when Serializing
 
 .. versionadded:: 2.3
     The :method:`GetSetMethodNormalizer::setIgnoredAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes>`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 As an option, there's a way to ignore attributes from the origin object when
 serializing. To remove those attributes use the
@@ -153,7 +153,7 @@ Using Camelized Method Names for Underscored Attributes
 
 .. versionadded:: 2.3
     The :method:`GetSetMethodNormalizer::setCamelizedAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes>`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 Sometimes property names from the serialized content are underscored (e.g.
 ``first_name``).  Normally, these attributes will use get/set methods like

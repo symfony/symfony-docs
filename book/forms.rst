@@ -130,7 +130,7 @@ other things, determines which HTML form tag(s) is rendered for that field.
 Finally, you added a submit button for submitting the form to the server.
 
 .. versionadded:: 2.3
-    Support for submit buttons was added in Symfony 2.3. Before that, you had
+    Support for submit buttons was introduced in Symfony 2.3. Before that, you had
     to add buttons to the form's HTML manually.
 
 Symfony2 comes with many built-in types that will be discussed shortly
@@ -278,7 +278,7 @@ Submitting Forms with Multiple Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Support for buttons in forms was added in Symfony 2.3.
+    Support for buttons in forms was introduced in Symfony 2.3.
 
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
@@ -478,7 +478,7 @@ Disabling Validation
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was added in Symfony 2.3.
+    The ability to set ``validation_groups`` to false was introduced in Symfony 2.3.
 
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
@@ -548,7 +548,7 @@ Groups based on the Clicked Button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Support for buttons in forms was added in Symfony 2.3.
+    Support for buttons in forms was introduced in Symfony 2.3.
 
 When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,

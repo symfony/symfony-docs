@@ -9,8 +9,7 @@ The Intl Component
     access to the localization data of the `ICU library`_.
 
 .. versionadded:: 2.3
-
-    The Intl component was added in Symfony 2.3. In earlier versions of Symfony,
+    The Intl component was introduced in Symfony 2.3. In earlier versions of Symfony,
     you should use the Locale component instead.
 
 .. caution::

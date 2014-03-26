@@ -2,7 +2,7 @@ Issn
 ====
 
 .. versionadded:: 2.3
-    The Issn constraint was added in Symfony 2.3.
+    The Issn constraint was introduced in Symfony 2.3.
 
 Validates that a value is a valid `International Standard Serial Number (ISSN)`_.
 
