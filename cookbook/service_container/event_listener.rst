@@ -52,7 +52,7 @@ event is just one of the core kernel events::
     }
 
 .. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. tip::
 

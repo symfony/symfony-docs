@@ -8,7 +8,7 @@ Progress Helper
     The ``setCurrent`` method was introduced in Symfony 2.3.
 
 .. versionadded:: 2.4
-    The ``clear`` method was added in Symfony 2.4.
+    The ``clear`` method was introduced in Symfony 2.4.
 
 .. caution::
 

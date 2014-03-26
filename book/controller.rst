@@ -398,7 +398,7 @@ itself.
     via the ``container`` property.
 
 .. versionadded:: 2.4
-    The ``ContainerAwareTrait`` is new in Symfony 2.4.
+    The ``ContainerAwareTrait`` was introduced in Symfony 2.4.
 
 .. note::
 
@@ -766,7 +766,7 @@ headers and content that's sent back to the client::
     $response->headers->set('Content-Type', 'application/json');
 
 .. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. tip::
 

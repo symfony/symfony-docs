@@ -40,7 +40,7 @@ Customize Table Layout using Named Layouts
 ------------------------------------------
 
 .. versionadded:: 2.4
-    The ``TableHelper::LAYOUT_COMPACT`` layout was added in Symfony 2.4.
+    The ``TableHelper::LAYOUT_COMPACT`` layout was introduced in Symfony 2.4.
 
 The Table helper ships with three preconfigured table layouts:
 

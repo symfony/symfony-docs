@@ -12,7 +12,7 @@ The API Key Authenticator
 -------------------------
 
 .. versionadded:: 2.4
-    The ``SimplePreAuthenticatorInterface`` interface was added in Symfony 2.4.
+    The ``SimplePreAuthenticatorInterface`` interface was introduced in Symfony 2.4.
 
 Authenticating a user based on the Request information should be done via a
 pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimplePreAuthenticatorInterface`

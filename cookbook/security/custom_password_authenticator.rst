@@ -13,7 +13,7 @@ The Password Authenticator
 --------------------------
 
 .. versionadded:: 2.4
-    The ``SimpleFormAuthenticatorInterface`` interface was added in Symfony 2.4.
+    The ``SimpleFormAuthenticatorInterface`` interface was introduced in Symfony 2.4.
 
 First, create a new class that implements
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
