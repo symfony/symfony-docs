@@ -468,8 +468,8 @@ To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
     The ``priority`` value is optional, and defaults to 0.
     The higher the priority, the sooner it gets executed.
 
-kernel.cache_warmer
-...................
+Core Cache Warmers
+..................
 
 +-------------------------------------------------------------------------------------------+-----------+
 | Cache Warmer Class Name                                                                   | Priority  |
