@@ -1082,7 +1082,7 @@ Here is how you can configure the Symfony2 reverse proxy to support the
     }
 
 .. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. caution::
 

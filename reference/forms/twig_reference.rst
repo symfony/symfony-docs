@@ -317,7 +317,7 @@ object:
     The ``method`` and ``action`` variables were introduced in Symfony 2.3.
 
 .. versionadded:: 2.4
-    The ``submitted`` variable was added in Symfony 2.4.
+    The ``submitted`` variable was introduced in Symfony 2.4.
 
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |

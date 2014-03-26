@@ -6,8 +6,8 @@ Debugging a Class Loader
 ========================
 
 .. versionadded:: 2.4
-    The ``DebugClassLoader`` of the Debug component is new in Symfony 2.4.
-    Previously, it was located in the Class Loader component.
+    The ``DebugClassLoader`` of the Debug component was introduced in Symfony 2.4.
+    Previously, it was located in the ClassLoader component.
 
 The :class:`Symfony\\Component\\Debug\\DebugClassLoader` attempts to
 throw more helpful exceptions when a class isn't found by the registered

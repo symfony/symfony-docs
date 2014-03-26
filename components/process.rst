@@ -46,7 +46,7 @@ and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
 .. versionadded:: 2.4
-    The ``clearOutput()`` and ``clearErrorOutput()`` methods were added in Symfony 2.4.
+    The ``clearOutput()`` and ``clearErrorOutput()`` methods were introduced in Symfony 2.4.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and

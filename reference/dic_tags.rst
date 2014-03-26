@@ -247,8 +247,8 @@ console.command
 ---------------
 
 .. versionadded:: 2.4
-   Support for registering commands in the service container was added in
-   version 2.4.
+   Support for registering commands in the service container was introduced in
+   Symfony 2.4.
 
 **Purpose**: Add a command to the application
 
