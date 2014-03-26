@@ -226,15 +226,15 @@ If there are any issues, correct them now before moving on.
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
     and if you get an error - try the next method. This uses a command to
-    try to determine your web server user and set it as ``APACHEUSER``:
+    try to determine your web server user and set it as ``HTTPDUSER``:
 
     .. code-block:: bash
 
         $ rm -rf app/cache/*
         $ rm -rf app/logs/*
 
-        $ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        $ sudo chmod +a "$APACHEUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+        $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 
@@ -244,14 +244,14 @@ If there are any issues, correct them now before moving on.
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
     and install setfacl before using it (as is the case with Ubuntu). This
     uses a command to try to determine your web server user and set it as
-    ``APACHEUSER``:
+    ``HTTPDUSER``:
 
     .. code-block:: bash
 
-		$ APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-		$ sudo setfacl -Rn -m u:"$APACHEUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-		$ sudo setfacl -dRn -m u:"$APACHEUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-		
+		$ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+		$ sudo setfacl -Rn -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+		$ sudo setfacl -dRn -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+
     **3. Without using ACL**
 
     If you don't have access to changing the ACL of the directories, you will
@@ -269,7 +269,7 @@ If there are any issues, correct them now before moving on.
 
     Note that using the ACL is recommended when you have access to them
     on your server because changing the umask is not thread-safe.
-    
+
     **4. Use the same user for the CLI and the web server**
 
     In development environments, it is a common practice to use the same unix
