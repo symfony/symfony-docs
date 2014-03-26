@@ -68,14 +68,14 @@ You can rely on the logger to use this dependency inside a command::
     }
 
 The dependency will use the instance of
-``Symfony\\Component\\Console\\Logger\\ConsoleLogger`` as logger.
+:class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger` as logger.
 Log messages emitted will be displayed on the console output.
 
 Verbosity
 ---------
 
 Depending on the verbosity level that the command is run, messages may or
-may not be sent to the ``Symfony\\Component\\Console\\Output\\OutputInterface``
+may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance.
 
 By default, the console logger behaves like the
