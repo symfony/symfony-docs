@@ -463,9 +463,23 @@ To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
             ->addTag('kernel.cache_warmer', array('priority' => 0))
         ;
 
-The ``priority`` value is optional, and defaults to 0. The core Symfony
-listeners priorities vary from -1024 to 1024 and the warmers will be
-executed in the order of their priority.
+.. note::
+
+    The ``priority`` value is optional, and defaults to 0.
+    The higher the priority, the sooner it gets executed.
+
+kernel.cache_warmer
+..............
+
++-------------------------------------------------------------------------------------------+-----------+
+| Cache Warmer Class Name                                                                   | Priority  |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\TemplatePathsCacheWarmer`          | 20        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\RouterCacheWarmer`                 | 0         |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\TwigBundle\\CacheWarmer\\TemplateCacheCacheWarmer`               | 0         |
++-------------------------------------------------------------------------------------------+-----------+
 
 .. _dic-tags-kernel-event-listener:
 
