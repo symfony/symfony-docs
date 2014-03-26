@@ -32,8 +32,8 @@ endpoint for filesystem operations::
     }
 
 .. versionadded:: 2.4
-    The ``IOExceptionInterface`` and its ``getPath`` method are new in Symfony
-    2.4. Prior to 2.4, you would catch the ``IOException`` class.
+    The ``IOExceptionInterface`` and its ``getPath`` method were introduced in
+    Symfony 2.4. Prior to 2.4, you would catch the ``IOException`` class.
 
 .. note::
 

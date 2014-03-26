@@ -481,7 +481,7 @@ the HTTP response being returned. Use them to improve the blog:
     $response->send();
 
 .. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,

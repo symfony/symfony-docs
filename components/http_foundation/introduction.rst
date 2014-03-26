@@ -254,7 +254,7 @@ by using the following methods:
   returns the list of accepted charsets ordered by descending quality;
 
   .. versionadded:: 2.4
-      The ``getEncodings()`` method was added in Symfony 2.4.
+      The ``getEncodings()`` method was introduced in Symfony 2.4.
 
 .. versionadded:: 2.2
     The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
@@ -289,7 +289,7 @@ Overriding the Request
 
 .. versionadded:: 2.4
     The :method:`Symfony\\Component\\HttpFoundation\\Request::setFactory`
-    method was added in Symfony 2.4.
+    method was introduced in Symfony 2.4.
 
 The ``Request`` class should not be overridden as it is a data object that
 represents an HTTP message. But when moving from a legacy system, adding
@@ -339,7 +339,7 @@ code, and an array of HTTP headers::
     );
 
 .. versionadded:: 2.4
-    Support for HTTP status code constants was added in Symfony 2.4.
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 These information can also be manipulated after the Response object creation::
 

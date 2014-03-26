@@ -141,7 +141,7 @@ Tags
 ----
 
 .. versionadded:: 2.4
-    The stopwatch tag was added in Symfony 2.4.
+    The stopwatch tag was introduced in Symfony 2.4.
 
 +---------------------------------------------------+--------------------------------------------------------------------+
 | Tag Syntax                                        | Usage                                                              |

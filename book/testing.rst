@@ -311,7 +311,7 @@ document::
         $this->assertTrue($client->getResponse()->isRedirect());
 
     .. versionadded:: 2.4
-        Support for HTTP status code constants was added with Symfony 2.4.
+        Support for HTTP status code constants was introduced in Symfony 2.4.
 
 .. index::
    single: Tests; Client

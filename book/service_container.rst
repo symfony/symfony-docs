@@ -836,7 +836,7 @@ Injecting the Request
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.4
-    The ``request_stack`` service was introduced in version 2.4.
+    The ``request_stack`` service was introduced in Symfony 2.4.
 
 As of Symfony 2.4, instead of injecting the ``request`` service, you should
 inject the ``request_stack`` service and access the ``Request`` by calling

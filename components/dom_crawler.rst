@@ -449,7 +449,7 @@ Selecting Invalid Choice Values
 
 .. versionadded:: 2.4
     The :method:`Symfony\\Component\\DomCrawler\\Form::disableValidation`
-    method was added in Symfony 2.4.
+    method was introduced in Symfony 2.4.
 
 By default, choice fields (select, radio) have internal validation activated
 to prevent you from setting invalid values. If you want to be able to set
