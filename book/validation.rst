@@ -583,8 +583,11 @@ Getters
 
 Constraints can also be applied to the return value of a method. Symfony2
 allows you to add a constraint to any public method whose name starts with
-"get" or "is". In this guide, both of these types of methods are referred
-to as "getters".
+"get", "is" or "has". In this guide, these types of methods are referred to
+as "getters".
+
+.. versionadded:: 2.5
+    Support for methods starting with ``has`` was introduced in Symfony 2.5.
 
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
@@ -665,9 +668,9 @@ Now, create the ``isPasswordLegal()`` method, and include the logic you need::
 .. note::
 
     The keen-eyed among you will have noticed that the prefix of the getter
-    ("get" or "is") is omitted in the mapping. This allows you to move the
-    constraint to a property with the same name later (or vice versa) without
-    changing your validation logic.
+    ("get", "is" or "has") is omitted in the mapping. This allows you to move
+    the constraint to a property with the same name later (or vice versa)
+    without changing your validation logic.
 
 .. _validation-class-target:
 
