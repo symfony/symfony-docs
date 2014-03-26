@@ -9,10 +9,9 @@ Using the Logger
     introduced in Symfony 2.5.
 
 The Console component comes with a standalone logger complying with the
-`PSR-3_` standard.
-Depending of the verbosity setting, log messages will be sent to the
-:class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance
-passed as a parameter to the constructor.
+`PSR-3`_ standard. Depending on the verbosity setting, log messages will
+be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
+instance passed as a parameter to the constructor.
 
 The logger does not have any external dependency except ``php-fig/log``.
 This is useful for console applications and commands needing a lightweight
@@ -63,20 +62,21 @@ You can rely on the logger to use this dependency inside a command::
         {
             $logger = new ConsoleLogger($output);
 
-            $myDependency = MyDependency($logger);
+            $myDependency = new MyDependency($logger);
             $myDependency->doStuff();
         }
     }
 
 The dependency will use the instance of
-``Symfony\\Component\\Console\\Logger\\ConsoleLogger`` as logger.
+:class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger` as logger.
 Log messages emitted will be displayed on the console output.
 
 Verbosity
 ---------
 
 Depending on the verbosity level that the command is run, messages may or
-may not be sent to the ``Symfony\\Component\\Console\\Output\\OutputInterface`` instance.
+may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
+instance.
 
 By default, the console logger behaves like the
 :doc:`Monolog's Console Handler </cookbook/logging/monolog_console>`.
@@ -99,7 +99,7 @@ level. This behavior is configurable through the third parameter of the
 constructor::
 
     // ...
-    private $formatLevelMap = array(
+    $formatLevelMap = array(
         LogLevel::CRITICAL => self::INFO,
         LogLevel::DEBUG    => self::ERROR,
     );
