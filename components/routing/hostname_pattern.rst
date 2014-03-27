@@ -176,16 +176,16 @@ instance, if you want to match both ``m.example.com`` and
 
         return $collection;
 
-.. tip::
-
-    Make sure you also include a default option for the ``subdomain``
-    placeholder, otherwise you need to include the subdomains value each time
-    you generate the route.
-
 .. sidebar:: Using Service Parameters
 
     You can also use service parameters if you do not want to hardcode the
     hostname:
+
+    .. tip::
+
+       Make sure you also include a default option for the ``subdomain``
+       placeholder, otherwise you need to include the subdomains value each time
+       you generate the route.
 
     .. configuration-block::
 
@@ -194,7 +194,9 @@ instance, if you want to match both ``m.example.com`` and
             mobile_homepage:
                 path:     /
                 host:     "m.{domain}"
-                defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
+                defaults:
+                    _controller: AcmeDemoBundle:Main:mobileHomepage
+                    domain: "%domain%"
                 requirements:
                     domain: "%domain%"
 
@@ -212,6 +214,7 @@ instance, if you want to match both ``m.example.com`` and
 
                 <route id="mobile_homepage" path="/" host="m.example.com">
                     <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
+                    <default key="domain">%domain%</requirement>
                     <requirement key="domain">%domain%</requirement>
                 </route>
 
@@ -228,6 +231,7 @@ instance, if you want to match both ``m.example.com`` and
             $collection = new RouteCollection();
             $collection->add('mobile_homepage', new Route('/', array(
                 '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
+                'domain' => '%domain%',
             ), array(
                 'domain' => '%domain%',
             ), array(), 'm.{domain}'));
