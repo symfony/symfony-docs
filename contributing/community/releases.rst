@@ -25,7 +25,7 @@ with a development period, followed by a maintenance period.
 Development
 -----------
 
-The first six-month period is divided into two phases:
+The full development period lasts six months and is divided into two phases:
 
 * *Development*: *Four months* to add new features and to enhance existing
   ones;
@@ -126,11 +126,12 @@ This results in very predictable dates and maintenance periods:
 Backward Compatibility
 ----------------------
 
-Our `Backwards Compatibility Promise`_ is very strict and allows developers to
-upgrade with confidence from one minor version of Symfony to the next one.
+Our :doc:`Backwards Compatibility Promise </contributing/code/bc>`_ is very
+strict and allows developers to upgrade with confidence from one minor version
+of Symfony to the next one.
 
 Whenever keeping backward compatibility is not possible, the feature, the
-enhancement, or the bug fix will be scheduled for the next major version.
+enhancement or the bug fix will be scheduled for the next major version.
 
 .. note::
 
