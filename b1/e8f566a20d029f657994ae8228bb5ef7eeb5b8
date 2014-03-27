@@ -1,0 +1,52 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2013-12-20T10:09:59Z
+
+-1 We may need to improve the text in the sidebar, that's why I leave this open.
+
+The sidebar is related to the tip above it:
+
+ > Make sure you also include a default option for the ``subdomain``
+ > placeholder, otherwise you need to include the subdomains value each time
+ > you generate the route.
+
+Here we say that you should set a default domain. Then, we say that you properbly don't want to hardcode it in the routing file, so you can use a parameter for that. Of course, you can also include parameters in the requirements, but that wasn't the idea of this sidebar.
+
+---------------------------------------------------------------------------
+
+by MarieMinasyan at 2013-12-20T10:12:30Z
+
+The parameter in the requirements won't work (tested yesterday), that's why I made this PR
+
+---------------------------------------------------------------------------
+
+by stof at 2013-12-24T10:55:27Z
+
+@MarieMinasyan the requirement is here to restrict the allowed values for the placeholder. It is not the same than defining a default
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-18T16:46:30Z
+
+@WouterJ We already have that nice note above. But what do you think about removing that note and just adding a `subdomain` key to `defaults` with a little comment above it?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-18T18:11:34Z
+
+@weaverryan I think we should move the tip box above the code block and then indeed add the default setting to the example. That should remove the confusion.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-18T19:30:03Z
+
+I like it - @MarieMinasyan are you able to make these changes? Let us know! And no worries, if you can't - we can open a new PR. But since you brought up the issue, we'd love to give you credit for your contribution ;).
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by MarieMinasyan at 2014-03-18T22:48:26Z
+
+Hi,
+Yes, I'll gladly do the changes :)
