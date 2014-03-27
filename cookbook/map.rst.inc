@@ -37,6 +37,7 @@
   * :doc:`/cookbook/console/usage`
   * :doc:`/cookbook/console/sending_emails`
   * :doc:`/cookbook/console/logging`
+  * :doc:`/cookbook/console/commands_as_services`
 
 * :doc:`/cookbook/controller/index`
 
