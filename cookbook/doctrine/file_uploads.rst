@@ -410,6 +410,14 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         }
     }
 
+.. caution::
+
+   If changes to your entity are handled by a Doctrine event listener or event 
+   subscriber, the ``preUpdate()`` callback must notify Doctrine about the changes 
+   being done.
+   For full reference on preUpdate event restrictions, see `preUpdate`_ in the 
+   Doctrine Events documentation.
+
 The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
 entity is ever deleted.
@@ -546,3 +554,5 @@ You'll notice in this case that you need to do a little bit more work in
 order to remove the file. Before it's removed, you must store the file path
 (since it depends on the id). Then, once the object has been fully removed
 from the database, you can safely delete the file (in ``PostRemove``).
+
+.. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
