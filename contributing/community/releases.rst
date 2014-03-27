@@ -126,7 +126,7 @@ This results in very predictable dates and maintenance periods:
 Backward Compatibility
 ----------------------
 
-Our :doc:`Backwards Compatibility Promise </contributing/code/bc>`_ is very
+Our :doc:`Backwards Compatibility Promise </contributing/code/bc>` is very
 strict and allows developers to upgrade with confidence from one minor version
 of Symfony to the next one.
 
