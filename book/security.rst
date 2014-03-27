@@ -20,8 +20,8 @@ perform a certain action.
 .. image:: /images/book/security_authentication_authorization.png
    :align: center
 
-Since the best way to learn is to see an example, let's start by securing your
-application with HTTP Basic authentication.
+Since the best way to learn is to see an example, just imagine that you want
+to secure your application with HTTP Basic authentication.
 
 .. note::
 
