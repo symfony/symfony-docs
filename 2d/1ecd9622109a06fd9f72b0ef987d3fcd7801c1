@@ -1,0 +1,128 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-01-30T15:31:14Z
+
+I'm not sure if I understand the reasons for this change. Can you please explain them in more detail (maybe with an example)?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-30T16:19:44Z
+
+Could you please add the [PR format](http://symfony.com/doc/current/contributing/documentation/overview.html#pull-request-format) to your PR description?
+
+You should not add this in the code imo, a paragraph after the example will do a better job.
+
+But, just like @xabbuh , I don't really understand your change (but, tbh, I haven't used doctrine that much)
+
+---------------------------------------------------------------------------
+
+by juanmf at 2014-01-31T12:12:05Z
+
+I see, I agree. I'll update it asap.
+Thanks!
+El ene 30, 2014 1:19 p.m., "Wouter J" <notifications@github.com> escribió:
+
+> You should not add this in the code imo, a paragraph after the example
+> will do a better job.
+>
+> But, just like @xabbuh <https://github.com/xabbuh> , I don't really
+> understand your change (but, tbh, I haven't used doctrine that much)
+>
+> --
+> Reply to this email directly or view it on GitHub<https://github.com/symfony/symfony-docs/pull/3525#issuecomment-33703454>
+> .
+>
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-02-04T03:23:41Z
+
+The issue is that when you use a subscriber (or a listener), any changes made to your entity in `preUpdate` (it doesn't affect `prePersist`) aren't actually taken into account when the entity is saved. You're suppose to call `setNewValue`, or even more commonly, do this: http://stackoverflow.com/a/8930276/805814).
+
+The problem is that this *isn't* an even listener/subscriber. However, using an event listener is actually better, so I think we should find a place for the warning. But it needs to be much shorter. Do you think a short `caution` note below the code block would be enough? Heck, I would be ok with linking straight to the stackoverflow answer - the Doctrine docs mention this, but not as clearly).
+
+---------------------------------------------------------------------------
+
+by juanmf at 2014-02-04T03:58:41Z
+
+I agree that i'd be enough with a caution note, but the code example in
+that stackoverflow is not that clear. I don't see why you should fetch the
+UnitOfWork when you have the chance to acces it via:
+
+       $document->setPdfPath($fileRelativePath);
+
+       $document->setPdfPages(5);
+
+       // Doctrine won't track direct manipulation in document at this
+> point, in updates.
+>        if ($args instanceof PreUpdateEventArgs) {
+>                 $args->setNewValue('pdfPath', $fileRelativePath);
+>                 $args->setNewValue('pdfPages', $document->getPdfPages());
+>        }
+
+Besides updating the document's record, you need to call setNewValue() when
+in preUpdate. The above code works for me in my event subscriber. I find it
+much clear than:
+
+$em = $args->getEntityManager();
+$uow = $em->getUnitOfWork();
+$meta = $em->getClassMetadata(get_class($entity));
+$uow->recomputeSingleEntityChangeSet($meta, $entity);
+
+Even more, in Doctrine Docs, they suggest using $args->setNewValue();
+
+On Tue, Feb 4, 2014 at 1:23 AM, Ryan Weaver <notifications@github.com>wrote:
+
+> The issue is that when you use a subscriber (or a listener), any changes
+> made to your entity in preUpdate (it doesn't affect prePersist) aren't
+> actually taken into account when the entity is saved. You're suppose to
+> call setNewValue, or even more commonly, do this:
+> http://stackoverflow.com/a/8930276/805814).
+>
+> The problem is that this *isn't* an even listener/subscriber. However,
+> using an event listener is actually better, so I think we should find a
+> place for the warning. But it needs to be much shorter. Do you think a
+> short caution note below the code block would be enough? Heck, I would be
+> ok with linking straight to the stackoverflow answer - the Doctrine docs
+> mention this, but not as clearly).
+>
+> --
+> Reply to this email directly or view it on GitHub<https://github.com/symfony/symfony-docs/pull/3525#issuecomment-34027374>
+> .
+>
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-18T19:07:08Z
+
+I've just proposed a few changes, then I think we should merge this.
+
+More importantly, this entry is a real mess - I really dislike it. I think we should *only* show uploading happening via a Doctrine listener, and not via lifecycle events. In fact, even better would be an ORM-agnostic cookbook entry, where we show uploading being done properly in a service, with a little section on the end showing up you can trigger this automatically with a Doctrine listener (whereas in the agnostic part, we'd show the service function being called manually in a controller). OR, we should just link to VichUploaderBundle and make sure it's documentation is rock solid. VichUploaderBundle also helps solve the problem of how to create a link to the asset after uploading, a second piece of all of this that's very important and too hard currently.
+
+Thoughts?
+
+See #2346 :)
+
+---------------------------------------------------------------------------
+
+by juanmf at 2014-03-21T20:50:37Z
+
+I like the idea of a service, with kernel as a dependency for getting the project root dir without __DIR__.
+As for the link part, I'd like to see it with multiple CDN configuration.
+An issue I'm facing is to create a Document Scannig software that allows the assets (PDFs) to be hosted at each client's network, but the web server is centralized, so each client will have one or more CDNs to which the PDF link must point.
+So the CDN server URL should be persisted to database and configurable. and templates should prefix relative links appropriately.
+I'd also recommend ways to prevent storage outage. Maybe a directory structure that will enable deployment of uploaded files in different mount points..
+
+---------------------------------------------------------------------------
+
+by juanmf at 2014-03-24T16:41:24Z
+
+Hum..
+I think I messed it up. @weaverryan commented on the 1st revission in wich I put a code snipet, that was replaced by a caution note, and now I reverted it 'cause I thought it was a suggestion. @weaverryan could you revise the version before the last anf give your insight?
+Thanks & sorry.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-24T20:16:34Z
+
+@juanmf after those 2 changes suggested by @xabbuh, I think this is ready!
