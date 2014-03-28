@@ -1003,7 +1003,7 @@ By default only public services are shown, but you can also view private service
 
 .. note::
 
-    If a private service is only used as an argument to just one other service,
+    If a private service is only used as an argument to just *one* other service,
     it won't be displayed by the ``container:debug`` command, even when using
     the ``--show-private`` option. See :ref:`inlined-private-services` for a
     more detailed explanation.
