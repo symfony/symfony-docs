@@ -123,11 +123,11 @@ This results in very predictable dates and maintenance periods:
     instance), you can automatically receive an email notification if you
     subscribed on the `roadmap notification`_ page.
 
-Backward Compatibility
-----------------------
+Backwards Compatibility
+-----------------------
 
-Our `Backwards Compatibility Promise`_ is very strict and allows developers to
-upgrade with confidence from one minor version of Symfony to the next one.
+:doc:`/contributing/code/bc` is very strict and allows developers to upgrade
+with confidence from one minor version of Symfony to the next one.
 
 Whenever keeping backward compatibility is not possible, the feature, the
 enhancement, or the bug fix will be scheduled for the next major version.
