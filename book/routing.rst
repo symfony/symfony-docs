@@ -1134,10 +1134,10 @@ Generating URLs
 ---------------
 
 The routing system should also be used to generate URLs. In reality, routing
-is a bi-directional system: mapping the URL to a controller+parameters and
+is a bidirectional system: mapping the URL to a controller+parameters and
 a route+parameters back to a URL. The
 :method:`Symfony\\Component\\Routing\\Router::match` and
-:method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
+:method:`Symfony\\Component\\Routing\\Router::generate` methods form this bidirectional
 system. Take the ``blog_show`` example route from earlier::
 
     $params = $this->get('router')->match('/blog/my-blog-post');
@@ -1272,7 +1272,7 @@ Summary
 Routing is a system for mapping the URL of incoming requests to the controller
 function that should be called to process the request. It both allows you
 to specify beautiful URLs and keeps the functionality of your application
-decoupled from those URLs. Routing is a two-way mechanism, meaning that it
+decoupled from those URLs. Routing is a bidirectional mechanism, meaning that it
 should also be used to generate URLs.
 
 Learn more from the Cookbook
