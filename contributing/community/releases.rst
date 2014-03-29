@@ -179,3 +179,4 @@ version is published every two years and there is a year to upgrade.
 .. _SensioLabs:     http://sensiolabs.com/
 .. _roadmap notification: http://symfony.com/roadmap
 .. _timeline calculator: http://symfony.com/roadmap
+.. _Backwards Compatibility Promise: http://symfony.com/doc/2.3/contributing/code/bc.html
