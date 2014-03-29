@@ -1260,11 +1260,10 @@ From a template, it looks like this:
 
 .. note::
 
-    The host that's used when generating an absolute URL is the host of
-    the current ``Request`` object. This is detected automatically. But if
-    you generate absolute URLs for scripts run from the command line, this
-    won't work. But don't worry! Just see :doc:`/cookbook/console/sending_emails`
-    for details.
+    The host that's used when generating an absolute URL is automatically
+    detected using the current ``Request`` object. When generating absolute
+    URLs from outside the web context (for instance in a console command) this
+    won't work. See :doc:`/cookbook/console/sending_emails` for details.
 
 Summary
 -------
