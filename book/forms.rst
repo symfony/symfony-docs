@@ -173,7 +173,7 @@ helper functions:
 
 That's it! By printing ``form(form)``, each field in the form is rendered, along
 with a label and error message (if there is one). The ``form`` function also
-surrounds everything in the necessary HTML ``form`` tag. As easy as this is,
+surrounds everything in the necessary HTML ``<form>`` tag. As easy as this is,
 it's not very flexible (yet). Usually, you'll want to render each form field
 individually so you can control how the form looks. You'll learn how to do
 that in the ":ref:`form-rendering-template`" section.
@@ -268,7 +268,8 @@ possible paths:
    .. note::
 
       Redirecting a user after a successful form submission prevents the user
-      from being able to hit "refresh" and re-post the data.
+      from being able to hit the "Refresh" button of their browser and re-post
+      the data.
 
 .. index::
    single: Forms; Multiple Submit Buttons
