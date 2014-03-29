@@ -1168,12 +1168,15 @@ route. With this information, any URL can easily be generated::
 
 .. note::
 
-    In controllers that extend Symfony's base
+    In controllers that don't extend Symfony's base
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`,
-    you can use the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
-    method, which calls the router service's
-    :method:`Symfony\\Component\\Routing\\Router::generate` method.
+    you can use the ``router`` service's
+    :method:`Symfony\\Component\\Routing\\Router::generate` method::
+
+        $url = $this->get('router')->generate(
+            'blog_show',
+            array('slug' => 'my-blog-post')
+        );
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
