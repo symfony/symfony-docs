@@ -1173,10 +1173,20 @@ route. With this information, any URL can easily be generated::
     you can use the ``router`` service's
     :method:`Symfony\\Component\\Routing\\Router::generate` method::
 
-        $url = $this->get('router')->generate(
-            'blog_show',
-            array('slug' => 'my-blog-post')
-        );
+        use Symfony\Component\DependencyInjection\ContainerAware;
+
+        class MainController extends ContainerAware
+        {
+            public function showAction($slug)
+            {
+                // ...
+
+                $url = $this->container->get('router')->generate(
+                    'blog_show',
+                    array('slug' => 'my-blog-post')
+                );
+            }
+        }
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
@@ -1266,7 +1276,8 @@ From a template, it looks like this:
     The host that's used when generating an absolute URL is automatically
     detected using the current ``Request`` object. When generating absolute
     URLs from outside the web context (for instance in a console command) this
-    won't work. See :doc:`/cookbook/console/sending_emails` for details.
+    doesn't work. See :doc:`/cookbook/console/sending_emails` to learn how to
+    solve this problem.
 
 Summary
 -------
