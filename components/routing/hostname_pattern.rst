@@ -180,9 +180,9 @@ instance, if you want to match both ``m.example.com`` and
 
     .. tip::
 
-       Make sure you also include a default option for the ``subdomain``
-       placeholder, otherwise you need to include the subdomains value each time
-       you generate the route.
+       Make sure you also include a default option for the ``domain`` placeholder,
+       otherwise you need to include a domain value each time you generate
+       a URL using the route.
 
     .. configuration-block::
 
