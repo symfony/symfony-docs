@@ -18,6 +18,8 @@ However, there are use-cases when you don't want a service to be public. This
 is common when a service is only defined because it could be used as an
 argument for another service.
 
+.. _inlined-private-services:
+
 .. note::
 
     If you use a private service as an argument to only one other service,
