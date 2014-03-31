@@ -1007,6 +1007,25 @@ If you need absolute URLs for assets, you can set the third argument (or the
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>" alt="Symfony!" />
 
+.. versionadded:: 2.5
+    Versioned URLs for assets were introduced in Symfony 2.5.
+
+If you need versioned URLs for assets, you can set the fourth argument (or the
+``version`` argument) to the desired version:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <img src="{{ asset('images/logo.png', version=3.0) }}" alt="Symfony!" />
+
+    .. code-block:: html+php
+
+        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>" alt="Symfony!" />
+
+If you dont give a version or pass ``null``, the default package version will
+be used. If you pass ``false``, versioned URL will be deactivated.
+
 .. index::
    single: Templating; Including stylesheets and JavaScripts
    single: Stylesheets; Including stylesheets
