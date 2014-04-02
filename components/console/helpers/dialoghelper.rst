@@ -113,7 +113,7 @@ method::
         'Please enter the name of the bundle',
         function ($answer) {
             if ('Bundle' !== substr($answer, -6)) {
-                throw new \RunTimeException(
+                throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }

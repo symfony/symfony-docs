@@ -1224,10 +1224,10 @@ Generating URLs
 ---------------
 
 The routing system should also be used to generate URLs. In reality, routing
-is a bi-directional system: mapping the URL to a controller+parameters and
+is a bidirectional system: mapping the URL to a controller+parameters and
 a route+parameters back to a URL. The
 :method:`Symfony\\Component\\Routing\\Router::match` and
-:method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
+:method:`Symfony\\Component\\Routing\\Router::generate` methods form this bidirectional
 system. Take the ``blog_show`` example route from earlier::
 
     $params = $this->get('router')->match('/blog/my-blog-post');
@@ -1258,12 +1258,25 @@ route. With this information, any URL can easily be generated::
 
 .. note::
 
-    In controllers that extend Symfony's base
+    In controllers that don't extend Symfony's base
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`,
-    you can use the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
-    method, which calls the router service's
-    :method:`Symfony\\Component\\Routing\\Router::generate` method.
+    you can use the ``router`` service's
+    :method:`Symfony\\Component\\Routing\\Router::generate` method::
+
+        use Symfony\Component\DependencyInjection\ContainerAware;
+
+        class MainController extends ContainerAware
+        {
+            public function showAction($slug)
+            {
+                // ...
+
+                $url = $this->container->get('router')->generate(
+                    'blog_show',
+                    array('slug' => 'my-blog-post')
+                );
+            }
+        }
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
@@ -1352,11 +1365,11 @@ to ``generateUrl()``:
 
 .. note::
 
-    The host that's used when generating an absolute URL is the host of
-    the current ``Request`` object. This is detected automatically. But if
-    you generate absolute URLs for scripts run from the command line, this
-    won't work. But don't worry! Just see :doc:`/cookbook/console/sending_emails`
-    for details.
+    The host that's used when generating an absolute URL is automatically
+    detected using the current ``Request`` object. When generating absolute
+    URLs from outside the web context (for instance in a console command) this
+    doesn't work. See :doc:`/cookbook/console/sending_emails` to learn how to
+    solve this problem.
 
 Summary
 -------
@@ -1364,7 +1377,7 @@ Summary
 Routing is a system for mapping the URL of incoming requests to the controller
 function that should be called to process the request. It both allows you
 to specify beautiful URLs and keeps the functionality of your application
-decoupled from those URLs. Routing is a two-way mechanism, meaning that it
+decoupled from those URLs. Routing is a bidirectional mechanism, meaning that it
 should also be used to generate URLs.
 
 Learn more from the Cookbook
