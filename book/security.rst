@@ -181,6 +181,11 @@ firewall is activated does *not* mean, however, that the HTTP authentication
 username and password box is displayed for every URL. For example, any user
 can access ``/foo`` without being prompted to authenticate.
 
+.. tip::
+
+    You can also match a request against other details of the request (e.g. host).
+    For more information and examples read :doc:`/cookbook/security/firewall_restriction`.
+
 .. image:: /images/book/security_anonymous_user_access.png
    :align: center
 
@@ -2135,7 +2140,7 @@ Learn more from the Cookbook
 * :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
-* :doc:`How to Restrict Firewalls to a Specific Host </cookbook/security/host_restriction>`
+* :doc:`How to Restrict Firewalls to a Specific Request </cookbook/security/firewall_restriction>`
 
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
