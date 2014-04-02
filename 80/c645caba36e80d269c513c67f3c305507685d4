@@ -1,0 +1,58 @@
+---------------------------------------------------------------------------
+
+by saro0h at 2014-03-25T19:50:06Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-25T20:40:16Z
+
+For the next time you submit a fix: If you answer "all" to "Applies to", you should base your PR on the 2.3 branch (since it's the oldest still maintained version). If you answer with a version to "Applies to", it should be based on the branch representing that version (where `master` is the dev version)
+
+---------------------------------------------------------------------------
+
+by tony-co at 2014-03-25T21:43:57Z
+
+@WouterJ Ok got it.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-26T14:54:29Z
+
+Actually, this is not true. The core cache warmers are:
+- [templating cache warmer](https://github.com/symfony/symfony/blob/08ec911c8e67ded8a5e02c3c57598af7eb1f0f04/src/Symfony/Bundle/FrameworkBundle/Resources/config/templating.xml#L42-46)
+- [routing cache warmer](https://github.com/symfony/symfony/blob/599c86509e06ebc06b71b04b445c0a9721c17ec4/src/Symfony/Bundle/FrameworkBundle/Resources/config/routing.xml#L86-89)
+- [twig cache warmer](https://github.com/symfony/symfony/blob/48c9985e73e551ecf1be8bd8d650e85974c9a6ed/src/Symfony/Bundle/TwigBundle/Resources/config/twig.xml#L40-44)
+
+One has a priority of `20`, the other two have a priority of `0`.
+
+The previous sentence was also not true, there are no limitations of the priority.
+
+---------------------------------------------------------------------------
+
+by tony-co at 2014-03-26T15:25:58Z
+
+Indeed.
+I was confused by the table just below listing all listeners with their priorities while this phrase is supposed to be only related to cache warmers. Well maybe this phrase should be move out of the cache warmers paragraph and should explain the priority system for all listeners, what do you think @WouterJ ?
+http://symfony.com/doc/current/reference/dic_tags.html#kernel-event-listener
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-26T15:34:42Z
+
+Cache warmers are no listeners.
+
+However, I think we should remove "The core Symfony listeners priorities vary from -1024 to 1024 and the warmers will be executed in the order of their priority." completely. It doesn't make sense and is not really usefull... However, we can add a table like for the listeners showing the 3 core cache warmers and their priority.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-03-26T15:37:13Z
+
+We need a sentence that explain "The bigger the priority, the sooner is the execution".
+
+---------------------------------------------------------------------------
+
+by tony-co at 2014-03-26T16:40:16Z
+
+Okay, I removed the phrasing and put a quick note about priority along with a table of the three cache warmers.
