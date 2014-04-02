@@ -183,8 +183,9 @@ can access ``/foo`` without being prompted to authenticate.
 
 .. tip::
 
-    You can also match a request against other details of the request (e.g. host, method). For more
-    information and examples read :doc:`/cookbook/security/firewall_restriction`.
+    You can also match a request against other details of the request (e.g.
+    host, method). For more information and examples read
+    :doc:`/cookbook/security/firewall_restriction`.
 
 .. image:: /images/book/security_anonymous_user_access.png
    :align: center
