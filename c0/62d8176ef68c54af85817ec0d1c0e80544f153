@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-12T18:25:57Z
+
+You documented it right the correct way: Saying what will happen and what is required for it to work
+
+I see no other problems with this PR, except that you need to add a `.. versionadded:: 2.5` box before the headline of the strict option saying "The `strict` option was introduced in Symfony 2.5."
+
+---------------------------------------------------------------------------
+
+by egulias at 2014-01-13T22:13:28Z
+
+Thanks @xabbuh and @WouterJ for your pacience :)
+
+---------------------------------------------------------------------------
+
+by egulias at 2014-01-16T23:11:38Z
+
+Thank you! I hope now is correct :)
+
+---------------------------------------------------------------------------
+
+by egulias at 2014-04-01T07:46:53Z
+
+Hi @WouterJ the PR has been merged so I guess this can be merged too. Let me know any issues.
+Thanks for the help!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-01T07:53:47Z
+
+:+1: Thanks for all the work you spent on this topic, @egulias!
+
+---------------------------------------------------------------------------
+
+by egulias at 2014-04-01T08:37:14Z
+
+:smile:
