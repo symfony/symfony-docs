@@ -489,14 +489,20 @@ For specific details on using the profiler inside a test, see the
 Redirecting
 ~~~~~~~~~~~
 
-When a request returns a redirect response, the client does not follow
-it automatically. You can examine the response and force a redirection
-afterwards with the ``followRedirect()`` method::
+When a request returns a redirect response, the client follows it
+automatically. You can prevent this by issuing the
+:method:`Symfony\\Component\\HttpKernel\\Client::followRedirects` method::
+
+    $client->followRedirects(false);
+
+You can examine the response and force a redirection afterwards  with
+the :method:`Symfony\\Component\\HttpKernel\\Client::followRedirects` method::
 
     $crawler = $client->followRedirect();
 
 If you want the client to automatically follow all redirects, you can
-force him with the ``followRedirects()`` method::
+force him with the
+:method:`Symfony\\Component\\HttpKernel\\Client::followRedirects` method::
 
     $client->followRedirects();
 
