@@ -666,10 +666,10 @@ from any controller::
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
-        // in another controller for another request
-        $foo = $session->get('foo');
+        // get the attribute set by another controller in another request
+        $foobar = $session->get('foobar');
 
-        // use a default value if the key doesn't exist
+        // use a default value if the attribute doesn't exist
         $filters = $session->get('filters', array());
     }
 
