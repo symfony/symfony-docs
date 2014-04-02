@@ -1167,6 +1167,13 @@ By default only public services are shown, but you can also view private service
 
     $ php app/console container:debug --show-private
 
+.. note::
+
+    If a private service is only used as an argument to just *one* other service,
+    it won't be displayed by the ``container:debug`` command, even when using
+    the ``--show-private`` option. See :ref:`Inline Private Services <inlined-private-services>`
+    for more details.
+
 You can get more detailed information about a particular service by specifying
 its id:
 
