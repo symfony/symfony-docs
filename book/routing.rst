@@ -1240,7 +1240,9 @@ method::
     $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
 
-From a template, it looks like this:
+From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL) 
+rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true`` 
+to ``generateUrl()``:
 
 .. configuration-block::
 
