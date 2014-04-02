@@ -89,8 +89,8 @@ of your bundle::
     directory, put the test in the ``Tests/Utility/`` directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``bootstrap.php.cache`` file (as configured by default in the ``phpunit.xml.dist``
-file).
+via the ``bootstrap.php.cache`` file (as configured by default in the
+``app/phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
 
@@ -777,12 +777,12 @@ machine only.
 
 .. tip::
 
-    Store the ``phpunit.xml.dist`` file in your code repository and ignore the
-    ``phpunit.xml`` file.
+    Store the ``app/phpunit.xml.dist`` file in your code repository and ignore
+    the ``app/phpunit.xml`` file.
 
 By default, only the tests from your own custom bundles stored in the standard
 directories ``src/*/*Bundle/Tests`` or ``src/*/Bundle/*Bundle/Tests`` are run
-by the ``phpunit`` command, as configured in the ``phpunit.xml.dist`` file:
+by the ``phpunit`` command, as configured in the ``app/phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
