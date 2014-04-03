@@ -21,7 +21,7 @@ and corresponding MIME type.
 Configure your New Format
 -------------------------
 
-The FrameworkBundle registers a subscriber that will add formats to incomming requests.
+The FrameworkBundle registers a subscriber that will add formats to incoming requests.
 
 All you have to do is to configure the ``jsonp`` format:
 
