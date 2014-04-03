@@ -65,7 +65,7 @@ matches the configured ``pattern``.
         ));
 
 The ``pattern`` is a regular expression. In this example, the firewall will only be 
-activated if the URL starts (due to the ``^`` regex character) with ``/admin`. If 
+activated if the URL starts (due to the ``^`` regex character) with ``/admin``. If
 the URL does not match this pattern, the firewall will not be activated and subsequent 
 firewalls will have the opportunity to be matched for this request.
 
