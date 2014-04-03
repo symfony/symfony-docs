@@ -291,6 +291,13 @@ would cause an exception to be raised for a non-abstract service.
    In order for parent dependencies to resolve, the ``ContainerBuilder`` must
    first be compiled. See :doc:`/components/dependency_injection/compilation`
    for more details.
+   
+.. tip::
+
+    In the examples shown, the classes sharing the same configuration also extend
+    from the same parent in PHP. This does not need to be the case though, you can
+    extract common parts of similar service definitions into a parent service without
+    also extending a parent class in PHP.
 
 Overriding Parent Dependencies
 ------------------------------
@@ -399,123 +406,12 @@ The ``GreetingCardManager`` will receive the same dependencies as before,
 but the ``NewsletterManager`` will be passed the ``my_alternative_mailer``
 instead of the ``my_mailer`` service.
 
-Collections of Dependencies
----------------------------
+.. caution::
 
-It should be noted that the overridden setter method in the previous example
-is actually called twice - once per the parent definition and once per the
-child definition. In the previous example, that was fine, since the second
-``setMailer`` call replaces mailer object set by the first call.
-
-In some cases, however, this can be a problem. For example, if the overridden
-method call involves adding something to a collection, then two objects will
-be added to that collection. The following shows such a case, if the parent
-class looks like this::
-
-    abstract class MailManager
-    {
-        protected $filters;
-
-        public function addFilter($filter)
-        {
-            $this->filters[] = $filter;
-        }
-
-        // ...
-    }
-
-If you had the following config:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # ...
-        services:
-            my_filter:
-                # ...
-            another_filter:
-                # ...
-
-            mail_manager:
-                abstract: true
-                calls:
-                    - [addFilter, ["@my_filter"]]
-
-            newsletter_manager:
-                class:  "%newsletter_manager.class%"
-                parent: mail_manager
-                calls:
-                    - [addFilter, ["@another_filter"]]
-
-    .. code-block:: xml
-
-        <!-- ... -->
-
-        <services>
-            <service id="my_filter">
-              <!-- ... -->
-            </service>
-
-            <service id="another_filter">
-              <!-- ... -->
-            </service>
-
-            <service id="mail_manager" abstract="true">
-                <call method="addFilter">
-                     <argument type="service" id="my_filter" />
-                </call>
-            </service>
-
-            <service id="newsletter_manager"
-                class="%newsletter_manager.class%"
-                parent="mail_manager"
-            >
-                 <call method="addFilter">
-                     <argument type="service" id="another_filter" />
-                </call>
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\DefinitionDecorator;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-        $container->setDefinition('my_filter', ...);
-        $container->setDefinition('another_filter', ...);
-        
-        $mailManager = new Definition();
-        $mailManager
-            ->setAbstract(true)
-            ->addMethodCall('addFilter', array(
-                new Reference('my_filter'),
-            ))
-        ;
-        $container->setDefinition('mail_manager', $mailManager);
-        
-        $newsletterManager = new DefinitionDecorator('mail_manager');
-        $newsletterManager
-            ->setClass('%newsletter_manager.class%')
-            ->addMethodCall('addFilter', array(
-                new Reference('another_filter'),
-            ))
-        ;
-        $container->setDefinition('newsletter_manager', $newsletterManager);
-
-In this example, the ``addFilter`` method of the ``newsletter_manager`` service
-will be called twice, resulting in the ``$filters`` array containing both
-``my_filter`` and ``another_filter`` objects. This is great if you just want
-to add additional filters to the subclasses. If you want to replace the filters
-passed to the subclass, removing the parent setting from the config will
-prevent the base class from calling ``addFilter``.
-
-.. tip::
-
-    In the examples shown there is a similar relationship between the parent
-    and child services and the underlying parent and child classes. This does
-    not need to be the case though, you can extract common parts of similar
-    service definitions into a parent service without also inheriting a parent
-    class.
+    You can't override method calls. When you defined new method calls in the child
+    service, it'll be added to the current set of configured method calls. This means
+    it works perfectly when the setter overrides the current property, but it doesn't
+    work as expected when the setter appends it to the existing data (e.g. an
+    ``addFilters()`` method).
+    In those cases, the only solution is to *not* extend the parent service and configuring
+    the service just like you did before knowing this feature.
