@@ -13,7 +13,7 @@ have a protocol.
 +-------------+-------------------------------------------------------------------+
 | Options     | - `default_protocol`_                                             |
 +-------------+-------------------------------------------------------------------+
-| Inherited   | - `max_length`_                                                   |
+| Inherited   | - `max_length`_ (deprecated as of 2.5)                            |
 | options     | - `empty_data`_                                                   |
 |             | - `required`_                                                     |
 |             | - `label`_                                                        |

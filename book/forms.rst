@@ -709,8 +709,8 @@ the correct values of a number of field options.
   (i.e. is the field ``nullable``). This is very useful, as your client-side
   validation will automatically match your validation rules.
 
-* ``max_length``: If the field is some sort of text field, then the ``max_length``
-  option can be guessed from the validation constraints (if ``Length`` or
+* ``maxlength``: If the field is some sort of text field, then the ``maxlength``
+  option attribute can be guessed from the validation constraints (if ``Length`` or
   ``Range`` is used) or from the Doctrine metadata (via the field's length).
 
 .. note::
@@ -721,7 +721,7 @@ the correct values of a number of field options.
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
 
-    ->add('task', null, array('max_length' => 4))
+    ->add('task', null, array('attr' => array('maxlength' => 4)))
 
 .. index::
    single: Forms; Rendering in a template

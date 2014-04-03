@@ -9,7 +9,7 @@ The text field represents the most basic input text field.
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
-| Inherited   | - `max_length`_                                                    |
+| Inherited   | - `max_length`_ (deprecated as of 2.5)                             |
 | options     | - `empty_data`_                                                    |
 |             | - `required`_                                                      |
 |             | - `label`_                                                         |
