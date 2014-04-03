@@ -778,7 +778,7 @@ routing system can be:
 
         $collection = new RouteCollection();
         $collection->add(
-            'homepage',
+            'article_show',
             new Route('/articles/{culture}/{year}/{title}.{_format}', array(
                 '_controller' => 'AcmeDemoBundle:Article:show',
                 '_format'     => 'html',
