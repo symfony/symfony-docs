@@ -157,12 +157,12 @@ in the previous example takes the ``templating`` service as an argument:
         services:
             newsletter_factory:
                 class:            "%newsletter_factory.class%"
+                arguments:
+                    - "@templating"
             newsletter_manager:
                 class:            "%newsletter_manager.class%"
                 factory_service:  newsletter_factory
                 factory_method:   get
-                arguments:
-                    - "@templating"
 
     .. code-block:: xml
 
@@ -173,14 +173,17 @@ in the previous example takes the ``templating`` service as an argument:
         </parameters>
 
         <services>
-            <service id="newsletter_factory" class="%newsletter_factory.class%"/>
+            <service id="newsletter_factory" 
+                     class="%newsletter_factory.class%"
+            />
+                <argument type="service" id="templating" />
+            </service>
+
             <service id="newsletter_manager"
                      class="%newsletter_manager.class%"
                      factory-service="newsletter_factory"
                      factory-method="get"
-            >
-                <argument type="service" id="templating" />
-            </service>
+            />
         </services>
 
     .. code-block:: php
@@ -192,11 +195,11 @@ in the previous example takes the ``templating`` service as an argument:
         $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
 
         $container->setDefinition('newsletter_factory', new Definition(
-            '%newsletter_factory.class%'
+            '%newsletter_factory.class%',
+            array(new Reference('templating'))
         ));
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%',
-            array(new Reference('templating'))
+            '%newsletter_manager.class%'
         ))->setFactoryService(
             'newsletter_factory'
         )->setFactoryMethod(
