@@ -107,7 +107,7 @@ from inside a controller::
                 ->getForm();
 
             return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
-                'form' => $form->createView(),
+                'form' => $form->createView()
             ));
         }
     }
