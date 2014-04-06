@@ -234,7 +234,7 @@ If ``debug`` is ``true``, Symfony2 automatically adds a ``X-Symfony-Cache``
 header to the response containing useful information about cache hits and
 misses.
 
-.. sidebar:: Changing from one Reverse Proxy to Another
+.. sidebar:: Changing from one Reverse Proxy to another
 
     The Symfony2 reverse proxy is a great tool to use when developing your
     website or when you deploy your website to a shared host where you cannot
@@ -327,7 +327,7 @@ its creation more manageable::
     // set a custom Cache-Control directive
     $response->headers->addCacheControlDirective('must-revalidate', true);
 
-Public vs Private Responses
+Public vs private Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Both gateway and proxy caches are considered "shared" caches as the cached
