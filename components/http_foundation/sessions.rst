@@ -12,9 +12,16 @@ object-oriented interface using a variety of session storage drivers.
 Sessions are used via the simple :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`
 implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface.
 
+.. caution::
+
+    Make sure your Sessions aren't already initliazed (which in Symfony is done automatically),
+    as initializing the Session object causes the session to be started, which can lead to unexpected errors.
+
 Quick example::
 
-    $session = $this->getRequest()->getSession();
+    use Symfony\Component\HttpFoundation\Session\Session;
+
+    $session = new Session();
     $session->start();
 
     // set and get session attributes
@@ -287,7 +294,9 @@ to be used for more complex messaging in your application.
 
 Examples of setting multiple flashes::
 
-    $session = $this->getRequest()->getSession();
+    use Symfony\Component\HttpFoundation\Session\Session;
+
+    $session = new Session();
     $session->start();
 
     // add flash messages
