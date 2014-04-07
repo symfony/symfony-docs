@@ -10,7 +10,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``email`` field (a text box)                              |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `max_length`_                                                     |
+| Inherited   | - `max_length`_ (deprecated as of 2.5)                              |
 | options     | - `empty_data`_                                                     |
 |             | - `required`_                                                       |
 |             | - `label`_                                                          |
