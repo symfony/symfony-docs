@@ -80,7 +80,7 @@ The Symfony Standard Edition comes with some bundles. Learn more about them:
 CMF
 ---
 
-The Symfony CMFproject makes it easier for developers to add CMS functionality
+The Symfony CMF project makes it easier for developers to add CMS functionality
 to applications built with the Symfony2 PHP framework.
 
 .. toctree::
