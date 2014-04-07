@@ -16,7 +16,7 @@ Quick example::
 
     use Symfony\Component\HttpFoundation\Session\Session;
 
-    $session = new Session();
+    $session = $this->getRequest()->getSession();
     $session->start();
 
     // set and get session attributes
@@ -291,7 +291,7 @@ Examples of setting multiple flashes::
 
     use Symfony\Component\HttpFoundation\Session\Session;
 
-    $session = new Session();
+    $session = $this->getRequest()->getSession();
     $session->start();
 
     // add flash messages
