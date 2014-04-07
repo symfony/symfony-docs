@@ -1,0 +1,73 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-01-11T14:04:36Z
+
+Fyi, I added [WCM], Waiting Code Merge to your PR title.
+
+---------------------------------------------------------------------------
+
+by stefanosala at 2014-01-11T14:13:10Z
+
+Thank you @WouterJ
+
+---------------------------------------------------------------------------
+
+by stefanosala at 2014-03-26T09:53:52Z
+
+The PR got merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-26T12:08:22Z
+
+fyi, you need to rebase this: (assuming `origin` refers to this repo)
+````
+$ git fetch origin
+$ git rebase origin/master
+````
+
+And then fix the conflicts.
+
+---------------------------------------------------------------------------
+
+by stefanosala at 2014-03-26T12:54:53Z
+
+Done, rebased && squashed. Thanks.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-26T22:41:21Z
+
+I think we may have a few more references:
+
+* `/reference/forms/types/form.rst` - we have `max_length` and `pattern` options here that need a little deprecated note
+
+* `/reference/forms/types/options/pattern.rst.inc`
+
+And @WouterJ what do you think about changing the `(deprecated)` notes to `(deprecated in 2.5)`?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-26T22:59:55Z
+
+i prefer `(deprecated as of 2.5)`
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-27T15:23:19Z
+
++1 for that
+
+---------------------------------------------------------------------------
+
+by stefanosala at 2014-03-27T15:24:41Z
+
+Thanks for the review, I'll work on it :)
+
+---------------------------------------------------------------------------
+
+by stefanosala at 2014-03-31T06:44:31Z
+
+Fixed, thanks.
