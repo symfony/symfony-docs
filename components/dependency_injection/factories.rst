@@ -17,7 +17,7 @@ object::
 
     class NewsletterFactory
     {
-        public function get()
+        public static function get()
         {
             $newsletterManager = new NewsletterManager();
 
