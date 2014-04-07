@@ -14,8 +14,6 @@ implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionIn
 
 Quick example::
 
-    use Symfony\Component\HttpFoundation\Session\Session;
-
     $session = $this->getRequest()->getSession();
     $session->start();
 
@@ -288,8 +286,6 @@ application can issue multiple messages for a given type. This allows the API
 to be used for more complex messaging in your application.
 
 Examples of setting multiple flashes::
-
-    use Symfony\Component\HttpFoundation\Session\Session;
 
     $session = $this->getRequest()->getSession();
     $session->start();
