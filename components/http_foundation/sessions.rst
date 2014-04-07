@@ -14,8 +14,9 @@ implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionIn
 
 .. caution::
 
-    Make sure your Sessions aren't already initliazed (which in Symfony is done automatically),
-    as initializing the Session object causes the session to be started, which can lead to unexpected errors.
+   Make sure your Sessions aren't already initliazed (which in Symfony is
+   done automatically),  as initializing the Session object causes the
+   session to be started, which can lead to unexpected errors.
 
 Quick example::
 
