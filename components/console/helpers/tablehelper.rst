@@ -14,7 +14,7 @@ When building a console application it may be useful to display tabular data:
 To display a table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
 set headers, rows and render::
 
-    $table = $app->getHelperSet()->get('table');
+    $table = $this->getHelperSet()->get('table');
     $table
         ->setHeaders(array('ISBN', 'Title', 'Author'))
         ->setRows(array(
