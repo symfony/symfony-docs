@@ -12,6 +12,7 @@ Security
     acl
     acl_advanced
     force_https
+    firewall_restriction
     host_restriction
     form_login
     securing_services
