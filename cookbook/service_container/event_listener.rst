@@ -115,7 +115,7 @@ done as follow::
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
-            if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
+            if (false === $event->isMasterRequest()) {
                 // don't do anything if it's not the master request
                 return;
             }
