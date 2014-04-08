@@ -6,6 +6,7 @@ Contributing Code
 
     bugs
     patches
+    core_team
     security
     tests
     bc
