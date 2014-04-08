@@ -124,6 +124,10 @@ done as follow::
         }
     }
 
+.. versionadded:: 2.4
+    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
+    Prior, the ``getRequestType()`` method must be used.
+
 .. tip::
 
     Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
