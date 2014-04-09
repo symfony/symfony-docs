@@ -9,9 +9,21 @@ The text field represents the most basic input text field.
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
+<<<<<<< HEAD
 | Inherited   | - `data`_                                                          |
 | options     | - `disabled`_                                                      |
 |             | - `empty_data`_                                                    |
+=======
+| Inherited   | - `max_length`_ (deprecated as of 2.5)                             |
+| options     | - `empty_data`_                                                    |
+|             | - `required`_                                                      |
+|             | - `label`_                                                         |
+|             | - `label_attr`_                                                    |
+|             | - `data`_                                                          |
+|             | - `trim`_                                                          |
+|             | - `read_only`_ (deprecated as of 2.6)                              |
+|             | - `disabled`_                                                      |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                |
 |             | - `error_mapping`_                                                 |
 |             | - `label`_                                                         |

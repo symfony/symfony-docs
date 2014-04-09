@@ -39,6 +39,11 @@ day and year) or three select boxes (see the `widget`_ option).
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
+<<<<<<< HEAD
+=======
+|                      | - `read_only`_ (deprecated as of 2.6)                                       |
+|                      | - `disabled`_                                                               |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |                      | - `mapped`_                                                                 |
 |                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+

@@ -31,6 +31,10 @@ you should just use the ``choice`` type directly.
 |             | from the :doc:`form </reference/forms/types/form>` type                |
 |             |                                                                        |
 |             | - `data`_                                                              |
+<<<<<<< HEAD
+=======
+|             | - `read_only`_ (deprecated as of 2.6)                                  |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |

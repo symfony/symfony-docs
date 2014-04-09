@@ -42,6 +42,12 @@ you should just use the ``choice`` type directly.
 |             | - `empty_data`_                                                        |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
+<<<<<<< HEAD
+=======
+|             | - `data`_                                                              |
+|             | - `read_only`_ (deprecated as of 2.6)                                  |
+|             | - `disabled`_                                                          |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `mapped`_                                                            |
 |             | - `read_only`_                                                         |
 |             | - `required`_                                                          |

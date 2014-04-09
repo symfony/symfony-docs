@@ -15,9 +15,19 @@ that you want to use for your number.
 |             | - `scale`_                                                           |
 |             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
+<<<<<<< HEAD
 | Inherited   | - `data`_                                                            |
 | options     | - `disabled`_                                                        |
 |             | - `empty_data`_                                                      |
+=======
+| Inherited   | - `empty_data`_                                                      |
+| options     | - `required`_                                                        |
+|             | - `label`_                                                           |
+|             | - `label_attr`_                                                      |
+|             | - `data`_                                                            |
+|             | - `read_only`_ (deprecated as of 2.6)                                |
+|             | - `disabled`_                                                        |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                  |
 |             | - `error_mapping`_                                                   |
 |             | - `invalid_message`_                                                 |

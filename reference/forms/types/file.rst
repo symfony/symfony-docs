@@ -11,8 +11,17 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Options     | - `multiple`_                                                       |
 +-------------+---------------------------------------------------------------------+
+<<<<<<< HEAD
 | Inherited   | - `disabled`_                                                       |
 | options     | - `empty_data`_                                                     |
+=======
+| Inherited   | - `empty_data`_                                                     |
+| options     | - `required`_                                                       |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
+|             | - `read_only`_ (deprecated as of 2.6)                               |
+|             | - `disabled`_                                                       |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |

@@ -40,6 +40,11 @@ option defaults to 120 years ago to the current year.
 |                      | - `inherit_data`_                                                             |
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
+<<<<<<< HEAD
+=======
+|                      | - `read_only`_ (deprecated as of 2.6)                                         |
+|                      | - `disabled`_                                                                 |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |                      | - `mapped`_                                                                   |
 |                      | - `read_only`_                                                                |
 +----------------------+-------------------------------------------------------------------------------+

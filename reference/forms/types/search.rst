@@ -14,6 +14,15 @@ Read about the input search field at `DiveIntoHTML5.info`_
 +-------------+----------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                        |
 | options     | - `empty_data`_                                                      |
+<<<<<<< HEAD
+=======
+|             | - `required`_                                                        |
+|             | - `label`_                                                           |
+|             | - `label_attr`_                                                      |
+|             | - `trim`_                                                            |
+|             | - `read_only`_ (deprecated as of 2.6)                                |
+|             | - `disabled`_                                                        |
+>>>>>>> [WCM][Form] Deprecate "read_only" option
 |             | - `error_bubbling`_                                                  |
 |             | - `error_mapping`_                                                   |
 |             | - `label`_                                                           |
