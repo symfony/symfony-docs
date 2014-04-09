@@ -37,11 +37,11 @@ always_empty
 
 .. caution::
 
-    The ``_always_empty`` option has been deprecated and will be removed in 3.0.
-    Instead, use the ``reset_on_submit`` option.
+    The ``always_empty`` option has been deprecated and will be removed in 3.0.
+    Use the ``reset_on_submit`` option instead.
 
 reset_on_submit
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
