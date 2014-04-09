@@ -7,5 +7,6 @@ Console
     introduction
     usage
     single_command_tool
+    console_arguments
     events
     helpers/index
