@@ -9,8 +9,7 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `always_empty`_ (deprecated as of 2.6)                               |
-|             | - `reset_on_submit`_                                                   |
+| Options     | - `always_empty`_                                                      |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -36,6 +35,7 @@ always_empty
 ~~~~~~~~~~~~
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 **type**: ``boolean`` **default**: ``true``
 =======
 .. caution::
@@ -46,6 +46,8 @@ always_empty
 reset_on_submit
 ~~~~~~~~~~~~
 
+=======
+>>>>>>> Revert "[Form] Fix #9325"
 **type**: ``Boolean`` **default**: ``true``
 >>>>>>> [Form] Fix #9325
 
