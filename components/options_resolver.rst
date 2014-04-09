@@ -84,7 +84,9 @@ knows which options should be resolved.
 
     To check if an option exists, you can use the
     :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isKnown`
-    function.
+    function. You can also `suppress the exception`_ by passing one of the
+    flags ``IGNORE_UNKNOWN`` or ``REMOVE_UNKNOWN`` to
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::resolve`.
 
 A best practice is to put the configuration in a method (e.g.
 ``configureOptions``). You call this method in the constructor to configure
@@ -162,7 +164,9 @@ will be thrown.
 
     To determine if an option is required, you can use the
     :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired`
-    method.
+    method. You can also `suppress the exception`_ by passing the flag
+    ``IGNORE_MISSING`` to
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::resolve`.
 
 Optional Options
 ~~~~~~~~~~~~~~~~
@@ -304,11 +308,11 @@ again. When using a closure as the new value it is passed 2 arguments:
 
     Existing option keys that you do not mention when overwriting are preserved.
 
-Configure allowed Values
-~~~~~~~~~~~~~~~~~~~~~~~~
+Setting Allowed Values
+~~~~~~~~~~~~~~~~~~~~~~
 
 Not all values are valid values for options. Suppose the ``Mailer`` class has
-a ``transport`` option, it can only be one of ``sendmail``, ``mail`` or
+a ``transport`` option, which can only be one of ``sendmail``, ``mail`` or
 ``smtp``. You can configure these allowed values by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setAllowedValues`::
 
@@ -324,8 +328,8 @@ a ``transport`` option, it can only be one of ``sendmail``, ``mail`` or
 
 There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
-method, which you can use if you want to add an allowed value to the previously
-configured allowed values.
+method. Use that method if you want to add another allowed value to the ones
+you configured previously.
 
 .. versionadded:: 2.5
     The callback support for allowed values was introduced in Symfony 2.5.
@@ -349,11 +353,12 @@ as an allowed value::
 
     Note that using this together with ``addAllowedValues`` will not work.
 
-Configure Allowed Types
-~~~~~~~~~~~~~~~~~~~~~~~
+Setting Allowed Types
+~~~~~~~~~~~~~~~~~~~~~
 
-You can also specify allowed types. For instance, the ``port`` option can
-be anything, but it must be an integer. You can configure these types by calling
+You can also specify allowed types. For instance, the ``port`` option can carry
+any value, as llong as it is an integer. You can configure the allowed type by
+calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setAllowedTypes`::
 
     // ...
@@ -370,12 +375,12 @@ Possible types are the ones associated with the ``is_*`` PHP functions or a
 class name. You can also pass an array of types as the value. For instance,
 ``array('null', 'string')`` allows ``port`` to be ``null`` or a ``string``.
 
-There is also an
+Like for the allowed values, there is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
-method, which you can use to add an allowed type to the previous allowed types.
+method, which adds an allowed type to the previously configured ones.
 
-Normalize the Options
-~~~~~~~~~~~~~~~~~~~~~
+Option Normalization
+~~~~~~~~~~~~~~~~~~~~
 
 Some values need to be normalized before you can use them. For instance,
 pretend that the ``host`` should always start with ``http://``. To do that,
@@ -422,5 +427,82 @@ need to use the other options for normalizing::
             },
         ));
     }
+
+.. _suppress the exception:
+
+Dealing With Errors
+~~~~~~~~~~~~~~~~~~~
+
+By default, if you pass a non-existing option to
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::resolve`, an
+:class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
+will be thrown. In some cases, that's not what you want. You can change this
+behavior by passing one of the following flags:
+
+* ``FORBID_UNKNOWN`` (the default)
+* ``IGNORE_UNKNOWN``
+* ``REMOVE_UNKNOWN``
+
+For example, if you pass ``REMOVE_UNKNOWN``, non-existing options will be
+removed from the resolved options array instead of throwing an exception::
+
+    $resolver->setDefaults(array(
+        'transport' => 'http',
+    ));
+
+    $options = $resolver->resolve(array(
+        'transport' => 'https',
+        'encryption' => 'tls',
+    ), OptionsResolverInterface::REMOVE_UNKNOWN);
+
+    print_r($options);
+    // => Array(
+    //     [transport] => https
+    // )
+
+If you pass ``IGNORE_UNKNOWN`` instead, the unknown option will be left in the
+final options array unchanged::
+
+    $options = $resolver->resolve(array(
+        'transport' => 'https',
+        'encryption' => 'tls',
+    ), OptionsResolverInterface::IGNORE_UNKNOWN);
+
+    print_r($options);
+    // => Array(
+    //     [transport] => https
+    //     [encryption] => tls
+    // )
+
+Likewise, you can configure how to deal with missing required options. By
+default, a
+:class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
+is thrown. The following flag values are available:
+
+* ``FORBID_MISSING`` (the default)
+* ``IGNORE_MISSING``
+
+If you pass ``IGNORE_MISSING``, missing required options will silently be
+ignored::
+
+    $resolver->setRequired(array(
+        'transport',
+        'port',
+    ));
+
+    $options = $resolver->resolve(array(
+        'port' => 587,
+    ), OptionsResolverInterface::IGNORE_MISSING);
+
+    print_r($options);
+    // => Array(
+    //     [port] => 587
+    // )
+
+You can combine multiple flags using the bitwise OR ("|") operator::
+
+    $options = $resolver->resolve(array(
+        'port' => 587,
+    ), OptionsResolverInterface::REMOVE_UNKNOWN | OptionsResolverInterface::IGNORE_MISSING);
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
