@@ -9,7 +9,8 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `always_empty`_                                                      |
+| Options     | - `always_empty`_ (deprecated as of 2.6)                               |
+|             | - `reset_on_submit`_                                                   |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `disabled`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -34,7 +35,19 @@ Field Options
 always_empty
 ~~~~~~~~~~~~
 
+<<<<<<< HEAD
 **type**: ``boolean`` **default**: ``true``
+=======
+.. caution::
+
+    The ``_always_empty`` option has been deprecated and will be removed in 3.0.
+    Instead, use the ``reset_on_submit`` option.
+
+reset_on_submit
+~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+>>>>>>> [Form] Fix #9325
 
 If set to true, the field will *always* render blank, even if the corresponding
 field has a value. When set to false, the password field will be rendered
