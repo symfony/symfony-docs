@@ -24,7 +24,7 @@ how the input and output of the data is handled.
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `data`_                                                           |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.6)                               |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |

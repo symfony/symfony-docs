@@ -16,7 +16,7 @@ on all types for which ``form`` is the parent type.
 |           | - `label_attr`_                                                    |
 |           | - `constraints`_                                                   |
 |           | - `cascade_validation`_                                            |
-|           | - `read_only`_                                                     |
+|           | - `read_only`_ (deprecated as of 2.6)                              |
 |           | - `trim`_                                                          |
 |           | - `mapped`_                                                        |
 |           | - `property_path`_                                                 |

@@ -37,7 +37,7 @@ you should just use the ``choice`` type directly.
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `data`_                                                              |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.6)                                  |
 |             | - `disabled`_                                                          |
 |             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+

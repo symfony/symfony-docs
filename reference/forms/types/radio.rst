@@ -21,7 +21,7 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 |             | - `required`_                                                       |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.6)                               |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |

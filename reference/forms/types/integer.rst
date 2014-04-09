@@ -24,7 +24,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `data`_                                                             |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.6)                                 |
 |             | - `disabled`_                                                         |
 |             | - `error_bubbling`_                                                   |
 |             | - `error_mapping`_                                                    |

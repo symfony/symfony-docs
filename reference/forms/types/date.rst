@@ -35,7 +35,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 | Inherited            | - `data`_                                                                   |
 | options              | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
-|                      | - `read_only`_                                                              |
+|                      | - `read_only`_ (deprecated as of 2.6)                                       |
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
 |                      | - `inherit_data`_                                                           |

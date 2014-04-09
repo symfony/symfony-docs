@@ -33,7 +33,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `data`_                                                                     |
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
-|                      | - `read_only`_                                                                |
+|                      | - `read_only`_ (deprecated as of 2.6)                                         |
 |                      | - `disabled`_                                                                 |
 |                      | - `mapped`_                                                                   |
 |                      | - `inherit_data`_                                                             |
