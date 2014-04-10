@@ -100,6 +100,10 @@ using a special "tag":
 Request events, checking types
 ------------------------------
 
+.. versionadded:: 2.4
+    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
+    Prior, the ``getRequestType()`` method must be used.
+
 A single page can make several requests (one master request, and then multiple
 sub-requests), which is why when working with the ``KernelEvents::REQUEST``
 event, you might need to check the type of the request. This can be easily
@@ -115,7 +119,7 @@ done as follow::
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
-            if (false === $event->isMasterRequest()) {
+            if (!$event->isMasterRequest()) {
                 // don't do anything if it's not the master request
                 return;
             }
@@ -123,10 +127,6 @@ done as follow::
             // ...
         }
     }
-
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
 
 .. tip::
 

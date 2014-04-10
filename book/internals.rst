@@ -208,6 +208,10 @@ processing must only occur on the master request).
 Events
 ~~~~~~
 
+.. versionadded:: 2.4
+    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
+    Prior, the ``getRequestType()`` method must be used.
+
 Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
@@ -216,22 +220,25 @@ each event has access to the same basic information:
   - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
   or ``HttpKernelInterface::SUB_REQUEST``);
 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+  - checks if it is a master request;
+
 * :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
   - returns the Kernel handling the request;
 
 * :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
   - returns the current ``Request`` being handled.
 
-``getRequestType()``
+``IsMasterRequest()``
 ....................
 
-The ``getRequestType()`` method allows listeners to know the type of the
+The ``isMasterRequest()`` method allows listeners to check the type of the
 request. For instance, if a listener must only be active for master requests,
 add the following code at the beginning of your listener method::
 
     use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-    if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+    if (!$event->isMasterRequest()) {
         // return immediately
         return;
     }
