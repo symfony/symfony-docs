@@ -229,8 +229,8 @@ each event has access to the same basic information:
 * :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
   - returns the current ``Request`` being handled.
 
-``IsMasterRequest()``
-....................
+``isMasterRequest()``
+.....................
 
 The ``isMasterRequest()`` method allows listeners to check the type of the
 request. For instance, if a listener must only be active for master requests,
