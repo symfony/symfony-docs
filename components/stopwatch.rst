@@ -34,7 +34,7 @@ microtime by yourself. Instead, use the simple
 .. versionadded:: 2.5
     The ``getEvent()`` method was introduced in Symfony 2.5
 
-The :class:`Symfony\\Component\\Stopwatch\StopwatchEvent` object can be retrieved
+The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
 from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`, 
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and 
