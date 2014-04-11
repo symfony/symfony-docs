@@ -88,7 +88,7 @@ In a similar way you can replace an already set argument by index using::
 You can also replace all the arguments (or set some if there are none) with
 an array of arguments::
 
-    $definition->replaceArguments($arguments);
+    $definition->setArguments($arguments);
 
 Method Calls
 ~~~~~~~~~~~~
