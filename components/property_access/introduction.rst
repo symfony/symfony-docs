@@ -314,12 +314,13 @@ Checking Property Paths
 
 .. versionadded:: 2.5
     The methods
-    :method:`PropertyAccessor::isReadable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
+    :method:`PropertyAccessor::isReadable <Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
     and
-    :method:`PropertyAccessor::isWritable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
-    methods were added in Symfony 2.5.
+    :method:`PropertyAccessor::isWritable <Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
+    methods were introduced in Symfony 2.5.
 
-When you want to check whether :method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
+When you want to check whether
+:method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
 can safely be called without actually calling that method, you can use
 :method:`PropertyAccessor::isReadable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
 instead::
