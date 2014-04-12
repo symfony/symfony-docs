@@ -334,12 +334,11 @@ instead::
 The same is possible for :method:`PropertyAccessor::setValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue>`:
 Call the
 :method:`PropertyAccessor::isWritable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
-method to find out whether a property path can be updated. In the third
-argument, you should pass the value that you want to write::
+method to find out whether a property path can be updated::
 
     $person = new Person();
 
-    if ($accessor->isWritable($person, 'firstName', 'Wouter') {
+    if ($accessor->isWritable($person, 'firstName') {
         // ...
     }
 
