@@ -762,7 +762,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
     and "setter injection". The Symfony2 service container also supports
     "property injection".
 
-Making References Optional
+Making References optional
 --------------------------
 
 Sometimes, one of your services may have an optional dependency, meaning

@@ -23,7 +23,7 @@ A button that resets all fields to their original values.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ResetType` |
 +----------------------+---------------------------------------------------------------------+
 
-Inherited options
+Inherited Options
 -----------------
 
 .. include:: /reference/forms/types/options/button_attr.rst.inc

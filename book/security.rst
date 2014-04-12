@@ -570,7 +570,7 @@ see :doc:`/cookbook/security/form_login`.
 
 .. _book-security-common-pitfalls:
 
-.. sidebar:: Avoid Common Pitfalls
+.. sidebar:: Avoid common Pitfalls
 
     When setting up your login form, watch out for a few common pitfalls.
 
@@ -713,7 +713,7 @@ In this section, you'll focus on how to secure different resources (e.g. URLs,
 method calls, etc) with different roles. Later, you'll learn more about how
 roles are created and assigned to users.
 
-Securing Specific URL Patterns
+Securing specific URL Patterns
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The most basic way to secure part of your application is to secure an entire
@@ -763,7 +763,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
 .. _security-book-access-control-explanation:
 
-Understanding how ``access_control`` works
+Understanding how ``access_control`` Works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For each incoming request, Symfony2 checks each ``access_control`` entry
@@ -1025,7 +1025,7 @@ In the previous sections, you learned how you can protect different resources
 by requiring a set of *roles* for a resource. This section explores
 the other side of authorization: users.
 
-Where do Users come from? (*User Providers*)
+Where do Users Come from? (*User Providers*)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During authentication, the user submits a set of credentials (usually a username
@@ -1390,7 +1390,7 @@ method:
 
         <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
 
-Using Multiple User Providers
+Using multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
@@ -1671,7 +1671,7 @@ the built-in helper function:
     idea to have a main firewall that covers all URLs (as has been shown
     in this chapter).
 
-Access Control Lists (ACLs): Securing Individual Database Objects
+Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Imagine you are designing a blog system where your users can comment on your
@@ -1868,7 +1868,7 @@ algorithm; you can use the same strategy in your own code thanks to the
     // is password1 equals to password2?
     $bool = StringUtils::equals($password1, $password2);
 
-Generating a secure Random Number
+Generating a secure random Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whenever you need to generate a secure random number, you are highly

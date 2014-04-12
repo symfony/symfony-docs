@@ -229,7 +229,7 @@ document::
 
 .. _book-testing-request-method-sidebar:
 
-.. sidebar:: More about the ``request()`` method:
+.. sidebar:: More about the ``request()`` Method:
 
     The full signature of the ``request()`` method is::
 
@@ -404,7 +404,7 @@ The Client supports many operations that can be done in a real browser::
     // Clears all cookies and the history
     $client->restart();
 
-Accessing Internal Objects
+Accessing internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3

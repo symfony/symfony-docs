@@ -105,7 +105,7 @@ Symfony will transform it into a proper ``500`` error page::
 
     throw new \Exception('Something went wrong!');
 
-Getting information from the Request
+Getting Information from the Request
 ------------------------------------
 
 Symfony automatically injects the ``Request`` object when the controller has an

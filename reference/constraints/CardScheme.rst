@@ -61,7 +61,7 @@ on an object that will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -76,7 +76,7 @@ on an object that will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -99,7 +99,7 @@ Available Options
 -----------------
 
 schemes
--------
+~~~~~~~
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 

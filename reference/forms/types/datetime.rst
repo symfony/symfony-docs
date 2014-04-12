@@ -132,7 +132,7 @@ field to be rendered as an ``input`` field with ``type="datetime"``.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:

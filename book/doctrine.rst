@@ -30,7 +30,7 @@ The easiest way to understand how Doctrine works is to see it in action.
 In this section, you'll configure your database, create a ``Product`` object,
 persist it to the database and fetch it back out.
 
-.. sidebar:: Code along with the example
+.. sidebar:: Code along with the Example
 
     If you want to follow along with the example in this chapter, create
     an ``AcmeStoreBundle`` via:
@@ -125,7 +125,7 @@ for you:
 
     $ php app/console doctrine:database:create
 
-.. sidebar:: Setting Up The Database to be UTF8
+.. sidebar:: Setting up the Database to be UTF8
 
     One mistake even seasoned developers make when starting a Symfony2 project
     is forgetting to setup default charset and collation on their database,
@@ -1392,7 +1392,7 @@ powerful, allowing you to create complex queries and subscribe to events
 that allow you to take different actions as objects go through their persistence
 lifecycle.
 
-Learn More
+Learn more
 ~~~~~~~~~~
 
 For more information about Doctrine, see the *Doctrine* section of the

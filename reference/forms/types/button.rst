@@ -22,7 +22,7 @@ A simple, non-responsive button.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |
 +----------------------+----------------------------------------------------------------------+
 
-Inherited options
+Inherited Options
 -----------------
 
 The following options are defined in the

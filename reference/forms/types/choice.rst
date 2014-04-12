@@ -111,7 +111,7 @@ can be created to supply the choices.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-Overridden options
+Overridden Options
 ------------------
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
@@ -121,7 +121,7 @@ compound
 
 **type**: ``boolean`` **default**: same value as ``expanded`` option
 
-This option specifies if a form is compound. The value is by default 
+This option specifies if a form is compound. The value is by default
 overridden by the value of the ``expanded`` option.
 
 error_bubbling
@@ -129,10 +129,10 @@ error_bubbling
 
 **type**: ``boolean`` **default**: ``false``
 
-Set that error on this field must be attached to the field instead of 
+Set that error on this field must be attached to the field instead of
 the parent field (the form in most cases).
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
