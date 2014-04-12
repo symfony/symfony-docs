@@ -46,14 +46,14 @@ Field Options
 
 .. include:: /reference/forms/types/options/value.rst.inc
 
-Overridden options
+Overridden Options
 ------------------
 
 .. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/checkbox_compound.rst.inc
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:

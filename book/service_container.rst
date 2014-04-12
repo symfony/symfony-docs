@@ -928,7 +928,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
     argument of your action method. See
     :ref:`book-controller-request-argument` for details.
 
-Making References Optional
+Making References optional
 --------------------------
 
 Sometimes, one of your services may have an optional dependency, meaning

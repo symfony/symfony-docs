@@ -16,7 +16,7 @@ to where it is now.
 By the end, you'll see how Symfony2 can rescue you from mundane tasks and
 let you take back control of your code.
 
-A simple Blog in flat PHP
+A Simple Blog in Flat PHP
 -------------------------
 
 In this chapter, you'll build the token blog application using only flat PHP.
@@ -701,7 +701,7 @@ And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
 A good selection of Symfony2 community tools can be found on `KnpBundles.com`_.
 
-Better templates
+Better Templates
 ----------------
 
 If you choose to use it, Symfony2 comes standard with a templating engine

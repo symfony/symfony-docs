@@ -56,7 +56,7 @@ choices
 The country type defaults the ``choices`` option to the whole list of countries.
 The locale is used to translate the countries names.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:

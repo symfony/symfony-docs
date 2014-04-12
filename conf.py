@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Symfony CMF documentation build configuration file, created by
+# Symfony documentation build configuration file, created by
 # sphinx-quickstart on Sat Jul 28 21:58:57 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -185,7 +185,7 @@ html_theme = 'default'
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SymfonyCMFdoc'
+htmlhelp_basename = 'SymfonyDoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -204,8 +204,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'SymfonyCMF.tex', u'Symfony CMF Documentation',
-   u'Symfony CMF community', 'manual'),
+  ('index', 'Symfony.tex', u'Symfony Documentation',
+   u'Symfony community', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -234,8 +234,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'symfonycmf', u'Symfony CMF Documentation',
-     [u'Symfony CMF community'], 1)
+    ('index', 'symfony', u'Symfony Documentation',
+     [u'Symfony community'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -248,8 +248,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'SymfonyCMF', u'Symfony CMF Documentation',
-   u'Symfony CMF community', 'SymfonyCMF', 'One line description of project.',
+  ('index', 'Symfony', u'Symfony Documentation',
+   u'Symfony community', 'Symfony', 'One line description of project.',
    'Miscellaneous'),
 ]
 

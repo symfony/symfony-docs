@@ -618,7 +618,7 @@ Each field type has a number of different options that can be passed to it.
 Many of these are specific to the field type and details can be found in
 the documentation for each type.
 
-.. sidebar:: The ``required`` option
+.. sidebar:: The ``required`` Option
 
     The most common option is the ``required`` option, which can be applied to
     any field. By default, the ``required`` option is set to ``true``, meaning
@@ -636,7 +636,7 @@ the documentation for each type.
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
 
-.. sidebar:: The ``label`` option
+.. sidebar:: The ``label`` Option
 
     The label for the form field can be set using the ``label`` option,
     which can be applied to any field::
@@ -1100,6 +1100,12 @@ Defining your Forms as Services
 
 Defining your form type as a service is a good practice and makes it really
 easy to use in your application.
+
+.. note::
+
+    Services and the service container will be handled
+    :doc:`later on in this book </book/service_container>`. Things will be
+    more clear after reading that chapter.
 
 .. configuration-block::
 

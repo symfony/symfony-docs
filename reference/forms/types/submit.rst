@@ -32,7 +32,7 @@ useful when :ref:`a form has multiple submit buttons <book-form-submitting-multi
         // ...
     }
 
-Inherited options
+Inherited Options
 -----------------
 
 .. include:: /reference/forms/types/options/button_attr.rst.inc
@@ -49,7 +49,7 @@ Form Variables
 --------------
 
 ======== =========== ==============================================================
-Variable Type        Usage                                       
+Variable Type        Usage
 ======== =========== ==============================================================
 clicked  ``Boolean`` Whether the button is clicked or not.
 ======== =========== ==============================================================

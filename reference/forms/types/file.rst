@@ -93,7 +93,7 @@ multiple
 
 When set to true, the user will be able to upload multiple files at the same time.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
@@ -120,7 +120,7 @@ Form Variables
 --------------
 
 ======== ========== ===============================================================================
-Variable Type       Usage                                       
+Variable Type       Usage
 ======== ========== ===============================================================================
 type     ``string`` The type variable is set to ``file``, in order to render as a file input field.
 ======== ========== ===============================================================================

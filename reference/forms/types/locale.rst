@@ -59,7 +59,7 @@ choices
 The choices option defaults to all locales. It uses the default locale to
 specify the language.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:

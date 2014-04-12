@@ -318,7 +318,7 @@ environment.
 
 .. _quick-tour-big-picture-environments-intro:
 
-What Is an environment?
+What is an Environment?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 An :term:`Environment` represents a group of configurations that's used to run

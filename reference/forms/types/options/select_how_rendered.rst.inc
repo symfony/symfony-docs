@@ -1,4 +1,4 @@
-Select tag, Checkboxes or Radio Buttons
+Select Tag, Checkboxes or Radio Buttons
 ---------------------------------------
 
 This field may be rendered as one of several different HTML fields, depending

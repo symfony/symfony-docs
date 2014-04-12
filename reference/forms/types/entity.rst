@@ -120,11 +120,11 @@ cast into a string and so must have a ``__toString()`` method.
 
 .. note::
 
-    The ``property`` option is the property path used to display the option. So you 
+    The ``property`` option is the property path used to display the option. So you
     can use anything supported by the
     :doc:`PropertyAccessor component </components/property_access/introduction>`
 
-    For example, if the translations property is actually an associative array of 
+    For example, if the translations property is actually an associative array of
     objects, each with a name property, then you could do this::
 
         $builder->add('gender', 'entity', array(
@@ -184,7 +184,7 @@ for you, by using all of the above options. If you need to override this
 option, you may just consider using the :doc:`/reference/forms/types/choice`
 directly.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
@@ -192,18 +192,18 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. note::
-    
+
     If you are working with a collection of Doctrine entities, it will be helpful
     to read the documentation for the :doc:`/reference/forms/types/collection`
     as well. In addition, there is a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
-    
+
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. note::
-    
+
     This option expects an array of entity objects, unlike the ``choice`` field
     that requires an array of keys.
 

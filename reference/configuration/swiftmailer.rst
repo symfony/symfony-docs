@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration reference; Swift Mailer
+    single: Configuration reference; Swift Mailer
 
 SwiftmailerBundle Configuration ("swiftmailer")
 ===============================================
@@ -172,7 +172,7 @@ logging
 If true, Symfony's data collector will be activated for Swift Mailer and the
 information will be available in the profiler.
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 .. configuration-block::
@@ -224,7 +224,7 @@ Full Default Configuration
             />
         </swiftmailer:config>
 
-Using Multiple Mailers
+Using multiple Mailers
 ----------------------
 
 You can configure multiple mailers by grouping them under the ``mailers``

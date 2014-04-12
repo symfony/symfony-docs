@@ -1,7 +1,7 @@
 .. index::
    single: Requirements
-   
-Requirements for running Symfony2
+
+Requirements for Running Symfony2
 =================================
 
 To run Symfony2, your system needs to adhere to a list of requirements. You can

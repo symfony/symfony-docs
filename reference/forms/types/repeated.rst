@@ -178,7 +178,7 @@ error_bubbling
 
 **default**: ``false``
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:

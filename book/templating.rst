@@ -1,7 +1,7 @@
 .. index::
    single: Templating
 
-Creating and using Templates
+Creating and Using Templates
 ============================
 
 As you know, the :doc:`controller </book/controller>` is responsible for
@@ -1130,7 +1130,7 @@ automatically:
 .. index::
    single: Templating; The templating service
 
-Configuring and using the ``templating`` Service
+Configuring and Using the ``templating`` Service
 ------------------------------------------------
 
 The heart of the template system in Symfony2 is the templating ``Engine``.
