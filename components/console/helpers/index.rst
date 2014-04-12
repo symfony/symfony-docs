@@ -11,6 +11,7 @@ The Console Helpers
     formatterhelper
     progressbar
     progresshelper
+    questionhelper
     table
     tablehelper
 
