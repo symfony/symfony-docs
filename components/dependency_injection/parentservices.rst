@@ -242,7 +242,7 @@ a parent for a service.
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        
+
         $mailManager = new Definition();
         $mailManager
             ->setAbstract(true);
@@ -254,11 +254,11 @@ a parent for a service.
             ))
         ;
         $container->setDefinition('mail_manager', $mailManager);
-        
+
         $newsletterManager = new DefinitionDecorator('mail_manager');
         $newsletterManager->setClass('%newsletter_manager.class%');
         $container->setDefinition('newsletter_manager', $newsletterManager);
-        
+
         $greetingCardManager = new DefinitionDecorator('mail_manager');
         $greetingCardManager->setClass('%greeting_card_manager.class%');
         $container->setDefinition('greeting_card_manager', $greetingCardManager);
@@ -291,13 +291,13 @@ would cause an exception to be raised for a non-abstract service.
    In order for parent dependencies to resolve, the ``ContainerBuilder`` must
    first be compiled. See :doc:`/components/dependency_injection/compilation`
    for more details.
-   
+
 .. tip::
 
-    In the examples shown, the classes sharing the same configuration also extend
-    from the same parent in PHP. This does not need to be the case though, you can
-    extract common parts of similar service definitions into a parent service without
-    also extending a parent class in PHP.
+    In the examples shown, the classes sharing the same configuration also
+    extend from the same parent class in PHP. This isn't necessary at all.
+    You can just extract common parts of similar service definitions into
+    a parent service without also extending a parent class in PHP.
 
 Overriding Parent Dependencies
 ------------------------------
@@ -377,7 +377,7 @@ to the ``NewsletterManager`` class, the config would look like this:
 
         // ...
         $container->setDefinition('my_alternative_mailer', ...);
-        
+
         $mailManager = new Definition();
         $mailManager
             ->setAbstract(true);
