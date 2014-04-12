@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration reference; Framework
+    single: Configuration reference; Framework
 
 FrameworkBundle Configuration ("framework")
 ===========================================
@@ -439,7 +439,7 @@ and activate the data collectors by hand::
 
     $profiler->enable();
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 .. configuration-block::

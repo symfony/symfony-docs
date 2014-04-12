@@ -43,8 +43,8 @@ on all types for which ``form`` is the parent type.
 | Class     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
 +-----------+--------------------------------------------------------------------+
 
-Options
--------
+Field Options
+-------------
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -104,7 +104,7 @@ Options
 
 .. include:: /reference/forms/types/options/method.rst.inc
 
-Inherited options
+Inherited Options
 -----------------
 
 The following options are defined in the
