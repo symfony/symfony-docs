@@ -8,10 +8,10 @@ The ``form`` type predefines a couple of options that are then available
 on all types for which ``form`` is the parent type.
 
 +-----------+--------------------------------------------------------------------+
-| Options   | - `compound`_                                                      |
-|           | - `data`_                                                          |
+| Options   | - `data`_                                                          |
 |           | - `data_class`_                                                    |
 |           | - `empty_data`_                                                    |
+|           | - `compound`_                                                      |
 |           | - `required`_                                                      |
 |           | - `label_attr`_                                                    |
 |           | - `constraints`_                                                   |
