@@ -90,6 +90,8 @@ have some ``NameRepository`` service that you'll use to get your default value::
 
         public function __construct(NameRepository $nameRepository)
         {
+            parent::__construct();
+            
             $this->nameRepository = $nameRepository;
         }
 
