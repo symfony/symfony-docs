@@ -35,7 +35,6 @@ As of Symfony 2.0, the following components have a public tagged API:
 * Finder
 * HttpFoundation
 * HttpKernel
-* Locale
 * Process
 * Routing
 * Templating
