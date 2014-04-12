@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-03T13:56:03Z
+
+Thank you for writing this! I've put some comments and although they are not caused by you (since you somewhat copied the original article), I would appreciate it if you can fix them.
+
+You also need to add this new document in the correct place in `/components/console/helpers/index.rst` and `/components/console/helpers/map.rst.inc`
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-03T13:57:40Z
+
+Sure !
+
+it was indeed easier for me to port the dialog helper to question helper (as a matter of writing a brand new page).
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-03T14:22:38Z
+
+PR updated, comments addressed
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-04T15:28:29Z
+
+PR has been updated
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-10T09:46:14Z
+
+PR has been updated
