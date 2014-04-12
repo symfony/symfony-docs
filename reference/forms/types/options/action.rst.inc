@@ -1,8 +1,8 @@
-.. versionadded:: 2.3
-    The ``action`` option was introduced in Symfony 2.3.
-
 action
 ~~~~~~
+
+.. versionadded:: 2.3
+    The ``action`` option was introduced in Symfony 2.3.
 
 **type**: ``string`` **default**: empty string
 
