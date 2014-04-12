@@ -73,7 +73,7 @@ on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\Integ
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:

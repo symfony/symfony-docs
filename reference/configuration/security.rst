@@ -1,5 +1,5 @@
 .. index::
-   single: Security; Configuration reference
+    single: Security; Configuration reference
 
 SecurityBundle Configuration ("security")
 =========================================
@@ -7,7 +7,7 @@ SecurityBundle Configuration ("security")
 The security system is one of the most powerful parts of Symfony2, and can
 largely be controlled via its configuration.
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 The following is the full default configuration for the security system.
@@ -287,7 +287,7 @@ Redirecting after Login
 
 .. _reference-security-pbkdf2:
 
-Using the PBKDF2 encoder: Security and Speed
+Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
 
 .. versionadded:: 2.2

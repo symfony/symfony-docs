@@ -868,7 +868,7 @@ routing system can be:
 
         $collection = new RouteCollection();
         $collection->add(
-            'homepage',
+            'article_show',
             new Route('/articles/{culture}/{year}/{title}.{_format}', array(
                 '_controller' => 'AcmeDemoBundle:Article:show',
                 '_format'     => 'html',
@@ -1161,7 +1161,7 @@ from the new routing resource.
     :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     to see how.
 
-Adding a Host requirement to Imported Routes
+Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
@@ -1343,8 +1343,8 @@ method::
     $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
 
-From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL) 
-rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true`` 
+From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
+rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
 to ``generateUrl()``:
 
 .. configuration-block::

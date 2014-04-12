@@ -1,9 +1,12 @@
 .. index::
-   single: Doctrine; ORM configuration reference
-   single: Configuration reference; Doctrine ORM
+    single: Doctrine; ORM configuration reference
+    single: Configuration reference; Doctrine ORM
 
 DoctrineBundle Configuration ("doctrine")
 =========================================
+
+Full default configuration
+--------------------------
 
 .. configuration-block::
 

@@ -244,8 +244,8 @@ parameters are the values of the variables defined in the route pattern::
     *absolute* URLs, which is very handy when rendering emails and RSS files:
     ``{{ url('_demo_hello', {'name': 'Thomas'}) }}``.
 
-Including Assets: images, JavaScripts, and stylesheets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Including Assets: Images, JavaScripts and Stylesheets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
 Symfony2 provides the ``asset`` function to deal with them easily:

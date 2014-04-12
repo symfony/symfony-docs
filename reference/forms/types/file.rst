@@ -78,7 +78,7 @@ before using it directly.
 Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example of
 how to manage a file upload associated with a Doctrine entity.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
@@ -105,7 +105,7 @@ Form Variables
 --------------
 
 ======== ========== ===============================================================================
-Variable Type       Usage                                       
+Variable Type       Usage
 ======== ========== ===============================================================================
 type     ``string`` The type variable is set to ``file``, in order to render as a file input field.
 ======== ========== ===============================================================================
