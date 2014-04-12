@@ -36,8 +36,8 @@ This field adds a percentage sign "``%``" after the input box.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
 
-Options
--------
+Field Options
+-------------
 
 type
 ~~~~
@@ -47,7 +47,7 @@ type
 This controls how your data is stored on your object. For example, a percentage
 corresponding to "55%", might be stored as ``.55`` or ``55`` on your
 object. The two "types" handle these two cases:
-    
+
 *   ``fractional``
     If your data is stored as a decimal (e.g. ``.55``), use this type.
     The data will be multiplied by ``100`` before being shown to the

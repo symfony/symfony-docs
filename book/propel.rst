@@ -15,7 +15,7 @@ A Simple Example: A Product
 In this section, you'll configure your database, create a ``Product`` object,
 persist it to the database and fetch it back out.
 
-.. sidebar:: Code along with the example
+.. sidebar:: Code along with the Example
 
     If you want to follow along with the example in this chapter, create an
     ``AcmeStoreBundle`` via:
@@ -425,7 +425,7 @@ before. First, fetch a ``$product`` object and then access its related
 
 Note, in the above example, only one query was made.
 
-More information on Associations
+More Information on Associations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You will find more information on relations by reading the dedicated chapter on

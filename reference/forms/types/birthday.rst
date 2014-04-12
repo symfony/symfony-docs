@@ -54,13 +54,13 @@ years
 List of years available to the year field type. This option is only
 relevant when the ``widget`` option is set to ``choice``.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
-    
+
 .. include:: /reference/forms/types/options/date_input.rst.inc
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc

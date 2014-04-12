@@ -169,7 +169,7 @@ the above example, the ``allowMissingFields`` option was set to true, meaning
 that if either of the ``personal_email`` or ``short_bio`` elements were missing
 from the ``$personalData`` property, no validation error would occur.
 
-Required and Optional Field Constraints
+Required and optional Field Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
@@ -187,7 +187,7 @@ field is optional but must be a valid email if supplied, you can do the followin
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
@@ -223,9 +223,9 @@ field is optional but must be a valid email if supplied, you can do the followin
                  'personal_email',
              );
         }
-    
+
     .. code-block:: xml
-    
+
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"

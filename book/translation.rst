@@ -499,7 +499,7 @@ as the locale for the current request.
 You can now use the locale to create routes to other translated pages
 in your application.
 
-Setting a Default Locale
+Setting a default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 What if the user's locale hasn't been determined? You can guarantee that a
