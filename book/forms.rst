@@ -1101,6 +1101,12 @@ Defining your Forms as Services
 Defining your form type as a service is a good practice and makes it really
 easy to use in your application.
 
+.. note::
+
+    Services and the service container will be handled
+    :doc:`later on in this book </book/service_container>`. Things will be
+    more clear after reading that chapter.
+
 .. configuration-block::
 
     .. code-block:: yaml
