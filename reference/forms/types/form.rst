@@ -30,6 +30,8 @@ on all types for which ``form`` is the parent type.
 |           | - `extra_fields_message`_                                          |
 |           | - `post_max_size_message`_                                         |
 |           | - `pattern`_                                                       |
+|           | - `action`_                                                        |
+|           | - `method`_                                                        |
 +-----------+--------------------------------------------------------------------+
 | Inherited | - `block_name`_                                                    |
 | options   | - `disabled`_                                                      |
@@ -49,10 +51,6 @@ Options
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
-
-.. include:: /reference/forms/types/options/action.rst.inc
-
-.. include:: /reference/forms/types/options/method.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
 
