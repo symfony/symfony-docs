@@ -79,8 +79,8 @@ class:
 
 When you specify the class to use for the factory (via ``factory_class``)
 the method will be called statically. If the factory itself should be instantiated
-and the resulting object's method called (as in this example), configure the
-factory itself as a service:
+and the resulting object's method called, configure the factory itself as a service.
+In this case, the method (e.g. get) should be changed to be non-static:
 
 .. configuration-block::
 
