@@ -654,11 +654,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     ``Tag`` is properly removed.
 
     In Doctrine, you have two side of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a many-to-many relation
+    inverse side. Normally in this case you'll have a many-to-many relationship
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
 
-    But if you have an one-to-many relation or a many-to-many with a
+    But if you have a one-to-many relationship or a many-to-many relationship with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
     you'll need to do more work for the removed tags to persist correctly.
 
