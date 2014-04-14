@@ -653,7 +653,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     work to ensure that the relationship between the ``Task`` and the removed
     ``Tag`` is properly removed.
 
-    In Doctrine, you have two side of the relationship: the owning side and the
+    In Doctrine, you have two sides of the relationship: the owning side and the
     inverse side. Normally in this case you'll have a many-to-many relationship
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
