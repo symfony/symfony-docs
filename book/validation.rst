@@ -839,8 +839,8 @@ Group Sequence
 --------------
 
 In some cases, you want to validate your groups by steps. To do this, you can
-use the ``GroupSequence`` feature. In this case, an object defines a group sequence
-, which determines the order groups should be validated.
+use the ``GroupSequence`` feature. In this case, an object defines a group
+sequence, which determines the order groups should be validated.
 
 For example, suppose you have a ``User`` class and want to validate that the
 username and the password are different only if all other validation passes
@@ -1082,10 +1082,7 @@ Now, change the ``User`` class to implement
 :class:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface` and
 add the
 :method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
-which should return an array of groups to use. Also, add the
-``@Assert\GroupSequenceProvider`` annotation to the class (or ``group_sequence_provider: true`` to the YAML). If you imagine
-that a method called ``isPremium`` returns true if the user is a premium member,
-then your code might look like this::
+which should return an array of groups to use::
 
     // src/Acme/DemoBundle/Entity/User.php
     namespace Acme\DemoBundle\Entity;
@@ -1093,10 +1090,6 @@ then your code might look like this::
     // ...
     use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
-    /**
-     * @Assert\GroupSequenceProvider
-     * ...
-     */
     class User implements GroupSequenceProviderInterface
     {
         // ...
@@ -1112,6 +1105,66 @@ then your code might look like this::
             return $groups;
         }
     }
+
+At last, you have to notify the Validator component that your ``User`` class
+provides a sequence of groups to be validated:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\User:
+            group_sequence_provider: ~
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        // ...
+
+        /**
+         * @Assert\GroupSequenceProvider
+         */
+        class User implements GroupSequenceProviderInterface
+        {
+            // ...
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd"
+        >
+            <class name="Acme\DemoBundle\Entity\User">
+                <group-sequence-provider />
+                <!-- ... -->
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class User implements GroupSequenceProviderInterface
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->setGroupSequenceProvider(true);
+                // ...
+            }
+        }
 
 .. _book-validation-raw-values:
 
