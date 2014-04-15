@@ -130,6 +130,10 @@ Naming Conventions
 
 * Use alphanumeric characters and underscores for file names;
 
+* For type-hinting in PHPDocs and casting, use ``bool`` (instead of ``boolean``
+  or ``Boolean``), ``int`` (instead of ``integer``), ``float`` (instead of
+  ``double`` or ``real``);
+
 * Don't forget to look at the more verbose :doc:`conventions` document for
   more subjective naming considerations.
 
