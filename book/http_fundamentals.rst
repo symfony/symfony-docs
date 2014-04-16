@@ -42,7 +42,7 @@ how to master it.
 .. index::
    single: HTTP; Request-response paradigm
 
-Step1: The Client sends a Request
+Step1: The Client Sends a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every conversation on the web starts with a *request*. The request is a text
@@ -105,7 +105,7 @@ the client accepts (``Accept``) and the application the client is using to
 make the request (``User-Agent``). Many other headers exist and can be found
 on Wikipedia's `List of HTTP header fields`_ article.
 
-Step 2: The Server returns a Response
+Step 2: The Server Returns a Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once a server has received the request, it knows exactly which resource the
@@ -248,7 +248,7 @@ you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
 the user is connecting via a secured connection (i.e. HTTPS).
 
-.. sidebar:: ParameterBags and Request attributes
+.. sidebar:: ParameterBags and Request Attributes
 
     As seen above, the ``$_GET`` and ``$_POST`` variables are accessible via
     the public ``query`` and ``request`` properties respectively. Each of

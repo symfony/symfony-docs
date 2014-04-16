@@ -266,7 +266,7 @@ to see what options you have available.
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the Form component calls ``buildView`` and ``buildViewBottomUp``
+    object of your form when the Form component calls ``buildView`` and ``finishView``
     on each "node" of your form tree. To see what "view" variables a particular
     field has, find the source code for the form field (and its parent fields)
     and look at the above two functions.
@@ -350,9 +350,11 @@ object:
 | ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
 |                        | validation. Additionally, a ``required`` class is added to the label.               |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element.                                 |
+| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element. (deprecated as of 2.5, to be    |
+|                        | removed in 3.0, use ``attr["maxlength"]`` instead)                                  |
 +------------------------+-------------------------------------------------------------------------------------+
-| ``pattern``            | Adds a ``pattern`` HTML attribute to the element.                                   |
+| ``pattern``            | Adds a ``pattern`` HTML attribute to the element. (deprecated as of 2.5, to be      |
+|                        | removed in 3.0, use ``attr["pattern"]`` instead)                                    |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``label``              | The string label that will be rendered.                                             |
 +------------------------+-------------------------------------------------------------------------------------+

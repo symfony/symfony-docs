@@ -20,7 +20,7 @@ on all types for which ``form`` is the parent type.
 |           | - `trim`_                                                          |
 |           | - `mapped`_                                                        |
 |           | - `property_path`_                                                 |
-|           | - `max_length`_                                                    |
+|           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `by_reference`_                                                  |
 |           | - `error_bubbling`_                                                |
 |           | - `inherit_data`_                                                  |
@@ -29,7 +29,7 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message_parameters`_                                    |
 |           | - `extra_fields_message`_                                          |
 |           | - `post_max_size_message`_                                         |
-|           | - `pattern`_                                                       |
+|           | - `pattern`_ (deprecated as of 2.5)                                |
 +-----------+--------------------------------------------------------------------+
 | Inherited | - `block_name`_                                                    |
 | options   | - `disabled`_                                                      |
@@ -43,8 +43,8 @@ on all types for which ``form`` is the parent type.
 | Class     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
 +-----------+--------------------------------------------------------------------+
 
-Options
--------
+Field Options
+-------------
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -104,7 +104,7 @@ Options
 
 .. include:: /reference/forms/types/options/method.rst.inc
 
-Inherited options
+Inherited Options
 -----------------
 
 The following options are defined in the

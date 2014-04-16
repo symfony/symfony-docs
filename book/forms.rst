@@ -13,7 +13,7 @@ learning the most important features of the form library along the way.
 
    The Symfony Form component is a standalone library that can be used outside
    of Symfony2 projects. For more information, see the `Symfony2 Form component`_
-   on Github.
+   on GitHub.
 
 .. index::
    single: Forms; Create a simple form
@@ -39,6 +39,7 @@ going to need to build a form. But before you begin, first focus on the generic
         {
             return $this->task;
         }
+
         public function setTask($task)
         {
             $this->task = $task;
@@ -48,7 +49,7 @@ going to need to build a form. But before you begin, first focus on the generic
         {
             return $this->dueDate;
         }
-        
+
         public function setDueDate(\DateTime $dueDate = null)
         {
             $this->dueDate = $dueDate;
@@ -172,7 +173,7 @@ helper functions:
 
 That's it! By printing ``form(form)``, each field in the form is rendered, along
 with a label and error message (if there is one). The ``form`` function also
-surrounds everything in the necessary HTML ``form`` tag. As easy as this is,
+surrounds everything in the necessary HTML ``<form>`` tag. As easy as this is,
 it's not very flexible (yet). Usually, you'll want to render each form field
 individually so you can control how the form looks. You'll learn how to do
 that in the ":ref:`form-rendering-template`" section.
@@ -267,7 +268,8 @@ possible paths:
    .. note::
 
       Redirecting a user after a successful form submission prevents the user
-      from being able to hit "refresh" and re-post the data.
+      from being able to hit the "Refresh" button of their browser and re-post
+      the data.
 
 .. index::
    single: Forms; Multiple Submit Buttons
@@ -566,7 +568,7 @@ First, we need to add the two buttons to the form::
 
 Then, we configure the button for returning to the previous step to run
 specific validation groups. In this example, we want it to suppress validation,
-so we set its ``validation_groups`` options to false::
+so we set its ``validation_groups`` option to false::
 
     $form = $this->createFormBuilder($task)
         // ...
@@ -616,7 +618,7 @@ Each field type has a number of different options that can be passed to it.
 Many of these are specific to the field type and details can be found in
 the documentation for each type.
 
-.. sidebar:: The ``required`` option
+.. sidebar:: The ``required`` Option
 
     The most common option is the ``required`` option, which can be applied to
     any field. By default, the ``required`` option is set to ``true``, meaning
@@ -634,7 +636,7 @@ the documentation for each type.
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
 
-.. sidebar:: The ``label`` option
+.. sidebar:: The ``label`` Option
 
     The label for the form field can be set using the ``label`` option,
     which can be applied to any field::
@@ -707,8 +709,8 @@ the correct values of a number of field options.
   (i.e. is the field ``nullable``). This is very useful, as your client-side
   validation will automatically match your validation rules.
 
-* ``max_length``: If the field is some sort of text field, then the ``max_length``
-  option can be guessed from the validation constraints (if ``Length`` or
+* ``maxlength``: If the field is some sort of text field, then the ``maxlength``
+  option attribute can be guessed from the validation constraints (if ``Length`` or
   ``Range`` is used) or from the Doctrine metadata (via the field's length).
 
 .. note::
@@ -719,7 +721,7 @@ the correct values of a number of field options.
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
 
-    ->add('task', null, array('max_length' => 4))
+    ->add('task', null, array('attr' => array('maxlength' => 4)))
 
 .. index::
    single: Forms; Rendering in a template
@@ -979,10 +981,10 @@ to the ``form()`` or the ``form_start()`` helper:
 .. note::
 
     If the form's method is not GET or POST, but PUT, PATCH or DELETE, Symfony2
-    will insert a hidden field with the name "_method" that stores this method.
+    will insert a hidden field with the name ``_method`` that stores this method.
     The form will be submitted in a normal POST request, but Symfony2's router
-    is capable of detecting the "_method" parameter and will interpret the
-    request as PUT, PATCH or DELETE request. Read the cookbook chapter
+    is capable of detecting the ``_method`` parameter and will interpret it as
+    a PUT, PATCH or DELETE request. Read the cookbook chapter
     ":doc:`/cookbook/routing/method_parameters`" for more information.
 
 .. index::
@@ -1076,7 +1078,8 @@ the choice is ultimately up to you.
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('task')
+            $builder
+                ->add('task')
                 ->add('dueDate', null, array('mapped' => false))
                 ->add('save', 'submit');
         }
@@ -1097,6 +1100,12 @@ Defining your Forms as Services
 
 Defining your form type as a service is a good practice and makes it really
 easy to use in your application.
+
+.. note::
+
+    Services and the service container will be handled
+    :doc:`later on in this book </book/service_container>`. Things will be
+    more clear after reading that chapter.
 
 .. configuration-block::
 
@@ -1316,8 +1325,7 @@ the ``cascade_validation`` option to ``TaskType``::
         ));
     }
 
-Render the ``Category`` fields in the same way
-as the original ``Task`` fields:
+Render the ``Category`` fields in the same way as the original ``Task`` fields:
 
 .. configuration-block::
 

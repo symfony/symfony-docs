@@ -48,7 +48,7 @@ choices
 
 The choices option defaults to all currencies.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`choice</reference/forms/types/choice>` type:

@@ -1,1 +1,8 @@
-_exts
+/_build
+/bundles/DoctrineFixturesBundle
+/bundles/DoctrineMigrationsBundle
+/bundles/DoctrineMongoDBBundle
+/bundles/SensioFrameworkExtraBundle
+/bundles/SensioGeneratorBundle
+/cmf
+/_exts

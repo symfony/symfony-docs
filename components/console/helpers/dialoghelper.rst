@@ -4,6 +4,13 @@
 Dialog Helper
 =============
 
+.. caution::
+
+    The Dialog Helper was deprecated in Symfony 2.5 and will be removed in
+    Symfony 3.0. You should now use the
+    :doc:`Question Helper </components/console/helpers/questionhelper>` instead,
+    which is simpler to use.
+
 The :class:`Symfony\\Component\\Console\\Helper\\DialogHelper` provides
 functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
@@ -107,7 +114,7 @@ method::
         'Please enter the name of the bundle',
         function ($answer) {
             if ('Bundle' !== substr($answer, -6)) {
-                throw new \RunTimeException(
+                throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
@@ -149,6 +156,8 @@ You can also ask and validate a hidden response::
         if (trim($value) == '') {
             throw new \Exception('The password can not be empty');
         }
+
+        return $value;
     };
 
     $password = $dialog->askHiddenResponseAndValidate(

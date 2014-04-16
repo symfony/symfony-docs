@@ -928,7 +928,7 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
     argument of your action method. See
     :ref:`book-controller-request-argument` for details.
 
-Making References Optional
+Making References optional
 --------------------------
 
 Sometimes, one of your services may have an optional dependency, meaning
@@ -1166,6 +1166,13 @@ By default only public services are shown, but you can also view private service
 .. code-block:: bash
 
     $ php app/console container:debug --show-private
+
+.. note::
+
+    If a private service is only used as an argument to just *one* other service,
+    it won't be displayed by the ``container:debug`` command, even when using
+    the ``--show-private`` option. See :ref:`Inline Private Services <inlined-private-services>`
+    for more details.
 
 You can get more detailed information about a particular service by specifying
 its id:

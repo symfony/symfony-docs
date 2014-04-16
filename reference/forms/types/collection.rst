@@ -113,7 +113,7 @@ existing addresses. Adding new addresses is possible by using the `allow_add`_
 option (and optionally the `prototype`_ option) (see example below). Removing
 emails from the ``emails`` array is possible with the `allow_delete`_ option.
 
-Adding and Removing items
+Adding and Removing Items
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If `allow_add`_ is set to ``true``, then if any unrecognized items are submitted,
@@ -350,7 +350,7 @@ form you have to set this option to true. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type.

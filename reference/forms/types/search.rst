@@ -12,7 +12,7 @@ Read about the input search field at `DiveIntoHTML5.info`_
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input search`` field                                               |
 +-------------+----------------------------------------------------------------------+
-| Inherited   | - `max_length`_                                                      |
+| Inherited   | - `max_length`_ (deprecated as of 2.5)                               |
 | options     | - `empty_data`_                                                      |
 |             | - `required`_                                                        |
 |             | - `label`_                                                           |

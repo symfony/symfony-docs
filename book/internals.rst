@@ -127,7 +127,7 @@ method returns an array of arguments to pass to the Controller callable. The
 default implementation automatically resolves the method arguments, based on
 the Request attributes.
 
-.. sidebar:: Matching Controller method arguments from Request attributes
+.. sidebar:: Matching Controller Method Arguments from Request Attributes
 
     For each method argument, Symfony2 tries to get the value of a Request
     attribute with the same name. If it is not defined, the argument default
@@ -365,6 +365,19 @@ The FrameworkBundle registers several listeners:
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
 .. index::
+    single: Event; kernel.finish_request
+
+``kernel.finish_request`` Event
+...............................
+
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
+
+The purpose of this event is to to handle tasks that should be performed after
+the request has been handled but that do not need to modify the response.
+Event listeners for the ``kernel.finish_request`` event are called in both
+successful and exception cases.
+
+.. index::
    single: Event; kernel.terminate
 
 ``kernel.terminate`` Event
@@ -492,7 +505,7 @@ token link (a string made of 13 random characters) to access the Web Profiler.
     If the token is not clickable, it means that the profiler routes are not
     registered (see below for configuration information).
 
-Analyzing Profiling data with the Web Profiler
+Analyzing Profiling Data with the Web Profiler
 ..............................................
 
 The Web Profiler is a visualization tool for profiling data that you can use

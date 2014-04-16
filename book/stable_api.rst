@@ -20,6 +20,10 @@ everything not tagged explicitly is not part of the stable API.
 
 .. tip::
 
+    Read more about the stable API in :doc:`/contributing/code/bc`.
+
+.. tip::
+
     Any third party bundle should also publish its own stable API.
 
 As of the latest stable release of Symfony, the following components have
@@ -36,7 +40,6 @@ a public tagged API:
 * Finder
 * HttpFoundation
 * HttpKernel
-* Locale
 * Process
 * Routing
 * Templating

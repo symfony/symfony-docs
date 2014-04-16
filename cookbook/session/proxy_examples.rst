@@ -1,5 +1,5 @@
 .. index::
-   single: Sessions, session proxy, proxy
+   single: Sessions, Session Proxy, Proxy
 
 Session Proxy Examples
 ======================
@@ -16,7 +16,7 @@ is injected into the proxy and registered with the session storage driver::
     $session = new Session(new NativeSessionStorage(array(), $proxy));
 
 Below, you'll learn two real examples that can be used for ``YourProxy``:
-encryption of session data and readonly guest session.
+encryption of session data and readonly guest sessions.
 
 Encryption of Session Data
 --------------------------
@@ -56,8 +56,8 @@ Readonly Guest Sessions
 -----------------------
 
 There are some applications where a session is required for guest users, but
-there is no particular need to persist the session. In this case you can
-intercept the session before it writes::
+where there is no particular need to persist the session. In this case you
+can intercept the session before it is written::
 
     use Foo\User;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;

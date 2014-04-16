@@ -52,7 +52,7 @@ choice_list
 The Timezone type defaults the choice_list to all timezones returned by
 :phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
