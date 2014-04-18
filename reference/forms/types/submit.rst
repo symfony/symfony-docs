@@ -16,6 +16,7 @@ A submit button.
 | options              | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
 |                      | - `label_attr`_                                                      |
+|                      | - `translation_count`_                                               |
 |                      | - `translation_domain`_                                              |
 +----------------------+----------------------------------------------------------------------+
 | Parent type          | :doc:`button</reference/forms/types/button>`                         |
@@ -42,6 +43,8 @@ Inherited Options
 .. include:: /reference/forms/types/options/button_label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/button_translation_count.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
