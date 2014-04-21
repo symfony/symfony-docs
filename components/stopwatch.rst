@@ -36,7 +36,7 @@ microtime by yourself. Instead, use the simple
     // ... some code goes here
     $event = $stopwatch->stop('eventName');
 
-The :class:`Symfony\\Component\\Stopwatch\StopwatchEvent` object can be retrieved
+The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
 from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop` and
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` methods.
