@@ -279,44 +279,44 @@ the following guidelines in mind while you develop.
 
 * **The order of the controller arguments does not matter**
 
-    Symfony is able to match the parameter names from the route to the variable
-    names in the controller method's signature. In other words, it realizes that
-    the ``{lastName}`` parameter matches up with the ``$lastName`` argument.
-    The arguments of the controller could be totally reordered and still work
-    perfectly::
+  Symfony is able to match the parameter names from the route to the variable
+  names in the controller method's signature. In other words, it realizes that
+  the ``{lastName}`` parameter matches up with the ``$lastName`` argument.
+  The arguments of the controller could be totally reordered and still work
+  perfectly::
 
-        public function indexAction($lastName, $color, $firstName)
-        {
-            // ...
-        }
+      public function indexAction($lastName, $color, $firstName)
+      {
+          // ...
+      }
 
 * **Each required controller argument must match up with a routing parameter**
 
-    The following would throw a ``RuntimeException`` because there is no ``foo``
-    parameter defined in the route::
+  The following would throw a ``RuntimeException`` because there is no ``foo``
+  parameter defined in the route::
 
-        public function indexAction($firstName, $lastName, $color, $foo)
-        {
-            // ...
-        }
+      public function indexAction($firstName, $lastName, $color, $foo)
+      {
+          // ...
+      }
 
-    Making the argument optional, however, is perfectly ok. The following
-    example would not throw an exception::
+  Making the argument optional, however, is perfectly ok. The following
+  example would not throw an exception::
 
-        public function indexAction($firstName, $lastName, $color, $foo = 'bar')
-        {
-            // ...
-        }
+      public function indexAction($firstName, $lastName, $color, $foo = 'bar')
+      {
+          // ...
+      }
 
 * **Not all routing parameters need to be arguments on your controller**
 
-    If, for example, the ``lastName`` weren't important for your controller,
-    you could omit it entirely::
+  If, for example, the ``lastName`` weren't important for your controller,
+  you could omit it entirely::
 
-        public function indexAction($firstName, $color)
-        {
-            // ...
-        }
+      public function indexAction($firstName, $color)
+      {
+          // ...
+      }
 
 .. tip::
 

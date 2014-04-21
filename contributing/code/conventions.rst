@@ -13,18 +13,18 @@ Method Names
 When an object has a "main" many relation with related "things"
 (objects, parameters, ...), the method names are normalized:
 
-  * ``get()``
-  * ``set()``
-  * ``has()``
-  * ``all()``
-  * ``replace()``
-  * ``remove()``
-  * ``clear()``
-  * ``isEmpty()``
-  * ``add()``
-  * ``register()``
-  * ``count()``
-  * ``keys()``
+* ``get()``
+* ``set()``
+* ``has()``
+* ``all()``
+* ``replace()``
+* ``remove()``
+* ``clear()``
+* ``isEmpty()``
+* ``add()``
+* ``register()``
+* ``count()``
+* ``keys()``
 
 The usage of these methods are only allowed when it is clear that there
 is a main relation:
