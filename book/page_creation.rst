@@ -1061,5 +1061,5 @@ to rapidly develop applications.
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`third-party bundles`: http://knpbundles.com
 .. _`Symfony Standard Edition`: http://symfony.com/download
-.. _`Apache's DirectoryIndex documentation`: http://httpd.apache.org/docs/2.0/mod/mod_dir.html
+.. _`Apache's DirectoryIndex documentation`: http://httpd.apache.org/docs/2.4/mod/mod_dir.html
 .. _`Nginx HttpCoreModule location documentation`: http://wiki.nginx.org/HttpCoreModule#location
