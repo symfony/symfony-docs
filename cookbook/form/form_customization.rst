@@ -662,9 +662,7 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
 
    If you want to change the ``product`` or ``name`` portion of the block
    name ``_product_name_widget`` you can set the ``block_name`` option in your
-   form type:
-
-    .. code-block:: php
+   form type::
 
         use Symfony\Component\Form\FormBuilderInterface;
 
@@ -673,11 +671,11 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
             // ...
 
             $builder->add('name', 'text', array(
-                'block_name' => 'custom_name'
+                'block_name' => 'custom_name',
             ));
         }
 
-   The block name can then be ``_product_custom_name_widget``
+   Then the block name will be ``_product_custom_name_widget``.
 
 You can also override the markup for an entire field row using the same method:
 
