@@ -49,7 +49,7 @@ to JavaScript::
         )
     );
 
-This will print ``Honeycrisp``.
+This will print out ``Honeycrisp``.
 
 Calling Methods
 ~~~~~~~~~~~~~~~
@@ -79,7 +79,7 @@ JavaScript::
         )
     );
 
-This will print ``Hi Hi Hi!``.
+This will print out ``Hi Hi Hi!``.
 
 .. _component-expression-functions:
 
@@ -97,7 +97,7 @@ constant::
         'constant("DB_USER")'
     );
 
-This will print ``root``.
+This will print out ``root``.
 
 .. tip::
 
@@ -121,7 +121,7 @@ array keys, similar to JavaScript::
         )
     );
 
-This will print ``42``.
+This will print out ``42``.
 
 Supported Operators
 -------------------

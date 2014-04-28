@@ -131,7 +131,8 @@ This methods has 2 new arguments, the full signature is::
         string|array $question,
         callback $validator,
         integer $attempts = false,
-        string $default = null
+        string $default = null,
+        array $autocomplete = null
     )
 
 The ``$validator`` is a callback which handles the validation. It should
@@ -140,8 +141,8 @@ in the console, so it is a good practice to put some useful information in it. T
 function should also return the value of the user's input if the validation was successful.
 
 You can set the max number of times to ask in the ``$attempts`` argument.
-If you reach this max number it will use the default value, which is given
-in the last argument. Using ``false`` means the amount of attempts is infinite.
+If you reach this max number it will use the default value.
+Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as they provide an invalid answer and will only
 be able to proceed if their input is valid.
 
