@@ -104,7 +104,7 @@ Structure
 * Declare public methods first, then protected ones and finally private ones. 
   The exceptions to this rule are the class constructor and the ``setUp`` and 
   ``tearDown`` methods of PHPUnit tests, which should always be the first methods
-  to increase readability.
+  to increase readability;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
