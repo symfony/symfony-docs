@@ -32,7 +32,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
 |                      | - `data`_                                                                   |
-|                      | - `read_only`_                                                              |
+|                      | - `read_only`_ (deprecated as of 2.5)                                       |
 |                      | - `disabled`_                                                               |
 |                      | - `mapped`_                                                                 |
 |                      | - `inherit_data`_                                                           |

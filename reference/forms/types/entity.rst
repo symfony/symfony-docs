@@ -31,7 +31,7 @@ objects from the database.
 |             | - `label`_                                                       |
 |             | - `label_attr`_                                                  |
 |             | - `data`_                                                        |
-|             | - `read_only`_                                                   |
+|             | - `read_only`_ (deprecated as of 2.5)                            |
 |             | - `disabled`_                                                    |
 |             | - `error_bubbling`_                                              |
 |             | - `error_mapping`_                                               |

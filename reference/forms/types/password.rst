@@ -17,7 +17,7 @@ The ``password`` field renders an input password text box.
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `trim`_                                                              |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.5)                                  |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |

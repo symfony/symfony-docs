@@ -16,7 +16,7 @@ The text field represents the most basic input text field.
 |             | - `label_attr`_                                                    |
 |             | - `data`_                                                          |
 |             | - `trim`_                                                          |
-|             | - `read_only`_                                                     |
+|             | - `read_only`_ (deprecated as of 2.5)                              |
 |             | - `disabled`_                                                      |
 |             | - `error_bubbling`_                                                |
 |             | - `error_mapping`_                                                 |

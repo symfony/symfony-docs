@@ -344,6 +344,7 @@ object:
 | ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute). |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field.                         |
+|                        | (deprecated as of 2.5, to be removed in 3.0, use ``attr["readonly"]`` instead)      |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+

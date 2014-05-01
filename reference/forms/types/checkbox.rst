@@ -20,7 +20,7 @@ if the box is unchecked, the value will be set to false.
 | options     | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.5)                                  |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
