@@ -18,7 +18,7 @@ Read about the input search field at `DiveIntoHTML5.info`_
 |             | - `label`_                                                           |
 |             | - `label_attr`_                                                      |
 |             | - `trim`_                                                            |
-|             | - `read_only`_                                                       |
+|             | - `read_only`_ (deprecated as of 2.5)                                |
 |             | - `disabled`_                                                        |
 |             | - `error_bubbling`_                                                  |
 |             | - `error_mapping`_                                                   |

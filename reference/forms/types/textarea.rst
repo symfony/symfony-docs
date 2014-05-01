@@ -16,7 +16,7 @@ Renders a ``textarea`` HTML element.
 |             | - `label_attr`_                                                        |
 |             | - `trim`_                                                              |
 |             | - `data`_                                                              |
-|             | - `read_only`_                                                         |
+|             | - `read_only`_ (deprecated as of 2.5)                                  |
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |

@@ -15,7 +15,7 @@ The ``file`` type represents a file input in your form.
 | options     | - `required`_                                                       |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.5)                               |
 |             | - `disabled`_                                                       |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
