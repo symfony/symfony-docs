@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-08T09:42:57Z
+
+Has to be added to ``/contributing/map.rst`` and ``/contributing/code/index.rst``.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-08T09:47:41Z
+
+What do you think about linking the names of the members to their GitHub profiles?
+
+---------------------------------------------------------------------------
+
+by bobdenotter at 2014-04-08T10:10:01Z
+
+Ah, a proposed solution for the "But what if Fabian gets hit by a bus?" problem. :-)
+
+But seriously, this is a good thing IMHO.
+
+---------------------------------------------------------------------------
+
+by vicb at 2014-04-08T11:51:24Z
+
+@fabpot best late than never!
+
+There is one thing that I would suggest, create an "currently inactive"category for inactive members. People do (also) contribute to get credits and giving them would be fair. Symfony would not be what it is now without the work of all its contributors. Win-win.
+
+Note: I'm not asking to be part of this cat. The "core team" never existed before and I have been inactive for way too long...
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-04-08T12:01:08Z
+
+@vicb: That's something totally different and that's already addressed, see http://symfony.com/contributors
+
+---------------------------------------------------------------------------
+
+by vicb at 2014-04-08T12:17:15Z
+
+Having the contributor page is nice. Not sure it's "totally different" though... But you decide, you're the project leader ;)
+
+On April 8, 2014 5:01:11 AM PDT, Fabien Potencier <notifications@github.com> wrote:
+>@vicb: That's something totally different and that's already addressed,
+>see http://symfony.com/contributors
+>
+>
+>---
+>Reply to this email directly or view it on GitHub:
+>https://github.com/symfony/symfony-docs/pull/3777#issuecomment-39839476
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-04-08T12:37:34Z
+
+@vicb I think that I understand your petition. You believe that we need to add a new section called *"Past Core Members"*. You are right. We haven't added it in this document because there are no past members yet (the old symfony 1.x core members don't apply for this and the special developers that contributed a lot during the past years, as is your case, don't apply either because there was no formal *symfony core* group).
+
+---------------------------------------------------------------------------
+
+by GrahamCampbell at 2014-04-09T10:46:38Z
+
+I noticed this is targeted at the master branch. Would it not make sense to target this at 2.3, that is, if I have understood this right, and this change means the core team can push changes to the 2.3 branch too?
+
+---------------------------------------------------------------------------
+
+by stof at 2014-04-09T14:14:18Z
+
+@GrahamCampbell the right target would indeed be 2.3. But anyway, this can be changed at merge time by @weaverryan
+
+---------------------------------------------------------------------------
+
+by GrahamCampbell at 2014-04-09T14:15:16Z
+
+Sure.
