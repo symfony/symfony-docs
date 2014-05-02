@@ -10,41 +10,39 @@ idea to turn your standard Doctrine repository into a service.
 Let's start with the repository itself. The process is pretty straight forward:
 if you might need to log something, here is the how-to too:
 
-	<?php
+    namespace Acme\BlogBundle\Entity\Repository;
 	
-	namespace Acme\BlogBundle\Entity\Repository;
+    use Psr\Log\NullLogger;
+    use Psr\Log\LoggerInterface;
+    use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+    use Doctrine\ORM\EntityRepository;
+    use Doctrine\ORM\EntityManager;
 	
-	use Psr\Log\NullLogger;
-	use Psr\Log\LoggerInterface;
-	use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-	use Doctrine\ORM\EntityRepository;
-	use Doctrine\ORM\EntityManager;
+    class PostRepository extends EntityRepository
+    {
+        private $Logger; /** @var LoggerInterface */
 	
-	class PostRepository extends EntityRepository
-	{
-		private $Logger; /** @var LoggerInterface */
+        /**
+         *
+         * @param EntityManager $em
+         * @param ClassMetadata $class
+         */
+        public function __construct(EntityManager $em, ClassMetadata $class)
+        {
+            parent::__construct($em, $class);
 	
-		/**
-		 *
-		 * @param EntityManager $em
-		 * @param ClassMetadata $class
-		 */
-		public function __construct(EntityManager $em, ClassMetadata $class)
-		{
-			parent::__construct($em, $class);
+            $this->Logger = new NullLogger();
+        }
 	
-			$this->Logger = new NullLogger();
-		}
-	
-		/**
-		 *
-		 * @param LoggerInterface $logger
-		 */
-		public function setLogger(LoggerInterface $logger)
-		{
-			$this->Logger = $logger;
-		}
-	 }
+        /**
+         *
+         * @param LoggerInterface $logger
+         */
+        public function setLogger(LoggerInterface $logger)
+        {
+            $this->Logger = $logger;
+        }
+    }
 
 	 // ...
 	 
@@ -70,27 +68,25 @@ Proceed with creating the service definition:
 	
 Finally, use your repository in your standard controller:
 
-	<?php
-	 
-	namespace Acme\BlogBundle\Controller;
+    namespace Acme\BlogBundle\Controller;
 	
-	use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-	use Acme\BlogBundle\Entity\Post;
-	use Acme\BlogBundle\Entity\Repository\PostRepository;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Acme\BlogBundle\Entity\Post;
+    use Acme\BlogBundle\Entity\Repository\PostRepository;
 	
-	class PostController extends Controller
-	{
-	    public function indexAction()
-	    {
-	    	/* @var $repository PostRepository */
-	    	$repository = $this->get('acme.blog.repository.post');
-	        $entities = $repository->findAll();
+    class PostController extends Controller
+    {
+        public function indexAction()
+        {
+            /* @var $repository PostRepository */
+            $repository = $this->get('acme.blog.repository.post');
+            $entities = $repository->findAll();
 	
-	        return $this->render('AcmeBlogBundle:Blog:index.html.twig', array(
-	            'entities' => $entities
-	        ));
-	    }
+            return $this->render('AcmeBlogBundle:Blog:index.html.twig', array(
+                'entities' => $entities
+            ));
+        }
 	    
-	    // ...
-	}
+        // ...
+    }
 	 
