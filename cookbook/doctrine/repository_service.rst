@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine; Service
+
 How to turn your Doctrine repository into a service
 ===================================================
 
