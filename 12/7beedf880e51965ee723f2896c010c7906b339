@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-07T13:48:42Z
+
+Indeed, the method needs to be static when setting the factory *class* and it can be non-static when setting a factory *service*
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-04-12T14:14:05Z
+
+No, it's not quite right yet, unfortunately. If you look at line 80:
+
+>
+When you specify the class to use for the factory (via ``factory_class``)
+the method will be called statically. If the factory itself should be instantiated
+and the resulting object's method called (as in this example), configure the
+factory itself as a service:
+
+So, we're using this one example to explain both `factory_class` and `factory_service`. I think we *should* include this change, but reword this paragraph  to something like:
+
+>
+When you specify the class to use for the factory (via ``factory_class``)
+the method will be called statically. If the factory itself should be instantiated
+and the resulting object's method called, configure the factory itself as a service.
+In this case, the method (e.g. `get`) should be changed to be non-static:
+
+@AlaaAttya Can you make this change please? :)
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by AlaaAttya at 2014-04-13T09:55:51Z
+
+@weaverryan done :)
