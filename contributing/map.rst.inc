@@ -2,6 +2,7 @@
 
   * :doc:`Bugs </contributing/code/bugs>`
   * :doc:`Patches </contributing/code/patches>`
+  * :doc:`The Core Team </contributing/code/core_team>`
   * :doc:`Security </contributing/code/security>`
   * :doc:`Tests </contributing/code/tests>`
   * :doc:`Backwards Compatibility </contributing/code/bc>`

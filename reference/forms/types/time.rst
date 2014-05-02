@@ -51,7 +51,7 @@ options are ``input`` and ``widget``.
 
 Suppose that you have a ``startTime`` field whose underlying time data is a
 ``DateTime`` object. The following configures the ``time`` type for that
-field as three different choice fields:
+field as two different choice fields:
 
 .. code-block:: php
 
