@@ -42,9 +42,9 @@ if you might need to log something, here is the how-to too:
         {
             $this->Logger = $logger;
         }
+        
+        // ...
     }
-
-	 // ...
 	 
 Proceed with creating the service definition:
 
