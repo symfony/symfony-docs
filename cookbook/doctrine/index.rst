@@ -15,3 +15,4 @@ Doctrine
     mapping_model_classes
     registration_form
     console
+    service
