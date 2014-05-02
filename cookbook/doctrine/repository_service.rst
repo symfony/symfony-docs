@@ -8,8 +8,10 @@ Since this often requires to have other services at hand it is a good
 idea to turn your standard Doctrine repository into a service.
 
 Let's start with the repository itself. The process is pretty straight forward:
-if you might need to log something, here is the how-to too:
+if you might need to log something, here is the how-to too::
 
+    // src/Acme/BlogBundle/Entity/Repository.php;
+    
     namespace Acme\BlogBundle\Entity\Repository;
 	
     use Psr\Log\NullLogger;
@@ -20,13 +22,8 @@ if you might need to log something, here is the how-to too:
 	
     class PostRepository extends EntityRepository
     {
-        private $Logger; /** @var LoggerInterface */
+	private $Logger; /** @var LoggerInterface */
 	
-        /**
-         *
-         * @param EntityManager $em
-         * @param ClassMetadata $class
-         */
         public function __construct(EntityManager $em, ClassMetadata $class)
         {
             parent::__construct($em, $class);
@@ -34,10 +31,6 @@ if you might need to log something, here is the how-to too:
             $this->Logger = new NullLogger();
         }
 	
-        /**
-         *
-         * @param LoggerInterface $logger
-         */
         public function setLogger(LoggerInterface $logger)
         {
             $this->Logger = $logger;
@@ -48,7 +41,16 @@ if you might need to log something, here is the how-to too:
 	 
 Proceed with creating the service definition:
 
+.. configuration-block::
+
+    .. code-block:: yaml
+    
+   	# src/Acme/BlogBundle/Resources/config/config.yml
+    	# todo
+
     .. code-block:: xml
+    
+    	<!-- src/Acme/BlogBundle/Resources/config/config.xml -->
 	<container xmlns="http://symfony.com/schema/dic/services"
 	           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -66,8 +68,16 @@ Proceed with creating the service definition:
 	    </services>
 	</container>
 	
-Finally, use your repository in your standard controller:
+    .. code-block:: php
+    
+    	// src/Acme/BlogBundle/Resources/config/config.php
+    	// @todo
+    	
+    
+Finally, use your repository in your standard controller::
 
+    // src/Acme/BlogBundle/Controller/PostController.php
+    
     namespace Acme\BlogBundle\Controller;
 	
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
