@@ -32,11 +32,16 @@ git repository:
    .. code-block:: text
 
         /web/bundles/
-        /app/bootstrap*
+        /app/bootstrap.php.cache
         /app/cache/*
-        /app/logs/*
-        /vendor/
         /app/config/parameters.yml
+        /app/logs/*
+        !app/cache/.gitkeep
+        !app/logs/.gitkeep
+        /build/
+        /vendor/
+        /bin/
+        /composer.phar
 
 .. tip::
 
