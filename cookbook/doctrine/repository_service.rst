@@ -25,18 +25,18 @@ if you might need to log something, here is the how-to too::
 	
     class PostRepository extends EntityRepository
     {
-	private $Logger; /** @var LoggerInterface */
+	private $logger; /** @var LoggerInterface */
 	
         public function __construct(EntityManager $em, ClassMetadata $class)
         {
             parent::__construct($em, $class);
 	
-            $this->Logger = new NullLogger();
+            $this->logger = new NullLogger();
         }
 	
         public function setLogger(LoggerInterface $logger)
         {
-            $this->Logger = $logger;
+            $this->logger = $logger;
         }
         
         // ...
