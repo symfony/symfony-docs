@@ -20,28 +20,30 @@ Initial Project Setup
 To get started, you'll need to download Symfony and initialize your local
 git repository:
 
-1. Download the `Symfony2 Standard Edition`_ without vendors.
+1. Download the `Symfony2 Standard Edition`_ using Composer:
 
-2. Unzip/untar the distribution. It will create a folder called Symfony with
-   your new project structure, config files, etc. Rename it to whatever you like.
+   .. code-block:: bash
 
-3. Create a new file called ``.gitignore`` at the root of your new project
-   (e.g. next to the ``composer.json`` file) and paste the following into it. Files
-   matching these patterns will be ignored by Git:
+        $ php composer.phar create-project symfony/framework-standard-edition path/ 2.4.4
 
-   .. code-block:: text
+   Composer will now download the Standard Distribution along with all of the
+   required vendor libraries. For more information about downloading Symfony using
+   Composer, see `Installing Symfony using Composer`_.
 
-        /web/bundles/
-        /app/bootstrap.php.cache
-        /app/cache/*
-        /app/config/parameters.yml
-        /app/logs/*
-        !app/cache/.gitkeep
-        !app/logs/.gitkeep
-        /build/
-        /vendor/
-        /bin/
-        /composer.phar
+2. Your project folder will now contain files of the Symfony framework, as well
+   as files and folders for vendor libraries. You'll want to store your project
+   files in Git, but not the dependencies, since they will be managed by Composer.
+   You'll also want to keep your ``parameters.yml`` out of your repository as it will
+   contain sensitive information, such as database credentials. Furthermore,
+   files that are automatically created by Symfony (such as logs, caches, and dumped
+   assets) should be excluded as well.
+
+   To help you keep these files out of your repository, Symfony comes with a file
+   called ``.gitignore``. It contains a list of files and folders that Git will
+   ignore.
+
+   The contents of the ``.gitignore`` file that comes with the Standard Distribution
+   can be found in the `GitHub repository`_.
 
 .. tip::
 
@@ -49,26 +51,23 @@ git repository:
    in which case, you can find more information here: `Github .gitignore`_
    This way you can exclude files/folders often used by your IDE for all of your projects.
 
-4. Initialize your Git repository:
+3. Initialize your Git repository:
 
    .. code-block:: bash
 
         $ git init
 
-5. Add all of the initial files to Git:
+4. Add all of the initial files to Git:
 
    .. code-block:: bash
 
         $ git add .
 
-6. Create an initial commit with your started project:
+5. Create an initial commit with your started project:
 
    .. code-block:: bash
 
         $ git commit -m "Initial commit"
-
-7. Finally, download all of the third-party vendor libraries by
-   executing Composer. For details, see :ref:`installation-updating-vendors`.
 
 At this point, you have a fully-functional Symfony2 project that's correctly
 committed to Git. You can immediately begin development, committing the new
@@ -116,6 +115,8 @@ manage this is `Gitolite`_.
 
 .. _`Git`: http://git-scm.com/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
+.. _`Installing Symfony using Composer`: http://symfony.com/doc/current/book/installation.html#option-1-composer
+.. _`GitHub repository`: https://github.com/symfony/symfony-standard/blob/master/.gitignore
 .. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
