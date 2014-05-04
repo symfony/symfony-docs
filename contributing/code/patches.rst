@@ -85,7 +85,7 @@ Get the Symfony2 source code:
       $ cd symfony
       $ git remote add upstream git://github.com/symfony/symfony.git
 
-Check that the current Tests pass
+Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that Symfony2 is installed, check that all unit tests pass for your

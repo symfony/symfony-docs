@@ -123,8 +123,8 @@ This results in very predictable dates and maintenance periods:
     instance), you can automatically receive an email notification if you
     subscribed on the `roadmap notification`_ page.
 
-Backward Compatibility
-----------------------
+Backwards Compatibility
+-----------------------
 
 Our :doc:`Backwards Compatibility Promise </contributing/code/bc>` is very
 strict and allows developers to upgrade with confidence from one minor version
