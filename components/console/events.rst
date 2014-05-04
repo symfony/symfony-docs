@@ -51,7 +51,7 @@ dispatched. Listeners receive a
         $application = $command->getApplication();
     });
 
-The ``ConsoleEvents::TERMINATE`` event
+The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------
 
 **Typical Purposes**: To perform some cleanup actions after the command has
@@ -89,7 +89,7 @@ Listeners receive a
     It is then dispatched just before the ``ConsoleEvents::EXCEPTION`` event.
     The exit code received in this case is the exception code.
 
-The ``ConsoleEvents::EXCEPTION`` event
+The ``ConsoleEvents::EXCEPTION`` Event
 --------------------------------------
 
 **Typical Purposes**: Handle exceptions thrown during the execution of a

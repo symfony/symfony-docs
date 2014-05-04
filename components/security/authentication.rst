@@ -93,7 +93,7 @@ authentication providers, each supporting a different type of token.
 
 .. _authentication_providers:
 
-Authentication providers
+Authentication Providers
 ------------------------
 
 Each provider (since it implements
@@ -162,7 +162,7 @@ password was valid::
     It is also possible to let multiple user providers try to find the user's
     data, using the :class:`Symfony\\Component\\Security\\Core\\User\\ChainUserProvider`.
 
-The Password encoder Factory
+The Password Encoder Factory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\DaoAuthenticationProvider`
@@ -190,7 +190,7 @@ Each encoder should implement :class:`Symfony\\Component\\Security\\Core\\Encode
 or be an array with a ``class`` and an ``arguments`` key, which allows the
 encoder factory to construct the encoder only when it is needed.
 
-Creating a Custom Password Encoder
+Creating a custom Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are many built-in password encoders. But if you need to create your

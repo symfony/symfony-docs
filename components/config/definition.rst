@@ -1,10 +1,10 @@
 .. index::
    single: Config; Defining and processing configuration values
 
-Defining and processing configuration values
+Defining and Processing Configuration Values
 ============================================
 
-Validating configuration values
+Validating Configuration Values
 -------------------------------
 
 After loading configuration values from all kinds of resources, the values
@@ -38,7 +38,7 @@ they are when first encountered. Also, some keys are only available when
 another key has a specific value (in the sample configuration above: the
 ``memory`` key only makes sense when the ``driver`` is ``sqlite``).
 
-Defining a hierarchy of configuration values using the TreeBuilder
+Defining a Hierarchy of Configuration Values Using the TreeBuilder
 ------------------------------------------------------------------
 
 All the rules concerning configuration values can be defined using the
@@ -66,10 +66,10 @@ should be returned from a custom ``Configuration`` class which implements the
         }
     }
 
-Adding node definitions to the tree
+Adding Node Definitions to the Tree
 -----------------------------------
 
-Variable nodes
+Variable Nodes
 ~~~~~~~~~~~~~~
 
 A tree contains node definitions which can be laid out in a semantic way.
@@ -91,7 +91,7 @@ The root node itself is an array node, and has children, like the boolean
 node ``auto_connect`` and the scalar node ``default_connection``. In general:
 after defining a node, a call to ``end()`` takes you one step up in the hierarchy.
 
-Node type
+Node Type
 ~~~~~~~~~
 
 It is possible to validate the type of a provided value by using the appropriate
@@ -108,7 +108,7 @@ node definition. Node type are available for:
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
 
-Numeric node constraints
+Numeric Node Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
@@ -133,7 +133,7 @@ allowing to validate the value::
         ->end()
     ;
 
-Enum nodes
+Enum Nodes
 ~~~~~~~~~~
 
 .. versionadded:: 2.1
@@ -152,7 +152,7 @@ values::
 
 This will restrict the ``gender`` option to be either ``male`` or ``female``.
 
-Array nodes
+Array Nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
@@ -193,7 +193,7 @@ inside the current node. According to the prototype definition in the example
 above, it is possible to have multiple connection arrays (containing a ``driver``,
 ``host``, etc.).
 
-Array node options
+Array Node Options
 ~~~~~~~~~~~~~~~~~~
 
 Before defining the children of an array node, you can provide options like:
@@ -236,7 +236,7 @@ In XML, each ``parameters`` node would have a ``name`` attribute (along with
 the final array. The ``useAttributeAsKey`` is useful for normalizing how
 arrays are specified between different formats like XML and YAML.
 
-Default and required values
+Default and required Values
 ---------------------------
 
 For all node types, it is possible to define default values and replacement
@@ -316,7 +316,7 @@ you can take advantage of the shortcut
 The ``canBeDisabled`` method looks about the same except that the section
 would be enabled by default.
 
-Merging options
+Merging Options
 ---------------
 
 Extra options concerning the merge process may be provided. For arrays:
@@ -330,7 +330,7 @@ For all nodes:
 ``cannotBeOverwritten()``
     don’t let other configuration arrays overwrite an existing value for this node
 
-Appending sections
+Appending Sections
 ------------------
 
 If you have a complex configuration to validate then the tree can grow to
@@ -502,7 +502,7 @@ By changing a string value into an associative array with ``name`` as the key::
         ->end()
     ;
 
-Validation rules
+Validation Rules
 ----------------
 
 More advanced validation rules can be provided using the
@@ -548,7 +548,7 @@ Usually, "then" is a closure. Its return value will be used as a new value
 for the node, instead
 of the node's original value.
 
-Processing configuration values
+Processing Configuration Values
 -------------------------------
 
 The :class:`Symfony\\Component\\Config\\Definition\\Processor` uses the tree

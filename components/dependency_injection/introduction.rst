@@ -160,7 +160,7 @@ like this::
 
     $newsletterManager = $container->get('newsletter_manager');
 
-Avoiding Your Code Becoming Dependent on the Container
+Avoiding your Code Becoming Dependent on the Container
 ------------------------------------------------------
 
 Whilst you can retrieve services from the container directly it is best
@@ -175,7 +175,7 @@ should be as few times as possible at the entry point to your application.
 
 .. _components-dependency-injection-loading-config:
 
-Setting Up the Container with Configuration Files
+Setting up the Container with Configuration Files
 -------------------------------------------------
 
 As well as setting up the services using PHP as above you can also use

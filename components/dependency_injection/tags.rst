@@ -64,7 +64,7 @@ Then, define the chain as a service:
 
         $container->setDefinition('acme_mailer.transport_chain', new Definition('%acme_mailer.transport_chain.class%'));
 
-Define Services with a Custom Tag
+Define Services with a custom Tag
 ---------------------------------
 
 Now you might want several of the ``\Swift_Transport`` classes to be instantiated
@@ -172,7 +172,7 @@ run when the container is compiled::
     stack framework. See :doc:`/cookbook/service_container/compiler_passes`
     for more details.
 
-Adding additional attributes on Tags
+Adding additional Attributes on Tags
 ------------------------------------
 
 Sometimes you need additional information about each service that's tagged with your tag.

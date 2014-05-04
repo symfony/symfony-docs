@@ -156,7 +156,7 @@ service by asking for the ``bar`` service like this::
            bar: "@foo"
 
 
-Requiring files
+Requiring Files
 ---------------
 
 There might be use cases when you need to include another file just before
