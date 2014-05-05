@@ -112,7 +112,7 @@ Numeric node constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The numeric (float and integer) nodes are new in 2.2
+    The numeric (float and integer) nodes were introduced in Symfony 2.2.
 
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
@@ -137,7 +137,7 @@ Enum nodes
 ~~~~~~~~~~
 
 .. versionadded:: 2.1
-    The enum node is new in Symfony 2.1
+    The enum node was introduced in Symfony 2.1.
 
 Enum nodes provide a constraint to match the given input against a set of
 values::
@@ -291,7 +291,8 @@ Optional Sections
 -----------------
 
 .. versionadded:: 2.2
-    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
+    The ``canBeEnabled`` and ``canBeDisabled`` methods were introduced in
+    Symfony 2.2.
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut

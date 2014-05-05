@@ -533,8 +533,8 @@ On a form, we can usually listen to the following events:
 * ``POST_SUBMIT``
 
 .. versionadded:: 2.3
-    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were added in
-    Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
+    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were introduced
+    in Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
 .. versionadded:: 2.2.6
     The behavior of the ``POST_SUBMIT`` event changed slightly in 2.2.6, which the

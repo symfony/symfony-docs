@@ -2,7 +2,7 @@ GreaterThanOrEqual
 ==================
 
 .. versionadded:: 2.3
-    This constraint is new in version 2.3.
+    The ``GreaterThanOrEqual`` constraint was introduced in Symfony 2.3.
 
 Validates that a value is greater than or equal to another value, defined in
 the options. To force that a value is greater than another value, see

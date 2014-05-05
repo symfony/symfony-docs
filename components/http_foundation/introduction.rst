@@ -251,7 +251,8 @@ by using the following methods:
   returns the list of accepted charsets ordered by descending quality.
 
 .. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
+    The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class was
+    introduced in Symfony 2.2.
 
 If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use

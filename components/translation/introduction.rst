@@ -90,8 +90,8 @@ Loader too. The default loaders are:
 
 .. versionadded:: 2.1
     The ``IcuDatFileLoader``, ``IcuResFileLoader``, ``IniFileLoader``,
-    ``MofileLoader``, ``PoFileLoader`` and ``QtFileLoader`` were added in
-    Symfony 2.1
+    ``MofileLoader``, ``PoFileLoader`` and ``QtFileLoader`` were introduced
+    in Symfony 2.1.
 
 All file loaders require the :doc:`Config component </components/config/index>`.
 

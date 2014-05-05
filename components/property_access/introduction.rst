@@ -9,8 +9,8 @@ The PropertyAccess Component
     object or array using a simple string notation.
 
 .. versionadded:: 2.2
-    The PropertyAccess component is new to Symfony 2.2. Previously, the
-    ``PropertyPath`` class was located in the Form component.
+    The PropertyAccess component was introduced in Symfony 2.2. Previously,
+    the ``PropertyPath`` class was located in the Form component.
 
 Installation
 ------------
@@ -34,8 +34,8 @@ default configuration::
     $accessor = PropertyAccess::createPropertyAccessor();
 
 .. versionadded:: 2.3
-    Before Symfony 2.3, the :method:`Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor`
-    was called ``getPropertyAccessor()``.
+    The :method:`Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor`
+    method was introduced in Symfony 2.3. Previously, it was called ``getPropertyAccessor()``.
 
 Reading from Arrays
 -------------------
