@@ -16,27 +16,17 @@ Assume you need to log something, your repository will look like::
     // src/Acme/BlogBundle/Entity/PostRepository.php
     namespace Acme\BlogBundle\Entity;
 	
-    use Psr\Log\NullLogger;
-    use Psr\Log\LoggerInterface;
     use Doctrine\Common\Persistence\Mapping\ClassMetadata;
     use Doctrine\ORM\EntityRepository;
     use Doctrine\ORM\EntityManager;
 	
     class PostRepository extends EntityRepository
     {
-        /** @var LoggerInterface */
-        private $logger;
-	
         public function __construct(EntityManager $em, ClassMetadata $class)
         {
             parent::__construct($em, $class);
 	
-            $this->logger = new NullLogger();
-        }
-	
-        public function setLogger(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+            // your own logic...
         }
         
         // ...
@@ -60,8 +50,6 @@ To configure the PostRepository, use something like:
             factory_service: doctrine.orm.entity_manager
             factory_method: getRepository
             arguments: ['Acme\BlogBundle\Entity\Blog']
-            calls:
-                - [setLogger, ["@logger"]]
 
     .. code-block:: xml
         <!-- src/Acme/BlogBundle/Resources/config/config.xml -->
@@ -74,10 +62,6 @@ To configure the PostRepository, use something like:
                     factory-service="doctrine.orm.entity_manager"
                     factory-method="getRepository">
                     <argument>Acme\BlogBundle\Entity\Blog</argument>
-                    
-                    <call method="setLogger">
-                        <argument type="service" id="logger" />
-                    </call>
                 </service>
             </services>
         </container>
@@ -93,9 +77,8 @@ To configure the PostRepository, use something like:
         ));
         $definition->setFactoryService('doctrine.orm.entity_manager');
         $definition->setFactoryMethod('getRepository');
-        $definition->addMethodCall('setLogger', array(new Reference('logger')));
 
-        $container->setDefinition('acme.blog.repository.event', $definition);
+        $container->setDefinition('acme.blog.repository.post', $definition);
     	
     
 Finally, use your repository in your standard controller::
