@@ -82,25 +82,48 @@ If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.
 
-If you use TextMate or Mac Vim, you can simply use one of the following built-in
-values:
+Symfony contains preconfigured urls for some popular IDEs, you can set them
+using the following keys:
 
 * ``textmate``
 * ``macvim``
+* ``emacs``
+* ``sublime``
 
-You can also specify a custom file link string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, the
-full TextMate string would look like this:
+.. versionadded:: 2.3.14
+    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
-.. code-block:: yaml
+You can also specify a custom url string. If you do this, all percentage
+signs (``%``) must be doubled to escape that character. For example, if you
+have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
-    framework:
-        ide:  "txmt://open?url=file://%%f&line=%%l"
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            ide: "pstorm://%%f:%%l"
+            
+    .. code-block:: xml
+    
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/service"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+            
+            <framework:config ide="pstorm://%%f:%%l" />
+            
+        </container>
+        
+    .. code-block:: php
+    
+        $container->loadFromExtension('framework', array(
+            'ide' => 'pstorm://%%f:%%l',
+        ));
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-``php.ini`` value to the file link string. If this configuration value is set, then
-the ``ide`` option does not need to be specified.
+in the ``php.ini`` configuration to the url string. If this configuration value
+is set, then the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -567,3 +590,4 @@ Full default Configuration
                 debug:                %kernel.debug%
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
+.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
