@@ -34,8 +34,8 @@ ApcClassLoader
     // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
     
-    // my_prefix is the APC namespace prefix to use
-    $cachedLoader = new ApcClassLoader('my_prefix', $loader);
+    // sha1(__FILE__) generates an APC namespace prefix
+    $cachedLoader = new ApcClassLoader(sha1(__FILE__), $loader);
     
     // register the cached class loader
     $cachedLoader->register();
@@ -54,8 +54,8 @@ it is straightforward::
     // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
     
-    // my_prefix is the XCache namespace
-    $cachedLoader = new XcacheClassLoader('my_prefix', $loader);
+    // sha1(__FILE__) generates an XCache namespace prefix
+    $cachedLoader = new XcacheClassLoader(sha1(__FILE__), $loader);
     
     // register the cached class loader
     $cachedLoader->register();
