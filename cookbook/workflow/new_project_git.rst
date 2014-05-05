@@ -45,11 +45,11 @@ git repository:
    The contents of the ``.gitignore`` file that comes with the Standard Distribution
    can be found in the `GitHub repository`_.
 
-.. tip::
+   .. tip::
 
-   You may also want to create a .gitignore file that can be used system-wide,
-   in which case, you can find more information here: `Github .gitignore`_
-   This way you can exclude files/folders often used by your IDE for all of your projects.
+      You may also want to create a .gitignore file that can be used system-wide,
+      in which case, you can find more information here: `Github .gitignore`_
+      This way you can exclude files/folders often used by your IDE for all of your projects.
 
 3. Initialize your Git repository:
 
