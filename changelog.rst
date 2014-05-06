@@ -228,3 +228,56 @@ Minor Documentation Changes
 - `664a0be <https://github.com/symfony/symfony-docs/commit/664a0bef8b4904b62abf5ec1eb3d7a7afa04f43c>`_ #3633 Added missing PHP syntax coloration (DerekRoth)
 - `1714a31 <https://github.com/symfony/symfony-docs/commit/1714a31344020bce18315b5977429bddab1db9a0>`_ #3585 Use consistent method chaining in BlogBundle sample application (ockcyp)
 - `cb61f4f <https://github.com/symfony/symfony-docs/commit/cb61f4fcda438583f297591fee1ecd081f4e72a3>`_ #3581 Add missing hyphen in HTTP Fundamentals page (ockcyp)
+
+
+April, 2014
+-----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `322972e <https://github.com/symfony/symfony-docs/commit/322972e322be754d34171d75514fa6f31a6677c8>`_ #3803 [Book][Validation] configuration examples for the GroupSequenceProvider (xabbuh)
+- `d4ca16a <https://github.com/symfony/symfony-docs/commit/d4ca16a7605697787424c5e09f0506c617880687>`_ #3743 Improve examples in parent services (WouterJ)
+- `70a3893 <https://github.com/symfony/symfony-docs/commit/70a389392b4d0e9c4d1b65699810c9884ce8ef49>`_ #3774 [Book][Internals] add description for the kernel.finish_request event (xabbuh)
+- `d611e77 <https://github.com/symfony/symfony-docs/commit/d611e77fa1408064c6f066c6acd9d8b4464198ef>`_ #3701 [Serializer] add documentation for serializer callbacks (cordoval)
+- `80c645c <https://github.com/symfony/symfony-docs/commit/80c645caba36e80d269c513c67f3c305507685d4>`_ #3719 Fixed event listeners priority (tony-co)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `f801e2e <https://github.com/symfony/symfony-docs/commit/f801e2e3998ae3da050e774411c0a726918e117c>`_ #3805 Add missing autocomplete argument in askAndValidate method (ifdattic)
+- `a81d367 <https://github.com/symfony/symfony-docs/commit/a81d367d6f96bc498a609eec3b553cd1a605e361>`_ #3786 replaceArguments should be setArguments (RobinvdVleuten)
+- `33b64e1 <https://github.com/symfony/symfony-docs/commit/33b64e16a79757d4c4964c18c9df97977e524a1c>`_ #3788 Fix link for StopwatchEvent class (rpg600)
+- `2ebabfb <https://github.com/symfony/symfony-docs/commit/2ebabfbb234c92d86a9311d11e7b8f94be046dfc>`_ #3792 Update commands_as_services.rst (mimol91)
+- `529d4ce <https://github.com/symfony/symfony-docs/commit/529d4ce6d587a98b36564366058eb34babbbab81>`_ #3761 buildViewBottomUp has been renamed to finishView (Nyholm)
+- `d743139 <https://github.com/symfony/symfony-docs/commit/d743139aed36813ba1dc4479290d6290cdc4316f>`_ #3768 the Locale component does not have elements tagged with @api (xabbuh)
+- `2b8e44d <https://github.com/symfony/symfony-docs/commit/2b8e44d59ab7fca426be86afd30df6c98583d1e3>`_ #3747 Fix Image constraint class and validator link (weaverryan)
+- `fa362ca <https://github.com/symfony/symfony-docs/commit/fa362caf410e876ca71070862abdb2df5242884a>`_ #3741 correct RuntimeException reference (shieldo)
+- `d92545e <https://github.com/symfony/symfony-docs/commit/d92545e998d8999435e554ab03cbe6eee5f05e83>`_ #3734 [book] [testing] fixed the path of the phpunit.xml file (javiereguiluz)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `136f98c <https://github.com/symfony/symfony-docs/commit/136f98c897ab354441e292149d988a444bbbb9ee>`_ #3784 [Expression Langage] be consistent in "print/print out" uses (mickaelandrieu)
+- `1094a13 <https://github.com/symfony/symfony-docs/commit/1094a13b2de0a7153e59f205aa57b93425da82cf>`_ #3807 Added some exceptions to the method order in CS (stof)
+- `55442b5 <https://github.com/symfony/symfony-docs/commit/55442b55fb3efb2d59914724eec197ec17cb76e4>`_ #3800 Fixed another blockquote rendering issue (WouterJ)
+- `969fd71 <https://github.com/symfony/symfony-docs/commit/969fd71a5fbef26a721784551d62dbd842d05ad4>`_ #3785 ensure that destination directories don't exist before creating them (xabbuh)
+- `79322ff <https://github.com/symfony/symfony-docs/commit/79322fffd6e9ee739c1edab481bbe40ba3a67127>`_ #3799 Fix list to not render in a block quote (WouterJ)
+- `1a6f730 <https://github.com/symfony/symfony-docs/commit/1a6f7301015e51c5ba255df289f4058c1ba1dc3c>`_ #3793 language tweak for the tip introduced in #3743 (xabbuh)
+- `dda9e88 <https://github.com/symfony/symfony-docs/commit/dda9e88af29b866041b81251a1a44ed02b2c9ff4>`_ #3778 Adding information on internal reverse proxy (tcz)
+- `d36bbd9 <https://github.com/symfony/symfony-docs/commit/d36bbd9418bdc2929745866d856448b7205a2676>`_ #3765 [WIP] make headlines consistent with our standards (xabbuh)
+- `daa81a0 <https://github.com/symfony/symfony-docs/commit/daa81a0f34d342ece53b8656832fec6d4dfca657>`_ #3766 [Book] add note about services and the service container in the form cha... (xabbuh)
+- `4529858 <https://github.com/symfony/symfony-docs/commit/45298580fada950a77536b142d903c3c4db11d0d>`_ #3767 [Book] link to the bc promise in the stable API description (xabbuh)
+- `a5471b3 <https://github.com/symfony/symfony-docs/commit/a5471b34ad8618430962a31571f34e25259c3358>`_ #3775 Fixed variable naming (peterrehm)
+- `703c2a6 <https://github.com/symfony/symfony-docs/commit/703c2a66282f7e42d6b2f74a71bd3dac28393984>`_ #3772 [Cookbook][Sessions] some language improvements (xabbuh)
+- `3d30b56 <https://github.com/symfony/symfony-docs/commit/3d30b560db2a69d2f98d6ad2caf1ab29fecf9d94>`_ #3773 modify Symfony CMF configuration values in the build process so that the... (xabbuh)
+- `cfd6d7c <https://github.com/symfony/symfony-docs/commit/cfd6d7c1f07ac80e557fb9eb358256a319acc8b9>`_ #3758 [Book][Routing] Fixed typo on PHP version of a route definition (saro0h)
+- `6bd134c <https://github.com/symfony/symfony-docs/commit/6bd134c00c79804a24d5210a74f342295014b847>`_ #3754 ignore more files and directories which are created when building the documentation (xabbuh)
+- `610462e <https://github.com/symfony/symfony-docs/commit/610462e6025c9a7a779c08c5e579563317686b30>`_ #3755 [Cookbook][Security] Firewall resitrction tweaks, fix markup, add to toc (xabbuh)
+- `0a21718 <https://github.com/symfony/symfony-docs/commit/0a21718883a7456a769824141fd0b405e29ea388>`_ #3695 Firewall backport (weaverryan)
+- `54d6a9e <https://github.com/symfony/symfony-docs/commit/54d6a9e738f99db87ff7c20cc6b394de11641155>`_ #3736 [book] Misc. routing fixes (javiereguiluz)
+- `f149dcf <https://github.com/symfony/symfony-docs/commit/f149dcf85efb5eb029a499413a80543be094a1df>`_ #3739 [book] [forms] misc. fixes and tweaks (javiereguiluz)
+- `ce582ec <https://github.com/symfony/symfony-docs/commit/ce582ec9e072c07ebbba37c70da08692a6707e12>`_ #3735 [book] [controller] fixed the code of a session sample code (javiereguiluz)
+- `499ba5c <https://github.com/symfony/symfony-docs/commit/499ba5c33b5a0c76c378f04dae01ea8c792973e5>`_ #3733 [book] [validation] fixed typos (javiereguiluz)
+- `4d0ff8f <https://github.com/symfony/symfony-docs/commit/4d0ff8f8762ea7d8e19b04c21065269e3b4667ab>`_ #3732 Update routing.rst. Explain using url() v. path(). (ackerman)
+- `44c6273 <https://github.com/symfony/symfony-docs/commit/44c6273ad86e8506463e23e88bcbac5f03e2a680>`_ #3727 Added a note about inlined private services (javiereguiluz)
