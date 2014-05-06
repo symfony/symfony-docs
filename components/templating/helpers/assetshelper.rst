@@ -80,6 +80,18 @@ is used in :phpfunction:`sprintf`. The first argument is the path and the
 second is the version. For instance, ``%s?v=%s`` will be rendered as
 ``/images/logo.png?v=328rad75``.
 
+.. versionadded:: 2.5
+    On-demand versioned URLs for assets were introduced in Symfony 2.5.
+
+You can also generate a versioned URL using the fourth argument of the helper:
+
+.. code-block:: html+php
+
+   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>">
+   <!-- renders as:
+   <img src="/images/logo.png?v=3.0">
+   -->
+
 Multiple Packages
 -----------------
 
