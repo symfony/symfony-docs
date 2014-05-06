@@ -14,10 +14,9 @@ implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionIn
 
 .. caution::
 
-    Make sure your sessions aren't already initialized (which is, for example,
-    automatically done in the full-stack framework). As initializing the
-    Session object causes the session to be started, which can lead to unexpected
-    errors.
+    Make sure your PHP session isn't already started before using the Session
+    class. If you have a legacy session system that starts your session, see
+    http://symfony.com/doc/current/components/http_foundation/session_php_bridge.html
 
 Quick example::
 
