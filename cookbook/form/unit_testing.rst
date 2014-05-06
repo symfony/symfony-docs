@@ -36,7 +36,7 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTest.php
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
