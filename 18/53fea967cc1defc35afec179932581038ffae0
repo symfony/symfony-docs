@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-24T23:08:40Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-26T22:28:13Z
+
+@umpirsky What do you think about a quick sentence after the code block?
+
+>
+If this doesn't work, try adding a `-n` flag to each command
+
+Then we can merge, even without totally understanding what is right :)
+
+---------------------------------------------------------------------------
+
+by umpirsky at 2014-03-26T22:58:29Z
+
+@weaverryan Hehum, I don't like writing about things I don't understand, but done. :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-27T15:17:12Z
+
+Thanks @umpirsky :). Actually, what do you think about just having a note about adding `-n` without the second code block? This section is already long, I want to be clear, but keep things somewhat short.
+
+Can can you rebase against the 2.3 branch - e.g. `git rebase master --onto 2.3`? That'll help me patch this cleanly onto the 2.3 branch (no need to actually open a new PR against 2.3).
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by umpirsky at 2014-04-13T20:56:41Z
+
+@weaverryan Fixed. Sorry for the delay.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-14T07:32:57Z
+
+@umpirsky Can you please rename the ``APACHEUSER`` to ``HTTPDUSER``. We made that change recently.
+
+---------------------------------------------------------------------------
+
+by umpirsky at 2014-04-14T07:56:32Z
+
+@xabbuh Fixed, thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-14T07:59:06Z
+
+:+1:
