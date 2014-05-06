@@ -1,0 +1,165 @@
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-21T16:42:51Z
+
+This is an initial WIP. It is far from being finished, but the final goal is to completely describe Form Events in the component's documentation, and not only in the cookbook, which doesn't formally explains form events.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-21T16:44:48Z
+
+Wow, thank you!
+
+Please note that there is already an article about form events in the cookbook: http://symfony.com/doc/current/cookbook/form/dynamic_form_modification.html You might be able to get some usefull things from it. At least, you should remove all things you put in the components article from that cookbook article and add a reference (or multiple references) to this new article.
+
+In the end, we should have a components article telling you everything you need to know about Form Events and a cookbook article which gives you a short introduction and framework specific things. If you do not want to do this, someone of the community can do it after this one is merged. :)
+
+Again, big thanks for getting this roling!
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-21T23:55:22Z
+
+Done. Also added a bit of code for adding a form event listener and a form event subscriber when using the form builder.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-03-22T09:42:06Z
+
+:+1: Great article! I really like it!
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-22T14:02:57Z
+
+Hum, I guess it's starting to look good! :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-03-22T17:17:36Z
+
+It's starting to become a truly lovely article! :smiley:
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-22T18:24:06Z
+
+which tool have you done for the graphics?
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-22T20:46:05Z
+
+I used created the diagrams using LucidChart. If you have any other tool suggest, I'm open to suggestions.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-22T22:16:53Z
+
+Rebased commits
+
+---------------------------------------------------------------------------
+
+by saro0h at 2014-03-22T23:59:31Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-03-23T23:53:58Z
+
+@webmozart can you share the original graphics of your presentation on forms from sunshinephp and warsaw so that they can be used here? I believe those are clear and are very similar. Some of the explanations would definitely complete the ideas here provided. thanks in advance. Also share the tool you used to create those graphics.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-25T19:02:43Z
+
+Rebased commits once again.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-26T22:24:15Z
+
+WOW, this is really incredible! Great great work!
+
+I have one thought. There are basically 2 sections to this entry: (A) explaining the form lifecycle and different events and (B) how to actually register event listeners/subscribers. I think we should change their order: explain how to register listeners first, then explain the event second.
+
+The reason is that I realized in the beginning (where we talk about the different events), we're talking about how to get at form data and the event object, as well as referring to events simply as SUBMIT, before really explaining that these are constants on FormEvents. If you reverse the order of these sections, I think it's an even better entry.
+
+What do you guys think? After this issue (and I left one other small comment), this is ready to merge! Great work to everyone!
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-26T22:40:13Z
+
+Hum, not sure. I just made the change locally, and it actually feels weird talking about form event listeners and subscribers before actually describing the events and the workflow. If we invert the sections, we need to rephrase a few things so it feels fluid.
+In any case, I can also rephrase the sections of the documentation to refer to ``FormEvents::{EVENT_NAME}`` instead of simply ``{EVENT_NAME}``.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-03-26T22:47:39Z
+
+Ok, let's keep it how it is - but yea, I like `FormEvents::{EVENT_NAME}` better, and we can also add a quick note to the top with a link that points to the second section on usage. A very very quick example usage at the top of the chapter (not really doing anything, just showing the registration of an anonymous function on some form event, and the arguments of that callback) might be plenty to give people enough idea of how this works before explaining the events.
+
+Thanks for checking it out :)
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-03-30T18:42:56Z
+
+Done. And also rebased the commits.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-04-01T19:58:18Z
+
+Well then, I guess it should be ready for merge, now!
+What do you think about it now, @weaverryan? :)
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-04-05T10:33:44Z
+
+Updated
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-04-05T21:33:56Z
+
+Fixed issue with travis build (underline too short)
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-04-08T10:04:37Z
+
+ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-08T12:23:12Z
+
+@csarrazi this PR is now ready. It'll be merged once @weaverryan has time to review and merge it. Since this PR add lots of stuff, it can take a little bit longer than smaller PRs. But don't worry, this great PR will never be missed by us :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-08T12:49:54Z
+
+@csarrazi But you can remove the [WIP] tag from the title for now. So, it's more obvious that the PR is finished. :)
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-04-08T13:38:47Z
+
+Thanks! I removed the [WIP] tag :)
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2014-04-30T14:51:02Z
+
+bump @weaverryan ! :)
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2014-05-01T21:33:47Z
+
+:+1:
