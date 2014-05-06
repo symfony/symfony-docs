@@ -6,3 +6,4 @@
 
     introduction
     type_guesser
+    form_events
