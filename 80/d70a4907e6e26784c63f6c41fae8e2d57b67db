@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-08T15:25:31Z
+
+It works both, is there a good reason to use this?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-08T15:47:20Z
+
+This is more a change to make clear that those constants don't depend on a concrete ``SecurityContextInterface`` implementation. People might get confused and may think that the constants are just part of the implementation shipped with the Security component which is not the case though.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-08T15:57:38Z
+
+Ah, I see now :+1: (that's why I asked for a good reason :P)
