@@ -346,7 +346,7 @@ requires the following methods:
   and ``remember_me`` and defines the position at which the provider is called;
 
 * ``getKey`` method which defines the configuration key used to reference
-  the provider;
+  the provider in the firewall configuration;
 
 * ``addConfiguration`` method, which is used to define the configuration
   options underneath the configuration key in your security configuration.
