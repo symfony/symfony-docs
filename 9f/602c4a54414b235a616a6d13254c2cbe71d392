@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-27T17:43:10Z
+
+Thank you for finding this issue & submitting a fix!
+
+But can you please change it to `http://httpd.apache.org/docs/current/mod/mod_dir.html` instead? This way, we don't get outdated apache URLs anymore :)
+
+---------------------------------------------------------------------------
+
+by adreeun at 2014-04-27T18:57:35Z
+
+Much better idea, thank you.
+
+---------------------------------------------------------------------------
+
+by adreeun at 2014-04-27T18:58:04Z
+
+Whoops - unclosing.
