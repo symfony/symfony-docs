@@ -240,7 +240,6 @@ New Documentation
 
 - `d52f3f8 <https://github.com/symfony/symfony-docs/commit/d52f3f8a146356e9e114474e820f8ec6ac5f2374>`_ #3454 [Security] Add host option (ghostika)
 - `6b3c424 <https://github.com/symfony/symfony-docs/commit/6b3c424034fec441a32d8305600c1c26936b8f1e>`_ #3428 Translation - Added info about JsonFileLoader added in 2.4 (singles)
-No changes
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
