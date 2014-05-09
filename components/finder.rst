@@ -295,7 +295,7 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
-Reading contents of returned files
+Reading Contents of Returned Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The contents of returned files can be read with

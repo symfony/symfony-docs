@@ -86,7 +86,7 @@ further than allowed.
 
 .. _firewall_listeners:
 
-Firewall listeners
+Firewall Listeners
 ~~~~~~~~~~~~~~~~~~
 
 When the firewall gets notified of the ``kernel.request`` event, it asks
@@ -98,7 +98,7 @@ means: find out if the current request contains any information by which
 the user might be authenticated (for instance the Basic HTTP authentication
 listener checks if the request has a header called ``PHP_AUTH_USER``).
 
-Exception listener
+Exception Listener
 ~~~~~~~~~~~~~~~~~~
 
 If any of the listeners throws an :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`,
@@ -112,7 +112,7 @@ authenticated based on a "remember-me" cookie), or transform the exception
 into an :class:`Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException`,
 which will eventually result in an "HTTP/1.1 403: Access Denied" response.
 
-Entry points
+Entry Points
 ~~~~~~~~~~~~
 
 When the user is not authenticated at all (i.e. when the security context

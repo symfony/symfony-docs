@@ -243,7 +243,7 @@ Notice that this class doesn't actually *do* anything. The purpose of the
 events can be centralized. Notice also that a special ``FilterOrderEvent``
 class will be passed to each listener of this event.
 
-Creating an Event object
+Creating an Event Object
 ........................
 
 Later, when you dispatch this new event, you'll create an ``Event`` instance

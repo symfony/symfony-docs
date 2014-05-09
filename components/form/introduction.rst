@@ -364,7 +364,7 @@ it throughout your application.
 
 .. _component-form-intro-create-simple-form:
 
-Creating a Simple Form
+Creating a simple Form
 ----------------------
 
 .. tip::
@@ -425,7 +425,7 @@ comes with a lot of :doc:`built-in types </reference/forms/types>`.
 Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
 it and :ref:`process the form submission <component-form-intro-handling-submission>`.
 
-Setting Default Values
+Setting default Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
 If you need your form to load with some default values (or you're building

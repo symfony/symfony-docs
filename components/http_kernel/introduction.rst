@@ -123,7 +123,7 @@ For general information on adding listeners to the events below, see
 
 .. _component-http-kernel-kernel-request:
 
-1) The ``kernel.request`` event
+1) The ``kernel.request`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: To add more information to the ``Request``, initialize
@@ -261,7 +261,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 
 .. _component-http-kernel-kernel-controller:
 
-3) The ``kernel.controller`` event
+3) The ``kernel.controller`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Initialize things or change the controller just before
@@ -367,7 +367,7 @@ has a little bit more work to do - :ref:`kernel.view <component-http-kernel-kern
 
 .. _component-http-kernel-kernel-view:
 
-6) The ``kernel.view`` event
+6) The ``kernel.view`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Transform a non-``Response`` return value from a controller
@@ -411,7 +411,7 @@ return a ``Response``.
 
 .. _component-http-kernel-kernel-response:
 
-7) The ``kernel.response`` event
+7) The ``kernel.response`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Modify the ``Response`` object just before it is sent
@@ -448,7 +448,7 @@ method, which sends the headers and prints the ``Response`` content.
 
 .. _component-http-kernel-kernel-terminate:
 
-8) The ``kernel.terminate`` event
+8) The ``kernel.terminate`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: To perform some "heavy" action after the response has
@@ -486,7 +486,7 @@ as possible to the client (e.g. sending emails).
 
 .. _component-http-kernel-kernel-exception:
 
-Handling Exceptions: the ``kernel.exception`` event
+Handling Exceptions: the ``kernel.exception`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Handle some type of exception and create an appropriate
@@ -587,7 +587,7 @@ each event has their own event object:
 
 .. _http-kernel-working-example:
 
-A Full Working Example
+A full Working Example
 ----------------------
 
 When using the HttpKernel component, you're free to attach any listeners

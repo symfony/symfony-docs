@@ -112,7 +112,7 @@ the ``OptionsResolver`` class::
         }
     }
 
-Set Default Values
+Set default Values
 ~~~~~~~~~~~~~~~~~~
 
 Most of the options have a default value. You can configure these options by
@@ -228,7 +228,7 @@ means you can handle it just like a normal array containing the options.
     The first argument of the closure must be typehinted as ``Options``,
     otherwise it is considered as the value.
 
-Overwriting Default Values
+Overwriting default Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A previously set default value can be overwritten by invoking
@@ -304,7 +304,7 @@ again. When using a closure as the new value it is passed 2 arguments:
 
     Existing option keys that you do not mention when overwriting are preserved.
 
-Configure allowed Values
+Configure Allowed Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Not all values are valid values for options. Suppose the ``Mailer`` class has
