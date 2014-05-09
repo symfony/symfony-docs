@@ -23,7 +23,7 @@ All the methods inside the Dialog Helper have an
 argument, the question as the second argument and the default value as the last
 argument.
 
-Asking the User for confirmation
+Asking the User for Confirmation
 --------------------------------
 
 Suppose you want to confirm an action before actually executing it. Add
@@ -172,7 +172,7 @@ You can also ask and validate a hidden response::
 If you want to allow the response to be visible if it cannot be hidden for
 some reason, pass true as the fifth argument.
 
-Let the user choose from a list of Answers
+Let the User Choose from a List of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have a predefined set of answers the user can choose from, you
@@ -240,7 +240,7 @@ this set the seventh argument to ``true``::
 Now, when the user enters ``1,2``, the result will be:
 ``You have just selected: blue, yellow``.
 
-Testing a Command which expects input
+Testing a Command which Expects Input
 -------------------------------------
 
 If you want to write a unit test for a command which expects some kind of input

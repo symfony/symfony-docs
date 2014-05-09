@@ -206,8 +206,9 @@ New Documentation
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-- `adcbb5d <https://github.com/symfony/symfony-docs/commit/adcbb5de6c3b8d6ba59e619315ef13fe45318494>`_ #3615 Fixes to cookbook/doctrine/registration_form.rst (Crushnaut)
 - `5c4336a <https://github.com/symfony/symfony-docs/commit/5c4336a325ec98bc0eb7ef35baf86bcb9628e490>`_ #3570 Callback: [Validator, validate] expects validate to be static (nixilla)
+- `5c367b4 <https://github.com/symfony/symfony-docs/commit/5c367b4dfa5c3adc8993702b1ae8f686c74419c8>`_ #3517 Fixed OptionsResolver component docs (WouterJ)
+- `adcbb5d <https://github.com/symfony/symfony-docs/commit/adcbb5de6c3b8d6ba59e619315ef13fe45318494>`_ #3615 Fixes to cookbook/doctrine/registration_form.rst (Crushnaut)
 - `a21fb26 <https://github.com/symfony/symfony-docs/commit/a21fb260978eaa27b1cb94fccb0bd0af71b6df7f>`_ #3559 Remove reference to copying parameters.yml from Git cookbook (pwaring)
 - `de71a51 <https://github.com/symfony/symfony-docs/commit/de71a5143f6d30fff7e890cea250d047a63916d2>`_ #3551 [Cookbook][Dynamic Form Modification] Fix sample code (rybakit)
 - `143db2f <https://github.com/symfony/symfony-docs/commit/143db2f75caa9ef6d7e1c230d0ac9d59c17fde5f>`_ #3550 Update introduction.rst (taavit)

@@ -7,7 +7,7 @@ The YAML Component
 
     The YAML Component loads and dumps YAML files.
 
-What is it?
+What is It?
 -----------
 
 The Symfony2 YAML Component parses YAML strings to convert them to PHP arrays.
@@ -50,14 +50,14 @@ It sports a real parser and is able to parse a large subset of the YAML
 specification, for all your configuration needs. It also means that the parser
 is pretty robust, easy to understand, and simple enough to extend.
 
-Clear error messages
+Clear Error Messages
 ~~~~~~~~~~~~~~~~~~~~
 
 Whenever you have a syntax problem with your YAML files, the library outputs a
 helpful message with the filename and the line number where the problem
 occurred. It eases the debugging a lot.
 
-Dump support
+Dump Support
 ~~~~~~~~~~~~
 
 It is also able to dump PHP arrays to YAML with object support, and inline
@@ -69,7 +69,7 @@ Types Support
 It supports most of the YAML built-in types like dates, integers, octals,
 booleans, and much more...
 
-Full merge key support
+Full Merge Key Support
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Full support for references, aliases, and full merge key. Don't repeat

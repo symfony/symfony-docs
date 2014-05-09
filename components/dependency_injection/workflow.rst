@@ -18,8 +18,8 @@ also handles the compilation and caching. Even if you are not using HttpKernel,
 it should give you an idea of one way of organizing configuration in a modular
 application.
 
-Working with cached Container
------------------------------
+Working with a Cached Container
+-------------------------------
 
 Before building it, the kernel checks to see if a cached version of the container
 exists. The HttpKernel has a debug setting and if this is false, the
@@ -58,7 +58,7 @@ passed to the Extension which also usually loads its own config file(s), typical
 with a :doc:`Configuration object </components/config/definition>` also stored
 in the bundle's ``DependencyInjection`` directory.
 
-Compiler passes to allow Interaction between Bundles
+Compiler Passes to Allow Interaction between Bundles
 ----------------------------------------------------
 
 :ref:`Compiler passes <components-dependency-injection-compiler-passes>` are

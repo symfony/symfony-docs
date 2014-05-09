@@ -225,7 +225,7 @@ has a simple API
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`:
   Clear the bag;
 
-Flash messages
+Flash Messages
 ~~~~~~~~~~~~~~
 
 The purpose of the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`

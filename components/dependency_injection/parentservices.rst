@@ -1,7 +1,7 @@
 .. index::
    single: DependencyInjection; Parent services
 
-Managing Common Dependencies with Parent Services
+Managing common Dependencies with parent Services
 =================================================
 
 As you add more functionality to your application, you may well start to have
@@ -299,7 +299,7 @@ would cause an exception to be raised for a non-abstract service.
     You can just extract common parts of similar service definitions into
     a parent service without also extending a parent class in PHP.
 
-Overriding Parent Dependencies
+Overriding parent Dependencies
 ------------------------------
 
 There may be times where you want to override what class is passed in for

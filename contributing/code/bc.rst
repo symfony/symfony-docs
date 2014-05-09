@@ -1,4 +1,4 @@
-Our Backwards Compatibility Promise
+Our backwards Compatibility Promise
 ===================================
 
 Ensuring smooth upgrades of your projects is our first priority. That's why
@@ -39,7 +39,7 @@ If you are using Symfony in your projects, the following guidelines will help
 you to ensure smooth upgrades to all future minor releases of your Symfony
 version.
 
-Using Our Interfaces
+Using our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
 
 All interfaces shipped with Symfony can be used in type hints. You can also call
@@ -101,7 +101,7 @@ backwards compatibility promise:
 
 .. include:: _api_tagging.rst.inc
 
-Using Our Classes
+Using our Classes
 ~~~~~~~~~~~~~~~~~
 
 All classes provided by Symfony may be instantiated and accessed through their

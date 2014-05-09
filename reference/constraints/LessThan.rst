@@ -2,7 +2,7 @@ LessThan
 ========
 
 .. versionadded:: 2.3
-    This constraint is new in version 2.3.
+    The ``LessThan`` constraint was introduced in Symfony 2.3.
 
 Validates that a value is less than another value, defined in the options. To
 force that a value is less than or equal to another value, see

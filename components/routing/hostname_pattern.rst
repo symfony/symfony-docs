@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Matching on Hostname
 
-How to match a route based on the Host
+How to Match a Route Based on the Host
 ======================================
 
 You can also match on the HTTP *host* of the incoming request.

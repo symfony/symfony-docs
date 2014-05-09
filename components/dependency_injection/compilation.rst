@@ -273,7 +273,7 @@ but also load a secondary one only if a certain parameter is set::
 
 .. _components-dependency-injection-compiler-passes:
 
-Prepending Configuration passed to the Extension
+Prepending Configuration Passed to the Extension
 ------------------------------------------------
 
 An Extension can prepend the configuration of any Bundle before the ``load()``

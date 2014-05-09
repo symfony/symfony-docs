@@ -88,7 +88,7 @@ immediately::
     This will include the Bundle and Bridge libraries, which you may not
     actually need.
 
-Now What?
+Now what?
 ---------
 
 Now that the component is installed and autoloaded, read the specific component's

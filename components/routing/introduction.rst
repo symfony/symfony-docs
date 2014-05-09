@@ -67,7 +67,7 @@ If no matching route can be found a
 In addition to your array of custom variables, a ``_route`` key is added,
 which holds the name of the matched route.
 
-Defining routes
+Defining Routes
 ~~~~~~~~~~~~~~~
 
 A full route definition can contain up to seven parts:

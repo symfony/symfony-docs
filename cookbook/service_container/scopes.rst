@@ -118,7 +118,7 @@ A) Using a Synchronized Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Synchronized services are new in Symfony 2.3.
+    Synchronized services were introduced in Symfony 2.3.
 
 Both injecting the container and setting your service to a narrower scope have
 drawbacks. Assume first that the ``client_configuration`` service has been

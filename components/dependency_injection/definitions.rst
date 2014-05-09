@@ -33,10 +33,10 @@ it to the container using::
 
     $container->setDefinition($id, $definition);
 
-Working with a definition
+Working with a Definition
 -------------------------
 
-Creating a new definition
+Creating a new Definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create a new definition rather than manipulate one retrieved

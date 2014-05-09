@@ -195,7 +195,7 @@ first constructor argument::
     which means that the roles given to its constructor will be
     automatically converted from strings to these simple ``Role`` objects.
 
-Using the decision manager
+Using the Decision Manager
 --------------------------
 
 The Access Listener
@@ -227,7 +227,7 @@ are required for the current user to get access to the application::
         $authenticationManager
     );
 
-Security context
+Security Context
 ~~~~~~~~~~~~~~~~
 
 The access decision manager is also available to other parts of the application

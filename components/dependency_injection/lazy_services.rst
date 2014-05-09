@@ -5,9 +5,9 @@ Lazy Services
 =============
 
 .. versionadded:: 2.3
-   Lazy services were added in Symfony 2.3.
+   Lazy services were introduced in Symfony 2.3.
 
-Why Lazy Services?
+Why lazy Services?
 ------------------
 
 In some cases, you may want to inject a service that is a bit heavy to instantiate,
@@ -36,13 +36,13 @@ the `ProxyManager bridge`_:
 
     If you're using the full-stack framework, the proxy manager bridge is already
     included but the actual proxy manager needs to be included. Therefore add
-    
+
     .. code-block:: json
 
         "require": {
             "ocramius/proxy-manager": "0.5.*"
         }
-    
+
     to your ``composer.json``. Afterwards compile your container and check
     to make sure that you get a proxy for your lazy services.
 
@@ -79,13 +79,13 @@ the same signature of the class representing the service. You can also inject
 the service just like normal into other services. The object that's actually
 injected will be the proxy.
 
-To check if your proxy works you can simply check the interface of the 
+To check if your proxy works you can simply check the interface of the
 received object.
 
 .. code-block:: php
 
     var_dump(class_implements($service));
-    
+
 If the class implements the ``ProxyManager\Proxy\LazyLoadingInterface`` your
 lazy loaded services are working.
 
