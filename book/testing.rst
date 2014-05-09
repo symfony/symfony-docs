@@ -408,8 +408,9 @@ Accessing internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ``getInternalRequest()`` and ``getInternalResponse()`` method were
-    added in Symfony 2.3.
+    The :method:`Symfony\\Component\\BrowserKit\\Client::getInternalRequest`
+    and :method:`Symfony\\Component\\BrowserKit\\Client::getInternalResponse`
+    methods were introduced in Symfony 2.3.
 
 If you use the client to test your application, you might want to access the
 client's internal objects::

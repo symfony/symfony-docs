@@ -2,7 +2,8 @@ inherit_data
 ~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    This option was known as ``virtual`` before Symfony 2.3.
+    The ``inherit_data`` option was introduced in Symfony 2.3. Before, it
+    was known as ``virtual``.
 
 **type**: ``boolean`` **default**: ``false``
 

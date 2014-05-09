@@ -37,7 +37,8 @@ The component takes care of the subtle differences between the different platfor
 when executing the command.
 
 .. versionadded:: 2.2
-    The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods were added in Symfony 2.2.
+    The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods
+    were introduced in Symfony 2.2.
 
 The ``getOutput()`` method always return the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error

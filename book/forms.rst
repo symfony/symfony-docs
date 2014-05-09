@@ -232,10 +232,10 @@ controller::
     }
 
 .. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method was
-    added in Symfony 2.3. Previously, the ``$request`` was passed to the
-    ``submit`` method - a strategy which is deprecated and will be removed
-    in Symfony 3.0. For details on that method, see :ref:`cookbook-form-submit-request`.
+    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
+    was introduced in Symfony 2.3. Previously, the ``$request`` was passed
+    to the ``submit`` method - a strategy which is deprecated and will be
+    removed in Symfony 3.0. For details on that method, see :ref:`cookbook-form-submit-request`.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
@@ -1845,7 +1845,7 @@ but here's a short example:
 .. versionadded:: 2.1
    The ``constraints`` option, which accepts a single constraint or an array
    of constraints (before 2.1, the option was called ``validation_constraint``,
-   and only accepted a single constraint) is new to Symfony 2.1.
+   and only accepted a single constraint) was introduced in Symfony 2.1.
 
 .. code-block:: php
 

@@ -2,7 +2,7 @@ Luhn
 ====
 
 .. versionadded:: 2.2
-    The Luhn validation is new in Symfony 2.2.
+    The ``Luhn`` constraint was introduced in Symfony 2.2.
 
 This constraint is used to ensure that a credit card number passes the `Luhn algorithm`_.
 It is useful as a first step to validating a credit card: before communicating with a
@@ -39,7 +39,7 @@ will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -71,7 +71,7 @@ will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

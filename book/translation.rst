@@ -308,7 +308,7 @@ texts* and complex expressions:
     template (in order to avoid side effects).
 
 .. versionadded:: 2.1
-    The ``trans_default_domain`` tag is new in Symfony 2.1
+    The ``trans_default_domain`` tag was introduced in Symfony 2.1.
 
 PHP Templates
 ~~~~~~~~~~~~~
