@@ -177,8 +177,9 @@ New Documentation
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-- `adcbb5d <https://github.com/symfony/symfony-docs/commit/adcbb5de6c3b8d6ba59e619315ef13fe45318494>`_ #3615 Fixes to cookbook/doctrine/registration_form.rst (Crushnaut)
 - `5c4336a <https://github.com/symfony/symfony-docs/commit/5c4336a325ec98bc0eb7ef35baf86bcb9628e490>`_ #3570 Callback: [Validator, validate] expects validate to be static (nixilla)
+- `5c367b4 <https://github.com/symfony/symfony-docs/commit/5c367b4dfa5c3adc8993702b1ae8f686c74419c8>`_ #3517 Fixed OptionsResolver component docs (WouterJ)
+- `adcbb5d <https://github.com/symfony/symfony-docs/commit/adcbb5de6c3b8d6ba59e619315ef13fe45318494>`_ #3615 Fixes to cookbook/doctrine/registration_form.rst (Crushnaut)
 - `a21fb26 <https://github.com/symfony/symfony-docs/commit/a21fb260978eaa27b1cb94fccb0bd0af71b6df7f>`_ #3559 Remove reference to copying parameters.yml from Git cookbook (pwaring)
 - `de71a51 <https://github.com/symfony/symfony-docs/commit/de71a5143f6d30fff7e890cea250d047a63916d2>`_ #3551 [Cookbook][Dynamic Form Modification] Fix sample code (rybakit)
 - `143db2f <https://github.com/symfony/symfony-docs/commit/143db2f75caa9ef6d7e1c230d0ac9d59c17fde5f>`_ #3550 Update introduction.rst (taavit)
@@ -239,6 +240,7 @@ New Documentation
 
 - `d52f3f8 <https://github.com/symfony/symfony-docs/commit/d52f3f8a146356e9e114474e820f8ec6ac5f2374>`_ #3454 [Security] Add host option (ghostika)
 - `6b3c424 <https://github.com/symfony/symfony-docs/commit/6b3c424034fec441a32d8305600c1c26936b8f1e>`_ #3428 Translation - Added info about JsonFileLoader added in 2.4 (singles)
+No changes
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -264,8 +266,8 @@ Fixed Documentation
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- `f285d93 <https://github.com/symfony/symfony-docs/commit/f285d930377d8cbaedccc3ad46853fa72ee6439d>`_ #3451 some language tweaks (AE, third-person perspective) (xabbuh)
 - `b9bbe5d <https://github.com/symfony/symfony-docs/commit/b9bbe5d5f8cb427f1a52e839f23a0f286da1a010>`_ #3499 Fix YAML syntax highlight + remove trailing whitespace (ifdattic)
+- `f285d93 <https://github.com/symfony/symfony-docs/commit/f285d930377d8cbaedccc3ad46853fa72ee6439d>`_ #3451 some language tweaks (AE, third-person perspective) (xabbuh)
 - `2b7e0f6 <https://github.com/symfony/symfony-docs/commit/2b7e0f6f2f9982e600918f447852a6f4c60966a1>`_ #3497 Fix highlighting (WouterJ)
 - `a535ae0 <https://github.com/symfony/symfony-docs/commit/a535ae0383a2a6715021681980877b0205dc3281>`_ #3471 Fixed `````versionadded````` inconsistencies in Symfony 2.3 (danielcsgomes)
 - `f077a8e <https://github.com/symfony/symfony-docs/commit/f077a8e71c4973e7775db8c9fb548a0866d21131>`_ #3465 change wording in versionadded example to be consistent with what we use... (xabbuh)

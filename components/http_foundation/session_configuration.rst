@@ -188,7 +188,7 @@ experience, for example, by displaying a message.
 Symfony2 records some basic metadata about each session to give you complete
 freedom in this area.
 
-Session metadata
+Session Metadata
 ~~~~~~~~~~~~~~~~
 
 Sessions are decorated with some basic metadata to enable fine control over the
@@ -217,7 +217,7 @@ particular cookie by reading the ``getLifetime()`` method::
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
-PHP 5.4 compatibility
+PHP 5.4 Compatibility
 ~~~~~~~~~~~~~~~~~~~~~
 
 Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface`

@@ -21,7 +21,7 @@ Configuring the Request Context globally
 ----------------------------------------
 
 .. versionadded: 2.2
-    The ``base_url`` parameter is available since Symfony 2.2
+    The ``base_url`` parameter was introduced in Symfony 2.2.
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
@@ -98,14 +98,14 @@ the queue yourself. Use the following code to send emails inside your
 console command::
 
     $message = new \Swift_Message();
-    
+
     // ... prepare the message
-    
+
     $container = $this->getContainer();
     $mailer = $container->get('mailer');
-    
+
     $mailer->send($message);
-    
+
     // now manually flush the queue
     $spool = $mailer->getTransport()->getSpool();
     $transport = $container->get('swiftmailer.transport.real');

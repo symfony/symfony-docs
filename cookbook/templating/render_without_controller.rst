@@ -79,7 +79,7 @@ Caching the static Template
 
 .. versionadded:: 2.2
     The ability to cache templates rendered via ``FrameworkBundle:Template:template``
-    is new in Symfony 2.2.
+    was introduced in Symfony 2.2.
 
 Since templates that are rendered in this way are typically static, it might
 make sense to cache them. Fortunately, this is easy! By configuring a few

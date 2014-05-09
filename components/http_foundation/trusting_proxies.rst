@@ -24,10 +24,10 @@ your proxy.
 
     // only trust proxy headers coming from this IP addresses
     Request::setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
-    
+
 .. note::
 
-   When using Symfony's internal reverse proxy (``AppCache.php``) make sure to add 
+   When using Symfony's internal reverse proxy (``AppCache.php``) make sure to add
    ``127.0.0.1`` to the list of trusted proxies.
 
 
@@ -49,7 +49,7 @@ can configure that header name via :method:`Symfony\\Component\\HttpFoundation\\
     Request::setTrustedHeaderName(Request::HEADER_CLIENT_PORT, 'X-Proxy-Port');
     Request::setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, 'X-Proxy-Proto');
 
-Not trusting certain Headers
+Not Trusting certain Headers
 ----------------------------
 
 By default, if you whitelist your proxy's IP address, then all four headers

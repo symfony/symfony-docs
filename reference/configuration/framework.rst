@@ -65,7 +65,7 @@ http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ``http_method_override`` option is new in Symfony 2.3.
+    The ``http_method_override`` option was introduced in Symfony 2.3.
 
 **type**: ``Boolean`` **default**: ``true``
 
@@ -425,10 +425,10 @@ enabled
 The profiler can be disabled by setting this key to ``false``.
 
 .. versionadded:: 2.3
-
-    The ``collect`` option is new in Symfony 2.3. Previously, when ``profiler.enabled``
-    was false, the profiler *was* actually enabled, but the collectors were
-    disabled. Now the profiler and collectors can be controller independently.
+    The ``collect`` option was introduced in Symfony 2.3. Previously, when
+    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
+    but the collectors were disabled. Now, the profiler and the collectors
+    can be controlled independently.
 
 collect
 .......

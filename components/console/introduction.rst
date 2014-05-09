@@ -472,7 +472,7 @@ method::
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
 
-Calling an existing Command
+Calling an Existing Command
 ---------------------------
 
 If a command depends on another one being run before it, instead of asking the

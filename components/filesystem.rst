@@ -6,6 +6,10 @@ The Filesystem Component
 
     The Filesystem component provides basic utilities for the filesystem.
 
+.. versionadded:: 2.1
+    The Filesystem component was introduced in Symfony 2.1. Previously, the
+    ``Filesystem`` class was located in the HttpKernel component.
+
 Installation
 ------------
 
@@ -237,7 +241,7 @@ dumpFile
 ~~~~~~~~
 
 .. versionadded:: 2.3
-    ``dumpFile`` is new in Symfony 2.3.
+    The ``dumpFile()`` was introduced in Symfony 2.3.
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
 dump contents to a file. It does this in an atomic manner: it writes a temporary

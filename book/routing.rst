@@ -69,8 +69,8 @@ The route is simple:
         return $collection;
 
 .. versionadded:: 2.2
-    The ``path`` option is new in Symfony 2.2, ``pattern`` is used in older
-    versions.
+    The ``path`` option was introduced in Symfony 2.2, ``pattern`` is used
+    in older versions.
 
 The path defined by the ``blog_show`` route acts like ``/blog/*`` where
 the wildcard is given the name ``slug``. For the URL ``/blog/my-blog-post``,
@@ -705,7 +705,7 @@ be accomplished with the following route configuration:
         return $collection;
 
 .. versionadded:: 2.2
-    The ``methods`` option is added in Symfony 2.2. Use the ``_method``
+    The ``methods`` option was introduced in Symfony 2.2. Use the ``_method``
     requirement in older versions.
 
 Despite the fact that these two routes have identical paths (``/contact``),

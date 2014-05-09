@@ -60,7 +60,6 @@ edit a particular object. Here's an example implementation::
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
     use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
-    use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
