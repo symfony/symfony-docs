@@ -5,7 +5,7 @@ Using Events
 ============
 
 .. versionadded:: 2.3
-    Console events were added in Symfony 2.3.
+    Console events were introduced in Symfony 2.3.
 
 The Application class of the Console component allows you to optionally hook
 into the lifecycle of a console application via events. Instead of reinventing

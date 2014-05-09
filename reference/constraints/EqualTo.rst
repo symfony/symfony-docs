@@ -2,7 +2,7 @@ EqualTo
 =======
 
 .. versionadded:: 2.3
-    This constraint is new in version 2.3.
+    The ``EqualTo`` constraint was introduced in Symfony 2.3.
 
 Validates that a value is equal to another value, defined in the options. To
 force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualTo`.

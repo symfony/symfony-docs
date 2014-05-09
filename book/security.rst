@@ -1846,7 +1846,8 @@ Utilities
 ---------
 
 .. versionadded:: 2.2
-    The ``StringUtils`` and ``SecureRandom`` classes were added in Symfony 2.2
+    The ``StringUtils`` and ``SecureRandom`` classes were introduced in Symfony
+    2.2
 
 The Symfony Security component comes with a collection of nice utilities related
 to security. These utilities are used by Symfony, but you should also use

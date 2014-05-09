@@ -99,7 +99,7 @@ Using a synchronized Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Synchronized services are new in Symfony 2.3.
+    Synchronized services were introduced in Symfony 2.3.
 
 Injecting the container or setting your service to a narrower scope have
 drawbacks. For synchronized services (like the ``request``), using setter

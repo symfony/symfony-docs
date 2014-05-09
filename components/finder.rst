@@ -207,7 +207,7 @@ Path
 ~~~~
 
 .. versionadded:: 2.2
-   The ``path()`` and ``notPath()`` methods were added in version 2.2.
+   The ``path()`` and ``notPath()`` methods were introduced in Symfony 2.2.
 
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
