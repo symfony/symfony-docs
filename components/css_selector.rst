@@ -18,8 +18,8 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-Why use CSS selectors?
-~~~~~~~~~~~~~~~~~~~~~~
+Why to Use CSS selectors?
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you're parsing an HTML or an XML document, by far the most powerful
 method is XPath.
@@ -41,7 +41,7 @@ be converted to an XPath equivalent. This XPath expression can then be used
 with other functions and classes that use XPath to find elements in a
 document.
 
-The CssSelector component
+The CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The component's only goal is to convert CSS selectors to their XPath
@@ -66,7 +66,7 @@ You can use this expression with, for instance, :phpclass:`DOMXPath` or
     uses the CssSelector component to find elements based on a CSS selector
     string. See the :doc:`/components/dom_crawler` for more details.
 
-Limitations of the CssSelector component
+Limitations of the CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Not all CSS selectors can be converted to XPath equivalents.

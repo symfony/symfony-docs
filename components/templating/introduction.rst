@@ -58,7 +58,7 @@ example, the result will be ``Hello, Fabien!``.
     you render the same template multiple times in the same request, the
     template will only be loaded once from the file system.
 
-The ``$view`` variable
+The ``$view`` Variable
 ----------------------
 
 In all templates parsed by the ``PhpEngine``, you get access to a mysterious
