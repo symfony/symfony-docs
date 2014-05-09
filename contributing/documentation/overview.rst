@@ -187,7 +187,7 @@ about in the :doc:`/contributing/community/releases` section.
 To keep up with the release process, the documentation team makes several
 changes to the documentation at various parts of the lifecycle.
 
-When a Release reaches "end of maintenance"
+When a Release Reaches "End of Maintenance"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every release will eventually reach its "end of maintenance". For details,
@@ -210,7 +210,7 @@ For this example, suppose version 2.1 has just reached its end of maintenance:
   *after* the end of maintenance of this branch), will have no mentions of
   the old version (e.g. 2.1).
 
-When a new Branch is created for a Release
+When a new Branch is Created for a Release
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During the :ref:`stabilization phase <contributing-release-development>`, a
