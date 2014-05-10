@@ -20,7 +20,7 @@ off the names of the action methods in a controller.
 
     There are many bundles out there that use their own route loaders to
     accomplish cases like those described above, for instance
-    `FOSRestBundle`_, `KnpRadBundle`_ and `SonataAdminBundle`_.
+    `FOSRestBundle`_, `JMSI18nRoutingBundle`_, `KnpRadBundle`_ and `SonataAdminBundle`_.
 
 Loading Routes
 --------------
@@ -262,5 +262,6 @@ configuration file - you can call the
     loader (YAML, XML, PHP, annotation, etc.).
 
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
+.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
 .. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle
 .. _`SonataAdminBundle`: https://github.com/sonata-project/SonataAdminBundle
