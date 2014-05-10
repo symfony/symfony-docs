@@ -88,7 +88,7 @@ as you normally do:
 
 .. code-block:: bash
 
-    $ php composer.phar install --no-dev --optimize-autoloader
+    php composer.phar install --no-dev --optimize-autoloader
 
 .. tip::
 
@@ -104,7 +104,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod --no-debug
+    php app/console cache:clear --env=prod --no-debug
 
 D) Dump your Assetic assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,7 +113,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    php app/console assetic:dump --env=prod --no-debug
 
 E) Other things!
 ~~~~~~~~~~~~~~~~

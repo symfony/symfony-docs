@@ -30,7 +30,7 @@ Step 1: Get `Composer`_
 
 .. code-block:: bash
 
-    $ curl -s http://getcomposer.org/installer | php
+    curl -s http://getcomposer.org/installer | php
 
 Make sure you download ``composer.phar`` in the same folder where
 the ``composer.json`` file is located.
@@ -39,7 +39,7 @@ Step 2: Install vendors
 
 .. code-block:: bash
 
-    $ php composer.phar --dev install
+    php composer.phar --dev install
 
 .. note::
 
@@ -61,7 +61,7 @@ the follow command:
 
 .. code-block:: bash
 
-    $ php composer.phar --dev update
+    php composer.phar --dev update
 
 Running
 -------
@@ -73,7 +73,7 @@ command:
 
 .. code-block:: bash
 
-    $ phpunit
+    phpunit
 
 The output should display ``OK``. If not, you need to figure out what's going on
 and if the tests are broken because of your modifications.
@@ -100,7 +100,7 @@ the ``coverage-html`` option:
 
 .. code-block:: bash
 
-    $ phpunit --coverage-html=cov/
+    phpunit --coverage-html=cov/
 
 Check the code coverage by opening the generated ``cov/index.html`` page in a
 browser.

@@ -18,7 +18,7 @@ directory:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition myproject/ ~2.4
+    composer create-project symfony/framework-standard-edition myproject/ ~2.4
 
 .. note::
 
@@ -47,15 +47,15 @@ make sure that your system meets all the technical requirements:
 
 .. code-block:: bash
 
-    $ cd myproject/
-    $ php app/check.php
+    cd myproject/
+    php app/check.php
 
 Fix any error reported by the command and then use the PHP built-in web server
 to run Symfony:
 
 .. code-block:: bash
 
-    $ php app/console server:run
+    php app/console server:run
 
 If you get the error `There are no commands defined in the "server" namespace.`,
 then you are probably using PHP 5.3. That's ok! But the built-in web server is

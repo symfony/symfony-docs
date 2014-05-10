@@ -39,4 +39,4 @@ adding ``--show-notes=github-comments`` to the ``git show`` command:
 
 .. code-block:: bash
 
-    $ git show HEAD --show-notes=github-comments
+    git show HEAD --show-notes=github-comments

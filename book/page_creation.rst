@@ -103,7 +103,7 @@ instructions (use all of the default options):
 
 .. code-block:: bash
 
-    $ php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
+    php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
 
 Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
 A line is also automatically added to the ``app/AppKernel.php`` file so that
@@ -705,7 +705,7 @@ generating a basic bundle skeleton:
 
 .. code-block:: bash
 
-    $ php app/console generate:bundle --namespace=Acme/TestBundle
+    php app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony2's command-line
@@ -869,13 +869,13 @@ FrameworkBundle configuration:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference FrameworkBundle
+    app/console config:dump-reference FrameworkBundle
 
 The extension alias (configuration key) can also be used:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference framework
+    app/console config:dump-reference framework
 
 .. note::
 
@@ -923,7 +923,7 @@ cached files and allow them to rebuild:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod --no-debug
+    php app/console cache:clear --env=prod --no-debug
 
 .. note::
 

@@ -81,7 +81,7 @@ Now generate the mod_rewrite rules:
 
 .. code-block:: bash
 
-    $ php app/console router:dump-apache -e=prod --no-debug
+    php app/console router:dump-apache -e=prod --no-debug
 
 Which should roughly output the following:
 

@@ -22,7 +22,7 @@ using npm:
 
 .. code-block:: bash
 
-    $ npm install -g uglify-js
+    npm install -g uglify-js
 
 This command will install UglifyJS globally and you may need to run it as
 a root user.
@@ -50,9 +50,9 @@ in the ``node_modules`` directory:
 
 .. code-block:: bash
 
-    $ uglifyjs --help
+    uglifyjs --help
 
-    $ ./app/Resources/node_modules/.bin/uglifyjs --help
+    ./app/Resources/node_modules/.bin/uglifyjs --help
 
 Configure the ``uglifyjs2`` Filter
 ----------------------------------
@@ -191,7 +191,7 @@ the node package is installed:
 
 .. code-block:: bash
 
-    $ npm install -g uglifycss
+    npm install -g uglifycss
 
 Next, add the configuration for this filter:
 

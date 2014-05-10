@@ -123,7 +123,7 @@ for you:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:database:create
+    php app/console doctrine:database:create
 
 .. sidebar:: Setting up the Database to be UTF8
 
@@ -396,7 +396,7 @@ a regular PHP class, you need to create getter and setter methods (e.g. ``getNam
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
+    php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
 
 This command makes sure that all of the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
@@ -437,8 +437,8 @@ mapping information) of a bundle or an entire namespace:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities AcmeStoreBundle
-    $ php app/console doctrine:generate:entities Acme
+    php app/console doctrine:generate:entities AcmeStoreBundle
+    php app/console doctrine:generate:entities Acme
 
 .. note::
 
@@ -460,7 +460,7 @@ in your application. To do this, run:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    php app/console doctrine:schema:update --force
 
 .. tip::
 
@@ -841,7 +841,7 @@ used earlier to generate the missing getter and setter methods:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Acme
+    php app/console doctrine:generate:entities Acme
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
 repository class. This method will query for all of the ``Product`` entities,
@@ -895,7 +895,7 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
+    php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
@@ -1049,7 +1049,7 @@ methods for you:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Acme
+    php app/console doctrine:generate:entities Acme
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Category``
 and ``Product`` with a natural one-to-many relationship. The ``Category``
@@ -1078,7 +1078,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    php app/console doctrine:schema:update --force
 
 .. note::
 

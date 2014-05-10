@@ -11,7 +11,7 @@ command:
 
 .. code-block:: bash
 
-    $ php app/console list doctrine
+    php app/console list doctrine
 
 A list of available commands will print out. You can find out more information
 about any of these commands (or any Symfony command) by running the ``help``
@@ -20,7 +20,7 @@ task, run:
 
 .. code-block:: bash
 
-    $ php app/console help doctrine:database:create
+    php app/console help doctrine:database:create
 
 Some notable or interesting tasks include:
 

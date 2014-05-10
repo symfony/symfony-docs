@@ -443,7 +443,7 @@ into a vendor/ directory:
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    php composer.phar install
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as
