@@ -991,10 +991,10 @@ assets won't be cached when deployed. For example, ``/images/logo.png`` might
 look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
 configuration option.
 
-.. _`
+.. _`book-templating-version-by-asset`:
 
 .. versionadded:: 2.5
-    Setting versioned URLs on an asset-by-asset basis were introduced in Symfony 2.5.
+    Setting versioned URLs on an asset-by-asset basis was introduced in Symfony 2.5.
 
 If you need to set a version for a specific asset, you can set the fourth
 argument (or the ``version`` argument) to the desired version:
@@ -1003,14 +1003,14 @@ argument (or the ``version`` argument) to the desired version:
 
     .. code-block:: html+jinja
 
-        <img src="{{ asset('images/logo.png', version=3.0) }}" alt="Symfony!" />
+        <img src="{{ asset('images/logo.png', version='3.0') }}" alt="Symfony!" />
 
     .. code-block:: html+php
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>" alt="Symfony!" />
 
 If you dont give a version or pass ``null``, the default package version
-(from :ref:`ref-framework-assets-version`) wil be used. If you pass ``false``,
+(from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
 .. versionadded:: 2.5
