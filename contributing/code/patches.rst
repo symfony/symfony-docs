@@ -401,7 +401,7 @@ messages of all the commits. When you are finished, execute the push command.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
-.. _`Github's Documentation`:              https://help.github.com/articles/ignoring-files
+.. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
 .. _Symfony2 repository:                   https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         https://travis-ci.org/

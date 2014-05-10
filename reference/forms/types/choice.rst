@@ -173,7 +173,7 @@ Field Variables
 | choices                | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
 |                        |              | the remaining choices.                                            |
 +------------------------+--------------+-------------------------------------------------------------------+
-| separator              | ``string``   | The seperator to use between choice groups.                       |
+| separator              | ``string``   | The separator to use between choice groups.                       |
 +------------------------+--------------+-------------------------------------------------------------------+
 | empty_value            | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                        |              | ``null``.                                                         |

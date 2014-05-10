@@ -174,7 +174,7 @@ mapping type:
             'dbal' => array(
                 'connections' => array(
                     'default' => array(
-                        // other connection parameers
+                        // other connection parameters
                         'mapping_types' => array(
                             'enum'  => 'string',
                         ),

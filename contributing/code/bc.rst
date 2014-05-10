@@ -138,7 +138,7 @@ your overridden method wouldn't match anymore and generate a fatal error.
 .. note::
 
     As with interfaces, we limit ourselves to changes that can be upgraded
-    easily. We will document the precise ugprade instructions in the UPGRADE
+    easily. We will document the precise upgrade instructions in the UPGRADE
     file in Symfony's root directory.
 
 In some cases, only specific properties and methods are tagged with the ``@api``
