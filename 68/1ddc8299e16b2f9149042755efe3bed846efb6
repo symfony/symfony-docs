@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-09T15:00:19Z
+
+I had fixed this in 2.3 and 2.4, but I seem to have missed it in master :) I've to update my script to fix things like this.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-05-09T15:01:31Z
+
+Oh, I didn't see that the issue ever existed in 2.3 and 2.4 before.
