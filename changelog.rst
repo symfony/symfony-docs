@@ -23,7 +23,7 @@ New Documentation
 - `9e129bc <https://github.com/symfony/symfony-docs/commit/9e129bcf3079e852b08e3c4746c7ad05cd99b8df>`_ #3752 [Console] Add documentation for QuestionHelper (romainneutron)
 - `64a924d <https://github.com/symfony/symfony-docs/commit/64a924da79c4ba00bebd94b8ebf1acec4c789145>`_ #3756 [WCM][Console] Add Process Helper documentation (romainneutron)
 - `d4ca16a <https://github.com/symfony/symfony-docs/commit/d4ca16a7605697787424c5e09f0506c617880687>`_ #3743 Improve examples in parent services (WouterJ)
-- `be4b9d3 <https://github.com/symfony/symfony-docs/commit/be4b9d3b8e3dc70cf161b70b72a20788fba93348>`_ #3729 Added documentation for the new PropertyAccessor``::``isReadable() and isWritable() methods (webmozart)
+- `be4b9d3 <https://github.com/symfony/symfony-docs/commit/be4b9d3b8e3dc70cf161b70b72a20788fba93348>`_ #3729 Added documentation for the new ``PropertyAccessor::isReadable()`` and ``isWritable()`` methods (webmozart)
 - `70a3893 <https://github.com/symfony/symfony-docs/commit/70a389392b4d0e9c4d1b65699810c9884ce8ef49>`_ #3774 [Book][Internals] add description for the kernel.finish_request event (xabbuh)
 - `1934720 <https://github.com/symfony/symfony-docs/commit/19347205ce6d52cba91700f99c20ae951265f490>`_ #3461 [Form] Deprecated max_length and pattern options (stefanosala)
 - `d611e77 <https://github.com/symfony/symfony-docs/commit/d611e77fa1408064c6f066c6acd9d8b4464198ef>`_ #3701 [Serializer] add documentation for serializer callbacks (cordoval)
