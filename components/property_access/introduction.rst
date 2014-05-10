@@ -313,7 +313,7 @@ Checking Property Paths
 -----------------------
 
 .. versionadded:: 2.5
-    The methods
+    The
     :method:`PropertyAccessor::isReadable <Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
     and
     :method:`PropertyAccessor::isWritable <Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
