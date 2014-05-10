@@ -487,7 +487,7 @@ by Symfony (as the asset files are in the ``dev`` environment). This is on
 purpose - letting Symfony generate these files dynamically in a production
 environment is just too slow.
 
-.. _cookbook-asetic-dump-prod:
+.. _cookbook-assetic-dump-prod:
 
 Instead, each time you use your app in the ``prod`` environment (and therefore,
 each time you deploy), you should run the following task:
