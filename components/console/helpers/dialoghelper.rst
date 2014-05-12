@@ -117,6 +117,7 @@ method::
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
+
             return $answer;
         },
         false,
@@ -156,9 +157,11 @@ You can also ask and validate a hidden response::
     $dialog = $this->getHelperSet()->get('dialog');
 
     $validator = function ($value) {
-        if (trim($value) == '') {
+        if ('' === trim($value)) {
             throw new \Exception('The password can not be empty');
         }
+        
+        return $value;
     };
 
     $password = $dialog->askHiddenResponseAndValidate(
