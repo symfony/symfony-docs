@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-07T10:11:31Z
+
+This article is about using the Sessions outside of the Symfony2 framework. It shouldn't cause any problems then. So I'm -1 for this change.
+
+However, we might need to add a `.. caution::` box saying that initializing the Session object causes the session to be started, which can lead to unexpected errors.
+
+---------------------------------------------------------------------------
+
+by scottwarren at 2014-04-07T10:19:11Z
+
+Sorry about that - I misunderstood the context of the page. Thanks for looking at this, I have removed my changes and added a caution box instead :-)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-07T10:27:11Z
+
+Thank you for your quick response @scottwarren ! I've added 2 little comments, once you fixed those I'm very happy and @weaverryan will merge your PR :)
+
+---------------------------------------------------------------------------
+
+by scottwarren at 2014-04-07T10:30:58Z
+
+No worries, all fixed up now :-) - thanks for your help
+
+---------------------------------------------------------------------------
+
+by scottwarren at 2014-04-07T10:36:04Z
+
+Oops - sorry :+1: fixed
+
+---------------------------------------------------------------------------
+
+by scottwarren at 2014-04-07T11:01:47Z
+
+Fixed
+
+---------------------------------------------------------------------------
+
+by scottwarren at 2014-04-07T11:27:41Z
+
+Fixed
+
+---------------------------------------------------------------------------
+
+by scottwarren at 2014-05-06T21:05:31Z
+
+Thanks @weaverryan I have updated the message
