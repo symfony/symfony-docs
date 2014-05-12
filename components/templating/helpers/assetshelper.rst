@@ -83,7 +83,8 @@ second is the version. For instance, ``%s?v=%s`` will be rendered as
 .. versionadded:: 2.5
     On-demand versioned URLs for assets were introduced in Symfony 2.5.
 
-You can also generate a versioned URL using the fourth argument of the helper:
+You can also generate a versioned URL on an asset-by-asset basis using the
+fourth argument of the helper:
 
 .. code-block:: html+php
 
