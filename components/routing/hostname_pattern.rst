@@ -282,3 +282,19 @@ You can also set the host option on imported routes:
 
 The host ``hello.example.com`` will be set on each route loaded from the new
 routing resource.
+
+Testing your Controllers
+------------------------
+
+You need to set the Host HTTP header on your request objects if you want to get
+past url matching in your functional tests.
+
+ .. code-block:: php
+
+     $crawler = $client->request(
+         'GET',
+         '/homepage',
+         array(),
+         array(),
+         array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
+     );
