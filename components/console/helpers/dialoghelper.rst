@@ -117,6 +117,7 @@ method::
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
+
             return $answer;
         },
         false,
