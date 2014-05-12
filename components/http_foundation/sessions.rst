@@ -12,6 +12,12 @@ object-oriented interface using a variety of session storage drivers.
 Sessions are used via the simple :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`
 implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface.
 
+.. caution::
+
+    Make sure your PHP session isn't already started before using the Session
+    class. If you have a legacy session system that starts your session, see
+    http://symfony.com/doc/current/components/http_foundation/session_php_bridge.html
+
 Quick example::
 
     use Symfony\Component\HttpFoundation\Session\Session;
