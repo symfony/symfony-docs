@@ -30,7 +30,7 @@ git repository:
    required vendor libraries. For more information about downloading Symfony using
    Composer, see `Installing Symfony using Composer`_.
 
-#. Your project folder will now contain files of the Symfony framework, as well
+#. Your project folder will now contain files for your new project, as well
    as files and folders for vendor libraries. You'll want to store your project
    files in Git, but not the dependencies, since they will be managed by Composer.
    You'll also want to keep your ``parameters.yml`` out of your repository as it will
