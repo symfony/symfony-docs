@@ -113,7 +113,7 @@ Session attributes
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`:
   Clear all attributes.
 
-The attributes are stored internally in an "Bag", a PHP object that acts like
+The attributes are stored internally in a "Bag", a PHP object that acts like
 an array. A few methods exist for "Bag" management:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`:
@@ -137,7 +137,7 @@ Session Data Management
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 PHP's session management requires the use of the ``$_SESSION`` super-global,
-however, this interferes somewhat with code testability and encapsulation in a
+however, this interferes somewhat with code testability and encapsulation in an
 OOP paradigm. To help overcome this, Symfony2 uses *session bags* linked to the
 session to encapsulate a specific dataset of attributes or flash messages.
 
@@ -236,7 +236,7 @@ Flash Messages
 
 The purpose of the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
 is to provide a way of setting and retrieving messages on a per session basis.
-The usual workflow for flash messages would be set in an request, and displayed
+The usual workflow would be to set flash messages in a request and to display them
 after a page redirect. For example, a user submits a form which hits an update
 controller, and after processing the controller redirects the page to either the
 updated page or an error page. Flash messages set in the previous page request

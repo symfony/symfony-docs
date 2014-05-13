@@ -186,7 +186,7 @@ Instead, you can use the
 method, which makes sure that the user can only enter a valid string
 from a predefined list::
 
-    $dialog = $app->getHelperSet()->get('dialog');
+    $dialog = $this->getHelperSet()->get('dialog');
     $colors = array('red', 'blue', 'yellow');
 
     $color = $dialog->select(

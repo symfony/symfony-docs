@@ -10,7 +10,7 @@ one or more components, the easiest way to integrate everything is with `Compose
 Composer is smart enough to download the component(s) that you need and take
 care of autoloading so that you can begin using the libraries immediately.
 
-This article will take you through using the :doc:`/components/finder`, though
+This article will take you through using :doc:`/components/finder`, though
 this applies to using any component.
 
 Using the Finder Component
