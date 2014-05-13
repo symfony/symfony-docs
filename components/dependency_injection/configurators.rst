@@ -12,7 +12,7 @@ in a class. The service instance is passed to the callable, allowing the
 configurator to do whatever it needs to configure the service after its
 creation.
 
-A Service Configurator can be used, for example, when you a have a service that
+A Service Configurator can be used, for example, when you have a service that
 requires complex setup based on configuration settings coming from different
 sources/services. Using an external configurator, you can maintain the service
 implementation cleanly and keep it decoupled from the other objects that provide
