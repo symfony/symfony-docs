@@ -324,8 +324,23 @@ Simple, display one type of message::
 
 Compact method to process display all flashes at once::
 
-    foreach ($session->getFlashBag()->all() as $type => $messages) {
-        foreach ($messages as $message) {
-            echo '<div class="flash-'.$type.'">'.$message.'</div>';
+
+.. configuration-block::
+
+    .. code-block:: twig
+    
+        {% for type, messages in app.session.flashbag.all %}        
+            {% for message in messages %}
+                <div class="flash-{{ type }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        
+        
+    .. code-block:: html+php
+    
+        foreach ($session->getFlashBag()->all() as $type => $messages) {
+            foreach ($messages as $message) {
+                echo '<div class="flash-'.$type.'">'.$message.'</div>';
+            }
         }
-    }
+        
