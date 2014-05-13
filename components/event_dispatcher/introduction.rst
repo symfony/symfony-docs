@@ -24,7 +24,7 @@ The Symfony2 EventDispatcher component implements the `Mediator`_ pattern in
 a simple and effective way to make all these things possible and to make your
 projects truly extensible.
 
-Take a simple example from the :doc:`/components/http_kernel/introduction`. Once a
+Take a simple example from :doc:`/components/http_kernel/introduction`. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
 used. To make this possible, the Symfony2 kernel throws an event -
