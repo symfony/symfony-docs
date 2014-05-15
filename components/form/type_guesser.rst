@@ -79,7 +79,7 @@ The ``TypeGuess`` constructor requires 3 options:
   want to set the ``class`` option). If no types are guessed, this should be
   set to an empty array;
 * The confidence that the guessed type is correct. This can be one of the
-  constants of the :class:`Symfony\\Component\\Form\\Guess\Guess` class:
+  constants of the :class:`Symfony\\Component\\Form\\Guess\\Guess` class:
   ``LOW_CONFIDENCE``, ``MEDIUM_CONFIDENCE``, ``HIGH_CONFIDENCE``,
   ``VERY_HIGH_CONFIDENCE``. After all type guessers have been executed, the
   type with the highest confidence is used.
@@ -105,7 +105,7 @@ With this knowledge, you can easily implement the ``guessType`` method of the
             // otherwise, base the type on the @var annotation
             switch ($annotations['var']) {
                 case 'string':
-                    // there is a high confidence that the type is a string when
+                    // there is a high confidence that the type is text when
                     // @var string is used
                     return new TypeGuess('text', array(), Guess::HIGH_CONFIDENCE);
 
