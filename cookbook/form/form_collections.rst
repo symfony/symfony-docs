@@ -363,7 +363,7 @@ will be show next):
 
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+        $collectionHolder.data('index', 'new_' + $collectionHolder.find(':input').length);
 
         $addTagLink.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
