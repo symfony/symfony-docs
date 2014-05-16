@@ -30,27 +30,6 @@ git repository:
    required vendor libraries. For more information about downloading Symfony using
    Composer, see `Installing Symfony using Composer`_.
 
-#. Your project folder will now contain files for your new project, as well
-   as files and folders for vendor libraries. You'll want to store your project
-   files in Git, but not the dependencies, since they will be managed by Composer.
-   You'll also want to keep your ``parameters.yml`` out of your repository as it will
-   contain sensitive information, such as database credentials. Furthermore,
-   files that are automatically created by Symfony (such as logs, caches, and dumped
-   assets) should be excluded as well.
-
-   To help you keep these files out of your repository, Symfony comes with a file
-   called ``.gitignore``. It contains a list of files and folders that Git will
-   ignore.
-
-   The contents of the ``.gitignore`` file that comes with the Standard Distribution
-   can be found in the `GitHub repository`_.
-
-   .. tip::
-
-      You may also want to create a .gitignore file that can be used system-wide,
-      in which case, you can find more information here: `Github .gitignore`_
-      This way you can exclude files/folders often used by your IDE for all of your projects.
-
 #. Initialize your Git repository:
 
    .. code-block:: bash
@@ -62,6 +41,23 @@ git repository:
    .. code-block:: bash
 
         $ git add .
+
+   .. tip::
+
+      As you might have noticed, not all files that were downloaded by Composer in step 1,
+      have been staged for commit by Git. Certain files and folders, such as the project's
+      dependencies (which are managed by Composer), ``parameters.yml`` (which contains sensitive
+      information such as database credentials) and log-, cache- and asset files (which are
+      created automatically by your project), should not be committed in Git. To help you prevent
+      committing those files and folders by accident, the Standard Distribution comes with a
+      file called ``.gitignore``, which contains a list of files and folders that Git should
+      ignore.
+
+   .. tip::
+
+      You may also want to create a .gitignore file that can be used system-wide,
+      in which case, you can find more information here: `Github .gitignore`_
+      This way you can exclude files/folders often used by your IDE for all of your projects.
 
 #. Create an initial commit with your started project:
 
@@ -116,7 +112,6 @@ manage this is `Gitolite`_.
 .. _`Git`: http://git-scm.com/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
 .. _`Installing Symfony using Composer`: http://symfony.com/doc/current/book/installation.html#option-1-composer
-.. _`GitHub repository`: https://github.com/symfony/symfony-standard/blob/master/.gitignore
 .. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
