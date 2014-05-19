@@ -55,9 +55,9 @@ git repository:
 
    .. tip::
 
-      You may also want to create a .gitignore file that can be used system-wide,
-      in which case, you can find more information here: `Github .gitignore`_
-      This way you can exclude files/folders often used by your IDE for all of your projects.
+      You may also want to create a ``.gitignore`` file that can be used system-wide.
+      This allows you to exclude files/folders for all your projects that are created by
+      your IDE or operating system. For details, see `Github .gitignore`_.
 
 #. Create an initial commit with your started project:
 
