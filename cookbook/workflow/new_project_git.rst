@@ -47,7 +47,7 @@ git repository:
       As you might have noticed, not all files that were downloaded by Composer in step 1,
       have been staged for commit by Git. Certain files and folders, such as the project's
       dependencies (which are managed by Composer), ``parameters.yml`` (which contains sensitive
-      information such as database credentials), log- and cache files and dumped assets (which are
+      information such as database credentials), log and cache files and dumped assets (which are
       created automatically by your project), should not be committed in Git. To help you prevent
       committing those files and folders by accident, the Standard Distribution comes with a
       file called ``.gitignore``, which contains a list of files and folders that Git should
