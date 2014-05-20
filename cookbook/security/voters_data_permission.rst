@@ -204,19 +204,17 @@ from the security context is called.
 
     class PostController extends Controller
     {
-        public function showAction()
+        public function showAction($id)
         {
             // get a Post instance
-            $post = ...;
+            $post = $this->getDoctrine()
+                ->getRepository('AcmeStoreBundle:Post')
+                ->find($id);
 
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
             }
-
-            $product = $this->getDoctrine()
-                ->getRepository('AcmeStoreBundle:Post')
-                ->find($id);
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
