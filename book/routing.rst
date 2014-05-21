@@ -68,13 +68,6 @@ The route is simple:
 
         return $collection;
 
-.. note::
-
-   When defining routes, the key (e.g. ``blog_show``) is meaningless.
-   Just be sure that it's unique so no other lines override it. In most cases, a 
-   vendorname_shortbundlename_controllername_actionname pattern
-   (e.g. ``acme_blog_show``) is appropriate.
-
 .. versionadded:: 2.2
     The ``path`` option was introduced in Symfony 2.2, ``pattern`` is used
     in older versions.
@@ -82,7 +75,9 @@ The route is simple:
 The path defined by the ``blog_show`` route acts like ``/blog/*`` where
 the wildcard is given the name ``slug``. For the URL ``/blog/my-blog-post``,
 the ``slug`` variable gets a value of ``my-blog-post``, which is available
-for you to use in your controller (keep reading).
+for you to use in your controller (keep reading). The ``blog_show`` is the
+internal name of the route, which doesn't have any meaning yet and just needs
+to be unique. Later, you'll use it to generate URLs.
 
 The ``_controller`` parameter is a special key that tells Symfony which controller
 should be executed when a URL matches this route. The ``_controller`` string
