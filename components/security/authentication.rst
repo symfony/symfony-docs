@@ -237,21 +237,35 @@ method of the password encoder factory is called with the user object as
 its first argument, it will return an encoder of type :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
 which should be used to encode this user's password::
 
-    // fetch a user of type Acme\Entity\LegacyUser
-    $user = ...
+    // a Acme\Entity\LegacyUser instance
+    $user = ...;
+
+    // the password that was submitted, e.g. when registering
+    $plainPassword = ...;
 
     $encoder = $encoderFactory->getEncoder($user);
 
     // will return $weakEncoder (see above)
+    $encodedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
 
-    $encodedPassword = $encoder->encodePassword($password, $user->getSalt());
+    $user->setPassword($encodedPassword);
 
-    // check if the password is valid:
+    // ... save the user
+
+Now, when you want to check if the submitted password (e.g. when trying to log
+in) is correct, you can use::
+
+    // fetch the Acme\Entity\LegacyUser
+    $user = ...;
+    
+    // the submitted password, e.g. from the login form
+    $plainPassword = ...;
 
     $validPassword = $encoder->isPasswordValid(
-        $encodedPassword,
-        $user->getPassword(),
-        $user->getSalt());
+        $user->getPassword(), // the encoded password
+        $plainPassword,       // the submitted password
+        $user->getSalt()
+    );
 
 .. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
 .. _`BasePasswordEncoder::checkPasswordLength`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/BasePasswordEncoder.php
