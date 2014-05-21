@@ -492,9 +492,9 @@ If you want the client to automatically follow all redirects, you can
 force him with the ``followRedirects()`` method::
 
     $client->followRedirects();
-     
-Also, if you want to prevent the client from following any redirect, you can
-force him by passing ``false`` to ``followRedirects()`` method::
+
+If you pass ``false`` to the ``followRedirects()`` method, the redirects 
+will no longer be followed::     
 
     $client->followRedirects(false);
 
