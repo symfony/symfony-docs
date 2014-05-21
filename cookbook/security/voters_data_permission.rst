@@ -207,10 +207,8 @@ from the security context is called.
         public function showAction($id)
         {
             // get a Post instance
-            $post = $this->getDoctrine()
-                ->getRepository('AcmeStoreBundle:Post')
-                ->find($id);
-
+            $post = ...;
+            
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
