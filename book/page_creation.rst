@@ -388,7 +388,9 @@ controller, and ``index.html.twig`` the template:
         <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
 
+        <?php $view['slots']->start('body') ?>
         Hello <?php echo $view->escape($name) ?>!
+        <?php $view['slots']->stop() ?>
 
 Step through the Twig template line-by-line:
 
