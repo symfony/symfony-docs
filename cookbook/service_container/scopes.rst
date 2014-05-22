@@ -237,10 +237,10 @@ Changing the scope of a service should be done in its definition:
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <services>
             <service id="greeting_card_manager"
-                class="Acme\HelloBundle\Mail\GreetingCardManager"
-                scope="request"
-            />
-            <argument type="service" id="request" />
+                    class="Acme\HelloBundle\Mail\GreetingCardManager"
+                    scope="request">
+                <argument type="service" id="request" />
+            </service>
         </services>
 
     .. code-block:: php
