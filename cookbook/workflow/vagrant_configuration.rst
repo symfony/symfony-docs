@@ -114,19 +114,19 @@ You will be creating a set of files under a new ``vagrant`` directory:
         fi
 
         if [ ! -d "/etc/puppet/modules/apache" ]; then
-            puppet module install puppetlabs-apache;
+            puppet module install -v 1.0.1 puppetlabs-apache;
         fi
 
         if [ ! -d "/etc/puppet/modules/mysql" ]; then
-            puppet module install puppetlabs-mysql;
+            puppet module install -v 2.2.3 puppetlabs-mysql;
         fi
 
         if [ ! -d "/etc/puppet/modules/apt" ]; then
-            puppet module install puppetlabs-apt;
+            puppet module install -v 1.4.2 puppetlabs-apt;
         fi
 
         if [ ! -d "/etc/puppet/modules/git" ]; then
-            puppet module install puppetlabs-git;
+            puppet module install -v 0.0.3 puppetlabs-git;
         fi
 
    This script will be executed within the virtual machine to install necessary
@@ -145,16 +145,19 @@ You will be creating a set of files under a new ``vagrant`` directory:
 
 
         # install Apache
-        class { 'apache': }
+        class { 'apache':
+            mpm_module => 'prefork',
+        }
         class { 'apache::mod::php': }
 
 
         # install MySQL
-        class { 'mysql': }
-        class { 'mysql::server':
-            config_hash => { 'root_password' => 'symfony' },
+        class { '::mysql::server':
+            root_password => 'symfony',
         }
-        class { 'mysql::php': }
+        class { '::mysql::bindings':
+            php_enable => true,
+        }
 
 
         # install Git for composer
@@ -164,7 +167,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # install PHP Extensions used with Symfony
         class php-extensions {
             package { ['php-apc', 'php5-intl', 'php5-xdebug']:
-                ensure  => latest,
+                ensure  => present,
                 require => Package['httpd'],
                 notify  => Service['httpd'],
             }
@@ -176,6 +179,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # install a local composer.phar file
         class composer {
             exec { 'composerPhar':
+                user    => 'vagrant',
                 cwd     => '/vagrant',
                 command => 'curl -s http://getcomposer.org/installer | php',
                 path    => ['/bin', '/usr/bin'],
@@ -194,13 +198,15 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # install the Symfony vendors using composer
         class symfony {
             exec { 'vendorsInstall':
-                cwd       => '/vagrant',
-                command   => 'php composer.phar install',
-                timeout   => 1200,
-                path      => ['/bin', '/usr/bin'],
-                creates   => '/vagrant/vendor',
-                logoutput => true,
-                require   => Exec['composerPhar'],
+                user        => 'vagrant',
+                cwd         => '/vagrant',
+                environment => ['COMPOSER_HOME=/home/vagrant/.composer'],
+                command     => 'php composer.phar install',
+                timeout     => 1200,
+                path        => ['/bin', '/usr/bin'],
+                creates     => '/vagrant/vendor',
+                logoutput   => true,
+                require     => [ Class['php-extensions'], Exec['composerPhar'] ],
             }
         }
 
@@ -232,14 +238,16 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # by the web server
 
         file_line { 'apache_user':
-            path    => '/etc/apache2/httpd.conf',
+            path    => '/etc/apache2/apache2.conf',
+            match   => 'User ',
             line    => 'User vagrant',
             require => Package['httpd'],
             notify  => Service['httpd'],
         }
 
         file_line { 'apache_group':
-            path    => '/etc/apache2/httpd.conf',
+            path    => '/etc/apache2/apache2.conf',
+            match   => 'Group ',
             line    => 'Group vagrant',
             require => Package['httpd'],
             notify  => Service['httpd'],
@@ -425,7 +433,7 @@ project without having to worry about your local server setup or the setup of
 another developer's machine.
 
 .. _`VirtualBox`: https://www.virtualbox.org/wiki/Downloads
-.. _`Vagrant`: http://downloads.vagrantup.com/
+.. _`Vagrant`: http://www.vagrantup.com/downloads.html
 .. _`Puppet`: http://www.puppetlabs.com/
 .. _`Vagrant Docs`: http://docs.vagrantup.com/v2/
 .. _`private network`: http://docs.vagrantup.com/v2/networking/private_network.html
