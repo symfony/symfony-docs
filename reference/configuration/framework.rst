@@ -115,8 +115,6 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
-.. _reference-framework-trusted-hosts:
-
 trusted_hosts
 ~~~~~~~~~~~~~
 
@@ -168,9 +166,7 @@ respond to any subdomain:
         ));
 
 In addition, you can also set the trusted hosts in the front controller using
-the ``Request::setTrustedHosts()`` method:
-
-.. code-block:: php
+the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
     Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
