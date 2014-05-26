@@ -321,7 +321,7 @@ When using the ``with`` keyword, pass the templates as an array:
 .. code-block:: html+jinja
 
     {% form_theme form with ['::common.html.twig', ':Form:fields.html.twig',
-                       'AcmeDemoBundle:Form:fields.html.twig'] %}
+                             'AcmeDemoBundle:Form:fields.html.twig'] %}
 
     {# ... #}
 
