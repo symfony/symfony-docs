@@ -106,7 +106,6 @@ specific template doesn't exist.
         <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns:twig="http://symfony.com/schema/dic/twig"
         >
 
