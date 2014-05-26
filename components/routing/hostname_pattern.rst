@@ -214,7 +214,7 @@ instance, if you want to match both ``m.example.com`` and
 
                 <route id="mobile_homepage" path="/" host="m.example.com">
                     <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
-                    <default key="domain">%domain%</requirement>
+                    <default key="domain">%domain%</default>
                     <requirement key="domain">%domain%</requirement>
                 </route>
 
