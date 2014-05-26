@@ -16,8 +16,10 @@ In Symfony, you can register your custom DQL functions as follows:
         # app/config/config.yml
         doctrine:
             orm:
-                # ...
-                dql:
+               entity_managers:
+                  default:
+                  # ...
+                  dql:
                     string_functions:
                         test_string: Acme\HelloBundle\DQL\StringFunction
                         second_string: Acme\HelloBundle\DQL\SecondStringFunction
