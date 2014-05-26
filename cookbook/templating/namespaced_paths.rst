@@ -127,7 +127,7 @@ specific template doesn't exist.
             );
         ));
 
-Now you can use the same ``@theme`` namespace to refer to any template located
+Now, you can use the same ``@theme`` namespace to refer to any template located
 in the previous three directories:
 
 .. code-block:: jinja
