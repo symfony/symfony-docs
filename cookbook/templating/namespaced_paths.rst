@@ -1,7 +1,7 @@
 .. index::
    single: Templating; Namespaced Twig Paths
 
-How to use and Register namespaced Twig Paths
+How to Use and Register Namespaced Twig Paths
 =============================================
 
 .. versionadded:: 2.2
@@ -33,7 +33,7 @@ Both paths are valid and functional by default in Symfony2.
 
     As an added bonus, the namespaced syntax is faster.
 
-Registering your own namespaces
+Registering your own Namespaces
 -------------------------------
 
 You can also register your own custom namespaces. Suppose that you're using
@@ -82,7 +82,7 @@ called ``sidebar.twig`` in that directory, you can use it easily:
 
     {% include '@foo_bar/sidebar.twig' %}
 
-Multiple paths per namespace
+Multiple Paths per Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also assign several paths to the same template namespace. The order in
