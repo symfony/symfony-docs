@@ -19,6 +19,7 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `trusted_hosts`_
 * `trusted_proxies`_
 * `form`_
     * enabled
@@ -113,6 +114,69 @@ If this configuration parameter is present (and not ``false``), then the
 services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
+
+.. _reference-framework-trusted-hosts:
+
+trusted_hosts
+~~~~~~~~~~~~~
+
+**type**: ``array``
+
+The value of the ``$_SERVER['HOST']`` parameter cannot be safely trusted because
+users can manipulate it. This option whitelists the hosts that your Symfony
+application can respond to.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            trusted_hosts:  ['acme.com', 'acme.org']
+
+    .. code-block:: xml
+
+        <framework:config trusted-hosts="acme.com, acme.org">
+            <!-- ... -->
+        </framework>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'trusted_hosts' => array('acme.com', 'acme.org'),
+        ));
+
+Hosts can also be configured using regular expressions, which make it easier to
+respond to any subdomain:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            trusted_hosts:  ['.*\.?acme.com$', '.*\.?acme.org$']
+
+    .. code-block:: xml
+
+        <framework:config trusted-hosts=".*\.?acme.com$, .*\.?acme.org$">
+            <!-- ... -->
+        </framework>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'trusted_hosts' => array('.*\.?acme.com$', '.*\.?acme.org$'),
+        ));
+
+In addition, you can also set the trusted hosts in the front controller using
+the ``Request::setTrustedHosts()`` method:
+
+.. code-block:: php
+
+    // web/app.php
+    Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
+
+The default value for this option is an empty array, meaning that the application
+can respond to any given host.
 
 .. _reference-framework-trusted-proxies:
 
