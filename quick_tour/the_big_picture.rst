@@ -84,7 +84,7 @@ main concepts. Go to the following URL to be greeted by Symfony2 (replace
 
 .. code-block:: text
 
-    http://localhost:8000/demo/hello/Fabien
+    http://localhost:8000/app_dev.php/demo/hello/Fabien
 
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
