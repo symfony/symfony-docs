@@ -298,7 +298,7 @@ When the ``form.age`` widget is rendered, Symfony will use the ``integer_widget`
 block from the new template and the ``input`` tag will be wrapped in the
 ``div`` element specified in the customized block.
 
-Multiple templates
+Multiple Templates
 ..................
 
 A form can also be customized applying several templates. To do so, pass the
