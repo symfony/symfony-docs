@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-03T17:58:12Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-04T12:37:37Z
+
+I've read some context now and I think the steps need a small rewrite. Can you do this in this PR please? (otherwise, I'll create a new one myself)
+
+ * The first 2 steps talk about downloading and unzippen the Standard Edition. This is not the recommend way, it should be changed to use `composer create-project`. With this, step 7 can be removed;
+ * The description of step 3 (the one you edited) is not accurate. There is already a `.gitignore` file with the correct things in the Standard Edition. Instead, it should say something among the lines of "If it is not yet done, a `.gitignore` file should be added to the root of your project (e.g. next to the ``composer.json`` file), take a look at the `.gitignore` file of the Standard Edition for an example;" The `.gitignore` file example should be removed from this step, to avoid having outdated docs on this topic again.
+
+---------------------------------------------------------------------------
+
+by nicwortel at 2014-05-05T09:10:31Z
+
+@WouterJ done! What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-05T09:25:30Z
+
+Except from some minor things, it looks great :+1:
+
+---------------------------------------------------------------------------
+
+by nicwortel at 2014-05-21T09:56:07Z
+
+This PR can be merged, as far as I'm concerned!
