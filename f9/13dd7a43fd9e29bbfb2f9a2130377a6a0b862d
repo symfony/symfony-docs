@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-02-24T19:12:26Z
+
+I just found one more issue, but apart from that: :+1:
+
+---------------------------------------------------------------------------
+
+by gquemener at 2014-02-27T09:08:50Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-21T09:03:34Z
+
+@tiraeth can you please update this PR to fix the comment made by @xabbuh ? And can you please rebase this, it seems to have merge conflicts in the current state.
+
+After that, @weaverryan should merge this since the upstream PR is merged (that's why I removed `[WCM]`)
+
+---------------------------------------------------------------------------
+
+by tiraeth at 2014-05-21T10:16:23Z
+
+Sure thing. Will do so shortly.
+
+---------------------------------------------------------------------------
+
+by tiraeth at 2014-05-21T10:34:49Z
+
+Made it up to date with ``symfony-docs/master`` and squashed everything to a single commit.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-21T10:38:40Z
+
+Thank you for your quick response & action @tiraeth! This is now ready to be merged :+1:
