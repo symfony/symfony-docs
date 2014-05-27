@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-08T07:46:56Z
+
+You should add a ``versionadded`` directive:
+
+```rst
+.. versionadded:: 2.4
+    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
+```
+
+---------------------------------------------------------------------------
+
+by bfgasparin at 2014-04-08T20:23:37Z
+
+Done!
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-08T20:27:54Z
+
+There are some more occurences of ``getRequestType()`` in the docs (namely in ``/components/http_kernel/introduction.rst`` and ``/book/internals.rst``). Can you change them too?
+
+---------------------------------------------------------------------------
+
+by bfgasparin at 2014-04-10T05:28:23Z
+
+All done!
+
+---------------------------------------------------------------------------
+
+by bfgasparin at 2014-04-10T20:23:08Z
+
+Fixed.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-21T09:47:45Z
+
+ping @weaverryan I think it's ready to merge!
