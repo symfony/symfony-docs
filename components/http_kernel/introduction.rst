@@ -665,12 +665,16 @@ argument as follows::
     $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST);
     // do something with this response
 
+.. versionadded:: 2.4
+    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
+    Prior, the ``getRequestType()`` method must be used.
+
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
 listeners (e.g. security) may only act upon the master request. Each listener
 is passed some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
-whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-can be used to figure out if the current request is a "master" or "sub" request.
+whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+can be used to check if the current request is a "master" or "sub" request.
 
 For example, a listener that only needs to act on the master request may
 look like this::
@@ -680,7 +684,7 @@ look like this::
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
