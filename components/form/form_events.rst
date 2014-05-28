@@ -108,13 +108,6 @@ the form.
 | View data       | Normalized data transformed using a view transformer |
 +-----------------+------------------------------------------------------+
 
-.. sidebar:: ``FormEvents::POST_SET_DATA`` in the Form component
-
-    The :class:`Symfony\\Component\\Form\\Extension\\DataCollector\\EventListener\\DataCollectorListener`
-    class is subscribed to listen to the ``FormEvents::POST_SET_DATA`` event
-    in order to collect information about the forms from the denormalized
-    model and view data.
-
 2) Submitting a Form (``FormEvents::PRE_SUBMIT``, ``FormEvents::SUBMIT`` and ``FormEvents::POST_SUBMIT``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -218,9 +211,6 @@ It can be used to fetch data after denormalization.
 
 .. sidebar:: ``FormEvents::POST_SUBMIT`` in the Form component
 
-    The :class:`Symfony\\Component\\Form\\Extension\\DataCollector\\EventListener\\DataCollectorListener`
-    subscribes to the ``FormEvents::POST_SUBMIT`` event in order to collect
-    information about the forms.
     The :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
     automatically validate the denormalized object, and update the normalized
