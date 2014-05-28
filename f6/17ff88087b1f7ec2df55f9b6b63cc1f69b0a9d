@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-21T09:46:10Z
+
+Hmm, it is disabled by default (when using the full-stack framework), so why would you want to disable it?
+
+I think it's a pretty specific need, so maybe a little sentence "If you pass `false`, the redirects will no longer be followed." will do the trick better. What do you think?
+
+---------------------------------------------------------------------------
+
+by NAYZO at 2014-05-21T10:57:26Z
+
+it's a specific need but very useful, and must be clarified.
+I already updated the commit
