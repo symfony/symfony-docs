@@ -494,6 +494,11 @@ force him with the ``followRedirects()`` method::
 
     $client->followRedirects();
 
+If you pass ``false`` to the ``followRedirects()`` method, the redirects 
+will no longer be followed::     
+
+    $client->followRedirects(false);
+
 .. index::
    single: Tests; Crawler
 
