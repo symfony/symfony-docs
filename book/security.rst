@@ -1135,7 +1135,7 @@ this by creating a ``User`` class and configuring the ``entity`` provider.
 .. tip::
 
     A high-quality open source bundle is available that allows your users
-    to be stored via the Doctrine ORM or ODM. Read more about the `FOSUserBundle`_
+    to be stored in a database. Read more about the `FOSUserBundle`_
     on GitHub.
 
 With this approach, you'll first create your own ``User`` class, which will
