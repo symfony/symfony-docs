@@ -451,16 +451,21 @@ Next, create the controller that will display the login form::
                 $error = $request->attributes->get(
                     SecurityContextInterface::AUTHENTICATION_ERROR
                 );
-            } else {
+            } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
                 $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
                 $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+            } else {
+                $error = '';
             }
+            
+            // last username entered by the user
+            $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
             return $this->render(
                 'AcmeSecurityBundle:Security:login.html.twig',
                 array(
                     // last username entered by the user
-                    'last_username' => $session->get(SecurityContextInterface::LAST_USERNAME),
+                    'last_username' => $lastUsername,
                     'error'         => $error,
                 )
             );
@@ -1259,7 +1264,7 @@ this by creating a ``User`` class and configuring the ``entity`` provider.
 .. tip::
 
     A high-quality open source bundle is available that allows your users
-    to be stored via the Doctrine ORM or ODM. Read more about the `FOSUserBundle`_
+    to be stored in a database. Read more about the `FOSUserBundle`_
     on GitHub.
 
 With this approach, you'll first create your own ``User`` class, which will
