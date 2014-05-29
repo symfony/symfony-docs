@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-03T14:47:29Z
+
+PR updated. @stof I've not addressed your comment https://github.com/symfony/symfony-docs/pull/3753#discussion_r11254287 yet. I don't really get what you mean
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-03T15:25:45Z
+
+@romainneutron you say "You can change the parent service name if you want to:" in the line from @stof's comment, it should be "inner service name" instead of "parent service name"
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-03T15:54:21Z
+
+@WouterJ It has already been fixed ^^
+
+---------------------------------------------------------------------------
+
+by stof at 2014-04-03T16:03:19Z
+
+You sentence reads as follow:
+
+> By convention, the old ``foo`` service is going to be renamed ``foo1.inner``
+
+When reading this, people could think that the conventional id ``foo1.inner`` is related to the id ``foo`` mentionned in the same sentence just before, while it has nothing to do with it (if the old service was named ``acme_demo.hello_greater``, the conventional name would still be ``foo1.inner``). The convention for the generated inner id (``foo1.inner``) is based on the id of the decorator service (``foo1`` here), not of the decorated service (``foo`` here). This is mandatory to allow several decorators on the same service (they need to have different generated inner ids).
+
+---------------------------------------------------------------------------
+
+by stof at 2014-04-03T16:18:25Z
+
+I would add a note that most of the time, the decorator service should be declared private, as you will not need to retrieve it as ``foo1`` from the container. The visibility of the decorated ``foo`` service (whch is an alias for ``foo1``) will still be the same than the original ``foo`` visibility.
+
+If the original service is public, this will not have much impact (the runtime access of aliases has been optimized in Symfony 2.4 already so there won't be any overhead if both ``foo`` and ``foo1`` are kept public). but if the original service was private, a public ``foo1`` in the call chain will prevent inlining calls to ``foo`` (they will still be rewritten to calls to ``foo1``, but not inlined further).
+
+I don't have any use case in mind where you will want your decorator service to have a public id.
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-04T08:59:16Z
+
+@stof  thanks for clarification, I've added a note about what you explained in https://github.com/symfony/symfony-docs/pull/3753#issuecomment-39469817
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-05T11:06:32Z
+
+PR has been updated
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-10T10:02:40Z
+
+PR updated, I've fixed code examples
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-04-10T13:22:49Z
+
+PR updated
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-04-15T16:45:41Z
+
+Does it make sense to add a hint that the container needs to compiled to use this feature (see also #3804)?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-21T09:38:04Z
+
+@romainneutron can you please apply the comments made by @weaverryan ?
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-05-21T12:11:01Z
+
+@WouterJ I've addressed @weaverryan comments, sorry for the delay
