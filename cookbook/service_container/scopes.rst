@@ -281,10 +281,10 @@ argument is the ``ClientConfiguration`` object:
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <services>
             <service id="my_mailer"
-                class="Acme\HelloBundle\Mail\Mailer"
-                scope="client"
-            />
-            <argument type="service" id="client_configuration" />
+                    class="Acme\HelloBundle\Mail\Mailer"
+                    scope="client">
+                    <argument type="service" id="client_configuration" />
+            </service>
         </services>
 
     .. code-block:: php

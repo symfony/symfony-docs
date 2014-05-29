@@ -232,15 +232,16 @@ helper:
 
     .. code-block:: html+jinja
 
-        {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='uglifycss' %}
+        {% stylesheets 'bundles/AcmeFoo/css/*' filter='uglifycss' filter='cssrewrite' %}
              <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->stylesheets(
-            array('@AcmeFooBundle/Resources/public/css/*'),
-            array('uglifycss')
+            array('bundles/AcmeFoo/css/*'),
+            array('uglifycss'),
+            array('cssrewrite')
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach; ?>
