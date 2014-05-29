@@ -660,7 +660,7 @@ argument as follows::
     // create some other request manually as needed
     $request = new Request();
     // for example, possibly set its _controller manually
-    $request->attributes->add('_controller', '...');
+    $request->attributes->set('_controller', '...');
 
     $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST);
     // do something with this response
