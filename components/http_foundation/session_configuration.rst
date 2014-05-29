@@ -83,7 +83,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new PdoSessionHandler());
+    $pdo = new \PDO('mysql:dbname=testdb;host=127.0.0.1');
+    $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
     $session = new Session($storage);
 
 Configuring PHP Sessions
