@@ -391,6 +391,8 @@ with ``append()``::
 This is also useful to help you avoid repeating yourself if you have sections
 of the config that are repeated in different places.
 
+.. _component-config-normalization:
+
 Normalization
 -------------
 
@@ -445,6 +447,8 @@ a second argument::
         ->fixXmlConfig('child', 'children')
         ->children()
             ->arrayNode('children')
+                // ...
+            ->end()
         ->end()
     ;
 
