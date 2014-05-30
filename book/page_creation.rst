@@ -64,10 +64,9 @@ cache.
 The "Random Number" Page
 ------------------------
 
-Instead of building the classic "Hello World!" application, this chapter develops
-an appllication that generates random numbers . When you're finished, the user
-will be able to get a random number between ``1`` and the upper limit set with
-the URL:
+In this chapter, you'll develop an application that can generate random numbers.
+When you're finished, the user will be able to get a random number between ``1``
+and the upper limit set with the URL:
 
 .. code-block:: text
 
