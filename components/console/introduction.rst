@@ -99,7 +99,7 @@ Test the new console command by running the following
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien
+    php application.php demo:greet Fabien
 
 This will print the following to the command line:
 
@@ -111,7 +111,7 @@ You can also use the ``--yell`` option to make everything uppercase:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien --yell
+    php application.php demo:greet Fabien --yell
 
 This prints::
 
@@ -232,8 +232,8 @@ The command can now be used in either of the following ways:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien
-    $ php application.php demo:greet Fabien Potencier
+    php application.php demo:greet Fabien
+    php application.php demo:greet Fabien Potencier
 
 It is also possible to let an argument take a list of values (imagine you want
 to greet all your friends). For this it must be specified at the end of the
@@ -251,7 +251,7 @@ To use this, just specify as many names as you want:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien Ryan Bernhard
+    php application.php demo:greet Fabien Ryan Bernhard
 
 You can access the ``names`` argument as an array::
 
@@ -321,8 +321,8 @@ flag:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien
-    $ php application.php demo:greet Fabien --iterations=5
+    php application.php demo:greet Fabien
+    php application.php demo:greet Fabien --iterations=5
 
 The first example will only print once, since ``iterations`` is empty and
 defaults to ``1`` (the last argument of ``addOption``). The second example
@@ -333,8 +333,8 @@ will work:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien --iterations=5 --yell
-    $ php application.php demo:greet Fabien --yell --iterations=5
+    php application.php demo:greet Fabien --iterations=5 --yell
+    php application.php demo:greet Fabien --yell --iterations=5
 
 There are 4 option variants you can use:
 

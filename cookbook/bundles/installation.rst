@@ -69,7 +69,7 @@ Or you can do this in one command:
 
 .. code-block:: bash
 
-    $ php composer.phar require friendsofsymfony/user-bundle:2.0.*@dev
+    php composer.phar require friendsofsymfony/user-bundle:2.0.*@dev
 
 Enable the Bundle
 -----------------
@@ -109,13 +109,13 @@ can use this:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference AsseticBundle
+    app/console config:dump-reference AsseticBundle
 
 or this:
 
 .. code-block:: bash
 
-    $ app/console config:dump-reference assetic
+    app/console config:dump-reference assetic
 
 The output will look like this:
 

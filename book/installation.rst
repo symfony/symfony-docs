@@ -44,7 +44,7 @@ have curl installed, it's as easy as:
 
 .. code-block:: bash
 
-    $ curl -s https://getcomposer.org/installer | php
+    curl -s https://getcomposer.org/installer | php
 
 .. note::
 
@@ -57,7 +57,7 @@ Distribution:
 
 .. code-block:: bash
 
-    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.3.*
+    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.3.*
 
 .. tip::
 
@@ -104,10 +104,10 @@ one of the following commands (replacing ``###`` with your actual filename):
 .. code-block:: bash
 
     # for .tgz file
-    $ tar zxvf Symfony_Standard_Vendors_2.3.###.tgz
+    tar zxvf Symfony_Standard_Vendors_2.3.###.tgz
 
     # for a .zip file
-    $ unzip Symfony_Standard_Vendors_2.3.###.zip
+    unzip Symfony_Standard_Vendors_2.3.###.zip
 
 If you've downloaded "without vendors", you'll definitely need to read the
 next section.
@@ -146,7 +146,7 @@ Step 1: Get `Composer`_ (The great new PHP packaging system)
 
 .. code-block:: bash
 
-    $ curl -s http://getcomposer.org/installer | php
+    curl -s http://getcomposer.org/installer | php
 
 Make sure you download ``composer.phar`` in the same folder where
 the ``composer.json`` file is located (this is your Symfony project
@@ -156,7 +156,7 @@ Step 2: Install vendors
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    php composer.phar install
 
 This command downloads all of the necessary vendor libraries - including
 Symfony itself - into the ``vendor/`` directory.

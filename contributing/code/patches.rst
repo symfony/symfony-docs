@@ -24,8 +24,8 @@ Set up your user information with your real name and a working email address:
 
 .. code-block:: bash
 
-    $ git config --global user.name "Your Name"
-    $ git config --global user.email you@example.com
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
 
 .. tip::
 
@@ -76,14 +76,14 @@ Get the Symfony2 source code:
 
 .. code-block:: bash
 
-      $ git clone git@github.com:USERNAME/symfony.git
+      git clone git@github.com:USERNAME/symfony.git
 
 * Add the upstream repository as a remote:
 
 .. code-block:: bash
 
-      $ cd symfony
-      $ git remote add upstream git://github.com/symfony/symfony.git
+      cd symfony
+      git remote add upstream git://github.com/symfony/symfony.git
 
 Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,20 +124,20 @@ topic branch:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME master
+    git checkout -b BRANCH_NAME master
 
 Or, if you want to provide a bugfix for the ``2.3`` branch, first track the remote
 ``2.3`` branch locally:
 
 .. code-block:: bash
 
-    $ git checkout -t origin/2.3
+    git checkout -t origin/2.3
 
 Then create a new branch off the ``2.3`` branch to work on the bugfix:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME 2.3
+    git checkout -b BRANCH_NAME 2.3
 
 .. tip::
 
@@ -220,11 +220,11 @@ while to finish your changes):
 
 .. code-block:: bash
 
-    $ git checkout master
-    $ git fetch upstream
-    $ git merge upstream/master
-    $ git checkout BRANCH_NAME
-    $ git rebase master
+    git checkout master
+    git fetch upstream
+    git merge upstream/master
+    git checkout BRANCH_NAME
+    git rebase master
 
 .. tip::
 
@@ -237,14 +237,14 @@ then continue the rebase:
 
 .. code-block:: bash
 
-    $ git add ... # add resolved files
-    $ git rebase --continue
+    git add ... # add resolved files
+    git rebase --continue
 
 Check that all tests still pass and push your branch remotely:
 
 .. code-block:: bash
 
-    $ git push --force origin BRANCH_NAME
+    git push --force origin BRANCH_NAME
 
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
@@ -368,8 +368,8 @@ patch. Before re-submitting the patch, rebase with ``upstream/master`` or
 
 .. code-block:: bash
 
-    $ git rebase -f upstream/master
-    $ git push --force origin BRANCH_NAME
+    git rebase -f upstream/master
+    git push --force origin BRANCH_NAME
 
 .. note::
 
@@ -382,8 +382,8 @@ convert many commits to one commit. To do this, use the rebase command:
 
 .. code-block:: bash
 
-    $ git rebase -i upstream/master
-    $ git push --force origin BRANCH_NAME
+    git rebase -i upstream/master
+    git push --force origin BRANCH_NAME
 
 After you type this command, an editor will popup showing a list of commits:
 

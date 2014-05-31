@@ -226,7 +226,7 @@ user records and encode their password, see :ref:`book-security-encoding-user-pa
 
 .. code-block:: bash
 
-    $ mysql> SELECT * FROM acme_users;
+    mysql> SELECT * FROM acme_users;
     +----+----------+------------------------------------------+--------------------+-----------+
     | id | username | password                                 | email              | is_active |
     +----+----------+------------------------------------------+--------------------+-----------+
@@ -677,13 +677,13 @@ For brevity, the getter and setter methods are hidden, but you can
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
+    php app/console doctrine:generate:entities Acme/UserBundle/Entity/User
 
 Don't forget also to update your database schema:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:schema:update --force
+    php app/console doctrine:schema:update --force
 
 This will create the ``acme_role`` table and a ``user_role`` that stores
 the many-to-many relationship between ``acme_user`` and ``acme_role``. If
@@ -692,14 +692,14 @@ this:
 
 .. code-block:: bash
 
-    $ mysql> SELECT * FROM acme_role;
+    mysql> SELECT * FROM acme_role;
     +----+-------+------------+
     | id | name  | role       |
     +----+-------+------------+
     |  1 | admin | ROLE_ADMIN |
     +----+-------+------------+
 
-    $ mysql> SELECT * FROM user_role;
+    mysql> SELECT * FROM user_role;
     +---------+---------+
     | user_id | role_id |
     +---------+---------+

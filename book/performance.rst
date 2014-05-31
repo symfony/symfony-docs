@@ -60,7 +60,7 @@ command line, and might become part of your deploy process:
 
 .. code-block:: bash
 
-    $ php composer.phar dump-autoload --optimize
+    php composer.phar dump-autoload --optimize
 
 Internally, this builds the big class map array in ``vendor/composer/autoload_classmap.php``.
 

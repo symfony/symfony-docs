@@ -993,13 +993,13 @@ console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
-    $ php app/console container:debug
+    php app/console container:debug
 
 By default only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
-    $ php app/console container:debug --show-private
+    php app/console container:debug --show-private
 
 .. note::
 
@@ -1013,7 +1013,7 @@ its id:
 
 .. code-block:: bash
 
-    $ php app/console container:debug my_mailer
+    php app/console container:debug my_mailer
 
 Learn more
 ----------

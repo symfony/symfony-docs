@@ -23,7 +23,7 @@ then clone your fork:
 
 .. code-block:: bash
 
-    $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
+    git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
 Consistent with Symfony's source code, the documentation repository is split into
 multiple branches, corresponding to the different versions of Symfony itself.
@@ -35,7 +35,7 @@ To do this checkout the 2.3 branch before the next step:
 
 .. code-block:: bash
 
-    $ git checkout 2.3
+    git checkout 2.3
 
 .. tip::
 
@@ -46,7 +46,7 @@ Next, create a dedicated branch for your changes (for organization):
 
 .. code-block:: bash
 
-    $ git checkout -b improving_foo_and_bar
+    git checkout -b improving_foo_and_bar
 
 You can now make your changes directly to this branch and commit them. When
 you're done, push this branch to *your* GitHub fork and initiate a pull request.

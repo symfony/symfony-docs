@@ -28,7 +28,7 @@ command:
 .. code-block:: bash
 
     # specify the configuration directory on the command line
-    $ phpunit -c app/
+    phpunit -c app/
 
 The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
 file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
@@ -97,13 +97,13 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: bash
 
     # run all tests in the Utility directory
-    $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/
+    phpunit -c app src/Acme/DemoBundle/Tests/Utility/
 
     # run tests for the Calculator class
-    $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
+    phpunit -c app src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit -c app src/Acme/DemoBundle/
+    phpunit -c app src/Acme/DemoBundle/
 
 .. index::
    single: Tests; Functional tests

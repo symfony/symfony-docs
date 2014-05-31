@@ -82,7 +82,7 @@ Fortunately, there is a task for this. Simply run the following command:
 
 .. code-block:: bash
 
-    $ php app/console init:acl
+    php app/console init:acl
 
 Getting Started
 ---------------

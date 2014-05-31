@@ -39,7 +39,7 @@ You can research the component names and versions at `packagist.org`_.
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    php composer.phar install
 
 **5.** Write your code:
 

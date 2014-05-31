@@ -94,7 +94,7 @@ available, run the following command:
 
 .. code-block:: bash
 
-    $ php app/console assets:install web
+    php app/console assets:install web
 
 .. note::
 
@@ -187,14 +187,14 @@ called ``symfony``:
 
 .. code-block:: bash
 
-    $ php symfony
+    php symfony
 
 In Symfony2, the console is now in the app sub-directory and is called
 ``console``:
 
 .. code-block:: bash
 
-    $ php app/console
+    php app/console
 
 Applications
 ------------
