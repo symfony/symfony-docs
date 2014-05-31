@@ -163,10 +163,16 @@ to be valid. The size of the file can be given in one of the following formats:
   numeric (e.g. ``4096``);
 
 * **kilobytes**: To specify the ``maxSize`` in kilobytes, pass a number and
-  suffix it with a lowercase "k" (e.g. ``200k``);
+  suffix it with a "k" (e.g. ``200k``);
 
 * **megabytes**: To specify the ``maxSize`` in megabytes, pass a number and
-  suffix it with a capital "M" (e.g. ``4M``).
+  suffix it with a "M" (e.g. ``4M``).
+
+* **kibibytes**: To specify the ``maxSize`` in kibibytes, pass a number and
+  suffix it with a "Ki" (e.g. ``600Ki``);
+
+* **mebibytes**: To specify the ``maxSize`` in mebibytes, pass a number and
+  suffix it with a "Mi" (e.g. ``8Mi``).
 
 mimeTypes
 ~~~~~~~~~
