@@ -152,22 +152,6 @@ have been specified.
 Options
 -------
 
-.. versionadded:: 2.6
-    The ``binaryFormat`` option was introduced in Symfony 2.6.
-
-binaryFormat
-~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``null``
-
-When ``true``, the sizes will be displayed in messages with binary suffixes
-(KiB, MiB). When ``false``, the sizes will be displayed with SI suffixes (kB,
-MB). When ``null``, then the binaryFormat will be guessed from the suffix
-defined in the maxSize option.
-
-For more information about the difference between binary and SI suffixes,
-see `Wikipedia: Binary prefix`_.
-
 maxSize
 ~~~~~~~
 
@@ -190,6 +174,22 @@ to be valid. The size of the file can be given in one of the following formats:
 
 * **mebibytes**: To specify the ``maxSize`` in mebibytes, pass a number and
   suffix it with a "Mi" (e.g. ``8Mi``); 1Mi = 1 048 576 bytes.
+
+For more information about the difference between binary and SI suffixes,
+see `Wikipedia: Binary prefix`_.
+
+binaryFormat
+~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``binaryFormat`` option was introduced in Symfony 2.6.
+
+**type**: ``boolean`` **default**: ``null``
+
+When ``true``, the sizes will be displayed in messages with binary suffixes
+(KiB, MiB). When ``false``, the sizes will be displayed with SI suffixes (kB,
+MB). When ``null``, then the binaryFormat will be guessed from the suffix
+defined in the maxSize option.
 
 For more information about the difference between binary and SI suffixes,
 see `Wikipedia: Binary prefix`_.
