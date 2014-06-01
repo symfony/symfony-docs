@@ -164,6 +164,8 @@ When true, the sizes will be displayed in messages with binary suffixes (KiB, Mi
 When false, the sizes will be displayed with SI suffixes (kB, MB).
 When null, then the binaryFormat will be guessed from the suffix defined in the maxSize option.
 
+For more information about the difference between binary and SI suffixes, see `Wikipedia: Binary prefix`_.
+
 maxSize
 ~~~~~~~
 
@@ -173,19 +175,21 @@ If set, the size of the underlying file must be below this file size in order
 to be valid. The size of the file can be given in one of the following formats:
 
 * **bytes**: To specify the ``maxSize`` in bytes, pass a value that is entirely
-  numeric (e.g. ``4096``);
+  numeric (e.g. ``4096``).
 
 * **kilobytes**: To specify the ``maxSize`` in kilobytes, pass a number and
-  suffix it with a "k" (e.g. ``200k``);
+  suffix it with a "k" (e.g. ``200k``); 1k = 1 000 bytes.
 
 * **megabytes**: To specify the ``maxSize`` in megabytes, pass a number and
-  suffix it with a "M" (e.g. ``4M``).
+  suffix it with a "M" (e.g. ``4M``); 1M = 1 000 000 bytes.
 
 * **kibibytes**: To specify the ``maxSize`` in kibibytes, pass a number and
-  suffix it with a "Ki" (e.g. ``600Ki``);
+  suffix it with a "Ki" (e.g. ``600Ki``); 1Ki = 1 024 bytes.
 
 * **mebibytes**: To specify the ``maxSize`` in mebibytes, pass a number and
-  suffix it with a "Mi" (e.g. ``8Mi``).
+  suffix it with a "Mi" (e.g. ``8Mi``); 1Mi = 1 048 576 bytes.
+
+For more information about the difference between binary and SI suffixes, see `Wikipedia: Binary prefix`_.
 
 mimeTypes
 ~~~~~~~~~
@@ -257,3 +261,4 @@ to disk.
 
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
+.. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix
