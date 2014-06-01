@@ -20,6 +20,7 @@ form type.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `maxSize`_                                                        |
+|                | - `binaryFormat`_                                                   |
 |                | - `mimeTypes`_                                                      |
 |                | - `maxSizeMessage`_                                                 |
 |                | - `mimeTypesMessage`_                                               |
@@ -78,7 +79,7 @@ below a certain file size and a valid PDF, add the following:
                         maxSize: 1024k
                         mimeTypes: [application/pdf, application/x-pdf]
                         mimeTypesMessage: Please upload a valid PDF
-                        
+
 
     .. code-block:: php-annotations
 
@@ -150,6 +151,18 @@ have been specified.
 
 Options
 -------
+
+.. versionadded:: 2.6
+    The ``binaryFormat`` option was introduced in Symfony 2.6.
+
+binaryFormat
+~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``null``
+
+When true, the sizes will be displayed in messages with binary suffixes (KiB, MiB).
+When false, the sizes will be displayed with SI suffixes (kB, MB).
+When null, then the binaryFormat will be guessed from the suffix defined in the maxSize option.
 
 maxSize
 ~~~~~~~
