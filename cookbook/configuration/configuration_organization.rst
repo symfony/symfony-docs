@@ -6,8 +6,8 @@ How to Organize Configuration Files
 
 The default Symfony2 Standard Edition defines three
 :doc:`execution environments </cookbook/configuration/environments>` called
-``dev``, ``prod``, and ``test``. An environment simply represents a way to
-execute the same codebase with different configuration.
+``dev``, ``prod`` and ``test``. An environment simply represents a way to
+execute the same codebase with different configurations.
 
 In order to select the configuration file to load for each environment, Symfony
 executes the ``registerContainerConfiguration()`` method of the ``AppKernel``
@@ -115,14 +115,21 @@ files, including the common files:
 
     .. code-block:: xml
 
-        <!-- # app/config/dev/config.xml -->
-        <imports>
-            <import resource="../common/config.xml" />
-            <import resource="parameters.xml" />
-            <import resource="security.xml" />
-        </imports>
+        <!-- app/config/dev/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="../common/config.xml" />
+                <import resource="parameters.xml" />
+                <import resource="security.xml" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
@@ -147,12 +154,21 @@ files, including the common files:
 
     .. code-block:: xml
 
-        <!-- # app/config/prod/config.xml -->
-        <imports>
-            <import resource="../common/config.xml" />
-            <import resource="parameters.xml" />
-            <import resource="security.xml" />
-        </imports>
+        <!-- app/config/prod/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <imports>
+                <import resource="../common/config.xml" />
+                <import resource="parameters.xml" />
+                <import resource="security.xml" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
         <!-- ... -->
 
@@ -178,13 +194,20 @@ files, including the common files:
 
     .. code-block:: xml
 
-        <!-- # app/config/config.xml -->
-        <imports>
-            <import resource="parameters.xml" />
-            <import resource="security.xml" />
-        </imports>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="parameters.xml" />
+                <import resource="security.xml" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
@@ -243,14 +266,15 @@ make Symfony aware of the new file organization::
     }
 
 Following the same technique explained in the previous section, make sure to
-load the appropriate configuration files from each main file (``common.yml``,
+import the appropriate configuration files from each main file (``common.yml``,
 ``dev.yml`` and ``prod.yml``).
 
-Advanced Tecniques
-------------------
+Advanced Techniques
+-------------------
 
-Symfony loads configuration files using the ``Config component </components/config>``,
-which provides some advanced features.
+Symfony loads configuration files using the
+``Config component </components/config/introduction>``, which provides some
+advanced features.
 
 Mix and Match Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -273,15 +297,22 @@ format (``.yml``, ``.xml``, ``.php``, ``.ini``):
 
     .. code-block:: xml
 
-        <!-- # app/config/config.xml -->
-        <imports>
-            <import resource="parameters.yml" />
-            <import resource="services.xml" />
-            <import resource="security.yml" />
-            <import resource="legacy.php" />
-        </imports>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="parameters.yml" />
+                <import resource="services.xml" />
+                <import resource="security.yml" />
+                <import resource="legacy.php" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
@@ -297,8 +328,8 @@ format (``.yml``, ``.xml``, ``.php``, ``.ini``):
 
     The ``IniFileLoader`` parses the file contents using the
     :phpfunction:`parse_ini_file` function, therefore, you can only set
-    parameters to string values. To set parameters to other data types
-    (e.g. boolean, integer, etc), the other loaders are recommended.
+    parameters to string values. Use one of the other loaders if you want
+    to use other data types (e.g. boolean, integer, etc.).
 
 If you use any other configuration format, you have to define your own loader
 class extending it from :class:`Symfony\\Component\\DependencyInjection\\Loader\\FileLoader`.
@@ -319,20 +350,27 @@ by loading an entire directory:
 
         # app/config/config.yml
         imports:
-            - { resource: 'bundles/'   }
-            - { resource: 'services/'  }
+            - { resource: 'bundles/'  }
+            - { resource: 'services/' }
 
         # ...
 
     .. code-block:: xml
 
-        <!-- # app/config/config.xml -->
-        <imports>
-            <import resource="bundles/" />
-            <import resource="services/" />
-        </imports>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="bundles/" />
+                <import resource="services/" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
@@ -343,18 +381,18 @@ by loading an entire directory:
         // ...
 
 
-The Config component will look for recursively in the ``bundles/`` and ``services/``
+The Config component will recursively look in the ``bundles/`` and ``services/``
 directories and it will load any supported file format (``.yml``, ``.xml``,
 ``.php``, ``.ini``).
 
 Global Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some system administrators may prefer to store sensitive parameteres in global
-configuration files under the ``/etc`` directory. Imagine that the database
-credentials for your website are stored in the ``/etc/sites/mysite.com/parameters.yml``.
-Loading this file is as simple as indicating the full file path when importing
-it from any other configuration file:
+Some system administrators may prefer to store sensitive parameters in files
+outside the project directory. Imagine that the database credentials for your
+website are stored in the ``/etc/sites/mysite.com/parameters.yml``. Loading this
+file is as simple as indicating the full file path when importing it from any
+other configuration file:
 
 .. configuration-block::
 
@@ -362,20 +400,27 @@ it from any other configuration file:
 
         # app/config/config.yml
         imports:
-            - { resource: 'parameters.yml'   }
-            - { resource: '/etc/sites/mysite.com/parameters.yml'  }
+            - { resource: 'parameters.yml' }
+            - { resource: '/etc/sites/mysite.com/parameters.yml' }
 
         # ...
 
     .. code-block:: xml
 
-        <!-- # app/config/config.xml -->
-        <imports>
-            <import resource="parameters.yml" />
-            <import resource="/etc/sites/mysite.com/parameters.yml" />
-        </imports>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="parameters.yml" />
+                <import resource="/etc/sites/mysite.com/parameters.yml" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
@@ -385,7 +430,7 @@ it from any other configuration file:
 
         // ...
 
-Most of the time, local developers won't have the same files that exist in the
+Most of the time, local developers won't have the same files that exist on the
 production servers. For that reason, the Config component provides the
 ``ignore_errors`` option to silently discard errors when the loaded file
 doesn't exist:
@@ -396,20 +441,27 @@ doesn't exist:
 
         # app/config/config.yml
         imports:
-            - { resource: 'parameters.yml'   }
-            - { resource: '/etc/sites/mysite.com/parameters.yml', ignore_errors: true  }
+            - { resource: 'parameters.yml' }
+            - { resource: '/etc/sites/mysite.com/parameters.yml', ignore_errors: true }
 
         # ...
 
     .. code-block:: xml
 
-        <!-- # app/config/config.xml -->
-        <imports>
-            <import resource="parameters.yml" />
-            <import resource="/etc/sites/mysite.com/parameters.yml" ignore-errors="true" />
-        </imports>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- ... -->
+            <imports>
+                <import resource="parameters.yml" />
+                <import resource="/etc/sites/mysite.com/parameters.yml" ignore-errors="true" />
+            </imports>
+
+            <!-- ... -->
+        </container>
 
     .. code-block:: php
 
