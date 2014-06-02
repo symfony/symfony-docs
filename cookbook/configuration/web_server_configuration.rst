@@ -55,13 +55,13 @@ following configuration snippet:
     In Apache 2.4, ``Order allow,deny`` has been replaced by ``Require all granted``,
     and hence you need to modify your ``Directory`` permission settings as follows:
 
-        .. code-block:: apache
+    .. code-block:: apache
 
-            <Directory /var/www/project/web>
-                # enable the .htaccess rewrites
-                AllowOverride All
-                Require all granted
-            </Directory>
+        <Directory /var/www/project/web>
+            # enable the .htaccess rewrites
+            AllowOverride All
+            Require all granted
+        </Directory>
 
 Nginx
 -----

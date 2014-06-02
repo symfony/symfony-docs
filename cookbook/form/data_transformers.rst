@@ -109,48 +109,48 @@ Using the Transformer
 Now that you have the transformer built, you just need to add it to your
 issue field in some form.
 
-    You can also use transformers without creating a new custom form type
-    by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
-    `Model and View Transformers`_) on any field builder::
+You can also use transformers without creating a new custom form type
+by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
+`Model and View Transformers`_) on any field builder::
 
-        use Symfony\Component\Form\FormBuilderInterface;
-        use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
-        class TaskType extends AbstractType
+    class TaskType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            public function buildForm(FormBuilderInterface $builder, array $options)
-            {
-                // ...
+            // ...
 
-                // this assumes that the entity manager was passed in as an option
-                $entityManager = $options['em'];
-                $transformer = new IssueToNumberTransformer($entityManager);
+            // this assumes that the entity manager was passed in as an option
+            $entityManager = $options['em'];
+            $transformer = new IssueToNumberTransformer($entityManager);
 
-                // add a normal text field, but add your transformer to it
-                $builder->add(
-                    $builder->create('issue', 'text')
-                        ->addModelTransformer($transformer)
-                );
-            }
+            // add a normal text field, but add your transformer to it
+            $builder->add(
+                $builder->create('issue', 'text')
+                    ->addModelTransformer($transformer)
+            );
+        }
 
-            public function setDefaultOptions(OptionsResolverInterface $resolver)
-            {
-                $resolver
-                    ->setDefaults(array(
-                        'data_class' => 'Acme\TaskBundle\Entity\Task',
-                    ))
-                    ->setRequired(array(
-                        'em',
-                    ))
-                    ->setAllowedTypes(array(
-                        'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                    ));
-
-                // ...
-            }
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        {
+            $resolver
+                ->setDefaults(array(
+                    'data_class' => 'Acme\TaskBundle\Entity\Task',
+                ))
+                ->setRequired(array(
+                    'em',
+                ))
+                ->setAllowedTypes(array(
+                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
+                ));
 
             // ...
         }
+
+        // ...
+    }
 
 This example requires that you pass in the entity manager as an option
 when creating your form. Later, you'll learn how you could create a custom

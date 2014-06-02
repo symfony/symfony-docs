@@ -850,7 +850,9 @@ uses a simple string pattern called the *logical controller name*, which
 Symfony maps to a specific PHP method and class. The pattern has three parts,
 each separated by a colon:
 
-    **bundle**:**controller**:**action**
+.. code-block:: text
+
+    bundle:controller:action
 
 For example, a ``_controller`` value of ``AcmeBlogBundle:Blog:show`` means:
 

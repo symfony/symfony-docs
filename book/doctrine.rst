@@ -413,12 +413,12 @@ doesn't replace your existing methods).
 
     With the ``doctrine:generate:entities`` command you can:
 
-        * generate getters and setters;
+    * generate getters and setters;
 
-        * generate repository classes configured with the
-            ``@ORM\Entity(repositoryClass="...")`` annotation;
+    * generate repository classes configured with the
+        ``@ORM\Entity(repositoryClass="...")`` annotation;
 
-        * generate the appropriate constructor for 1:n and n:m relations.
+    * generate the appropriate constructor for 1:n and n:m relations.
 
     The ``doctrine:generate:entities`` command saves a backup of the original
     ``Product.php`` named ``Product.php~``. In some cases, the presence of

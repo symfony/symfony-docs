@@ -287,12 +287,12 @@ The new environment is now accessible via::
 
 .. note::
 
-   Some environments, like the ``dev`` environment, are never meant to be
-   accessed on any deployed server by the general public. This is because
-   certain environments, for debugging purposes, may give too much information
-   about the application or underlying infrastructure. To be sure these environments
-   aren't accessible, the front controller is usually protected from external
-   IP addresses via the following code at the top of the controller:
+    Some environments, like the ``dev`` environment, are never meant to be
+    accessed on any deployed server by the general public. This is because
+    certain environments, for debugging purposes, may give too much information
+    about the application or underlying infrastructure. To be sure these environments
+    aren't accessible, the front controller is usually protected from external
+    IP addresses via the following code at the top of the controller:
 
     .. code-block:: php
 
@@ -315,8 +315,12 @@ However, each environment caches its own set of files:
 
 .. code-block:: text
 
-    app/cache/dev   - cache directory for the *dev* environment
-    app/cache/prod  - cache directory for the *prod* environment
+    <your-project>/
+    ├─ app/
+    │  ├─ cache/
+    │  │  ├─ dev/   // cache directory for the *dev* environment
+    │  │  └─ prod/  // cache directory for the *prod* environment
+    │  ├─ ...
 
 Sometimes, when debugging, it may be helpful to inspect a cached file to
 understand how something is working. When doing so, remember to look in
