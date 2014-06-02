@@ -273,7 +273,7 @@ Advanced Techniques
 -------------------
 
 Symfony loads configuration files using the
-``Config component </components/config/introduction>``, which provides some
+:doc:`Config component </components/config/introduction>`, which provides some
 advanced features.
 
 Mix and Match Configuration Formats
