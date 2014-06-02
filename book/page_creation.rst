@@ -66,7 +66,7 @@ The "Random Number" Page
 
 In this chapter, you'll develop an application that can generate random numbers.
 When you're finished, the user will be able to get a random number between ``1``
-and the upper limit set with the URL:
+and the upper limit set by the URL:
 
 .. code-block:: text
 
@@ -98,15 +98,15 @@ A bundle is nothing more than a directory that houses everything related
 to a specific feature, including PHP classes, configuration, and even stylesheets
 and JavaScript files (see :ref:`page-creation-bundles`).
 
-To create a bundle called ``AcmeWebsiteBundle`` (a play bundle that you'll
+To create a bundle called ``AcmeDemoBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
 instructions (use all of the default options):
 
 .. code-block:: bash
 
-    $ php app/console generate:bundle --namespace=Acme/WebsiteBundle --format=yml
+    $ php app/console generate:bundle --namespace=Acme/DemoBundle --format=yml
 
-Behind the scenes, a directory is created for the bundle at ``src/Acme/WebsiteBundle``.
+Behind the scenes, a directory is created for the bundle at ``src/Acme/DemoBundle``.
 A line is also automatically added to the ``app/AppKernel.php`` file so that
 the bundle is registered with the kernel::
 
@@ -115,7 +115,7 @@ the bundle is registered with the kernel::
     {
         $bundles = array(
             ...,
-            new Acme\WebsiteBundle\AcmeWebsiteBundle(),
+            new Acme\DemoBundle\AcmeDemoBundle(),
         );
         // ...
 
@@ -133,7 +133,7 @@ located at ``app/config/routing.yml``. Like all configuration in Symfony2,
 you can also choose to use XML or PHP out of the box to configure routes.
 
 If you look at the main routing file, you'll see that Symfony already added
-an entry when you generated the ``AcmeWebsiteBundle``:
+an entry when you generated the ``AcmeDemoBundle``:
 
 .. configuration-block::
 
@@ -141,7 +141,7 @@ an entry when you generated the ``AcmeWebsiteBundle``:
 
         # app/config/routing.yml
         acme_website:
-            resource: "@AcmeWebsiteBundle/Resources/config/routing.yml"
+            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
             prefix:   /
 
     .. code-block:: xml
@@ -153,7 +153,7 @@ an entry when you generated the ``AcmeWebsiteBundle``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeWebsiteBundle/Resources/config/routing.xml"
+            <import resource="@AcmeDemoBundle/Resources/config/routing.xml"
                 prefix="/" />
         </routes>
 
@@ -165,14 +165,14 @@ an entry when you generated the ``AcmeWebsiteBundle``:
 
         $collection = new RouteCollection();
         $collection->addCollection(
-            $loader->import('@AcmeWebsiteBundle/Resources/config/routing.php'),
+            $loader->import('@AcmeDemoBundle/Resources/config/routing.php'),
             '/'
         );
 
         return $collection;
 
 This entry is pretty basic: it tells Symfony to load routing configuration
-from the ``Resources/config/routing.yml`` file that lives inside the ``AcmeWebsiteBundle``.
+from the ``Resources/config/routing.yml`` file that lives inside the ``AcmeDemoBundle``.
 This means that you place routing configuration directly in ``app/config/routing.yml``
 or organize your routes throughout your application, and import them from here.
 
@@ -183,14 +183,14 @@ the new route that defines the URL of the page that you're about to create:
 
     .. code-block:: yaml
 
-        # src/Acme/WebsiteBundle/Resources/config/routing.yml
+        # src/Acme/DemoBundle/Resources/config/routing.yml
         random:
             path:     /random/{limit}
-            defaults: { _controller: AcmeWebsiteBundle:Random:index }
+            defaults: { _controller: AcmeDemoBundle:Random:index }
 
     .. code-block:: xml
 
-        <!-- src/Acme/WebsiteBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -198,19 +198,19 @@ the new route that defines the URL of the page that you're about to create:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="random" path="/random/{limit}">
-                <default key="_controller">AcmeWebsiteBundle:Random:index</default>
+                <default key="_controller">AcmeDemoBundle:Random:index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Acme/WebsiteBundle/Resources/config/routing.php
+        // src/Acme/DemoBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('random', new Route('/random/{limit}', array(
-            '_controller' => 'AcmeWebsiteBundle:Random:index',
+            '_controller' => 'AcmeDemoBundle:Random:index',
         )));
 
         return $collection;
@@ -233,17 +233,17 @@ Step 2: Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a URL such as ``/random/10`` is handled by the application, the ``random``
-route is matched and the ``AcmeWebsiteBundle:Random:index`` controller is executed
+route is matched and the ``AcmeDemoBundle:Random:index`` controller is executed
 by the framework. The second step of the page-creation process is to create
 that controller.
 
-The controller - ``AcmeWebsiteBundle:Random:index`` is the *logical* name of
+The controller - ``AcmeDemoBundle:Random:index`` is the *logical* name of
 the controller, and it maps to the ``indexAction`` method of a PHP class
-called ``Acme\WebsiteBundle\Controller\RandomController``. Start by creating this
-file inside your ``AcmeWebsiteBundle``::
+called ``Acme\DemoBundle\Controller\RandomController``. Start by creating this
+file inside your ``AcmeDemoBundle``::
 
-    // src/Acme/WebsiteBundle/Controller/RandomController.php
-    namespace Acme\WebsiteBundle\Controller;
+    // src/Acme/DemoBundle/Controller/RandomController.php
+    namespace Acme\DemoBundle\Controller;
 
     class RandomController
     {
@@ -258,8 +258,8 @@ object.
 Create the ``indexAction`` method that Symfony will execute when the ``random``
 route is matched::
 
-    // src/Acme/WebsiteBundle/Controller/RandomController.php
-    namespace Acme\WebsiteBundle\Controller;
+    // src/Acme/DemoBundle/Controller/RandomController.php
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -319,8 +319,8 @@ of writing the HTML inside the controller, render a template instead:
 .. code-block:: php
     :linenos:
 
-    // src/Acme/WebsiteBundle/Controller/RandomController.php
-    namespace Acme\WebsiteBundle\Controller;
+    // src/Acme/DemoBundle/Controller/RandomController.php
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -331,13 +331,13 @@ of writing the HTML inside the controller, render a template instead:
             $number = rand(1, $limit);
 
             return $this->render(
-                'AcmeWebsiteBundle:Random:index.html.twig',
+                'AcmeDemoBundle:Random:index.html.twig',
                 array('number' => $number)
             );
 
             // render a PHP template instead
             // return $this->render(
-            //     'AcmeWebsiteBundle:Random:index.html.php',
+            //     'AcmeDemoBundle:Random:index.html.php',
             //     array('number' => $number)
             // );
         }
@@ -361,7 +361,7 @@ By default, Symfony2 supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be
 alarmed - you're free to choose either or even both in the same project.
 
-The controller renders the ``AcmeWebsiteBundle:Random:index.html.twig`` template,
+The controller renders the ``AcmeDemoBundle:Random:index.html.twig`` template,
 which uses the following naming convention:
 
     **BundleName**:**ControllerName**:**TemplateName**
@@ -371,7 +371,7 @@ location using the following convention.
 
     **/path/to/BundleName**/Resources/views/**ControllerName**/**TemplateName**
 
-In this case, ``AcmeWebsiteBundle`` is the bundle name, ``Random`` is the
+In this case, ``AcmeDemoBundle`` is the bundle name, ``Random`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -379,7 +379,7 @@ controller, and ``index.html.twig`` the template:
     .. code-block:: jinja
        :linenos:
 
-        {# src/Acme/WebsiteBundle/Resources/views/Random/index.html.twig #}
+        {# src/Acme/DemoBundle/Resources/views/Random/index.html.twig #}
         {% extends '::base.html.twig' %}
 
         {% block body %}
@@ -388,7 +388,7 @@ controller, and ``index.html.twig`` the template:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/WebsiteBundle/Resources/views/Random/index.html.php -->
+        <!-- src/Acme/DemoBundle/Resources/views/Random/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
 
         Number: <?php echo $view->escape($number) ?>
@@ -573,9 +573,9 @@ You'll learn more about each of these directories in later chapters.
     .. code-block:: text
 
         Class Name:
-            Acme\WebsiteBundle\Controller\RandomController
+            Acme\DemoBundle\Controller\RandomController
         Path:
-            src/Acme/WebsiteBundle/Controller/RandomController.php
+            src/Acme/DemoBundle/Controller/RandomController.php
 
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -725,7 +725,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Take a look at ``AcmeWebsiteBundle``, as it contains
+between all Symfony2 bundles. Take a look at ``AcmeDemoBundle``, as it contains
 some of the most common elements of a bundle:
 
 * ``Controller/`` contains the controllers of the bundle (e.g. ``RandomController.php``);
