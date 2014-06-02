@@ -30,6 +30,7 @@
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
+  * :doc:`/cookbook/configuration/configuration_organization`
 
 * :doc:`/cookbook/console/index`
 

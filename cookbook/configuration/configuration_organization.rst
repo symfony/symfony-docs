@@ -1,5 +1,5 @@
 .. index::
-    single: Configuration, Environments
+    single: Configuration
 
 How to Organize Configuration Files
 ===================================
@@ -47,7 +47,7 @@ default Symfony Standard Edition follow this structure:
     ├─ vendor/
     └─ web/
 
-This default structure was choosen for its simplicity — one file per environment.
+This default structure was chosen for its simplicity — one file per environment.
 But as any other Symfony feature, you can customize it to better suit your needs.
 The following sections explain different ways to organize your configuration
 files. In order to simplify the examples, only the ``dev`` and ``prod``
@@ -101,38 +101,104 @@ method::
 Then, make sure that each ``config.yml`` file loads the rest of the configuration
 files, including the common files:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/dev/config.yml
-    imports:
-        - { resource: '../config.yml'  }
-        - { resource: 'parameters.yml' }
-        - { resource: 'security.yml'   }
+    .. code-block:: yaml
 
-    # ...
+        # app/config/dev/config.yml
+        imports:
+            - { resource: '../common/config.yml'  }
+            - { resource: 'parameters.yml' }
+            - { resource: 'security.yml'   }
 
-    # app/config/prod/config.yml
-    imports:
-        - { resource: '../config.yml'  }
-        - { resource: 'parameters.yml' }
-        - { resource: 'security.yml'   }
+        # ...
 
-    # ...
+    .. code-block:: xml
 
+        <!-- # app/config/dev/config.xml -->
+        <imports>
+            <import resource="../common/config.xml" />
+            <import resource="parameters.xml" />
+            <import resource="security.xml" />
+        </imports>
 
-    # app/config/common/config.yml
-    imports:
-        - { resource: 'parameters.yml' }
-        - { resource: 'security.yml'   }
+        <!-- ... -->
 
-    # ...
+    .. code-block:: php
 
+        // app/config/dev/config.php
+        $loader->import('../common/config.php');
+        $loader->import('parameters.php');
+        $loader->import('security.php');
+
+        // ...
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/prod/config.yml
+        imports:
+            - { resource: '../common/config.yml'  }
+            - { resource: 'parameters.yml' }
+            - { resource: 'security.yml'   }
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- # app/config/prod/config.xml -->
+        <imports>
+            <import resource="../common/config.xml" />
+            <import resource="parameters.xml" />
+            <import resource="security.xml" />
+        </imports>
+
+        <!-- ... -->
+
+    .. code-block:: php
+
+        // app/config/prod/config.php
+        $loader->import('../common/config.php');
+        $loader->import('parameters.php');
+        $loader->import('security.php');
+
+        // ...
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        imports:
+            - { resource: 'parameters.yml' }
+            - { resource: 'security.yml'   }
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- # app/config/config.xml -->
+        <imports>
+            <import resource="parameters.xml" />
+            <import resource="security.xml" />
+        </imports>
+
+        <!-- ... -->
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $loader->import('parameters.php');
+        $loader->import('security.php');
+
+        // ...
 
 Semantic Configuration Files
 ----------------------------
 
 A different organization strategy may be needed for complex applications with
-large configuration files. You could for instance create one file per bundle
+large configuration files. For instance, you could create one file per bundle
 and several files to define all the application services:
 
 .. code-block:: text
@@ -176,6 +242,10 @@ make Symfony aware of the new file organization::
         }
     }
 
+Following the same technique explained in the previous section, make sure to
+load the appropriate configuration files from each main file (``common.yml``,
+``dev.yml`` and ``prod.yml``).
+
 Advanced Tecniques
 ------------------
 
@@ -188,19 +258,50 @@ Mix and Match Configuration Formats
 Configuration files can import files defined with any other built-in configuration
 format (``.yml``, ``.xml``, ``.php``, ``.ini``):
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    imports:
-        - { resource: 'parameters.yml' }
-        - { resource: 'services.xml'   }
-        - { resource: 'security.yml'   }
-        - { resource: 'legacy.php'     }
+    .. code-block:: yaml
 
-    # ...
+        # app/config/config.yml
+        imports:
+            - { resource: 'parameters.yml' }
+            - { resource: 'services.xml'   }
+            - { resource: 'security.yml'   }
+            - { resource: 'legacy.php'     }
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- # app/config/config.xml -->
+        <imports>
+            <import resource="parameters.yml" />
+            <import resource="services.xml" />
+            <import resource="security.yml" />
+            <import resource="legacy.php" />
+        </imports>
+
+        <!-- ... -->
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $loader->import('parameters.yml');
+        $loader->import('services.xml');
+        $loader->import('security.yml');
+        $loader->import('legacy.php');
+
+        // ...
+
+.. caution::
+
+    The ``IniFileLoader`` parses the file contents using the
+    :phpfunction:`parse_ini_file` function, therefore, you can only set
+    parameters to string values. To set parameters to other data types
+    (e.g. boolean, integer, etc), the other loaders are recommended.
 
 If you use any other configuration format, you have to define your own loader
-class extending it from ``Symfony\Component\DependencyInjection\Loader\FileLoader``.
+class extending it from :class:`Symfony\\Component\\DependencyInjection\\Loader\\FileLoader`.
 When the configuration values are dynamic, you can use the PHP configuration
 file to execute your own logic. In addition, you can define your own services
 to load configuration from databases and web services.
@@ -212,14 +313,35 @@ Splitting configuration into lots of smaller files can rapidly become cumbersome
 when importing those files from the main configuration file. Avoid these problems
 by loading an entire directory:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    imports:
-        - { resource: 'bundles/'   }
-        - { resource: 'services/'  }
+    .. code-block:: yaml
 
-    # ...
+        # app/config/config.yml
+        imports:
+            - { resource: 'bundles/'   }
+            - { resource: 'services/'  }
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- # app/config/config.xml -->
+        <imports>
+            <import resource="bundles/" />
+            <import resource="services/" />
+        </imports>
+
+        <!-- ... -->
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $loader->import('bundles/');
+        $loader->import('services/');
+
+        // ...
+
 
 The Config component will look for recursively in the ``bundles/`` and ``services/``
 directories and it will load any supported file format (``.yml``, ``.xml``,
@@ -234,25 +356,70 @@ credentials for your website are stored in the ``/etc/sites/mysite.com/parameter
 Loading this file is as simple as indicating the full file path when importing
 it from any other configuration file:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    imports:
-        - { resource: 'parameters.yml'   }
-        - { resource: '/etc/sites/mysite.com/parameters.yml'  }
+    .. code-block:: yaml
 
-    # ...
+        # app/config/config.yml
+        imports:
+            - { resource: 'parameters.yml'   }
+            - { resource: '/etc/sites/mysite.com/parameters.yml'  }
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- # app/config/config.xml -->
+        <imports>
+            <import resource="parameters.yml" />
+            <import resource="/etc/sites/mysite.com/parameters.yml" />
+        </imports>
+
+        <!-- ... -->
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $loader->import('parameters.yml');
+        $loader->import('/etc/sites/mysite.com/parameters.yml');
+
+        // ...
 
 Most of the time, local developers won't have the same files that exist in the
 production servers. For that reason, the Config component provides the
 ``ignore_errors`` option to silently discard errors when the loaded file
 doesn't exist:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    imports:
-        - { resource: 'parameters.yml'   }
-        - { resource: '/etc/sites/mysite.com/parameters.yml', ignore_errors: true  }
+    .. code-block:: yaml
 
-    # ...
+        # app/config/config.yml
+        imports:
+            - { resource: 'parameters.yml'   }
+            - { resource: '/etc/sites/mysite.com/parameters.yml', ignore_errors: true  }
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- # app/config/config.xml -->
+        <imports>
+            <import resource="parameters.yml" />
+            <import resource="/etc/sites/mysite.com/parameters.yml" ignore-errors="true" />
+        </imports>
+
+        <!-- ... -->
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $loader->import('parameters.yml');
+        $loader->import('/etc/sites/mysite.com/parameters.yml', null, true);
+
+        // ...
+
+As you've seen, there are lots of ways to organize your configuration files. You
+can choose one of these or even create your own custom way of organizing the
+files. Don't feel limited by the standard edition that comes with Symfony. For even
+more customization, see ":doc:`dir_structure`".
