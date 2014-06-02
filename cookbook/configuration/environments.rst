@@ -318,8 +318,8 @@ However, each environment caches its own set of files:
     <your-project>/
     ├─ app/
     │  ├─ cache/
-    │  │  ├─ dev/   // cache directory for the *dev* environment
-    │  │  └─ prod/  // cache directory for the *prod* environment
+    │  │  ├─ dev/   # cache directory for the *dev* environment
+    │  │  └─ prod/  # cache directory for the *prod* environment
     │  ├─ ...
 
 Sometimes, when debugging, it may be helpful to inspect a cached file to
