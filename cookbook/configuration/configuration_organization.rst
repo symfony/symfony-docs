@@ -84,7 +84,8 @@ name as the environment:
     ├─ vendor/
     └─ web/
 
-To make it work, change the code of the ``registerContainerConfiguration()``
+To make this work, change the code of the
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
 method::
 
     // app/AppKernel.php
@@ -107,7 +108,7 @@ files, including the common files:
 
         # app/config/dev/config.yml
         imports:
-            - { resource: '../common/config.yml'  }
+            - { resource: '../common/config.yml' }
             - { resource: 'parameters.yml' }
             - { resource: 'security.yml'   }
 
@@ -222,7 +223,7 @@ Semantic Configuration Files
 
 A different organization strategy may be needed for complex applications with
 large configuration files. For instance, you could create one file per bundle
-and several files to define all the application services:
+and several files to define all application services:
 
 .. code-block:: text
 
@@ -473,5 +474,5 @@ doesn't exist:
 
 As you've seen, there are lots of ways to organize your configuration files. You
 can choose one of these or even create your own custom way of organizing the
-files. Don't feel limited by the standard edition that comes with Symfony. For even
+files. Don't feel limited by the Standard Edition that comes with Symfony. For even
 more customization, see ":doc:`dir_structure`".
