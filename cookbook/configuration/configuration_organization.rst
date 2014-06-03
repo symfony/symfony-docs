@@ -475,4 +475,4 @@ doesn't exist:
 As you've seen, there are lots of ways to organize your configuration files. You
 can choose one of these or even create your own custom way of organizing the
 files. Don't feel limited by the Standard Edition that comes with Symfony. For even
-more customization, see ":doc:`dir_structure`".
+more customization, see ":doc:`/cookbook/configuration/override_dir_structure`".
