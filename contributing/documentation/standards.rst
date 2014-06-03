@@ -81,6 +81,23 @@ Configuration examples should show all supported formats using
 * **Validation**: YAML, Annotations, XML, PHP
 * **Doctrine Mapping**: Annotations, YAML, XML, PHP
 
+Files and Directories
+~~~~~~~~~~~~~~~~~~~~~
+
+* When referencing directories, always add a trailing slash to avoid confusions
+  with regular files (e.g. *"execute the ``console`` script located at the ``app/``
+  directory"*).
+* You should include a leading dot in every file extension (e.g. *"``.ini`` files
+  are very limited compared to ``.xml`` files"*).
+* When you list a Symfony file/directory hierarchy, use ``your-project/`` as the
+  top level directory. E.g.
+
+      your-project/
+      ├─ app/
+      ├─ src/
+      ├─ vendor/
+      └─ ...
+
 Example
 ~~~~~~~
 
