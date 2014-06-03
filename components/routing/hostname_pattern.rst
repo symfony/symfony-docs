@@ -179,13 +179,9 @@ instance, if you want to match both ``m.example.com`` and
 .. sidebar:: Using Service Parameters
 
     You can also use service parameters if you do not want to hardcode the
-    hostname:
-
-    .. tip::
-
-       Make sure you also include a default option for the ``domain`` placeholder,
-       otherwise you need to include a domain value each time you generate
-       a URL using the route.
+    hostname. Make sure you also include a default option for the ``domain``
+    placeholder, otherwise you need to include a domain value each time you
+    generate a URL using the route.
 
     .. configuration-block::
 
