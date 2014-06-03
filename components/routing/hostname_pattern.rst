@@ -287,10 +287,10 @@ past url matching in your functional tests.
 
  .. code-block:: php
 
-     $crawler = $client->request(
-         'GET',
-         '/homepage',
-         array(),
-         array(),
-         array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
-     );
+    $crawler = $client->request(
+        'GET',
+        '/homepage',
+        array(),
+        array(),
+        array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
+    );
