@@ -87,8 +87,8 @@ Files and Directories
 * When referencing directories, always add a trailing slash to avoid confusions
   with regular files (e.g. *"execute the ``console`` script located at the ``app/``
   directory"*).
-* You should include a leading dot in every file extension (e.g. *"``.ini`` files
-  are very limited compared to ``.xml`` files"*).
+* When referencing file extensions explicitly, you should include a leading dot
+  for every extension (e.g. "*XML files use the ``.xml`` extension*").
 * When you list a Symfony file/directory hierarchy, use ``your-project/`` as the
   top level directory. E.g.
 
@@ -145,11 +145,11 @@ Language Standards
 * When referencing a hypothetical person, such as "a user with a session cookie", gender-neutral
   pronouns (they/their/them) should be used. For example, instead of:
 
-     * he or she, use they
-     * him or her, use them
-     * his or her, use their
-     * his or hers, use theirs
-     * himself or herself, use themselves
+   * he or she, use they
+   * him or her, use them
+   * his or her, use their
+   * his or hers, use theirs
+   * himself or herself, use themselves
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
