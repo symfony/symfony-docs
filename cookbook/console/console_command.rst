@@ -135,9 +135,8 @@ before translating contents::
         }
     }
 
-However for other services the solution might be more complex. You may even need
-to manually create a ``request`` service and then call the ``enterScope('request')``
-and the ``set('request', $request)`` methods.
+However for other services the solution might be more complex. For more details,
+see :doc:`/cookbook/service_container/scopes`.
 
 Testing Commands
 ----------------
