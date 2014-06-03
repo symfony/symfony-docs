@@ -338,54 +338,6 @@ When the configuration values are dynamic, you can use the PHP configuration
 file to execute your own logic. In addition, you can define your own services
 to load configuration from databases and web services.
 
-Directory Loading
-~~~~~~~~~~~~~~~~~
-
-Splitting configuration into lots of smaller files can rapidly become cumbersome
-when importing those files from the main configuration file. Avoid these problems
-by loading an entire directory:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        imports:
-            - { resource: 'bundles/'  }
-            - { resource: 'services/' }
-
-        # ...
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <imports>
-                <import resource="bundles/" />
-                <import resource="services/" />
-            </imports>
-
-            <!-- ... -->
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $loader->import('bundles/');
-        $loader->import('services/');
-
-        // ...
-
-
-The Config component will recursively look in the ``bundles/`` and ``services/``
-directories and it will load any supported file format (``.yml``, ``.xml``,
-``.php``, ``.ini``).
-
 Global Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
