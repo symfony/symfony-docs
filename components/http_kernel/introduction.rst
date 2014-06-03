@@ -570,8 +570,8 @@ each event has their own event object:
 .. _component-http-kernel-event-table:
 
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| **Name**          | ``KernelEvents`` **Constant** | **Argument passed to the listener**                                                 |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
+| Name              | ``KernelEvents`` Constant     | Argument passed to the listener                                                     |
++===================+===============================+=====================================================================================+
 | kernel.request    | ``KernelEvents::REQUEST``     | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    |
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 | kernel.controller | ``KernelEvents::CONTROLLER``  | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`               |
