@@ -176,7 +176,7 @@ instance, if you want to match both ``m.example.com`` and
 
         return $collection;
 
-.. sidebar:: Using Service Parameters
+.. tip::
 
     You can also use service parameters if you do not want to hardcode the
     hostname. Make sure you also include a default option for the ``domain``
