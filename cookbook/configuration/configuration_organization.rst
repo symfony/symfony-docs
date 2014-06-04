@@ -106,7 +106,8 @@ method::
     }
 
 Then, make sure that each ``config.yml`` file loads the rest of the configuration
-files, including the common files:
+files, including the common files. For instance, this would be the imports
+needed for the ``app/config/dev/config.yml`` file:
 
 .. configuration-block::
 
@@ -142,83 +143,6 @@ files, including the common files:
 
         // app/config/dev/config.php
         $loader->import('../common/config.php');
-        $loader->import('parameters.php');
-        $loader->import('security.php');
-
-        // ...
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/prod/config.yml
-        imports:
-            - { resource: '../common/config.yml' }
-            - { resource: 'parameters.yml' }
-            - { resource: 'security.yml' }
-
-        # ...
-
-    .. code-block:: xml
-
-        <!-- app/config/prod/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <imports>
-                <import resource="../common/config.xml" />
-                <import resource="parameters.xml" />
-                <import resource="security.xml" />
-            </imports>
-
-            <!-- ... -->
-        </container>
-
-        <!-- ... -->
-
-    .. code-block:: php
-
-        // app/config/prod/config.php
-        $loader->import('../common/config.php');
-        $loader->import('parameters.php');
-        $loader->import('security.php');
-
-        // ...
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        imports:
-            - { resource: 'parameters.yml' }
-            - { resource: 'security.yml' }
-
-        # ...
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <imports>
-                <import resource="parameters.xml" />
-                <import resource="security.xml" />
-            </imports>
-
-            <!-- ... -->
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
         $loader->import('parameters.php');
         $loader->import('security.php');
 
