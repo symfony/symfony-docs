@@ -179,9 +179,7 @@ instance, if you want to match both ``m.example.com`` and
 .. tip::
 
     You can also use service parameters if you do not want to hardcode the
-    hostname. Make sure you also include a default option for the ``domain``
-    placeholder, otherwise you need to include a domain value each time you
-    generate a URL using the route.
+    hostname:
 
     .. configuration-block::
 
@@ -237,6 +235,12 @@ instance, if you want to match both ``m.example.com`` and
             )));
 
             return $collection;
+
+.. tip::
+
+    Make sure you also include a default option for the ``domain`` placeholder,
+    otherwise you need to include a domain value each time you generate
+    a URL using the route.
 
 .. _component-routing-host-imported:
 
