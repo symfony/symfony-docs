@@ -416,7 +416,7 @@ doesn't replace your existing methods).
     * generate getters and setters;
 
     * generate repository classes configured with the
-        ``@ORM\Entity(repositoryClass="...")`` annotation;
+      ``@ORM\Entity(repositoryClass="...")`` annotation;
 
     * generate the appropriate constructor for 1:n and n:m relations.
 
