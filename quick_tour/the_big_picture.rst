@@ -18,7 +18,7 @@ directory:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition myproject/ ~2.4
+    $ composer create-project symfony/framework-standard-edition myproject/ ~2.5
 
 .. note::
 
@@ -35,9 +35,25 @@ directory:
 
 Beware that the first time you install Symfony2, it may take a few minutes to
 download all its components. At the end of the installation process, the
-installer will ask you to provide some configuration options for the Symfony2
-project. For this first project you can safely ignore this configuration by
-pressing the ``<Enter>`` key repeatedly.
+installer will ask you four questions:
+
+1. **Would you like to use Symfony 3 directory structure? [y/N]** The upcoming
+   Symfony 3 version will modify the default directory structure for Symfony
+   applications. If you want to test drive this new structure, type ``y``.
+   In order to follow this tutorial, press the ``<Enter>`` key to accept the
+   default ``N`` value and to keep using the default Symfony2 structure.
+2. **Would you like to install Acme demo bundle? [y/N]** Symfony versions prior
+   to 2.5 included a demo application to test drive some features of the
+   framework. However, as this demo application is only useful for newcomers,
+   installing it is now optional. In order to follow this tutorial, type the
+   ``y`` key to install the demo application.
+3. **Some parameters are missing. Please provide them.** Symfony2 asks you for
+   the value of all the configuration parameters. For this first project,
+   you can safely ignore this configuration by pressing the ``<Enter>`` key
+   repeatedly.
+4. **Do you want to remove the existing VCS (.git, .svn..) history? [Y,n]?**
+   The development history of large projects such as Symfony can take a lot of
+   disk space. Press the ``<Enter>`` key to safely remove all this history data.
 
 Running Symfony2
 ----------------
