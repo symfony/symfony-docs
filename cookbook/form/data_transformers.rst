@@ -189,21 +189,21 @@ types of underlying data.
 .. image:: /images/cookbook/form/DataTransformersTypes.png
    :align: center
 
-In any form, the 3 different types of data are:
+In any form, the three different types of data are:
 
-1) **Model data** - This is the data in the format used in your application
-(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
-you're dealing with the "model" data.
+#. **Model data** - This is the data in the format used in your application
+   (e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
+   you're dealing with the "model" data.
 
-2) **Norm Data** - This is a normalized version of your data, and is commonly
-the same as your "model" data (though not in our example). It's not commonly
-used directly.
+#. **Norm Data** - This is a normalized version of your data, and is commonly
+   the same as your "model" data (though not in our example). It's not commonly
+   used directly.
 
-3) **View Data** - This is the format that's used to fill in the form fields
-themselves. It's also the format in which the user will submit the data. When
-you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
+#. **View Data** - This is the format that's used to fill in the form fields
+   themselves. It's also the format in which the user will submit the data. When
+   you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
 
-The 2 different types of transformers help convert to and from each of these
+The two different types of transformers help convert to and from each of these
 types of data:
 
 **Model transformers**:
