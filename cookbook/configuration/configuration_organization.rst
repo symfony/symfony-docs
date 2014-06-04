@@ -14,6 +14,9 @@ executes the ``registerContainerConfiguration()`` method of the ``AppKernel``
 class::
 
     // app/AppKernel.php
+    use Symfony\Component\HttpKernel\Kernel;
+    use Symfony\Component\Config\Loader\LoaderInterface;
+
     class AppKernel extends Kernel
     {
         // ...
@@ -89,6 +92,9 @@ To make this work, change the code of the
 method::
 
     // app/AppKernel.php
+    use Symfony\Component\HttpKernel\Kernel;
+    use Symfony\Component\Config\Loader\LoaderInterface;
+
     class AppKernel extends Kernel
     {
         // ...
@@ -110,7 +116,7 @@ files, including the common files:
         imports:
             - { resource: '../common/config.yml' }
             - { resource: 'parameters.yml' }
-            - { resource: 'security.yml'   }
+            - { resource: 'security.yml' }
 
         # ...
 
@@ -147,9 +153,9 @@ files, including the common files:
 
         # app/config/prod/config.yml
         imports:
-            - { resource: '../common/config.yml'  }
+            - { resource: '../common/config.yml' }
             - { resource: 'parameters.yml' }
-            - { resource: 'security.yml'   }
+            - { resource: 'security.yml' }
 
         # ...
 
@@ -189,7 +195,7 @@ files, including the common files:
         # app/config/config.yml
         imports:
             - { resource: 'parameters.yml' }
-            - { resource: 'security.yml'   }
+            - { resource: 'security.yml' }
 
         # ...
 
@@ -256,6 +262,9 @@ Again, change the code of the ``registerContainerConfiguration()`` method to
 make Symfony aware of the new file organization::
 
     // app/AppKernel.php
+    use Symfony\Component\HttpKernel\Kernel;
+    use Symfony\Component\Config\Loader\LoaderInterface;
+
     class AppKernel extends Kernel
     {
         // ...
@@ -290,9 +299,9 @@ format (``.yml``, ``.xml``, ``.php``, ``.ini``):
         # app/config/config.yml
         imports:
             - { resource: 'parameters.yml' }
-            - { resource: 'services.xml'   }
-            - { resource: 'security.yml'   }
-            - { resource: 'legacy.php'     }
+            - { resource: 'services.xml' }
+            - { resource: 'security.yml' }
+            - { resource: 'legacy.php' }
 
         # ...
 
@@ -328,7 +337,7 @@ format (``.yml``, ``.xml``, ``.php``, ``.ini``):
 .. caution::
 
     The ``IniFileLoader`` parses the file contents using the
-    :phpfunction:`parse_ini_file` function, therefore, you can only set
+    :phpfunction:`parse_ini_file` function. Therefore, you can only set
     parameters to string values. Use one of the other loaders if you want
     to use other data types (e.g. boolean, integer, etc.).
 
@@ -336,16 +345,16 @@ If you use any other configuration format, you have to define your own loader
 class extending it from :class:`Symfony\\Component\\DependencyInjection\\Loader\\FileLoader`.
 When the configuration values are dynamic, you can use the PHP configuration
 file to execute your own logic. In addition, you can define your own services
-to load configuration from databases and web services.
+to load configurations from databases or web services.
 
 Global Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some system administrators may prefer to store sensitive parameters in files
 outside the project directory. Imagine that the database credentials for your
-website are stored in the ``/etc/sites/mysite.com/parameters.yml``. Loading this
-file is as simple as indicating the full file path when importing it from any
-other configuration file:
+website are stored in the ``/etc/sites/mysite.com/parameters.yml`` file. Loading
+this file is as simple as indicating the full file path when importing it from
+any other configuration file:
 
 .. configuration-block::
 
