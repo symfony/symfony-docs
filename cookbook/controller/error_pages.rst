@@ -38,7 +38,7 @@ shown to the end-user.
     pages for arbitrary HTTP status codes even with 
     ``kernel.debug`` set to ``true``.
 
-Override Error templates
+Override Error Templates
 ------------------------
 
 All of the error templates live inside the TwigBundle. To override the
