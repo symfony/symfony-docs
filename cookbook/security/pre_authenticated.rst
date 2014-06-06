@@ -1,14 +1,14 @@
 .. index::
    single: Security; Pre authenticated providers
 
-Using pre authenticated security firewalls
+Using pre Authenticated Security Firewalls
 ==========================================
 
 A lot of authentication modules are already provided by some webservers,
 including Apache. These modules generally set some environment variables
-that can be used to know which user is accessing your application. Out of the 
-box, Symfony supports most authentication mecanisms.
-These are called *pre authenticated* requests because the user is already
+that can be used to determine which user is accessing your application. Out of the 
+box, Symfony supports most authentication mechanisms.
+These requests are called *pre authenticated* requests because the user is already
 authenticated when reaching your application.
 
 .. note::
