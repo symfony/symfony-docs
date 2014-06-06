@@ -55,7 +55,7 @@ instance::
 
     $progress = new ProgressBar($output);
 
-The progress will then be displayed as a throbber::
+The progress will then be displayed as a throbber:
 
 .. code-block:: text
 
