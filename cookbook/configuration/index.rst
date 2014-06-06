@@ -10,6 +10,7 @@ Configuration
     front_controllers_and_kernel
     external_parameters
     pdo_session_storage
+    dbal_session_storage
     apache_router
     web_server_configuration
     configuration_organization
