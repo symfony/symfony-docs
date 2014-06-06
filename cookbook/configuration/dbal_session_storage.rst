@@ -70,7 +70,7 @@ You can pass a second parameter to the constructor to set the table name.
 * ``db_time_col``: The name of the time column in your session table (INTEGER)
 
 Configuring your Database Connection Information
---------------------------------------------
+-------------------------------------------------
 
 With the given configuration, the database connection settings are the ones you've
 set for the default doctrine connection. This is OK if you're storing everything 
@@ -79,7 +79,7 @@ to configure a new doctrine connection.
 
 
 Table structure and example SQL Statements
-----------------------
+------------------------------------------
 Because of the way this is implemented in the php class you can only configure the table name (The default is sessions)
 Here are a couple of SQL statements to help you create a table that will work with this
 MySQL
