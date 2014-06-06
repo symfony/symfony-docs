@@ -241,17 +241,17 @@ will be called after another event - ``kernel.controller`` - is dispatched.
     information is typically placed on the ``Request`` via the ``RouterListener``).
     This string is then transformed into a PHP callable by doing the following:
 
-    #. The ``AcmeDemoBundle:Default:index`` format of the ``_controller`` key
+    a) The ``AcmeDemoBundle:Default:index`` format of the ``_controller`` key
        is changed to another string that contains the full class and method
        name of the controller by following the convention used in Symfony2 - e.g.
        ``Acme\DemoBundle\Controller\DefaultController::indexAction``. This transformation
        is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony2 Framework.
 
-    #. A new instance of your controller class is instantiated with no
+    b) A new instance of your controller class is instantiated with no
        constructor arguments.
 
-    #. If the controller implements :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`,
+    c) If the controller implements :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`,
        ``setContainer`` is called on the controller object and the container
        is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony2 Framework.
@@ -324,13 +324,13 @@ of arguments that should be passed when executing that callable.
     It then iterates over each of these arguments and uses the following tricks
     to determine which value should be passed for each argument:
 
-    #. If the ``Request`` attributes bag contains a key that matches the name
+    a) If the ``Request`` attributes bag contains a key that matches the name
        of the argument, that value is used. For example, if the first argument
        to a controller is ``$slug``, and there is a ``slug`` key in the ``Request``
        ``attributes`` bag, that value is used (and typically this value came
        from the ``RouterListener``).
 
-    #. If the argument in the controller is type-hinted with Symfony's
+    b) If the argument in the controller is type-hinted with Symfony's
        :class:`Symfony\\Component\\HttpFoundation\\Request` object, then the
        ``Request`` is passed in as the value.
 
@@ -527,19 +527,19 @@ below for more details).
     and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`.
     The listener has several goals:
 
-    #. The thrown exception is converted into a
+    1) The thrown exception is converted into a
        :class:`Symfony\\Component\\HttpKernel\\Exception\\FlattenException`
        object, which contains all the information about the request, but which
        can be printed and serialized.
 
-    #. If the original exception implements
+    2) If the original exception implements
        :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
        then ``getStatusCode`` and ``getHeaders`` are called on the exception
        and used to populate the headers and status code of the ``FlattenException``
        object. The idea is that these are used in the next step when creating
        the final response.
 
-    #. A controller is executed and passed the flattened exception. The exact
+    3) A controller is executed and passed the flattened exception. The exact
        controller to render is passed as a constructor argument to this listener.
        This controller will return the final ``Response`` for this error page.
 

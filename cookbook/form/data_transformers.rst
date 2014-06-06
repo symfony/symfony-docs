@@ -191,15 +191,15 @@ types of underlying data.
 
 In any form, the three different types of data are:
 
-#. **Model data** - This is the data in the format used in your application
+1) **Model data** - This is the data in the format used in your application
    (e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
    you're dealing with the "model" data.
 
-#. **Norm Data** - This is a normalized version of your data, and is commonly
+2) **Norm Data** - This is a normalized version of your data, and is commonly
    the same as your "model" data (though not in our example). It's not commonly
    used directly.
 
-#. **View Data** - This is the format that's used to fill in the form fields
+3) **View Data** - This is the format that's used to fill in the form fields
    themselves. It's also the format in which the user will submit the data. When
    you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
 

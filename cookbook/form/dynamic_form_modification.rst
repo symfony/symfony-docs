@@ -7,18 +7,18 @@ How to Dynamically Modify Forms Using Form Events
 Often times, a form can't be created statically. In this entry, you'll learn
 how to customize your form based on three common use-cases:
 
-#. :ref:`cookbook-form-events-underlying-data`
+1) :ref:`cookbook-form-events-underlying-data`
 
    Example: you have a "Product" form and need to modify/add/remove a field
     based on the data on the underlying Product being edited.
 
-#. :ref:`cookbook-form-events-user-data`
+2) :ref:`cookbook-form-events-user-data`
 
    Example: you create a "Friend Message" form and need to build a drop-down
    that contains only users that are friends with the *current* authenticated
    user.
 
-#. :ref:`cookbook-form-events-submitted-data`
+3) :ref:`cookbook-form-events-submitted-data`
 
    Example: on a registration form, you have a "country" field and a "state"
    field which should populate dynamically based on the value in the "country"
