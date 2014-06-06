@@ -16,10 +16,11 @@ control you need:
 
 1. Customize the error templates of the different error pages;
 
-2. Replace the default exception controller ``twig.controller.exception:showAction``
+2. Replace the default exception controller ``twig.controller.exception:showAction``.
 
 The default ExceptionController
 -------------------------------
+
 The default ``ExceptionController`` will either display an
 *exception* or *error* page, depending on the setting of the ``kernel.debug``
 flag. While *exception* pages give you a lot of helpful
@@ -37,7 +38,7 @@ shown to the end-user.
     pages for arbitrary HTTP status codes even with 
     ``kernel.debug`` set to ``true``.
 
-Override error templates
+Override Error templates
 ------------------------
 
 All of the error templates live inside the TwigBundle. To override the
@@ -124,7 +125,7 @@ Symfony uses the following algorithm to determine which template to use:
 
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
 
-Replace the default exception controller
+Replace the default Exception Controller
 ----------------------------------------
 
 Replace the default exception controller ``twig.controller.exception:showAction``
