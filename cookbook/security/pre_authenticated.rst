@@ -21,15 +21,14 @@ authenticated when reaching your application.
     * :doc:`/cookbook/security/entity_provider`
     * :doc:`/cookbook/security/custom_provider`
 
-X.509 Client certificate authentication
+X.509 Client Certificate Authentication
 ---------------------------------------
 
-When using client certificate, your webserver is doing all the authentication
-process itself. For Apache, on your VirtualHost, you may use the 
+When using client certificates, your webserver is doing all the authentication
+process itself. With Apache, for example, you would use the
 ``SSLVerifyClient Require`` directive.
 
-On your Symfony2 application security configuration, you can enable the x509
-authentication firewall:
+Enable the x509 authentication for a particular firewall in the security configuration:
 
 .. configuration-block::
 
@@ -66,8 +65,8 @@ authentication firewall:
             ),
         ));
 
-By default, the firewall will provide the ``SSL_CLIENT_S_DN_Email`` variable to
-your user provider, and set the ``SSL_CLIENT_S_DN`` as credentials in the 
+By default, the firewall provides the ``SSL_CLIENT_S_DN_Email`` variable to
+the user provider, and sets the ``SSL_CLIENT_S_DN`` as credentials in the 
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\PreAuthenticatedToken`.
-You can override these by setting respectively the ``user`` and the ``credentials`` keys
-in the x509 firewall configuration.
+You can override these by setting the ``user`` and the ``credentials`` keys
+in the x509 firewall configuration respectively.
