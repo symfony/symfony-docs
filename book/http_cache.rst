@@ -1034,7 +1034,7 @@ Cache Invalidation
 ------------------
 
     "There are only two hard things in Computer Science: cache invalidation
-    and naming things." --Phil Karlton
+    and naming things." -- Phil Karlton
 
 You should never need to invalidate cached data because invalidation is already
 taken into account natively in the HTTP cache models. If you use validation,

@@ -242,22 +242,22 @@ will be called after another event - ``kernel.controller`` - is dispatched.
     This string is then transformed into a PHP callable by doing the following:
 
     a) The ``AcmeDemoBundle:Default:index`` format of the ``_controller`` key
-    is changed to another string that contains the full class and method
-    name of the controller by following the convention used in Symfony2 - e.g.
-    ``Acme\DemoBundle\Controller\DefaultController::indexAction``. This transformation
-    is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
-    sub-class used by the Symfony2 Framework.
+       is changed to another string that contains the full class and method
+       name of the controller by following the convention used in Symfony2 - e.g.
+       ``Acme\DemoBundle\Controller\DefaultController::indexAction``. This transformation
+       is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
+       sub-class used by the Symfony2 Framework.
 
     b) A new instance of your controller class is instantiated with no
-    constructor arguments.
+       constructor arguments.
 
     c) If the controller implements :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`,
-    ``setContainer`` is called on the controller object and the container
-    is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
-    sub-class used by the Symfony2 Framework.
+       ``setContainer`` is called on the controller object and the container
+       is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
+       sub-class used by the Symfony2 Framework.
 
-    There are also a few other variations on the above process (e.g. if
-    you're registering your controllers as services).
+       There are also a few other variations on the above process (e.g. if
+       you're registering your controllers as services).
 
 .. _component-http-kernel-kernel-controller:
 
@@ -325,14 +325,14 @@ of arguments that should be passed when executing that callable.
     to determine which value should be passed for each argument:
 
     a) If the ``Request`` attributes bag contains a key that matches the name
-    of the argument, that value is used. For example, if the first argument
-    to a controller is ``$slug``, and there is a ``slug`` key in the ``Request``
-    ``attributes`` bag, that value is used (and typically this value came
-    from the ``RouterListener``).
+       of the argument, that value is used. For example, if the first argument
+       to a controller is ``$slug``, and there is a ``slug`` key in the ``Request``
+       ``attributes`` bag, that value is used (and typically this value came
+       from the ``RouterListener``).
 
     b) If the argument in the controller is type-hinted with Symfony's
-    :class:`Symfony\\Component\\HttpFoundation\\Request` object, then the
-    ``Request`` is passed in as the value.
+       :class:`Symfony\\Component\\HttpFoundation\\Request` object, then the
+       ``Request`` is passed in as the value.
 
 .. _component-http-kernel-calling-controller:
 
@@ -528,20 +528,20 @@ below for more details).
     The listener has several goals:
 
     1) The thrown exception is converted into a
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\FlattenException`
-    object, which contains all the information about the request, but which
-    can be printed and serialized.
+       :class:`Symfony\\Component\\HttpKernel\\Exception\\FlattenException`
+       object, which contains all the information about the request, but which
+       can be printed and serialized.
 
     2) If the original exception implements
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
-    then ``getStatusCode`` and ``getHeaders`` are called on the exception
-    and used to populate the headers and status code of the ``FlattenException``
-    object. The idea is that these are used in the next step when creating
-    the final response.
+       :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
+       then ``getStatusCode`` and ``getHeaders`` are called on the exception
+       and used to populate the headers and status code of the ``FlattenException``
+       object. The idea is that these are used in the next step when creating
+       the final response.
 
     3) A controller is executed and passed the flattened exception. The exact
-    controller to render is passed as a constructor argument to this listener.
-    This controller will return the final ``Response`` for this error page.
+       controller to render is passed as a constructor argument to this listener.
+       This controller will return the final ``Response`` for this error page.
 
     **ExceptionListener in Security**
 
@@ -570,8 +570,8 @@ each event has their own event object:
 .. _component-http-kernel-event-table:
 
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
-| **Name**          | ``KernelEvents`` **Constant** | **Argument passed to the listener**                                                 |
-+-------------------+-------------------------------+-------------------------------------------------------------------------------------+
+| Name              | ``KernelEvents`` Constant     | Argument passed to the listener                                                     |
++===================+===============================+=====================================================================================+
 | kernel.request    | ``KernelEvents::REQUEST``     | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`                    |
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 | kernel.controller | ``KernelEvents::CONTROLLER``  | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`               |

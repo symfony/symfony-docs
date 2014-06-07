@@ -9,20 +9,20 @@ how to customize your form based on three common use-cases:
 
 1) :ref:`cookbook-form-events-underlying-data`
 
-Example: you have a "Product" form and need to modify/add/remove a field
-based on the data on the underlying Product being edited.
+   Example: you have a "Product" form and need to modify/add/remove a field
+    based on the data on the underlying Product being edited.
 
 2) :ref:`cookbook-form-events-user-data`
 
-Example: you create a "Friend Message" form and need to build a drop-down
-that contains only users that are friends with the *current* authenticated
-user.
+   Example: you create a "Friend Message" form and need to build a drop-down
+   that contains only users that are friends with the *current* authenticated
+   user.
 
 3) :ref:`cookbook-form-events-submitted-data`
 
-Example: on a registration form, you have a "country" field and a "state"
-field which should populate dynamically based on the value in the "country"
-field.
+   Example: on a registration form, you have a "country" field and a "state"
+   field which should populate dynamically based on the value in the "country"
+   field.
 
 If you wish to learn more about the basics behind form events, you can
 take a look at the :doc:`Form Events </components/form/form_events>`

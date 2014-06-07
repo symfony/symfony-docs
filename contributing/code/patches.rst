@@ -310,23 +310,23 @@ translation files, use the shorter version of the check-list:
 
 Some answers to the questions trigger some more requirements:
 
- * If you answer yes to "Bug fix?", check if the bug is already listed in the
-   Symfony issues and reference it/them in "Fixed tickets";
+* If you answer yes to "Bug fix?", check if the bug is already listed in the
+  Symfony issues and reference it/them in "Fixed tickets";
 
- * If you answer yes to "New feature?", you must submit a pull request to the
-   documentation and reference it under the "Doc PR" section;
+* If you answer yes to "New feature?", you must submit a pull request to the
+  documentation and reference it under the "Doc PR" section;
 
- * If you answer yes to "BC breaks?", the patch must contain updates to the
-   relevant ``CHANGELOG`` and ``UPGRADE`` files;
+* If you answer yes to "BC breaks?", the patch must contain updates to the
+  relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
- * If you answer yes to "Deprecations?", the patch must contain updates to the
-   relevant ``CHANGELOG`` and ``UPGRADE`` files;
+* If you answer yes to "Deprecations?", the patch must contain updates to the
+  relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
- * If you answer no to "Tests pass", you must add an item to a todo-list with
-   the actions that must be done to fix the tests;
+* If you answer no to "Tests pass", you must add an item to a todo-list with
+  the actions that must be done to fix the tests;
 
- * If the "license" is not MIT, just don't submit the pull request as it won't
-   be accepted anyway.
+* If the "license" is not MIT, just don't submit the pull request as it won't
+  be accepted anyway.
 
 If some of the previous requirements are not met, create a todo-list and add
 relevant items:
