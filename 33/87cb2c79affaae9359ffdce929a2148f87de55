@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-26T08:02:36Z
+
+The Quick Tour guide assumes that you used the `server:run` command. When you do that, the `app_dev.php` part should be omitted from the URL. So this change is incorrect.
+
+However, since you didn't knew this, do we have to clarify this a bit more in the quick tour? Or did you just skipped the "Running Symfony2" section?
+
+---------------------------------------------------------------------------
+
+by parthasarathigk at 2014-05-26T08:12:36Z
+
+Ok. That sounds good.
+It's bit confusing when we are looking at each part of the URL and there is no mention of app_dev.php in the URL part. A quick note may help the readers.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-05-30T16:08:17Z
+
+@WouterJ Hmm, we *do* mention `app_dev.php` right below this actually, so there is a problem. Also, since putting `app_dev.php` in there still works, perhaps we should default and include this?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-30T17:11:32Z
+
+>> since putting app_dev.php in there still works, perhaps we should default and include this?
+
+Does it?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-05-31T09:53:51Z
+
+Yes, it does. I just tried it out.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-31T10:04:37Z
+
+Ok, :+1: then! Thanks @xabbuh and @parthasarathigk !
