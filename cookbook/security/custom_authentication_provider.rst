@@ -287,8 +287,8 @@ The Factory
 -----------
 
 You have created a custom token, custom listener, and custom provider. Now
-you need to tie them all together. How do you make your provider available
-to your security configuration? The answer is by using a *factory*. A factory
+you need to tie them all together. How do you make a unique provider available
+for every firewall? The answer is by using a *factory*. A factory
 is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
