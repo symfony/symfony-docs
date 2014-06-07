@@ -631,7 +631,7 @@ Once you have your repository, you have access to all sorts of helpful methods::
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
 to easily fetch objects based on multiple conditions::
 
-    // query for one product matching be name and price
+    // query for one product matching by name and price
     $product = $repository->findOneBy(
         array('name' => 'foo', 'price' => 19.99)
     );
