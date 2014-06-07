@@ -195,11 +195,11 @@ field is optional but must be a valid email if supplied, you can do the followin
                     - Collection:
                         fields:
                             personal_email:
-                                - Collection\Required
+                                - Required
                                     - NotBlank: ~
                                     - Email: ~
                             alternate_email:
-                                - Collection\Optional:
+                                - Optional:
                                     - Email: ~
 
     .. code-block:: php-annotations
@@ -237,13 +237,13 @@ field is optional but must be a valid email if supplied, you can do the followin
                     <constraint name="Collection">
                         <option name="fields">
                             <value key="personal_email">
-                                <constraint name="Collection\Required">
+                                <constraint name="Required">
                                     <constraint name="NotBlank" />
                                     <constraint name="Email" />
                                 </constraint>
                             </value>
                             <value key="alternate_email">
-                                <constraint name="Collection\Optional">
+                                <constraint name="Optional">
                                     <constraint name="Email" />
                                 </constraint>
                             </value>

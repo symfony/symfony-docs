@@ -173,16 +173,10 @@ instance, if you want to match both ``m.example.com`` and
 
         return $collection;
 
-.. sidebar:: Using Service Parameters
+.. tip::
 
     You can also use service parameters if you do not want to hardcode the
     hostname:
-
-    .. tip::
-
-       Make sure you also include a default option for the ``domain`` placeholder,
-       otherwise you need to include a domain value each time you generate
-       a URL using the route.
 
     .. configuration-block::
 
@@ -209,9 +203,9 @@ instance, if you want to match both ``m.example.com`` and
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-                <route id="mobile_homepage" path="/" host="m.example.com">
+                <route id="mobile_homepage" path="/" host="m.{domain}">
                     <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
-                    <default key="domain">%domain%</requirement>
+                    <default key="domain">%domain%</default>
                     <requirement key="domain">%domain%</requirement>
                 </route>
 
@@ -238,6 +232,12 @@ instance, if you want to match both ``m.example.com`` and
             )));
 
             return $collection;
+
+.. tip::
+
+    Make sure you also include a default option for the ``domain`` placeholder,
+    otherwise you need to include a domain value each time you generate
+    a URL using the route.
 
 .. _component-routing-host-imported:
 
@@ -286,12 +286,12 @@ Testing your Controllers
 You need to set the Host HTTP header on your request objects if you want to get
 past url matching in your functional tests.
 
- .. code-block:: php
+.. code-block:: php
 
-     $crawler = $client->request(
-         'GET',
-         '/homepage',
-         array(),
-         array(),
-         array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
-     );
+    $crawler = $client->request(
+        'GET',
+        '/homepage',
+        array(),
+        array(),
+        array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
+    );

@@ -190,11 +190,11 @@ security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
 interface forces the class to implement the five following methods:
 
-* ``getRoles()``,
-* ``getPassword()``,
-* ``getSalt()``,
-* ``getUsername()``,
-* ``eraseCredentials()``
+* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getRoles`
+* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getPassword`
+* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getSalt`
+* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername`
+* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredential`
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
@@ -377,11 +377,14 @@ entity class to benefit from simple and advanced authentication behaviors.
 The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
 interface adds four extra methods to validate the account status:
 
-* ``isAccountNonExpired()`` checks whether the user's account has expired,
-* ``isAccountNonLocked()`` checks whether the user is locked,
-* ``isCredentialsNonExpired()`` checks whether the user's credentials (password)
-  has expired,
-* ``isEnabled()`` checks whether the user is enabled.
+* :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonExpired`
+  checks whether the user's account has expired,
+* :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonLocked`
+   checks whether the user is locked,
+* :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isCredentialsNonExpired`
+  checks whether the user's credentials (password) has expired,
+* :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isEnabled`
+  checks whether the user is enabled.
 
 For this example, the first three methods will return ``true`` whereas the
 ``isEnabled()`` method will return the boolean value in the ``isActive`` field.

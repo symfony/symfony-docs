@@ -75,7 +75,7 @@ to web designers and, in several ways, more powerful than PHP templates:
         </body>
     </html>
 
-Twig defines two types of special syntax:
+Twig defines three types of special syntax:
 
 * ``{{ ... }}``: "Says something": prints a variable or the result of an
   expression to the template;
@@ -83,11 +83,9 @@ Twig defines two types of special syntax:
 * ``{% ... %}``: "Does something": a **tag** that controls the logic of the
   template; it is used to execute statements such as for-loops for example.
 
-.. note::
-
-   There is a third syntax used for creating comments: ``{# this is a comment #}``.
-   This syntax can be used across multiple lines like the PHP-equivalent
-   ``/* comment */`` syntax.
+* ``{# ... #}``: "Comment something": it's the equivalent of the PHP
+  ``/* comment */`` syntax. It's used to add single or multi-line comments.
+  The content of the comments isn't included in the rendered pages.
 
 Twig also contains **filters**, which modify content before being rendered.
 The following makes the ``title`` variable all uppercase before rendering
@@ -394,14 +392,14 @@ lives in a specific location:
   template for a specific page. The three parts of the string, each separated
   by a colon (``:``), mean the following:
 
-    * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
-      ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
+  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
+    ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
 
-    * ``Blog``: (*controller*) indicates that the template lives inside the
-      ``Blog`` subdirectory of ``Resources/views``;
+  * ``Blog``: (*controller*) indicates that the template lives inside the
+    ``Blog`` subdirectory of ``Resources/views``;
 
-    * ``index.html.twig``: (*template*) the actual name of the file is
-      ``index.html.twig``.
+  * ``index.html.twig``: (*template*) the actual name of the file is
+    ``index.html.twig``.
 
   Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.

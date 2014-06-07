@@ -413,12 +413,12 @@ doesn't replace your existing methods).
 
     With the ``doctrine:generate:entities`` command you can:
 
-        * generate getters and setters;
+    * generate getters and setters;
 
-        * generate repository classes configured with the
-            ``@ORM\Entity(repositoryClass="...")`` annotation;
+    * generate repository classes configured with the
+      ``@ORM\Entity(repositoryClass="...")`` annotation;
 
-        * generate the appropriate constructor for 1:n and n:m relations.
+    * generate the appropriate constructor for 1:n and n:m relations.
 
     The ``doctrine:generate:entities`` command saves a backup of the original
     ``Product.php`` named ``Product.php~``. In some cases, the presence of
@@ -631,7 +631,7 @@ Once you have your repository, you have access to all sorts of helpful methods::
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
 to easily fetch objects based on multiple conditions::
 
-    // query for one product matching be name and price
+    // query for one product matching by name and price
     $product = $repository->findOneBy(
         array('name' => 'foo', 'price' => 19.99)
     );

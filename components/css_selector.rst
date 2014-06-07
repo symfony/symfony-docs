@@ -55,7 +55,7 @@ This gives the following output:
 
 .. code-block:: text
 
-    descendant-or-self::div[contains(concat(' ',normalize-space(@class), ' '), ' item ')]/h4/a
+    descendant-or-self::div[@class and contains(concat(' ',normalize-space(@class), ' '), ' item ')]/h4/a
 
 You can use this expression with, for instance, :phpclass:`DOMXPath` or
 :phpclass:`SimpleXMLElement` to find elements in a document.
@@ -76,8 +76,8 @@ web-browser.
 
 * link-state selectors: ``:link``, ``:visited``, ``:target``
 * selectors based on user action: ``:hover``, ``:focus``, ``:active``
-* UI-state selectors: ``:enabled``, ``:disabled``, ``:indeterminate``
-  (however, ``:checked`` and ``:unchecked`` are available)
+* UI-state selectors: ``:invalid``, ``:indeterminate`` (however, ``:enabled``, 
+  ``:disabled``, ``:checked`` and ``:unchecked`` are available)
 
 Pseudo-elements (``:before``, ``:after``, ``:first-line``,
 ``:first-letter``) are not supported because they select portions of text
@@ -85,8 +85,6 @@ rather than elements.
 
 Several pseudo-classes are not yet supported:
 
-* ``:lang(language)``
-* ``root``
 * ``*:first-of-type``, ``*:last-of-type``, ``*:nth-of-type``,
   ``*:nth-last-of-type``, ``*:only-of-type``. (These work with an element
   name (e.g. ``li:first-of-type``) but not with ``*``.
