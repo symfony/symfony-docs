@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-06-04T20:16:35Z
+
+I prefer not to add more commits to this PR to avoid getting too big. If you agree with the changes/fixes, please merge it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-04T20:25:29Z
+
+Do far, I think it looks fine. Besides, you could squash your commits if you feel that they get somewhat messy.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-04T21:01:12Z
+
+Did you test all lists that were changed to #. in this PR? That syntax can be buggy sometimes
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-06-04T21:05:36Z
+
+@WouterJ yes, I checked the three lists. I even checked them with the GitHub renderer and everything seems fine.
