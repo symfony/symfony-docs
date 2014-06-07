@@ -5,7 +5,7 @@
 The Stopwatch Component
 =======================
 
-    Stopwatch component provides a way to profile code.
+    The Stopwatch component provides a way to profile code.
 
 .. versionadded:: 2.2
     The Stopwatch component was introduced in Symfony 2.2. Previously, the
