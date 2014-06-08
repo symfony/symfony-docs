@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-28T07:48:02Z
+
+Master is 2.6 now, this should be merged into 2.5
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-05-28T10:57:03Z
+
+Hm, I thought that I opened it against the 2.5 branch.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-05-28T11:00:31Z
+
+At least, it was based off the 2.5 branch.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-07T17:50:09Z
+
+Hey @xabbuh!
+
+Thank you very very much for doing this. But the PR looks like it may be out of date - I'm conflicting when I try to patch into 2.5. If this *is* against 2.5, then that's great - but can you rebase it to the latest 2.5 and let me know?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-07T19:08:50Z
+
+@weaverryan Thanks for the feedback. I just rebased against the most recent 2.5. Can you check if it now merges nicely?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-07T19:51:01Z
+
+Ah, @xabbuh can you try one more time? This PR is showing extra, unrelated changes and it's still not patching nicely. It could have been because I was in the middle of merging other things when you did this. I'm all done for now, all branches are merged into each other and pushed.
+
+Sorry and thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-07T19:56:37Z
+
+There you go. No need apologise. I really appreciate your work for the docs. :)
