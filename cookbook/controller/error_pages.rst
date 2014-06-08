@@ -35,7 +35,7 @@ shown to the end-user.
 
     The third-party `WebfactoryExceptionsBundle`_ provides a special
     test controller that allows you to display your custom error
-    pages for arbitrary HTTP status codes even with 
+    pages for arbitrary HTTP status codes even with
     ``kernel.debug`` set to ``true``.
 
 Override Error Templates
@@ -128,11 +128,24 @@ Symfony uses the following algorithm to determine which template to use:
 Replace the default Exception Controller
 ----------------------------------------
 
-Replace the default exception controller ``twig.controller.exception:showAction``
-with your own controller and handle it however you want (see
-:ref:`exception_controller in the Twig reference <config-twig-exception-controller>`).
+If you need a little more flexibility beyond just overriding the template
+(e.g. you need to pass some additional variables into your template),
+then you can override the controller that renders the error page.
+
 The default exception controller is registered as a service - the actual
 class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
+
+To do this, create a new controller class and make it extend Symfony's default
+Symfony\Bundle\TwigBundle\Controller\ExceptionController class.
+
+There are several methods you can override to customize different parts of how
+the error page is rendered. You could ie replace the default exception
+controller ``twig.controller.exception:showAction`` with your own method
+and handle it however you want.
+
+To make Symfony use your exception controller instead of the default, set the
+:ref:`twig.exception_controller <config-twig-exception-controller> option
+in app/config/config.yml.
 
 .. tip::
 
