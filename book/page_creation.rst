@@ -98,6 +98,12 @@ A bundle is nothing more than a directory that houses everything related
 to a specific feature, including PHP classes, configuration, and even stylesheets
 and JavaScript files (see :ref:`page-creation-bundles`).
 
+Depending on the way you installed Symfony, you may already have a bundle called
+``AcmeDemoBundle``. Browse the ``src/`` directory of your project and check
+if there is a ``DemoBundle/`` directory inside an ``Acme/`` directory. If those
+directories already exist, skip the rest of this section and go directly to
+create the route.
+
 To create a bundle called ``AcmeDemoBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
 instructions (use all of the default options):
