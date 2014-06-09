@@ -13,6 +13,68 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+May, 2014
+---------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `af8c20f <https://github.com/symfony/symfony-docs/commit/af8c20fa357695645a98570a916658688894eb6d>`_ #3818 [Form customization] added block_name example. (aitboudad)
+- `c788325 <https://github.com/symfony/symfony-docs/commit/c78832551744ed1c6aa2d3eb48501e0e1039d073>`_ #3841 [Cookbook][Logging] register processor per handler and per channel (xabbuh)
+- `979533a <https://github.com/symfony/symfony-docs/commit/979533aa4430a0db4c421744023028192e02cb3d>`_ #3839 document how to test actions (greg0ire)
+- `d8aaac3 <https://github.com/symfony/symfony-docs/commit/d8aaac3de8c867f05ce3c1543ebeb75eda3816e9>`_ #3835 Updated framework.ide configuration (WouterJ)
+- `f665e14 <https://github.com/symfony/symfony-docs/commit/f665e14059f56f729b20448ade416b3e11a14be8>`_ #3704 [Form] Added documentation for Form Events (csarrazi)
+- `14b9f14 <https://github.com/symfony/symfony-docs/commit/14b9f140aff2e8a8fe23a18181f94e1f5e0d8a9b>`_ #3777 added docs for the core team (fabpot)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `0649c21 <https://github.com/symfony/symfony-docs/commit/0649c212b3ea28c8890914912ffb2503bfdfdad0>`_ #3869 Add a missing argument to the PdoSessionHandler (jakzal)
+- `259a2b7 <https://github.com/symfony/symfony-docs/commit/259a2b7a891ba9c2f271cbcee5bf0130a15c98ac>`_ #3866 [Book][Security]fixed Login when there is no session. (aitboudad)
+- `9b7584f <https://github.com/symfony/symfony-docs/commit/9b7584f0501a34016c4ec20a1c439c25ac663f5b>`_ #3863 Error in XML (tvlooy)
+- `0cb9c3b <https://github.com/symfony/symfony-docs/commit/0cb9c3bc3fb6d17a8fafd778abf8dc6981fc550d>`_ #3827 Update 'How to Create and store a Symfony2 Project in Git' (nicwortel)
+- `4ed9a08 <https://github.com/symfony/symfony-docs/commit/4ed9a08f073aa515636dd8bb2a0279f7e39d1ab8>`_ #3830 Generate an APC prefix based on __FILE__ (trsteel88)
+- `9a65412 <https://github.com/symfony/symfony-docs/commit/9a654126306b113b329b6965a700632c477a5585>`_ #3840 Update dialoghelper.rst (jdecoster)
+- `1853fea <https://github.com/symfony/symfony-docs/commit/1853fea967cc1defc35afec179932581038ffae0>`_ #3716 Fix issue #3712 (umpirsky)
+- `80d70a4 <https://github.com/symfony/symfony-docs/commit/80d70a4907e6e26784c63f6c41fae8e2d57b67db>`_ #3779 [Book][Security] constants are defined in the SecurityContextInterface (xabbuh)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `302fa82 <https://github.com/symfony/symfony-docs/commit/302fa8254f6ae1c4777e90db58503ef5d145816e>`_ #3872 Update hostname_pattern.rst (sofany)
+- `50672f7 <https://github.com/symfony/symfony-docs/commit/50672f7768d7eb6ae7acf4d954902d913aa6a20e>`_ #3867 fixed missing info about FosUserBundle. (aitboudad)
+- `b32ec15 <https://github.com/symfony/symfony-docs/commit/b32ec158602704de28325ca5ba5cd7a915d97af8>`_ #3856 Update voters_data_permission.rst (MarcomTeam)
+- `bffe163 <https://github.com/symfony/symfony-docs/commit/bffe1635435b61a95ef26e433391ca8385984430>`_ #3859 Add filter cssrewrite (DOEO)
+- `f617ff8 <https://github.com/symfony/symfony-docs/commit/f617ff88087b1f7ec2df55f9b6b63cc1f69b0a9d>`_ #3764 Update testing.rst (NAYZO)
+- `3792fee <https://github.com/symfony/symfony-docs/commit/3792fee4a18cc1b411ca02c4909534e17ee22593>`_ #3858 Clarified Password Encoders example (WouterJ)
+- `663d68c <https://github.com/symfony/symfony-docs/commit/663d68c034c41bd539064ae544b466c372cd7f5b>`_ #3857 Added little bit information about the route name (WouterJ)
+- `4211bff <https://github.com/symfony/symfony-docs/commit/4211bff395f613d8dd3630178da3208b328df2bc>`_ #3852 Fixed link and typo in type_guesser.rst (rpg600)
+- `78ae7ec <https://github.com/symfony/symfony-docs/commit/78ae7ecc6d35cb7f0bc1e9124aac961f13113d02>`_ #3845 added link to /cookbook/security/force_https. (aitboudad)
+- `6c69362 <https://github.com/symfony/symfony-docs/commit/6c693626ec93dfeb7e04529cc752e3a0dc9174e1>`_ #3846 [Routing][Loader] added JMSI18nRoutingBundle (aitboudad)
+- `136864b <https://github.com/symfony/symfony-docs/commit/136864b7727820196014ef3247fdc1da02106eea>`_ #3844 [Components] Fixed some typos. (ahsio)
+- `b0710bc <https://github.com/symfony/symfony-docs/commit/b0710bc58740f6e5fcc1b98b25088870adda8389>`_ #3842 Update dialoghelper.rst (bijsterdee)
+- `9f1a354 <https://github.com/symfony/symfony-docs/commit/9f1a354fe63a90bf4f6672082fe8cb2dc7900178>`_ #3804 [Components][DependencyInjection] add note about a use case that requires to compile the container (xabbuh)
+- `d92c522 <https://github.com/symfony/symfony-docs/commit/d92c5228e3460dd3bce024c180829fd13a623672>`_ #3769 Updated references to new Session() (scottwarren)
+- `7288a33 <https://github.com/symfony/symfony-docs/commit/7288a337b1d86e9c00b3eb7f7d778d643d0d2802>`_ #3789 [Reference][Forms] Improvements to the form type (xabbuh)
+- `72fae25 <https://github.com/symfony/symfony-docs/commit/72fae25898b37e6e6761ac9c52bee45520545332>`_ #3790 [Reference][Forms] move versionadded directives for form options directly below the option's headline (xabbuh)
+- `b4d4ac3 <https://github.com/symfony/symfony-docs/commit/b4d4ac34d999a09556517431d91d3221a9fa5be3>`_ #3838 fix filename typo in cookbook/form/unit_testing.rst (hice3000)
+- `0b06287 <https://github.com/symfony/symfony-docs/commit/0b06287e617d870dd7ea7173b7670893b7f6c6dc>`_ #3836 remove unnecessary rewrite from nginx conf (Burgov)
+- `e58e39f <https://github.com/symfony/symfony-docs/commit/e58e39f8211791a7531eee71eb0af8b0cb8f9627>`_ #3832 fix the wording in versionadded directives (for the 2.3 branch) (xabbuh)
+- `09d6ca1 <https://github.com/symfony/symfony-docs/commit/09d6ca1ee588982b2f6d067744b09ec911e1538a>`_ #3829 [Components] consistent headlines (xabbuh)
+- `54e0882 <https://github.com/symfony/symfony-docs/commit/54e08822dd490e340aeefab5cd0e222077d56287>`_ #3828 [Contributing] consistent headlines (xabbuh)
+- `b1336d7 <https://github.com/symfony/symfony-docs/commit/b1336d7ed2290c320f9199dcea0778d8af0755bb>`_ #3823 Added empty line after if statements (zomberg)
+- `79b9fdc <https://github.com/symfony/symfony-docs/commit/79b9fdc325a49643aa5a42e2f59337acb5473de9>`_ #3822 Update voters_data_permission.rst (mimol91)
+- `69cb7b8 <https://github.com/symfony/symfony-docs/commit/69cb7b8b8fe29b68bb7b153f582818ffac2f1c50>`_ #3821 Update custom_authentication_provider.rst (leberknecht)
+- `9f602c4 <https://github.com/symfony/symfony-docs/commit/9f602c4a54414b235a616a6d13254c2cbe71d392>`_ #3820 Update page_creation.rst (adreeun)
+- `52518c0 <https://github.com/symfony/symfony-docs/commit/52518c0a97b3d1b75bade2d3566e8029080a9d88>`_ #3819 Update csrf_in_login_form.rst (micheal)
+- `1adfd9b <https://github.com/symfony/symfony-docs/commit/1adfd9b7b9d4d0e33cf0fd266d05d3cef36a2faa>`_ #3802 Add a note about which types can be used in Symfony (fabpot)
+- `fa27ded <https://github.com/symfony/symfony-docs/commit/fa27ded5dfdef27d43f33c2f6b325f69acae87a6>`_ #3801 [Cookbook][Form] Fixed Typo & missing word. (ahsio)
+- `127beed <https://github.com/symfony/symfony-docs/commit/127beedf880e51965ee723f2896c010c7906b339>`_ #3770 Update factories.rst (AlaaAttya)
+- `822d985 <https://github.com/symfony/symfony-docs/commit/822d985c964f175380f697f175345ad6bbd63fda>`_ #3817 Update translation.rst (richardpi)
+- `241d923 <https://github.com/symfony/symfony-docs/commit/241d9238e4cda9248bf5588433d9087cd5cd6d09>`_ #3813 [Reference][Forms]fix time field count. (yositani2002)
+- `bc96f55 <https://github.com/symfony/symfony-docs/commit/bc96f55f27eda223b920206925ab9582f200f14a>`_ #3812 [Cookbook][Configuration] Fixed broken link. (ahsio)
+- `5867327 <https://github.com/symfony/symfony-docs/commit/58673278fa53554bcedeabc7609bb19c3af12063>`_ #3809 Fixed typo (WouterJ)
+
 April, 2014
 -----------
 
