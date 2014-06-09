@@ -14,20 +14,12 @@ the status code that should be set for the given exception.
 Error pages can be customized in two different ways, depending on how much
 control you need:
 
-1. Customize the error templates of the different error pages (explained below);
+1. Customize the error templates of the different error pages;
 
-2. Replace the default exception controller ``twig.controller.exception:showAction``
-   with your own controller and handle it however you want (see
-   :ref:`exception_controller in the Twig reference <config-twig-exception-controller>`).
-   The default exception controller is registered as a service - the actual
-   class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
+2. Replace the default exception controller ``twig.controller.exception:showAction``.
 
-.. tip::
-
-    The customization of exception handling is actually much more powerful
-    than what's written here. An internal event, ``kernel.exception``, is thrown
-    which allows complete control over exception handling. For more
-    information, see :ref:`kernel-kernel.exception`.
+The default ExceptionController
+-------------------------------
 
 The default ``ExceptionController`` will either display an
 *exception* or *error* page, depending on the setting of the ``kernel.debug``
@@ -43,8 +35,11 @@ shown to the end-user.
 
     The third-party `WebfactoryExceptionsBundle`_ provides a special
     test controller that allows you to display your custom error
-    pages for arbitrary HTTP status codes even with 
+    pages for arbitrary HTTP status codes even with
     ``kernel.debug`` set to ``true``.
+
+Override Error Templates
+------------------------
 
 All of the error templates live inside the TwigBundle. To override the
 templates, simply rely on the standard method for overriding templates that
@@ -129,3 +124,32 @@ Symfony uses the following algorithm to determine which template to use:
     ``exception.json.twig`` for the JSON exception page.
 
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
+
+Replace the default Exception Controller
+----------------------------------------
+
+If you need a little more flexibility beyond just overriding the template
+(e.g. you need to pass some additional variables into your template),
+then you can override the controller that renders the error page.
+
+The default exception controller is registered as a service - the actual
+class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
+
+To do this, create a new controller class and make it extend Symfony's default
+``Symfony\Bundle\TwigBundle\Controller\ExceptionController`` class.
+
+There are several methods you can override to customize different parts of how
+the error page is rendered. You could, for example, override the entire
+``showAction`` or just the ``findTemplate`` method, which locates which
+template should be rendered.
+
+To make Symfony use your exception controller instead of the default, set the
+:ref:`twig.exception_controller <config-twig-exception-controller>` option
+in app/config/config.yml.
+
+.. tip::
+
+    The customization of exception handling is actually much more powerful
+    than what's written here. An internal event, ``kernel.exception``, is thrown
+    which allows complete control over exception handling. For more
+    information, see :ref:`kernel-kernel.exception`.
