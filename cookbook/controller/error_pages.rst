@@ -136,15 +136,15 @@ The default exception controller is registered as a service - the actual
 class is ``Symfony\Bundle\TwigBundle\Controller\ExceptionController``.
 
 To do this, create a new controller class and make it extend Symfony's default
-Symfony\Bundle\TwigBundle\Controller\ExceptionController class.
+``Symfony\Bundle\TwigBundle\Controller\ExceptionController`` class.
 
 There are several methods you can override to customize different parts of how
-the error page is rendered. You could ie replace the default exception
-controller ``twig.controller.exception:showAction`` with your own method
-and handle it however you want.
+the error page is rendered. You could, for example, override the entire
+``showAction`` or just the ``findTemplate`` method, which locates which
+template should be rendered.
 
 To make Symfony use your exception controller instead of the default, set the
-:ref:`twig.exception_controller <config-twig-exception-controller> option
+:ref:`twig.exception_controller <config-twig-exception-controller>` option
 in app/config/config.yml.
 
 .. tip::
