@@ -138,6 +138,7 @@
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
+  * :doc:`/cookbook/security/pre_authenticated`
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
 
