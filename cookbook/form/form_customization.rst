@@ -302,21 +302,7 @@ Multiple Templates
 ..................
 
 A form can also be customized applying several templates. To do so, pass the
-name of all the templates to the ``form_theme`` tag separating them with one
-whitespace:
-
-.. code-block:: html+jinja
-
-    {% form_theme form '::common.html.twig' ':Form:fields.html.twig'
-                       'AcmeDemoBundle:Form:fields.html.twig' %}
-
-    {# ... #}
-
-The templates can be located at different bundles and they can even be stored
-at the global ``app/Resources/views/`` directory.
-
-When using the ``with`` keyword, pass the templates as an array:
-
+name of all the templates as an array using the ``with`` keyword:
 
 .. code-block:: html+jinja
 
@@ -324,6 +310,9 @@ When using the ``with`` keyword, pass the templates as an array:
                              'AcmeDemoBundle:Form:fields.html.twig'] %}
 
     {# ... #}
+
+The templates can be located at different bundles and they can even be stored
+at the global ``app/Resources/views/`` directory.
 
 Child Forms
 ...........
