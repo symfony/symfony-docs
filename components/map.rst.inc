@@ -57,6 +57,7 @@
   * :doc:`/components/event_dispatcher/container_aware_dispatcher`
   * :doc:`/components/event_dispatcher/generic_event`
   * :doc:`/components/event_dispatcher/immutable_dispatcher`
+  * :doc:`/components/event_dispatcher/traceable_dispatcher`
 
 * :doc:`/components/expression_language/index`
 
