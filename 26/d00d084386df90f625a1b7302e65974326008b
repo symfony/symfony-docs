@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-10T07:52:05Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-10T15:49:41Z
+
+Nice!
+
+How do you catch all those errors? Do you just read every page and fix the wrong things, or do you use automated scripts, etc? (Just curious, since you're the best error-catching doc guy we've had :P)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-06-10T16:00:32Z
+
+@WouterJ thanks! The explanation is really simple: since we're redesigning the symfony.com website, whenever we introduce lots of changes in the styles, I randomly click on some documentation pages. Thanks to the new blockquote styles, when a code block is wrongly indented, it stands out very clearly and it's easy to spot it. So everything is about random luck.
