@@ -92,6 +92,8 @@ Files and Directories
 * When you list a Symfony file/directory hierarchy, use ``your-project/`` as the
   top level directory. E.g.
 
+  .. code-block:: text
+
       your-project/
       ├─ app/
       ├─ src/
