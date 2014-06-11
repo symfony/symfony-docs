@@ -647,7 +647,7 @@ Translating Database Content
 
 The translation of database content should be handled by Doctrine through
 the `Translatable Extension`_ or the `Translatable Behavior`_ (PHP 5.4+).
-For more information, see the documentation for thes libraries.
+For more information, see the documentation for these libraries.
 
 Summary
 -------
