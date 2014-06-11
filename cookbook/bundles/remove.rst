@@ -73,12 +73,6 @@ should remove the bundle from the filesystem. The bundle is located in the
 ``src/Acme/DemoBundle`` directory. You should remove this directory and you
 can remove the ``Acme`` directory as well.
 
-3.1 Remove bundle resources
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Remove the Acme resource directory from the applications web folder. It can be found in ``web/bundles/acmedemo``.
-
-
 .. tip::
 
     If you don't know the location of a bundle, you can use the
@@ -86,6 +80,11 @@ Remove the Acme resource directory from the applications web folder. It can be f
     to get the path of the bundle::
 
         echo $this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath();
+
+3.1 Remove bundle resources
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Remove the Acme resource directory from the application's web folder. It can be found in ``web/bundles/acmedemo``.
 
 4. Remove Integration in other Bundles
 --------------------------------------
