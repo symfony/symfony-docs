@@ -59,7 +59,7 @@ first need to configure the ``Psr4ClassLoader``:
 
 First of all, the class loader is loaded manually using a ``require``
 statement, since there is no autoload mechanism yet. With the
-:method:`Symfony\Component\ClassLoader\Psr4ClassLoader::addPrefix` call, you
+:method:`Symfony\\Component\\ClassLoader\\Psr4ClassLoader::addPrefix` call, you
 tell the class loader where to look for classes with the
 ``Symfony\Component\Yaml\`` namespace prefix. After registering the autoloader,
 the Yaml component is ready to be used.
