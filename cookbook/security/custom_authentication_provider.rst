@@ -159,12 +159,6 @@ set an authenticated token in the security context if successful.
                 //     $this->securityContext->setToken(null);
                 // }
                 // return;
-
-                // Deny authentication with a '403 Forbidden' HTTP response
-                $response = new Response();
-                $response->setStatusCode(Response::HTTP_FORBIDDEN);
-                $event->setResponse($response);
-
             }
 
             // By default deny authorization
