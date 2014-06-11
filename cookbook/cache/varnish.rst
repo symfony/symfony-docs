@@ -57,6 +57,12 @@ Symfony2 adds automatically:
             // For Varnish < 3.0
             // esi;
         }
+        /* Do not cache if no-cache is found in headers */
+        if (beresp.http.Pragma ~ "no-cache" ||
+             beresp.http.Cache-Control ~ "no-cache" ||
+             beresp.http.Cache-Control ~ "private") {
+            return (hit_for_pass);
+        }
     }
 
 .. caution::
