@@ -52,11 +52,11 @@ value and then a User object is created::
     				$providerKey
     			);
             }
-    		else if($request->request->has('apikey'))
+    		else if($request->headers->has('apikey'))
     		{
     			return new PreAuthenticatedToken(
     				'anon.',
-    				$request->request->get('apikey'),
+    				$request->headers->get('apikey'),
     				$providerKey
     			);
     		}
