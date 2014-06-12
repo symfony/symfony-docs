@@ -73,8 +73,8 @@ in the x509 firewall configuration respectively.
     An authentication provider will only inform the user provider of the username
     that made the request. You will need to create (or use) a "user provider" that
     is referenced by the ``provider`` configuration parameter (``your_user_provider``
-    in the configuration example). This provider will turn the username into a User 
-    object of your choice. For more information on creating or configuring a user 
+    in the configuration example). This provider will turn the username into a User
+    object of your choice. For more information on creating or configuring a user
     provider, see:
 
     * :doc:`/cookbook/security/custom_provider`
@@ -86,11 +86,11 @@ REMOTE_USER based Authentication
 .. versionadded:: 2.6
     REMOTE_USER pre authenticated firewall was introduced in Symfony 2.6.
 
-A lot of authentication modules, like ``auth_kerb` for Apache provide the username 
-using the ``REMOTE_USER`` environment variable. This variable can be trusted by 
+A lot of authentication modules, like ``auth_kerb` for Apache provide the username
+using the ``REMOTE_USER`` environment variable. This variable can be trusted by
 the application since the authentication happened before the request reached it.
 
-To configure Symfony using the ``REMOTE_USER` environment variable, simply enable the 
+To configure Symfony using the ``REMOTE_USER`` environment variable, simply enable the
 corresponding firewall in your security configuration:
 
 .. configuration-block::
@@ -140,4 +140,5 @@ key in the ``remote_user`` firewall configuration.
 .. note::
 
     Just like for X509 authentication, you will need to configure a "user provider".
-    See :ref:`the note about it <cookbook-security-pre-authenticated-user-provider-note>`.
+    See :ref:`the note previous note <cookbook-security-pre-authenticated-user-provider-note>`
+    for more information.
