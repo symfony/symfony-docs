@@ -452,3 +452,6 @@ However, if you are only using one entity manager, DQL functions can be registed
                     test_numeric: Acme\HelloBundle\DQL\NumericFunction
                 datetime_functions:
                     test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+
+
+.. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
