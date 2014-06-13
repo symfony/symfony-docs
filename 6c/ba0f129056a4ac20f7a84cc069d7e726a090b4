@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-11T15:43:05Z
+
+Wow, it looks like you're right (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control).
+
+What do you think about adding a little note in your comment that says that Varnish ignores the `no-cache` by default and include the link from above? I want to leave "breadcrumbs" for readers later when they see this.
+
+---------------------------------------------------------------------------
+
+by gonzalovilaseca at 2014-06-11T16:13:53Z
+
+Done!
