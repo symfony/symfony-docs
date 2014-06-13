@@ -440,6 +440,7 @@ In Symfony, you can register your custom DQL functions as follows:
 However, if you are only using one entity manager, DQL functions can be registed like this:
 
 .. code-block:: yaml
+
     doctrine:
         orm:
             # ...
