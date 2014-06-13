@@ -411,3 +411,42 @@ Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
+
+Register Custom DQL Functions
+-----------------------------
+
+Doctrine allows you to specify custom DQL functions. For more information
+on this topic, read Doctrine's cookbook article "`DQL User Defined Functions`_".
+
+In Symfony, you can register your custom DQL functions as follows:
+
+.. code-block:: yaml
+    doctrine:
+        orm:
+            # ...
+            entity_managers:
+                default:
+                    # ...
+                    dql:
+                        string_functions:
+                            test_string: Acme\HelloBundle\DQL\StringFunction
+                            second_string: Acme\HelloBundle\DQL\SecondStringFunction
+                        numeric_functions:
+                            test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                        datetime_functions:
+                            test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+
+However, if you are only using one entity manager, DQL functions can be registed like this:
+
+.. code-block:: yaml
+    doctrine:
+        orm:
+            # ...
+            dql:
+                string_functions:
+                    test_string: Acme\HelloBundle\DQL\StringFunction
+                    second_string: Acme\HelloBundle\DQL\SecondStringFunction
+                numeric_functions:
+                    test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                datetime_functions:
+                    test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
