@@ -132,6 +132,41 @@ listeners registered with that event::
 Connecting Listeners
 ~~~~~~~~~~~~~~~~~~~~
 
+.. sidebar:: Registering Event Listeners in the Service Container
+
+    When your are using the DependencyInjection component, you can use the
+    :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterListenersPass`
+    from the HttpKernel component to tag services as event listeners::
+
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
+
+        $containerBuilder = ...;
+        $containerBuilder->addCompilerPass(new RegisterListenersPass());
+
+        // register the event dispatcher service
+        $dispatcher = new Definition('Symfony\Component\EventDispatcher\EventDispatcher');
+        $containerBuilder->setDefinition('event_dispatcher', $dispatcher);
+
+        // register your event listener service
+        $listener = new Definition('AcmeListener');
+        $listener->addTag('kernel.event_listener', array(
+            'event' => 'foo.action',
+            'method' => 'onFooAction',
+        ));
+        $containerBuilder->setDefinition('listener_service_id', $listener);
+
+        // register an event subscriber
+        $subscriber = new Definition('AcmeSubscriber');
+        $subscriber->addTag('kernel.event_subscriber');
+        $containerBuilder->setDefinition('subscriber_service_id', $subscriber);
+
+    By default, the listeners pass assumes that the event dispatcher's service
+    id is ``event_dispatcher``, that event listeners are tagged with the
+    ``kernel.event_listener`` tag and that event subscribers are tagged with
+    the ``kernel.event_subscriber`` tag. You can change these default values
+    by passing custom values to the constructor of ``RegisterListenersPass``.
+
 To take advantage of an existing event, you need to connect a listener to the
 dispatcher so that it can be notified when the event is dispatched. A call to
 the dispatcher ``addListener()`` method associates any valid PHP callable to
