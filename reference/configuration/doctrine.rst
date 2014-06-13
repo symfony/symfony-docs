@@ -421,6 +421,7 @@ on this topic, read Doctrine's cookbook article "`DQL User Defined Functions`_".
 In Symfony, you can register your custom DQL functions as follows:
 
 .. code-block:: yaml
+
     doctrine:
         orm:
             # ...
