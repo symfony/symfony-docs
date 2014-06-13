@@ -10,9 +10,9 @@ You can do more advanced things with this helper than you can in
 
 The :class:`Symfony\\Component\\Console\\Helper\\FormatterHelper` is included
 in the default helper set, which you can get by calling
-:method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
+:method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
 
-    $formatter = $this->getHelperSet()->get('formatter');
+    $formatter = $this->getHelper('formatter');
 
 The methods return a string, which you'll usually render to the console by
 passing it to the
