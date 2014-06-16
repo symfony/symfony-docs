@@ -412,46 +412,72 @@ service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
 
-Register Custom DQL Functions
+Shorten configuration syntax
 -----------------------------
 
-Doctrine allows you to specify custom DQL functions. For more information
-on this topic, read Doctrine's cookbook article "`DQL User Defined Functions`_".
-
-In Symfony, you can register your custom DQL functions as follows:
+When you are only using one entity manager, all config options available 
+for each entity manager can be placed directly under doctrine.orm config level. 
 
 .. code-block:: yaml
 
     doctrine:
         orm:
             # ...
-            entity_managers:
-                default:
-                    # ...
-                    dql:
-                        string_functions:
-                            test_string: Acme\HelloBundle\DQL\StringFunction
-                            second_string: Acme\HelloBundle\DQL\SecondStringFunction
-                        numeric_functions:
-                            test_numeric: Acme\HelloBundle\DQL\NumericFunction
-                        datetime_functions:
-                            test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
-
-However, if you are only using one entity manager, DQL functions can be registed like this:
-
-.. code-block:: yaml
-
-    doctrine:
-        orm:
-            # ...
+            query_cache_driver:
+                type:                 array # Required
+                host:                 ~
+                port:                 ~
+                instance_class:       ~
+                class:                ~
+            metadata_cache_driver:
+                type:                 array # Required
+                host:                 ~
+                port:                 ~
+                instance_class:       ~
+                class:                ~
+            result_cache_driver:
+                type:                 array # Required
+                host:                 ~
+                port:                 ~
+                instance_class:       ~
+                class:                ~
+            connection:           ~
+            class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
+            default_repository_class:  Doctrine\ORM\EntityRepository
+            auto_mapping:         false
+            hydrators:
+                # An array of hydrator names
+                hydrator_name:                 []
+            mappings:
+                # An array of mappings, which may be a bundle name or something else
+                mapping_name:
+                    mapping:              true
+                    type:                 ~
+                    dir:                  ~
+                    alias:                ~
+                    prefix:               ~
+                    is_bundle:            ~
             dql:
+                # a collection of string functions
                 string_functions:
-                    test_string: Acme\HelloBundle\DQL\StringFunction
-                    second_string: Acme\HelloBundle\DQL\SecondStringFunction
-                numeric_functions:
-                    test_numeric: Acme\HelloBundle\DQL\NumericFunction
-                datetime_functions:
-                    test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+                    # example
+                    # test_string: Acme\HelloBundle\DQL\StringFunction
 
+                # a collection of numeric functions
+                numeric_functions:
+                    # example
+                    # test_numeric: Acme\HelloBundle\DQL\NumericFunction
+
+                # a collection of datetime functions
+                datetime_functions:
+                    # example
+                    # test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+            filters:
+                # An array of filters
+                some_filter:
+                    class:                ~ # Required
+                    enabled:              false
+
+This shorten version is commonly used in other documentation sections. Keep in mind that you can't use both syntax at same time.
 
 .. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
