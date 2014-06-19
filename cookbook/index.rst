@@ -11,7 +11,7 @@ The Cookbook
     console/index
     controller/index
     debugging
-    deployment-tools
+    deployment/index
     doctrine/index
     email/index
     event_dispatcher/index

@@ -257,7 +257,7 @@ from the command line, you need to overwrite the HelperSet used by the command::
         $commandTester = new CommandTester($command);
 
         $dialog = $command->getHelper('dialog');
-        $dialog->setInputStream($this->getInputStream('Test\n'));
+        $dialog->setInputStream($this->getInputStream("Test\n"));
         // Equals to a user inputing "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
