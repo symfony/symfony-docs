@@ -124,7 +124,7 @@ specific template doesn't exist.
                 '%kernel.root_dir%/../vendor/acme/themes/theme1' => 'theme',
                 '%kernel.root_dir%/../vendor/acme/themes/theme2' => 'theme',
                 '%kernel.root_dir%/../vendor/acme/themes/common' => 'theme',
-            );
+            ),
         ));
 
 Now, you can use the same ``@theme`` namespace to refer to any template located
