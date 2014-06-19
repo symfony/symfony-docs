@@ -24,7 +24,7 @@ When building a console application it may be useful to display tabular data:
 To display a table, use :class:`Symfony\\Component\\Console\\Helper\\Table`,
 set the headers, set the rows and then render the table::
 
-    use Symfony\Component\Helper\Table;
+    use Symfony\Component\Console\Helper\Table;
 
     $table = new Table($output);
     $table
@@ -41,7 +41,7 @@ set the headers, set the rows and then render the table::
 You can add a table separator anywhere in the output by passing an instance of
 :class:`Symfony\\Component\\Console\\Helper\\TableSeparator` as a row::
 
-    use Symfony\Component\Helper\TableSeparator;
+    use Symfony\Component\Console\Helper\TableSeparator;
 
     $table->setRows(array(
         array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
@@ -103,7 +103,7 @@ which outputs:
 
 If the built-in styles do not fit your need, define your own::
 
-    use Symfony\Component\Helper\TableStyle;
+    use Symfony\Component\Console\Helper\TableStyle;
 
     // by default, this is based on the default style
     $style = new TableStyle();
