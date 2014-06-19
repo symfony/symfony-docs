@@ -91,6 +91,8 @@ the first template that exists, starting from the first configured path. This
 feature can be used as a fallback mechanism to load generic templates when the
 specific template doesn't exist.
 
+.. configuration-block::
+
     .. code-block:: yaml
 
         # app/config/config.yml
