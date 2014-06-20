@@ -91,6 +91,8 @@ the first template that exists, starting from the first configured path. This
 feature can be used as a fallback mechanism to load generic templates when the
 specific template doesn't exist.
 
+.. configuration-block::
+
     .. code-block:: yaml
 
         # app/config/config.yml
@@ -124,7 +126,7 @@ specific template doesn't exist.
                 '%kernel.root_dir%/../vendor/acme/themes/theme1' => 'theme',
                 '%kernel.root_dir%/../vendor/acme/themes/theme2' => 'theme',
                 '%kernel.root_dir%/../vendor/acme/themes/common' => 'theme',
-            );
+            ),
         ));
 
 Now, you can use the same ``@theme`` namespace to refer to any template located
