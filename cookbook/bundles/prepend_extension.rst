@@ -6,21 +6,21 @@ How to simplify configuration of multiple Bundles
 =================================================
 
 When building reusable and extensible applications, developers are often
-faced with a choice: either create a single large Bundle or multiple smaller
-Bundles. Creating a single Bundle has the draw back that it's impossible for
+faced with a choice: either create a single large bundle or multiple smaller
+bundles. Creating a single bundle has the drawback that it's impossible for
 users to choose to remove functionality they are not using. Creating multiple
-Bundles has the draw back that configuration becomes more tedious and settings
-often need to be repeated for various Bundles.
+bundles has the drawback that configuration becomes more tedious and settings
+often need to be repeated for various bundles.
 
 Using the below approach, it is possible to remove the disadvantage of the
-multiple Bundle approach by enabling a single Extension to prepend the settings
-for any Bundle. It can use the settings defined in the ``app/config/config.yml``
-to prepend settings just as if they would have been written explicitly by the
-user in the application configuration.
+multiple bundle approach by enabling a single Extension to prepend the settings
+for any bundle. It can use the settings defined in the ``app/config/config.yml``
+to prepend settings just as if they would have been written explicitly by
+the user in the application configuration.
 
 For example, this could be used to configure the entity manager name to use in
-multiple Bundles. Or it can be used to enable an optional feature that depends
-on another Bundle being loaded as well.
+multiple bundles. Or it can be used to enable an optional feature that depends
+on another bundle being loaded as well.
 
 To give an Extension the power to do this, it needs to implement
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
@@ -45,24 +45,24 @@ To give an Extension the power to do this, it needs to implement
 Inside the :method:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface::prepend`
 method, developers have full access to the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
 instance just before the :method:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface::load`
-method is called on each of the registered Bundle Extensions. In order to
-prepend settings to a Bundle extension developers can use the
+method is called on each of the registered bundle Extensions. In order to
+prepend settings to a bundle extension developers can use the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::prependExtensionConfig`
 method on the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
 instance. As this method only prepends settings, any other settings done explicitly
 inside the ``app/config/config.yml`` would override these prepended settings.
 
 The following example illustrates how to prepend
-a configuration setting in multiple Bundles as well as disable a flag in multiple Bundles
-in case a specific other Bundle is not registered::
+a configuration setting in multiple bundles as well as disable a flag in multiple bundles
+in case a specific other bundle is not registered::
 
     public function prepend(ContainerBuilder $container)
     {
-        // get all Bundles
+        // get all bundles
         $bundles = $container->getParameter('kernel.bundles');
         // determine if AcmeGoodbyeBundle is registered
         if (!isset($bundles['AcmeGoodbyeBundle'])) {
-            // disable AcmeGoodbyeBundle in Bundles
+            // disable AcmeGoodbyeBundle in bundles
             $config = array('use_acme_goodbye' => false);
             foreach ($container->getExtensions() as $name => $extension) {
                 switch ($name) {
