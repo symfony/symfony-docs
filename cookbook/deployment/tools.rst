@@ -71,14 +71,24 @@ Common Post-Deployment Tasks
 After deploying your actual source code, there are a number of common things
 you'll need to do:
 
-A) Configure your ``app/config/parameters.yml`` File
+A) Check Requirements.
+~~~~~~~~~~~~~~~~~~~~~~
+
+Check if your server meets requirements.
+Run command:
+
+.. code-block:: bash
+
+    $ php app/check.php
+
+B) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This file should be customized on each system. The method you use to
 deploy your source code should *not* deploy this file. Instead, you should
 set it up manually (or via some build process) on your server(s).
 
-B) Update your Vendors
+C) Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Your vendors can be updated before transferring your source code (i.e.
@@ -97,7 +107,7 @@ as you normally do:
     ensures that development packages are not installed in the production
     environment.
 
-C) Clear your Symfony Cache
+D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Make sure you clear (and warm-up) your Symfony cache:
@@ -106,7 +116,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
     $ php app/console cache:clear --env=prod --no-debug
 
-D) Dump your Assetic Assets
+E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using Assetic, you'll also want to dump your assets:
@@ -115,7 +125,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
     $ php app/console assetic:dump --env=prod --no-debug
 
-E) Other Things!
+F) Other Things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your
