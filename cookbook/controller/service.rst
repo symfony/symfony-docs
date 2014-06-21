@@ -136,6 +136,10 @@ the route ``_controller`` value:
     :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     for details.
 
+.. versionadded:: 2.6
+    If your controller service implements the ``__invoke`` method, you can simply refer to the service id
+    (``acme.hello.controller``).
+
 Alternatives to base Controller Methods
 ---------------------------------------
 
