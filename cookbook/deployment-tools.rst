@@ -138,6 +138,7 @@ setup:
 * Running ``assets:install`` (taken care of already in ``composer.phar install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
+* Change default Favicon
 * ...
 
 Application Lifecycle: Continuous Integration, QA, etc
