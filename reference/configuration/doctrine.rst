@@ -424,59 +424,23 @@ for each entity manager can be placed directly under doctrine.orm config level.
         orm:
             # ...
             query_cache_driver:
-                type:                 array # Required
-                host:                 ~
-                port:                 ~
-                instance_class:       ~
-                class:                ~
+               # ...
             metadata_cache_driver:
-                type:                 array # Required
-                host:                 ~
-                port:                 ~
-                instance_class:       ~
-                class:                ~
+                # ...
             result_cache_driver:
-                type:                 array # Required
-                host:                 ~
-                port:                 ~
-                instance_class:       ~
-                class:                ~
-            connection:           ~
+                # ...
+            connection: ~
             class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
             default_repository_class:  Doctrine\ORM\EntityRepository
-            auto_mapping:         false
+            auto_mapping: false
             hydrators:
-                # An array of hydrator names
-                hydrator_name:                 []
+                # ...
             mappings:
-                # An array of mappings, which may be a bundle name or something else
-                mapping_name:
-                    mapping:              true
-                    type:                 ~
-                    dir:                  ~
-                    alias:                ~
-                    prefix:               ~
-                    is_bundle:            ~
+                # ...
             dql:
-                # a collection of string functions
-                string_functions:
-                    # example
-                    # test_string: Acme\HelloBundle\DQL\StringFunction
-
-                # a collection of numeric functions
-                numeric_functions:
-                    # example
-                    # test_numeric: Acme\HelloBundle\DQL\NumericFunction
-
-                # a collection of datetime functions
-                datetime_functions:
-                    # example
-                    # test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+                # ...
             filters:
-                # An array of filters
-                some_filter:
-                    class:                ~ # Required
-                    enabled:              false
+                # ...
 
 This shorten version is commonly used in other documentation sections. Keep in mind that you can't use both syntax at same time.
 
