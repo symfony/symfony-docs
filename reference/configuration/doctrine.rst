@@ -415,8 +415,9 @@ service where ``[name]`` is the name of the connection.
 Shorten configuration syntax
 -----------------------------
 
-When you are only using one entity manager, all config options available 
-for each entity manager can be placed directly under doctrine.orm config level. 
+When you are only using one entity manager, all config options available
+for each entity manager can be placed directly under ``doctrine.orm`` config
+level. 
 
 .. code-block:: yaml
 
@@ -442,6 +443,7 @@ for each entity manager can be placed directly under doctrine.orm config level.
             filters:
                 # ...
 
-This shorten version is commonly used in other documentation sections. Keep in mind that you can't use both syntax at same time.
+This shorten version is commonly used in other documentation sections.
+Keep in mind that you can't use both syntax at the same time.
 
 .. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
