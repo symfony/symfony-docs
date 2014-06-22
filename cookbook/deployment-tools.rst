@@ -107,7 +107,7 @@ as you normally do:
     ensures that development packages are not installed in the production
     environment.
 
-D) Clear your Symfony cache
+D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Make sure you clear (and warm-up) your Symfony cache:
@@ -116,7 +116,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
     $ php app/console cache:clear --env=prod --no-debug
 
-E) Dump your Assetic assets
+E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using Assetic, you'll also want to dump your assets:
@@ -125,7 +125,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
     $ php app/console assetic:dump --env=prod --no-debug
 
-F) Other things!
+F) Other Things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your
