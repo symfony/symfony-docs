@@ -36,8 +36,6 @@ There are several ways you can deploy a Symfony2 application.
 
 Start with a few basic deployment strategies and build up from there.
 
-
-
 Basic File Transfer
 ~~~~~~~~~~~~~~~~~~~
 
