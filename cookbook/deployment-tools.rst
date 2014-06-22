@@ -71,7 +71,7 @@ Common Post-Deployment Tasks
 After deploying your actual source code, there are a number of common things
 you'll need to do:
 
-A) Check requirements.
+A) Check Requirements.
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Check if your server meets requirements.
@@ -81,14 +81,14 @@ Run command:
 
     $ php app/check.php
 
-B) Configure your ``app/config/parameters.yml`` file
+B) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This file should be customized on each system. The method you use to
 deploy your source code should *not* deploy this file. Instead, you should
 set it up manually (or via some build process) on your server(s).
 
-C) Update your vendors
+C) Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Your vendors can be updated before transferring your source code (i.e.
