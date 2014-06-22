@@ -1,0 +1,77 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2014-06-20T15:55:22Z
+
+@weaverryan Could this be reviewed and merged fast as Microsoft want to talk about it on Monday during a PHP conference? Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-20T16:16:00Z
+
+I guess a new entry should be added to ``redirection_map`` for the ``/cookbook/deployment-tools.rst`` file.
+
+---------------------------------------------------------------------------
+
+by hhamon at 2014-06-20T16:51:25Z
+
+Thanks @xabbuh for the feedbacks. I've fixed the article.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-20T19:49:03Z
+
+I'll review it tonight or tomorrow morning.
+
+---------------------------------------------------------------------------
+
+by hhamon at 2014-06-21T19:49:17Z
+
+@weaverryan @WouterJ did you have time to review this PR please?
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-06-21T21:20:29Z
+
+It would be very nice to see also entries from ServerGrove cc/ @pgodel here
+same as a very extensive entry for AWS deployment! :+1:
+
+---------------------------------------------------------------------------
+
+by pgodel at 2014-06-22T13:33:02Z
+
+There is nothing special about deploying in ServerGrove, we try to have our
+platform be as standard as possible so documents like this are not needed.
+
+I would say a more generic shared hosting / VPS guide would be more useful,
+or maybe guides using the various tools out there like capifony,
+magallanes, ansible, etc. We have switched from capifony to ansible and
+would be willing to write an entry on ansible  if there is interest.
+
+On Sat, Jun 21, 2014 at 5:20 PM, Luis Cordova <notifications@github.com>
+wrote:
+
+> It would be very nice to see also entries from ServerGrove cc/ @pgodel
+> <https://github.com/pgodel> here
+> same as a very extensive entry for AWS deployment! [image: :+1:]
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/3963#issuecomment-46765097>.
+>
+
+--
+Pablo Godel
+ServerGrove Networks
+http://servergrove.com/
+
+---------------------------------------------------------------------------
+
+by hhamon at 2014-06-22T21:10:54Z
+
+@weaverryan any news please?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-22T21:29:36Z
+
+@hhamon if ryan did not answer on this PR tonight, I'll merge it tomorrow morning european time.
