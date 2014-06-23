@@ -91,20 +91,9 @@ front controller? As you might expect, there is a solution. We can solve all
 these issues and some more by using the Symfony2 dependency injection
 container:
 
-.. code-block:: javascript
+.. code-block:: sh
 
-    {
-        "require": {
-            "symfony/http-foundation": "~2.3",
-            "symfony/routing": "~2.3",
-            "symfony/http-kernel": "~2.3",
-            "symfony/event-dispatcher": "~2.3",
-            "symfony/dependency-injection": "~2.3"
-        },
-        "autoload": {
-            "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
-        }
-    }
+    $ php composer.phar require symfony/dependency-injection 2.5.*
 
 Create a new file to host the dependency injection container configuration::
 
@@ -244,7 +233,7 @@ definitions, from scope support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful
 and is able to manage any kind of PHP class.
 
-Don't yell at me if you don't want to have a dependency injection container in
+Don't yell at me if you don't want to use a dependency injection container in
 your framework. If you don't like it, don't use it. It's your framework, not
 mine.
 

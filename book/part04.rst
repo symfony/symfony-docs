@@ -53,18 +53,11 @@ instead of relying on a query string:
     # After
     /hello/Fabien
 
-To support this feature, we are going to use the Symfony2 Routing component.
-As always, add it to ``composer.json`` and run the ``php composer.phar
-update`` command to install it:
+To support this feature, add the Symfony2 Routing component as a dependency:
 
-.. code-block:: javascript
+.. code-block:: sh
 
-    {
-        "require": {
-            "symfony/http-foundation": "~2.3",
-            "symfony/routing": "~2.3"
-        }
-    }
+    $ php composer.phar require symfony/routing 2.5.*
 
 Instead of an array for the URL map, the Routing component relies on a
 ``RouteCollection`` instance::

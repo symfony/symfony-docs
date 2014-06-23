@@ -26,7 +26,7 @@ it suffers from a few problems::
 
     printf('Hello %s', $input);
 
-First, if the ``name`` query parameter is not given in the URL query string,
+First, if the ``name`` query parameter is not defined in the URL query string,
 you will get a PHP warning; so let's fix it::
 
     <?php
@@ -122,22 +122,22 @@ approach; that's the main goal of the Symfony2 HttpFoundation component:
 replacing the default PHP global variables and functions by an Object-Oriented
 layer.
 
-To use this component, open the ``composer.json`` file and add it as a
-dependency for the project:
-
-.. code-block:: javascript
-
-    {
-        "require": {
-            "symfony/http-foundation": "~2.3"
-        }
-    }
-
-Then, run the composer ``update`` command:
+To use this component, add it as a dependency of the project:
 
 .. code-block:: sh
 
-    $ php composer.phar update
+    $ php composer.phar require symfony/http-foundation 2.5.*
+
+Running this command will also automatically download the Symfony
+HttpFoundation component and install it under the ``vendor/`` directory.
+
+.. sidebar:: Class Autoloading
+
+    When installing a new dependency, Composer also generates a
+    ``vendor/autoload.php`` file that allows any class to be easily
+    `autoloaded`_. Without autoloading, you would need to require the file
+    where a class is defined before being able to use it. But thanks to
+    `PSR-0`_, we can just let Composer and PHP do the hard work for us.
 
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
@@ -309,8 +309,8 @@ the wheel.
 
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
-applications using it (as of today `Symfony2`_, `Drupal 8`_, `phpBB 4`_,
-`ezPublish 5`, `Silex`_, `Midgard CMS`_, `Zikula`_ ...).
+applications using it (like `Symfony2`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
+5`, `Laravel`_, `Silex`_, and `more`_).
 
 .. _`Twig`:                     http://twig.sensiolabs.com/
 .. _`Symfony2 versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
@@ -324,3 +324,6 @@ applications using it (as of today `Symfony2`_, `Drupal 8`_, `phpBB 4`_,
 .. _`Silex`:                    http://silex.sensiolabs.org/
 .. _`Midgard CMS`:              http://www.midgard-project.org/
 .. _`Zikula`:                   http://zikula.org/
+.. _`autoloaded`:               http://php.net/autoload
+.. _`PSR-0`:                    https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _`more`:                     http://symfony.com/components/HttpFoundation

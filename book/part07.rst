@@ -12,10 +12,8 @@ Request, and one output, the Response. Our framework class will follow this
 simple principle: the logic is about creating the Response associated with a
 Request.
 
-As the Symfony2 components requires PHP 5.3, let's create our very own
-namespace for our framework: ``Simplex``.
-
-Move the request handling logic into its own ``Simplex\\Framework`` class::
+Let's create our very own namespace for our framework: ``Simplex``. Move the
+request handling logic into its own ``Simplex\\Framework`` class::
 
     <?php
 
@@ -89,9 +87,9 @@ be autoloaded, update the ``composer.json`` file:
 
     {
         "require": {
-            "symfony/http-foundation": "~2.3",
-            "symfony/routing": "~2.3",
-            "symfony/http-kernel": "~2.3"
+            "symfony/http-foundation": "2.5.*",
+            "symfony/routing": "2.5.*",
+            "symfony/http-kernel": "2.5.*"
         },
         "autoload": {
             "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
@@ -100,7 +98,7 @@ be autoloaded, update the ``composer.json`` file:
 
 .. note::
 
-    For the autoloader to be updated, run ``php composer.phar update``.
+    For the Composer autoloader to be updated, run ``php composer.phar update``.
 
 Move the controller to ``Calendar\\Controller\\LeapYearController``::
 

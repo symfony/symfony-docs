@@ -94,44 +94,23 @@ To store our framework, create a directory somewhere on your machine:
     $ mkdir framework
     $ cd framework
 
-Components Installation
-~~~~~~~~~~~~~~~~~~~~~~~
+Dependency Management
+~~~~~~~~~~~~~~~~~~~~~
 
-To install the Symfony2 Components that we need for our framework, we are
-going to use `Composer`_, a project dependency manager for PHP. Create a
-``composer.json`` file, where we will list our dependencies:
-
-.. code-block:: javascript
-
-    {
-        "require": {
-        }
-    }
-
-The file is empty for now as we do not depend on anything yet. To install the
-project dependencies, download the composer binary and run it:
+To install the Symfony2 Components that we need for our framework, we are going
+to use `Composer`_, a project dependency manager for PHP. If you don't have it
+yet, `download and install`_ Composer now:
 
 .. code-block:: sh
 
-    $ wget http://getcomposer.org/composer.phar
-    $ # or
-    $ curl -O http://getcomposer.org/composer.phar
+    $ curl -sS https://getcomposer.org/installer | php
 
-    $ php composer.phar install
+Then, generate an empty ``composer.json`` file, where Composer will store the
+framework dependencies:
 
-After running the ``install`` command, you must see a new ``vendor/``
-directory.
+.. code-block:: sh
 
-Naming Conventions and Autoloading
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-We are going to `autoload`_ all our classes. Without autoloading, you need to
-require the file where a class is defined before being able to use it. But
-with some conventions, we can just let PHP do the hard work for us.
-
-Symfony2 follows the de-facto PHP standard, `PSR-0`_, for class names and
-autoloading and Composer generates such an autoloader for all the dependencies
-it manages; it can be enabled by requiring the ``vendor/autoload.php`` file.
+    $ php composer.phar init -n
 
 Our Project
 -----------
@@ -148,12 +127,18 @@ start with the simplest web application we can think of in PHP::
 
     printf('Hello %s', $input);
 
+Use the PHP built-in server to test this great application in a browser
+(``http://localhost:4321/index.php?name=Fabien``):
+
+.. code-block:: sh
+
+    $ php -S 127.0.0.1:4321
+
 In the next chapter, we are going to introduce the HttpFoundation Component
 and see what it brings us.
 
-.. _`Symfony2`:      http://symfony.com/
-.. _`documentation`: http://symfony.com/doc
-.. _`Silex`:         http://silex.sensiolabs.org/
-.. _`autoload`:      http://fr.php.net/autoload
-.. _`Composer`:      http://packagist.org/about-composer
-.. _`PSR-0`:         https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _`Symfony2`:             http://symfony.com/
+.. _`documentation`:        http://symfony.com/doc
+.. _`Silex`:                http://silex.sensiolabs.org/
+.. _`Composer`:             http://packagist.org/about-composer
+.. _`download and install`: https://getcomposer.org/doc/01-basic-usage.md

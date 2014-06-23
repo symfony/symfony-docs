@@ -17,19 +17,9 @@ pattern, the *Observer*, to allow any kind of behaviors to be attached to our
 framework; the Symfony2 EventDispatcher Component implements a lightweight
 version of this pattern:
 
-.. code-block:: javascript
+.. code-block:: sh
 
-    {
-        "require": {
-            "symfony/http-foundation": "~2.3",
-            "symfony/routing": "~2.3",
-            "symfony/http-kernel": "~2.3",
-            "symfony/event-dispatcher": "~2.3"
-        },
-        "autoload": {
-            "psr-0": { "Simplex\\": "src/", "Calendar\\": "src/" }
-        }
-    }
+    $ php composer.phar require symfony/event-dispatcher 2.5.*
 
 How does it work? The *dispatcher*, the central object of the event dispatcher
 system, notifies *listeners* of an *event* dispatched to it. Put another way:

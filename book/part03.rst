@@ -64,13 +64,13 @@ And for the "Goodbye" page::
     $response->send();
 
 We have indeed moved most of the shared code into a central place, but it does
-not feel like a good abstraction, doesn't it? First, we still have the
-``send()`` method in all pages, then our pages do not look like templates, and
-we are still not able to test this code properly.
+not feel like a good abstraction, does it? We still have the ``send()`` method
+for all pages, our pages do not look like templates, and we are still not able
+to test this code properly.
 
 Moreover, adding a new page means that we need to create a new PHP script,
 which name is exposed to the end user via the URL
-(``http://example.com/bye.php``): there is a direct mapping between the PHP
+(``http://127.0.0.1:4321/bye.php``): there is a direct mapping between the PHP
 script name and the client URL. This is because the dispatching of the request
 is done by the web server directly. It might be a good idea to move this
 dispatching to our code for better flexibility. This can be easily achieved by
@@ -127,18 +127,17 @@ we return a custom 404 page; you are now in control of your website.
 
 To access a page, you must now use the ``front.php`` script:
 
-* ``http://example.com/front.php/hello?name=Fabien``
+* ``http://127.0.0.1:4321/front.php/hello?name=Fabien``
 
-* ``http://example.com/front.php/bye``
+* ``http://127.0.0.1:4321/front.php/bye``
 
 ``/hello`` and ``/bye`` are the page *path*s.
 
 .. tip::
 
-    Most web servers like Apache or nginx are able to rewrite the incoming
-    URLs and remove the front controller script so that your users will be
-    able to type ``http://example.com/hello?name=Fabien``, which looks much
-    better.
+    Most web servers like Apache or nginx are able to rewrite the incoming URLs
+    and remove the front controller script so that your users will be able to
+    type ``http://127.0.0.1:4321/hello?name=Fabien``, which looks much better.
 
 The trick is the usage of the ``Request::getPathInfo()`` method which returns
 the path of the Request by removing the front controller script name including
@@ -152,8 +151,8 @@ its sub-directories (only if needed -- see above tip).
     argument is the URL path you want to simulate.
 
 Now that the web server always access the same script (``front.php``) for all
-our pages, we can secure our code further by moving all other PHP files
-outside the web root directory:
+pages, we can secure the code further by moving all other PHP files outside the
+web root directory:
 
 .. code-block:: text
 
@@ -170,14 +169,21 @@ outside the web root directory:
 Now, configure your web server root directory to point to ``web/`` and all
 other files won't be accessible from the client anymore.
 
+To test your changes in a browser (``http://localhost:4321/?name=Fabien``), run
+the PHP built-in server:
+
+.. code-block:: sh
+
+    $ php -S 127.0.0.1:4321 -t web/ web/front.php
+
 .. note::
 
     For this new structure to work, you will have to adjust some paths in
     various PHP files; the changes are left as an exercise for the reader.
 
 The last thing that is repeated in each page is the call to ``setContent()``.
-We can convert all pages to "templates" by just echoing the content and
-calling the ``setContent()`` directly from the front controller script::
+We can convert all pages to "templates" by just echoing the content and calling
+the ``setContent()`` directly from the front controller script::
 
     <?php
 
