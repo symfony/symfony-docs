@@ -162,20 +162,19 @@ maxSize
 If set, the size of the underlying file must be below this file size in order
 to be valid. The size of the file can be given in one of the following formats:
 
-* **bytes**: To specify the ``maxSize`` in bytes, pass a value that is entirely
-  numeric (e.g. ``4096``);
-
-* **kilobytes**: To specify the ``maxSize`` in kilobytes, pass a number and
-  suffix it with a "k" (e.g. ``200k``); 1k = 1,000 bytes;
-
-* **megabytes**: To specify the ``maxSize`` in megabytes, pass a number and
-  suffix it with a "M" (e.g. ``4M``); 1M = 1,000,000 bytes;
-
-* **kibibytes**: To specify the ``maxSize`` in kibibytes, pass a number and
-  suffix it with a "Ki" (e.g. ``600Ki``); 1Ki = 1,024 bytes;
-
-* **mebibytes**: To specify the ``maxSize`` in mebibytes, pass a number and
-  suffix it with a "Mi" (e.g. ``8Mi``); 1Mi = 1,048,576 bytes.
++--------+-----------+-----------------+------+
+| Suffix | Unit Name |      value      | e.g. |
++========+===========+=================+======+
+|        | byte      |          1 byte | 4096 |
++--------+-----------+-----------------+------+
+| k      | kilobyte  |     1,000 bytes | 200k |
++--------+-----------+-----------------+------+
+| M      | megabyte  | 1,000,000 bytes |   2M |
++--------+-----------+-----------------+------+
+| Ki     | kibibyte  |     1,024 bytes | 32Ki |
++--------+-----------+-----------------+------+
+| Mi     | mebibyte  | 1,048,576 bytes |  8Mi |
++--------+-----------+-----------------+------+
 
 For more information about the difference between binary and SI suffixes,
 see `Wikipedia: Binary prefix`_.
