@@ -154,6 +154,9 @@ Options
 maxSize
 ~~~~~~~
 
+.. versionadded:: 2.6
+    The suffixes ``Ki`` and ``Mi`` were introduced in Symfony 2.6.
+
 **type**: ``mixed``
 
 If set, the size of the underlying file must be below this file size in order
@@ -188,7 +191,7 @@ binaryFormat
 When ``true``, the sizes will be displayed in messages with binary suffixes
 (KiB, MiB). When ``false``, the sizes will be displayed with SI suffixes (kB,
 MB). When ``null``, then the binaryFormat will be guessed from the suffix
-defined in the maxSize option.
+defined in the ``maxSize`` option.
 
 For more information about the difference between binary and SI suffixes,
 see `Wikipedia: Binary prefix`_.
