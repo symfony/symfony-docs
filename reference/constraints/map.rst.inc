@@ -66,12 +66,15 @@ File Constraints
 Financial and other Number Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* :doc:`Bic </reference/constraints/Bic>`
+* :doc:`Blz </reference/constraints/Blz>`
 * :doc:`CardScheme </reference/constraints/CardScheme>`
 * :doc:`Currency </reference/constraints/Currency>`
 * :doc:`Luhn </reference/constraints/Luhn>`
 * :doc:`Iban </reference/constraints/Iban>`
 * :doc:`Isbn </reference/constraints/Isbn>`
 * :doc:`Issn </reference/constraints/Issn>`
+* :doc:`Konto </reference/constraints/Konto>`
 
 Other Constraints
 ~~~~~~~~~~~~~~~~~
