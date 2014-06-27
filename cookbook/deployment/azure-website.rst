@@ -4,24 +4,6 @@
 Deploying to Microsoft Azure Website Cloud
 ==========================================
 
-SensioLabs and Microsoft announce their partnership during the upcoming PHP Tour
-in Lyon (France). This announcement covers several strategic aspects including
-the integration of Symfony into the Microsoft Azure Website Cloud platform
-destined to leverage all the devops aspects from Azure Websites to the Symfony2
-developers community.
-
-The two companies will provide all the needed tutorials allowing both
-communities and companies to migrate their Symfony applications to the Microsoft
-Azure Cloud platform.
- 
-Additionally, Microsoft and SensioLabs are working on integrating Symfony into
-the Azure Website gallery in an effort to simplify the deployment of Symfony
-applications and provide a complete offer to satisfy various company's target
-markets.
-
-Objectives
-----------
-
 Simply put, this cookbook illustrates how to deploy a very simple **Symfony2
 Standard Edition** web application. You can easily download a copy of the
 Symfony Standard Edition on the `downloads`_ page. Also, this cookbook assumes
