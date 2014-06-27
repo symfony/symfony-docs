@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-20T13:14:46Z
+
+I'm not sure if I like this change. It still lives in the AcmeDemoBundle, but only if you installed it. SensioDistributionBundle is just because we need to save the skeleton files somewhere, it is not available in there only its skeleton.
+
+On the other hand, "available in the Symfony Standard Edition" is maybe to short, since it is not always included there anymore.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-20T15:21:18Z
+
+@WouterJ I kind of agree, I'm mixed on this. It goes back your symfony/symfony#11165 - it causes some confusion. Though honestly, this entry doesn't even need to be using `AcmeDemoBundle` - we're just saying "Suppose there is a bundle called AcmeDemoBundle in your system, ..."
+
+---------------------------------------------------------------------------
+
+by hice3000 at 2014-06-20T17:46:16Z
+
+@WouterJ @weaverryan  How about `(installed with SensioDistributionBundle, which is required by the Symfony Standard Edition by default)` ?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-20T21:20:16Z
+
+I think we should just remove the whole thing inside the parenthesis.
+
+Something like
+
+````diff
+To make the console commands available automatically with Symfony2, create a
+``Command`` directory inside your bundle and create a PHP file suffixed with
+``Command.php`` for each command that you want to provide. For example, if you
+--- want to extend the AcmeDemoBundle (available in the Symfony Standard
+--- Edition) to greet you from the command line, create ``GreetCommand.php`` and
++++ want to create a command which greets you, create a ``GreetCommand.php`` and
+add the following to it:
+````
+
+---------------------------------------------------------------------------
+
+by hice3000 at 2014-06-21T15:57:39Z
+
+@WouterJ I agree, commited this.
