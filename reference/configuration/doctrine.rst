@@ -443,7 +443,7 @@ level.
             filters:
                 # ...
 
-This shorten version is commonly used in other documentation sections.
-Keep in mind that you can't use both syntax at the same time.
+This shortened version is commonly used in other documentation sections.
+Keep in mind that you can't use both syntaxes at the same time.
 
 .. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
