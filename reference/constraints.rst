@@ -46,8 +46,11 @@ Validation Constraints Reference
    constraints/File
    constraints/Image
 
+   constraints/Bic
+   constraints/Blz
    constraints/CardScheme
    constraints/Currency
+   constraints/Konto
    constraints/Luhn
    constraints/Iban
    constraints/Isbn
