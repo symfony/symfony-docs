@@ -571,6 +571,7 @@ set to any desirable value per firewall.
             firewalls:
                 wsse_secured:
                     pattern:   /api/.*
+                    provider:  wsse
                     stateless: true
                     wsse:      { lifetime: 30 }
 
@@ -579,6 +580,7 @@ set to any desirable value per firewall.
         <config>
             <firewall name="wsse_secured"
                 pattern="/api/.*"
+                provider="wsse"
             >
                 <stateless />
                 <wsse lifetime="30" />
@@ -591,6 +593,7 @@ set to any desirable value per firewall.
             'firewalls' => array(
                 'wsse_secured' => array(
                     'pattern' => '/api/.*',
+                    'provider' =>  'wsse',
                     'stateless' => true,
                     'wsse'    => array(
                         'lifetime' => 30,
