@@ -10,18 +10,19 @@ directory structure is:
 
 .. code-block:: text
 
-    app/
-        cache/
-        config/
-        logs/
-        ...
-    src/
-        ...
-    vendor/
-        ...
-    web/
-        app.php
-        ...
+    your-project/
+    ├─ app/
+    |  ├─ cache/
+    |  ├─ config/
+    |  ├─ logs/
+    |  └─ ...
+    ├─ src/
+    |  └─ ...
+    ├─ vendor/
+    |  └─ ...
+    └─ web/
+       ├─ app.php
+       └─ ...
 
 .. _override-cache-dir:
 
