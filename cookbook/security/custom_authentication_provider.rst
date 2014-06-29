@@ -593,7 +593,7 @@ set to any desirable value per firewall.
             'firewalls' => array(
                 'wsse_secured' => array(
                     'pattern' => '/api/.*',
-                    'provider' =>  'wsse',
+                    'provider' => 'wsse',
                     'stateless' => true,
                     'wsse'    => array(
                         'lifetime' => 30,
