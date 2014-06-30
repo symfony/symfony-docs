@@ -412,12 +412,11 @@ service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
 
-Shortened Configuration syntax
+Shortened Configuration Syntax
 ------------------------------
 
 When you are only using one entity manager, all config options available
-for each entity manager can be placed directly under ``doctrine.orm`` config
-level. 
+can be placed directly under ``doctrine.orm`` config level. 
 
 .. code-block:: yaml
 
