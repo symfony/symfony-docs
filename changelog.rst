@@ -13,6 +13,62 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+June, 2014
+----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `5540e0b <https://github.com/symfony/symfony-docs/commit/5540e0b4a8dd455cb6ac4e149d1545385f4b203b>`_ #3963 [cookbook] [deployment] added cookbook showing how to deploy to the Microsoft Azure Website Cloud (hhamon)
+- `6cba0f1 <https://github.com/symfony/symfony-docs/commit/6cba0f129056a4ac20f7a84cc069d7e726a090b4>`_ #3936 Varnish only takes into account max-age (gonzalovilaseca)
+- `3c95af5 <https://github.com/symfony/symfony-docs/commit/3c95af5ebb26710f1e2f95bb9ded3abc7ea3b709>`_ #3928 Reorder page from simple to advanced (rebased) (clemens-tolboom)
+- `350b805 <https://github.com/symfony/symfony-docs/commit/350b8055458e02c63cb2f24b3e261b6b334b30b1>`_ #3916 [Component][EventDispatcher] documentation for the TraceableEventDispatcher (xabbuh)
+- `1702133 <https://github.com/symfony/symfony-docs/commit/17021333289c9de37ab7383dee4b94bdb04f4ea7>`_ #3913 [Cookbook][Security] Added doc for x509 pre authenticated listener (zefrog)
+- `32b9058 <https://github.com/symfony/symfony-docs/commit/32b9058563637def77d2820d659f8d647b5b2e5b>`_ #3909 Update the CssSelector component documentation (stof)
+- `23b51c8 <https://github.com/symfony/symfony-docs/commit/23b51c84e72a2a7692667fd449d3362ec6f542a1>`_ #3901 Bootstraped the standards for "Files and Directories" (javiereguiluz)
+- `8931c36 <https://github.com/symfony/symfony-docs/commit/8931c362c2b256bb52507ca2d367b72eea421d84>`_ #3889 Fixed the section about getting services from a command (javiereguiluz)
+- `9fddab6 <https://github.com/symfony/symfony-docs/commit/9fddab6e0cb6e7a023056e1f8456ebc3520e5cfb>`_ #3877 Added a note about configuring several paths under the same namespace (javiereguiluz)
+- `eadf281 <https://github.com/symfony/symfony-docs/commit/eadf281096ccbdc69928d0f94a57428bcc906fde>`_ #3874 Updated the installation instructions for Symfony 2.5+ (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `aeffd12 <https://github.com/symfony/symfony-docs/commit/aeffd126b3dff698792fb39374d856b702990e1e>`_ #3961 Fixing php coding (mvhirsch)
+- `84332ff <https://github.com/symfony/symfony-docs/commit/84332ff5b041ba09a9674c772cf203a573375038>`_ #3945 Fixed missing component name in namespaces (WouterJ)
+- `d8329dc <https://github.com/symfony/symfony-docs/commit/d8329dc05523bfe17e7fcc24099122932e638ba3>`_ #3943 Fixing simple quotes in double quotes (ptitlazy)
+- `04f4318 <https://github.com/symfony/symfony-docs/commit/04f43183dea62c1036c169392a81a353e516d8fe>`_ #3934 Move __construct after the repository assignment (cmodijk)
+- `0626f2b <https://github.com/symfony/symfony-docs/commit/0626f2bda67fa34ac6039a400a9b23f5968d9e82>`_ #3897 Collection constraint (hhamon)
+- `3387cb2 <https://github.com/symfony/symfony-docs/commit/3387cb2c79affaae9359ffdce929a2148f87de55>`_ #3871 Fix missing Front Controller (parthasarathigk)
+- `8257be9 <https://github.com/symfony/symfony-docs/commit/8257be91df0a873fd3ea9277a2c7e308a579a4ce>`_ #3891 Fixed wrong method call. (cmfcmf)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `75ee6b4 <https://github.com/symfony/symfony-docs/commit/75ee6b4d62e7caf0932f6966b3fb8dfcefdb8335>`_ #3969 [cookbook] [deployment] removed marketing introduction in Azure Deployme... (hhamon)
+- `02aeade <https://github.com/symfony/symfony-docs/commit/02aeade9a01155ca5e203f065008fd2ec2044cb4>`_ #3967 fix typo. (yositani2002)
+- `208b0dc <https://github.com/symfony/symfony-docs/commit/208b0dc78b07f4dbabb4d3e7dd6b2c7f1ac4863a>`_ #3951 fix origin of AcmeDemoBundle (hice3000)
+- `fba083e <https://github.com/symfony/symfony-docs/commit/fba083efaddd92ad782e453d43a62bdec053cfa0>`_ #3957 [Cookbook][Bundles] fix typos in the prepend extension chapter (xabbuh)
+- `c444b5d <https://github.com/symfony/symfony-docs/commit/c444b5ddb2df7bede3a84f8fffa543892a629916>`_ #3948 update the Sphinx extensions to raise warnings when backslashes are not ... (xabbuh)
+- `8fef7b7 <https://github.com/symfony/symfony-docs/commit/8fef7b7fd81ee12aca2d45ac59c2ef2da11528d0>`_ #3938 [Contributing][Documentation] don't render the list inside a blockquote (xabbuh)
+- `b7a03f8 <https://github.com/symfony/symfony-docs/commit/b7a03f85e24b2d04faa832de151c5f02d9e864ba>`_ #3937 properly escape backslashes in class and method directives (xabbuh)
+- `882471f <https://github.com/symfony/symfony-docs/commit/882471fc1dd6b39dd22a62361ebbaad9939f1c4f>`_ #3935 Typo (greg0ire)
+- `222a014 <https://github.com/symfony/symfony-docs/commit/222a014164c005a38ff69a8b1ed3dd80612b6403>`_ #3933 render directory inside a code block (xabbuh)
+- `0c2a9b3 <https://github.com/symfony/symfony-docs/commit/0c2a9b3c033666fd87feaf21ce23a92178e0c802>`_ #3931 [Component][EventDispatcher] 2.5 specific documentation for the TraceableEventDispatcher (xabbuh)
+- `b31ea51 <https://github.com/symfony/symfony-docs/commit/b31ea51f524017bbfe7906f7b46a59dfe2ac9f48>`_ #3929 Update custom_authentication_provider.rst (verschoof)
+- `7937864 <https://github.com/symfony/symfony-docs/commit/793786494d80f37dc0311520585f2699ab07a149>`_ #3927 [Cookbook][Security] Explicit 'your_user_provider' configuration parameter (zefrog)
+- `26d00d0 <https://github.com/symfony/symfony-docs/commit/26d00d084386df90f625a1b7302e65974326008b>`_ #3925 Fixed the indentation of two code blocks (javiereguiluz)
+- `351b2cf <https://github.com/symfony/symfony-docs/commit/351b2cf60575e4e2f1249c9c7ac7b19a0ecbe1b8>`_ #3922 update fabpot Sphinx extensions version (xabbuh)
+- `3ddbe1b <https://github.com/symfony/symfony-docs/commit/3ddbe1be2a91426fa2b8665b5a33f9c8a5fd21eb>`_ #3923 Fixed the headers of one table (javiereguiluz)
+- `35cbffc <https://github.com/symfony/symfony-docs/commit/35cbffcd90920494231d07a487deee1d9a8ae967>`_ #3920 [Components][Form] remove blank line to render the versionadded directive properly (xabbuh)
+- `df9f31a <https://github.com/symfony/symfony-docs/commit/df9f31ae2dcceb8f51a1cf9fb497d5a027944b8f>`_ #3882 change version numbers in installation notes to be in line with the docu... (xabbuh)
+- `ed496ae <https://github.com/symfony/symfony-docs/commit/ed496aeb401943f48c8c66ce45e57ae89cb186a4>`_ #3887 [Components][Form] add versionadded for the data collector form extension (xabbuh)
+- `36337e7 <https://github.com/symfony/symfony-docs/commit/36337e7b44af6237ad43533742571c27d8976faa>`_ #3906 Blockquote introductions (xabbuh)
+- `5e0e119 <https://github.com/symfony/symfony-docs/commit/5e0e1196cf1b7735e489b25fe2c2263fea13d8ff>`_ #3899 [RFR] Misc. fixes mostly related to formatting issues (javiereguiluz)
+- `349cbeb <https://github.com/symfony/symfony-docs/commit/349cbeb161cb9d1eec9238a58fc21004a560ced9>`_ #3900 Fixed the formatting of the table headers (javiereguiluz)
+- `1dc8b4a <https://github.com/symfony/symfony-docs/commit/1dc8b4af41b6e89a22ca79ed95c84955e1e8a1e6>`_ #3898 clarifying the need of a factory for auth-provider (leberknecht)
+- `0c20141 <https://github.com/symfony/symfony-docs/commit/0c2014162aec345fc2665602ab0b0380cb50fe57>`_ #3896 Fixing comment typo for Doctrine findBy and findOneBy code example (beenanner)
+- `b00573c <https://github.com/symfony/symfony-docs/commit/b00573c4be04f4181896127437aa3d09c4817669>`_ #3870 Fix wrong indentation for lists (WouterJ)
+
 May, 2014
 ---------
 
