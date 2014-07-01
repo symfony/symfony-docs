@@ -481,7 +481,7 @@ configured and executed on a Microsoft IIS web server. The process remains
 simple and easy to implement. Microsoft continues working to reduce the number
 of necessary steps so that deployment becomes even easier.
 
-.. _`downloads`: http://symfony.com/download/
+.. _`downloads`: http://symfony.com/download
 .. _`signup to Azure`: https://signup.live.com/signup.aspx
 .. _`Azure Portal`: https://manage.windowsazure.com
 .. _`PHP MSDN documentation`: http://blogs.msdn.com/b/silverlining/archive/2012/07/10/configuring-php-in-windows-azure-websites-with-user-ini-files.aspx
