@@ -51,7 +51,7 @@ plan configuration in the previous step.
 
 Agree to the terms and conditions and click on the right arrow to continue.
 
-Step 3: Where is your source code
+Step 3: Where Is your source code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now, on the third step, select a **Local Git repository** item and click
@@ -60,11 +60,11 @@ on the right arrow to configure your Azure Website credentials.
 .. image:: /images/cookbook/deployment/azure-website/step-04.png
    :alt: Setup a local Git repository
 
-Step 4: New user name and password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 4: New Username and Password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Great! You're now on the final step. Create a username and a secure password:
-theese will become essential identifiers to connect to the FTP server and
+these will become essential identifiers to connect to the FTP server and
 also to push your application code to the Git repository.
 
 .. image:: /images/cookbook/deployment/azure-website/step-05.png
@@ -83,7 +83,7 @@ Website.
 .. image:: /images/cookbook/deployment/azure-website/step-07.png
    :alt: Azure Website Control Panel
 
-Your Azure Website is now ready, but to run a Symfony site, you need to configure
+Your Azure Website is ready! But to run a Symfony site, you need to configure
 just a few additional things.
 
 Configuring the Azure Website for Symfony
@@ -112,16 +112,16 @@ the web server.
 .. note::
 
     Choosing a more recent PHP version can greatly improve runtime performance.
-    PHP 5.5 ships with a new built-in PHP accelerator called ZendOptimizer+ that
-    replaces APC. On an Azure Website, ZendOptimizer+ is already enabled
-    and there is no need to install and setup APC.
+    PHP 5.5 ships with a new built-in PHP accelerator called OPCache that
+    replaces APC. On an Azure Website, OPCache is already enabled and there
+    is no need to install and setup APC.
 
     The following screenshot shows the output of a :phpfunction:`phpinfo` script
     run from an Azure Website to verify that PHP 5.5 is running with
-    ZendOptimizer+ enabled.
+    OPCache enabled.
 
     .. image:: /images/cookbook/deployment/azure-website/step-09.png
-       :alt: ZendOptimizer+ Configuration
+       :alt: OPCache Configuration
 
 Tweaking php.ini Configuration Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,7 +153,7 @@ Website repository.
     This cookbook has a section dedicated to explaining how to configure your
     Azure Website Git repository and how to push the commits to be deployed. See
     `Deploying from Git`_. You can also learn more about configuring PHP
-    internal settings on the official page `PHP MSDN documentation`_.
+    internal settings on the official `PHP MSDN documentation`_ page.
 
 Enabling the PHP intl Extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -324,7 +324,7 @@ the Composer ``install`` command downloads and installs all necessary third-part
 libraries.
 
 This may take a while depending on the number of third-party dependencies
-you've configured into your ``composer.json`` file.
+you've configured in your ``composer.json`` file.
 
 .. note::
 
@@ -408,15 +408,15 @@ Configure the Web Server
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 At this point, the Symfony application has been deployed and works perfectly on
-the Azure Website. However the ``web`` folder is still part of the url, which
-you definitely don't want. But don't worry! We can easily configure the web
+the Azure Website. However, the ``web`` folder is still part of the url, which
+you definitely don't want. But don't worry! You can easily configure the web
 server to point to the ``web`` folder and remove the ``web`` in the URL (and
 guarantee that nobody can access files outside of the ``web`` directory.)
 
 To do this, create and deploy (see previous section about Git) the following
 ``web.config`` file. This file must be located at the root of your project
 next to the ``composer.json`` file. This file is the Microsoft IIS Server
-equivalent of the well-known ``.htaccess`` file from Apache. For a Symfony
+equivalent to the well-known ``.htaccess`` file from Apache. For a Symfony
 application, configure it with the following content:
 
 .. code-block:: xml
