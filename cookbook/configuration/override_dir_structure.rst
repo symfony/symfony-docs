@@ -10,18 +10,19 @@ directory structure is:
 
 .. code-block:: text
 
-    app/
-        cache/
-        config/
-        logs/
-        ...
-    src/
-        ...
-    vendor/
-        ...
-    web/
-        app.php
-        ...
+    your-project/
+    ├─ app/
+    │  ├─ cache/
+    │  ├─ config/
+    │  ├─ logs/
+    │  └─ ...
+    ├─ src/
+    │  └─ ...
+    ├─ vendor/
+    │  └─ ...
+    └─ web/
+       ├─ app.php
+       └─ ...
 
 .. _override-cache-dir:
 
@@ -94,7 +95,7 @@ may need to modify the paths inside these files::
 Since Symfony 2.1 (in which Composer is introduced), you also need to change
 the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         ...
