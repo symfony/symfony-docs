@@ -411,3 +411,38 @@ Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
+
+Shortened Configuration Syntax
+------------------------------
+
+When you are only using one entity manager, all config options available
+can be placed directly under ``doctrine.orm`` config level. 
+
+.. code-block:: yaml
+
+    doctrine:
+        orm:
+            # ...
+            query_cache_driver:
+               # ...
+            metadata_cache_driver:
+                # ...
+            result_cache_driver:
+                # ...
+            connection: ~
+            class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
+            default_repository_class:  Doctrine\ORM\EntityRepository
+            auto_mapping: false
+            hydrators:
+                # ...
+            mappings:
+                # ...
+            dql:
+                # ...
+            filters:
+                # ...
+
+This shortened version is commonly used in other documentation sections.
+Keep in mind that you can't use both syntaxes at the same time.
+
+.. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
