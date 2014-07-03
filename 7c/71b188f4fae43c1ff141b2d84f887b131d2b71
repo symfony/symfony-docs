@@ -1,0 +1,73 @@
+---------------------------------------------------------------------------
+
+by danieledangeli at 2013-09-06T10:31:48Z
+
+@xabbuh thanks :+1:
+
+---------------------------------------------------------------------------
+
+by danieledangeli at 2013-09-06T11:44:44Z
+
+It's now? Is he first time that I seen the .rst files :S
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2013-09-06T11:48:27Z
+
+It's nearly done. I think you need to fix the indentation:
+
+* no indentation for the ``code-block`` directive
+* indent the YAML code by four spaces
+
+And by the way: Can you please enclose the ``collect`` parameter inside the text with double backticks?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2013-09-06T13:43:44Z
+
+Could you please also add the [pr format](http://symfony.com/doc/current/contributing/documentation/overview.html#pull-request-format) to your PR description? I promise you, after that this PR is ready to get merged :)
+
+BTW, the next time you submit a PR, please base your branch on the oldest maintained version (as stated in the readme file) except for things that are added in symfony in newer releases.
+
+---------------------------------------------------------------------------
+
+by liuggio at 2013-09-06T14:12:48Z
+
+Daniele my friend you are Italian why don't you do a PR in the Italian doc as well?
+Could be great! :dancer:
+
+---------------------------------------------------------------------------
+
+by claudio-dalicandro at 2013-09-06T14:25:51Z
+
++1
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2013-09-18T15:36:33Z
+
+Hi guys!
+
+This all makes good technical sense, but I have one question. This `collect` setting is new in Symfony 2.3. Additionally, in Symfony 2.3, `collect: false` *does* appear on the `config_test.yml` file. So, if a user is using Symfony 2.3 (unless they upgraded from 2.2), then they should already have this setting and everything should work out fine.
+
+@danieledangeli you opened this issue because you said people were opening issues about enabling the profiler in the test environment, but how some people don't want to collect on every request. Can you talk more about these issues? Are these people who upgraded from some older version and so were missing the `collect: false` setting in `config_test.yml`? If so, perhaps we just need to add a quick note that mentions this setting and points to the reference section.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by danieledangeli at 2013-09-18T16:10:38Z
+
+For performance reasons, when I run all tests suite  I don't want enabling the profiler in each test.
+So, if you set only ``enableProfiler: true`` , the profiler collector is active for each test.
+If you set ``collect: false`` and ``enableProfiler: true`` the profiler collector don't works in each test, but only in test that call ``$client->enableProfiler()``.
+Another problem is that, if you don't set ``enableProfiler: true`` the test fails with this message: '
+'  <i>"Call to a member function getCollector() on a non-object''</i>
+In actual Symfony 2.3 documentation ( http://symfony.com/doc/current/cookbook/testing/profiling.html ) there isn't any about that.
+The option ``enableProfiler: true`` is necessary if you want use the collector object.
+
+---------------------------------------------------------------------------
+
+by liuggio at 2013-10-01T08:32:12Z
+
+:+1:
