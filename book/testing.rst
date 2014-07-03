@@ -487,6 +487,52 @@ To get the Profiler for the last request, do the following::
 For specific details on using the profiler inside a test, see the
 :doc:`/cookbook/testing/profiling` cookbook entry.
 
+To avoid collecting data in each test you can set the ``collect`` parameter
+in the configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_test.yml
+
+        # ...
+        framework:
+            profiler:
+                enabled: true
+                collect: false
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+
+            <framework:config>
+                <framework:profiler enabled="true" collect="false" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        // ...
+        $container->loadFromExtension('framework', array(
+            'profiler' => array(
+                'enabled' => true,
+                'collect' => false,
+            ),
+        ));
+
+In this way only tests that call ``enableProfiler()`` will collect data.
+
 Redirecting
 ~~~~~~~~~~~
 
