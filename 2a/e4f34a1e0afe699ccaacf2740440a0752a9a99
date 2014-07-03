@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-04-02T14:34:19Z
+
+It'll be part of, at last, 2.5, but more likely 2.6. So "Applies to" 2.4+ is wrong.
+
+You should add `.. versionadded:: 2.5`/`.. versionadded:: 2.6` saying that "Option xxx was introduced in Symfony 2.5/2.6" to the new options.
+
+---------------------------------------------------------------------------
+
+by megazoll at 2014-04-02T19:47:40Z
+
+I'm hope it will be added in 2.5. Fixed.
+
+---------------------------------------------------------------------------
+
+by megazoll at 2014-06-16T10:37:52Z
+
+@WouterJ code is merged. Please check this PR.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-16T16:51:05Z
+
+:+1:
+
+@weaverryan will merge it when he has some time
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-20T15:03:52Z
+
+Great feature @megazoll - I just suggested a few small changed. Thanks!
+
+---------------------------------------------------------------------------
+
+by megazoll at 2014-06-20T21:30:30Z
+
+@weaverryan fixed. Please check my text align, should I break line in description or not?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-22T23:35:53Z
+
+@megazoll Just one more tiny change! Thanks for your work! :)
