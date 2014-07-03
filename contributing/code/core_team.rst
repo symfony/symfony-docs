@@ -52,11 +52,15 @@ Active Core Members
     Process_ component;
 
   * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_
-    component.
+    component;
+
+  * **Christophe Coevoet** (:merger:`stof`) can merge into the BrowserKit_,
+    Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
+    HttpFoundation_, HttpKernel_, Serializer_, Stopwatch_, DoctrineBridge_,
+    MonologBridge_, and TwigBridge_ components.
 
 * **Deciders**:
 
-  * **Christophe Coevoet** (:decider:`stof`);
   * **Jakub Zalas** (:decider:`jakzal`);
   * **Jordi Boggiano** (:decider:`seldaek`);
   * **Lukas Kahwe Smith** (:decider:`lsmith77`).
@@ -137,13 +141,26 @@ discretion of the **Project Leader**.
 .. [1] Minor changes comprise typos, DocBlock fixes, code standards
        violations, and minor CSS, JavaScript and HTML modifications.
 
+.. _BrowserKit: https://github.com/symfony/BrowserKit
+.. _Config: https://github.com/symfony/Config
+.. _Console: https://github.com/symfony/Console
+.. _Debug: https://github.com/symfony/Debug
+.. _DependencyInjection: https://github.com/symfony/DependencyInjection
+.. _DoctrineBridge: https://github.com/symfony/DoctrineBridge
+.. _EventDispatcher: https://github.com/symfony/EventDispatcher
+.. _DomCrawler: https://github.com/symfony/DomCrawler
 .. _Form: https://github.com/symfony/Form
-.. _Validator: https://github.com/symfony/Validator
+.. _HttpFoundation: https://github.com/symfony/HttpFoundation
+.. _HttpKernel: https://github.com/symfony/HttpKernel
 .. _Icu: https://github.com/symfony/Icu
 .. _Intl: https://github.com/symfony/Intl
 .. _Locale: https://github.com/symfony/Locale
+.. _MonologBridge: https://github.com/symfony/MonologBridge
 .. _OptionsResolver: https://github.com/symfony/OptionsResolver
+.. _Process: https://github.com/symfony/Process
 .. _PropertyAccess: https://github.com/symfony/PropertyAccess
 .. _Routing: https://github.com/symfony/Routing
-.. _Process: https://github.com/symfony/Process
-.. _Debug: https://github.com/symfony/Debug
+.. _Serializer: https://github.com/symfony/Serializer
+.. _Stopwatch: https://github.com/symfony/Stopwatch
+.. _TwigBridge: https://github.com/symfony/TwigBridge
+.. _Validator: https://github.com/symfony/Validator
