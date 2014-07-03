@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-22T08:51:22Z
+
+what's left here @weaverryan ?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-05-29T12:59:08Z
+
+I just added a few small notes. Travis failure is unrelated, though if you do want to rebase to master, we should then see if it passes (I think the too short `~` would have gotten caught if the tests had run properly).
+
+---------------------------------------------------------------------------
+
+by sprain at 2014-06-03T08:48:26Z
+
+Updated!
