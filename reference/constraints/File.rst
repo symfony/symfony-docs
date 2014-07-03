@@ -23,6 +23,7 @@ form type.
 |                | - `mimeTypes`_                                                      |
 |                | - `maxSizeMessage`_                                                 |
 |                | - `mimeTypesMessage`_                                               |
+|                | - `disallowEmptyMessage`_                                           |
 |                | - `notFoundMessage`_                                                |
 |                | - `notReadableMessage`_                                             |
 |                | - `uploadIniSizeErrorMessage`_                                      |
@@ -193,6 +194,18 @@ mimeTypesMessage
 
 The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
+
+disallowEmptyMessage
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``disallowEmptyMessage`` option was introduced in Symfony 2.6. Prior to 2.6,
+    if the user uploaded an empty file, no validation error occurred.
+
+**type**: ``string`` **default**: ``An empty file is not allowed.``
+
+This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
+this message is displayed.
 
 notFoundMessage
 ~~~~~~~~~~~~~~~
