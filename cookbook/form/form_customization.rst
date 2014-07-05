@@ -301,7 +301,7 @@ block from the new template and the ``input`` tag will be wrapped in the
 Multiple Templates
 ..................
 
-A form can also be customized applying several templates. To do this, pass the
+A form can also be customized by applying several templates. To do this, pass the
 name of all the templates as an array using the ``with`` keyword:
 
 .. code-block:: html+jinja
