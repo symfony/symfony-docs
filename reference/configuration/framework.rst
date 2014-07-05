@@ -120,9 +120,16 @@ trusted_hosts
 
 **type**: ``array``
 
-The value of the ``$_SERVER['HOST']`` parameter cannot be safely trusted because
-users can manipulate it. This option whitelists the hosts that your Symfony
-application can respond to.
+A lot of different attacks have been discovered relying on inconsistencies
+between the handling of the ``Host`` header by various software (web servers,
+reverse proxies, web frameworks, etc.). Basically, everytime the framework is
+generating an absolute URL (when sending an email to reset a password for
+instance), the host might have been manipulated by an attacker.
+
+The Symfony Request::getHost() method might be vulnerable to some of these attacks
+because it depends on the configuration of your web server. One simple solution
+to avoid these attacks is to whitelist the hosts that your Symfony application
+can respond to. That's the purpose of this ``trusted_hosts`` option:
 
 .. configuration-block::
 
