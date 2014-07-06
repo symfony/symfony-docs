@@ -97,6 +97,11 @@ as you normally do:
     ensures that development packages are not installed in the production
     environment.
 
+.. note::
+
+    You may need to pass the environment name via ``export SYMFONY_ENV=prod``
+    for the Symfony ``post-install-cmd`` commands to execute properly.
+
 C) Clear your Symfony cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
