@@ -70,7 +70,13 @@ to run Symfony:
 
 .. code-block:: bash
 
-    $ php app/console server:run
+    $ php app/console server:start
+
+When you are finished, you can stop it with the ``server:stop`` command:
+
+.. code-block:: bash
+
+    $ php app/console server:stop
 
 .. seealso::
 

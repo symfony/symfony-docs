@@ -274,7 +274,21 @@ If there are any issues, correct them now before moving on.
     Note that using the ACL is recommended when you have access to them
     on your server because changing the umask is not thread-safe.
 
-    **4. Use the same user for the CLI and the web server**
+    **4. Use the built-in web server in development environments**
+
+    The built-in PHP web server - which can be used during development - allows
+    your web server user and CLI user to be the same. This removes any permissions
+    issues:
+
+    .. code-block:: bash
+
+        $ php app/console server:start
+
+    .. seealso::
+
+        Read more about the internal server :doc:`in the cookbook </cookbook/web_server/built_in>`.
+
+    **5. Use the same user for the CLI and the web server**
 
     In development environments, it is a common practice to use the same unix
     user for the CLI and the web server because it avoids any of these permissions
