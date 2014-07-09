@@ -758,11 +758,9 @@ can be extended to have an almost infinite flexibility using ``conditions``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="contact"
-                path="/contact"
-                condition="context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
-            >
+            <route id="contact" path="/contact">
                 <default key="_controller">AcmeDemoBundle:Main:contact</default>
+                <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
             </route>
         </routes>
 
