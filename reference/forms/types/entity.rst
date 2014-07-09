@@ -154,6 +154,9 @@ either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
 the entity.
 
+Please note that regardless of the entity type returned by the ``QueryBuilder`` the 
+first entity referenced by it must be that specified through the ``class`` option.
+
 em
 ~~
 
