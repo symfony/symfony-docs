@@ -53,10 +53,9 @@ properties::
 
 To validate the object, you have some special requirements:
 
-* A) If ``isTechnicalPost`` is true, then ``category`` must be either ``php``
-  or ``symfony``;
-
-* B) If ``isTechnicalPost`` is false, then ``category`` can be anything.
+A) If ``isTechnicalPost`` is true, then ``category`` must be either ``php``
+   or ``symfony``;
+B) If ``isTechnicalPost`` is false, then ``category`` can be anything.
 
 One way to accomplish this is with the Expression constraint:
 
