@@ -128,6 +128,7 @@
   * :doc:`/cookbook/routing/service_container_parameters`
   * :doc:`/cookbook/routing/custom_route_loader`
   * :doc:`/cookbook/routing/redirect_trailing_slash`
+  * :doc:`/cookbook/routing/extra_information`
 
 * :doc:`/cookbook/security/index`
 
