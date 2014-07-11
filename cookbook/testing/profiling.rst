@@ -73,3 +73,52 @@ finish. It's easy to achieve if you embed the token in the error message::
 
     Read the API for built-in :doc:`data collectors </cookbook/profiler/data_collector>`
     to learn more about their interfaces.
+
+Speeding up Tests by not Collecting Profiler Data
+-------------------------------------------------
+
+To avoid collecting data in each test you can set the ``collect`` parameter
+to false:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_test.yml
+
+        # ...
+        framework:
+            profiler:
+                enabled: true
+                collect: false
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+
+            <framework:config>
+                <framework:profiler enabled="true" collect="false" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        // ...
+        $container->loadFromExtension('framework', array(
+            'profiler' => array(
+                'enabled' => true,
+                'collect' => false,
+            ),
+        ));
+
+In this way only tests that call ``$client->enableProfiler()`` will collect data.

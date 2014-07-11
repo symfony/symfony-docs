@@ -35,11 +35,7 @@ This method has 3 arguments:
 
     $language = new ExpressionLanguage();
     $language->register('lowercase', function ($str) {
-        if (!is_string($str)) {
-            return $str;
-        }
-
-        return sprintf('strtolower(%s)', $str);
+        is_string(%1$s) ? strtolower(%1$s) : %1$s;
     }, function ($arguments, $str) {
         if (!is_string($str)) {
             return $str;
