@@ -77,7 +77,7 @@ from a predefined list::
     $question = new ChoiceQuestion(
         'Please select your favorite color (defaults to red)',
         array('red', 'blue', 'yellow'),
-        'red'
+        0
     );
     $question->setErrorMessage('Color %s is invalid.');
 
@@ -109,9 +109,9 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
     $helper = $this->getHelper('question');
     $question = new ChoiceQuestion(
-        'Please select your favorite color (defaults to red)',
+        'Please select your favorite colors (defaults to red and blue)',
         array('red', 'blue', 'yellow'),
-        'red'
+        '0,1'
     );
     $question->setMultiselect(true);
 
@@ -120,6 +120,9 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
 Now, when the user enters ``1,2``, the result will be:
 ``You have just selected: blue, yellow``.
+
+If the user does not enter anything, the result will be:
+``You have just selected: red, blue``.
 
 Autocompletion
 ~~~~~~~~~~~~~~
