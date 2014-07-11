@@ -16,7 +16,7 @@ functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
 :method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
 
 All the methods inside the Dialog Helper have an
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` as the first
@@ -69,7 +69,7 @@ Autocompletion
 You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
     $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
     $name = $dialog->ask(
         $output,
@@ -84,7 +84,7 @@ Hiding the User's Response
 You can also ask a question and hide the response. This is particularly
 convenient for passwords::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
     $password = $dialog->askHiddenResponse(
         $output,
         'What is the database password?',
@@ -152,7 +152,7 @@ Validating a Hidden Response
 
 You can also ask and validate a hidden response::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
 
     $validator = function ($value) {
         if ('' === trim($value)) {
@@ -186,7 +186,7 @@ Instead, you can use the
 method, which makes sure that the user can only enter a valid string
 from a predefined list::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
     $colors = array('red', 'blue', 'yellow');
 
     $color = $dialog->select(

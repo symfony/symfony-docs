@@ -12,7 +12,7 @@ functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
 :method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
 
-    $helper = $this->getHelperSet()->get('question');
+    $helper = $this->getHelper('question');
 
 The Question Helper has a single method
 :method:`Symfony\\Component\\Console\\Command\\Command::ask` that needs an
@@ -30,7 +30,7 @@ the following to your command::
     use Symfony\Component\Console\Question\ConfirmationQuestion;
     // ...
 
-    $helper = $this->getHelperSet()->get('question');
+    $helper = $this->getHelper('question');
     $question = new ConfirmationQuestion('Continue with this action?', false);
 
     if (!$helper->ask($input, $output, $question)) {
@@ -73,11 +73,11 @@ from a predefined list::
     use Symfony\Component\Console\Question\ChoiceQuestion;
     // ...
 
-    $helper = $app->getHelperSet()->get('question');
+    $helper = $this->getHelper('question');
     $question = new ChoiceQuestion(
         'Please select your favorite color (defaults to red)',
         array('red', 'blue', 'yellow'),
-        'red'
+        0
     );
     $question->setErrorMessage('Color %s is invalid.');
 
@@ -107,11 +107,11 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
     use Symfony\Component\Console\Question\ChoiceQuestion;
     // ...
 
-    $helper = $app->getHelperSet()->get('question');
+    $helper = $this->getHelper('question');
     $question = new ChoiceQuestion(
-        'Please select your favorite color (defaults to red)',
+        'Please select your favorite colors (defaults to red and blue)',
         array('red', 'blue', 'yellow'),
-        'red'
+        '0,1'
     );
     $question->setMultiselect(true);
 
@@ -120,6 +120,9 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
 Now, when the user enters ``1,2``, the result will be:
 ``You have just selected: blue, yellow``.
+
+If the user does not enter anything, the result will be:
+``You have just selected: red, blue``.
 
 Autocompletion
 ~~~~~~~~~~~~~~
@@ -206,7 +209,7 @@ You can also use a validator with a hidden question::
     use Symfony\Component\Console\Question\Question;
     // ...
 
-    $helper = $this->getHelperSet()->get('question');
+    $helper = $this->getHelper('question');
 
     $question = new Question('Please enter your password');
     $question->setValidator(function ($value) {

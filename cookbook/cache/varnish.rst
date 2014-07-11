@@ -38,6 +38,11 @@ application:
         set req.http.Surrogate-Capability = "abc=ESI/1.0";
     }
 
+.. note::
+
+    The ``abc`` part of the header isn't important unless you have multiple "surrogates"
+    that need to advertise their capabilities. See `Surrogate-Capability Header`_ for details.
+
 Then, optimize Varnish so that it only parses the Response contents when there
 is at least one ESI tag by checking the ``Surrogate-Control`` header that
 Symfony2 adds automatically:
@@ -217,3 +222,4 @@ absolute URLs:
 .. _`Varnish`: https://www.varnish-cache.org
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
+.. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch

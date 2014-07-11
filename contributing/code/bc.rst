@@ -138,7 +138,7 @@ your overridden method wouldn't match anymore and generate a fatal error.
 .. note::
 
     As with interfaces, we limit ourselves to changes that can be upgraded
-    easily. We will document the precise ugprade instructions in the UPGRADE
+    easily. We will document the precise upgrade instructions in the UPGRADE
     file in Symfony's root directory.
 
 In some cases, only specific properties and methods are tagged with the ``@api``
@@ -307,6 +307,9 @@ Add type hint to an argument                        Yes             Yes
 Remove type hint of an argument                     Yes             Yes
 Change argument type                                Yes             Yes
 Change return type                                  Yes             Yes
+**Static Methods**
+Turn non static into static                         No              No
+Turn static into non static                         No              No
 ==================================================  ==============  ==============
 
 .. [1] Your code may be broken by changes in the Symfony code. Such changes will
