@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-04T03:13:51Z
+
+This makes sense, but to be difficult, is there value in showing both ways? Should we pick just *one* of the ways and show it? Disagree?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-04T07:10:16Z
+
+What do you mean with both ways, @weaverryan? A single file vs. multiple files?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-07T18:27:39Z
+
+I mean showing:
+
+```twig
+{% form_theme form '::common.html.twig' ':Form:fields.html.twig' %}
+```
+
+AND
+
+```twig
+{% form_theme form with ['::common.html.twig', ':Form:fields.html.twig'] %}
+```
+
+I think we should just pick *one* of these formats and not show the other one. I don't believe there is a difference between the 2 functionally.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-06-07T19:42:57Z
+
+The ``with`` syntax allows to use any valid Twig expression, which means you can use variables in it
+
+---------------------------------------------------------------------------
+
+by stof at 2014-06-07T19:43:44Z
+
+my suggestion is to document the ``with`` syntax. The syntax without ``with`` is the older syntax from 2.0
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-08T15:49:31Z
+
+I agree with Stof. @javiereguiluz if you agree, can we just show the `with` syntax?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-06-10T20:30:18Z
+
+@stof @weaverryan thanks for your suggestions! I've just removed the old syntax explanation.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-05T13:35:12Z
+
+@weaverryan excuse me for taking so long to fix the error that you reported. I think that now everything is OK to merge it.
