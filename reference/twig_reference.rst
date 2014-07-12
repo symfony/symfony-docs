@@ -5,7 +5,7 @@ Symfony2 Twig Extensions
 ========================
 
 Twig is the default template engine for Symfony2. By itself, it already contains
-a lot of build-in functions, filters, tags and tests (`http://twig.sensiolabs.org/documentation`_
+a lot of built-in functions, filters, tags and tests (`http://twig.sensiolabs.org/documentation`_
 then scroll to the bottom).
 
 Symfony2 adds more custom extension on top of Twig to integrate some components
