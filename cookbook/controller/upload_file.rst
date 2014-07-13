@@ -1,18 +1,21 @@
 .. index::
    single: Controller; Upload; File
 
-How to upload files
+How to Upload Files
 ===================
 
 Let's begin with the creation of an entity Product having a document property to
-which will contain the description of that product. We'll also indicate the
+which will contain the description of that product.
+
+First of all, you need to create a `Product` entity that has a `document` property
+which will contain the description of the product. You'll also indicate the
 validation needed for each properties of the entity.
 
-So let's say we have a product with a name, a price and a document which must be
-a PDF file::
+Assume you need to have a product with a name, a price and a document which must
+be a PDF file::
 
-    // src/Vendor/ShopBundle/Entity/Product.php
-    namespace Vendor\ShopBundle\Entity;
+    // src/Acme/ShopBundle/Entity/Product.php
+    namespace Acme\ShopBundle\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -72,14 +75,18 @@ a PDF file::
         }
     }
 
-We also made sure that the user will have to indicate information to each fields.
-To know more about validation, take a look at the :doc:`validation book </book/validation>`
-chapter.
+To make sure that the user will have to indicate information to each fields by
+adding the `NotBlank` constraint.
+
+.. seealso::
+
+    To know more about validation, take a look at the :doc:`validation book </book/validation>`
+    chapter.
 
 You have now to create the ``ProductType`` with those three fields as following::
 
-    // src/Vendor/ShopBundle/Form/ProductType.php
-    namespace Vendor\ShopBundle\Form;
+    // src/Acme/ShopBundle/Form/ProductType.php
+    namespace Acme\ShopBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -102,64 +109,68 @@ You have now to create the ``ProductType`` with those three fields as following:
         }
     }
 
-Now, make it as a service so it can be used anywhere easily::
+Now, make it as a service so it can be used anywhere easily:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Vendor/ShopBundle/Resources/config/services.yml
+        # src/Acme/ShopBundle/Resources/config/services.yml
         services:
-            vendor.form.product_type:
-                class:        Vendor\ShopBundle\Form\ProductType
+            acme.form.product_type:
+                class: Acme\ShopBundle\Form\ProductType
                 tags:
                     -  { name: form.type }
 
         # Import the services.yml file of your bundle in your config.yml
         imports:
-            - { resource: "@VendorShopBundle/Resources/config/services.yml" }
+            - { resource: "@AcmeShopBundle/Resources/config/services.yml" }
 
     .. code-block:: xml
 
-            <!-- src/Vendor/ShopBundle/Resources/config/services.xml -->
+            <!-- src/Acme/ShopBundle/Resources/config/services.xml -->
+
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services">
             <services>
-                <service id="vendor.form.product_type" class="Vendor\ShopBundle\Form\ProductType">
+                <service id="acme.form.product_type" class="Acme\ShopBundle\Form\ProductType">
                     <tag name="form.type" alias="product" />
                 </service>
             </services>
 
     .. code-block:: php
 
-        // src/Vendor/ShopBundle/DependencyInjection/VendorShopExtension.php
+        // src/Acme/ShopBundle/DependencyInjection/AcmeShopExtension.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        //…
+        //...
 
-        $definition = new Definition('Vendor\ShopBundle\Form\ProductType');
-        $container->setDefinition('vendor.form.product_type', $definition);
+        $definition = new Definition('Acme\ShopBundle\Form\ProductType');
         $definition->addTag('form.type');
+        $container->setDefinition('acme.form.product_type', $definition);
 
-If you never dealt with services before, take some time to read the
-:doc:`book Service </book/service_container>` chapter.
+.. seealso::
 
+    If you never dealt with services before, take some time to read the
+    :doc:`book Service </book/service_container>` chapter.
 
-We must display the form to our users. To do that, create the controller as
+Now, time to display the form to our users. To do that, create the controller as
 following::
 
-    // src/Vendor/ShopBundle/Controller/ProductController.php
-    namespace Vendor\ShopBundle\Controller;
+    // src/Acme/ShopBundle/Controller/ProductController.php
+    namespace Acme\ShopBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-    use Vendor\ShopBundle\Entity\Product;
+    use Acme\ShopBundle\Entity\Product;
 
     class ProductController extends Controller
     {
         /**
-         * @Route("/product/new", name="vendor_product_new")
+         * @Route("/product/new", name="acme_product_new")
          * @Template()
          * @Method({"GET", "POST"})
          */
@@ -173,16 +184,16 @@ following::
         }
     }
 
-Create the corresponding template as following::
+Then, create the corresponding template as following:
 
 .. code-block:: html+jinja
 
-    {# src/Vendor/ShopBundle/Resources/views/Product/new.html.twig #}
+    {# src/Acme/ShopBundle/Resources/views/Product/new.html.twig #}
     {% form_theme form _self %}
 
     <h1>Creation of a new Product</h1>
 
-    <form action="{{ path('vendor_product_new') }}" method="POST" {{ form_enctype(form) }}>
+    <form action="{{ path('acme_product_new') }}" method="POST" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
     </form>
 
@@ -197,25 +208,25 @@ Create the corresponding template as following::
     {% endspaceless %}
     {% endblock form_row %}
 
-We added some sugar by adapting our form with a form theme (take a look at the
-:doc:`form themes </cookbook/form/form_customization#what-are-form-themes>` to
-know more about the subject).
+Some sugar has been added by adapting our form with a form theme (take a look at
+the :doc:`form themes </cookbook/form/form_customization#what-are-form-themes>`
+to know more about the subject).
 
-We now have our form displayed. Let's complete our action to deal with the
+The form is now displayed. You have to complete our action to deal with the
 upload of our document::
 
-    // src/Vendor/ShopBundle/Controller/ProductController.php
+    // src/Acme/ShopBundle/Controller/ProductController.php
 
     class ProductController extends Controller
     {
         /**
-         * @Route("/product/new", name="vendor_product_new")
+         * @Route("/product/new", name="acme_product_new")
          * @Template()
          * @Method({"GET", "POST"})
          */
         public function newAction(Request $request)
         {
-            //…
+            //...
 
             if ($form->isValid()) {
 
@@ -227,11 +238,11 @@ upload of our document::
                 $file = $file->move(__DIR__.'/../../../../web/uploads', $name);
                 $product->setDocument($filename);
 
-                // Perform some persistance
+                // ... perform some persistance
 
                 $this->getSession()->getFlashBag()->add('notice', 'The upload has been well uploaded.');
 
-                return $this->redirect($this->generateUrl('vendor_product_new'));
+                return $this->redirect($this->generateUrl('acme_product_new'));
             }
 
             return array('form' => $form->createView());
@@ -242,15 +253,15 @@ The :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtens
 returns the extension of the file the user just uploaded.
 
 Note the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::move`
-method allowing movement of the file
+method allowing movement of the file.
 
-We must display the flash message in our template::
+To display the flash message in our template, you have to add the following code:
 
-    .. code-block:: html+jinja
+.. code-block:: html+jinja
 
-    {# src/Vendor/ShopBundle/Resources/views/Product/new.html.twig #}
+    {# src/Acme/ShopBundle/Resources/views/Product/new.html.twig #}
 
-    {# … #}
+    {# ... #}
     {% for flashes in app.session.flashbag.all %}
         {% for flashMessage in flashes %}
             <ul>
@@ -258,7 +269,7 @@ We must display the flash message in our template::
             </ul>
         {% endfor %}
     {% endfor %}
-    {# … #}
+    {# ... #}
 
 The file is now uploaded in the folder ``web/upload`` of your project.
 
