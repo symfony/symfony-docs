@@ -96,6 +96,7 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
+* July 15, 2014: `Security releases: Symfony 2.3.18, 2.4.8, and 2.5.2 released <http://symfony.com/blog/security-releases-cve-2014-4931-symfony-2-3-18-2-4-8-and-2-5-2-released>`_ (`CVE-2014-4931 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4931>`_)
 * October 10, 2013: `Security releases: Symfony 2.0.25, 2.1.13, 2.2.9, and 2.3.6 released <http://symfony.com/blog/security-releases-cve-2013-5958-symfony-2-0-25-2-1-13-2-2-9-and-2-3-6-released>`_ (`CVE-2013-5958 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5958>`_)
 * August 7, 2013: `Security releases: Symfony 2.0.24, 2.1.12, 2.2.5, and 2.3.3 released <http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released>`_ (`CVE-2013-4751 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4751>`_ and `CVE-2013-4752 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4752>`_)
 * January 17, 2013: `Security release: Symfony 2.0.22 and 2.1.7 released <http://symfony.com/blog/security-release-symfony-2-0-22-and-2-1-7-released>`_ (`CVE-2013-1348 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1348>`_ and `CVE-2013-1397 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1397>`_)
