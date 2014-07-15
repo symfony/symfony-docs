@@ -71,7 +71,7 @@ to run Symfony:
 
 .. code-block:: bash
 
-    $ php app/console server:run
+    $ php bin/console server:run
 
 If you get the error `There are no commands defined in the "server" namespace.`,
 then you are probably using PHP 5.3. That's ok! But the built-in web server is
