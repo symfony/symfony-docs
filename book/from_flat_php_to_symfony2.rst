@@ -431,7 +431,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.4.*"
+            "symfony/symfony": "2.5.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -480,8 +480,8 @@ the HTTP response being returned. Use them to improve the blog:
     // echo the headers and send the response
     $response->send();
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
+.. versionadded:: 2.5
+    Support for HTTP status code constants was introduced in Symfony 2.5.
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,
