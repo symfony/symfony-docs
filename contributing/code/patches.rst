@@ -37,7 +37,7 @@ Set up your user information with your real name and a working email address:
     If your IDE creates configuration files inside the project's directory,
     you can use global ``.gitignore`` file (for all projects) or
     ``.git/info/exclude`` file (per project) to ignore them. See
-    `Github's documentation`_.
+    `GitHub's documentation`_.
 
 .. tip::
 
@@ -249,7 +249,7 @@ Check that all tests still pass and push your branch remotely:
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
 
-You can now make a pull request on the ``symfony/symfony`` Github repository.
+You can now make a pull request on the ``symfony/symfony`` GitHub repository.
 
 .. tip::
 
@@ -401,7 +401,7 @@ messages of all the commits. When you are finished, execute the push command.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
-.. _`Github's Documentation`:              https://help.github.com/articles/ignoring-files
+.. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
 .. _Symfony2 repository:                   https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         https://travis-ci.org/
