@@ -57,7 +57,7 @@ git repository:
 
       You may also want to create a ``.gitignore`` file that can be used system-wide.
       This allows you to exclude files/folders for all your projects that are created by
-      your IDE or operating system. For details, see `Github .gitignore`_.
+      your IDE or operating system. For details, see `GitHub .gitignore`_.
 
 #. Create an initial commit with your started project:
 
@@ -116,6 +116,6 @@ manage this is `Gitolite`_.
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
-.. _`Github .gitignore`: https://help.github.com/articles/ignoring-files
+.. _`GitHub .gitignore`: https://help.github.com/articles/ignoring-files
 .. _`Bitbucket`: https://bitbucket.org/
 .. _`comparison of hosting services`: http://en.wikipedia.org/wiki/Comparison_of_open-source_software_hosting_facilities
