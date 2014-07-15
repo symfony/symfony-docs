@@ -272,7 +272,7 @@ directory with at least the following contents:
     /composer.phar
     /web/app_dev.php
     /web/bundles/
-    /web/config.php 
+    /web/config.php
 
 The ``.gitignore`` file asks Git not to track any of the files and directories
 that match these patterns. This means these files won't be deployed to the Azure
@@ -457,7 +457,7 @@ rewriting any urls to the ``web/app.php`` front controller which allows you to
 skip the ``web/`` folder in the URL. The first rule called ``BlockAccessToPublic``
 matches all url patterns that contain the ``web/`` folder and serves a
 ``403 Forbidden`` HTTP response instead. This example is based on Benjamin
-Eberlei's sample you can find on Github in the `SymfonyAzureEdition`_ bundle.
+Eberlei's sample you can find on GitHub in the `SymfonyAzureEdition`_ bundle.
 
 Deploy this file under the ``site/wwwroot`` directory of the Azure Website and
 browse to your application without the ``web/app.php`` segment in the URL.
