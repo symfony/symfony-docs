@@ -17,13 +17,13 @@ clear and warm the ``prod`` cache you need to run:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear --env=prod
+    $ php bin/console cache:clear --env=prod
 
 or the equivalent:
 
 .. code-block:: bash
 
-    $ php app/console cache:clear -e prod
+    $ php bin/console cache:clear -e prod
 
 In addition to changing the environment, you can also choose to disable debug mode.
 This can be useful where you want to run commands in the ``dev`` environment
@@ -31,7 +31,7 @@ but avoid the performance hit of collecting debug data:
 
 .. code-block:: bash
 
-    $ php app/console list --no-debug
+    $ php bin/console list --no-debug
 
 There is an interactive shell which allows you to enter commands without having to
 specify ``php app/console`` each time, which is useful if you need to run several
@@ -39,8 +39,8 @@ commands. To enter the shell run:
 
 .. code-block:: bash
 
-    $ php app/console --shell
-    $ php app/console -s
+    $ php bin/console --shell
+    $ php bin/console -s
 
 You can now just run commands with the command name:
 
@@ -52,8 +52,8 @@ When using the shell you can choose to run each command in a separate process:
 
 .. code-block:: bash
 
-    $ php app/console --shell --process-isolation
-    $ php app/console -s --process-isolation
+    $ php bin/console --shell --process-isolation
+    $ php bin/console -s --process-isolation
 
 When you do this, the output will not be colorized and interactivity is not
 supported so you will need to pass all command params explicitly.
