@@ -14,7 +14,7 @@ Registering an event listener is very easy using the Form component.
 
 For example, if you wish to register a function to the
 ``FormEvents::PRE_SUBMIT`` event, the following code lets you add a field,
-depending on the request' values::
+depending on the request values::
 
     // ...
 
