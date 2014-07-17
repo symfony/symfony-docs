@@ -343,7 +343,7 @@ Event subscribers have different uses:
 
     class AddEmailFieldListener implements EventSubscriberInterface
     {
-        public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
                 FormEvents::PRE_SET_DATA => 'onPreSetData',
