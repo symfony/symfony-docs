@@ -629,7 +629,7 @@ the service container gives you a much more appealing option:
             </parameters>
 
             <services>
-                <service id="my_mailer" ...>
+                <service id="my_mailer">
                 <!-- ... -->
                 </service>
                 <service id="newsletter_manager" class="%newsletter_manager.class%">
@@ -726,7 +726,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
             </parameters>
 
             <services>
-                <service id="my_mailer" ...>
+                <service id="my_mailer">
                 <!-- ... -->
                 </service>
                 <service id="newsletter_manager" class="%newsletter_manager.class%">
@@ -794,7 +794,7 @@ it exists and do nothing if it doesn't:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_mailer" ...>
+                <service id="my_mailer">
                 <!-- ... -->
                 </service>
                 <service id="newsletter_manager" class="%newsletter_manager.class%">
