@@ -81,7 +81,7 @@ greeted. To create the page, follow the simple two-step process.
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
     on this process, see the documentation on the web server you are using.
-    Here's the relevant documentation page for some web server you might be using:
+    Here's some relevant documentation pages for the web server you might be using:
 
     * For Apache HTTP Server, refer to `Apache's DirectoryIndex documentation`_
     * For Nginx, refer to `Nginx HttpCoreModule location documentation`_
