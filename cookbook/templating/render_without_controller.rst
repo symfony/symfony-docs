@@ -1,7 +1,7 @@
 .. index::
    single: Templating; Render template without custom controller
 
-How to render a Template without a custom Controller
+How to Render a Template without a custom Controller
 ====================================================
 
 Usually, when you need to create a page, you need to create a controller

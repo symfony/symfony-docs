@@ -110,7 +110,7 @@ widgets you want to display are available in the children property::
         $this->assertArrayHasKey($key, $children);
     }
 
-Adding a Type your Form depends on
+Adding a Type your Form Depends on
 ----------------------------------
 
 Your form may depend on other types that are defined as services. It

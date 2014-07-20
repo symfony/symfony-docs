@@ -1,7 +1,7 @@
 .. index::
    single: Logging
 
-How to log Messages to different Files
+How to Log Messages to different Files
 ======================================
 
 The Symfony Standard Edition contains a bunch of channels for logging: ``doctrine``,
@@ -84,7 +84,7 @@ To do so, just create a new handler and configure it like this:
             ),
         ));
 
-YAML specification
+YAML Specification
 ------------------
 
 You can specify the configuration by many forms:

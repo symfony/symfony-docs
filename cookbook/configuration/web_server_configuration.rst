@@ -1,7 +1,7 @@
 .. index::
     single: Web Server
 
-Configuring a web server
+Configuring a Web Server
 ========================
 
 The web directory is the home of all of your application's public and static

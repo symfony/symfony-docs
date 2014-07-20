@@ -1,7 +1,7 @@
 .. index::
    single: PHP Templates
 
-How to use PHP instead of Twig for Templates
+How to Use PHP instead of Twig for Templates
 ============================================
 
 Symfony2 defaults to Twig for its template engine, but you can still use
@@ -296,8 +296,8 @@ pattern:
         path:     /hello/{name}
         defaults: { _controller: AcmeHelloBundle:Hello:index }
 
-Using Assets: images, JavaScripts, and stylesheets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using Assets: Images, JavaScripts and Stylesheets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
 Symfony2 provides the ``assets`` tag to deal with them easily:

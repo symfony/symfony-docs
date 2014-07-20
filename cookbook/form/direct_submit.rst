@@ -1,7 +1,7 @@
 .. index::
    single: Form; Form::submit()
 
-How to use the submit() Function to handle Form Submissions
+How to Use the submit() Function to Handle Form Submissions
 ===========================================================
 
 .. versionadded:: 2.3
@@ -84,7 +84,7 @@ method, pass the submitted data directly to
 
 .. _cookbook-form-submit-request:
 
-Passing a Request to Form::submit() (deprecated)
+Passing a Request to Form::submit() (Deprecated)
 ------------------------------------------------
 
 .. versionadded:: 2.3

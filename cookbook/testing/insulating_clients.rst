@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Insulating clients
 
-How to test the Interaction of several Clients
+How to Test the Interaction of several Clients
 ==============================================
 
 If you need to simulate an interaction between different clients (think of a

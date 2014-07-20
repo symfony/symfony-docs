@@ -1,7 +1,7 @@
 .. index::
    single: Doctrine; Mapping Model classes
 
-How to provide model classes for several Doctrine implementations
+How to Provide Model Classes for several Doctrine Implementations
 =================================================================
 
 When building a bundle that could be used not only with Doctrine ORM but

@@ -1,7 +1,7 @@
 .. index::
    single: Security; Target redirect path
 
-How to change the Default Target Path Behavior
+How to Change the default Target Path Behavior
 ==============================================
 
 By default, the Security component retains the information of the last request

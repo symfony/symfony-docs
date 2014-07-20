@@ -1,7 +1,7 @@
 .. index::
    single: Emails; Using the cloud
 
-How to use the Cloud to Send Emails
+How to Use the Cloud to Send Emails
 ===================================
 
 Requirements for sending emails from a production system differ from your

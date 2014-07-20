@@ -1,7 +1,7 @@
 .. index::
    single: Security; "Remember me"
 
-How to add "Remember Me" Login Functionality
+How to Add "Remember Me" Login Functionality
 ============================================
 
 Once a user is authenticated, their credentials are typically stored in the
@@ -109,7 +109,7 @@ might ultimately looks like this:
 The user will then automatically be logged in on subsequent visits while
 the cookie remains valid.
 
-Forcing the User to Re-authenticate before accessing certain Resources
+Forcing the User to Re-authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
 
 When the user returns to your site, they are authenticated automatically based

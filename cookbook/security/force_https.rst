@@ -1,7 +1,7 @@
 .. index::
    single: Security; Force HTTPS
 
-How to force HTTPS or HTTP for Different URLs
+How to Force HTTPS or HTTP for different URLs
 =============================================
 
 You can force areas of your site to use the HTTPS protocol in the security

@@ -1,7 +1,7 @@
 .. index::
    single: Debugging
 
-How to optimize your development Environment for debugging
+How to Optimize your Development Environment for Debugging
 ==========================================================
 
 When you work on a Symfony project on your local machine, you should use the

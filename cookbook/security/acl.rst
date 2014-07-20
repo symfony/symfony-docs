@@ -1,7 +1,7 @@
 .. index::
    single: Security; Access Control Lists (ACLs)
 
-How to use Access Control Lists (ACLs)
+How to Use Access Control Lists (ACLs)
 ======================================
 
 In complex applications, you will often face the problem that access decisions
@@ -94,8 +94,8 @@ Once the ACL is created, you can grant access to objects by creating an
 Access Control Entity (ACE) to solidify the relationship between the entity
 and your user.
 
-Creating an ACL, and adding an ACE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating an ACL and Adding an ACE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 

@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Allow / in route parameter
 
-How to allow a "/" character in a route parameter
+How to Allow a "/" Character in a Route Parameter
 =================================================
 
 Sometimes, you need to compose URLs with parameters that can contain a slash

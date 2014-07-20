@@ -1,7 +1,7 @@
 .. index::
    single: Workflow; Subversion
 
-How to Create and store a Symfony2 Project in Subversion
+How to Create and Store a Symfony2 Project in Subversion
 ========================================================
 
 .. tip::
@@ -125,7 +125,7 @@ to learn more about how to configure and develop inside your application.
 
 .. _svn-hosting:
 
-Subversion hosting solutions
+Subversion Hosting Solutions
 ----------------------------
 
 The biggest difference between `Git`_ and `SVN`_ is that Subversion *needs* a
