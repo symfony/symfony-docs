@@ -1,16 +1,16 @@
 .. index::
    single: Emails; Testing
 
-How to Test that an Email is Sent in a functional Test
+How to Test that an Email is Sent in a Functional Test
 ======================================================
 
-Sending e-mails with Symfony is pretty straightforward thanks to the
+Sending emails with Symfony is pretty straightforward thanks to the
 SwiftmailerBundle, which leverages the power of the `Swift Mailer`_ library.
 
 To functionally test that an email was sent, and even assert the email subject,
 content or any other headers, you can use :ref:`the Symfony Profiler <internals-profiler>`.
 
-Start with an easy controller action that sends an e-mail::
+Start with an easy controller action that sends an email::
 
     public function sendEmailAction($name)
     {
@@ -49,13 +49,13 @@ to get information about the messages send on the previous request::
 
             $mailCollector = $client->getProfile()->getCollector('swiftmailer');
 
-            // Check that an e-mail was sent
+            // Check that an email was sent
             $this->assertEquals(1, $mailCollector->getMessageCount());
 
             $collectedMessages = $mailCollector->getMessages();
             $message = $collectedMessages[0];
 
-            // Asserting e-mail data
+            // Asserting email data
             $this->assertInstanceOf('Swift_Message', $message);
             $this->assertEquals('Hello Email', $message->getSubject());
             $this->assertEquals('send@example.com', key($message->getFrom()));
