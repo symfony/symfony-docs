@@ -4,7 +4,7 @@
 Tel Field Type
 ===============
 
-.. versionadded:: 2.7
+.. versionadded:: 2.6
     The Tel field type was introduced in Symfony 2.7.
 
 The tel field represents a text field for entering a telephone number.
