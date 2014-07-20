@@ -1,17 +1,19 @@
 .. index::
    single: Forms; Fields; tel
 
-tel Field Type
+Tel Field Type
 ===============
+
+.. versionadded:: 2.7
+    The Tel field type was introduced in Symfony 2.7.
 
 The tel field represents a text field for entering a telephone number.
 
 +-------------+--------------------------------------------------------------------+
-| Rendered as | ``input`` ``tel`` field                                           |
+| Rendered as | ``input`` ``tel`` field                                            |
 +-------------+--------------------------------------------------------------------+
-| Inherited   | - `max_length`_ (deprecated as of 2.5)                             |
-| options     | - `empty_data`_                                                    |
-|             | - `required`_                                                      |
+| Inherited   | - `empty_data`_                                                    |
+| options     | - `required`_                                                      |
 |             | - `label`_                                                         |
 |             | - `label_attr`_                                                    |
 |             | - `data`_                                                          |
@@ -24,7 +26,7 @@ The tel field represents a text field for entering a telephone number.
 +-------------+--------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                          |
 +-------------+--------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TelType` |
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TelType`  |
 +-------------+--------------------------------------------------------------------+
 
 
@@ -32,8 +34,6 @@ Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
 
