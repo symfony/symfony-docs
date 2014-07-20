@@ -204,7 +204,7 @@ Combining Assets
 ~~~~~~~~~~~~~~~~
 
 One feature of Assetic is that it will combine many files into one. This helps
-to reduce the number of HTTP requests, which is great for frontend performance.
+to reduce the number of HTTP requests, which is great for front-end performance.
 It also allows you to maintain the files more easily by splitting them into
 manageable parts. This can help with re-usability as you can easily split
 project-specific files from those which can be used in other applications,

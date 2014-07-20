@@ -126,7 +126,7 @@ controller to make use of the new kernel.
 
 Having different ``AppKernels`` might be useful to enable different front
 controllers (on potentially different servers) to run parts of your application
-independently (for example, the admin UI, the frontend UI and database migrations).
+independently (for example, the admin UI, the front-end UI and database migrations).
 
 .. note::
 

@@ -200,14 +200,14 @@ Applications
 ------------
 
 In a symfony1 project, it is common to have several applications: one for the
-frontend and one for the backend for instance.
+front-end and one for the back-end for instance.
 
 In a Symfony2 project, you only need to create one application (a blog
 application, an intranet application, ...). Most of the time, if you want to
 create a second application, you might instead create another project and
 share some bundles between them.
 
-And if you need to separate the frontend and the backend features of some
+And if you need to separate the front-end and the back-end features of some
 bundles, you can create sub-namespaces for controllers, sub-directories for
 templates, different semantic configurations, separate routing configurations,
 and so on.
