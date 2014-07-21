@@ -19,6 +19,7 @@ Validation Constraints Reference
    constraints/Regex
    constraints/Ip
    constraints/Uuid
+   constraints/PhoneNumber
 
    constraints/Range
 
