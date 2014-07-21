@@ -56,3 +56,5 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. note:: Tel field rely on third-party library : https://github.com/giggsey/libphonenumber-for-php. It's require and you should install it via Composer.
