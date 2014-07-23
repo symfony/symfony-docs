@@ -51,6 +51,7 @@
 
   * :doc:`/cookbook/deployment/tools`
   * :doc:`/cookbook/deployment/azure-website`
+  * :doc:`/cookbook/deployment/heroku`
 
 * :doc:`/cookbook/doctrine/index`
 
