@@ -185,7 +185,7 @@ application will respond:
 
 You should be seeing your Symfony2 application in your browser.
 
-.. _`this original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
+.. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
 .. _`Heroku Toolbet`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
 .. _`getting Started with PHP on Heroku`: .. _`Heroku Toolbet`: https://devcenter.heroku.com/articles/getting-started-with-php
