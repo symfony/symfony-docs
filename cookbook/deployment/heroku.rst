@@ -5,20 +5,20 @@ Deploying to Heroku Cloud
 =========================
 
 This step by step cookbook describes how to deploy a Symfony2 web application to
-the Heroku cloud platform. Its contents are based on `this original article`_
+the Heroku cloud platform. Its contents are based on `the original article`_
 published by Heroku.
 
 Setting up
 ----------
 
 To setup a new Heroku website, first `signup with Heroku`_ or sign in
-with your credentials. Then, download and install the `Heroku Toolbet`_ on your
+with your credentials. Then download and install the `Heroku Toolbet`_ on your
 local computer.
 
 You can also check out the `getting Started with PHP on Heroku`_ guide to gain 
 more familiarity with the specifics of working with PHP applications on Heroku.
 
-Preparing your application
+Preparing your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Deploying a Symfony2 application to Heroku doesn't require any change in its
@@ -28,7 +28,7 @@ By default, the Symfony2 app will log into your application's ``app/log/``
 directory, which isn't ideal as Heroku uses an `ephemeral file system`_. On 
 Heroku, the best way to handle logging is using Logplex, and the best way to 
 send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily 
-Symfony2 uses the excellent Monolog library for logging, and so a new log 
+Symfony2 uses the excellent Monolog library for logging and so a new log 
 destination is just a config file change away.
 
 Open ``app/config/config_prod.yml`` file, locate ``monolog/handlers/nested`` 
@@ -44,13 +44,12 @@ section and change the value of ``path`` from
             # ...
             nested:
                 # ...
-                # path:  %kernel.logs_dir%/%kernel.environment%.log
                 path: "php://stderr"
 
 Once the application is deployed, run ``heroku logs --tail`` to keep the 
 stream of logs from Heroku open in your terminal.
 
-Creating a new application on Heroku
+Creating a New Application on Heroku
 ------------------------------------
 
 To create a new Heroku application that you can push to, use the CLI ``create``
@@ -66,12 +65,12 @@ command:
 
 You are now ready to deploy the application as explained in the next section.
 
-Deploying your application on Heroku
+Deploying your Application on Heroku
 ------------------------------------
 
 To deploy your application to Heroku, you must first create a ``Procfile``, 
 which tells Heroku what command to use to launch the web server with the 
-correct settings. After you've done that, you can simply ``git push``, and 
+correct settings. After you've done that, you can simply ``git push`` and 
 you're done!
 
 Creating a Procfile
@@ -175,15 +174,16 @@ Then, deploy your application executing this command:
     To git@heroku.com:mighty-hamlet-1981.git
      * [new branch]      master -> master
 
-**And that's it!** If you now open your browser, either by manually pointing 
-it to the URL ``heroku create`` gave you, or by using the Heroku Toolbelt, the application will respond:
+And that's it! If you now open your browser, either by manually pointing 
+it to the URL ``heroku create`` gave you, or by using the Heroku Toolbelt, the 
+application will respond:
 
 .. code-block:: bash
 
     $ heroku open
     Opening mighty-hamlet-1981... done
 
-*Et voilà!* You should be seeing your Symfony2 application in your browser.
+You should be seeing your Symfony2 application in your browser.
 
 .. _`this original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
