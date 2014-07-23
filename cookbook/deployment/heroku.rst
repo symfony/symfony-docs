@@ -95,7 +95,7 @@ applications. However, two special circumstances apply to Symfony applications:
 Create a new file called ``Procfile`` (without any extension) at the root 
 directory of the application and add just the following content:
 
-.. code-block::
+.. code-block:: text
 
     web: bin/heroku-php-apache2 web/
 
@@ -116,7 +116,7 @@ Pushing to Heroku
 Next up, it's finally time to deploy your application to Heroku. If you are
 doing this for the very first time, you may see a message such as the following:
 
-.. code-block:
+.. code-block:: bash
 
     The authenticity of host 'heroku.com (50.19.85.132)' can't be established.
     RSA key fingerprint is 8b:48:5e:67:0e:c9:16:47:32:f2:87:0c:1f:c8:60:ad.
