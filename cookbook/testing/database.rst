@@ -150,15 +150,13 @@ configuration:
 Make sure that your database runs on localhost and has the defined database and
 user credentials set up.
 
-Set up database insulation for your tests
------------------------------------------------
+Set up Database Insulation for your Tests
+-----------------------------------------
 
 In your functional tests, you are maybe going to make changes to your database and then request some pages to see that the result is well displayed. You may also want to test form submit and see the new entity created. 
 With the following code, you will be able to rollback all changes done to the database during the execution of one test, even in subrequests done by the test client.
 
-To do so, we have to share the same database connection object in the test case and the test client. You first have to override the default test client class::
-   
-   // src/Acme/DemoBundle/Tests/Client.php
+To do so, you have to share the same database connection object in the test case and the test client. You first have to override the default test client class::
    
    namespace Acme\DemoBundle\Tests;
 
