@@ -86,15 +86,15 @@ This is how your ``WebserviceUser`` class looks in action::
                 return false;
             }
 
-            if ($this->getPassword() !== $user->getPassword()) {
+            if ($this->password !== $user->getPassword()) {
                 return false;
             }
 
-            if ($this->getSalt() !== $user->getSalt()) {
+            if ($this->salt !== $user->getSalt()) {
                 return false;
             }
 
-            if ($this->getUsername() !== $user->getUsername()) {
+            if ($this->username !== $user->getUsername()) {
                 return false;
             }
 
