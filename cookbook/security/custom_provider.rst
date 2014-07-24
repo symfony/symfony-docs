@@ -86,7 +86,7 @@ This is how your ``WebserviceUser`` class looks in action::
                 return false;
             }
 
-            if ($this->password !== $user->getPassword()) {
+            if ($this->getPassword() !== $user->getPassword()) {
                 return false;
             }
 
@@ -94,7 +94,7 @@ This is how your ``WebserviceUser`` class looks in action::
                 return false;
             }
 
-            if ($this->username !== $user->getUsername()) {
+            if ($this->getUsername() !== $user->getUsername()) {
                 return false;
             }
 
