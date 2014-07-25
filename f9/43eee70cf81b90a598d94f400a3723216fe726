@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2014-07-09T08:16:28Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-07-10T02:15:55Z
+
+:thumbsup:
+
+Of, if we want to, we could keep the paragraph but say: "It's recommended to extend Symfony's base Controller class" and be done with it :).
+
+---------------------------------------------------------------------------
+
+by merk at 2014-07-10T02:38:27Z
+
+Could we not use this document to talk about how controllers should be built, with injected dependencies, or link to a cookbook article about it?
+
+Seems like while we can say 'Hey, for getting started, the base controller is very handy, but for <reasons> you should do it <a better way> when you're comfortable with symfony'?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-10T18:16:08Z
+
+The scope of this article is to explain best practises for creating shared bundles, not to explain controllers. We already have an article which talks about controllers as services.
+
+And some people (including @fabpot and me) don't believe extending the base controller class is a better practise than using controllers as services.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2014-07-10T18:27:48Z
+
+The most elegant way is clearly to use controllers as services. For experienced users, it's the more testable, clear, complete and precise way. However, we have to found a balance between elegance and usability for new developers.
+
+The `Controller` base class is very useful, espacially to run some code easily without worrying about services. It's much easier to learn by small steps. Understand how to make a valid action before how to inject services.
+
+We could solve this problem just by saying in the doc that for application controllers, you should register them as services, but if you intend to distribute your bundle, you should extends the `Controller ` base class to have the shortcuts. Just like @merk proposed.
+
+BTW: Note that even in FOSUserBundle the whole container is injected in controllers so the `Best practice` implementation is not really the best one.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-10T18:51:32Z
+
+@tgalopin controllers are a very thin layer between http land and the services. By making the controllers services, it is no longer a layer between them, but part of them. That means that a controller can no longer do his job correctly. Besides this, making it a service makes the controller fatter.
+
+Controllers extending the base controller are perfectly testable using functional testing. Controllers are implementation classes and should not be unit tested.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2014-07-10T19:25:33Z
+
+I agree on the fact that controllers are thin layers, however I don't agree on the way to make them thin. I  think that injecting the whole service container instead of only the services needed is what make controllers fat. So registering them as services allow developpers to inject only needed services, to make their controllers as thin as possible.
+
+And for the testing, I'm just pointing the fact that mocking service is much easier than mocking the service container itself. But I agree, controllers shouldn't be unit tested as they shouldn't have application logic in them, so my argument is irrelevant :) .
+
+But that doesn't really change the problem. Should we write two best pratices (one for application, one for vendors) or no best pratice at all?
