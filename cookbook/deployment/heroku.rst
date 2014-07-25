@@ -22,17 +22,18 @@ Preparing your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Deploying a Symfony2 application to Heroku doesn't require any change in its
-code, but it requires some minor tweaks in its configuration.
+code, but it requires some minor tweaks to its configuration.
 
 By default, the Symfony2 app will log into your application's ``app/log/``
-directory, which isn't ideal as Heroku uses an `ephemeral file system`_. On 
-Heroku, the best way to handle logging is using Logplex, and the best way to 
-send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily 
-Symfony2 uses the excellent Monolog library for logging and so a new log 
-destination is just a config file change away.
+directory. This is not ideal as Heroku uses an `ephemeral file system`_. On 
+Heroku, the best way to handle logging is using `Logplex`_. And the best way to 
+send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily, 
+Symfony2 uses the excellent Monolog library for logging. So, a new log 
+destination is just a change to a config file away.
 
-Open ``app/config/config_prod.yml`` file, locate ``monolog/handlers/nested`` 
-section and change the value of ``path`` from
+Open the ``app/config/config_prod.yml`` file, locate the
+``monolog/handlers/nested``  section (or create it if it doesn't exist yet) and 
+change the value of ``path`` from
 ``"%kernel.logs_dir%/%kernel.environment%.log"`` to ``"php://stderr"``:
 
 .. code-block:: yaml
@@ -49,7 +50,7 @@ section and change the value of ``path`` from
 Once the application is deployed, run ``heroku logs --tail`` to keep the 
 stream of logs from Heroku open in your terminal.
 
-Creating a New Application on Heroku
+Creating a new Application on Heroku
 ------------------------------------
 
 To create a new Heroku application that you can push to, use the CLI ``create``
@@ -190,4 +191,5 @@ You should be seeing your Symfony2 application in your browser.
 .. _`Heroku Toolbet`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
 .. _`getting Started with PHP on Heroku`: .. _`Heroku Toolbet`: https://devcenter.heroku.com/articles/getting-started-with-php
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
+.. _`Logplex`: https://devcenter.heroku.com/articles/logplex
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
