@@ -364,7 +364,7 @@ Rework your Patch
 
 Based on the feedback on the pull request, you might need to rework your
 patch. Before re-submitting the patch, rebase with ``upstream/master`` or
-``upstream/2.1``, don't merge; and force the push to the origin:
+``upstream/2.3``, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 
