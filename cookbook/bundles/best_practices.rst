@@ -194,23 +194,6 @@ Extensive documentation should also be provided in the
 the ``Resources/doc/`` directory; the ``Resources/doc/index.rst`` file is
 the only mandatory file and must be the entry point for the documentation.
 
-Controllers
------------
-
-As a best practice, controllers in a bundle that's meant to be distributed
-to others must not extend the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` base class.
-They can implement
-:class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface` or
-extend :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`
-instead.
-
-.. note::
-
-    If you have a look at
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` methods,
-    you will see that they are only nice shortcuts to ease the learning curve.
-
 Routing
 -------
 
