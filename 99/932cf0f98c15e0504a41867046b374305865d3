@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-10T18:17:59Z
+
+-1, in the complete article, `$progress` is assumed to be an instance of `ProgressBar` and not of the progress helper. It makes no sense to add this (including too specific arguments) to this example and not to others. Btw, this is also how we handle this stuff in all other documentation articles
+
+---------------------------------------------------------------------------
+
+by VasekPurchart at 2014-07-10T21:46:08Z
+
+@WouterJ I missed the wrong class name in the description of the code sample at first (because it's in a link; PR is now updated). The isntance cannot be "assumed", because then there would not be showed the size of the steps (unless it would be in a comment, which is less clear).
+
+This is not an addition, but an update to reflect the API changes.
