@@ -508,9 +508,6 @@ points.
 For a full example of this listener, read the :doc:`/cookbook/service_container/event_listener`
 cookbook entry.
 
-For another practical example of a kernel listener, see the cookbook
-article: :doc:`/cookbook/request/mime_type`.
-
 Core Event Listener Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

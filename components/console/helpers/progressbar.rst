@@ -265,10 +265,11 @@ to display it can be customized::
     For performance reasons, be careful if you set the total number of steps
     to a high number. For example, if you're iterating over a large number of
     items, consider setting the redraw frequency to a higher value by calling
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressHelper::setRedrawFrequency`,
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`,
     so it updates on only some iterations::
 
-        $progress->start($output, 50000);
+        $progress = new ProgressBar($output, 50000);
+        $progress->start();
 
         // update every 100 iterations
         $progress->setRedrawFrequency(100);

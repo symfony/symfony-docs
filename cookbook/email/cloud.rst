@@ -101,17 +101,17 @@ And that's it, you're ready to start sending emails through the cloud!
 
     If you intend to use Amazon SES, please note the following:
 
-        * You have to sign up to `Amazon Web Services (AWS)`_;
+    * You have to sign up to `Amazon Web Services (AWS)`_;
 
-        * Every sender address used in the ``From`` or ``Return-Path`` (bounce
-          address) header needs to be confirmed by the owner. You can also
-          confirm an entire domain;
+    * Every sender address used in the ``From`` or ``Return-Path`` (bounce
+      address) header needs to be confirmed by the owner. You can also
+      confirm an entire domain;
 
-        * Initially you are in a restricted sandbox mode. You need to request
-          production access before being allowed to send to arbitrary
-          recipients;
+    * Initially you are in a restricted sandbox mode. You need to request
+      production access before being allowed to send to arbitrary
+      recipients;
 
-        * SES may be subject to a charge.
+    * SES may be subject to a charge.
 
 .. _`Amazon's Simple Email Service (SES)`: http://aws.amazon.com/ses
 .. _`SES console`: https://console.aws.amazon.com/ses
