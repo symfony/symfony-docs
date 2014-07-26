@@ -22,7 +22,7 @@ Renders a ``textarea`` HTML element.
 |             | - `error_mapping`_                                                     |
 |             | - `mapped`_                                                            |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                              |
+| Parent type | :doc:`text </reference/forms/types/text>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
