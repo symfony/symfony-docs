@@ -10,8 +10,8 @@ Symfony2 internals.
 
 .. note::
 
-    You need to read this section only if you want to understand how Symfony2
-    works behind the scene, or if you want to extend Symfony2.
+    You only need to read this section if you want to understand how Symfony2
+    works behind the scenes, or if you want to extend Symfony2.
 
 Overview
 --------
