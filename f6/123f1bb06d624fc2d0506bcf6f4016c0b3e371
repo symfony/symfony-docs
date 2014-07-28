@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-17T11:12:56Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2014-07-17T12:09:32Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by redstar504 at 2014-07-17T19:44:25Z
+
+Also, why is this subscriber class called AddEmailFieldListener?   Shouldn't it be AddEmailFieldSubscriber?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-20T10:47:20Z
+
+@redstar504 Symfony Core calls everything listeners (in fact, a subscriber is nothing more than a group of listener functions), we just follow that convention in the docs.
