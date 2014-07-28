@@ -14,7 +14,7 @@ Registering an event listener is very easy using the Form component.
 
 For example, if you wish to register a function to the
 ``FormEvents::PRE_SUBMIT`` event, the following code lets you add a field,
-depending on the request' values::
+depending on the request values::
 
     // ...
 
@@ -349,7 +349,7 @@ Event subscribers have different uses:
 
     class AddEmailFieldListener implements EventSubscriberInterface
     {
-        public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
                 FormEvents::PRE_SET_DATA => 'onPreSetData',
