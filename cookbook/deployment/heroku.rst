@@ -176,7 +176,7 @@ Then, deploy your application executing this command:
      * [new branch]      master -> master
 
 And that's it! If you now open your browser, either by manually pointing 
-it to the URL ``heroku create`` gave you, or by using the Heroku Toolbelt, the 
+it to the URL ``heroku create`` gave you or by using the Heroku Toolbelt, the
 application will respond:
 
 .. code-block:: bash
