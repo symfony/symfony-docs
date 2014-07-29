@@ -1,7 +1,7 @@
 .. index::
    single: Console; Create commands
 
-How to create a Console Command
+How to Create a Console Command
 ===============================
 
 The Console page of the Components section (:doc:`/components/console/introduction`) covers

@@ -159,7 +159,7 @@ the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
 
 .. _cookbook-assetic-including-image:
 
-Including images
+Including Images
 ~~~~~~~~~~~~~~~~
 
 To include an image you can use the ``image`` tag.
@@ -422,7 +422,7 @@ into your template:
 A more detailed guide about configuring and using Assetic filters as well as
 details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/uglifyjs`.
 
-Controlling the URL used
+Controlling the URL Used
 ------------------------
 
 If you wish to, you can control the URLs that Assetic produces. This is
@@ -471,7 +471,7 @@ it might be downright frustrating.
 Fortunately, Assetic provides a way to dump your assets to real files, instead
 of being generated dynamically.
 
-Dumping Asset Files in the ``prod`` environment
+Dumping Asset Files in the ``prod`` Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``prod`` environment, your JS and CSS files are represented by a single
@@ -500,7 +500,7 @@ This will physically generate and write each file that you need (e.g. ``/js/abcd
 If you update any of your assets, you'll need to run this again to regenerate
 the file.
 
-Dumping Asset Files in the ``dev`` environment
+Dumping Asset Files in the ``dev`` Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, each asset path generated in the ``dev`` environment is handled

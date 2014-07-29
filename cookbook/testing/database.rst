@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Database
 
-How to test code that interacts with the Database
+How to Test Code that Interacts with the Database
 =================================================
 
 If your code interacts with the database, e.g. reads data from or stores data
@@ -99,7 +99,7 @@ the employee which gets returned by the ``Repository``, which itself gets
 returned by the ``EntityManager``. This way, no real class is involved in
 testing.
 
-Changing database Settings for functional Tests
+Changing Database Settings for Functional Tests
 -----------------------------------------------
 
 If you have functional tests, you want them to interact with a real database.

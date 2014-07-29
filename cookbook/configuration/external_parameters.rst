@@ -1,7 +1,7 @@
 .. index::
     single: Environments; External parameters
 
-How to Set External Parameters in the Service Container
+How to Set external Parameters in the Service Container
 =======================================================
 
 In the chapter :doc:`/cookbook/configuration/environments`, you learned how

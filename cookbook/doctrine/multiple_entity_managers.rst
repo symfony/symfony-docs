@@ -1,7 +1,7 @@
 .. index::
    single: Doctrine; Multiple entity managers
 
-How to work with Multiple Entity Managers and Connections
+How to Work with multiple Entity Managers and Connections
 =========================================================
 
 You can use multiple Doctrine entity managers or connections in a Symfony2

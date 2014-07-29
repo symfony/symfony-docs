@@ -1,7 +1,7 @@
 .. index::
    single: Workflow; Git
 
-How to Create and store a Symfony2 Project in Git
+How to Create and Store a Symfony2 Project in Git
 =================================================
 
 .. tip::
@@ -92,7 +92,7 @@ is the official way to solve this problem and probably much easier to
 deal with. Unlike Git submodules, Composer is smart enough to calculate
 which libraries depend on which other libraries.
 
-Storing your Project on a Remote Server
+Storing your Project on a remote Server
 ---------------------------------------
 
 You now have a fully-functional Symfony2 project stored in Git. However,

@@ -1,7 +1,7 @@
 .. index::
    single: Emails; Testing
 
-How to test that an Email is sent in a functional Test
+How to Test that an Email is Sent in a functional Test
 ======================================================
 
 Sending e-mails with Symfony2 is pretty straightforward thanks to the

@@ -106,19 +106,19 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
         framework:
             ide: "pstorm://%%f:%%l"
-            
+
     .. code-block:: xml
-    
+
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/service"
             xmlns:framework="http://symfony.com/schema/dic/symfony">
-            
+
             <framework:config ide="pstorm://%%f:%%l" />
-            
+
         </container>
-        
+
     .. code-block:: php
-    
+
         $container->loadFromExtension('framework', array(
             'ide' => 'pstorm://%%f:%%l',
         ));
@@ -543,7 +543,7 @@ Full default Configuration
                 gc_divisor:           ~
                 gc_probability:       ~
                 gc_maxlifetime:       ~
-                save_path:            %kernel.cache_dir%/sessions
+                save_path:            "%kernel.cache_dir%/sessions"
 
             # serializer configuration
             serializer:
@@ -552,7 +552,7 @@ Full default Configuration
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  %%s?%%s
+                assets_version_format:  "%%s?%%s"
                 hinclude_default_template:  ~
                 form:
                     resources:
@@ -573,7 +573,7 @@ Full default Configuration
                     # Prototype
                     name:
                         version:              ~
-                        version_format:       %%s?%%s
+                        version_format:       "%%s?%%s"
                         base_urls:
                             http:                 []
                             ssl:                  []
@@ -593,8 +593,8 @@ Full default Configuration
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       %kernel.cache_dir%/annotations
-                debug:                %kernel.debug%
+                file_cache_dir:       "%kernel.cache_dir%/annotations"
+                debug:                "%kernel.debug%"
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener

@@ -156,7 +156,7 @@ The service config for the above classes would look something like this:
     .. code-block:: xml
 
         <services>
-            <service id="my_mailer" ...>
+            <service id="my_mailer">
               <!-- ... -->
             </service>
             <service id="email_formatter_manager" class="EmailFormatterManager">

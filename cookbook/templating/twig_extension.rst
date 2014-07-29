@@ -1,7 +1,7 @@
 .. index::
    single: Twig extensions
 
-How to write a custom Twig Extension
+How to Write a custom Twig Extension
 ====================================
 
 The main motivation for writing an extension is to move often used code

@@ -1,7 +1,7 @@
 .. index::
    single: symfony1
 
-How Symfony2 differs from symfony1
+How Symfony2 Differs from Symfony1
 ==================================
 
 The Symfony2 framework embodies a significant evolution when compared with

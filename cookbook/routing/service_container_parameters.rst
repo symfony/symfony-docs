@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Service Container Parameters
 
-How to use Service Container Parameters in your Routes
+How to Use Service Container Parameters in your Routes
 ======================================================
 
 Sometimes you may find it useful to make some parts of your routes

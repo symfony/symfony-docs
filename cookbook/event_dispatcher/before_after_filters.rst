@@ -1,7 +1,7 @@
 .. index::
    single: EventDispatcher
 
-How to setup before and after Filters
+How to Setup before and after Filters
 =====================================
 
 It is quite common in web application development to need some logic to be
@@ -13,7 +13,7 @@ Most major frameworks have similar methods but there is no such thing in Symfony
 The good news is that there is a much better way to interfere with the
 Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
 
-Token validation Example
+Token Validation Example
 ------------------------
 
 Imagine that you need to develop an API where some controllers are public
@@ -30,7 +30,7 @@ token.
     in config and neither database setup nor authentication via the Security
     component will be used.
 
-Before filters with the ``kernel.controller`` Event
+Before Filters with the ``kernel.controller`` Event
 ---------------------------------------------------
 
 First, store some basic token configuration using ``config.yml`` and the
@@ -64,7 +64,7 @@ parameters key:
             'client2' => 'pass2',
         ));
 
-Tag Controllers to be checked
+Tag Controllers to Be Checked
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ``kernel.controller`` listener gets notified on *every* request, right before
@@ -186,7 +186,7 @@ implements ``TokenAuthenticatedController``, token authentication is
 applied. This lets you have a "before" filter on any controller that you
 want.
 
-After filters with the ``kernel.response`` Event
+After Filters with the ``kernel.response`` Event
 ------------------------------------------------
 
 In addition to having a "hook" that's executed before your controller, you

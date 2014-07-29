@@ -1,7 +1,7 @@
 .. index::
     single: Cache; Varnish
 
-How to use Varnish to speed up my Website
+How to Use Varnish to Speed up my Website
 =========================================
 
 Because Symfony2's cache uses the standard HTTP cache headers, the
@@ -62,7 +62,7 @@ Symfony2 adds automatically:
             // For Varnish < 3.0
             // esi;
         }
-        /* By default Varnish ignores Cache-Control: nocache 
+        /* By default Varnish ignores Cache-Control: nocache
         (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control),
         so in order avoid caching it has to be done explicitly */
         if (beresp.http.Pragma ~ "no-cache" ||

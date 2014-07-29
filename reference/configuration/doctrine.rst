@@ -59,8 +59,8 @@ Full default configuration
                         MultipleActiveResultSets:  ~
                         driver:               pdo_mysql
                         platform_service:     ~
-                        logging:              %kernel.debug%
-                        profiling:            %kernel.debug%
+                        logging:              "%kernel.debug%"
+                        profiling:            "%kernel.debug%"
                         driver_class:         ~
                         wrapper_class:        ~
                         options:
@@ -106,7 +106,7 @@ Full default configuration
             orm:
                 default_entity_manager:  ~
                 auto_generate_proxy_classes:  false
-                proxy_dir:            %kernel.cache_dir%/doctrine/orm/Proxies
+                proxy_dir:            "%kernel.cache_dir%/doctrine/orm/Proxies"
                 proxy_namespace:      Proxies
                 # search for the "ResolveTargetEntityListener" class for a cookbook about this
                 resolve_target_entities: []
@@ -416,7 +416,7 @@ Shortened Configuration Syntax
 ------------------------------
 
 When you are only using one entity manager, all config options available
-can be placed directly under ``doctrine.orm`` config level. 
+can be placed directly under ``doctrine.orm`` config level.
 
 .. code-block:: yaml
 

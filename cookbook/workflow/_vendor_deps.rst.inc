@@ -1,7 +1,7 @@
 Managing Vendor Libraries with ``composer.json``
 ------------------------------------------------
 
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
 Every Symfony project uses a group of third-party "vendor" libraries. One

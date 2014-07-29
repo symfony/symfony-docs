@@ -1,7 +1,7 @@
 .. index::
     single: Apache Router
 
-How to use the Apache Router
+How to Use the Apache Router
 ============================
 
 Symfony2, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
@@ -49,7 +49,7 @@ Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
     at the end of ``ApacheUrlMatcher::match()`` a call to ``parent::match()``
     is done).
 
-Generating mod_rewrite rules
+Generating mod_rewrite Rules
 ----------------------------
 
 To test that it's working, create a very basic route for the AcmeDemoBundle:
@@ -119,7 +119,7 @@ it should look like this:
 That's it!
 You're now all set to use Apache routes.
 
-Additional tweaks
+Additional Tweaks
 -----------------
 
 To save a little bit of processing time, change occurrences of ``Request``

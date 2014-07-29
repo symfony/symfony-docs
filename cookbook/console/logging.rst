@@ -1,7 +1,7 @@
 .. index::
    single: Console; Enabling logging
 
-How to enable logging in Console Commands
+How to Enable Logging in Console Commands
 =========================================
 
 The Console component doesn't provide any logging capabilities out of the box.
@@ -17,7 +17,7 @@ There are basically two logging cases you would need:
  * Manually logging some information from your command;
  * Logging uncaught Exceptions.
 
-Manually logging from a console Command
+Manually Logging from a Console Command
 ---------------------------------------
 
 This one is really simple. When you create a console command within the full
@@ -66,7 +66,7 @@ container and use it to do the logging::
 Depending on the environment in which you run your command (and your logging
 setup), you should see the logged entries in ``app/logs/dev.log`` or ``app/logs/prod.log``.
 
-Enabling automatic Exceptions logging
+Enabling automatic Exceptions Logging
 -------------------------------------
 
 To get your console application to automatically log uncaught exceptions for
@@ -174,7 +174,7 @@ service configuration. Your method receives a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` object,
 which has methods to get information about the event and the exception.
 
-Logging non-0 exit statuses
+Logging non-0 Exit Statuses
 ---------------------------
 
 The logging capabilities of the console can be further extended by logging

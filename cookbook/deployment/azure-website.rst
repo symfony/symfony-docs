@@ -51,7 +51,7 @@ plan configuration in the previous step.
 
 Agree to the terms and conditions and click on the right arrow to continue.
 
-Step 3: Where Is your source code
+Step 3: Where Is your Source Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now, on the third step, select a **Local Git repository** item and click
@@ -93,7 +93,7 @@ This section of the tutorial details how to configure the correct version of PHP
 to run Symfony. It also shows you how to enable some mandatory PHP extensions
 and how to properly configure PHP for a production environment.
 
-Configuring the Latest PHP Runtime
+Configuring the latest PHP Runtime
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Even though Symfony only requires PHP 5.3.3 to run, it's always recommended

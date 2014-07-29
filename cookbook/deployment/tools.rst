@@ -29,7 +29,7 @@ A deployment may also include other things, such as:
 * Removal of any unnecessary files from ``web`` to keep your production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
-How to deploy a Symfony2 application
+How to Deploy a Symfony2 Application
 ------------------------------------
 
 There are several ways you can deploy a Symfony2 application.
@@ -55,7 +55,7 @@ control system.
 This makes updating your files *easier*, but you still need to worry about
 manually taking other steps (see `Common Post-Deployment Tasks`_).
 
-Using Build scripts and other Tools
+Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are also high-quality tools to help ease the pain of deployment. There
@@ -71,14 +71,14 @@ Common Post-Deployment Tasks
 After deploying your actual source code, there are a number of common things
 you'll need to do:
 
-A) Configure your ``app/config/parameters.yml`` file
+A) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This file should be customized on each system. The method you use to
 deploy your source code should *not* deploy this file. Instead, you should
 set it up manually (or via some build process) on your server(s).
 
-B) Update your vendors
+B) Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Your vendors can be updated before transferring your source code (i.e.
@@ -97,7 +97,7 @@ as you normally do:
     ensures that development packages are not installed in the production
     environment.
 
-C) Clear your Symfony cache
+C) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Make sure you clear (and warm-up) your Symfony cache:
@@ -106,7 +106,7 @@ Make sure you clear (and warm-up) your Symfony cache:
 
     $ php app/console cache:clear --env=prod --no-debug
 
-D) Dump your Assetic assets
+D) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using Assetic, you'll also want to dump your assets:
@@ -115,7 +115,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
     $ php app/console assetic:dump --env=prod --no-debug
 
-E) Other things!
+E) Other Things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your

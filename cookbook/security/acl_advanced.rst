@@ -1,7 +1,7 @@
 .. index::
    single: Security; Advanced ACL concepts
 
-How to use Advanced ACL Concepts
+How to Use advanced ACL Concepts
 ================================
 
 The aim of this chapter is to give a more in-depth view of the ACL system, and
