@@ -90,7 +90,7 @@ This is how your ``WebserviceUser`` class looks in action::
                 return false;
             }
 
-            if ($this->getSalt() !== $user->getSalt()) {
+            if ($this->salt !== $user->getSalt()) {
                 return false;
             }
 
