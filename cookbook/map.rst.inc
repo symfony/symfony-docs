@@ -47,7 +47,7 @@
 
   * :doc:`/cookbook/debugging`
 
-* **Deployment**
+* :doc:`/cookbook/deployment/index`
 
   * :doc:`/cookbook/deployment/tools`
   * :doc:`/cookbook/deployment/azure-website`
