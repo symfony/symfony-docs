@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by iamdto at 2014-07-16T15:06:27Z
+
+A quick search on the documentation give me this:
+
+- http://symfony.com/doc/current/reference/configuration/doctrine.html
+- http://symfony.com/doc/current/cookbook/configuration/using_parameters_in_dic.html
+- http://symfony.com/doc/current/cookbook/bundles/installation.html
+
+The last one in the JSON example is caused by the three dots in the file I think.
+
+It looks like everytime the syntax highlighter fails, it sets the code dark on bright. Was this the case before the new version of the website? @javiereguiluz any inputs on this?
+
+---------------------------------------------------------------------------
+
+by stof at 2014-07-16T15:11:56Z
+
+@iamdto when the syntax highlighter fails, the code was not highlighted either previously (this is not related to the website itself, but to the Python tool used to render the doc). However, the background was still black in the old website IIRC.
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-07-16T15:35:18Z
+
+Yes, exactly, that's what I meant. Even when syntax highlighting failed the code was still bright on black.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-16T15:36:43Z
+
+Indeed, the old style rendered it like a `text` code block.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-16T17:11:21Z
+
+Changed the examples mentioned by @iamdto and updated the changeset according to @stof's comment.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-17T12:38:15Z
+
+@javiereguiluz What do you think about the default code block style?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-17T21:53:29Z
+
+The xml code containing the three dots in a tag (e.g. `<container ...>`) are broken too. See also https://github.com/symfony/symfony-docs/issues/1886#issuecomment-14035875
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-18T07:48:01Z
+
+@WouterJ Thanks for the hint. Most of the code blocks you found have been fixed in the meantime in the ``2.3`` branch. The rest should be fixed with this PR.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-18T07:54:40Z
+
+@xabbuh I've added this bug to the symfony.com backlog. It will be probably fixed soon because it can be easily fixed. Thank you all for reporting this error!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-18T07:55:34Z
+
+@javiereguiluz Thank you!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-21T13:55:29Z
+
+This error has been fixed and it will be online after the next deploy.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-21T13:57:46Z
+
+:+1:
