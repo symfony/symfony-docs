@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-07-24T11:04:17Z
+
+I'm afraid I might be missing the point of this change. Is there a reason why we should use getters instead of accessing the properties?
+
+---------------------------------------------------------------------------
+
+by entering at 2014-07-24T11:06:09Z
+
+consistency, the salt is with the getters others not, use properties or getters but keep it consistent
+
+```php
+        if (!$user instanceof WebserviceUser) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->getSalt() !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+```
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-24T11:06:55Z
+
+I'd prefer to use properties then, to make it easier for users to see the difference between `$this->` and `$user->` in the conditions.
+
+But great catch! We love consistency in the docs :)
+
+---------------------------------------------------------------------------
+
+by mtrojanowski at 2014-07-24T11:11:59Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by entering at 2014-07-24T11:25:06Z
+
+Done
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-24T11:31:22Z
+
+:+1:
