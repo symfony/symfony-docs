@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-23T13:53:30Z
+
+:+1: Awesome work @xabbuh!
+
+Somewhat related to this, do you think it could be necessary to updated the [documentation standards related to capitalization and closed-class words](http://symfony.com/doc/current/contributing/documentation/standards.html#language-standards)? Currently is just a link to a very dense Wikipedia article.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-23T14:16:07Z
+
+@javiereguiluz what would you update? The text itself does say it all actually, no need to click on the link
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-23T14:33:35Z
+
+@WouterJ you are right that the standard clearly states the rule:
+
+>  Capitalization of the first word, and all other words, except for closed-class words.
+
+The problem is that, as any other "rule" related to human languages, the "closed-class word" concept seems arbitrary. In other words: Which is the simplest rule to unequivocally, and without any exception, identify a closed-class word in English?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-23T14:36:24Z
+
+"a closed class (or closed word class) is a word class to which no new items can normally be added" http://en.wikipedia.org/wiki/Closed_class We might want to link to that wiki page instead
