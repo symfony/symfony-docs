@@ -93,7 +93,7 @@ See :doc:`/cookbook/service_container/compiler_passes` for information on how to
 compiler passes. If you want to do something beyond just overriding the class -
 like adding a method call - you can only use the compiler pass method.
 
-Entities & Entity mapping
+Entities & Entity Mapping
 -------------------------
 
 Due to the way Doctrine works, it is not possible to override entity mapping
@@ -119,7 +119,7 @@ rather than::
 
 .. _override-validation:
 
-Validation metadata
+Validation Metadata
 -------------------
 
 Symfony loads all validation configuration files from every bundle and

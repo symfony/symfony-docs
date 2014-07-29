@@ -1,7 +1,7 @@
 .. index::
    single: Templating; Global variables
 
-How to Inject Variables into all Templates (i.e. Global Variables)
+How to Inject Variables into all Templates (i.e. global Variables)
 ==================================================================
 
 Sometimes you want a variable to be accessible to all the templates you use.
@@ -20,7 +20,7 @@ This is possible inside your ``app/config/config.yml`` file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
+        <twig:config>
             <!-- ... -->
             <twig:global key="ga_tracking">UA-xxxxx-x</twig:global>
         </twig:config>
@@ -67,7 +67,7 @@ system, which lets you isolate or reuse the value:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
+        <twig:config>
             <twig:global key="ga_tracking">%ga_tracking%</twig:global>
         </twig:config>
 
@@ -111,7 +111,7 @@ This should feel familiar, as it's the same syntax you use in service configurat
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
+        <twig:config>
             <!-- ... -->
             <twig:global key="user_management">@acme_user.user_management</twig:global>
         </twig:config>

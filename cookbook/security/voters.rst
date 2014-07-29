@@ -1,7 +1,7 @@
 .. index::
    single: Security; Voters
 
-How to implement your own Voter to blacklist IP Addresses
+How to Implement your own Voter to Blacklist IP Addresses
 =========================================================
 
 The Symfony2 Security component provides several layers to authorize users.
@@ -29,7 +29,7 @@ blacklisted addresses and "something" will be the application. If the user's IP 
 ``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
 access, not to grant access.
 
-Creating a Custom Voter
+Creating a custom Voter
 -----------------------
 
 To blacklist a user based on its IP, you can use the ``request`` service
@@ -49,7 +49,11 @@ and compare the IP address against a set of blacklisted IP addresses:
         protected $requestStack;
         private $blacklistedIp;
 
+<<<<<<< HEAD
         public function __construct(RequestStack $requestStack, array $blacklistedIp = array())
+=======
+        public function __construct(ContainerInterface $container, array $blacklistedIp = array())
+>>>>>>> 2.3
         {
             $this->requestStack  = $requestStack;
             $this->blacklistedIp = $blacklistedIp;

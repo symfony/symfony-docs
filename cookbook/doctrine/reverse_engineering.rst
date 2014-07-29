@@ -1,7 +1,7 @@
 .. index::
    single: Doctrine; Generating entities from existing database
 
-How to generate Entities from an Existing Database
+How to Generate Entities from an Existing Database
 ==================================================
 
 When starting work on a brand new project that uses a database, two different

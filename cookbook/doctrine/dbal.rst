@@ -1,7 +1,7 @@
 .. index::
    pair: Doctrine; DBAL
 
-How to use Doctrine's DBAL Layer
+How to Use Doctrine's DBAL Layer
 ================================
 
 .. note::
@@ -77,7 +77,7 @@ You can then access the Doctrine DBAL connection by accessing the
         }
     }
 
-Registering Custom Mapping Types
+Registering custom Mapping Types
 --------------------------------
 
 You can register custom mapping types through Symfony's configuration. They
@@ -124,7 +124,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
             ),
         ));
 
-Registering Custom Mapping Types in the SchemaTool
+Registering custom Mapping Types in the SchemaTool
 --------------------------------------------------
 
 The SchemaTool is used to inspect the database to compare the schema. To

@@ -1,7 +1,7 @@
 .. index::
    single: Emails; Gmail
 
-How to use Gmail to Send Emails
+How to Use Gmail to Send Emails
 ===============================
 
 During development, instead of using a regular SMTP server to send emails, you

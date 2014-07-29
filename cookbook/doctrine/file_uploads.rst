@@ -1,7 +1,7 @@
 .. index::
    single: Doctrine; File uploads
 
-How to handle File Uploads with Doctrine
+How to Handle File Uploads with Doctrine
 ========================================
 
 Handling file uploads with Doctrine entities is no different than handling
@@ -412,10 +412,10 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
 
 .. caution::
 
-   If changes to your entity are handled by a Doctrine event listener or event 
-   subscriber, the ``preUpdate()`` callback must notify Doctrine about the changes 
+   If changes to your entity are handled by a Doctrine event listener or event
+   subscriber, the ``preUpdate()`` callback must notify Doctrine about the changes
    being done.
-   For full reference on preUpdate event restrictions, see `preUpdate`_ in the 
+   For full reference on preUpdate event restrictions, see `preUpdate`_ in the
    Doctrine Events documentation.
 
 The class now does everything you need: it generates a unique filename before
@@ -450,7 +450,7 @@ call to ``$document->upload()`` should be removed from the controller::
     via Doctrine. One solution would be to use an ``updated`` field that's
     persisted to Doctrine, and to modify it manually when changing the file.
 
-Using the ``id`` as the filename
+Using the ``id`` as the Filename
 --------------------------------
 
 If you want to use the ``id`` as the name of the file, the implementation is

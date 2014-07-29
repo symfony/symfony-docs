@@ -30,7 +30,7 @@ documentation.
 
 .. _cookbook-form-events-underlying-data:
 
-Customizing your Form based on the underlying Data
+Customizing your Form Based on the Underlying Data
 --------------------------------------------------
 
 Before jumping right into dynamic form generation, hold on and recall what
@@ -202,7 +202,7 @@ class::
 
 .. _cookbook-form-events-user-data:
 
-How to Dynamically Generate Forms based on user Data
+How to dynamically Generate Forms Based on user Data
 ----------------------------------------------------
 
 Sometimes you want a form to be generated dynamically based not only on data
@@ -440,7 +440,7 @@ You can also easily embed the form type into another form::
 
 .. _cookbook-form-events-submitted-data:
 
-Dynamic generation for submitted Forms
+Dynamic Generation for Submitted Forms
 --------------------------------------
 
 Another case that can appear is that you want to customize the form specific to

@@ -50,7 +50,7 @@ the object). If the condition fails, you'll return
 ``VoterInterface::ACCESS_GRANTED``. In case the responsibility for this decision
 does not belong to this voter, it will return ``VoterInterface::ACCESS_ABSTAIN``.
 
-Creating the Custom Voter
+Creating the custom Voter
 -------------------------
 
 The goal is to create a voter that checks if a user has access to view or
@@ -210,7 +210,7 @@ from the security context is called.
         {
             // get a Post instance
             $post = ...;
-            
+
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.context')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');

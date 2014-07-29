@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Simulating authentication
 
-How to simulate Authentication with a Token in a Functional Test
+How to Simulate Authentication with a Token in a Functional Test
 ================================================================
 
 Authenticating requests in functional tests might slow down the suite.

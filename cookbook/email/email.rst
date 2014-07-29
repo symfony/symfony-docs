@@ -1,7 +1,7 @@
 .. index::
    single: Emails
 
-How to send an Email
+How to Send an Email
 ====================
 
 Sending emails is a classic task for any web application and one that has

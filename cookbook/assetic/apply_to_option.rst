@@ -1,7 +1,7 @@
 .. index::
    single: Assetic; Apply filters
 
-How to Apply an Assetic Filter to a Specific File Extension
+How to Apply an Assetic Filter to a specific File Extension
 ===========================================================
 
 Assetic filters can be applied to individual files, groups of files or even,
@@ -49,7 +49,7 @@ An example configuration might look like this:
             ),
         ));
 
-Filter a Single File
+Filter a single File
 --------------------
 
 You can now serve up a single CoffeeScript file as JavaScript from within your
@@ -75,7 +75,7 @@ templates:
 This is all that's needed to compile this CoffeeScript file and serve it
 as the compiled JavaScript.
 
-Filter Multiple Files
+Filter multiple Files
 ---------------------
 
 You can also combine multiple CoffeeScript files into a single output file:
@@ -107,7 +107,7 @@ JavaScript.
 
 .. _cookbook-assetic-apply-to:
 
-Filtering based on a File Extension
+Filtering Based on a File Extension
 -----------------------------------
 
 One of the great advantages of using Assetic is reducing the number of asset
@@ -146,7 +146,7 @@ applied to all ``.coffee`` files:
                 apply_to="\.coffee$" />
                 <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
         </assetic:config>
-        
+
     .. code-block:: php
 
         // app/config/config.php

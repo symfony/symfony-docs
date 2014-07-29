@@ -10,7 +10,7 @@ submit Field Type
 A submit button.
 
 +----------------------+----------------------------------------------------------------------+
-| Rendered as          | ``input`` ``submit`` tag                                             |
+| Rendered as          | ``button`` ``submit`` tag                                            |
 +----------------------+----------------------------------------------------------------------+
 | Inherited            | - `attr`_                                                            |
 | options              | - `disabled`_                                                        |
