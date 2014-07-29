@@ -146,12 +146,11 @@ Language Standards
   point of view: use the second instead);
 * When referencing a hypothetical person, such as "a user with a session cookie", gender-neutral
   pronouns (they/their/them) should be used. For example, instead of:
-
-   * he or she, use they
-   * him or her, use them
-   * his or her, use their
-   * his or hers, use theirs
-   * himself or herself, use themselves
+  * he or she, use they
+  * him or her, use them
+  * his or her, use their
+  * his or hers, use theirs
+  * himself or herself, use themselves
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
