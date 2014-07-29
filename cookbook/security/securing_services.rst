@@ -2,7 +2,7 @@
    single: Security; Securing any service
    single: Security; Securing any method
 
-How to secure any Service or Method in your Application
+How to Secure any Service or Method in your Application
 =======================================================
 
 In the security chapter, you can see how to :ref:`secure a controller <book-security-securing-controller>`

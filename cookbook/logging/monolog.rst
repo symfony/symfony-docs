@@ -1,7 +1,7 @@
 .. index::
    single: Logging
 
-How to use Monolog to write Logs
+How to Use Monolog to Write Logs
 ================================
 
 Monolog_ is a logging library for PHP 5.3 used by Symfony2. It is
@@ -26,7 +26,7 @@ The ``logger`` service has different methods for different logging levels.
 See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
 on which methods are available.
 
-Handlers and Channels: Writing logs to different Locations
+Handlers and Channels: Writing Logs to different Locations
 ----------------------------------------------------------
 
 In Monolog each logger defines a logging channel, which organizes your log
@@ -49,7 +49,7 @@ messages in a buffer and to log them only if a message reaches the
 action level (``error`` in the configuration provided in the Standard
 Edition) by forwarding the messages to another handler.
 
-Using several handlers
+Using several Handlers
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The logger uses a stack of handlers which are called successively. This
@@ -154,7 +154,7 @@ in the order where they are defined.
     because the order matters and a merge does not allow to control the
     order.
 
-Changing the formatter
+Changing the Formatter
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The handler uses a ``Formatter`` to format the record before logging
@@ -218,7 +218,7 @@ easily. Your formatter must implement
             ),
         ));
 
-Adding some extra data in the log messages
+Adding some extra Data in the Log Messages
 ------------------------------------------
 
 Monolog allows to process the record before logging it to add some

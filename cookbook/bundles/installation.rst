@@ -1,7 +1,7 @@
 .. index::
    single: Bundle; Installation
 
-How to install 3rd party Bundles
+How to Install 3rd Party Bundles
 ================================
 
 Most bundles provide their own installation instructions. However, the

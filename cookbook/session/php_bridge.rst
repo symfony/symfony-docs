@@ -1,7 +1,7 @@
 .. index::
    single: Sessions
 
-Bridge a legacy application with Symfony Sessions
+Bridge a legacy Application with Symfony Sessions
 =================================================
 
 .. versionadded:: 2.3

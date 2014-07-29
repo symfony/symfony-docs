@@ -1,4 +1,4 @@
-How to customize the Bootstrap Process before running Tests
+How to Customize the Bootstrap Process before Running Tests
 ===========================================================
 
 Sometimes when running tests, you need to do additional bootstrap work before

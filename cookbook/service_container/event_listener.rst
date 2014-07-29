@@ -1,7 +1,7 @@
 .. index::
    single: Events; Create listener
 
-How to create an Event Listener
+How to Create an Event Listener
 ===============================
 
 Symfony has various events and hooks that can be used to trigger custom
@@ -94,7 +94,7 @@ using a special "tag":
     in the order of their priority (highest to lowest). This is useful when
     you need to guarantee that one listener is executed before another.
 
-Request events, checking types
+Request Events, Checking Types
 ------------------------------
 
 A single page can make several requests (one master request, and then multiple

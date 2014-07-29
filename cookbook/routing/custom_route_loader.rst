@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Custom route loader
 
-How to create a custom Route Loader
+How to Create a custom Route Loader
 ===================================
 
 A custom route loader allows you to add routes to an application without
@@ -54,7 +54,7 @@ its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
 will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
 containing :class:`Symfony\\Component\\Routing\\Route` objects.
 
-Creating a Custom Loader
+Creating a custom Loader
 ------------------------
 
 To load routes from some custom source (i.e. from something other than annotations,
@@ -97,7 +97,7 @@ type you want. The resource name itself is not actually used in the example::
             // add the new route to the route collection:
             $routeName = 'extraRoute';
             $routes->add($routeName, $route);
-            
+
             $this->loaded = true;
 
             return $routes;
@@ -166,7 +166,7 @@ Notice the tag ``routing.loader``. All services with this tag will be marked
 as potential route loaders and added as specialized routers to the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 
-Using the Custom Loader
+Using the custom Loader
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 If you did nothing else, your custom routing loader would *not* be called.
@@ -212,7 +212,7 @@ for the ``ExtraLoader``, so it is set to ".".
     cached by the framework. So whenever you change something in the loader
     class itself, don't forget to clear the cache.
 
-More Advanced Loaders
+More advanced Loaders
 ---------------------
 
 In most cases it's better not to implement

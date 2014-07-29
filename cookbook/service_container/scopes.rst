@@ -95,7 +95,7 @@ Each scenario is detailed in the following sections.
 
 .. _using-synchronized-service:
 
-Using a synchronized Service
+Using a Synchronized Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3

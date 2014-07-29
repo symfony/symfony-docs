@@ -1,7 +1,7 @@
 .. index::
    single: Security; Custom authentication provider
 
-How to create a custom Authentication Provider
+How to Create a custom Authentication Provider
 ==============================================
 
 If you have read the chapter on :doc:`/book/security`, you understand the
@@ -495,7 +495,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
 Congratulations! You have written your very own custom security authentication
 provider!
 
-A Little Extra
+A little Extra
 --------------
 
 How about making your WSSE authentication provider a bit more exciting? The

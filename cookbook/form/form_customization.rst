@@ -1,7 +1,7 @@
 .. index::
    single: Form; Custom form rendering
 
-How to customize Form Rendering
+How to Customize Form Rendering
 ===============================
 
 Symfony gives you a wide variety of ways to customize how a form is rendered.
@@ -180,7 +180,7 @@ this folder.
 
 .. _cookbook-form-customization-sidebar:
 
-.. sidebar:: Knowing which block to customize
+.. sidebar:: Knowing which Block to Customize
 
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
@@ -265,7 +265,7 @@ several (or all) forms in your application, read on to the next section.
 
 .. _cookbook-form-twig-separate-template:
 
-Method 2: Inside a Separate Template
+Method 2: Inside a separate Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to put the customized ``integer_widget`` form block in a
@@ -376,7 +376,7 @@ method:
 
 .. _cookbook-form-twig-import-base-blocks:
 
-Referencing Base Form Blocks (Twig specific)
+Referencing base Form Blocks (Twig specific)
 --------------------------------------------
 
 So far, to override a particular form block, the best method is to copy
@@ -410,7 +410,7 @@ via ``base_integer_widget``:
         </div>
     {% endblock %}
 
-Referencing Base Blocks from an External Template
+Referencing base Blocks from an external Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your form customizations live inside an external template, you can reference
@@ -629,7 +629,7 @@ your template file rather than adding the template as a resource:
 Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.
 
-How to customize an Individual field
+How to Customize an individual Field
 ------------------------------------
 
 So far, you've seen the different ways you can customize the widget output
@@ -725,7 +725,7 @@ You can also override the markup for an entire field row using the same method:
             <?php echo $view['form']->widget($form) ?>
         </div>
 
-Other Common Customizations
+Other common Customizations
 ---------------------------
 
 So far, this recipe has shown you several different ways to customize a single
@@ -810,10 +810,10 @@ of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
 
 .. tip::
 
-    See :ref:`form-template-blocks` to find out which specific block or file you 
+    See :ref:`form-template-blocks` to find out which specific block or file you
     have to customize.
 
-Certain errors that are more global to your form (i.e. not specific to just one 
+Certain errors that are more global to your form (i.e. not specific to just one
 field) are rendered separately, usually at the top of your form:
 
 .. configuration-block::
@@ -828,7 +828,7 @@ field) are rendered separately, usually at the top of your form:
 
 To customize *only* the markup used for these errors, follow the same directions
 as above, but now check if the ``compound`` variable is set to ``true``. If it
-is ``true``, it means that what's being currently rendered is a collection of 
+is ``true``, it means that what's being currently rendered is a collection of
 fields (e.g. a whole form), and not just an individual field.
 
 .. configuration-block::
@@ -972,7 +972,7 @@ original template:
             content: "* ";
         }
 
-Adding "help" messages
+Adding "help" Messages
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can also customize your form widgets to have an optional "help" message.

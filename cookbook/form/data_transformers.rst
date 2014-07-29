@@ -1,7 +1,7 @@
 .. index::
    single: Form; Data transformers
 
-How to use Data Transformers
+How to Use Data Transformers
 ============================
 
 You'll often find the need to transform the data the user entered in a form into
@@ -218,7 +218,7 @@ Which transformer you need depends on your situation.
 
 To use the view transformer, call ``addViewTransformer``.
 
-So why use the model transformer?
+So why Use the Model Transformer?
 ---------------------------------
 
 In this example, the field is a ``text`` field, and a text field is always
@@ -232,7 +232,7 @@ about what the "norm" data for a field should really be. For example, the
 "norm" data for a ``text`` field is a string, but is a ``DateTime`` object
 for a ``date`` field.
 
-Using Transformers in a custom field type
+Using Transformers in a custom Field Type
 -----------------------------------------
 
 In the above example, you applied the transformer to a normal ``text`` field.

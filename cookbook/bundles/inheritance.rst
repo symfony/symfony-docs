@@ -1,7 +1,7 @@
 .. index::
    single: Bundle; Inheritance
 
-How to use Bundle Inheritance to Override parts of a Bundle
+How to Use Bundle Inheritance to Override Parts of a Bundle
 ===========================================================
 
 When working with third-party bundles, you'll probably come across a situation

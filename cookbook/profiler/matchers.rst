@@ -1,7 +1,7 @@
 .. index::
     single: Profiling; Matchers
 
-How to use Matchers to enable the Profiler Conditionally
+How to Use Matchers to Enable the Profiler Conditionally
 ========================================================
 
 By default, the profiler is only activated in the development environment. But
@@ -52,7 +52,7 @@ You can also set a ``path`` option to define the path on which the profiler
 should be enabled. For instance, setting it to ``^/admin/`` will enable the
 profiler only for the ``/admin/`` URLs.
 
-Creating a Custom Matcher
+Creating a custom Matcher
 -------------------------
 
 You can also create a custom matcher. This is a service that checks whether

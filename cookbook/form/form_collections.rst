@@ -261,7 +261,7 @@ great, your user can't actually add any new tags yet.
 
 .. _cookbook-form-collections-new-prototype:
 
-Allowing "new" tags with the "prototype"
+Allowing "new" Tags with the "Prototype"
 -----------------------------------------
 
 Allowing the user to dynamically add new tags means that you'll need to
@@ -559,7 +559,7 @@ we talk about next!).
 
 .. _cookbook-form-collections-remove:
 
-Allowing tags to be removed
+Allowing Tags to be Removed
 ----------------------------
 
 The next step is to allow the deletion of a particular item in the collection.
@@ -595,8 +595,8 @@ Now, you need to put some code into the ``removeTag`` method of ``Task``::
         }
     }
 
-Templates Modifications
-~~~~~~~~~~~~~~~~~~~~~~~
+Template Modifications
+~~~~~~~~~~~~~~~~~~~~~~
 
 The ``allow_delete`` option has one consequence: if an item of a collection
 isn't sent on submission, the related data is removed from the collection

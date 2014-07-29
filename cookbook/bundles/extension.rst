@@ -2,7 +2,7 @@
    single: Configuration; Semantic
    single: Bundle; Extension configuration
 
-How to expose a Semantic Configuration for a Bundle
+How to Expose a semantic Configuration for a Bundle
 ===================================================
 
 If you open your application configuration file (usually ``app/config/config.yml``),
@@ -330,7 +330,7 @@ information loaded from other bundles). The goal of the ``load()`` method
 is to manipulate the container, adding and configuring any methods or services
 needed by your bundle.
 
-Loading External Configuration Resources
+Loading external Configuration Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 One common thing to do is to load an external configuration file that may
@@ -549,7 +549,7 @@ normalization and advanced merging. You can read more about this in
 You can also see it in action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 
-Modifying the configuration of another Bundle
+Modifying the Configuration of another Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have multiple bundles that depend on each other, it may be useful

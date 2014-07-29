@@ -1,7 +1,7 @@
 .. index::
    single: Form; Empty data
 
-How to configure Empty Data for a Form Class
+How to Configure empty Data for a Form Class
 ============================================
 
 The ``empty_data`` option allows you to specify an empty data set for your

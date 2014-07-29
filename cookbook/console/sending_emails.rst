@@ -2,7 +2,7 @@
    single: Console; Sending emails
    single: Console; Generating URLs
 
-How to generate URLs and send Emails from the Console
+How to Generate URLs and Send Emails from the Console
 =====================================================
 
 Unfortunately, the command line context does not know about your VirtualHost

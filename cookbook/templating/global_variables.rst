@@ -1,7 +1,7 @@
 .. index::
    single: Templating; Global variables
 
-How to Inject Variables into all Templates (i.e. Global Variables)
+How to Inject Variables into all Templates (i.e. global Variables)
 ==================================================================
 
 Sometimes you want a variable to be accessible to all the templates you use.

@@ -1,7 +1,7 @@
 .. index::
    single: Security; User Provider
 
-How to create a custom User Provider
+How to Create a custom User Provider
 ====================================
 
 Part of Symfony's standard authentication process depends on "user providers".
@@ -285,7 +285,7 @@ then encoded using this algorithm before being compared to the hashed password
 returned by your ``getPassword()`` method. Additionally, depending on your
 options, the password may be encoded multiple times and encoded to base64.
 
-.. sidebar:: Specifics on how passwords are encoded
+.. sidebar:: Specifics on how Passwords are Encoded
 
     Symfony uses a specific method to combine the salt and encode the password
     before comparing it to your encoded password. If ``getSalt()`` returns

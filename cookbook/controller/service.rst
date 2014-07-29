@@ -1,7 +1,7 @@
 .. index::
    single: Controller; As Services
 
-How to define Controllers as Services
+How to Define Controllers as Services
 =====================================
 
 In the book, you've learned how easily a controller can be used when it
@@ -89,7 +89,7 @@ Then you can define it as a service as follows:
             '%acme.controller.hello.class%'
         ));
 
-Referring to the service
+Referring to the Service
 ------------------------
 
 To refer to a controller that's defined as a service, use the single colon (:)
@@ -136,7 +136,7 @@ the route ``_controller`` value:
     :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     for details.
 
-Alternatives to Base Controller Methods
+Alternatives to base Controller Methods
 ---------------------------------------
 
 When using a controller defined as a service, it will most likely not extend

@@ -15,7 +15,7 @@ such as a file. Another process can then read from the spool and take care
 of sending the emails in the spool. Currently only spooling to file or memory is supported
 by Swift Mailer.
 
-Spool using memory
+Spool Using Memory
 ------------------
 
 When you use spooling to store the emails to memory, they will get sent right
@@ -53,7 +53,7 @@ swiftmailer with the memory option, use the following configuration:
             'spool' => array('type' => 'memory')
         ));
 
-Spool using a file
+Spool Using a File
 ------------------
 
 In order to use the spool with a file, use the following configuration:

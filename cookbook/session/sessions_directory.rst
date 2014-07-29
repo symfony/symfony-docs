@@ -1,8 +1,8 @@
 .. index::
    single: Sessions, sessions directory
 
-Configuring the Directory Where Sessions Files are Saved
-========================================================
+Configuring the Directory where Session Files are Saved
+=======================================================
 
 By default, the Symfony Standard Edition uses the global ``php.ini`` values
 for ``session.save_handler`` and ``session.save_path`` to determine where
@@ -138,4 +138,4 @@ session directory to ``app/sessions``:
                 'save_path'  => '%kernel.root_dir%/sessions',
             ),
         ));
-        
+

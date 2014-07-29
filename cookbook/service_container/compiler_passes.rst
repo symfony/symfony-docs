@@ -2,7 +2,7 @@
    single: DependencyInjection; Compiler passes
    single: Service Container; Compiler passes
 
-How to work with Compiler Passes in Bundles
+How to Work with Compiler Passes in Bundles
 ===========================================
 
 Compiler passes give you an opportunity to manipulate other service
