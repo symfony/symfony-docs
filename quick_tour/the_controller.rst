@@ -148,7 +148,7 @@ from any controller::
 
     public function indexAction(Request $request)
     {
-        $session = $this->request->getSession();
+        $session = $request->getSession();
 
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');

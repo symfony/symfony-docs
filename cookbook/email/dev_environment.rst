@@ -1,7 +1,7 @@
 .. index::
    single: Emails; In development
 
-How to Work with Emails During Development
+How to Work with Emails during Development
 ==========================================
 
 When developing an application which sends email, you will often

@@ -2,7 +2,7 @@
    single: Configuration; Semantic
    single: Bundle; Extension configuration
 
-How to simplify configuration of multiple Bundles
+How to Simplify Configuration of multiple Bundles
 =================================================
 
 When building reusable and extensible applications, developers are often

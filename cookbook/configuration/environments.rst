@@ -16,7 +16,7 @@ optimized for speed.
 .. index::
    single: Environments; Configuration files
 
-Different Environments, Different Configuration Files
+Different Environments, different Configuration Files
 -----------------------------------------------------
 
 A typical Symfony2 application begins with three environments: ``dev``,
@@ -125,7 +125,7 @@ activated by modifying the default value in the ``dev`` configuration file:
 .. index::
    single: Environments; Executing different environments
 
-Executing an Application in Different Environments
+Executing an Application in different Environments
 --------------------------------------------------
 
 To execute the application in each environment, load up the application using
@@ -147,7 +147,7 @@ If you open up one of these files, you'll quickly see that the environment
 used by each is explicitly set::
 
     // web/app.php
-    // ... 
+    // ...
 
     $kernel = new AppKernel('prod', false);
 
@@ -215,7 +215,7 @@ environment by using this code and changing the environment string.
 .. index::
    single: Environments; Creating a new environment
 
-Creating a New Environment
+Creating a new Environment
 --------------------------
 
 By default, a Symfony2 application has three environments that handle most
@@ -345,7 +345,7 @@ includes the following:
     You can easily change the directory location and name. For more information
     read the article :doc:`/cookbook/configuration/override_dir_structure`.
 
-Going Further
+Going further
 -------------
 
 Read the article on :doc:`/cookbook/configuration/external_parameters`.

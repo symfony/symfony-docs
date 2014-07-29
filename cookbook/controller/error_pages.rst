@@ -2,7 +2,7 @@
    single: Controller; Customize error pages
    single: Error pages
 
-How to customize Error Pages
+How to Customize Error Pages
 ============================
 
 When any exception is thrown in Symfony2, the exception is caught inside the

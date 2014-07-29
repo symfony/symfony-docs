@@ -2,7 +2,7 @@
     single: How the front controller, ``AppKernel`` and environments
     work together
 
-Understanding how the Front Controller, Kernel and Environments work together
+Understanding how the Front Controller, Kernel and Environments Work together
 =============================================================================
 
 The section :doc:`/cookbook/configuration/environments` explained the basics

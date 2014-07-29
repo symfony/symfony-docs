@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Profiling
 
-How to use the Profiler in a Functional Test
+How to Use the Profiler in a Functional Test
 ============================================
 
 It's highly recommended that a functional test only tests the Response. But if

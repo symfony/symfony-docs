@@ -1,7 +1,7 @@
 .. index::
    single: Assetic; UglifyJS
 
-How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)
+How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)
 =========================================================
 
 `UglifyJS`_ is a JavaScript parser/compressor/beautifier toolkit. It can be used
@@ -183,7 +183,7 @@ and :ref:`dump your assetic assets <cookbook-asetic-dump-prod>`.
     rather than the common config file. For details on applying filters by
     file extension, see :ref:`cookbook-assetic-apply-to`.
 
-Install, configure and use UglifyCSS
+Install, Configure and Use UglifyCSS
 ------------------------------------
 
 The usage of UglifyCSS works the same way as UglifyJS. First, make sure

@@ -1,7 +1,7 @@
 .. index::
    single: Request; Add a request format and mime type
 
-How to register a new Request Format and Mime Type
+How to Register a new Request Format and Mime Type
 ==================================================
 
 Every ``Request`` has a "format" (e.g. ``html``, ``json``), which is used

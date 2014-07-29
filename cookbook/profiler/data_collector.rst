@@ -1,14 +1,14 @@
 .. index::
    single: Profiling; Data collector
 
-How to create a custom Data Collector
+How to Create a custom Data Collector
 =====================================
 
 The Symfony2 :ref:`Profiler <internals-profiler>` delegates data collecting to
 data collectors. Symfony2 comes bundled with a few of them, but you can easily
 create your own.
 
-Creating a Custom Data Collector
+Creating a custom Data Collector
 --------------------------------
 
 Creating a custom data collector is as simple as implementing the
@@ -73,7 +73,7 @@ populate the ``$this->data`` property (it takes care of serializing the
 
 .. _data_collector_tag:
 
-Enabling Custom Data Collectors
+Enabling custom Data Collectors
 -------------------------------
 
 To enable a data collector, add it as a regular service in one of your

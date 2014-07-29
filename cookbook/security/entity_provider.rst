@@ -2,7 +2,7 @@
    single: Security; User provider
    single: Security; Entity provider
 
-How to load Security Users from the Database (the Entity Provider)
+How to Load Security Users from the Database (the Entity Provider)
 ==================================================================
 
 The security layer is one of the smartest tools of Symfony. It handles two
@@ -358,7 +358,7 @@ entity user provider to load User entity objects from the database by using
 the ``username`` unique field. In other words, this tells Symfony how to
 fetch the user from the database before checking the password validity.
 
-Forbid Inactive Users
+Forbid inactive Users
 ---------------------
 
 If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
