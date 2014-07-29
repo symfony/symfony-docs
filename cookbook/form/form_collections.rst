@@ -510,7 +510,7 @@ we talk about next!).
                 xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-                <entity name="Acme\TaskBundle\Entity\Task" ...>
+                <entity name="Acme\TaskBundle\Entity\Task">
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
@@ -609,7 +609,7 @@ First, add a "delete this tag" link to each tag form:
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
         $collectionHolder = $('ul.tags');
-        
+
         // add a delete link to all of the existing tag form li elements
         $collectionHolder.find('li').each(function() {
             addTagFormDeleteLink($(this));
@@ -667,9 +667,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
-        
+
         use Doctrine\Common\Collections\ArrayCollection;
-        
+
         // ...
         public function editAction($id, Request $request)
         {
