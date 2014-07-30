@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-23T14:20:57Z
+
+It should also be added to `cookbook/map.rst.inc`
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-23T20:50:13Z
+
+@WouterJ thanks for your exhaustive review. Awesome work as always!
+
+Regarding the contents of this tutorial, I'd like to add two things:
+
+  * The technical part of this article should be correct because it has been written by Heroku and validated by independent companies, such as SensioLabs.
+  * Most of the contents have been borrowed from [the original tutorial published by Heroku](https://devcenter.heroku.com/articles/getting-started-with-symfony2) but we've been legally entitled to do so.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-25T06:33:56Z
+
+@xabbuh thanks for your great review! I've applied each and every suggestion.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-25T06:43:12Z
+
+@javiereguiluz Thanks for this great article. I'll try to review the rest of it later today.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-07-29T14:29:26Z
+
+Great job Javier! I loved reading through this! I only had one comment.
