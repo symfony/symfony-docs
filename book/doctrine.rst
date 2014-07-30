@@ -699,7 +699,7 @@ method of the entity manager::
     $em->flush();
 
 As you might expect, the ``remove()`` method notifies Doctrine that you'd
-like to remove the given entity from the database. The actual ``DELETE`` query,
+like to remove the given object from the database. The actual ``DELETE`` query,
 however, isn't actually executed until the ``flush()`` method is called.
 
 .. _`book-doctrine-queries`:
