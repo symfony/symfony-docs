@@ -49,11 +49,7 @@ and compare the IP address against a set of blacklisted IP addresses:
         protected $requestStack;
         private $blacklistedIp;
 
-<<<<<<< HEAD
         public function __construct(RequestStack $requestStack, array $blacklistedIp = array())
-=======
-        public function __construct(ContainerInterface $container, array $blacklistedIp = array())
->>>>>>> 2.3
         {
             $this->requestStack  = $requestStack;
             $this->blacklistedIp = $blacklistedIp;
