@@ -25,8 +25,14 @@ Finally, the tutorial will demonstrate how to create a custom
 :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider` object to
 retrieve users from a database with custom conditions.
 
-This tutorial assumes there is a bootstrapped and loaded
-``Acme\UserBundle`` bundle in the application kernel.
+.. sidebar:: Code along with the Example
+
+    If you want to follow along with the example in this chapter, create
+    an AcmeUserBundle via:
+
+    .. code-block:: bash
+
+        $ php app/console generate:bundle --namespace=Acme/UserBundle
 
 The Data Model
 --------------
