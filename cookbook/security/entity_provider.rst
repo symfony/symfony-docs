@@ -194,7 +194,7 @@ interface forces the class to implement the five following methods:
 * :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getPassword`
 * :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getSalt`
 * :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername`
-* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredential`
+* :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredentials`
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
