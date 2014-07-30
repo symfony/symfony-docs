@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-30T08:30:55Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-30T11:38:01Z
+
+Btw. this should be merged into the 2.4 branch.
+
+---------------------------------------------------------------------------
+
+by pmartelletti at 2014-07-30T16:54:23Z
+
+@xabbuh why 2.4? I saw this error while reading the 2.5 branch.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-30T16:59:30Z
+
+@pmartelletti This error was introduced when the 2.3 branch was merged into the 2.4 branch (you can see that [here](http://symfony.com/doc/2.4/cookbook/security/voters.html#creating-a-custom-voter) too). But there's nothing you have to do. @weaverryan can easily pick this command and merge it into the 2.4 branch. Once it has been merged into the 2.4 branch, it should get into 2.5 when 2.4 is merged into 2.5.
+
+---------------------------------------------------------------------------
+
+by pmartelletti at 2014-07-30T17:00:18Z
+
+@xabbuh ahh good point :smile:
