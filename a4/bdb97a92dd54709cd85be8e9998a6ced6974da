@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-31T09:12:30Z
+
+I use :ref:`book-installation-permissions` as recommended, but the Travis build fails with this error:
+
+> Warning, treated as error:
+> /home/travis/build/symfony/symfony-docs/quick_tour/the_big_picture.rst:94: WARNING: undefined label: book-installation-permissions (if the link has no caption the label must precede a section header)
+
+Can someone help me solving this issue? Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-31T10:21:03Z
+
+Ah, @javiereguiluz the pointer `book-installation-permissions` is put here: https://github.com/symfony/symfony-docs/blame/master/book/installation.rst#L215
+
+As you can see, the pointer is not directly followed by a headline. That means Sphinx cannot automatically generate the text for the reference link, as it normaly takes the headline. So in this case, you have to write the text yourself. For instance: `` :ref:`Setting up Permissions <book-installation-permissions>` ``.
+
+PS: These reference still don't work well with the fixed navbar, see #3974
