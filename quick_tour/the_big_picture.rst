@@ -94,8 +94,8 @@ main concepts. Go to the following URL to be greeted by Symfony2 (replace
     Instead of the greeting page, you may see a blank page or an error page.
     This is caused by a directory permission misconfiguration. There are several
     possible solutions depending on your operating system. All of them are
-    explained in the :ref:`book-installation-permissions` section of the
-    official book.
+    explained in the :ref:`Setting up Permissions <book-installation-permissions>`
+    section of the official book.
 
 What's going on here? Have a look at each part of the URL:
 
