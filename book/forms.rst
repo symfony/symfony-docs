@@ -273,6 +273,12 @@ possible paths:
       from being able to hit the "Refresh" button of their browser and re-post
       the data.
 
+.. seealso::
+
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+
 .. index::
    single: Forms; Multiple Submit Buttons
 
