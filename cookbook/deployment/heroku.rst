@@ -12,7 +12,7 @@ Setting up
 ----------
 
 To setup a new Heroku website, first `signup with Heroku`_ or sign in
-with your credentials. Then download and install the `Heroku Toolbet`_ on your
+with your credentials. Then download and install the `Heroku Toolbelt`_ on your
 local computer.
 
 You can also check out the `getting Started with PHP on Heroku`_ guide to gain 
@@ -188,8 +188,8 @@ You should be seeing your Symfony2 application in your browser.
 
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
-.. _`Heroku Toolbet`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
-.. _`getting Started with PHP on Heroku`: .. _`Heroku Toolbet`: https://devcenter.heroku.com/articles/getting-started-with-php
+.. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
+.. _`getting Started with PHP on Heroku`: https://devcenter.heroku.com/articles/getting-started-with-php
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
