@@ -1125,11 +1125,12 @@ easy to use in your application.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd>
-
-            <service id="acme_demo.form.type.task"
+            <services>
+               <service id="acme_demo.form.type.task"
                 class="Acme\TaskBundle\Form\Type\TaskType">
-                <tag name="form.type" alias="task" />
-            </service>
+                  <tag name="form.type" alias="task" />
+               </service>
+            </services>
         </container>
 
     .. code-block:: php

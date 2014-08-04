@@ -23,7 +23,7 @@ The ``email`` field is a text field that is rendered using the HTML5
 |             | - `error_mapping`_                                                  |
 |             | - `mapped`_                                                         |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`text </reference/forms/types/text>`                           |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
 +-------------+---------------------------------------------------------------------+
