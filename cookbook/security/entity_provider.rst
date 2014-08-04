@@ -25,8 +25,14 @@ Finally, the tutorial will demonstrate how to create a custom
 :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider` object to
 retrieve users from a database with custom conditions.
 
-This tutorial assumes there is a bootstrapped and loaded
-``Acme\UserBundle`` bundle in the application kernel.
+.. sidebar:: Code along with the Example
+
+    If you want to follow along with the example in this chapter, create
+    an AcmeUserBundle via:
+
+    .. code-block:: bash
+
+        $ php app/console generate:bundle --namespace=Acme/UserBundle
 
 The Data Model
 --------------
@@ -357,6 +363,69 @@ In this case, the ``entity`` keyword means that Symfony will use the Doctrine
 entity user provider to load User entity objects from the database by using
 the ``username`` unique field. In other words, this tells Symfony how to
 fetch the user from the database before checking the password validity.
+
+.. note::
+
+    By default, the entity provider uses the default entity manager to fetch
+    user information from the database. If you,
+    :doc:`use multiple entity managers </cookbook/doctrine/multiple_entity_managers>`,
+    you can specify which manager to use with the ``manager_name`` option:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            security:
+                # ...
+
+                providers:
+                    administrators:
+                        entity:
+                            class: AcmeUserBundle:User
+                            property: username
+                            manager_name: customer
+
+                # ...
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+                <config>
+                    <!-- ... -->
+
+                    <provider name="administrators">
+                        <entity class="AcmeUserBundle:User"
+                            property="username"
+                            manager-name="customer" />
+                    </provider>
+
+                    <!-- ... -->
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('security', array(
+                // ...
+                'providers' => array(
+                    'administrator' => array(
+                        'entity' => array(
+                            'class' => 'AcmeUserBundle:User',
+                            'property' => 'username',
+                            'manager_name' => 'customer',
+                        ),
+                    ),
+                ),
+                // ...
+            ));
 
 Forbid inactive Users
 ---------------------

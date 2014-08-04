@@ -194,7 +194,7 @@ property.
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Author:
+        Acme\HelloBundle\Entity\Author:
             properties:
                 address:
                     - Valid: ~
