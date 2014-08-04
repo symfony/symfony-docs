@@ -207,7 +207,7 @@ the relative path of a directory given another one::
         '/var/lib/symfony/src/Symfony/',
         '/var/lib/symfony/src/Symfony/Component'
     );
-    // returns 'videos'
+    // returns 'videos/'
     $fs->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
