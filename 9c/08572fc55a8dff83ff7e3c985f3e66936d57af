@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-29T15:12:49Z
+
+:+1: thank you @saro0h!
+
+By the way, this typo should also be fixed in `2.3` and `2.4` branches.
+
+---------------------------------------------------------------------------
+
+by saro0h at 2014-07-29T18:51:50Z
+
+Should I create a new PR?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-29T18:59:20Z
+
+@saro0h There's no need for this. @weaverryan can easily pick this commit and merge it into 2.3.
