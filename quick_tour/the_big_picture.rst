@@ -18,7 +18,7 @@ directory:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition myproject/ ~2.5
+    $ composer create-project symfony/framework-standard-edition myproject/ '~2.5'
 
 .. note::
 
