@@ -57,7 +57,7 @@ Distribution:
 
 .. code-block:: bash
 
-    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.5.*
+    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony '~2.5'
 
 .. tip::
 
