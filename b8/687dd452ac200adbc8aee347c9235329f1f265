@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-05T14:32:26Z
+
+:+1: thanks @dannykopping for fixing this issue!
+
+I can confirm that this is an issue and we even updated [the symfony.com download page](http://symfony.com/download) to wrap the version number with quotes.
+
+Could you please update also these two other places where this version number could cause problems?
+
+  * https://github.com/symfony/symfony-docs/blob/master/book/installation.rst#option-1-composer
+  * https://github.com/symfony/symfony-docs/blob/master/cookbook/workflow/new_project_git.rst#initial-project-setup
+
+@weaverryan I know that you are aware, but this change should also be applied to the previous 2.3 and 2.4 versions.
+
+And I have an open question for the symfony-docs reviewers: I think that we should use the double quote `"` instead of the single quote `'`. Do you agree? Do you think that this is irrelevant?
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-05T14:50:04Z
+
+Done
+
+See #4092
+See #4093
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-05T15:21:20Z
+
+@dannykopping thanks for your quick response and for creating the other pull requests.
+
+As a side comment, when different changes are closely related, even if they modify very different files in very different locations, we usually group all the changes under the same pull request. This means that the changes of the PR #4092 and #4093 could have been included in this PR. However, don't worry this time about this.
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-05T17:46:52Z
+
+Sure, I shouldn't have done it on GitHub - next time I'll pull down the repo and push them up as one PR.
