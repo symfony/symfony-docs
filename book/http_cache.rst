@@ -915,7 +915,7 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
     .. code-block:: html+php
 
         <?php echo $view['actions']->render(
-            new ControllerReference('...:news', array('max' => 5)),
+            new \Symfony\Component\HttpKernel\Controller\ControllerReference('...:news', array('max' => 5)),
             array('strategy' => 'esi'))
         ?>
 

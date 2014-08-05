@@ -658,7 +658,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render(
-                new ControllerReference(
+                new \Symfony\Component\HttpKernel\Controller\ControllerReference(
                     'AcmeArticleBundle:Article:recentArticles',
                     array('max' => 3)
                 )
