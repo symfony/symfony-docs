@@ -938,6 +938,19 @@ wondering why you would want to use a helper instead of just writing the ESI
 tag yourself. That's because using a helper makes your application work even
 if there is no gateway cache installed.
 
+.. tip::
+
+    Using render_esi with parameters doesn't use request variables - they are 
+    passed in as named parameters. They must be named the same.
+    
+    e.g. ``render_esi(controller('...:content', { max_per_page: 5, type: 'news' }``
+    
+.. code-block:: php
+
+    public function content($max_per_page = 10, $type = "news") 
+    {
+
+
 When using the default ``render`` function (or setting the renderer to
 ``inline``), Symfony merges the included page content into the main one
 before sending the response to the client. But if you use the ``esi`` renderer
