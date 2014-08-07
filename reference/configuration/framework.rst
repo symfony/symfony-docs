@@ -145,7 +145,7 @@ trusted_proxies
 **type**: ``array``
 
 Configures the IP addresses that should be trusted as proxies. For more details,
-see :doc:`/components/http_foundation/trusting_proxies`.
+see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 
 .. versionadded:: 2.3
     CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole

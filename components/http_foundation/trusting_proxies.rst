@@ -4,6 +4,11 @@
 Trusting Proxies
 ================
 
+.. tip::
+
+    If you're using the Symfony Framework, start by reading
+    :doc:`/cookbookrequest/load_balancer_reverse_proxy`.
+
 If you find yourself behind some sort of proxy - like a load balancer - then
 certain header information may be sent to you using special ``X-Forwarded-*``
 headers. For example, the ``Host`` HTTP header is usually used to return

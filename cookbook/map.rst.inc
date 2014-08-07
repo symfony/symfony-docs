@@ -113,6 +113,7 @@
 
 * :doc:`/cookbook/request/index`
 
+  * :doc:`/cookbook/request/load_balancer_reverse_proxy`
   * :doc:`/cookbook/request/mime_type`
   * (session) :doc:`/cookbook/session/locale_sticky_session`
 
