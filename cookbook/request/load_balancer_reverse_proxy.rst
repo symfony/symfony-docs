@@ -86,8 +86,8 @@ That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true true IP address
 and other information.
 
-My Reverse Proxy Uses Non-Standard (not X-Forwarded-*) Headers
---------------------------------------------------------------
+My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
+------------------------------------------------------------
 
 Most reverse proxies store information on specific ``X-Forwarded-*`` headers.
 But if your reverse proxy uses non-standard header names, you can configure
