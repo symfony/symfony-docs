@@ -48,8 +48,8 @@ are:
             Allow from All
         </Directory>
 
-        ErrorLog /var/log/apache2/project_error.log
-        CustomLog /var/log/apache2/project_access.log combined
+        ErrorLog ${APACHE_LOG_DIR}/project_error.log
+        CustomLog ${APACHE_LOG_DIR}/project_access.log combined
     </VirtualHost>
 
 .. note::
