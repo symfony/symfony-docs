@@ -12,9 +12,9 @@ cached content quickly and including support for :ref:`Edge Side Includes <edge-
 Trusting Reverse Proxies
 ------------------------
 
-For ESI to work correctly and for the :ref:`X-FORWARDED<varnish-x-forwarded-headers>`
+For ESI to work correctly and for the :ref:`X-FORWARDED <varnish-x-forwarded-headers>`
 headers to be used, you need to configure Varnish as a
-:doc:`trusted proxy</cookbook/request/load_balancer_reverse_proxy>`.
+:doc:`trusted proxy </cookbook/request/load_balancer_reverse_proxy>`.
 
 .. index::
     single: Varnish; configuration

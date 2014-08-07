@@ -9,11 +9,11 @@ For the most part, this doesn't cause any problems with Symfony. But, when
 a request passes through a proxy, certain request information is sent using
 special ``X-Forwarded-*`` headers. For example, instead of reading the ``REMOTE_ADDR``
 header (which will now be the IP address of your reverse proxy), the user's
-true IP will be stored in a ``X-Forwarded-For`` header.
+true IP will be stored in an ``X-Forwarded-For`` header.
 
 .. tip::
 
-    If your using Symfonys :ref:`AppCache<symfony-gateway-cache>` for caching,
+    If you're using Symfony's :ref:`AppCache<symfony-gateway-cache>` for caching,
     then you *are* using a reverse proxy with the IP address ``127.0.0.1``.
     You'll need to configure that address as a trusted proxy below.
 
@@ -38,10 +38,18 @@ and which reverse proxy IP addresses will be doing this type of thing:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xyml -->
-        <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
-            <!-- ... -->
-        </framework>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
+                <!-- ... -->
+            </framework>
+        </container>
 
     .. code-block:: php
 
@@ -50,29 +58,27 @@ and which reverse proxy IP addresses will be doing this type of thing:
             'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
         ));
 
-In this example, you're saying that your reverse proxy (or proxies) have
-the IP address ``192.0.0.1`` or match the range of IP addresses that use
+In this example, you're saying that your reverse proxy (or proxies) has
+the IP address ``192.0.0.1`` or matches the range of IP addresses that use
 the CIDR notation ``10.0.0.0/8``. For more details, see :ref:`reference-framework-trusted-proxies`.
 
 That's it! Symfony will now look for the correct ``X-Forwarded-*`` headers
 to get information like the client's IP address, host, port and whether or
 not the request is using HTTPS.
 
-But I the IP of my Reverse Proxy Changes Constantly!
-----------------------------------------------------
+But What if the IP of my Reverse Proxy Changes Constantly!
+----------------------------------------------------------
 
 Some reverse proxies (like Amazon's Elastic Load Balancers) don't have a
 static IP address or even a range that you can target with the CIDR notation.
 In this case, you'll need to - *very carefully* - trust *all* proxies.
 
-1. Configure your web server(s) to not respond to traffic from *any* servers
+1. Configure your web server(s) to *not* respond to traffic from *any* clients
    other than your load balancers. For AWS, this can be done with `security groups`_.
 
 1. Once you've guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request. This is
-   done inside of your front controller:
-
-.. code-block:: php
+   done inside of your front controller::
 
     // web/app.php
     // ...
@@ -83,15 +89,15 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
     // ...
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
-If you allow outside traffic, they could "spoof" their true true IP address
-and other information.
+If you allow outside traffic, they could "spoof" their true IP address and
+other information.
 
 My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 ------------------------------------------------------------
 
 Most reverse proxies store information on specific ``X-Forwarded-*`` headers.
 But if your reverse proxy uses non-standard header names, you can configure
-these. See :doc:`/components/http_foundation/trusting_proxies`. The code
-for doing this will need to live in your front controller (e.g. ``web/app.php``).
+these (:doc:`see reference </components/http_foundation/trusting_proxies>`.
+The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
 .. _`security groups`: http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-elb-security-groups.html
