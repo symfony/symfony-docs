@@ -65,9 +65,9 @@ The validator class is also simple, and only has one required method ``validate(
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-                $this->context->addViolation(
-                    $constraint->message,
-                    array('%string%' => $value)
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('%string%', $value)
+                    ->addViolation();
                 );
             }
         }
@@ -76,11 +76,17 @@ The validator class is also simple, and only has one required method ``validate(
 .. note::
 
     The ``validate`` method does not return a value; instead, it adds violations
-    to the validator's ``context`` property with an ``addViolation`` method
-    call if there are validation failures. Therefore, a value could be considered
-    as being valid if it causes no violations to be added to the context.
-    The first parameter of the ``addViolation`` call is the error message to
-    use for that violation.
+    to the validator's ``context`` property. Therefore, a value could be considered
+    as being valid if it causes no violations to be added to the context.The
+    violation is constructed and added to the context using a
+    ``ConstraintViolationBuilder`` returned by the ``buildViolation`` method
+    call. The parameter given to the ``buildViolation`` call is the error message
+    to use for that violation. The ``addViolation`` method call finally adds the
+    violation to the context.
+
+.. versionadded:: 2.5
+    The ``buildViolation`` method was added in Symfony 2.5. For usage examples with
+    older Symfony versions, see the corresponding versions of this documentation page.
 
 Using the new Validator
 -----------------------
