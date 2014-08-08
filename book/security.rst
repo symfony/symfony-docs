@@ -804,6 +804,17 @@ the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admi
 
 .. _`book-security-securing-controller`:
 
+
+Securing other Services
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In fact, anything in Symfony can be protected using a strategy similar to
+the one seen in the previous section. For example, suppose you have a service
+(i.e. a PHP class) whose job is to send emails from one user to another.
+You can restrict use of this class - no matter where it's being used from -
+to users that have a specific role.
+>>>>>>> Minor format improvements
+
 Securing Controllers and other Code
 ...................................
 
@@ -813,8 +824,8 @@ You can easily deny access from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
         // ...
@@ -830,6 +841,12 @@ You can easily deny access from inside a controller::
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException`
 method creates a special :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 object, which ultimately triggers a 403 HTTP response inside Symfony.
+
+.. versionadded:: 2.6
+    You can use directly `$this->isGranted($role)` instead of 
+    `$this->get('security.context')->isGranted($role)` to check if 
+    a role is granted and `denyAccessUnlessGranted` to throw an exception
+    if the access is not granted (like in the example above).
 
 That's it! If the user isn't logged in yet, they will be asked to login (e.g.
 redirected to the login page). If they *are* logged in, they'll be shown
