@@ -914,7 +914,10 @@ enabled, it's recommended to secure access to ESI URLs. Indeed, some ESI may
 contain some private content like the current logged in user's information. To
 prevent any direct access to these resources from a web browser (by guessing the
 ESI URL pattern), the ESI route **must** be secured to be only visible from
-the trusted reverse proxy cache.
+the reverse proxy cache. Furthermore, the IP of the reverse proxy cache must not be
+in the list of trusted proxies, as this would cause the original client's IP,
+or the IP of an untrusted proxy, to be the one matched against the ACL rule instead.
+
 
 .. versionadded:: 2.3
     Version 2.3 allows multiple IP addresses in a single rule with the ``ips: [a, b]``
