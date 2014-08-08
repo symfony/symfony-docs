@@ -66,7 +66,7 @@ That's it! Symfony will now look for the correct ``X-Forwarded-*`` headers
 to get information like the client's IP address, host, port and whether or
 not the request is using HTTPS.
 
-But What if the IP of my Reverse Proxy Changes Constantly!
+But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
 
 Some reverse proxies (like Amazon's Elastic Load Balancers) don't have a
