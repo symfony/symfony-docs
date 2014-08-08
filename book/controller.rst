@@ -451,6 +451,10 @@ perform a 301 (permanent) redirect, modify the second argument::
 
         return new RedirectResponse($this->generateUrl('homepage'));
 
+    You can also directly use ``redirectToRoute()`` and give it directly the route name like :
+
+        return $this->redirectToRoute('homepage');
+
 .. index::
    single: Controller; Forwarding
 
@@ -719,6 +723,10 @@ For example, imagine you're processing a form submit::
 After processing the request, the controller sets a ``notice`` flash message
 and then redirects. The name (``notice``) isn't significant - it's just what
 you're using to identify the type of the message.
+
+.. tip::
+
+    You can use the ``addFlash(...)`` method as a shortcut to ``$this->get('session')->getFlashBag()->add(...)``.
 
 In the template of the next action, the following code could be used to render
 the ``notice`` message:
