@@ -802,9 +802,6 @@ the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admi
 
     To learn about all of this, see :doc:`/cookbook/security/access_control`.
 
-.. _`book-security-securing-controller`:
-
-
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -813,10 +810,14 @@ the one seen in the previous section. For example, suppose you have a service
 (i.e. a PHP class) whose job is to send emails from one user to another.
 You can restrict use of this class - no matter where it's being used from -
 to users that have a specific role.
->>>>>>> Minor format improvements
+
+.. _`book-security-securing-controller`:
 
 Securing Controllers and other Code
 ...................................
+
+Securing a Controller
+~~~~~~~~~~~~~~~~~~~~~
 
 You can easily deny access from inside a controller::
 
@@ -834,6 +835,12 @@ You can easily deny access from inside a controller::
 .. versionadded:: 2.6
      The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
      to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+
+.. versionadded:: 2.6
+    You can use directly :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::isGranted`
+    instead of  `$this->get('security.context')->isGranted($role)` to check if 
+    a role is granted and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::denyAccessUnlessGranted`
+    to throw an exception if the access is not granted (like in the example above).
 
 .. versionadded:: 2.5
     The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
