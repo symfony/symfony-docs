@@ -129,7 +129,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.twig -->
+        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -150,6 +150,8 @@ link for details), create a ``gender_widget`` block to handle this:
     be ``gender_widget``, according to the value returned by ``getName``.
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
+
+    When using Twig this is:
 
     .. configuration-block::
 
@@ -177,6 +179,51 @@ link for details), create a ``gender_widget`` block to handle this:
                 'form' => array(
                     'resources' => array(
                         'AcmeDemoBundle:Form:fields.html.twig',
+                    ),
+                ),
+            ));
+
+    For the PHP templating engine, your configuration should look like this:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                templating:
+                    form:
+                        resources:
+                            - 'AcmeDemoBundle:Form'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:templating>
+                        <framework:form>
+                            <framework:resource>AcmeDemoBundle:Form</twig:resource>
+                        </framework:form>
+                    </framework:templating>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'templating' => array(
+                    'form' => array(
+                        'resources' => array(
+                            'AcmeDemoBundle:Form',
+                        ),
                     ),
                 ),
             ));
