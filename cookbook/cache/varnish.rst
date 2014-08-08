@@ -9,6 +9,13 @@ Because Symfony2's cache uses the standard HTTP cache headers, the
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
 cached content quickly and including support for :ref:`Edge Side Includes <edge-side-includes>`.
 
+Trusting Reverse Proxies
+------------------------
+
+For ESI to work correctly and for the :ref:`X-FORWARDED <varnish-x-forwarded-headers>`
+headers to be used, you need to configure Varnish as a
+:doc:`trusted proxy </cookbook/request/load_balancer_reverse_proxy>`.
+
 .. index::
     single: Varnish; configuration
 
@@ -187,6 +194,8 @@ that will invalidate the cache for a given resource:
                 error 404 "Not purged";
             }
         }
+
+.. _varnish-x-forwarded-headers:
 
 Routing and X-FORWARDED Headers
 -------------------------------

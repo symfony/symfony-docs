@@ -103,7 +103,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
                 ->add('dueDate', 'date')
-                ->add('save', 'submit')
+                ->add('save', 'submit', array('label' => 'Create Post'))
                 ->getForm();
 
             return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
@@ -128,7 +128,9 @@ In this example, you've added two fields to your form - ``task`` and ``dueDate``
 corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
 You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
 other things, determines which HTML form tag(s) is rendered for that field.
-Finally, you added a submit button for submitting the form to the server.
+
+Finally, you added a submit button with a custom label for submitting the form to 
+the server.
 
 .. versionadded:: 2.3
     Support for submit buttons was introduced in Symfony 2.3. Before that, you had
@@ -217,7 +219,7 @@ controller::
         $form = $this->createFormBuilder($task)
             ->add('task', 'text')
             ->add('dueDate', 'date')
-            ->add('save', 'submit')
+            ->add('save', 'submit', array('label' => 'Create Post'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -289,8 +291,8 @@ To do this, add a second button with the caption "Save and add" to your form::
     $form = $this->createFormBuilder($task)
         ->add('task', 'text')
         ->add('dueDate', 'date')
-        ->add('save', 'submit')
-        ->add('saveAndAdd', 'submit')
+        ->add('save', 'submit', array('label' => 'Create Post'))
+        ->add('saveAndAdd', 'submit', array('label' => 'Save and Add'))
         ->getForm();
 
 In your controller, use the button's

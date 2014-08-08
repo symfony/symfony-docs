@@ -229,7 +229,7 @@ If you create a ``fancy`` action, and want to include it into the
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render(
-        new ControllerReference('AcmeHelloBundle:Hello:fancy', array(
+        new \Symfony\Component\HttpKernel\Controller\ControllerReference('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ))
