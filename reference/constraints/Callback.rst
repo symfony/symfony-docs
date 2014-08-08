@@ -100,7 +100,7 @@ can set "violations" directly on this object and determine to which field
 those errors should be attributed::
 
     // ...
-    use Symfony\Component\Validator\ExecutionContextInterface;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
     class Author
     {
@@ -114,12 +114,11 @@ those errors should be attributed::
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $context->addViolationAt(
-                    'firstName',
-                    'This name sounds totally fake!',
-                    array(),
-                    null
-                );
+                $context
+                    ->buildViolation('This name sounds totally fake!', array())
+                    ->atPath('firstName')
+                    ->addViolation()
+                ;
             }
         }
     }
