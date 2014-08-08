@@ -453,7 +453,7 @@ perform a 301 (permanent) redirect, modify the second argument::
 
 .. versionadded:: 2.6
     You can also directly use 
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::redirectToRoute``
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::redirectToRoute`
     and give it directly the route name like :
 
         return $this->redirectToRoute('homepage');
@@ -728,7 +728,7 @@ and then redirects. The name (``notice``) isn't significant - it's just what
 you're using to identify the type of the message.
 
 .. versionadded:: 2.6
-    You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::addFlash``
+    You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::addFlash`
     method as a shortcut to ``$this->get('session')->getFlashBag()->add(...)``.
 
 In the template of the next action, the following code could be used to render

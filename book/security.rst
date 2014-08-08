@@ -1125,10 +1125,10 @@ For more information, see the
 :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
 
 .. versionadded:: 2.6
-    You can use directly `$this->isGranted($role)` instead of 
-    `$this->get('security.context')->isGranted($role)` to check if 
-    a role is granted and `denyAccessUnlessGranted` to throw an exception
-    if the access is not granted (like in the example above).
+    You can use directly :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::isGranted`
+    instead of  `$this->get('security.context')->isGranted($role)` to check if 
+    a role is granted and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::denyAccessUnlessGranted`
+    to throw an exception if the access is not granted (like in the example above).
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
