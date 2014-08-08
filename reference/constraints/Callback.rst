@@ -116,8 +116,7 @@ those errors should be attributed::
             if (in_array($this->getFirstName(), $fakeNames)) {
                 $context->buildViolation('This name sounds totally fake!')
                     ->atPath('firstName')
-                    ->addViolation()
-                ;
+                    ->addViolation();
             }
         }
     }
