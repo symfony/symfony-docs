@@ -73,10 +73,10 @@ Some reverse proxies (like Amazon's Elastic Load Balancers) don't have a
 static IP address or even a range that you can target with the CIDR notation.
 In this case, you'll need to - *very carefully* - trust *all* proxies.
 
-1. Configure your web server(s) to *not* respond to traffic from *any* clients
+#. Configure your web server(s) to *not* respond to traffic from *any* clients
    other than your load balancers. For AWS, this can be done with `security groups`_.
 
-1. Once you've guaranteed that traffic will only come from your trusted reverse
+#. Once you've guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request. This is
    done inside of your front controller::
 
