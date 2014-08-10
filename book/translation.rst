@@ -136,17 +136,17 @@ different formats, XLIFF being the recommended format:
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
+
     .. code-block:: php
 
         // messages.fr.php
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
         );
-
-    .. code-block:: yaml
-
-        # messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
 
 For information on where these files should be located, see
 :ref:`book-translation-resource-locations`.
@@ -638,17 +638,17 @@ bundle.
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # validators.en.yml
+        author.name.not_blank: Please enter an author name.
+
     .. code-block:: php
 
         // validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );
-
-    .. code-block:: yaml
-
-        # validators.en.yml
-        author.name.not_blank: Please enter an author name.
 
 Translating Database Content
 ----------------------------
