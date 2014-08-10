@@ -81,13 +81,13 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
    proxies, configure Symfony to *always* trust incoming request. This is
    done inside of your front controller::
 
-    // web/app.php
-    // ...
+       // web/app.php
 
-    Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
+       // ...
+       Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
 
-    $response = $kernel->handle($request);
-    // ...
+       $response = $kernel->handle($request);
+       // ...
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
