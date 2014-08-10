@@ -13,6 +13,58 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+July, 2014
+----------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `1b4c1c8 <https://github.com/symfony/symfony-docs/commit/1b4c1c86a3e4729e1a6ce226963ac05577b8ab8f>`_ #4045 Added a new "Deploying to Heroku Cloud" cookbook article (javiereguiluz)
+- `f943eee <https://github.com/symfony/symfony-docs/commit/f943eee70cf81b90a598d94f400a3723216fe726>`_ #4009 Remove "Controllers extends ContainerAware" best practice (tgalopin)
+- `eae9ad0 <https://github.com/symfony/symfony-docs/commit/eae9ad037ed402752238e4eb1c9c0b2fdc443d7d>`_ #3875 Added a note about customizing a form with more than one template (javiereguiluz)
+- `d6787b7 <https://github.com/symfony/symfony-docs/commit/d6787b7b64ed6d20cafee0134a99e590bee6102b>`_ #3989 adde stof as a merger (fabpot)
+- `4a9e49e <https://github.com/symfony/symfony-docs/commit/4a9e49ef142fdeeb5523dbdcf73503ac602373e7>`_ #3946 DQL custom functions on doctrine reference page (healdropper)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `1b695b5 <https://github.com/symfony/symfony-docs/commit/1b695b52a3f8094daf18d212a124a6050f2fad1a>`_ #4063 fix parent form types (xabbuh)
+- `7901005 <https://github.com/symfony/symfony-docs/commit/7901005f37d223cd4541648131bccc0e4bd687d5>`_ #4048 $this->request replaced by $request (danielsan)
+- `f6123f1 <https://github.com/symfony/symfony-docs/commit/f6123f1bb06d624fc2d0506bcf6f4016c0b3e371>`_ #4031 Update form_events.rst (redstar504)
+- `06f8c31 <https://github.com/symfony/symfony-docs/commit/06f8c3157f76da36847a70d132c61971ac72dc1e>`_ #4012 Fix xml route configuration for routing condition (xavierbriand)
+- `b32f9f2 <https://github.com/symfony/symfony-docs/commit/b32f9f2981ae3d63d547c07cee7f0cb03dc7db5a>`_ #3771 Fix function example in expression language component (raulfraile)
+- `eb813a5 <https://github.com/symfony/symfony-docs/commit/eb813a563c564358ba82253ea667516cd3e7191d>`_ #3979 removed invalid processors option (ricoli)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `a4bdb97 <https://github.com/symfony/symfony-docs/commit/a4bdb97a92dd54709cd85be8e9998a6ced6974da>`_ #4070 Added a note about permissions in the Quick Tour (javiereguiluz)
+- `a7fe00f <https://github.com/symfony/symfony-docs/commit/a7fe00fedea3ba89089a2de6fb54970cdbe2440e>`_ #4068 Remove diff info from cookbook/security/voters.rst (pmartelletti)
+- `b3f15b2 <https://github.com/symfony/symfony-docs/commit/b3f15b2dc78c0593e6db09311c0c79eba68a97f0>`_ #4059 eraseCredentials method typo (danielsan)
+- `44091b1 <https://github.com/symfony/symfony-docs/commit/44091b132c1007535ff3030a64126751486982cd>`_ #4053 Update doctrine.rst (sr972)
+- `b06ad60 <https://github.com/symfony/symfony-docs/commit/b06ad6041164479c049ae4c202b13b3f248c3bed>`_ #4052 [Security] [Custom Provider] Use properties on WebserviceUser (entering)
+- `a834a7e <https://github.com/symfony/symfony-docs/commit/a834a7e883e78005ed41a6cea0dcee058ed85b1f>`_ #4042 [Cookbook] apply headline guidelines to the cookbook articles (xabbuh)
+- `f25faf3 <https://github.com/symfony/symfony-docs/commit/f25faf3ed3facd3812b743288465ee9ca25397a4>`_ #4046 Fixed a syntax error (javiereguiluz)
+- `3c660d1 <https://github.com/symfony/symfony-docs/commit/3c660d13390cc1cf05e9d0be98bbce847002c05b>`_ #4044 Added editorconfig (WouterJ)
+- `ae3ec04 <https://github.com/symfony/symfony-docs/commit/ae3ec048e8583082928bffadb079d1391e888f0f>`_ #4041 [Cookbook][Deployment] link to the deployment index (xabbuh)
+- `2e4fc7f <https://github.com/symfony/symfony-docs/commit/2e4fc7f3a5dd4caa4ee5cbfade6989e71bcda123>`_ #4030 enclose YAML strings containing % with quotes (xabbuh)
+- `9520d92 <https://github.com/symfony/symfony-docs/commit/9520d9299e6ddbc19985e0ed322349c70d89cdc7>`_ #4038 Update rendered tag (kirill-oficerov)
+- `f5c2602 <https://github.com/symfony/symfony-docs/commit/f5c260219f8e7df969493df2fe2d2feb1fc97e19>`_ #4036 Update page_creation.rst (redstar504)
+- `c2eda93 <https://github.com/symfony/symfony-docs/commit/c2eda939ad8681721cd1b12bcedadd1faf294725>`_ #4034 Update internals.rst (redstar504)
+- `a5ad0df <https://github.com/symfony/symfony-docs/commit/a5ad0dfbf9ad2dcc84e7f9c6de73c8bad2a89e2f>`_ #4035 Update version in Rework your Patch section (yguedidi)
+- `d8b037a <https://github.com/symfony/symfony-docs/commit/d8b037a989c1581ae671e81284d0d758254d8e1e>`_ #4019 Update twig_reference.rst (redstar504)
+- `7ea87e6 <https://github.com/symfony/symfony-docs/commit/7ea87e63e3417c59e47972b9cf12ca76cce4b195>`_ #4016 Fixed the format of one letter-based list (javiereguiluz)
+- `579a873 <https://github.com/symfony/symfony-docs/commit/579a8732299dd944998ab3fee4fa738a3c45cea2>`_ #4015 Fixed bad indenting (the list was treated as a blockquote) (javiereguiluz)
+- `4669620 <https://github.com/symfony/symfony-docs/commit/466962051e0753557fc75d9d449083d68ae48992>`_ #4004 use GitHub instead of Github (xabbuh)
+- `a3fe74f <https://github.com/symfony/symfony-docs/commit/a3fe74f4fad9f691dc570fb9234acd15bd6ccfdc>`_ #3993 [Console] Fix Console component getHelperSet()->get() to getHelper() (eko)
+- `a41af7e <https://github.com/symfony/symfony-docs/commit/a41af7e0f4a10cf7a6230598fd955dab2559935e>`_ #3880 document the mysterious abc part of the header (greg0ire)
+- `90773b0 <https://github.com/symfony/symfony-docs/commit/90773b03425388542d1b0face5368eb4c47ce3b8>`_ #3990 Move the section about collect: false to the cookbook entry (weaverryan)
+- `2ae8281 <https://github.com/symfony/symfony-docs/commit/2ae82816556478c75ba9873589b2d77987156c36>`_ #3864 plug rules for static methods (cordoval)
+- `d882cc0 <https://github.com/symfony/symfony-docs/commit/d882cc0e0b41e8c49187854d40dfb0963b429939>`_ #3988 fix typos. (yositani2002)
+- `b67a059 <https://github.com/symfony/symfony-docs/commit/b67a059d5ff8c45482df135ed8dda5b3bcc81f3a>`_ #3986 Rebased #3982 - Some fixes (WouterJ)
+- `801c756 <https://github.com/symfony/symfony-docs/commit/801c7565a3e6c0d440fb86f1b2fd4a076ff4399c>`_ #3977 [WCM] removed call to deprecated getRequest() method (Baptouuuu)
+- `4c1d4ae <https://github.com/symfony/symfony-docs/commit/4c1d4ae506a7dc68fad57ddf6cc25c17a00169a4>`_ #3968 Proofreading the new Azure deployment article (weaverryan)
+
 June, 2014
 ----------
 
