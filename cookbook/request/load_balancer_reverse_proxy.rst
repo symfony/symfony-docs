@@ -60,7 +60,8 @@ and which reverse proxy IP addresses will be doing this type of thing:
 
 In this example, you're saying that your reverse proxy (or proxies) has
 the IP address ``192.0.0.1`` or matches the range of IP addresses that use
-the CIDR notation ``10.0.0.0/8``. For more details, see :ref:`reference-framework-trusted-proxies`.
+the CIDR notation ``10.0.0.0/8``. For more details, see the
+:ref:`framework.trusted_proxies <reference-framework-trusted-proxies>` option.
 
 That's it! Symfony will now look for the correct ``X-Forwarded-*`` headers
 to get information like the client's IP address, host, port and whether or
@@ -97,7 +98,7 @@ My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
 
 Most reverse proxies store information on specific ``X-Forwarded-*`` headers.
 But if your reverse proxy uses non-standard header names, you can configure
-these (:doc:`see reference </components/http_foundation/trusting_proxies>`.
+these (see ":doc:`/components/http_foundation/trusting_proxies`").
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
 .. _`security groups`: http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-elb-security-groups.html
