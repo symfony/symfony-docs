@@ -429,6 +429,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -443,8 +444,8 @@ by adding an entry for ``/contact`` to your routing configuration file:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
