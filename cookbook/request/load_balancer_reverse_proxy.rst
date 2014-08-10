@@ -1,5 +1,5 @@
-How to Configure Symfony to Work behind a Load Balancer or Reverse Proxy
-========================================================================
+How to Configure Symfony to Work behind a Load Balancer or a Reverse Proxy
+==========================================================================
 
 When you deploy your application, you may be behind a load balancer (e.g.
 an AWS Elastic Load Balancer) or a reverse proxy (e.g. Varnish for
