@@ -132,9 +132,8 @@ the route ``_controller`` value:
 .. tip::
 
     You can also use annotations to configure routing using a controller
-    defined as a service. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
-    for details.
+    defined as a service. See the `FrameworkExtraBundle documentation`_ for
+    details.
 
 Alternatives to base Controller Methods
 ---------------------------------------
@@ -267,3 +266,4 @@ inject *only* the exact service(s) that you need directly into the controller.
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
+.. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/routing.html

@@ -288,16 +288,15 @@ on the event object that's passed to listeners on this event.
     the Symfony Framework, and many deal with collecting profiler data when
     the profiler is enabled.
 
-    One interesting listener comes from the :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>`,
+    One interesting listener comes from the `SensioFrameworkExtraBundle`_,
     which is packaged with the Symfony Standard Edition. This listener's
-    :doc:`@ParamConverter </bundles/SensioFrameworkExtraBundle/annotations/converters>`
-    functionality allows you to pass a full object (e.g. a ``Post`` object)
-    to your controller instead of a scalar value (e.g. an ``id`` parameter
-    that was on your route). The listener - ``ParamConverterListener`` - uses
-    reflection to look at each of the arguments of the controller and tries
-    to use different methods to convert those to objects, which are then
-    stored in the ``attributes`` property of the ``Request`` object. Read the
-    next section to see why this is important.
+    `@ParamConverter`_ functionality allows you to pass a full object (e.g. a
+    ``Post`` object) to your controller instead of a scalar value (e.g. an
+    ``id`` parameter that was on your route). The listener -
+    ``ParamConverterListener`` - uses reflection to look at each of the
+    arguments of the controller and tries to use different methods to convert
+    those to objects, which are then stored in the ``attributes`` property of
+    the ``Request`` object. Read the next section to see why this is important.
 
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -395,14 +394,12 @@ return a ``Response``.
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, one core bundle -
-    :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>` -
-    *does* add a listener to this event. If your controller returns an array,
-    and you place the :doc:`@Template </bundles/SensioFrameworkExtraBundle/annotations/view>`
-    annotation above the controller, then this listener renders a template,
-    passes the array you returned from your controller to that template,
-    and creates a ``Response`` containing the returned content from that
-    template.
+    event. However, one core bundle - `SensioFrameworkExtraBundle`_ - *does*
+    add a listener to this event. If your controller returns an array,
+    and you place the `@Template`_ annotation above the controller, then this
+    listener renders a template, passes the array you returned from your
+    controller to that template, and creates a ``Response`` containing the
+    returned content from that template.
 
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
@@ -699,3 +696,6 @@ look like this::
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`Create your own framework... on top of the Symfony2 Components`: http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
 .. _`PHP FPM`: http://php.net/manual/en/install.fpm.php
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`@ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
