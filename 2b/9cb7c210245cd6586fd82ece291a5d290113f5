@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-08-04T11:33:37Z
+
+Why is travis failing? I don't see an actual issue in line 41
+
+    /home/travis/build/symfony/symfony-docs/cookbook/security/api_key_authentication.rst:41: ERROR: Unexpected indentation.
