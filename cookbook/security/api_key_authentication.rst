@@ -232,7 +232,7 @@ you can use to create an error ``Response``.
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
     {
-        //...
+        // ...
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
@@ -426,6 +426,51 @@ configuration or set it to ``false``:
                 ),
             ),
         ));
+
+Even though the token is being stored in the session, the credentials - in this
+case the API key (i.e. ``$token->getCredentials()``) - are not stored in the session
+for security reasons. To take advantage of the session, update ``ApiKeyAuthenticator``
+to see if the stored token has a valid User object that can be used::
+
+    // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
+    // ...
+
+    class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
+    {
+        // ...
+        public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
+        {
+            $apiKey = $token->getCredentials();
+            $username = $this->userProvider->getUsernameForApiKey($apiKey);
+
+            // User is the Entity which represents your user
+            $user = $token->getUser();
+            if ($user instanceof User) {
+                return new PreAuthenticatedToken(
+                    $user,
+                    $apiKey,
+                    $providerKey,
+                    $user->getRoles()
+                );
+            }
+
+            if (!$username) {
+                throw new AuthenticationException(
+                    sprintf('API Key "%s" does not exist.', $apiKey)
+                );
+            }
+
+            $user = $this->userProvider->loadUserByUsername($username);
+
+            return new PreAuthenticatedToken(
+                $user,
+                $apiKey,
+                $providerKey,
+                $user->getRoles()
+            );
+        }
+        // ...
+    }
 
 Storing authentication information in the session works like this:
 

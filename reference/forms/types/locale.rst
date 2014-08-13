@@ -79,6 +79,16 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The actual default value of this option depends on other field options:
+
+* If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
+  (empty string);
+* Otherwise ``array()`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
