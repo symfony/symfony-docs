@@ -49,7 +49,7 @@ Specifies the currency that the money is being specified in. This determines
 the currency symbol that should be shown by the text box. Depending on
 the currency - the currency symbol may be shown before or after the input
 text field.
-    
+
 This can be any `3 letter ISO 4217 code`_. You can also set this to false to
 hide the currency symbol.
 
@@ -89,6 +89,12 @@ Inherited Options
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -116,7 +122,7 @@ Form Variables
 --------------
 
 ============= ========== ===============================================================
-Variable      Type       Usage                                       
+Variable      Type       Usage
 ============= ========== ===============================================================
 money_pattern ``string`` The format to use to display the money, including the currency.
 ============= ========== ===============================================================
