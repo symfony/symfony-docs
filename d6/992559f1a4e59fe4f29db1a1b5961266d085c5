@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-02T13:45:32Z
+
+I updated #4033 to use a placeholder together with the ``end-before`` and ``start-after`` options of the ``include`` directive.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-05T18:41:29Z
+
+@xabbuh You said this is not yet complete, what else do you want to do? You also said that you're not sure if you like the way it looks now with the default value below the `note` directive. Where is that?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T06:19:54Z
+
+> You said this is not yet complete, what else do you want to do?
+
+Oh, it's complete now. I forgot to remove that note.
+
+> You also said that you're not sure if you like the way it looks now with the default value below the note directive. Where is that?
+
+That was before I introduced the placeholder. The description of the real default value was that split with an example of when this might be useful. Now, we have the description of the default value first, followed by the example. I think it's fine this way.
