@@ -71,8 +71,6 @@ To avoid using the cached resource after updating the old resource, you can
 use versions which you bump every time you release a new project. The version
 can be specified in the third argument::
 
-    use Symfony\Component\Templating\Asset\PathPackage;
-
     // ...
     $templateEngine->set(new AssetsHelper(null, null, '328rad75'));
 
@@ -106,6 +104,8 @@ Asset path generation is handled internally by packages. The component provides
 
 You can also use multiple packages::
 
+    use Symfony\Component\Templating\Asset\PathPackage;
+    
     // ...
     $templateEngine->set(new AssetsHelper());
 
