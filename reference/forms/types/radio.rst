@@ -44,7 +44,7 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
+.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
