@@ -45,16 +45,9 @@ rounding_mode
 
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
-<<<<<<< HEAD
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
     
 * ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
-=======
-option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
-
-*   ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
-    round towards zero.
->>>>>>> 2.3
 
 * ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
   infinity.
