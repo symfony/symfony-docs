@@ -13,23 +13,23 @@ forms, which is useful when creating forms that expose one-to-many relationships
 +-------------+-----------------------------------------------------------------------------+
 | Rendered as | depends on the `type`_ option                                               |
 +-------------+-----------------------------------------------------------------------------+
-| Options     | - `type`_                                                                   |
-|             | - `options`_                                                                |
-|             | - `allow_add`_                                                              |
+| Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
+|             | - `delete_empty`_                                                           |
+|             | - `options`_                                                                |
 |             | - `prototype`_                                                              |
 |             | - `prototype_name`_                                                         |
-|             | - `delete_empty`_                                                           |
+|             | - `type`_                                                                   |
 +-------------+-----------------------------------------------------------------------------+
-| Inherited   | - `label`_                                                                  |
-| options     | - `label_attr`_                                                             |
+| Inherited   | - `by_reference`_                                                           |
+| options     | - `cascade_validation`_                                                     |
+|             | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
-|             | - `by_reference`_                                                           |
-|             | - `empty_data`_                                                             |
-|             | - `required`_                                                               |
+|             | - `label`_                                                                  |
+|             | - `label_attr`_                                                             |
 |             | - `mapped`_                                                                 |
-|             | - `cascade_validation`_                                                     |
+|             | - `required`_                                                               |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                   |
 +-------------+-----------------------------------------------------------------------------+
@@ -212,39 +212,6 @@ you need is the JavaScript:
 Field Options
 -------------
 
-type
-~~~~
-
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
-
-This is the field type for each item in this collection (e.g. ``text``, ``choice``,
-etc). For example, if you have an array of email addresses, you'd use the
-:doc:`email </reference/forms/types/email>` type. If you want to embed
-a collection of some other form, create a new instance of your form type
-and pass it as this option.
-
-options
-~~~~~~~
-
-**type**: ``array`` **default**: ``array()``
-
-This is the array that's passed to the form type specified in the `type`_
-option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
-type as your `type`_ option (e.g. for a collection of drop-down menus), then
-you'd need to at least pass the ``choices`` option to the underlying type::
-
-    $builder->add('favorite_cities', 'collection', array(
-        'type'   => 'choice',
-        'options'  => array(
-            'choices'  => array(
-                'nashville' => 'Nashville',
-                'paris'     => 'Paris',
-                'berlin'    => 'Berlin',
-                'london'    => 'London',
-            ),
-        ),
-    ));
-
 allow_add
 ~~~~~~~~~
 
@@ -288,6 +255,41 @@ For more information, see :ref:`cookbook-form-collections-remove`.
     to delete it or at least remove its foreign key reference to the main object.
     None of this is handled automatically. For more information, see
     :ref:`cookbook-form-collections-remove`.
+
+delete_empty
+~~~~~~~~~~~~
+
+.. versionadded:: 2.5
+    The ``delete_empty`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you want to explicitly remove entirely empty collection entries from your
+form you have to set this option to true. However, existing collection entries
+will only be deleted if you have the allow_delete_ option enabled. Otherwise
+the empty values will be kept.
+
+options
+~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+This is the array that's passed to the form type specified in the `type`_
+option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
+type as your `type`_ option (e.g. for a collection of drop-down menus), then
+you'd need to at least pass the ``choices`` option to the underlying type::
+
+    $builder->add('favorite_cities', 'collection', array(
+        'type'   => 'choice',
+        'options'  => array(
+            'choices'  => array(
+                'nashville' => 'Nashville',
+                'paris'     => 'Paris',
+                'berlin'    => 'Berlin',
+                'london'    => 'London',
+            ),
+        ),
+    ));
 
 prototype
 ~~~~~~~~~
@@ -337,18 +339,16 @@ If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are not
 replaced with the same value.
 
-delete_empty
-~~~~~~~~~~~~
+type
+~~~~
 
-.. versionadded:: 2.5
-    The ``delete_empty`` option was introduced in Symfony 2.5.
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
 
-**type**: ``Boolean`` **default**: ``false``
-
-If you want to explicitly remove entirely empty collection entries from your
-form you have to set this option to true. However, existing collection entries
-will only be deleted if you have the allow_delete_ option enabled. Otherwise
-the empty values will be kept.
+This is the field type for each item in this collection (e.g. ``text``, ``choice``,
+etc). For example, if you have an array of email addresses, you'd use the
+:doc:`email </reference/forms/types/email>` type. If you want to embed
+a collection of some other form, create a new instance of your form type
+and pass it as this option.
 
 Inherited Options
 -----------------
@@ -356,9 +356,19 @@ Inherited Options
 These options inherit from the :doc:`form </reference/forms/types/form>` type.
 Not all options are listed here - only the most applicable to this type:
 
-.. include:: /reference/forms/types/options/label.rst.inc
+.. _reference-form-types-by-reference:
 
-.. include:: /reference/forms/types/options/label_attr.rst.inc
+.. include:: /reference/forms/types/options/by_reference.rst.inc
+
+.. include:: /reference/forms/types/options/cascade_validation.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``array()`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 error_bubbling
 ~~~~~~~~~~~~~~
@@ -369,23 +379,13 @@ error_bubbling
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
-.. _reference-form-types-by-reference:
+.. include:: /reference/forms/types/options/label.rst.inc
 
-.. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
-
-The default value is ``array()`` (empty array).
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
-
-.. include:: /reference/forms/types/options/required.rst.inc
+.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Field Variables
 ---------------
