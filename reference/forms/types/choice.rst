@@ -15,25 +15,25 @@ option.
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_list`_                                                             |
-|             | - `multiple`_                                                                |
-|             | - `expanded`_                                                                |
-|             | - `preferred_choices`_                                                       |
 |             | - `empty_value`_                                                             |
+|             | - `expanded`_                                                                |
+|             | - `multiple`_                                                                |
+|             | - `preferred_choices`_                                                       |
 +-------------+------------------------------------------------------------------------------+
-| Overridden  | - `empty_data`_                                                              |
-| options     | - `compound`_                                                                |
+| Overridden  | - `compound`_                                                                |
+| options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
 +-------------+------------------------------------------------------------------------------+
-| Inherited   | - `required`_                                                                |
-| options     | - `label`_                                                                   |
-|             | - `label_attr`_                                                              |
-|             | - `data`_                                                                    |
-|             | - `read_only`_                                                               |
+| Inherited   | - `by_reference`_                                                            |
+| options     | - `data`_                                                                    |
 |             | - `disabled`_                                                                |
 |             | - `error_mapping`_                                                           |
-|             | - `mapped`_                                                                  |
 |             | - `inherit_data`_                                                            |
-|             | - `by_reference`_                                                            |
+|             | - `label`_                                                                   |
+|             | - `label_attr`_                                                              |
+|             | - `mapped`_                                                                  |
+|             | - `read_only`_                                                               |
+|             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                    |
 +-------------+------------------------------------------------------------------------------+
@@ -103,16 +103,24 @@ The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
-.. include:: /reference/forms/types/options/multiple.rst.inc
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
+.. include:: /reference/forms/types/options/multiple.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 Overridden Options
 ------------------
+
+compound
+~~~~~~~~
+
+**type**: ``boolean`` **default**: same value as ``expanded`` option
+
+This option specifies if a form is compound. The value is by default
+overridden by the value of the ``expanded`` option.
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
@@ -125,14 +133,6 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
-
-compound
-~~~~~~~~
-
-**type**: ``boolean`` **default**: same value as ``expanded`` option
-
-This option specifies if a form is compound. The value is by default
-overridden by the value of the ``expanded`` option.
 
 error_bubbling
 ~~~~~~~~~~~~~~
@@ -147,25 +147,25 @@ Inherited Options
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
+.. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
-.. include:: /reference/forms/types/options/mapped.rst.inc
-
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
-.. include:: /reference/forms/types/options/by_reference.rst.inc
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Field Variables
 ---------------
