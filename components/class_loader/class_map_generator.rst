@@ -108,7 +108,7 @@ class map with, for example, the :class:`Symfony\\Component\\ClassLoader\\MapCla
 
 .. note::
 
-    The example assumes that you already have autoloading working (e. g.
+    The example assumes that you already have autoloading working (e.g.
     through `Composer`_ or one of the other class loaders from the ClassLoader
     component.
 
