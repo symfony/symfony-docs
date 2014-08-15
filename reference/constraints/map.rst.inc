@@ -45,6 +45,7 @@ Date Constraints
 * :doc:`Date </reference/constraints/Date>`
 * :doc:`DateTime </reference/constraints/DateTime>`
 * :doc:`Time </reference/constraints/Time>`
+* :doc:`DateRange </reference/constraints/DateRange>`
 
 Collection Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
