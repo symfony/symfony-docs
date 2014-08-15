@@ -163,7 +163,7 @@ The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.
 
 Now that you're using a "proxy", you'll need to configure ``127.0.0.1`` under
-the ``trusted_proxies`` configuration (see :ref:`reference <reference-framework-trusted-proxies>`).
+the ``trusted_proxies`` configuration (see :ref:`the reference <reference-framework-trusted-proxies>`).
 Without this, the client's IP address and a few other things won't report correctly.
 
 .. tip::
