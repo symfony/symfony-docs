@@ -82,7 +82,7 @@ you need it::
     use Acme\HelloBundle\Mailer;
 
     $mailer = new Mailer('sendmail');
-    $mailer->send('ryan@foobar.net', ...);
+    $mailer->send('ryan@example.com', ...);
 
 This is easy enough. The imaginary ``Mailer`` class allows you to configure
 the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``, etc).
