@@ -16,15 +16,17 @@ In Symfony, you can register your custom DQL functions as follows:
         # app/config/config.yml
         doctrine:
             orm:
-                # ...
-                dql:
-                    string_functions:
-                        test_string: Acme\HelloBundle\DQL\StringFunction
-                        second_string: Acme\HelloBundle\DQL\SecondStringFunction
-                    numeric_functions:
-                        test_numeric: Acme\HelloBundle\DQL\NumericFunction
-                    datetime_functions:
-                        test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+               entity_managers:
+                  default:
+                  # ...
+                     dql:
+                       string_functions:
+                           test_string: Acme\HelloBundle\DQL\StringFunction
+                           second_string: Acme\HelloBundle\DQL\SecondStringFunction
+                       numeric_functions:
+                           test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                       datetime_functions:
+                           test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
 
     .. code-block:: xml
 
