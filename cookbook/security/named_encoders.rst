@@ -105,7 +105,7 @@ named encoders:
 This creates an encoder named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement
 :class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderAwareInterface`.
-The interface requires one method - ``getEncoderName`` - which should reutrn
+The interface requires one method - ``getEncoderName`` - which should return
 the name of the encoder to use::
 
     // src/Acme/UserBundle/Entity/User.php

@@ -715,8 +715,9 @@ tags:
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                    http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                    http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
+                <!-- ... -->
                 <framework:config>
                     <framework:fragments path="/_fragment" />
                 </framework:config>
@@ -751,11 +752,11 @@ in your application configuration:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
+            <!-- ... -->
             <framework:config>
-                <framework:templating
-                    hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+                <framework:templating hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
             </framework:config>
         </container>
 
@@ -832,12 +833,14 @@ configuration:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         _welcome:
             path:     /
             defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.yml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -850,6 +853,10 @@ configuration:
         </routes>
 
     .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
         $collection->add('_welcome', new Route('/', array(
@@ -870,19 +877,21 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
         <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
-As expected, this will generate the URL ``/``. Now for a more complicated
+As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         article_show:
             path:     /article/{slug}
             defaults: { _controller: AcmeArticleBundle:Article:show }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -895,6 +904,10 @@ route:
         </routes>
 
     .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
         $collection->add('article_show', new Route('/article/{slug}', array(
@@ -1192,11 +1205,12 @@ configuration file:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
+            <!-- ... -->
             <framework:config>
                 <framework:templating>
-                    <framework:engine id="twig" />
+                    <framework:engine>twig</framework:engine>
                 </framework:templating>
             </framework:config>
         </container>
