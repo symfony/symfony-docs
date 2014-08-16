@@ -413,6 +413,10 @@ Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
 into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
 
+.. seealso::
+
+    You can find a working example in this `JSFiddle`_.
+
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
@@ -726,3 +730,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     each Tag object itself.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
