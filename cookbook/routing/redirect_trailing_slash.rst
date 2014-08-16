@@ -44,7 +44,7 @@ system, as explained below:
             defaults: { _controller: AcmeDemoBundle:Redirecting:removeTrailingSlash }
             requirements:
                 url: .*/$
-                _method: GET
+            methods: [GET]
 
     .. code-block:: xml
 
@@ -53,7 +53,7 @@ system, as explained below:
             <route id="remove_trailing_slash" path="/{url}">
                 <default key="_controller">AcmeDemoBundle:Redirecting:removeTrailingSlash</default>
                 <requirement key="url">.*/$</requirement>
-                <requirement key="_method">GET</requirement>
+                <method>GET</method>
             </route>
         </routes>
 
@@ -72,8 +72,11 @@ system, as explained below:
                 ),
                 array(
                     'url' => '.*/$',
-                    '_method' => 'GET',
-                )
+                ),
+                array(),
+                '',
+                array(),
+                array('GET')
             )
         );
 
