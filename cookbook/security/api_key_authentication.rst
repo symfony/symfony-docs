@@ -45,15 +45,25 @@ value and then a User object is created::
 
         public function createToken(Request $request, $providerKey)
         {
-            if (!$request->query->has('apikey')) {
-                throw new BadCredentialsException('No API key found');
+            if ($request->query->has('apikey')) {
+    			return new PreAuthenticatedToken(
+    				'anon.',
+    				$request->query->get('apikey'),
+    				$providerKey
+    			);
             }
-
-            return new PreAuthenticatedToken(
-                'anon.',
-                $request->query->get('apikey'),
-                $providerKey
-            );
+    		else if($request->headers->has('apikey'))
+    		{
+    			return new PreAuthenticatedToken(
+    				'anon.',
+    				$request->headers->get('apikey'),
+    				$providerKey
+    			);
+    		}
+    		else
+    		{
+                throw new BadCredentialsException('No API key found');
+    		}
         }
 
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
