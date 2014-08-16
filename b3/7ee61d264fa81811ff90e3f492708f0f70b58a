@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T11:01:32Z
+
+@Baptouuuu :+1: Nice change!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T11:02:59Z
+
+@weaverryan This should also be merged into 2.3.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T11:17:50Z
+
+I've removed [WCM]. WCM stands for Waiting Code Merge, it should be used in cases where the PR relies on some other PR to be merged first (e.g. a code PR adding a feature).
