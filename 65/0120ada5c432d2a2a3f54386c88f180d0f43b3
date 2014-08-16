@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-07T13:57:49Z
+
+Will ``@symfony/mergers`` and ``@symfony/deciders`` then be somehow visible on GitHub later on?
+
+---------------------------------------------------------------------------
+
+by stof at 2014-07-07T15:21:31Z
+
+@xabbuh AFAIK, teams are only visible for their members on github. I don't think there is a way to mark a team as public.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-07T15:22:37Z
+
+@stof I see. But, does it then have any value to add this information?
+
+---------------------------------------------------------------------------
+
+by stof at 2014-07-07T15:39:43Z
+
+yeah, because you can ping teams on github
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-07T21:02:02Z
+
+E.g. `ping @symfony/team-symfony-docs` will ping ryan, fabian and me.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-07T21:07:48Z
+
+Alright, the issue is that this behaviour is not really obvious since you can't check if such a team does exist when you are not a member of it. Maybe it's better to add a short explanation for that.
