@@ -159,7 +159,8 @@ an entry when you generated the ``AcmeDemoBundle``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeDemoBundle/Resources/config/routing.xml"
+            <import
+                resource="@AcmeDemoBundle/Resources/config/routing.xml"
                 prefix="/" />
         </routes>
 
@@ -167,20 +168,26 @@ an entry when you generated the ``AcmeDemoBundle``:
 
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+
+        $acmeDemo = $loader->import('@AcmeDemoBundle/Resources/config/routing.php');
+        $acmeDemo->addPrefix('/');
 
         $collection = new RouteCollection();
-        $collection->addCollection(
-            $loader->import('@AcmeDemoBundle/Resources/config/routing.php'),
-            '/'
-        );
+        $collection->addCollection($acmeDemo);
 
         return $collection;
 
 This entry is pretty basic: it tells Symfony to load routing configuration
-from the ``Resources/config/routing.yml`` file that lives inside the ``AcmeDemoBundle``.
+from the ``Resources/config/routing.yml`` (``routing.xml`` or ``routing.php``
+in the XML and PHP code example respectively) file that lives inside the ``AcmeDemoBundle``.
 This means that you place routing configuration directly in ``app/config/routing.yml``
 or organize your routes throughout your application, and import them from here.
+
+.. note::
+
+    You are not limited to load routing configurations that are of the same
+    format. For example, you could also load a YAML file in an XML configuration
+    and vice versa.
 
 Now that the ``routing.yml`` file from the bundle is being imported, add
 the new route that defines the URL of the page that you're about to create:
@@ -800,9 +807,9 @@ format you prefer:
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
-                                
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
             <imports>
                 <import resource="parameters.yml" />
                 <import resource="security.yml" />
@@ -821,16 +828,16 @@ format you prefer:
 
     .. code-block:: php
 
+        // app/config/config.php
         $this->import('parameters.yml');
         $this->import('security.yml');
 
         $container->loadFromExtension('framework', array(
-            'secret'          => '%secret%',
-            'router'          => array(
+            'secret' => '%secret%',
+            'router' => array(
                 'resource' => '%kernel.root_dir%/config/routing.php',
             ),
             // ...
-            ),
         ));
 
         // Twig Configuration
@@ -994,20 +1001,19 @@ the configuration file for the ``dev`` environment.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="config.xml" />
             </imports>
 
             <framework:config>
-                <framework:router
-                    resource="%kernel.root_dir%/config/routing_dev.xml"
-                />
+                <framework:router resource="%kernel.root_dir%/config/routing_dev.xml" />
                 <framework:profiler only-exceptions="false" />
             </framework:config>
 
             <!-- ... -->
+        </container>
 
     .. code-block:: php
 

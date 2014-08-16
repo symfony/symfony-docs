@@ -173,7 +173,7 @@ file:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
@@ -210,12 +210,14 @@ A basic route consists of just two parts: the ``path`` to match and a
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         _welcome:
             path:      /
             defaults:  { _controller: AcmeDemoBundle:Main:homepage }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -230,6 +232,7 @@ A basic route consists of just two parts: the ``path`` to match and a
 
     ..  code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -258,12 +261,14 @@ routes will contain one or more named "wildcard" placeholders:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog_show:
             path:      /blog/{slug}
             defaults:  { _controller: AcmeBlogBundle:Blog:show }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -277,6 +282,7 @@ routes will contain one or more named "wildcard" placeholders:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -307,12 +313,14 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog
             defaults:  { _controller: AcmeBlogBundle:Blog:index }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -326,6 +334,7 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -345,12 +354,14 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -364,6 +375,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -388,12 +400,14 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -408,6 +422,7 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -458,6 +473,7 @@ Take a quick look at the routes that have been created so far:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
@@ -468,6 +484,7 @@ Take a quick look at the routes that have been created so far:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -486,6 +503,7 @@ Take a quick look at the routes that have been created so far:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -502,7 +520,7 @@ Take a quick look at the routes that have been created so far:
         return $collection;
 
 Can you spot the problem? Notice that both routes have patterns that match
-URL's that look like ``/blog/*``. The Symfony router will always choose the
+URLs that look like ``/blog/*``. The Symfony router will always choose the
 **first** matching route it finds. In other words, the ``blog_show`` route
 will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
 the first route (``blog``) and return a nonsense value of ``my-blog-post``
@@ -525,6 +543,7 @@ requirements can easily be added for each parameter. For example:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
@@ -533,6 +552,7 @@ requirements can easily be added for each parameter. For example:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -548,6 +568,7 @@ requirements can easily be added for each parameter. For example:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -597,6 +618,7 @@ URL:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         homepage:
             path:      /{culture}
             defaults:  { _controller: AcmeDemoBundle:Main:homepage, culture: en }
@@ -605,6 +627,7 @@ URL:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -620,6 +643,7 @@ URL:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -662,6 +686,7 @@ be accomplished with the following route configuration:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         contact:
             path:     /contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
@@ -674,6 +699,7 @@ be accomplished with the following route configuration:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -691,6 +717,7 @@ be accomplished with the following route configuration:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -745,6 +772,7 @@ routing system can be:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         article_show:
           path:     /articles/{culture}/{year}/{title}.{_format}
           defaults: { _controller: AcmeDemoBundle:Article:show, _format: html }
@@ -755,6 +783,7 @@ routing system can be:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -775,6 +804,7 @@ routing system can be:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -819,7 +849,7 @@ a slash. URLs matching this route might look like:
 
     Sometimes you want to make certain parts of your routes globally configurable.
     Symfony provides you with a way to do this by leveraging service container
-    parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`.
+    parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`".
 
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -833,7 +863,7 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 * ``_format``: Used to set the request format (:ref:`read more <book-routing-format-param>`);
 
-* ``_locale``: Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`);
+* ``_locale``: Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
 
 .. index::
    single: Routing; Controllers
@@ -1044,7 +1074,8 @@ instead of simply ``/hello/{name}``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeHelloBundle/Resources/config/routing.xml"
+            <import
+                resource="@AcmeHelloBundle/Resources/config/routing.xml"
                 prefix="/admin" />
         </routes>
 
@@ -1053,13 +1084,10 @@ instead of simply ``/hello/{name}``:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-
-        $acmeHello = $loader->import(
-            "@AcmeHelloBundle/Resources/config/routing.php"
-        );
+        $acmeHello = $loader->import('@AcmeHelloBundle/Resources/config/routing.php');
         $acmeHello->addPrefix('/admin');
 
+        $collection = new RouteCollection();
         $collection->addCollection($acmeHello);
 
         return $collection;
