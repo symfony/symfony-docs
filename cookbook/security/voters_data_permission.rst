@@ -59,7 +59,6 @@ edit a particular object. Here's an example implementation::
     // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -98,7 +97,7 @@ edit a particular object. Here's an example implementation::
             // this isn't a requirement, it's just one easy way for you to
             // design your voter
             if(1 !== count($attributes)) {
-                throw new InvalidArgumentException(
+                throw new \InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
             }
