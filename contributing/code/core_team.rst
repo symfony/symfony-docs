@@ -39,7 +39,7 @@ Active Core Members
 
   * **Fabien Potencier** (:leader:`fabpot`).
 
-* **Mergers**:
+* **Mergers** (``@symfony/mergers`` on GitHub):
 
   * **Bernhard Schussek** (:merger:`webmozart`) can merge into the Form_,
     Validator_, Icu_, Intl_, Locale_, OptionsResolver_ and PropertyAccess_
@@ -59,7 +59,7 @@ Active Core Members
     HttpFoundation_, HttpKernel_, Serializer_, Stopwatch_, DoctrineBridge_,
     MonologBridge_, and TwigBridge_ components.
 
-* **Deciders**:
+* **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jakub Zalas** (:decider:`jakzal`);
   * **Jordi Boggiano** (:decider:`seldaek`);
