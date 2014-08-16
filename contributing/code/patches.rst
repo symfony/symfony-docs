@@ -297,6 +297,8 @@ An example submission could now look as follows:
     | License       | MIT
     | Doc PR        | symfony/symfony-docs#123
 
+Note: Failing to add this headers will result in a "Pull Request License Headers”.
+
 The whole table must be included (do **not** remove lines that you think are
 not relevant). For simple typos, minor changes in the PHPDocs, or changes in
 translation files, use the shorter version of the check-list:
