@@ -71,11 +71,10 @@ Common Post-Deployment Tasks
 After deploying your actual source code, there are a number of common things
 you'll need to do:
 
-A) Check Requirements.
-~~~~~~~~~~~~~~~~~~~~~~
+A) Check Requirements
+~~~~~~~~~~~~~~~~~~~~~
 
-Check if your server meets requirements.
-Run command:
+Check if your server meets the requirements by running:
 
 .. code-block:: bash
 
