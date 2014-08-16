@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T10:28:33Z
+
+Can we guarantee that the snippet is never modified by someone else?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T10:36:12Z
+
+Yes, if someone modifies it, it'll create a new fork (so another url) or a new version (so another url too)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T10:40:43Z
+
+Do you get notifications in case someone modifies it?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T11:18:49Z
+
+No and it shouldn't make any sense to get those imo
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T11:39:00Z
+
+This means that we have to check the example frequently, doesn't it?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T12:43:56Z
+
+> This means that we have to check the example frequently, doesn't it?
+
+Why? *"if someone modifies it, it'll create a new fork (so another url) or a new version (so another url too)"*
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T12:52:27Z
+
+Sorry, I read "I'll" and not "it'll".
