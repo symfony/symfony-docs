@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-08-12T14:43:18Z
+
+the typo is actually in the class name, not in the file name. The service config just above also uses ConsoleExceptionListener (which is a much better name than ConsoleTerminateListener btw)
+
+---------------------------------------------------------------------------
+
+by alOneh at 2014-08-12T14:50:18Z
+
+Yes I just realized that. Thks
