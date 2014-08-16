@@ -69,7 +69,7 @@ enable the ``translator`` in your configuration:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:translator fallback="en" />
@@ -136,17 +136,17 @@ different formats, XLIFF being the recommended format:
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
+
     .. code-block:: php
 
         // messages.fr.php
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
         );
-
-    .. code-block:: yaml
-
-        # messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
 
 For information on where these files should be located, see
 :ref:`book-translation-resource-locations`.
@@ -448,6 +448,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         contact:
             path:     /{_locale}/contact
             defaults: { _controller: AcmeDemoBundle:Contact:index }
@@ -456,6 +457,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -470,6 +472,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -514,9 +517,15 @@ the framework:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:default-locale>en</framework:default-locale>
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config default-locale="en" />
+        </container>
 
     .. code-block:: php
 
@@ -630,17 +639,17 @@ bundle.
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # validators.en.yml
+        author.name.not_blank: Please enter an author name.
+
     .. code-block:: php
 
         // validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );
-
-    .. code-block:: yaml
-
-        # validators.en.yml
-        author.name.not_blank: Please enter an author name.
 
 Translating Database Content
 ----------------------------

@@ -127,17 +127,17 @@ recommended format. These files are parsed by one of the loader classes.
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        Symfony2 is great: J'aime Symfony2
+        symfony2.great:    J'aime Symfony2
+
     .. code-block:: php
 
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
             'symfony2.great'    => 'J\'aime Symfony2',
         );
-
-    .. code-block:: yaml
-
-        Symfony2 is great: J'aime Symfony2
-        symfony2.great:    J'aime Symfony2
 
 .. sidebar:: Using Real or Keyword Messages
 

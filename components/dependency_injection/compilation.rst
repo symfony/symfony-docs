@@ -203,7 +203,6 @@ The XML version of the config would then look like this:
             <acme_demo:foo>fooValue</acme_hello:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
-
     </container>
 
 .. note::

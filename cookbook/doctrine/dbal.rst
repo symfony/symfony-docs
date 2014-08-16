@@ -61,7 +61,8 @@ To get started, configure the database connection parameters:
             ),
         ));
 
-For full DBAL configuration options, see :ref:`reference-dbal-configuration`.
+For full DBAL configuration options, or to learn how to configure multiple
+connections, see :ref:`reference-dbal-configuration`.
 
 You can then access the Doctrine DBAL connection by accessing the
 ``database_connection`` service::
@@ -141,11 +142,8 @@ mapping type:
         # app/config/config.yml
         doctrine:
             dbal:
-                connections:
-                    default:
-                        # other connections parameters
-                        mapping_types:
-                            enum: string
+               mapping_types:
+                  enum: string
 
     .. code-block:: xml
 
@@ -158,11 +156,7 @@ mapping type:
 
             <doctrine:config>
                 <doctrine:dbal>
-                <doctrine:dbal default-connection="default">
-                    <doctrine:connection>
-                        <!-- other connections parameters -->
-                        <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
-                    </doctrine:connection>
+                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -172,14 +166,9 @@ mapping type:
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-                'connections' => array(
-                    'default' => array(
-                        // other connection parameers
-                        'mapping_types' => array(
-                            'enum'  => 'string',
-                        ),
-                    ),
-                ),
+               mapping_types' => array(
+                  'enum'  => 'string',
+               ),
             ),
         ));
 

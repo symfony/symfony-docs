@@ -375,7 +375,7 @@ configuration.
     .. code-block:: php
 
         // app/config/config.php
-        $this->import('@AcmeHelloBundle/Resources/config/services.php');
+        $loader->import('@AcmeHelloBundle/Resources/config/services.php');
 
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
@@ -443,7 +443,7 @@ invokes the service container extension inside the FrameworkBundle:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config secret="xxxxxxxxxx">
                 <framework:form />
@@ -994,7 +994,7 @@ it exists and do nothing if it doesn't:
         ));
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
-is optional. Of course, the ``NewsletterManager`` must also be written to
+is optional. Of course, the ``NewsletterManager`` must also be rewritten to
 allow for an optional dependency::
 
         public function __construct(Mailer $mailer = null)
@@ -1058,6 +1058,7 @@ Configuring the service container is easy:
 
     .. code-block:: yaml
 
+        # src/Acme/HelloBundle/Resources/config/services.yml
         services:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
@@ -1065,6 +1066,7 @@ Configuring the service container is easy:
 
     .. code-block:: xml
 
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1078,6 +1080,7 @@ Configuring the service container is easy:
 
     .. code-block:: php
 
+        // src/Acme/HelloBundle/Resources/config/services.php
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
             array(
@@ -1112,6 +1115,7 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
             foo.twig.extension:
                 class: Acme\HelloBundle\Extension\FooExtension
@@ -1120,18 +1124,24 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: xml
 
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <service id="foo.twig.extension"
+            <service
+                id="foo.twig.extension"
                 class="Acme\HelloBundle\Extension\FooExtension">
+
                 <tag name="twig.extension" />
             </service>
         </container>
 
     .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Acme\HelloBundle\Extension\FooExtension');
         $definition->addTag('twig.extension');

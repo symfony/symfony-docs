@@ -47,18 +47,24 @@ class:
 
     .. code-block:: xml
 
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-            <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="newsletter_manager"
-                     class="%newsletter_manager.class%"
-                     factory-class="%newsletter_factory.class%"
-                     factory-method="get"
-            />
+            <parameters>
+                <!-- ... -->
+                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
+                <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
+            </parameters>
+
+            <services>
+                <service
+                    id="newsletter_manager"
+                    class="%newsletter_manager.class%"
+                    factory-class="%newsletter_factory.class%"
+                    factory-method="get" />
+            </services>
         </services>
 
     .. code-block:: php
@@ -69,13 +75,11 @@ class:
         $container->setParameter('newsletter_manager.class', 'NewsletterManager');
         $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
 
-        $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%'
-        ))->setFactoryClass(
-            '%newsletter_factory.class%'
-        )->setFactoryMethod(
-            'get'
-        );
+        $definition = new Definition('%newsletter_manager.class%');
+        $definition->setFactoryClass('%newsletter_factory.class%');
+        $definition->setFactoryMethod('get');
+
+        $container->setDefinition('newsletter_manager', $definition);
 
 When you specify the class to use for the factory (via ``factory_class``)
 the method will be called statically. If the factory itself should be instantiated
@@ -100,20 +104,27 @@ In this case, the method (e.g. get) should be changed to be non-static:
 
     .. code-block:: xml
 
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-            <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="newsletter_factory" class="%newsletter_factory.class%"/>
-            <service id="newsletter_manager"
-                     class="%newsletter_manager.class%"
-                     factory-service="newsletter_factory"
-                     factory-method="get"
-            />
-        </services>
+            <parameters>
+                <!-- ... -->
+                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
+                <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
+            </parameters>
+
+            <services>
+                <service id="newsletter_factory" class="%newsletter_factory.class%"/>
+
+                <service
+                    id="newsletter_manager"
+                    class="%newsletter_manager.class%"
+                    factory-service="newsletter_factory"
+                    factory-method="get" />
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -137,7 +148,8 @@ In this case, the method (e.g. get) should be changed to be non-static:
 .. note::
 
    The factory service is specified by its id name and not a reference to
-   the service itself. So, you do not need to use the @ syntax.
+   the service itself. So, you do not need to use the @ syntax for this in
+   YAML configurations.
 
 Passing Arguments to the Factory Method
 ---------------------------------------
@@ -166,22 +178,30 @@ in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: xml
 
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-            <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="newsletter_factory" class="%newsletter_factory.class%"/>
-            <service id="newsletter_manager"
-                     class="%newsletter_manager.class%"
-                     factory-service="newsletter_factory"
-                     factory-method="get"
-            >
-                <argument type="service" id="templating" />
-            </service>
-        </services>
+            <parameters>
+                <!-- ... -->
+                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
+                <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
+            </parameters>
+
+            <services>
+                <service id="newsletter_factory" class="%newsletter_factory.class%"/>
+
+                <service
+                    id="newsletter_manager"
+                    class="%newsletter_manager.class%"
+                    factory-service="newsletter_factory"
+                    factory-method="get">
+
+                    <argument type="service" id="templating" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

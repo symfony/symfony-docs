@@ -140,6 +140,9 @@ output. For example::
 It is possible to define your own styles using the class
 :class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`::
 
+    use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+
+    // ...
     $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
     $output->getFormatter()->setStyle('fire', $style);
     $output->writeln('<fire>foo</fire>');
