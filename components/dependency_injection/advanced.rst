@@ -233,7 +233,7 @@ a reference of the old one  as ``bar.inner``:
             ->setPublic(false)
             ->setDecoratedService('foo');
 
-Here is what's going on here: the ``setDecoratedService()` method tells
+Here is what's going on here: the ``setDecoratedService()`` method tells
 the container that the ``bar`` service should replace the ``foo`` service,
 renaming ``foo`` to ``bar.inner``.
 By convention, the old ``foo`` service is going to be renamed ``bar.inner``,
