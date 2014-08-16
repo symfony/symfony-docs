@@ -80,6 +80,7 @@ Configuration examples should show all supported formats using
 * **Configuration** (including services and routing): YAML, XML, PHP
 * **Validation**: YAML, Annotations, XML, PHP
 * **Doctrine Mapping**: Annotations, YAML, XML, PHP
+* **Translation**: XML, YAML, PHP
 
 Example
 ~~~~~~~
