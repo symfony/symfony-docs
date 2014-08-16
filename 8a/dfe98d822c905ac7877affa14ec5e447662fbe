@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2014-06-03T11:52:09Z
+
+good job @WouterJ I will now stop and cook you again when i get a chance. These simplifications and tips are a great addition!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-14T16:17:19Z
+
+Thanks @xabbuh @cordoval @stof! I've applied everything I agreed with and commented on the others
+
+---------------------------------------------------------------------------
+
+by jrobeson at 2014-07-27T08:25:44Z
+
+i just got seriously bitten by this information being out of date. Anything small i can do to get this merged?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-27T10:14:34Z
+
+@jrobeson exactly what you did now: Making me aware that I need to do some things.
+
+Oh, and creating a time machine for @weaverryan so he has some time to review this.
+
+---------------------------------------------------------------------------
+
+by jrobeson at 2014-07-27T11:11:15Z
+
+thanks @WouterJ!
+
+specifically i got bit by the part about  using  getConfigurationExtension() vs the old way $container->registerExtension()
+
+---------------------------------------------------------------------------
+
+by jrobeson at 2014-08-15T10:10:42Z
+
+just had to explain this issue to another person. Is there anything i can do to help with this?
