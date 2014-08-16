@@ -1,0 +1,58 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T17:26:50Z
+
+I guess this is actually not possible with XML since you can't set an attribute multiple times.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T18:08:05Z
+
+This should work:
+
+````xml
+<monolog:config>
+    <monolog:handler name="swift" ...>
+        <monolog:to-email>dev1@example.com</monolog:to-email>
+        <monolog:to-email>dev2@example.com</monolog:to-email>
+    </monolog:handler>
+</monolog:config>
+````
+
+(iirc, the XML parser doesn't parse elements or attributes differently, you can replace all attributes by elements)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T19:01:30Z
+
+@WouterJ The issue is that the MonologBundle XML schema doesn't allow ``to-email`` elements: https://github.com/symfony/MonologBundle/blob/master/Resources/config/schema/monolog-1.0.xsd#L18-28
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T19:06:36Z
+
+@xabbuh then someone should fix that. If we don't put the scheme in schemeLocation, it'll not be validated and work perfectly
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T19:07:06Z
+
+@WouterJ I'm preparing a pull request on the MonologBundle.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T19:10:53Z
+
+see symfony/MonologBundle#91
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-16T19:30:53Z
+
+Nice work @xabbuh! I think we should merge this and then update the docs later after that code PR is merged. Make sense?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T19:33:03Z
+
+@weaverryan I'm fine with that. We can update the XML example once the pull request on the MonologBundle is merged.
