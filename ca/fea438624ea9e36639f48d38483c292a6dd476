@@ -1,0 +1,76 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-05-29T10:55:00Z
+
+Create example!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-06-02T16:12:04Z
+
+@xabbuh you are absolutely right! `AcmeDemoBundle` is the best name because it's generic (doesn't imply and/or constraint anything) and it's easier for the reader because it's used elsewhere.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-07T18:14:23Z
+
+I like it! But, won't using `AcmeDemoBundle` be a conflict if they already have that bundle in their project? What do you think about that Javier?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-07T19:01:34Z
+
+That's a good point, Ryan. Is there a better name to use? Would be great to have one unique name throughout the docs.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-07T19:45:04Z
+
+:) I would like to call it `DemoBundle` - I think having the vendor prefix for user-land bundles is a bad idea. But that's a conversation for later. We *could* alternatively add a note that says "You may already have an AcmeDemoBundle, etc etc" - and just let them know that if they already have this bundle, just use it!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-07T20:49:56Z
+
+Well, to be honest. I don't see the extra value of having the same bundle for all documentation. Using different bundles means we can use different examples and using more examples gives people a better overview of what Symfony is capable of.
+
+But let's move that discussion to somewhere else :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-07T23:45:45Z
+
+Actually, +1 to that Wouter
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-06-09T18:01:33Z
+
+After reading this discussion, I'm a bit confused about the bundle name.  So please, tell me which name do you want to use for this example and I'll change it:
+
+  * `AcmeDemoBundle`
+  * `DemoBundle`
+  * `NumberBundle`
+  * `AcmeNumberBundle`
+  * `AcmeWebsiteBundle`
+  * `WebsiteBundle`
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-06-09T18:18:12Z
+
+Let's use AcmeDemoBundle here (including the "You may already have an AcmeDemoBundle, etc etc" proposal of Ryan if you think it's usefull).
+
+We can discuss later if we want to include the vendor name or not, etc.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-09T19:05:11Z
+
++1
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-15T21:30:31Z
+
+ping @weaverryan
