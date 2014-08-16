@@ -1,0 +1,66 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-20T10:44:09Z
+
+Fyi, I've added `[WCM]` which means Waiting Code Merge to your PR title. This way, we don't merge it when the code isn't merged yet.
+
+---------------------------------------------------------------------------
+
+by fejese at 2014-07-20T19:01:17Z
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by fejese at 2014-07-25T06:33:44Z
+
+Removed the [WCM] tag as the related PR (symfony/symfony#11426) has been merged
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-25T07:35:25Z
+
+You should add a `.. versionadded:: 2.6` directive before the new text, to explain it's new:
+````rst
+.. versionadded:: 2.6
+    The :method;`Symfony\\Component\\DomCrawler\\Crawler::nodeName` was
+    introduced in Symfony 2.6.
+````
+
+---------------------------------------------------------------------------
+
+by fejese at 2014-07-25T08:10:43Z
+
+@WouterJ Good point, done
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-25T08:15:10Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-25T08:26:20Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by fejese at 2014-08-11T12:31:44Z
+
+@WouterJ do you reckon there's anything else to be done on this PR or do I need to do anything more? Or is it just waiting for someone who can spare time to merge?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-11T16:33:08Z
+
+@fejese this PR is ready to be merged. When @weaverryan has some time left, he'll merge it asap.
+
+Thanks for your time to add a nice feature and document it perfectly!
+
+---------------------------------------------------------------------------
+
+by fejese at 2014-08-11T19:05:17Z
+
+Cheers then :)
