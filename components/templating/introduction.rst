@@ -103,7 +103,7 @@ In a template:
 
 .. note::
 
-    The global variables can be overriden by a local variable in the template
+    The global variables can be overridden by a local variable in the template
     with the same name.
 
 Output Escaping
