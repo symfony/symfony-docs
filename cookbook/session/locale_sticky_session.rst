@@ -19,14 +19,14 @@ The listener will look something like this. Typically, ``_locale`` is used
 as a routing parameter to signify the locale, though it doesn't really matter
 how you determine the desired locale from the request::
 
-    // src/Acme/LocaleBundle/EventListener/LocaleListener.php
-    namespace Acme\LocaleBundle\EventListener;
+    // src/Acme/LocaleBundle/EventListener/LocaleSubscriber.php
+    namespace Acme\LocaleBundle\EventSubscriber;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-    class LocaleListener implements EventSubscriberInterface
+    class LocaleSubscriber implements EventSubscriberInterface
     {
         private $defaultLocale;
 
@@ -67,16 +67,16 @@ Then register the listener:
     .. code-block:: yaml
 
         services:
-            acme_locale.locale_listener:
-                class: Acme\LocaleBundle\EventListener\LocaleListener
+            acme_locale.locale_subscriber:
+                class: Acme\LocaleBundle\EventListener\LocaleSubscriber
                 arguments: ["%kernel.default_locale%"]
                 tags:
                     - { name: kernel.event_subscriber }
 
     .. code-block:: xml
 
-        <service id="acme_locale.locale_listener"
-            class="Acme\LocaleBundle\EventListener\LocaleListener">
+        <service id="acme_locale.locale_subscriber"
+            class="Acme\LocaleBundle\EventListener\LocaleSubscriber">
             <argument>%kernel.default_locale%</argument>
 
             <tag name="kernel.event_subscriber" />
@@ -87,8 +87,8 @@ Then register the listener:
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->setDefinition('acme_locale.locale_listener', new Definition(
-                'Acme\LocaleBundle\EventListener\LocaleListener',
+            ->setDefinition('acme_locale.locale_subscriber', new Definition(
+                'Acme\LocaleBundle\EventListener\LocaleSubscriber',
                 array('%kernel.default_locale%')
             ))
             ->addTag('kernel.event_subscriber')
