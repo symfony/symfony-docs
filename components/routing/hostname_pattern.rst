@@ -25,12 +25,10 @@ You can also match on the HTTP *host* of the incoming request.
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd"
-        >
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="mobile_homepage" path="/" host="m.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
@@ -82,12 +80,10 @@ you can use placeholders in your hostname:
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd"
-        >
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="projects_homepage" path="/" host="{project_name}.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
@@ -138,17 +134,14 @@ instance, if you want to match both ``m.example.com`` and
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd"
-        >
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="mobile_homepage" path="/" host="{subdomain}.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
                 <default key="subdomain">m</default>
-
                 <requirement key="subdomain">m|mobile</requirement>
             </route>
 
@@ -201,7 +194,6 @@ instance, if you want to match both ``m.example.com`` and
         .. code-block:: xml
 
             <?xml version="1.0" encoding="UTF-8" ?>
-
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
@@ -253,16 +245,13 @@ You can also set the host option on imported routes:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
         acme_hello:
             resource: "@AcmeHelloBundle/Resources/config/routing.yml"
             host:     "hello.example.com"
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
@@ -272,7 +261,6 @@ You can also set the host option on imported routes:
 
     .. code-block:: php
 
-        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();

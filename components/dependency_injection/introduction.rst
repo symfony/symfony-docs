@@ -244,22 +244,28 @@ config files:
 
     .. code-block:: xml
 
-        <parameters>
-            <!-- ... -->
-            <parameter key="mailer.transport">sendmail</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="mailer" class="Mailer">
-                <argument>%mailer.transport%</argument>
-            </service>
+            <parameters>
+                <!-- ... -->
+                <parameter key="mailer.transport">sendmail</parameter>
+            </parameters>
 
-            <service id="newsletter_manager" class="NewsletterManager">
-                <call method="setMailer">
-                     <argument type="service" id="mailer" />
-                </call>
-            </service>
-        </services>
+            <services>
+                <service id="mailer" class="Mailer">
+                    <argument>%mailer.transport%</argument>
+                </service>
+
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <call method="setMailer">
+                        <argument type="service" id="mailer" />
+                    </call>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
