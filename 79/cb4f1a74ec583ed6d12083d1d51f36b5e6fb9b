@@ -1,0 +1,68 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T13:41:50Z
+
+code pull request has been merged
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-08T15:10:42Z
+
+updated the doc. fine like this?
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-08T15:39:41Z
+
+thanks for the feedback. adjusted.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T15:54:16Z
+
+Looks good! :+1:
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-08T16:06:19Z
+
+thanks. then lets merge - or do we need to wait for input from others?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T16:18:57Z
+
+At least, @weaverryan will have another look at this since he's the only to merge pull requests.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T16:27:35Z
+
+After reading your discussion on FriendsOfSymfony/FOSUserBundle#1566, does it make sense to choose another example that is more of a real-world one?
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-08T16:45:50Z
+
+hm, good point. we do this with CmfRoutingBundle. or i can just do an
+AcmeDemoBundle example if you prefer.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T16:55:05Z
+
+I don't mind. If you have an example in the routing bundle, you'll be able to link to it, won't you? That would maybe be more interesting.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-14T23:41:10Z
+
+@dbu I added a few tiny comments, but I'm happy with this and the example. If you'd like to add a link to a real implementation, I think that's a great idea.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-16T13:57:23Z
+
+thanks for the feedback. fixed all, and changed the example to CmfRoutingBundle (although its also not a completely real example, as we don't support mongo/couchdb at the moment)
