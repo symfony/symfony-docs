@@ -105,13 +105,13 @@ edit a particular object. Here's an example implementation::
             // set the attribute to check against
             $attribute = $attributes[0];
 
-            // get current logged in user
-            $user = $token->getUser();
-
             // check if the given attribute is covered by this voter
             if (!$this->supportsAttribute($attribute)) {
                 return VoterInterface::ACCESS_ABSTAIN;
             }
+
+            // get current logged in user
+            $user = $token->getUser();
 
             // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
@@ -119,7 +119,7 @@ edit a particular object. Here's an example implementation::
             }
 
             switch($attribute) {
-                case 'view':
+                case self::VIEW:
                     // the data object could have for example a method isPrivate()
                     // which checks the Boolean attribute $private
                     if (!$post->isPrivate()) {
@@ -127,7 +127,7 @@ edit a particular object. Here's an example implementation::
                     }
                     break;
 
-                case 'edit':
+                case self::EDIT:
                     // we assume that our data object has a method getOwner() to
                     // get the current owner user entity for this data object
                     if ($user->getId() === $post->getOwner()->getId()) {
@@ -135,6 +135,8 @@ edit a particular object. Here's an example implementation::
                     }
                     break;
             }
+            
+            return VoterInterface::ACCESS_DENIED;
         }
     }
 
