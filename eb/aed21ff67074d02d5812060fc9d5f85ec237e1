@@ -1,0 +1,70 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-06-13T12:07:30Z
+
+it's all a matter of using the expanded syntax or the shortcut syntax for a single connection.
+
+---------------------------------------------------------------------------
+
+by bpiepiora at 2014-06-13T12:21:11Z
+
+okay, is it possible to give another example for new symfony developers? with the default configuration the example doesn't work:
+
+error while generating mapping
+
+    doctrine:
+        dbal:
+            driver:   "%database_driver%"
+            host:     "%database_host%"
+            port:     "%database_port%"
+            dbname:   "%database_name%"
+            user:     "%database_user%"
+            password: "%database_password%"
+            charset:  UTF8
+            connections:
+                default:
+                    mapping_types:
+                        enum: string
+
+mapping works
+
+    doctrine:
+        dbal:
+            driver:   "%database_driver%"
+            host:     "%database_host%"
+            port:     "%database_port%"
+            dbname:   "%database_name%"
+            user:     "%database_user%"
+            password: "%database_password%"
+            charset:  UTF8
+
+            mapping_types:
+                enum: string
+
+---------------------------------------------------------------------------
+
+by stof at 2014-06-13T12:30:40Z
+
+this is because your first example is a mix of the shortcut and expanded syntaxes, not a usage of one of them.
+there is already an issue somewhere about documenting better both syntaxes, but it should be done in the whole Doctrine section, and probably not by removing the expanded syntax entirely
+
+---------------------------------------------------------------------------
+
+by bpiepiora at 2014-06-13T12:42:15Z
+
+i really need to get deeper into that configuration stuff! :smile:
+thanks for your time and i hope some guy has the time to document both syntaxes!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-19T15:00:01Z
+
+This relates also to doctrine/DoctrineBundle#299. We've had a few issues lately with people getting confused by the 2 syntaxes, so you're not alone! I think there is probably something we can do in the documentation, but I would like a better error message in the code itself (since you can't use the expanded syntax *and* the short syntax, you can only choose one - but we should be able to detect if you're trying to use both).
+
+I *do* think we typically document the short syntax (not the expanded), so I would actually be a +1 for merging this, perhaps with a note about the expanded syntax.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-15T21:20:09Z
+
++1 too
