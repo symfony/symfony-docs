@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-13T19:53:41Z
+
+Wow, you've gone use statement hunting! Nice job of fixing some of the examples!
+
+Some tips for the next time you create PRs (you don't have to edit this PR, it's just in case you want to contribute more):
+
+* It's better to create a new branch for each PR. This means you can submit multiple PRs at the same time (a PR is related to a whole branch, not to a specific changeset).
+* In the documentation, we have branches for each Symfony version. Currently, we are maintaining 2.3, 2.4, 2.5 and master versions of the docs. We merge them up from the oldest (2.3) to the newest (master), so all fixes in 2.3 will also be applied in 2.4, 2.5 and master. So if you fix something, you should always base your PR on 2.3. And only if you document new features, you should base your PR on one of the other branches.
+
+To comment on your question:
+
+> On http://symfony.com/doc/current/components/config/resources.html at "new YamlUserLoader", we have also a missing "use" statement. But i'm not sure if we need there one.
+
+In the definition of the `YamlUserLoader` class, we don't use a namespace, so I think we're good.
