@@ -50,10 +50,9 @@ system, as explained below:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing">
-            <route id="remove_trailing_slash" path="/{url}">
+            <route id="remove_trailing_slash" path="/{url}" methods="GET">
                 <default key="_controller">AcmeDemoBundle:Redirecting:removeTrailingSlash</default>
                 <requirement key="url">.*/$</requirement>
-                <method>GET</method>
             </route>
         </routes>
 
