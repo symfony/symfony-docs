@@ -20,7 +20,7 @@ and per Command.
 Configuring the Request Context globally
 ----------------------------------------
 
-.. versionadded: 2.2
+.. versionadded:: 2.2
     The ``base_url`` parameter was introduced in Symfony 2.2.
 
 To configure the Request Context - which is used by the URL Generator - you can
@@ -88,7 +88,7 @@ from the ``router`` service and override its settings::
 Using Memory Spooling
 ---------------------
 
-.. versionadded: 2.3
+.. versionadded:: 2.3
     When using Symfony 2.3+ and SwiftmailerBundle 2.3.5+, the memory spool is now
     handled automatically in the CLI and the code below is not necessary anymore.
 
