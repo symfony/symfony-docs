@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by Baptouuuu at 2014-08-16T10:37:41Z
+
+Oops, the target branch should be `2.5` not `master`.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T11:00:49Z
+
+And actually, this was introduced in Symfony 2.2. So, it should be merged into the 2.3 branch.
