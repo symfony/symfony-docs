@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by jeremy-derusse at 2014-06-18T16:12:45Z
+
+The corresponding PR is merged symfony/symfony#11027
+
+---------------------------------------------------------------------------
+
+by jeremy-derusse at 2014-07-05T07:55:19Z
+
+@weaverryan I took into account the latest comments. For me, this PR is finished.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-15T21:28:27Z
+
+For me, it's finished too, let's give it a Finished label :)
+
+@jeremy-derusse if you have some free time, can you please squash the commits? Thanks!
