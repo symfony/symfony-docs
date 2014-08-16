@@ -423,7 +423,7 @@ and in the ``app`` directory:
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title>{% block title %}Random Number Generator{% endblock %}</title>
+                <title>{% block title %}Welcome!{% endblock %}</title>
                 {% block stylesheets %}{% endblock %}
                 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
             </head>
@@ -440,7 +440,7 @@ and in the ``app`` directory:
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title><?php $view['slots']->output('title', 'Random Number Generator') ?></title>
+                <title><?php $view['slots']->output('title', 'Welcome!') ?></title>
                 <?php $view['slots']->output('stylesheets') ?>
                 <link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
             </head>
