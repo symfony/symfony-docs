@@ -14,6 +14,7 @@
   * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/remove`
   * :doc:`/cookbook/bundles/extension`
+  * :doc:`/cookbook/bundles/configuration`
   * :doc:`/cookbook/bundles/prepend_extension`
 
 * :doc:`/cookbook/cache/index`
@@ -30,6 +31,7 @@
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
+  * :doc:`/cookbook/configuration/configuration_organization`
 
 * :doc:`/cookbook/console/index`
 

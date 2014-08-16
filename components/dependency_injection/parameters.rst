@@ -52,9 +52,15 @@ You can also use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: xml
 
-        <parameters>
-            <parameter key="mailer.transport">sendmail</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="mailer.transport">sendmail</parameter>
+            </parameters>
+        </container>
 
     .. code-block:: php
 
@@ -84,22 +90,28 @@ rather than being tied up and hidden with the service definition:
 
     .. code-block:: xml
 
-        <parameters>
-            <parameter key="mailer.transport">sendmail</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="mailer" class="Mailer">
-                <argument>%mailer.transport%</argument>
-            </service>
-        </services>
+            <parameters>
+                <parameter key="mailer.transport">sendmail</parameter>
+            </parameters>
+
+            <services>
+                <service id="mailer" class="Mailer">
+                    <argument>%mailer.transport%</argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
         $container->setParameter('mailer.transport', 'sendmail');
+
         $container
             ->register('mailer', 'Mailer')
             ->addArgument('%mailer.transport%');
@@ -146,31 +158,33 @@ making the class of a service a parameter:
 
     .. code-block:: xml
 
-        <parameters>
-            <parameter key="mailer.transport">sendmail</parameter>
-            <parameter key="mailer.class">Mailer</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="mailer" class="%mailer.class%">
-                <argument>%mailer.transport%</argument>
-            </service>
-        </services>
+            <parameters>
+                <parameter key="mailer.transport">sendmail</parameter>
+                <parameter key="mailer.class">Mailer</parameter>
+            </parameters>
+
+            <services>
+                <service id="mailer" class="%mailer.class%">
+                    <argument>%mailer.transport%</argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
         $container->setParameter('mailer.transport', 'sendmail');
         $container->setParameter('mailer.class', 'Mailer');
+
         $container
             ->register('mailer', '%mailer.class%')
             ->addArgument('%mailer.transport%');
-
-        $container
-            ->register('newsletter_manager', 'NewsletterManager')
-            ->addMethodCall('setMailer', array(new Reference('mailer')));
 
 .. note::
 
@@ -181,11 +195,11 @@ making the class of a service a parameter:
 
         .. code-block:: yaml
 
-            arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
+            arguments: ["http://symfony.com/?foo=%%s&bar=%%d"]
 
         .. code-block:: xml
 
-            <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+            <argument>http://symfony.com/?foo=%%s&bar=%%d</argument>
 
         .. code-block:: php
 
@@ -204,7 +218,6 @@ all parameters that are arrays.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
         parameters:
             my_mailer.gateways:
                 - mail1
@@ -220,29 +233,31 @@ all parameters that are arrays.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="my_mailer.gateways" type="collection">
-                <parameter>mail1</parameter>
-                <parameter>mail2</parameter>
-                <parameter>mail3</parameter>
-            </parameter>
-            <parameter key="my_multilang.language_fallback" type="collection">
-                <parameter key="en" type="collection">
-                    <parameter>en</parameter>
-                    <parameter>fr</parameter>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="my_mailer.gateways" type="collection">
+                    <parameter>mail1</parameter>
+                    <parameter>mail2</parameter>
+                    <parameter>mail3</parameter>
                 </parameter>
-                <parameter key="fr" type="collection">
-                    <parameter>fr</parameter>
-                    <parameter>en</parameter>
+                <parameter key="my_multilang.language_fallback" type="collection">
+                    <parameter key="en" type="collection">
+                        <parameter>en</parameter>
+                        <parameter>fr</parameter>
+                    </parameter>
+                    <parameter key="fr" type="collection">
+                        <parameter>fr</parameter>
+                        <parameter>en</parameter>
+                    </parameter>
                 </parameter>
-            </parameter>
-        </parameters>
+            </parameters>
+        </container>
 
     .. code-block:: php
-
-        // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
         $container->setParameter('my_multilang.language_fallback', array(
@@ -263,10 +278,10 @@ key, and define the type as ``constant``.
 
     .. code-block:: xml
 
-        <?xml version="1.0" encoding="UTF-8"?>
-
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
@@ -276,21 +291,18 @@ key, and define the type as ``constant``.
 
     .. code-block:: php
 
-            $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
-            $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
+        $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
+        $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
 .. note::
 
-    This does not work for YAML configuration. If you're using YAML, you can
-    import an XML file to take advantage of this functionality:
+    This does not work for YAML configurations. If you're using YAML, you
+    can import an XML file to take advantage of this functionality:
 
-    .. configuration-block::
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-            # app/config/config.yml
-            imports:
-                - { resource: parameters.xml }
+        imports:
+            - { resource: parameters.xml }
 
 PHP Keywords in XML
 -------------------

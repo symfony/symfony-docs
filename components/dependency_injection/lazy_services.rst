@@ -62,9 +62,19 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
     .. code-block:: xml
 
-        <service id="foo" class="Acme\Foo" lazy="true" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Acme\Foo" lazy="true" />
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Acme\Foo');
         $definition->setLazy(true);

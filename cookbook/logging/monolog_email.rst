@@ -28,6 +28,8 @@ it is broken down.
                     type:       swift_mailer
                     from_email: error@example.com
                     to_email:   error@example.com
+                    # or list of recipients
+                    # to_email:   [developer_1@example.com, developer_2@example.com, ...]
                     subject:    An Error Occurred!
                     level:      debug
 

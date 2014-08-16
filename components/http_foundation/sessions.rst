@@ -16,7 +16,7 @@ implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionIn
 
     Make sure your PHP session isn't already started before using the Session
     class. If you have a legacy session system that starts your session, see
-    http://symfony.com/doc/current/components/http_foundation/session_php_bridge.html
+    :doc:`Legacy Sessions </components/http_foundation/session_php_bridge>`.
 
 Quick example::
 

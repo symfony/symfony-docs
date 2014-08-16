@@ -205,11 +205,11 @@ First configure a listener for console terminate events in the service container
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
-                <parameter key="console_terminate_listener.class">Acme\DemoBundle\EventListener\ConsoleExceptionListener</parameter>
+                <parameter key="console_exception_listener.class">Acme\DemoBundle\EventListener\ConsoleExceptionListener</parameter>
             </parameters>
 
             <services>
-                <service id="kernel.listener.command_dispatch" class="%console_terminate_listener.class%">
+                <service id="kernel.listener.command_dispatch" class="%console_exception_listener.class%">
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
@@ -223,11 +223,11 @@ First configure a listener for console terminate events in the service container
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter(
-            'console_terminate_listener.class',
+            'console_exception_listener.class',
             'Acme\DemoBundle\EventListener\ConsoleExceptionListener'
         );
         $definitionConsoleExceptionListener = new Definition(
-            '%console_terminate_listener.class%',
+            '%console_exception_listener.class%',
             array(new Reference('logger'))
         );
         $definitionConsoleExceptionListener->addTag(
@@ -247,7 +247,7 @@ Then implement the actual listener::
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
     use Psr\Log\LoggerInterface;
 
-    class ConsoleTerminateListener
+    class ConsoleExceptionListener
     {
         private $logger;
 

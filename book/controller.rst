@@ -170,9 +170,15 @@ to the controller:
     .. code-block:: php
 
         // app/config/routing.php
+        use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
             '_controller' => 'AcmeHelloBundle:Hello:index',
         )));
+
+        return $collection;
 
 Going to ``/hello/ryan`` now executes the ``HelloController::indexAction()``
 controller and passes in ``ryan`` for the ``$name`` variable. Creating a
@@ -257,10 +263,16 @@ example:
     .. code-block:: php
 
         // app/config/routing.php
+        use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{firstName}/{lastName}', array(
             '_controller' => 'AcmeHelloBundle:Hello:index',
             'color'       => 'green',
         )));
+
+        return $collection;
 
 The controller for this can take several arguments::
 

@@ -129,7 +129,7 @@ corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
 You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
 other things, determines which HTML form tag(s) is rendered for that field.
 
-Finally, you added a submit button with a custom label for submitting the form to 
+Finally, you added a submit button with a custom label for submitting the form to
 the server.
 
 .. versionadded:: 2.3
@@ -1126,20 +1126,21 @@ easy to use in your application.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd>
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
-               <service id="acme_demo.form.type.task"
-                class="Acme\TaskBundle\Form\Type\TaskType">
-                  <tag name="form.type" alias="task" />
-               </service>
+                <service
+                    id="acme_demo.form.type.task"
+                    class="Acme\TaskBundle\Form\Type\TaskType">
+
+                    <tag name="form.type" alias="task" />
+                </service>
             </services>
         </container>
 
     .. code-block:: php
 
         // src/Acme/TaskBundle/Resources/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
         $container
             ->register(
                 'acme_demo.form.type.task',
@@ -1590,13 +1591,13 @@ file:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                    <twig:form>
-                        <twig:resource>AcmeTaskBundle:Form:fields.html.twig</twig:resource>
-                    </twig:form>
-                    <!-- ... -->
+                <twig:form>
+                    <twig:resource>AcmeTaskBundle:Form:fields.html.twig</twig:resource>
+                </twig:form>
+                <!-- ... -->
             </twig:config>
         </container>
 
@@ -1676,7 +1677,7 @@ file:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:templating>

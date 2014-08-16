@@ -272,7 +272,7 @@ annotations if you're using the annotation method to specify your constraints:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:validation enable-annotations="true" />
@@ -1142,8 +1142,8 @@ provides a sequence of groups to be validated:
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
-                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
             <class name="Acme\DemoBundle\Entity\User">
                 <group-sequence-provider />
                 <!-- ... -->

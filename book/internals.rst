@@ -601,7 +601,7 @@ the configuration for the development environment:
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- load the profiler -->
             <framework:config>
@@ -611,9 +611,7 @@ the configuration for the development environment:
             <!-- enable the web profiler -->
             <webprofiler:config
                 toolbar="true"
-                intercept-redirects="true"
-                verbose="true"
-            />
+                intercept-redirects="true" />
         </container>
 
     .. code-block:: php
@@ -627,7 +625,6 @@ the configuration for the development environment:
         $container->loadFromExtension('web_profiler', array(
             'toolbar'             => true,
             'intercept_redirects' => true,
-            'verbose'             => true,
         ));
 
 When ``only_exceptions`` is set to ``true``, the profiler only collects data
@@ -657,18 +654,18 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
             <import
                 resource="@WebProfilerBundle/Resources/config/routing/profiler.xml"
-                prefix="/_profiler"
-            />
+                prefix="/_profiler" />
         </routes>
 
     .. code-block:: php
 
-        $collection->addCollection(
-            $loader->import(
-                "@WebProfilerBundle/Resources/config/routing/profiler.xml"
-            ),
-            '/_profiler'
-        );
+        use Symfony\Component\Routing\RouteCollection;
+
+        $profiler = $loader->import('@WebProfilerBundle/Resources/config/routing/profiler.xml');
+        $profiler->addPrefix('/_profiler');
+
+        $collection = new RouteCollection();
+        $collection->addCollection($profiler);
 
 As the profiler adds some overhead, you might want to enable it only under
 certain circumstances in the production environment. The ``only_exceptions``

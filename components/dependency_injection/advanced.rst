@@ -42,9 +42,19 @@ Here is an example:
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo" public="false" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Example\Foo" public="false" />
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Example\Foo');
         $definition->setPublic(false);
@@ -88,15 +98,22 @@ To create a synthetic service, set ``synthetic`` to ``true``:
 
     .. code-block:: xml
 
-        <service id="request"
-            synthetic="true" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="request" synthetic="true" />
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setDefinition('request', new Definition())
+        $container
+            ->setDefinition('request', new Definition())
             ->setSynthetic(true);
 
 As you see, only the ``synthetic`` option is set. All other options are only used
@@ -128,14 +145,23 @@ services.
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo"/>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <service id="bar" alias="foo" />
+            <services>
+                <service id="foo" class="Example\Foo" />
+
+                <service id="bar" alias="foo" />
+            </services>
+        </container>
 
     .. code-block:: php
 
-        $definition = new Definition('Example\Foo');
-        $container->setDefinition('foo', $definition);
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->setDefinition('foo', new Definition('Example\Foo'));
 
         $containerBuilder->setAlias('bar', 'foo');
 
@@ -173,11 +199,21 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo\Bar">
-            <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Example\Foo\Bar">
+                    <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Example\Foo\Bar');
         $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');

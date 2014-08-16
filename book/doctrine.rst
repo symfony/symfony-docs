@@ -85,7 +85,7 @@ information. By convention, this information is usually configured in an
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
                 <doctrine:config>
                     <doctrine:dbal
@@ -93,10 +93,8 @@ information. By convention, this information is usually configured in an
                         host="%database_host%"
                         dbname="%database_name%"
                         user="%database_user%"
-                        password="%database_password%"
-                    />
+                        password="%database_password%" />
                 </doctrine:config>
-
             </container>
 
         .. code-block:: php
@@ -175,16 +173,14 @@ for you:
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-                <doctrine:config
-                    driver="pdo_sqlite"
-                    path="%kernel.root_dir%/sqlite.db"
-                    charset="UTF-8"
-                >
-                    <!-- ... -->
+                <doctrine:config>
+                    <doctrine:dbal
+                        driver="pdo_sqlite"
+                        path="%kernel.root_dir%/sqlite.db"
+                        charset="UTF-8" />
                 </doctrine:config>
-
             </container>
 
         .. code-block:: php
@@ -319,17 +315,17 @@ in a number of different formats including YAML, XML or directly inside the
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product" table="product">
-                <id name="id" type="integer" column="id">
+                <id name="id" type="integer">
                     <generator strategy="AUTO" />
                 </id>
-                <field name="name" column="name" type="string" length="100" />
-                <field name="price" column="price" type="decimal" scale="2" />
-                <field name="description" column="description" type="text" />
+                <field name="name" type="string" length="100" />
+                <field name="price" type="decimal" scale="2" />
+                <field name="description" type="text" />
             </entity>
         </doctrine-mapping>
 
@@ -826,13 +822,15 @@ To do this, add the name of the repository class to your mapping definition:
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="Acme\StoreBundle\Entity\Product"
-                    repository-class="Acme\StoreBundle\Entity\ProductRepository">
-                    <!-- ... -->
+            <entity
+                name="Acme\StoreBundle\Entity\Product"
+                repository-class="Acme\StoreBundle\Entity\ProductRepository">
+
+                <!-- ... -->
             </entity>
         </doctrine-mapping>
 
@@ -945,17 +943,18 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Category.orm.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Category">
                 <!-- ... -->
-                <one-to-many field="products"
+                <one-to-many
+                    field="products"
                     target-entity="Product"
-                    mapped-by="category"
-                />
+                    mapped-by="category" />
 
                 <!--
                     don't forget to init the collection in
@@ -1023,22 +1022,21 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product">
                 <!-- ... -->
-                <many-to-one field="category"
+                <many-to-one
+                    field="category"
                     target-entity="Category"
                     inversed-by="products"
-                    join-column="category"
-                >
-                    <join-column
-                        name="category_id"
-                        referenced-column-name="id"
-                    />
+                    join-column="category">
+
+                    <join-column name="category_id" referenced-column-name="id" />
                 </many-to-one>
             </entity>
         </doctrine-mapping>
@@ -1306,6 +1304,8 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
     .. code-block:: php-annotations
 
+        // src/Acme/StoreBundle/Entity/Product.php
+
         /**
          * @ORM\PrePersist
          */
@@ -1328,16 +1328,15 @@ the current date, only when the entity is first persisted (i.e. inserted):
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="Acme\StoreBundle\Entity\Product">
-                    <!-- ... -->
-                    <lifecycle-callbacks>
-                        <lifecycle-callback type="prePersist"
-                            method="setCreatedAtValue" />
-                    </lifecycle-callbacks>
+                <!-- ... -->
+                <lifecycle-callbacks>
+                    <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+                </lifecycle-callbacks>
             </entity>
         </doctrine-mapping>
 
