@@ -57,10 +57,18 @@ it is broken down.
                 <monolog:handler
                     name="swift"
                     from-email="error@example.com"
-                    to-email="error@example.com"
                     subject="An Error Occurred!"
-                    level="debug"
-                />
+                    level="debug">
+
+                    <monolog:to-email>error@example.com</monolog:to-email>
+
+                    <!-- or multiple to-email elements -->
+                    <!--
+                    <monolog:to-email>dev1@example.com</monolog:to-email>
+                    <monolog:to-email>dev2@example.com</monolog:to-email>
+                    ...
+                    -->
+                </monolog:handler>
             </monolog:config>
         </container>
 
