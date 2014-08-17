@@ -4,12 +4,28 @@
 Configuring a Web Server
 ========================
 
-The web directory is the home of all of your application's public and static
-files. Including images, stylesheets and JavaScript files. It is also where the
-front controllers live. For more details, see the :ref:`the-web-directory`.
+The preferred way to develop your Symfony2 application is to use
+:doc:`PHP's internal web server </cookbook/web_server/built_in>`. However,
+when using an older PHP version or when running the application in the production
+environment, you'll need to use a fully-featured web server. This article
+describes several ways to use Symfony with Apache2 or Nginx.
 
-The web directory services as the document root when configuring your web
-server. In the examples below, this directory is in ``/var/www/project/web/``.
+When using Apache2, you can configure PHP as an
+:ref:`Apache module <web-server-apache-mod-php>` or with FastCGI using
+:ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
+to use PHP :ref:`with Nginx <web-server-nginx>`.
+
+.. sidebar:: The Web Directory
+
+    The web directory is the home of all of your application's public and
+    static files, including images, stylesheets and JavaScript files. It is
+    also where the front controllers live. For more details, see the :ref:`the-web-directory`.
+
+    The web directory services as the document root when configuring your
+    web server. In the examples below, the ``web/`` directory will be the
+    document root. This directory is ``/var/www/project/web/``.
+
+.. _web-server-apache-mod-php:
 
 Apache2 with mod_php/PHP-CGI
 ----------------------------
@@ -62,6 +78,8 @@ following configuration snippet:
             AllowOverride All
             Require all granted
         </Directory>
+
+.. _web-server-apache-fpm:
 
 Apache2 with PHP-FPM
 --------------------
@@ -163,6 +181,8 @@ instead:
 .. code-block:: apache
 
     FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
+
+.. _web-server-nginx:
 
 Nginx
 -----
