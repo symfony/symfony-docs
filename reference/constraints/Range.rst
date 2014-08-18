@@ -99,6 +99,203 @@ you might add the following:
             }
         }
 
+Date Ranges
+-----------
+
+This constraint can be used to compare ``DateTime`` objects against date ranges.
+The minimum and maximum date of the range should be given as any date string
+`accepted by the DateTime constructor`_. For example, you could check that a
+date must lie within the current year like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Event:
+            properties:
+                startDate:
+                    - Range:
+                        min: first day of January
+                        max: first day of January next year
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Event.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            /**
+             * @Assert\Range(
+             *      min = "first day of January",
+             *      max = "first day of January next year"
+             * )
+             */
+            protected $startDate;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <class name="Acme\EventBundle\Entity\Event">
+            <property name="startDate">
+                <constraint name="Range">
+                    <option name="min">first day of January</option>
+                    <option name="max">first day of January next year</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Person.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('startDate', new Assert\Range(array(
+                    'min' => 'first day of January',
+                    'max' => 'first day of January next year',
+                )));
+            }
+        }
+
+Be aware that PHP will use the server's configured timezone to interpret these
+dates. If you want to fix the timezone, append it to the date string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Event:
+            properties:
+                startDate:
+                    - Range:
+                        min: first day of January UTC
+                        max: first day of January next year UTC
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Event.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            /**
+             * @Assert\Range(
+             *      min = "first day of January UTC",
+             *      max = "first day of January next year UTC"
+             * )
+             */
+            protected $startDate;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <class name="Acme\EventBundle\Entity\Event">
+            <property name="startDate">
+                <constraint name="Range">
+                    <option name="min">first day of January UTC</option>
+                    <option name="max">first day of January next year UTC</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Person.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('startDate', new Assert\Range(array(
+                    'min' => 'first day of January UTC',
+                    'max' => 'first day of January next year UTC',
+                )));
+            }
+        }
+
+The ``DateTime`` class also accepts relative dates or times. For example, you
+can check that a delivery date starts within the next five hours like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - Range:
+                        min: now
+                        max: +5 hours
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\Range(
+             *      min = "now",
+             *      max = "+5 hours"
+             * )
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <class name="Acme\OrderBundle\Entity\Order">
+            <property name="deliveryDate">
+                <constraint name="Range">
+                    <option name="min">now</option>
+                    <option name="max">+5 hours</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/OrderBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\Range(array(
+                    'min' => 'now',
+                    'max' => '+5 hours',
+                )));
+            }
+        }
+
 Options
 -------
 
@@ -145,3 +342,4 @@ the `is_numeric`_ PHP function).
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php
+.. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
