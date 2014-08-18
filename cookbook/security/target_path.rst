@@ -10,7 +10,7 @@ the name of the firewall, defined in ``security.yml``). Upon a successful
 login, the user is redirected to this path, as to help them continue from the
 last known page they visited.
 
-In some situations, this is not ideal. For example when the last request
+In some situations, this is not ideal. For example, when the last request
 URI was an XMLHttpRequest which returned a non-HTML or partial HTML response,
 the user is redirected back to a page which the browser cannot render.
 
