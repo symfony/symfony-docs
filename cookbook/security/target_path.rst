@@ -10,9 +10,9 @@ the name of the firewall, defined in ``security.yml``). Upon a successful
 login, the user is redirected to this path, as to help them continue from the
 last known page they visited.
 
-On some occasions, this is unexpected. For example when the last request before logout 
-was an XMLHttpRequest route, the user may be redirected back to an invalid 
-route.
+In some situations, this is not ideal. For example when the last request
+URI was an XMLHttpRequest which returned a non-HTML or partial HTML response,
+the user is redirected back to a page which the browser cannot render.
 
 To get around this behavior, you would simply need to extend the ``ExceptionListener``
 class and override the default method named ``setTargetPath()``.
