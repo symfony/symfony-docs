@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-15T20:55:52Z
+
+I would like to see references to this article in places where we talk about the `server:run` command (for instance, the quick tour)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T07:51:08Z
+
+Actually, there's just one part in the docs that mentions the built-in web server at the moment (the quick tour that you mentioned). But we'll have to keep track of this if we start to tend to focus more on the built-in server in the future.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T19:50:15Z
+
+However, I addressed all your other suggestions. Thanks for these nice additions.
