@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by TerjeBr at 2014-08-16T22:35:05Z
+
+This fix is for the file `cookbook/console/sending_emails.rst`.
+Why do you say in your first comment that it fixes http://symfony.com/doc/current/cookbook/bundles/configuration.html ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-17T06:42:55Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-17T09:22:18Z
+
+@TerjeBr sorry, I meant to say fixes #4117
