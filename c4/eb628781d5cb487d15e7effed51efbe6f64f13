@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by Baptouuuu at 2014-08-16T10:37:30Z
+
+Oops, the target branch should be `2.5` not `master`.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T10:48:13Z
+
+@Baptouuuu These are really nice catches! :+1: And don't worry about the target branch. @weaverryan can easily apply the changes to the right branch.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-16T11:22:45Z
+
+Great fixes!
+
+However, almost all of the fixes in this PR should be merged in the 2.3 branch, except from the change in ``components/dependency_injection/advanced``. Can you please remove that change from this PR and create a new PR based on the 2.5 branch for that change? Thank you!
+
+---------------------------------------------------------------------------
+
+by Baptouuuu at 2014-08-16T11:27:53Z
+
+@WouterJ done.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T11:37:41Z
+
+Thanks @Baptouuuu
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-16T19:13:07Z
+
+Hey @Baptouuuu!
+
+I need to merge this into the 2.3 branch, but it's not merging cleanly. If you can rebase this against the 2.3 branch and re-push (not need to open a new PR), then I can merge it in. Assuming `origin` is the `Baptouuuu/symfony` repo and `upstream` is what you called `symfony/symfony`, it should be something like:
+
+```bash
+git fetch upstream
+git checkout typos
+git rebase --onto upstream/2.3 upstream/master
+git push origin typos --force
+```
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by Baptouuuu at 2014-08-17T10:23:05Z
+
+@weaverryan done
