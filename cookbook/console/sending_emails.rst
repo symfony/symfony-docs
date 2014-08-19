@@ -85,7 +85,7 @@ from the ``router`` service and override its settings::
 Using Memory Spooling
 ---------------------
 
-.. versionadded: 2.3
+.. versionadded:: 2.3
     When using Symfony 2.3+ and SwiftmailerBundle 2.3.5+, the memory spool is now
     handled automatically in the CLI and the code below is not necessary anymore.
 

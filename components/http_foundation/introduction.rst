@@ -177,7 +177,7 @@ on how this is used in the Symfony2 framework, see
 :ref:`the Symfony2 book <book-fundamentals-attributes>`.
 
 Finally, the raw data sent with the request body can be accessed using
-:method:`Symfony\\Component\\HttpFoundation\\Request::getContent()`::
+:method:`Symfony\\Component\\HttpFoundation\\Request::getContent`::
 
     $content = $request->getContent();
 
