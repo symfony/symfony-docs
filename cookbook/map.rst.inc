@@ -191,6 +191,11 @@
 
   * :doc:`/cookbook/validation/custom_constraint`
 
+* :doc:`/cookbook/web_server/index`
+
+  * :doc:`/cookbook/web_server/built_in`
+  * (configuration) :doc:`/cookbook/configuration/web_server_configuration`
+
 * :doc:`/cookbook/web_services/index`
 
   * :doc:`/cookbook/web_services/php_soap_extension`
