@@ -73,19 +73,19 @@ Loader too. The default loaders are:
 * :class:`Symfony\\Component\\Translation\\Loader\\CsvFileLoader` - to load
   catalogs from CSV files.
 * :class:`Symfony\\Component\\Translation\\Loader\\IcuDatFileLoader` - to load
-  catalogs form resource bundles.
+  catalogs from resource bundles.
 * :class:`Symfony\\Component\\Translation\\Loader\\IcuResFileLoader` - to load
-  catalogs form resource bundles.
+  catalogs from resource bundles.
 * :class:`Symfony\\Component\\Translation\\Loader\\IniFileLoader` - to load
-  catalogs form ini files.
+  catalogs from ini files.
 * :class:`Symfony\\Component\\Translation\\Loader\\MoFileLoader` - to load
-  catalogs form gettext files.
+  catalogs from gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PhpFileLoader` - to load
   catalogs from PHP files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PoFileLoader` - to load
-  catalogs form gettext files.
+  catalogs from gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\QtFileLoader` - to load
-  catalogs form QT XML files.
+  catalogs from QT XML files.
 * :class:`Symfony\\Component\\Translation\\Loader\\XliffFileLoader` - to load
   catalogs from Xliff files.
 * :class:`Symfony\\Component\\Translation\\Loader\\JsonFileLoader` - to load

@@ -11,8 +11,8 @@ front controllers live. For more details, see the :ref:`the-web-directory`.
 The web directory services as the document root when configuring your web
 server. In the examples below, this directory is in ``/var/www/project/web/``.
 
-Apache2
--------
+Apache2 with mod_php/PHP-CGI
+----------------------------
 
 For advanced Apache configuration options, see the official `Apache`_
 documentation. The minimum basics to get your application running under Apache2
@@ -63,6 +63,107 @@ following configuration snippet:
             Require all granted
         </Directory>
 
+Apache2 with PHP-FPM
+--------------------
+
+To make use of PHP5-FPM with Apache, you first have to ensure that you have
+the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
+installed (for example, on a Debian based system you have to install the
+``libapache2-mod-fastcgi`` and ``php5-fpm`` packages).
+
+PHP-FPM uses so called *pools* to handle incoming FastCGI requests. You can
+configure an arbitrary number of pools in the FPM configuration. In a pool
+you configure either a TCP socket (IP and port) or a unix domain socket to
+listen on. Each pool can also be run under a different UID and GID:
+
+.. code-block:: ini
+
+    ; a pool called www
+    [www]
+    user = www-data
+    group = www-data
+
+    ; use a unix domain socket
+    listen = /var/run/php5-fpm.sock
+
+    ; or listen on a TCP socket
+    listen = 127.0.0.1:9000
+
+Using mod_proxy_fcgi with Apache 2.4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are running Apache 2.4, you can easily use ``mod_proxy_fcgi`` to pass
+incoming requests to PHP-FPM. Configure PHP-FPM to listen on a TCP socket
+(``mod_proxy`` currently `does not support unix sockets`_), enable ``mod_proxy``
+and ``mod_proxy_fcgi`` in your Apache configuration and use the ``ProxyPassMatch``
+directive to pass requests for PHP files to PHP FPM:
+
+.. code-block:: apache
+
+    <VirtualHost *:80>
+        ServerName domain.tld
+        ServerAlias www.domain.tld
+
+        ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+
+        DocumentRoot /var/www/project/web
+        <Directory /var/www/project/web>
+            # enable the .htaccess rewrites
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+        ErrorLog /var/log/apache2/project_error.log
+        CustomLog /var/log/apache2/project_access.log combined
+    </VirtualHost>
+
+.. caution::
+
+    When you run your Symfony application on a subpath of your document root,
+    the regular expression used in ``ProxyPassMatch`` directive must be changed
+    accordingly:
+
+    .. code-block:: apache
+
+        ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+
+PHP-FPM with Apache 2.2
+~~~~~~~~~~~~~~~~~~~~~~~
+
+On Apache 2.2 or lower, you cannot use ``mod_proxy_fcgi``. You have to use
+the `FastCgiExternalServer`_ directive instead. Therefore, your Apache configuration
+should look something like this:
+
+.. code-block:: apache
+
+    <VirtualHost *:80>
+        ServerName domain.tld
+        ServerAlias www.domain.tld
+
+        AddHandler php5-fcgi .php
+        Action php5-fcgi /php5-fcgi
+        Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
+        FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
+
+        DocumentRoot /var/www/project/web
+        <Directory /var/www/project/web>
+            # enable the .htaccess rewrites
+            AllowOverride All
+            Order allow,deny
+            Allow from all
+        </Directory>
+
+        ErrorLog /var/log/apache2/project_error.log
+        CustomLog /var/log/apache2/project_access.log combined
+    </VirtualHost>
+
+If you prefer to use a unix socket, you have to use the ``-socket`` option
+instead:
+
+.. code-block:: apache
+
+    FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
+
 Nginx
 -----
 
@@ -110,4 +211,6 @@ are:
     be sure to include them in the ``location`` block above.
 
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
+.. _`does not support unix sockets`: https://issues.apache.org/bugzilla/show_bug.cgi?id=54101
+.. _`FastCgiExternalServer`: http://www.fastcgi.com/mod_fastcgi/docs/mod_fastcgi.html#FastCgiExternalServer
 .. _`Nginx`: http://wiki.nginx.org/Symfony

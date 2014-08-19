@@ -61,7 +61,6 @@ edit a particular object. Here's an example implementation:
     // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -100,7 +99,7 @@ edit a particular object. Here's an example implementation:
             // this isn't a requirement, it's just one easy way for you to
             // design your voter
             if(1 !== count($attributes)) {
-                throw new InvalidArgumentException(
+                throw new \InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
             }
@@ -108,13 +107,13 @@ edit a particular object. Here's an example implementation:
             // set the attribute to check against
             $attribute = $attributes[0];
 
-            // get current logged in user
-            $user = $token->getUser();
-
             // check if the given attribute is covered by this voter
             if (!$this->supportsAttribute($attribute)) {
                 return VoterInterface::ACCESS_ABSTAIN;
             }
+
+            // get current logged in user
+            $user = $token->getUser();
 
             // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
@@ -122,7 +121,7 @@ edit a particular object. Here's an example implementation:
             }
 
             switch($attribute) {
-                case 'view':
+                case self::VIEW:
                     // the data object could have for example a method isPrivate()
                     // which checks the Boolean attribute $private
                     if (!$post->isPrivate()) {
@@ -130,7 +129,7 @@ edit a particular object. Here's an example implementation:
                     }
                     break;
 
-                case 'edit':
+                case self::EDIT:
                     // we assume that our data object has a method getOwner() to
                     // get the current owner user entity for this data object
                     if ($user->getId() === $post->getOwner()->getId()) {
@@ -138,6 +137,8 @@ edit a particular object. Here's an example implementation:
                     }
                     break;
             }
+            
+            return VoterInterface::ACCESS_DENIED;
         }
     }
 
