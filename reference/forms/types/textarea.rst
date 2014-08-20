@@ -9,8 +9,9 @@ Renders a ``textarea`` HTML element.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``textarea`` tag                                                       |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `data`_                                                              |
-| options     | - `disabled`_                                                          |
+| Inherited   | - `attr`_                                                              |
+| options     | - `data`_                                                              |
+|             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
@@ -31,6 +32,8 @@ Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
