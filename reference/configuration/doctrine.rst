@@ -21,6 +21,9 @@ Full default configuration
                     some_custom_type:
                         class:                Acme\HelloBundle\MyCustomType
                         commented:            true
+                # If enabled all tables not prefixed with sf2_ will be ignored by the schema
+                # tool. This is for custom tables which should not be altered automatically.
+                #schema_filter:        ^sf2_ 
 
                 connections:
                     default:
