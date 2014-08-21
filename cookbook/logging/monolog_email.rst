@@ -56,6 +56,7 @@ it is broken down.
                 />
                 <monolog:handler
                     name="swift"
+                    type="swift_mailer"
                     from-email="error@example.com"
                     to-email="error@example.com"
                     subject="An Error Occurred!"
