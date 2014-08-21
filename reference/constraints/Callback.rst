@@ -107,10 +107,17 @@ those errors should be attributed::
         // ...
         private $firstName;
 
+<<<<<<< HEAD
         public function validate(ExecutionContextInterface $context)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array(/* ... */);
+=======
+        public function isAuthorValid(ExecutionContextInterface $context)
+        {
+            // somehow you have an array of "fake names"
+            $fakeNames = array();
+>>>>>>> [Reference] consistent & complete config examples
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
@@ -179,6 +186,7 @@ You can then use the following configuration to invoke this validator:
 
     .. code-block:: php-annotations
 
+<<<<<<< HEAD
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
 
@@ -190,6 +198,16 @@ You can then use the following configuration to invoke this validator:
         class Author
         {
         }
+=======
+            /**
+             * @Assert\Callback(methods={
+             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid" }
+             * })
+             */
+            class Author
+            {
+            }
+>>>>>>> [Reference] consistent & complete config examples
 
     .. code-block:: xml
 
@@ -228,6 +246,7 @@ You can then use the following configuration to invoke this validator:
 
 .. note::
 
+<<<<<<< HEAD
     The Callback constraint does *not* support global callback functions nor
     is it possible to specify a global function or a :term:`service` method
     as callback. To validate using a service, you should
@@ -246,6 +265,14 @@ constructor of the Callback constraint::
     class Author
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
+=======
+        namespace Acme\BlogBundle;
+
+        use Symfony\Component\Validator\ExecutionContextInterface;
+        use Acme\BlogBundle\Entity\Author;
+
+        class MyStaticValidatorClass
+>>>>>>> [Reference] consistent & complete config examples
         {
             $callback = function ($object, ExecutionContextInterface $context) {
                 // ...

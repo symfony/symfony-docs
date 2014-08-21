@@ -24,7 +24,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Entity\User:
             properties:
                 locale:
@@ -34,13 +34,13 @@ Basic Usage
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class User
         {
             /**
-             * @Assert\Locale
+             * @Assert\Locale()
              */
              protected $locale;
         }
@@ -64,10 +64,10 @@ Basic Usage
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-  
+
         class User
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
