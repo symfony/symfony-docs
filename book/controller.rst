@@ -148,14 +148,14 @@ to the controller:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
             path:      /hello/{name}
             defaults:  { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/routing.yml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -169,7 +169,7 @@ to the controller:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // src/Acme/HelloBundle/Resources/config/routing.yml
         use Symfony\Component\Routing\Route;
         use Symfony\Component\Routing\RouteCollection;
 
