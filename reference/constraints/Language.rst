@@ -21,7 +21,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Entity\User:
             properties:
                 preferredLanguage:
@@ -31,13 +31,13 @@ Basic Usage
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
-  
+
         class User
         {
             /**
-             * @Assert\Language
+             * @Assert\Language()
              */
              protected $preferredLanguage;
         }
@@ -61,7 +61,7 @@ Basic Usage
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

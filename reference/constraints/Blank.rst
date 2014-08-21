@@ -26,7 +26,7 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 firstName:

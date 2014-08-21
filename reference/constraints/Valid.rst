@@ -85,7 +85,7 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\Length(max = "5")
+             * @Assert\Length(max = 5)
              */
             protected $zipCode;
         }
@@ -93,11 +93,13 @@ an ``Address`` instance in the ``$address`` property.
         // src/Acme/HelloBundle/Entity/Author.php
         namespace Acme\HelloBundle\Entity;
 
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
              * @Assert\NotBlank
-             * @Assert\Length(min = "4")
+             * @Assert\Length(min = 4)
              */
             protected $firstName;
 
@@ -159,9 +161,7 @@ an ``Address`` instance in the ``$address`` property.
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
-                $metadata->addPropertyConstraint(
-                    'zipCode',
-                    new Assert\Length(array("max" => 5)));
+                $metadata->addPropertyConstraint('zipCode', new Assert\Length(array("max" => 5)));
             }
         }
 

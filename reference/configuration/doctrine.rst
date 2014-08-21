@@ -356,32 +356,37 @@ The following block shows all possible configuration keys:
 
     .. code-block:: xml
 
-        <!-- xmlns:doctrine="http://symfony.com/schema/dic/doctrine" -->
-        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-        <doctrine:config>
-            <doctrine:dbal
-                name="default"
-                dbname="database"
-                host="localhost"
-                port="1234"
-                user="user"
-                password="secret"
-                driver="pdo_mysql"
-                driver-class="MyNamespace\MyDriverImpl"
-                path="%kernel.data_dir%/data.sqlite"
-                memory="true"
-                unix-socket="/tmp/mysql.sock"
-                wrapper-class="MyDoctrineDbalConnectionWrapper"
-                charset="UTF8"
-                logging="%kernel.debug%"
-                platform-service="MyOwnDatabasePlatformService"
-            >
-                <doctrine:option key="foo">bar</doctrine:option>
-                <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
-                <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
-            </doctrine:dbal>
-        </doctrine:config>
+            <doctrine:config>
+                <doctrine:dbal
+                    name="default"
+                    dbname="database"
+                    host="localhost"
+                    port="1234"
+                    user="user"
+                    password="secret"
+                    driver="pdo_mysql"
+                    driver-class="MyNamespace\MyDriverImpl"
+                    path="%kernel.data_dir%/data.sqlite"
+                    memory="true"
+                    unix-socket="/tmp/mysql.sock"
+                    wrapper-class="MyDoctrineDbalConnectionWrapper"
+                    charset="UTF8"
+                    logging="%kernel.debug%"
+                    platform-service="MyOwnDatabasePlatformService">
+
+                    <doctrine:option key="foo">bar</doctrine:option>
+                    <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                    <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
+                </doctrine:dbal>
+            </doctrine:config>
+        </container>
 
 If you want to configure multiple connections in YAML, put them under the
 ``connections`` key and give them a unique name:
