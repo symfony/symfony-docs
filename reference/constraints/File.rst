@@ -177,7 +177,7 @@ to be valid. The size of the file can be given in one of the following formats:
 | Mi     | mebibyte  | 1,048,576 bytes |  8Mi |
 +--------+-----------+-----------------+------+
 
-For more information about the difference between binary and SI suffixes,
+For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
 binaryFormat
@@ -188,12 +188,12 @@ binaryFormat
 
 **type**: ``boolean`` **default**: ``null``
 
-When ``true``, the sizes will be displayed in messages with binary suffixes
-(KiB, MiB). When ``false``, the sizes will be displayed with SI suffixes (kB,
-MB). When ``null``, then the binaryFormat will be guessed from the suffix
-defined in the ``maxSize`` option.
+When ``true``, the sizes will be displayed in messages with binary-prefixed
+units (KiB, MiB). When ``false``, the sizes will be displayed with SI-prefixed
+units (kB, MB). When ``null``, then the binaryFormat will be guessed from
+the value defined in the ``maxSize`` option.
 
-For more information about the difference between binary and SI suffixes,
+For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
 mimeTypes
