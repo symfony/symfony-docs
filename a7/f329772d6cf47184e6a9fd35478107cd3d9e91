@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T19:15:11Z
+
+@javiereguiluz Thanks for your comments. I simply replaced *suffix* by *prefix*. But it's really a good idea to be more precise. I updated the pull request. I chose to use "binary-prefixed unit". What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-16T19:28:21Z
+
+I like "suffix", since the user will use this as the suffix for their value and the message will show them some number, suffixed by a string (e.g. `5 mb`).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-17T07:51:26Z
+
+@xabbuh thanks for updating the PR. I really like it now!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-17T17:30:57Z
+
+So, should we revert the change to the ``versionadded`` directive and the table, but keep the changes in the rest?
+
+---------------------------------------------------------------------------
+
+by jeremy-derusse at 2014-08-18T07:52:10Z
+
+IMHO yes. What do you think @weaverryan, @javiereguiluz  ?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-19T22:01:47Z
+
+@xabbuh revert the `versionadded` and one entry below it. I've added some comments to hopefully make it clear.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-19T22:16:08Z
+
+@jeremy-derusse @weaverryan Thanks for the feedback. Updated.
+
+---------------------------------------------------------------------------
+
+by Tobion at 2014-08-20T00:22:49Z
+
+I don't see why you like "suffix". That is just the display position and nothing semantical. Also some languages might display units in front, like `€ 5,--`. Would you still call it a suffix?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-20T06:08:56Z
+
+@Tobion you are right in the sense that "prefix" is the most correct term in this case. But as @weaverryan said, for the user this is always a suffix:
+
+> I like "suffix", since the user will use this as the suffix for their value and
+> the message will show them some number, suffixed by a string (e.g. 5 mb).
+
+---------------------------------------------------------------------------
+
+by jeremy-derusse at 2014-08-20T09:10:06Z
+
+We also use the word "suffix" in the properties `maxsizemessage` and `uploadinisizeerrormessage`
