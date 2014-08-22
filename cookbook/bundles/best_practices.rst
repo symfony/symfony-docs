@@ -219,7 +219,7 @@ the following standardized instructions in your ``README.md`` file.
         $ composer require <package-name> "~1"
         ```
 
-        This command requires to have installed Composer globally, as explained
+        This command requires to have Composer installed globally, as explained
         in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
         of Composer documentation.
 
@@ -233,17 +233,18 @@ the following standardized instructions in your ``README.md`` file.
         <?php
         // app/AppKernel.php
 
+        // ...
+
         public function registerBundles()
         {
             $bundles = array(
                 // ...
-
                 new <vendor>\<bundle-name>\<bundle-long-name>(),
             );
         }
         ```
 
-    Optionally you can add *Step 3*, *Step 4*, etc. to explain other required
+    Optionally, you can add *Step 3*, *Step 4*, etc. to explain other required
     installation steps, such as registering routes or dumping assets.
 
 
