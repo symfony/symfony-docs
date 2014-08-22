@@ -99,12 +99,11 @@ built-in dumper. In this example, the translation messages defined in the YAML f
 are dumped into a text file with the custom format::
 
     use Symfony\Component\Translation\Loader\YamlFileLoader;
-    use RaulFraile\Dumper\CustomDumper;
 
     include_once __DIR__. '/vendor/autoload.php';
 
     $loader = new YamlFileLoader();
     $catalogue = $loader->load(__DIR__ . '/translations/messages.es_ES.yml' , 'es_ES');
 
-    $dumper = new CustomDumper();
+    $dumper = new MyFormatDumper();
     $dumper->dump($catalogue, array('path' => __DIR__.'/dumps'));
