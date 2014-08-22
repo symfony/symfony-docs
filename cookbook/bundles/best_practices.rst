@@ -202,7 +202,10 @@ you to use the following standardized instructions in your ``README`` file.
 
 .. sidebar:: Installation Instructions Template
 
-    .. raw:: rst
+    This template assumes that your bundle is in its ``1.x`` version. If not,
+    change the ``"~1"`` installation version accordingly (e.g. ``"~2"``).
+
+    .. raw:: md
 
         Installation
         ============
@@ -212,36 +215,36 @@ you to use the following standardized instructions in your ``README`` file.
 
         Use Composer to add the bundle as a new dependency of your project:
 
-        .. code-block:: bash
-
-            $ composer require "<vendor>/<bundle-name>:dev-master"
+        ```
+        $ composer require <package-name> "~1"
+        ```
 
         This command requires to have installed Composer globally, as explained
-        `in the installation chapter <https://getcomposer.org/doc/00-intro.md>`_
+        in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
         of Composer documentation.
 
         Step 2: Enable the Bundle
         -------------------------
 
-        Then, enable the bundle adding the following line in the ``AppKernel``
+        Then, enable the bundle adding the following line in the `AppKernel`
         class of your project:
 
-        .. code-block:: php
+        ```php
+        <?php
+        // app/AppKernel.php
 
-            <?php
-            // app/AppKernel.php
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
 
-            public function registerBundles()
-            {
-                $bundles = array(
-                    // ...
+                new <vendor>\<bundle-name>\<bundle-long-name>(),
+            );
+        }
+        ```
 
-                    new <vendor>\<bundle-name>\<bundle-long-name>(),
-                );
-            }
-
-        (optionally add *Step 3*, *Step 4*, etc. to explain other required
-        installation steps, such as registering routes or dumping assets)
+    Optionally you can add *Step 3*, *Step 4*, etc. to explain other required
+    installation steps, such as registering routes or dumping assets.
 
 
 Routing
