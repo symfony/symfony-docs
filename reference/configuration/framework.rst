@@ -19,6 +19,7 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `trusted_hosts`_
 * `trusted_proxies`_
 * `form`_
     * enabled
@@ -136,6 +137,72 @@ If this configuration parameter is present (and not ``false``), then the
 services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
+
+trusted_hosts
+~~~~~~~~~~~~~
+
+**type**: ``array``
+
+A lot of different attacks have been discovered relying on inconsistencies
+between the handling of the ``Host`` header by various software (web servers,
+reverse proxies, web frameworks, etc.). Basically, everytime the framework is
+generating an absolute URL (when sending an email to reset a password for
+instance), the host might have been manipulated by an attacker.
+
+The Symfony Request::getHost() method might be vulnerable to some of these attacks
+because it depends on the configuration of your web server. One simple solution
+to avoid these attacks is to whitelist the hosts that your Symfony application
+can respond to. That's the purpose of this ``trusted_hosts`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            trusted_hosts:  ['acme.com', 'acme.org']
+
+    .. code-block:: xml
+
+        <framework:config trusted-hosts="acme.com, acme.org">
+            <!-- ... -->
+        </framework>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'trusted_hosts' => array('acme.com', 'acme.org'),
+        ));
+
+Hosts can also be configured using regular expressions, which make it easier to
+respond to any subdomain:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            trusted_hosts:  ['.*\.?acme.com$', '.*\.?acme.org$']
+
+    .. code-block:: xml
+
+        <framework:config trusted-hosts=".*\.?acme.com$, .*\.?acme.org$">
+            <!-- ... -->
+        </framework>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'trusted_hosts' => array('.*\.?acme.com$', '.*\.?acme.org$'),
+        ));
+
+In addition, you can also set the trusted hosts in the front controller using
+the ``Request::setTrustedHosts()`` method::
+
+    // web/app.php
+    Request::setTrustedHosts(array('.*\.?acme.com$', '.*\.?acme.org$'));
+
+The default value for this option is an empty array, meaning that the application
+can respond to any given host.
 
 .. _reference-framework-trusted-proxies:
 
