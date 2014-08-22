@@ -753,7 +753,7 @@ you need to have a complete custom prototype you can render it yourself:
     data-prototype="<?php
         $prototype = $view->render(
             'AcmeTaskBundle:Task:prototypeTask.html.php',
-            array('task' => $form->task->get('prototype')
+            array('task' => $form->task->get('prototype'))
         );
 
         echo $view->escape($prototype);
