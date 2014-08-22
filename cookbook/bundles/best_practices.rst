@@ -194,6 +194,56 @@ Extensive documentation should also be provided in the
 the ``Resources/doc/`` directory; the ``Resources/doc/index.rst`` file is
 the only mandatory file and must be the entry point for the documentation.
 
+Installation instructions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to ease the installation process of third-party bundles, we propose
+you to use the following standardized instructions in your ``README`` file.
+
+.. sidebar:: Bundle Instructions Template
+
+    .. raw:: rst
+
+        Installation
+        ============
+
+        Step 1: Download the Bundle
+        ---------------------------
+
+        Use Composer to add the bundle as a new dependency of your project:
+
+        .. code-block:: bash
+
+            $ composer require "<vendor>/<bundle-name>:dev-master"
+
+        This command requires to have installed Composer globally, as explained
+        `in the installation chapter <https://getcomposer.org/doc/00-intro.md>`_
+        of Composer documentation.
+
+        Step 2: Enable the Bundle
+        -------------------------
+
+        Then, enable the bundle adding the following line in the ``AppKernel``
+        class of your project:
+
+        .. code-block:: php
+
+            <?php
+            // app/AppKernel.php
+
+            public function registerBundles()
+            {
+                $bundles = array(
+                    // ...
+
+                    new <vendor>\<bundle-name>\<bundle-long-name>(),
+                );
+            }
+
+        (optionally add *Step 3*, *Step 4*, etc. to explain other required
+        installation steps, such as registering routes or dumping assets)
+
+
 Routing
 -------
 
@@ -267,53 +317,6 @@ semantic configuration described in the cookbook.
 
     If you are defining services, they should also be prefixed with the bundle
     alias.
-
-Installation instructions
--------------------------
-
-In order to ease the installation process of third-party bundles, we propose
-you to use the following standardized instructions in your ``README`` file:
-
-.. code-block::
-
-    Installation
-    ============
-
-    Step 1: Download the bundle
-    ---------------------------
-
-    Use Composer to add the bundle as a new dependency of your project:
-
-    .. code-block:: bash
-
-        $ composer require "<vendor>/<bundle-name>:dev-master"
-
-    This command requires to have installed Composer globally, as explained
-    `in the installation chapter <https://getcomposer.org/doc/00-intro.md>`_
-    of Composer documentation.
-
-    Step 2: Enable the bundle
-    -------------------------
-
-    Then, enable the bundle adding the following line in the ``AppKernel`` class
-    of your project:
-
-    .. code-block:: php
-
-        <?php
-        // app/AppKernel.php
-
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-
-                new <vendor>\<bundle-name>\<bundle-long-name>(),
-            );
-        }
-
-    (optionally add *Step 3*, *Step 4*, etc. to explain other required
-    installation steps, such as registering routes or dumping assets)
 
 Learn more from the Cookbook
 ----------------------------
