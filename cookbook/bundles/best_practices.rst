@@ -200,7 +200,7 @@ Installation instructions
 In order to ease the installation process of third-party bundles, we propose
 you to use the following standardized instructions in your ``README`` file.
 
-.. sidebar:: Bundle Instructions Template
+.. sidebar:: Installation Instructions Template
 
     .. raw:: rst
 
