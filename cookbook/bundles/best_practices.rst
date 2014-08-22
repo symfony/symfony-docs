@@ -198,14 +198,14 @@ Installation instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to ease the installation process of third-party bundles, we propose
-you to use the following standardized instructions in your ``README`` file.
+you to use the following standardized instructions in your ``README.md`` file.
 
 .. sidebar:: Installation Instructions Template
 
     This template assumes that your bundle is in its ``1.x`` version. If not,
     change the ``"~1"`` installation version accordingly (e.g. ``"~2"``).
 
-    .. raw:: md
+    .. code-block:: text
 
         Installation
         ============
