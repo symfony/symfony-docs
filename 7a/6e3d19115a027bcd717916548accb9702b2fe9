@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-21T13:01:39Z
+
+:thumbsup: I didn't know this existed :)
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-08-21T13:30:21Z
+
+Hehe this is why I suggested yesterday on twitter to add the DoctrineBundle documentation on to the symfony bundle documentation as well. But this will take some time according to @javiereguiluz.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-21T15:27:13Z
+
+@peterrehm :+1: for adding the XML example (of possible).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-21T15:40:39Z
+
+@xabbuh Yea, but we don't show the XML version of the full configuration, so there's no spot for it (and I don't really want to start doing the full XML for this).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-21T15:43:59Z
+
+@weaverryan Yeah, you're right. I didn't spot that we are talking about the full documentation reference.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-08-21T16:17:26Z
+
+And it is hard to add it optionally only
