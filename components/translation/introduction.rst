@@ -62,11 +62,17 @@ The Translation component uses Loader classes to load catalogs. You can load
 multiple resources for the same locale, which will then be combined into one
 catalog.
 
+<<<<<<< HEAD
 .. versionadded:: 2.4
     The ``JsonFileLoader`` was introduced in Symfony 2.4.    
 
 The component comes with some default Loaders and you can create your own
 Loader too. The default loaders are:
+=======
+The component comes with some default Loaders and you can
+:doc:`create your own Loader too</components/translation/custom_formats>`. The
+default loaders are:
+>>>>>>> Link from introduction section
 
 * :class:`Symfony\\Component\\Translation\\Loader\\ArrayLoader` - to load
   catalogs from PHP arrays.
