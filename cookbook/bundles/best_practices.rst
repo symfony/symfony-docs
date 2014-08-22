@@ -194,11 +194,11 @@ Extensive documentation should also be provided in the
 the ``Resources/doc/`` directory; the ``Resources/doc/index.rst`` file is
 the only mandatory file and must be the entry point for the documentation.
 
-Installation instructions
+Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to ease the installation process of third-party bundles, we propose
-you to use the following standardized instructions in your ``README.md`` file.
+In order to ease the installation process of third-party bundles, consider using
+the following standardized instructions in your ``README.md`` file.
 
 .. sidebar:: Installation Instructions Template
 
