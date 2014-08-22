@@ -73,7 +73,7 @@ One way to accomplish this is with the Expression constraint:
     .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Model/BlogPost.php
-        namespace Acme\DemoBundle\Model\BlogPost;
+        namespace Acme\DemoBundle\Model;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
