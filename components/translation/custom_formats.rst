@@ -10,7 +10,7 @@ loader (to load translations) and, optionally, a dumper (to dump translations).
 
 Let's imagine you have a custom format where translation messages are defined
 using one line for each translation and parenthesis to wrap the key and the
-message. A translation file would look like this:
+message. A translation file would look like this::
 
     (welcome)(Bienvenido)
     (goodbye)(Adios)
@@ -22,14 +22,13 @@ new class that implements the
 which defines a
 :method:`Symfony\\Component\\Translation\\Loader\\LoaderInterface::load`
 method. In the loader, this method will get a filename and parse it to create an
-array. Then, it will create the catalog that will be returned.
+array. Then, it will create the catalog that will be returned::
 
     use Symfony\Component\Translation\MessageCatalogue;
     use Symfony\Component\Translation\Loader\LoaderInterface;
 
     class MyFormatLoader implements LoaderInterface
     {
-
         public function load($resource, $locale, $domain = 'messages')
         {
             $messages = array();
@@ -62,12 +61,11 @@ It will print *"Bienvenido"*.
 
 It is also possible to create a custom dumper for your format. To do so,
 a new class implementing the
-DumperInterface
 :class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface`
 interface must be created.
 To write the dump contents into a file, extending the
 :class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` class
-will save a few lines.
+will save a few lines::
 
     use Symfony\Component\Translation\MessageCatalogue;
     use Symfony\Component\Translation\Dumper\FileDumper;
