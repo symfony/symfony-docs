@@ -660,6 +660,33 @@ and the errors will display next to the fields on error.
     For a list of all of the built-in validation constraints, see
     :doc:`/reference/constraints`.
 
+Accessing Form Errors
+~~~~~~~~~~~~~~~~~~~~~
+
+You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
+method to access the list of errors. Each element is a :class:`Symfony\\Component\\Form\\FormError`
+object::
+
+    $form = ...;
+
+    // ...
+
+    // an array of FormError objects, but only errors attached to this form level (e.g. "global errors)
+    $errors = $form->getErrors();
+
+    // an array of FormError objects, but only errors attached to the "firstName" field
+    $errors = $form['firstName']->getErrors();
+
+    // a string representation of all errors of the whole form tree
+    $errors = $form->getErrorsAsString();
+
+.. note::
+
+    If you enable the :ref:`error_bubbling <reference-form-option-error-bubbling>`
+    option on a field, calling ``getErrors()`` on the parent form will include
+    errors from that field. However, there is no way to determine which field
+    an error was originally attached to.
+
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html
