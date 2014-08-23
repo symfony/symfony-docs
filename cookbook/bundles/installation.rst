@@ -36,7 +36,7 @@ Now that you know the package name, you can install it via Composer:
 
 .. code-block:: bash
 
-    $ php composer.phar require friendsofsymfony/user-bundle
+    $ composer require friendsofsymfony/user-bundle
 
 This will choose the best version for your project, add it to ``composer.json``
 and download the library into the ``vendor/`` directory. If you need a specific

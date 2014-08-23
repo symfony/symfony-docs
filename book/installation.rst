@@ -117,16 +117,7 @@ don't have installed it globally, start by reading the next section.
 Installing Composer Globally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On Linux and Mac OS X, execute the following two commands to install Composer
-globally:
-
-.. code-block:: bash
-
-    $ curl -sS https://getcomposer.org/installer | php
-    $ sudo mv composer.phar /usr/local/bin/composer
-
-On Windows Systems, download the executable Composer installer that you can find
-on the `Composer download page`_ and follow the steps.
+Start with :doc:`installing Composer globally </cookbook/composer>`.
 
 Creating a Symfony Application with Composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -21,6 +21,10 @@
 
   * :doc:`/cookbook/cache/varnish`
 
+* **Composer**
+
+  * :doc:`/cookbook/composer`
+
 * :doc:`/cookbook/configuration/index`
 
   * :doc:`/cookbook/configuration/environments`

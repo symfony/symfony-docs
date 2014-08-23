@@ -165,7 +165,7 @@ defined in the ``composer.json`` file.
 If you look at the ``HelloController`` from the Symfony2 Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
 AcmeDemoBundle is not defined in your ``composer.json`` file. Nonetheless are
-the files autoloaded. This is because you can tell composer to autoload files
+the files autoloaded. This is because you can tell Composer to autoload files
 from specific directories without defining a dependency:
 
 .. code-block:: json
