@@ -215,7 +215,7 @@ the following standardized instructions in your ``README.md`` file.
 
         Use Composer to add the bundle as a new dependency of your project:
 
-        ```
+        ```bash
         $ composer require <package-name> "~1"
         ```
 
@@ -239,7 +239,7 @@ the following standardized instructions in your ``README.md`` file.
         {
             $bundles = array(
                 // ...
-                new <vendor>\<bundle-name>\<bundle-long-name>(),
+                return new <vendor>\<bundle-name>\<bundle-long-name>(),
             );
         }
         ```
