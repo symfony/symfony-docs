@@ -208,7 +208,8 @@ following standardized instructions in your ``README.md`` file.
     Step 1: Download the Bundle
     ---------------------------
 
-    Use Composer to add the bundle as a new dependency of your project:
+    Open a command console, enter your project directory and execute the
+    following command to download the latest stable version of this bundle:
 
     ```bash
     $ composer require <package-name> "~1"
