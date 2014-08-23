@@ -18,7 +18,11 @@ directory:
 
 .. code-block:: bash
 
+<<<<<<< HEAD
     $ composer create-project symfony/framework-standard-edition myproject/ '~2.5'
+=======
+    $ composer create-project symfony/framework-standard-edition myproject/ '~2.3'
+>>>>>>> Fixed version for composer install
 
 .. note::
 
