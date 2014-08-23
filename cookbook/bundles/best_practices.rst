@@ -197,56 +197,54 @@ the only mandatory file and must be the entry point for the documentation.
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to ease the installation process of third-party bundles, consider using
-the following standardized instructions in your ``README.md`` file.
+In order to ease the installation of third-party bundles, consider using the
+following standardized instructions in your ``README.md`` file.
 
-.. sidebar:: Installation Instructions Template
+.. code-block:: text
 
-    This template assumes that your bundle is in its ``1.x`` version. If not,
-    change the ``"~1"`` installation version accordingly (e.g. ``"~2"``).
+    Installation
+    ============
 
-    .. code-block:: text
+    Step 1: Download the Bundle
+    ---------------------------
 
-        Installation
-        ============
+    Use Composer to add the bundle as a new dependency of your project:
 
-        Step 1: Download the Bundle
-        ---------------------------
+    ```bash
+    $ composer require <package-name> "~1"
+    ```
 
-        Use Composer to add the bundle as a new dependency of your project:
+    This command requires to have Composer installed globally, as explained
+    in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
+    of Composer documentation.
 
-        ```bash
-        $ composer require <package-name> "~1"
-        ```
+    Step 2: Enable the Bundle
+    -------------------------
 
-        This command requires to have Composer installed globally, as explained
-        in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-        of Composer documentation.
+    Then, enable the bundle adding the following line in the `AppKernel`
+    class of your project:
 
-        Step 2: Enable the Bundle
-        -------------------------
+    ```php
+    <?php
+    // app/AppKernel.php
 
-        Then, enable the bundle adding the following line in the `AppKernel`
-        class of your project:
+    // ...
 
-        ```php
-        <?php
-        // app/AppKernel.php
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            return new <vendor>\<bundle-name>\<bundle-long-name>(),
+        );
+    }
+    ```
 
-        // ...
+This template assumes that your bundle is in its ``1.x`` version. If not, change
+the ``"~1"`` installation version accordingly (``"~2"``, ``"~3"``, etc.)
 
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-                return new <vendor>\<bundle-name>\<bundle-long-name>(),
-            );
-        }
-        ```
-
-    Optionally, you can add *Step 3*, *Step 4*, etc. to explain other required
-    installation steps, such as registering routes or dumping assets.
-
+Optionally, you can add more installation steps (*Step 3*, *Step 4*, etc.) to
+explain other required installation tasks, such as registering routes or
+dumping assets.
 
 Routing
 -------
