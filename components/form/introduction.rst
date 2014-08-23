@@ -687,6 +687,13 @@ object::
     errors from that field. However, there is no way to determine which field
     an error was originally attached to.
 
+.. note::
+
+    Unless you enable the :ref:`error_bubbling <reference-form-option-error-bubbling>`
+    option on a particular child form, ``getErrors()`` only returns the errors
+    of the form it is accessed on. For debugging purposes, you can use the :method:`Symfony\\Component\\Form\\Form::getErrorsAsString` method which
+    returns a string representation of all errors of the whole form tree.
+
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org
 .. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html
