@@ -130,6 +130,7 @@
 
   * :doc:`/components/translation/introduction`
   * :doc:`/components/translation/usage`
+  * :doc:`/components/translation/custom_formats`
 
 * :doc:`/components/yaml/index`
 
