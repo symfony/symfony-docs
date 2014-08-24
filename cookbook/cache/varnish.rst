@@ -91,10 +91,18 @@ Symfony2 adds automatically:
 Cache Invalidation
 ------------------
 
-You should never need to invalidate cached data because invalidation is already
-taken into account natively in the HTTP cache models (see :ref:`http-cache-invalidation`).
+If you want to cache content that changes frequently and still serve 
+the most recent version to users, you need to invalidate that content. 
+While `cache invalidation`_ allows you to purge content from your 
+proxy before it has expired, it adds complexity to your caching setup.
 
-Still, Varnish can be configured to accept a special HTTP ``PURGE`` method
+.. tip::
+
+    The open source `FOSHttpCacheBundle`_ takes the pain out of cache 
+    invalidation by helping you to organize your caching and 
+    invalidation setup. 
+
+Varnish can be configured to accept a special HTTP ``PURGE`` method
 that will invalidate the cache for a given resource:
 
 .. code-block:: text
@@ -232,3 +240,5 @@ absolute URLs:
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
+.. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
+.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
