@@ -62,9 +62,7 @@ The Translation component uses Loader classes to load catalogs. You can load
 multiple resources for the same locale, which will then be combined into one
 catalog.
 
-The component comes with some default loaders and you can
-:doc:`create your own Loader too </components/translation/custom_formats>`. The
-default loaders are:
+The component comes with some default loaders:
 
 * :class:`Symfony\\Component\\Translation\\Loader\\ArrayLoader` - to load
   catalogs from PHP arrays.
@@ -95,6 +93,9 @@ default loaders are:
     in Symfony 2.1.
 
 All file loaders require the :doc:`Config component </components/config/index>`.
+
+You can also :doc:`create your own Loader </components/translation/custom_formats>`,
+in case the format is not already supported by one of the default loaders.
 
 At first, you should add one or more loaders to the ``Translator``::
 
