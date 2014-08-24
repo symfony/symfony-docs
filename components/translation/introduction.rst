@@ -64,6 +64,7 @@ catalog.
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. versionadded:: 2.4
     The ``JsonFileLoader`` was introduced in Symfony 2.4.    
 
@@ -78,6 +79,9 @@ The component comes with some default loaders and you can
 >>>>>>> Improvements based on comments
 default loaders are:
 >>>>>>> Link from introduction section
+=======
+The component comes with some default loaders:
+>>>>>>> Extra improvements based on comments
 
 * :class:`Symfony\\Component\\Translation\\Loader\\ArrayLoader` - to load
   catalogs from PHP arrays.
@@ -113,6 +117,9 @@ default loaders are:
 
 >>>>>>> Fixed minor typos.
 All file loaders require the :doc:`Config component </components/config/index>`.
+
+You can also :doc:`create your own Loader </components/translation/custom_formats>`,
+in case the format is not already supported by one of the default loaders.
 
 At first, you should add one or more loaders to the ``Translator``::
 
