@@ -72,7 +72,7 @@ It is also possible to create a custom dumper for your format, which is
 useful when using the extraction commands. To do so, a new class
 implementing the
 :class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface`
- must be created.
+must be created.
 To write the dump contents into a file, extending the
 :class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` class
 will save a few lines::
