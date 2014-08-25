@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-08-18T13:33:57Z
+
+I would not put the attribute and the element in the same example. It would create an undefined config when specifying both (whether the attribute or the child elements win depend on the internal implementation of the XML config loader)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-18T23:05:33Z
+
+Code pull request has been merged.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-21T16:23:22Z
+
+@WouterJ @weaverryan The ``stalled`` label can be replaced with a ``Finished`` label. :)
