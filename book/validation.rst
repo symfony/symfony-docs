@@ -1115,7 +1115,7 @@ provides a sequence of groups to be validated:
 
         # src/Acme/DemoBundle/Resources/config/validation.yml
         Acme\DemoBundle\Entity\User:
-            group_sequence_provider: ~
+            group_sequence_provider: true
 
     .. code-block:: php-annotations
 
