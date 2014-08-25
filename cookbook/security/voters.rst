@@ -32,7 +32,7 @@ access, not to grant access.
 Creating a custom Voter
 -----------------------
 
-To blacklist a user based on its IP, you can use the ``request`` service
+To blacklist a user based on its IP, you can use the ``request_stack`` service
 and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
