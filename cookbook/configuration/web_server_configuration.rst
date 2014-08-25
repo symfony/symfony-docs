@@ -48,10 +48,13 @@ are:
             Allow from All
         </Directory>
 
-        ErrorLog ${APACHE_LOG_DIR}/project_error.log
-        CustomLog ${APACHE_LOG_DIR}/project_access.log combined
+        ErrorLog /var/log/apache2/project_error.log
+        CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
-
+.. note::
+    You probably want to use ``${APACHE_LOG_DIR}/`` instead of ``/var/log/apache2/`` 
+    for the logging-paths, if your system supports the ``APACHE_LOG_DIR`` variable.
+    
 .. note::
 
     For performance reasons, you will probably want to set
