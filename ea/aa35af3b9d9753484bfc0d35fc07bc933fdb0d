@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-24T12:54:50Z
+
+Indeed, anything but `null` is allowed as a value (since they use `isset()` in the code). But let's use true! (it's the most logical)
+
+thanks for investigating this bug!
