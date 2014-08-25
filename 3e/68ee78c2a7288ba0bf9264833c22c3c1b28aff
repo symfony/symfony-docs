@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-22T18:50:22Z
+
+Hey @ronanguilloux!
+
+Hmm, you're right! This is one of the more important options, and we're actually missing it on *every* field (in a few cases, like "collection", that's ok - I don't think `attr` makes sense for it).
+
+I think we should add this option to ever field that it makes sense to. That's a bit of work. Would you like to do it? If not, no worries - I'll merge this PR and we'll add it in another.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-22T18:52:32Z
+
+Also, if you *do* add it to the other fields, we'll need this PR to be rebased onto the 2.3 branch (else we'll likely get merge conflicts trying to merge this into 2.3): https://github.com/symfony/symfony-docs/pull/4134#issuecomment-52402993
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by stof at 2014-08-23T04:04:01Z
+
+it makes sense even for the ``collection`` type too
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T07:12:39Z
+
+This is related to #2360.
