@@ -42,7 +42,7 @@ table:
 
     .. code-block:: php-annotations
 
-        // Acme/UserBundle/Entity/User.php
+        // Acme/UserBundle/Entity/Author.php
         namespace Acme\UserBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -79,7 +79,6 @@ table:
             <class name="Acme\UserBundle\Entity\Author">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">email</option>
-                    <option name="message">This email already exists.</option>
                 </constraint>
                 <property name="email">
                     <constraint name="Email" />
@@ -104,7 +103,6 @@ table:
             {
                 $metadata->addConstraint(new UniqueEntity(array(
                     'fields'  => 'email',
-                    'message' => 'This email already exists.',
                 )));
 
                 $metadata->addPropertyConstraint('email', new Assert\Email());

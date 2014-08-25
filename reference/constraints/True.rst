@@ -50,7 +50,8 @@ Then you can constrain this method with ``True``.
         Acme\BlogBundle\Entity\Author:
             getters:
                 tokenValid:
-                    - 'True': { message: "The token is invalid." }
+                    - 'True':
+                        message: The token is invalid.
 
     .. code-block:: php-annotations
 
@@ -96,11 +97,11 @@ Then you can constrain this method with ``True``.
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\True;
-        
+
         class Author
         {
             protected $token;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('tokenValid', new True(array(

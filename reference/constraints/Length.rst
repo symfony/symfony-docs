@@ -35,8 +35,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     - Length:
                         min: 2
                         max: 50
-                        minMessage: "Your first name must be at least {{ limit }} characters length"
-                        maxMessage: "Your first name cannot be longer than {{ limit }} characters length"
+                        minMessage: "Your first name must be at least {{ limit }} characters long"
+                        maxMessage: "Your first name cannot be longer than {{ limit }} characters long"
 
     .. code-block:: php-annotations
 
@@ -49,10 +49,10 @@ To verify that the ``firstName`` field length of a class is between "2" and
         {
             /**
              * @Assert\Length(
-             *      min = "2",
-             *      max = "50",
-             *      minMessage = "Your first name must be at least {{ limit }} characters length",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters length"
+             *      min = 2,
+             *      max = 50,
+             *      minMessage = "Your first name must be at least {{ limit }} characters long",
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters long"
              * )
              */
              protected $firstName;
@@ -71,8 +71,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     <constraint name="Length">
                         <option name="min">2</option>
                         <option name="max">50</option>
-                        <option name="minMessage">Your first name must be at least {{ limit }} characters length</option>
-                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters length</option>
+                        <option name="minMessage">Your first name must be at least {{ limit }} characters long</option>
+                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters long</option>
                     </constraint>
                 </property>
             </class>
@@ -93,8 +93,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                 $metadata->addPropertyConstraint('firstName', new Assert\Length(array(
                     'min'        => 2,
                     'max'        => 50,
-                    'minMessage' => 'Your first name must be at least {{ limit }} characters length',
-                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters length',
+                    'minMessage' => 'Your first name must be at least {{ limit }} characters long',
+                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters long',
                 )));
             }
         }
