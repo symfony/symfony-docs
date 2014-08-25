@@ -92,7 +92,6 @@ it is between a certain size, add the following:
                         maxWidth: 400
                         minHeight: 200
                         maxHeight: 400
-                        
 
     .. code-block:: php-annotations
 
@@ -137,15 +136,14 @@ it is between a certain size, add the following:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme/BlogBundle/Entity
+
+        namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            // ...
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('headshot', new Assert\Image(array(

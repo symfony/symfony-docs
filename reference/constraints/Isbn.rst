@@ -49,6 +49,8 @@ on an  object that will contain an ISBN.
     .. code-block:: php-annotations
 
         // src/Acme/BookcaseBundle/Entity/Book.php
+        namespace Acme\BookcaseBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Book
@@ -65,14 +67,20 @@ on an  object that will contain an ISBN.
     .. code-block:: xml
 
         <!-- src/Acme/BookcaseBundle/Resources/config/validation.xml -->
-        <class name="Acme\BookcaseBundle\Entity\Book">
-            <property name="isbn">
-                <constraint name="Isbn">
-                    <option name="type">isbn10</option>
-                    <option name="message">This value is not  valid.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BookcaseBundle\Entity\Book">
+                <property name="isbn">
+                    <constraint name="Isbn">
+                        <option name="type">isbn10</option>
+                        <option name="message">This value is not  valid.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

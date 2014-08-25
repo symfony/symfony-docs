@@ -200,29 +200,35 @@ Full default Configuration
 
     .. code-block:: xml
 
-        <swiftmailer:config
-            transport="smtp"
-            username=""
-            password=""
-            host="localhost"
-            port="false"
-            encryption=""
-            auth_mode=""
-            sender_address=""
-            delivery_address=""
-            disable_delivery=""
-            logging="%kernel.debug%"
-        >
-            <swiftmailer:spool
-                path="%kernel.cache_dir%/swiftmailer/spool"
-                type="file"
-            />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:antiflood
-                sleep="0"
-                threshold="99"
-            />
-        </swiftmailer:config>
+            <swiftmailer:config
+                transport="smtp"
+                username=""
+                password=""
+                host="localhost"
+                port="false"
+                encryption=""
+                auth_mode=""
+                sender_address=""
+                delivery_address=""
+                disable_delivery=""
+                logging="%kernel.debug%"
+                >
+                <swiftmailer:spool
+                    path="%kernel.cache_dir%/swiftmailer/spool"
+                    type="file" />
+
+                <swiftmailer:antiflood
+                    sleep="0"
+                    threshold="99" />
+            </swiftmailer:config>
+        </container>
 
 Using multiple Mailers
 ----------------------

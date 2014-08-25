@@ -29,7 +29,7 @@ or equal to ``18``, you could do the following:
 
     .. code-block:: yaml
 
-        # src/SocialBundle/Resources/config/validation.yml
+        # src/Acme/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
                 age:
@@ -56,13 +56,19 @@ or equal to ``18``, you could do the following:
     .. code-block:: xml
 
         <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
-        <class name="Acme\SocialBundle\Entity\Person">
-            <property name="age">
-                <constraint name="GreaterThanOrEqual">
-                    <option name="value">18</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SocialBundle\Entity\Person">
+                <property name="age">
+                    <constraint name="GreaterThanOrEqual">
+                        <option name="value">18</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
