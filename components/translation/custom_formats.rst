@@ -1,8 +1,8 @@
 .. index::
-    single: Translation; Custom formats
+    single: Translation; Adding Custom Format Support
 
-Custom Formats
-==============
+Adding Custom Format Support
+============================
 
 Sometimes, you need to deal with custom formats for translation files. The
 Translation component is flexible enough to support this. Just create a
@@ -14,12 +14,12 @@ message. A translation file would look like this:
 
 .. code-block:: text
 
-    (welcome)(Bienvenido)
-    (goodbye)(Adiós)
-    (hello)(Hola)
+    (welcome)(accueil)
+    (goodbye)(au revoir)
+    (hello)(bonjour)
 
-Custom Loader
--------------
+Creating a Custom Loader
+------------------------
 
 To define a custom loader that is able to read this kind of files, you must create a
 new class that implements the
@@ -56,24 +56,23 @@ Once created, it can be used as any other loader::
 
     use Symfony\Component\Translation\Translator;
 
-    $translator = new Translator('es_ES');
+    $translator = new Translator('fr_FR');
     $translator->addLoader('my_format', new MyFormatLoader());
 
-    $translator->addResource('my_format', __DIR__.'/translations/messages.txt', 'es_ES');
+    $translator->addResource('my_format', __DIR__.'/translations/messages.txt', 'fr_FR');
 
     echo $translator->trans('welcome');
 
-It will print *"Bienvenido"*.
+It will print *"accueil"*.
 
-Custom Dumper
--------------
+Creating a Custom Dumper
+------------------------
 
 It is also possible to create a custom dumper for your format, which is
 useful when using the extraction commands. To do so, a new class
 implementing the
 :class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface`
-must be created.
-To write the dump contents into a file, extending the
+must be created. To write the dump contents into a file, extending the
 :class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` class
 will save a few lines::
 
@@ -109,7 +108,7 @@ YAML file are dumped into a text file with the custom format::
     use Symfony\Component\Translation\Loader\YamlFileLoader;
 
     $loader = new YamlFileLoader();
-    $catalogue = $loader->load(__DIR__ . '/translations/messages.es_ES.yml' , 'es_ES');
+    $catalogue = $loader->load(__DIR__ . '/translations/messages.fr_FR.yml' , 'fr_FR');
 
     $dumper = new MyFormatDumper();
     $dumper->dump($catalogue, array('path' => __DIR__.'/dumps'));
