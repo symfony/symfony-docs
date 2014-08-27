@@ -215,15 +215,15 @@ following standardized instructions in your ``README.md`` file.
     $ composer require <package-name> "~1"
     ```
 
-    This command requires to have Composer installed globally, as explained
+    This command requires you to have Composer installed globally, as explained
     in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-    of Composer documentation.
+    of the Composer documentation.
 
     Step 2: Enable the Bundle
     -------------------------
 
-    Then, enable the bundle adding the following line in the `AppKernel`
-    class of your project:
+    Then, enable the bundle by adding the following line in the `app/AppKernel.php`
+    file of your project:
 
     ```php
     <?php
