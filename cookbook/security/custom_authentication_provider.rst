@@ -201,6 +201,7 @@ the ``PasswordDigest`` header value matches with the user's password.
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Util\StringUtils;
     use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
 
     class WsseProvider implements AuthenticationProviderInterface
@@ -260,7 +261,7 @@ the ``PasswordDigest`` header value matches with the user's password.
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
 
-            return $digest === $expected;
+            return StringUtils::equals($expected, $digest);
         }
 
         public function supports(TokenInterface $token)
