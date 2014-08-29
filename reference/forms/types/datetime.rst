@@ -75,7 +75,7 @@ format
 **type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\DateTimeType::HTML5_FORMAT``
 
 If the ``widget`` option is set to ``single_text``, this option specifies
- the format of the input, i.e. how Symfony will interpret the given input
+the format of the input, i.e. how Symfony will interpret the given input
 as a datetime string. It defaults to the `RFC 3339`_ format which is used
 by the HTML5 ``datetime`` field. Keeping the default value will cause the
 field to be rendered as an ``input`` field with ``type="datetime"``.
