@@ -231,7 +231,7 @@ the new route that defines the URL of the page that you're about to create:
 The routing consists of two basic pieces: the ``path``, which is the URL
 that this route will match, and a ``defaults`` array, which specifies the
 controller that should be executed. The placeholder syntax in the path
-(``{limit}``) is a wildcard. It means that ``/number/10``, ``/number/327``
+(``{limit}``) is a wildcard. It means that ``/random/10``, ``/random/327``
 or any other similar URL will match this route. The ``{limit}`` placeholder
 parameter will also be passed to the controller so that you can use its value
 to generate the proper random number.
