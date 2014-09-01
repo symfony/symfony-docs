@@ -163,7 +163,7 @@ Testing Documentation
 
 To test documentation before a commit:
 
-* Install `Sphinx`_;
+* Check for sphinx : ``sphinx-build --version``. If not available install `Sphinx`_;
 * Install the Sphinx extensions using git submodules: ``git submodule update --init``;
 * (Optionally) Install the bundle docs and CMF docs: ``bash install.sh``;
 * Run ``make html`` and view the generated HTML in the ``build`` directory.
