@@ -1,0 +1,209 @@
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-07-05T14:48:22Z
+
+ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-05T14:49:36Z
+
+@aferrandini this should be applied to Sf 2.6 instead of 2.5, shouldn't it?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-05T14:56:38Z
+
+@aferrandini in the ` book/security.rst` file, I would only explain the new method to encode passwords. If you want, you can add a note or sidebar explaining how to get the encoder for a given user, just in case the developer needs to do some advanced stuff. But for regular developers, in my opinion the new method is the only thing that they should use.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-05T14:59:39Z
+
+By the way, you should add a ``versionadded`` directive explaining that the new service was introduced in Symfon 2.6.
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-07-06T12:01:47Z
+
+Updated with modifications proposed by @javiereguiluz and @xabbuh.
+
+- Changed the version which applies to 2.6.
+- Changed the default way to encode a password.
+- Added a sidebar to explain who to get the encoder for some advanced staff.
+- Changed the title to "Validating a plaintext password".
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-06T15:16:36Z
+
+@aferrandini thanks for completing this doc. I'm :+1: with it, except for the possible tweaks suggested by native English speakers such as @weaverryan.
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-07-07T06:14:45Z
+
+ping @WouterJ @javiereguiluz @xabbuh @weaverryan
+
+Updated with comments from @WouterJ and @xabbuh
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-07T06:17:51Z
+
+@aferrandini nice work! :+1:
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-07-07T06:31:01Z
+
+@xabbuh :+1:
+
+Updated
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-07-07T06:57:42Z
+
+@xabbuh added the double backticks
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-07T07:14:10Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-07-11T22:31:25Z
+
+I think we can also simplify `custom_password_authenticator.rst` a little bit too I think! @aferrandini can you make that update?
+
+This is awesome!
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-07-11T23:16:09Z
+
+This weekend it's impossible for me, I'll try on Monday ;)
+
+Enviado desde mi iPhone
+
+> El 12/07/2014, a las 00:31, Ryan Weaver <notifications@github.com> escribió:
+>
+> I think we can also simplify custom_password_authenticator.rst a little bit too I think! @aferrandini can you make that update?
+>
+> This is awesome!
+>
+> —
+> Reply to this email directly or view it on GitHub.
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-05T06:12:55Z
+
+@weaverryan just moved `Validating a Plaintext Password` to `book\security.rst`.
+
+I'm not sure if this section should go before `Retrieving the User Object` section.
+
+Please check it and tell me if I have to move it.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-06T18:39:41Z
+
+@aferrandini can you also update `cookbook/security/custom_password_authenticator.rst`? It uses the encoder factory and then uses the `isPasswordValid` method. I think we can now just inject your new service into `TimeAuthenticator` and use it directly. Much easier :).
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-07T00:22:32Z
+
+👍
+
+I'm on vacation without laptop because of the family and my girlfriend. I'll be back on Monday and I'll try yo change it.
+
+Enviado desde mi iPhone
+
+> El 06/08/2014, a las 20:39, Ryan Weaver <notifications@github.com> escribió:
+>
+> @aferrandini can you also update cookbook/security/custom_password_authenticator.rst? It uses the encoder factory and then uses the isPasswordValid method. I think we can now just inject your new service into TimeAuthenticator and use it directly. Much easier :).
+>
+> —
+> Reply to this email directly or view it on GitHub.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-14T23:32:19Z
+
+ping @aferrandini! :)
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-20T19:10:40Z
+
+Hi all, I've been a little disconnected due to a issue in my body ;P
+
+@weaverryan I changed the `custom_password_authenticator.rst` and the service injection.
+
+Please check it ;)
+
+Ping @WouterJ
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-25T17:54:27Z
+
+@aferrandini No worries - thanks for the updates. I just added 2 last (hopefully) comments :)
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-25T23:35:31Z
+
+Ok, I'll change it tomorrow. :)
+
+El lunes, 25 de agosto de 2014, Ryan Weaver <notifications@github.com>
+escribió:
+
+> @aferrandini <https://github.com/aferrandini> No worries - thanks for the
+> updates. I just added 2 last (hopefully) comments :)
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/3995#issuecomment-53300444>.
+>
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-26T08:21:27Z
+
+Ping @weaverryan @WouterJ
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-26T09:01:43Z
+
+:+1:
+
+(if you've time left, can you please squash the commits?)
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-26T10:06:07Z
+
+@WouterJ squashed. ;)
+
+---------------------------------------------------------------------------
+
+by aferrandini at 2014-08-26T11:06:13Z
+
+@xabbuh fixed the double backticks.
+
+What do you think about declare the var `$plainPassword = 'ryanpass';` in a new line and leave it as it is.
+
+Ping @WouterJ @weaverryan
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-26T18:40:36Z
+
+@aferrandini I like that idea :thumbsup:
