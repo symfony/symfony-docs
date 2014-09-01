@@ -153,7 +153,7 @@ used by each is explicitly set::
 
     // ...
 
-As you can see, the ``prod`` key specifies that this environment will run
+As you can see, the ``prod`` key specifies that this application will run
 in the ``prod`` environment. A Symfony2 application can be executed in any
 environment by using this code and changing the environment string.
 
