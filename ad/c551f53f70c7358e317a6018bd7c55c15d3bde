@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-25T02:10:56Z
+
+looks good to me.
+i hope to review the caching book chapter soonish - inputs on the strong opinion about cache invalidations would be appreciated - otherwise i would try to present them as more neutral options.
+
+---------------------------------------------------------------------------
+
+by ddeboer at 2014-08-25T06:39:11Z
+
+> But linking to the official documentation seems reasonable to me since this is what people are usually interested in when reading the documentation.
+
+@javiereguiluz @xabbuh That for me was the reason to link to the docs as well. On the other hand, readers may want to have a look at the GitHub page too and see whether anyone else is using the bundle, whether it’s still being maintained etc. in order to assess whether it’s a good idea to start using it. Would linking to both docs and GitHub be overkill?
+
+@dbu Good idea, we should follow this more balanced line there, too.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-25T09:42:49Z
+
+@ddeboer The FOSHttpCacheBundle documentation already links to the GitHub repository on the first page. So, I don't think that there is any need to add a link to GitHub too.
+
+---------------------------------------------------------------------------
+
+by ddeboer at 2014-08-25T10:16:34Z
+
+Good point, so we can keep it this way. If you guys are okay with the text I added, please go ahead and merge this. If not, let me know so I can change things.
