@@ -12,7 +12,7 @@ you can take advantage of this tool very easily.
 
     The YUI Compressor is `no longer maintained by Yahoo`_ but by an independent
     volunteer. Moreover, Yahoo has decided to `stop all new development on YUI`_
-    and to move to other modern alternatives such as NodeJS.
+    and to move to other modern alternatives such as Node.js.
 
     That's why you are **strongly advised** to avoid using YUI utilities unless
     strictly necessary. Read :doc:`/cookbook/assetic/uglifyjs` for a modern and
