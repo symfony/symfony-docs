@@ -49,7 +49,7 @@ script:
 
     $ php app/console server:run --env=test --router=router_test.php
 
-.. warning
+.. caution
 
     the router path is relative to the application's document root 
     
