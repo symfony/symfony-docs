@@ -47,7 +47,7 @@ script:
 
 .. code-block:: bash
 
-    $ php app/console server:run --env=test --router=app/config/router_test.php
+    $ php app/console server:run --env=test --router=../app/config/router_test.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:
