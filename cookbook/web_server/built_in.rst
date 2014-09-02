@@ -49,16 +49,16 @@ script:
 
     $ php app/console server:run --env=test --router=router_test.php
 
-.. caution
+.. caution::
 
-    the router path is relative to the application's document root 
+    The router path is relative to the application's document root 
     
-.. note
+.. note::
 
-    Under most Linux distributions, you can prepend `$(pwd)` 
-    to your router path to make it relative to your current working directory
+    Under most Linux distributions, you can prepend ``$(pwd)``
+    to your router path to make it relative to your current working directory.
     
-    Under Windows, you can prepend with the `%CD%` special environment variable
+    Under Windows, you can prepend with the ``%CD%`` special environment variable.
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:
