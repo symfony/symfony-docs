@@ -55,10 +55,9 @@ script:
     
 .. note
 
-    Under most Linux distributions, you can prepend `$(pwd)` to your router path to make it relative to your current working directory
+    Under most Linux distributions, you can prepend `$(pwd)` 
+    to your router path to make it relative to your current working directory
     
-.. note
-
     Under Windows, you can prepend with the `%CD%` special environment variable
 
 If your application's document root differs from the standard directory layout,
