@@ -1,7 +1,7 @@
 Documentation Format
 ====================
 
-The Symfony2 documentation uses `reStructuredText`_ as its markup language and
+The Symfony documentation uses `reStructuredText`_ as its markup language and
 `Sphinx`_ for building the output (HTML, PDF, ...).
 
 reStructuredText
@@ -10,7 +10,7 @@ reStructuredText
 reStructuredText *"is an easy-to-read, what-you-see-is-what-you-get plaintext
 markup syntax and parser system"*.
 
-You can learn more about its syntax by reading existing Symfony2 `documents`_
+You can learn more about its syntax by reading existing Symfony `documents`_
 or by reading the `reStructuredText Primer`_ on the Sphinx website.
 
 .. caution::

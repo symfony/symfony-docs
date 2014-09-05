@@ -118,7 +118,7 @@ For general information on adding listeners to the events below, see
 .. tip::
 
     Fabien Potencier also wrote a wonderful series on using the HttpKernel
-    component and other Symfony2 components to create your own framework. See
+    component and other Symfony components to create your own framework. See
     `Create your own framework... on top of the Symfony2 Components`_.
 
 .. _component-http-kernel-kernel-request:
@@ -226,7 +226,7 @@ on the request's information.
 The second method, :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`,
 will be called after another event - ``kernel.controller`` - is dispatched.
 
-.. sidebar:: Resolving the Controller in the Symfony2 Framework
+.. sidebar:: Resolving the Controller in the Symfony Framework
 
     The Symfony Framework uses the built-in
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
@@ -243,10 +243,10 @@ will be called after another event - ``kernel.controller`` - is dispatched.
 
     a) The ``AcmeDemoBundle:Default:index`` format of the ``_controller`` key
        is changed to another string that contains the full class and method
-       name of the controller by following the convention used in Symfony2 - e.g.
+       name of the controller by following the convention used in Symfony - e.g.
        ``Acme\DemoBundle\Controller\DefaultController::indexAction``. This transformation
        is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
-       sub-class used by the Symfony2 Framework.
+       sub-class used by the Symfony Framework.
 
     b) A new instance of your controller class is instantiated with no
        constructor arguments.
@@ -254,7 +254,7 @@ will be called after another event - ``kernel.controller`` - is dispatched.
     c) If the controller implements :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`,
        ``setContainer`` is called on the controller object and the container
        is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
-       sub-class used by the Symfony2 Framework.
+       sub-class used by the Symfony Framework.
 
        There are also a few other variations on the above process (e.g. if
        you're registering your controllers as services).
@@ -273,7 +273,7 @@ After the controller callable has been determined, ``HttpKernel::handle``
 dispatches the ``kernel.controller`` event. Listeners to this event might initialize
 some part of the system that needs to be initialized after certain things
 have been determined (e.g. the controller, routing information) but before
-the controller is executed. For some examples, see the Symfony2 section below.
+the controller is executed. For some examples, see the Symfony section below.
 
 .. image:: /images/components/http_kernel/06-kernel-controller.png
    :align: center
@@ -316,7 +316,7 @@ is a good example.
 At this point the kernel has a PHP callable (the controller) and an array
 of arguments that should be passed when executing that callable.
 
-.. sidebar:: Getting the Controller Arguments in the Symfony2 Framework
+.. sidebar:: Getting the Controller Arguments in the Symfony Framework
 
     Now that you know exactly what the controller callable (usually a method
     inside a controller object) is, the ``ControllerResolver`` uses `reflection`_
@@ -479,7 +479,7 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the SwiftmailerBundle with Symfony2 and use ``memory``
+    If you use the SwiftmailerBundle with Symfony and use ``memory``
     spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
     is activated, which actually delivers any emails that you scheduled to
     send during the request.

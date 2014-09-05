@@ -27,7 +27,7 @@ into the language of the user::
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
 In this chapter, you'll learn how to use the Translation component in the
-Symfony2 framework. You can read the
+Symfony framework. You can read the
 :doc:`Translation component documentation </components/translation/usage>`
 to learn even more. Overall, the process has several steps:
 
@@ -105,16 +105,16 @@ for example, that you're translating a simple message from inside a controller::
 
     public function indexAction()
     {
-        $translated = $this->get('translator')->trans('Symfony2 is great');
+        $translated = $this->get('translator')->trans('Symfony is great');
 
         return new Response($translated);
     }
 
 .. _book-translation-resources:
 
-When this code is executed, Symfony2 will attempt to translate the message
-"Symfony2 is great" based on the ``locale`` of the user. For this to work,
-you need to tell Symfony2 how to translate the message via a "translation
+When this code is executed, Symfony will attempt to translate the message
+"Symfony is great" based on the ``locale`` of the user. For this to work,
+you need to tell Symfony how to translate the message via a "translation
 resource", which is usually a file that contains a collection of translations
 for a given locale. This "dictionary" of translations can be created in several
 different formats, XLIFF being the recommended format:
@@ -129,8 +129,8 @@ different formats, XLIFF being the recommended format:
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
                     <trans-unit id="1">
-                        <source>Symfony2 is great</source>
-                        <target>J'aime Symfony2</target>
+                        <source>Symfony is great</source>
+                        <target>J'aime Symfony</target>
                     </trans-unit>
                 </body>
             </file>
@@ -139,26 +139,26 @@ different formats, XLIFF being the recommended format:
     .. code-block:: yaml
 
         # messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
+        Symfony is great: J'aime Symfony
 
     .. code-block:: php
 
         // messages.fr.php
         return array(
-            'Symfony2 is great' => 'J\'aime Symfony2',
+            'Symfony is great' => 'J\'aime Symfony',
         );
 
 For information on where these files should be located, see
 :ref:`book-translation-resource-locations`.
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
-the message will be translated into ``J'aime Symfony2``. You can also translate
+the message will be translated into ``J'aime Symfony``. You can also translate
 the message inside your :ref:`templates <book-translation-tags>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To actually translate the message, Symfony2 uses a simple process:
+To actually translate the message, Symfony uses a simple process:
 
 * The ``locale`` of the current user, which is stored on the request is determined;
 
@@ -171,7 +171,7 @@ To actually translate the message, Symfony2 uses a simple process:
 * If the message is located in the catalog, the translation is returned. If
   not, the translator returns the original message.
 
-When using the ``trans()`` method, Symfony2 looks for the exact string inside
+When using the ``trans()`` method, Symfony looks for the exact string inside
 the appropriate message catalog and returns it (if it exists).
 
 Message Placeholders
@@ -215,7 +215,7 @@ in the Translation component documentation.
 Translations in Templates
 -------------------------
 
-Most of the time, translation occurs in templates. Symfony2 provides native
+Most of the time, translation occurs in templates. Symfony provides native
 support for both Twig and PHP templates.
 
 .. _book-translation-tags:
@@ -223,7 +223,7 @@ support for both Twig and PHP templates.
 Twig Templates
 ~~~~~~~~~~~~~~
 
-Symfony2 provides specialized Twig tags (``trans`` and ``transchoice``) to
+Symfony provides specialized Twig tags (``trans`` and ``transchoice``) to
 help with message translation of *static blocks of text*:
 
 .. code-block:: jinja
@@ -318,7 +318,7 @@ The translator service is accessible in PHP templates through the
 
 .. code-block:: html+php
 
-    <?php echo $view['translator']->trans('Symfony2 is great') ?>
+    <?php echo $view['translator']->trans('Symfony is great') ?>
 
     <?php echo $view['translator']->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
@@ -331,7 +331,7 @@ The translator service is accessible in PHP templates through the
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-Symfony2 looks for message files (i.e. translations) in the following locations:
+Symfony looks for message files (i.e. translations) in the following locations:
 
 * the ``app/Resources/translations`` directory;
 
@@ -355,7 +355,7 @@ must be named according to the following path: ``domain.locale.loader``:
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
-* **loader**: How Symfony2 should load and parse the file (e.g. ``xliff``,
+* **loader**: How Symfony should load and parse the file (e.g. ``xliff``,
   ``php``, ``yml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
@@ -391,7 +391,7 @@ Fallback Translation Locales
 ----------------------------
 
 Imagine that the user's locale is ``fr_FR`` and that you're translating the
-key ``Symfony2 is great``. To find the French translation, Symfony actually
+key ``Symfony is great``. To find the French translation, Symfony actually
 checks translation resources for several different locales:
 
 1. First, Symfony looks for the translation in a ``fr_FR`` translation resource
@@ -669,7 +669,7 @@ For more information, see the documentation for these libraries.
 Summary
 -------
 
-With the Symfony2 Translation component, creating an internationalized application
+With the Symfony Translation component, creating an internationalized application
 no longer needs to be a painful process and boils down to just a few basic
 steps:
 
@@ -679,7 +679,7 @@ steps:
   (learn about this in :doc:`/components/translation/usage`);
 
 * Translate each message into multiple locales by creating translation message
-  files. Symfony2 discovers and processes each file because its name follows
+  files. Symfony discovers and processes each file because its name follows
   a specific convention;
 
 * Manage the user's locale, which is stored on the request, but can also

@@ -10,7 +10,7 @@ The YAML Component
 What is It?
 -----------
 
-The Symfony2 YAML Component parses YAML strings to convert them to PHP arrays.
+The Symfony YAML Component parses YAML strings to convert them to PHP arrays.
 It is also able to convert PHP arrays to YAML strings.
 
 `YAML`_, *YAML Ain't Markup Language*, is a human friendly data serialization
@@ -18,7 +18,7 @@ standard for all programming languages. YAML is a great format for your
 configuration files. YAML files are as expressive as XML files and as readable
 as INI files.
 
-The Symfony2 YAML Component implements the YAML 1.2 version of the
+The Symfony YAML Component implements the YAML 1.2 version of the
 specification.
 
 .. tip::
@@ -75,10 +75,12 @@ Full Merge Key Support
 Full support for references, aliases, and full merge key. Don't repeat
 yourself by referencing common configuration bits.
 
-Using the Symfony2 YAML Component
----------------------------------
+.. _using-the-symfony2-yaml-component:
 
-The Symfony2 YAML Component is very simple and consists of two main classes:
+Using the Symfony YAML Component
+--------------------------------
+
+The Symfony YAML Component is very simple and consists of two main classes:
 one parses YAML strings (:class:`Symfony\\Component\\Yaml\\Parser`), and the
 other dumps a PHP array to a YAML string
 (:class:`Symfony\\Component\\Yaml\\Dumper`).
@@ -163,7 +165,7 @@ array to its YAML representation:
 
 .. note::
 
-    Of course, the Symfony2 YAML dumper is not able to dump resources. Also,
+    Of course, the Symfony YAML dumper is not able to dump resources. Also,
     even if the dumper is able to dump PHP objects, it is considered to be a
     not supported feature.
 

@@ -4,7 +4,7 @@
 SecurityBundle Configuration ("security")
 =========================================
 
-The security system is one of the most powerful parts of Symfony2, and can
+The security system is one of the most powerful parts of Symfony, and can
 largely be controlled via its configuration.
 
 Full default Configuration

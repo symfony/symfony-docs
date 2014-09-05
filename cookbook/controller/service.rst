@@ -25,7 +25,7 @@ this works fine, controllers can also be specified as services.
     split into multiple controllers.
 
     So, even if you don't specify your controllers as services, you'll likely
-    see this done in some open-source Symfony2 bundles. It's also important
+    see this done in some open-source Symfony bundles. It's also important
     to understand the pros and cons of both approaches.
 
 Defining the Controller as a Service

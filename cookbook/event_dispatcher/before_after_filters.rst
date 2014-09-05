@@ -125,7 +125,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
             $controller = $event->getController();
 
             /*
-             * $controller passed can be either a class or a Closure. This is not usual in Symfony2 but it may happen.
+             * $controller passed can be either a class or a Closure. This is not usual in Symfony but it may happen.
              * If it is a class, it comes in array format
              */
             if (!is_array($controller)) {

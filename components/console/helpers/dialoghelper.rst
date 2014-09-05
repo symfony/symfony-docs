@@ -102,7 +102,7 @@ Validating the Answer
 ---------------------
 
 You can even validate the answer. For instance, in the last example you asked
-for the bundle name. Following the Symfony2 naming conventions, it should
+for the bundle name. Following the Symfony naming conventions, it should
 be suffixed with ``Bundle``. You can validate that by using the
 :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::askAndValidate`
 method::
@@ -160,7 +160,7 @@ You can also ask and validate a hidden response::
         if ('' === trim($value)) {
             throw new \Exception('The password can not be empty');
         }
-        
+
         return $value;
     };
 

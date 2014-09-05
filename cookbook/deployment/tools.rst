@@ -1,8 +1,10 @@
 .. index::
    single: Deployment; Deployment tools
 
-How to Deploy a Symfony2 Application
-====================================
+.. _how-to-deploy-a-symfony2-application:
+
+How to Deploy a Symfony Application
+===================================
 
 .. note::
 
@@ -10,10 +12,12 @@ How to Deploy a Symfony2 Application
     This entry doesn't try to explain everything, but rather offers the most
     common requirements and ideas for deployment.
 
-Symfony2 Deployment Basics
---------------------------
+.. _symfony2-deployment-basics:
 
-The typical steps taken while deploying a Symfony2 application include:
+Symfony Deployment Basics
+-------------------------
+
+The typical steps taken while deploying a Symfony application include:
 
 #. Upload your modified code to the live server;
 #. Update your vendor dependencies (typically done via Composer, and may
@@ -29,10 +33,10 @@ A deployment may also include other things, such as:
 * Removal of any unnecessary files from ``web`` to keep your production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
-How to Deploy a Symfony2 Application
-------------------------------------
+How to Deploy a Symfony Application
+-----------------------------------
 
-There are several ways you can deploy a Symfony2 application.
+There are several ways you can deploy a Symfony application.
 
 Start with a few basic deployment strategies and build up from there.
 
@@ -60,7 +64,7 @@ Using Build Scripts and other Tools
 
 There are also high-quality tools to help ease the pain of deployment. There
 are even a few tools which have been specifically tailored to the requirements of
-Symfony2, and which take special care to ensure that everything before, during,
+Symfony, and which take special care to ensure that everything before, during,
 and after a deployment has gone correctly.
 
 See `The Tools`_ for a list of tools that can help with deployment.
@@ -159,11 +163,11 @@ The Tools
 `Capifony`_:
 
     This tool provides a specialized set of tools on top of Capistrano, tailored
-    specifically to symfony and Symfony2 projects.
+    specifically to symfony and Symfony projects.
 
 `sf2debpkg`_:
 
-    This tool helps you build a native Debian package for your Symfony2 project.
+    This tool helps you build a native Debian package for your Symfony project.
 
 `Magallanes`_:
 
@@ -173,7 +177,7 @@ The Tools
 Bundles:
 
     There are many `bundles that add deployment features`_ directly into your
-    Symfony2 console.
+    Symfony console.
 
 Basic scripting:
 
@@ -185,7 +189,7 @@ Platform as a Service Providers:
     PaaS is a relatively new way to deploy your application. Typically a PaaS
     will use a single configuration file in your project's root directory to
     determine how to build an environment on the fly that supports your software.
-    One provider with confirmed Symfony2 support is `PagodaBox`_.
+    One provider with confirmed Symfony support is `PagodaBox`_.
 
 .. tip::
 

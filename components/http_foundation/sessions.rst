@@ -5,7 +5,7 @@
 Session Management
 ==================
 
-The Symfony2 HttpFoundation component has a very powerful and flexible session
+The Symfony HttpFoundation component has a very powerful and flexible session
 subsystem which is designed to provide session management through a simple
 object-oriented interface using a variety of session storage drivers.
 
@@ -138,16 +138,16 @@ Session Data Management
 
 PHP's session management requires the use of the ``$_SESSION`` super-global,
 however, this interferes somewhat with code testability and encapsulation in an
-OOP paradigm. To help overcome this, Symfony2 uses *session bags* linked to the
+OOP paradigm. To help overcome this, Symfony uses *session bags* linked to the
 session to encapsulate a specific dataset of attributes or flash messages.
 
 This approach also mitigates namespace pollution within the ``$_SESSION``
 super-global because each bag stores all its data under a unique namespace.
-This allows Symfony2 to peacefully co-exist with other applications or libraries
+This allows Symfony to peacefully co-exist with other applications or libraries
 that might use the ``$_SESSION`` super-global and all data remains completely
-compatible with Symfony2's session management.
+compatible with Symfony's session management.
 
-Symfony2 provides two kinds of storage bags, with two separate implementations.
+Symfony provides two kinds of storage bags, with two separate implementations.
 Everything is written against interfaces so you may extend or create your own
 bag types if necessary.
 
@@ -159,7 +159,7 @@ the following API which is intended mainly for internal purposes:
   Generally this value can be left at its default and is for internal use.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::initialize`:
-  This is called internally by Symfony2 session storage classes to link bag data
+  This is called internally by Symfony session storage classes to link bag data
   to the session.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`:

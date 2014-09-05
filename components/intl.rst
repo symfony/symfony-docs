@@ -64,7 +64,7 @@ code::
 
     The intl extension internally uses the `ICU library`_ to obtain localization
     data such as number formats in different languages, country names and more.
-    To make this data accessible to userland PHP libraries, Symfony2 ships a copy
+    To make this data accessible to userland PHP libraries, Symfony ships a copy
     in the `Icu component`_.
 
     Depending on the ICU version compiled with your intl extension, a matching

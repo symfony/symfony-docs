@@ -5,7 +5,7 @@ How to Create a custom Authentication Provider
 ==============================================
 
 If you have read the chapter on :doc:`/book/security`, you understand the
-distinction Symfony2 makes between authentication and authorization in the
+distinction Symfony makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
 in the authentication process, and how to implement a custom authentication
 provider. Because authentication and authorization are separate concepts,
@@ -29,7 +29,7 @@ REST.
 
 There is plenty of great documentation on `WSSE`_, but this article will
 focus not on the security protocol, but rather the manner in which a custom
-protocol can be added to your Symfony2 application. The basis of WSSE is
+protocol can be added to your Symfony application. The basis of WSSE is
 that a request header is checked for encrypted credentials, verified using
 a timestamp and `nonce`_, and authenticated for the requested user using a
 password digest.
@@ -42,7 +42,7 @@ password digest.
 The Token
 ---------
 
-The role of the token in the Symfony2 security context is an important one.
+The role of the token in the Symfony security context is an important one.
 A token represents the user authentication data present in the request. Once
 a request is authenticated, the token retains the user's data, and delivers
 this data across the security context. First, you'll create your token class.
