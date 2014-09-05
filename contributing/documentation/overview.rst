@@ -61,7 +61,7 @@ If you have made your changes based on the 2.3 branch then you need to change
 the base branch to be 2.3 on the preview page by clicking the ``edit`` button
 on the top left:
 
-.. image:: /images/docs-pull-request-change-base.png
+.. image:: /images/contributing/docs-pull-request-change-base.png
    :align: center
 
 .. note::
