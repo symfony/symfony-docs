@@ -217,6 +217,13 @@ more about the expression language syntax, see
                 // ...
             }
 
+    .. caution::
+
+        In Symfony 2.4 and Symfony 2.5, if the property (e.g. ``isTechnicalPost``)
+        were ``null``, the expression would never be called and the value
+        would be seen as valid. To ensure that the value is not ``null``,
+        use the :doc:`NotNull constraint </reference/constraints/NotNull>`.
+
 For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
 option details below.
