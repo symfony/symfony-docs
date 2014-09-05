@@ -48,12 +48,12 @@ Form Types Reference
    types/form
 
 A form is composed of *fields*, each of which are built with the help of
-a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony2 comes
+a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony comes
 standard with a large list of field types that can be used in your application.
 
 Supported Field Types
 ---------------------
 
-The following field types are natively available in Symfony2:
+The following field types are natively available in Symfony:
 
 .. include:: /reference/forms/types/map.rst.inc

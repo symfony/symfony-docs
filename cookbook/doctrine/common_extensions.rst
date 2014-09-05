@@ -20,7 +20,7 @@ To do this, you have two options:
 #. Use the `StofDoctrineExtensionsBundle`_, which integrates the above library.
 
 #. Implement this services directly by following the documentation for integration
-   with Symfony2: `Install Gedmo Doctrine2 extensions in Symfony2`_
+   with Symfony: `Install Gedmo Doctrine2 extensions in Symfony2`_
 
 .. _`DoctrineExtensions`: https://github.com/Atlantic18/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle

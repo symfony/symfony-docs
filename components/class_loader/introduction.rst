@@ -12,7 +12,11 @@ Usage
 
 Whenever you reference a class that has not been required or included yet,
 PHP uses the `autoloading mechanism`_ to delegate the loading of a file defining
+<<<<<<< HEAD
 the class. Symfony2 provides three autoloaders, which are able to load your classes:
+=======
+the class. Symfony provides two autoloaders, which are able to load your classes:
+>>>>>>> replace "Symfony2" with "Symfony"
 
 * :doc:`/components/class_loader/class_loader`: loads classes that follow
   the `PSR-0` class naming standard;

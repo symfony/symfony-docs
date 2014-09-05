@@ -13,7 +13,7 @@ by using matchers.
 Using the built-in Matcher
 --------------------------
 
-Symfony2 provides a
+Symfony provides a
 :class:`built-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
 which can match paths and IPs. For example, if you want to only show the
 profiler when accessing the page with the ``168.0.0.1`` IP, then you can

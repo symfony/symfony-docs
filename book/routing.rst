@@ -13,7 +13,7 @@ URL of a page from ``/blog`` to ``/news``? How many links should you need to
 hunt down and update to make the change? If you're using Symfony's router,
 the change is simple.
 
-The Symfony2 router lets you define creative URLs that you map to different
+The Symfony router lets you define creative URLs that you map to different
 areas of your application. By the end of this chapter, you'll be able to:
 
 * Create complex routes that map to controllers
@@ -102,7 +102,7 @@ Congratulations! You've just created your first route and connected it to
 a controller. Now, when you visit ``/blog/my-post``, the ``showAction`` controller
 will be executed and the ``$slug`` variable will be equal to ``my-post``.
 
-This is the goal of the Symfony2 router: to map the URL of a request to a
+This is the goal of the Symfony router: to map the URL of a request to a
 controller. Along the way, you'll learn all sorts of tricks that make mapping
 even the most complex URLs easy.
 
@@ -121,22 +121,22 @@ else. Take the following HTTP request for example:
 
     GET /blog/my-blog-post
 
-The goal of the Symfony2 routing system is to parse this URL and determine
+The goal of the Symfony routing system is to parse this URL and determine
 which controller should be executed. The whole process looks like this:
 
-#. The request is handled by the Symfony2 front controller (e.g. ``app.php``);
+#. The request is handled by the Symfony front controller (e.g. ``app.php``);
 
-#. The Symfony2 core (i.e. Kernel) asks the router to inspect the request;
+#. The Symfony core (i.e. Kernel) asks the router to inspect the request;
 
 #. The router matches the incoming URL to a specific route and returns information
    about the route, including the controller that should be executed;
 
-#. The Symfony2 Kernel executes the controller, which ultimately returns
+#. The Symfony Kernel executes the controller, which ultimately returns
    a ``Response`` object.
 
 .. figure:: /images/request-flow.png
    :align: center
-   :alt: Symfony2 request flow
+   :alt: Symfony request flow
 
    The routing layer is a tool that translates the incoming URL into a specific
    controller to execute.
@@ -240,7 +240,7 @@ A basic route consists of just two parts: the ``path`` to match and a
         return $collection;
 
 This route matches the homepage (``/``) and maps it to the ``AcmeDemoBundle:Main:homepage``
-controller. The ``_controller`` string is translated by Symfony2 into an
+controller. The ``_controller`` string is translated by Symfony into an
 actual PHP function and executed. That process will be explained shortly
 in the :ref:`controller-string-syntax` section.
 

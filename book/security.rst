@@ -275,7 +275,7 @@ the request flow is always the same:
 
 .. tip::
 
-    You'll also learn later how *anything* can be secured in Symfony2, including
+    You'll also learn later how *anything* can be secured in Symfony, including
     specific controllers, objects, or even PHP methods.
 
 .. _book-security-form-login:
@@ -810,7 +810,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 Understanding how ``access_control`` Works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For each incoming request, Symfony2 checks each ``access_control`` entry
+For each incoming request, Symfony checks each ``access_control`` entry
 to find *one* that matches the current request. As soon as it finds a matching
 ``access_control`` entry, it stops - only the **first** matching ``access_control``
 is used to enforce access.
@@ -826,7 +826,7 @@ things:
 1. Matching Options
 ...................
 
-Symfony2 creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
+Symfony creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
 for each ``access_control`` entry, which determines whether or not a given
 access control should be used on this request. The following ``access_control``
 options are used for matching:
@@ -938,7 +938,7 @@ will match any ``ip``, ``host`` or ``method``:
 2. Access Enforcement
 .....................
 
-Once Symfony2 has decided which ``access_control`` entry matches (if any),
+Once Symfony has decided which ``access_control`` entry matches (if any),
 it then *enforces* access restrictions based on the ``roles`` and ``requires_channel``
 options:
 
@@ -1248,10 +1248,10 @@ During authentication, the user submits a set of credentials (usually a username
 and password). The job of the authentication system is to match those credentials
 against some pool of users. So where does this list of users come from?
 
-In Symfony2, users can come from anywhere - a configuration file, a database
+In Symfony, users can come from anywhere - a configuration file, a database
 table, a web service, or anything else you can dream up. Anything that provides
 one or more users to the authentication system is known as a "user provider".
-Symfony2 comes standard with the two most common user providers: one that
+Symfony comes standard with the two most common user providers: one that
 loads users from a configuration file and one that loads users from a database
 table.
 
@@ -1825,7 +1825,7 @@ doesn't need to be defined anywhere - you can just start using it.
 .. note::
 
     All roles **must** begin with the ``ROLE_`` prefix to be managed by
-    Symfony2. If you define your own roles with a dedicated ``Role`` class
+    Symfony. If you define your own roles with a dedicated ``Role`` class
     (more advanced), don't use the ``ROLE_`` prefix.
 
 .. _book-security-role-hierarchy:
@@ -2198,12 +2198,12 @@ more information on configuring the logout, see the
 Stateless Authentication
 ------------------------
 
-By default, Symfony2 relies on a cookie (the Session) to persist the security
+By default, Symfony relies on a cookie (the Session) to persist the security
 context of the user. But if you use certificates or HTTP authentication for
 instance, persistence is not needed as credentials are available for each
 request. In that case, and if you don't need to store anything else between
 requests, you can activate the stateless authentication (which means that no
-cookie will be ever created by Symfony2):
+cookie will be ever created by Symfony):
 
 .. configuration-block::
 
@@ -2244,7 +2244,7 @@ cookie will be ever created by Symfony2):
 
 .. note::
 
-    If you use a form login, Symfony2 will create a cookie even if you set
+    If you use a form login, Symfony will create a cookie even if you set
     ``stateless`` to ``true``.
 
 Utilities

@@ -5,7 +5,7 @@
 Testing with Sessions
 =====================
 
-Symfony2 is designed from the ground up with code-testability in mind. In order
+Symfony is designed from the ground up with code-testability in mind. In order
 to make your code which utilizes session easily testable we provide two separate
 mock storage mechanisms for both unit testing and functional testing.
 

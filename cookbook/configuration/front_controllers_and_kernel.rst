@@ -18,7 +18,7 @@ three parts that work together:
 .. note::
 
     Usually, you will not need to define your own front controller or
-    ``AppKernel`` class as the `Symfony2 Standard Edition`_ provides
+    ``AppKernel`` class as the `Symfony Standard Edition`_ provides
     sensible default implementations.
 
     This documentation section is provided to explain what is going on behind
@@ -30,7 +30,7 @@ The Front Controller
 The `front controller`_ is a well-known design pattern; it is a section of
 code that *all* requests served by an application run through.
 
-In the `Symfony2 Standard Edition`_, this role is taken by the `app.php`_
+In the `Symfony Standard Edition`_, this role is taken by the `app.php`_
 and `app_dev.php`_ files in the ``web/`` directory. These are the very
 first PHP scripts executed when a request is processed.
 
@@ -83,7 +83,7 @@ The Kernel Class
 ----------------
 
 The :class:`Symfony\\Component\\HttpKernel\\Kernel` is the core of
-Symfony2. It is responsible for setting up all the bundles that make up
+Symfony. It is responsible for setting up all the bundles that make up
 your application and providing them with the application's configuration.
 It then creates the service container before serving requests in its
 :method:`Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle`
@@ -105,7 +105,7 @@ To fill these (small) blanks, your application needs to subclass the
 Kernel and implement these methods. The resulting class is conventionally
 called the ``AppKernel``.
 
-Again, the Symfony2 Standard Edition provides an `AppKernel`_ in the ``app/``
+Again, the Symfony Standard Edition provides an `AppKernel`_ in the ``app/``
 directory. This class uses the name of the environment - which is passed to
 the Kernel's :method:`constructor <Symfony\\Component\\HttpKernel\\Kernel::__construct>`
 method and is available via :method:`Symfony\\Component\\HttpKernel\\Kernel::getEnvironment` -
@@ -162,7 +162,7 @@ free to implement this method differently if you need a more sophisticated
 way of loading your configuration.
 
 .. _front controller: http://en.wikipedia.org/wiki/Front_Controller_pattern
-.. _Symfony2 Standard Edition: https://github.com/symfony/symfony-standard
+.. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
 .. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
 .. _app_dev.php: https://github.com/symfony/symfony-standard/blob/master/web/app_dev.php
 .. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console

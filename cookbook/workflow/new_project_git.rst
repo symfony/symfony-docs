@@ -1,8 +1,10 @@
 .. index::
    single: Workflow; Git
 
-How to Create and Store a Symfony2 Project in Git
-=================================================
+.. _how-to-create-and-store-a-symfony2-project-in-git:
+
+How to Create and Store a Symfony Project in Git
+================================================
 
 .. tip::
 
@@ -11,7 +13,7 @@ How to Create and Store a Symfony2 Project in Git
 
 Once you've read through :doc:`/book/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. In this
-cookbook article, you'll learn the best way to start a new Symfony2 project
+cookbook article, you'll learn the best way to start a new Symfony project
 that's stored using the `Git`_ source control management system.
 
 Initial Project Setup
@@ -20,7 +22,7 @@ Initial Project Setup
 To get started, you'll need to download Symfony and initialize your local
 git repository:
 
-#. Download the `Symfony2 Standard Edition`_ using Composer:
+#. Download the `Symfony Standard Edition`_ using Composer:
 
    .. code-block:: bash
 
@@ -65,7 +67,7 @@ git repository:
 
         $ git commit -m "Initial commit"
 
-At this point, you have a fully-functional Symfony2 project that's correctly
+At this point, you have a fully-functional Symfony project that's correctly
 committed to Git. You can immediately begin development, committing the new
 changes to your Git repository.
 
@@ -74,7 +76,7 @@ to learn more about how to configure and develop inside your application.
 
 .. tip::
 
-    The Symfony2 Standard Edition comes with some example functionality. To
+    The Symfony Standard Edition comes with some example functionality. To
     remove the sample code, follow the instructions in the
     ":doc:`/cookbook/bundles/remove`" article.
 
@@ -95,7 +97,7 @@ which libraries depend on which other libraries.
 Storing your Project on a remote Server
 ---------------------------------------
 
-You now have a fully-functional Symfony2 project stored in Git. However,
+You now have a fully-functional Symfony project stored in Git. However,
 in most cases, you'll also want to store your project on a remote server
 both for backup purposes, and so that other developers can collaborate on
 the project.
@@ -110,7 +112,7 @@ a `barebones repository`_ and then pushing to it. One library that helps
 manage this is `Gitolite`_.
 
 .. _`Git`: http://git-scm.com/
-.. _`Symfony2 Standard Edition`: http://symfony.com/download
+.. _`Symfony Standard Edition`: http://symfony.com/download
 .. _`Installing Symfony using Composer`: http://symfony.com/doc/current/book/installation.html#option-1-composer
 .. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/

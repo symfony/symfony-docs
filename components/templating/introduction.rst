@@ -83,7 +83,7 @@ Global Variables
 ----------------
 
 Sometimes, you need to set a variable which is available in all templates
-rendered by an engine (like the ``$app`` variable when using the Symfony2
+rendered by an engine (like the ``$app`` variable when using the Symfony
 framework). These variables can be set by using the
 :method:`Symfony\\Component\\Templating\\PhpEngine::addGlobal` method and they
 can be accessed in the template as normal variables::

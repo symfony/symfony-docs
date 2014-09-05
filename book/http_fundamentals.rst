@@ -1,21 +1,23 @@
 .. index::
-   single: Symfony2 Fundamentals
+   single: Symfony Fundamentals
 
-Symfony2 and HTTP Fundamentals
-==============================
+.. _symfony2-and-http-fundamentals:
 
-Congratulations! By learning about Symfony2, you're well on your way towards
+Symfony and HTTP Fundamentals
+=============================
+
+Congratulations! By learning about Symfony, you're well on your way towards
 being a more *productive*, *well-rounded* and *popular* web developer (actually,
-you're on your own for the last part). Symfony2 is built to get back to
+you're on your own for the last part). Symfony is built to get back to
 basics: to develop tools that let you develop faster and build more robust
 applications, while staying out of your way. Symfony is built on the best
 ideas from many technologies: the tools and concepts you're about to learn
 represent the efforts of thousands of people, over many years. In other words,
 you're not just learning "Symfony", you're learning the fundamentals of the
 web, development best practices, and how to use many amazing new PHP libraries,
-inside or independently of Symfony2. So, get ready.
+inside or independently of Symfony. So, get ready.
 
-True to the Symfony2 philosophy, this chapter begins by explaining the fundamental
+True to the Symfony philosophy, this chapter begins by explaining the fundamental
 concept common to web development: HTTP. Regardless of your background or
 preferred programming language, this chapter is a **must-read** for everyone.
 
@@ -35,8 +37,8 @@ HTTP is the term used to describe this simple text-based language. And no
 matter how you develop on the web, the goal of your server is *always* to
 understand simple text requests, and return simple text responses.
 
-Symfony2 is built from the ground-up around that reality. Whether you realize
-it or not, HTTP is something you use everyday. With Symfony2, you'll learn
+Symfony is built from the ground-up around that reality. Whether you realize
+it or not, HTTP is something you use everyday. With Symfony, you'll learn
 how to master it.
 
 .. index::
@@ -173,7 +175,7 @@ Symfony is architected to match this reality.
     while browsing is the `Live HTTP Headers`_ extension for Firefox.
 
 .. index::
-   single: Symfony2 Fundamentals; Requests and responses
+   single: Symfony Fundamentals; Requests and responses
 
 Requests and Responses in PHP
 -----------------------------
@@ -264,7 +266,7 @@ the user is connecting via a secured connection (i.e. HTTPS).
 
     The Request class also has a public ``attributes`` property, which holds
     special data related to how the application works internally. For the
-    Symfony2 framework, the ``attributes`` holds the values returned by the
+    Symfony framework, the ``attributes`` holds the values returned by the
     matched route, like ``_controller``, ``id`` (if you have an ``{id}``
     wildcard), and even the name of the matched route (``_route``). The
     ``attributes`` property exists entirely to be a place where you can
@@ -393,7 +395,7 @@ the same simple pattern for every request:
 
 .. figure:: /images/request-flow.png
    :align: center
-   :alt: Symfony2 request flow
+   :alt: Symfony request flow
 
    Incoming requests are interpreted by the routing and passed to controller
    functions that return ``Response`` objects.
@@ -491,8 +493,10 @@ template file. This frees up the controller to worry only about the hard
 stuff: interacting with the database, handling submitted data, or sending
 email messages.
 
-Symfony2: Build your App, not your Tools.
------------------------------------------
+.. _symfony2-build-your-app-not-your-tools:
+
+Symfony: Build your App, not your Tools.
+----------------------------------------
 
 You now know that the goal of any app is to interpret each incoming request
 and create an appropriate response. As an application grows, it becomes more
@@ -503,18 +507,20 @@ emails, validating user input and handling security.
 
 The good news is that none of these problems is unique. Symfony provides
 a framework full of tools that allow you to build your application, not your
-tools. With Symfony2, nothing is imposed on you: you're free to use the full
+tools. With Symfony, nothing is imposed on you: you're free to use the full
 Symfony framework, or just one piece of Symfony all by itself.
 
 .. index::
-   single: Symfony2 Components
+   single: Symfony Components
 
-Standalone Tools: The Symfony2 *Components*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _standalone-tools-the-symfony2-components:
 
-So what *is* Symfony2? First, Symfony2 is a collection of over twenty independent
+Standalone Tools: The Symfony *Components*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So what *is* Symfony? First, Symfony is a collection of over twenty independent
 libraries that can be used inside *any* PHP project. These libraries, called
-the *Symfony2 Components*, contain something useful for almost any situation,
+the *Symfony Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
 * :doc:`HttpFoundation </components/http_foundation/introduction>` - Contains
@@ -546,16 +552,18 @@ regardless of how your project is developed. To name a few:
 * `Translation`_ - A framework for translating strings in your application.
 
 Each and every one of these components is decoupled and can be used in *any*
-PHP project, regardless of whether or not you use the Symfony2 framework.
+PHP project, regardless of whether or not you use the Symfony framework.
 Every part is made to be used if needed and replaced when necessary.
 
-The Full Solution: The Symfony2 *Framework*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _the-full-solution-the-symfony2-framework:
 
-So then, what *is* the Symfony2 *Framework*? The *Symfony2 Framework* is
+The Full Solution: The Symfony *Framework*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So then, what *is* the Symfony *Framework*? The *Symfony Framework* is
 a PHP library that accomplishes two distinct tasks:
 
-#. Provides a selection of components (i.e. the Symfony2 Components) and
+#. Provides a selection of components (i.e. the Symfony Components) and
    third-party libraries (e.g. `Swift Mailer`_ for sending emails);
 
 #. Provides sensible configuration and a "glue" library that ties all of these
@@ -563,12 +571,12 @@ a PHP library that accomplishes two distinct tasks:
 
 The goal of the framework is to integrate many independent tools in order
 to provide a consistent experience for the developer. Even the framework
-itself is a Symfony2 bundle (i.e. a plugin) that can be configured or replaced
+itself is a Symfony bundle (i.e. a plugin) that can be configured or replaced
 entirely.
 
-Symfony2 provides a powerful set of tools for rapidly developing web applications
+Symfony provides a powerful set of tools for rapidly developing web applications
 without imposing on your application. Normal users can quickly start development
-by using a Symfony2 distribution, which provides a project skeleton with
+by using a Symfony distribution, which provides a project skeleton with
 sensible defaults. For more advanced users, the sky is the limit.
 
 .. _`xkcd`: http://xkcd.com/

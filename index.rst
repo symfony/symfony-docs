@@ -1,5 +1,7 @@
-Symfony2 Documentation
-======================
+.. _symfony2-documentation:
+
+Symfony Documentation
+=====================
 
 .. toctree::
     :hidden:
@@ -9,7 +11,7 @@ Symfony2 Documentation
 Quick Tour
 ----------
 
-Get started fast with the Symfony2 :doc:`Quick Tour <quick_tour/index>`:
+Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 
 .. toctree::
     :hidden:
@@ -24,7 +26,7 @@ Get started fast with the Symfony2 :doc:`Quick Tour <quick_tour/index>`:
 Book
 ----
 
-Dive into Symfony2 with the topical guides:
+Dive into Symfony with the topical guides:
 
 .. toctree::
     :hidden:
@@ -81,7 +83,7 @@ CMF
 ---
 
 The Symfony CMF project makes it easier for developers to add CMS functionality
-to applications built with the Symfony2 PHP framework.
+to applications built with the Symfony PHP framework.
 
 .. toctree::
     :hidden:
@@ -91,7 +93,7 @@ to applications built with the Symfony2 PHP framework.
 Contributing
 ------------
 
-Contribute to Symfony2:
+Contribute to Symfony:
 
 .. toctree::
     :hidden:

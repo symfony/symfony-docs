@@ -5,7 +5,7 @@ Creating and Using Templates
 ============================
 
 As you know, the :doc:`controller </book/controller>` is responsible for
-handling each request that comes into a Symfony2 application. In reality,
+handling each request that comes into a Symfony application. In reality,
 the controller delegates most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
 CSS or any other content, it hands the work off to the templating engine.
@@ -53,7 +53,7 @@ template - a text file parsed by PHP that contains a mix of text and PHP code:
 
 .. index:: Twig; Introduction
 
-But Symfony2 packages an even more powerful templating language called `Twig`_.
+But Symfony packages an even more powerful templating language called `Twig`_.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:
 
@@ -178,7 +178,7 @@ Template Inheritance and Layouts
 --------------------------------
 
 More often than not, templates in a project share common elements, like the
-header, footer, sidebar or more. In Symfony2, this problem is thought about
+header, footer, sidebar or more. In Symfony, this problem is thought about
 differently: a template can be decorated by another one. This works
 exactly the same as PHP classes: template inheritance allows you to build
 a base "layout" template that contains all the common elements of your site
@@ -332,7 +332,7 @@ tag in a parent template is always used by default.
 
 You can use as many levels of inheritance as you want. In the next section,
 a common three-level inheritance model will be explained along with how templates
-are organized inside a Symfony2 project.
+are organized inside a Symfony project.
 
 When working with template inheritance, here are some tips to keep in mind:
 
@@ -384,7 +384,7 @@ By default, templates can live in two different locations:
   ``Resources/views`` directory (and subdirectories). The majority of templates
   will live inside a bundle.
 
-Symfony2 uses a **bundle**:**controller**:**template** string syntax for
+Symfony uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
 lives in a specific location:
 
@@ -438,11 +438,11 @@ that specify the *format* and *engine* for that template.
 
 * **AcmeBlogBundle:Blog:index.css.twig** - CSS format, Twig engine
 
-By default, any Symfony2 template can be written in either Twig or PHP, and
+By default, any Symfony template can be written in either Twig or PHP, and
 the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
 of these two *engines* should be used. The first part of the extension,
 (e.g. ``.html``, ``.css``, etc) is the final format that the template will
-generate. Unlike the engine, which determines how Symfony2 parses the template,
+generate. Unlike the engine, which determines how Symfony parses the template,
 this is simply an organizational tactic used in case the same resource needs
 to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
 or any other format. For more information, read the :ref:`template-formats`
@@ -466,7 +466,7 @@ this section, you'll learn about a large group of tools available to help
 perform the most common template tasks such as including other templates,
 linking to pages and including images.
 
-Symfony2 comes bundled with several specialized Twig tags and functions that
+Symfony comes bundled with several specialized Twig tags and functions that
 ease the work of the template designer. In PHP, the templating system provides
 an extensible *helper* system that provides useful features in a template
 context.
@@ -667,7 +667,7 @@ Asynchronous Content with hinclude.js
 
 Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
-Symfony2 uses a version of the standard ``render`` function to configure ``hinclude``
+Symfony uses a version of the standard ``render`` function to configure ``hinclude``
 tags:
 
 .. configuration-block::
@@ -972,7 +972,7 @@ Linking to Assets
 
 Templates also commonly refer to images, JavaScript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony2 provides a more dynamic option via the ``asset`` Twig function:
+but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
 .. configuration-block::
 
@@ -1124,7 +1124,7 @@ stylesheets.
 Global Template Variables
 -------------------------
 
-During each request, Symfony2 will set a global template variable ``app``
+During each request, Symfony will set a global template variable ``app``
 in both Twig and PHP template engines by default. The ``app`` variable
 is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
@@ -1166,7 +1166,7 @@ automatically:
 Configuring and Using the ``templating`` Service
 ------------------------------------------------
 
-The heart of the template system in Symfony2 is the templating ``Engine``.
+The heart of the template system in Symfony is the templating ``Engine``.
 This special object is responsible for rendering templates and returning
 their content. When you render a template in a controller, for example,
 you're actually using the templating engine service. For example::
@@ -1185,7 +1185,7 @@ is equivalent to::
 .. _template-configuration:
 
 The templating engine (or "service") is preconfigured to work automatically
-inside Symfony2. It can, of course, be configured further in the application
+inside Symfony. It can, of course, be configured further in the application
 configuration file:
 
 .. configuration-block::
@@ -1242,7 +1242,7 @@ Several configuration options are available and are covered in the
 Overriding Bundle Templates
 ---------------------------
 
-The Symfony2 community prides itself on creating and maintaining high quality
+The Symfony community prides itself on creating and maintaining high quality
 bundles (see `KnpBundles.com`_) for a large number of different features.
 Once you use a third-party bundle, you'll likely need to override and customize
 one or more of its templates.
@@ -1264,7 +1264,7 @@ customize the markup specifically for your application. By digging into the
         );
     }
 
-When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually
+When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony actually
 looks in two different locations for the template:
 
 #. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
@@ -1282,7 +1282,7 @@ to create it). You're now free to customize the template.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in ``AcmeBlogBundle`` inherits from a base template called
-``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony2 will look in
+``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony will look in
 the following two places for the template:
 
 #. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
@@ -1292,7 +1292,7 @@ Once again, to override the template, just copy it from the bundle to
 ``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're now free to
 customize this copy as you see fit.
 
-If you take a step back, you'll see that Symfony2 always starts by looking in
+If you take a step back, you'll see that Symfony always starts by looking in
 the ``app/Resources/{BUNDLE_NAME}/views/`` directory for a template. If the
 template doesn't exist there, it continues by checking inside the
 ``Resources/views`` directory of the bundle itself. This means that all bundle
@@ -1312,7 +1312,7 @@ subdirectory.
 Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the Symfony2 framework itself is just a bundle, core templates can be
+Since the Symfony framework itself is just a bundle, core templates can be
 overridden in the same way. For example, the core TwigBundle contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the
@@ -1594,7 +1594,7 @@ the most common tasks.
 
 Overall, the topic of templating should be thought of as a powerful tool
 that's at your disposal. In some cases, you may not need to render a template,
-and in Symfony2, that's absolutely fine.
+and in Symfony, that's absolutely fine.
 
 Learn more from the Cookbook
 ----------------------------

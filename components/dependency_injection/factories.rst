@@ -4,7 +4,7 @@
 Using a Factory to Create Services
 ==================================
 
-Symfony2's Service Container provides a powerful way of controlling the
+Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this
 will not provide you with everything you need to construct your objects.
