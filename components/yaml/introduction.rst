@@ -5,16 +5,24 @@
 The Yaml Component
 ==================
 
+<<<<<<< HEAD
     The Yaml component loads and dumps YAML files.
+=======
+    The Yaml Component loads and dumps YAML files.
+>>>>>>> Added a note about the lacking features of Yaml Component
 
 What is It?
 -----------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The Symfony2 Yaml component parses YAML strings to convert them to PHP arrays.
 =======
 The Symfony YAML Component parses YAML strings to convert them to PHP arrays.
 >>>>>>> replace "Symfony2" with "Symfony"
+=======
+The Symfony2 Yaml Component parses YAML strings to convert them to PHP arrays.
+>>>>>>> Added a note about the lacking features of Yaml Component
 It is also able to convert PHP arrays to YAML strings.
 
 `YAML`_, *YAML Ain't Markup Language*, is a human friendly data serialization
@@ -23,11 +31,16 @@ configuration files. YAML files are as expressive as XML files and as readable
 as INI files.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The Symfony2 Yaml component implements the YAML 1.2 version of the
 =======
 The Symfony YAML Component implements the YAML 1.2 version of the
 >>>>>>> replace "Symfony2" with "Symfony"
 specification.
+=======
+The Symfony2 Yaml Component implements a selected subset of features defined in
+the `YAML 1.2 version specification`_.
+>>>>>>> Added a note about the lacking features of Yaml Component
 
 .. tip::
 
@@ -48,9 +61,16 @@ Why?
 Fast
 ~~~~
 
+<<<<<<< HEAD
 One of the goals of the Symfony Yaml component is to find the right balance
 between speed and features. It supports just the needed features to handle
 configuration files.
+=======
+One of the goals of Symfony Yaml is to find the right balance between speed and
+features. It supports just the needed features to handle configuration files.
+Notable lacking features are: document directives, multi-line quoted messages,
+compact block collections and multi-document files.
+>>>>>>> Added a note about the lacking features of Yaml Component
 
 Real Parser
 ~~~~~~~~~~~
@@ -88,6 +108,7 @@ yourself by referencing common configuration bits.
 Using the Symfony2 Yaml Component
 ---------------------------------
 
+<<<<<<< HEAD
 The Symfony2 Yaml component is very simple and consists of two main classes:
 =======
 .. _using-the-symfony2-yaml-component:
@@ -97,6 +118,9 @@ Using the Symfony YAML Component
 
 The Symfony YAML Component is very simple and consists of two main classes:
 >>>>>>> replace "Symfony2" with "Symfony"
+=======
+The Symfony2 Yaml Component is very simple and consists of two main classes:
+>>>>>>> Added a note about the lacking features of Yaml Component
 one parses YAML strings (:class:`Symfony\\Component\\Yaml\\Parser`), and the
 other dumps a PHP array to a YAML string
 (:class:`Symfony\\Component\\Yaml\\Dumper`).
@@ -181,7 +205,11 @@ array to its YAML representation:
 
 .. note::
 
+<<<<<<< HEAD
     Of course, the Symfony YAML dumper is not able to dump resources. Also,
+=======
+    Of course, the Symfony2 Yaml dumper is not able to dump resources. Also,
+>>>>>>> Added a note about the lacking features of Yaml Component
     even if the dumper is able to dump PHP objects, it is considered to be a
     not supported feature.
 
@@ -231,3 +259,4 @@ representation to the inline one:
 
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
+.. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html
