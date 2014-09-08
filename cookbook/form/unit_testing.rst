@@ -177,6 +177,7 @@ on other extensions. You need add those extensions to the factory object::
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
+    use Symfony\Component\Validator\ConstraintViolationList;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -185,7 +186,7 @@ on other extensions. You need add those extensions to the factory object::
             parent::setUp();
             
             $validator = $this->getMock('\Symfony\Component\Validator\ValidatorInterface');
-            $validator->method('validate')->will($this->returnValue(array()));
+            $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
             $this->factory = Forms::createFormFactoryBuilder()
                 ->addExtensions($this->getExtensions())
