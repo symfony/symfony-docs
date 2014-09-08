@@ -183,12 +183,15 @@ on other extensions. You need add those extensions to the factory object::
         protected function setUp()
         {
             parent::setUp();
+            
+            $validator = $this->getMock('\Symfony\Component\Validator\ValidatorInterface');
+            $validator->method('validate')->will($this->returnValue(array()));
 
             $this->factory = Forms::createFormFactoryBuilder()
                 ->addExtensions($this->getExtensions())
                 ->addTypeExtension(
                     new FormTypeValidatorExtension(
-                        $this->getMock('Symfony\Component\Validator\ValidatorInterface')
+                        $validator
                     )
                 )
                 ->addTypeGuesser(
