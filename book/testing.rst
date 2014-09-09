@@ -19,6 +19,7 @@ it has its own excellent `documentation`_.
 
     Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
     needed to test the Symfony core code itself.
+    
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``Tests/`` subdirectory of your bundles. If you follow
@@ -29,6 +30,18 @@ command:
 
     # specify the configuration directory on the command line
     $ phpunit -c app/
+    
+.. note::
+
+    If have the ``No tests executed!`` 
+    message in, specify the "src" directory at the
+    end of the command.
+    
+.. code-block:: bash
+
+    # specify the configuration directory on the command line
+    $ phpunit -c app/ arc/
+
 
 The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
 file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
