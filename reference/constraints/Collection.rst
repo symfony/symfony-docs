@@ -144,7 +144,7 @@ blank but is no longer than 100 characters in length, you would do the following
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
                         'personal_email' => new Assert\Email(),
-                        'lastName' => array(
+                        'short_bio' => array(
                             new Assert\NotBlank(),
                             new Assert\Length(array(
                                 'max' => 100,
