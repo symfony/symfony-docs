@@ -1888,8 +1888,12 @@ Now that you have a User and Roles, you can go further than URL-pattern based
 authorization.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ..book-security-securing-controller:
+=======
+.. _book-security-securing-controller:
+>>>>>>> Fix reference label
 
 >>>>>>> Add label book-security-roles
 Access Control in Controllers
