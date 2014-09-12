@@ -1652,6 +1652,8 @@ the default for the firewall as a whole).
 For more information about user provider and firewall configuration, see
 the :doc:`/reference/configuration/security`.
 
+.. _book-security-roles:
+
 Roles
 -----
 
@@ -1726,7 +1728,7 @@ Access Control
 Now that you have a User and Roles, you can go further than URL-pattern based
 authorization.
 
-.. _book-security-securing-controller:
+..book-security-securing-controller:
 
 Access Control in Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
