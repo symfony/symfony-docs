@@ -653,8 +653,11 @@ about in this section.
 
 .. caution::
 
-    The default role voter requires that all of the roles returned should be prefaced by ROLE_.  
-    Example ROLE_ADMIN, ROLE_USER; not just ADMIN or USER.
+    In order to work with the security configuration examples on this page
+    all roles must be prefixed with ``ROLE_`` (see
+    the :ref:`section about roles <book-security-roles>` in the book). For
+    example, your roles will be ``ROLE_ADMIN`` or ``ROLE_USER`` instead of
+    ``ADMIN`` or ``USER``.
 
 In this example, the ``AcmeUserBundle:User`` entity class defines a
 many-to-many relationship with a ``AcmeUserBundle:Role`` entity class.
