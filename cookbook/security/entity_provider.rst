@@ -651,6 +651,11 @@ about in this section.
     If you fail to return any roles, it may appear as if your user isn't
     authenticated at all.
 
+.. caution::
+
+    The default role voter requires that all of the roles returned should be prefaced by ROLE_.  
+    Example ROLE_ADMIN, ROLE_USER; not just ADMIN or USER.
+
 In this example, the ``AcmeUserBundle:User`` entity class defines a
 many-to-many relationship with a ``AcmeUserBundle:Role`` entity class.
 A user can be related to several roles and a role can be composed of
