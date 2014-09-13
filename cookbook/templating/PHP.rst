@@ -80,19 +80,27 @@ shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template
 .. caution::
 
     Enabling the ``php`` and ``twig`` template engines simultaneously is
-    allowed but it will produce an important side effect in your application:
-    template namespaces will no longer work::
+    allowed but it will produce an undesirable side effect in your application.
+    Template namespaces will no longer work except inside Twig templates::
 
         public function indexAction()
         {
             // ...
 
-            // namespaced templates will no longer work
+            // namespaced templates will no longer work in controllers
             $this->render('@Acme/Default/index.html.twig');
 
-            // traditional template notation will work
+            // you must use the traditional template notation
             $this->render('AcmeBundle:Default:index.html.twig');
         }
+
+    .. code-block:: jinja
+
+        {# inside a Twig template, namespaced templates work as expected #}
+        {{ include('@Acme/Default/index.html.twig') }}
+
+        {# traditional template notation will also work #}
+        {{ include('AcmeBundle:Default:index.html.twig') }}
 
 
 .. index::
