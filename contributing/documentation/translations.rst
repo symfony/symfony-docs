@@ -7,8 +7,8 @@ in the translation process.
 Contributing
 ------------
 
-First, become familiar with the :doc:`markup language <format>` used by the
-documentation.
+First, become familiar with the :doc:`markup language </contributing/documentation/format>`
+used by the documentation.
 
 Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
 there.

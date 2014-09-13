@@ -5,10 +5,9 @@ One of the essential principles of the Symfony project is that **documentation i
 as important as code**. That's why we dedicate a great amount of resources to
 document new features and to maintain updated the rest of the documentation.
 
-More than 800 hundred developers all around the world have contributed to
-Symfony documentation, and we are glad that you are considering joining this big
-family. This guide will explain everything you need to contribute to Symfony
-documentation.
+More than 800 developers all around the world have contributed to Symfony
+documentation, and we are glad that you are considering joining this big family.
+This guide will explain everything you need to contribute to Symfony documentation.
 
 Before Your First Contribution
 ------------------------------
@@ -20,11 +19,12 @@ The Symfony documentation is hosted on GitHub:
 >>>>>>> Revamped the documentation about "Contributing Docs"
 
 * Symfony documentation is written using `reStructuredText`_ markup language.
-  If you are not familiar with this format, read :doc:`this article <format>`
+  If you are not familiar with this format, read :doc:`this article </contributing/documentation/format>`
   for a quick overview of its basic features.
 * Symfony documentation is hosted on `GitHub`_. You'll need a GitHub user account
   to contribute documentation.
-* Symfony documentation is published under a :doc:`Creative Commons BY-SA 3.0 License <license>`
+* Symfony documentation is published under a
+  :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
   and all your contributions will implicitly adhere to that license.
 
 Your First Documentation Contribution
@@ -284,7 +284,7 @@ website.
 What If I Want to Translate Some Documentation into my Language?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Read the dedicated :doc:`document <translations>`.
+Read the dedicated :doc:`document </contributing/documentation/translations>`.
 
 Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
