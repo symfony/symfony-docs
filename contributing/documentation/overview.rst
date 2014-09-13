@@ -76,7 +76,8 @@ memorable name for the new branch:
     $ git checkout -b improve_install_chapter
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
-even remove any content, but make sure that you comply with the doc:`standards`.
+even remove any content, but make sure that you comply with the
+doc:`/contributing/documentation/standards`.
 
 **Step 6.** **Push** the changes to your forked repository:
 
