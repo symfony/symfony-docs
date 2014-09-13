@@ -80,8 +80,9 @@ shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template
 .. caution::
 
     Enabling the ``php`` and ``twig`` template engines simultaneously is
-    allowed but it will produce an undesirable side effect in your application.
-    Template namespaces will no longer work except inside Twig templates::
+    allowed, but it will produce an undesirable side effect in your application:
+    the ``@`` notation for Twig namespaces will no longer be supported for the
+    ``render()`` method::
 
         public function indexAction()
         {
