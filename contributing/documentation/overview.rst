@@ -2,7 +2,7 @@ Contributing to the Documentation
 =================================
 
 One of the essential principles of the Symfony project is that **documentation is
-as important as code**. That's why we dedicate a great amount of resources to
+as important as code**. That's why a great amount of resources are dedicated to
 document new features and to maintain updated the rest of the documentation.
 
 More than 800 developers all around the world have contributed to Symfony
@@ -38,13 +38,12 @@ Let's imagine that you want to improve the installation chapter of the Symfony
 book. In order to do those changes, follow these steps:
 
 **Step 1.** Go to the official Symfony documentation repository located at
-`github.com/symfony/symfony-docs <https://github.com/symfony/symfony-docs>`_
-and `fork the repository`_ to your personal account. This is only needed the
-first time you contribute to Symfony.
+`github.com/symfony/symfony-docs`_ and `fork the repository`_ to your personal
+account. This is only needed the first time you contribute to Symfony.
 
-**Step 2.** **Clone** the forked repository to your local machine (in this
-example we'll use the ``projects/symfony-docs/`` directory to store the
-documentation; change this value accordingly):
+**Step 2.** **Clone** the forked repository to your local machine (this
+example uses the ``projects/symfony-docs/`` directory to store the documentation;
+change this value accordingly):
 
 .. code-block:: bash
 
@@ -129,7 +128,7 @@ In this example, this table would look as follows:
     | ------------- | ---
     | Doc fix?      | yes
     | New docs?     | no
-    | Applies to    | 2.3+
+    | Applies to    | all
     | Fixed tickets | #10575
 
 **Step 9.** Now that you've successfully submitted your first contribution to the
@@ -152,14 +151,14 @@ tag and a short description:
     $ git checkout improve_install_chapter
 >>>>>>> Revamped the documentation about "Contributing Docs"
 
-    # do your changes ...
+    # ... do your changes
 
     $ git push
 
 **Step 10.** After your pull request is eventually accepted and merged in the Symfony
 documentation, you will be included in the `Symfony Documentation Contributors`_
-list. Moreover, if you happen to have a `SensioLabsConnect`_ profile, we will
-award you a cool `Symfony Documentation Badge`_.
+list. Moreover, if you happen to have a `SensioLabsConnect`_ profile, you will
+get a cool `Symfony Documentation Badge`_.
 
 Your Second Documentation Contribution
 --------------------------------------
@@ -206,7 +205,7 @@ Now you can proceed following the same steps explained in the previous section:
     $ git checkout 2.3
     $ git checkout -b my_changes
 
-    # do your changes ...
+    # ... do your changes
 
     # submit the changes to your forked repository
     $ git add xxx.rst     # (optional) only if this is a new content
@@ -248,7 +247,7 @@ a **checklist**:
     $ git checkout 2.3
     $ git checkout -b my_changes
 
-    # do your changes ...
+    # ... do your changes
 
     # add and commit your changes
     $ git add xxx.rst     # (optional) only if this is a new content
@@ -277,10 +276,9 @@ Frequently Asked Questions
 Why Do my Changes so Long to Be Reviewed and/or Merged?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please be patient. It can take from 15 minutes to several days before your pull
-request can be fully reviewed. And after merging the changes, it could take again
-from some minutes to several hours before your changes appear on the symfony.com
-website.
+Please be patient. It can take up to several days before your pull request can
+be fully reviewed. After merging the changes, it could take again several hours
+before your changes appear on the symfony.com website.
 
 What If I Want to Translate Some Documentation into my Language?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -322,6 +320,7 @@ in the Symfony Documentation repository to ask the managers if they agree with
 your proposed changes. Otherwise, they could refuse your proposal after having
 made all the work and you would have wasted a lot of time.
 
+.. _`github.com/symfony/symfony-docs`: https://github.com/symfony/symfony-docs
 .. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
 .. _`GitHub`: https://github.com/
 .. _`fork the repository`: https://help.github.com/articles/fork-a-repo
