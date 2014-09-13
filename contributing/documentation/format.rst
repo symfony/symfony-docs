@@ -1,8 +1,8 @@
 Documentation Format
 ====================
 
-The Symfony documentation uses `reStructuredText`_ as its markup language and
-`Sphinx`_ for generating the documentation in the formats read by the end users,
+The Symfony documentation uses reStructuredText_ as its markup language and
+Sphinx_ for generating the documentation in the formats read by the end users,
 such as HTML and PDF.
 
 reStructuredText
@@ -12,7 +12,7 @@ reStructuredText is a plaintext markup syntax similar to Markdown, but much
 stricter with its syntax. If you are new to reStructuredText, take some time to
 familiarize with this format by reading the existing `Symfony documentation`_
 
-If you prefer to learn more about this format, check out the `reStructuredText Primer`_
+If you want to learn more about this format, check out the `reStructuredText Primer`_
 tutorial and the `reStructuredText Reference`_.
 
 .. caution::
@@ -64,7 +64,7 @@ Configuration Blocks
 
 Whenever you include a configuration sample, use the ``configuration-block``
 directive to show the configuration in all supported configuration formats
-(``PHP``, ``YAML``, and ``XML``). Example:
+(``PHP``, ``YAML`` and ``XML``). Example:
 
 .. code-block:: rst
 
@@ -146,7 +146,8 @@ If you want to modify that title, use this alternative syntax:
 .. note::
 
     Although they are technically correct, avoid the use of relative internal
-    links such as the following:
+    links such as the following, because they break the references in the
+    generated PDF documentation:
 
     .. code-block:: rst
 
@@ -217,13 +218,13 @@ free of syntax errors and is ready to be reviewed.
 Nevertheless, if you prefer to do this check locally on your own machine before
 submitting your documentation, follow these steps:
 
-* Install `Sphinx`_;
+* Install Sphinx_;
 * Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
 * (Optionally) Install the bundle docs and CMF docs: ``$ bash install.sh``;
 * Run ``make html`` and view the generated HTML in the ``build/`` directory.
 
-.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
-.. _`Sphinx`: http://sphinx-doc.org/
+.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _Sphinx: http://sphinx-doc.org/
 .. _`Symfony documentation`: https://github.com/symfony/symfony-docs
 .. _`reStructuredText Primer`: http://sphinx-doc.org/rest.html
 .. _`reStructuredText Reference`: http://docutils.sourceforge.net/docs/user/rst/quickref.html
