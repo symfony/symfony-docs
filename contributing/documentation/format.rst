@@ -123,7 +123,7 @@ Adding Links
 
 .. code-block:: rst
 
-    :doc:`/path/to/page`
+    :doc:`/absolute/path/to/page`
 
 The page name should not include the file extension (``.rst``). For example:
 
@@ -135,7 +135,18 @@ The page name should not include the file extension (``.rst``). For example:
 
     :doc:`/cookbook/configuration/environments`
 
-The title of the linked page will be automaticall used as the text of the link.
+Although they are technically correct, avoid the use of relative internal links
+such as the following:
+
+.. code-block:: rst
+
+    :doc:`controller`
+
+    :doc:`event_dispatcher/introduction`
+
+    :doc:`environments`
+
+The title of the linked page will be automatically used as the text of the link.
 If you want to modify that title, use this alternative syntax:
 
 .. code-block:: rst
