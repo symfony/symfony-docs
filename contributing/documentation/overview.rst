@@ -321,6 +321,7 @@ in the Symfony Documentation repository to ask the managers if they agree with
 your proposed changes. Otherwise, they could refuse your proposal after having
 made all the work and you would have wasted a lot of time.
 
+.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
 .. _`GitHub`: https://github.com/
 .. _`fork the repository`: https://help.github.com/articles/fork-a-repo
 .. _`Symfony Documentation Contributors`: http://symfony.com/contributors/doc
