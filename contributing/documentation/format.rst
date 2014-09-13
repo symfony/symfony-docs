@@ -119,7 +119,8 @@ Markup format        Use it to display
 Adding Links
 ~~~~~~~~~~~~
 
-**Internal links** to other documentation pages use the following syntax:
+The most common type of links are **internal links** to other documentation pages,
+which use the following syntax:
 
 .. code-block:: rst
 
@@ -135,23 +136,25 @@ The page name should not include the file extension (``.rst``). For example:
 
     :doc:`/cookbook/configuration/environments`
 
-Although they are technically correct, avoid the use of relative internal links
-such as the following:
-
-.. code-block:: rst
-
-    :doc:`controller`
-
-    :doc:`event_dispatcher/introduction`
-
-    :doc:`environments`
-
 The title of the linked page will be automatically used as the text of the link.
 If you want to modify that title, use this alternative syntax:
 
 .. code-block:: rst
 
     :doc:`Spooling Email </cookbook/email/spool>`
+
+.. note::
+
+    Although they are technically correct, avoid the use of relative internal
+    links such as the following:
+
+    .. code-block:: rst
+
+        :doc:`controller`
+
+        :doc:`event_dispatcher/introduction`
+
+        :doc:`environments`
 
 **Links to the API** follow a different syntax, where you must specify the type
 of linked resource (``namespace``, ``class`` or ``method``):
@@ -178,7 +181,7 @@ New Features or Behavior Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're documenting a brand new feature or a change that's been made in
-Symfony2, you should precede your description of the change with a
+Symfony, you should precede your description of the change with a
 ``.. versionadded:: 2.X`` directive and a short description:
 
 .. code-block:: text
@@ -186,7 +189,7 @@ Symfony2, you should precede your description of the change with a
     .. versionadded:: 2.3
         The ``askHiddenResponse`` method was introduced in Symfony 2.3.
 
-    You can also ask a question and hide the response. This is particularly...
+    You can also ask a question and hide the response. This is particularly [...]
 
 If you're documenting a behavior change, it may be helpful to *briefly* describe
 how the behavior has changed.
@@ -197,9 +200,9 @@ how the behavior has changed.
         The ``include()`` function is a new Twig feature that's available in
         Symfony 2.3. Prior, the ``{% include %}`` tag was used.
 
-Whenever a new minor version of Symfony2 is released (e.g. 2.4, 2.5, etc),
+Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
-At this point, all the ``versionadded`` tags for Symfony2 versions that have
+At this point, all the ``versionadded`` tags for Symfony versions that have
 reached end-of-life will be removed. For example, if Symfony 2.5 were released
 today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
 tags would be removed from the new 2.5 branch.
