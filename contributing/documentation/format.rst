@@ -1,11 +1,16 @@
 Documentation Format
 ====================
 
+<<<<<<< HEAD
 The Symfony documentation uses `reStructuredText`_ as its markup language and
 <<<<<<< HEAD
 `Sphinx`_ for building the output (HTML, PDF, ...).
 =======
 `Sphinx`_ for generating the documentation in the formats read by the end users,
+=======
+The Symfony documentation uses reStructuredText_ as its markup language and
+Sphinx_ for generating the documentation in the formats read by the end users,
+>>>>>>> More and more fixes and improvements
 such as HTML and PDF.
 >>>>>>> Revamped the documentation about "Contributing Docs"
 
@@ -17,10 +22,14 @@ stricter with its syntax. If you are new to reStructuredText, take some time to
 familiarize with this format by reading the existing `Symfony documentation`_
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 You can learn more about its syntax by reading existing Symfony `documents`_
 or by reading the `reStructuredText Primer`_ on the Sphinx website.
 =======
 If you prefer to learn more about this format, check out the `reStructuredText Primer`_
+=======
+If you want to learn more about this format, check out the `reStructuredText Primer`_
+>>>>>>> More and more fixes and improvements
 tutorial and the `reStructuredText Reference`_.
 >>>>>>> Revamped the documentation about "Contributing Docs"
 
@@ -73,7 +82,7 @@ Configuration Blocks
 
 Whenever you include a configuration sample, use the ``configuration-block``
 directive to show the configuration in all supported configuration formats
-(``PHP``, ``YAML``, and ``XML``). Example:
+(``PHP``, ``YAML`` and ``XML``). Example:
 
 .. code-block:: rst
 
@@ -155,7 +164,8 @@ If you want to modify that title, use this alternative syntax:
 .. note::
 
     Although they are technically correct, avoid the use of relative internal
-    links such as the following:
+    links such as the following, because they break the references in the
+    generated PDF documentation:
 
     .. code-block:: rst
 
@@ -226,13 +236,13 @@ free of syntax errors and is ready to be reviewed.
 Nevertheless, if you prefer to do this check locally on your own machine before
 submitting your documentation, follow these steps:
 
-* Install `Sphinx`_;
+* Install Sphinx_;
 * Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
 * (Optionally) Install the bundle docs and CMF docs: ``$ bash install.sh``;
 * Run ``make html`` and view the generated HTML in the ``build/`` directory.
 
-.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
-.. _`Sphinx`: http://sphinx-doc.org/
+.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _Sphinx: http://sphinx-doc.org/
 .. _`Symfony documentation`: https://github.com/symfony/symfony-docs
 .. _`reStructuredText Primer`: http://sphinx-doc.org/rest.html
 .. _`reStructuredText Reference`: http://docutils.sourceforge.net/docs/user/rst/quickref.html

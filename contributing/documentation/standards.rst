@@ -140,7 +140,7 @@ English Language Standards
 * **English Dialect**: use the United States English dialect, commonly called
   `American English`_.
 * **Section titles**: use a variant of the title case, where the first
-  word is always capitalized, and all other words are capitalized, except for
+  word is always capitalized and all other words are capitalized, except for
   the closed-class words (read Wikipedia article about `headings and titles`_).
 
   E.g.: The Vitamins are in my Fresh California Raisins

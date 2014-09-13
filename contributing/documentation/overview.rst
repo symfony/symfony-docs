@@ -18,10 +18,10 @@ The Symfony documentation is hosted on GitHub:
 **Before contributing**, you should consider the following:
 >>>>>>> Revamped the documentation about "Contributing Docs"
 
-* Symfony documentation is written using `reStructuredText`_ markup language.
+* Symfony documentation is written using reStructuredText_ markup language.
   If you are not familiar with this format, read :doc:`this article </contributing/documentation/format>`
   for a quick overview of its basic features.
-* Symfony documentation is hosted on `GitHub`_. You'll need a GitHub user account
+* Symfony documentation is hosted on GitHub_. You'll need a GitHub user account
   to contribute documentation.
 * Symfony documentation is published under a
   :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
@@ -157,7 +157,7 @@ tag and a short description:
 
 **Step 10.** After your pull request is eventually accepted and merged in the Symfony
 documentation, you will be included in the `Symfony Documentation Contributors`_
-list. Moreover, if you happen to have a `SensioLabsConnect`_ profile, you will
+list. Moreover, if you happen to have a SensioLabsConnect_ profile, you will
 get a cool `Symfony Documentation Badge`_.
 
 Your Second Documentation Contribution
@@ -315,16 +315,17 @@ which is the state of your work:
 Would You Admit a Huge Pull Request with Lots of Changes?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sure! But before doing a huge change, it's probably a good idea to open an issue
-in the Symfony Documentation repository to ask the managers if they agree with
-your proposed changes. Otherwise, they could refuse your proposal after having
-made all the work and you would have wasted a lot of time.
+First, make sure that the changes are somewhat related. Otherwise, please create
+separate pull requests. Anyway, before submitting a huge change, it's probably a
+good idea to open an issue in the Symfony Documentation repository to ask the
+managers if they agree with your proposed changes. Otherwise, they could refuse
+your proposal after having made all the work and you would have wasted a lot of time.
 
 .. _`github.com/symfony/symfony-docs`: https://github.com/symfony/symfony-docs
-.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
-.. _`GitHub`: https://github.com/
+.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _GitHub: https://github.com/
 .. _`fork the repository`: https://help.github.com/articles/fork-a-repo
 .. _`Symfony Documentation Contributors`: http://symfony.com/contributors/doc
-.. _`SensioLabsConnect`: https://connect.sensiolabs.com/
+.. _SensioLabsConnect: https://connect.sensiolabs.com/
 .. _`Symfony Documentation Badge`: https://connect.sensiolabs.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
