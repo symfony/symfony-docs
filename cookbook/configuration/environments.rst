@@ -262,6 +262,8 @@ The best way to accomplish this is via a new environment called, for example,
             'profiler' => array('only-exceptions' => false),
         ));
 
+.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
+
 And with this simple addition, the application now supports a new environment
 called ``benchmark``.
 
