@@ -1192,12 +1192,15 @@ Visualizing & Debugging Routes
 
 While adding and customizing routes, it's helpful to be able to visualize
 and get detailed information about your routes. A great way to see every route
-in your application is via the ``router:debug`` console command. Execute
+in your application is via the ``debug:router`` console command. Execute
 the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php app/console router:debug
+    $ php app/console debug:router
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``router:debug``.
 
 This command will print a helpful list of *all* the configured routes in
 your application:
@@ -1216,7 +1219,7 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php app/console router:debug article_show
+    $ php app/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:
