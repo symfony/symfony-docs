@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-05T09:46:38Z
+
+:+1: thanks @xabbuh for bringing in consistency!
+
+However, there is a `YAML` instance that we could also transform to `Yaml`. It's in this phrase:
+
+```
+Fast
+
+One of the goal of Symfony YAML is to find the right balance between speed and features. It supports just the needed feature to handle configuration files.
+```
+
+`Symfony YAML` refers to the component or to the subset dialect of YAML supported by Symfony?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-05T09:51:24Z
+
+@javiereguiluz Good catch. The sentence is also worded really weird. I updated it too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-05T10:02:36Z
+
+@xabbuh it's much better now! Thanks.
