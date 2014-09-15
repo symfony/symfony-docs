@@ -517,6 +517,34 @@ returns the returned code from the command (return value from command's
 
 .. note::
 
+    Calling a command in this way will not dispatch any events defined for
+    the application. To run a command with events use must use the
+    ``runCommand()`` method on your application object
+
+.. versionadded:: 2.6
+    The ``runCommand()`` method was introduced in Symfony 2.6.
+
+Calling a command from another one with events::
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $application = $this->getApplication();
+        $command = $application>find('demo:greet');
+
+        $arguments = array(
+            'command' => 'demo:greet',
+            'name'    => 'Fabien',
+            '--yell'  => true,
+        );
+
+        $input = new ArrayInput($arguments);
+        $returnCode = $application->runCommand($command, $input, $output);
+
+        // ...
+    }
+
+.. note::
+
     Most of the time, calling a command from code that is not executed on the
     command line is not a good idea for several reasons. First, the command's
     output is optimized for the console. But more important, you can think of
