@@ -114,15 +114,16 @@ those errors should be attributed::
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $context->addViolationAt(
-                    'firstName',
-                    'This name sounds totally fake!',
-                    array(),
-                    null
-                );
+                $context->buildViolation('This name sounds totally fake!')
+                    ->atPath('firstName')
+                    ->addViolation();
             }
         }
     }
+
+.. versionadded:: 2.5
+    The ``buildViolation`` method was added in Symfony 2.5. For usage examples with
+    older Symfony versions, see the corresponding versions of this documentation page.
 
 Static Callbacks
 ----------------
@@ -137,12 +138,9 @@ have access to the object instance, they receive the object as the first argumen
 
         // check if the name is actually a fake name
         if (in_array($object->getFirstName(), $fakeNames)) {
-            $context->addViolationAt(
-                'firstName',
-                'This name sounds totally fake!',
-                array(),
-                null
-            );
+                $context->buildViolation('This name sounds totally fake!')
+                    ->atPath('firstName')
+                    ->addViolation();
         }
     }
 
