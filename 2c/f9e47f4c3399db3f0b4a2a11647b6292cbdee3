@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-23T14:40:13Z
+
+:+1: @zomberg thanks for fixing this issue.
+
+@WouterJ @weaverryan this is a quick win that can be merged right away.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-23T15:12:49Z
+
+@javiereguiluz Hmm. But why wouldn't we always recommend the latest version? Especially for the quick tour, I would want them seeing the latest and greatest. What do you think?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T15:22:36Z
+
+@weaverryan But then there was no reason to maintain three versions of the quick tour. With the current situation, people may believe that they should choose the proper version of the quick tour from the version switcher. If they then got installation instructions for a different version, they would be confused, wouldn't they?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-23T15:23:12Z
+
+My only concern is that they might be following the 2.3.x tutorial (for whatever reason they don't follow the latest tutorial) but they are using the 2.6.x version. The tutorial is so basic that there should not be BC problems, but who knows.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-23T15:25:21Z
+
+I like @xabbuh's proposal. Why do we need different versions of the Quick Start tutorial?
+
+---------------------------------------------------------------------------
+
+by zomberg at 2014-08-23T16:57:07Z
+
+This fix wrong: ~2.3 or ~2.4 (or ~2.5) install latest 2.x.x version (currently it's 2.5.x).
+
+If you decide use different versions for different versions of Symfony version must be specified as:
+- '2.3.*' for install latest version for 2.3 for 2.3 docs.
+- '2.4.*' for install  latest version for 2.4 for 2.4 docs.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-15T18:27:25Z
+
+I think this is not too important of an issue, because we'll be replacing the installer soon. And when we do, I think we will need to look through the docs and start removing installation instructions and pointing simply to symfony.com/download and making that the *one* path of installation. On that page (or the installer) it'll have details about downloading the latest version of the LTS.
+
+The quick tour is a spot for "showing a newcomer about Symfony". And so I think we should *always* recommend the latest version of Symfony. But again, this will all need to be changed soon anyways.
+
+So:
+
+1. I'm going to merge this, though it makes not technical difference (as @zomberg pointed out, `~2.3` and `~2.4` will, at this moment, both cause 2.5.4 to be installed)
+
+2. Soon, we'll revisit all of this installation stuff and really streamline it.
+
+Thanks!
