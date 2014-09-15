@@ -1,17 +1,19 @@
 .. index::
    single: Page creation
 
-Creating Pages in Symfony2
-==========================
+.. _creating-pages-in-symfony2:
 
-Creating a new page in Symfony2 is a simple two-step process:
+Creating Pages in Symfony
+=========================
+
+Creating a new page in Symfony is a simple two-step process:
 
 * *Create a route*: A route defines the URL (e.g. ``/about``) to your page
-  and specifies a controller (which is a PHP function) that Symfony2 should
+  and specifies a controller (which is a PHP function) that Symfony should
   execute when the URL of an incoming request matches the route path;
 
 * *Create a controller*: A controller is a PHP function that takes the incoming
-  request and transforms it into the Symfony2 ``Response`` object that's
+  request and transforms it into the Symfony ``Response`` object that's
   returned to the user.
 
 This simple approach is beautiful because it matches the way that the Web works.
@@ -19,7 +21,7 @@ Every interaction on the Web is initiated by an HTTP request. The job of
 your application is simply to interpret the request and return the appropriate
 HTTP response.
 
-Symfony2 follows this philosophy and provides you with tools and conventions
+Symfony follows this philosophy and provides you with tools and conventions
 to keep your application organized as it grows in users and complexity.
 
 .. index::
@@ -33,28 +35,28 @@ Environments & Front Controllers
 Every Symfony application runs within an :term:`environment`. An environment
 is a specific set of configuration and loaded bundles, represented by a string.
 The same application can be run with different configurations by running the
-application in different environments. Symfony2 comes with three environments
+application in different environments. Symfony comes with three environments
 defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
 
 Environments are useful by allowing a single application to have a dev environment
 built for debugging and a production environment optimized for speed. You might
 also load specific bundles based on the selected environment. For example,
-Symfony2 comes with the WebProfilerBundle (described below), enabled only
+Symfony comes with the WebProfilerBundle (described below), enabled only
 in the ``dev`` and ``test`` environments.
 
-Symfony2 comes with two web-accessible front controllers: ``app_dev.php``
+Symfony comes with two web-accessible front controllers: ``app_dev.php``
 provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
-All web accesses to Symfony2 normally go through one of these front controllers.
+All web accesses to Symfony normally go through one of these front controllers.
 (The ``test`` environment is normally only used when running unit tests, and so
 doesn't have a dedicated front controller. The console tool also provides a
 front controller that can be used with any environment.)
 
 When the front controller initializes the kernel, it provides two parameters:
 the environment, and also whether the kernel should run in debug mode.
-To make your application respond faster, Symfony2 maintains a cache under the
+To make your application respond faster, Symfony maintains a cache under the
 ``app/cache/`` directory. When debug mode is enabled (such as ``app_dev.php``
 does by default), this cache is flushed automatically whenever you make changes
-to any code or configuration. When running in debug mode, Symfony2 runs
+to any code or configuration. When running in debug mode, Symfony runs
 slower, but your changes are reflected without having to manually clear the
 cache.
 
@@ -78,9 +80,9 @@ process.
 
 .. note::
 
-    The tutorial assumes that you've already downloaded Symfony2 and configured
+    The tutorial assumes that you've already downloaded Symfony and configured
     your webserver. The above URL assumes that ``localhost`` points to the
-    ``web`` directory of your new Symfony2 project. For detailed information
+    ``web`` directory of your new Symfony project. For detailed information
     on this process, see the documentation on the web server you are using.
     Here are some relevant documentation pages for the web server you might be using:
 
@@ -90,7 +92,7 @@ process.
 Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you begin, you'll need to create a *bundle*. In Symfony2, a :term:`bundle`
+Before you begin, you'll need to create a *bundle*. In Symfony, a :term:`bundle`
 is like a plugin, except that all of the code in your application will live
 inside a bundle.
 
@@ -134,8 +136,8 @@ inside the bundle.
 Step 1: Create the Route
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the routing configuration file in a Symfony2 application is
-located at ``app/config/routing.yml``. Like all configuration in Symfony2,
+By default, the routing configuration file in a Symfony application is
+located at ``app/config/routing.yml``. Like all configuration in Symfony,
 you can also choose to use XML or PHP out of the box to configure routes.
 
 If you look at the main routing file, you'll see that Symfony already added
@@ -265,7 +267,7 @@ file inside your ``AcmeDemoBundle``::
 In reality, the controller is nothing more than a PHP method that you create
 and Symfony executes. This is where your code uses information from the request
 to build and prepare the resource being requested. Except in some advanced
-cases, the end product of a controller is always the same: a Symfony2 ``Response``
+cases, the end product of a controller is always the same: a Symfony ``Response``
 object.
 
 Create the ``indexAction`` method that Symfony will execute when the ``random``
@@ -370,7 +372,7 @@ of the given, rendered template. Like any other controller, you will ultimately
 return that ``Response`` object.
 
 Notice that there are two different examples for rendering the template.
-By default, Symfony2 supports two different templating languages: classic
+By default, Symfony supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be
 alarmed - you're free to choose either or even both in the same project.
 
@@ -479,8 +481,8 @@ The Directory Structure
 -----------------------
 
 After just a few short sections, you already understand the philosophy behind
-creating and rendering pages in Symfony2. You've also already begun to see
-how Symfony2 projects are structured and organized. By the end of this section,
+creating and rendering pages in Symfony. You've also already begun to see
+how Symfony projects are structured and organized. By the end of this section,
 you'll know where to find and put different types of files and why.
 
 Though entirely flexible, by default, each Symfony :term:`application` has
@@ -514,7 +516,7 @@ images, stylesheets, and JavaScript files. It is also where each
     $kernel->handle(Request::createFromGlobals())->send();
 
 The front controller file (``app.php`` in this example) is the actual PHP
-file that's executed when using a Symfony2 application and its job is to
+file that's executed when using a Symfony application and its job is to
 use a Kernel class, ``AppKernel``, to bootstrap the application.
 
 .. tip::
@@ -606,9 +608,9 @@ The Bundle System
 -----------------
 
 A bundle is similar to a plugin in other software, but even better. The key
-difference is that *everything* is a bundle in Symfony2, including both the
+difference is that *everything* is a bundle in Symfony, including both the
 core framework functionality and the code written for your application.
-Bundles are first-class citizens in Symfony2. This gives you the flexibility
+Bundles are first-class citizens in Symfony. This gives you the flexibility
 to use pre-built features packaged in `third-party bundles`_ or to distribute
 your own bundles. It makes it easy to pick and choose which features to enable
 in your application and to optimize them the way you want.
@@ -724,7 +726,7 @@ generating a basic bundle skeleton:
     $ php app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates with a basic controller, template and routing
-resource that can be customized. You'll learn more about Symfony2's command-line
+resource that can be customized. You'll learn more about Symfony's command-line
 tools later.
 
 .. tip::
@@ -738,7 +740,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Take a look at ``AcmeDemoBundle``, as it contains
+between all Symfony bundles. Take a look at ``AcmeDemoBundle``, as it contains
 some of the most common elements of a bundle:
 
 * ``Controller/`` contains the controllers of the bundle (e.g. ``RandomController.php``);
@@ -860,7 +862,7 @@ routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.
 The configuration file ships with sensible defaults. As you read more and
-explore each part of Symfony2, you'll learn about the specific configuration
+explore each part of Symfony, you'll learn about the specific configuration
 options of each feature.
 
 .. sidebar:: Configuration Formats
@@ -915,7 +917,7 @@ rebuilt on each request in the ``dev`` environment (for the developer's convenie
 but cached in the ``prod`` environment. All environments live together on
 the same machine and execute the same application.
 
-A Symfony2 project generally begins with three environments (``dev``, ``test``
+A Symfony project generally begins with three environments (``dev``, ``test``
 and ``prod``), though creating new environments is easy. You can view your
 application in different environments simply by changing the front controller
 in your browser. To see the application in the ``dev`` environment, access
@@ -1043,7 +1045,7 @@ just pieces of it between environments.
 Summary
 -------
 
-Congratulations! You've now seen every fundamental aspect of Symfony2 and have
+Congratulations! You've now seen every fundamental aspect of Symfony and have
 hopefully discovered how easy and flexible it can be. And while there are
 *a lot* of features still to come, be sure to keep the following basic points
 in mind:
@@ -1056,7 +1058,7 @@ in mind:
   and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
   used to help updated vendor libraries);
 
-* Each feature in Symfony2 (including the Symfony2 framework core) is organized
+* Each feature in Symfony (including the Symfony framework core) is organized
   into a *bundle*, which is a structured set of files for that feature;
 
 * The **configuration** for each bundle lives in the ``Resources/config``
@@ -1069,7 +1071,7 @@ in mind:
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
 
 From here, each chapter will introduce you to more and more powerful tools
-and advanced concepts. The more you know about Symfony2, the more you'll
+and advanced concepts. The more you know about Symfony, the more you'll
 appreciate the flexibility of its architecture and the power it gives you
 to rapidly develop applications.
 

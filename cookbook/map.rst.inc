@@ -197,6 +197,7 @@
   * :doc:`/cookbook/testing/doctrine`
   * :doc:`/cookbook/testing/bootstrap`
   * (email) :doc:`/cookbook/email/testing`
+  * (form) :doc:`/cookbook/form/unit_testing`
 
 * :doc:`/cookbook/validation/index`
 

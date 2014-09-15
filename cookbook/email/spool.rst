@@ -4,7 +4,7 @@
 How to Spool Emails
 ===================
 
-When you are using the SwiftmailerBundle to send an email from a Symfony2
+When you are using the SwiftmailerBundle to send an email from a Symfony
 application, it will default to sending the email immediately. You may, however,
 want to avoid the performance hit of the communication between Swift Mailer
 and the email transport, which could cause the user to wait for the next

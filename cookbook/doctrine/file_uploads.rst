@@ -213,7 +213,7 @@ rules::
 
 .. note::
 
-    As you are using the ``File`` constraint, Symfony2 will automatically guess
+    As you are using the ``File`` constraint, Symfony will automatically guess
     that the form field is a file upload input. That's why you did not have
     to set it explicitly when creating the form above (``->add('file')``).
 

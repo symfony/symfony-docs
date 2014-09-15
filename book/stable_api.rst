@@ -1,10 +1,12 @@
 .. index::
    single: Stable API
 
-The Symfony2 Stable API
-=======================
+.. _the-symfony2-stable-api:
 
-The Symfony2 stable API is a subset of all Symfony2 published public methods
+The Symfony Stable API
+======================
+
+The Symfony stable API is a subset of all Symfony published public methods
 (components and core bundles) that share the following properties:
 
 * The namespace and class name won't change;

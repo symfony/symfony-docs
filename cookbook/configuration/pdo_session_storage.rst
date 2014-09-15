@@ -4,12 +4,12 @@
 How to Use PdoSessionHandler to Store Sessions in the Database
 ==============================================================
 
-The default session storage of Symfony2 writes the session information to
+The default Symfony session storage writes the session information to
 file(s). Most medium to large websites use a database to store the session
 values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
-Symfony2 has a built-in solution for database session storage called
+Symfony has a built-in solution for database session storage called
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):

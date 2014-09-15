@@ -4,7 +4,7 @@
 How to Use Varnish to Speed up my Website
 =========================================
 
-Because Symfony2's cache uses the standard HTTP cache headers, the
+Because Symfony's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
 cached content quickly and including support for :ref:`Edge Side Includes <edge-side-includes>`.
@@ -22,12 +22,12 @@ headers to be used, you need to configure Varnish as a
 Configuration
 -------------
 
-As seen previously, Symfony2 is smart enough to detect whether it talks to a
+As seen previously, Symfony is smart enough to detect whether it talks to a
 reverse proxy that understands ESI or not. It works out of the box when you
-use the Symfony2 reverse proxy, but you need a special configuration to make
-it work with Varnish. Thankfully, Symfony2 relies on yet another standard
+use the Symfony reverse proxy, but you need a special configuration to make
+it work with Varnish. Thankfully, Symfony relies on yet another standard
 written by Akamai (`Edge Architecture`_), so the configuration tips in this
-chapter can be useful even if you don't use Symfony2.
+chapter can be useful even if you don't use Symfony.
 
 .. note::
 
@@ -52,7 +52,7 @@ application:
 
 Then, optimize Varnish so that it only parses the Response contents when there
 is at least one ESI tag by checking the ``Surrogate-Control`` header that
-Symfony2 adds automatically:
+Symfony adds automatically:
 
 .. code-block:: text
 
@@ -91,16 +91,16 @@ Symfony2 adds automatically:
 Cache Invalidation
 ------------------
 
-If you want to cache content that changes frequently and still serve 
-the most recent version to users, you need to invalidate that content. 
-While `cache invalidation`_ allows you to purge content from your 
+If you want to cache content that changes frequently and still serve
+the most recent version to users, you need to invalidate that content.
+While `cache invalidation`_ allows you to purge content from your
 proxy before it has expired, it adds complexity to your caching setup.
 
 .. tip::
 
-    The open source `FOSHttpCacheBundle`_ takes the pain out of cache 
-    invalidation by helping you to organize your caching and 
-    invalidation setup. 
+    The open source `FOSHttpCacheBundle`_ takes the pain out of cache
+    invalidation by helping you to organize your caching and
+    invalidation setup.
 
 Varnish can be configured to accept a special HTTP ``PURGE`` method
 that will invalidate the cache for a given resource:

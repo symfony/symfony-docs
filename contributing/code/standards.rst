@@ -1,9 +1,9 @@
 Coding Standards
 ================
 
-When contributing code to Symfony2, you must follow its coding standards. To
+When contributing code to Symfony, you must follow its coding standards. To
 make a long story short, here is the golden rule: **Imitate the existing
-Symfony2 code**. Most open-source Bundles and libraries used by Symfony2 also
+Symfony code**. Most open-source Bundles and libraries used by Symfony also
 follow the same guidelines, and you should too.
 
 Remember that the main advantage of standards is that every piece of code
@@ -73,7 +73,7 @@ example containing most features described below:
                 if ('values' === $mergedOptions['some_default']) {
                     return substr($dummy, 0, 5);
                 }
-                
+
                 return ucwords($dummy);
             }
 
@@ -103,8 +103,8 @@ Structure
 
 * Declare class properties before methods;
 
-* Declare public methods first, then protected ones and finally private ones. 
-  The exceptions to this rule are the class constructor and the ``setUp`` and 
+* Declare public methods first, then protected ones and finally private ones.
+  The exceptions to this rule are the class constructor and the ``setUp`` and
   ``tearDown`` methods of PHPUnit tests, which should always be the first methods
   to increase readability;
 
@@ -123,7 +123,7 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Prefix abstract classes with ``Abstract``. Please note some early Symfony2 classes
+* Prefix abstract classes with ``Abstract``. Please note some early Symfony classes
   do not follow this convention and have not been renamed for backward compatibility
   reasons. However all new abstract classes must follow this naming convention;
 

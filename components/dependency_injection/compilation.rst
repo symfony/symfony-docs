@@ -207,7 +207,7 @@ The XML version of the config would then look like this:
 
 .. note::
 
-    In the Symfony2 full stack framework there is a base Extension class which
+    In the Symfony full stack framework there is a base Extension class which
     implements these methods as well as a shortcut method for processing the
     configuration. See :doc:`/cookbook/bundles/extension` for more details.
 
@@ -298,7 +298,7 @@ method is called by implementing :class:`Symfony\\Component\\DependencyInjection
     }
 
 For more details, see :doc:`/cookbook/bundles/prepend_extension`, which is
-specific to the Symfony2 Framework, but contains more details about this feature.
+specific to the Symfony Framework, but contains more details about this feature.
 
 Creating a Compiler Pass
 ------------------------

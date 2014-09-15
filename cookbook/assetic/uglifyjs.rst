@@ -57,7 +57,7 @@ in the ``node_modules`` directory:
 Configure the ``uglifyjs2`` Filter
 ----------------------------------
 
-Now we need to configure Symfony2 to use the ``uglifyjs2`` filter when processing
+Now we need to configure Symfony to use the ``uglifyjs2`` filter when processing
 your JavaScripts:
 
 .. configuration-block::
