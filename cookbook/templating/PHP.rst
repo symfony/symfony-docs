@@ -4,9 +4,9 @@
 How to Use PHP instead of Twig for Templates
 ============================================
 
-Symfony2 defaults to Twig for its template engine, but you can still use
+Symfony defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
-Symfony2. Symfony2 adds some nice features on top of PHP to make writing
+Symfony. Symfony adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
 
 Rendering PHP Templates
@@ -85,7 +85,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, this problem is thought about
+well-known header and footer. In Symfony, this problem is thought about
 differently: a template can be decorated by another one.
 
 The ``index.html.php`` template is decorated by ``layout.html.php``, thanks to
@@ -114,7 +114,7 @@ Now, have a look at the ``layout.html.php`` file:
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another one (``::base.html.php``). Symfony2
+The layout is itself decorated by another one (``::base.html.php``). Symfony
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
 looked for in the ``app/Resources/views/`` directory. This directory stores
@@ -138,7 +138,7 @@ For both layouts, the ``$view['slots']->output('_content')`` expression is
 replaced by the content of the child template, ``index.html.php`` and
 ``layout.html.php`` respectively (more on slots in the next section).
 
-As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In
+As you can see, Symfony provides methods on a mysterious ``$view`` object. In
 a template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods that makes the template engine tick.
 
@@ -266,9 +266,9 @@ you more about those.
 Using Template Helpers
 ----------------------
 
-The Symfony2 templating system can be easily extended via helpers. Helpers are
+The Symfony templating system can be easily extended via helpers. Helpers are
 PHP objects that provide features useful in a template context. ``actions`` and
-``slots`` are two of the built-in Symfony2 helpers.
+``slots`` are two of the built-in Symfony helpers.
 
 Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,7 +300,7 @@ Using Assets: Images, JavaScripts and Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides the ``assets`` tag to deal with them easily:
+Symfony provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 

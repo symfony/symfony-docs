@@ -14,30 +14,32 @@ developing in immediately.
     If you're looking for instructions on how best to create a new project
     and store it via source control, see `Using Source Control`_.
 
-Installing a Symfony2 Distribution
-----------------------------------
+.. _installing-a-symfony2-distribution:
+
+Installing a Symfony Distribution
+---------------------------------
 
 .. tip::
 
     First, check that you have installed and configured a Web server (such
-    as Apache) with PHP. For more information on Symfony2 requirements, see the
+    as Apache) with PHP. For more information on Symfony requirements, see the
     :doc:`requirements reference </reference/requirements>`.
 
-Symfony2 packages "distributions", which are fully-functional applications
-that include the Symfony2 core libraries, a selection of useful bundles, a
+Symfony packages "distributions", which are fully-functional applications
+that include the Symfony core libraries, a selection of useful bundles, a
 sensible directory structure and some default configuration. When you download
-a Symfony2 distribution, you're downloading a functional application skeleton
+a Symfony distribution, you're downloading a functional application skeleton
 that can be used immediately to begin developing your application.
 
-Start by visiting the Symfony2 download page at `http://symfony.com/download`_.
+Start by visiting the Symfony download page at `http://symfony.com/download`_.
 On this page, you'll see the *Symfony Standard Edition*, which is the main
-Symfony2 distribution. There are 2 ways to get your project started:
+Symfony distribution. There are 2 ways to get your project started:
 
 Option 1) Composer
 ~~~~~~~~~~~~~~~~~~
 
 `Composer`_ is a dependency management library for PHP, which you can use
-to download the Symfony2 Standard Edition.
+to download the Symfony Standard Edition.
 
 Start by `downloading Composer`_ anywhere onto your local computer. If you
 have curl installed, it's as easy as:
@@ -119,7 +121,7 @@ next section.
     information.
 
 All public files and the front controller that handles incoming requests in
-a Symfony2 application live in the ``Symfony/web/`` directory. So, assuming
+a Symfony application live in the ``Symfony/web/`` directory. So, assuming
 you unpacked the archive into your web server's or virtual host's document root,
 your application's URLs will start with ``http://localhost/Symfony/web/``.
 
@@ -202,7 +204,7 @@ At this point, all of the needed third-party libraries now live in the ``vendor/
 directory. You also have a default application setup in ``app/`` and some
 sample code inside the ``src/`` directory.
 
-Symfony2 comes with a visual server configuration tester to help make sure
+Symfony comes with a visual server configuration tester to help make sure
 your Web server and PHP are configured to use Symfony. Use the following URL
 to check your configuration:
 
@@ -282,13 +284,13 @@ If there are any issues, correct them now before moving on.
     and Group values).
 
 When everything is fine, click on "Go to the Welcome page" to request your
-first "real" Symfony2 webpage:
+first "real" Symfony webpage:
 
 .. code-block:: text
 
     http://localhost/app_dev.php/
 
-Symfony2 should welcome and congratulate you for your hard work so far!
+Symfony should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.png
 
@@ -307,7 +309,7 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 Beginning Development
 ---------------------
 
-Now that you have a fully-functional Symfony2 application, you can begin
+Now that you have a fully-functional Symfony application, you can begin
 development! Your distribution may contain some sample code - check the
 ``README.md`` file included with the distribution (open it as a text file)
 to learn about what sample code was included with your distribution.

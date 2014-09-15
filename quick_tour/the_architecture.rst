@@ -4,13 +4,13 @@ The Architecture
 You are my hero! Who would have thought that you would still be here after the
 first three parts? Your efforts will be well rewarded soon. The first three
 parts didn't look too deeply at the architecture of the framework. Because it
-makes Symfony2 stand apart from the framework crowd, let's dive into the
+makes Symfony stand apart from the framework crowd, let's dive into the
 architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
 
-The directory structure of a Symfony2 :term:`application` is rather flexible,
+The directory structure of a Symfony :term:`application` is rather flexible,
 but the recommended structure is as follows:
 
 * ``app/``:    the application configuration;
@@ -66,14 +66,14 @@ Understanding the Bundle System
 -------------------------------
 
 This section introduces one of the greatest and most powerful features of
-Symfony2, the :term:`bundle` system.
+Symfony, the :term:`bundle` system.
 
 A bundle is kind of like a plugin in other software. So why is it called a
 *bundle* and not a *plugin*? This is because *everything* is a bundle in
-Symfony2, from the core framework features to the code you write for your
+Symfony, from the core framework features to the code you write for your
 application.
 
-Bundles are first-class citizens in Symfony2. This gives you the flexibility
+Bundles are first-class citizens in Symfony. This gives you the flexibility
 to use pre-built features packaged in third-party bundles or to distribute your
 own bundles. It makes it easy to pick and choose which features to enable in
 your application and optimize them the way you want. And at the end of the day,
@@ -233,7 +233,7 @@ Logical File Names
 ..................
 
 When you want to reference a file from a bundle, use this notation:
-``@BUNDLE_NAME/path/to/file``; Symfony2 will resolve ``@BUNDLE_NAME``
+``@BUNDLE_NAME/path/to/file``; Symfony will resolve ``@BUNDLE_NAME``
 to the real path to the bundle. For instance, the logical path
 ``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
 ``src/Acme/DemoBundle/Controller/DemoController.php``, because Symfony knows
@@ -267,7 +267,7 @@ first look for the ``WelcomeController`` class in AcmeNewBundle and, if
 it doesn't exist, then look inside AcmeDemoBundle. This means that one bundle
 can override almost any part of another bundle!
 
-Do you understand now why Symfony2 is so flexible? Share your bundles between
+Do you understand now why Symfony is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
 
 .. _using-vendors:
@@ -277,18 +277,18 @@ Using Vendors
 
 Odds are that your application will depend on third-party libraries. Those
 should be stored in the ``vendor/`` directory. This directory already contains
-the Symfony2 libraries, the SwiftMailer library, the Doctrine ORM, the Twig
+the Symfony libraries, the SwiftMailer library, the Doctrine ORM, the Twig
 templating system, and some other third party libraries and bundles.
 
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony2 is probably one of the fastest full-stack frameworks around. But how
+Symfony is probably one of the fastest full-stack frameworks around. But how
 can it be so fast if it parses and interprets tens of YAML and XML files for
 each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``app/cache/`` directory. In the development
-environment, Symfony2 is smart enough to flush the cache when you change a
+environment, Symfony is smart enough to flush the cache when you change a
 file. But in the production environment, to speed things up, it is your
 responsibility to clear the cache when you update your code or change its
 configuration.
@@ -320,12 +320,12 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything in Symfony2
+moving things around and making Symfony work for you. Everything in Symfony
 is designed to get out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
-need to learn a lot to become a Symfony2 master. Ready to dig into these
+need to learn a lot to become a Symfony master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 

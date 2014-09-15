@@ -343,7 +343,7 @@ assets_base_urls
 
 This option allows you to define base URLs to be used for assets referenced
 from ``http`` and ``ssl`` (``https``) pages. A string value may be provided in
-lieu of a single-element array. If multiple base URLs are provided, Symfony2
+lieu of a single-element array. If multiple base URLs are provided, Symfony
 will select one from the collection each time it generates an asset's path.
 
 For your convenience, ``assets_base_urls`` can be set directly with a string or

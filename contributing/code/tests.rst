@@ -1,19 +1,21 @@
-Running Symfony2 Tests
-======================
+.. _running-symfony2-tests:
+
+Running Symfony Tests
+=====================
 
 Before submitting a :doc:`patch <patches>` for inclusion, you need to run the
-Symfony2 test suite to check that you have not broken anything.
+Symfony test suite to check that you have not broken anything.
 
 PHPUnit
 -------
 
-To run the Symfony2 test suite, `install PHPUnit`_ 3.7 (or later) first.
+To run the Symfony test suite, `install PHPUnit`_ 3.7 (or later) first.
 
 Dependencies (optional)
 -----------------------
 
 To run the entire test suite, including tests that depend on external
-dependencies, Symfony2 needs to be able to autoload them. By default, they are
+dependencies, Symfony needs to be able to autoload them. By default, they are
 autoloaded from ``vendor/`` under the main root directory (see
 ``autoload.php.dist``).
 
@@ -68,7 +70,7 @@ Running
 
 First, update the vendors (see above).
 
-Then, run the test suite from the Symfony2 root directory with the following
+Then, run the test suite from the Symfony root directory with the following
 command:
 
 .. code-block:: bash

@@ -5,13 +5,13 @@ Controller
 ==========
 
 A controller is a PHP function you create that takes information from the
-HTTP request and constructs and returns an HTTP response (as a Symfony2
+HTTP request and constructs and returns an HTTP response (as a Symfony
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
 application* needs to render the content of a page.
 
-See how simple this is by looking at a Symfony2 controller in action.
+See how simple this is by looking at a Symfony controller in action.
 The following controller would render a page that simply prints ``Hello world!``::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +50,7 @@ common examples:
 Requests, Controller, Response Lifecycle
 ----------------------------------------
 
-Every request handled by a Symfony2 project goes through the same simple lifecycle.
+Every request handled by a Symfony project goes through the same simple lifecycle.
 The framework takes care of the repetitive tasks and ultimately executes a
 controller, which houses your custom application code:
 
@@ -87,7 +87,7 @@ A Simple Controller
 -------------------
 
 While a controller can be any PHP callable (a function, method on an object,
-or a ``Closure``), in Symfony2, a controller is usually a single method inside
+or a ``Closure``), in Symfony, a controller is usually a single method inside
 a controller object. Controllers are also called *actions*.
 
 .. code-block:: php
@@ -117,7 +117,7 @@ a controller object. Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony takes advantage of PHP 5.3 namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 
@@ -185,8 +185,8 @@ controller and passes in ``ryan`` for the ``$name`` variable. Creating a
 "page" means simply creating a controller method and associated route.
 
 Notice the syntax used to refer to the controller: ``AcmeHelloBundle:Hello:index``.
-Symfony2 uses a flexible string notation to refer to different controllers.
-This is the most common syntax and tells Symfony2 to look for a controller
+Symfony uses a flexible string notation to refer to different controllers.
+This is the most common syntax and tells Symfony to look for a controller
 class called ``HelloController`` inside a bundle named ``AcmeHelloBundle``. The
 method ``indexAction()`` is then executed.
 
@@ -232,7 +232,7 @@ passed to that method::
 
 The controller has a single argument, ``$name``, which corresponds to the
 ``{name}`` parameter from the matched route (``ryan`` in the example). In
-fact, when executing your controller, Symfony2 matches each argument of
+fact, when executing your controller, Symfony matches each argument of
 the controller with a parameter from the matched route. Take the following
 example:
 
@@ -369,7 +369,7 @@ Use it! See :doc:`/cookbook/templating/render_without_controller`.
 The Base Controller Class
 -------------------------
 
-For convenience, Symfony2 comes with a base ``Controller`` class that assists
+For convenience, Symfony comes with a base ``Controller`` class that assists
 with some of the most common controller tasks and gives your controller class
 access to any resource it might need. By extending this ``Controller`` class,
 you can take advantage of several helper methods.
@@ -393,7 +393,7 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
 
 This doesn't actually change anything about how your controller works. In
 the next section, you'll learn about the helper methods that the base controller
-class makes available. These methods are just shortcuts to using core Symfony2
+class makes available. These methods are just shortcuts to using core Symfony
 functionality that's available to you with or without the use of the base
 ``Controller`` class. A great way to see the core functionality in action
 is to look in the
@@ -422,7 +422,7 @@ Common Controller Tasks
 Though a controller can do virtually anything, most controllers will perform
 the same basic tasks over and over again. These tasks, such as redirecting,
 forwarding, rendering templates and accessing core services, are very easy
-to manage in Symfony2.
+to manage in Symfony.
 
 .. index::
    single: Controller; Redirecting
@@ -496,15 +496,15 @@ look something like the following::
     }
 
 And just like when creating a controller for a route, the order of the arguments
-to ``fancyAction`` doesn't matter. Symfony2 matches the index key names
+to ``fancyAction`` doesn't matter. Symfony matches the index key names
 (e.g. ``name``) with the method argument names (e.g. ``$name``). If you
-change the order of the arguments, Symfony2 will still pass the correct
+change the order of the arguments, Symfony will still pass the correct
 value to each variable.
 
 .. tip::
 
     Like other base ``Controller`` methods, the ``forward`` method is just
-    a shortcut for core Symfony2 functionality. A forward can be accomplished
+    a shortcut for core Symfony functionality. A forward can be accomplished
     directly by duplicating the current request. When this
     :ref:`sub request <http-kernel-sub-requests>` is executed via the ``http_kernel``
     service the ``HttpKernel`` returns a ``Response`` object::
@@ -598,7 +598,7 @@ The Symfony templating engine is explained in great detail in the
 Accessing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-When extending the base controller class, you can access any Symfony2 service
+When extending the base controller class, you can access any Symfony service
 via the ``get()`` method. Here are several common services you might need::
 
     $templating = $this->get('templating');
@@ -643,7 +643,7 @@ The ``createNotFoundException()`` method creates a special ``NotFoundHttpExcepti
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
 Of course, you're free to throw any ``Exception`` class in your controller -
-Symfony2 will automatically return a 500 HTTP response code.
+Symfony will automatically return a 500 HTTP response code.
 
 .. code-block:: php
 
@@ -661,9 +661,9 @@ Both of these error pages can be customized. For details, read the
 Managing the Session
 --------------------
 
-Symfony2 provides a nice session object that you can use to store information
+Symfony provides a nice session object that you can use to store information
 about the user (be it a real person using a browser, a bot, or a web service)
-between requests. By default, Symfony2 stores the attributes in a cookie
+between requests. By default, Symfony stores the attributes in a cookie
 by using the native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved

@@ -24,20 +24,20 @@ or after a method is executed, without interfering with other plugins. This is
 not an easy problem to solve with single inheritance, and multiple inheritance
 (were it possible with PHP) has its own drawbacks.
 
-The Symfony2 EventDispatcher component implements the `Mediator`_ pattern in
+The Symfony EventDispatcher component implements the `Mediator`_ pattern in
 a simple and effective way to make all these things possible and to make your
 projects truly extensible.
 
 Take a simple example from :doc:`/components/http_kernel/introduction`. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
-used. To make this possible, the Symfony2 kernel throws an event -
+used. To make this possible, the Symfony kernel throws an event -
 ``kernel.response``. Here's how it works:
 
 * A *listener* (PHP object) tells a central *dispatcher* object that it wants
   to listen to the ``kernel.response`` event;
 
-* At some point, the Symfony2 kernel tells the *dispatcher* object to dispatch
+* At some point, the Symfony kernel tells the *dispatcher* object to dispatch
   the ``kernel.response`` event, passing with it an ``Event`` object that has
   access to the ``Response`` object;
 

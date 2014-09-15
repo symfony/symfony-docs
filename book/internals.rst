@@ -4,19 +4,19 @@
 Internals
 =========
 
-Looks like you want to understand how Symfony2 works and how to extend it.
+Looks like you want to understand how Symfony works and how to extend it.
 That makes me very happy! This section is an in-depth explanation of the
-Symfony2 internals.
+Symfony internals.
 
 .. note::
 
-    You only need to read this section if you want to understand how Symfony2
-    works behind the scenes, or if you want to extend Symfony2.
+    You only need to read this section if you want to understand how Symfony
+    works behind the scenes, or if you want to extend Symfony.
 
 Overview
 --------
 
-The Symfony2 code is made of several independent layers. Each layer is built
+The Symfony code is made of several independent layers. Each layer is built
 on top of the previous one.
 
 .. tip::
@@ -81,11 +81,11 @@ Kernel
 ------
 
 The :class:`Symfony\\Component\\HttpKernel\\HttpKernel` class is the central
-class of Symfony2 and is responsible for handling client requests. Its main
+class of Symfony and is responsible for handling client requests. Its main
 goal is to "convert" a :class:`Symfony\\Component\\HttpFoundation\\Request`
 object to a :class:`Symfony\\Component\\HttpFoundation\\Response` object.
 
-Every Symfony2 Kernel implements
+Every Symfony Kernel implements
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
 
     function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
@@ -129,11 +129,11 @@ the Request attributes.
 
 .. sidebar:: Matching Controller Method Arguments from Request Attributes
 
-    For each method argument, Symfony2 tries to get the value of a Request
+    For each method argument, Symfony tries to get the value of a Request
     attribute with the same name. If it is not defined, the argument default
     value is used if defined::
 
-        // Symfony2 will look for an 'id' attribute (mandatory)
+        // Symfony will look for an 'id' attribute (mandatory)
         // and an 'admin' one (optional)
         public function showAction($id, $admin = true)
         {
@@ -238,7 +238,7 @@ add the following code at the beginning of your listener method::
 
 .. tip::
 
-    If you are not yet familiar with the Symfony2 EventDispatcher, read the
+    If you are not yet familiar with the Symfony EventDispatcher, read the
     :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`
     section first.
 
@@ -448,15 +448,15 @@ see the :doc:`EventDispatcher component documentation </components/event_dispatc
 Profiler
 --------
 
-When enabled, the Symfony2 profiler collects useful information about each
+When enabled, the Symfony profiler collects useful information about each
 request made to your application and store them for later analysis. Use the
 profiler in the development environment to help you to debug your code and
 enhance performance; use it in the production environment to explore problems
 after the fact.
 
-You rarely have to deal with the profiler directly as Symfony2 provides
+You rarely have to deal with the profiler directly as Symfony provides
 visualizer tools like the Web Debug Toolbar and the Web Profiler. If you use
-the Symfony2 Standard Edition, the profiler, the web debug toolbar, and the
+the Symfony Standard Edition, the profiler, the web debug toolbar, and the
 web profiler are all already configured with sensible settings.
 
 .. note::
@@ -552,7 +552,7 @@ where the information were generated, use the
 Configuration
 .............
 
-The default Symfony2 configuration comes with sensible settings for the
+The default Symfony configuration comes with sensible settings for the
 profiler, the web debug toolbar, and the web profiler. Here is for instance
 the configuration for the development environment:
 
@@ -658,5 +658,3 @@ Learn more from the Cookbook
 * :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
-
-.. _`Symfony2 DependencyInjection component`: https://github.com/symfony/DependencyInjection

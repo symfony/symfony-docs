@@ -4,7 +4,7 @@
 Deploying to Microsoft Azure Website Cloud
 ==========================================
 
-This step by step cookbook describes how to deploy a small Symfony2 web
+This step by step cookbook describes how to deploy a small Symfony web
 application to the Microsoft Azure Website cloud platform. It will explain how
 to setup a new Azure website including configuring the right PHP version and
 global environment variables. The document also shows how to you can leverage
@@ -355,7 +355,7 @@ below. Of course, each value depends on what you've already configured.
 
 .. code-block:: text
 
-    Database=mysymfony2MySQL;Data Source=eu-cdbr-azure-north-c.cloudapp.net;User Id=bff2481a5b6074;Password=bdf50b42
+    Database=mysymfonyMySQL;Data Source=eu-cdbr-azure-north-c.cloudapp.net;User Id=bff2481a5b6074;Password=bdf50b42
 
 Switch back to the console and answer the prompted questions and provide the
 following answers. Don't forget to adapt the values below with your real values
@@ -366,7 +366,7 @@ from the MySQL connection string.
     database_driver: pdo_mysql
     database_host: u-cdbr-azure-north-c.cloudapp.net
     database_port: null
-    database_name: mysymfony2MySQL
+    database_name: mysymfonyMySQL
     database_user: bff2481a5b6074
     database_password: bdf50b42
     // ...
