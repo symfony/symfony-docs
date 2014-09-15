@@ -50,7 +50,7 @@ Configuration
         namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\ExecutionContextInterface;
+        use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
         class Author
         {
@@ -100,7 +100,7 @@ can set "violations" directly on this object and determine to which field
 those errors should be attributed::
 
     // ...
-    use Symfony\Component\Validator\ExecutionContextInterface;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
     class Author
     {
@@ -156,7 +156,7 @@ your validation function is ``Vendor\Package\Validator::validate()``::
 
     namespace Vendor\Package;
 
-    use Symfony\Component\Validator\ExecutionContextInterface;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
     class Validator
     {
@@ -274,7 +274,7 @@ callback method:
 
 * A closure.
 
-Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
+Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
 instance as only argument.
 
 Static or closure callbacks receive the validated object as the first argument
