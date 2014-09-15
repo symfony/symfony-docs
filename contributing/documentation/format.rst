@@ -112,8 +112,6 @@ Markup format        Use it to display
 ``html+php``         PHP code blended with HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
-``php-standalone``   Pure PHP code
-``php-symfony``      PHP code with special Symfony features
 ===================  ======================================
 
 Adding Links
