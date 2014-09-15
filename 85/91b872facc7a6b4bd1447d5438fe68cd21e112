@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-13T11:05:11Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-13T11:06:29Z
+
+:+1: Would be nice if there was an option to let Sphinx raise a warning when it cannot properly highlight a code block for which it was expected.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-13T11:32:20Z
+
+I requested it: https://bitbucket.org/birkenfeld/sphinx/issue/1565/add-an-option-to-throw-a-warning-when
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-13T11:47:34Z
+
+Thank you @stof
