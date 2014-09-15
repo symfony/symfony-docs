@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-08T15:49:08Z
+
+Good catches!
+
+For the next time, PRs like this (which fix a bug or typo) should go into the 2.3 branch. For now, the merger can easily switch branches when merging.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-08T16:51:26Z
+
+@WouterJ the ProgressBar class is new in 2.5, so the target is right
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-08T16:51:54Z
+
+:+1:
