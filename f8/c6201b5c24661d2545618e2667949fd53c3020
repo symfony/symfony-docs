@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-05T12:32:13Z
+
+I suggest adding a small note in the doc about contributing to the documentation saying that images should not be placed in ``images`` directly, to avoid such error in the future
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-08T16:32:14Z
+
+@stof let's first find out if this solves the issue.
