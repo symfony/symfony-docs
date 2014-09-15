@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-05T13:51:05Z
+
+@xabbuh beware that if we change any title of any section, links will be broken. For internal anchors is not that important I guess, but for the title of the chapters, this would be a big problem. Example: https://github.com/symfony/symfony-docs/pull/4205/files#diff-7c476141c8e94caded7e7fc0707ff263R1
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-05T13:53:50Z
+
+@javiereguiluz Hm, that's true. How do we deal with this? Could adding explicit labels with the outdated headline be an option?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-05T14:57:52Z
+
+I added labels for all modified headlines.
