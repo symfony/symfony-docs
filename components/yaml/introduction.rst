@@ -18,8 +18,8 @@ standard for all programming languages. YAML is a great format for your
 configuration files. YAML files are as expressive as XML files and as readable
 as INI files.
 
-The Symfony2 Yaml component implements the YAML 1.2 version of the
-specification.
+The Symfony2 Yaml Component implements a selected subset of features defined in
+the `YAML 1.2 version specification`_.
 
 .. tip::
 
@@ -40,9 +40,10 @@ Why?
 Fast
 ~~~~
 
-One of the goals of the Symfony Yaml component is to find the right balance
-between speed and features. It supports just the needed features to handle
-configuration files.
+One of the goals of Symfony Yaml is to find the right balance between speed and
+features. It supports just the needed features to handle configuration files.
+Notable lacking features are: document directives, multi-line quoted messages,
+compact block collections and multi-document files.
 
 Real Parser
 ~~~~~~~~~~~
@@ -164,7 +165,7 @@ array to its YAML representation:
 
 .. note::
 
-    Of course, the Symfony2 YAML dumper is not able to dump resources. Also,
+    Of course, the Symfony2 Yaml dumper is not able to dump resources. Also,
     even if the dumper is able to dump PHP objects, it is considered to be a
     not supported feature.
 
@@ -214,3 +215,4 @@ representation to the inline one:
 
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
+.. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html
