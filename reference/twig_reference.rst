@@ -1,16 +1,18 @@
 .. index::
-    single: Symfony2 Twig extensions
+    single: Symfony Twig extensions
 
-Symfony2 Twig Extensions
-========================
+.. _symfony2-twig-extensions:
 
-Twig is the default template engine for Symfony2. By itself, it already contains
+Symfony Twig Extensions
+=======================
+
+Twig is the default template engine for Symfony. By itself, it already contains
 a lot of built-in functions, filters, tags and tests (`http://twig.sensiolabs.org/documentation`_
 then scroll to the bottom).
 
-Symfony2 adds more custom extension on top of Twig to integrate some components
+Symfony adds more custom extension on top of Twig to integrate some components
 into the Twig templates. Below is information about all the custom functions,
-filters, tags and tests that are added when using the Symfony2 Core Framework.
+filters, tags and tests that are added when using the Symfony Core Framework.
 
 There may also be tags in bundles you use that aren't listed here.
 
@@ -182,7 +184,7 @@ Global Variables
 Symfony Standard Edition Extensions
 -----------------------------------
 
-The Symfony Standard Edition adds some bundles to the Symfony2 Core Framework.
+The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
 Those bundles can have other Twig extensions:
 
 * **Twig Extensions** includes some interesting extensions that do not belong to the

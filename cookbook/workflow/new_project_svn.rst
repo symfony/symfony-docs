@@ -1,8 +1,10 @@
 .. index::
    single: Workflow; Subversion
 
-How to Create and Store a Symfony2 Project in Subversion
-========================================================
+.. _how-to-create-and-store-a-symfony2-project-in-subversion:
+
+How to Create and Store a Symfony Project in Subversion
+=======================================================
 
 .. tip::
 
@@ -11,14 +13,14 @@ How to Create and Store a Symfony2 Project in Subversion
 
 Once you've read through :doc:`/book/page_creation` and become familiar with
 using Symfony, you'll no-doubt be ready to start your own project. The
-preferred method to manage Symfony2 projects is using `Git`_ but some prefer
+preferred method to manage Symfony projects is using `Git`_ but some prefer
 to use `Subversion`_ which is totally fine!. In this cookbook article, you'll
 learn how to manage your project using `SVN`_ in a similar manner you
 would do with `Git`_.
 
 .. tip::
 
-    This is **a** method to tracking your Symfony2 project in a Subversion
+    This is **a** method to tracking your Symfony project in a Subversion
     repository. There are several ways to do and this one is simply one that
     works.
 
@@ -44,9 +46,9 @@ widespread standard structure:
 Initial Project Setup
 ---------------------
 
-To get started, you'll need to download Symfony2 and get the basic Subversion setup:
+To get started, you'll need to download Symfony and get the basic Subversion setup:
 
-1. Download the `Symfony2 Standard Edition`_ with or without vendors.
+1. Download the `Symfony Standard Edition`_ with or without vendors.
 
 2. Unzip/untar the distribution. It will create a folder called Symfony with
    your new project structure, config files, etc. Rename it to whatever you
@@ -59,7 +61,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
         $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
-4. Copy the Symfony2 project files in the Subversion folder:
+4. Copy the Symfony project files in the Subversion folder:
 
    .. code-block:: bash
 
@@ -108,7 +110,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 	If you rely on any "dev" versions, then Git may be used to install
 	those libraries, since there is no archive available for download.
 
-At this point, you have a fully-functional Symfony2 project stored in your
+At this point, you have a fully-functional Symfony project stored in your
 Subversion repository. The development can start with commits in the Subversion
 repository.
 
@@ -117,7 +119,7 @@ to learn more about how to configure and develop inside your application.
 
 .. tip::
 
-    The Symfony2 Standard Edition comes with some example functionality. To
+    The Symfony Standard Edition comes with some example functionality. To
     remove the sample code, follow the instructions in the
     ":doc:`/cookbook/bundles/remove`" article.
 
@@ -142,7 +144,7 @@ central repository to work. You then have several solutions:
 .. _`Git`: http://git-scm.com/
 .. _`SVN`: http://subversion.apache.org/
 .. _`Subversion`: http://subversion.apache.org/
-.. _`Symfony2 Standard Edition`: http://symfony.com/download
+.. _`Symfony Standard Edition`: http://symfony.com/download
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
 .. _`GitHub`: https://github.com/
 .. _`Google code`: http://code.google.com/hosting/

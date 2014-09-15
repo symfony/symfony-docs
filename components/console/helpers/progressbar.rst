@@ -289,8 +289,8 @@ display that are not available in the list of built-in placeholders, you can
 create your own. Let's see how you can create a ``remaining_steps`` placeholder
 that displays the number of remaining steps::
 
-    ProgressBar::setPlaceholderFormatter(
-        '%remaining_steps%',
+    ProgressBar::setPlaceholderFormatterDefinition(
+        'remaining_steps',
         function (ProgressBar $bar, OutputInterface $output) {
             return $bar->getMaxSteps() - $bar->getStep();
         }

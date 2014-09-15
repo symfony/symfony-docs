@@ -11,13 +11,13 @@ using both functional and unit tests.
 The PHPUnit Testing Framework
 -----------------------------
 
-Symfony2 integrates with an independent library - called PHPUnit - to give
+Symfony integrates with an independent library - called PHPUnit - to give
 you a rich testing framework. This chapter won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
+    Symfony works with PHPUnit 3.5.11 or later, though version 3.6.4 is
     needed to test the Symfony core code itself.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
@@ -47,7 +47,7 @@ Unit Tests
 A unit test is usually a test against a specific PHP class. If you want to
 test the overall behavior of your application, see the section about `Functional Tests`_.
 
-Writing Symfony2 unit tests is no different than writing standard PHPUnit
+Writing Symfony unit tests is no different than writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
@@ -129,7 +129,7 @@ directory of your bundle. If you want to test the pages handled by your
 ``DemoController`` class, start by creating a new ``DemoControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
-For example, the Symfony2 Standard Edition provides a simple functional test
+For example, the Symfony Standard Edition provides a simple functional test
 for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
@@ -320,7 +320,7 @@ Working with the Test Client
 -----------------------------
 
 The Test Client simulates an HTTP client like a browser and makes requests
-into your Symfony2 application::
+into your Symfony application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
 

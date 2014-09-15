@@ -414,7 +414,7 @@ tools capable of helping you with different tasks:
 Testing Commands
 ----------------
 
-Symfony2 provides several tools to help you test your commands. The most
+Symfony provides several tools to help you test your commands. The most
 useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::

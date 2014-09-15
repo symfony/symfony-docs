@@ -89,5 +89,5 @@ system, as explained below:
 
     Make sure to include this route in your routing configuration at the
     very end of your route listing. Otherwise, you risk redirecting real
-    routes (including Symfony2 core routes) that actually *do* have a trailing
+    routes (including Symfony core routes) that actually *do* have a trailing
     slash in their path.

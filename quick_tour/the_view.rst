@@ -1,7 +1,7 @@
 The View
 ========
 
-After reading the first part of this tutorial, you have decided that Symfony2
+After reading the first part of this tutorial, you have decided that Symfony
 was worth another 10 minutes. In this second part, you will learn more about
 `Twig`_, the fast, flexible, and secure template engine for PHP. Twig makes your
 templates more readable and concise; it also makes them more friendly for web
@@ -248,7 +248,7 @@ Including Assets: Images, JavaScripts and Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides the ``asset`` function to deal with them easily:
+Symfony provides the ``asset`` function to deal with them easily:
 
 .. code-block:: jinja
 
@@ -269,14 +269,14 @@ inclusions, it is very easy to organize your templates in a logical and
 extensible way. However, if you're not comfortable with Twig, you can always
 use PHP templates inside Symfony without any issues.
 
-You have only been working with Symfony2 for about 20 minutes, but you can
-already do pretty amazing stuff with it. That's the power of Symfony2. Learning
+You have only been working with Symfony for about 20 minutes, but you can
+already do pretty amazing stuff with it. That's the power of Symfony. Learning
 the basics is easy, and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
 But I'm getting ahead of myself. First, you need to learn more about the controller
 and that's exactly the topic of the :doc:`next part of this tutorial <the_controller>`.
-Ready for another 10 minutes with Symfony2?
+Ready for another 10 minutes with Symfony?
 
 .. _Twig:               http://twig.sensiolabs.org/
 .. _Twig documentation: http://twig.sensiolabs.org/documentation

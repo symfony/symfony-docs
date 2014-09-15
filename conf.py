@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Symfony2 Framework Documentation'
+project = 'Symfony Framework Documentation'
 copyright = ''
 
 # The version info for the project you're documenting, acts as replacement for

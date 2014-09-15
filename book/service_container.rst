@@ -12,15 +12,15 @@ your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
 into many objects that handle each task.
 
-This chapter is about a special PHP object in Symfony2 that helps
+This chapter is about a special PHP object in Symfony that helps
 you instantiate, organize and retrieve the many objects of your application.
 This object, called a service container, will allow you to standardize and
 centralize the way objects are constructed in your application. The container
 makes your life easier, is super fast, and emphasizes an architecture that
-promotes reusable and decoupled code. Since all core Symfony2 classes
+promotes reusable and decoupled code. Since all core Symfony classes
 use the container, you'll learn how to extend, configure and use any object
-in Symfony2. In large part, the service container is the biggest contributor
-to the speed and extensibility of Symfony2.
+in Symfony. In large part, the service container is the biggest contributor
+to the speed and extensibility of Symfony.
 
 Finally, configuring and using the service container is easy. By the end
 of this chapter, you'll be comfortable creating your own objects via the
@@ -61,7 +61,7 @@ application into a series of services. Since each service does just one job,
 you can easily access each service and use its functionality wherever you
 need it. Each service can also be more easily tested and configured since
 it's separated from the other functionality in your application. This idea
-is called `service-oriented architecture`_ and is not unique to Symfony2
+is called `service-oriented architecture`_ and is not unique to Symfony
 or even PHP. Structuring your application around a set of independent service
 classes is a well-known and trusted object-oriented best-practice. These skills
 are key to being a good developer in almost any language.
@@ -107,7 +107,7 @@ be specified in YAML, XML or PHP:
 
 .. note::
 
-    When Symfony2 initializes, it builds the service container using the
+    When Symfony initializes, it builds the service container using the
     application configuration (``app/config/config.yml`` by default). The
     exact file that's loaded is dictated by the ``AppKernel::registerContainerConfiguration()``
     method, which loads an environment-specific configuration file (e.g.
@@ -115,7 +115,7 @@ be specified in YAML, XML or PHP:
     for ``prod``).
 
 An instance of the ``Acme\HelloBundle\Mailer`` object is now available via
-the service container. The container is available in any traditional Symfony2
+the service container. The container is available in any traditional Symfony
 controller where you can access the services of the container via the ``get()``
 shortcut method::
 
@@ -266,13 +266,13 @@ Importing other Container Configuration Resources
 
     In this section, service configuration files are referred to as *resources*.
     This is to highlight the fact that, while most configuration resources
-    will be files (e.g. YAML, XML, PHP), Symfony2 is so flexible that configuration
+    will be files (e.g. YAML, XML, PHP), Symfony is so flexible that configuration
     could be loaded from anywhere (e.g. a database or even via an external
     web service).
 
 The service container is built using a single configuration resource
 (``app/config/config.yml`` by default). All other service configuration
-(including the core Symfony2 and third-party bundle configuration) must
+(including the core Symfony and third-party bundle configuration) must
 be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
@@ -393,10 +393,10 @@ directory.
 Importing Configuration via Container Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When developing in Symfony2, you'll most commonly use the ``imports`` directive
+When developing in Symfony, you'll most commonly use the ``imports`` directive
 to import container configuration from the bundles you've created specifically
 for your application. Third-party bundle container configuration, including
-Symfony2 core services, are usually loaded using another method that's more
+Symfony core services, are usually loaded using another method that's more
 flexible and easy to configure in your application.
 
 Here's how it works. Internally, each bundle defines its services very much
@@ -419,7 +419,7 @@ In other words, a service container extension configures the services for
 a bundle on your behalf. And as you'll see in a moment, the extension provides
 a sensible, high-level interface for configuring the bundle.
 
-Take the FrameworkBundle - the core Symfony2 framework bundle - as an
+Take the FrameworkBundle - the core Symfony framework bundle - as an
 example. The presence of the following code in your application configuration
 invokes the service container extension inside the FrameworkBundle:
 
@@ -471,8 +471,8 @@ When the configuration is parsed, the container looks for an extension that
 can handle the ``framework`` configuration directive. The extension in question,
 which lives in the FrameworkBundle, is invoked and the service configuration
 for the FrameworkBundle is loaded. If you remove the ``framework`` key
-from your application configuration file entirely, the core Symfony2 services
-won't be loaded. The point is that you're in control: the Symfony2 framework
+from your application configuration file entirely, the core Symfony services
+won't be loaded. The point is that you're in control: the Symfony framework
 doesn't contain any magic or perform any actions that you don't have control
 over.
 
@@ -827,7 +827,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
 .. note::
 
     The approaches presented in this section are called "constructor injection"
-    and "setter injection". The Symfony2 service container also supports
+    and "setter injection". The Symfony service container also supports
     "property injection".
 
 .. _book-container-request-stack:
@@ -1005,12 +1005,12 @@ allow for an optional dependency::
 Core Symfony and Third-Party Bundle Services
 --------------------------------------------
 
-Since Symfony2 and all third-party bundles configure and retrieve their services
+Since Symfony and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
-services. To keep things simple, Symfony2 by default does not require that
-controllers be defined as services. Furthermore Symfony2 injects the entire
+services. To keep things simple, Symfony by default does not require that
+controllers be defined as services. Furthermore, Symfony injects the entire
 service container into your controller. For example, to handle the storage of
-information on a user's session, Symfony2 provides a ``session`` service,
+information on a user's session, Symfony provides a ``session`` service,
 which you can access inside a standard controller as follows::
 
     public function indexAction($bar)
@@ -1021,13 +1021,13 @@ which you can access inside a standard controller as follows::
         // ...
     }
 
-In Symfony2, you'll constantly use services provided by the Symfony core or
+In Symfony, you'll constantly use services provided by the Symfony core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
 sending emails (``mailer``), or accessing information on the request (``request``).
 
 You can take this a step further by using these services inside services that
 you've created for your application. Beginning by modifying the ``NewsletterManager``
-to use the real Symfony2 ``mailer`` service (instead of the pretend ``my_mailer``).
+to use the real Symfony ``mailer`` service (instead of the pretend ``my_mailer``).
 Also pass the templating engine service to the ``NewsletterManager``
 so that it can generate the email content via a template::
 
@@ -1153,7 +1153,7 @@ the bundle knows that the ``foo.twig.extension`` service should be registered
 as a Twig extension with Twig. In other words, Twig finds all services tagged
 with ``twig.extension`` and automatically registers them as extensions.
 
-Tags, then, are a way to tell Symfony2 or other third-party bundles that
+Tags, then, are a way to tell Symfony or other third-party bundles that
 your service should be registered or used in some special way by the bundle.
 
 For a list of all the tags available in the core Symfony Framework, check

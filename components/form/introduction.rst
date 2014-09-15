@@ -30,7 +30,7 @@ Configuration
     If you are working with the full-stack Symfony framework, the Form component
     is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
 
-In Symfony2, forms are represented by objects and these objects are built
+In Symfony, forms are represented by objects and these objects are built
 by using a *form factory*. Building a form factory is simple::
 
     use Symfony\Component\Form\Forms;
@@ -50,7 +50,7 @@ support for very important features:
 * **Validation:** Integration with a validation library to generate error
   messages for submitted data.
 
-The Symfony2 Form component relies on other libraries to solve these problems.
+The Symfony Form component relies on other libraries to solve these problems.
 Most of the time you will use Twig and the Symfony
 :doc:`HttpFoundation </components/http_foundation/introduction>`,
 Translation and Validator components, but you can replace any of these with
@@ -154,7 +154,7 @@ errors, and labels). If you use `Twig`_ as your template engine, the Form
 component offers a rich integration.
 
 To use the integration, you'll need the ``TwigBridge``, which provides integration
-between Twig and several Symfony2 components. If you're using Composer, you
+between Twig and several Symfony components. If you're using Composer, you
 could install the latest 2.3 version by adding the following ``require``
 line to your ``composer.json`` file:
 
@@ -369,7 +369,7 @@ Creating a simple Form
 
 .. tip::
 
-    If you're using the Symfony2 framework, then the form factory is available
+    If you're using the Symfony framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder``

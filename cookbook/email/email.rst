@@ -129,7 +129,7 @@ of `Creating Messages`_ in great detail in its documentation.
 .. tip::
 
     Several other cookbook articles are available related to sending emails
-    in Symfony2:
+    in Symfony:
 
     * :doc:`gmail`
     * :doc:`dev_environment`

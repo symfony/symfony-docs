@@ -12,7 +12,7 @@ Contributing
 Before contributing, you need to become familiar with the :doc:`markup
 language <format>` used by the documentation.
 
-The Symfony2 documentation is hosted on GitHub:
+The Symfony documentation is hosted on GitHub:
 
 .. code-block:: text
 
@@ -61,7 +61,7 @@ If you have made your changes based on the 2.3 branch then you need to change
 the base branch to be 2.3 on the preview page by clicking the ``edit`` button
 on the top left:
 
-.. image:: /images/docs-pull-request-change-base.png
+.. image:: /images/contributing/docs-pull-request-change-base.png
    :align: center
 
 .. note::
@@ -73,7 +73,7 @@ GitHub covers the topic of `pull requests`_ in detail.
 
 .. note::
 
-    The Symfony2 documentation is licensed under a Creative Commons
+    The Symfony documentation is licensed under a Creative Commons
     Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
 
 You can also prefix the title of your pull request in a few cases:
@@ -129,7 +129,7 @@ Documenting new Features or Behavior Changes
 --------------------------------------------
 
 If you're documenting a brand new feature or a change that's been made in
-Symfony2, you should precede your description of the change with a ``.. versionadded:: 2.X``
+Symfony, you should precede your description of the change with a ``.. versionadded:: 2.X``
 tag and a short description:
 
 .. code-block:: text
@@ -148,9 +148,9 @@ how the behavior has changed.
         The ``include()`` function is a new Twig feature that's available in
         Symfony 2.3. Prior, the ``{% include %}`` tag was used.
 
-Whenever a new minor version of Symfony2 is released (e.g. 2.4, 2.5, etc),
+Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
-At this point, all the ``versionadded`` tags for Symfony2 versions that have
+At this point, all the ``versionadded`` tags for Symfony versions that have
 reached end-of-life will be removed. For example, if Symfony 2.5 were released
 today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
 tags would be removed from the new 2.5 branch.

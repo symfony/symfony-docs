@@ -1,19 +1,21 @@
 The Big Picture
 ===============
 
-Start using Symfony2 in 10 minutes! This chapter will walk you through some of
-the most important concepts behind Symfony2 and explain how you can get started
+Start using Symfony in 10 minutes! This chapter will walk you through some of
+the most important concepts behind Symfony and explain how you can get started
 quickly by showing you a simple project in action.
 
 If you've used a web framework before, you should feel right at home with
-Symfony2. If not, welcome to a whole new way of developing web applications.
+Symfony. If not, welcome to a whole new way of developing web applications.
 
-Installing Symfony2
--------------------
+.. _installing-symfony2:
 
-First, check that the PHP version installed on your computer meets the Symfony2
+Installing Symfony
+------------------
+
+First, check that the PHP version installed on your computer meets the Symfony
 requirements: 5.3.3 or higher. Then, open a console and execute the following
-command to install the latest version of Symfony2 in the ``myproject/``
+command to install the latest version of Symfony in the ``myproject/``
 directory:
 
 .. code-block:: bash
@@ -23,7 +25,7 @@ directory:
 .. note::
 
     `Composer`_ is the package manager used by modern PHP applications and the
-    only recommended way to install Symfony2. To install Composer on your
+    only recommended way to install Symfony. To install Composer on your
     Linux or Mac system, execute the following commands:
 
     .. code-block:: bash
@@ -33,32 +35,29 @@ directory:
 
     To install Composer on a Windows system, download the `executable installer`_.
 
-Beware that the first time you install Symfony2, it may take a few minutes to
+Beware that the first time you install Symfony, it may take a few minutes to
 download all its components. At the end of the installation process, the
-installer will ask you four questions:
+installer will ask you three questions:
 
-1. **Would you like to use Symfony 3 directory structure? [y/N]** The upcoming
-   Symfony 3 version will modify the default directory structure for Symfony
-   applications. If you want to test drive this new structure, type ``y``.
-   In order to follow this tutorial, press the ``<Enter>`` key to accept the
-   default ``N`` value and to keep using the default Symfony2 structure.
-2. **Would you like to install Acme demo bundle? [y/N]** Symfony versions prior
+1. **Would you like to install Acme demo bundle? [y/N]** Symfony versions prior
    to 2.5 included a demo application to test drive some features of the
    framework. However, as this demo application is only useful for newcomers,
    installing it is now optional. In order to follow this tutorial, type the
    ``y`` key to install the demo application.
-3. **Some parameters are missing. Please provide them.** Symfony2 asks you for
+2. **Some parameters are missing. Please provide them.** Symfony asks you for
    the value of all the configuration parameters. For this first project,
    you can safely ignore this configuration by pressing the ``<Enter>`` key
    repeatedly.
-4. **Do you want to remove the existing VCS (.git, .svn..) history? [Y,n]?**
+3. **Do you want to remove the existing VCS (.git, .svn..) history? [Y,n]?**
    The development history of large projects such as Symfony can take a lot of
    disk space. Press the ``<Enter>`` key to safely remove all this history data.
 
-Running Symfony2
-----------------
+.. _running-symfony2:
 
-Before running Symfony2 for the first time, execute the following command to
+Running Symfony
+---------------
+
+Before running Symfony for the first time, execute the following command to
 make sure that your system meets all the technical requirements:
 
 .. code-block:: bash
@@ -84,11 +83,11 @@ if you prefer a traditional web server such as Apache or Nginx, read the
 :doc:`/cookbook/configuration/web_server_configuration` article.
 
 Open your browser and access the ``http://localhost:8000`` URL to see the
-Welcome page of Symfony2:
+Welcome page of Symfony:
 
 .. image:: /images/quick_tour/welcome.png
    :align: center
-   :alt:   Symfony2 Welcome Page
+   :alt:   Symfony Welcome Page
 
 Understanding the Fundamentals
 ------------------------------
@@ -99,7 +98,7 @@ calls, HTML tags and business logic in the same script. To achieve this goal
 with Symfony, you'll first need to learn a few fundamental concepts and terms.
 
 Symfony comes with some sample code that you can use to learn more about its
-main concepts. Go to the following URL to be greeted by Symfony2 (replace
+main concepts. Go to the following URL to be greeted by Symfony (replace
 *Fabien* with your first name):
 
 .. code-block:: text
@@ -132,7 +131,7 @@ Your responsibility as a developer is to write the code that maps the user's
 Routing
 ~~~~~~~
 
-Symfony2 routes the request to the code that handles it by matching the
+Symfony routes the request to the code that handles it by matching the
 requested URL (i.e. the virtual path) against some configured paths. The demo
 paths are defined in the ``app/config/routing_dev.yml`` configuration file:
 
@@ -170,7 +169,7 @@ will be executed. In the next section, you'll learn exactly what that means.
 
     In addition to YAML files, routes can be configured in XML or PHP files
     and can even be embedded in PHP annotations. This flexibility is one of the
-    main features of Symfony2, a framework that never imposes a particular
+    main features of Symfony, a framework that never imposes a particular
     configuration format on you.
 
 Controllers
@@ -189,7 +188,7 @@ controller might create the response by hand, based on the request::
 
     return new Response('Hello '.$name);
 
-Symfony2 chooses the controller based on the ``_controller`` value from the
+Symfony chooses the controller based on the ``_controller`` value from the
 routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
 controller *logical name*, and it references the ``indexAction`` method from
 the ``Acme\DemoBundle\Controller\WelcomeController`` class::
@@ -304,17 +303,17 @@ template (or ``AcmeDemoBundle:Demo:hello.html.twig`` if you use the logical name
         <h1>Hello {{ name }}!</h1>
     {% endblock %}
 
-By default, Symfony2 uses `Twig`_ as its template engine but you can also use
+By default, Symfony uses `Twig`_ as its template engine but you can also use
 traditional PHP templates if you choose. The
 :doc:`second part of this tutorial</quick_tour/the_view>` will introduce how
-templates work in Symfony2.
+templates work in Symfony.
 
 Bundles
 ~~~~~~~
 
 You might have wondered why the :term:`Bundle` word is used in many names you
 have seen so far. All the code you write for your application is organized in
-bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
+bundles. In Symfony speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
 of now, you have manipulated one bundle, AcmeDemoBundle. You will learn
@@ -325,10 +324,10 @@ more about bundles in the :doc:`last part of this tutorial</quick_tour/the_archi
 Working with Environments
 -------------------------
 
-Now that you have a better understanding of how Symfony2 works, take a closer
-look at the bottom of any Symfony2 rendered page. You should notice a small
-bar with the Symfony2 logo. This is the "Web Debug Toolbar", and it is a
-Symfony2 developer's best friend!
+Now that you have a better understanding of how Symfony works, take a closer
+look at the bottom of any Symfony rendered page. You should notice a small
+bar with the Symfony logo. This is the "Web Debug Toolbar", and it is a
+Symfony developer's best friend!
 
 .. image:: /images/quick_tour/web_debug_toolbar.png
    :align: center
@@ -350,7 +349,7 @@ What is an Environment?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 An :term:`Environment` represents a group of configurations that's used to run
-your application. Symfony2 defines two environments by default: ``dev``
+your application. Symfony defines two environments by default: ``dev``
 (suited for when developing the application locally) and ``prod`` (optimized
 for when executing the application on production).
 
@@ -384,7 +383,7 @@ URL, you'll get a 404 error.
 
     If instead of using PHP's built-in webserver, you use Apache with
     ``mod_rewrite`` enabled and take advantage of the ``.htaccess`` file
-    Symfony2 provides in ``web/``, you can even omit the ``app.php`` part of the
+    Symfony provides in ``web/``, you can even omit the ``app.php`` part of the
     URL. The default ``.htaccess`` points all requests to the ``app.php`` front
     controller:
 
@@ -398,10 +397,10 @@ For more details on environments, see
 Final Thoughts
 --------------
 
-Congratulations! You've had your first taste of Symfony2 code. That wasn't so
+Congratulations! You've had your first taste of Symfony code. That wasn't so
 hard, was it? There's a lot more to explore, but you should already see how
-Symfony2 makes it really easy to implement web sites better and faster. If you
-are eager to learn more about Symfony2, dive into the next section:
+Symfony makes it really easy to implement web sites better and faster. If you
+are eager to learn more about Symfony, dive into the next section:
 ":doc:`The View<the_view>`".
 
 .. _Composer:             https://getcomposer.org/

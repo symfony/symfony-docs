@@ -5,14 +5,14 @@ Forms
 =====
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
-a web developer. Symfony2 integrates a Form component that makes dealing with
+a web developer. Symfony integrates a Form component that makes dealing with
 forms easy. In this chapter, you'll build a complex form from the ground-up,
 learning the most important features of the form library along the way.
 
 .. note::
 
    The Symfony Form component is a standalone library that can be used outside
-   of Symfony2 projects. For more information, see the `Symfony2 Form component`_
+   of Symfony projects. For more information, see the `Symfony Form component`_
    on GitHub.
 
 .. index::
@@ -80,7 +80,7 @@ Building the Form
 ~~~~~~~~~~~~~~~~~
 
 Now that you've created a ``Task`` class, the next step is to create and
-render the actual HTML form. In Symfony2, this is done by building a form
+render the actual HTML form. In Symfony, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
@@ -119,7 +119,7 @@ from inside a controller::
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
 
-Creating a form requires relatively little code because Symfony2 form objects
+Creating a form requires relatively little code because Symfony form objects
 are built with a "form builder". The form builder's purpose is to allow you
 to write simple form "recipes", and have it do all the heavy-lifting of actually
 building the form.
@@ -136,7 +136,7 @@ the server.
     Support for submit buttons was introduced in Symfony 2.3. Before that, you had
     to add buttons to the form's HTML manually.
 
-Symfony2 comes with many built-in types that will be discussed shortly
+Symfony comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
 .. index::
@@ -318,7 +318,7 @@ Form Validation
 ---------------
 
 In the previous section, you learned how a form can be submitted with valid
-or invalid data. In Symfony2, validation is applied to the underlying object
+or invalid data. In Symfony, validation is applied to the underlying object
 (e.g. ``Task``). In other words, the question isn't whether the "form" is
 valid, but whether or not the ``$task`` object is valid after the form has
 applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
@@ -441,7 +441,7 @@ corresponding errors printed out with the form.
                'attr' => array('novalidate' => 'novalidate'),
            )) ?>
 
-Validation is a very powerful feature of Symfony2 and has its own
+Validation is a very powerful feature of Symfony and has its own
 :doc:`dedicated chapter </book/validation>`.
 
 .. index::
@@ -982,9 +982,9 @@ to the ``form()`` or the ``form_start()`` helper:
 
 .. note::
 
-    If the form's method is not GET or POST, but PUT, PATCH or DELETE, Symfony2
+    If the form's method is not GET or POST, but PUT, PATCH or DELETE, Symfony
     will insert a hidden field with the name ``_method`` that stores this method.
-    The form will be submitted in a normal POST request, but Symfony2's router
+    The form will be submitted in a normal POST request, but Symfony's router
     is capable of detecting the ``_method`` parameter and will interpret it as
     a PUT, PATCH or DELETE request. Read the cookbook chapter
     ":doc:`/cookbook/routing/method_parameters`" for more information.
@@ -1901,7 +1901,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
 
-.. _`Symfony2 Form component`: https://github.com/symfony/Form
+.. _`Symfony Form component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

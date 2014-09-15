@@ -9,7 +9,7 @@ you can flag it with the ``kernel.event_listener`` tag.
 You can learn a little bit more about "tags" by reading the ":ref:`book-service-container-tags`"
 section of the Service Container chapter.
 
-Below is information about all of the tags available inside Symfony2. There
+Below is information about all of the tags available inside Symfony. There
 may also be tags in other bundles you use that aren't listed here.
 
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -1124,7 +1124,7 @@ translation.extractor
 **Purpose**: To register a custom service that extracts messages from a file
 
 When executing the ``translation:update`` command, it uses extractors to
-extract translation messages from a file. By default, the Symfony2 framework
+extract translation messages from a file. By default, the Symfony framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
 :class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`, which
 help to find and extract translation keys from Twig templates and PHP files.
@@ -1205,7 +1205,7 @@ After an `Extractor <translation.extractor>`_ has extracted all messages from
 the templates, the dumpers are executed to dump the messages to a translation
 file in a specific format.
 
-Symfony2 already comes with many dumpers:
+Symfony already comes with many dumpers:
 
 * :class:`Symfony\\Component\\Translation\\Dumper\\CsvFileDumper`
 * :class:`Symfony\\Component\\Translation\\Dumper\\IcuResFileDumper`

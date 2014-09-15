@@ -190,7 +190,7 @@ and::
         // ...
     }
 
-In a similar fashion, the Symfony2 service container also supports extending
+In a similar fashion, the Symfony service container also supports extending
 services in the configuration so you can also reduce the repetition by specifying
 a parent for a service.
 

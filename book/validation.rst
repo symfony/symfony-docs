@@ -8,7 +8,7 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony2 ships with a `Validator`_ component that makes this task easy and
+Symfony ships with a `Validator`_ component that makes this task easy and
 transparent. This component is based on the
 `JSR303 Bean Validation specification`_.
 
@@ -253,7 +253,7 @@ For more information, see the :doc:`Forms </book/forms>` chapter.
 Configuration
 -------------
 
-The Symfony2 validator is enabled by default, but you must explicitly enable
+The Symfony validator is enabled by default, but you must explicitly enable
 annotations if you're using the annotation method to specify your constraints:
 
 .. configuration-block::
@@ -302,14 +302,14 @@ to its class and then pass it to the ``validator`` service.
 
 Behind the scenes, a constraint is simply a PHP object that makes an assertive
 statement. In real life, a constraint could be: "The cake must not be burned".
-In Symfony2, constraints are similar: they are assertions that a condition
+In Symfony, constraints are similar: they are assertions that a condition
 is true. Given a value, a constraint will tell you whether or not that value
 adheres to the rules of the constraint.
 
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 packages a large number of the most commonly-needed constraints:
+Symfony packages a large number of the most commonly-needed constraints:
 
 .. include:: /reference/constraints/map.rst.inc
 
@@ -502,7 +502,7 @@ to use, but the second allows you to specify more complex validation rules.
 Properties
 ~~~~~~~~~~
 
-Validating class properties is the most basic validation technique. Symfony2
+Validating class properties is the most basic validation technique. Symfony
 allows you to validate private, protected or public properties. The next
 listing shows you how to configure the ``$firstName`` property of an ``Author``
 class to have at least 3 characters.
@@ -581,7 +581,7 @@ class to have at least 3 characters.
 Getters
 ~~~~~~~
 
-Constraints can also be applied to the return value of a method. Symfony2
+Constraints can also be applied to the return value of a method. Symfony
 allows you to add a constraint to any public method whose name starts with
 "get", "is" or "has". In this guide, these types of methods are referred to
 as "getters".
@@ -1220,7 +1220,7 @@ which holds the error message on its ``getMessage`` method.
 Final Thoughts
 --------------
 
-The Symfony2 ``validator`` is a powerful tool that can be leveraged to
+The Symfony ``validator`` is a powerful tool that can be leveraged to
 guarantee that the data of any object is "valid". The power behind validation
 lies in "constraints", which are rules that you can apply to properties or
 getter methods of your object. And while you'll most commonly use the validation

@@ -49,7 +49,7 @@ includes some simple default logic::
     }
 
 In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
-Symfony2 will automatically look for another class, ``MyConstraintValidator``
+Symfony will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
 The validator class is also simple, and only has one required method ``validate()``::
@@ -85,7 +85,7 @@ The validator class is also simple, and only has one required method ``validate(
 Using the new Validator
 -----------------------
 
-Using custom validators is very easy, just as the ones provided by Symfony2 itself:
+Using custom validators is very easy, just as the ones provided by Symfony itself:
 
 .. configuration-block::
 
@@ -194,11 +194,11 @@ validator::
         return 'alias_name';
     }
 
-As mentioned above, Symfony2 will automatically look for a class named after
+As mentioned above, Symfony will automatically look for a class named after
 the constraint, with ``Validator`` appended. If your constraint validator
 is defined as a service, it's important that you override the
 ``validatedBy()`` method to return the alias used when defining your service,
-otherwise Symfony2 won't use the constraint validator service, and will
+otherwise Symfony won't use the constraint validator service, and will
 instantiate the class instead, without any dependencies injected.
 
 Class Constraint Validator

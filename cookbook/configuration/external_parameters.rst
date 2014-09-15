@@ -24,7 +24,7 @@ the following ``VirtualHost`` configuration:
 .. code-block:: apache
 
     <VirtualHost *:80>
-        ServerName      Symfony2
+        ServerName      Symfony
         DocumentRoot    "/path/to/symfony_2_app/web"
         DirectoryIndex  index.php index.html
         SetEnv          SYMFONY__DATABASE__USER user
@@ -65,7 +65,7 @@ You can now reference these parameters wherever you need them.
         doctrine:
             dbal:
                 driver    pdo_mysql
-                dbname:   symfony2_project
+                dbname:   symfony_project
                 user:     "%database.user%"
                 password: "%database.password%"
 
@@ -77,7 +77,7 @@ You can now reference these parameters wherever you need them.
         <doctrine:config>
             <doctrine:dbal
                 driver="pdo_mysql"
-                dbname="symfony2_project"
+                dbname="symfony_project"
                 user="%database.user%"
                 password="%database.password%"
             />
@@ -88,7 +88,7 @@ You can now reference these parameters wherever you need them.
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'driver'   => 'pdo_mysql',
-                'dbname'   => 'symfony2_project',
+                'dbname'   => 'symfony_project',
                 'user'     => '%database.user%',
                 'password' => '%database.password%',
             )
