@@ -125,7 +125,7 @@ for you:
 
 .. sidebar:: Setting up the Database to be UTF8
 
-    One mistake even seasoned developers make when starting a Symfony2 project
+    One mistake even seasoned developers make when starting a Symfony project
     is forgetting to setup default charset and collation on their database,
     ending up with latin type collations, which are default for most databases.
     They might even remember to do it the very first time, but forget that

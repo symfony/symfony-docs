@@ -4,8 +4,8 @@
 How to Create a custom Data Collector
 =====================================
 
-The Symfony2 :ref:`Profiler <internals-profiler>` delegates data collecting to
-data collectors. Symfony2 comes bundled with a few of them, but you can easily
+The Symfony :ref:`Profiler <internals-profiler>` delegates data collecting to
+data collectors. Symfony comes bundled with a few of them, but you can easily
 create your own.
 
 Creating a custom Data Collector

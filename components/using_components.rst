@@ -2,8 +2,10 @@
    single: Components; Installation
    single: Components; Usage
 
-How to Install and Use the Symfony2 Components
-==============================================
+.. _how-to-install-and-use-the-symfony2-components:
+
+How to Install and Use the Symfony Components
+=============================================
 
 If you're starting a new project (or already have a project) that will use
 one or more components, the easiest way to integrate everything is with `Composer`_.
@@ -62,7 +64,7 @@ immediately::
 
 .. tip::
 
-    If you want to use all of the Symfony2 Components, then instead of adding
+    If you want to use all of the Symfony Components, then instead of adding
     them one by one:
 
     .. code-block:: json

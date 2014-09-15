@@ -32,7 +32,7 @@ characters at the beginning of your string:
         Acme\BlogBundle\Entity\Author:
             properties:
                 description:
-                    - Regex: "/^\w+/"
+                    - Regex: '/^\w+/'
 
     .. code-block:: php-annotations
 
@@ -98,7 +98,7 @@ message:
             properties:
                 firstName:
                     - Regex:
-                        pattern: "/\d/"
+                        pattern: '/\d/'
                         match:   false
                         message: Your name cannot contain a number
 

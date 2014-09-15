@@ -2,7 +2,7 @@ Submitting a Patch
 ==================
 
 Patches are the best way to provide a bug fix or to propose enhancements to
-Symfony2.
+Symfony.
 
 Step 1: Setup your Environment
 ------------------------------
@@ -10,7 +10,7 @@ Step 1: Setup your Environment
 Install the Software Stack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before working on Symfony2, setup a friendly environment with the following
+Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
@@ -65,11 +65,11 @@ Set up your user information with your real name and a working email address:
 Get the Symfony Source Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Get the Symfony2 source code:
+Get the Symfony source code:
 
 * Create a `GitHub`_ account and sign in;
 
-* Fork the `Symfony2 repository`_ (click on the "Fork" button);
+* Fork the `Symfony repository`_ (click on the "Fork" button);
 
 * After the "forking action" has completed, clone your fork locally
   (this will create a ``symfony`` directory):
@@ -88,7 +88,7 @@ Get the Symfony2 source code:
 Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that Symfony2 is installed, check that all unit tests pass for your
+Now that Symfony is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
 
 Step 2: Work on your Patch
@@ -266,7 +266,7 @@ pull request message, like in:
 
 The pull request description must include the following checklist at the top
 to ensure that contributions may be reviewed without needless feedback
-loops and that your contributions can be included into Symfony2 as quickly as
+loops and that your contributions can be included into Symfony as quickly as
 possible:
 
 .. code-block:: text
@@ -402,7 +402,7 @@ messages of all the commits. When you are finished, execute the push command.
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
 .. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
-.. _Symfony2 repository:                   https://github.com/symfony/symfony
+.. _Symfony repository:                    https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         https://travis-ci.org/
 .. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/

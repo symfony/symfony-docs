@@ -5,7 +5,7 @@
 How to Customize Error Pages
 ============================
 
-When any exception is thrown in Symfony2, the exception is caught inside the
+When any exception is thrown in Symfony, the exception is caught inside the
 ``Kernel`` class and eventually forwarded to a special controller,
 ``TwigBundle:Exception:show`` for handling. This controller, which lives
 inside the core TwigBundle, determines which error template to display and
@@ -31,7 +31,7 @@ shown to the end-user.
 
     You should not set ``kernel.debug`` to ``false`` in order to see your
     error pages during development. This will also stop
-    Symfony2 from recompiling your twig templates, among other things.
+    Symfony from recompiling your twig templates, among other things.
 
     The third-party `WebfactoryExceptionsBundle`_ provides a special
     test controller that allows you to display your custom error
@@ -75,7 +75,7 @@ template located at
 .. tip::
 
     If you're not familiar with Twig, don't worry. Twig is a simple, powerful
-    and optional templating engine that integrates with Symfony2. For more
+    and optional templating engine that integrates with Symfony. For more
     information about Twig see :doc:`/book/templating`.
 
 In addition to the standard HTML error page, Symfony provides a default error
@@ -111,7 +111,7 @@ Symfony uses the following algorithm to determine which template to use:
 
     To see the full list of default error templates, see the
     ``Resources/views/Exception`` directory of the TwigBundle. In a
-    standard Symfony2 installation, the TwigBundle can be found at
+    standard Symfony installation, the TwigBundle can be found at
     ``vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle``. Often, the easiest way
     to customize an error page is to copy it from the TwigBundle into
     ``app/Resources/TwigBundle/views/Exception`` and then modify it.

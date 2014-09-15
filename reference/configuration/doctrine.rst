@@ -23,7 +23,7 @@ Full default configuration
                         commented:            true
                 # If enabled all tables not prefixed with sf2_ will be ignored by the schema
                 # tool. This is for custom tables which should not be altered automatically.
-                #schema_filter:        ^sf2_ 
+                #schema_filter:        ^sf2_
 
                 connections:
                     default:
@@ -401,7 +401,7 @@ If you want to configure multiple connections in YAML, put them under the
             default_connection:       default
             connections:
                 default:
-                    dbname:           Symfony2
+                    dbname:           Symfony
                     user:             root
                     password:         null
                     host:             localhost

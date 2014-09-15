@@ -4,7 +4,7 @@
 How to Organize Configuration Files
 ===================================
 
-The default Symfony2 Standard Edition defines three
+The default Symfony Standard Edition defines three
 :doc:`execution environments </cookbook/configuration/environments>` called
 ``dev``, ``prod`` and ``test``. An environment simply represents a way to
 execute the same codebase with different configurations.

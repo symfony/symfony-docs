@@ -15,7 +15,7 @@ headers. For example, the ``Host`` HTTP header is usually used to return
 the requested host. But when you're behind a proxy, the true host may be
 stored in a ``X-Forwarded-Host`` header.
 
-Since HTTP headers can be spoofed, Symfony2 does *not* trust these proxy
+Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
 your proxy.
 
