@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-13T08:14:13Z
+
+we need to make sure that this syntax is still described when referencing services in arguments though
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-13T08:39:29Z
+
+This should be covered with the [Types of Injection](http://symfony.com/doc/current/components/dependency_injection/types.html) chapter.
