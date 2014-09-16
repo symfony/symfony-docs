@@ -1,0 +1,94 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-08-23T09:56:57Z
+
+the new page should be added to the map.rst.inc in the components folder.
+
+And in the DIC tag reference presenting the ``translation.loader`` tag, you should add a link to this page
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-23T10:01:48Z
+
+@raulfraile thanks for completing the documentation of the translator component. I really like it!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T10:09:23Z
+
+Does it make sense to have this in the components part? What about moving this to the cookbook?
+
+---------------------------------------------------------------------------
+
+by raulfraile at 2014-08-23T20:23:34Z
+
+@stof @javiereguiluz just pushed some changes based on your comments, but I am not sure about linking it from the `translation.loader` DIC tag. Should we remove the small introduction about custom loaders from there and just link here?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T20:45:27Z
+
+@raulfraile I would remove everything after the first sentence there and add a link to your new article instead. So, it would then look something like this:
+
+```rst
+translation.loader
+------------------
+
+**Purpose**: To register a custom service that loads translations
+
+By default, translations are loaded from the filesystem in a variety of different
+formats (YAML, XLIFF, PHP, etc).
+
+.. seealso::
+
+    Learn how to :doc:`load custom formats </components/translation/custom_format>`
+    in the components section.
+```
+
+But let's wait what the others think.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T21:03:09Z
+
+@raulfraile I didn't meant to shock you. The things I commented on are mainly minor issues. I basically really like the work you did. :+1:
+
+---------------------------------------------------------------------------
+
+by raulfraile at 2014-08-24T06:24:00Z
+
+@xabbuh thank you for the suggestions! I fixed all the issues (except the DIC tag docs, waiting what others think).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-24T06:51:51Z
+
+We also have a ``translation.dumper`` tag which can also be linked the same way like ``translation.loader``.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-24T12:44:29Z
+
++1 for keeping this in the component section: It is related to the component, not the framework.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-24T12:50:55Z
+
+apart from some minor comments, it looks good.
+
+Thank you for submitting!
+
+---------------------------------------------------------------------------
+
+by raulfraile at 2014-08-26T18:46:00Z
+
+@WouterJ I pushed some changes based on your comments, except for the extractor, as I would need to do some additional research. Can we leave it for another PR?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-26T19:40:02Z
+
+@raulfraile As @stof mentioned [here](https://github.com/symfony/symfony-docs/pull/4166#discussion_r16734714), the extractor is not really related to this article and I agree with him in that.
+
+@WouterJ What do you think about the [proposed change](https://github.com/symfony/symfony-docs/pull/4166#issuecomment-53165042) in the reference (I think something like that should be added for the ``translation.dumper`` tag too)?
