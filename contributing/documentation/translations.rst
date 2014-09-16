@@ -4,11 +4,17 @@ Translations
 The Symfony documentation is written in English and many people are involved
 in the translation process.
 
+.. note::
+
+    Symfony Project officially discourages starting new translations for the
+    documentation. As a matter of fact, there is `an ongoing discussion`_ in
+    the community about the benefits and drawbacks of community driven translations.
+
 Contributing
 ------------
 
-First, become familiar with the :doc:`markup language <format>` used by the
-documentation.
+First, become familiar with the :doc:`markup language </contributing/documentation/format>`
+used by the documentation.
 
 Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
 there.
@@ -82,4 +88,5 @@ repository and apply changes to the translated documents as soon as possible.
     Non maintained languages are removed from the official list of
     repositories as obsolete documentation is dangerous.
 
+.. _`an ongoing discussion`: https://github.com/symfony/symfony-docs/issues/4078
 .. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs
