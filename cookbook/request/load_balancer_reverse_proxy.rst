@@ -11,12 +11,6 @@ special ``X-Forwarded-*`` headers. For example, instead of reading the ``REMOTE_
 header (which will now be the IP address of your reverse proxy), the user's
 true IP will be stored in an ``X-Forwarded-For`` header.
 
-.. tip::
-
-    If you're using Symfony's :ref:`AppCache<symfony-gateway-cache>` for caching,
-    then you *are* using a reverse proxy with the IP address ``127.0.0.1``.
-    You'll need to configure that address as a trusted proxy below.
-
 If you don't configure Symfony to look for these headers, you'll get incorrect
 information about the client's IP address, whether or not the client is connecting
 via HTTPS, the client's port and the hostname being requested.
