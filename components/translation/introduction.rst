@@ -95,6 +95,9 @@ Loader too. The default loaders are:
 
 All file loaders require the :doc:`Config component </components/config/index>`.
 
+You can also :doc:`create your own Loader </components/translation/custom_formats>`,
+in case the format is not already supported by one of the default loaders.
+
 At first, you should add one or more loaders to the ``Translator``::
 
     // ...
