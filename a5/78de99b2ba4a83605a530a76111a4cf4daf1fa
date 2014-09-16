@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-13T08:59:09Z
+
+the description of the PR seems incomplete
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-13T08:59:54Z
+
+@stof it's fixed now :)
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-13T09:20:50Z
+
+btw, the rule about relative links should be added in the doc standards. It is not written currently
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-13T09:25:29Z
+
+The rule about internal relative links has been added here: https://github.com/symfony/symfony-docs/commit/991ff6f6e8afb16cc509b0610838510da3387820
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-15T18:43:46Z
+
+Ryan, thanks for your great review. I'm really sorry for having made so many mistakes :(
