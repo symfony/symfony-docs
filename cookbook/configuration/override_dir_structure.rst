@@ -151,5 +151,6 @@ file:
     work:
 
     .. code-block:: bash
+    
         $ php app/console cache:clear --env=prod
         $ php app/console assetic:dump --env=prod --no-debug
