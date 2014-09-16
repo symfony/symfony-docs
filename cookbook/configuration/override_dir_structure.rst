@@ -147,9 +147,10 @@ file:
                 'read_from' => '%kernel.root_dir%/../../public_html',
             ));
 
-    Now you just need to dump the assets again and your application should
+    Now you just need to clear the cache and dump the assets again and your application should
     work:
 
     .. code-block:: bash
-
+    
+        $ php app/console cache:clear --env=prod
         $ php app/console assetic:dump --env=prod --no-debug
