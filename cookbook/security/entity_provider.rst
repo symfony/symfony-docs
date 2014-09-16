@@ -651,6 +651,14 @@ about in this section.
     If you fail to return any roles, it may appear as if your user isn't
     authenticated at all.
 
+.. caution::
+
+    In order to work with the security configuration examples on this page
+    all roles must be prefixed with ``ROLE_`` (see
+    the :ref:`section about roles <book-security-roles>` in the book). For
+    example, your roles will be ``ROLE_ADMIN`` or ``ROLE_USER`` instead of
+    ``ADMIN`` or ``USER``.
+
 In this example, the ``AcmeUserBundle:User`` entity class defines a
 many-to-many relationship with a ``AcmeUserBundle:Role`` entity class.
 A user can be related to several roles and a role can be composed of
