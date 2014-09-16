@@ -1782,6 +1782,8 @@ the default for the firewall as a whole).
 For more information about user provider and firewall configuration, see
 the :doc:`/reference/configuration/security`.
 
+.. _book-security-roles:
+
 Roles
 -----
 
