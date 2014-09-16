@@ -51,6 +51,8 @@ Configuration
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Context\ExecutionContextInterface;
+        // if you're using the older 2.4 validation API, you'll need this instead
+        // use Symfony\Component\Validator\ExecutionContextInterface;
 
         class Author
         {
@@ -101,6 +103,8 @@ those errors should be attributed::
 
     // ...
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
+    // if you're using the older 2.4 validation API, you'll need this instead
+    // use Symfony\Component\Validator\ExecutionContextInterface;
 
     class Author
     {
@@ -114,16 +118,26 @@ those errors should be attributed::
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
+                // If you're using the new 2.5 validation API (you probably are!)
                 $context->buildViolation('This name sounds totally fake!')
                     ->atPath('firstName')
                     ->addViolation();
+
+                // If you're using the old 2.4 validation API
+                /*
+                $context->addViolationAt(
+                    'firstName',
+                    'This name sounds totally fake!'
+                );
+                */
             }
         }
     }
 
 .. versionadded:: 2.5
-    The ``buildViolation`` method was added in Symfony 2.5. For usage examples with
-    older Symfony versions, see the corresponding versions of this documentation page.
+    The ``buildViolation`` method was added in Symfony 2.5. For usage examples
+    with older Symfony versions, see the corresponding versions of this documentation
+    page.
 
 Static Callbacks
 ----------------
@@ -138,10 +152,17 @@ have access to the object instance, they receive the object as the first argumen
 
         // check if the name is actually a fake name
         if (in_array($object->getFirstName(), $fakeNames)) {
+            // If you're using the new 2.5 validation API (you probably are!)
             $context->buildViolation('This name sounds totally fake!')
                 ->atPath('firstName')
                 ->addViolation()
             ;
+
+            // If you're using the old 2.4 validation API
+            $context->addViolationAt(
+                'firstName',
+                'This name sounds totally fake!'
+            );
         }
     }
 
@@ -156,6 +177,8 @@ your validation function is ``Vendor\Package\Validator::validate()``::
     namespace Vendor\Package;
 
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
+    // if you're using the older 2.4 validation API, you'll need this instead
+    // use Symfony\Component\Validator\ExecutionContextInterface;
 
     class Validator
     {

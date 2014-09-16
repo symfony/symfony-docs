@@ -65,28 +65,34 @@ The validator class is also simple, and only has one required method ``validate(
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
+                // If you're using the new 2.5 validation API (you probably are!)
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
                     ->addViolation();
                 );
+
+                // If you're using the old 2.4 validation API
+                /*
+                $this->context->addViolation(
+                    $constraint->message,
+                    array('%string%' => $value)
+                );
+                */
             }
         }
     }
 
-.. note::
-
-    The ``validate`` method does not return a value; instead, it adds violations
-    to the validator's ``context`` property. Therefore, a value could be considered
-    as being valid if it causes no violations to be added to the context.The
-    violation is constructed and added to the context using a
-    ``ConstraintViolationBuilder`` returned by the ``buildViolation`` method
-    call. The parameter given to the ``buildViolation`` call is the error message
-    to use for that violation. The ``addViolation`` method call finally adds the
-    violation to the context.
+Inside ``validate``, you don't need to return a value. Instead, you add violations
+to the validator's ``context`` property and a value will be considered valid
+if it causes no violations. The ``buildViolation`` takes the error message
+as its argument and returns an instance of
+:class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilder`
+The ``addViolation`` method call finally adds the violation to the context.
 
 .. versionadded:: 2.5
-    The ``buildViolation`` method was added in Symfony 2.5. For usage examples with
-    older Symfony versions, see the corresponding versions of this documentation page.
+    The ``buildViolation`` method was added in Symfony 2.5. For usage examples
+    with older Symfony versions, see the corresponding versions of this documentation
+    page.
 
 Using the new Validator
 -----------------------
