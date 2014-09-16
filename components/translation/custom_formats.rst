@@ -21,7 +21,7 @@ message. A translation file would look like this:
 Creating a Custom Loader
 ------------------------
 
-To define a custom loader that is able to read this kind of files, you must create a
+To define a custom loader that is able to read these kinds of files, you must create a
 new class that implements the
 :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`. The
 :method:`Symfony\\Component\\Translation\\Loader\\LoaderInterface::load`
