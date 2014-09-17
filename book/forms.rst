@@ -504,6 +504,8 @@ fields were submitted. If you want to suppress validation, you can use the
 .. index::
    single: Forms; Validation groups based on submitted data
 
+.. _book-form-validation-groups:
+
 Groups based on the Submitted Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
