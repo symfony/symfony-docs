@@ -96,6 +96,7 @@ is thrown if an unknown option is passed::
 The rest of your code can now access the values of the options without
 boilerplate code::
 
+    // ...
     class Mailer
     {
         // ...
@@ -117,8 +118,7 @@ If an option must be set by the caller, pass that option to
 :method:`Symfony\\Component\\OptionsResolver\\Options::validateRequired`.
 For example, let's make the ``host`` option required::
 
-    use Symfony\Component\OptionsResolver\Options;
-
+    // ...
     class Mailer
     {
         // ...
@@ -160,9 +160,8 @@ Type Validation
 You can run additional checks on the options to make sure they were passed
 correctly. To validate the types of the options, call
 :method:`Symfony\\Component\\OptionsResolver\\Options::validateTypes`::
-
-    use Symfony\Component\OptionsResolver\Options;
-
+    
+    // ...
     class Mailer
     {
         // ...
@@ -206,8 +205,7 @@ one of ``sendmail``, ``mail`` and ``smtp``. Use the method
 :method:`Symfony\\Component\\OptionsResolver\\Options::validateValues` to verify
 that the passed option contains one of these values::
 
-    use Symfony\Component\OptionsResolver\Options;
-
+    // ...
     class Mailer
     {
         // ...
@@ -256,8 +254,7 @@ You can implement this feature by passing a closure as default value of the
 ``port`` option. The closure receives the options as argument. Based on these
 options, you can return the desired default value::
 
-    use Symfony\Component\OptionsResolver\Options;
-
+    // ...
     class Mailer
     {
         // ...
@@ -305,8 +302,7 @@ If you have a large list of options, the option processing code can take up a
 lot of space of your method. To make your code easier to read and maintain, it
 is a good practice to put the option definitions into static class properties::
 
-    use Symfony\Component\OptionsResolver\Options;
-
+    // ...
     class Mailer
     {
         private static $defaultOptions = array(
@@ -382,7 +378,7 @@ configuration object to resolve the options.
 The following code demonstrates how to write our previous ``Mailer`` class with
 an :class:`Symfony\\Component\\OptionsResolver\\OptionsConfig` object::
 
-    use Symfony\Component\OptionsResolver\Options;
+    // ...
     use Symfony\Component\OptionsResolver\OptionsConfig;
 
     class Mailer
@@ -431,9 +427,7 @@ the :class:`Symfony\\Component\\OptionsResolver\\OptionsConfig` instance.
 Nevertheless, this design also has a benefit: We can extend the ``Mailer``
 class and adjust the options of the parent class in the subclass::
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
+    // ...
     class GoogleMailer extends Mailer
     {
         protected function configureOptions(OptionsConfig $config)
@@ -476,9 +470,7 @@ however, *no default value* will be added to the options array. Pass the names
 of the optional options to
 :method:`Symfony\\Component\\OptionsResolver\\OptionsConfig::setOptional`::
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
+    // ...
     class Mailer
     {
         // ...
@@ -493,6 +485,7 @@ of the optional options to
 This is useful if you need to know whether an option was explicitly passed. If
 not, it will be missing from the options array::
 
+    // ...
     class Mailer
     {
         // ...
@@ -523,8 +516,7 @@ not, it will be missing from the options array::
     the options before calling
     :method:`Symfony\\Component\\OptionsResolver\\Options::resolve`::
 
-        use Symfony\Component\OptionsResolver\Options;
-
+        // ...
         class Mailer
         {
             // ...
@@ -557,9 +549,7 @@ again. When using a closure as the new value it is passed 2 arguments:
 
 .. code-block:: php
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
+    // ...
     class Mailer
     {
         // ...
@@ -592,9 +582,7 @@ again. When using a closure as the new value it is passed 2 arguments:
     to improve performance. This means that the previous default value is not
     available when overwriting with another closure::
 
-        use Symfony\Component\OptionsResolver\Options;
-        use Symfony\Component\OptionsResolver\OptionsConfig;
-
+        // ...
         class Mailer
         {
             // ...
@@ -635,9 +623,7 @@ you can write normalizers. Normalizers are executed after all options were
 processed. You can configure these normalizers by calling
 :method:`Symfony\\Components\\OptionsResolver\\OptionsConfig::setNormalizers`::
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
+    // ...
     class Mailer
     {
         // ...
@@ -661,9 +647,7 @@ The normalizer receives the actual ``$value`` and returns the normalized form.
 You see that the closure also takes an ``$options`` parameter. This is useful
 if you need to use other options for the normalization::
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
+    // ...
     class Mailer
     {
         // ...
@@ -693,8 +677,7 @@ if you need to use other options for the normalization::
     object, perform normalization after the call to
     :method:`Symfony\\Component\\OptionsResolver\\Options::resolve`::
 
-        use Symfony\Component\OptionsResolver\Options;
-
+        // ...
         class Mailer
         {
             // ...
