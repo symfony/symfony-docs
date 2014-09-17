@@ -143,6 +143,10 @@
   * :doc:`/components/translation/usage`
   * :doc:`/components/translation/custom_formats`
 
+* **VarDumper**
+
+  * :doc:`/components/var_dumper`
+
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`

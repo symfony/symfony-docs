@@ -29,6 +29,7 @@ The Components
     stopwatch
     templating/index
     translation/index
+    var_dumper
     yaml/index
 
 .. include:: /components/map.rst.inc
