@@ -84,9 +84,9 @@ The validator class is also simple, and only has one required method ``validate(
 
 Inside ``validate``, you don't need to return a value. Instead, you add violations
 to the validator's ``context`` property and a value will be considered valid
-if it causes no violations. The ``buildViolation`` takes the error message
-as its argument and returns an instance of
-:class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilder`
+if it causes no violations. The ``buildViolation`` method takes the error
+message as its argument and returns an instance of
+:class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
 The ``addViolation`` method call finally adds the violation to the context.
 
 .. versionadded:: 2.5
