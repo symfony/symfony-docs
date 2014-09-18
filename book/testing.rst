@@ -459,7 +459,10 @@ injection container::
 
 Be warned that this does not work if you insulate the client or if you use an
 HTTP layer. For a list of services available in your application, use the
-``container:debug`` console task.
+``debug:container`` console task.
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 .. tip::
 
