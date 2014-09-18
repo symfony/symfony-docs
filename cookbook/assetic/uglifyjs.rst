@@ -111,10 +111,11 @@ your JavaScripts:
 
 You now have access to the ``uglifyjs2`` filter in your application.
 
-Configure the ``node binary``
-----------------------------------
+Configure the ``node`` Binary
+-----------------------------
 
-he name of the binary is node you can skip this section.
+Assetic tries to find the node binary automatically. If it cannot be found, you'll
+be able to configure its location using the ``node`` key:
 
 .. configuration-block::
 
@@ -124,12 +125,19 @@ he name of the binary is node you can skip this section.
         assetic:
             # the path to the node executable
             node: /usr/bin/nodejs
+            filters:
+                uglifyjs2:
+                    # the path to the uglifyjs executable
+                    bin: /usr/local/bin/uglifyjs
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <assetic:config 
-            node="/usr/bin/nodejs">
+            node="/usr/bin/nodejs" >
+            <assetic:filter
+                name="uglifyjs2"
+                bin="/usr/local/bin/uglifyjs" />
         </assetic:config>
 
     .. code-block:: php
@@ -137,6 +145,10 @@ he name of the binary is node you can skip this section.
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
             'node' => '/usr/bin/nodejs',
+            'uglifyjs2' => array(
+                    // the path to the uglifyjs executable
+                    'bin' => '/usr/local/bin/uglifyjs',
+                ),
         ));
 
 Minify your Assets
