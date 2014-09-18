@@ -1,12 +1,19 @@
 .. index::
    single: Bundle; Best practices
 
-How to Use best Practices for Structuring Bundles
-=================================================
+Best Practices for Reusable Bundles
+===================================
 
-A bundle is a directory that has a well-defined structure and can host anything
-from classes to controllers and web resources. Even if bundles are very
-flexible, you should follow some best practices if you want to distribute them.
+There are 2 types of bundles:
+
+* Application bundles: only use to build your application;
+* Reusable bundle: meant to be shared across many projects.
+
+This article is all about how to structure your **reusable bundles** so that
+they're easy to configure and extend. Many of these recommendations do not
+apply to application bundles because you'll want to keep those as simple
+as possible. For application bundles, just follow the practices shown throughout
+the book and cookbook.
 
 .. index::
    pair: Bundle; Naming conventions
