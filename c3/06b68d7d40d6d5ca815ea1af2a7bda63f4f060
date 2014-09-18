@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-18T12:28:51Z
+
+Actually, as long as the name of the binary is ``node`` and it can be located by ``ExecutableFinder`` or if it can be found under ``/usr/bin/node``, it's not necessary to configure anything here. Maybe you should add a comment mentioning this.
+
+---------------------------------------------------------------------------
+
+by desarrolla2 at 2014-09-18T13:51:36Z
+
+@xabbuh i was updated the PR as you indicate. In my ubuntu14.04 i was installed node via apt and binary name is nodejs
+
+---------------------------------------------------------------------------
+
+by desarrolla2 at 2014-09-18T14:09:50Z
+
+I think that i solved your comments
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-18T14:24:02Z
+
+@desarrolla2 thanks for your quick response to the comments and for having created this documentation.
+
+I know that you've been a Symfony developer for a long time, but if I'm right, this is your first documentation contribution. If this is true, congratulations!
+
+By the way, you mentioned the [How to Contribute to Symfony Documentation](http://symfony.com/doc/current/contributing/documentation/overview.html) guide that we recently updated. If you found something hard to understand or some missing explanation, please feel free to open an issue in this repository. Thanks.
