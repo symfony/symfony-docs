@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-08T15:50:23Z
+
+You should add a versionadded that this was called `...:debug` prior to Symfony 2.6 (but there is no need to tell about BC)
+
+---------------------------------------------------------------------------
+
+by matthieuauger at 2014-09-08T20:58:56Z
+
+@WouterJ : Thanks, I updated the PR
