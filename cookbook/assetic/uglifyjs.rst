@@ -66,6 +66,7 @@ your JavaScripts:
 
         # app/config/config.yml
         assetic:
+            node: /usr/bin/nodejs
             filters:
                 uglifyjs2:
                     # the path to the uglifyjs executable
