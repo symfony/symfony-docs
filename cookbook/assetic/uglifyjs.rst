@@ -112,6 +112,34 @@ your JavaScripts:
 
 You now have access to the ``uglifyjs2`` filter in your application.
 
+Configure the ``node binary``
+----------------------------------
+
+he name of the binary is node you can skip this section.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            # the path to the node executable
+            node: /usr/bin/nodejs
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <assetic:config 
+            node="/usr/bin/nodejs">
+        </assetic:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'node' => '/usr/bin/nodejs',
+        ));
+
 Minify your Assets
 ------------------
 
