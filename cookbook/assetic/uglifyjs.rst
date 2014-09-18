@@ -114,8 +114,8 @@ You now have access to the ``uglifyjs2`` filter in your application.
 Configure the ``node`` Binary
 -----------------------------
 
-Assetic tries to find the node binary automatically. If it cannot be found, you'll
-be able to configure its location using the ``node`` key:
+Assetic tries to find the node binary automatically. If it cannot be found, you
+can configure its location using the ``node`` key:
 
 .. configuration-block::
 
