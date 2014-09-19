@@ -367,7 +367,7 @@ fetch the user from the database before checking the password validity.
 .. note::
 
     By default, the entity provider uses the default entity manager to fetch
-    user information from the database. If you,
+    user information from the database. If you
     :doc:`use multiple entity managers </cookbook/doctrine/multiple_entity_managers>`,
     you can specify which manager to use with the ``manager_name`` option:
 
