@@ -81,6 +81,12 @@ can remove the ``Acme`` directory as well.
 
         echo $this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath();
 
+3.1 Remove Bundle Assets
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Remove the assets of the bundle in the web/ directory (e.g.
+``web/bundles/acmedemo`` for the AcmeDemoBundle).
+
 4. Remove Integration in other Bundles
 --------------------------------------
 
