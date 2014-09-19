@@ -731,12 +731,12 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
 .. _cookbook-form-collections-custom-prototype
 
-Render a custom prototype
--------------------------
+Rendering a Custom Prototype
+----------------------------
 
 Most of the time the provided prototype will be sufficient for your needs
 and does not need to be changed. But if you are in the situation were
-you need to have a complete custom prototype you can render it yourself:
+you need to have a complete custom prototype, you can render it yourself:
 
 .. configuration-block::
 
