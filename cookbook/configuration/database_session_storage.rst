@@ -1,7 +1,11 @@
 .. index::
     single: Session; Database Storage
 
+<<<<<<< HEAD:cookbook/configuration/pdo_session_storage.rst
 How to Use PdoSessionHandler to Store Sessions in the Database
+=======
+How to use Store Session in the Database
+>>>>>>> - Merged both database session storage configurations into one file:cookbook/configuration/database_session_storage.rst
 ==============================================================
 
 The default Symfony session storage writes the session information to
@@ -9,11 +13,145 @@ file(s). Most medium to large websites use a database to store the session
 values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
+<<<<<<< HEAD:cookbook/configuration/pdo_session_storage.rst
 Symfony has a built-in solution for database session storage called
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
+=======
+Symfony2 has two built-in solutions for database session storage one uses doctrine
+:class:`Symfony\\Bridge\\Doctrine\\HttpFoundation\\HttpFoundation\\DbalSessionHandler` 
+and the other uses PDO :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
+>>>>>>> - Merged both database session storage configurations into one file:cookbook/configuration/database_session_storage.rst
 
+Using Doctrine to Store the Session in the Database
+---------------------------------------------------
+
+To use it, you just need to inject this class as a service in ``config.yml``:
+
+.. versionadded:: 2.1
+    
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            session:
+                # ...
+                handler_id:     session.handler.dbal_handler
+
+        services:
+           
+            session.handler.dbal_handler:
+                class:     Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler
+                arguments: ["@doctrine.dbal.default_connection"]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:session handler-id="session.handler.dbal_handler" cookie-lifetime="3600" auto-start="true"/>
+        </framework:config>
+
+        <services>
+            <service id="session.handler.dbal_handler" class="Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler">
+                <argument type="service" id="doctrine.dbal.default_connection" />                
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->loadFromExtension('framework', array(
+            ...,
+            'session' => array(
+                // ...,
+                'handler_id' => 'session.handler.dbal_handler',
+            ),
+        ));
+
+        $storageDefinition = new Definition('Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler', array(
+            new Reference('doctrine.dbal.default_connection'),
+        ));
+        $container->setDefinition('session.handler.dbal_handler', $storageDefinition);
+
+You can pass a second parameter to the constructor to set the table name. 
+* ``db_table``: The name of the session table in your database
+* ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
+* ``db_data_col``: The name of the value column in your session table (TEXT or CLOB)
+* ``db_time_col``: The name of the time column in your session table (INTEGER)
+
+Configuring your Database Connection Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With the given configuration, the database connection settings are the ones you've
+set for the default doctrine connection. This is OK if you're storing everything 
+in the same database. If you want to store the sessions in another database you just have
+to configure a new doctrine connection.
+
+
+Table structure and example SQL Statements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Because of the way this is implemented in the php class you can only configure the table name (The default is sessions)
+Here are a couple of SQL statements to help you create a table that will work with this
+MySQL
+.....
+
+The SQL statement for creating the needed database table might look like the
+following (MySQL):
+
+.. code-block:: sql
+
+    CREATE TABLE `sessions` (
+        `sess_id` varchar(255) NOT NULL,
+        `sess_data` text NOT NULL,
+        `sess_time` int(11) NOT NULL,
+        PRIMARY KEY (`sess_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+PostgreSQL
+..........
+
+For PostgreSQL, the statement should look like this:
+
+.. code-block:: sql
+
+    CREATE TABLE sessions (
+        sess_id character varying(255) NOT NULL,
+        sess_data text NOT NULL,
+        sess_time integer NOT NULL,
+        CONSTRAINT session_pkey PRIMARY KEY (sess_id)
+    );
+
+Microsoft SQL Server
+....................
+
+For MSSQL, the statement might look like the following:
+
+.. code-block:: sql
+
+    CREATE TABLE [dbo].[sessions](
+	    [sess_id] [nvarchar](255) NOT NULL,
+	    [sess_data] [ntext] NOT NULL,
+        [sess_time] [int] NOT NULL,
+		PRIMARY KEY CLUSTERED(
+			[sess_id] ASC
+		) WITH (
+		    PAD_INDEX  = OFF,
+		    STATISTICS_NORECOMPUTE  = OFF,
+		    IGNORE_DUP_KEY = OFF,
+		    ALLOW_ROW_LOCKS  = ON,
+		    ALLOW_PAGE_LOCKS  = ON
+		) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+
+Using PDO to Store the Session in the Database
+----------------------------------------------
 .. versionadded:: 2.1
     In Symfony 2.1 the class and namespace are slightly modified. You can now
     find the session storage classes in the ``Session\Storage`` namespace:
@@ -126,7 +264,7 @@ configuration format of your choice):
 * ``db_time_col``: The name of the time column in your session table (INTEGER)
 
 Sharing your Database Connection Information
---------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 With the given configuration, the database connection settings are defined for
 the session storage connection only. This is OK when you use a separate
@@ -165,10 +303,10 @@ of your project's data, you can use the connection settings from the
         ));
 
 Example SQL Statements
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 MySQL
-~~~~~
+.....
 
 The SQL statement for creating the needed database table might look like the
 following (MySQL):
@@ -183,7 +321,7 @@ following (MySQL):
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 PostgreSQL
-~~~~~~~~~~
+..........
 
 For PostgreSQL, the statement should look like this:
 
@@ -197,7 +335,7 @@ For PostgreSQL, the statement should look like this:
     );
 
 Microsoft SQL Server
-~~~~~~~~~~~~~~~~~~~~
+....................
 
 For MSSQL, the statement might look like the following:
 
