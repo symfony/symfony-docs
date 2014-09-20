@@ -462,7 +462,8 @@ these new ``Tag`` objects easier (especially if you're using Doctrine, which
 we talk about next!).
 
 .. caution::
-
+    Create **both** methods, otherwise none of them will be used.
+    
     If no ``addTag`` **and** ``removeTag`` method is found, the form will
     still use ``setTag`` even if ``by_reference`` is ``false``. You'll learn
     more about the ``removeTag`` method later in this article.
