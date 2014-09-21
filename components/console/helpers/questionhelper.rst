@@ -65,9 +65,10 @@ If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
 Showing the Default Answer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes, it is beneficial for the user to be aware of the default answer should
-they decide not to give one. If you want the user to know, you can add this to your
-command::
+Sometimes you want to present the default answer to the user that will be
+chosen if they don't provide an answer themself. Use the
+:method:`Symfony\\Component\\Console\\Question\\Question::setShowDefault` method
+to show the default answer::
 
     use Symfony\Component\Console\Question\Question;
     // ...
