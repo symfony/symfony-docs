@@ -62,6 +62,23 @@ some name which will be returned by the
 :method:`Symfony\\Component\\Console\\Helper\\QuestionHelper::ask` method.
 If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
 
+Showing the default answer
+...........................
+
+Sometimes, it is beneficial for the user to be aware of the default answer should
+they decide not to give one. If you want the user to know, you can add this to your
+command::
+
+    use Symfony\Component\Console\Question\Question;
+    // ...
+
+    $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
+    $question->setShowDefault(true);
+
+    $bundle = $helper->ask($input, $output, $question);
+
+The user will be asked "Please enter the name of the bundle [AcmeDemoBundle]".
+
 Let the User Choose from a List of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
