@@ -62,8 +62,8 @@ some name which will be returned by the
 :method:`Symfony\\Component\\Console\\Helper\\QuestionHelper::ask` method.
 If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
 
-Showing the default answer
-...........................
+Showing the Default Answer
+..........................
 
 Sometimes, it is beneficial for the user to be aware of the default answer should
 they decide not to give one. If you want the user to know, you can add this to your
