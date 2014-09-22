@@ -208,6 +208,8 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 .. sidebar:: Registering Event Listeners in the Service Container
 
     When you are using the
+    :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher`
+    and the
     :doc:`DependencyInjection component </components/dependency_injection/introduction>`,
     you can use the
     :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterListenersPass`
@@ -216,16 +218,17 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 
         // register the event dispatcher service
-        $containerBuilder->register(
-            'event_dispatcher',
-            'Symfony\Component\EventDispatcher\EventDispatcher'
-        );
+        $containerBuilder->setDefinition('event_dispatcher', new Definition(
+            'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher',
+            array(new Reference('service_container'))
+        ));
 
         // register your event listener service
         $listener = new Definition('AcmeListener');
