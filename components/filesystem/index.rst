@@ -5,5 +5,4 @@ Filesystem
     :maxdepth: 2
 
     introduction
-    filesystem
-    lockhandler
+    lock_handler
