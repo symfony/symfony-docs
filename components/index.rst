@@ -14,7 +14,7 @@ The Components
     dom_crawler
     event_dispatcher/index
     expression_language/index
-    filesystem
+    filesystem/index
     finder
     form/index
     http_foundation/index
