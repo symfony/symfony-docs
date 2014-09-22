@@ -955,6 +955,10 @@ see :ref:`route-parameters-controller-arguments`.
     You can also use a special ``$_route`` variable, which is set to the
     name of the route that was matched.
 
+You can even add extra information to your route definition and access it
+within your controller. For more information on this topic,
+see :doc:`/cookbook/routing/extra_information`.
+
 .. index::
    single: Routing; Importing routing resources
 
