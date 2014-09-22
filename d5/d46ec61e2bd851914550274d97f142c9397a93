@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by iamdto at 2014-07-16T13:00:43Z
+
+So I removed references to the array defaults. This should be added back in another PR if @xabbuh PR is getting merged.
+
+I've also changed the `name` parameter to `title`. It makes more sense as the example is talking about a blog.
+
+Should be good to merge now.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-15T20:50:40Z
+
+ping @iamdto, it would be nice to get this merged!
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-08-18T07:45:02Z
+
+Sorry I was on holiday, I couldn't work on this. So basically I should move all of this in a new cookbook entry, right? I'll try to do it by the end of the week.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-19T21:59:58Z
+
+No worries :). Yes, a new cookbook entry then we'll have another look.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-09-09T09:56:38Z
+
+I've added the new cookbook entry. If it's sounds OK, I'll squash my commits. Otherwise let me know what to change.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-16T02:12:19Z
+
+@iamdto I added some minor notes, but it looks great to me after those. Thanks for the hard work!
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-09-16T14:14:07Z
+
+I've updated my commit, let me know if I need to change something.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-16T15:40:02Z
+
+@iamdto I've found one very minor thing, apart from that it's finished imo
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-09-22T08:54:26Z
+
+Should be good now.
+
+---------------------------------------------------------------------------
+
+by iamdto at 2014-09-22T15:03:17Z
+
+Updated.
+
+Sidenote about GitHub: are you notified when commits are added or updated?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-22T17:04:42Z
+
+@iamdto No, you would have to write a comment to notify users who are subscribed to it.
+
+Anyway, I think it's ready to be merged now. Nice job! :+1:
