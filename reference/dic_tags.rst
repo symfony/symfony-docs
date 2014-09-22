@@ -1040,32 +1040,12 @@ translation.loader
 **Purpose**: To register a custom service that loads translations
 
 By default, translations are loaded from the filesystem in a variety of different
-formats (YAML, XLIFF, PHP, etc). If you need to load translations from some
-other source, first create a class that implements the
-:class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface::
+formats (YAML, XLIFF, PHP, etc).
 
-    // src/Acme/MainBundle/Translation/MyCustomLoader.php
-    namespace Acme\MainBundle\Translation;
+.. seealso::
 
-    use Symfony\Component\Translation\Loader\LoaderInterface;
-    use Symfony\Component\Translation\MessageCatalogue;
-
-    class MyCustomLoader implements LoaderInterface
-    {
-        public function load($resource, $locale, $domain = 'messages')
-        {
-            $catalogue = new MessageCatalogue($locale);
-
-            // some how load up some translations from the "resource"
-            // then set them into the catalogue
-            $catalogue->set('hello.world', 'Hello World!', $domain);
-
-            return $catalogue;
-        }
-    }
-
-Your custom loader's ``load`` method is responsible for returning a
-:Class:`Symfony\\Component\\Translation\\MessageCatalogue`.
+    Learn how to :ref:`load custom formats <components-translation-custom-loader>`
+    in the components section.
 
 Now, register your loader as a service and tag it with ``translation.loader``:
 
@@ -1256,6 +1236,11 @@ This is the name that's used to determine which dumper should be used.
             'Acme\DemoBundle\Translation\JsonFileDumper'
         )
             ->addTag('translation.dumper', array('alias' => 'json'));
+
+.. seealso::
+
+    Learn how to :ref:`dump to custom formats <components-translation-custom-dumper>`
+    in the components section.
 
 .. _reference-dic-tags-twig-extension:
 

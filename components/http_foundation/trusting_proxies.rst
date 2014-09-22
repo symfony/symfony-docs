@@ -30,12 +30,6 @@ your proxy.
     // only trust proxy headers coming from this IP addresses
     Request::setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
 
-.. note::
-
-   When using Symfony's internal reverse proxy (``AppCache.php``) make sure to add
-   ``127.0.0.1`` to the list of trusted proxies.
-
-
 Configuring Header Names
 ------------------------
 
