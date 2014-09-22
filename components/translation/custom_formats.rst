@@ -18,6 +18,8 @@ message. A translation file would look like this:
     (goodbye)(au revoir)
     (hello)(bonjour)
 
+.. _components-translation-custom-loader:
+
 Creating a Custom Loader
 ------------------------
 
@@ -64,6 +66,8 @@ Once created, it can be used as any other loader::
     echo $translator->trans('welcome');
 
 It will print *"accueil"*.
+
+.. _components-translation-custom-dumper:
 
 Creating a Custom Dumper
 ------------------------
