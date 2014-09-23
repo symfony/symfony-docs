@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-23T11:28:59Z
+
+Is this even true for Symfony versions that have been released before the release cycle was established?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-23T11:30:32Z
+
+@xabbuh for the oldest versions this wasn't a very strict process, but it was more or less respected.
