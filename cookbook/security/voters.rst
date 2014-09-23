@@ -92,6 +92,13 @@ the security layer. This can be done easily through the service container.
     methods in your implementation of the ``vote()`` method and return ``ACCESS_ABSTAIN``
     if your voter does not support the class or attribute.
 
+
+.. tip::
+
+    An
+    :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`
+    is provided to cover the common use cases when implementing security voters.
+
 Declaring the Voter as a Service
 --------------------------------
 
