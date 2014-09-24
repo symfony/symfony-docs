@@ -455,18 +455,15 @@ form is rendered.
 
         # app/config/config.yml
         twig:
-            form:
-                resources:
-                    - 'AcmeDemoBundle:Form:fields.html.twig'
+            form_themes:
+                - 'AcmeDemoBundle:Form:fields.html.twig'
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
-            <twig:form>
-                <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
-            </twig:form>
+            <twig:form-theme>AcmeDemoBundle:Form:fields.html.twig</twig:form-theme>
             <!-- ... -->
         </twig:config>
 
@@ -474,10 +471,8 @@ form is rendered.
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'AcmeDemoBundle:Form:fields.html.twig',
-                ),
+            'form_themes' => array(
+                'AcmeDemoBundle:Form:fields.html.twig',
             ),
 
             // ...
@@ -493,17 +488,14 @@ resource to use such a layout:
 
         # app/config/config.yml
         twig:
-            form:
-                resources: ['form_table_layout.html.twig']
+            form_themes: ['form_table_layout.html.twig']
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
-            <twig:form>
-                <resource>form_table_layout.html.twig</resource>
-            </twig:form>
+            <twig:form-theme>form_table_layout.html.twig</twig:form-theme>
             <!-- ... -->
         </twig:config>
 
@@ -511,10 +503,8 @@ resource to use such a layout:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'form_table_layout.html.twig',
-                ),
+            'form_themes' => array(
+                'form_table_layout.html.twig',
             ),
 
             // ...
