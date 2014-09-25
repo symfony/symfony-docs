@@ -230,13 +230,20 @@ following standardized instructions in your ``README.md`` file.
     // app/AppKernel.php
 
     // ...
-
-    public function registerBundles()
+    class AppKernel extends Kernel
     {
-        $bundles = array(
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+   
+                new <vendor>\<bundle-name>\<bundle-long-name>(),
+            );
+   
             // ...
-            return new <vendor>\<bundle-name>\<bundle-long-name>(),
-        );
+        }
+        
+        // ...
     }
     ```
 
