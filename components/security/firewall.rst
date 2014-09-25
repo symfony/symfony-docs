@@ -30,6 +30,11 @@ certain action or resource of the application::
         throw new AccessDeniedException();
     }
 
+.. versionadded:: 2.6
+    As of Symfony 2.6, the :class:`Symfony\\Component\\Security\\Core\\SecurityContext` class was split 
+    in the :class:`Symfony\\Component\\Security\\Core\\Authentication\\Authorization\\AuthorizationChecker` and 
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorage` classes.
+
 .. note::
 
     Read the dedicated sections to learn more about :doc:`/components/security/authentication`
@@ -115,7 +120,7 @@ which will eventually result in an "HTTP/1.1 403: Access Denied" response.
 Entry Points
 ~~~~~~~~~~~~
 
-When the user is not authenticated at all (i.e. when the security context
+When the user is not authenticated at all (i.e. when the token storage
 has no token yet), the firewall's entry point will be called to "start"
 the authentication process. An entry point should implement
 :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`,
