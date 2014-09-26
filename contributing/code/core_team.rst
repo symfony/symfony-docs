@@ -51,8 +51,8 @@ Active Core Members
   * **Romain Neutron** (:merger:`romainneutron`) can merge into the
     Process_ component;
 
-  * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_ and
-    VarDumper_ components, and into the DebugBundle_ bundle;
+  * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_
+    component, the VarDumper_ component and the DebugBundle_;
 
   * **Christophe Coevoet** (:merger:`stof`) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
