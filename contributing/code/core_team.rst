@@ -51,8 +51,8 @@ Active Core Members
   * **Romain Neutron** (:merger:`romainneutron`) can merge into the
     Process_ component;
 
-  * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_
-    component;
+  * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_ and
+    VarDumper_ components, and into the DebugBundle_ bundle;
 
   * **Christophe Coevoet** (:merger:`stof`) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
@@ -164,3 +164,5 @@ discretion of the **Project Leader**.
 .. _Stopwatch: https://github.com/symfony/Stopwatch
 .. _TwigBridge: https://github.com/symfony/TwigBridge
 .. _Validator: https://github.com/symfony/Validator
+.. _VarDumper: https://github.com/symfony/var-dumper
+.. _DebugBundle: https://github.com/symfony/debug-bundle
