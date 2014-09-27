@@ -729,5 +729,79 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
 
+.. _cookbook-form-collections-custom-prototype:
+
+Render a custom prototype
+-------------------------
+
+Most of the time the provided prototype will be sufficient for your needs
+and does not need to be changed. But if you are in the situation were
+you need to have a complete custom prototype you can render it yourself:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <!-- src/Acme/TaskBundle/Resources/views/Task/prototypeTask.html.twig -->
+        data-prototype="{% filter escape %}
+            {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig'
+                with { 'task': form.task.get('prototype') }
+            %}
+        {% endfilter %}"
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/TaskBundle/Resources/views/Task/prototypeTask.html.php -->
+        data-prototype="<?php
+            $prototype = $view->render(
+                'AcmeTaskBundle:Task:prototypeTask.html.php',
+                array('task' => $form->task->get('prototype'))
+            );
+
+            echo $view->escape($prototype);
+        ?>"
+
+To be not confused let's have a look how the prototype-template might look like.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <tr>
+            <td>{{ form_widget(task.task) }}</td>
+            <td>{{ form_widget(task.dueDate) }}</td>
+        </tr>
+
+    .. code-block:: html+php
+
+        <tr>
+            <td><?php echo $view['form']->widget($task->getTask()) ?></td>
+            <td><?php echo $view['form']->widget($task->getDueDate()) ?></td>
+        </tr>
+
+The included template contains the markup used for the prototype.
+This way you can not only easily structure your prototype-markup,
+you can also use this markup to render the
+contents of the collection when it already holds items:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% for task in tasks %}
+            {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig'
+                with { 'form': form.task.vars.form }
+            %}
+        {% endfor %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($tasks as $task) ?>
+            <?php echo $view->render('AcmeTaskBundle:Task:prototypeTask.html.php', array('form' => $form->task->vars->form)); ?>
+        <?php endforeach; ?>
+
+This makes sure the displayed items are the same as the newly inserted
+from the prototype.
+
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
