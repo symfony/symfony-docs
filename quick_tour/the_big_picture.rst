@@ -20,7 +20,7 @@ directory:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition myproject/ '~2.3'
+    $ composer create-project symfony/framework-standard-edition myproject/ "~2.3"
 
 .. note::
 
