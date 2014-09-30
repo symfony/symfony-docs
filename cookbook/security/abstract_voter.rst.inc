@@ -18,7 +18,7 @@ which has this structure:
 .. include:: /cookbook/security/voter_interface.rst.inc
 
 The basic functionality covering common use cases is provided
-and end developer is expected to implement the abstract methods.
+and developer is expected to implement the abstract methods.
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
 method is used to provide an array of supported classes, i.e. ['\Acme\DemoBundle\Model\Product']
@@ -28,4 +28,4 @@ method is used to provide an array of supported attributes, i.e. ['CREATE', 'REA
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::isGranted`
 method must implement the business logic that verifies whether or not a given
-user is allowed a given attribute on a given object. This method must return a boolean.
+user is allowed access to a given attribute on a given object. This method must return a boolean.

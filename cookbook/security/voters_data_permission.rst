@@ -63,7 +63,6 @@ edit a particular object. Here's an example implementation:
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
     use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class PostVoter extends AbstractVoter
