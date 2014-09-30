@@ -161,7 +161,7 @@ They are useful when you need to set a success message before redirecting the
 user to another page (which will then show the message)::
 
     // store a message for the very next request (in a controller)
-    $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
+    $this->addFlash('notice', 'Congratulations, your action succeeded!');
 
 .. code-block:: html+jinja
 
