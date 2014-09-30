@@ -6,18 +6,8 @@ The VarDumper Component
 =======================
 
     The VarDumper component provides mechanisms for walking through any arbitrary PHP variable.
-    Built on top, it provides a better ``dump()`` function, that you can use instead of ``var_dump()``,
-    *better* meaning:
+    Built on top, it provides a better ``dump()`` function that you can use instead of :phpfunction:`var_dump`.
 
-    - per object and resource types specialized view to e.g. filter out Doctrine noise
-      while dumping a single proxy entity, or get more insight on opened files with
-      ``stream_get_meta_data()``.
-    - configurable output format: HTML, command line with colors or JSON.
-    - ability to dump internal references, either soft ones (objects or resources)
-      or hard ones (``=&`` on arrays or objects properties). Repeated occurrences of
-      the same object/array/resource won't appear again and again anymore. Moreover,
-      you'll be able to inspected the reference structure of your data.
-    - ability to operate in the context of an output buffering handler.
 
 .. versionadded:: 2.6
     The VarDumper component was introduced in Symfony 2.6.
@@ -33,21 +23,34 @@ You can install the component in 2 different ways:
 The dump() function
 -------------------
 
-The VarDumper component creates a global ``dump()`` function that is auto-configured out of the box:
+The VarDumper component creates a global ``dump()`` function that is configured out of the box:
 HTML or CLI output is automatically selected based on the current PHP SAPI.
 
-``dump()`` is just a thin wrapper for ``\Symfony\Component\VarDumper\VarDumper::dump()`` so can you also use it directly.
-You can change the behavior of this function by calling ``\Symfony\Component\VarDumper\VarDumper::setHandler($callable)``:
-calls to ``dump()`` will then be forwarded to the ``$callable`` given as first argument.
+The advantages of this function are:
 
-Advanced usage
+    - per object and resource types specialized view to e.g. filter out Doctrine internals
+      while dumping a single proxy entity, or get more insight on opened files with
+      :phpfunction:`stream_get_meta_data()`.
+    - configurable output formats: HTML or colored command line output.
+    - ability to dump internal references, either soft ones (objects or resources)
+      or hard ones (``=&`` on arrays or objects properties). Repeated occurrences of
+      the same object/array/resource won't appear again and again anymore. Moreover,
+      you'll be able to inspect the reference structure of your data.
+    - ability to operate in the context of an output buffering handler.
+
+``dump()`` is just a thin wrapper for :method:`VarDumper::dump() <Symfony\\Component\\VarDumper\\VarDumper::dump>`
+so can you also use it directly. You can change the behavior of this function by calling
+:method:`VarDumper::setHandler($callable) <Symfony\\Component\\VarDumper\\VarDumper::setHandler>`:
+calls to ``dump()`` will then be forwarded to ``$callable``, given as first argument.
+
+Advanced Usage
 --------------
 
 Cloners
 ~~~~~~~
 
 A cloner is used to create an intermediate representation of any PHP variable.
-Its output is a Data object that wraps this representation.
+Its output is a :class:`Data <Symfony\\Component\\VarDumper\\Cloner\\Data>` object that wraps this representation.
 A cloner also applies limits when creating the representation, so that the corresponding
 Data object could represent only a subset of the cloned variable.
 
@@ -61,26 +64,27 @@ Before cloning, you can configure the limits with::
     $cloner->setMaxItems($number);
     $cloner->setMaxString($number);
 
-These limits will be applied when calling ``->cloneVar()`` afterwise.
+They will be applied when calling ``->cloneVar()`` afterwards.
 
 Casters
 ~~~~~~~
 
 Objects and resources nested in a PHP variable are casted to arrays in the intermediate Data representation.
 You can tweak the array representation for each object/resource by hooking a Caster into this process.
-The component already has a many casters for base PHP classes and other common classes.
+The component already includes many casters for base PHP classes and other common classes.
 
-If you want to build your how Caster, you can register one before cloning a PHP variable.
+If you want to build your own Caster, you can register one before cloning a PHP variable.
 Casters are registered using either a Cloner's constructor or its ``addCasters()`` method::
 
     $myCasters = array(...);
     $cloner = new PhpCloner($myCasters);
 
-or::
+    // or
 
     $cloner->addCasters($myCasters);
 
-The provided ``$myCasters`` argument is an array that maps a class, an interface or a resource type to a callable::
+The provided ``$myCasters`` argument is an array that maps a class,
+an interface or a resource type to a callable::
 
     $myCasters = array(
         'FooClass' => $myFooClassCallableCaster,
@@ -96,26 +100,24 @@ Several casters can also be registered for the same resource type/class/interfac
 They are called in registration order.
 
 Casters are responsible for returning the properties of the object or resource being cloned in an array.
-They are callables that accept four arguments::
+They are callables that accept four arguments:
 
-    /**
-     * A caster not doing anything.
-     *
-     * @param object|resource $object   The object or resource being casted.
-     * @param array           $array    An array modelled for objects after PHP's native `(array)` cast operator.
-     * @param Stub            $stub     A Cloner\Stub object representing the main properties of $object (class, type, etc.).
-     * @param bool            $isNested True/false when the caster is called nested is a structure or not.
-     *
-     * @return array The properties of $object casted in an array.
-     */
-    function myCaster($origValue, $array, $stub, $isNested)
+    - the object or resource being casted,
+    - an array modelled for objects after PHP's native ``(array)`` cast operator,
+    - a :class:`Stub <Sumfony\\Component\\VarDumper\\Cloner\\Stub>` object representing
+      the main properties of the object (class, type, etc.),
+    - true/false when the caster is called nested is a structure or not.
+
+Here is a simple caster not doing anything::
+
+    function myCaster($object, $array, $stub, $isNested)
     {
-        // Here, populate/alter $array to your needs.
+        // ... populate/alter $array to your needs
 
         return $array;
     }
 
-For objects, the ``$array`` parameter comes pre-populated with PHP's native ``(array)`` casting operator,
+For objects, the ``$array`` parameter comes pre-populated with PHP's native ``(array)`` casting operator
 or with the return value of ``$object->__debugInfo()`` if the magic method exists.
 Then, the return value of one Caster is given as argument to the next Caster in the chain.
 
