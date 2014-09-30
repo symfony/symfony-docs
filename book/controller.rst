@@ -429,42 +429,29 @@ A great way to see the core functionality in action is to look in the
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-method::
+If you want to redirect the user to another page, use the ``redirectToRoute()`` method::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
     }
 
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
-
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
+By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the second argument::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'), 301);
+        return $this->redirectToRoute('homepage', 301);
     }
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
+    The ``redirectToRoute()`` method is simply a shortcut that creates a ``Response``
     object that specializes in redirecting the user. It's equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
         return new RedirectResponse($this->generateUrl('homepage'));
-
-.. versionadded:: 2.6
-    You can also directly use 
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::redirectToRoute`
-    and give it directly the route name like :
-
-        return $this->redirectToRoute('homepage');
 
 .. index::
    single: Controller; Rendering templates
@@ -635,7 +622,7 @@ For example, imagine you're processing a form submit::
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl(...));
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(...);
