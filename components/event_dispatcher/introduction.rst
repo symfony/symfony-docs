@@ -434,6 +434,39 @@ method::
     $subscriber = new StoreSubscriber();
     $dispatcher->addSubscriber($subscriber);
 
+You can also register the event subscriber by defining it as a service in the
+dependency injection component, using the ``kernel.event_subscriber`` tag:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/StoreBundle/Resources/config/services.yml
+        services:
+            acme_store.event.subscriber:
+                class: Acme\StoreBundle\Event\StoreSubscriber
+                tags:
+                    - { name: kernel.event_subscriber }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/StoreBundle/Resources/config/services.xml -->
+        <service id="acme_store.event.subscriber" class="Acme\StoreBundle\Event\StoreSubscriber">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+    .. code-block:: php
+
+        // src/Acme/StoreBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container
+            ->setDefinition('acme_store.event.subscriber', new Definition(
+                'Acme\StoreBundle\Event\StoreSubscriber'
+            ))
+            ->addTag('kernel.event_subscriber')
+        ;
+
 The dispatcher will automatically register the subscriber for each event
 returned by the ``getSubscribedEvents`` method. This method returns an array
 indexed by event names and whose values are either the method name to call or
