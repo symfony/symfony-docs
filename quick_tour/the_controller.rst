@@ -74,14 +74,10 @@ requirement.
 Redirecting and Forwarding
 --------------------------
 
-If you want to redirect the user to another page, use the ``redirect()``
+If you want to redirect the user to another page, use the ``redirectToRoute()``
 method::
 
-    return $this->redirect($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
-
-The ``generateUrl()`` is the same method as the ``path()`` function used in the
-templates. It takes the route name and an array of parameters as arguments and
-returns the associated friendly URL.
+    return $this->redirectToRoute('_demo_hello', array('name' => 'Lucas'));
 
 You can also internally forward the action to another using the ``forward()``
 method::

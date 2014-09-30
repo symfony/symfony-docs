@@ -25,7 +25,7 @@ submissions::
         if ($form->isValid()) {
             // perform some action...
 
-            return $this->redirect($this->generateUrl('task_success'));
+            return $this->redirectToRoute('task_success');
         }
 
         return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
@@ -64,7 +64,7 @@ method, pass the submitted data directly to
             if ($form->isValid()) {
                 // perform some action...
 
-                return $this->redirect($this->generateUrl('task_success'));
+                return $this->redirectToRoute('task_success');
             }
         }
 
@@ -109,7 +109,7 @@ a convenient shortcut to the previous example::
             if ($form->isValid()) {
                 // perform some action...
 
-                return $this->redirect($this->generateUrl('task_success'));
+                return $this->redirectToRoute('task_success');
             }
         }
 
