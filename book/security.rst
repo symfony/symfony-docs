@@ -816,31 +816,16 @@ to users that have a specific role.
 Securing Controllers and other Code
 ...................................
 
-Securing a Controller
-~~~~~~~~~~~~~~~~~~~~~
-
 You can easily deny access from inside a controller::
 
     // ...
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Unable to access this page!');
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         // ...
     }
-
-.. versionadded:: 2.6
-     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
-.. versionadded:: 2.6
-    You can use directly :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::isGranted`
-    instead of  `$this->get('security.context')->isGranted($role)` to check if 
-    a role is granted and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::denyAccessUnlessGranted`
-    to throw an exception if the access is not granted (like in the example above).
 
 .. versionadded:: 2.5
     The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
@@ -872,6 +857,10 @@ using annotations::
      */
     public function helloAction($name)
     {
+        $this->denyAccessUnlessGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ));
+
         // ...
     }
 

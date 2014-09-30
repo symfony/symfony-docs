@@ -14,16 +14,10 @@ and checking the current user's role::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // ...
     }
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 You can also secure *any* service in a similar way by injecting the ``security.authorization_checker``
 service into it. For a general introduction to injecting dependencies into
