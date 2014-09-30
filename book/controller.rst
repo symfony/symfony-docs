@@ -617,7 +617,7 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Your changes were saved!'
             );
@@ -631,10 +631,6 @@ For example, imagine you're processing a form submit::
 After processing the request, the controller sets a ``notice`` flash message
 in the session and then redirects. The name (``notice``) isn't significant -
 it's just something you invent and reference next.
-
-.. versionadded:: 2.6
-    You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::addFlash`
-    method as a shortcut to ``$this->get('session')->getFlashBag()->add(...)``.
 
 In the template of the next action, the following code could be used to render
 the ``notice`` message:
