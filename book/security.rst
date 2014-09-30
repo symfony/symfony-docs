@@ -1092,9 +1092,7 @@ authorization from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Unable to access this page!');
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         // ...
     }
@@ -1123,12 +1121,6 @@ Thanks to the SensioFrameworkExtraBundle, you can also secure your controller us
 
 For more information, see the
 :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
-
-.. versionadded:: 2.6
-    You can use directly :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::isGranted`
-    instead of  `$this->get('security.context')->isGranted($role)` to check if 
-    a role is granted and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::denyAccessUnlessGranted`
-    to throw an exception if the access is not granted (like in the example above).
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1742,9 +1734,7 @@ authorization from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // ...
     }
@@ -1772,11 +1762,9 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     public function indexAction()
     {
-        if (!$this->get('security.context')->isGranted(new Expression(
+        $this->denyAccessUnlessGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
-        ))) {
-            throw new AccessDeniedException();
-        }
+        ));
 
         // ...
     }
