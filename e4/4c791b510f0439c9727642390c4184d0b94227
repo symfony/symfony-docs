@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-23T20:54:59Z
+
+@WouterJ thanks for adding this missing documentation.
+
+I have a question for you: Does the expression *"the info"* sound right? My concern is that `info` is not even a valid English word. We could say *"the information"*, *"the option documentation"* or something else.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-23T21:16:31Z
+
+Yeah, I wanted to use the method name in the sentences, but I already thought somebody was going to bring it up :) In dutch, "de info" is correct, but I'm afraid it isn't in English. Let's change it to "the information"
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-07-29T14:31:16Z
+
+How about "the info text..."?
+
+I love that you included the info in the validation exception message. That's a great idea.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-29T14:48:24Z
+
+btw, @weaverryan, I think I should split this PR so we have docs about the `info` function in all versions?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-04T22:09:54Z
+
+@WouterJ Yep, you're totally right. Let's split it!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-25T22:26:08Z
+
+The code pull request was merged.
