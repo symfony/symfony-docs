@@ -377,6 +377,8 @@ configuration.
         // app/config/config.php
         $loader->import('@AcmeHelloBundle/Resources/config/services.php');
 
+.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
+
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
