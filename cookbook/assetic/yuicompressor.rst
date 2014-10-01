@@ -10,8 +10,13 @@ you can take advantage of this tool very easily.
 
 .. caution::
 
-    The YUI Compressor is going through a `deprecation process`_. But don't
-    worry! See :doc:`/cookbook/assetic/uglifyjs` for an alternative.
+    The YUI Compressor is `no longer maintained by Yahoo`_ but by an independent
+    volunteer. Moreover, Yahoo has decided to `stop all new development on YUI`_
+    and to move to other modern alternatives such as Node.js.
+
+    That's why you are **strongly advised** to avoid using YUI utilities unless
+    strictly necessary. Read :doc:`/cookbook/assetic/uglifyjs` for a modern and
+    up-to-date alternative.
 
 Download the YUI Compressor JAR
 -------------------------------
@@ -164,4 +169,5 @@ apply this filter when debug mode is off.
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
 .. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
-.. _`deprecation process`: http://www.yuiblog.com/blog/2012/10/16/state-of-yui-compressor/
+.. _`no longer maintained by Yahoo`: http://www.yuiblog.com/blog/2013/01/24/yui-compressor-has-a-new-owner/
+.. _`stop all new development on YUI`: http://yahooeng.tumblr.com/post/96098168666/important-announcement-regarding-yui
