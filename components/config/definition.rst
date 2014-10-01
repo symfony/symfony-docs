@@ -284,6 +284,15 @@ has a certain value:
         ->end()
     ;
 
+Documenting the Option
+----------------------
+
+All options can be documented using the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
+method.
+
+The info will be printed as a comment when dumping the configuration tree.
+
 Optional Sections
 -----------------
 
