@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-08T16:29:57Z
+
+:+1:
+
+(can someone recall why we still have this chapter in the docs?)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-15T14:45:01Z
+
+@javiereguiluz can you re-push this branch? It's missing from your fork now :).
+
+Yea, we don't need this document anymore, but with this clear warning on the top, I *think* it still serves a purpose for blog posts, stackoverflow, etc that are linking to this post. Instead of a 404, they'll (ideally) see this big warning, then go check out uglify.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-16T20:59:42Z
+
+I'm afraid that we have the same problem as the other issues: I deleted my fork before all the pending PR were merged. I'm **really** sorry for all the troubles caused :(
