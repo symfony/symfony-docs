@@ -93,6 +93,14 @@ is the item value and the array value is the item's label::
         'choices' => array('m' => 'Male', 'f' => 'Female')
     ));
 
+.. tip::
+
+    When the values to choose from are not integers or strings (but e.g. floats
+    or booleans), you should use the `choice_list`_ option instead. With this
+    option you are able to keep the original data format which is important
+    to ensure that the user input is validated properly and useless database
+    updates caused by a data type mismatch are avoided.
+
 choice_list
 ~~~~~~~~~~~
 
@@ -102,6 +110,17 @@ This is one way of specifying the options to be used for this field.
 The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
+
+With this option you can also allow float values to be selected as data.
+
+.. code-block:: php
+
+    use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+
+    // ...
+    $builder->add('status', 'choice', array(
+      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half')
+    ));
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
