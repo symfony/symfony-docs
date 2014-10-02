@@ -1,35 +1,23 @@
 .. index::
     single: Session; Database Storage
 
-<<<<<<< HEAD:cookbook/configuration/pdo_session_storage.rst
-How to Use PdoSessionHandler to Store Sessions in the Database
-=======
-How to use Store Session in the Database
->>>>>>> - Merged both database session storage configurations into one file:cookbook/configuration/database_session_storage.rst
-==============================================================
+How to Store Session in the Database
+====================================
 
 The default Symfony session storage writes the session information to
 file(s). Most medium to large websites use a database to store the session
 values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
-<<<<<<< HEAD:cookbook/configuration/pdo_session_storage.rst
-Symfony has a built-in solution for database session storage called
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
-To use it, you just need to change some parameters in ``config.yml`` (or the
-configuration format of your choice):
-=======
 Symfony2 has two built-in solutions for database session storage one uses doctrine
 :class:`Symfony\\Bridge\\Doctrine\\HttpFoundation\\HttpFoundation\\DbalSessionHandler` 
 and the other uses PDO :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
->>>>>>> - Merged both database session storage configurations into one file:cookbook/configuration/database_session_storage.rst
 
 Using Doctrine to Store the Session in the Database
 ---------------------------------------------------
 
-To use it, you just need to inject this class as a service in ``config.yml``:
+To use it, you just need to inject this class as a service in the configuration:
 
-.. versionadded:: 2.1
     
 .. configuration-block::
 
