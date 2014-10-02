@@ -341,9 +341,14 @@ there are 3 modes, which the user can configure in their project:
 
 As a bundle author, you'll want to support *both* API's, since some users
 may still be using the 2.4 API. Specifically, if your bundle adds a violation
-directly to the :class:`Symfony\Component\Validator\Context\ExecutionContext`
+directly to the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContext`
 (e.g. like in a custom validation constraint), you'll need to check for which
 API is being used. The following code, would work for *all* users::
+
+    use Symfony\Component\Validator\ConstraintValidator;
+    use Symfony\Component\Validator\Constraint;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
+    // ...
 
     class ContainsAlphanumericValidator extends ConstraintValidator
     {
