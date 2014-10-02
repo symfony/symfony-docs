@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-19T17:56:32Z
+
+@WouterJ I want to make sure I get this merge correct: this should apply to *only* the 2.3 branch, correct? And so when this merges into 2.4, we'll need to revert it there.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-19T19:09:07Z
+
+@weaverryan That's right. The ``versionadded`` directives for the data collector extension already have been added in #3887.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-19T19:38:51Z
+
+@xabbuh I decided to remove all class directives in the sidebar, to be consistent and they don
+don't add any value
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-19T19:42:16Z
+
+@WouterJ I understand your concerns. Though having fully qualified class names rendered in the documentation looks pretty ugly to me. That's why I'd prefer the ``class`` here in favour of putting the FQCN in literals.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-20T08:13:03Z
+
+@xabbuh tbh, I don't like to use the `:class:` API links everywhere in the documentation. In most cases, they don't add any real value. The only good thing about them, is that it allows us to "hide" the FQCN, but at the same time making it also available on hover.
+
+I think we should make a new directive which does only that, without the link.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-20T08:19:10Z
+
+Of course, building such a directive should be very easy since we could reuse most of the code from the ``class `` directive. Though, what do you dislike of the the API links?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-20T08:23:07Z
+
+@xabbuh let's take this case as an example. The class shows as an implementation example of the listener for a specific event. I don't care what the signature of the class is (in fact, everyone with a basic event system knowledge knows that it has a `getSubscribedEvents` method, another method and properbly a constructor), I care about the implementation. If there is anything the classname should link to, it should be the github code.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-02T13:12:43Z
+
+I agree. In *this* case, we're saying "hey, look at this core code so you can learn from it!" - so in this case, the API docs don't help (and like Wouter said, a link to the GH source code if anything would be appropriate - perhaps having an extension to make this link with the proper version would be nice). Anyways, I'm +1 for what we've done here, and in general, we'll just be thoughtful whenever we have a class :).
