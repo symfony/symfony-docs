@@ -3,10 +3,10 @@ Contributing to the Documentation
 
 One of the essential principles of the Symfony project is that **documentation is
 as important as code**. That's why a great amount of resources are dedicated to
-documenting new features and to keeping the rest of the documentation up to date.
+documenting new features and to keeping the rest of the documentation up-to-date.
 
-More than 800 developers all around the world have contributed to Symfony's
-documentation, and we are glad that you are considering joining this big family.
+More than 700 developers all around the world have contributed to Symfony's
+documentation and we are glad that you are considering joining this big family.
 This guide will explain everything you need to contribute to the Symfony
 documentation.
 
@@ -27,9 +27,9 @@ Before Your First Contribution
 Your First Documentation Contribution
 -------------------------------------
 
-In this section you'll learn how to contribute to the Symfony documentation for
+In this section, you'll learn how to contribute to the Symfony documentation for
 the first time. The next section will explain the shorter process you'll follow
-in the future for every contribution after your first.
+in the future for every contribution after your first one.
 
 Let's imagine that you want to improve the installation chapter of the Symfony
 book. In order to make your changes, follow these steps:
@@ -164,8 +164,12 @@ Now you can **sync your fork** by executing the following command:
 
     $ cd projects/symfony-docs/
     $ git fetch upstream
-    $ git checkout master
-    $ git merge upstream/master
+    $ git checkout 2.3
+    $ git merge upstream/2.3
+
+This command will update the ``2.3`` branch, which is the one you used to
+create the new branch for your changes. If have used another base branch,
+e.g. ``master``, replace the ``2.3`` with the appropriate branch name.
 
 Great! Now you can proceed by following the same steps explained in the previous
 section:
@@ -212,8 +216,8 @@ steps to contribute to the Symfony documentation, which you can use as a
     # sync your fork with the official Symfony repository
     $ cd projects/symfony-docs/
     $ git fetch upstream
-    $ git checkout master
-    $ git merge upstream/master
+    $ git checkout 2.3
+    $ git merge upstream/2.3
 
     # create a new branch from the oldest maintained version
     $ git checkout 2.3
@@ -262,10 +266,11 @@ Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
 
 Consistent with Symfony's source code, the documentation repository is split
 into multiple branches, corresponding to the different versions of Symfony itself.
-The master branch holds the documentation for the development branch of the code.
+The ``master`` branch holds the documentation for the development branch of
+the code.
 
 Unless you're documenting a feature that was introduced after Symfony 2.3,
-your changes should always be based on the 2.3 branch. Documentation managers
+your changes should always be based on the ``2.3`` branch. Documentation managers
 will use the necessary Git-magic to also apply your changes to all the active
 branches of the documentation.
 
