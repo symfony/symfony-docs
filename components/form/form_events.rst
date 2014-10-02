@@ -83,7 +83,7 @@ The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
 .. sidebar:: ``FormEvents::PRE_SET_DATA`` in the Form component
 
     The ``collection`` form type relies on the
-    :class:`Symfony\\Component\\Form\\Extension\\Core\\EventListener\\ResizeFormListener`
+    ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
     subscriber, listening to the ``FormEvents::PRE_SET_DATA`` event in order
     to reorder the form's fields depending on the data from the pre-populated
     object, by removing and adding all form rows.
@@ -113,7 +113,7 @@ the form.
     .. versionadded:: 2.4
         The data collector extension was introduced in Symfony 2.4.
 
-    The :class:`Symfony\\Component\\Form\\Extension\\DataCollector\\EventListener\\DataCollectorListener`
+    The ``Symfony\Component\Form\Extension\DataCollector\EventListener\DataCollectorListener``
     class is subscribed to listen to the ``FormEvents::POST_SET_DATA`` event
     in order to collect information about the forms from the denormalized
     model and view data.
@@ -155,10 +155,10 @@ It can be used to:
 
 .. sidebar:: ``FormEvents::PRE_SUBMIT`` in the Form component
 
-    The :class:`Symfony\\Component\\Form\\Extension\\Core\\EventListener\\TrimListener`
+    The ``Symfony\Component\Form\Extension\Core\EventListener\TrimListener``
     subscriber subscribes to the ``FormEvents::PRE_SUBMIT`` event in order to
     trim the request's data (for string values).
-    The :class:`Symfony\\Component\\Form\\Extension\\Csrf\\EventListener\\CsrfValidationListener`
+    The ``Symfony\Component\Form\Extension\Csrf\EventListener\CsrfValidationListener``
     subscriber subscribes to the ``FormEvents::PRE_SUBMIT`` event in order to
     validate the CSRF token.
 
@@ -189,7 +189,7 @@ It can be used to change data from the normalized representation of the data.
 
 .. sidebar:: ``FormEvents::SUBMIT`` in the Form component
 
-    The :class:`Symfony\\Component\\Form\\Extension\\Core\\EventListener\\ResizeFormListener`
+    The ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
     subscribes to the ``FormEvents::SUBMIT`` event in order to remove the
     fields that need to be removed whenever manipulating a collection of forms
     for which ``allow_delete`` has been enabled.
@@ -224,10 +224,10 @@ It can be used to fetch data after denormalization.
     .. versionadded:: 2.4
         The data collector extension was introduced in Symfony 2.4.
 
-    The :class:`Symfony\\Component\\Form\\Extension\\DataCollector\\EventListener\\DataCollectorListener`
+    The ``Symfony\Component\Form\Extension\DataCollector\EventListener\DataCollectorListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to collect
     information about the forms.
-    The :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
+    The ``Symfony\Component\Form\Extension\Validator\EventListener\ValidationListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
     automatically validate the denormalized object, and update the normalized
     as well as the view's representations.
