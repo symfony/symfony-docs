@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-17T13:09:56Z
+
+note that this is also useful to choose boolean values, or ``null`` (anything other than strings and integers actually, as they cannot be array keys)
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-09-17T19:08:52Z
+
+Thank you for the information, just updated accordingly and squashed the commits.
