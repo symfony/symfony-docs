@@ -212,7 +212,7 @@ following standardized instructions in your ``README.md`` file.
     following command to download the latest stable version of this bundle:
 
     ```bash
-    $ composer require <package-name> "~1"
+    $ composer require <package-name>
     ```
 
     This command requires you to have Composer installed globally, as explained
@@ -246,9 +246,6 @@ following standardized instructions in your ``README.md`` file.
         // ...
     }
     ```
-
-This template assumes that your bundle is in its ``1.x`` version. If not, change
-the ``"~1"`` installation version accordingly (``"~2"``, ``"~3"``, etc.)
 
 Optionally, you can add more installation steps (*Step 3*, *Step 4*, etc.) to
 explain other required installation tasks, such as registering routes or
