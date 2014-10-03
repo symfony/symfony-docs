@@ -8,8 +8,8 @@ The ``language`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of languages. As an added bonus, the language names
 are displayed in the language of the user.
 
-The "value" for each language is the *Unicode language identifier*
-(e.g. ``fr`` or ``zh-Hant``).
+The "value" for each language is the *Unicode language identifier* used in 
+the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
 
 .. note::
 
@@ -106,3 +106,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. _`International Components for Unicode`: http://site.icu-project.org
