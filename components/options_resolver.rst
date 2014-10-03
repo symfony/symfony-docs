@@ -39,23 +39,26 @@ Imagine you have a ``Mailer`` class which has four options: ``host``,
 When accessing the ``$options``, you need to add a lot of boilerplate code to
 check which options are set::
 
-    // ...
-    public function sendMail($from, $to)
+    class Mailer
     {
-        $mail = ...;
-        $mail->setHost(isset($this->options['host'])
-            ? $this->options['host']
-            : 'smtp.example.org');
-        $mail->setUsername(isset($this->options['username'])
-            ? $this->options['username']
-            : 'user');
-        $mail->setPassword(isset($this->options['password'])
-            ? $this->options['password']
-            : 'pa$$word');
-        $mail->setPort(isset($this->options['port'])
-            ? $this->options['port']
-            : 25);
         // ...
+        public function sendMail($from, $to)
+        {
+            $mail = ...;
+            $mail->setHost(isset($this->options['host'])
+                ? $this->options['host']
+                : 'smtp.example.org');
+            $mail->setUsername(isset($this->options['username'])
+                ? $this->options['username']
+                : 'user');
+            $mail->setPassword(isset($this->options['password'])
+                ? $this->options['password']
+                : 'pa$$word');
+            $mail->setPort(isset($this->options['port'])
+                ? $this->options['port']
+                : 25);
+            // ...
+        }
     }
 
 This boilerplate is hard to read and repetitive. Also, the default values of the
@@ -64,15 +67,18 @@ options are buried in the business logic of your code. Let's use
 
     use Symfony\Component\OptionsResolver\Options;
 
-    // ...
-    public function __construct(array $options = array())
+    class Mailer
     {
-        $this->options = Options::resolve($options, array(
-            'host'     => 'smtp.example.org',
-            'username' => 'user',
-            'password' => 'pa$$word',
-            'port'     => 25,
-        ));
+        // ...
+        public function __construct(array $options = array())
+        {
+            $this->options = Options::resolve($options, array(
+                'host'     => 'smtp.example.org',
+                'username' => 'user',
+                'password' => 'pa$$word',
+                'port'     => 25,
+            ));
+        }
     }
 
 Now all options are guaranteed to be set. Any option that wasn't passed through
@@ -91,14 +97,18 @@ The rest of your code can now access the values of the options without
 boilerplate code::
 
     // ...
-    public function sendMail($from, $to)
+    class Mailer
     {
-        $mail = ...;
-        $mail->setHost($this->options['host']);
-        $mail->setUsername($this->options['username']);
-        $mail->setPassword($this->options['password']);
-        $mail->setPort($this->options['port']);
         // ...
+        public function sendMail($from, $to)
+        {
+            $mail = ...;
+            $mail->setHost($this->options['host']);
+            $mail->setUsername($this->options['username']);
+            $mail->setPassword($this->options['password']);
+            $mail->setPort($this->options['port']);
+            // ...
+        }
     }
 
 Required Options
@@ -109,16 +119,20 @@ If an option must be set by the caller, pass that option to
 For example, let's make the ``host`` option required::
 
     // ...
-    public function __construct(array $options = array())
+    class Mailer
     {
-        Options::validateRequired($options, 'host');
+        // ...
+        public function __construct(array $options = array())
+        {
+            Options::validateRequired($options, 'host');
 
-        $this->options = Options::resolve($options, array(
-            'host'     => null,
-            'username' => 'user',
-            'password' => 'pa$$word',
-            'port'     => 25,
-        ));
+            $this->options = Options::resolve($options, array(
+                'host'     => null,
+                'username' => 'user',
+                'password' => 'pa$$word',
+                'port'     => 25,
+            ));
+        }
     }
 
 If you omit a required option, a
@@ -146,22 +160,26 @@ Type Validation
 You can run additional checks on the options to make sure they were passed
 correctly. To validate the types of the options, call
 :method:`Symfony\\Component\\OptionsResolver\\Options::validateTypes`::
-
+    
     // ...
-    public function __construct(array $options = array())
+    class Mailer
     {
         // ...
-        Options::validateTypes($options, array(
-            'host' => 'string',
-            'port' => array('null', 'int'),
-        ));
+        public function __construct(array $options = array())
+        {
+            // ...
+            Options::validateTypes($options, array(
+                'host' => 'string',
+                'port' => array('null', 'int'),
+            ));
 
-        $this->options = Options::resolve($options, array(
-            'host'     => null,
-            'username' => 'user',
-            'password' => 'pa$$word',
-            'port'     => 25,
-        ));
+            $this->options = Options::resolve($options, array(
+                'host'     => null,
+                'username' => 'user',
+                'password' => 'pa$$word',
+                'port'     => 25,
+            ));
+        }
     }
 
 For each option, you can define either just one type or an array of acceptable
@@ -188,17 +206,21 @@ one of ``sendmail``, ``mail`` and ``smtp``. Use the method
 that the passed option contains one of these values::
 
     // ...
-    public function __construct(array $options = array())
+    class Mailer
     {
         // ...
-        Options::validateValues($options, array(
-            'transport' => array('sendmail', 'mail', 'smtp'),
-        ));
-
-        $this->options = Options::resolve($options, array(
+        public function __construct(array $options = array())
+        {
             // ...
-            'transport' => 'sendmail',
-        ));
+            Options::validateValues($options, array(
+                'transport' => array('sendmail', 'mail', 'smtp'),
+            ));
+
+            $this->options = Options::resolve($options, array(
+                // ...
+                'transport' => 'sendmail',
+            ));
+        }
     }
 
 If you pass an invalid transport, an :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
@@ -233,21 +255,25 @@ You can implement this feature by passing a closure as default value of the
 options, you can return the desired default value::
 
     // ...
-    public function __construct(array $options = array())
+    class Mailer
     {
         // ...
-
-        $this->options = Options::resolve($options, new Options(array(
+        public function __construct(array $options = array())
+        {
             // ...
-            'encryption' => null,
-            'port' => function (Options $options) {
-                if ('ssl' === $options['encryption']) {
-                    return 465;
-                }
 
-                return 25;
-            },
-        )));
+            $this->options = Options::resolve($options, new Options(array(
+                // ...
+                'encryption' => null,
+                'port' => function (Options $options) {
+                    if ('ssl' === $options['encryption']) {
+                        return 465;
+                    }
+
+                    return 25;
+                },
+            )));
+        }
     }
 
 Instead of a simple array, we now pass the default options as
@@ -276,6 +302,7 @@ If you have a large list of options, the option processing code can take up a
 lot of space of your method. To make your code easier to read and maintain, it
 is a good practice to put the option definitions into static class properties::
 
+    // ...
     class Mailer
     {
         private static $defaultOptions = array(
@@ -351,7 +378,7 @@ configuration object to resolve the options.
 The following code demonstrates how to write our previous ``Mailer`` class with
 an :class:`Symfony\\Component\\OptionsResolver\\OptionsConfig` object::
 
-    use Symfony\Component\OptionsResolver\Options;
+    // ...
     use Symfony\Component\OptionsResolver\OptionsConfig;
 
     class Mailer
@@ -400,9 +427,7 @@ the :class:`Symfony\\Component\\OptionsResolver\\OptionsConfig` instance.
 Nevertheless, this design also has a benefit: We can extend the ``Mailer``
 class and adjust the options of the parent class in the subclass::
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
+    // ...
     class GoogleMailer extends Mailer
     {
         protected function configureOptions(OptionsConfig $config)
@@ -446,16 +471,21 @@ of the optional options to
 :method:`Symfony\\Component\\OptionsResolver\\OptionsConfig::setOptional`::
 
     // ...
-    protected function configureOptions(OptionsConfig $config)
+    class Mailer
     {
         // ...
+        protected function configureOptions(OptionsConfig $config)
+        {
+            // ...
 
-        $config->setOptional(array('port'));
+            $config->setOptional(array('port'));
+        }
     }
 
 This is useful if you need to know whether an option was explicitly passed. If
 not, it will be missing from the options array::
 
+    // ...
     class Mailer
     {
         // ...
@@ -487,19 +517,23 @@ not, it will be missing from the options array::
     :method:`Symfony\\Component\\OptionsResolver\\Options::resolve`::
 
         // ...
-        public function __construct(array $options = array())
+        class Mailer
         {
             // ...
-
-            if (array_key_exists('port', $options)) {
-                echo "Set!";
-            } else {
-                echo "Not Set!";
-            }
-
-            $this->options = Options::resolve($options, array(
+            public function __construct(array $options = array())
+            {
                 // ...
-            ));
+
+                if (array_key_exists('port', $options)) {
+                    echo "Set!";
+                } else {
+                    echo "Not Set!";
+                }
+
+                $this->options = Options::resolve($options, array(
+                    // ...
+                ));
+            }
         }
 
 Overwriting Default Values
@@ -515,27 +549,28 @@ again. When using a closure as the new value it is passed 2 arguments:
 
 .. code-block:: php
 
-    use Symfony\Component\OptionsResolver\Options;
-    use Symfony\Component\OptionsResolver\OptionsConfig;
-
     // ...
-    protected function configureOptions(OptionsConfig $config)
+    class Mailer
     {
         // ...
-        $config->setDefaults(array(
-            'encryption' => 'ssl',
-            'host' => 'localhost',
-        ));
+        protected function configureOptions(OptionsConfig $config)
+        {
+            // ...
+            $config->setDefaults(array(
+                'encryption' => 'ssl',
+                'host' => 'localhost',
+            ));
 
-        // ...
-        $config->setDefaults(array(
-            'encryption' => 'tls', // simple overwrite
-            'host' => function (Options $options, $previousValue) {
-                return 'localhost' == $previousValue
-                    ? '127.0.0.1'
-                    : $previousValue;
-            },
-        ));
+            // ...
+            $config->setDefaults(array(
+                'encryption' => 'tls', // simple overwrite
+                'host' => function (Options $options, $previousValue) {
+                    return 'localhost' == $previousValue
+                        ? '127.0.0.1'
+                        : $previousValue;
+                },
+            ));
+        }
     }
 
 .. tip::
@@ -547,31 +582,32 @@ again. When using a closure as the new value it is passed 2 arguments:
     to improve performance. This means that the previous default value is not
     available when overwriting with another closure::
 
-        use Symfony\Component\OptionsResolver\Options;
-        use Symfony\Component\OptionsResolver\OptionsConfig;
-
         // ...
-        protected function configureOptions(OptionsConfig $config)
+        class Mailer
         {
             // ...
-            $config->setDefaults(array(
-                'encryption' => 'ssl',
-                'heavy' => function (Options $options) {
-                    // Some heavy calculations to create the $result
+            protected function configureOptions(OptionsConfig $config)
+            {
+                // ...
+                $config->setDefaults(array(
+                    'encryption' => 'ssl',
+                    'heavy' => function (Options $options) {
+                        // Some heavy calculations to create the $result
 
-                    return $result;
-                },
-            ));
+                        return $result;
+                    },
+                ));
 
-            $config->replaceDefaults(array(
-                'encryption' => 'tls', // simple overwrite
-                'heavy' => function (Options $options) {
-                    // $previousValue not available
-                    // ...
+                $config->replaceDefaults(array(
+                    'encryption' => 'tls', // simple overwrite
+                    'heavy' => function (Options $options) {
+                        // $previousValue not available
+                        // ...
 
-                    return $someOtherResult;
-                },
-            ));
+                        return $someOtherResult;
+                    },
+                ));
+            }
         }
 
 .. note::
@@ -588,19 +624,23 @@ processed. You can configure these normalizers by calling
 :method:`Symfony\\Components\\OptionsResolver\\OptionsConfig::setNormalizers`::
 
     // ...
-    protected function configureOptions(OptionsConfig $config)
+    class Mailer
     {
         // ...
+        protected function configureOptions(OptionsConfig $config)
+        {
+            // ...
 
-        $config->setNormalizers(array(
-            'host' => function (Options $options, $value) {
-                if ('http://' !== substr($value, 0, 7)) {
-                    $value = 'http://'.$value;
-                }
+            $config->setNormalizers(array(
+                'host' => function (Options $options, $value) {
+                    if ('http://' !== substr($value, 0, 7)) {
+                        $value = 'http://'.$value;
+                    }
 
-                return $value;
-            },
-        ));
+                    return $value;
+                },
+            ));
+        }
     }
 
 The normalizer receives the actual ``$value`` and returns the normalized form.
@@ -608,23 +648,27 @@ You see that the closure also takes an ``$options`` parameter. This is useful
 if you need to use other options for the normalization::
 
     // ...
-    protected function configureOptions(OptionsConfig $config)
+    class Mailer
     {
         // ...
+        protected function configureOptions(OptionsConfig $config)
+        {
+            // ...
 
-        $config->setNormalizers(array(
-            'host' => function (Options $options, $value) {
-                if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
-                    if ($options['ssl']) {
-                        $value = 'https://'.$value;
-                    } else {
-                        $value = 'http://'.$value;
+            $config->setNormalizers(array(
+                'host' => function (Options $options, $value) {
+                    if (!in_array(substr($value, 0, 7), array('http://', 'https://'))) {
+                        if ($options['ssl']) {
+                            $value = 'https://'.$value;
+                        } else {
+                            $value = 'http://'.$value;
+                        }
                     }
-                }
 
-                return $value;
-            },
-        ));
+                    return $value;
+                },
+            ));
+        }
     }
 
 .. tip::
@@ -634,14 +678,18 @@ if you need to use other options for the normalization::
     :method:`Symfony\\Component\\OptionsResolver\\Options::resolve`::
 
         // ...
-        public function __construct(array $options = array())
+        class Mailer
         {
-            $this->options = Options::resolve($options, array(
-                // ...
-            ));
+            // ...
+            public function __construct(array $options = array())
+            {
+                $this->options = Options::resolve($options, array(
+                    // ...
+                ));
 
-            if ('http://' !== substr($this->options['host'], 0, 7)) {
-                $this->options['host'] = 'http://'.$this->options['host'];
+                if ('http://' !== substr($this->options['host'], 0, 7)) {
+                    $this->options['host'] = 'http://'.$this->options['host'];
+                }
             }
         }
 
