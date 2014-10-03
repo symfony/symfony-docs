@@ -114,5 +114,5 @@ what to do next. Have fun!
 .. _their documentation: http://getcomposer.org/doc/00-intro.md
 .. _Packagist.org:       https://packagist.org
 .. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _KnpBundles:          http://knpbundles.com/
+.. _KnpBundles.com:      http://knpbundles.com/
 .. _`composer require`:  https://getcomposer.org/doc/03-cli.md#require
