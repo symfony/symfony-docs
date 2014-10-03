@@ -279,6 +279,19 @@ When running a program asynchronously, you can send it posix signals with the
     POSIX signals are not available on Windows platforms, please refer to the
     `PHP documentation`_ for available signals.
 
+    .. versionadded:: 2.6
+        The ``enableShellWrapper()`` method was introduced in Symfony 2.6.
+
+    When you use the ``ProcessBuilder`` to build a ``Process``, you can use
+    the :method:`Symfony\\Component\\Process\\ProcessBuilder::enableShellWrapper`
+    method to prefix the executed script with "exec"::
+
+        use Symfony\Component\Process\ProcessBuilder;
+
+        $process = new ProcessBuilder(array('find', '/', '-name', '"rabbit"'))
+            ->enableShellWrapper()
+            ->getProcess();
+
 Process Pid
 -----------
 
