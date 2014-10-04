@@ -202,6 +202,13 @@ are:
         server_name domain.tld www.domain.tld;
         root /var/www/project/web;
 
+        if ($request_uri ~ "/app\.php(/|$)") {
+            # prevent explicit access and hide front controller
+            # remove this block if you want to allow uri's like
+            # http://domain.tld/app.php/some-path
+            return 404;
+        }
+
         location / {
             # try to serve file directly, fallback to app.php
             try_files $uri /app.php$is_args$args;
