@@ -1786,6 +1786,8 @@ Additionally, you have access to a number of functions inside the expression:
   see below;
 * ``has_role``: Checks to see if the user has the given role - equivalent
   to an expression like ``'ROLE_ADMIN' in roles``.
+* ``is_granted``: Similar to the php code like `$securityContext->isGranted('ROLE_USER')`.
+  Unlike `has_role` expression, `is_granted` will call your custom voters if defined.
 
 .. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
