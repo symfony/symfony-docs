@@ -6,8 +6,8 @@ Best Practices for Reusable Bundles
 
 There are 2 types of bundles:
 
-* Application bundles: only use to build your application;
-* Reusable bundle: meant to be shared across many projects.
+* Application-specific bundles: only used to build your application;
+* Reusable bundles: meant to be shared across many projects.
 
 This article is all about how to structure your **reusable bundles** so that
 they're easy to configure and extend. Many of these recommendations do not
