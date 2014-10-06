@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-18T14:34:33Z
+
+And I managed to open this against the wrong branch :). I'll patch it into 2.3 when I merge.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-21T11:24:24Z
+
+Apart from @stof's comments, +1. (although I don't 100% agree with the "application type of bundles")
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-25T09:26:57Z
+
+I suggest ``Application-specific bundles``. what do you think ?
