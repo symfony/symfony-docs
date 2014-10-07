@@ -80,7 +80,7 @@ in the x509 firewall configuration respectively.
     * :doc:`/cookbook/security/custom_provider`
     * :doc:`/cookbook/security/entity_provider`
 
-REMOTE_USER based Authentication
+REMOTE_USER Based Authentication
 --------------------------------
 
 .. versionadded:: 2.6
