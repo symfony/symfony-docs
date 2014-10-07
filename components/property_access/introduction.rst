@@ -209,7 +209,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
@@ -305,7 +305,7 @@ see `Enable other Features`_.
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
