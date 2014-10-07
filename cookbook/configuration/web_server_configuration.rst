@@ -89,7 +89,7 @@ the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
 installed (for example, on a Debian based system you have to install the
 ``libapache2-mod-fastcgi`` and ``php5-fpm`` packages).
 
-PHP-FPM uses so called *pools* to handle incoming FastCGI requests. You can
+PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
 you configure either a TCP socket (IP and port) or a unix domain socket to
 listen on. Each pool can also be run under a different UID and GID:
