@@ -17,7 +17,7 @@ represent only a subset of the cloned variable.
 You can create a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
 object this way::
 
-    $cloner = new PhpCloner();
+    $cloner = new VarCloner();
     $data = $cloner->cloneVar($myVar);
 
 Before cloning, you can configure the limits with::
@@ -41,7 +41,7 @@ a PHP variable. Casters are registered using either a Cloner's constructor
 or its ``addCasters()`` method::
 
     $myCasters = array(...);
-    $cloner = new PhpCloner($myCasters);
+    $cloner = new VarCloner($myCasters);
 
     // or
 
@@ -112,7 +112,7 @@ for optionally colored command line output.
 
 For example, if you want to dump some ``$variable``, just do::
 
-    $cloner = new PhpCloner();
+    $cloner = new VarCloner();
     $dumper = new CliDumper();
 
     $dumper->dump($cloner->cloneVar($variable));
@@ -132,7 +132,7 @@ method or using the second argument of the
 
 For example, to get a dump in a variable, you can do::
 
-    $cloner = new PhpCloner();
+    $cloner = new VarCloner();
     $dumper = new CliDumper();
     $output = '';
 
