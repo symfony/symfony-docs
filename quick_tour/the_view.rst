@@ -157,7 +157,7 @@ First, create an ``embedded.html.twig`` template:
     {# src/Acme/DemoBundle/Resources/views/Demo/embedded.html.twig #}
     Hello {{ name }}
 
-And change the ``index.html.twig`` template to include it:
+And change the ``hello.html.twig`` template to include it:
 
 .. code-block:: jinja
 
