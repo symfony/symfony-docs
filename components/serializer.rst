@@ -247,22 +247,22 @@ There are several types of normalizers available::
 
 * The :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 
-This normalizer reads the content of the class by calling the "getters" (public
-methods starting with "get"). It will denormalize data by calling the constructor
-and the "setters" (public methods starting with "set").
+   This normalizer reads the content of the class by calling the "getters" (public
+   methods starting with "get"). It will denormalize data by calling the constructor
+   and the "setters" (public methods starting with "set").
 
-Objects are serialized to a map of property names (method name stripped of the "get"
-prefix and converted to lower case) to property values.
+   Objects are serialized to a map of property names (method name stripped of the "get"
+   prefix and converted to lower case) to property values.
 
 * The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
-    class was introduced in Symfony 2.6.
+   .. versionadded:: 2.6
+       The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
+       class was introduced in Symfony 2.6.
 
-This normalizer directly reads and writes public properties as well as
-**private and protected** properties. Objects are serialized to a map of
-property names to property values.
+   This normalizer directly reads and writes public properties as well as
+   **private and protected** properties. Objects are serialized to a map of
+   property names to property values.
 
 Handling Circular References
 ----------------------------
