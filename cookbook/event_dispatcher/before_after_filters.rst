@@ -125,7 +125,8 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
             $controller = $event->getController();
 
             /*
-             * $controller passed can be either a class or a Closure. This is not usual in Symfony but it may happen.
+             * $controller passed can be either a class or a Closure.
+             * This is not usual in Symfony but it may happen.
              * If it is a class, it comes in array format
              */
             if (!is_array($controller)) {
@@ -189,7 +190,7 @@ want.
 After Filters with the ``kernel.response`` Event
 ------------------------------------------------
 
-In addition to having a "hook" that's executed before your controller, you
+In addition to having a "hook" that's executed *before* your controller, you
 can also add a hook that's executed *after* your controller. For this example,
 imagine that you want to add a sha1 hash (with a salt using that token) to
 all responses that have passed this token authentication.
