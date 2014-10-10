@@ -144,6 +144,8 @@ error if something goes wrong by adding the filename to the message.
     must validate the input first. Passing a filename is deprecated in
     Symfony 2.2, and will be removed in Symfony 3.0.
 
+.. _components-yaml-dump:
+
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 

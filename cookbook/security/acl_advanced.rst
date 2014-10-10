@@ -66,6 +66,8 @@ tables are ordered from least rows to most rows in a typical application:
   with the most rows. It can contain tens of millions without significantly
   impacting performance.
 
+.. _cookbook-security-acl-field_scope:
+
 Scope of Access Control Entries
 -------------------------------
 
