@@ -34,3 +34,10 @@ Submiting Forms
 
 Creating a Client
 -----------------
+
+For a simple implementation of a browser based on an HTTP layer, have a look at Goutte_.
+
+For an implementation based on HttpKernelInterface, have a look at the Client provided by the :doc:`/components/http_kernel/introduction`.
+
+.. _Packagist: https://packagist.org/packages/symfony/event-dispatcher
+.. _Goutte: https://github.com/fabpot/Goutte
