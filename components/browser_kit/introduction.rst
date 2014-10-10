@@ -26,6 +26,16 @@ Usage
 Making Request
 ~~~~~~~~~~~~~~
 
+To make a request you use the client's request method. 
+The first two arguments are for the HTTP method and the request url.
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    $client = new Client();
+    $response = $client->request('GET', 'http://symfony.com');
+
 Clicking Links
 ~~~~~~~~~~~~~~
 
