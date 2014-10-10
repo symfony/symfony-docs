@@ -28,16 +28,28 @@ Making Request
 
 To make a request you use the client's request method. 
 The first two arguments are for the HTTP method and the request url.
+The request method will return a crawler object.
 
 .. code-block:: php
 
     use ACME\Client;
 
     $client = new Client();
-    $response = $client->request('GET', 'http://symfony.com');
+    $crawler = $client->request('GET', 'http://symfony.com');
 
 Clicking Links
 ~~~~~~~~~~~~~~
+
+select a link with the crawler and pass it to the click method to click on the link.
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    $client = new Client();
+    $crawler = $client->request('GET', 'http://symfony.com');
+    $link = $crawler->selectLink('Go elsewhere...')->link();
+    $client->click($link);
 
 Submiting Forms
 ~~~~~~~~~~~~~~~~
