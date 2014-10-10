@@ -1,5 +1,5 @@
-Browser Kit
-====
+BrowserKit
+==========
 
 .. toctree::
     :maxdepth: 2

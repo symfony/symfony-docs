@@ -1,13 +1,13 @@
 .. index::
-   single: Yaml
-   single: Components; Yaml
+   single: BrowserKit
+   single: Components; BrowserKit
 
-The Browser Kit Component
+The BrowserKit Component
 =========================
 
-    The Browser Kit component simulates the behavior of a web browser.
+    The BrowserKit component simulates the behavior of a web browser.
 
-The Browser Kit component allows you to make web request, click on links and submit forms. 
+The BrowserKit component allows you to make web request, click on links and submit forms. 
 
 Installation
 ------------
