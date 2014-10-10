@@ -5,6 +5,7 @@ The Components
     :hidden:
 
     using_components
+    browser_kit/index
     class_loader/index
     config/index
     console/index
