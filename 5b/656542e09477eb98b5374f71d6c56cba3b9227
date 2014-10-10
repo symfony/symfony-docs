@@ -1,0 +1,78 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-06-06T12:46:29Z
+
+this should be split into 2 separate PRs:
+
+- the X509 documentation should be merged in 2.3+
+- The remote_user doc should be merged only in 2.6+
+
+---------------------------------------------------------------------------
+
+by stof at 2014-06-06T12:48:12Z
+
+and the PR should be marked as ``WCM`` as the PR is not yet merged in the code repo for the REMOTE_USER feature
+
+---------------------------------------------------------------------------
+
+by zefrog at 2014-06-06T13:13:15Z
+
+Okay I made PR #3913 for x509 which can be merged in 2.3. Hope this is correct.
+
+---------------------------------------------------------------------------
+
+by zefrog at 2014-06-06T15:32:13Z
+
+I'll leave this as a WIP for now. If the #3913 is merged I'll rewrite the REMOTE_USER part of this PR based on it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-06T15:55:22Z
+
+@zefrog I think it's better to remove the X509 part here. #3913 can be merged first. After that, this PR can be rebased on the modifications made on the 2.3 branch.
+
+---------------------------------------------------------------------------
+
+by zefrog at 2014-06-06T17:07:16Z
+
+@xabbuh that's exactly what I meant in my previous comment. X509 doc was some "extra", because I only needed initially to document the remote_user part I added in pr symfony/symfony#10698.
+
+But let's wait for #3913 to be merged, I will rewrite the remote_user part according to the contributing guide. Sorry for all the trouble, it's my first doc PR ;)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-06T17:12:51Z
+
+@zefrog Never mind. It's great to have new people contributing to the documentation. :)
+
+---------------------------------------------------------------------------
+
+by zefrog at 2014-09-24T12:10:29Z
+
+Do I need to rebase /  modify something before this can be merged since the PR has been accepted?
+
+Thx
+
+---------------------------------------------------------------------------
+
+by zefrog at 2014-10-06T08:37:24Z
+
+Is this PR mergeable now? Completing the pre Authenticated documentation makes sense.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-06T18:38:01Z
+
+@zefrog Besides my minor comment, I think this is ready to be merged.
+
+---------------------------------------------------------------------------
+
+by zefrog at 2014-10-07T14:09:03Z
+
+Thank you for the feedback. It's done now.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-08T09:56:53Z
+
+@zefrog Yeah, I think it's ready to be merged. :+1:
