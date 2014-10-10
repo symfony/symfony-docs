@@ -21,7 +21,7 @@ Usage
 -----
 
 .. note::
-    The component only provide an abstract client and does not provide any "default" backend for the HTTP layer.
+    The component only provides an abstract client and does not provide any "default" backend for the HTTP layer.
 
 Making Request
 ~~~~~~~~~~~~~~
