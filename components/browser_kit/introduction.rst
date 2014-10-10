@@ -3,7 +3,7 @@
    single: Components; BrowserKit
 
 The BrowserKit Component
-=========================
+========================
 
     The BrowserKit component simulates the behavior of a web browser.
 
