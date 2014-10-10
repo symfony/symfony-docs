@@ -16,3 +16,21 @@ You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/browser-kit`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/BrowserKit).
+
+Usage
+-----
+
+.. note::
+    The component only provide an abstract client and does not provide any "default" backend for the HTTP layer.
+
+Making Request
+~~~~~~~~~~~~~~
+
+Clicking Links
+~~~~~~~~~~~~~~
+
+Submiting Forms
+~~~~~~~~~~~~~~~~
+
+Creating a Client
+-----------------
