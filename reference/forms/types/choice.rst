@@ -119,7 +119,7 @@ With this option you can also allow float values to be selected as data.
 
     // ...
     $builder->add('status', 'choice', array(
-      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half')
+      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half'))
     ));
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
