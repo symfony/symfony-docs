@@ -17,8 +17,8 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/browser-kit`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/BrowserKit).
 
-Usage
------
+Basic Usage
+-----------
 
 .. note::
     The component only provides an abstract client and does not provide any "default" backend for the HTTP layer.
@@ -40,7 +40,7 @@ The request method will return a crawler object.
 Clicking Links
 ~~~~~~~~~~~~~~
 
-select a link with the crawler and pass it to the click method to click on the link.
+Select a link with the crawler and pass it to the click method to click on the link.
 
 .. code-block:: php
 
@@ -54,12 +54,39 @@ select a link with the crawler and pass it to the click method to click on the l
 Submiting Forms
 ~~~~~~~~~~~~~~~~
 
+
+Cookies
+-------
+
+History
+-------
+
+Insulated Request
+-----------------
+
 Creating a Client
 -----------------
+
+To create your own client you must extend the abstract client class and implement the doRequest method.
+This method accepts a request and should return a response.
+
+.. code-block:: php
+    namespace ACME;
+    
+    use Symfony\Component\BrowserKit\Client as BaseClient;
+    use Symfony\Component\BrowserKit\Response;
+
+    class Client extends BaseClient {
+        protected function doRequest($request) {
+            // convert request into a response
+            // ...
+            return new Response($content, $status, $headers);
+        }
+    }
 
 For a simple implementation of a browser based on an HTTP layer, have a look at Goutte_.
 
 For an implementation based on HttpKernelInterface, have a look at the Client provided by the :doc:`/components/http_kernel/introduction`.
 
-.. _Packagist: https://packagist.org/packages/symfony/event-dispatcher
+.. _Packagist: https://packagist.org/packages/symfony/browser-kit
 .. _Goutte: https://github.com/fabpot/Goutte
