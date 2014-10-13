@@ -84,7 +84,7 @@ container, to ensure all services and parameters are also added to the actual
 container.
 
 In the ``load()`` method, you can use PHP code to register service definitions,
-but it is more common if you put the these definitions in a configuration file
+but it is more common if you put these definitions in a configuration file
 (using the Yaml, XML or PHP format). Luckily, you can use the file loaders in
 the extension!
 
