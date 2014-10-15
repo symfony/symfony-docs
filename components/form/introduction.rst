@@ -137,7 +137,7 @@ and validated when binding the form.
 
 .. tip::
 
-    If you're not using the HttpFoundation component, load use
+    If you're not using the HttpFoundation component, you can use
     :class:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\DefaultCsrfProvider`
     instead, which relies on PHP's native session handling::
 
