@@ -1,3 +1,6 @@
+.. index::
+   single: Symfony Framework Best Practices
+
 The Symfony Framework Best Practices
 ====================================
 
