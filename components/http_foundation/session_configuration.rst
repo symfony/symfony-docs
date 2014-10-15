@@ -181,7 +181,7 @@ which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
-The other option is specifically checking if a session has expired after the
+The other option is specifically check if a session has expired after the
 session is started. The session can be destroyed as required. This method of
 processing can allow the expiry of sessions to be integrated into the user
 experience, for example, by displaying a message.
