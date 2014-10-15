@@ -45,6 +45,16 @@ Cookbook
 
 Read the :doc:`Cookbook </cookbook/index>`.
 
+Best Practices
+--------------
+
+.. toctree::
+    :hidden:
+
+    best_practices/index
+
+Read the :doc:`Official Best Practices </best_practices/index>`.
+
 Components
 ----------
 

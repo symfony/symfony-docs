@@ -2,7 +2,6 @@ Official Symfony Best Practices
 ===============================
 
 .. toctree::
-    :hidden:
 
     introduction
     creating-the-project
