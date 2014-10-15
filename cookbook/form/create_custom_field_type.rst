@@ -159,27 +159,22 @@ link for details), create a ``gender_widget`` block to handle this:
 
             # app/config/config.yml
             twig:
-                form:
-                    resources:
-                        - 'AcmeDemoBundle:Form:fields.html.twig'
+                form_themes:
+                    - 'AcmeDemoBundle:Form:fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
-                <twig:form>
-                    <twig:resource>AcmeDemoBundle:Form:fields.html.twig</twig:resource>
-                </twig:form>
+                <twig:form-theme>AcmeDemoBundle:Form:fields.html.twig</twig:form-theme>
             </twig:config>
 
         .. code-block:: php
 
             // app/config/config.php
             $container->loadFromExtension('twig', array(
-                'form' => array(
-                    'resources' => array(
-                        'AcmeDemoBundle:Form:fields.html.twig',
-                    ),
+                'form_themes' => array(
+                    'AcmeDemoBundle:Form:fields.html.twig',
                 ),
             ));
 

@@ -1580,9 +1580,8 @@ file:
 
         # app/config/config.yml
         twig:
-            form:
-                resources:
-                    - 'AcmeTaskBundle:Form:fields.html.twig'
+            form_themes:
+                - 'AcmeTaskBundle:Form:fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -1596,9 +1595,7 @@ file:
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form>
-                    <twig:resource>AcmeTaskBundle:Form:fields.html.twig</twig:resource>
-                </twig:form>
+                <twig:theme>AcmeTaskBundle:Form:fields.html.twig</twig:theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -1607,10 +1604,8 @@ file:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'AcmeTaskBundle:Form:fields.html.twig',
-                ),
+            'form_themes' => array(
+                'AcmeTaskBundle:Form:fields.html.twig',
             ),
             // ...
         ));
