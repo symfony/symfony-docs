@@ -509,8 +509,11 @@ Lazy loading listeners::
     {
         private $started = false;
 
-        public function myLazyListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
-        {
+        public function myLazyListener(
+            Event $event,
+            $eventName,
+            EventDispatcherInterface $dispatcher
+        ) {
             if (false === $this->started) {
                 $subscriber = new StoreSubscriber();
                 $dispatcher->addSubscriber($subscriber);
@@ -529,8 +532,11 @@ Dispatching another event from within a listener::
 
     class Foo
     {
-        public function myFooListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
-        {
+        public function myFooListener(
+            Event $event,
+            $eventName,
+            EventDispatcherInterface $dispatcher
+        ) {
             $dispatcher->dispatch('log', $event);
 
             // ... more code

@@ -23,6 +23,7 @@ sys.path.append(os.path.abspath('_exts'))
 # adding PhpLexer
 from sphinx.highlighting import lexers
 from pygments.lexers.web import PhpLexer
+from pygments.lexers.agile import RubyLexer
 
 # -- General configuration -----------------------------------------------------
 
@@ -100,6 +101,15 @@ lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
+lexers['varnish2'] = RubyLexer()
+lexers['varnish3'] = RubyLexer()
+lexers['varnish4'] = RubyLexer()
+
+config_block = {
+    'varnish2': 'Varnish 2',
+    'varnish3': 'Varnish 3',
+    'varnish4': 'Varnish 4'
+}
 
 # use PHP as the primary domain
 primary_domain = 'php'
@@ -264,3 +274,4 @@ texinfo_documents = [
 
 # Use PHP syntax highlighting in code examples by default
 highlight_language='php'
+
