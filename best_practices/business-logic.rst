@@ -164,7 +164,7 @@ Using a Persistence Layer
 Symfony is an HTTP framework that only cares about generating an HTTP response
 for each HTTP request. That's why Symfony doesn't provide a way to talk to
 a persistence layer (e.g. database, external API). You can choose whatever
-library of strategy you want for this.
+library or strategy you want for this.
 
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.

@@ -40,7 +40,7 @@ drastically simplifies their logical names:
 ==================================================  ==================================
 Templates stored inside bundles                     Templates stored in ``app/``
 ==================================================  ==================================
-``AcmeDemoBunde:Default:index.html.twig``           ``default/index.html.twig``
+``AcmeDemoBundle:Default:index.html.twig``          ``default/index.html.twig``
 ``::layout.html.twig``                              ``layout.html.twig``
 ``AcmeDemoBundle::index.html.twig``                 ``index.html.twig``
 ``AcmeDemoBundle:Default:subdir/index.html.twig``   ``default/subdir/index.html.twig``
