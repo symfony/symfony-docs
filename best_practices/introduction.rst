@@ -18,10 +18,10 @@ original pragmatic philosophy of Symfony.
 What is this Guide About?
 -------------------------
 
-This guide aims to fix that by describing the **official best practices for
-developing web apps with the Symfony full-stack framework**. These are best-
-practices that fit the philosophy of the framework as envisioned by its original
-creator `Fabien Potencier`_.
+This guide aims to fix that by describing the **best practices for developing
+web apps with the Symfony full-stack framework**. These are best practices that
+fit the philosophy of the framework as envisioned by its original creator
+`Fabien Potencier`_.
 
 .. note::
 
