@@ -1,0 +1,83 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-05T09:29:24Z
+
+I like it a lot, thanks @mpdude !
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-05T09:35:03Z
+
+Sorry, but I don't get the capitalization rules :) Not a native speaker, though.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-05T09:40:44Z
+
+@mpdude we use title caps, which means that every word is capitialized except from closed-class words. Closed-class words are words that can't be "extended" by other words. E.g. "title" is not a closed-class word, you can extend it by saying "a strong title", "a complicated title", etc. "the" on the other hand can't be extended and is a closed-class word.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-05T11:04:09Z
+
+Extended the section on custom exception listeners that was discussed in #4181 and would like to get @stof's opinion on this.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-09T21:06:39Z
+
+@mpdude For now, I think it's fine if you just remove the backticks in the headlines completely. We can discuss this topic later on. But that's out of the scope of this pull request. Sorry for the confusion.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-09T21:09:40Z
+
+Roger that. Let me know when I should squash this PR.
+
+How/when will you decide if this gets merged?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-10T07:20:51Z
+
+From my point of view, this is perfect to be merged now. Let's see what the others think.
+
+If you want to, you can of course squash your commits.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-10T10:06:44Z
+
+Great, because I could then work on #4293 for Smyfony 2.6.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-15T15:46:12Z
+
+@mpdude Comments added - BIG improvement!
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-15T22:37:19Z
+
+Squashed & ready for merge (as far as I am concerned).
+
+Thanks to everyone involved for the feedback!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-16T15:21:14Z
+
+@mpdude Thank you! I'm sorry, but I just found another minor issue.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-16T15:46:40Z
+
+Done
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-17T06:50:56Z
+
+This is really nice @mpdude! Thank you for your patience with all our comments and suggestions.
