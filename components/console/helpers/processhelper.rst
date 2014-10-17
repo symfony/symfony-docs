@@ -38,7 +38,7 @@ Arguments
 
 There are three ways to use the process helper:
 
-* Either using a command line string::
+* Using a command line string::
 
     // ...
     $helper->run($output, 'figlet Symfony');
@@ -51,9 +51,9 @@ There are three ways to use the process helper:
   .. note::
 
       When running the helper against an array of arguments, be aware that
-      these ones will be automatically escaped.
+      these will be automatically escaped.
 
-* Or a :class:`Symfony\\Component\\Process\\Process` instance::
+* Passing a :class:`Symfony\\Component\\Process\\Process` instance::
 
     use Symfony\Component\Process\ProcessBuilder;
 
@@ -70,7 +70,7 @@ You can display a customized error message using the third argument of the
 
     $helper->run($output, $process, 'The process failed :(');
 
-A custom process callback can be passed as fourth argument, refer to the
+A custom process callback can be passed as the fourth argument. Refer to the
 :doc:`Process Component </components/process>` for callback documentation::
 
     use Symfony\Component\Process\Process;
