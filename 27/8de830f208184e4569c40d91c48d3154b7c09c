@@ -1,0 +1,94 @@
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-06-11T08:37:17Z
+
+Removing the `[WCM]` tag as the PR has been merged
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-06-11T15:12:02Z
+
+This was merged - woot! @romainneutron was this merged into master or 2.3? It looked like master, but says `2.3-dev` here: https://github.com/symfony/symfony/commit/44735cdd5f6bd3674da06e2924555f3ad80bf4bb
+
+Let's make any last changes to this PR and I'll merge it in.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by stof at 2014-06-13T13:14:01Z
+
+@weaverryan this is a bug in the gh tool. It was merged in master
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-06-14T12:06:59Z
+
+PR updated, I've addressed @xabbuh's comments and added examples
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-06-14T12:09:02Z
+
+Please note that I've added two sections : `Arguments` and `Customized display`. let me know if wording is wrong
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T12:55:46Z
+
+@romainneutron Can you make the suggested changes?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-16T13:42:22Z
+
+ping @romainneutron
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-09-16T13:53:15Z
+
+Woops, I definitely missed your ping @xabbuh! I just added what you all suggested. Just a question, how should I add un unordered list?
+
+Something like?
+
+```
+There are three ways to use the process helper:
+
+  - Something like this
+    blablabla
+
+  - Something like that
+    blablabla
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-16T14:10:07Z
+
+@romainneutron You can create [unordered lists](http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#bullet-lists) using the ``*`` character:
+
+```rst
+There are three ways to use the process helper:
+
+* foo
+* bar
+```
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-10-11T13:55:22Z
+
+I just updated th PR according to @xabbuh 's comment
+
+---------------------------------------------------------------------------
+
+by romainneutron at 2014-10-12T11:22:38Z
+
+@xabbuh fixed :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-16T12:57:13Z
+
+Looks good now. :+1:
