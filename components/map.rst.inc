@@ -70,9 +70,10 @@
   * :doc:`/components/expression_language/extending`
   * :doc:`/components/expression_language/caching`
 
-* **Filesystem**
+* :doc:`/components/filesystem/index`
 
-  * :doc:`/components/filesystem`
+  * :doc:`/components/filesystem/introduction`
+  * :doc:`/components/filesystem/lock_handler`
 
 * **Finder**
 
