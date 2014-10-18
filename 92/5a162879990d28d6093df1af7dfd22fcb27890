@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-04T08:11:24Z
+
+:-1: for the reason I mentioned here: https://github.com/symfony/symfony-docs/pull/4267#issuecomment-56836879
+
+---------------------------------------------------------------------------
+
+by stof at 2014-10-04T10:50:06Z
+
+@WouterJ this is a case against using ``require`` without version, not against using ``require`` itself.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-04T10:52:06Z
+
+@stof indeed. This PR does 2 things:
+
+1) Using the `require` command
+2) Removing versions from the `require` command
+
+I'm +1 for (1) and -1 for (2).
