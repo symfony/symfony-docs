@@ -1,0 +1,151 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-17T11:08:34Z
+
+The file should be added to the toctree in ``/components/console/helper/index.rst``.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-06-17T11:55:38Z
+
+@xabbuh fixed.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-06-17T12:17:39Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-04T20:37:47Z
+
+This PR needs to be updated as the code is not in the Console component anymore but in the Filesystem component
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-22T12:48:02Z
+
+The code pull request has been merged.
+
+@lyrixx Can you update the files according to @stof's comments?
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-22T13:13:56Z
+
+Sure. ;)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-22T17:03:38Z
+
+Could you please extend the document with a bit more information?
+
+For instance, what exactly is that lock file you pass into the constructor? What is locking actually? A real usecase is also better for an example.
+
+I would also like to see an explanation of the `->lock()` method. E.g. it returns `true` when calling it multiple times on the same instance, but it would return `false` when the process is already executing. I would also like to see where to execute the process in the example.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-22T18:02:59Z
+
+I split the documentation of the Filesystem component.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-22T20:54:18Z
+
+@xabbuh Thanks. I addressed all your comments.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-22T21:00:17Z
+
+One minor issue: I would rename the ``lockhandler.rst`` file to be ``lock_handler.rst``.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-22T21:07:41Z
+
+Ah, and you would have to update ``/components/map.rst.inc``.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-22T21:17:26Z
+
+@xabbuh done, but the page `http://127.0.0.1:9009/components/index.html` the Filesystem doc is wrong. Any idea?
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-22T21:20:43Z
+
+@xabbuh Sorry, I rebuild the doc is everything is ok now.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-24T22:35:34Z
+
+@javiereguiluz Thanks for the review ;) I addressed your comments, but I'm not very happy with the doc about the `blocking` argument... What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-24T22:56:57Z
+
+I've decorated it a bit more :) Luckily, all minor things.
+
+Could you please also add a reference to this article from within the introduction article? E.g. by using a `.. tip::` directive or by creating a small new section.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-09-24T23:04:42Z
+
+@WouterJ done ;)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-24T23:07:54Z
+
+Looks awesome! Just one minor thing and I'll give it a Finished flag :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-24T23:42:04Z
+
+:+1: thanks for your quick actions @lyrixx!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-25T16:55:53Z
+
+@lyrixx I just added some final comments. It looks great - I'll merge after those.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-09-26T06:17:58Z
+
+@lyrixx @javiereguiluz the blocking mode (comments on outdated diff) is really useful. For instance, it allows making a console command to wait a previous finished before running critical code section.
+I use it in production for months. The code of @lyrixx works great.
+
+At least on Linux, if a problem occurs and the PHP script exits without releasing the lock, the OS will instantly release the lock (this is a big advantage of using `flock()` instead of a custom implementation).
+I think this feature should be documented. The paragraph wrote by @lyrixx was fine enough IMO.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-10-04T11:20:08Z
+
+@weaverryan I forgot to ping you ;) I hope it's ok now ;)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-17T20:36:02Z
+
+@lyrixx I left some tweaks, but it looks great!
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2014-10-18T00:13:14Z
+
+@weaverryan it should be better now. I really hope it's ok now.
