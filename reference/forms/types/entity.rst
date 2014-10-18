@@ -117,7 +117,7 @@ or the short alias name (as shown prior).
 em
 ~~
 
-**type**: ``string`` **default**: the default entity manager
+**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
 
 If specified, the specified entity manager will be used to load the choices
 instead of the default entity manager.
@@ -183,7 +183,7 @@ directly.
 choices
 ~~~~~~~
 
-**type**:  array || ``\Traversable`` **default**: ``null``
+**type**:  array | ``\Traversable`` **default**: ``null``
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
