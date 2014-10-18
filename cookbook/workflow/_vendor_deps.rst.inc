@@ -24,29 +24,12 @@ To upgrade your libraries to new versions, run ``php composer.phar update``.
 
 .. tip::
 
-    If you want to add a new package to your application, modify the ``composer.json``
-    file:
-
-    .. code-block:: json
-
-        {
-            "require": {
-                ...
-                "doctrine/doctrine-fixtures-bundle": "@dev"
-            }
-        }
-
-    and then execute the ``update`` command for this specific package, i.e.:
+    If you want to add a new package to your application, run the composer
+    ``require`` command:
 
     .. code-block:: bash
 
-        $ php composer.phar update doctrine/doctrine-fixtures-bundle
-
-    You can also combine both steps into a single command:
-
-    .. code-block:: bash
-
-        $ php composer.phar require doctrine/doctrine-fixtures-bundle:@dev
+        $ php composer.phar require doctrine/doctrine-fixtures-bundle
 
 To learn more about Composer, see `GetComposer.org`_:
 
