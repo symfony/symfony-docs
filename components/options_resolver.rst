@@ -370,6 +370,11 @@ Possible types are the ones associated with the ``is_*`` PHP functions or a
 class name. You can also pass an array of types as the value. For instance,
 ``array('null', 'string')`` allows ``port`` to be ``null`` or a ``string``.
 
+Additionally, you can define a type as an array of another type. For instance, ``array<stdClass>`` 
+and ``stdClass[]``. Doing this would enforce the given array to only contain instances of ``stdClass``. 
+Deeper levels are also possible, like ``array<array<stdClass>>``, and even having keys and values 
+of a certain type, such as ``array<string, stdClass>``.
+
 There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 method, which you can use to add an allowed type to the previous allowed types.
