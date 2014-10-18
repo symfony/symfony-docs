@@ -822,9 +822,13 @@ With this configuration, there are three validation groups:
   fields only.
 
 To tell the validator to use a specific group, pass one or more group names
-as the second argument to the ``validate()`` method::
+as the third argument to the ``validate()`` method::
 
-    $errors = $validator->validate($author, array('registration'));
+    // If you're using the new 2.5 validation API (you probably are!)
+    $errors = $validator->validate($author, null, array('registration'));
+
+    // If you're using the old 2.4 validation API
+    // $errors = $validator->validate($author, array('registration'));
 
 If no groups are specified, all constraints that belong in group ``Default``
 will be applied.
@@ -1189,10 +1193,19 @@ it looks like this::
         $emailConstraint->message = 'Invalid email address';
 
         // use the validator to validate the value
+        // If you're using the new 2.5 validation API (you probably are!)
+        $errorList = $this->get('validator')->validate(
+            $email,
+            $emailConstraint
+        );
+
+        // If you're using the old 2.4 validation API
+        /*
         $errorList = $this->get('validator')->validateValue(
             $email,
             $emailConstraint
         );
+        */
 
         if (count($errorList) == 0) {
             // this IS a valid email address, do something
@@ -1206,13 +1219,13 @@ it looks like this::
         // ...
     }
 
-By calling ``validateValue`` on the validator, you can pass in a raw value and
+By calling ``validate`` on the validator, you can pass in a raw value and
 the constraint object that you want to validate that value against. A full
 list of the available constraints - as well as the full class name for each
 constraint - is available in the :doc:`constraints reference </reference/constraints>`
 section .
 
-The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
+The ``validate`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
 which holds the error message on its ``getMessage`` method.

@@ -94,6 +94,8 @@ to base your changes on. The **compare repository** should be your forked copy
 of ``symfony-docs`` and the **compare branch** should be ``improve_install_chapter``,
 which is the name of the branch you created and where you made your changes.
 
+.. _pull-request-format:
+
 **Step 8.** The last step is to prepare the **description** of the pull request.
 To ensure that your work is reviewed quickly, please add the following table
 at the beginning of your pull request description:
