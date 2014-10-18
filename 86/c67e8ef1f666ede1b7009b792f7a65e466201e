@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-16T01:07:49Z
+
+Please add a note in the bundle best practices sayignt hat shared bundles MUST support both the 2.4 and the 2.5 validation API, given they don't know which one is used in a project. An example should be provided showing how to do it
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-09-16T05:04:09Z
+
+bundle best practices": **public** bundle (vs project bundle.)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-16T06:22:53Z
+
+The cookbook chapter about form testing should probably also be updated (see for example the changes in #4213). What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-18T14:20:31Z
+
+Thanks for the feedback! I've just added a section to the bundle best-practices doc, which could use a quick review.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-02T12:58:45Z
+
+Hi guys!
+
+I made a few tweaks (including updating the form testing chapter) at sha: 94fc520c79839c9dfa3b06abcd8f5bf703ace561 and then also tackled the changes to `validateValue()` and `validate()` (see items E and F in #4094, which came from #4242) - see sha: 9874d8e5d533cf40bd2e182fa53ee4271e641f18.
+
+One last review would be awesome because these changes are confusing, so I want them to be perfect in the docs.
+
+Thanks!
