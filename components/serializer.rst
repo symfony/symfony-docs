@@ -50,6 +50,8 @@ which Encoders and Normalizer are going to be available::
 
     $serializer = new Serializer($normalizers, $encoders);
 
+There are several normalizers available, e.g. the :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` or the :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`. To read more about them, refer to the "Normalizers" section in this page. All the examples shown below use the GetSetMethodNormalizer.
+
 Serializing an Object
 ---------------------
 
