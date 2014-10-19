@@ -66,6 +66,8 @@ Distribution:
     To download the vendor files faster, add the ``--prefer-dist`` option at
     the end of any Composer command.
 
+.. tip::
+
     Add the ``-vvv`` flag to see everything that Composer is doing - this is
     especially useful on a slow connection where it may seem that nothing is
     happening.
