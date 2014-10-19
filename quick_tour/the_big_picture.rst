@@ -22,6 +22,12 @@ directory:
 
     $ composer create-project symfony/framework-standard-edition myproject/ '~2.3'
 
+.. tip::
+
+    Add the ``-vvv`` flag to see everything that Composer is doing - this is
+    especially useful on a slow connection where it may seem that nothing is
+    happening.
+
 .. note::
 
     `Composer`_ is the package manager used by modern PHP applications and the
