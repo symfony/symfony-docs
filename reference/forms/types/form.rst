@@ -48,6 +48,8 @@ on all types for which ``form`` is the parent type.
 Field Options
 -------------
 
+.. _form-option-action:
+
 .. include:: /reference/forms/types/options/action.rst.inc
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
@@ -95,6 +97,8 @@ The actual default value of this option depends on other field options:
 .. _reference-form-option-max_length:
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
+
+.. _form-option-method:
 
 .. include:: /reference/forms/types/options/method.rst.inc
 

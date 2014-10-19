@@ -78,6 +78,12 @@ Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHa
 object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 ``$_GET``) based on the HTTP method configured on the form (POST is default).
 
+.. seealso::
+
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+
 .. sidebar:: Integration with the HttpFoundation Component
 
     If you use the HttpFoundation component, then you should add the
@@ -488,6 +494,43 @@ rendered, along with a label and error message (if there is one). As easy
 as this is, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
 to do that in the ":ref:`form-rendering-template`" section.
+
+Changing a Form's Method and Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ability to configure the form method and action was introduced in
+    Symfony 2.3.
+
+By default, a form is submitted to the same URI that rendered the form with
+an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
+and :ref:`form-option-method` options (the ``method`` option is also used
+by ``handleRequest()`` to determine whether a form has been submitted):
+
+.. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $formBuilder = $formFactory->createBuilder('form', null, array(
+            'action' => '/search',
+            'method' => 'GET',
+        );
+
+        // ...
+
+    .. code-block:: php-symfony
+
+        // ...
+
+        public function searchAction()
+        {
+            $formBuilder = $this->createFormBuilder('form', null, array(
+                'action' => '/search',
+                'method' => 'GET',
+            ));
+
+            // ...
+        }
 
 .. _component-form-intro-handling-submission:
 
