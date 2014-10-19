@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-15T21:03:29Z
+
+Thanks again @weaverryan! I moved the new sentences into the sidebar and reworded it a bit. However, I kept the ``versionadded`` directive for the moment. I'm not sure if we should keep it. But I think that we need to make them aware that there is something they should really read. What do you think about a note or a ``caution`` directive instead?
