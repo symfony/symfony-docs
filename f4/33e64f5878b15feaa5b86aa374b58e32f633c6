@@ -1,0 +1,169 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-08-06T15:19:32Z
+
+you should rebase your branch on top of the upstream master branch to remove these 2 weird merge commits from the history.
+
+When creating a feature branch, it should generally be created based on the state of the upstream master branch to avoid such weirdness
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-06T15:20:55Z
+
+Thanks, yeah I should've done that... It's done now
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-06T15:23:06Z
+
+:+1:  thanks for adding these tips @dannykopping!
+
+However, for the `tip` added in the `Getting Started` tutorial I think that we should be more explicit about what does *"add the -vvv flag"* mean. This tutorial is targeted for newcomers and it could be hard for some of them to correctly understand that phrase. Maybe we should display something like `$ composer -vvv ...`  But before making any change, let's see what do @weaverryan @WouterJ and @xabbuh think about this.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T06:55:55Z
+
+@javiereguiluz I like adding the example code block. I would also provide an example code block for the first part of the tip. Maybe it's also better to split them into two tips as they are not really related.
+
+I would then suggest to change the wording a bit, so that you first explain the problem and provide a solution then. I think something like this is good:
+
+```rst
+.. tip::
+
+    Sometimes, especially when your Internet connection is slow, running the
+    ``composer`` command may look like it does nothing at all. You can use
+    the ``-vvv`` flag to let Composer print all activities it is doing in
+    the background:
+
+    .. code-block:: bash
+
+        $ php composer.phar create-project -vvv ...
+```
+
+@dannykopping @javiereguiluz What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-08-07T07:06:32Z
+
+@xabbuh I love your proposal! The only minor thing is that I think that *Internet* should always be capitalized.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T07:16:25Z
+
+@javiereguiluz :+1: (updated the comment)
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-07T07:32:50Z
+
+Much better! Thanks
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T07:56:11Z
+
+@dannykopping What do you think about also adding example code blocks to the tips?
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-07T08:13:06Z
+
+In this instance specifically, or in general?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T08:47:41Z
+
+I think it's worth to add it to all tips you added for the ``-vvv`` flag.
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-07T09:00:05Z
+
+Sure, but what would you suggest putting in the 'code block'?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T09:02:42Z
+
+I would suggest the tip to be like what I suggested in [this comment](https://github.com/symfony/symfony-docs/pull/4099#issuecomment-51437393).
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-07T09:16:52Z
+
+OK - I will clean this up tonight and implement the suggestions
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-09T17:17:25Z
+
+Hmm, I like what you're trying to solve here, but I'm not sure this is the correct option.
+
+`-vvv` is the DEBUG verbosity. Installing the framework isn't about debugging at all, it's all about usage.
+
+So what is the original problem? I believe it's the fact that Composer is not verbose enough at normal verbosity. I think we should solve that instead, e.g. by using the ProgressBar helper to show the progress instead of showing all details about every action done by Composer.
+
+What do you think @dannykopping ? If you agree, I would recommend to open an issue in composer/composer and see what the composer guys think about this.
+If you don't agree, that's fine! Then I would suggest to use @xabbuh's proposal and also move this to the `book` installation chapter.
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-09T17:23:23Z
+
+I really like that idea, given that we have the [ProgressBar](http://symfony.com/doc/current/components/console/helpers/progressbar.html) helper.
+Imagine you're trying to install Symfony on a 4Mb DSL connection (2Mb is the median connection speed in South Africa) - it can appear as though something has stalled oftentimes; the reason why I suggested the `DEBUG` level is because this at least shows you that Composer is doing work.
+
+I'll definitely add an issue in composer/composer - nice idea!
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-09T17:26:10Z
+
+It's already planned apparently
+https://github.com/composer/composer/issues/2809
+
+Maybe I'll put something together over the weekend and send you a PR and a penny for your thoughts @WouterJ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-10T09:53:38Z
+
+I'm not convinced that the progress bar will resolve the issue that made @dannykopping adding the ``-vvv`` flag. In case of slow internet connections, the progress bar would move forward so slowly that you wouldn't recognise any difference, would you?
+
+---------------------------------------------------------------------------
+
+by dannykopping at 2014-08-10T09:55:17Z
+
+That's a good point, but if it could be customised to show the bytes downloaded vs bytes total - that would resolve it. I'm thinking of something like a `wget`-style output
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-10T10:11:53Z
+
+@xabbuh the same applies to the `-vvv` flag.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-15T00:18:44Z
+
+Thanks Danny for starting this! I'm ok with merging this in, but I think getting a progress bar added to Composer is much much more impactful. I hear people complain about this all the time - I would love to *at least* be able to show progress (and even better would be to speed up Composer - I didn't realize how many JSON requests it makes for metadata).
+
+@dannykopping I just left you 2 small comments.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by stof at 2014-08-18T13:16:43Z
+
+@weaverryan for most people, the slow part is not the metadata loading, but the dependency resolution itself
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-20T14:10:46Z
+
+@stof I always thought that too, but when I run `-vvv`, those downloads take at least a significant amount of time (and since there's no while the dep resolution happens, I'm not sure how long that part takes).
