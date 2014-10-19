@@ -472,6 +472,15 @@ you will trigger the ``kernel.terminate`` event where you can perform certain
 actions that you may have delayed in order to return the response as quickly
 as possible to the client (e.g. sending emails).
 
+.. caution::
+
+    Internally, the HttpKernel makes use of the :phpfunction:`fastcgi_finish_request`
+    PHP function. This means that at the moment, only the `PHP FPM`_ server
+    API is able to send a response to the client while the server's PHP process
+    still performs some tasks. With all other server APIs, listeners to ``kernel.terminate``
+    are still executed, but the response is not sent to the client until they
+    are all completed.
+
 .. note::
 
     Using the ``kernel.terminate`` event is optional, and should only be
@@ -689,3 +698,4 @@ look like this::
 .. _reflection: http://php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`Create your own framework... on top of the Symfony2 Components`: http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
+.. _`PHP FPM`: http://php.net/manual/en/install.fpm.php
