@@ -1,0 +1,67 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-07T21:10:47Z
+
+Thanks for your feedback @cordoval and @WouterJ.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-22T12:46:16Z
+
+Code pull request has been merged.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-22T14:36:57Z
+
+Congrats @xabbuh!
+
+But now I have a question. What's the *best* way to tell people to use the built-in web server? Is it with the existing `server:run` or is it with `server:start` and `server:stop`?
+
+For me, I still need to play with the new commands to see how they feel. For the record, Django uses a `server:run` type of method (and tells you to press ctrl+c to exit).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-22T15:01:42Z
+
+@weaverryan the original idea of the `server:start` command was to forget about dealing with the internal web server details.
+
+Now when executing `server:run` in one app, the result is that the command blocks your current terminal. You must open a new console window or you have to execute the command with the `&` at the end. And when you have several applications, if you execute the command with `&`, you forget about which ports are open in the other servers.
+
+The idea of the new workflow was:
+
+  * Whenever you want to use the internal server, execute `server:start`. This command is so smart that it will look for an open port and will use it without asking or bothering you. In addition, it won't block your terminal window.
+  * You almost never need it, but just in case you need to know the port where your app is listening, execute the `server:status` command.
+  * When you finish your work with one app, you just execute `server:stop` and again, the command is smart enough to end the server associated with this app (without asking or bothering you).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-24T16:04:56Z
+
+@javiereguiluz That *is* a really great sounding workflow, so you've convinced me! @xabbuh can you update your PR so that it updates everything in the docs about the built-in web server and uses the new workflow. I would only actually explain this full workflow in the dedicated cookbook article - but in other areas (e.g. quick start guide) we'll just say "start a web server with this command... and later when you're finished, you can stop it with this command..."
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-24T22:51:05Z
+
+@weaverryan I think I can handle my pending pull requests during the next week.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-18T19:24:19Z
+
+a very friendly ping to you Mr @xabbuh :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-19T18:00:22Z
+
+@weaverryan @javiereguiluz A really big sorry for the long delay.
+
+I finally managed to completely rework the cookbook entry. I replaced the ``server:run`` command by explaining the ``server:start`` command now. There are small notes explaining how to use ``server:status`` and that you *could* use ``server:run`` like in older Symfony versions.
+
+I also replaced the ``server:run`` call in the quick tour and added a note to the installation chapter in the book.
+
+What do you think?
