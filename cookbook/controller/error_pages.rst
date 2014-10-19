@@ -169,6 +169,32 @@ To use this feature, you need to have a definition in your
             resource: "@TwigBundle/Resources/config/routing/errors.xml"
             prefix:   /_error
 
+    .. code-block:: xml
+
+        <!-- app/config/routing_dev.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="@TwigBundle/Resources/config/routing/errors.xml"
+                prefix="/_error" />
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing_dev.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            $loader->import("@AcmeHelloBundle/Resources/config/routing.php")
+        );
+        $collection->addPrefix("/error");
+
+        return $collection;
+
 If you're coming from an older version of Symfony, you might need to
 add this to your ``routing_dev.yml`` file. If you're starting from
 scratch, the `Symfony Standard Edition`_ already contains it for you.
@@ -182,15 +208,6 @@ With this route added, you can use URLs like
 
 to preview the *error* page for a given status code as HTML or for a
 given status code and format.
-
-.. tip::
-
-    You should not set ``kernel.debug`` to ``false`` in order to see your
-    error pages during development. This will also stop
-    Symfony from recompiling your twig templates, among other things.
-
-.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
-.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
 
 .. _custom-exception-controller:
 
@@ -329,4 +346,6 @@ several) listeners deal with them.
 
 Good luck!
 
+.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
 .. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php
