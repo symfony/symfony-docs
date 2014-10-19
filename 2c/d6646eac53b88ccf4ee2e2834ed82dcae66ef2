@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-10-04T11:16:10Z
+
+I don't like the fact that the cookbook page diverges so much between the 2.3 to 2.5 branches and your proposal for master. It would make it impossible to apply further enhancements on the article (as we would have 2 conflicting versions).
+
+So I see 2 solutions here for your PR:
+
+- extract all things which are not specific to your symfony PR to update the cookbook for 2.3+, and then add the few extra stuff for 2.6 in the master branch after the merge.
+- add only the doc for the new 2.6 feature, without changing the whole cookbook article.
+
+If you go for the first way, have a look at https://github.com/symfony/symfony-docs/issues/4181 (and the symfony discussion linked in it) which describes some of the changes needed in this cookbook.
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-04T11:31:56Z
+
+Oh, I was not aware of #4181 but am happy that it also suggests to show three approaches and use them for structuring the article as suggested by @weaverryan.
+
+I don't think I can satisfy all of #4181, but porting this PR over to 2.3 (without the 2.6 stuff) should be in line with my possibilities.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-17T19:58:06Z
+
+I've just merged #4294 up through master. So this is ready to be worked on again!
+
+---------------------------------------------------------------------------
+
+by mpdude at 2014-10-17T21:56:31Z
+
+Fire at will!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-18T19:23:19Z
+
+@mpdude I've added a few minor comments, but it reads really nicely.
