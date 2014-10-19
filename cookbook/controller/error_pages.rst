@@ -189,7 +189,7 @@ To use this feature, you need to have a definition in your
 
         $collection = new RouteCollection();
         $collection->addCollection(
-            $loader->import("@AcmeHelloBundle/Resources/config/routing.php")
+            $loader->import('@TwigBundle/Resources/config/routing/errors.xml')
         );
         $collection->addPrefix("/error");
 
