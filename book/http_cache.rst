@@ -915,20 +915,20 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
     .. code-block:: jinja
 
         {# you can use a controller reference #}
-        {{ render_esi(controller('...:news', { 'max': 5 })) }}
+        {{ render_esi(controller('...:news', { 'maxPerPage': 5 })) }}
 
         {# ... or a URL #}
-        {{ render_esi(url('latest_news', { 'max': 5 })) }}
+        {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
 
     .. code-block:: html+php
 
         <?php echo $view['actions']->render(
-            new \Symfony\Component\HttpKernel\Controller\ControllerReference('...:news', array('max' => 5)),
+            new \Symfony\Component\HttpKernel\Controller\ControllerReference('...:news', array('maxPerPage' => 5)),
             array('strategy' => 'esi'))
         ?>
 
         <?php echo $view['actions']->render(
-            $view['router']->generate('latest_news', array('max' => 5), true),
+            $view['router']->generate('latest_news', array('maxPerPage' => 5), true),
             array('strategy' => 'esi'),
         ) ?>
 
@@ -937,6 +937,13 @@ tell Symfony that the action should be rendered as an ESI tag. You might be
 wondering why you would want to use a helper instead of just writing the ESI
 tag yourself. That's because using a helper makes your application work even
 if there is no gateway cache installed.
+
+.. tip::
+
+    As you'll see below, the ``maxPerPage`` variable you pass is available
+    as an argument to your controller (i.e. ``$maxPerPage``). The variables
+    passed through ``render_esi`` also become part of the cache key so that
+    you have unique caches for each combination of variables and values.
 
 When using the default ``render`` function (or setting the renderer to
 ``inline``), Symfony merges the included page content into the main one
@@ -958,7 +965,7 @@ of the master page.
 
 .. code-block:: php
 
-    public function newsAction($max)
+    public function newsAction($maxPerPage)
     {
         // ...
 
