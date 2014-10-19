@@ -54,6 +54,11 @@ are:
 
 .. note::
 
+    If your system supports the ``APACHE_LOG_DIR`` variable, you may want
+    to use ``${APACHE_LOG_DIR}/`` instead of ``/var/log/apache2/``.
+
+.. note::
+
     For performance reasons, you will probably want to set
     ``AllowOverride None`` and implement the rewrite rules in the ``web/.htaccess``
     into the ``VirtualHost`` config.
