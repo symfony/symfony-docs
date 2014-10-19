@@ -1,0 +1,73 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-05T18:53:41Z
+
+@xabbuh Thanks for opening this. We need to keep track of what we do and don't have, and where. for example:
+
+* The `submit()` instead of `bind()` is covered already in `cookbook/form/direct_submit.rst`, but not directly in the form component
+* The `method` and `action` are covered in the form book chapter, but not (until this PR) in the component
+* The `form_start` and `form_end` are covered in the form book chapter, but not in the components
+* Using a button is mentioned in the form chapter, but we don't really talk about configuration, except for its reference documentation.
+
+It's difficult because the form component has a significant amount of duplication, in part because we thought that we might try to make it work for both the component and framework all in one page (but I don't think that makes sense anymore). Ideally, I'd like to find a way to duplicate less.
+
+Let me know what you think!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T06:28:59Z
+
+@weaverryan I absolutely agree with you when talking about duplicated documentation. My suggestion is, to first complete the documentation with this pull request (so that all the things you mentioned have been covered) and afterwards discuss how to deal with duplicated documentation separately (I opened #4100 to for this). What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-13T19:21:47Z
+
+Yep, let's do that. You already have #4100 opened to track the duplication, so we can finish this PR, which will make sure that everything is covered and accomplished. :thumbsup:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-13T21:24:03Z
+
+Alright, I think I can manage to complete this til the end of the week.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T08:01:27Z
+
+When it comes to duplicated documentation, we have to talk about ``form_start()`` and ``form_end()`` again. Looking at how it is done yet, I'm not sure if it really makes sense to document it twice. In the components documentation we already have a paragraph like this in the rendering section:
+
+> That’s it! By printing form_widget(form), each field in the form is rendered, along with a label and error message (if there is one). As easy as this is, it’s not very flexible (yet). Usually, you’ll want to render each form field individually so you can control how the form looks. You’ll learn how to do that in the “Rendering a Form in a Template” section.
+
+“Rendering a Form in a Template” directly links to the appropriate section in the book chapter.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-16T08:22:46Z
+
+For ``submit()`` I decided to not duplicate any documentation, but to link to the cookbook article from the book and from the component instead.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-04T10:39:07Z
+
+I think the features you can use with buttons are already documented in the book:
+
+* [Submitting Forms with Multiple Buttons](http://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons)
+* [validation based on the clicked button](http://symfony.com/doc/current/book/forms.html#groups-based-on-the-clicked-button)
+
+What do you think? Should we duplicate or move parts of this to the component section?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-19T15:24:45Z
+
+@xabbuh I agree with you! So, I think this PR is ready, except for one small comment I just left.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-19T15:42:37Z
+
+@weaverryan I added a small note on it.
