@@ -26,7 +26,13 @@ git repository:
 
    .. code-block:: bash
 
-        $ php composer.phar create-project symfony/framework-standard-edition path/ "~2.3"
+        $ php composer.phar create-project symfony/framework-standard-edition path/ '~2.5'
+
+   .. tip::
+
+       Add the ``-vvv`` flag to see everything that Composer is doing - this is
+       especially useful on a slow connection where it may seem that nothing is
+       happening.
 
    Composer will now download the Standard Distribution along with all of the
    required vendor libraries. For more information about downloading Symfony using
