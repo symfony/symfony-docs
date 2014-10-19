@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-07T21:49:00Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-08T17:11:46Z
+
+Is the `APACHE_LOG_DIR` environment variable consistently set in all Apache environments? I want this to work for as many people as possible without a headache. If `APACHE_LOG_DIR` is *always* set, then clearly that's better (since your real log dir will differ in installations).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xamgreen at 2014-08-10T22:41:21Z
+
+I did some research and found that it is not provided by the apache2-bin. But apache2-bin is a non-optional dependency of the gnome desktop and APACHE_LOG_DIR seems to be provided by gnome and some other programs. Means, i cant give you a security that it is present on ALL systems.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-15T00:42:48Z
+
+Hmm, I'm personally -1 on this. I had actually never heard of this variable, and I think it'll cause confusion. Even if it may be a best practice, I don't want to confuse people :).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-15T08:02:04Z
+
+After @weaverryan's question I searched a bit for this and it seems that the way to use an environment variable is mainly used in Linux distributions (especially Debian based ones). So, having this by default may confuse a lot of people not using such distributions. What do you think about adding a tip stating that your distribution may support this environment variable, but that you have to check it?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-16T20:19:28Z
+
+@xabbuh Awesome, thanks for the research! I would say that we should *not* make this change then. At most, we could add a note below the code block - something like: "Some Apache installations have an environment variable for the log directory" - followed by how one of these lines would look with the `APACHE_LOG_DIR` variable.
+
+---------------------------------------------------------------------------
+
+by xamgreen at 2014-08-17T17:43:28Z
+
+That would be a good idea i think. The ones that giv something about having a clean system und want to use the variables will use it and the other ones wont be confused. +1 for this solution.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-19T21:58:08Z
+
+@xamgreen Perfect! Do you want to under your change then and add a note below?
+
+Thanks!
