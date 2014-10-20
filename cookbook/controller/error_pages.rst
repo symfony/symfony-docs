@@ -191,7 +191,7 @@ To use this feature, you need to have a definition in your
         $collection->addCollection(
             $loader->import('@TwigBundle/Resources/config/routing/errors.xml')
         );
-        $collection->addPrefix("/error");
+        $collection->addPrefix("/_error");
 
         return $collection;
 
@@ -326,7 +326,7 @@ another page or rendering specialized error pages.
 
     If your listener calls ``setResponse()`` on the
     :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`,
-    event propagation will be stopped and the response will be sent to 
+    event propagation will be stopped and the response will be sent to
     the client.
 
 This approach allows you to create centralized and layered error
@@ -338,7 +338,7 @@ several) listeners deal with them.
 
     To see an example, have a look at the `ExceptionListener`_ in the
     Security Component.
-    
+
     It handles various security-related exceptions that are thrown in
     your application (like :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`)
     and takes measures like redirecting the user to the login page,
