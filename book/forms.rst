@@ -1234,6 +1234,8 @@ objects. For example, a registration form may contain data belonging to
 a ``User`` object as well as many ``Address`` objects. Fortunately, this
 is easy and natural with the Form component.
 
+.. _forms-embedding-single-object:
+
 Embedding a Single Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1263,6 +1265,7 @@ Next, add a new ``category`` property to the ``Task`` class::
 
         /**
          * @Assert\Type(type="Acme\TaskBundle\Entity\Category")
+         * @Assert\Valid()
          */
         protected $category;
 
@@ -1278,6 +1281,12 @@ Next, add a new ``category`` property to the ``Task`` class::
             $this->category = $category;
         }
     }
+
+.. tip::
+
+    The ``Valid`` Constraint has been added to the property ``category``. This
+    cascades the validation to the corresponding entity. If you omit this constraint
+    the child entity would not be validated.
 
 Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
@@ -1326,16 +1335,7 @@ class:
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
-the ``TaskType`` class. To activate validation on CategoryType, add
-the ``cascade_validation`` option to ``TaskType``::
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Acme\TaskBundle\Entity\Task',
-            'cascade_validation' => true,
-        ));
-    }
+the ``TaskType`` class.
 
 Render the ``Category`` fields in the same way as the original ``Task`` fields:
 
