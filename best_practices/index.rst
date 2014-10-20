@@ -2,6 +2,7 @@ Official Symfony Best Practices
 ===============================
 
 .. toctree::
+    :hidden:
 
     introduction
     creating-the-project
@@ -14,3 +15,5 @@ Official Symfony Best Practices
     security
     web-assets
     tests
+
+.. include:: /best_practices/map.rst.inc
