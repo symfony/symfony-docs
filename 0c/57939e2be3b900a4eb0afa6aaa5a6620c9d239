@@ -1,0 +1,91 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-15T13:13:58Z
+
+`best_practises/index.rst` needs to be included in a toctree in `index.rst`.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-15T13:32:13Z
+
+@WouterJ the Travis build is failing because the `best-practice` directive is missing. I've tried to add it here https://github.com/fabpot/sphinx-php/pull/21  but I don't know either if it's needed nor if it's correctly done.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-10-15T14:00:33Z
+
+@javiereguiluz you need to update the submodule to point to a commit with the new directive included
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-15T14:19:20Z
+
+@stof thanks for pointing me about how to solve this problem. Let's see if Travis is happy now.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-15T14:37:09Z
+
+This is the latest message error reported by Travis. Any help is really appreciated:
+
+```
+Exception occurred:
+  File "/home/travis/virtualenv/python2.7.8/lib/python2.7/site-packages/sphinx/writers/html.py",
+  line 204, in visit_admonition
+    node.insert(0, nodes.title(name, admonitionlabels[name]))
+KeyError: 'best-practice'
+The full traceback has been saved in /tmp/sphinx-err-Tpl_1y.log, if you want to report the
+issue to the developers.
+```
+
+---------------------------------------------------------------------------
+
+by stof at 2014-10-15T14:53:40Z
+
+@javiereguiluz try running the build locally to see the full stack trace
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-15T16:25:27Z
+
+@stof thanks again for the advice. I've finally been able to track the error and I've successfully solved it locally. A new PR has been created (https://github.com/fabpot/sphinx-php/pull/22) and once it's merged, I'll try to update the submodule of this repo to see if it works.
+
+---------------------------------------------------------------------------
+
+by henrikbjorn at 2014-10-16T13:09:15Z
+
+IMO "Official" should be changed to "SensioLabs". And then i would not have any objections to the content or recommendations in the book.
+
+"Official: relating to an authority or public body and its activities and responsibilities." and i like to think the  public body and authority is the community (even though Fabien have the absolute last say), and the community as a whole have not created these.
+
+---------------------------------------------------------------------------
+
+by KrunoKnego at 2014-10-16T13:10:49Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-16T14:22:31Z
+
+@henrikbjorn @KrunoKnego we think that your proposal is right. We have reworded a paragraph in the introduction. Now these are the "Symfony best practices" instead of the "Official Symfony best practices". We haven't updated the symfony.com/best-practices page because once this book is published, that page will be gone forever.
+
+If the community creates their own set of recommendations, we'll call them "Community Best Practices" or "Symfony Community Best Practices" or something like that.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T07:44:01Z
+
+@javiereguiluz You can update the submodule reference to point to ``e58edd22d16cb247267025d557410dcbfa5fa959``.
+
+---------------------------------------------------------------------------
+
+by webdevilopers at 2014-10-20T09:09:50Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-20T10:57:22Z
+
+thanks @xabbuh! It looks like everything works now as expected.
