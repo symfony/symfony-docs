@@ -408,6 +408,8 @@ lives in a specific location:
   that's specific to the ``AcmeBlogBundle``. Since the middle, "controller",
   portion is missing (e.g. ``Blog``), the template lives at
   ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
+  Yes, there are 2 colons in the middle of the string when the "controller"
+  subdirectory part is missing.
 
 * ``::base.html.twig``: This syntax refers to an application-wide base template
   or layout. Notice that the string begins with two colons (``::``), meaning
