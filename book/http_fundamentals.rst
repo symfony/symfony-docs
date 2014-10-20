@@ -186,7 +186,7 @@ PHP? In reality, PHP abstracts you a bit from the whole process::
     $uri = $_SERVER['REQUEST_URI'];
     $foo = $_GET['foo'];
 
-    header('Content-type: text/html');
+    header('Content-Type: text/html');
     echo 'The URI requested is: '.$uri;
     echo 'The value of the "foo" parameter is: '.$foo;
 
