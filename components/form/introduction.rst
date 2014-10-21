@@ -514,7 +514,7 @@ by ``handleRequest()`` to determine whether a form has been submitted):
         $formBuilder = $formFactory->createBuilder('form', null, array(
             'action' => '/search',
             'method' => 'GET',
-        );
+        ));
 
         // ...
 
