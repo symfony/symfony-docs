@@ -166,7 +166,7 @@ mapping type:
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-               mapping_types' => array(
+               'mapping_types' => array(
                   'enum'  => 'string',
                ),
             ),
