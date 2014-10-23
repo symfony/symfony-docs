@@ -103,7 +103,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
                 ->add('dueDate', 'date')
-                ->add('save', 'submit', array('label' => 'Create Post'))
+                ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
@@ -219,7 +219,7 @@ controller::
         $form = $this->createFormBuilder($task)
             ->add('task', 'text')
             ->add('dueDate', 'date')
-            ->add('save', 'submit', array('label' => 'Create Post'))
+            ->add('save', 'submit', array('label' => 'Create Task'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -297,7 +297,7 @@ To do this, add a second button with the caption "Save and add" to your form::
     $form = $this->createFormBuilder($task)
         ->add('task', 'text')
         ->add('dueDate', 'date')
-        ->add('save', 'submit', array('label' => 'Create Post'))
+        ->add('save', 'submit', array('label' => 'Create Task'))
         ->add('saveAndAdd', 'submit', array('label' => 'Save and Add'))
         ->getForm();
 
