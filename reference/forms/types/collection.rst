@@ -20,6 +20,7 @@ photos).
 |             | - `entry_options`_                                                          |
 |             | - `entry_type`_                                                             |
 |             | - `prototype`_                                                              |
+|             | - `prototype_data`_                                                         |
 |             | - `prototype_name`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
@@ -353,6 +354,14 @@ rendering your form, having the entire "form row" may be easier for you.
 
 For details on how to actually use this option, see the above example as
 well as :ref:`cookbook-form-collections-new-prototype`.
+
+prototype_data
+~~~~~~~~~~~~~~
+
+**type**: ``mixed`` **default**: ``null``
+
+Allows you to specify data for the prototype. Each new row added will initially
+contain the data set by this option.
 
 prototype_name
 ~~~~~~~~~~~~~~
