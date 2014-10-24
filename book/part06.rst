@@ -41,7 +41,7 @@ component:
 
 .. code-block:: sh
 
-    $ php composer.phar require symfony/http-kernel 2.5.*
+    $ php composer.phar require symfony/http-kernel
 
 The HttpKernel component has many interesting features, but the one we need
 right now is the *controller resolver*. A controller resolver knows how to

@@ -126,7 +126,7 @@ To use this component, add it as a dependency of the project:
 
 .. code-block:: sh
 
-    $ php composer.phar require symfony/http-foundation 2.5.*
+    $ php composer.phar require symfony/http-foundation
 
 Running this command will also automatically download the Symfony
 HttpFoundation component and install it under the ``vendor/`` directory.

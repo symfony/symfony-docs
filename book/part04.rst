@@ -57,7 +57,7 @@ To support this feature, add the Symfony2 Routing component as a dependency:
 
 .. code-block:: sh
 
-    $ php composer.phar require symfony/routing 2.5.*
+    $ php composer.phar require symfony/routing
 
 Instead of an array for the URL map, the Routing component relies on a
 ``RouteCollection`` instance::

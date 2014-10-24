@@ -93,7 +93,7 @@ container:
 
 .. code-block:: sh
 
-    $ php composer.phar require symfony/dependency-injection 2.5.*
+    $ php composer.phar require symfony/dependency-injection
 
 Create a new file to host the dependency injection container configuration::
 

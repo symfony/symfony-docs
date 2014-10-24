@@ -19,7 +19,7 @@ version of this pattern:
 
 .. code-block:: sh
 
-    $ php composer.phar require symfony/event-dispatcher 2.5.*
+    $ php composer.phar require symfony/event-dispatcher
 
 How does it work? The *dispatcher*, the central object of the event dispatcher
 system, notifies *listeners* of an *event* dispatched to it. Put another way:
