@@ -5,8 +5,8 @@
 The OptionsResolver Component
 =============================
 
-    The OptionsResolver component is `array_replace()` on steroids. It
-    allows you to create an options system with required options, defaults,
+    The OptionsResolver component is :phpfunction:`array_replace` on steroids.
+    It allows you to create an options system with required options, defaults,
     validation (type, value), normalization and more.
 
 Installation
@@ -23,7 +23,7 @@ Notes on Previous Versions
 .. versionadded:: 2.6
     This documentation was written for Symfony 2.6 and later. If you use an older
     version, please read the corresponding documentation using the version
-    drop-down on the upper right. For a list of changes, see the `CHANGELOG`_
+    drop-down on the upper right. For a list of changes, see the `CHANGELOG`_.
 
 Usage
 -----
@@ -50,29 +50,35 @@ check which options are set::
         public function sendMail($from, $to)
         {
             $mail = ...;
+
             $mail->setHost(isset($this->options['host'])
                 ? $this->options['host']
                 : 'smtp.example.org');
+
             $mail->setUsername(isset($this->options['username'])
                 ? $this->options['username']
                 : 'user');
+
             $mail->setPassword(isset($this->options['password'])
                 ? $this->options['password']
                 : 'pa$$word');
+
             $mail->setPort(isset($this->options['port'])
                 ? $this->options['port']
                 : 25);
+
             // ...
         }
     }
 
 This boilerplate is hard to read and repetitive. Also, the default values of the
-options are buried in the business logic of your code. We can use the
+options are buried in the business logic of your code. You could use the
 :phpfunction:`array_replace` to fix that::
 
     class Mailer
     {
         // ...
+
         public function __construct(array $options = array())
         {
             $this->options = array_replace(array(
@@ -85,7 +91,7 @@ options are buried in the business logic of your code. We can use the
     }
 
 Now all four options are guaranteed to be set. But what happens if the user of
-the ``Mailer`` class does a mistake?
+the ``Mailer`` class makes a mistake?
 
 .. code-block:: php
 
@@ -97,14 +103,15 @@ No error will be shown. In the best case, the bug will appear during testing,
 but the developer will spend time looking for the problem. In the worst case,
 the bug might not appear until it's deployed to the live system.
 
-Let's use the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
-class to fix this problem::
+Fortunately, the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
+class helps you to fix this problem::
 
     use Symfony\Component\OptionsResolver\Options;
 
     class Mailer
     {
         // ...
+
         public function __construct(array $options = array())
         {
             $resolver = new OptionsResolver();
@@ -137,6 +144,7 @@ code::
     class Mailer
     {
         // ...
+
         public function sendMail($from, $to)
         {
             $mail = ...;
@@ -154,6 +162,7 @@ It's a good practice to split the option configuration into a separate method::
     class Mailer
     {
         // ...
+
         public function __construct(array $options = array())
         {
             $resolver = new OptionsResolver();
@@ -165,10 +174,10 @@ It's a good practice to split the option configuration into a separate method::
         protected function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'host' => 'smtp.example.org',
-                'username' => 'user',
-                'password' => 'pa$$word',
-                'port' => 25,
+                'host'       => 'smtp.example.org',
+                'username'   => 'user',
+                'password'   => 'pa$$word',
+                'port'       => 25,
                 'encryption' => null,
             ));
         }
@@ -197,12 +206,13 @@ Required Options
 
 If an option must be set by the caller, pass that option to
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setRequired`.
-For example, let's make the ``host`` option required::
+For example, to make the ``host`` option required, you can do::
 
     // ...
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
@@ -211,8 +221,8 @@ For example, let's make the ``host`` option required::
     }
 
 .. versionadded:: 2.6
-    Before Symfony 2.6, `setRequired()` accepted only arrays. Since then, single
-    option names can be passed as well.
+    As of Symfony 2.6, ``setRequired()`` accepts both an array of options or a
+    single option. Prior to 2.6, you could only pass arrays.
 
 If you omit a required option, a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
@@ -230,6 +240,7 @@ one required option::
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
@@ -277,6 +288,7 @@ been set::
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
@@ -321,6 +333,7 @@ correctly. To validate the types of the options, call
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
@@ -330,8 +343,8 @@ correctly. To validate the types of the options, call
     }
 
 For each option, you can define either just one type or an array of acceptable
-types. You can pass any type for which an ``is_<type>()`` method is defined.
-Additionally, you may pass fully qualified class or interface names.
+types. You can pass any type for which an ``is_<type>()`` function is defined
+in PHP. Additionally, you may pass fully qualified class or interface names.
 
 If you pass an invalid option now, an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
@@ -349,9 +362,7 @@ to add additional allowed types without erasing the ones already set.
 
 .. versionadded:: 2.6
     Before Symfony 2.6, `setAllowedTypes()` and `addAllowedTypes()` expected
-    the values to be given as an array mapping option names to allowed types:
-
-    .. code-block:: php
+    the values to be given as an array mapping option names to allowed types::
 
         $resolver->setAllowedTypes(array('port' => array('null', 'int')));
 
@@ -368,6 +379,7 @@ to verify that the passed option contains one of these values::
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
@@ -421,9 +433,11 @@ option. You can configure a normalizer by calling
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
+
             $resolver->setNormalizer('host', function ($options, $value) {
                 if ('http://' !== substr($value, 0, 7)) {
                     $value = 'http://'.$value;
@@ -468,7 +482,7 @@ Default Values that Depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you want to set the default value of the ``port`` option based on the
-encryption chosen by the user of the ``Mailer`` class. More precisely, we want
+encryption chosen by the user of the ``Mailer`` class. More precisely, you want
 to set the port to ``465`` if SSL is used and to ``25`` otherwise.
 
 You can implement this feature by passing a closure as the default value of
@@ -499,7 +513,7 @@ these options, you can return the desired default value::
 .. caution::
 
     The argument of the callable must be type hinted as ``Options``. Otherwise,
-    the callable is considered as the default value of the option.
+    the callable itself is considered as the default value of the option.
 
 .. note::
 
@@ -587,6 +601,7 @@ be included in the resolved options if it was actually passed to
     class Mailer
     {
         // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             // ...
@@ -640,6 +655,8 @@ let you find out which options are defined::
     // ...
     class GoogleMailer extends Mailer
     {
+        // ...
+
         protected function configureOptions(OptionsResolver $resolver)
         {
             parent::configureOptions($resolver);
@@ -674,10 +691,10 @@ can change your code to do the configuration only once per class::
 
         public function __construct(array $options = array())
         {
-            // Are we a Mailer, a GoogleMailer, ... ?
+            // What type of Mailer is this, a Mailer, a GoogleMailer, ... ?
             $class = get_class($this);
 
-            // Did we call configureOptions() before for this class?
+            // Was configureOptions() executed before for this class?
             if (!isset(self::$resolversByClass[$class])) {
                 self::$resolversByClass[$class] = new OptionsResolver();
                 $this->configureOptions(self::$resolversByClass[$class]);
