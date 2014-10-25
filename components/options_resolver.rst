@@ -5,7 +5,9 @@
 The OptionsResolver Component
 =============================
 
-    The OptionsResolver component is `array_replace()` on steroids.
+    The OptionsResolver component is `array_replace()` on steroids. It
+    allows you to create an options system with required options, defaults,
+    validation (type, value), normalization and more.
 
 Installation
 ------------
@@ -21,7 +23,7 @@ Notes on Previous Versions
 .. versionadded:: 2.6
     This documentation was written for Symfony 2.6 and later. If you use an older
     version, please read the corresponding documentation using the version
-    drop-down on the upper right.
+    drop-down on the upper right. For a list of changes, see the `CHANGELOG`_
 
 Usage
 -----
@@ -65,7 +67,7 @@ check which options are set::
     }
 
 This boilerplate is hard to read and repetitive. Also, the default values of the
-options are buried in the business logic of your code. We can use
+options are buried in the business logic of your code. We can use the
 :phpfunction:`array_replace` to fix that::
 
     class Mailer
@@ -91,10 +93,9 @@ the ``Mailer`` class does a mistake?
         'usernme' => 'johndoe',
     ));
 
-No error will be shown. In the best case, the bug will be appear during testing.
-The developer will possibly spend a lot of time looking for the problem. In the
-worst case, however, the bug won't even appear and will be deployed to the live
-system.
+No error will be shown. In the best case, the bug will appear during testing,
+but the developer will spend time looking for the problem. In the worst case,
+the bug might not appear until it's deployed to the live system.
 
 Let's use the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
 class to fix this problem::
@@ -268,8 +269,8 @@ retrieve the names of all required options::
 
 If you want to check whether a required option is still missing from the default
 options, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isMissing`.
-The difference to :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired`
-is that this method will return false for required options that have already
+The difference between this and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired`
+is that this method will return false if a required option has already
 been set::
 
     // ...
@@ -360,8 +361,8 @@ Value Validation
 Some options can only take one of a fixed list of predefined values. For
 example, suppose the ``Mailer`` class has a ``transport`` option which can be
 one of ``sendmail``, ``mail`` and ``smtp``. Use the method
-:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setAllowedValues` to verify
-that the passed option contains one of these values::
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setAllowedValues`
+to verify that the passed option contains one of these values::
 
     // ...
     class Mailer
@@ -470,9 +471,9 @@ Suppose you want to set the default value of the ``port`` option based on the
 encryption chosen by the user of the ``Mailer`` class. More precisely, we want
 to set the port to ``465`` if SSL is used and to ``25`` otherwise.
 
-You can implement this feature by passing a closure as default value of the
-``port`` option. The closure receives the options as argument. Based on these
-options, you can return the desired default value::
+You can implement this feature by passing a closure as the default value of
+the ``port`` option. The closure receives the options as argument. Based on
+these options, you can return the desired default value::
 
     use Symfony\Component\OptionsResolver\Options;
 
@@ -546,8 +547,10 @@ Options without Default Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In some cases, it is useful to define an option without setting a default value.
-Mostly, you will need this when you want to know whether an option was passed
-or not. If you set a default value for that option, this is not possible::
+This is useful if you need to know whether or not the user *actually* set
+an option or not. For example, if you set the default value for an option,
+it's not possible to know whether the user passed this value or if it simply
+comes from the default::
 
     // ...
     class Mailer
@@ -713,3 +716,4 @@ options in your code.
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
 .. _Form component: http://symfony.com/doc/current/components/form/introduction.html
+.. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md
