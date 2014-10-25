@@ -192,9 +192,7 @@ you need is the JavaScript:
 
                     // create a new list element and add it to the list
                     var newLi = jQuery('<li></li>').html(newWidget);
-                    newLi.appendTo(jQuery('#email-fields-list'));
-
-                    return false;
+                    newLi.appendTo(emailList);
                 });
             })
         </script>
