@@ -2,7 +2,7 @@
    pair: Doctrine; DBAL
 
 How to Use Doctrine's DBAL
-================================
+==========================
 
 .. note::
 
