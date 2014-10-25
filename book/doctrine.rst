@@ -544,7 +544,7 @@ Take a look at the previous example in more detail:
 
   In fact, since Doctrine is aware of all your managed entities, when you call
   the ``flush()`` method, it calculates an overall changeset and executes
-  the queries in the correct order. It utilizes cached prepare statement to
+  the queries in the correct order. It utilizes cached prepared statement to
   slightly improve the performance. For example, if you persist a total of 100
   ``Product`` objects and then subsequently call ``flush()``, Doctrine will
   execute 100 ``INSERT`` queries using a single prepared statement object.
