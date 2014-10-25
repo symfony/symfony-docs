@@ -18,8 +18,9 @@ Use a Byte Code Cache (e.g. APC)
 One of the best (and easiest) things that you should do to improve your performance
 is to use a "byte code cache". The idea of a byte code cache is to remove
 the need to constantly recompile the PHP source code. There are a number of
-`byte code caches`_ available, some of which are open source. The most widely
-used byte code cache is probably `APC`_
+`byte code caches`_ available, some of which are open source. If you are using 
+PHP 5.5 or more, the byte code cache is built-in into PHP runtime. For older versions, 
+the most widely used byte code cache is probably `APC`_
 
 Using a byte code cache really has no downside, and Symfony has been architected
 to perform really well in this type of environment.
