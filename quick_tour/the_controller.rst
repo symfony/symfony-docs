@@ -126,7 +126,7 @@ its default value::
 
 Obviously, when you support several request formats, you have to provide a
 tempalte for each of the supported formats. In this case, you should create a
-new ``hello.xml.twig`` template::
+new ``hello.xml.twig`` template:
 
 .. code-block:: xml+php
 
