@@ -62,6 +62,7 @@ Each part will be explained in the next section.
                     hash_algorithm:       sha512
                     encode_as_base64:     true
                     iterations:           1000
+                    key_length:           40
 
                 # Example options/values for what a custom encoder might look like
                 Acme\DemoBundle\Entity\User3:
