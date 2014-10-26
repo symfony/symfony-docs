@@ -833,7 +833,7 @@ variables that are passed into the expression:
     Behind the scenes, expressions are compiled down to raw PHP. Our example
     would generate the following PHP in the cache directory::
 
-        if (0 === strpos($pathinfo, '/contact') && (
+        if ($pathinfo === '/contact' && (
             in_array($context->getMethod(), array(0 => "GET", 1 => "HEAD"))
             && preg_match("/firefox/i", $request->headers->get("User-Agent"))
         )) {
