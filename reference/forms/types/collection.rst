@@ -180,7 +180,9 @@ you need is the JavaScript:
             var emailCount = '{{ form.emails|length }}';
 
             jQuery(document).ready(function() {
-                jQuery('#add-another-email').click(function() {
+                jQuery('#add-another-email').click(function(e) {
+                    e.preventDefault();
+
                     var emailList = jQuery('#email-fields-list');
 
                     // grab the prototype template
@@ -193,9 +195,7 @@ you need is the JavaScript:
 
                     // create a new list element and add it to the list
                     var newLi = jQuery('<li></li>').html(newWidget);
-                    newLi.appendTo(jQuery('#email-fields-list'));
-
-                    return false;
+                    newLi.appendTo(emailList);
                 });
             })
         </script>
