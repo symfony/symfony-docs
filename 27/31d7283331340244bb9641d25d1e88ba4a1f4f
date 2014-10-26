@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by GeertDD at 2014-10-20T14:40:06Z
+
+Fine by me, @WouterJ, as long as that erroneous use of `rtrim()` disappears. Updated to `strpos()` now.
