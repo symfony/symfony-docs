@@ -8,9 +8,9 @@ Changing the Default Command
     The :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
     method was introduced in Symfony 2.5.
 
-will always run the ``ListCommand`` when no command name is passed. In order to change
-the default command you just need to pass the command name you want to run by
-default to the ``setDefaultCommand`` method::
+The Console component will always run the ``ListCommand`` when no command name is
+passed. In order to change the default command you just need to pass the command
+name to the ``setDefaultCommand`` method::
 
     namespace Acme\Console\Command;
 
