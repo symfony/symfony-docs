@@ -15,6 +15,11 @@ apply to application bundles because you'll want to keep those as simple
 as possible. For application bundles, just follow the practices shown throughout
 the book and cookbook.
 
+.. seealso::
+
+    The best practices for application-specific bundles are discussed in
+    :doc:`/best_practices/introduction`.
+
 .. index::
    pair: Bundle; Naming conventions
 
