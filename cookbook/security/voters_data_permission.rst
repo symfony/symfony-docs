@@ -98,7 +98,7 @@ edit a particular object. Here's an example implementation:
             // check if the voter is used correct, only allow one attribute
             // this isn't a requirement, it's just one easy way for you to
             // design your voter
-            if(1 !== count($attributes)) {
+            if (1 !== count($attributes)) {
                 throw new \InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
