@@ -178,10 +178,10 @@ you need is the JavaScript:
             // keep track of how many email fields have been rendered
             var emailCount = '{{ form.emails|length }}';
 
-            jQuery(document).ready(function(e) {
-                e.preventDefault();
+            jQuery(document).ready(function() {
+                jQuery('#add-another-email').click(function(e) {
+                    e.preventDefault();
 
-                jQuery('#add-another-email').click(function() {
                     var emailList = jQuery('#email-fields-list');
 
                     // grab the prototype template
