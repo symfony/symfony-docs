@@ -391,7 +391,8 @@ console::
     {
         public function testExecute()
         {
-            $application = new Application();
+            // mock the Kernel or create one depending on your needs
+            $application = new Application($kernel);
             $application->add(new GreetCommand());
 
             $command = $application->find('demo:greet');
@@ -422,7 +423,8 @@ method::
 
         public function testNameIsOutput()
         {
-            $application = new Application();
+            // mock the Kernel or create one depending on your needs
+            $application = new Application($kernel);
             $application->add(new GreetCommand());
 
             $command = $application->find('demo:greet');
