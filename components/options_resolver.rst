@@ -99,7 +99,7 @@ system.
 Let's use the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
 class to fix this problem::
 
-    use Symfony\Component\OptionsResolver\Options;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class Mailer
     {
