@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-25T17:55:56Z
+
+I also did a proofread and added the commit to this PR.
+
+---------------------------------------------------------------------------
+
+by webmozart at 2014-10-26T11:23:36Z
+
+Thanks @weaverryan! Could you also rename `clearDefaultOptions()` to `clearOptionsConfig()` in the last example? I think that explains itself a bit better.
