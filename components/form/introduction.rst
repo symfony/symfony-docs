@@ -671,14 +671,15 @@ object::
 
     // ...
 
-    // an array of FormError objects, but only errors attached to this form level (e.g. "global errors)
-    $errors = $form->getErrors();
+    // an array of FormError objects. Use $deep to include child errors too,
+    // $flatten to flatten the list of errors in case
+    $errors = $form->getErrors($deep = false, $flatten = true);
+
+    // you can cast the result as a readable string
+    $errors = (string) $form->getErrors();
 
     // an array of FormError objects, but only errors attached to the "firstName" field
     $errors = $form['firstName']->getErrors();
-
-    // a string representation of all errors of the whole form tree
-    $errors = $form->getErrorsAsString();
 
 .. note::
 
