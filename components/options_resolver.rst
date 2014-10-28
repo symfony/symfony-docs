@@ -713,14 +713,14 @@ Now the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` instance
 will be created once per class and reused from that on. Be aware that this may
 lead to memory leaks in long-running applications, if the default options contain
 references to objects or object graphs. If that's the case for you, implement a
-method ``clearDefaultOptions()`` and call it periodically::
+method ``clearOptionsConfig()`` and call it periodically::
 
     // ...
     class Mailer
     {
         private static $resolversByClass = array();
 
-        public static function clearDefaultOptions()
+        public static function clearOptionsConfig()
         {
             self::$resolversByClass = array();
         }
