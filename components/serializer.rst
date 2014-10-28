@@ -301,7 +301,7 @@ Circular references are common when dealing with entity relations::
 
 To avoid infinite loops, :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 throws a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
-when such case is encountered::
+when such a case is encountered::
 
     $member = new Member();
     $member->setName('Kévin');
@@ -315,8 +315,8 @@ when such case is encountered::
     echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
 
 The ``setCircularReferenceLimit()`` method of this normalizer sets the number
-of times serializing the same object must occur before considering being
-in a circular reference. Its default value is ``1``.
+of times it will serialize the same object before considering it a circular
+reference. Its default value is ``1``.
 
 Instead of throwing an exception, circular references can also be handled
 by custom callables. This is especially useful when serializing entities
