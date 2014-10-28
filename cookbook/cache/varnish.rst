@@ -54,30 +54,62 @@ Then, optimize Varnish so that it only parses the Response contents when there
 is at least one ESI tag by checking the ``Surrogate-Control`` header that
 Symfony adds automatically:
 
-.. code-block:: text
+.. configuration-block::
 
-    sub vcl_fetch {
-        /*
-        Check for ESI acknowledgement
-        and remove Surrogate-Control header
-        */
-        if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
-            unset beresp.http.Surrogate-Control;
+    .. code-block:: varnish4
 
-            // For Varnish >= 3.0
-            set beresp.do_esi = true;
-            // For Varnish < 3.0
-            // esi;
+         /* (https://www.varnish-cache.org/docs/4.0/whats-new/upgrading.html#req-not-available-in-vcl-backend-response) */
+        sub vcl_backend_response {
+            // Check for ESI acknowledgement and remove Surrogate-Control header
+            if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+                unset beresp.http.Surrogate-Control;
+                set beresp.do_esi = true;
+            }
+            /* By default Varnish ignores Pragma: nocache
+            (https://www.varnish-cache.org/docs/4.0/users-guide/increasing-your-hitrate.html#cache-control)
+            so in order avoid caching it has to be done explicitly */
+            if (beresp.http.Pragma ~ "no-cache") {
+                // https://www.varnish-cache.org/docs/4.0/whats-new/upgrading.html#hit-for-pass-objects-are-created-using-beresp-uncacheable
+                set beresp.uncacheable = true;
+                set beresp.ttl = 120s;
+                return (deliver);
+            }
         }
-        /* By default Varnish ignores Cache-Control: nocache
-        (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control),
-        so in order avoid caching it has to be done explicitly */
-        if (beresp.http.Pragma ~ "no-cache" ||
-             beresp.http.Cache-Control ~ "no-cache" ||
-             beresp.http.Cache-Control ~ "private") {
-            return (hit_for_pass);
+
+    .. code-block:: varnish3
+
+        sub vcl_fetch {
+            // Check for ESI acknowledgement and remove Surrogate-Control header
+            if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+                unset beresp.http.Surrogate-Control;
+                set beresp.do_esi = true;
+            }
+            /* By default Varnish ignores Cache-Control: nocache
+            (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control),
+            so in order avoid caching it has to be done explicitly */
+            if (beresp.http.Pragma ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "private") {
+                return (hit_for_pass);
+            }
         }
-    }
+
+    .. code-block:: varnish2
+
+        sub vcl_fetch {
+            // Check for ESI acknowledgement and remove Surrogate-Control header
+            if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+                unset beresp.http.Surrogate-Control;
+                esi;
+            }
+            /* By default Varnish ignores Cache-Control: nocache
+            so in order avoid caching it has to be done explicitly */
+            if (beresp.http.Pragma ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "private") {
+                return (hit_for_pass);
+            }
+        }
 
 .. caution::
 
