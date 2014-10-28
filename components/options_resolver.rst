@@ -22,8 +22,8 @@ Notes on Previous Versions
 
 .. versionadded:: 2.6
     This documentation was written for Symfony 2.6 and later. If you use an older
-    version, please read the corresponding documentation using the version
-    drop-down on the upper right. For a list of changes, see the `CHANGELOG`_.
+    version, please `read the Symfony 2.5 documentation`_. For a list of changes,
+    see the `CHANGELOG`_.
 
 Usage
 -----
@@ -72,7 +72,7 @@ check which options are set::
     }
 
 This boilerplate is hard to read and repetitive. Also, the default values of the
-options are buried in the business logic of your code. You could use the
+options are buried in the business logic of your code. Use the
 :phpfunction:`array_replace` to fix that::
 
     class Mailer
@@ -734,3 +734,4 @@ options in your code.
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
 .. _Form component: http://symfony.com/doc/current/components/form/introduction.html
 .. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md
+.. _`read the Symfony 2.5 documentation`: http://symfony.com/doc/2.5/components/options_resolver.html
