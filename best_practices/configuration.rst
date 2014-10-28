@@ -119,7 +119,7 @@ You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity:
 
 The main advantage of defining constants is that you can use their values
 everywhere in your application. When using parameters, they are only available
-from places wih access to the Symfony container.
+from places with access to the Symfony container.
 
 Constants can be used for example in your Twig templates thanks to the
 ``constant()`` function:
