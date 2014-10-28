@@ -69,7 +69,6 @@ The validator class is also simple, and only has one required method ``validate(
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
                     ->addViolation();
-                );
 
                 // If you're using the old 2.4 validation API
                 /*
