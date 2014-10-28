@@ -1,0 +1,225 @@
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-09-29T23:01:41Z
+
+@cordoval, Thank you for the quick feedback, do you believe it could be satisfying enough?
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-09-29T23:05:37Z
+
+imo is ok :+1: though i am not @WouterJ or @xabbuh :blush:
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-09-29T23:20:29Z
+
+@cordoval Thanks! I look forward to hearing from them ^_^
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-30T10:29:56Z
+
+Related issue https://github.com/symfony/symfony-docs/issues/4176
+
+@dbu since you wanted to work on this chapter and varnish in general, can you have a look at this PR and share your thoughts?
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-09-30T20:10:02Z
+
+@dbu Having a tab for each version of Varnish would be much better!
+
+We could even offer a docker image running the proper version of varnish with corresponding configuration files (strictly inspired from the documentation) as well :)
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-10-01T06:55:47Z
+
+yeah the tabs for varnish config would be really cool (/me looking at @fabpot)
+
+i intend to review the documentation and clean up what is on http://foshttpcache.readthedocs.org/ and what belongs into the symfony documentation itself. in the FOSHttpCache we have configuration fragments that we include in the doc which are used in functional tests. i think wouter was talking about trying to find a way to test configuration examples from the doc. this would be a particularly challenging bit to test. not sure how much its worth the effort or if we rather keep the examples very minimal. if you want to provide a demo docker setup with a playground for varnish features, that would be cool. for a workshop, i did a vagrant setup (plain php examples without symfony) i can share with you if you want.
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-01T07:14:50Z
+
+@dbu I would love to put together something like what you've suggested, a Docker image, which could be pulled and ran in order to check responses for specific request given some configuration :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-02T15:29:19Z
+
+@thierrymarianne @dbu will something like the following be sufficient?
+
+```rst
+.. configuration-block::
+
+    .. code-block:: varnish2
+
+        // ...
+
+    .. code-block:: varnish3
+
+        // ...
+
+    .. code-block:: varnish4
+
+        // ...
+```
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-02T15:36:00Z
+
+@xabbuh To my mind, it would be more than perfect.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-10-02T16:16:07Z
+
+yep, exactly! (i would swap the order to show the current varnish by default and older versions on the not visible tabs, but whatever)
+
+i wonder if this could be generic tabs rather than code tabs. then the content could specify the tab titles, in case we have other situations with alternatives. then we would still need to mark the tab content as code - but could also have varnish version specific comments (e.g. the doc links) inside the tab.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-03T12:32:59Z
+
+see fabpot/sphinx-php#20 and #4287
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-03T13:58:56Z
+
+@xabbuh Varnish has its own DSL : https://www.varnish-cache.org/trac/wiki/VCL
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-03T14:02:08Z
+
+@thierrymarianne Yeah, but unfortunately it's not supported by Pygments (which is used for rendering code blocks). So, I was wondering if we could use Ruby to get some syntax highlighting since the syntax seems to be similar.
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-03T14:38:02Z
+
+@xabbuh Sure, if it provides a good enough syntax highlighting!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-03T14:48:47Z
+
+At least, it looks good locally. If you don't know any difference that may break it.
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-03T14:59:40Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-10-06T16:27:09Z
+
+cool. are you going to update to the new tabs feature now? or do you want to leave that for later (= for me)?
+
+we still have the open question which cache directives we need to explicitly track vs those that are respected by default in varnish 4.
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-06T18:32:44Z
+
+@dbu Sure (I intend to integrate the tabs feature) !
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-06T18:35:47Z
+
+@thierrymarianne Note that this will only work once #4287 is merged.
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-06T18:51:32Z
+
+@xabbuh Well noted!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-11T10:03:19Z
+
+@thierrymarianne It was merged. So you can use it if you rebase your branch.
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-11T14:26:46Z
+
+@xabbuh I've applied the changes and rebased the branch from 2.3.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-10-13T21:48:22Z
+
+apart for the version 2 comment, this now seems good to merge to me!
+
+i think there are more issues in parts of the cookbook that you did not touch, but i can easily do that once this one is merged. i don't want to do that in parallel, or we get into a big mess with merge conflicts :-)
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-13T22:42:35Z
+
+I've added the Varnish 2.0 tab. I'm quite unsure about the `no-cache` [part](https://github.com/symfony/symfony-docs/pull/4280/files#diff-d71346ddc6b16ba61c49b548c363ec92R107) for this version though, should I remove it? The link to 3.0 documentation doesn't make sense, anyway.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-10-14T08:04:36Z
+
+i think the varnish2 thing looks correct. at least there is no regression over the doc as it previously was... lets merge like this. (varnish2 and varnish3 are copies, but it would be confusing to only have 2 tabs and in varnish3 tab say that its the same for varnish2...)
+
+@xabbuh ok for you, or do you have anything to add?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-14T08:32:51Z
+
+I'm no Varnish expert, but apart from the minor issue this looks good. :+1:
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-14T08:34:43Z
+
+\o/
+
+A way to make sure we didn't break anything could be to have a test controller in the near future to enrich our test suite given a varnish setup inspired directly from the documentation. Could we attempt to take care of this via a another issue (maybe the one previously referred to i.e. https://github.com/symfony/symfony-docs/issues/4176)?
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-19T08:37:34Z
+
+@xabbuh @dbu, is everything OK or did I miss a recent assignment?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-19T09:07:47Z
+
+:+1: from my sight.
+
+@dbu What do you think about the Varnish-related things?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-19T09:08:48Z
+
+@thierrymarianne Oh wait, can you please add the blank line I mentioned [here](https://github.com/symfony/symfony-docs/pull/4280#issuecomment-59007312)?
+
+---------------------------------------------------------------------------
+
+by thierrymarianne at 2014-10-19T09:29:56Z
+
+@xabbuh The blank line has been added. Thanks for the reminder!
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-10-20T06:38:15Z
+
+i did not run them in varnish, but they seem to be correct. lets merge and we can still fix later on if people discover issues.
