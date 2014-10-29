@@ -68,6 +68,18 @@ Each part will be explained in the next section.
                 Acme\DemoBundle\Entity\User3:
                     id:                   my.encoder.id
 
+                # BCrypt encoder
+                # see the note about bcrypt below for details on specific dependencies
+                Acme\DemoBundle\Entity\User4:
+                    algorithm:            bcrypt
+                    cost:                 13
+
+                # Plaintext encoder
+                # it does not do any encoding
+                Acme\DemoBundle\Entity\User5:
+                    algorithm:            plaintext
+                    ignore_case:          false
+
             providers:            # Required
                 # Examples:
                 my_in_memory_provider:
