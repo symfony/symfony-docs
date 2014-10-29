@@ -5,11 +5,13 @@ Databases and Doctrine
 ======================
 
 One of the most common and challenging tasks for any application
-involves persisting and reading information to and from a database. Fortunately,
-Symfony comes integrated with `Doctrine`_, a library whose sole goal is to
-give you powerful tools to make this easy. In this chapter, you'll learn the
-basic philosophy behind Doctrine and see how easy working with a database can
-be.
+involves persisting and reading information to and from a database. Although
+the Symfony full-stack framework doesn't integrate any ORM by default,
+the Symfony Standard Edition, which is the most widely used distribution,
+comes integrated with `Doctrine`_, a library whose sole goal is to give
+you powerful tools to make this easy. In this chapter, you'll learn the
+basic philosophy behind Doctrine and see how easy working with a database
+can be.
 
 .. note::
 
