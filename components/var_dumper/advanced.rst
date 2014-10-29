@@ -27,6 +27,23 @@ Before cloning, you can configure the limits with::
 
 They will be applied when calling ``->cloneVar()`` afterwards.
 
+Before dumping it, you can further limit the resulting
+:class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object by calling its
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::getLimitedClone`
+method:
+- the first `$maxDepth` argument allows limiting dumps in the depth dimension,
+- the second `$maxItemsPerDepth` limits the number of items per depth level,
+- and the last `$useRefHandles` defaults to `true` but allows removing internal
+  objects' handles for sparser output,
+- but unlike the previous limits on cloners that remove data on purpose, these
+  limits can be changed back and forth before dumping since they do not affect
+  the intermediate representation internally.
+
+.. note::
+    When no limit is applied, a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
+    object is as accurate as the native :phpfunction:`serialize` function and thus
+    could have a wider purpose than strictly dumping for debugging.
+
 Dumpers
 ~~~~~~~
 
