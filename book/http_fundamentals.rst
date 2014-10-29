@@ -37,7 +37,7 @@ HTTP is the term used to describe this simple text-based language. And no
 matter how you develop on the web, the goal of your server is *always* to
 understand simple text requests, and return simple text responses.
 
-Symfony is built from the ground-up around that reality. Whether you realize
+Symfony is built from the ground up around that reality. Whether you realize
 it or not, HTTP is something you use everyday. With Symfony, you'll learn
 how to master it.
 
