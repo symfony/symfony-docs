@@ -106,7 +106,7 @@ the bug might not appear until it's deployed to the live system.
 Fortunately, the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
 class helps you to fix this problem::
 
-    use Symfony\Component\OptionsResolver\Options;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class Mailer
     {
