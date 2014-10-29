@@ -6,7 +6,7 @@ Forms
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
 a web developer. Symfony integrates a Form component that makes dealing with
-forms easy. In this chapter, you'll build a complex form from the ground-up,
+forms easy. In this chapter, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
 .. note::
