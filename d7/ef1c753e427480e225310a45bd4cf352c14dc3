@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T18:45:16Z
+
+Wow, thanks for taking this up so quickly @peterrehm. What do you think about also adding some note to this option in the form reference?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-20T20:45:34Z
+
+No problem. I have added this depreciation note into a separate PR since this one can be merged immediately, the other one only after symfony/symfony#12237 gots merged.
+
+/cc @webmozart
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T20:48:59Z
+
+Thanks for the new PR. However, doesn't it make sense to mention in the ``cascade_validation`` section that in most cases, you should better use the ``Valid`` constraint?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-20T21:11:01Z
+
+It is mentioned? "Instead, use the ``Valid`` constraint in your model to cascade validation"
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T21:16:40Z
+
+Hm, yeah, but it will then only be shown in the 2.6 version of the documentation. Though, as far as I understand the issue, these implications are also true for older versions, aren't they?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-21T06:51:58Z
+
+I added the recommendation to both PR's so it will appear in all versions. It was mentioned before but not recommended so I thought best would be to have it in a tip section.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-29T15:40:29Z
+
+I added one small suggestion. But after that, this has a :+1: from me! Furthermore, I'm very happy to have this clarified - iirc, the cascading worked differently in 2.0, so there was some "baggage" in understanding how this worked and documenting it absolutely correctly.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-10-29T17:44:25Z
+
+Just updated it as suggested.
