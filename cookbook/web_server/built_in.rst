@@ -30,11 +30,28 @@ The command will wait and will respond to incoming HTTP requests until you
 terminate it (this is usually done by pressing Ctrl and C).
 
 By default, the web server listens on port 8000 on the loopback device. You
-can change the socket passing an ip address and a port as a command-line argument:
+can change the socket passing an IP address and a port as a command-line argument:
 
 .. code-block:: bash
 
     $ php app/console server:run 192.168.0.1:8080
+
+.. sidebar:: Using the built-in Web Server from inside a Virtual Machine
+
+    If you want to use the built-in web server from inside a virtual machine
+    and then load the site from a browser on your host machine, you'll need
+    to listen on the ``0.0.0.0:8000`` address (i.e. on all IP addresses that
+    are assigned to the virtual machine):
+
+    .. code-block:: bash
+
+        $ php app/console server:run 0.0.0.0:8000
+
+    .. caution::
+
+        You should **NEVER** listen to all interfaces on a computer that is
+        directly accessible from the Internet. The built-in web server is
+        not designed to be used on public networks.
 
 Command Options
 ---------------
