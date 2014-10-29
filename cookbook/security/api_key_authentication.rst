@@ -31,7 +31,6 @@ value and then a User object is created::
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
-    use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface

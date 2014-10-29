@@ -61,6 +61,23 @@ can change the socket passing an IP address and a port as a command-line argumen
     terminal until you terminate it (this is usually done by pressing Ctrl
     and C).
 
+.. sidebar:: Using the built-in Web Server from inside a Virtual Machine
+
+    If you want to use the built-in web server from inside a virtual machine
+    and then load the site from a browser on your host machine, you'll need
+    to listen on the ``0.0.0.0:8000`` address (i.e. on all IP addresses that
+    are assigned to the virtual machine):
+
+    .. code-block:: bash
+
+        $ php app/console server:start 0.0.0.0:8000
+
+    .. caution::
+
+        You should **NEVER** listen to all interfaces on a computer that is
+        directly accessible from the Internet. The built-in web server is
+        not designed to be used on public networks.
+
 Command Options
 ~~~~~~~~~~~~~~~
 
