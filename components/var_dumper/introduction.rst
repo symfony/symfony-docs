@@ -45,6 +45,52 @@ The advantages of this function are:
 so can you also use it directly.
 You can change the behavior of this function by calling
 :method:`VarDumper::setHandler($callable) <Symfony\\Component\\VarDumper\\VarDumper::setHandler>`:
-calls to ``dump()`` will then be forwarded to ``$callable``, given as first argument.
+calls to ``dump()`` will then be forwarded to ``$callable``.
+
+Where does the output go?
+-------------------------
+
+If you read the advanced documentation, you'll learn how to change the
+format or redirect the output to wherever you want.
+
+By default, these are selected based on your current PHP SAPI:
+
+- on the command line (CLI SAPI), the output is written on `STDERR`. This
+  can be surprising to some because this bypasses PHP's output buffering
+  mechanism. On the other hand, this give the possibility to easily split
+  dumps from regular output by using pipe redirection.
+- on other SAPIs, dumps are written as HTML on the regular output.
+
+DebugBundle and Twig integration
+--------------------------------
+
+The `DebugBundle` allows greater integration of the component into the
+Symfony full stack framework. It is enabled by default in the dev
+environement of the standard edition since version 2.6.
+
+Since generating (even debug) output in the controller or in the model
+of your application may just break it by e.g. sending HTTP headers or
+corrupting your view, the bundle configures the `dump()` function so that
+variables are dumped in the web debug toolbar.
+
+But if the toolbar can not be displayed because you e.g. called `die`/`exit`
+or a fatal error occurred, then dumps are written on the regular output.
+
+In a Twig template, two constructs are available for dumping a variable.
+Choosing between both is generally only a matter of personal taste:
+
+- `{% dump foo.bar %}` is the way to go when the original template output
+  shall not be modified: variables are not dumped inline, but in the web
+  debug toolbar.
+- on the contrary, `{{ dump(foo.bar) }}` dumps inline and thus may or not
+  be suited to your use case (e.g. you shouldn't use it in an HTML
+  attribute or a `script` tag).
+
+Reading a dump
+--------------
+
+For simple variables, reading the output should be straightforward::
+
+    dump(array(true, 1.1, "string"));
 
 .. _Packagist: https://packagist.org/packages/symfony/var-dumper

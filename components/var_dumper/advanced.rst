@@ -77,6 +77,18 @@ For example, to get a dump as a string in a variable, you can do::
 
     // $output is now populated with the dump representation of $variable
 
+An other option for doing the same could be::
+
+    $output = fopen('php://memory', 'r+b');
+    cloner = new VarCloner();
+    $dumper = new CliDumper($output);
+
+    $dumper->dump($cloner->cloneVar($variable));
+    fseek($output, 0);
+    $output = stream_get_contents($output);
+
+    // $output is now populated with the dump representation of $variable
+
 Dumpers implement the :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface`
 interface that specifies the
 :method:`dump(Data $data) <Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface::dump>`
