@@ -49,11 +49,11 @@ will automatically generate an absolute URL with HTTPS as the scheme:
 
 .. code-block:: jinja
 
-    {# If the current scheme is HTTPS #}
+    {# If the current scheme is HTTP #}
     {{ path('secure') }}
     {# generates /secure #}
 
-    {# If the current scheme is HTTP #}
+    {# If the current scheme is HTTPS #}
     {{ path('secure') }}
     {# generates https://example.com/secure #}
 
