@@ -32,11 +32,11 @@ Before dumping it, you can further limit the resulting
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::getLimitedClone`
 method:
 
-- the first ``$maxDepth`` argument allows limiting dumps in the depth dimension,
-- the second ``$maxItemsPerDepth`` limits the number of items per depth level,
-- and the last ``$useRefHandles`` defaults to ``true`` but allows removing internal
+* the first ``$maxDepth`` argument allows limiting dumps in the depth dimension,
+* the second ``$maxItemsPerDepth`` limits the number of items per depth level,
+* and the last ``$useRefHandles`` defaults to ``true`` but allows removing internal
   objects' handles for sparser output,
-- but unlike the previous limits on cloners that remove data on purpose, these
+* but unlike the previous limits on cloners that remove data on purpose, these
   limits can be changed back and forth before dumping since they do not affect
   the intermediate representation internally.
 
@@ -156,11 +156,11 @@ They are called in registration order.
 Casters are responsible for returning the properties of the object or resource
 being cloned in an array. They are callables that accept four arguments:
 
-- the object or resource being casted,
-- an array modelled for objects after PHP's native ``(array)`` cast operator,
-- a :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` object
+* the object or resource being casted,
+* an array modelled for objects after PHP's native ``(array)`` cast operator,
+* a :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` object
   representing the main properties of the object (class, type, etc.),
-- true/false when the caster is called nested is a structure or not.
+* true/false when the caster is called nested is a structure or not.
 
 Here is a simple caster not doing anything::
 
