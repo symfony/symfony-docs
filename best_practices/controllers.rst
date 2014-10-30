@@ -137,7 +137,7 @@ For example:
 .. code-block:: php
 
     /**
-     * @Route("/{id}", name="admin_post_show")
+     * @Route("/{post}", name="admin_post_show")
      */
     public function showAction(Post $post)
     {
