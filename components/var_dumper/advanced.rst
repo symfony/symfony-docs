@@ -31,9 +31,10 @@ Before dumping it, you can further limit the resulting
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object by calling its
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::getLimitedClone`
 method:
-- the first `$maxDepth` argument allows limiting dumps in the depth dimension,
-- the second `$maxItemsPerDepth` limits the number of items per depth level,
-- and the last `$useRefHandles` defaults to `true` but allows removing internal
+
+- the first ``$maxDepth`` argument allows limiting dumps in the depth dimension,
+- the second ``$maxItemsPerDepth`` limits the number of items per depth level,
+- and the last ``$useRefHandles`` defaults to ``true`` but allows removing internal
   objects' handles for sparser output,
 - but unlike the previous limits on cloners that remove data on purpose, these
   limits can be changed back and forth before dumping since they do not affect
