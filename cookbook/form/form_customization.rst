@@ -67,7 +67,7 @@ just one line:
 
     .. code-block:: jinja
 
-        {{ form_widget(form) }}
+        {{ form(form) }}
 
     .. code-block:: php
 
