@@ -134,7 +134,7 @@ Connecting Listeners
 
 To take advantage of an existing event, you need to connect a listener to the
 dispatcher so that it can be notified when the event is dispatched. A call to
-the dispatcher ``addListener()`` method associates any valid PHP callable to
+the dispatcher's ``addListener()`` method associates any valid PHP callable to
 an event::
 
     $listener = new AcmeListener();
@@ -158,7 +158,7 @@ The ``addListener()`` method takes up to three arguments:
     A `PHP callable`_ is a PHP variable that can be used by the
     ``call_user_func()`` function and returns ``true`` when passed to the
     ``is_callable()`` function. It can be a ``\Closure`` instance, an object
-    implementing an __invoke method (which is what closures are in fact),
+    implementing an ``__invoke`` method (which is what closures are in fact),
     a string representing a function, or an array representing an object
     method or a class method.
 
@@ -583,7 +583,7 @@ Dispatcher Shortcuts
 
 The :method:`EventDispatcher::dispatch <Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
 method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
-object. This allows for various shortcuts. For example if one does not need
+object. This allows for various shortcuts. For example, if one does not need
 a custom event object, one can simply rely on a plain
 :class:`Symfony\\Component\\EventDispatcher\\Event` object. You do not even need
 to pass this to the dispatcher as it will create one by default unless you
