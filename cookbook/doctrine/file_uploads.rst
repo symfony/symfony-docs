@@ -404,7 +404,8 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
+            $file = $this->getAbsolutePath();
+            if ($file) {
                 unlink($file);
             }
         }
