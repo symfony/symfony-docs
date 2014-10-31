@@ -37,25 +37,25 @@ use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
   reference structure of your data;
 * Ability to operate in the context of an output buffering handler.
 
-``dump()`` is just a thin wrapper and more convenient way to call
+``dump()`` is just a thin wrapper and a more convenient way to call
 :method:`VarDumper::dump() <Symfony\\Component\\VarDumper\\VarDumper::dump>`.
 You can change the behavior of this function by calling
 :method:`VarDumper::setHandler($callable) <Symfony\\Component\\VarDumper\\VarDumper::setHandler>`:
 calls to ``dump()`` will then be forwarded to ``$callable``.
 
-Output Format and Destination
------------------------------
+By default, the output format and destination are selected based on your
+current PHP SAPI:
 
-If you read the `advanced documentation <advanced>`, you'll learn how to
-change the format or redirect the output to wherever you want.
-
-By default, these are selected based on your current PHP SAPI:
-
-* On the command line (CLI SAPI), the output is written on ``STDERR``. This
+* On the command line (CLI SAPI), the output is written on ``STDOUT``. This
   can be surprising to some because this bypasses PHP's output buffering
-  mechanism. On the other hand, it give the possibility to easily split
-  dumps from regular output by using pipe redirection;
+  mechanism;
 * On other SAPIs, dumps are written as HTML on the regular output.
+
+.. note::
+    If you want to catch the dump output as a string, please read the
+    `advanced documentation <advanced>` which contains examples of it.
+    You'll also learn how to change the format or redirect the output to
+    wherever you want.
 
 DebugBundle and Twig Integration
 --------------------------------
