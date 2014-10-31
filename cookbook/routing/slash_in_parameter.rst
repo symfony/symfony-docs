@@ -5,12 +5,12 @@ How to Allow a "/" Character in a Route Parameter
 =================================================
 
 Sometimes, you need to compose URLs with parameters that can contain a slash
-``/``. For example, take the classic ``/hello/{userName}`` route. By default,
+``/``. For example, take the classic ``/hello/{username}`` route. By default,
 ``/hello/Fabien`` will match this route but not ``/hello/Fabien/Kris``. This
 is because Symfony uses this character as separator between route parts.
 
 This guide covers how you can modify a route so that ``/hello/Fabien/Kris``
-matches the ``/hello/{userName}`` route, where ``{userName}`` equals ``Fabien/Kris``.
+matches the ``/hello/{username}`` route, where ``{username}`` equals ``Fabien/Kris``.
 
 Configure the Route
 -------------------
@@ -27,10 +27,10 @@ a more permissive regex path.
     .. code-block:: yaml
 
         _hello:
-            path:     /hello/{userName}
+            path:     /hello/{username}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
             requirements:
-                userName: .+
+                username: .+
 
     .. code-block:: xml
 
@@ -40,9 +40,9 @@ a more permissive regex path.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_hello" path="/hello/{userName}">
+            <route id="_hello" path="/hello/{username}">
                 <default key="_controller">AcmeDemoBundle:Demo:hello</default>
-                <requirement key="userName">.+</requirement>
+                <requirement key="username">.+</requirement>
             </route>
         </routes>
 
@@ -52,10 +52,10 @@ a more permissive regex path.
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('_hello', new Route('/hello/{userName}', array(
+        $collection->add('_hello', new Route('/hello/{username}', array(
             '_controller' => 'AcmeDemoBundle:Demo:hello',
         ), array(
-            'userName' => '.+',
+            'username' => '.+',
         )));
 
         return $collection;
@@ -75,4 +75,4 @@ a more permissive regex path.
             }
         }
 
-That's it! Now, the ``{userName}`` parameter can contain the ``/`` character.
+That's it! Now, the ``{username}`` parameter can contain the ``/`` character.
