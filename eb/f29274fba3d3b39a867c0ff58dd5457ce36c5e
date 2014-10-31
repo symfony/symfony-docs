@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by acidjames at 2014-10-29T08:53:14Z
+
+Hi i see that i referenced this PR from a commit, is that enough for it to be merged ? sorry i'm new ...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-29T10:44:10Z
+
+@acidjames you should put the required changes in the branch that is related to this PR: `acidjames:patch-1`
+
+The PR can only be merged by people with push access (basically @weaverryan and me). I'll merge your PR once you did the required changed. Btw, if you need more help, don't hesitate to ask :)
+
+---------------------------------------------------------------------------
+
+by acidjames at 2014-10-30T15:46:23Z
+
+@WouterJ i've been trying to access acidjames:patch-1 with the official Github client without success, should i be using this client or something else ?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-30T15:55:16Z
+
+@acidjames you can go to http://github.com/acidjames/symfony-docs/tree/patch-1 Then navigate to the file and click on "edit", make the changes and commit them.
+
+---------------------------------------------------------------------------
+
+by acidjames at 2014-10-31T09:40:30Z
+
+Sorry guys, i'll do better next time i promise !
