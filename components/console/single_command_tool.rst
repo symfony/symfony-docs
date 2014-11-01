@@ -1,5 +1,5 @@
 .. index::
-   single: Console; Single command application
+    single: Console; Single command application
 
 Building a single Command Application
 =====================================

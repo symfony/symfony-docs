@@ -295,7 +295,7 @@ declare a one-letter shortcut that you can call with a single dash like
 .. tip::
 
     It is also possible to make an option *optionally* accept a value (so that
-    ``--yell`` or ``--yell=loud`` work). Options can also be configured to
+    ``--yell`` or ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
     accept an array of values.
 
 For example, add a new option to the command that can be used to specify
@@ -495,6 +495,7 @@ Learn More!
 * :doc:`/components/console/usage`
 * :doc:`/components/console/single_command_tool`
 * :doc:`/components/console/events`
+* :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
