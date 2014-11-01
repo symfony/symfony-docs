@@ -59,7 +59,7 @@ This will print the following to the command line:
 
 .. tip::
 
-    This feature has a limitation: you cannot use it with any Command arguments.
+    This feature has a limitation: you cannot use it with any Command arguments, but, you can still use the Command options from the Default Command.
 
 Learn More!
 -----------
