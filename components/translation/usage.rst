@@ -373,7 +373,7 @@ use for translation::
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 
 Check if a Message Exists
------------------------------
+-------------------------
 
 You can check for the existance of a message ID using the
 :method:`Symfony\\Component\\Translation\\Translator::hasId` method::
