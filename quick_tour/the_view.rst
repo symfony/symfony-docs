@@ -50,7 +50,7 @@ Below is a minimal template that illustrates a few basics, using two variables
 
 To render a template in Symfony, use the ``render`` method from within a controller.
 If the template needs variables to generate its contents, pass them as an array
-using the second optional second argument::
+using the second optional argument::
 
     $this->render('default/index.html.twig', array(
         'variable_name' => 'variable_value',
@@ -156,7 +156,7 @@ The best way to share a snippet of code between several templates is to create a
 new template fragment that can then be included from other templates.
 
 Imagine that we want to display ads on some pages of our application. First,
-create an ``banner.html.twig`` template:
+create a ``banner.html.twig`` template:
 
 .. code-block:: jinja
 
@@ -229,8 +229,8 @@ updated by just changing the configuration:
 
     <a href="{{ path('homepage') }}">Return to homepage</a>
 
-The ``path`` function takes the route name as the first argument and optionally
-you can pass an array of route parameters as the second argument.
+The ``path`` function takes the route name as the first argument and you can
+optionally pass an array of route parameters as the second argument.
 
 .. tip::
 
@@ -251,8 +251,8 @@ Symfony provides the ``asset`` function to deal with them easily:
     <img src="{{ asset('images/logo.png') }}" />
 
 The ``asset()`` function looks for the web assets inside the ``web/`` directory.
-If you store them in other directory, read ..... this article to learn how to
-manage web assets.
+If you store them in another directory, read :doc:`this article <cookbook/assetic/asset_management>`
+to learn how to manage web assets.
 
 Using the ``asset`` function, your application is more portable. The reason is
 that you can move the application root directory anywhere under your web root
