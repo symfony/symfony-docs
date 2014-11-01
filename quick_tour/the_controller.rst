@@ -14,7 +14,7 @@ any action of any controller is the creation of a ``Response`` object which
 Symfony uses to generate the HTML content returned to the user.
 
 So far, all the actions shown in this tutorial used the ``$this->render()``
-shortcut to return a rendered response as result. If case you need it, you can
+shortcut to return a rendered response as result. In case you need it, you can
 also create a raw ``Response`` object to return any text content::
 
     // src/AppBundle/Controller/DefaultController.php
@@ -125,7 +125,7 @@ its default value::
     }
 
 Obviously, when you support several request formats, you have to provide a
-tempalte for each of the supported formats. In this case, you should create a
+template for each of the supported formats. In this case, you should create a
 new ``hello.xml.twig`` template:
 
 .. code-block:: xml+php
@@ -144,7 +144,7 @@ in your browser.
 
 That's all there is to it. For standard formats, Symfony will also
 automatically choose the best ``Content-Type`` header for the response. To
-restrict the the formats supported by a given action, use the ``requirements``
+restrict the formats supported by a given action, use the ``requirements``
 option of the ``@Route()`` annotation::
 
     // src/AppBundle/Controller/DefaultController.php
@@ -190,9 +190,8 @@ method::
         }
     }
 
-The ``redirectToRoute()`` is similar to the ``path()`` function used in the
-templates. It takes the route name and an array of parameters as arguments and
-returns the associated friendly URL.
+The ``redirectToRoute()`` method takes as arguments the route name and an optional
+array of parameters and redirects the user to the URL generated with those arguments.
 
 You can also internally forward the action to another action of the same or
 different controller using the ``forward()`` method::
@@ -226,6 +225,7 @@ use in your controllers::
          */
         public function indexAction()
         {
+            // ...
             throw $this->createNotFoundException();
         }
     }
@@ -241,6 +241,7 @@ Symfony will transform it into a proper ``500`` error page::
          */
         public function indexAction()
         {
+            // ...
             throw new \Exception('Something went horribly wrong!');
         }
     }
@@ -249,7 +250,7 @@ Getting Information from the Request
 ------------------------------------
 
 Sometimes your controllers need to access the information related to the user
-request, such as his/her preferred language, IP address or the URL query parameters.
+request, such as their preferred language, IP address or the URL query parameters.
 To get access to this information, add a new argument of type ``Request`` to the
 action. The name of this new argument doesn't matter, but it must be preceded
 by the ``Request`` type in order to work (don't forget to add the new ``use``
@@ -346,4 +347,4 @@ That's all there is to it, and I'm not even sure you'll have spent the full
 10 minutes. You were briefly introduced to bundles in the first part, and all the
 features you've learned about so far are part of the core framework bundle.
 But thanks to bundles, everything in Symfony can be extended or replaced.
-That's the topic of the :doc:`next part of this tutorial<the_architecture>`.
+That's the topic of the :doc:`next part of this tutorial <the_architecture>`.

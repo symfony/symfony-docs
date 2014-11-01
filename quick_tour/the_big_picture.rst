@@ -16,7 +16,7 @@ to display the installed PHP version:
 
 .. code-block:: bash
 
-  php --version
+    $ php --version
 
 .. _installing-symfony2:
 
@@ -37,12 +37,13 @@ On **Linux** and **Mac OS X** systems, execute the following console commands:
 
 .. note::
 
-    If your system doesn't have cURL installed, execute instead the following
-    command:
+    If your system doesn't have cURL installed, execute the following
+    commands instead:
 
     .. code-block:: bash
 
         $ php -r "readfile('https://symfony.com/installer');" | php
+        $ sudo mv symfony.phar /usr/local/bin/symfony
 
 After installing the Symfony installer, you'll have to open a new console window
 to be able to execute the new ``symfony`` command:
@@ -214,16 +215,17 @@ A **PHP annotation** is a convenient way to configure a method without having to
 write regular PHP code. Beware that annotation blocks start with ``/**``, whereas
 regular PHP comments start with ``/*``.
 
-The first value of ``@Route()`` defines the path that will trigger the execution
-of the action. This path is configured via a relative URL, so you don't have to
-add the host of your application (e.g. ```http://example.com``). In this case,
-the value ``/`` refers to the application homepage. The second value of ``@Route()``
-(e.g. ``name="homepage"``) is optional and sets the name of this route. For now
-this name is not needed, but later it'll be useful for linking pages.
+The first value of ``@Route()`` defines the URL that will trigger the execution
+of the action. As you don't have to add the host of your application to the URL
+(e.g. ```http://example.com``), these URLs are always relative and they are usually
+called *paths*. In this case, the ``/`` path refers to the application homepage.
+The second value of ``@Route()`` (e.g. ``name="homepage"``) is optional and sets
+the name of this route. For now this name is not needed, but later it'll be useful
+for linking pages.
 
 Considering all this, the ``@Route("/", name="homepage")`` annotation creates a
 new route called ``homepage`` which makes Symfony execute the ``index`` action
-of the ``Default`` controller when the users browses the ``/`` URL of the application.
+of the ``Default`` controller when the user browses the ``/`` path of the application.
 
 .. tip::
 
@@ -259,7 +261,7 @@ the following code:
     {% endblock %}
 
 This template is created with `Twig`_, a new template engine created for modern
-PHP applications. The :doc:`second part of this tutorial</quick_tour/the_view>`
+PHP applications. The :doc:`second part of this tutorial </quick_tour/the_view>`
 will introduce how templates work in Symfony.
 
 .. _quick-tour-big-picture-environments:
@@ -287,8 +289,8 @@ may be worried about your visitors accessing sensible information. Symfony is
 aware of this issue and for that reason, it won't display this bar when your
 application is running in the production server.
 
-How does Symfony knows when is your application running locally or in a production
-server? Keep reading to discover the concept of **execution environments**.
+How does Symfony know  whether your application is running locally or on a
+production server? Keep reading to discover the concept of **execution environments**.
 
 .. _quick-tour-big-picture-environments-intro:
 

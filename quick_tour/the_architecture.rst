@@ -122,7 +122,7 @@ a single ``Bundle`` class that describes it::
 
 In addition to the AppBundle that was already talked about, notice that the
 kernel also enables other bundles such as the FrameworkBundle, DoctrineBundle,
-SwiftmailerBundle and AsseticBundle bundle. They are all part of the core framework.
+SwiftmailerBundle and AsseticBundle. They are all part of the core framework.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -213,7 +213,7 @@ the location of the AppBundle.
 Logical Controller Names
 ........................
 
-For controllers, you need to reference action using the format
+For controllers, you need to reference actions using the format
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
 ``AppBundle:Default:index`` maps to the ``indexAction`` method from the
 ``AppBundle\Controller\DefaultController`` class.
@@ -240,7 +240,7 @@ Using Vendors
 Odds are that your application will depend on third-party libraries. Those
 should be stored in the ``vendor/`` directory and managed by Composer.
 This directory already contains the Symfony libraries, the SwiftMailer library,
-the Doctrine ORM, the Twig templating system, and some other third party
+the Doctrine ORM, the Twig templating system and some other third party
 libraries and bundles.
 
 Understanding the Cache and Logs
