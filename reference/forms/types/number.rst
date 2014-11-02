@@ -48,7 +48,7 @@ rounding_mode
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
-    
+
 * ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
 
 * ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
@@ -97,6 +97,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

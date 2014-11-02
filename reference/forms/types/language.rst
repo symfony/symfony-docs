@@ -8,7 +8,7 @@ The ``language`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of languages. As an added bonus, the language names
 are displayed in the language of the user.
 
-The "value" for each language is the *Unicode language identifier* used in 
+The "value" for each language is the *Unicode language identifier* used in
 the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
 
 .. note::
@@ -100,6 +100,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

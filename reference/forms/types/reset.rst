@@ -34,4 +34,6 @@ Inherited Options
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
