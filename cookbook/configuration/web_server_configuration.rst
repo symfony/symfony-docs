@@ -207,6 +207,8 @@ are:
             try_files $uri /app.php$is_args$args;
         }
         # DEV
+        # Be sure to remove app_dev.php and config.php scripts when app is
+        # deployed to PROD environment, this rule only must be placed on DEV
         location ~ ^/(app_dev|config)\.php(/|$) {
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
