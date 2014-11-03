@@ -4,7 +4,7 @@ label_format
 .. versionadded:: 2.6
     The ``label_format`` option was introduced in Symfony 2.6
 
-**type**: ``string`` **default**: The label is "humanized" version of the field name
+**type**: ``string`` **default**: The label is the "humanized" version of the field name.
 
 Sets the format applied to generate the ``<label>`` element, which will be used when
 rendering the label for the field. This option supports two placeholders called
