@@ -28,9 +28,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `empty_value`_                                                              |
 |                      | - `format`_                                                                   |
 |                      | - `input`_                                                                    |
-|                      | - `model_timezone`_                                                           |
 |                      | - `months`_                                                                   |
-|                      | - `view_timezone`_                                                            |
 |                      | - `widget`_                                                                   |
 |                      |                                                                               |
 |                      | from the :doc:`form </reference/forms/types/form>` type:                      |
@@ -72,11 +70,7 @@ These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/date_input.rst.inc
 
-.. include:: /reference/forms/types/options/model_timezone.rst.inc
-
 .. include:: /reference/forms/types/options/months.rst.inc
-
-.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
