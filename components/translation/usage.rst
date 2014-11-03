@@ -371,3 +371,17 @@ use for translation::
 
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
+
+Check if a Message Exists
+-------------------------
+
+You can check for the existance of a message ID using the
+:method:`Symfony\\Component\\Translation\\Translator::hasId` method::
+
+    // ...
+    $messageExists = $translator->hasId('Hello %name%');
+
+The existance of a message can also be checked for specific domains or locales::
+
+    // ...
+    $messageExists = $translator->hasId('Hello %name%', 'messages', 'fr_FR');
