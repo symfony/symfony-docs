@@ -10,6 +10,11 @@ This can be rendered as a text field, a series of text fields (e.g. hour,
 minute, second) or a series of select fields. The underlying data can be stored
 as a ``DateTime`` object, a string, a timestamp or an array.
 
+.. note::
+
+    In case of ``DateTime`` the timezone is ignored.
+    Only hour, minutes and seconds are used.
+
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +----------------------+-----------------------------------------------------------------------------+

@@ -11,6 +11,11 @@ The underlying data used for this field type can be a ``DateTime`` object,
 a string, a timestamp or an array. As long as the `input`_ option is set
 correctly, the field will take care of all of the details.
 
+.. note::
+
+    In case of ``DateTime`` the timezone is ignored.
+    Only year, month and day are used.
+
 The field can be rendered as a single text box, three text boxes (month,
 day, and year) or three select boxes (see the `widget`_ option).
 
