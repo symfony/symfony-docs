@@ -1,12 +1,12 @@
 .. index::
    pair: Doctrine; DBAL
 
-How to Use Doctrine's DBAL Layer
-================================
+How to Use Doctrine DBAL
+========================
 
 .. note::
 
-    This article is about Doctrine DBAL's layer. Typically, you'll work with
+    This article is about the Doctrine DBAL. Typically, you'll work with
     the higher level Doctrine ORM layer, which simply uses the DBAL behind
     the scenes to actually communicate with the database. To read more about
     the Doctrine ORM, see ":doc:`/book/doctrine`".
