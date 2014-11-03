@@ -19,9 +19,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `hours`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
-|                      | - `model_timezone`_                                                         |
 |                      | - `seconds`_                                                                |
-|                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
 |                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
@@ -99,11 +97,7 @@ this format.
 
 .. include:: /reference/forms/types/options/minutes.rst.inc
 
-.. include:: /reference/forms/types/options/model_timezone.rst.inc
-
 .. include:: /reference/forms/types/options/seconds.rst.inc
-
-.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 widget
 ~~~~~~

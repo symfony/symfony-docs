@@ -23,9 +23,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 |                      | - `empty_value`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `input`_                                                                  |
-|                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
-|                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
@@ -109,11 +107,7 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/date_input.rst.inc
 
-.. include:: /reference/forms/types/options/model_timezone.rst.inc
-
 .. include:: /reference/forms/types/options/months.rst.inc
-
-.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
