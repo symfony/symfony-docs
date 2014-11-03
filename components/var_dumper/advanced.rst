@@ -10,9 +10,7 @@ Cloners
 
 A cloner is used to create an intermediate representation of any PHP variable.
 Its output is a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
-object that wraps this representation. A cloner also applies limits when
-creating the representation, so that the corresponding Data object could
-represent only a subset of the cloned variable.
+object that wraps this representation.
 
 You can create a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
 object this way::
@@ -20,12 +18,19 @@ object this way::
     $cloner = new VarCloner();
     $data = $cloner->cloneVar($myVar);
 
-Before cloning, you can configure the limits with::
+A cloner also applies limits when creating this representation, so that the
+corresponding Data object could represent only a subset of the cloned variable.
+Before :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::cloneVar`,
+you can configure these limits:
 
-    $cloner->setMaxItems($number);
-    $cloner->setMaxString($number);
-
-They will be applied when calling ``->cloneVar()`` afterwards.
+* :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
+  configures the maximum number of items that will be cloned *past the first
+  nesting level*. Items are counted using a breadth-first algorithm so that
+  lower level items have higher priority than deeply nested items;
+* :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
+  configures the maximum number of characters that will be cloned before
+  cutting overlong strings;
+* in both cases, specifying `-1` removes any limit.
 
 Before dumping it, you can further limit the resulting
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object by calling its
@@ -34,16 +39,16 @@ method:
 
 * the first ``$maxDepth`` argument allows limiting dumps in the depth dimension,
 * the second ``$maxItemsPerDepth`` limits the number of items per depth level,
-* and the last ``$useRefHandles`` defaults to ``true`` but allows removing internal
-  objects' handles for sparser output,
-* but unlike the previous limits on cloners that remove data on purpose, these
-  limits can be changed back and forth before dumping since they do not affect
+* and the last ``$useRefHandles`` defaults to ``true`` but allows removing
+  internal objects' handles for sparser output,
+* but unlike the previous limits on cloners that remove data on purpose,
+  these can be changed back and forth before dumping since they do not affect
   the intermediate representation internally.
 
 .. note::
     When no limit is applied, a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
-    object is as accurate as the native :phpfunction:`serialize` function and thus
-    could have a wider purpose than strictly dumping for debugging.
+    object is as accurate as the native :phpfunction:`serialize` function
+    and thus could have a wider purpose than strictly dumping for debugging.
 
 Dumpers
 ~~~~~~~
