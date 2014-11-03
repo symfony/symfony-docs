@@ -10,8 +10,6 @@ Sets the format applied to generate the ``<label>`` element, which will be used 
 rendering the label for the field. This option supports two placeholders called
 ``%name%`` and ``%id%``::
 
-.. code-block:: php
-
     // defining the label format for all the form fields
     $form = $this->createForm('myform', $data, array('label_format' => 'form.label.%id%'));
 
