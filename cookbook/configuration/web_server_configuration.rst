@@ -223,9 +223,9 @@ are:
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param HTTPS off;
-            # Prevents URI's that include the front controller. This will 404:
+            # Prevents URIs that include the front controller. This will 404:
             # http://domain.tld/app.php/some-path
-            # Remove the internal directive to allow URI's like this
+            # Remove the internal directive to allow URIs like this
             internal;
         }
 
