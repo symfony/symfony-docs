@@ -1,0 +1,89 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-25T11:12:15Z
+
+I would change it a bit to be a complete new section:
+
+````rst
+Disable Commands inside Listeners
+---------------------------------
+
+.. versionadded:: 2.6
+    Disabling commands inside listeners was introduced in Symfony 2.6.
+
+Using the
+:method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`
+method, you can disable a command inside a listener. The application
+will the return the code `113` (defined in
+``ConsoleCommandEvent::RETURN_CODE_DISABLED``)::
+
+    use Symfony\Component\Console\Event\ConsoleCommandEvent;
+    use Symfony\Component\Console\ConsoleEvents;
+
+    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+        // get the command to be executed
+        $command = $event->getCommand();
+
+        // ... check if the command can be executed
+
+        // disable the command, this will result in the command being skipped
+        // and code 113 being returned from the Application
+        $event->disableCommand();
+
+        // it is possible to enable the command in a later listener
+        if (!$event->commandShouldRun()) {
+            $event->enableCommand();
+        }
+    });
+````
+
+---------------------------------------------------------------------------
+
+by tPl0ch at 2014-07-25T11:36:28Z
+
+@WouterJ @javiereguiluz Incorporated both the section issue as well as the explanation for the return code. :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-07-25T11:45:35Z
+
+@tPl0ch thank you!
+
+@WouterJ what do you think about rewording the paragraph that includes the URL to something like this:
+
+```
+Using the
+:method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`
+method, you can disable a command inside a listener. The application
+will then not execute the command but return the code `113` (defined in
+``ConsoleCommandEvent::RETURN_CODE_DISABLED``), which is one of the
+`reserved exit codes`_ for the console commands to conform with the C/C++ standard.::
+
+.. _`reserved exit codes`: http://www.tldp.org/LDP/abs/html/exitcodes.html
+```
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-25T11:46:11Z
+
+@javiereguiluz +1 for that
+
+---------------------------------------------------------------------------
+
+by tPl0ch at 2014-07-25T11:50:29Z
+
+Oh how I just hate writing docs...
+
+;)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-25T12:22:45Z
+
+You did it perfectly @tPl0ch ! :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-31T06:13:10Z
+
+The code pull request has been merged.
