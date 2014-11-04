@@ -22,8 +22,8 @@ sys.path.append(os.path.abspath('_exts'))
 
 # adding PhpLexer
 from sphinx.highlighting import lexers
+from pygments.lexers.compiled import CLexer
 from pygments.lexers.web import PhpLexer
-from pygments.lexers.agile import RubyLexer
 
 # -- General configuration -----------------------------------------------------
 
@@ -101,9 +101,9 @@ lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
-lexers['varnish2'] = RubyLexer()
-lexers['varnish3'] = RubyLexer()
-lexers['varnish4'] = RubyLexer()
+lexers['varnish2'] = CLexer()
+lexers['varnish3'] = CLexer()
+lexers['varnish4'] = CLexer()
 
 config_block = {
     'varnish2': 'Varnish 2',
