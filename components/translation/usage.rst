@@ -376,12 +376,12 @@ Retrieving the Message Catalogue
 --------------------------------
 
 In case you want to use the same translation catalogue outside your application
-(e.g. use translation on a client side), it's possible to fetch raw translation messages.
-You just need to specify required locale::
+(e.g. use translation on the client side), it's possible to fetch raw translation
+messages. Just specify the required locale::
 
     $messages = $translator->getMessages('fr_FR');
 
-``$messages`` will have the following structure::
+The ``$messages`` variable will have the following structure::
 
     array(
         'messages' => array(
@@ -392,4 +392,3 @@ You just need to specify required locale::
             'Value is too long' => 'Valeur est trop long',
         ),
     );
-
