@@ -1,0 +1,98 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T11:11:22Z
+
+Hmm, to be honest, I don't understand any of these principles. So I can't say anything about this PR or decide if it's wrong or not.
+
+@symfony/team-symfony-docs can you please help? :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-31T14:06:28Z
+
+I'm no Nginx expert. @phansys can you explain a bit more what this change is supposed to do?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-31T15:16:03Z
+
+If I understand this correctly, this gives us the *exact* same behavior as before, except that I can no longer go to `example.com/app.php/contact` - that will be a 404. The reason for that would be that if this *does* work, then it kind of exposes the fact that this is a Symfony2 site a little bit. That's the security through obscurity part.
+
+I haven't used this internal option before, so I'm trusting it works like this :). I *would* add a little comment about it that explains what it does. Something like this:
+
+```txt
+# Causes a 404 page if someone goes to example.com/app.php/some-page
+# This can obscure, slightly, the fact that this is a Symfony2 app
+```
+
+---------------------------------------------------------------------------
+
+by phansys at 2014-10-31T15:19:45Z
+
+Hi @xabbuh.
+With this change, requests in PROD env to ```/app.php/``` will return 404 instead of redirect to domain root or serve the same content as ```/```. It prevents a possible attacker guessing that app is running Symfony.
+
+Before:
+GET /app/ -> 301 redirection to /
+
+After:
+GET /app/ -> 404 not found
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-31T15:22:36Z
+
+@phansys well-said. If you can summarize that into a short comment to put in the code block, I am a :+1: on this.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-31T16:59:21Z
+
+I see and I agree that this makes sense in the prod environment. However, I wouldn't add these rules to the dev environment. It makes things more complex and these files shouldn't be available in public at all.
+
+---------------------------------------------------------------------------
+
+by phansys at 2014-10-31T17:46:11Z
+
+Thank you @weaverryan.
+The code now has a block with this comment:
+```
+# prevent explicit access and hide front controller
+# remove "internal" directive if you want to allow uri's like
+# http://domain.tld/app.php/some-path
+```
+
+If you want, I can add more verbosity in it.
+@xabbuh, I also agree with you; that's the reason why I split off ```app.php``` rule from ```app_dev.php``` and ```config.php```.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-01T10:57:21Z
+
+@phansys But is the part for the dev environment really needed? What happens when we omit it?
+
+Edit: Never mind, it was there before. So it's probably needed.
+
+---------------------------------------------------------------------------
+
+by phansys at 2014-11-01T16:26:53Z
+
+@xabbuh, the part for DEV is needed in order to serve the app when you are in development phase (with debug toolbar enabled, etc). IE, for using ```app_dev.php``` as front controller or accessing ```/config.php``` after install.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-03T16:54:02Z
+
+@phansys @xabbuh we should maybe add a note in the `# DEV` comment line that says `(don't add this to your production web server configuration)`. What do you think?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-03T16:55:57Z
+
+Both files shouldn't be present at all in that case. But yes, adding an additional comment might be useful too.
+
+---------------------------------------------------------------------------
+
+by phansys at 2014-11-03T23:13:14Z
+
+Docblock for DEV rule updated.
