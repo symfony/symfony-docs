@@ -333,9 +333,6 @@ a command-line utility that can fix the coding standards of an entire codebase
 in a matter of seconds.
 
 .. _`full definition`: http://en.wikipedia.org/wiki/Business_logic
-.. _`Toran Proxy`: https://toranproxy.com/
-.. _`Composer`: https://getcomposer.org/
-.. _`MVC architecture`: http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine project`: http://www.doctrine-project.org/
 .. _`fixture class`: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
