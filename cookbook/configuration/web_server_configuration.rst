@@ -206,13 +206,27 @@ are:
             # try to serve file directly, fallback to app.php
             try_files $uri /app.php$is_args$args;
         }
-
-        location ~ ^/(app|app_dev|config)\.php(/|$) {
+        # DEV
+        # Be sure to remove app_dev.php and config.php scripts when app is
+        # deployed to PROD environment, this rule only must be placed on DEV
+        location ~ ^/(app_dev|config)\.php(/|$) {
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param HTTPS off;
+        }
+        # PROD
+        location ~ ^/app\.php(/|$) {
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_split_path_info ^(.+\.php)(/.*)$;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param HTTPS off;
+            # prevent explicit access and hide front controller
+            # remove "internal" directive if you want to allow uri's like
+            # http://domain.tld/app.php/some-path
+            internal;
         }
 
         error_log /var/log/nginx/project_error.log;
