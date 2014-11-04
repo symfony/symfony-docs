@@ -211,7 +211,7 @@ To begin with, change the ``TransportChain`` class::
         public function getTransport($alias)
         {
             if (array_key_exists($alias, $this->transports)) {
-               return $this->transports[$alias];
+                return $this->transports[$alias];
             }
         }
     }
