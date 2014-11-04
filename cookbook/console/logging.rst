@@ -205,11 +205,11 @@ First configure a listener for console terminate events in the service container
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
-                <parameter key="console_exception_listener.class">Acme\DemoBundle\EventListener\ConsoleExceptionListener</parameter>
+                <parameter key="console_terminate_listener.class">Acme\DemoBundle\EventListener\ConsoleTerminateListener</parameter>
             </parameters>
 
             <services>
-                <service id="kernel.listener.command_dispatch" class="%console_exception_listener.class%">
+                <service id="kernel.listener.command_dispatch" class="%console_terminate_listener.class%">
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
@@ -223,31 +223,31 @@ First configure a listener for console terminate events in the service container
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter(
-            'console_exception_listener.class',
-            'Acme\DemoBundle\EventListener\ConsoleExceptionListener'
+            'console_terminate_listener.class',
+            'Acme\DemoBundle\EventListener\ConsoleTerminateListener'
         );
-        $definitionConsoleExceptionListener = new Definition(
-            '%console_exception_listener.class%',
+        $definitionConsoleTerminateListener = new Definition(
+            '%console_terminate_listener.class%',
             array(new Reference('logger'))
         );
-        $definitionConsoleExceptionListener->addTag(
+        $definitionConsoleTerminateListener->addTag(
             'kernel.event_listener',
             array('event' => 'console.terminate')
         );
         $container->setDefinition(
             'kernel.listener.command_dispatch',
-            $definitionConsoleExceptionListener
+            $definitionConsoleTerminateListener
         );
 
 Then implement the actual listener::
 
-    // src/Acme/DemoBundle/EventListener/ConsoleExceptionListener.php
+    // src/Acme/DemoBundle/EventListener/ConsoleTerminateListener.php
     namespace Acme\DemoBundle\EventListener;
 
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
     use Psr\Log\LoggerInterface;
 
-    class ConsoleExceptionListener
+    class ConsoleTerminateListener
     {
         private $logger;
 
