@@ -44,8 +44,7 @@ are:
         <Directory /var/www/project/web>
             # enable the .htaccess rewrites
             AllowOverride All
-            Order allow,deny
-            Allow from All
+            Require all granted
         </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
