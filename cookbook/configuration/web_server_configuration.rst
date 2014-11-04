@@ -207,8 +207,8 @@ are:
             try_files $uri /app.php$is_args$args;
         }
         # DEV
-        # Be sure to remove app_dev.php and config.php scripts when app is
-        # deployed to PROD environment, this rule only must be placed on DEV
+        # This rule should only be placed on your development environment
+        # In production, don't include this and don't deploy app_dev.php or config.php
         location ~ ^/(app_dev|config)\.php(/|$) {
             fastcgi_pass unix:/var/run/php5-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
@@ -223,9 +223,9 @@ are:
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param HTTPS off;
-            # prevent explicit access and hide front controller
-            # remove "internal" directive if you want to allow uri's like
+            # Prevents URI's that include the front controller. This will 404:
             # http://domain.tld/app.php/some-path
+            # Remove the internal directive to allow URI's like this
             internal;
         }
 
