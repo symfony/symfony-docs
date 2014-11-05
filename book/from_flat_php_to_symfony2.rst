@@ -547,8 +547,8 @@ from scratch, you could at least use Symfony's standalone `Routing`_ and
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
 
-    // src/Acme/BlogBundle/Controller/BlogController.php
-    namespace Acme\BlogBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -571,7 +571,7 @@ them for you. Here's the same sample application, now built in Symfony::
         {
             $post = $this->get('doctrine')
                 ->getManager()
-                ->getRepository('AcmeBlogBundle:Post')
+                ->getRepository('AppBundle:Post')
                 ->find($id);
 
             if (!$post) {
@@ -644,11 +644,11 @@ A routing configuration map provides this information in a readable format:
     # app/config/routing.yml
     blog_list:
         path:     /blog
-        defaults: { _controller: AcmeBlogBundle:Blog:list }
+        defaults: { _controller: AppBundle:Blog:list }
 
     blog_show:
         path:     /blog/show/{id}
-        defaults: { _controller: AcmeBlogBundle:Blog:show }
+        defaults: { _controller: AppBundle:Blog:show }
 
 Now that Symfony is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
