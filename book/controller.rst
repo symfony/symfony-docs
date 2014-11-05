@@ -201,7 +201,8 @@ see :ref:`controller-string-syntax`.
 
 .. tip::
 
-    You can learn much more about the routing system in the :doc:`Routing chapter </book/routing>`.
+    You can learn much more about the routing system in the
+    :doc:`Routing chapter </book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
@@ -225,15 +226,15 @@ to that method::
     {
         public function indexAction($name)
         {
-          // ...
+            // ...
         }
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
 ``{name}`` parameter from the matched route (``ryan`` in the example). In
 fact, when executing your controller, Symfony matches each argument of
-the controller with a parameter from the matched route. Take the following
-example:
+the controller with a parameter from the matched route by its name. Take the
+following example:
 
 .. configuration-block::
 
@@ -421,7 +422,7 @@ Common Controller Tasks
 Though a controller can do virtually anything, most controllers will perform
 the same basic tasks over and over again. These tasks, such as redirecting,
 forwarding, rendering templates and accessing core services, are very easy
-to manage in Symfony.
+to manage in Symfony when you're extending the base ``Controller`` class.
 
 .. index::
    single: Controller; Redirecting
@@ -429,7 +430,9 @@ to manage in Symfony.
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the ``redirect()`` method::
+If you want to redirect the user to another page, use the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
+method::
 
     public function indexAction()
     {
