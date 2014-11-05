@@ -1,0 +1,107 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-09-17T17:08:29Z
+
+The doc should explain how to configure the component to be able to use it, and show some examples of the output
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-17T17:08:55Z
+
+FYI, I added [WCM] to the title since symfony/symfony#10640 isn't merged yet.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2014-09-18T01:29:28Z
+
+This docu will need to be revamped by the docu guys (I hope I can help too) because there is so much more that needs to be said here about this useful component.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-09-18T09:25:34Z
+
+I'll update the doc in the next few days. I already wrote some more paragraphs and added a todo list.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-26T14:29:34Z
+
+Could you please add line breaks after the first word that crosses the 72th character (starting at column 0, not the first letter)?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-09-30T07:17:01Z
+
+Thanks for the review guys, I just pushed a commit fixing most of your comments. Remain the "too abstract?" question from @javiereguiluz (any suggestion?) and the 72th char from @WouterJ (I didn't understand...). I'll split the single page in two later.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-30T07:59:06Z
+
+@nicolas-grekas It just means that we want to enforce lines to not be much longer than 72 characters. So, for example, if you have one line where a word with four characters starts at position 70, you'll have to add a line break after that word (you are then at position 74), but don't add a line break before the word.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-10-01T07:50:25Z
+
+I just pushed a new § about dumpers
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-02T15:22:54Z
+
+I also like the idea of moving the advanced usage part into a separate file (I think it was suggested by @javiereguiluz).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-16T09:13:21Z
+
+I would really like to see this merged in this stabilization phrase
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-10-16T10:33:03Z
+
+Now that I'm done with enhancing the output (see symfony/symfony#12202), I can take screenshots :-)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-10-29T09:12:32Z
+
+So, before taking screenshot, I may wait for https://github.com/symfony/symfony/issues/12348 to be closed.
+In the meantime, I added a few §.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-10-30T10:48:37Z
+
+Help/review request: I added the paragraphs that I wanted to talk about. Please tell me if the wording is understandable enough or erroneous/has mistakes sometimes. If you see any subject that need more explanations/reorganization, please tell me also.
+
+In fact there is one topic that is missing: the example section.
+But as @WouterJ is working on the colors, I can't take screenshots :)
+Still, to prepare for them, I just created a helper for partially generating this section.
+So, here is a first list of examples:
+https://github.com/nicolas-grekas/var-dumper-doc-example
+
+Could someone please help me gather the best list that we want to put in the doc?
+Making PR on the above repo would help very much!
+
+Things that we may want to show with examples:
+- [x] basic values (scalars and arrays)
+- [x] complex values
+  - [x] objects with pub/prot/priv,
+  - [x] dynamic properties,
+  - [x] meta-datas
+- [x] soft and hard references
+- [x] objects/references handle (the `#123` numbers after each object, see https://github.com/symfony/symfony/issues/12346)
+- [x] utf8 vs non-utf8 string (`b` prefix)
+- [x] hovers titles / hover ref highlighting / children toggling in HTML mode
+- [x] control chars
+- [x] ellipsis for truncated strings/structures
+- (did I miss something?)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-11-05T08:43:41Z
+
+Call for review: I added examples and thus checked all my task items
