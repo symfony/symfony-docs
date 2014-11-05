@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-26T14:08:51Z
+
+I'm not a security guy, can you maybe add some more information about this change? (in this PR)
+
+---------------------------------------------------------------------------
+
+by Guillaume-Rossignol at 2014-10-26T14:42:59Z
+
+The pbdkf2 encoder has 4 parameters :
+
+>  /**
+     * Constructor.
+     *
+     * @param string  $algorithm          The digest algorithm to use
+     * @param bool    $encodeHashAsBase64 Whether to base64 encode the password hash
+     * @param int     $iterations         The number of iterations to use to stretch the password hash
+     * @param int     $length             Length of derived key to create
+     */
+
+but only the three first are documented in the full example.
+
+in the event of migration (django to symfony in my case) it may be necessary to play with this last parameter to be compatible with old database.
+
+---------------------------------------------------------------------------
+
+by Nek- at 2014-10-26T16:10:08Z
+
+Some options are not documented either, maybe it's an occasion to add theme : https://github.com/symfony/symfony/blob/master/src%2FSymfony%2FBundle%2FSecurityBundle%2FDependencyInjection%2FMainConfiguration.php#L421
+
+( `cost` and `ignore_case` )
+
+---------------------------------------------------------------------------
+
+by Guillaume-Rossignol at 2014-10-26T17:01:08Z
+
+`ignore_case` is used by `plain_text` encoder and this encoder is not documented.
+
+`cost` is used by `bcrypt` encoder and he has his own section (https://github.com/symfony/symfony-docs/blob/2.3/reference/configuration/security.rst#using-the-bcrypt-password-encoder). Certainly because he has more prerequite (php5.5 or ircmaxell/password-compat library).
+
+For the plain_text encoder should i :
+
+* Add a specific section with a caution about the securtiy
+* Add the encoder with a comment in the "full default configuration"
+* both
+
+And for the bcrypt encoder, should i integrate its configuration in the full example ?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T10:01:38Z
+
+@Guillaume-Rossignol thanks for starting with this and sorry for my delay... It looks great now!
+
+I don't think dedicated section should be created for the `plaintext` encoder. However, we might want to add a new section to the reference talking about all encoder types and their options. If you agree, let's do that in another PR and merge this one :)
+
+---------------------------------------------------------------------------
+
+by Guillaume-Rossignol at 2014-11-02T20:53:23Z
+
+> "he" should be "it". ("he" is only used for men in english)
+
+:cry: i'm full of shame
+
+>  However, we might want to add a new section to the reference talking about all encoder types and their options
+
+I'm not sure that my english is well enough for this exercise, but i can try during the week
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-02T22:36:14Z
+
+> :cry: i'm full of shame
+
+Don't worry, you're doing a great job! It's just a very minor thing that I also do wrong most of the time :)
+
+> I'm not sure that my english is well enough for this exercise, but i can try during the week
+
+As said, let's wait when this one is merged first. After that, feel free to start, we are here to help you with your english and all other things.
