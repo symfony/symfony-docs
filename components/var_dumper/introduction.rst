@@ -28,7 +28,7 @@ use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
 
 * Per object and resource types specialized view to e.g. filter out
   Doctrine internals while dumping a single proxy entity, or get more
-  insight on opened files with :phpfunction:`stream_get_meta_data()`;
+  insight on opened files with :phpfunction:`stream_get_meta_data`;
 * Configurable output formats: HTML or colored command line output;
 * Ability to dump internal references, either soft ones (objects or
   resources) or hard ones (``=&`` on arrays or objects properties).
@@ -36,12 +36,6 @@ use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
   again and again anymore. Moreover, you'll be able to inspect the
   reference structure of your data;
 * Ability to operate in the context of an output buffering handler.
-
-``dump()`` is just a thin wrapper and a more convenient way to call
-:method:`VarDumper::dump() <Symfony\\Component\\VarDumper\\VarDumper::dump>`.
-You can change the behavior of this function by calling
-:method:`VarDumper::setHandler($callable) <Symfony\\Component\\VarDumper\\VarDumper::setHandler>`:
-calls to ``dump()`` will then be forwarded to ``$callable``.
 
 By default, the output format and destination are selected based on your
 current PHP SAPI:
@@ -52,8 +46,9 @@ current PHP SAPI:
 * On other SAPIs, dumps are written as HTML on the regular output.
 
 .. note::
+
     If you want to catch the dump output as a string, please read the
-    `advanced documentation <advanced>` which contains examples of it.
+    `advanced documentation <advanced>`_ which contains examples of it.
     You'll also learn how to change the format or redirect the output to
     wherever you want.
 
@@ -61,7 +56,7 @@ DebugBundle and Twig Integration
 --------------------------------
 
 The ``DebugBundle`` allows greater integration of the component into the
-Symfony full stack framework. It is enabled by default in the dev
+Symfony full stack framework. It is enabled by default in the *dev* and *test*
 environement of the standard edition since version 2.6.
 
 Since generating (even debug) output in the controller or in the model
@@ -109,8 +104,108 @@ original value. You can configure the limits in terms of:
 Reading a Dump
 --------------
 
-For simple variables, reading the output should be straightforward::
+For simple variables, reading the output should be straightforward.
+Here are some examples showing first a variable defined in PHP,
+then its dump representation::
 
-    dump(array(true, 1.1, "string"));
+    $var = array(
+        'a simple string' => "in an array of 5 elements",
+        'a float' => 1.0,
+        'an integer' => 1,
+        'a boolean' => true,
+        'an empty array' => array(),
+    );
+
+.. image:: /images/components/var_dumper/01-simple.png
+
+.. note::
+
+    The gray arrow is a toggle button for hidding/showing children of
+    nested structures.
+
+.. code-block:: php
+
+    $var = "This is a multi-line string.\n";
+    $var .= "Hovering a string shows its length.\n";
+    $var .= "The length of UTF-8 strings is counted in terms of UTF-8 characters.\n";
+    $var .= "Non-UTF-8 strings length are counted in octet size.\n";
+    $var .= "Because of this `\xE9` octet (\\xE9),\n";
+    $var .= "this string is not UTF-8 valid, thus the `b` prefix.\n";
+
+.. image:: /images/components/var_dumper/02-multi-line-str.png
+
+.. code-block:: php
+
+    class PropertyExample
+    {
+        public $publicProperty = 'The `+` prefix denotes public properties,';
+        protected $protectedProperty = '`#` protected ones and `-` private ones.';
+        private $privateProperty = 'Hovering a property shows a reminder.';
+    }
+
+    $var = new PropertyExample();
+
+.. image:: /images/components/var_dumper/03-object.png
+
+.. note::
+
+    `#14` is the internal object handle. It allows comparing two
+    consecutive dumps of the same object.
+
+.. code-block:: php
+
+    class DynamicPropertyExample
+    {
+        public $declaredProperty = 'This property is declared in the class definition';
+    }
+
+    $var = new DynamicPropertyExample();
+    $var->undeclaredProperty = 'Runtime added dynamic properties have `"` around their name.';
+
+.. image:: /images/components/var_dumper/04-dynamic-property.png
+
+.. code-block:: php
+
+    class ReferenceExample
+    {
+        public $info = "Circular and sibling references are displayed as `#number`.\nHovering them highlights all instances in the same dump.\n";
+    }
+    $var = new ReferenceExample();
+    $var->aCircularReference = $var;
+
+.. image:: /images/components/var_dumper/05-soft-ref.png
+
+.. code-block:: php
+
+    $var = new \ErrorException("For some objects, properties have special values\nthat are best represented as constants, like\n`severity` below. Hovering displays the value (`2`).\n", 0, E_WARNING);
+
+.. image:: /images/components/var_dumper/06-constants.png
+
+.. code-block:: php
+
+    $var = array();
+    $var[0] = 1;
+    $var[1] =& $var[0];
+    $var[1] += 1;
+    $var[2] = array("Hard references (circular or sibling)");
+    $var[3] =& $var[2];
+    $var[3][] = "are dumped using `&number` prefixes.";
+
+.. image:: /images/components/var_dumper/07-hard-ref.png
+
+.. code-block:: php
+
+    $var = new \ArrayObject();
+    $var[] = "Some resources and special objects like the current";
+    $var[] = "one are sometimes best represented using virtual";
+    $var[] = "properties that describe their internal state.";
+
+.. image:: /images/components/var_dumper/08-virtual-property.png
+
+.. code-block:: php
+
+    $var = new AcmeController("When a dump goes over its maximum items limit,\nor when some special objects are encountered,\nchildren can be replaced by an ellipsis and\noptionnally followed by a number that says how\nmany have been removed; `9` in this case.\n");
+
+.. image:: /images/components/var_dumper/09-cut.png
 
 .. _Packagist: https://packagist.org/packages/symfony/var-dumper

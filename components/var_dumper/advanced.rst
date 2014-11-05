@@ -5,6 +5,12 @@
 Advanced Usage of the VarDumper Component
 =========================================
 
+``dump()`` function is just a thin wrapper and a more convenient way to call
+:method:`VarDumper::dump() <Symfony\\Component\\VarDumper\\VarDumper::dump>`.
+You can change the behavior of this function by calling
+:method:`VarDumper::setHandler($callable) <Symfony\\Component\\VarDumper\\VarDumper::setHandler>`:
+calls to ``dump()`` will then be forwarded to ``$callable``.
+
 Cloners
 ~~~~~~~
 
@@ -46,6 +52,7 @@ method:
   the intermediate representation internally.
 
 .. note::
+
     When no limit is applied, a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
     object is as accurate as the native :phpfunction:`serialize` function
     and thus could have a wider purpose than strictly dumping for debugging.
@@ -176,7 +183,7 @@ Here is a simple caster not doing anything::
         return $array;
     }
 
-For objects, the ``$array`` parameter comes pre-populated with PHP's native
+For objects, the ``$array`` parameter comes pre-populated using PHP's native
 ``(array)`` casting operator or with the return value of ``$object->__debugInfo()``
 if the magic method exists. Then, the return value of one Caster is given
 as argument to the next Caster in the chain.
@@ -189,5 +196,10 @@ for virtual properties and ``\0+\0`` for dynamic ones (runtime added
 properties not in the class declaration).
 
 .. note::
+
     Although you can, it is best advised not to alter the state of an object
     while casting it in a Caster.
+
+.. tip::
+
+    Before writting your own casters, you should check the existing ones.
