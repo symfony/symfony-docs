@@ -539,33 +539,28 @@ content from the template can be used to create a ``Response`` object::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    $content = $this->renderView(
-        'AcmeHelloBundle:Hello:index.html.twig',
-        array('name' => $name)
-    );
+    $content = $this->renderView('Hello/index.html.twig', array('name' => $name));
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
 returns a ``Response`` object containing the content from the template::
 
-    return $this->render(
-        'AcmeHelloBundle:Hello:index.html.twig',
-        array('name' => $name)
-    );
+    return $this->render('Hello/index.html.twig', array('name' => $name));
 
-In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
-the ``AcmeHelloBundle`` will be rendered.
+In both cases, the ``app/Resources/views/Hello/index.html.twig`` template will
+be rendered.
+
+.. sidebar:: Referencing Templates that Live inside the Bundle
+
+    You can also put templates in the ``Resources/views`` directory of a
+    bundle. You can then reference is with the
+    ``BundleName:DirectoryName:FileName`` syntax. E.g.
+    ``AppBundle:Hello:index.html.twig`` would refer to the template located in
+    ``src/AppBundle/Resources/views/Hello/index.html.twig``.
 
 The Symfony templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.
-
-.. tip::
-
-    You can even avoid calling the ``render`` method by using the ``@Template``
-    annotation. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/view>`
-    more details.
 
 .. tip::
 
@@ -573,10 +568,7 @@ The Symfony templating engine is explained in great detail in the
     service. The ``templating`` service can also be used directly::
 
         $templating = $this->get('templating');
-        $content = $templating->render(
-            'AcmeHelloBundle:Hello:index.html.twig',
-            array('name' => $name)
-        );
+        $content = $templating->render('Hello/index.html.twig', array('name' => $name));
 
 .. note::
 
@@ -584,12 +576,8 @@ The Symfony templating engine is explained in great detail in the
     be careful to avoid the pitfall of making your directory structure unduly
     elaborate::
 
-        $templating->render(
-            'AcmeHelloBundle:Hello/Greetings:index.html.twig',
-            array('name' => $name)
-        );
-        // index.html.twig found in Resources/views/Hello/Greetings
-        // is rendered.
+        $templating->render('Hello/Greetings/index.html.twig', array('name' => $name));
+        // renders app/Resources/views/Hello/Greetings/index.html.twig
 
 .. index::
    single: Controller; Accessing services
