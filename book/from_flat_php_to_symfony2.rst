@@ -580,10 +580,10 @@ them for you. Here's the same sample application, now built in Symfony::
         }
     }
 
-The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
-to retrieve objects from the database and the Templating component to
-render a template and return a ``Response`` object. The list template is
-now quite a bit simpler:
+The two controllers are still lightweight. Each uses the
+:doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
+database and the Templating component to render a template and return a
+``Response`` object. The list template is now quite a bit simpler:
 
 .. code-block:: html+php
 
