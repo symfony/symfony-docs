@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T10:05:38Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by GeertDD at 2014-10-31T10:06:38Z
+
+I based this on the 2.3 branch as asked, just don’t know where or how I can see that here on GitHub.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T10:21:27Z
+
+@GeertDD when creating the PR, you have a bar at the top which shows you the target branch and the branch of the PR. Hit "edit" and change the target branch to "2.3".
+
+You can't change the target when a PR is already opened. But no worries, our tools can cope with this, it's just a little bit easier if the PR was based on the correct branch immediately.
+
+---------------------------------------------------------------------------
+
+by GeertDD at 2014-10-31T10:36:02Z
+
+Okay, I’ll give it a try next time. Thanks, Wouter.
