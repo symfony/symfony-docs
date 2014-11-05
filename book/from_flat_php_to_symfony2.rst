@@ -561,10 +561,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render(
-                'AcmeBlogBundle:Blog:list.html.php',
-                array('posts' => $posts)
-            );
+            return $this->render('Blog/list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
@@ -579,10 +576,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render(
-                'AcmeBlogBundle:Blog:show.html.php',
-                array('post' => $post)
-            );
+            return $this->render('Blog/show.html.php', array('post' => $post));
         }
     }
 
@@ -593,8 +587,8 @@ now quite a bit simpler:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php -->
-    <?php $view->extend('::layout.html.php') ?>
+    <!-- app/Resources/views/Blog/list.html.php -->
+    <?php $view->extend('layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
 
@@ -716,8 +710,8 @@ for example, the list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
-    {% extends "::layout.html.twig" %}
+    {# app/Resources/views/Blog/list.html.twig #}
+    {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}
 
