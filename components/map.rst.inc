@@ -144,6 +144,11 @@
   * :doc:`/components/translation/usage`
   * :doc:`/components/translation/custom_formats`
 
+* :doc:`/components/var_dumper/index`
+
+  * :doc:`/components/var_dumper/introduction`
+  * :doc:`/components/var_dumper/advanced`
+
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`
