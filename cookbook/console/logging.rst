@@ -204,12 +204,8 @@ First configure a listener for console terminate events in the service container
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <parameter key="console_terminate_listener.class">Acme\DemoBundle\EventListener\ConsoleTerminateListener</parameter>
-            </parameters>
-
             <services>
-                <service id="kernel.listener.command_dispatch" class="%console_terminate_listener.class%">
+                <service id="kernel.listener.command_dispatch" class="Acme\DemoBundle\EventListener\ConsoleTerminateListener">
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
@@ -222,12 +218,8 @@ First configure a listener for console terminate events in the service container
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setParameter(
-            'console_terminate_listener.class',
-            'Acme\DemoBundle\EventListener\ConsoleTerminateListener'
-        );
         $definitionConsoleTerminateListener = new Definition(
-            '%console_terminate_listener.class%',
+            'Acme\DemoBundle\EventListener\ConsoleTerminateListener',
             array(new Reference('logger'))
         );
         $definitionConsoleTerminateListener->addTag(
