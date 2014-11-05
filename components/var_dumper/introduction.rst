@@ -37,13 +37,21 @@ use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
   reference structure of your data;
 * Ability to operate in the context of an output buffering handler.
 
+For example::
+
+    require __DIR__.'/vendor/autoload.php';
+    // create a variable, which could be anything!
+    $someVar = '...';
+
+    dump($someVar);
+
 By default, the output format and destination are selected based on your
 current PHP SAPI:
 
 * On the command line (CLI SAPI), the output is written on ``STDOUT``. This
   can be surprising to some because this bypasses PHP's output buffering
   mechanism;
-* On other SAPIs, dumps are written as HTML on the regular output.
+* On other SAPIs, dumps are written as HTML in the regular output.
 
 .. note::
 
@@ -101,8 +109,8 @@ original value. You can configure the limits in terms of:
             <config max-items="250" max-string-length="-1" />
         </container>
 
-Reading a Dump
---------------
+Dump Examples and Output
+------------------------
 
 For simple variables, reading the output should be straightforward.
 Here are some examples showing first a variable defined in PHP,
@@ -115,6 +123,7 @@ then its dump representation::
         'a boolean' => true,
         'an empty array' => array(),
     );
+    dump($var);
 
 .. image:: /images/components/var_dumper/01-simple.png
 
@@ -131,6 +140,7 @@ then its dump representation::
     $var .= "Non-UTF-8 strings length are counted in octet size.\n";
     $var .= "Because of this `\xE9` octet (\\xE9),\n";
     $var .= "this string is not UTF-8 valid, thus the `b` prefix.\n";
+    dump($var);
 
 .. image:: /images/components/var_dumper/02-multi-line-str.png
 
@@ -144,6 +154,7 @@ then its dump representation::
     }
 
     $var = new PropertyExample();
+    dump($var);
 
 .. image:: /images/components/var_dumper/03-object.png
 
@@ -161,6 +172,7 @@ then its dump representation::
 
     $var = new DynamicPropertyExample();
     $var->undeclaredProperty = 'Runtime added dynamic properties have `"` around their name.';
+    dump($var);
 
 .. image:: /images/components/var_dumper/04-dynamic-property.png
 
@@ -172,12 +184,20 @@ then its dump representation::
     }
     $var = new ReferenceExample();
     $var->aCircularReference = $var;
+    dump($var);
 
 .. image:: /images/components/var_dumper/05-soft-ref.png
 
 .. code-block:: php
 
-    $var = new \ErrorException("For some objects, properties have special values\nthat are best represented as constants, like\n`severity` below. Hovering displays the value (`2`).\n", 0, E_WARNING);
+    $var = new \ErrorException(
+        "For some objects, properties have special values
+        that are best represented as constants, like
+        `severity` below. Hovering displays the value (`2`).",
+        0,
+        E_WARNING
+    );
+    dump($var);
 
 .. image:: /images/components/var_dumper/06-constants.png
 
@@ -190,6 +210,7 @@ then its dump representation::
     $var[2] = array("Hard references (circular or sibling)");
     $var[3] =& $var[2];
     $var[3][] = "are dumped using `&number` prefixes.";
+    dump($var);
 
 .. image:: /images/components/var_dumper/07-hard-ref.png
 
@@ -199,12 +220,20 @@ then its dump representation::
     $var[] = "Some resources and special objects like the current";
     $var[] = "one are sometimes best represented using virtual";
     $var[] = "properties that describe their internal state.";
+    dump($var);
 
 .. image:: /images/components/var_dumper/08-virtual-property.png
 
 .. code-block:: php
 
-    $var = new AcmeController("When a dump goes over its maximum items limit,\nor when some special objects are encountered,\nchildren can be replaced by an ellipsis and\noptionnally followed by a number that says how\nmany have been removed; `9` in this case.\n");
+    $var = new AcmeController(
+        "When a dump goes over its maximum items limit,
+        or when some special objects are encountered,
+        children can be replaced by an ellipsis and
+        optionnally followed by a number that says how
+        many have been removed; `9` in this case."
+    );
+    dump($var);
 
 .. image:: /images/components/var_dumper/09-cut.png
 
