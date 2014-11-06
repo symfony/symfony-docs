@@ -391,9 +391,10 @@ By default, templates can live in two different locations:
   plan to share your bundle, you should put the templates in the shared bundle
   instead of the ``app/Resources/views`` directory.
 
-Symfony uses a **bundle**:**controller**:**template** string syntax for
-templates. This allows for several different types of templates, each which
-lives in a specific location:
+Symfony uses a **bundle**:**directory**:**filename** string syntax for
+templates. You can also give paths, which are relative to the
+``app/Resources/views`` directory. This allows for several different types of
+templates, each which lives in a specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
   template for a specific page. The three parts of the string, each separated
@@ -402,26 +403,26 @@ lives in a specific location:
   * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
     ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
 
-  * ``Blog``: (*controller*) indicates that the template lives inside the
+  * ``Blog``: (*directory*) indicates that the template lives inside the
     ``Blog`` subdirectory of ``Resources/views``;
 
-  * ``index.html.twig``: (*template*) the actual name of the file is
+  * ``index.html.twig``: (*filename*) the actual name of the file is
     ``index.html.twig``.
 
   Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
 * ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
-  that's specific to the ``AcmeBlogBundle``. Since the middle, "controller",
+  that's specific to the ``AcmeBlogBundle``. Since the middle, "directory",
   portion is missing (e.g. ``Blog``), the template lives at
   ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
   Yes, there are 2 colons in the middle of the string when the "controller"
   subdirectory part is missing.
 
-* ``::base.html.twig``: This syntax refers to an application-wide base template
-  or layout. Notice that the string begins with two colons (``::``), meaning
-  that both the *bundle* and *controller* portions are missing. This means
-  that the template is not located in any bundle, but instead in the root
+* ``::base.html.twig``: This syntax refers to views in ``app/Resources/views``.
+  Notice that the string begins with two colons (``::``), meaning that both the
+  *bundle* and *directory* portions are missing. This means that the template
+  is not located in any bundle, but instead in the root
   ``app/Resources/views/`` directory.
 
 * ``base.html.twig``: Equivalent to ``::base.html.twig`` and **recommended**
