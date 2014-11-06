@@ -97,7 +97,7 @@ pattern that points to a specific PHP class and method::
             $article = ...;
 
             return $this->render('Blog/show.html.twig', array(
-                'blog' => $blog,
+                'article' => $article,
             ));
         }
     }
@@ -439,15 +439,13 @@ longer required. The URL ``/blog`` will match this route and the value of
 the ``page`` parameter will be set to ``1``. The URL ``/blog/2`` will also
 match, giving the ``page`` parameter a value of ``2``. Perfect.
 
-+--------------------+-------+-----------------------+
-| URL                | route | parameters            |
-+====================+=======+=======================+
-| /blog              | blog  | {page} = 1            |
-+--------------------+-------+-----------------------+
-| /blog/1            | blog  | {page} = 1            |
-+--------------------+-------+-----------------------+
-| /blog/2            | blog  | {page} = 2            |
-+--------------------+-------+-----------------------+
+=========== ===== ==========
+URL         route parameters
+=========== ===== ==========
+``/blog``   blog  {page} = 1
+``/blog/1`` blog  {page} = 1
+``/blog/2`` blog  {page} = 2
+=========== ===== ==========
 
 .. caution::
 
@@ -660,15 +658,14 @@ URL:
 For incoming requests, the ``{culture}`` portion of the URL is matched against
 the regular expression ``(en|fr)``.
 
-+-----+--------------------------+
-| /   | {culture} = en           |
-+-----+--------------------------+
-| /en | {culture} = en           |
-+-----+--------------------------+
-| /fr | {culture} = fr           |
-+-----+--------------------------+
-| /es | *won't match this route* |
-+-----+--------------------------+
+======= ========================
+path    parameters
+======= ========================
+``/``   {culture} = en
+``/en`` {culture} = en
+``/fr`` {culture} = fr
+``/es`` *won't match this route*
+======= ========================
 
 .. index::
    single: Routing; Method requirement
@@ -884,11 +881,11 @@ each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-+----------------+------------------+-------------+
-| Bundle         | Controller Class | Method Name |
-+================+==================+=============+
-| AppBundle      | BlogController   | showAction  |
-+----------------+------------------+-------------+
+========= ================== ==============
+Bundle    Controller Class   Method Name
+========= ================== ==============
+AppBundle ``BlogController`` ``showAction``
+========= ================== ==============
 
 The controller might look like this::
 
