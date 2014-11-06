@@ -39,7 +39,7 @@ The route is simple:
         # app/config/routing.yml
         blog_show:
             path:      /blog/{slug}
-            defaults:  { _controller: AcmeBlogBundle:Blog:show }
+            defaults:  { _controller: AppBundle:Blog:show }
 
     .. code-block:: xml
 
@@ -51,7 +51,7 @@ The route is simple:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" path="/blog/{slug}">
-                <default key="_controller">AcmeBlogBundle:Blog:show</default>
+                <default key="_controller">AppBundle:Blog:show</default>
             </route>
         </routes>
 
@@ -63,7 +63,7 @@ The route is simple:
 
         $collection = new RouteCollection();
         $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:show',
+            '_controller' => 'AppBundle:Blog:show',
         )));
 
         return $collection;
@@ -84,8 +84,8 @@ should be executed when a URL matches this route. The ``_controller`` string
 is called the :ref:`logical name <controller-string-syntax>`. It follows a
 pattern that points to a specific PHP class and method::
 
-    // src/Acme/BlogBundle/Controller/BlogController.php
-    namespace Acme\BlogBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -94,9 +94,9 @@ pattern that points to a specific PHP class and method::
         public function showAction($slug)
         {
             // use the $slug variable to query the database
-            $blog = ...;
+            $article = ...;
 
-            return $this->render('AcmeBlogBundle:Blog:show.html.twig', array(
+            return $this->render('Blog/show.html.twig', array(
                 'blog' => $blog,
             ));
         }
@@ -213,7 +213,7 @@ A basic route consists of just two parts: the ``path`` to match and a
         # app/config/routing.yml
         _welcome:
             path:      /
-            defaults:  { _controller: AcmeDemoBundle:Main:homepage }
+            defaults:  { _controller: AppBundle:Main:homepage }
 
     .. code-block:: xml
 
@@ -225,7 +225,7 @@ A basic route consists of just two parts: the ``path`` to match and a
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="_welcome" path="/">
-                <default key="_controller">AcmeDemoBundle:Main:homepage</default>
+                <default key="_controller">AppBundle:Main:homepage</default>
             </route>
 
         </routes>
@@ -238,12 +238,12 @@ A basic route consists of just two parts: the ``path`` to match and a
 
         $collection = new RouteCollection();
         $collection->add('_welcome', new Route('/', array(
-            '_controller' => 'AcmeDemoBundle:Main:homepage',
+            '_controller' => 'AppBundle:Main:homepage',
         )));
 
         return $collection;
 
-This route matches the homepage (``/``) and maps it to the ``AcmeDemoBundle:Main:homepage``
+This route matches the homepage (``/``) and maps it to the ``AppBundle:Main:homepage``
 controller. The ``_controller`` string is translated by Symfony into an
 actual PHP function and executed. That process will be explained shortly
 in the :ref:`controller-string-syntax` section.
@@ -264,7 +264,7 @@ routes will contain one or more named "wildcard" placeholders:
         # app/config/routing.yml
         blog_show:
             path:      /blog/{slug}
-            defaults:  { _controller: AcmeBlogBundle:Blog:show }
+            defaults:  { _controller: AppBundle:Blog:show }
 
     .. code-block:: xml
 
@@ -276,7 +276,7 @@ routes will contain one or more named "wildcard" placeholders:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" path="/blog/{slug}">
-                <default key="_controller">AcmeBlogBundle:Blog:show</default>
+                <default key="_controller">AppBundle:Blog:show</default>
             </route>
         </routes>
 
@@ -288,7 +288,7 @@ routes will contain one or more named "wildcard" placeholders:
 
         $collection = new RouteCollection();
         $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:show',
+            '_controller' => 'AppBundle:Blog:show',
         )));
 
         return $collection;
@@ -316,7 +316,7 @@ the available blog posts for this imaginary blog application:
         # app/config/routing.yml
         blog:
             path:      /blog
-            defaults:  { _controller: AcmeBlogBundle:Blog:index }
+            defaults:  { _controller: AppBundle:Blog:index }
 
     .. code-block:: xml
 
@@ -328,7 +328,7 @@ the available blog posts for this imaginary blog application:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog">
-                <default key="_controller">AcmeBlogBundle:Blog:index</default>
+                <default key="_controller">AppBundle:Blog:index</default>
             </route>
         </routes>
 
@@ -340,7 +340,7 @@ the available blog posts for this imaginary blog application:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog', array(
-            '_controller' => 'AcmeBlogBundle:Blog:index',
+            '_controller' => 'AppBundle:Blog:index',
         )));
 
         return $collection;
@@ -357,7 +357,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
         # app/config/routing.yml
         blog:
             path:      /blog/{page}
-            defaults:  { _controller: AcmeBlogBundle:Blog:index }
+            defaults:  { _controller: AppBundle:Blog:index }
 
     .. code-block:: xml
 
@@ -369,7 +369,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AcmeBlogBundle:Blog:index</default>
+                <default key="_controller">AppBundle:Blog:index</default>
             </route>
         </routes>
 
@@ -381,7 +381,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:index',
+            '_controller' => 'AppBundle:Blog:index',
         )));
 
         return $collection;
@@ -403,7 +403,7 @@ This is done by including it in the ``defaults`` collection:
         # app/config/routing.yml
         blog:
             path:      /blog/{page}
-            defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
+            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
 
     .. code-block:: xml
 
@@ -415,7 +415,7 @@ This is done by including it in the ``defaults`` collection:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AcmeBlogBundle:Blog:index</default>
+                <default key="_controller">AppBundle:Blog:index</default>
                 <default key="page">1</default>
             </route>
         </routes>
@@ -428,7 +428,7 @@ This is done by including it in the ``defaults`` collection:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:index',
+            '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
         )));
 
@@ -476,11 +476,11 @@ Take a quick look at the routes that have been created so far:
         # app/config/routing.yml
         blog:
             path:      /blog/{page}
-            defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
+            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
 
         blog_show:
             path:      /blog/{slug}
-            defaults:  { _controller: AcmeBlogBundle:Blog:show }
+            defaults:  { _controller: AppBundle:Blog:show }
 
     .. code-block:: xml
 
@@ -492,12 +492,12 @@ Take a quick look at the routes that have been created so far:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AcmeBlogBundle:Blog:index</default>
+                <default key="_controller">AppBundle:Blog:index</default>
                 <default key="page">1</default>
             </route>
 
             <route id="blog_show" path="/blog/{slug}">
-                <default key="_controller">AcmeBlogBundle:Blog:show</default>
+                <default key="_controller">AppBundle:Blog:show</default>
             </route>
         </routes>
 
@@ -509,12 +509,12 @@ Take a quick look at the routes that have been created so far:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:index',
+            '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
         )));
 
         $collection->add('blog_show', new Route('/blog/{show}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:show',
+            '_controller' => 'AppBundle:Blog:show',
         )));
 
         return $collection;
@@ -546,7 +546,7 @@ requirements can easily be added for each parameter. For example:
         # app/config/routing.yml
         blog:
             path:      /blog/{page}
-            defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
+            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
             requirements:
                 page:  \d+
 
@@ -560,7 +560,7 @@ requirements can easily be added for each parameter. For example:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AcmeBlogBundle:Blog:index</default>
+                <default key="_controller">AppBundle:Blog:index</default>
                 <default key="page">1</default>
                 <requirement key="page">\d+</requirement>
             </route>
@@ -574,7 +574,7 @@ requirements can easily be added for each parameter. For example:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AcmeBlogBundle:Blog:index',
+            '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
         ), array(
             'page' => '\d+',
@@ -621,7 +621,7 @@ URL:
         # app/config/routing.yml
         homepage:
             path:      /{culture}
-            defaults:  { _controller: AcmeDemoBundle:Main:homepage, culture: en }
+            defaults:  { _controller: AppBundle:Main:homepage, culture: en }
             requirements:
                 culture:  en|fr
 
@@ -635,7 +635,7 @@ URL:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" path="/{culture}">
-                <default key="_controller">AcmeDemoBundle:Main:homepage</default>
+                <default key="_controller">AppBundle:Main:homepage</default>
                 <default key="culture">en</default>
                 <requirement key="culture">en|fr</requirement>
             </route>
@@ -649,7 +649,7 @@ URL:
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/{culture}', array(
-            '_controller' => 'AcmeDemoBundle:Main:homepage',
+            '_controller' => 'AppBundle:Main:homepage',
             'culture'     => 'en',
         ), array(
             'culture' => 'en|fr',
@@ -689,12 +689,12 @@ be accomplished with the following route configuration:
         # app/config/routing.yml
         contact:
             path:     /contact
-            defaults: { _controller: AcmeDemoBundle:Main:contact }
+            defaults: { _controller: AppBundle:Main:contact }
             methods:  [GET]
 
         contact_process:
             path:     /contact
-            defaults: { _controller: AcmeDemoBundle:Main:contactProcess }
+            defaults: { _controller: AppBundle:Main:contactProcess }
             methods:  [POST]
 
     .. code-block:: xml
@@ -707,11 +707,11 @@ be accomplished with the following route configuration:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/contact" methods="GET">
-                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+                <default key="_controller">AppBundle:Main:contact</default>
             </route>
 
             <route id="contact_process" path="/contact" methods="POST">
-                <default key="_controller">AcmeDemoBundle:Main:contactProcess</default>
+                <default key="_controller">AppBundle:Main:contactProcess</default>
             </route>
         </routes>
 
@@ -723,11 +723,11 @@ be accomplished with the following route configuration:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
-            '_controller' => 'AcmeDemoBundle:Main:contact',
+            '_controller' => 'AppBundle:Main:contact',
         ), array(), array(), '', array(), array('GET')));
 
         $collection->add('contact_process', new Route('/contact', array(
-            '_controller' => 'AcmeDemoBundle:Main:contactProcess',
+            '_controller' => 'AppBundle:Main:contactProcess',
         ), array(), array(), '', array(), array('POST')));
 
         return $collection;
@@ -775,7 +775,7 @@ routing system can be:
         # app/config/routing.yml
         article_show:
           path:     /articles/{culture}/{year}/{title}.{_format}
-          defaults: { _controller: AcmeDemoBundle:Article:show, _format: html }
+          defaults: { _controller: AppBundle:Article:show, _format: html }
           requirements:
               culture:  en|fr
               _format:  html|rss
@@ -793,7 +793,7 @@ routing system can be:
             <route id="article_show"
                 path="/articles/{culture}/{year}/{title}.{_format}">
 
-                <default key="_controller">AcmeDemoBundle:Article:show</default>
+                <default key="_controller">AppBundle:Article:show</default>
                 <default key="_format">html</default>
                 <requirement key="culture">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
@@ -812,7 +812,7 @@ routing system can be:
         $collection->add(
             'article_show',
             new Route('/articles/{culture}/{year}/{title}.{_format}', array(
-                '_controller' => 'AcmeDemoBundle:Article:show',
+                '_controller' => 'AppBundle:Article:show',
                 '_format'     => 'html',
             ), array(
                 'culture' => 'en|fr',
@@ -882,18 +882,18 @@ each separated by a colon:
 
     **bundle**:**controller**:**action**
 
-For example, a ``_controller`` value of ``AcmeBlogBundle:Blog:show`` means:
+For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
 +----------------+------------------+-------------+
 | Bundle         | Controller Class | Method Name |
 +================+==================+=============+
-| AcmeBlogBundle | BlogController   | showAction  |
+| AppBundle      | BlogController   | showAction  |
 +----------------+------------------+-------------+
 
 The controller might look like this::
 
-    // src/Acme/BlogBundle/Controller/BlogController.php
-    namespace Acme\BlogBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -967,18 +967,18 @@ see :doc:`/cookbook/routing/extra_information`.
 Including External Routing Resources
 ------------------------------------
 
-All routes are loaded via a single configuration file - usually ``app/config/routing.yml``
-(see `Creating Routes`_ above). Commonly, however, you'll want to load routes
-from other places, like a routing file that lives inside a bundle. This can
-be done by "importing" that file:
+All routes are loaded via a single configuration file - usually
+``app/config/routing.yml`` (see `Creating Routes`_ above). Commonly, however,
+you'll want to load routes from other places, like a routing file that lives
+inside a bundle. This can be done by "importing" that file:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/routing.yml
-        acme_hello:
-            resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+        app:
+            resource: "@AppBundle/Resources/config/routing.yml"
 
     .. code-block:: xml
 
@@ -989,7 +989,7 @@ be done by "importing" that file:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeHelloBundle/Resources/config/routing.xml" />
+            <import resource="@AppBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -999,18 +999,18 @@ be done by "importing" that file:
 
         $collection = new RouteCollection();
         $collection->addCollection(
-            $loader->import("@AcmeHelloBundle/Resources/config/routing.php")
+            $loader->import("@AppBundle/Resources/config/routing.php")
         );
 
         return $collection;
 
 .. note::
 
-   When importing resources from YAML, the key (e.g. ``acme_hello``) is meaningless.
+   When importing resources from YAML, the key (e.g. ``app``) is meaningless.
    Just be sure that it's unique so no other lines override it.
 
 The ``resource`` key loads the given routing resource. In this example the
-resource is the full path to a file, where the ``@AcmeHelloBundle`` shortcut
+resource is the full path to a file, where the ``@AppBundle`` shortcut
 syntax resolves to the path of that bundle. The imported file might look
 like this:
 
@@ -1018,14 +1018,14 @@ like this:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/routing.yml
-       acme_hello:
+        # src/AppBundle/Resources/config/routing.yml
+       app:
             path:     /hello/{name}
-            defaults: { _controller: AcmeHelloBundle:Hello:index }
+            defaults: { _controller: AppBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/AppBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1033,19 +1033,19 @@ like this:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="acme_hello" path="/hello/{name}">
-                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+                <default key="_controller">AppBundle:Hello:index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/routing.php
+        // src/AppBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('acme_hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeHelloBundle:Hello:index',
+            '_controller' => 'AppBundle:Hello:index',
         )));
 
         return $collection;
@@ -1057,7 +1057,7 @@ Prefixing Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
-suppose you want the ``acme_hello`` route to have a final path of ``/admin/hello/{name}``
+suppose you want the ``app`` routes to have a final path of ``/admin/hello/{name}``
 instead of simply ``/hello/{name}``:
 
 .. configuration-block::
@@ -1065,8 +1065,8 @@ instead of simply ``/hello/{name}``:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        acme_hello:
-            resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+        app:
+            resource: "@AppBundle/Resources/config/routing.yml"
             prefix:   /admin
 
     .. code-block:: xml
@@ -1079,7 +1079,7 @@ instead of simply ``/hello/{name}``:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import
-                resource="@AcmeHelloBundle/Resources/config/routing.xml"
+                resource="@AppBundle/Resources/config/routing.xml"
                 prefix="/admin" />
         </routes>
 
@@ -1088,11 +1088,11 @@ instead of simply ``/hello/{name}``:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $acmeHello = $loader->import('@AcmeHelloBundle/Resources/config/routing.php');
-        $acmeHello->addPrefix('/admin');
+        $app = $loader->import('@AppBundle/Resources/config/routing.php');
+        $app->addPrefix('/admin');
 
         $collection = new RouteCollection();
-        $collection->addCollection($acmeHello);
+        $collection->addCollection($app);
 
         return $collection;
 
@@ -1177,7 +1177,7 @@ system. Take the ``blog_show`` example route from earlier::
     $params = $this->get('router')->match('/blog/my-blog-post');
     // array(
     //     'slug'        => 'my-blog-post',
-    //     '_controller' => 'AcmeBlogBundle:Blog:show',
+    //     '_controller' => 'AppBundle:Blog:show',
     // )
 
     $uri = $this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'));
