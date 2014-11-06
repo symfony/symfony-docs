@@ -16,8 +16,8 @@ code.
 
 .. note::
 
-    How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
-    page of the book.
+    How to render templates is covered in the
+    :ref:`controller <controller-rendering-templates>` page of the book.
 
 .. index::
    single: Templating; What is a template?
@@ -355,15 +355,15 @@ When working with template inheritance, here are some tips to keep in mind:
   can use the ``{{ parent() }}`` function. This is useful if you want to add
   to the contents of a parent block instead of completely overriding it:
 
-    .. code-block:: html+jinja
+  .. code-block:: html+jinja
 
-        {% block sidebar %}
-            <h3>Table of Contents</h3>
+      {% block sidebar %}
+          <h3>Table of Contents</h3>
 
-            {# ... #}
+          {# ... #}
 
-            {{ parent() }}
-        {% endblock %}
+          {{ parent() }}
+      {% endblock %}
 
 .. index::
    single: Templating; Naming conventions
@@ -444,9 +444,13 @@ Template Suffix
 Every template name also has two extensions that specify the *format* and
 *engine* for that template.
 
-* **Blog/index.html.twig** - HTML format, Twig engine
-* **Blog/index.html.php** - HTML format, PHP engine
-* **Blog/index.css.twig** - CSS format, Twig engine
+======================== ====== ======
+Filename                 Format Engine
+======================== ====== ======
+``Blog/index.html.twig`` HTML   Twig
+``Blog/index.html.php``  HTML   PHP
+``Blog/index.css.twig``  CSS    Twig
+======================== ====== ======
 
 By default, any Symfony template can be written in either Twig or PHP, and
 the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
@@ -556,7 +560,7 @@ Including this template from any other template is simple:
                     'Article/articleDetails.html.php',
                     array('article' => $article)
                 ) ?>
-            <?php endforeach; ?>
+            <?php endforeach ?>
         <?php $view['slots']->stop() ?>
 
 The template is included using the ``{{ include() }}`` function. Notice that the
@@ -594,6 +598,10 @@ template. First, create a controller that renders a certain number of recent
 articles::
 
     // src/AppBundle/Controller/ArticleController.php
+    namespace AppBundle\Controller;
+
+    // ...
+
     class ArticleController extends Controller
     {
         public function recentArticlesAction($max = 3)
@@ -1227,11 +1235,11 @@ bundles (see `KnpBundles.com`_) for a large number of different features.
 Once you use a third-party bundle, you'll likely need to override and customize
 one or more of its templates.
 
-Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
-project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
-really happy with everything, you want to override the blog "list" page to
-customize the markup specifically for your application. By digging into the
-``Blog`` controller of the ``AcmeBlogBundle``, you find the following::
+Suppose you've installed the imaginary open-source ``AcmeBlogBundle`` in your
+project. And while you're really happy with everything, you want to override
+the blog "list" page to customize the markup specifically for your application.
+By digging into the ``Blog`` controller of the ``AcmeBlogBundle``, you find the
+following::
 
     public function indexAction()
     {
