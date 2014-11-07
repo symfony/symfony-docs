@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-19T15:45:57Z
+
+Thanks @stof, I applied both comments.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T10:57:40Z
+
+Thanks @xabbuh ! I've fixed them all
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-31T22:14:11Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-05T17:14:13Z
+
+I think this is really great - it will be possible now to link to specific things and we won't be squeezed into the little table. The table was a great start, now we're growing out of it :).
+
+With the limited markup control we have, what do you think about trying to create *something* at the top of this page like the table-of-contents that Twig has on its docs (scroll down to "Twig Reference": http://twig.sensiolabs.org/documentation).
+
+We don't have a lot of space to work with, so here's my idea:
+
+1) At the top of the article, just have a list (with links of):
+
+```rst
+* Functions
+* Filters
+* etc
+```
+
+At the top of each section, have a list of the individual items themselves (as links of course):
+
+```rst
+Functions
+---------
+
+* `path()`
+* `asset()`
+* etc
+```
+
+What do you think? Any improvements on this idea?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-06T16:32:23Z
+
+> What do you think? Any improvements on this idea?
+
+We already have a table of contents which, due tot the document outline, will be ordered as:
+
+ * Functions
+    * render
+    * render_esi
+    * ...
+ * Filters
+    * ...
+ * Tests
+    * ...
+
+I don't see how links will make this better, apart from it making the document very long
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-06T20:35:41Z
+
+The issue with the TOC is that you first have to scroll down to reach it if you don't have a very large screen. Though I'm not sure if this fact really justifies adding links to the sections to the top of this document.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-07T03:00:38Z
+
+I agree with @xabbuh, I think the left TOC won't be much help because of the length on this document. Let's just merge this in and see how it looks (to decide if we want header-links at the top and possibly specific links at the top of each section).
