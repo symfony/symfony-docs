@@ -102,7 +102,7 @@ the view layer, this work is done in your templates:
             array('yui_js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -130,7 +130,7 @@ can be repeated to minify your stylesheets.
             array('yui_css')
         ) as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Disable Minification in Debug Mode
 ----------------------------------
@@ -156,7 +156,7 @@ apply this filter when debug mode is off.
             array('?yui_js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. tip::
 

@@ -46,7 +46,7 @@ template - a text file parsed by PHP that contains a mix of text and PHP code:
                             <?php echo $item->getCaption() ?>
                         </a>
                     </li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         </body>
     </html>
@@ -233,7 +233,7 @@ First, build a base layout file:
                             <li><a href="/">Home</a></li>
                             <li><a href="/blog">Blog</a></li>
                         </ul>
-                    <?php endif; ?>
+                    <?php endif ?>
                 </div>
 
                 <div id="content">
@@ -283,7 +283,7 @@ A child template might look like this:
             <?php foreach ($blog_entries as $entry): ?>
                 <h2><?php echo $entry->getTitle() ?></h2>
                 <p><?php echo $entry->getBody() ?></p>
-            <?php endforeach; ?>
+            <?php endforeach ?>
         <?php $view['slots']->stop() ?>
 
 .. note::
@@ -637,7 +637,7 @@ The ``recentList`` template is perfectly straightforward:
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
             </a>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -967,7 +967,7 @@ correctly:
             )) ?>">
                 <?php echo $article->getTitle() ?>
             </a>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. tip::
 
@@ -1141,7 +1141,7 @@ automatically:
         <?php if ($app->getDebug()): ?>
             <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
-        <?php endif; ?>
+        <?php endif ?>
 
 .. tip::
 
