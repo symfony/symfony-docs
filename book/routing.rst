@@ -34,6 +34,25 @@ The route is simple:
 
 .. configuration-block::
 
+    .. code-block:: php-annotation
+
+        // src/AppBundle/Controller/BlogController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{slug}")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -79,28 +98,14 @@ for you to use in your controller (keep reading). The ``blog_show`` is the
 internal name of the route, which doesn't have any meaning yet and just needs
 to be unique. Later, you'll use it to generate URLs.
 
-The ``_controller`` parameter is a special key that tells Symfony which controller
-should be executed when a URL matches this route. The ``_controller`` string
-is called the :ref:`logical name <controller-string-syntax>`. It follows a
-pattern that points to a specific PHP class and method::
-
-    // src/AppBundle/Controller/BlogController.php
-    namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class BlogController extends Controller
-    {
-        public function showAction($slug)
-        {
-            // use the $slug variable to query the database
-            $article = ...;
-
-            return $this->render('Blog/show.html.twig', array(
-                'article' => $article,
-            ));
-        }
-    }
+If you don't want to use annotations, because you don't like them or because
+you don't want to depend on the SensioFrameworkExtraBundle, you can also use
+Yaml, XML or PHP. In these formats, the ``_controller`` parameter is a special
+key that tells Symfony which controller should be executed when a URL matches
+this route. The ``_controller`` string is called the
+:ref:`logical name <controller-string-syntax>`. It follows a pattern that
+points to a specific PHP class and method, in this case the
+``AppBundle\Controller\BlogController::showAction`` method.
 
 Congratulations! You've just created your first route and connected it to
 a controller. Now, when you visit ``/blog/my-post``, the ``showAction`` controller
@@ -163,7 +168,7 @@ file:
         # app/config/config.yml
         framework:
             # ...
-            router:        { resource: "%kernel.root_dir%/config/routing.yml" }
+            router: { resource: "%kernel.root_dir%/config/routing.yml" }
 
     .. code-block:: xml
 
@@ -208,6 +213,22 @@ A basic route consists of just two parts: the ``path`` to match and a
 
 .. configuration-block::
 
+    .. code-block:: php-annotation
+
+        // src/AppBundle/Controller/MainController.php
+
+        // ...
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/")
+             */
+            public function homepageAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -243,10 +264,10 @@ A basic route consists of just two parts: the ``path`` to match and a
 
         return $collection;
 
-This route matches the homepage (``/``) and maps it to the ``AppBundle:Main:homepage``
-controller. The ``_controller`` string is translated by Symfony into an
-actual PHP function and executed. That process will be explained shortly
-in the :ref:`controller-string-syntax` section.
+This route matches the homepage (``/``) and maps it to the
+``AppBundle:Main:homepage`` controller. The ``_controller`` string is
+translated by Symfony into an actual PHP function and executed. That process
+will be explained shortly in the :ref:`controller-string-syntax` section.
 
 .. index::
    single: Routing; Placeholders
@@ -258,6 +279,22 @@ Of course the routing system supports much more interesting routes. Many
 routes will contain one or more named "wildcard" placeholders:
 
 .. configuration-block::
+
+    .. code-block:: php-annotation
+
+        // src/AppBundle/Controller/BlogController.php
+
+        // ...
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{slug}")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
@@ -311,6 +348,24 @@ the available blog posts for this imaginary blog application:
 
 .. configuration-block::
 
+    .. code-block:: php-annotation
+
+        // src/AppBundle/Controller/BlogController.php
+
+        // ...
+        class BlogController extends Controller
+        {
+            // ...
+
+            /**
+             * @Route("/blog")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -351,6 +406,20 @@ to support pagination, where ``/blog/2`` displays the second page of blog
 entries? Update the route to have a new ``{page}`` placeholder:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/BlogController.php
+        
+        // ...
+
+        /**
+         * @Route("/blog/{page}")
+         */
+        public function indexAction($page)
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -397,6 +466,20 @@ app to behave, modify the route to make the ``{page}`` parameter optional.
 This is done by including it in the ``defaults`` collection:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/BlogController.php
+        
+        // ...
+
+        /**
+         * @Route("/blog/{page}", defaults={"page" = 1})
+         */
+        public function indexAction($page)
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -449,10 +532,10 @@ URL         route parameters
 
 .. caution::
 
-    Of course, you can have more than one optional placeholder (e.g. ``/blog/{slug}/{page}``),
-    but everything after an optional placeholder must be optional. For example,
-    ``/{page}/blog`` is a valid path, but ``page`` will always be required
-    (i.e. simply ``/blog`` will not match this route).
+    Of course, you can have more than one optional placeholder (e.g.
+    ``/blog/{slug}/{page}``), but everything after an optional placeholder must
+    be optional. For example, ``/{page}/blog`` is a valid path, but ``page``
+    will always be required (i.e. simply ``/blog`` will not match this route).
 
 .. tip::
 
@@ -468,6 +551,30 @@ Adding Requirements
 Take a quick look at the routes that have been created so far:
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/BlogController.php
+        
+        // ...
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page}", defaults={"page" = 1})
+             */
+            public function indexAction($page)
+            {
+                // ...
+            }
+
+            /**
+             * @Route("/blog/{slug}")
+             */
+            public function showAction($slug)
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
@@ -538,6 +645,20 @@ URLs where the ``{page}`` portion is an integer. Fortunately, regular expression
 requirements can easily be added for each parameter. For example:
 
 .. configuration-block::
+
+    .. code-block:: php
+
+        // src/AppBundle/Controller/BlogController.php
+
+        // ...
+
+        /**
+         * @Route("/blog/{page}", defaults={"page": 1}, requirements={"page": "\d+"})
+         */
+        public function indexAction($page)
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -614,14 +735,29 @@ URL:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/MainController.php
+        
+        // ...
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/{_locale}", defaults={"_locale": "en"}, requirements={"_locale": "en|fr"})
+             */
+            public function homepageAction($_locale)
+            {
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
         homepage:
-            path:      /{culture}
-            defaults:  { _controller: AppBundle:Main:homepage, culture: en }
+            path:      /{_locale}
+            defaults:  { _controller: AppBundle:Main:homepage, _locale: en }
             requirements:
-                culture:  en|fr
+                _locale:  en|fr
 
     .. code-block:: xml
 
@@ -632,10 +768,10 @@ URL:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="homepage" path="/{culture}">
+            <route id="homepage" path="/{_locale}">
                 <default key="_controller">AppBundle:Main:homepage</default>
-                <default key="culture">en</default>
-                <requirement key="culture">en|fr</requirement>
+                <default key="_locale">en</default>
+                <requirement key="_locale">en|fr</requirement>
             </route>
         </routes>
 
@@ -646,24 +782,24 @@ URL:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/{culture}', array(
+        $collection->add('homepage', new Route('/{_locale}', array(
             '_controller' => 'AppBundle:Main:homepage',
-            'culture'     => 'en',
+            '_locale'     => 'en',
         ), array(
-            'culture' => 'en|fr',
+            '_locale' => 'en|fr',
         )));
 
         return $collection;
 
-For incoming requests, the ``{culture}`` portion of the URL is matched against
+For incoming requests, the ``{_locale}`` portion of the URL is matched against
 the regular expression ``(en|fr)``.
 
 ======= ========================
 path    parameters
 ======= ========================
-``/``   {culture} = en
-``/en`` {culture} = en
-``/fr`` {culture} = fr
+``/``   {_locale} = en
+``/en`` {_locale} = en
+``/fr`` {_locale} = fr
 ``/es`` *won't match this route*
 ======= ========================
 
@@ -681,6 +817,35 @@ be accomplished with the following route configuration:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/MainController.php
+        namespace AppBundle\Controller;
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+        // ...
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/contact")
+             * @Method("GET")
+             */
+            public function contactAction()
+            {
+                // ... display contact form
+            }
+
+            /**
+             * @Route("/contact")
+             * @Method("POST")
+             */
+            public function processContactAction()
+            {
+                // ... process contact form
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -691,7 +856,7 @@ be accomplished with the following route configuration:
 
         contact_process:
             path:     /contact
-            defaults: { _controller: AppBundle:Main:contactProcess }
+            defaults: { _controller: AppBundle:Main:processContact }
             methods:  [POST]
 
     .. code-block:: xml
@@ -708,7 +873,7 @@ be accomplished with the following route configuration:
             </route>
 
             <route id="contact_process" path="/contact" methods="POST">
-                <default key="_controller">AppBundle:Main:contactProcess</default>
+                <default key="_controller">AppBundle:Main:processContact</default>
             </route>
         </routes>
 
@@ -724,7 +889,7 @@ be accomplished with the following route configuration:
         ), array(), array(), '', array(), array('GET')));
 
         $collection->add('contact_process', new Route('/contact', array(
-            '_controller' => 'AppBundle:Main:contactProcess',
+            '_controller' => 'AppBundle:Main:processContact',
         ), array(), array(), '', array(), array('POST')));
 
         return $collection;
@@ -767,14 +932,33 @@ routing system can be:
 
 .. configuration-block::
 
+    .. code-block:: php-annotation
+
+        // src/AppBundle/Controller/ArticleController.php
+
+        // ...
+        class ArticleController extends Controller
+        {
+            /**
+             * @Route(
+             *     "/articles/{_locale}/{year}/{title}.{_format}",
+             *     defaults: {"_format": "html"}
+             *     requirements: {"_locale": "en|fr", "_format": "html|rss", "year": "\d+"}
+             * )
+             */
+            public function showAction($_locale, $year, $title)
+            {
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
         article_show:
-          path:     /articles/{culture}/{year}/{title}.{_format}
+          path:     /articles/{_locale}/{year}/{title}.{_format}
           defaults: { _controller: AppBundle:Article:show, _format: html }
           requirements:
-              culture:  en|fr
+              _locale:  en|fr
               _format:  html|rss
               year:     \d+
 
@@ -788,11 +972,11 @@ routing system can be:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show"
-                path="/articles/{culture}/{year}/{title}.{_format}">
+                path="/articles/{_locale}/{year}/{title}.{_format}">
 
                 <default key="_controller">AppBundle:Article:show</default>
                 <default key="_format">html</default>
-                <requirement key="culture">en|fr</requirement>
+                <requirement key="_locale">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
                 <requirement key="year">\d+</requirement>
 
@@ -808,11 +992,11 @@ routing system can be:
         $collection = new RouteCollection();
         $collection->add(
             'article_show',
-            new Route('/articles/{culture}/{year}/{title}.{_format}', array(
+            new Route('/articles/{_locale}/{year}/{title}.{_format}', array(
                 '_controller' => 'AppBundle:Article:show',
                 '_format'     => 'html',
             ), array(
-                'culture' => 'en|fr',
+                '_locale' => 'en|fr',
                 '_format' => 'html|rss',
                 'year'    => '\d+',
             ))
@@ -820,7 +1004,7 @@ routing system can be:
 
         return $collection;
 
-As you've seen, this route will only match if the ``{culture}`` portion of
+As you've seen, this route will only match if the ``{_locale}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
 route also shows how you can use a dot between placeholders instead of
 a slash. URLs matching this route might look like:
@@ -937,11 +1121,12 @@ for a route parameter of that name and assigns its value to that argument.
 In the advanced example above, any combination (in any order) of the following
 variables could be used as arguments to the ``showAction()`` method:
 
-* ``$culture``
+* ``$_locale``
 * ``$year``
 * ``$title``
 * ``$_format``
 * ``$_controller``
+* ``$_route``
 
 Since the placeholders and ``defaults`` collection are merged together, even
 the ``$_controller`` variable is available. For a more detailed discussion,
@@ -949,8 +1134,8 @@ see :ref:`route-parameters-controller-arguments`.
 
 .. tip::
 
-    You can also use a special ``$_route`` variable, which is set to the
-    name of the route that was matched.
+    The special ``$_route`` variable is set to the name of the route that was
+    matced.
 
 You can even add extra information to your route definition and access it
 within your controller. For more information on this topic,
@@ -1134,7 +1319,7 @@ your application:
     homepage              ANY       /
     contact               GET       /contact
     contact_process       POST      /contact
-    article_show          ANY       /articles/{culture}/{year}/{title}.{_format}
+    article_show          ANY       /articles/{_locale}/{year}/{title}.{_format}
     blog                  ANY       /blog/{page}
     blog_show             ANY       /blog/{slug}
 
