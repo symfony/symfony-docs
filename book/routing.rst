@@ -1150,9 +1150,10 @@ Including External Routing Resources
 ------------------------------------
 
 All routes are loaded via a single configuration file - usually
-``app/config/routing.yml`` (see `Creating Routes`_ above). Commonly, however,
-you'll want to load routes from other places, like a routing file that lives
-inside a bundle. This can be done by "importing" that file:
+``app/config/routing.yml`` (see `Creating Routes`_ above). However, if you use
+routing annotations, you'll need to point the router to the controllers with
+the annotations. This can be done by "importing" directories into the routing
+configuration:
 
 .. configuration-block::
 
@@ -1160,7 +1161,8 @@ inside a bundle. This can be done by "importing" that file:
 
         # app/config/routing.yml
         app:
-            resource: "@AppBundle/Resources/config/routing.yml"
+            resource: "@AppBundle/Controller/"
+            type:     annotation # required to enable the Annotation reader for this resource
 
     .. code-block:: xml
 
@@ -1171,7 +1173,8 @@ inside a bundle. This can be done by "importing" that file:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AppBundle/Resources/config/routing.xml" />
+            <!-- the type is required to enable the annotation reader for this resource -->
+            <import resource="@AppBundle/Controller/" type="annotation"/>
         </routes>
 
     .. code-block:: php
@@ -1181,7 +1184,9 @@ inside a bundle. This can be done by "importing" that file:
 
         $collection = new RouteCollection();
         $collection->addCollection(
-            $loader->import("@AppBundle/Resources/config/routing.php")
+            // second argument is the type, which is required to enable the annotation reader
+            // for this resource
+            $loader->import("@AppBundle/Controller/", "annotation")
         );
 
         return $collection;
@@ -1192,55 +1197,53 @@ inside a bundle. This can be done by "importing" that file:
    Just be sure that it's unique so no other lines override it.
 
 The ``resource`` key loads the given routing resource. In this example the
-resource is the full path to a file, where the ``@AppBundle`` shortcut
-syntax resolves to the path of that bundle. The imported file might look
-like this:
+resource is a directory, where the ``@AppBundle`` shortcut syntax resolves to
+the full path of the AppBundle. When pointing to a directory, all files in that
+directory are parsed and put into the routing.
 
-.. configuration-block::
+.. note::
 
-    .. code-block:: yaml
+    You can also include other routing configuration files, this is often used
+    to import the routing of third party bundles:
 
-        # src/AppBundle/Resources/config/routing.yml
-       app:
-            path:     /hello/{name}
-            defaults: { _controller: AppBundle:Hello:index }
+    .. configuration-block::
 
-    .. code-block:: xml
+        .. code-block:: yaml
 
-        <!-- src/AppBundle/Resources/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+            # app/config/routing.yml
+            app:
+                resource: "@AcmeOtherBundle/Resources/config/routing.yml"
 
-            <route id="acme_hello" path="/hello/{name}">
-                <default key="_controller">AppBundle:Hello:index</default>
-            </route>
-        </routes>
+        .. code-block:: xml
 
-    .. code-block:: php
+            <!-- app/config/routing.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    http://symfony.com/schema/routing/routing-1.0.xsd">
 
-        // src/AppBundle/Resources/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+                <import resource="@AcmeOtherBundle/Resources/config/routing.xml" />
+            </routes>
 
-        $collection = new RouteCollection();
-        $collection->add('acme_hello', new Route('/hello/{name}', array(
-            '_controller' => 'AppBundle:Hello:index',
-        )));
+        .. code-block:: php
 
-        return $collection;
+            // app/config/routing.php
+            use Symfony\Component\Routing\RouteCollection;
 
-The routes from this file are parsed and loaded in the same way as the main
-routing file.
+            $collection = new RouteCollection();
+            $collection->addCollection(
+                $loader->import("@AcmeOtherBundle/Resources/config/routing.php")
+            );
+
+            return $collection;
 
 Prefixing Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
-suppose you want the ``app`` routes to have a final path of ``/admin/hello/{name}``
-instead of simply ``/hello/{name}``:
+suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
+``/site/blog/{slug}`` instead of ``/blog/{slug}``):
 
 .. configuration-block::
 
@@ -1248,8 +1251,9 @@ instead of simply ``/hello/{name}``:
 
         # app/config/routing.yml
         app:
-            resource: "@AppBundle/Resources/config/routing.yml"
-            prefix:   /admin
+            resource: "@AppBundle/Controller/"
+            type:     annotation
+            prefix:   /site
 
     .. code-block:: xml
 
@@ -1261,8 +1265,9 @@ instead of simply ``/hello/{name}``:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import
-                resource="@AppBundle/Resources/config/routing.xml"
-                prefix="/admin" />
+                resource="@AppBundle/Controller/"
+                type="annotation"
+                prefix="/site" />
         </routes>
 
     .. code-block:: php
@@ -1270,22 +1275,16 @@ instead of simply ``/hello/{name}``:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $app = $loader->import('@AppBundle/Resources/config/routing.php');
-        $app->addPrefix('/admin');
+        $app = $loader->import('@AppBundle/Controller/');
+        $app->addPrefix('/site');
 
         $collection = new RouteCollection();
         $collection->addCollection($app);
 
         return $collection;
 
-The string ``/admin`` will now be prepended to the path of each route loaded
+The string ``/site`` will now be prepended to the path of each route loaded
 from the new routing resource.
-
-.. tip::
-
-    You can also define routes using annotations. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
-    to see how.
 
 Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
