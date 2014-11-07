@@ -388,12 +388,21 @@ By default, templates can live in two different locations:
 
 * ``path/to/bundle/Resources/views/``: Each third party bundle houses its
   templates in its ``Resources/views`` directory (and subdirectories). When you
-  plan to share your bundle, you should put the templates in the shared bundle
-  instead of the ``app/Resources/views`` directory.
+  plan to share your bundle, you should put the templates in the bundle instead
+  of the ``app/`` directory.
+
+Most of the templates you'll use live in the ``app/Resources/views/``
+directory. The path you'll use will be relative to this directory. For example,
+to render/extend ``app/Resources/views/base.html.twig``, you'll use the
+``base.html.twig`` path and to render/extend
+``app/Resources/views/Blog/index.html.twig``, you'll use the
+``Blog/index.html.twig`` path.
+
+Referencing Templates in a Bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony uses a **bundle**:**directory**:**filename** string syntax for
-templates. You can also give paths, which are relative to the
-``app/Resources/views`` directory. This allows for several different types of
+templates that live inside a bundle. This allows for several different types of
 templates, each which lives in a specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
@@ -419,15 +428,6 @@ templates, each which lives in a specific location:
   Yes, there are 2 colons in the middle of the string when the "controller"
   subdirectory part is missing.
 
-* ``::base.html.twig``: This syntax refers to views in ``app/Resources/views``.
-  Notice that the string begins with two colons (``::``), meaning that both the
-  *bundle* and *directory* portions are missing. This means that the template
-  is not located in any bundle, but instead in the root
-  ``app/Resources/views/`` directory.
-
-* ``base.html.twig``: Equivalent to ``::base.html.twig`` and **recommended**
-  for application-wide templates.
-
 In the :ref:`overriding-bundle-templates` section, you'll find out how each
 template living inside the ``AcmeBlogBundle``, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
@@ -435,8 +435,8 @@ directory. This gives the power to override templates from any vendor bundle.
 
 .. tip::
 
-    Hopefully the template naming syntax looks familiar - it's the same naming
-    convention used to refer to :ref:`controller-string-syntax`.
+    Hopefully the template naming syntax looks familiar - it's similair to the
+    naming convention used to refer to :ref:`controller-string-syntax`.
 
 Template Suffix
 ~~~~~~~~~~~~~~~
@@ -1322,7 +1322,7 @@ covered:
   template is called ``base.html.twig``;
 
 * Create a template for each "section" of your site. For example, the blog
-  functionality would have a template called ``/Blog/layout.html.twig`` that
+  functionality would have a template called ``Blog/layout.html.twig`` that
   contains only blog section-specific elements;
 
   .. code-block:: html+jinja
