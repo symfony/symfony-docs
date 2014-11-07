@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-06T15:30:22Z
+
+@WouterJ You are my absolute favorite for doing this! This is *such* an important thing to get done over the next few weeks. So yes! Let's get this merged as quickly as possible and then we can move onto other sections. Basically, you can move onto any section you want. By the end of Nov, we'll need to have covered basically everything important.
+
+And also, this is of course a great time to fix other errors and update outdated stuff. After all, in a lot of cases, things were written years ago and may contain recommendations that have turned out to not be perfect or talk about features that turned out to not really be all that important.
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-06T15:31:06Z
+
+@WouterJ So, tell me when you're happy enough with this and I'll review it. I'll actually probably just merge it, then do a read-through and open up another PR for us to review once again (you going through this first will save a lot of time in that process).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-06T21:00:40Z
+
+@WouterJ Wow, this must have been much work.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-07T10:14:54Z
+
+@weaverryan I added the annotations, which was a lot trickier than I thought it would be. There is one thing I don't like: The annotations remove the nice seperation of the internal layers. Before we clearly had: First the route is matched, then the ``_controller`` parameter is read by a class and then the controller is called. With annotations, this is now all mixed together and we can't really be clear about this.
+
+There are also 2 another things with annotations;
+* Should we always include a route name? If not, we should add a new section on routing naming
+* Defaults can be done in 2 ways: ``@Route("/blog/{page}", defaults={"page": 1})`` or ``$page = 1`` in the controller. I like the second one more, but that means we'll be inconsistent with other formats which will lead to confusion.
+
+I've also taken @xabbuh's suggestions into account.
