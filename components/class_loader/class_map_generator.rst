@@ -29,7 +29,7 @@ manually. For example, imagine a library with the following directory structure:
 These files contain the following classes:
 
 =========================== ================
-File                        Class name
+File                        Class Name
 =========================== ================
 ``library/bar/baz/Boo.php`` ``Acme\Bar\Baz``
 --------------------------- ----------------

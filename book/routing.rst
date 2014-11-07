@@ -410,7 +410,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
 
         /**
@@ -470,7 +470,7 @@ This is done by including it in the ``defaults`` collection:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
 
         /**
@@ -522,13 +522,13 @@ longer required. The URL ``/blog`` will match this route and the value of
 the ``page`` parameter will be set to ``1``. The URL ``/blog/2`` will also
 match, giving the ``page`` parameter a value of ``2``. Perfect.
 
-=========== ===== ==========
-URL         route parameters
-=========== ===== ==========
-``/blog``   blog  {page} = 1
-``/blog/1`` blog  {page} = 1
-``/blog/2`` blog  {page} = 2
-=========== ===== ==========
+=========== ======== ==================
+URL         Route    Parameters
+=========== ======== ==================
+``/blog``   ``blog`` ``{page}`` = ``1``
+``/blog/1`` ``blog`` ``{page}`` = ``1``
+``/blog/2`` ``blog`` ``{page}`` = ``2``
+=========== ======== ==================
 
 .. caution::
 
@@ -555,7 +555,7 @@ Take a quick look at the routes that have been created so far:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
         class BlogController extends Controller
         {
@@ -631,13 +631,12 @@ will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
 the first route (``blog``) and return a nonsense value of ``my-blog-post``
 to the ``{page}`` parameter.
 
-+--------------------+-------+-----------------------+
-| URL                | route | parameters            |
-+====================+=======+=======================+
-| /blog/2            | blog  | {page} = 2            |
-+--------------------+-------+-----------------------+
-| /blog/my-blog-post | blog  | {page} = my-blog-post |
-+--------------------+-------+-----------------------+
+====================== ======== ===============================
+URL                    Route    Parameters
+====================== ======== ===============================
+``/blog/2``            ``blog`` ``{page}`` = ``2``
+``/blog/my-blog-post`` ``blog`` ``{page}`` = ``"my-blog-post"``
+====================== ======== ===============================
 
 The answer to the problem is to add route *requirements*. The routes in this
 example would work perfectly if the ``/blog/{page}`` path *only* matched
@@ -710,15 +709,13 @@ is *not* a number).
 As a result, a URL like ``/blog/my-blog-post`` will now properly match the
 ``blog_show`` route.
 
-+----------------------+-----------+-------------------------+
-| URL                  | route     | parameters              |
-+======================+===========+=========================+
-| /blog/2              | blog      | {page} = 2              |
-+----------------------+-----------+-------------------------+
-| /blog/my-blog-post   | blog_show | {slug} = my-blog-post   |
-+----------------------+-----------+-------------------------+
-| /blog/2-my-blog-post | blog_show | {slug} = 2-my-blog-post |
-+----------------------+-----------+-------------------------+
+======================== ============= ===============================
+URL                      Route         Parameters
+======================== ============= ===============================
+``/blog/2``              ``blog``      ``{page}`` = ``2``
+``/blog/my-blog-post``   ``blog_show`` ``{slug}`` = ``my-blog-post``
+``/blog/2-my-blog-post`` ``blog_show`` ``{slug}`` = ``2-my-blog-post``
+======================== ============= ===============================
 
 .. sidebar:: Earlier Routes always Win
 
@@ -738,7 +735,7 @@ URL:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/MainController.php
-        
+
         // ...
         class MainController extends Controller
         {
@@ -795,11 +792,11 @@ For incoming requests, the ``{_locale}`` portion of the URL is matched against
 the regular expression ``(en|fr)``.
 
 ======= ========================
-path    parameters
+Path    Parameters
 ======= ========================
-``/``   {_locale} = en
-``/en`` {_locale} = en
-``/fr`` {_locale} = fr
+``/``   ``{_locale}`` = ``"en"``
+``/en`` ``{_locale}`` = ``"en"``
+``/fr`` ``{_locale}`` = ``"fr"``
 ``/es`` *won't match this route*
 ======= ========================
 
