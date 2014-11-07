@@ -34,7 +34,7 @@ The route is simple:
 
 .. configuration-block::
 
-    .. code-block:: php-annotation
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
         namespace AppBundle\Controller;
@@ -213,7 +213,7 @@ A basic route consists of just two parts: the ``path`` to match and a
 
 .. configuration-block::
 
-    .. code-block:: php-annotation
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/MainController.php
 
@@ -280,7 +280,7 @@ routes will contain one or more named "wildcard" placeholders:
 
 .. configuration-block::
 
-    .. code-block:: php-annotation
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
 
@@ -348,7 +348,7 @@ the available blog posts for this imaginary blog application:
 
 .. configuration-block::
 
-    .. code-block:: php-annotation
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
 
@@ -932,7 +932,7 @@ routing system can be:
 
 .. configuration-block::
 
-    .. code-block:: php-annotation
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/ArticleController.php
 
