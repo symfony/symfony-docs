@@ -398,6 +398,8 @@ to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 ``app/Resources/views/Blog/index.html.twig``, you'll use the
 ``Blog/index.html.twig`` path.
 
+.. _template-referencing-in-bundle:
+
 Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
