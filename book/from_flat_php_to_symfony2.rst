@@ -547,8 +547,8 @@ from scratch, you could at least use Symfony's standalone `Routing`_ and
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
 
-    // src/Acme/BlogBundle/Controller/BlogController.php
-    namespace Acme\BlogBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -561,17 +561,14 @@ them for you. Here's the same sample application, now built in Symfony::
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render(
-                'AcmeBlogBundle:Blog:list.html.php',
-                array('posts' => $posts)
-            );
+            return $this->render('Blog/list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
         {
             $post = $this->get('doctrine')
                 ->getManager()
-                ->getRepository('AcmeBlogBundle:Post')
+                ->getRepository('AppBundle:Post')
                 ->find($id);
 
             if (!$post) {
@@ -579,22 +576,19 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render(
-                'AcmeBlogBundle:Blog:show.html.php',
-                array('post' => $post)
-            );
+            return $this->render('Blog/show.html.php', array('post' => $post));
         }
     }
 
-The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
-to retrieve objects from the database and the Templating component to
-render a template and return a ``Response`` object. The list template is
-now quite a bit simpler:
+The two controllers are still lightweight. Each uses the
+:doc:`Doctrine ORM library </book/doctrine>` to retrieve objects from the
+database and the Templating component to render a template and return a
+``Response`` object. The list template is now quite a bit simpler:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php -->
-    <?php $view->extend('::layout.html.php') ?>
+    <!-- app/Resources/views/Blog/list.html.php -->
+    <?php $view->extend('layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
 
@@ -644,11 +638,11 @@ A routing configuration map provides this information in a readable format:
     # app/config/routing.yml
     blog_list:
         path:     /blog
-        defaults: { _controller: AcmeBlogBundle:Blog:list }
+        defaults: { _controller: AppBundle:Blog:list }
 
     blog_show:
         path:     /blog/show/{id}
-        defaults: { _controller: AcmeBlogBundle:Blog:show }
+        defaults: { _controller: AppBundle:Blog:show }
 
 Now that Symfony is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
@@ -716,8 +710,8 @@ for example, the list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
-    {% extends "::layout.html.twig" %}
+    {# app/Resources/views/Blog/list.html.twig #}
+    {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}
 
