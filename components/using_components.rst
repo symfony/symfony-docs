@@ -27,7 +27,7 @@ Using the Finder Component
     $ composer require symfony/finder
 
 The name ``symfony/finder`` is written at the top of the documentation for
-whatever component you want. 
+whatever component you want.
 
 .. tip::
 
@@ -35,6 +35,12 @@ whatever component you want.
     `Install composer`_. Depending on how you install, you may end up with
     a ``composer.phar`` file in your directory. In that case, no worries!
     Just run ``php composer.phar require symfony/finder``.
+
+If you know you need a specific version of the library, add that to the command:
+
+.. code-block:: bash
+
+    $ composer require symfony/finder:~2.3
 
 **3.** Write your code!
 
