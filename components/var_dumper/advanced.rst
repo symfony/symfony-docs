@@ -12,7 +12,7 @@ You can change the behavior of this function by calling
 Calls to ``dump()`` will then be forwarded to ``$callable``.
 
 By adding a handler, you can customize the `Cloners`_, `Dumpers`_ and `Casters`_
-explained below. A simple implementation of a handler function might look
+as explained below. A simple implementation of a handler function might look
 like this::
 
     use Symfony\Component\VarDumper\VarDumper;
@@ -41,7 +41,7 @@ object this way::
 
     $cloner = new VarCloner();
     $data = $cloner->cloneVar($myVar);
-    // this is commonly then passed to the dumpe
+    // this is commonly then passed to the dumper
     // see the example at the top of this page
     // $dumper->dump($data);
 
