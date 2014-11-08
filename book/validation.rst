@@ -192,7 +192,7 @@ Inside the template, you can output the list of errors exactly as needed:
         <ul>
         <?php foreach ($errors as $error): ?>
             <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
         </ul>
 
 .. note::

@@ -69,7 +69,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
             array('@AcmeFooBundle/Resources/public/js/*')
         ) as $url): ?>
             <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -126,7 +126,7 @@ above, except with the ``stylesheets`` tag:
             array('cssrewrite')
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -178,7 +178,7 @@ To include an image you can use the ``image`` tag.
             array('@AcmeFooBundle/Resources/public/images/example.jpg')
         ) as $url): ?>
             <img src="<?php echo $view->escape($url) ?>" alt="Example" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 You can also use Assetic for image optimization. More information in
 :doc:`/cookbook/assetic/jpeg_optimize`.
@@ -231,7 +231,7 @@ but still serve them as a single file:
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 In the ``dev`` environment, each file is still served individually, so that
 you can debug problems more easily. However, in the ``prod`` environment
@@ -268,7 +268,7 @@ combine third party assets, such as jQuery, with your own into a single file:
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Using Named Assets
 ~~~~~~~~~~~~~~~~~~
@@ -341,7 +341,7 @@ with the ``@named_asset`` notation:
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. _cookbook-assetic-filters:
 
@@ -417,7 +417,7 @@ into your template:
             array('uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 A more detailed guide about configuring and using Assetic filters as well as
 details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/uglifyjs`.
@@ -444,7 +444,7 @@ done from the template and is relative to the public document root:
             array('output' => 'js/compiled/main.js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -567,4 +567,4 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
             array('output' => 'js/compiled/main.js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
