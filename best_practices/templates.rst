@@ -22,8 +22,6 @@ In addition, Twig is the only template format with guaranteed support in Symfony
 3.0. As a matter of fact, PHP may be removed from the officially supported
 template engines.
 
-.. _best_practices-template-location:
-
 Template Locations
 ------------------
 
