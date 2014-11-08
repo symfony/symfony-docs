@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-15T13:14:47Z
+
+"each" and "every" can be used in cases like this afaik. Let's see how our natives think about it
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-15T18:43:09Z
+
+@WouterJ Yes, but then you have to omit "the".
+
+---------------------------------------------------------------------------
+
+by fabschurt at 2014-10-15T19:57:29Z
+
+@xabbuh Yep. So basically it would be:
+
+* either "that help you render the HTML widget, label and error for each field";
+* or "that help you render each HTML widget, label and error for each field".
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T10:44:57Z
+
+@fabschurt I'm in favor of the last option. Can you please update this PR?
+
+---------------------------------------------------------------------------
+
+by fabschurt at 2014-10-31T15:22:15Z
+
+@WouterJ Done ;-) I did a `git push --force` in order to keep only 1 commit for the PR, I don't know if it's the best way to go?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-31T17:03:05Z
+
+:+1: Nice change.
+
+@fabschurt Squashing commits is not necessary, but we are happy if you do it anyway. :)
+
+---------------------------------------------------------------------------
+
+by fabschurt at 2014-11-05T21:24:13Z
+
+Heh heh, this kind of things is trickier than it sounds :-) I updated the PR, we should be good to go now.
