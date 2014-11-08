@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-02T12:36:09Z
+
+Let's use a better example, don't you think? Something like: "Which colors do you like?" and then default to `array('blue', 'red')`.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-07T19:45:46Z
+
+@WouterJ Good point, I changed it.
