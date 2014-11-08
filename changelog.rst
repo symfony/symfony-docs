@@ -21,18 +21,28 @@ New Documentation
 
 - `d7ef1c7 <https://github.com/symfony/symfony-docs/commit/d7ef1c753e427480e225310a45bd4cf352c14dc3>`_ #4348 Updated information about handling validation of embedded forms to Valid... (peterrehm)
 - `691b13d <https://github.com/symfony/symfony-docs/commit/691b13d686b64884b6e91eb6ffdf1e70bd5b8154>`_ #4340 [Cookbook][Web Server] add sidebar for the built-in server in VMs (xabbuh)
+- `bd85865 <https://github.com/symfony/symfony-docs/commit/bd85865f4b5e64b72d00f6b4e29e9c2015cde01d>`_ #4299 [Serializer] Handle circular references. symfony/symfony#12098. (dunglas)
 - `d79c48d <https://github.com/symfony/symfony-docs/commit/d79c48dfdd6fa7b92c19d5092f2171dc99ad0b24>`_ #4280 [Cookbook][Cache] Added config example for Varnish 4.0 (thierrymarianne)
 - `5849f7f <https://github.com/symfony/symfony-docs/commit/5849f7f5a7c8c0f4652be44b86df903d9a0f5db9>`_ #4168 [Components][Form] describe how to access form errors (xabbuh)
 - `c10e9c1 <https://github.com/symfony/symfony-docs/commit/c10e9c19f8d425598a8be0578df4c84b232ff214>`_ #4371 Added a code example for emailing on 4xx and 5xx errors without 404's (weaverryan)
+- `1117741 <https://github.com/symfony/symfony-docs/commit/111774187843dbad1667199944549d8add944c73>`_ #4159 [WCM][OptionsResolver] Adjusted the OptionsResolver documentation to describe the 2.6 API (webmozart, peterrehm)
 - `0c57939 <https://github.com/symfony/symfony-docs/commit/0c57939e2be3b900a4eb0afa6aaa5a6620c9d239>`_ #4327 First import of the "Official Best Practices" book (javiereguiluz)
+- `2cd6646 <https://github.com/symfony/symfony-docs/commit/2cd6646eac53b88ccf4ee2e2834ed82dcae66ef2>`_ #4293 Document error page preview (Symfony ~2.6) (mpdude)
+- `142c826 <https://github.com/symfony/symfony-docs/commit/142c8263e206716fcf6709589960997b60ec2080>`_ #4005 [Cookbook][Web server] description for running PHP's built-in web server in the background (xabbuh)
 - `8dc90ef <https://github.com/symfony/symfony-docs/commit/8dc90efdff19a00c55ee0be187866b1f97c0b16f>`_ #4224 [Components][HttpKernel] outline implications of the kernel.terminate event (xabbuh)
 - `d3b5ba2 <https://github.com/symfony/symfony-docs/commit/d3b5ba29f42bc3d3c73abb2420ad05a8dbac54cc>`_ #4085 [Component][Forms] add missing features introduced in 2.3 (xabbuh)
 - `f433e64 <https://github.com/symfony/symfony-docs/commit/f433e64f5878b15feaa5b86aa374b58e32f633c6>`_ #4099 Composer installation verbosity tip (dannykopping)
+- `f583a45 <https://github.com/symfony/symfony-docs/commit/f583a45443e7424ef4ba459131873015b4f70aea>`_ #4204 [Reference][Constraints] validate `````null````` (Expression constraint in 2.6) (xabbuh)
 - `925a162 <https://github.com/symfony/symfony-docs/commit/925a162879990d28d6093df1af7dfd22fcb27890>`_ #4290 Updating library/bundle install docs to use "require" (weaverryan)
 - `86c67e8 <https://github.com/symfony/symfony-docs/commit/86c67e8ef1f666ede1b7009b792f7a65e466201e>`_ #4233 2.5 Validation API changes (nicolassing, lashae, Rootie, weaverryan)
+- `0f34bb8 <https://github.com/symfony/symfony-docs/commit/0f34bb861128116c2f8267575746fc01d5c2fbfc>`_ #3956 [Command] Added LockHelper (lyrixx)
+- `278de83 <https://github.com/symfony/symfony-docs/commit/278de830f208184e4569c40d91c48d3154b7c09c>`_ #3930 [Console] Add Process Helper documentation (romainneutron)
 - `44f570b <https://github.com/symfony/symfony-docs/commit/44f570b3e5efbc3a318beb789b87ecf69febdfa1>`_ #4294 Improve cookbook entry for error pages in 2.3~ (mpdude)
 - `3b6c2b9 <https://github.com/symfony/symfony-docs/commit/3b6c2b97f1ff7304cc981a74bc521e91e0ed1873>`_ #4269 [Cookbook][External Parameters] Enhance content (bicpi)
+- `25a17fe <https://github.com/symfony/symfony-docs/commit/25a17fee9cb8ce1b4190ef5899c492244796d7f8>`_ #4264 [#4003] A few more form_themes config changes (weaverryan)
+- `5b65654 <https://github.com/symfony/symfony-docs/commit/5b656542e09477eb98b5374f71d6c56cba3b9227>`_ #3912 [Security] Added remote_user firewall info and documentation for pre authenticated firewalls (Maxime Douailin, mdouailin)
 - `62bafad <https://github.com/symfony/symfony-docs/commit/62bafad2a1cb6718bde3ae7d7612e65bfd3fd123>`_ #4246 [Reference] add description for the `````validation_groups````` option (xabbuh)
+- `5d505bb <https://github.com/symfony/symfony-docs/commit/5d505bba4205110860184f3486f786c969cb86f8>`_ #4206 Added note about ProgressBar changes (kbond)
 - `c2342a7 <https://github.com/symfony/symfony-docs/commit/c2342a72d0bc237c951b035a02651a1a3ac84c90>`_ #4241 [Form] Added information about float choice lists (peterrehm)
 
 Fixed Documentation
@@ -40,6 +50,7 @@ Fixed Documentation
 
 - `dde6919 <https://github.com/symfony/symfony-docs/commit/dde6919223413344718ddd52594a38cd007eb005>`_ #4390 Update custom_constraint.rst (luciantugui)
 - `68a2c7b <https://github.com/symfony/symfony-docs/commit/68a2c7b87b779aad5cbf02ad196aeb89aa4d0ee5>`_ #4381 Updated Valid constraint reference (inso)
+- `dbb25b9 <https://github.com/symfony/symfony-docs/commit/dbb25b97ef29f12d85e3d2fa9ba05dc897a64184>`_ #4379 [OptionsResolver] Fix wrong namespace in example (rybakit)
 - `db01e57 <https://github.com/symfony/symfony-docs/commit/db01e57482a66f52501b07de0edfbda6ee195465>`_ #4362 Missing apostrophe in source example. (astery)
 - `d49d51f <https://github.com/symfony/symfony-docs/commit/d49d51ff97ca74c5acaced86293f4c29639f0c84>`_ #4350 Removed extra parenthesis (sivolobov)
 - `e6d7d8f <https://github.com/symfony/symfony-docs/commit/e6d7d8f12617cd097818bb9fc36484c141299f4f>`_ #4315 Update choice.rst (odolbeau)
@@ -51,6 +62,7 @@ Fixed Documentation
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- `217bf5f <https://github.com/symfony/symfony-docs/commit/217bf5f58630b79bca357c93efad6e311b7e3b48>`_ #4353 [Cookbook][Controller] fix route prefix in PHP code example (xabbuh)
 - `a4f7d51 <https://github.com/symfony/symfony-docs/commit/a4f7d5112776002e5509b66a255cd07dd5476d79>`_ #4396 Corrected latin abbreviation (GeertDD)
 - `ebf2927 <https://github.com/symfony/symfony-docs/commit/ebf29274fba3d3b39a867c0ff58dd5457ce36c5e>`_ #4387 Inline condition removed for easier reading (acidjames)
 - `aa70028 <https://github.com/symfony/symfony-docs/commit/aa70028c2c436c65a1e332151fcd7fecc8cb6cd2>`_ #4375 Removed the redundant usage of layer. (micheal)
@@ -59,6 +71,7 @@ Minor Documentation Changes
 - `9e03f2d <https://github.com/symfony/symfony-docs/commit/9e03f2dd00f3aa0df16cfa001610d57636eba93c>`_ #4388 Minor spelling fix (GeertDD)
 - `4dfd607 <https://github.com/symfony/symfony-docs/commit/4dfd607ecdeb4867507c30bc59caecdb90a16966>`_ #4356 Remove incoherence between Doctrine and Propel introduction paragraphs (arnaugm)
 - `1d71332 <https://github.com/symfony/symfony-docs/commit/1d71332030658d0bfe91752af8cb007f929457cd>`_ #4344 [Templating] Added a sentence that explains what a Template Helper is (iltar)
+- `22b9b27 <https://github.com/symfony/symfony-docs/commit/22b9b27859939e3b35fd733436df6f15216c0adc>`_ #4372 Tweaks after proofreading the 2.6 OptionsResolver stuff (weaverryan, WouterJ)
 - `9a76309 <https://github.com/symfony/symfony-docs/commit/9a76309a14c7eabe077111dfdc9ac74aab6593c9>`_ #4384 fix typo (kokoon)
 - `eb752cc <https://github.com/symfony/symfony-docs/commit/eb752ccdd8050db4487f7d0f0711cad2691ecded>`_ #4363 Fixed sentence (WouterJ)
 - `3e8aa59 <https://github.com/symfony/symfony-docs/commit/3e8aa59ba74ac1b1ec5938de8370bf449e3790dc>`_ #4376 Cleaned up javascript code (flip111)
@@ -71,6 +84,7 @@ Minor Documentation Changes
 - `6ceb8cb <https://github.com/symfony/symfony-docs/commit/6ceb8cbf0d3e448f66d5ab822c4e68c33aef1ec3>`_ #4345 Correct capitalization for the Content-Type header (GeertDD)
 - `3e4c92a <https://github.com/symfony/symfony-docs/commit/3e4c92a12cf794dc09ccb640c2b1928213e06d80>`_ #4104 Use ${APACHE_LOG_DIR} instead of /var/log/apache2 (xamgreen)
 - `3da0776 <https://github.com/symfony/symfony-docs/commit/3da0776b502dd23b399c3e005a27e965dc70e46f>`_ #4338 ESI Variable Details Continuation (Farkie, weaverryan)
+- `9e0e12d <https://github.com/symfony/symfony-docs/commit/9e0e12d01f424cf1fd068f525516cadeafb45ccf>`_ Merge branch '2.5'
 - `7f461d2 <https://github.com/symfony/symfony-docs/commit/7f461d23ebc2cabf52380ca85582a581b7b0482b>`_ #4325 [Components][Form] Correct a typo (fabschurt)
 - `d162329 <https://github.com/symfony/symfony-docs/commit/d1623295fb561849de82815eebba7f9db4e82651>`_ #4276 [Components][HttpFoundation] Make a small grammatical adjustment (fabschurt)
 - `459052d <https://github.com/symfony/symfony-docs/commit/459052d431dcda538cc6430fc0692994c894896f>`_ Merge remote-tracking branch 'origin/2.4' into 2.5
