@@ -191,9 +191,9 @@ then its dump representation::
 .. code-block:: php
 
     $var = new \ErrorException(
-        "For some objects, properties have special values
-        that are best represented as constants, like
-        `severity` below. Hovering displays the value (`2`).",
+        "For some objects, properties have special values\n"
+        ."that are best represented as constants, like\n"
+        ."`severity` below. Hovering displays the value (`2`).\n",
         0,
         E_WARNING
     );
@@ -227,11 +227,11 @@ then its dump representation::
 .. code-block:: php
 
     $var = new AcmeController(
-        "When a dump goes over its maximum items limit,
-        or when some special objects are encountered,
-        children can be replaced by an ellipsis and
-        optionnally followed by a number that says how
-        many have been removed; `9` in this case."
+        "When a dump goes over its maximum items limit,\n"
+        ."or when some special objects are encountered,\n"
+        ."children can be replaced by an ellipsis and\n"
+        ."optionnally followed by a number that says how\n"
+        ."many have been removed; `9` in this case.\n"
     );
     dump($var);
 
