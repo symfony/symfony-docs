@@ -13,6 +13,73 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+October, 2014
+-------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `d7ef1c7 <https://github.com/symfony/symfony-docs/commit/d7ef1c753e427480e225310a45bd4cf352c14dc3>`_ #4348 Updated information about handling validation of embedded forms to Valid... (peterrehm)
+- `691b13d <https://github.com/symfony/symfony-docs/commit/691b13d686b64884b6e91eb6ffdf1e70bd5b8154>`_ #4340 [Cookbook][Web Server] add sidebar for the built-in server in VMs (xabbuh)
+- `d79c48d <https://github.com/symfony/symfony-docs/commit/d79c48dfdd6fa7b92c19d5092f2171dc99ad0b24>`_ #4280 [Cookbook][Cache] Added config example for Varnish 4.0 (thierrymarianne)
+- `5849f7f <https://github.com/symfony/symfony-docs/commit/5849f7f5a7c8c0f4652be44b86df903d9a0f5db9>`_ #4168 [Components][Form] describe how to access form errors (xabbuh)
+- `c10e9c1 <https://github.com/symfony/symfony-docs/commit/c10e9c19f8d425598a8be0578df4c84b232ff214>`_ #4371 Added a code example for emailing on 4xx and 5xx errors without 404's (weaverryan)
+- `0c57939 <https://github.com/symfony/symfony-docs/commit/0c57939e2be3b900a4eb0afa6aaa5a6620c9d239>`_ #4327 First import of the "Official Best Practices" book (javiereguiluz)
+- `8dc90ef <https://github.com/symfony/symfony-docs/commit/8dc90efdff19a00c55ee0be187866b1f97c0b16f>`_ #4224 [Components][HttpKernel] outline implications of the kernel.terminate event (xabbuh)
+- `d3b5ba2 <https://github.com/symfony/symfony-docs/commit/d3b5ba29f42bc3d3c73abb2420ad05a8dbac54cc>`_ #4085 [Component][Forms] add missing features introduced in 2.3 (xabbuh)
+- `f433e64 <https://github.com/symfony/symfony-docs/commit/f433e64f5878b15feaa5b86aa374b58e32f633c6>`_ #4099 Composer installation verbosity tip (dannykopping)
+- `925a162 <https://github.com/symfony/symfony-docs/commit/925a162879990d28d6093df1af7dfd22fcb27890>`_ #4290 Updating library/bundle install docs to use "require" (weaverryan)
+- `44f570b <https://github.com/symfony/symfony-docs/commit/44f570b3e5efbc3a318beb789b87ecf69febdfa1>`_ #4294 Improve cookbook entry for error pages in 2.3~ (mpdude)
+- `3b6c2b9 <https://github.com/symfony/symfony-docs/commit/3b6c2b97f1ff7304cc981a74bc521e91e0ed1873>`_ #4269 [Cookbook][External Parameters] Enhance content (bicpi)
+- `62bafad <https://github.com/symfony/symfony-docs/commit/62bafad2a1cb6718bde3ae7d7612e65bfd3fd123>`_ #4246 [Reference] add description for the `````validation_groups````` option (xabbuh)
+- `c2342a7 <https://github.com/symfony/symfony-docs/commit/c2342a72d0bc237c951b035a02651a1a3ac84c90>`_ #4241 [Form] Added information about float choice lists (peterrehm)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `68a2c7b <https://github.com/symfony/symfony-docs/commit/68a2c7b87b779aad5cbf02ad196aeb89aa4d0ee5>`_ #4381 Updated Valid constraint reference (inso)
+- `db01e57 <https://github.com/symfony/symfony-docs/commit/db01e57482a66f52501b07de0edfbda6ee195465>`_ #4362 Missing apostrophe in source example. (astery)
+- `d49d51f <https://github.com/symfony/symfony-docs/commit/d49d51ff97ca74c5acaced86293f4c29639f0c84>`_ #4350 Removed extra parenthesis (sivolobov)
+- `e6d7d8f <https://github.com/symfony/symfony-docs/commit/e6d7d8f12617cd097818bb9fc36484c141299f4f>`_ #4315 Update choice.rst (odolbeau)
+- `1b15d57 <https://github.com/symfony/symfony-docs/commit/1b15d57eaca4d78f249e3ebca9abebd0eab41cd3>`_ #4300 [Components][PropertyAccess] Fix PropertyAccessorBuilder usage (Thierry Geindre)
+- `061324f <https://github.com/symfony/symfony-docs/commit/061324f69e8418d5cc8f5bef28ac7b3618f44e8c>`_ #4297 [Cookbook][Doctrine] Fix typo in XML configuration for custom SQL functions (jdecool)
+- `f81b7ad <https://github.com/symfony/symfony-docs/commit/f81b7ad00cc5e2cdb9fbaf36c91db566b54970ff>`_ #4292 Fixed broken external link to DemoController Test (danielsan)
+- `9591a04 <https://github.com/symfony/symfony-docs/commit/9591a04b612869a7078dc104589628a2f6d77965>`_ #4284 change misleading language identifier (Kristof Van Cauwenbergh, kristofvc)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `a4f7d51 <https://github.com/symfony/symfony-docs/commit/a4f7d5112776002e5509b66a255cd07dd5476d79>`_ #4396 Corrected latin abbreviation (GeertDD)
+- `ebf2927 <https://github.com/symfony/symfony-docs/commit/ebf29274fba3d3b39a867c0ff58dd5457ce36c5e>`_ #4387 Inline condition removed for easier reading (acidjames)
+- `aa70028 <https://github.com/symfony/symfony-docs/commit/aa70028c2c436c65a1e332151fcd7fecc8cb6cd2>`_ #4375 Removed the redundant usage of layer. (micheal)
+- `f3dd676 <https://github.com/symfony/symfony-docs/commit/f3dd6763a0e33c03300c06e2396eb28b0d949f43>`_ #4394 update Sphinx extension submodule reference (xabbuh)
+- `9e03f2d <https://github.com/symfony/symfony-docs/commit/9e03f2dd00f3aa0df16cfa001610d57636eba93c>`_ #4388 Minor spelling fix (GeertDD)
+- `4dfd607 <https://github.com/symfony/symfony-docs/commit/4dfd607ecdeb4867507c30bc59caecdb90a16966>`_ #4356 Remove incoherence between Doctrine and Propel introduction paragraphs (arnaugm)
+- `1d71332 <https://github.com/symfony/symfony-docs/commit/1d71332030658d0bfe91752af8cb007f929457cd>`_ #4344 [Templating] Added a sentence that explains what a Template Helper is (iltar)
+- `9a76309 <https://github.com/symfony/symfony-docs/commit/9a76309a14c7eabe077111dfdc9ac74aab6593c9>`_ #4384 fix typo (kokoon)
+- `3e8aa59 <https://github.com/symfony/symfony-docs/commit/3e8aa59ba74ac1b1ec5938de8370bf449e3790dc>`_ #4376 Cleaned up javascript code (flip111)
+- `06e7c5f <https://github.com/symfony/symfony-docs/commit/06e7c5f54a75e55d0cdb6ddf364aa8a17bbda22d>`_ #4364 changed submit button label (OskarStark)
+- `d1810ca <https://github.com/symfony/symfony-docs/commit/d1810ca52c177c19fbc870ee733751427fcdba37>`_ #4357 fix Twig-extensions links (mhor)
+- `e2e2915 <https://github.com/symfony/symfony-docs/commit/e2e29153aa2457bd8103aca1ef0459f3b2b7bb38>`_ #4359 Added missing closing parenthesis to example. (mattjanssen)
+- `f1bb8bb <https://github.com/symfony/symfony-docs/commit/f1bb8bbdd0eb372e5fb880a9bd3a942ef8a84545>`_ #4358 Fixed link to documentation standards (sivolobov)
+- `65c891d <https://github.com/symfony/symfony-docs/commit/65c891dd2403facb6d8df06520d458155e58e3a5>`_ #4355 Missing space (ErikSaunier)
+- `7359cb4 <https://github.com/symfony/symfony-docs/commit/7359cb4d35091055683358a0674747f0acb2146c>`_ #4196 Clarified the bundle base template bit. (Veltar)
+- `6ceb8cb <https://github.com/symfony/symfony-docs/commit/6ceb8cbf0d3e448f66d5ab822c4e68c33aef1ec3>`_ #4345 Correct capitalization for the Content-Type header (GeertDD)
+- `3e4c92a <https://github.com/symfony/symfony-docs/commit/3e4c92a12cf794dc09ccb640c2b1928213e06d80>`_ #4104 Use ${APACHE_LOG_DIR} instead of /var/log/apache2 (xamgreen)
+- `3da0776 <https://github.com/symfony/symfony-docs/commit/3da0776b502dd23b399c3e005a27e965dc70e46f>`_ #4338 ESI Variable Details Continuation (Farkie, weaverryan)
+- `7f461d2 <https://github.com/symfony/symfony-docs/commit/7f461d23ebc2cabf52380ca85582a581b7b0482b>`_ #4325 [Components][Form] Correct a typo (fabschurt)
+- `d162329 <https://github.com/symfony/symfony-docs/commit/d1623295fb561849de82815eebba7f9db4e82651>`_ #4276 [Components][HttpFoundation] Make a small grammatical adjustment (fabschurt)
+- `69bfac1 <https://github.com/symfony/symfony-docs/commit/69bfac17420c3a690ae170df530990859256d850>`_ #4322 [Components][DependencyInjection] Correct a typo: replace "then" by "the" (fabschurt)
+- `8073239 <https://github.com/symfony/symfony-docs/commit/80732390c57c0a65a37e62230a1d76f617831bdf>`_ #4318 [Cookbook][Bundles] Correct a typo: remove unnecessary "the" word (fabschurt)
+- `34e22d6 <https://github.com/symfony/symfony-docs/commit/34e22d6039a5130a57bb9755eeccdb51dd0de613>`_ #4317 Remove horizontal scrollbar and change event name to follow conventions (ifdattic)
+- `090afab <https://github.com/symfony/symfony-docs/commit/090afab6e873171f58f8e48abfa4d09361937884>`_ #4287 support Varnish in configuration blocks (xabbuh)
+- `1603463 <https://github.com/symfony/symfony-docs/commit/16034633f498c23af8abce8edce266f8af36a010>`_ #4306 Improve readability (ifdattic)
+- `31d7905 <https://github.com/symfony/symfony-docs/commit/31d79055a700df631165107d5b0b948690c165be>`_ #4302 View documentation had a reference to the wrong twig template (milan)
+- `ef11ef4 <https://github.com/symfony/symfony-docs/commit/ef11ef40d1cc3b33d481ffda386773314903d5d5>`_ #4250 Clarifying Bundle Best Practices is for *reusable* bundles (weaverryan)
+- `430eabf <https://github.com/symfony/symfony-docs/commit/430eabf0e563247884b1702b4c5149c83c9c49e4>`_ #4298 Book HTTP Fundamentals routing example fixed with routing.xml file (peterkokot)
+- `7ab6df9 <https://github.com/symfony/symfony-docs/commit/7ab6df94b858a0a11276ccc9d40c25e00806caa5>`_ #4237 Finished #3886 (ahsio, WouterJ)
+- `990b453 <https://github.com/symfony/symfony-docs/commit/990b4531f8ee636e3167537bd0dce7c88da16b98>`_ #4245 [Contributing] tweaks to the contribution chapter (xabbuh)
+
 September, 2014
 ---------------
 
