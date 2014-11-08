@@ -49,7 +49,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
                         <?php echo $row['title'] ?>
                     </a>
                 </li>
-                <?php endwhile; ?>
+                <?php endwhile ?>
             </ul>
         </body>
     </html>
@@ -121,7 +121,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
                         <?php echo $post['title'] ?>
                     </a>
                 </li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         </body>
     </html>
@@ -238,7 +238,7 @@ the layout:
                     <?php echo $post['title'] ?>
                 </a>
             </li>
-            <?php endforeach; ?>
+            <?php endforeach ?>
         </ul>
     <?php $content = ob_get_clean() ?>
 
@@ -603,7 +603,7 @@ database and the Templating component to render a template and return a
                 <?php echo $post->getTitle() ?>
             </a>
         </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
     </ul>
 
 The layout is nearly identical:

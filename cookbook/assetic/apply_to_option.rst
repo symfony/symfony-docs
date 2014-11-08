@@ -70,7 +70,7 @@ templates:
             array('coffee')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 This is all that's needed to compile this CoffeeScript file and serve it
 as the compiled JavaScript.
@@ -100,7 +100,7 @@ You can also combine multiple CoffeeScript files into a single output file:
             array('coffee')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Both the files will now be served up as a single file compiled into regular
 JavaScript.
@@ -186,4 +186,4 @@ being run through the CoffeeScript filter):
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>

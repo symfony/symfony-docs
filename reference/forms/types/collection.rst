@@ -101,7 +101,7 @@ A much more flexible method would look like this:
                 <?php echo $view['form']->errors($emailField) ?>
                 <?php echo $view['form']->widget($emailField) ?>
             </li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
         </ul>
 
 In both cases, no input fields would render unless your ``emails`` data array
