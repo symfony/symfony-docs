@@ -13,6 +13,53 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+September, 2014
+---------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `eac0e51 <https://github.com/symfony/symfony-docs/commit/eac0e5101ef8cb142fd37810e7f4faf2396c84d5>`_ #4195 Added a note about the total deprecation of YUI (javiereguiluz)
+- `e44c791 <https://github.com/symfony/symfony-docs/commit/e44c791b510f0439c9727642390c4184d0b94227>`_ #4047 Documented info method (WouterJ)
+- `d5d46ec <https://github.com/symfony/symfony-docs/commit/d5d46ec61e2bd851914550274d97f142c9397a93>`_ #4017 Clarify that route defaults don't need a placeholder (iamdto)
+- `1d56da4 <https://github.com/symfony/symfony-docs/commit/1d56da4384b09298d8ae11b8a14f1ae62b82d5ff>`_ #4239 Remove redundant references to trusting HttpCache (thewilkybarkid)
+- `c306b68 <https://github.com/symfony/symfony-docs/commit/c306b68d7d40d6d5ca815ea1af2a7bda63f4f060>`_ #4249 provide node path on configuration (desarrolla2)
+- `9b4b36f <https://github.com/symfony/symfony-docs/commit/9b4b36fa5f653e621e86363cd060c693c308c62f>`_ #4236 Javiereguiluz bundle install instructions (WouterJ)
+- `a578de9 <https://github.com/symfony/symfony-docs/commit/a578de99b2ba4a83605a530a76111a4cf4daf1fa>`_ #4223 Revamped the documentation about "Contributing Docs" (javiereguiluz)
+- `de60dbe <https://github.com/symfony/symfony-docs/commit/de60dbed64c719792c0259248e4dc52aefd6b088>`_ #4182 Added note about exporting SYMFONY_ENV (jpb0104)
+- `a8dc2bf <https://github.com/symfony/symfony-docs/commit/a8dc2bfe0f5cfcc5af24565e195d8293f45ee393>`_ #4166 Translation custom loaders (raulfraile)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `5500e0b <https://github.com/symfony/symfony-docs/commit/5500e0b211633e65de693f0eca7dddfef52ee35e>`_ #4267 Fix error in bundle installation standard example (WouterJ)
+- `082755d <https://github.com/symfony/symfony-docs/commit/082755dac2385250c11a8c6024ca2d74048bd654>`_ #4240 [Components][EventDispatcher] fix ContainerAwareEventDispatcher definition (xabbuh)
+- `2319d6a <https://github.com/symfony/symfony-docs/commit/2319d6a391ee16f772ac34b5c4336680a26f8992>`_ #4213 Handle "constraints" option in form unit testing (sarcher)
+- `c567707 <https://github.com/symfony/symfony-docs/commit/c5677076f81b1c13d6230332fef0d5727354b9af>`_ #4222 [Components][DependencyInjection] do not reference services in parameters (xabbuh)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `df16779 <https://github.com/symfony/symfony-docs/commit/df167799641899e679a4022dcd260d2f63035276>`_ #4226 add note about parameters in imports (xabbuh)
+- `c332063 <https://github.com/symfony/symfony-docs/commit/c3320637e61f053af6ce279b9d792b6a793eea4e>`_ #4278 Missing word in DependencyInjection => Types of Injection (fabschurt)
+- `3a4e226 <https://github.com/symfony/symfony-docs/commit/3a4e22689d6e72edcd5f628a6f74fea633919021>`_ #4263 Fixed typo (zebba)
+- `187c255 <https://github.com/symfony/symfony-docs/commit/187c25511ebe2d9109bb356d7f0e62f22a3abaaa>`_ #4259 Added feature freeze dates for Symfony versions (javiereguiluz)
+- `efc1436 <https://github.com/symfony/symfony-docs/commit/efc1436e02600aefbd39546068b362a4d22800cc>`_ #4247 [Reference] link translation DIC tags to components section (xabbuh)
+- `17addb1 <https://github.com/symfony/symfony-docs/commit/17addb112a2a0e5b5b233a61b3541dd1f8aa58b9>`_ #4238 Finished #3924 (WouterJ)
+- `19a0c35 <https://github.com/symfony/symfony-docs/commit/19a0c35d08af7f8ff474d6a52fac88c5d7db24f8>`_ #4252 Removed unnecessary comma (allejo)
+- `9fd91d6 <https://github.com/symfony/symfony-docs/commit/9fd91d60644d2111bdc3a7dfc872b90aa3a97ac7>`_ #4219 Cache needs be cleared (burki94)
+- `025f02e <https://github.com/symfony/symfony-docs/commit/025f02e7917473cc9a885b41de1fe9ca945044b8>`_ #4220 Added a note about the side effects of enabling both PHP and Twig (javiereguiluz)
+- `46fcb67 <https://github.com/symfony/symfony-docs/commit/46fcb678392e2f0c8f0bbe34a94f01429e256a4a>`_ #4218 Caution that roles should start with ROLE_ (jrjohnson)
+- `78eea60 <https://github.com/symfony/symfony-docs/commit/78eea60c0cc93849732f071801b39042feed3cbf>`_ #4077 Removed outdated translations from the official list (WouterJ)
+- `2cf9e47 <https://github.com/symfony/symfony-docs/commit/2cf9e47f4c3399db3f0b4a2a11647b6292cbdee3>`_ #4171 Fixed version for composer install (zomberg)
+- `5c62b36 <https://github.com/symfony/symfony-docs/commit/5c62b36f63a308b9d7be262dff9a02b89d94600d>`_ #4216 Update Collection.rst (azarzag)
+- `8591b87 <https://github.com/symfony/symfony-docs/commit/8591b872facc7a6b4bd1447d5438fe68cd21e112>`_ #4215 Fixed code highlighting (WouterJ)
+- `f276e34 <https://github.com/symfony/symfony-docs/commit/f276e348faf446e26be9871bf49caa14a1a05a40>`_ #4205 replace "Symfony2" with "Symfony" (xabbuh)
+- `6db13ac <https://github.com/symfony/symfony-docs/commit/6db13ac022006f9746c5a97a63a6f1f02458edca>`_ #4208 Added a note about the lacking features of Yaml Component (javiereguiluz)
+- `f8c6201 <https://github.com/symfony/symfony-docs/commit/f8c6201b5c24661d2545618e2667949fd53c3020>`_ #4200 Moved 'contributing' images to their own directory (javiereguiluz)
+- `b4650fa <https://github.com/symfony/symfony-docs/commit/b4650fa7a3c9b7cef533c1174e7c9783528be247>`_ #4199 fix name of the Yaml component (xabbuh)
+- `9d89bb0 <https://github.com/symfony/symfony-docs/commit/9d89bb030714617d42f80e06e11d7c5fecb7b1b6>`_ #4190 add link to form testing chapter in test section (xabbuh)
+
 August, 2014
 ------------
 
