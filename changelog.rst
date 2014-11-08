@@ -19,12 +19,14 @@ September, 2014
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+- `e8a1501 <https://github.com/symfony/symfony-docs/commit/e8a15017248748fa6638fc39ec2e10d255d5277d>`_ #4201 [Components][Process] `````mustRun()````` documentation (xabbuh)
 - `eac0e51 <https://github.com/symfony/symfony-docs/commit/eac0e5101ef8cb142fd37810e7f4faf2396c84d5>`_ #4195 Added a note about the total deprecation of YUI (javiereguiluz)
 - `e44c791 <https://github.com/symfony/symfony-docs/commit/e44c791b510f0439c9727642390c4184d0b94227>`_ #4047 Documented info method (WouterJ)
 - `d5d46ec <https://github.com/symfony/symfony-docs/commit/d5d46ec61e2bd851914550274d97f142c9397a93>`_ #4017 Clarify that route defaults don't need a placeholder (iamdto)
 - `1d56da4 <https://github.com/symfony/symfony-docs/commit/1d56da4384b09298d8ae11b8a14f1ae62b82d5ff>`_ #4239 Remove redundant references to trusting HttpCache (thewilkybarkid)
 - `c306b68 <https://github.com/symfony/symfony-docs/commit/c306b68d7d40d6d5ca815ea1af2a7bda63f4f060>`_ #4249 provide node path on configuration (desarrolla2)
 - `9b4b36f <https://github.com/symfony/symfony-docs/commit/9b4b36fa5f653e621e86363cd060c693c308c62f>`_ #4236 Javiereguiluz bundle install instructions (WouterJ)
+- `ea068c2 <https://github.com/symfony/symfony-docs/commit/ea068c22ffff653f020ea488b3e3e54d96d32949>`_ #4202 [Reference][Constraints] caution on `````null````` values in Expression constraint (xabbuh)
 - `a578de9 <https://github.com/symfony/symfony-docs/commit/a578de99b2ba4a83605a530a76111a4cf4daf1fa>`_ #4223 Revamped the documentation about "Contributing Docs" (javiereguiluz)
 - `de60dbe <https://github.com/symfony/symfony-docs/commit/de60dbed64c719792c0259248e4dc52aefd6b088>`_ #4182 Added note about exporting SYMFONY_ENV (jpb0104)
 - `a8dc2bf <https://github.com/symfony/symfony-docs/commit/a8dc2bfe0f5cfcc5af24565e195d8293f45ee393>`_ #4166 Translation custom loaders (raulfraile)
@@ -32,10 +34,12 @@ New Documentation
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
+- `c289ac8 <https://github.com/symfony/symfony-docs/commit/c289ac8fabe363683c57953a9b60db3765e897cb>`_ #4279 Double-quotes instead of single quotes (UnexpectedValueException in Windows 8) (galdiolo)
 - `5500e0b <https://github.com/symfony/symfony-docs/commit/5500e0b211633e65de693f0eca7dddfef52ee35e>`_ #4267 Fix error in bundle installation standard example (WouterJ)
 - `082755d <https://github.com/symfony/symfony-docs/commit/082755dac2385250c11a8c6024ca2d74048bd654>`_ #4240 [Components][EventDispatcher] fix ContainerAwareEventDispatcher definition (xabbuh)
 - `2319d6a <https://github.com/symfony/symfony-docs/commit/2319d6a391ee16f772ac34b5c4336680a26f8992>`_ #4213 Handle "constraints" option in form unit testing (sarcher)
 - `c567707 <https://github.com/symfony/symfony-docs/commit/c5677076f81b1c13d6230332fef0d5727354b9af>`_ #4222 [Components][DependencyInjection] do not reference services in parameters (xabbuh)
+- `02d1091 <https://github.com/symfony/symfony-docs/commit/02d1091e9795cfc773bf3061b61e3933f08c4e11>`_ #4209 Fix method for adding placholders in progressBar (danez)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,6 +58,7 @@ Minor Documentation Changes
 - `2cf9e47 <https://github.com/symfony/symfony-docs/commit/2cf9e47f4c3399db3f0b4a2a11647b6292cbdee3>`_ #4171 Fixed version for composer install (zomberg)
 - `5c62b36 <https://github.com/symfony/symfony-docs/commit/5c62b36f63a308b9d7be262dff9a02b89d94600d>`_ #4216 Update Collection.rst (azarzag)
 - `8591b87 <https://github.com/symfony/symfony-docs/commit/8591b872facc7a6b4bd1447d5438fe68cd21e112>`_ #4215 Fixed code highlighting (WouterJ)
+- `8f01195 <https://github.com/symfony/symfony-docs/commit/8f01195970f38f5494186b904f7c4f536cff0461>`_ #4212 Missing backtick, thanks to @Baptouuuu (WouterJ)
 - `f276e34 <https://github.com/symfony/symfony-docs/commit/f276e348faf446e26be9871bf49caa14a1a05a40>`_ #4205 replace "Symfony2" with "Symfony" (xabbuh)
 - `6db13ac <https://github.com/symfony/symfony-docs/commit/6db13ac022006f9746c5a97a63a6f1f02458edca>`_ #4208 Added a note about the lacking features of Yaml Component (javiereguiluz)
 - `f8c6201 <https://github.com/symfony/symfony-docs/commit/f8c6201b5c24661d2545618e2667949fd53c3020>`_ #4200 Moved 'contributing' images to their own directory (javiereguiluz)
