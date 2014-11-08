@@ -128,7 +128,7 @@ Minor Documentation Changes
 - `19a0c35 <https://github.com/symfony/symfony-docs/commit/19a0c35d08af7f8ff474d6a52fac88c5d7db24f8>`_ #4252 Removed unnecessary comma (allejo)
 - `9fd91d6 <https://github.com/symfony/symfony-docs/commit/9fd91d60644d2111bdc3a7dfc872b90aa3a97ac7>`_ #4219 Cache needs be cleared (burki94)
 - `025f02e <https://github.com/symfony/symfony-docs/commit/025f02e7917473cc9a885b41de1fe9ca945044b8>`_ #4220 Added a note about the side effects of enabling both PHP and Twig (javiereguiluz)
-- `46fcb67 <https://github.com/symfony/symfony-docs/commit/46fcb678392e2f0c8f0bbe34a94f01429e256a4a>`_ #4218 Caution that roles should start with ROLE_ (jrjohnson)
+- `46fcb67 <https://github.com/symfony/symfony-docs/commit/46fcb678392e2f0c8f0bbe34a94f01429e256a4a>`_ #4218 Caution that roles should start with ``ROLE_`` (jrjohnson)
 - `78eea60 <https://github.com/symfony/symfony-docs/commit/78eea60c0cc93849732f071801b39042feed3cbf>`_ #4077 Removed outdated translations from the official list (WouterJ)
 - `2cf9e47 <https://github.com/symfony/symfony-docs/commit/2cf9e47f4c3399db3f0b4a2a11647b6292cbdee3>`_ #4171 Fixed version for composer install (zomberg)
 - `5c62b36 <https://github.com/symfony/symfony-docs/commit/5c62b36f63a308b9d7be262dff9a02b89d94600d>`_ #4216 Update Collection.rst (azarzag)
