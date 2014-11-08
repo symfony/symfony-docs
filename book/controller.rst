@@ -91,10 +91,9 @@ or a ``Closure``), in Symfony, a controller is usually a single method inside
 a controller object. Controllers are also called *actions*.
 
 .. code-block:: php
-    :linenos:
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/AppBundle/Controller/HelloController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -151,7 +150,7 @@ to the controller:
         # app/config/routing.yml
         hello:
             path:      /hello/{name}
-            defaults:  { _controller: AcmeHelloBundle:Hello:index }
+            defaults:  { _controller: AppBundle:Hello:index }
 
     .. code-block:: xml
 
@@ -163,7 +162,7 @@ to the controller:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello/{name}">
-                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+                <default key="_controller">AppBundle:Hello:index</default>
             </route>
         </routes>
 
@@ -175,7 +174,7 @@ to the controller:
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeHelloBundle:Hello:index',
+            '_controller' => 'AppBundle:Hello:index',
         )));
 
         return $collection;
@@ -184,10 +183,10 @@ Going to ``/hello/ryan`` now executes the ``HelloController::indexAction()``
 controller and passes in ``ryan`` for the ``$name`` variable. Creating a
 "page" means simply creating a controller method and associated route.
 
-Notice the syntax used to refer to the controller: ``AcmeHelloBundle:Hello:index``.
+Notice the syntax used to refer to the controller: ``AppBundle:Hello:index``.
 Symfony uses a flexible string notation to refer to different controllers.
 This is the most common syntax and tells Symfony to look for a controller
-class called ``HelloController`` inside a bundle named ``AcmeHelloBundle``. The
+class called ``HelloController`` inside a bundle named ``AppBundle``. The
 method ``indexAction()`` is then executed.
 
 For more details on the string format used to reference different controllers,
@@ -202,7 +201,8 @@ see :ref:`controller-string-syntax`.
 
 .. tip::
 
-    You can learn much more about the routing system in the :doc:`Routing chapter </book/routing>`.
+    You can learn much more about the routing system in the
+    :doc:`Routing chapter </book/routing>`.
 
 .. index::
    single: Controller; Controller arguments
@@ -212,13 +212,13 @@ see :ref:`controller-string-syntax`.
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You already know that the ``_controller`` parameter ``AcmeHelloBundle:Hello:index``
+You already know that the ``_controller`` parameter ``AppBundle:Hello:index``
 refers to a ``HelloController::indexAction()`` method that lives inside the
-``AcmeHelloBundle`` bundle. What's more interesting is the arguments that are
-passed to that method::
+``AppBundle`` bundle. What's more interesting is the arguments that are passed
+to that method::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/AppBundle/Controller/HelloController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -226,15 +226,15 @@ passed to that method::
     {
         public function indexAction($name)
         {
-          // ...
+            // ...
         }
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
 ``{name}`` parameter from the matched route (``ryan`` in the example). In
 fact, when executing your controller, Symfony matches each argument of
-the controller with a parameter from the matched route. Take the following
-example:
+the controller with a parameter from the matched route by its name. Take the
+following example:
 
 .. configuration-block::
 
@@ -243,7 +243,7 @@ example:
         # app/config/routing.yml
         hello:
             path:      /hello/{firstName}/{lastName}
-            defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
+            defaults:  { _controller: AppBundle:Hello:index, color: green }
 
     .. code-block:: xml
 
@@ -255,7 +255,7 @@ example:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello/{firstName}/{lastName}">
-                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+                <default key="_controller">AppBundle:Hello:index</default>
                 <default key="color">green</default>
             </route>
         </routes>
@@ -268,7 +268,7 @@ example:
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{firstName}/{lastName}', array(
-            '_controller' => 'AcmeHelloBundle:Hello:index',
+            '_controller' => 'AppBundle:Hello:index',
             'color'       => 'green',
         )));
 
@@ -377,8 +377,8 @@ you can take advantage of several helper methods.
 Add the ``use`` statement atop the ``Controller`` class and then modify the
 ``HelloController`` to extend it::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/AppBundle/Controller/HelloController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
@@ -427,7 +427,7 @@ Common Controller Tasks
 Though a controller can do virtually anything, most controllers will perform
 the same basic tasks over and over again. These tasks, such as redirecting,
 forwarding, rendering templates and accessing core services, are very easy
-to manage in Symfony.
+to manage in Symfony when you're extending the base ``Controller`` class.
 
 .. index::
    single: Controller; Redirecting
@@ -435,7 +435,9 @@ to manage in Symfony.
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the ``redirect()`` method::
+If you want to redirect the user to another page, use the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
+method::
 
     public function indexAction()
     {
@@ -477,7 +479,7 @@ object that's returned from that controller::
 
     public function indexAction($name)
     {
-        $response = $this->forward('AcmeHelloBundle:Hello:fancy', array(
+        $response = $this->forward('AppBundle:Something:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ));
@@ -489,22 +491,22 @@ object that's returned from that controller::
 
 Notice that the ``forward()`` method uses the same string representation of
 the controller used in the routing configuration. In this case, the target
-controller class will be ``HelloController`` inside some ``AcmeHelloBundle``.
-The array passed to the method becomes the arguments on the resulting controller.
-This same interface is used when embedding controllers into templates (see
-:ref:`templating-embedding-controller`). The target controller method should
-look something like the following::
+controller class will be ``SomethingController::fancyAction()`` inside the
+``AppBundle``.  The array passed to the method becomes the arguments on the
+resulting controller. This same interface is used when embedding controllers
+into templates (see :ref:`templating-embedding-controller`). The target
+controller method should look something like the following::
 
     public function fancyAction($name, $color)
     {
         // ... create and return a Response object
     }
 
-And just like when creating a controller for a route, the order of the arguments
-to ``fancyAction`` doesn't matter. Symfony matches the index key names
-(e.g. ``name``) with the method argument names (e.g. ``$name``). If you
-change the order of the arguments, Symfony will still pass the correct
-value to each variable.
+Just like when creating a controller for a route, the order of the arguments of
+``fancyAction`` doesn't matter. Symfony matches the index key names (e.g.
+``name``) with the method argument names (e.g. ``$name``). If you change the
+order of the arguments, Symfony will still pass the correct value to each
+variable.
 
 .. tip::
 
@@ -517,7 +519,7 @@ value to each variable.
         use Symfony\Component\HttpKernel\HttpKernelInterface;
 
         $path = array(
-            '_controller' => 'AcmeHelloBundle:Hello:fancy',
+            '_controller' => 'AppBundle:Something:fancy',
             'name'        => $name,
             'color'       => 'green',
         );
@@ -545,33 +547,28 @@ content from the template can be used to create a ``Response`` object::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    $content = $this->renderView(
-        'AcmeHelloBundle:Hello:index.html.twig',
-        array('name' => $name)
-    );
+    $content = $this->renderView('Hello/index.html.twig', array('name' => $name));
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
 returns a ``Response`` object containing the content from the template::
 
-    return $this->render(
-        'AcmeHelloBundle:Hello:index.html.twig',
-        array('name' => $name)
-    );
+    return $this->render('Hello/index.html.twig', array('name' => $name));
 
-In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
-the ``AcmeHelloBundle`` will be rendered.
+In both cases, the ``app/Resources/views/Hello/index.html.twig`` template will
+be rendered.
+
+.. sidebar:: Referencing Templates that Live inside the Bundle
+
+    You can also put templates in the ``Resources/views`` directory of a
+    bundle. You can then reference is with the
+    ``BundleName:DirectoryName:FileName`` syntax. E.g.
+    ``AppBundle:Hello:index.html.twig`` would refer to the template located in
+    ``src/AppBundle/Resources/views/Hello/index.html.twig``.
 
 The Symfony templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.
-
-.. tip::
-
-    You can even avoid calling the ``render`` method by using the ``@Template``
-    annotation. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/view>`
-    more details.
 
 .. tip::
 
@@ -579,10 +576,7 @@ The Symfony templating engine is explained in great detail in the
     service. The ``templating`` service can also be used directly::
 
         $templating = $this->get('templating');
-        $content = $templating->render(
-            'AcmeHelloBundle:Hello:index.html.twig',
-            array('name' => $name)
-        );
+        $content = $templating->render('Hello/index.html.twig', array('name' => $name));
 
 .. note::
 
@@ -590,12 +584,8 @@ The Symfony templating engine is explained in great detail in the
     be careful to avoid the pitfall of making your directory structure unduly
     elaborate::
 
-        $templating->render(
-            'AcmeHelloBundle:Hello/Greetings:index.html.twig',
-            array('name' => $name)
-        );
-        // index.html.twig found in Resources/views/Hello/Greetings
-        // is rendered.
+        $templating->render('Hello/Greetings/index.html.twig', array('name' => $name));
+        // renders app/Resources/views/Hello/Greetings/index.html.twig
 
 .. index::
    single: Controller; Accessing services
@@ -751,7 +741,7 @@ the ``notice`` message:
             <div class="flash-notice">
                 <?php echo "<div class='flash-error'>$message</div>" ?>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 By design, flash messages are meant to live for exactly one request (they're
 "gone in a flash"). They're designed to be used across redirects exactly as

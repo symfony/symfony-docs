@@ -213,7 +213,7 @@ redirect to the URL defined by some ``account`` route, use the following:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
