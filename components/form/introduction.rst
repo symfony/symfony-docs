@@ -173,7 +173,7 @@ line to your ``composer.json`` file:
     }
 
 The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
-that help you render each the HTML widget, label and error for each field
+that help you render the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
