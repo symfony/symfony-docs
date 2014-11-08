@@ -87,7 +87,7 @@ service container. In other words, you have access to any configured service::
         // ...
     }
 
-However, due to the `container scopes </doc/current/cookbook/service_container/scopes.html>`_ this
+However, due to the :doc:`container scopes </cookbook/service_container/scopes>` this
 code doesn't work for some services. For instance, if you try to get the ``request``
 service or any other service related to it, you'll get the following error:
 
