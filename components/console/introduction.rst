@@ -357,11 +357,11 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL``
     $this
         // ...
         ->addOption(
-            'iterations',
+            'colors',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'How many times should the message be printed?',
-            1
+            'Which colors do you like?',
+            array('blue', 'red')
         );
 
 Console Helpers
