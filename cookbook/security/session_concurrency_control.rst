@@ -2,7 +2,7 @@
     single: Security; How to control Session Concurrency
 
 How to control Session Concurrency
-=================================
+==================================
 
 Sometimes, it's useful to be able to control session concurrency for logged in
 users disabling new session or expiring old active sessions setting a limit for
