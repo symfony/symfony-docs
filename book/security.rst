@@ -2330,6 +2330,7 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 * :doc:`How to Restrict Firewalls to a Specific Request </cookbook/security/firewall_restriction>`
+* :doc:`How to control Session Concurrency </cookbook/security/session_concurrency_control>`
 
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
