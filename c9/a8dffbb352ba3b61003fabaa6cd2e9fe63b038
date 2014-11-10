@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-26T14:03:22Z
+
+We can also simply add ``:maxdepth: 1 ``, the result will be equal, no?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-26T16:24:31Z
+
+That should probably do the same. But this is the way we have it in the other parts of the  documentation. And I think it's easier to understand for newcomers of we keep it consistent.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-01T10:48:46Z
+
+@WouterJ @weaverryan What do you think?
