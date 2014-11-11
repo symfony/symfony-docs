@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T09:10:43Z
+
+@fabpot Can we then also remove the ``install.sh`` script and modify the ``.travis.yml`` file accordingly? Or are those still needed for the new process?
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-08-08T09:13:04Z
+
+@xabbuh Correct, I was not aware of these files. Fixed now.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-08T09:17:25Z
+
+@fabpot And one other thing: How do we handle ``doc`` directives referencing documents from the ``bundles`` directory (actually, that's why the Travis build fails)? I guess we have to link with absolute URLs then? This must be taken into account once we know where these docs can be viewed.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-08T17:28:12Z
+
+@xabbuh @fabpot Yes, we will need to turn this into absolute links, which I think is fine.
+
+Fabien, if you agree, you can do it or one of us can fork you and change the references.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-10T10:24:52Z
+
+Awesome! I can't wait for this to be merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-11T08:45:30Z
+
+The step "(Optionally) Install the bundle docs and CMF docs: bash install.sh;" should also be removed from http://symfony.com/doc/current/contributing/documentation/format.html#testing-documentation
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-08-11T09:05:39Z
+
+@WouterJ done
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-11T09:31:19Z
+
+@fabpot I created a PR which removes even more references to third party docs: https://github.com/fabpot/symfony-docs/pull/1
+
+And do these entries in the redirection map still work?
+
+````
+/cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
+/cookbook/doctrine/doctrine_fixtures /bundles/DoctrineFixturesBundle/index
+/cookbook/doctrine/mongodb /bundles/DoctrineMongoDBBundle/index
+````
