@@ -4,7 +4,6 @@ python:
     - "2.7"
 
 install: 
-    - "bash install.sh"
     - "pip install -q -r requirements.txt --use-mirrors"
 
 script: sphinx-build -nW -b html -d _build/doctrees . _build/html

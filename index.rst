@@ -77,29 +77,6 @@ Get answers quickly with reference documents:
 
 .. include:: /reference/map.rst.inc
 
-Bundles
--------
-
-The Symfony Standard Edition comes with some bundles. Learn more about them:
-
-.. toctree::
-    :hidden:
-
-    bundles/index
-
-.. include:: /bundles/map.rst.inc
-
-CMF
----
-
-The Symfony CMF project makes it easier for developers to add CMS functionality
-to applications built with the Symfony PHP framework.
-
-.. toctree::
-    :hidden:
-
-    cmf/index
-
 Contributing
 ------------
 

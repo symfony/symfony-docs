@@ -764,7 +764,7 @@ at some interval (the expiration) to verify that the content is still valid.
 
     You can also define HTTP caching headers for expiration and validation by using
     annotations. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/cache>`.
+    `FrameworkExtraBundle documentation <http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html>`_.
 
 .. index::
     pair: Cache; Configuration
