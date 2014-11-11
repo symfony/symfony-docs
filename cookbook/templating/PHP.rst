@@ -60,11 +60,10 @@ below renders the ``index.html.php`` template::
         );
     }
 
-You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
-shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template::
+You can also use the `@Template`_ shortcut to render the default
+``AcmeHelloBundle:Hello:index.html.php`` template::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
@@ -368,3 +367,5 @@ within an HTML context. The second argument lets you change the context. For
 instance, to output something in a JavaScript script, use the ``js`` context::
 
     <?php echo $view->escape($var, 'js') ?>
+
+.. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view`
