@@ -1487,12 +1487,33 @@ in a JavaScript string, use the ``js`` context:
 Debugging
 ---------
 
-When using PHP, you can use :phpfunction:`var_dump` if you need to quickly find
-the value of a variable passed. This is useful, for example, inside your
-controller.  The same can be achieved when using Twig thanks to the debug
-extension.
+When using PHP, you can use the
+:ref:`dump() function from the VarDumper component <components-var-dumper-dump>`
+if you need to quickly find the value of a variable passed. This is useful,
+for example, inside your controller::
 
-Template parameters can then be dumped using the ``dump`` function:
+    // src/AppBundle/Controller/ArticleController.php
+    namespace AppBundle\Controller;
+
+    // ...
+
+    class ArticleController extends Controller
+    {
+        public function recentListAction()
+        {
+            $articles = ...;
+            dump($articles);
+
+            // ...
+        }
+    }
+
+.. note::
+
+    The output of the ``dump()`` function is then rendered in the web developer
+    toolbar.
+
+The same mechanism can be used in Twig templates thanks to ``dump`` function:
 
 .. code-block:: html+jinja
 
