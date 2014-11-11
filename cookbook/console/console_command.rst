@@ -59,7 +59,7 @@ This command will now automatically be available to run:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien
+    $ php app/console demo:greet Fabien
 
 Getting Services from the Service Container
 -------------------------------------------
