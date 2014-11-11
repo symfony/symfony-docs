@@ -22,7 +22,7 @@ can be.
     easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
-    more information, read the ":doc:`/bundles/DoctrineMongoDBBundle/index`"
+    more information, read the "`DoctrineMongoDBBundle`_"
     documentation.
 
 A Simple Example: A Product
@@ -471,10 +471,10 @@ in your application. To do this, run:
     new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
-    :doc:`migrations </bundles/DoctrineMigrationsBundle/index>`, which allow you to
-    generate these SQL statements and store them in migration classes that
-    can be run systematically on your production server in order to track
-    and migrate your database schema safely and reliably.
+    `migrations`_, which allow you to generate these SQL statements and store
+    them in migration classes that can be run systematically on your production
+    server in order to track and migrate your database schema safely and
+    reliably.
 
 Your database now has a fully-functional ``product`` table with columns that
 match the metadata you've specified.
@@ -559,7 +559,7 @@ an ``UPDATE`` query if the record already exists in the database.
 
     Doctrine provides a library that allows you to programmatically load testing
     data into your project (i.e. "fixture data"). For information, see
-    :doc:`/bundles/DoctrineFixturesBundle/index`.
+    the "`DoctrineFixturesBundle`_" documentation.
 
 Fetching Objects from the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -586,8 +586,7 @@ on its ``id`` value::
 .. tip::
 
     You can achieve the equivalent of this without writing any code by using
-    the ``@ParamConverter`` shortcut. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    the ``@ParamConverter`` shortcut. See the `FrameworkExtraBundle documentation`_
     for more details.
 
 When you query for a particular type of object, you always use what's known
@@ -1083,7 +1082,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations </bundles/DoctrineMigrationsBundle/index>`.
+    `migrations`_.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1400,8 +1399,8 @@ For more information about Doctrine, see the *Doctrine* section of the
 
 * :doc:`/cookbook/doctrine/common_extensions`
 * :doc:`/cookbook/doctrine/console`
-* :doc:`/bundles/DoctrineFixturesBundle/index`
-* :doc:`/bundles/DoctrineMongoDBBundle/index`
+* `DoctrineFixturesBundle`_
+* `DoctrineMongoDBBundle`_
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`MongoDB`: http://www.mongodb.org/
@@ -1414,3 +1413,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
 .. _`Persistent classes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes
+.. _`DoctrineMongoDBBundle`: http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+.. _`migrations`: http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
+.. _`DoctrineFixturesBundle`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
+.. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
