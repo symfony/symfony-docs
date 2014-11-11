@@ -1,13 +1,14 @@
 .. index::
     single: Security; How to control Session Concurrency
 
-How to control Session Concurrency
+How to Control Session Concurrency
 ==================================
 
-Sometimes, it's useful to be able to control session concurrency for logged in
-users disabling new session or expiring old active sessions setting a limit for
-concurrent sessions. This can be easily done setting the ``max_sessions`` option
-inside the ``session_concurrency`` zone in the firewall:
+Sometimes, it's useful to restrict the number of concurrent sessions that a given
+user can open using different browsers and devices. When the maximum number of
+concurrent sessions is achieved, Symfony allows you to disable new sessions or to
+expire the old ones. To do so, set the ``max_sessions`` limit using the ``session_concurrency``
+option of your firewall:
 
 .. configuration-block::
 
@@ -109,7 +110,7 @@ option to false in the firewall configuration:
             ),
         ));
 
-With theese settings, when the user open a new session, the older ones will be
+With these settings, when the user opens a new session, the older ones will be
 marked as expired leaving only 2 active sessions. If the user makes a new
 request with the expired session, will be logged out and redirected to ``/`` by
 default. You can control where the user will be redirected when an expired
@@ -167,8 +168,8 @@ configuration:
             ),
         ));
 
-If the ``max_sessions`` options is left to its default value (``0``) the maximum 
-number of sessions will not be checked, but it will allow you to manually expire 
+If the ``max_sessions`` option is left to its default value (``0``) the maximum
+number of sessions will not be checked, but it will allow you to manually expire
 all sessions for a concrete user through the session registry:
 
 .. code-block:: php
@@ -183,12 +184,12 @@ all sessions for a concrete user through the session registry:
     {
         public function expireUserSessionsAction(UserInterface $user)
         {
-            /* @var $sessionRegistry \Symfony\Component\Security\Http\Session\SessionRegistry */
+            /** @var $sessionRegistry \Symfony\Component\Security\Http\Session\SessionRegistry */
             $sessionRegistry = $this->get('security.authentication.session_registry');
-            
-            $sessionsInformation = $sessionRegistry->getAllSessions($user->getUsername());
-            foreach ($sessionsInformation as $sessionInformation) {
-		$sessionRegistry->expireNow($sessionInformation->getSessionId());
+
+            $sessions = $sessionRegistry->getAllSessions($user->getUsername());
+            foreach ($sessions as $session) {
+                $sessionRegistry->expireNow($session->getSessionId());
             }
         }
     }
