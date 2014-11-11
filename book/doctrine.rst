@@ -1399,8 +1399,8 @@ For more information about Doctrine, see the *Doctrine* section of the
 
 * :doc:`/cookbook/doctrine/common_extensions`
 * :doc:`/cookbook/doctrine/console`
-* :doc:`DoctrineFixturesBundle`
-* :doc:`DoctrineMongoDBBundle`
+* `DoctrineFixturesBundle`_
+* `DoctrineMongoDBBundle`_
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`MongoDB`: http://www.mongodb.org/
