@@ -410,7 +410,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
 
         /**
@@ -470,7 +470,7 @@ This is done by including it in the ``defaults`` collection:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
 
         /**
@@ -555,7 +555,7 @@ Take a quick look at the routes that have been created so far:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
         class BlogController extends Controller
         {
@@ -738,7 +738,7 @@ URL:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/MainController.php
-        
+
         // ...
         class MainController extends Controller
         {
@@ -1283,8 +1283,8 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
         return $collection;
 
-The string ``/site`` will now be prepended to the path of each route loaded
-from the new routing resource.
+The path of each route being loaded from the new routing resource will now
+be prefixed with the string ``/site``.
 
 Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
