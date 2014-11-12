@@ -131,7 +131,7 @@ To access a page, you must now use the ``front.php`` script:
 
 * ``http://127.0.0.1:4321/front.php/bye``
 
-``/hello`` and ``/bye`` are the page *path*s.
+``/hello`` and ``/bye`` are the page *paths*.
 
 .. tip::
 
