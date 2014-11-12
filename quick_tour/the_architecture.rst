@@ -13,7 +13,7 @@ Understanding the Directory Structure
 The directory structure of a Symfony :term:`application` is rather flexible,
 but the recommended structure is as follows:
 
-* ``app/``: the application configuration and templates;
+* ``app/``: the application configuration, templates and translations;
 * ``src/``: the project's PHP code;
 * ``vendor/``: the third-party dependencies;
 * ``web/``: the web root directory.
@@ -121,8 +121,8 @@ a single ``Bundle`` class that describes it::
     }
 
 In addition to the AppBundle that was already talked about, notice that the
-kernel also enables other bundles such as the FrameworkBundle, DoctrineBundle,
-SwiftmailerBundle and AsseticBundle. They are all part of the core framework.
+kernel also enables other bundles that are part of Symfony, such as FrameworkBundle,
+DoctrineBundle, SwiftmailerBundle and AsseticBundle.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -168,7 +168,7 @@ PHP. Have a look at this sample of the default Symfony configuration:
 
     # ...
 
-Each first level entry like ``framework``, ``twig`` or ``swiftmailer`` defines
+Each first level entry like ``framework``, ``twig`` and ``swiftmailer`` defines
 the configuration for a specific bundle. For example, ``framework`` configures
 the FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
 
@@ -238,10 +238,10 @@ Using Vendors
 -------------
 
 Odds are that your application will depend on third-party libraries. Those
-should be stored in the ``vendor/`` directory and managed by Composer.
-This directory already contains the Symfony libraries, the SwiftMailer library,
-the Doctrine ORM, the Twig templating system and some other third party
-libraries and bundles.
+should be stored in the ``vendor/`` directory. You should never touch anything
+in this directory, because it is exclusively managed by Composer. This directory
+already contains the Symfony libraries, the SwiftMailer library, the Doctrine ORM,
+the Twig templating system and some other third party libraries and bundles.
 
 Understanding the Cache and Logs
 --------------------------------
