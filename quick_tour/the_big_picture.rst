@@ -23,10 +23,9 @@ to display the installed PHP version:
 Installing Symfony
 ------------------
 
-In the past, Symfony had to be installed manually for each new project. In order
-to simplify this set up, a new **Symfony Installer** was introduced recently.
-This means that the very first time you use Symfony on a computer, you have to
-install the Symfony Installer.
+In the past, Symfony had to be installed manually for each new project. Now you
+can use the **Symfony Installer**, which has to be installed the very first time
+you use Symfony on a computer.
 
 On **Linux** and **Mac OS X** systems, execute the following console commands:
 
@@ -52,9 +51,15 @@ to be able to execute the new ``symfony`` command:
 
     $ symfony
 
-On **Windows** systems, download the ``symfony.phar`` file from ........... and
-save it into the directory where you create the Symfony projects. Then you can
-execute the Symfony installer right away with this command:
+On **Windows** systems, execute the following console command:
+
+ .. code-block:: bash
+
+    c:\> php -r "readfile('https://symfony.com/installer');" | php
+
+This command downloads a file called ``symfony.phar`` which contains the Symfony
+installer. Save or move that file to the directory where you create the Symfony
+projects and then, execute the Symfony installer right away with this command:
 
 .. code-block:: bash
 
@@ -90,7 +95,7 @@ the project directory and executing this command:
 .. code-block:: bash
 
     $ cd myproject/
-    $ php app/console server:start
+    $ php app/console server:run
 
 Open your browser and access the ``http://localhost:8000`` URL to see the
 Welcome page of Symfony:
@@ -166,9 +171,9 @@ that will be explained in the next section)::
         }
     }
 
-In Symfony applications, **controllers** are PHP classes whose names are suffixed
-with the ``Controller`` word. In this example, the controller is called ``Default``
-and the PHP class is called ``DefaultController``.
+In Symfony applications, **controllers** are usually PHP classes whose names are
+suffixed with the ``Controller`` word. In this example, the controller is called
+``Default`` and the PHP class is called ``DefaultController``.
 
 The methods defined in a controller are called **actions**, they are usually
 associated with one URL of the application and their names are suffixed with
@@ -230,8 +235,9 @@ of the ``Default`` controller when the user browses the ``/`` path of the applic
 .. tip::
 
     In addition to PHP annotations, routes can be configured in YAML, XML or
-    PHP files. This flexibility is one of the main features of Symfony, a
-    framework that never imposes a particular configuration format on you.
+    PHP files, as explained in `the Routing chapter of the Symfony book`_ .
+    This flexibility is one of the main features of Symfony, a framework that
+    never imposes a particular configuration format on you.
 
 Templates
 ~~~~~~~~~
@@ -348,6 +354,7 @@ Symfony makes it really easy to implement web sites better and faster. If you
 are eager to learn more about Symfony, dive into the next section:
 ":doc:`The View <the_view>`".
 
-.. _Composer:             https://getcomposer.org/
+.. _Composer: https://getcomposer.org/
 .. _executable installer: http://getcomposer.org/download
-.. _Twig:                 http://twig.sensiolabs.org/
+.. _Twig: http://twig.sensiolabs.org/
+.. _the Routing chapter of the Symfony book: http://symfony.com/doc/current/book/routing.html

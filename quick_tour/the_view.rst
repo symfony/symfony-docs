@@ -64,18 +64,18 @@ display the content of a variable passed by the controller depending on its type
 .. code-block:: jinja
 
     {# 1. Simple variables #}
-    {# $this->render( ..., array('name' => 'Fabien') ) #}
+    {# $this->render('template.html.twig', array('name' => 'Fabien') ) #}
     {{ name }}
 
     {# 2. Arrays #}
-    {# $this->render( ..., array('user' => array('name' => 'Fabien')) ) #}
+    {# $this->render('template.html.twig', array('user' => array('name' => 'Fabien')) ) #}
     {{ user.name }}
 
     {# alternative syntax for arrays #}
     {{ user['name'] }}
 
     {# 3. Objects #}
-    {# $this->render( ..., array('user' => new User('Fabien')) ) #}
+    {# $this->render('template.html.twig', array('user' => new User('Fabien')) ) #}
     {{ user.name }}
     {{ user.getName }}
 
@@ -251,7 +251,7 @@ Symfony provides the ``asset`` function to deal with them easily:
     <img src="{{ asset('images/logo.png') }}" />
 
 The ``asset()`` function looks for the web assets inside the ``web/`` directory.
-If you store them in another directory, read :doc:`this article <cookbook/assetic/asset_management>`
+If you store them in another directory, read :doc:`this article </cookbook/assetic/asset_management>`
 to learn how to manage web assets.
 
 Using the ``asset`` function, your application is more portable. The reason is

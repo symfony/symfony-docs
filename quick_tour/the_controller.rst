@@ -218,6 +218,8 @@ In the case of ``404`` errors, Symfony includes a handy shortcut that you can
 use in your controllers::
 
     // src/AppBundle/Controller/DefaultController.php
+    // ...
+
     class DefaultController extends Controller
     {
         /**
@@ -234,6 +236,8 @@ For ``500`` errors, just throw a regular PHP exception inside the controller and
 Symfony will transform it into a proper ``500`` error page::
 
     // src/AppBundle/Controller/DefaultController.php
+    // ...
+
     class DefaultController extends Controller
     {
         /**
