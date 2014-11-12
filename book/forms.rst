@@ -526,6 +526,7 @@ to an array callback::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+    // ...
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -541,22 +542,50 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a ``Closure``::
 
+    use Acme\AcmeBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+    // ...
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
-                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                if (Client::TYPE_PERSON == $data->getType()) {
                     return array('person');
-                } else {
-                    return array('company');
                 }
+
+                return array('company');
             },
         ));
     }
+
+Using the ``validation_groups`` option overrides the default validation
+group which is being used. If you want to validate the default constraints
+of the entity as well you have to adjust the option as follows::
+
+    use Acme\AcmeBundle\Entity\Client;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    // ...
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Client::TYPE_PERSON == $data->getType()) {
+                    return array('Default', 'person');
+                }
+
+                return array('Default', 'company');
+            },
+        ));
+    }
+
+You can find more information about how the validation groups and the default constraints
+work in the book section about :ref:`validation groups <book-validation-validation-groups>`.
 
 .. index::
    single: Forms; Validation groups based on clicked button
