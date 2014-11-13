@@ -28,17 +28,14 @@ manually. For example, imagine a library with the following directory structure:
 
 These files contain the following classes:
 
-=========================== ================
-File                        Class Name
-=========================== ================
-``library/bar/baz/Boo.php`` ``Acme\Bar\Baz``
---------------------------- ----------------
-``library/bar/Foo.php``     ``Acme\Bar``
---------------------------- ----------------
-``library/foo/bar/Foo.php`` ``Acme\Foo\Bar``
---------------------------- ----------------
-``library/foo/Bar.php``     ``Acme\Foo``
-=========================== ================
+===========================  ================
+File                         Class Name
+===========================  ================
+``library/bar/baz/Boo.php``  ``Acme\Bar\Baz``
+``library/bar/Foo.php``      ``Acme\Bar``
+``library/foo/bar/Foo.php``  ``Acme\Foo\Bar``
+``library/foo/Bar.php``      ``Acme\Foo``
+===========================  ================
 
 To make your life easier, the ClassLoader component comes with a
 :class:`Symfony\\Component\\ClassLoader\\ClassMapGenerator` class that makes
