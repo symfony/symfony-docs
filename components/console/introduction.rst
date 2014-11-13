@@ -33,9 +33,10 @@ Creating a basic Command
 ------------------------
 
 To make a console command that greets you from the command line, create ``GreetCommand.php``
-and add the following to it::
+within your DemoBundle and add the following to it::
 
-    namespace Acme\Console\Command;
+    // src/Acme/DemoBundle/Command/GreetCommand.php
+    namespace Acme\DemoBundle\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
@@ -88,7 +89,7 @@ an ``Application`` and adds commands to it::
     <?php
     // application.php
 
-    use Acme\Console\Command\GreetCommand;
+    use Acme\DemoBundle\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $application = new Application();
