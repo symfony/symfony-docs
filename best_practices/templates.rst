@@ -37,15 +37,15 @@ But for the templates used in your application, it's much more convenient
 to store them in the ``app/Resources/views/`` directory. For starters, this
 drastically simplifies their logical names:
 
-==================================================  ==================================
-Templates stored inside bundles                     Templates stored in ``app/``
-==================================================  ==================================
-``AcmeDemoBundle:Default:index.html.twig``          ``default/index.html.twig``
-``::layout.html.twig``                              ``layout.html.twig``
-``AcmeDemoBundle::index.html.twig``                 ``index.html.twig``
-``AcmeDemoBundle:Default:subdir/index.html.twig``   ``default/subdir/index.html.twig``
-``AcmeDemoBundle:Default/subdir:index.html.twig``   ``default/subdir/index.html.twig``
-==================================================  ==================================
+=================================================  ==================================
+Templates Stored inside Bundles                    Templates Stored in ``app/``
+=================================================  ==================================
+``AcmeDemoBundle:Default:index.html.twig``         ``default/index.html.twig``
+``::layout.html.twig``                             ``layout.html.twig``
+``AcmeDemoBundle::index.html.twig``                ``index.html.twig``
+``AcmeDemoBundle:Default:subdir/index.html.twig``  ``default/subdir/index.html.twig``
+``AcmeDemoBundle:Default/subdir:index.html.twig``  ``default/subdir/index.html.twig``
+=================================================  ==================================
 
 Another advantage is that centralizing your templates simplifies the work
 of your designers. They don't need to look for templates in lots of directories

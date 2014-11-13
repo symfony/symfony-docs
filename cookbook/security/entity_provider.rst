@@ -447,11 +447,11 @@ The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
 interface adds four extra methods to validate the account status:
 
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonExpired`
-  checks whether the user's account has expired,
+  checks whether the user's account has expired;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonLocked`
-   checks whether the user is locked,
+  checks whether the user is locked;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isCredentialsNonExpired`
-  checks whether the user's credentials (password) has expired,
+  checks whether the user's credentials (password) has expired;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isEnabled`
   checks whether the user is enabled.
 

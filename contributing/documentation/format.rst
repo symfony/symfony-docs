@@ -92,7 +92,7 @@ The previous reST snippet renders as follow:
 The current list of supported formats are the following:
 
 ===================  ======================================
-Markup format        Use it to display
+Markup Format        Use It to Display
 ===================  ======================================
 ``html``             HTML
 ``xml``              XML
