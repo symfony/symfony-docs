@@ -95,10 +95,10 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (``==``, ``&&``, ...), with the 
-  exception  of the not (``!``) operator;
+* Add a single space around binary operators (``==``, ``&&``, ...), with 
+  the exception of the concatenation (``,``) operator;
 
-* Place the not operator adjacent to the variable that it affects;
+* Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
