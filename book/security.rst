@@ -1566,22 +1566,35 @@ is available by calling the PHP function :phpfunction:`hash_algos`.
 Determining the Hashed Password
 ...............................
 
+.. versionadded:: 2.6
+    The ``security.password_encoder`` service was introduced in Symfony 2.6.
+
 If you're storing users in the database and you have some sort of registration
 form for users, you'll need to be able to determine the hashed password so
 that you can set it on your user before inserting it. No matter what algorithm
 you configure for your user object, the hashed password can always be determined
 in the following way from a controller::
 
-    $factory = $this->get('security.encoder_factory');
     $user = new Acme\UserBundle\Entity\User();
+    $plainPassword = 'ryanpass';
+    $encoded = $this->container->get('security.password_encoder')
+        ->encodePassword($user, $plainPassword);
 
-    $encoder = $factory->getEncoder($user);
-    $password = $encoder->encodePassword('ryanpass', $user->getSalt());
-    $user->setPassword($password);
+    $user->setPassword($encoded);
 
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``Acme\UserBundle\Entity\User``) configured under the ``encoders``
 key in ``app/config/security.yml``.
+
+.. sidebar:: Get the User Encoder
+
+    In some cases, you need a specific encoder for a given user (e.g. ``Acme\UserBundle\Entity\User``).
+    You can use the ``EncoderFactory`` to get this encoder::
+
+        $factory = $this->get('security.encoder_factory');
+        $user = new Acme\UserBundle\Entity\User();
+
+        $encoder = $factory->getEncoder($user);
 
 .. caution::
 
@@ -1589,6 +1602,20 @@ key in ``app/config/security.yml``.
     form, change password form), you *must* have validation that guarantees
     that the password is 4096 characters or less. Read more details in
     :ref:`How to implement a simple Registration Form <cookbook-registration-password-max>`.
+
+Validating a Plaintext Password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes you want to check if a plain password is valid for a given user::
+
+    // a user instance of some class which implements Symfony\Component\Security\Core\User\UserInterface
+    $user = ...;
+
+    // the password that should be checked
+    $plainPassword = ...;
+
+    $isValidPassword = $this->container->get('security.password_encoder')
+        ->isPasswordValid($user, $plainPassword);
 
 Retrieving the User Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

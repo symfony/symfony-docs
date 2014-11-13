@@ -1171,18 +1171,21 @@ console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
-    $ php app/console container:debug
+    $ php app/console debug:container
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 By default only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
-    $ php app/console container:debug --show-private
+    $ php app/console debug:container --show-private
 
 .. note::
 
     If a private service is only used as an argument to just *one* other service,
-    it won't be displayed by the ``container:debug`` command, even when using
+    it won't be displayed by the ``debug:container`` command, even when using
     the ``--show-private`` option. See :ref:`Inline Private Services <inlined-private-services>`
     for more details.
 
@@ -1191,7 +1194,7 @@ its id:
 
 .. code-block:: bash
 
-    $ php app/console container:debug my_mailer
+    $ php app/console debug:container my_mailer
 
 Learn more
 ----------

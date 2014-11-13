@@ -70,9 +70,10 @@
   * :doc:`/components/expression_language/extending`
   * :doc:`/components/expression_language/caching`
 
-* **Filesystem**
+* :doc:`/components/filesystem/index`
 
-  * :doc:`/components/filesystem`
+  * :doc:`/components/filesystem/introduction`
+  * :doc:`/components/filesystem/lock_handler`
 
 * **Finder**
 
@@ -142,6 +143,11 @@
   * :doc:`/components/translation/introduction`
   * :doc:`/components/translation/usage`
   * :doc:`/components/translation/custom_formats`
+
+* :doc:`/components/var_dumper/index`
+
+  * :doc:`/components/var_dumper/introduction`
+  * :doc:`/components/var_dumper/advanced`
 
 * :doc:`/components/yaml/index`
 

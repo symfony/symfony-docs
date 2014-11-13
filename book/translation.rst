@@ -662,10 +662,13 @@ Debugging Translations
 ----------------------
 
 .. versionadded:: 2.5
-    The ``translation:debug`` command was introduced in Symfony 2.5.
+    The ``debug:translation`` command was introduced in Symfony 2.5.
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``translation:debug``.
 
 When maintaining a bundle, you may use or remove the usage of a translation
-message without updating all message catalogues. The ``translation:debug``
+message without updating all message catalogues. The ``debug:translation``
 command helps you to find these missing or unused translation messages for a
 given locale. It shows you a table with the result when translating the
 message in the given locale and the result when the fallback would be used.
@@ -774,7 +777,7 @@ To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
 .. code-block:: bash
 
-    $ php app/console translation:debug fr AcmeDemoBundle
+    $ php app/console debug:translation fr AcmeDemoBundle
 
 You will get this output:
 
@@ -815,15 +818,15 @@ By default all domains are inspected, but it is possible to specify a single dom
 
 .. code-block:: bash
 
-    $ php app/console translation:debug en AcmeDemoBundle --domain=messages
+    $ php app/console debug:translation en AcmeDemoBundle --domain=messages
 
 When bundles have a lot of messages, it is useful to display only the unused
 or only the missing messages, by using the ``--only-unused`` or ``--only-missing`` switches:
 
 .. code-block:: bash
 
-    $ php app/console translation:debug en AcmeDemoBundle --only-unused
-    $ php app/console translation:debug en AcmeDemoBundle --only-missing
+    $ php app/console debug:translation en AcmeDemoBundle --only-unused
+    $ php app/console debug:translation en AcmeDemoBundle --only-missing
 
 Summary
 -------

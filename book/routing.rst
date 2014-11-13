@@ -406,7 +406,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
 
         /**
@@ -466,7 +466,7 @@ This is done by including it in the ``defaults`` collection:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
 
         /**
@@ -518,13 +518,13 @@ longer required. The URL ``/blog`` will match this route and the value of
 the ``page`` parameter will be set to ``1``. The URL ``/blog/2`` will also
 match, giving the ``page`` parameter a value of ``2``. Perfect.
 
-=========== ===== ==========
-URL         route parameters
-=========== ===== ==========
-``/blog``   blog  {page} = 1
-``/blog/1`` blog  {page} = 1
-``/blog/2`` blog  {page} = 2
-=========== ===== ==========
+===========  ========  ==================
+URL          Route     Parameters
+===========  ========  ==================
+``/blog``    ``blog``  ``{page}`` = ``1``
+``/blog/1``  ``blog``  ``{page}`` = ``1``
+``/blog/2``  ``blog``  ``{page}`` = ``2``
+===========  ========  ==================
 
 .. caution::
 
@@ -551,7 +551,7 @@ Take a quick look at the routes that have been created so far:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
-        
+
         // ...
         class BlogController extends Controller
         {
@@ -627,13 +627,12 @@ will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
 the first route (``blog``) and return a nonsense value of ``my-blog-post``
 to the ``{page}`` parameter.
 
-+--------------------+-------+-----------------------+
-| URL                | route | parameters            |
-+====================+=======+=======================+
-| /blog/2            | blog  | {page} = 2            |
-+--------------------+-------+-----------------------+
-| /blog/my-blog-post | blog  | {page} = my-blog-post |
-+--------------------+-------+-----------------------+
+======================  ========  ===============================
+URL                     Route     Parameters
+======================  ========  ===============================
+``/blog/2``             ``blog``  ``{page}`` = ``2``
+``/blog/my-blog-post``  ``blog``  ``{page}`` = ``"my-blog-post"``
+======================  ========  ===============================
 
 The answer to the problem is to add route *requirements* or route *conditions*
 (see :ref:`book-routing-conditions`). The routes in this example would work
@@ -707,15 +706,13 @@ is *not* a number).
 As a result, a URL like ``/blog/my-blog-post`` will now properly match the
 ``blog_show`` route.
 
-+----------------------+-----------+-------------------------+
-| URL                  | route     | parameters              |
-+======================+===========+=========================+
-| /blog/2              | blog      | {page} = 2              |
-+----------------------+-----------+-------------------------+
-| /blog/my-blog-post   | blog_show | {slug} = my-blog-post   |
-+----------------------+-----------+-------------------------+
-| /blog/2-my-blog-post | blog_show | {slug} = 2-my-blog-post |
-+----------------------+-----------+-------------------------+
+========================  =============  ===============================
+URL                       Route          Parameters
+========================  =============  ===============================
+``/blog/2``               ``blog``       ``{page}`` = ``2``
+``/blog/my-blog-post``    ``blog_show``  ``{slug}`` = ``my-blog-post``
+``/blog/2-my-blog-post``  ``blog_show``  ``{slug}`` = ``2-my-blog-post``
+========================  =============  ===============================
 
 .. sidebar:: Earlier Routes always Win
 
@@ -735,7 +732,7 @@ URL:
     .. code-block:: php-annotations
 
         // src/AppBundle/Controller/MainController.php
-        
+
         // ...
         class MainController extends Controller
         {
@@ -791,14 +788,14 @@ URL:
 For incoming requests, the ``{_locale}`` portion of the URL is matched against
 the regular expression ``(en|fr)``.
 
-======= ========================
-path    parameters
-======= ========================
-``/``   {_locale} = en
-``/en`` {_locale} = en
-``/fr`` {_locale} = fr
-``/es`` *won't match this route*
-======= ========================
+=======  ========================
+Path     Parameters
+=======  ========================
+``/``    ``{_locale}`` = ``"en"``
+``/en``  ``{_locale}`` = ``"en"``
+``/fr``  ``{_locale}`` = ``"fr"``
+``/es``  *won't match this route*
+=======  ========================
 
 .. index::
    single: Routing; Method requirement
@@ -1142,11 +1139,11 @@ each separated by a colon:
 
 For example, a ``_controller`` value of ``AppBundle:Blog:show`` means:
 
-========= ================== ==============
-Bundle    Controller Class   Method Name
-========= ================== ==============
-AppBundle ``BlogController`` ``showAction``
-========= ================== ==============
+=========  ==================  ==============
+Bundle     Controller Class    Method Name
+=========  ==================  ==============
+AppBundle  ``BlogController``  ``showAction``
+=========  ==================  ==============
 
 The controller might look like this::
 
@@ -1360,8 +1357,8 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
         return $collection;
 
-The string ``/site`` will now be prepended to the path of each route loaded
-from the new routing resource.
+The path of each route being loaded from the new routing resource will now
+be prefixed with the string ``/site``.
 
 Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1377,12 +1374,15 @@ Visualizing & Debugging Routes
 
 While adding and customizing routes, it's helpful to be able to visualize
 and get detailed information about your routes. A great way to see every route
-in your application is via the ``router:debug`` console command. Execute
+in your application is via the ``debug:router`` console command. Execute
 the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    $ php app/console router:debug
+    $ php app/console debug:router
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``router:debug``.
 
 This command will print a helpful list of *all* the configured routes in
 your application:
@@ -1401,7 +1401,7 @@ the route name after the command:
 
 .. code-block:: bash
 
-    $ php app/console router:debug article_show
+    $ php app/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, you can
 use the ``router:match`` console command:

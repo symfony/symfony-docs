@@ -10,14 +10,13 @@ TwigBundle Configuration ("twig")
 
         twig:
             exception_controller:  twig.controller.exception:showAction
-            form:
-                resources:
+            form_themes:
 
-                    # Default:
-                    - form_div_layout.html.twig
+                # Default:
+                - form_div_layout.html.twig
 
-                    # Example:
-                    - MyBundle::form.html.twig
+                # Example:
+                - MyBundle::form.html.twig
             globals:
 
                 # Examples:
@@ -54,9 +53,8 @@ TwigBundle Configuration ("twig")
                                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config auto-reload="%kernel.debug%" autoescape="true" base-template-class="Twig_Template" cache="%kernel.cache_dir%/twig" charset="%kernel.charset%" debug="%kernel.debug%" strict-variables="false">
-                <twig:form>
-                    <twig:resource>MyBundle::form.html.twig</twig:resource>
-                </twig:form>
+                <twig:form-theme>form_div_layout.html.twig</twig:form-theme> <!-- Default -->
+                <twig:form-theme>MyBundle::form.html.twig</twig:form-theme>
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
             </twig:config>
@@ -65,10 +63,9 @@ TwigBundle Configuration ("twig")
     .. code-block:: php
 
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'MyBundle::form.html.twig',
-                )
+            'form_themes' => array(
+                'form_div_layout.html.twig', // Default
+                'MyBundle::form.html.twig',
              ),
              'globals' => array(
                  'foo' => '@bar',
@@ -82,6 +79,12 @@ TwigBundle Configuration ("twig")
              'debug'               => '%kernel.debug%',
              'strict_variables'    => false,
         ));
+
+.. caution::
+
+    The ``twig.form`` (``<twig:form />`` tag for xml) configuration key
+    has been deprecated and will be removed in 3.0. Instead, use the ``twig.form_themes``
+    option.
 
 Configuration
 -------------

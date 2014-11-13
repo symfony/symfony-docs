@@ -217,12 +217,11 @@ more about the expression language syntax, see
                 // ...
             }
 
-    .. caution::
-
-        In Symfony 2.4 and Symfony 2.5, if the property (e.g. ``isTechnicalPost``)
-        were ``null``, the expression would never be called and the value
-        would be seen as valid. To ensure that the value is not ``null``,
-        use the :doc:`NotNull constraint </reference/constraints/NotNull>`.
+    .. versionadded:: 2.6
+        In Symfony 2.6, the Expression constraint *is* executed if the value
+        is ``null``. Before 2.6, if the value was ``null``, the expression
+        was never executed and the value was considered valid (unless you
+        also had a constraint like ``NotBlank`` on the property).
 
 For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`

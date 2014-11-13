@@ -134,6 +134,8 @@ Each part will be explained in the next section.
                     stateless: false
                     x509:
                         provider: some_key_from_above
+                    remote_user:
+                        provider: some_key_from_above
                     http_basic:
                         provider: some_key_from_above
                     http_digest:

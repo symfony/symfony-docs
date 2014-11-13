@@ -9,6 +9,7 @@ The Console Helpers
 
     dialoghelper
     formatterhelper
+    processhelper
     progressbar
     progresshelper
     questionhelper

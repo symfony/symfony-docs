@@ -603,12 +603,15 @@ via the ``get()`` method. Here are several common services you might need::
     $mailer = $this->get('mailer');
 
 There are countless other services available and you are encouraged to define
-your own. To list all available services, use the ``container:debug`` console
+your own. To list all available services, use the ``debug:container`` console
 command:
 
 .. code-block:: bash
 
-    $ php app/console container:debug
+    $ php app/console debug:container
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 For more information, see the :doc:`/book/service_container` chapter.
 
