@@ -382,7 +382,7 @@ By default, templates can live in two different locations:
   third party bundle templates (see :ref:`overriding-bundle-templates`);
 
 * ``path/to/bundle/Resources/views/``: Each third party bundle houses its
-  templates in its ``Resources/views`` directory (and subdirectories). When you
+  templates in its ``Resources/views/`` directory (and subdirectories). When you
   plan to share your bundle, you should put the templates in the bundle instead
   of the ``app/`` directory.
 
@@ -430,8 +430,8 @@ directory. This gives the power to override templates from any vendor bundle.
 
 .. tip::
 
-    Hopefully the template naming syntax looks familiar - it's similair to the
-    naming convention used to refer to :ref:`controller-string-syntax`.
+    Hopefully the template naming syntax looks familiar - it's similar to
+    the naming convention used to refer to :ref:`controller-string-syntax`.
 
 Template Suffix
 ~~~~~~~~~~~~~~~
@@ -1376,7 +1376,7 @@ covered:
       {% endblock %}
 
 Notice that this template extends the section template (``Blog/layout.html.twig``)
-which in-turn extends the base application layout (``base.html.twig``). This is
+which in turn extends the base application layout (``base.html.twig``). This is
 the common three-level inheritance model.
 
 When building your application, you may choose to follow this method or simply
@@ -1489,7 +1489,7 @@ Debugging
 
 When using PHP, you can use :phpfunction:`var_dump` if you need to quickly find
 the value of a variable passed. This is useful, for example, inside your
-controller.  The same can be achieved when using Twig thanks to the debug
+controller. The same can be achieved when using Twig thanks to the Debug
 extension.
 
 Template parameters can then be dumped using the ``dump`` function:
