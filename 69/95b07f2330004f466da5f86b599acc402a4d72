@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-07T23:06:01Z
+
+:+1: Cool. you're always blazing fast on these things!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-07T23:08:03Z
+
+Otherwise I would forget them. ;)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-11-11T15:39:46Z
+
+@xabbuh thanks for working on this!
+
+I have a comment about the new table syntax. In [this table](https://github.com/symfony/symfony-docs/pull/4435/files#diff-bb96593a7a270f89d21571e736b4861eR42), columns are separated with two white spaces, while in the rest of the tables you use one white space.
+
+Instead of suggesting you to use also one white space on the first table, I'd like to ask you reconsider using always two white spaces. That's what I've been using and I think that it improves readability.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-11T17:33:36Z
+
+@javiereguiluz There was no specific reason. Honestly, I simply didn't realise that there already were two spaces. Personally, I don't really care if we use one space or two spaces.
+
+@WouterJ @weaverryan What are your thoughts on this?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-11T17:55:14Z
+
++1 for 2 spaces
+
+Op di 11 nov. 2014 18:33 schreef Christian Flothmann <
+notifications@github.com>:
+
+> @javiereguiluz <https://github.com/javiereguiluz> There was no specific
+> reason. Honestly, I simply didn't realise that there already were two
+> spaces. Personally, I don't really care if we use one space or two spaces.
+>
+> @WouterJ <https://github.com/WouterJ> @weaverryan
+> <https://github.com/weaverryan> What are your thoughts on this?
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/4435#issuecomment-62584277>.
+>
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-13T17:22:47Z
+
+If both render ok, I'm also cool with 2 spaces - I guess the extra separation makes it a bit more readable in the source.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-13T17:28:08Z
+
+Alright, do we wanna do that in this pull request or do you prefer a different one?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-13T17:31:28Z
+
+@xabbuh This one if it's ok - it'll save me from merging up twice, which may involve a few conflicts :).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-13T17:45:49Z
+
+Of course, no problem. Here we go.
