@@ -82,10 +82,10 @@ example containing most features described below:
         
         private function reverseBoolean($value = null)
         {
-            if ( ! isset($value)) {
+            if (!isset($value)) {
                 return;
             }
-            return ! $value;
+            return !$value;
         }
     }
 
@@ -94,7 +94,8 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (``==``, ``&&``, ``!``, ...);
+* Add a single space around operators (``==``, ``&&``, ...), with the excption
+  of the not (!) operator;
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
