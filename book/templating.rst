@@ -439,13 +439,13 @@ Template Suffix
 Every template name also has two extensions that specify the *format* and
 *engine* for that template.
 
-======================== ====== ======
-Filename                 Format Engine
-======================== ====== ======
-``Blog/index.html.twig`` HTML   Twig
-``Blog/index.html.php``  HTML   PHP
-``Blog/index.css.twig``  CSS    Twig
-======================== ====== ======
+========================  ======  ======
+Filename                  Format  Engine
+========================  ======  ======
+``Blog/index.html.twig``  HTML    Twig
+``Blog/index.html.php``   HTML    PHP
+``Blog/index.css.twig``   CSS     Twig
+========================  ======  ======
 
 By default, any Symfony template can be written in either Twig or PHP, and
 the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
