@@ -17,4 +17,3 @@ the data from ``CategoryType`` to also be validated.
     in the section about :ref:`Embedding a Single Object <forms-embedding-single-object>`.
 
 .. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
-

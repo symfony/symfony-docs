@@ -376,9 +376,9 @@ error_bubbling
 Field Variables
 ---------------
 
-============ =========== ========================================
-Variable     Type        Usage
-============ =========== ========================================
-allow_add    ``Boolean`` The value of the `allow_add`_ option.
-allow_delete ``Boolean`` The value of the `allow_delete`_ option.
-============ =========== ========================================
+============  ===========  ========================================
+Variable      Type         Usage
+============  ===========  ========================================
+allow_add     ``Boolean``  The value of the `allow_add`_ option.
+allow_delete  ``Boolean``  The value of the `allow_delete`_ option.
+============  ===========  ========================================
