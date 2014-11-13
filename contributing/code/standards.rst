@@ -85,6 +85,7 @@ example containing most features described below:
             if (!isset($value)) {
                 return;
             }
+
             return !$value;
         }
     }
