@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-25T17:33:19Z
+
+> The tutorial requires PHP 5.4 because this way everything is simpler. By the way, PHP 5.3 is unsupported since August 2014 and it's extremely dangerous to keep using it.
+
+What does require PHP 5.4?
+
+Btw, I'll review the PR another time :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-25T17:36:35Z
+
+@WouterJ PHP 5.4 is needed for the new Symfony Installer and for the built-in web server.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-25T19:29:57Z
+
+> I've created this PR against the master branch for that reason and I ask the doc managers (@weaverryan, @WouterJ and @xabbuh) to think about removing all the previous versions of this tutorial.
+
+:+1: (since I already if we actually need different versions of it :))
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-25T19:31:58Z
+
+@javiereguiluz Actually, I don't think that we can technically get rid of different versions of the quick tour (given how Git works). But links can be changed on symfony.com to only link to one version, right?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-25T19:42:43Z
+
+> Actually, I don't think that we can technically get rid of different versions of the quick tour (given how Git works).
+
+We can, we just have to remove the quick tour each time we create a new version branch
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-25T19:47:14Z
+
+Hm, yes, you're right. We could keep it only in master.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-05T15:47:45Z
+
+@javiereguiluz Thanks for taking this big step. Here's what I think we should do:
+
+1) Check out the comments and make updates. There are some good ones :).
+
+2) I'll then merge in and re-read everything from end-to-end and create a separate PR with tweaks (since the changes are big, it's better to re-read the whole thing).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-11-12T17:04:33Z
+
+@weaverryan I've addressed almost all of the suggestions made by reviewers, so I think we're good for the first merge. Then, let's create a separate PR to fix anything else. Thanks!
