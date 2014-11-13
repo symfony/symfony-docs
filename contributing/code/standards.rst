@@ -97,7 +97,7 @@ Structure
 * Add a single space around operators (``==``, ``&&``, ...), with the excption
   of the not (!) operator;
 
-+ Place the not operator adjacent to the variable that it affects
+* Place the not operator adjacent to the variable that it affects
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
