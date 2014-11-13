@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-11-05T17:26:10Z
+
+Thanks for the merge and the fixes!
+@WouterJ suggested moving the "DebugBundle and Twig Integration" section in an other page,
+maybe for this PR?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-11-05T18:24:06Z
+
+I don't see the images on http://symfony.com/doc/master/components/var_dumper/introduction.html
+Did I miss something?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-05T18:28:40Z
+
+I'll do another pr after this is merged with my fixes.
+
+The images will be shown after the complete build, which happen at 3 or 4 AM european time
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2014-11-08T12:15:32Z
+
+You can cherry-pick https://github.com/nicolas-grekas/symfony-docs/tree/var-dumper-tweaks for fixing my above comments
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-13T09:26:14Z
+
+FYI, I applied the tweaks suggested by @nicolas-grekas.
