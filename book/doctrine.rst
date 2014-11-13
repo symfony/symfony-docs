@@ -747,7 +747,7 @@ normal ``Query`` object, which can be used to get the result of the query.
     (``:price`` in the example above) as it prevents SQL injection attacks.
 
 The ``getResult()`` method returns an array of results. To get only one
-result, you can use ``getSingleResult()`` (which throws exception there is no
+result, you can use ``getSingleResult()`` (which throws exception if there is no
 result) or ``getOneOrNullResult()``::
 
     $product = $query->getOneOrNullResult();
