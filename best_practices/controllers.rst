@@ -76,19 +76,14 @@ Template Configuration
     Don't use the ``@Template()`` annotation to configure the template used by
     the controller.
 
-The ``@Template`` annotation is useful, but also involves some magic. For
-that reason, we don't recommend using it.
+The ``@Template`` annotation is useful, but also involves some magic. We
+don't think its benefit is worth the magic, and so recommend against using
+it.
 
 Most of the time, ``@Template`` is used without any parameters, which makes
 it more difficult to know which template is being rendered. It also makes
 it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
-
-Lastly, the ``@Template`` annotation uses a ``TemplateListener`` class that hooks
-into the ``kernel.view`` event dispatched by the framework. This listener introduces
-a measurable performance impact. In the sample blog application, rendering the
-homepage took 5 milliseconds using the ``$this->render()`` method and 26 milliseconds
-using the ``@Template`` annotation.
 
 How the Controller Looks
 ------------------------
