@@ -80,9 +80,9 @@ example containing most features described below:
             throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
         }
         
-        private function reverseBoolean($value = null)
+        private function reverseBoolean($value = null, $theSwitch = false)
         {
-            if (!isset($value)) {
+            if (!$theSwitch) {
                 return;
             }
 
