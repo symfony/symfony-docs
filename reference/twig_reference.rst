@@ -444,7 +444,7 @@ yaml_dump
 ``dumpObjects``
     **type**: ``boolean`` **default**: ``false``
 
-Does the same as :ref:`yaml_encode() <yaml_encode>`_, but includes the type in the output.
+Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in the output.
 
 abbr_class
 ~~~~~~~~~~
@@ -539,7 +539,7 @@ format_file_from_text
 ``text``
     **type**: ``string``
 
-Uses :ref:`|format_file <format_file>`_ to improve the output of default PHP errors.
+Uses :ref:`|format_file <format_file>` to improve the output of default PHP errors.
 
 file_link
 ~~~~~~~~~
