@@ -25,3 +25,4 @@ Security
     target_path
     csrf_in_login_form
     named_encoders
+    session_expiration

@@ -2326,6 +2326,7 @@ Learn more from the Cookbook
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 * :doc:`/cookbook/security/remember_me`
 * :doc:`How to Restrict Firewalls to a Specific Request </cookbook/security/firewall_restriction>`
+* :doc:`/cookbook/security/session_expiration`
 
 .. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

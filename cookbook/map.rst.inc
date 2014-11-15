@@ -157,6 +157,7 @@
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
+  * :doc:`/cookbook/security/session_expiration`
 
 * **Serializer**
 
@@ -175,6 +176,7 @@
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
   * :doc:`/cookbook/session/limit_metadata_writes`
+  * (security) :doc:`/cookbook/security/session_expiration`
 
 * **symfony1**
 
