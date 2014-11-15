@@ -539,7 +539,7 @@ format_file_from_text
 ``text``
     **type**: ``string``
 
-Uses :ref:`|format_file <format_file>` to improve the output of default PHP errors.
+Uses `format_file`_ to improve the output of default PHP errors.
 
 file_link
 ~~~~~~~~~
