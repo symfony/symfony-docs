@@ -235,9 +235,9 @@ Full Default Configuration
                         <doctrine:mapping name="AcmeHelloBundle" />
 
                         <doctrine:dql>
-                            <doctrine:string-function
-                                name="test_string"
-                            >Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
+                            <doctrine:string-function name="test_string">
+                                Acme\HelloBundle\DQL\StringFunction
+                            </doctrine:string-function>
 
                             <doctrine:numeric-function name="test_numeric">
                                 Acme\HelloBundle\DQL\NumericFunction
