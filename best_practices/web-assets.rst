@@ -50,7 +50,7 @@ tools like GruntJS.
     comfortable with frontend tools like GruntJS.
 
 `Assetic`_ is an asset manager capable of compiling assets developed with
-a lot of different frontend technologies like LESS, Sass and CoffeScript.
+a lot of different frontend technologies like LESS, Sass and CoffeeScript.
 Combining all your assets with Assetic is a matter of wrapping all the assets
 with a single Twig tag:
 
