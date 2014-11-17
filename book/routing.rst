@@ -1132,7 +1132,7 @@ see :ref:`route-parameters-controller-arguments`.
 .. tip::
 
     The special ``$_route`` variable is set to the name of the route that was
-    matced.
+    matched.
 
 You can even add extra information to your route definition and access it
 within your controller. For more information on this topic,
