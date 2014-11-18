@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-12T19:55:33Z
+
+Is it somehow possible to test this on Travis CI?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-12T19:56:41Z
+
+I don't see a reason why.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-12T20:42:09Z
+
+I first thought that it would be good to ensure that the docs built successfully on Windows. But we obviously don't change this file usually. So it doesn't make much sense.
