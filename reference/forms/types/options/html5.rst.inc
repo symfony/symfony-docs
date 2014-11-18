@@ -1,0 +1,13 @@
+html5
+~~~~~
+
+.. versionadded:: 2.6
+    The ``html5`` option was introduced in Symfony 2.6.
+
+**type**: ``boolean`` **default**: ``true``
+
+If this is set to ``true`` (the default), it'll use the HTML5 type (date, time
+or datetime) to render the field. When set to ``false``, it'll use the text type.
+
+This is usefull when you want to use a custom JavaScript datapicker, which
+often require a text type instead of a HTML5 type.
