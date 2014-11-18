@@ -232,6 +232,7 @@ With this, the validator ``validate()`` method gets an object as its first argum
             if ($protocol->getFoo() != $protocol->getBar()) {
                 // If you're using the new 2.5 validation API (you probably are!)
                 $this->context->buildViolation($constraint->message)
+                    ->atPath('foo')
                     ->addViolation();
 
                 // If you're using the old 2.4 validation API
