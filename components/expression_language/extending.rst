@@ -51,24 +51,31 @@ an ``arguments`` variable as their first argument, which is equal to the
 second argument to ``evaluate()`` or ``compile()`` (e.g. the "values" when
 evaluating or the "names" if compiling).
 
-Creating a new ExpressionLanguage Class
----------------------------------------
+Using Expression Providers
+--------------------------
 
-When you use the ``ExpressionLanguage`` class in your library, it's recommend
-to create a new ``ExpressionLanguage`` class and register the functions there.
-Override ``registerFunctions`` to add your own functions::
+.. versionadded:: 2.6
+    Expression providers were introduced in Symfony 2.6.
 
-    namespace Acme\AwesomeLib\ExpressionLanguage;
+When you use the ``ExpressionLanguage`` class in your library, you often want
+to add custom functions. To do so, you can create a new expression provider by
+creating a class that implements
+:class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface`.
 
-    use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
+This interface requires one method: 
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface::getFunctions`.
+This method returns an array of expression functions (instances of
+:class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction`) to register.
 
-    class ExpressionLanguage extends BaseExpressionLanguage
+.. code-block:: php
+
+    use Symfony\Component\ExpressionLanguage\ExpressionFunction;
+    use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
+
+    class StringExpressionLanguageProvider implements ExpressionFunctionProviderInterface
     {
-        protected function registerFunctions()
-        {
-            parent::registerFunctions(); // do not forget to also register core functions
-
-            $this->register('lowercase', function ($str) {
+        return array(
+            new ExpressionFunction('lowercase', function ($str) {
                 return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
             }, function ($arguments, $str) {
                 if (!is_string($str)) {
@@ -77,5 +84,35 @@ Override ``registerFunctions`` to add your own functions::
 
                 return strtolower($str);
             });
-        }
+        );
     }
+
+You can register providers using
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::registerProvider`
+or by using the second argument of the constructor::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+
+    // using the constructor
+    $language = new ExpressionLanguage(null, array(...));
+
+    $language->registerProvider(new StringExpressionLanguageProvider());
+
+.. tip::
+
+    It is recommended to create your own ``ExpressionLanguage`` class in your
+    library. Now you can add the extension by overriding the constructor::
+
+        use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
+        use Symfony\Component\ExpressionLanguage\ParserCache\ParserCacheInterface;
+
+        class ExpressionLanguage extends BaseExpressionLanguage
+        {
+            public function __construct(ParserCacheInterface $parser = null, array $providers = array())
+            {
+                // prepend the default provider to let users override it easily
+                array_unshift($providers, new MyExpressionLanguageProvider());
+
+                parent::__construct($parser, $providers);
+            }
+        }
