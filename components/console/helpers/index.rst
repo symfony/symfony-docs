@@ -7,6 +7,7 @@ The Console Helpers
 .. toctree::
     :hidden:
 
+    debug_formatter
     dialoghelper
     formatterhelper
     processhelper

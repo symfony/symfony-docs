@@ -1,3 +1,4 @@
+* :doc:`/components/console/helpers/debug_formatter` (new in 2.6)
 * :doc:`/components/console/helpers/dialoghelper`
 * :doc:`/components/console/helpers/formatterhelper`
 * :doc:`/components/console/helpers/processhelper`
