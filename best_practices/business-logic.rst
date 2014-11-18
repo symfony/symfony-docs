@@ -299,7 +299,7 @@ Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
 
             if (in_array($this->getEnvironment(), array('dev', 'test'))) {
                 // ...
-                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             }
 
             return $bundles;
