@@ -38,7 +38,7 @@ First, configure Varnish so that it advertises its ESI support by adding a
 ``Surrogate-Capability`` header to requests forwarded to the backend
 application:
 
-.. code-block:: text
+.. code-block:: varnish4
 
     sub vcl_recv {
         // Add a Surrogate-Capability header to announce ESI support.
@@ -137,7 +137,7 @@ proxy before it has expired, it adds complexity to your caching setup.
 Varnish can be configured to accept a special HTTP ``PURGE`` method
 that will invalidate the cache for a given resource:
 
-.. code-block:: text
+.. code-block:: varnish4
 
     /*
      Connect to the backend server
@@ -186,7 +186,7 @@ that will invalidate the cache for a given resource:
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data. You can do this by setting up an access list:
 
-    .. code-block:: text
+    .. code-block:: varnish4
 
         /*
          Connect to the backend server
@@ -252,7 +252,7 @@ is 80 and not 8080.
 If this header weren't set properly, Symfony may append ``8080`` when generating
 absolute URLs:
 
-.. code-block:: text
+.. code-block:: varnish4
 
     sub vcl_recv {
         if (req.http.X-Forwarded-Proto == "https" ) {
