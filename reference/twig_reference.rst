@@ -407,6 +407,8 @@ Twig. See ":ref:`Template Expressions <book-security-template-expression>`".
 Filters
 -------
 
+.. _reference-twig-humanize-filter:
+
 humanize
 ~~~~~~~~
 
