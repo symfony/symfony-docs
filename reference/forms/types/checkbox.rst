@@ -22,6 +22,7 @@ if the box is unchecked, the value will be set to false.
 |             | - `error_mapping`_                                                     |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
+|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
@@ -69,6 +70,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
