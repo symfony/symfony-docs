@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-05T16:09:01Z
+
+ping @javiereguiluz could you please apply this change to the build process too?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-18T00:05:47Z
+
+ping @javiereguiluz, did you already update te config file? I don't want to be out of sync (so I'll wait with merging till you guys applied the change)
+
+---------------------------------------------------------------------------
+
+by fabpot at 2014-11-18T07:31:21Z
+
+I did the change a while ago, so it should already show up in the online docs.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-18T07:35:40Z
+
+@fabpot Thank you. It looks good now. :+1:
