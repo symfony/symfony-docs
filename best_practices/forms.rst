@@ -157,7 +157,7 @@ There are a lot of ways to render your form, ranging from rendering the entire
 thing in one line to rendering each part of each field independently. The
 best way depends on how much customization you need.
 
-One of thhe simplest ways - which is especially useful during development -
+One of the simplest ways - which is especially useful during development -
 is to render the form tags and use ``form_widget()`` to render all of the
 fields:
 
