@@ -31,7 +31,7 @@ On **Linux** and **Mac OS X** systems, execute the following console commands:
 
 .. code-block:: bash
 
-    $ curl -sS https://symfony.com/installer | php
+    $ curl -LsS http://symfony.com/installer > symfony.phar
     $ sudo mv symfony.phar /usr/local/bin/symfony
 
 .. note::
@@ -41,7 +41,7 @@ On **Linux** and **Mac OS X** systems, execute the following console commands:
 
     .. code-block:: bash
 
-        $ php -r "readfile('https://symfony.com/installer');" | php
+        $ php -r "readfile('http://symfony.com/installer');" > symfony.phar
         $ sudo mv symfony.phar /usr/local/bin/symfony
 
 After installing the Symfony installer, you'll have to open a new console window
@@ -53,9 +53,9 @@ to be able to execute the new ``symfony`` command:
 
 On **Windows** systems, execute the following console command:
 
- .. code-block:: bash
+.. code-block:: bash
 
-    c:\> php -r "readfile('https://symfony.com/installer');" | php
+    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
 
 This command downloads a file called ``symfony.phar`` which contains the Symfony
 installer. Save or move that file to the directory where you create the Symfony
