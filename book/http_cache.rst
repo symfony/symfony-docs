@@ -763,8 +763,7 @@ at some interval (the expiration) to verify that the content is still valid.
 .. tip::
 
     You can also define HTTP caching headers for expiration and validation by using
-    annotations. See the
-    `FrameworkExtraBundle documentation <http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html>`_.
+    annotations. See the `FrameworkExtraBundle documentation`_.
 
 .. index::
     pair: Cache; Configuration
@@ -1130,4 +1129,5 @@ Learn more from the Cookbook
 .. _`HTTP Bis`: http://tools.ietf.org/wg/httpbis/
 .. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional
 .. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache
+.. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
 .. _`ESI`: http://www.w3.org/TR/esi-lang
