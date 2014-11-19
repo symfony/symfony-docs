@@ -53,7 +53,7 @@ to be able to execute the new ``symfony`` command:
 
 On **Windows** systems, execute the following console command:
 
- .. code-block:: bash
+.. code-block:: bash
 
     c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
 
