@@ -138,7 +138,7 @@ new ``hello.xml.twig`` template:
 Now, when you browse to ``http://localhost:8000/hello/fabien``, you'll see the
 regular HTML page because ``html`` is the default format. When visiting
 ``http://localhost:8000/hello/fabien.html`` you'll get again the HTML page, this
-time because you explicitely asked for the ``html`` format. Lastly, if you visit
+time because you explicitly asked for the ``html`` format. Lastly, if you visit
 ``http://localhost:8000/hello/fabien.xml`` you'll see the new XML template rendered
 in your browser.
 
