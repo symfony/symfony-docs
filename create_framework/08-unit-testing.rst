@@ -119,9 +119,8 @@ Executing this test is as simple as running ``phpunit`` from the
 
 .. note::
 
-    I do not explain how the code works in details as this is not the goal of
-    this book, but if you don't understand what the hell is going on, I highly
-    recommend you to read PHPUnit documentation on `test doubles`_.
+    If you don't understand what the hell is going on in the code, read
+    PHPUnit documentation on `test doubles`_.
 
 After the test ran, you should see a green bar. If not, you have a bug
 either in the test or in the framework code!

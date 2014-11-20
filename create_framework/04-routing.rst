@@ -55,9 +55,9 @@ instead of relying on a query string:
 
 To support this feature, add the Symfony2 Routing component as a dependency:
 
-.. code-block:: sh
+.. code-block:: bash
 
-    $ php composer.phar require symfony/routing
+    $ composer require symfony/routing
 
 Instead of an array for the URL map, the Routing component relies on a
 ``RouteCollection`` instance::

@@ -91,9 +91,9 @@ front controller? As you might expect, there is a solution. We can solve all
 these issues and some more by using the Symfony2 dependency injection
 container:
 
-.. code-block:: sh
+.. code-block:: bash
 
-    $ php composer.phar require symfony/dependency-injection
+    $ composer require symfony/dependency-injection
 
 Create a new file to host the dependency injection container configuration::
 
@@ -243,8 +243,8 @@ in great details, but hopefully it gives you enough information to get started
 on your own and to better understand how the Symfony2 framework works
 internally.
 
-If you want to learn more, I highly recommend you to read the source code of
-the `Silex`_ micro-framework, and especially its `Application`_ class.
+If you want to learn more, read the source code of the `Silex`_
+micro-framework, and especially its `Application`_ class.
 
 Have fun!
 

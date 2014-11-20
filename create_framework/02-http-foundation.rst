@@ -1,16 +1,15 @@
 The HttpFoundation Component
 ============================
 
-Before diving into the framework creation process, I first want to step back
-and take a look at why you would like to use a framework instead of keeping
-your plain-old PHP applications as is. Why using a framework is actually a
-good idea, even for the simplest snippet of code and why creating your
-framework on top of the Symfony2 components is better than creating a
-framework from scratch.
+Before diving into the framework creation process, let's first step back and
+let's take a look at why you would like to use a framework instead of keeping
+your plain-old PHP applications as is. Why using a framework is actually a good
+idea, even for the simplest snippet of code and why creating your framework on
+top of the Symfony2 components is better than creating a framework from scratch.
 
 .. note::
 
-    I won't talk about the obvious and traditional benefits of using a
+    We won't talk about the obvious and traditional benefits of using a
     framework when working on big applications with more than a few
     developers; the Internet has already plenty of good resources on that
     topic.
@@ -124,9 +123,9 @@ layer.
 
 To use this component, add it as a dependency of the project:
 
-.. code-block:: sh
+.. code-block:: bash
 
-    $ php composer.phar require symfony/http-foundation
+    $ composer require symfony/http-foundation
 
 Running this command will also automatically download the Symfony
 HttpFoundation component and install it under the ``vendor/`` directory.
@@ -270,13 +269,12 @@ chained proxies)::
         // the client is a known one, so give it some more privilege
     }
 
-And there is an added benefit: it is *secure* by default. What do I mean by
-secure? The ``$_SERVER['HTTP_X_FORWARDED_FOR']`` value cannot be trusted as it
-can be manipulated by the end user when there is no proxy. So, if you are
-using this code in production without a proxy, it becomes trivially easy to
-abuse your system. That's not the case with the ``getClientIp()`` method as
-you must explicitly trust your reverse proxies by calling
-``setTrustedProxies()``::
+And there is an added benefit: it is *secure* by default. What does it mean?
+The ``$_SERVER['HTTP_X_FORWARDED_FOR']`` value cannot be trusted as it can be
+manipulated by the end user when there is no proxy. So, if you are using this
+code in production without a proxy, it becomes trivially easy to abuse your
+system. That's not the case with the ``getClientIp()`` method as you must
+explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
     <?php
 
@@ -295,8 +293,8 @@ cases by yourself. Why not using a technology that already works?
 .. note::
 
     If you want to learn more about the HttpFoundation component, you can have
-    a look at the `API`_ or read its dedicated `documentation`_ on the Symfony
-    website.
+    a look at the :namespace:`Symfony\\Component\\HttpFoundation` API or read
+    its dedicated :doc:`documentation </components/http_foundation/index>`.
 
 Believe or not but we have our first framework. You can stop now if you want.
 Using just the Symfony2 HttpFoundation component already allows you to write
@@ -315,8 +313,6 @@ applications using it (like `Symfony2`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 .. _`Twig`:                     http://twig.sensiolabs.com/
 .. _`Symfony2 versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
 .. _`HTTP specification`:       http://tools.ietf.org/wg/httpbis/
-.. _`API`:                      http://api.symfony.com/2.0/Symfony/Component/HttpFoundation.html
-.. _`documentation`:            http://symfony.com/doc/current/components/http_foundation.html
 .. _`audited`:                  http://symfony.com/blog/symfony2-security-audit
 .. _`Symfony2`:                 http://symfony.com/
 .. _`Drupal 8`:                 http://drupal.org/

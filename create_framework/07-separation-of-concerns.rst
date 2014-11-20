@@ -98,7 +98,7 @@ be autoloaded, update the ``composer.json`` file:
 
 .. note::
 
-    For the Composer autoloader to be updated, run ``php composer.phar update``.
+    For the Composer autoloader to be updated, run ``composer update``.
 
 Move the controller to ``Calendar\\Controller\\LeapYearController``::
 

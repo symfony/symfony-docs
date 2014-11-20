@@ -17,9 +17,9 @@ pattern, the *Observer*, to allow any kind of behaviors to be attached to our
 framework; the Symfony2 EventDispatcher Component implements a lightweight
 version of this pattern:
 
-.. code-block:: sh
+.. code-block:: bash
 
-    $ php composer.phar require symfony/event-dispatcher
+    $ composer require symfony/event-dispatcher
 
 How does it work? The *dispatcher*, the central object of the event dispatcher
 system, notifies *listeners* of an *event* dispatched to it. Put another way:
@@ -165,7 +165,7 @@ type is HTML (these conditions demonstrate the ease of manipulating the
 Request and Response data from your code).
 
 So far so good, but let's add another listener on the same event. Let's say
-that I want to set the ``Content-Length`` of the Response if it is not already
+that we want to set the ``Content-Length`` of the Response if it is not already
 set::
 
     $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {

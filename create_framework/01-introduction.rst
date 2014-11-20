@@ -8,19 +8,14 @@ Instead of using these low-level components, you can use the ready-to-be-used
 Symfony2 full-stack web framework, which is based on these components... or
 you can create your very own framework. This book is about the latter.
 
-.. note::
-
-    If you just want to use the Symfony2 full-stack framework, you'd better
-    read its official `documentation`_ instead.
-
 Why would you like to create your own framework?
 ------------------------------------------------
 
 Why would you like to create your own framework in the first place? If you
 look around, everybody will tell you that it's a bad thing to reinvent the
 wheel and that you'd better choose an existing framework and forget about
-creating your own altogether. Most of the time, they are right but I can think
-of a few good reasons to start creating your own framework:
+creating your own altogether. Most of the time, they are right but there are
+a few good reasons to start creating your own framework:
 
 * To learn more about the low level architecture of modern web frameworks in
   general and about the Symfony2 full-stack framework internals in particular;
@@ -37,11 +32,11 @@ of a few good reasons to start creating your own framework:
 * To prove the world that you can actually create a framework on your own (...
   but with little effort).
 
-I will gently guide you through the creation of a web framework, one step at a
-time. At each step, you will have a fully-working framework that you can use
-as is or as a start for your very own. We will start with simple frameworks
-and more features will be added with time. Eventually, you will have a
-fully-featured full-stack web framework.
+This tutorial will gently guide you through the creation of a web framework,
+one step at a time. At each step, you will have a fully-working framework that
+you can use as is or as a start for your very own. We will start with simple
+frameworks and more features will be added with time. Eventually, you will have
+a fully-featured full-stack web framework.
 
 And of course, each step will be the occasion to learn more about some of the
 Symfony2 Components.
@@ -58,16 +53,16 @@ won't talk about the MVC pattern as the Symfony2 Components are able to create
 any type of frameworks, not just the ones that follow the MVC architecture.
 Anyway, if you have a look at the MVC semantics, this book is about how to
 create the Controller part of a framework. For the Model and the View, it
-really depends on your personal taste and I will let you use any existing
+really depends on your personal taste and you can use any existing
 third-party libraries (Doctrine, Propel, or plain-old PDO for the Model; PHP
 or Twig for the View).
 
-When creating a framework, following the MVC pattern is not the right goal.
-The main goal should be the **Separation of Concerns**; I actually think that
-this is the only design pattern that you should really care about. The
-fundamental principles of the Symfony2 Components are focused on the HTTP
-specification. As such, the frameworks that we are going to create should be
-more accurately labelled as HTTP frameworks or Request/Response frameworks.
+When creating a framework, following the MVC pattern is not the right goal. The
+main goal should be the **Separation of Concerns**; this is probably the only
+design pattern that you should really care about. The fundamental principles of
+the Symfony2 Components are focused on the HTTP specification. As such, the
+frameworks that we are going to create should be more accurately labelled as
+HTTP frameworks or Request/Response frameworks.
 
 Before we start
 ---------------
@@ -89,7 +84,7 @@ classes, how we will reference external dependencies, etc.
 
 To store our framework, create a directory somewhere on your machine:
 
-.. code-block:: sh
+.. code-block:: bash
 
     $ mkdir framework
     $ cd framework
@@ -101,16 +96,16 @@ To install the Symfony2 Components that we need for our framework, we are going
 to use `Composer`_, a project dependency manager for PHP. If you don't have it
 yet, `download and install`_ Composer now:
 
-.. code-block:: sh
+.. code-block:: bash
 
     $ curl -sS https://getcomposer.org/installer | php
 
 Then, generate an empty ``composer.json`` file, where Composer will store the
 framework dependencies:
 
-.. code-block:: sh
+.. code-block:: bash
 
-    $ php composer.phar init -n
+    $ composer init -n
 
 Our Project
 -----------
@@ -130,7 +125,7 @@ start with the simplest web application we can think of in PHP::
 Use the PHP built-in server to test this great application in a browser
 (``http://localhost:4321/index.php?name=Fabien``):
 
-.. code-block:: sh
+.. code-block:: bash
 
     $ php -S 127.0.0.1:4321
 

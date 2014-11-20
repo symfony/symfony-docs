@@ -99,8 +99,8 @@ content and check that the number only changes every 10 seconds::
 Using HTTP cache headers to manage your application cache is very powerful and
 allows you to tune finely your caching strategy as you can use both the
 expiration and the validation models of the HTTP specification. If you are not
-comfortable with these concepts, I highly recommend you to read the `HTTP
-caching`_ chapter of the Symfony2 documentation.
+comfortable with these concepts, read the `HTTP caching`_ chapter of the
+Symfony2 documentation.
 
 The Response class contains many other methods that let you configure the
 HTTP cache very easily. One of the most powerful is ``setCache()`` as it

@@ -39,9 +39,9 @@ instantiated.
 To solve this issue, and a bunch more, let's install and use the HttpKernel
 component:
 
-.. code-block:: sh
+.. code-block:: bash
 
-    $ php composer.phar require symfony/http-kernel
+    $ composer require symfony/http-kernel
 
 The HttpKernel component has many interesting features, but the one we need
 right now is the *controller resolver*. A controller resolver knows how to

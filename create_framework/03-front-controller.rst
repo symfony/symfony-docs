@@ -172,7 +172,7 @@ other files won't be accessible from the client anymore.
 To test your changes in a browser (``http://localhost:4321/?name=Fabien``), run
 the PHP built-in server:
 
-.. code-block:: sh
+.. code-block:: bash
 
     $ php -S 127.0.0.1:4321 -t web/ web/front.php
 
