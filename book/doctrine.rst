@@ -1105,6 +1105,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
             $product = new Product();
             $product->setName('Foo');
             $product->setPrice(19.99);
+            $product->setDescription('Lorem ipsum dolor');
             // relate this product to the category
             $product->setCategory($category);
 
