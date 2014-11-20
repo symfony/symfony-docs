@@ -197,8 +197,8 @@ using the following keys:
     The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if you
-have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
+signs (``%``) must be doubled to escape that character. For example, if you use
+PHPstorm on the Mac OS platform, you will do something like:
 
 .. configuration-block::
 
@@ -206,7 +206,7 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
         # app/config/config.yml
         framework:
-            ide: "pstorm://%%f:%%l"
+            ide: "phpstorm://open?file=%%f&line=%%l"
 
     .. code-block:: xml
 
@@ -218,14 +218,14 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="pstorm://%%f:%%l" />
+            <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'ide' => 'pstorm://%%f:%%l',
+            'ide' => 'phpstorm://open?file=%%f&line=%%l',
         ));
 
 Of course, since every developer uses a different IDE, it's better to set
@@ -1278,7 +1278,6 @@ Whether to enable the ``serializer`` service or not in the service container.
 For more details, see :doc:`/cookbook/serializer`.
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
-.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
