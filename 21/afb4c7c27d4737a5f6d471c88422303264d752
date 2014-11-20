@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by Nek- at 2014-11-11T17:16:05Z
+
+:-1: actually the Request is used just after the use statement. So it's needed after autoload...
+
+---------------------------------------------------------------------------
+
+by hasumedic at 2014-11-11T17:20:47Z
+
+Good. Don't we need then to add it to the first code example?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-11T17:54:23Z
+
+I think it's okay to remove it here. If you have a look at the file contents of the Symfony Standard Edition, you'll see that the `use` statements are placed in the part that we don't show (indicated by the `// ...` placeholders).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-11T23:12:56Z
+
+I agree with @xabbuh, +1
