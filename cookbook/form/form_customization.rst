@@ -67,11 +67,19 @@ just one line:
 
     .. code-block:: jinja
 
+        {# renders all fields #}
         {{ form_widget(form) }}
+
+        {# renders all fields *and* the form start and end tags #}
+        {{ form(form) }}
 
     .. code-block:: php
 
-        <?php echo $view['form']->widget($form); ?>
+        <!-- renders all fields -->
+        <?php echo $view['form']->widget($form) ?>
+
+        <!-- renders all fields *and* the form start and end tags -->
+        <?php echo $view['form']->form($form) ?>
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
