@@ -427,7 +427,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
         # app/config/routing.yml
         contact:
             path:     /contact
-            defaults: { _controller: AcmeDemoBundle:Main:contact }
+            defaults: { _controller: AppBundle:Main:contact }
 
     .. code-block:: xml
 
@@ -439,7 +439,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/contact">
-                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+                <default key="_controller">AppBundle:Main:contact</default>
             </route>
         </routes>
 
@@ -451,24 +451,18 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
-            '_controller' => 'AcmeDemoBundle:Main:contact',
+            '_controller' => 'AppBundle:Main:contact',
         )));
 
         return $collection;
-
-.. note::
-
-   This example uses :doc:`YAML </components/yaml/yaml_format>` to define the routing
-   configuration. Routing configuration can also be written in other formats
-   such as XML or PHP.
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
 the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
-    // src/Acme/DemoBundle/Controller/MainController.php
-    namespace Acme\DemoBundle\Controller;
+    // src/AppBundle/Controller/MainController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
 
