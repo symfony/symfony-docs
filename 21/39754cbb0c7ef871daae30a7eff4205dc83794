@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by kshishkin at 2014-09-21T18:29:41Z
+
+I'd still add proposed note explicitly. Merged into one paragraph as suggested.
+
+Rationale:
+You could infer it from next sentence, but it is focused on informing when setTag is still used. As a reader you try to understand entire concept, you  don't run so much targetted tautologic analysis, and it's easy to miss it. Even if you read this fragment several times having your code not working (found out myself :)).
+
+I think it's also because natural, intuitive expectation is adder and remover are separate overrides.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-18T07:25:02Z
+
+@WouterJ @weaverryan What do you think about this? From my point of view, this is ready to be merged.
