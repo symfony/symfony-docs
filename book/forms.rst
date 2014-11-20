@@ -12,8 +12,9 @@ learning the most important features of the form library along the way.
 .. note::
 
    The Symfony Form component is a standalone library that can be used outside
-   of Symfony projects. For more information, see the `Symfony Form component`_
-   on GitHub.
+   of Symfony projects. For more information, see the
+   :doc:`Form component documentation </components/form/introduction>` on
+   GitHub.
 
 .. index::
    single: Forms; Create a simple form
