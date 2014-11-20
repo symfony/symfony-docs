@@ -144,14 +144,16 @@ helper functions:
     .. code-block:: html+jinja
 
         {# app/Resources/views/Default/new.html.twig #}
-
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
 
     .. code-block:: html+php
 
         <!-- app/Resources/views/Default/new.html.php -->
-
-        <?php echo $view['form']->form($form) ?>
+        <?php echo $view['form']->start($form) ?>
+        <?php echo $view['form']->widget($form) ?>
+        <?php echo $view['form']->end($form) ?>
 
 .. image:: /images/book/form-simple.png
     :align: center
@@ -162,12 +164,24 @@ helper functions:
     the same URL that it was displayed in. You will learn later how to
     change the request method and the target URL of the form.
 
-That's it! By printing ``form(form)``, each field in the form is rendered, along
-with a label and error message (if there is one). The ``form`` function also
-surrounds everything in the necessary HTML ``<form>`` tag. As easy as this is,
-it's not very flexible (yet). Usually, you'll want to render each form field
-individually so you can control how the form looks. You'll learn how to do
-that in the ":ref:`form-rendering-template`" section.
+That's it! Just three lines are needed to render the complete form:
+
+* ``form_start(form)`` - Renders the start tag of the form, including the
+  correct enctype attributes when using file uploads;
+
+* ``form_widget(form)`` - Renders all fields, along with a label and error
+  message (if there is one) input element;
+
+* ``form_end()`` - Renders the end tag of the form and any fields that have not
+  yet been rendered, in case you rendered each field yourself. This is useful
+  for rendering hidden fields and taking advantage of the automatic
+  :ref:`CSRF Protection <forms-csrf>`.
+
+.. seealso::
+
+    As easy as this is, it's not very flexible (yet). Usually, you'll want to
+    render each form field individually so you can control how the form looks.
+    You'll learn how to do that in the ":ref:`form-rendering-template`" section.
 
 Before moving on, notice how the rendered ``task`` input field has the value
 of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
@@ -753,25 +767,20 @@ of code. Of course, you'll usually need much more flexibility when rendering:
             <?php echo $view['form']->row($form['dueDate']) ?>
         <?php echo $view['form']->end($form) ?>
 
-Take a look at each part:
-
-* ``form_start(form)`` - Renders the start tag of the form.
+You already know the ``form_start()`` and ``form_end()`` functions, but what do
+the other functions do?
 
 * ``form_errors(form)`` - Renders any errors global to the whole form
   (field-specific errors are displayed next to each field);
 
 * ``form_row(form.dueDate)`` - Renders the label, any errors, and the HTML
   form widget for the given field (e.g. ``dueDate``) inside, by default, a
-  ``div`` element;
-
-* ``form_end()`` - Renders the end tag of the form and any fields that have not
-  yet been rendered. This is useful for rendering hidden fields and taking
-  advantage of the automatic :ref:`CSRF Protection <forms-csrf>`.
+  ``div`` element.
 
 The majority of the work is done by the ``form_row`` helper, which renders
-the label, errors and HTML form widget of each field inside a ``div`` tag
-by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
-output can be customized on many different levels.
+the label and HTML form widget of each field inside a ``div`` tag by default.
+In the :ref:`form-theming` section, you'll learn how the ``form_row`` output
+can be customized on many different levels.
 
 .. tip::
 
@@ -958,18 +967,11 @@ to the ``form()`` or the ``form_start()`` helper:
     .. code-block:: html+jinja
 
         {# app/Resources/views/Default/new.html.twig #}
-        {{ form(form, {'action': path('target_route'), 'method': 'GET'}) }}
-
         {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
 
     .. code-block:: html+php
 
         <!-- app/Resources/views/Default/newAction.html.php -->
-        <?php echo $view['form']->form($form, array(
-            'action' => $view['router']->generate('target_route'),
-            'method' => 'GET',
-        )) ?>
-
         <?php echo $view['form']->start($form, array(
             'action' => $view['router']->generate('target_route'),
             'method' => 'GET',
