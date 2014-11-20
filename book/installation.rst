@@ -135,7 +135,7 @@ version as the second argument of the ``create-project`` command:
 
 .. code-block:: bash
 
-    $ composer create-project symfony/framework-standard-edition my_project_name '2.3.*'
+    $ composer create-project symfony/framework-standard-edition my_project_name "2.3.*"
 
 .. tip::
 
