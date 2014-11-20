@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-23T10:09:26Z
+
+You didn't really document `$flatten`, did you?
+
+Also, I would be a bit more detailed about the iterator returned. That it extends `RecursiveIterator`, so you can iterator recursively over all form errors.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-08-23T10:10:48Z
+
+Also, we still miss some lines on converting the object to a string to get a nice overview.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T10:10:54Z
+
+Everything starting with line 669 is about ``$flatten``. Though I agree with you about the ``RecursiveIterator``.
+
+What way do you suggest to convert it to a string? I guess there is no easy way.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-04T07:23:13Z
+
+@WouterJ I changed the example to make use of a ``RecursiveIteratorIterator``. I think a ``RecursiveTreeIterator`` isn't really applicable in the web context (e.g. it doesn't look nice). It might be useful in console applications but probably you wouldn't use forms there.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-10T08:18:27Z
+
+I guess this is finished but we need for #4168 here.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-10-28T14:51:45Z
+
+This needs to be rebased now that the other PR has been merged
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-28T14:53:55Z
+
+@stof Yes, I also need do some other modifications tonight.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-01T10:09:29Z
+
+I rebased the pull request and made some modifications.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-07T19:47:18Z
+
+Any opinion on this?
