@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-11-14T07:42:16Z
+
+In my opinion this seems very reasonable.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-14T08:17:39Z
+
+:+1: It does not only make it easier to find your own services with `grep`, but it also decreases the possibility to conflict with future core services.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-11-14T10:06:41Z
+
+looks good to me
+
+And btw, this means that the best practice would be the same than for shared bundles (given your bundle is named AppBundle and so its alias is ``app``)
+
+---------------------------------------------------------------------------
+
+by Nek- at 2014-11-14T13:02:22Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-14T13:05:28Z
+
+I'm -0.3 on this, but I won't stop this PR from merging.
