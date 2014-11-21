@@ -26,7 +26,7 @@ git repository:
 
    .. code-block:: bash
 
-        $ php composer.phar create-project symfony/framework-standard-edition path/ '~2.5'
+        $ php composer.phar create-project symfony/framework-standard-edition path/ "~2.5"
 
    .. tip::
 
