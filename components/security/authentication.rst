@@ -13,7 +13,7 @@ an *authenticated* token if the supplied credentials were found to be valid.
 The listener should then store the authenticated token in the security context::
 
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -21,9 +21,9 @@ The listener should then store the authenticated token in the security context::
     class SomeAuthenticationListener implements ListenerInterface
     {
         /**
-         * @var SecurityContextInterface
+         * @var TokenStorageInterface
          */
-        private $securityContext;
+        private $tokenStorage;
 
         /**
          * @var AuthenticationManagerInterface
@@ -54,7 +54,7 @@ The listener should then store the authenticated token in the security context::
                 ->authenticationManager
                 ->authenticate($unauthenticatedToken);
 
-            $this->securityContext->setToken($authenticatedToken);
+            $this->tokenStorage->setToken($authenticatedToken);
         }
     }
 
