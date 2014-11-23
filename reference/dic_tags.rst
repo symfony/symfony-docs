@@ -893,10 +893,10 @@ routing.expression_language_provider
 
 **Purpose**: Register a provider for expression language functions in routing
 
-This tag is used to automatically register :ref:`expression function providers
-<components-expression-language-provider>` for the routing expression
-component. Using these providers, you can add custom functions to the routing
-expression language.
+This tag is used to automatically register
+:ref:`expression function providers <components-expression-language-provider>`
+for the routing expression component. Using these providers, you can add custom
+functions to the routing expression language.
 
 security.expression_language_provider
 -------------------------------------
