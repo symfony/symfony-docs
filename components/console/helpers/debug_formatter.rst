@@ -1,24 +1,24 @@
 .. index::
     single: Console Helpers; DebugFormatter Helper
 
-DebugFormatter Helper
-=====================
+Debug Formatter Helper
+======================
 
 .. versionadded:: 2.6
-    The DebugFormatter helper was introduced in Symfony 2.6.
+    The Debug Formatter helper was introduced in Symfony 2.6.
 
 The :class:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper` provides
 functions to output debug information when running an external program, for
-instance a process or HTTP request. It is included in the default helper set,
-which you can get by calling
-:method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
+instance a process or HTTP request. It is included in the default helper set
+and you can get it by calling
+:method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
 
     $debugFormatter = $this->getHelper('debug_formatter');
 
 The formatter only formats strings, which you can use to output to the console,
-but also to log the information or anything else.
+but also to log the information or do anything else.
 
-All methods of this helper have an identifier as the first argument. This is an
+All methods of this helper have an identifier as the first argument. This is a
 unique value for each program. This way, the helper can debug information for
 multiple programs at the same time. When using the
 :doc:`Process component </components/process>`, you probably want to use
@@ -26,7 +26,7 @@ multiple programs at the same time. When using the
 
 .. tip::
 
-    This information is often too verbose to show by default. You can use
+    This information is often too verbose to be shown by default. You can use
     :ref:`verbosity levels <verbosity-levels>` to only show it when in
     debugging mode (``-vvv``).
 
@@ -62,8 +62,17 @@ Some programs give output while they are running. This information can be shown
 using
 :method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::progress`::
 
+    use Symfony\Component\Process\Process;
+
     // ...
-    $output->writeln($debugFormatter->progress(spl_object_hash($process), $buffer, Process::ERR === $type));
+    $process = new Process(...);
+
+    $process->run(function ($type, $buffer) use ($output, $debugFormatter, $process) {
+        $output->writeln(
+            $debugFormatter->progress(spl_object_hash($process), $buffer, Process::ERR === $type)
+        );
+    });
+    // ...
 
 In case of success, this will output:
 
@@ -80,18 +89,24 @@ And this in case of failure:
 The third argument is a boolean which tells the function if the output is error
 output or not. When ``true``, the output is considered error output.
 
-The fourth and fifth argument allow you to override the prefix for respectively
-the normal output and error output.
+The fourth and fifth argument allow you to override the prefix for the normal
+output and error output respectively.
 
 Stopping a Program
 ------------------
 
 When a program is stopped, you can use
-:method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::progress`
-to notify this to the users::
+:method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::run` to
+notify this to the users::
 
     // ...
-    $output->writeln($debugFormatter->progress(spl_object_hash($process), 'Some command description', $process->isSuccesfull()));
+    $output->writeln(
+        $debugFormatter->stop(
+            spl_object_hash($process),
+            'Some command description',
+            $process->isSuccessfull()
+        )
+    );
 
 This will output:
 
