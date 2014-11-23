@@ -5,8 +5,9 @@ Using a Factory to Create Services
 ==================================
 
 .. versionadded:: 2.6
-    The new ``setFactory`` method was introduced in Symfony 2.6. Refer to older
-    versions for the syntax for factories prior to 2.6.
+    The new `Symfony\\Component\\DependencyInjection\\Definition::setFactory`
+    method was introduced in Symfony 2.6. Refer to older versions for the
+    syntax for factories prior to 2.6.
 
 Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
@@ -92,10 +93,10 @@ be non-static.
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="newsletter_factory" class="NewsletterManagerFactory" />
+                <service id="newsletter_manager.factory" class="NewsletterManagerFactory" />
 
                 <service id="newsletter_manager" class="NewsletterManager">
-                    <factory service="NewsletterManager" method="createNewsletterManager" />
+                    <factory service="newsletter_manager.factry" method="createNewsletterManager" />
                 </service>
             </services>
         </container>
@@ -106,7 +107,7 @@ be non-static.
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $container->register('newsletter_manager.factory', 'createNewsletterManager');
+        $container->register('newsletter_manager.factory', 'NewsletterManagerFactory');
 
         $newsletterManager = new Definition();
         $newsletterManager->setFactory(array(
