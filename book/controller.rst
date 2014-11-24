@@ -516,49 +516,6 @@ The Symfony templating engine is explained in great detail in the
         $content = $templating->renderResponse('Hello/index.html.twig', array('name' => $name));
 
 .. index::
-   single: Controller; Forwarding
-
-Forwarding
-~~~~~~~~~~
-
-You can also forward to another controller internally with the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
-method. Instead of redirecting the user's browser, it makes an internal sub-request,
-and calls the controller. The ``forward()`` method returns the ``Response``
-object that's returned from *that* controller::
-
-    public function indexAction($name)
-    {
-        $response = $this->forward('AppBundle:Something:fancy', array(
-            'name'  => $name,
-            'color' => 'green',
-        ));
-
-        // ... further modify the response or return it directly
-
-        return $response;
-    }
-
-Notice that the ``forward()`` method uses a special string representation
-of the controller (see :ref:`controller-string-syntax`). In this case, the
-target controller function will be ``SomethingController::fancyAction()``
-inside the ``AppBundle``. The array passed to the method becomes the arguments
-on the resulting controller. This same idea is used when embedding controllers
-into templates (see :ref:`templating-embedding-controller`). The target
-controller method would look something like this::
-
-    public function fancyAction($name, $color)
-    {
-        // ... create and return a Response object
-    }
-
-Just like when creating a controller for a route, the order of the arguments of
-``fancyAction`` doesn't matter. Symfony matches the index key names (e.g.
-``name``) with the method argument names (e.g. ``$name``). If you change the
-order of the arguments, Symfony will still pass the correct value to each
-variable.
-
-.. index::
    single: Controller; Accessing services
 
 .. _controller-accessing-services:
@@ -807,6 +764,49 @@ You can create a static page without even creating a controller (only a route
 and template are needed).
 
 Use it! See :doc:`/cookbook/templating/render_without_controller`.
+
+.. index::
+   single: Controller; Forwarding
+
+Forwarding to Another Controller
+--------------------------------
+
+Though not very common, you can also forward to another controller internally
+with the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward`
+method. Instead of redirecting the user's browser, it makes an internal sub-request,
+and calls the controller. The ``forward()`` method returns the ``Response``
+object that's returned from *that* controller::
+
+    public function indexAction($name)
+    {
+        $response = $this->forward('AppBundle:Something:fancy', array(
+            'name'  => $name,
+            'color' => 'green',
+        ));
+
+        // ... further modify the response or return it directly
+
+        return $response;
+    }
+
+Notice that the ``forward()`` method uses a special string representation
+of the controller (see :ref:`controller-string-syntax`). In this case, the
+target controller function will be ``SomethingController::fancyAction()``
+inside the ``AppBundle``. The array passed to the method becomes the arguments
+on the resulting controller. This same idea is used when embedding controllers
+into templates (see :ref:`templating-embedding-controller`). The target
+controller method would look something like this::
+
+    public function fancyAction($name, $color)
+    {
+        // ... create and return a Response object
+    }
+
+Just like when creating a controller for a route, the order of the arguments of
+``fancyAction`` doesn't matter. Symfony matches the index key names (e.g.
+``name``) with the method argument names (e.g. ``$name``). If you change the
+order of the arguments, Symfony will still pass the correct value to each
+variable.
 
 Final Thoughts
 --------------
