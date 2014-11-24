@@ -67,4 +67,4 @@ Next, create your own ``ExceptionListener``::
         }
     }
 
-Add as much or few logic here as required for your scenario!
+Add as much or as little logic here as required for your scenario!

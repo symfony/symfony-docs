@@ -4,8 +4,8 @@
 AsseticBundle Configuration ("assetic")
 =======================================
 
-Full default Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Full Default Configuration
+--------------------------
 
 .. configuration-block::
 
