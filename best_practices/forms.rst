@@ -157,29 +157,15 @@ There are a lot of ways to render your form, ranging from rendering the entire
 thing in one line to rendering each part of each field independently. The
 best way depends on how much customization you need.
 
-The simplest way - which is especially useful during development - is to render
-the form tags manually and then use ``form_widget()`` to render all of the fields:
+One of the simplest ways - which is especially useful during development -
+is to render the form tags and use ``form_widget()`` to render all of the
+fields:
 
 .. code-block:: html+jinja
 
-    <form method="POST" {{ form_enctype(form) }}>
+    {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
         {{ form_widget(form) }}
-    </form>
-
-.. best-practice::
-
-    Don't use the ``form()`` or ``form_start()`` functions to render the
-    starting and ending form tags.
-
-Experienced Symfony developers will recognize that we're rendering the ``<form>``
-tags manually instead of using the ``form_start()`` or ``form()`` functions.
-While those are convenient, they take away from some clarity with little
-benefit.
-
-.. tip::
-
-    The exception is a delete form because it's really just one button and
-    so benefits from some of these extra shortcuts.
+    {{ form_end(form) }}
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
