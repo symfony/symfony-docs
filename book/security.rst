@@ -1546,9 +1546,6 @@ do the following:
             ),
         ));
 
-.. versionadded:: 2.2
-    The BCrypt encoder was introduced in Symfony 2.2.
-
 You can now calculate the hashed password either programmatically
 (e.g. ``password_hash('ryanpass', PASSWORD_BCRYPT, array('cost' => 12));``)
 or via some online tool.
