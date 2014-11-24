@@ -24,7 +24,7 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
 | options     |                                                                  |
-|             | - `empty_value`_                                                 |
+|             | - `placeholder`_                                                 |
 |             | - `expanded`_                                                    |
 |             | - `multiple`_                                                    |
 |             | - `preferred_choices`_                                           |
@@ -194,7 +194,7 @@ Inherited Options
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
