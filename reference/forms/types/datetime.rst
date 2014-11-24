@@ -21,6 +21,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `hours`_                                                                  |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
@@ -81,6 +82,8 @@ by the HTML5 ``datetime`` field. Keeping the default value will cause the
 field to be rendered as an ``input`` field with ``type="datetime"``.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 input
 ~~~~~

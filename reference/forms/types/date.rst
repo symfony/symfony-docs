@@ -22,6 +22,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 | Options              | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
@@ -108,6 +109,8 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 .. _reference-forms-type-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 .. _form-reference-date-input:
 
