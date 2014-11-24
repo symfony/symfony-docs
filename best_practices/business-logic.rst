@@ -140,12 +140,9 @@ the class namespace as a parameter:
     # app/config/services.yml
 
     # service definition with class namespace as parameter
-    parameters:
-        slugger.class: AppBundle\Utils\Slugger
-
     services:
         app.slugger:
-            class: "%slugger.class%"
+            class: AppBundle\Utils\Slugger
 
 This practice is cumbersome and completely unnecessary for your own services:
 

@@ -39,12 +39,9 @@ Then, define the chain as a service:
 
     .. code-block:: yaml
 
-        parameters:
-            acme_mailer.transport_chain.class: TransportChain
-
         services:
             acme_mailer.transport_chain:
-                class: "%acme_mailer.transport_chain.class%"
+                class: TransportChain
 
     .. code-block:: xml
 
@@ -53,12 +50,8 @@ Then, define the chain as a service:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <parameter key="acme_mailer.transport_chain.class">TransportChain</parameter>
-            </parameters>
-
             <services>
-                <service id="acme_mailer.transport_chain" class="%acme_mailer.transport_chain.class%" />
+                <service id="acme_mailer.transport_chain" class="TransportChain" />
             </services>
         </container>
 
@@ -66,9 +59,7 @@ Then, define the chain as a service:
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('acme_mailer.transport_chain.class', 'TransportChain');
-
-        $container->setDefinition('acme_mailer.transport_chain', new Definition('%acme_mailer.transport_chain.class%'));
+        $container->setDefinition('acme_mailer.transport_chain', new Definition('TransportChain'));
 
 Define Services with a custom Tag
 ---------------------------------

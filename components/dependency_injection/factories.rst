@@ -35,14 +35,10 @@ class:
 
     .. code-block:: yaml
 
-        parameters:
-            # ...
-            newsletter_manager.class: NewsletterManager
-            newsletter_factory.class: NewsletterFactory
         services:
             newsletter_manager:
-                class:          "%newsletter_manager.class%"
-                factory_class:  "%newsletter_factory.class%"
+                class:          NewsletterManager
+                factory_class:  NewsletterFactory
                 factory_method: get
 
     .. code-block:: xml
@@ -52,17 +48,11 @@ class:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <!-- ... -->
-                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-                <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
-            </parameters>
-
             <services>
                 <service
                     id="newsletter_manager"
-                    class="%newsletter_manager.class%"
-                    factory-class="%newsletter_factory.class%"
+                    class="NewsletterManager"
+                    factory-class="NewsletterFactory"
                     factory-method="get" />
             </services>
         </services>
@@ -71,12 +61,8 @@ class:
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
-        $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
-
-        $definition = new Definition('%newsletter_manager.class%');
-        $definition->setFactoryClass('%newsletter_factory.class%');
+        $definition = new Definition('NewsletterManager');
+        $definition->setFactoryClass('NewsletterFactory');
         $definition->setFactoryMethod('get');
 
         $container->setDefinition('newsletter_manager', $definition);
@@ -90,15 +76,11 @@ In this case, the method (e.g. get) should be changed to be non-static:
 
     .. code-block:: yaml
 
-        parameters:
-            # ...
-            newsletter_manager.class: NewsletterManager
-            newsletter_factory.class: NewsletterFactory
         services:
             newsletter_factory:
-                class:            "%newsletter_factory.class%"
+                class:            NewsletterFactory
             newsletter_manager:
-                class:            "%newsletter_manager.class%"
+                class:            NewsletterManager
                 factory_service:  newsletter_factory
                 factory_method:   get
 
@@ -109,18 +91,12 @@ In this case, the method (e.g. get) should be changed to be non-static:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <!-- ... -->
-                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-                <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
-            </parameters>
-
             <services>
-                <service id="newsletter_factory" class="%newsletter_factory.class%"/>
+                <service id="newsletter_factory" class="NewsletterFactory"/>
 
                 <service
                     id="newsletter_manager"
-                    class="%newsletter_manager.class%"
+                    class="NewsletterManager"
                     factory-service="newsletter_factory"
                     factory-method="get" />
             </services>
@@ -130,15 +106,11 @@ In this case, the method (e.g. get) should be changed to be non-static:
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
-        $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
-
         $container->setDefinition('newsletter_factory', new Definition(
-            '%newsletter_factory.class%'
+            'NewsletterFactory'
         ));
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%'
+            'NewsletterManager'
         ))->setFactoryService(
             'newsletter_factory'
         )->setFactoryMethod(
@@ -162,15 +134,11 @@ in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: yaml
 
-        parameters:
-            # ...
-            newsletter_manager.class: NewsletterManager
-            newsletter_factory.class: NewsletterFactory
         services:
             newsletter_factory:
-                class:            "%newsletter_factory.class%"
+                class:            NewsletterFactory
             newsletter_manager:
-                class:            "%newsletter_manager.class%"
+                class:            NewsletterManager
                 factory_service:  newsletter_factory
                 factory_method:   get
                 arguments:
@@ -183,18 +151,12 @@ in the previous example takes the ``templating`` service as an argument:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <!-- ... -->
-                <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-                <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
-            </parameters>
-
             <services>
-                <service id="newsletter_factory" class="%newsletter_factory.class%"/>
+                <service id="newsletter_factory" class="NewsletterFactory"/>
 
                 <service
                     id="newsletter_manager"
-                    class="%newsletter_manager.class%"
+                    class="NewsletterManager"
                     factory-service="newsletter_factory"
                     factory-method="get">
 
@@ -207,15 +169,11 @@ in the previous example takes the ``templating`` service as an argument:
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
-        $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
-
         $container->setDefinition('newsletter_factory', new Definition(
-            '%newsletter_factory.class%'
+            'NewsletterFactory'
         ));
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%',
+            'NewsletterManager',
             array(new Reference('templating'))
         ))->setFactoryService(
             'newsletter_factory'
