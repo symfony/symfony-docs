@@ -202,18 +202,18 @@ to the controller:
         return $collection;
 
 Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/app_dev.php/hello/ryan``
-if you're using the :doc:`built-in web server </cookbook/webserver/built_in>`_)
+if you're using the :doc:`built-in web server </cookbook/webserver/built_in>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
-simply creating a controller method and associated route.
+simply creating a controller method and an associated route.
 
 Simple, right?
 
-.. sidebar:: The AppBundle:Hello:index syntax for YML and XML
+.. sidebar:: The AppBundle:Hello:index controller syntax
 
     If you use the YML or XML formats, you'll refer to the controller using
     a special shortcut syntax: ``AppBundle:Hello:index``. For more details
-    on this controllers format, see :ref:`controller-string-syntax`.
+    on the controller format, see :ref:`controller-string-syntax`.
 
 .. seealso::
 
@@ -236,15 +236,12 @@ that is passed to that method::
     // ...
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-    class HelloController
+    /**
+     * @Route("/hello/{name}", name="hello")
+     */
+    public function indexAction($name)
     {
-        /**
-         * @Route("/hello/{name}", name="hello")
-         */
-        public function indexAction($name)
-        {
-            // ...
-        }
+        // ...
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
@@ -260,6 +257,7 @@ Take the following more-interesting example:
 
         // src/AppBundle/Controller/HelloController.php
         // ...
+
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         class HelloController
@@ -360,7 +358,9 @@ the following guidelines in mind while you develop.
 
     Every route also has a special ``_route`` parameter, which is equal to
     the name of the route that was matched (e.g. ``hello``). Though not usually
-    useful, this is also available as a controller argument.
+    useful, this is also available as a controller argument. You can also
+    pass other variables from your route to your controller arguments. See
+    :doc:`/cookbook/routing/extra_information.`.
 
 .. _book-controller-request-argument:
 
@@ -369,7 +369,7 @@ The ``Request`` as a Controller Argument
 
 What if you need to read query parameters, grab a request header or get access
 to an uploaded file? All of that information is stored in Symfony's ``Request``
-object. To get it in your contorller, just add it as an argument and
+object. To get it in your controller, just add it as an argument and
 **type-hint it with the Request class**::
 
     use Symfony\Component\HttpFoundation\Request;
@@ -384,7 +384,7 @@ object. To get it in your contorller, just add it as an argument and
 .. seealso::
 
     Want to know more about getting information from the request? See
-    :ref:`Access Request Information <component-http-foundation-request`.
+    :ref:`Access Request Information <component-http-foundation-request>`.
 
 .. index::
    single: Controller; Base controller class
@@ -422,17 +422,6 @@ A great way to see the core functionality in action is to look in the
     this base class, check out :doc:`Controllers as Services </cookbook/controller/service>`.
     This is optional, but can give you more control over the exact objects/dependencies
     that are injected into your controller.
-
-.. index::
-   single: Controller; Common tasks
-
-Common Controller Tasks
------------------------
-
-Yes, a controller can do anything. But most controllers do the same basic
-tasks over and over again. These tasks - like redirecting, rendering templates
-and accessing core services - are easier with the shortcut methods you get
-by extending the base ``Controller`` class.
 
 .. index::
    single: Controller; Redirecting
@@ -502,19 +491,6 @@ The Symfony templating engine is explained in great detail in the
     ``AppBundle:Hello:index.html.twig`` would refer to the template located in
     ``src/AppBundle/Resources/views/Hello/index.html.twig``. See :ref:`template-referencing-in-bundle`.
 
-.. tip::
-
-    The ``render`` method is a shortcut to direct use of the ``templating``
-    service. The ``templating`` service can also be used directly::
-
-        $templating = $this->get('templating');
-
-        // returns the content
-        $content = $templating->render('Hello/index.html.twig', array('name' => $name));
-
-        // puts the content into a Response object for convenience
-        $content = $templating->renderResponse('Hello/index.html.twig', array('name' => $name));
-
 .. index::
    single: Controller; Accessing services
 
@@ -526,7 +502,7 @@ Accessing other Services
 Symfony comes packed with a lot of useful objects, called services. These
 are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of. When you install a new bundle, it probably
-brings in even *more* services. And of course, will even :ref:`add your own services <service-container-creating-service>`.
+brings in even *more* services.
 
 When extending the base controller class, you can access any Symfony service
 via the ``get()`` method. Here are several common services you might need::
@@ -705,19 +681,19 @@ content that's sent back to the client::
     $response->headers->set('Content-Type', 'application/json');
 
 The ``headers`` property is a :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`
-object some nice methods for getting and setting the headers. The header
-names are normalized so that using ``Content-Type`` is equivalent to ``content-type``
-or even ``content_type``.
+object and has some nice methods for getting and setting the headers. The
+header names are normalized so that using ``Content-Type`` is equivalent to
+``content-type`` or even ``content_type``.
 
 There are also special classes to make certain kinds of responses easier:
 
-- For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
+* For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
   See :ref:`component-http-foundation-json-response`.
 
-- For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
+* For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
   See :ref:`component-http-foundation-serving-files`.
 
-- For streamed responses, there is :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
+* For streamed responses, there is :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
   See :ref:`streaming-response`.
 
 .. seealso::
@@ -763,7 +739,7 @@ Creating Static Pages
 You can create a static page without even creating a controller (only a route
 and template are needed).
 
-Use it! See :doc:`/cookbook/templating/render_without_controller`.
+See :doc:`/cookbook/templating/render_without_controller`.
 
 .. index::
    single: Controller; Forwarding
