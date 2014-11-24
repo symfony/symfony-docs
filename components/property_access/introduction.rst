@@ -175,6 +175,8 @@ The ``getValue`` method can also use the magic ``__get`` method::
 
     echo $accessor->getValue($person, 'Wouter'); // array(...)
 
+.. _components-property-access-magic-call:
+
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 

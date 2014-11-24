@@ -48,6 +48,9 @@ Configuration
 * `profiler`_
     * `collect`_
     * :ref:`enabled <profiler.enabled>`
+* `property_accessor`_
+    * `magic_call`_
+    * `throw_exception_on_invalid_index`_
 
 secret
 ~~~~~~
@@ -494,6 +497,26 @@ collect information on-demand, you can set the ``collect`` flag to ``false``
 and activate the data collectors by hand::
 
     $profiler->enable();
+
+property_accessor
+~~~~~~~~~~~~~~~~~
+
+magic_call
+..........
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __call() method <components-property-access-magic-call>` when
+its ``getValue()`` method is called.
+
+throw_exception_on_invalid_index
+................................
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service throws an exception when you
+try to access an invalid index of an array.
 
 Full default Configuration
 --------------------------
