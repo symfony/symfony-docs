@@ -470,7 +470,7 @@ sport like this::
             $builder
                 ->add('sport', 'entity', array(
                     'class'       => 'AcmeDemoBundle:Sport',
-                    'empty_value' => '',
+                    'placeholder' => '',
                 ))
             ;
 
@@ -487,7 +487,7 @@ sport like this::
 
                     $form->add('position', 'entity', array(
                         'class'       => 'AcmeDemoBundle:Position',
-                        'empty_value' => '',
+                        'placeholder' => '',
                         'choices'     => $positions,
                     ));
                 }
@@ -496,6 +496,10 @@ sport like this::
 
         // ...
     }
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    ``empty_value``, which is available prior to 2.6.
 
 When you're building this form to display to the user for the first time,
 then this example works perfectly.
@@ -537,7 +541,7 @@ The type would now look like::
             $builder
                 ->add('sport', 'entity', array(
                     'class'       => 'AcmeDemoBundle:Sport',
-                    'empty_value' => '',
+                    'placeholder' => '',
                 ));
             ;
 
@@ -546,7 +550,7 @@ The type would now look like::
 
                 $form->add('position', 'entity', array(
                     'class'       => 'AcmeDemoBundle:Position',
-                    'empty_value' => '',
+                    'placeholder' => '',
                     'choices'     => $positions,
                 ));
             };
