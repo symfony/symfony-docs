@@ -265,8 +265,8 @@ The Login Form and Process
     ``use_forward`` is set to ``true``) when they try to access a
     protected resource but isn't fully authenticated.
 
-    This path **must** be accessible by a normal, un-authenticated user, else
-    you may create a redirect loop. For details, see
+    This path **must** be accessible by a normal, un-authenticated user,
+    else you may create a redirect loop. For details, see
     ":ref:`Avoid Common Pitfalls <book-security-common-pitfalls>`".
 
 *   ``check_path`` (type: ``string``, default: ``/login_check``)
@@ -278,8 +278,8 @@ The Login Form and Process
     a separate firewall just for ``check_path`` URL).
 
 *   ``use_forward`` (type: ``Boolean``, default: ``false``)
-    If you'd like the user to be forwarded to the login form instead of being
-    redirected, set this option to ``true``.
+    If you'd like the user to be forwarded to the login form instead of
+    being redirected, set this option to ``true``.
 
 *   ``username_parameter`` (type: ``string``, default: ``_username``)
     This is the field name that you should give to the username field of

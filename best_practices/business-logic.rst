@@ -81,7 +81,7 @@ Next, define a new service for that class.
     # app/config/services.yml
     services:
         # keep your service names short
-        slugger:
+        app.slugger:
             class: AppBundle\Utils\Slugger
 
 Traditionally, the naming convention for a service involved following the
@@ -92,7 +92,8 @@ your code will be easier to read and use.
 .. best-practice::
 
     The name of your application's services should be as short as possible,
-    ideally just one simple word.
+    but unique enough that you can search your project for the service if
+    you ever need to.
 
 Now you can use the custom slugger in any controller class, such as the
 ``AdminController``:
@@ -104,7 +105,7 @@ Now you can use the custom slugger in any controller class, such as the
         // ...
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $this->get('slugger')->slugify($post->getTitle());
+            $slug = $this->get('app.slugger')->slugify($post->getTitle());
             $post->setSlug($slug);
 
             // ...
@@ -143,7 +144,7 @@ the class namespace as a parameter:
         slugger.class: AppBundle\Utils\Slugger
 
     services:
-        slugger:
+        app.slugger:
             class: "%slugger.class%"
 
 This practice is cumbersome and completely unnecessary for your own services:
