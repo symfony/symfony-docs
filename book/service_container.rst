@@ -95,6 +95,8 @@ down every place you create a ``Mailer`` service and change it.
 .. index::
    single: Service Container; Configuring services
 
+.. _service-container-creating-service:
+
 Creating/Configuring Services in the Container
 ----------------------------------------------
 
