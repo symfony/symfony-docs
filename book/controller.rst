@@ -360,7 +360,7 @@ the following guidelines in mind while you develop.
     the name of the route that was matched (e.g. ``hello``). Though not usually
     useful, this is also available as a controller argument. You can also
     pass other variables from your route to your controller arguments. See
-    :doc:`/cookbook/routing/extra_information.`.
+    :doc:`/cookbook/routing/extra_information`.
 
 .. _book-controller-request-argument:
 
