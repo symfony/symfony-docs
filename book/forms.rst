@@ -168,10 +168,10 @@ helper functions:
 That's it! Just three lines are needed to render the complete form:
 
 * ``form_start(form)`` - Renders the start tag of the form, including the
-  correct enctype attributes when using file uploads;
+  correct enctype attribute when using file uploads;
 
-* ``form_widget(form)`` - Renders all fields, along with a label and error
-  message (if there is one) input element;
+* ``form_widget(form)`` - Renders all of the fields, which includes the field
+  element itself, a label and any validation error messages for the field;
 
 * ``form_end()`` - Renders the end tag of the form and any fields that have not
   yet been rendered, in case you rendered each field yourself. This is useful
@@ -779,9 +779,9 @@ the other functions do?
   ``div`` element.
 
 The majority of the work is done by the ``form_row`` helper, which renders
-the label and HTML form widget of each field inside a ``div`` tag by default.
-In the :ref:`form-theming` section, you'll learn how the ``form_row`` output
-can be customized on many different levels.
+the label, errors and HTML form widget of each field inside a ``div`` tag by
+default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
+output can be customized on many different levels.
 
 .. tip::
 

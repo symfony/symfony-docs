@@ -524,7 +524,7 @@ regardless of how your project is developed. To name a few:
   about how that request should be handled (e.g. execute the ``contactAction()``
   method);
 
-* `Form </components/form/introduction>` - A full-featured and flexible
+* :doc:`Form </components/form/introduction>` - A full-featured and flexible
   framework for creating forms and handling form submissions;
 
 * `Validator`_ - A system for creating rules about data and then validating
@@ -534,10 +534,10 @@ regardless of how your project is developed. To name a few:
   templates, handling template inheritance (i.e. a template is decorated with
   a layout) and performing other common template tasks;
 
-* `Security </components/security/introduction>` - A powerful library for
+* :doc:`Security </components/security/introduction>` - A powerful library for
   handling all types of security inside an application;
 
-* `Translation </components/translation/introduction>` - A framework for
+* :doc:`Translation </components/translation/introduction>` - A framework for
   translating strings in your application.
 
 Each and every one of these components is decoupled and can be used in *any*
