@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-07T18:05:59Z
+
+> I removed ContainerAware information. This is not the right spot... and maybe nothing is. I don't see much use-case for this - it seems like you'd either extend the base Controller or register your controller as a service.
+
++1, I was about doing the same in my PR :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-20T22:08:07Z
+
+let's postpone this to post-2.6 :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-20T22:25:55Z
+
+@WouterJ while not strictly related to 2.6, I'd like to have things like this done as close to 2.6 launch as possible. There is a good amount of work, but I don't want to postpone and drag it on.
+
+Now, that would require me finding time of course. So, I'm not saying you're wrong, I'm more saying that I *want* to do this kind of stuff before 2.6 ;).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-20T22:52:06Z
+
+@weaverryan I predict that I'm not able to review this PR before 2.6, given the amount of work that has more priority (best practices update, missing 2.6 features, sf installer, etc.) That was my reason to say I would like to postpone this :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-24T20:03:38Z
+
+@WouterJ I understand! Do your best, but of course we're all just giving our free time :).
+
+And thanks for the feedback - I've just pushed updates based on everything. The only pending issue I know of is this one: https://github.com/symfony/symfony-docs/pull/4433#discussion_r20045202. Wouter - have you reviewed this entire PR when you originally added comments, or only part of it?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-24T20:09:18Z
+
+> Wouter - have you reviewed this entire PR when you originally added comments, or only part of it?
+
+I don't believe I did, although my comments reached from start to end... We don't have to stop this PR from merging though, I can always create a follow up.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-24T20:24:25Z
+
+@WouterJ Good plan - I think we have this *most* right. I'll get the tests passing and get this guy merged in. Thanks :)
