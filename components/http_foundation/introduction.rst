@@ -441,6 +441,8 @@ To redirect the client to another URL, you can use the
 
     $response = new RedirectResponse('http://example.com/');
 
+.. _streaming-response:
+
 Streaming a Response
 ~~~~~~~~~~~~~~~~~~~~
 
