@@ -25,7 +25,7 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-security context (i.e. the ``security.context`` service). Each one decides
+authorization checker (i.e. the ``security.authorization_checker`` service). Each one decides
 if the current user should have access to some resource.
 
 Ultimately, Symfony uses one of three different approaches on what to do
@@ -194,7 +194,7 @@ How to Use the Voter in a Controller
 ------------------------------------
 
 The registered voter will then always be asked as soon as the method ``isGranted()``
-from the security context is called.
+from the authorization checker is called.
 
 .. code-block:: php
 
@@ -213,7 +213,7 @@ from the security context is called.
             $post = ...;
 
             // keep in mind, this will call all registered security voters
-            if (false === $this->get('security.context')->isGranted('view', $post)) {
+            if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
             }
 

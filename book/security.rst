@@ -438,7 +438,7 @@ Next, create the controller that will display the login form::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\Security;
 
     class SecurityController extends Controller
     {
@@ -447,19 +447,19 @@ Next, create the controller that will display the login form::
             $session = $request->getSession();
 
             // get the login error if there is one
-            if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
                 $error = $request->attributes->get(
-                    SecurityContextInterface::AUTHENTICATION_ERROR
+                    Security::AUTHENTICATION_ERROR
                 );
-            } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-                $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-                $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+            } elseif (null !== $session && $session->has(Security::AUTHENTICATION_ERROR)) {
+                $error = $session->get(Security::AUTHENTICATION_ERROR);
+                $session->remove(Security::AUTHENTICATION_ERROR);
             } else {
                 $error = '';
             }
 
             // last username entered by the user
-            $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+            $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
 
             return $this->render(
                 'AcmeSecurityBundle:Security:login.html.twig',
@@ -1174,7 +1174,7 @@ authorization from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
@@ -1618,12 +1618,12 @@ Retrieving the User Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.context`` service. From inside a controller, this will
+via the ``security.authorization_checker`` service. From inside a controller, this will
 look like::
 
     public function indexAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.authorization_checker')->getToken()->getUser();
     }
 
 In a controller this can be shortcut to:
@@ -1895,7 +1895,7 @@ authorization from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -1925,7 +1925,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     public function indexAction()
     {
-        if (!$this->get('security.context')->isGranted(new Expression(
+        if (!$this->get('security.authorization_checker')->isGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
         ))) {
             throw new AccessDeniedException();
@@ -1979,7 +1979,7 @@ Additionally, you have access to a number of functions inside the expression:
         use Symfony\Component\ExpressionLanguage\Expression;
         // ...
 
-        $sc = $this->get('security.context');
+        $sc = $this->get('security.authorization_checker');
         $access1 = $sc->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $access2 = $sc->isGranted(new Expression(

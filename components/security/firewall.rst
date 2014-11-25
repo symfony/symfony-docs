@@ -5,12 +5,12 @@ The Firewall and Security Context
 =================================
 
 Central to the Security component is the security context, which is an instance
-of :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`. When all
+of :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface`. When all
 steps in the process of authenticating the user have been taken successfully,
 you can ask the security context if the authenticated user has access to a
 certain action or resource of the application::
 
-    use Symfony\Component\Security\Core\SecurityContext;
+    use Symfony\Component\Security\Core\Authorization\\AuthorizationChecker;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     // instance of Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface
@@ -19,14 +19,14 @@ certain action or resource of the application::
     // instance of Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
     $accessDecisionManager = ...;
 
-    $securityContext = new SecurityContext(
+    $authorizationChecker = new AuthorizationChecker(
         $authenticationManager,
         $accessDecisionManager
     );
 
     // ... authenticate the user
 
-    if (!$securityContext->isGranted('ROLE_ADMIN')) {
+    if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
 
