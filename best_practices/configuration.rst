@@ -158,7 +158,7 @@ Semantic Configuration: Don't Do It
 
     Don't define a semantic dependency injection configuration for your bundles.
 
-As explained in `How to Expose a semantic Configuration for a Bundle`_ article,
+As explained in `How to Load Service Configuration inside a Bundle`_ article,
 Symfony bundles have two choices on how to handle configuration: normal service
 configuration through the ``services.yml`` file and semantic configuration
 through a special ``*Extension`` class.
@@ -179,5 +179,5 @@ through environment variables. Learn how to do it in the following article:
 .. _`feature toggles`: http://en.wikipedia.org/wiki/Feature_toggle
 .. _`execution environment`: http://symfony.com/doc/current/cookbook/configuration/environments.html
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
-.. _`How to Expose a semantic Configuration for a Bundle`: http://symfony.com/doc/current/cookbook/bundles/extension.html
+.. _`How to Load Service Configuration inside a Bundle`: http://symfony.com/doc/current/cookbook/bundles/extension.html
 .. _`How to Set external Parameters in the Service Container`: http://symfony.com/doc/current/cookbook/configuration/external_parameters.html
