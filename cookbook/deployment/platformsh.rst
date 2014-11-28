@@ -4,8 +4,8 @@
 Deploying to Platform.sh
 ========================
 
-This step by step cookbook describes how to deploy a Symfony web application to 
-`Platform.sh`_ . You can read more about using Symfony with Platform.sh on the 
+This step-by-step cookbook describes how to deploy a Symfony web application to 
+`Platform.sh`_. You can read more about using Symfony with Platform.sh on the 
 official `Platform.sh documentation`_.
 
 Deploy an existing site
@@ -94,6 +94,8 @@ your Git repository which contains the following files:
     mysql:
         type: mysql
         disk: 2048
+
+An example of these configurations can be found on `Github`_.
 
 Configure database access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -186,10 +188,11 @@ through the checkout process.
 Once your project is ready, give it a name and choose: **Create a new site**.
 Choose the *Symfony* stack and a starting point such as *Standard*.
 
-That's it! Your Symfony application will be bootstaped and deployed. You'll soon
+That's it! Your Symfony application will be bootstrapped and deployed. You'll soon
 be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh
-.. _`Platform.sh documentation`: https://docs.platform.sh/toolstacks/symfony/symfony-getting-started/
+.. _`Platform.sh documentation`: https://docs.platform.sh/toolstacks/symfony/symfony-getting-started
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
-.. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files/
+.. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
+.. _`Github`: https://github.com/platformsh/platformsh-examples
