@@ -74,9 +74,9 @@ add an extra layer of configuration that's not needed because you don't need
 or want these configuration values to change on each server.
 
 The configuration options defined in the ``config.yml`` file usually vary from
-one `execution environment`_ to another. That's why Symfony already includes
-``app/config/config_dev.yml`` and ``app/config/config_prod.yml`` files so
-that you can override specific values for each environment.
+one :doc:`/cookbook/configuration/environments` to another. That's why Symfony
+already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
+files so that you can override specific values for each environment.
 
 Constants vs Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,10 +158,10 @@ Semantic Configuration: Don't Do It
 
     Don't define a semantic dependency injection configuration for your bundles.
 
-As explained in `How to Expose a semantic Configuration for a Bundle`_ article,
-Symfony bundles have two choices on how to handle configuration: normal service
-configuration through the ``services.yml`` file and semantic configuration
-through a special ``*Extension`` class.
+As explained in :doc:`/cookbook/bundles/extension` article, Symfony bundles
+have two choices on how to handle configuration: normal service configuration
+through the ``services.yml`` file and semantic configuration through a special
+``*Extension`` class.
 
 Although semantic configuration is much more powerful and provides nice features
 such as configuration validation, the amount of work needed to define that
@@ -174,10 +174,7 @@ Moving Sensitive Options Outside of Symfony Entirely
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
 through environment variables. Learn how to do it in the following article:
-`How to Set external Parameters in the Service Container`_
+:doc:`/cookbook/configuration/external_parameters`
 
 .. _`feature toggles`: http://en.wikipedia.org/wiki/Feature_toggle
-.. _`execution environment`: http://symfony.com/doc/current/cookbook/configuration/environments.html
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
-.. _`How to Expose a semantic Configuration for a Bundle`: http://symfony.com/doc/current/cookbook/bundles/extension.html
-.. _`How to Set external Parameters in the Service Container`: http://symfony.com/doc/current/cookbook/configuration/external_parameters.html
