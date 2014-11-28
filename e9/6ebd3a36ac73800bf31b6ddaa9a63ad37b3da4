@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-27T08:48:38Z
+
+:+1: Nice findings.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-27T15:18:26Z
+
+@loonytoons Thank you for the fixes. Do you like to open a separate pull request for the semicolons so that they can be merged into the `2.3` branch?
+
+---------------------------------------------------------------------------
+
+by loonytoons at 2014-11-27T22:29:33Z
+
+@xabbuh Added in PR #4523. Is it okay to leave them in this PR, or did you want them taken out of here?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-28T08:45:51Z
+
+I think it's okay to keep them here.
+
+@WouterJ Is the merge to capable to handle this?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-28T08:52:13Z
+
+I would prefer if they are moved from this pr
+
+---------------------------------------------------------------------------
+
+by loonytoons at 2014-11-28T09:07:16Z
+
+Updated
