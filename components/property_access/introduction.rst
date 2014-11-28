@@ -327,7 +327,7 @@ instead::
 
     $person = new Person();
 
-    if ($accessor->isReadable($person, 'firstName') {
+    if ($accessor->isReadable($person, 'firstName')) {
         // ...
     }
 
@@ -338,7 +338,7 @@ method to find out whether a property path can be updated::
 
     $person = new Person();
 
-    if ($accessor->isWritable($person, 'firstName') {
+    if ($accessor->isWritable($person, 'firstName')) {
         // ...
     }
 
