@@ -127,8 +127,10 @@ directive to pass requests for PHP files to PHP FPM:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        # Force Apache to pass the Authorization header to PHP
-        SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+        # Uncomment the following line to force Apache to pass the Authorization
+        # header to PHP: required for "basic_auth" under PHP-FPM and FastCGI
+        #
+        # SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
 
         ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
 
