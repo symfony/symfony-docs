@@ -60,20 +60,23 @@ all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
 
-* ``buildForm()`` - Each field type has a ``buildForm`` method, which is where
-  you configure and build any field(s). Notice that this is the same method
-  you use to setup *your* forms, and it works the same here.
+``buildForm()``
+    Each field type has a ``buildForm`` method, which is where
+    you configure and build any field(s). Notice that this is the same method
+    you use to setup *your* forms, and it works the same here.
 
-* ``buildView()`` - This method is used to set any extra variables you'll
-  need when rendering your field in a template. For example, in `ChoiceType`_,
-  a ``multiple`` variable is set and used in the template to set (or not
-  set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
-  for more details.
+``buildView()``
+    This method is used to set any extra variables you'll
+    need when rendering your field in a template. For example, in `ChoiceType`_,
+    a ``multiple`` variable is set and used in the template to set (or not
+    set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
+    for more details.
 
-* ``setDefaultOptions()`` - This defines options for your form type that
-  can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see :doc:`/reference/forms/types/form`),
-  but you can create any others that you need here.
+``setDefaultOptions()``
+    This defines options for your form type that
+    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
+    options common to all fields (see :doc:`/reference/forms/types/form`),
+    but you can create any others that you need here.
 
 .. tip::
 
