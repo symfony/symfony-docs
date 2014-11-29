@@ -167,6 +167,11 @@ return a ``Response`` directly, or to add information to the ``Request``
 (e.g. setting the locale or setting some other information on the ``Request``
 attributes).
 
+.. note::
+
+    When setting a response for the ``kernel.view`` event, the propagation
+    is stopped, so the lower priority listeners on that event don't get called.
+
 .. sidebar:: ``kernel.request`` in the Symfony Framework
 
     The most important listener to ``kernel.request`` in the Symfony Framework

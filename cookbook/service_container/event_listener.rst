@@ -59,9 +59,9 @@ event is just one of the core kernel events::
 
 .. note::
 
-    When setting a response for the ``kernel.view`` or ``kernel.exception``
-    events, the propagation is stopped, so the lower priority listeners on
-    that event don't get called.
+    When setting a response for the ``kernel.request``, ``kernel.view`` and
+    ``kernel.exception`` events, the propagation is stopped, so the lower
+    priority listeners on that event don't get called.
 
 Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
