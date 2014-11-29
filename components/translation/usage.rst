@@ -226,7 +226,7 @@ Pluralization
 -------------
 
 Message pluralization is a tough topic as the rules can be quite complex. For
-instance, here is the mathematic representation of the Russian pluralization
+instance, here is the mathematical representation of the Russian pluralization
 rules::
 
     (($number % 10 == 1) && ($number % 100 != 11))
