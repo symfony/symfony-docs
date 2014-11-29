@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T09:14:57Z
+
+Thank you for finding this @dangarzon.
+
+However, it's actually not a good idea that we use absolute URL's to link from the best practices to the rest of the documentation. It seems that we didn't think about removing them when the best practices were imported into the documentation repository. What we should do is replacing all links to the best practices with `doc` roles or `ref` roles (whatever fits best in the context of a reference). @dangarzon Do you think you will be able to do that or should we open an issue for this?
+
+---------------------------------------------------------------------------
+
+by dangarzon at 2014-11-29T09:20:58Z
+
+Ok,
+I will take care!
+
+---------------------------------------------------------------------------
+
+by dangarzon at 2014-11-29T10:45:58Z
+
+@xabbuh
+Updated links in configuration article.
+
+I'm working in the other articles of this book with @jms85, will keep the PRs going.
