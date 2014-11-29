@@ -26,10 +26,11 @@ configuration format of your choice):
 
         parameters:
             pdo.db_options:
-                db_table:    session
-                db_id_col:   session_id
-                db_data_col: session_value
-                db_time_col: session_time
+                db_table:        sessions
+                db_id_col:       sess_id
+                db_data_col:     sess_data
+                db_lifetime_col: sess_lifetime
+                db_time_col:     sess_time
 
         services:
             pdo:
@@ -54,10 +55,11 @@ configuration format of your choice):
 
         <parameters>
             <parameter key="pdo.db_options" type="collection">
-                <parameter key="db_table">session</parameter>
-                <parameter key="db_id_col">session_id</parameter>
-                <parameter key="db_data_col">session_value</parameter>
-                <parameter key="db_time_col">session_time</parameter>
+                <parameter key="db_table">sessions</parameter>
+                <parameter key="db_id_col">sess_id</parameter>
+                <parameter key="db_data_col">sess_data</parameter>
+                <parameter key="db_lifetime_col">sess_lifetime</parameter>
+                <parameter key="db_time_col">sess_time</parameter>
             </parameter>
         </parameters>
 
@@ -93,10 +95,11 @@ configuration format of your choice):
         ));
 
         $container->setParameter('pdo.db_options', array(
-            'db_table'      => 'session',
-            'db_id_col'     => 'session_id',
-            'db_data_col'   => 'session_value',
-            'db_time_col'   => 'session_time',
+            'db_table'          => 'sessions',
+            'db_id_col'         => 'sess_id',
+            'db_data_col'       => 'sess_data',
+            'db_lifetime_col'   => 'sess_lifetime',
+            'db_time_col'       => 'sess_time',
         ));
 
         $pdoDefinition = new Definition('PDO', array(
@@ -114,8 +117,9 @@ configuration format of your choice):
         $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 * ``db_table``: The name of the session table in your database
-* ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
-* ``db_data_col``: The name of the value column in your session table (TEXT or CLOB)
+* ``db_id_col``: The name of the id column in your session table (VARCHAR(128))
+* ``db_data_col``: The name of the value column in your session table (BLOB)
+* ``db_lifetime_col``: The name of the lifetime column in your session table (INTEGER)
 * ``db_time_col``: The name of the time column in your session table (INTEGER)
 
 Sharing your Database Connection Information
@@ -159,6 +163,8 @@ of your project's data, you can use the connection settings from the
 Example SQL Statements
 ----------------------
 
+In Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler, the createTable() method can be called once for setup.
+
 MySQL
 ~~~~~
 
@@ -167,12 +173,12 @@ following (MySQL):
 
 .. code-block:: sql
 
-    CREATE TABLE `session` (
-        `session_id` varchar(255) NOT NULL,
-        `session_value` text NOT NULL,
-        `session_time` int(11) NOT NULL,
-        PRIMARY KEY (`session_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    CREATE TABLE `sessions` (
+        `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY,
+        `sess_data` BLOB NOT NULL,
+        `sess_lifetime` MEDIUMINT NOT NULL,
+        `sess_time` INTEGER UNSIGNED NOT NULL
+    ) COLLATE utf8_bin, ENGINE = InnoDB;
 
 PostgreSQL
 ~~~~~~~~~~
@@ -181,11 +187,11 @@ For PostgreSQL, the statement should look like this:
 
 .. code-block:: sql
 
-    CREATE TABLE session (
-        session_id character varying(255) NOT NULL,
-        session_value text NOT NULL,
-        session_time integer NOT NULL,
-        CONSTRAINT session_pkey PRIMARY KEY (session_id)
+    CREATE TABLE sessions (
+        sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
+        sess_data BYTEA NOT NULL,
+        sess_lifetime INTEGER NOT NULL,
+        sess_time INTEGER NOT NULL
     );
 
 Microsoft SQL Server
@@ -195,12 +201,13 @@ For MSSQL, the statement might look like the following:
 
 .. code-block:: sql
 
-    CREATE TABLE [dbo].[session](
-        [session_id] [nvarchar](255) NOT NULL,
-        [session_value] [ntext] NOT NULL,
-        [session_time] [int] NOT NULL,
+    CREATE TABLE [dbo].[sessions](
+        [sess_id] [nvarchar](255) NOT NULL,
+        [sess_data] [ntext] NOT NULL,
+        [sess_lifetime] [int] NOT NULL,
+        [sess_time] [int] NOT NULL,
         PRIMARY KEY CLUSTERED(
-            [session_id] ASC
+            [sess_id] ASC
         ) WITH (
             PAD_INDEX  = OFF,
             STATISTICS_NORECOMPUTE  = OFF,
