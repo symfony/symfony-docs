@@ -113,18 +113,18 @@ set an authenticated token in the security context if successful.
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
 
     class WsseListener implements ListenerInterface
     {
-        protected $securityContext;
+        protected $tokenStorage;
         protected $authenticationManager;
 
-        public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager)
+        public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager)
         {
-            $this->securityContext = $securityContext;
+            $this->tokenStorage = $tokenStorage;
             $this->authenticationManager = $authenticationManager;
         }
 
@@ -146,7 +146,7 @@ set an authenticated token in the security context if successful.
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
-                $this->securityContext->setToken($authToken);
+                $this->tokenStorage->setToken($authToken);
 
                 return;
             } catch (AuthenticationException $failed) {
@@ -154,9 +154,9 @@ set an authenticated token in the security context if successful.
 
                 // To deny the authentication clear the token. This will redirect to the login page.
                 // Make sure to only clear your token, not those of other authentication listeners.
-                // $token = $this->securityContext->getToken();
+                // $token = $this->tokenStorage->getToken();
                 // if ($token instanceof WsseUserToken && $this->providerKey === $token->getProviderKey()) {
-                //     $this->securityContext->setToken(null);
+                //     $this->tokenStorage->setToken(null);
                 // }
                 // return;
             }
