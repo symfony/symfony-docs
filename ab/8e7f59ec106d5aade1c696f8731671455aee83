@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T09:10:01Z
+
+Thank you for noticing and for providing a patch @dangarzon. As you have seen, simply using the documents title is a bit error prone when the referenced document's title changes. Therefore, I would suggest to simply omit the title here and let Sphinx do all the work for us.
+
+---------------------------------------------------------------------------
+
+by dangarzon at 2014-11-29T10:04:09Z
+
+@xabbuh
+Done, link modified without title
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T10:10:11Z
+
+@dangarzon Thank you. Can you even reorder the paragraph so that uses almost all available space of a line (simply wrap lines after the first word that crosses the 72nd character).
+
+---------------------------------------------------------------------------
+
+by dangarzon at 2014-11-29T10:27:39Z
+
+@xabbuh like this?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T10:31:53Z
+
+@dangarzon Exactly :+1:
+
+---------------------------------------------------------------------------
+
+by dangarzon at 2014-11-29T10:33:02Z
+
+Nice!
