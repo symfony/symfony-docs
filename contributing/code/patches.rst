@@ -105,7 +105,7 @@ Choose the right Branch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Before working on a patch, you must determine on which branch you need to
-work. The branch should be based on the ``master`` branch if you want to add a
+work. The branch should be based on the ``2.7`` branch if you want to add a
 new feature. But if you want to fix a bug, use the oldest but still maintained
 version of Symfony where the bug happens (like ``2.3``).
 
