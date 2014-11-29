@@ -59,7 +59,7 @@ Who this Book Is for (Hint: It's not a Tutorial)
 Any Symfony developer, whether you are an expert or a newcomer, can read this
 guide. But since this isn't a tutorial, you'll need some basic knowledge of
 Symfony to follow everything. If you are totally new to Symfony, welcome!
-Start with `The Quick Tour`_ tutorial first.
+Start with :doc:`The Quick Tour </quick_tour/the_big_picture>` tutorial first.
 
 We've deliberately kept this guide short. We won't repeat explanations that
 you can find in the vast Symfony documentation, like discussions about dependency
@@ -95,7 +95,3 @@ practices**. The reasons for not doing it are various:
   your tests or adding features that provide real value to the end users.
 
 .. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
-.. _`The Quick Tour`: http://symfony.com/doc/current/quick_tour/the_big_picture.html
-.. _`The Official Symfony Book`: http://symfony.com/doc/current/book/index.html
-.. _`The Symfony Cookbook`: http://symfony.com/doc/current/cookbook/index.html
-.. _`github.com/.../...`: http://github.com/.../...
