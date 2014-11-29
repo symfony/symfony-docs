@@ -170,7 +170,7 @@ attributes).
 .. note::
 
     When setting a response for the ``kernel.view`` event, the propagation
-    is stopped, so the lower priority listeners on that event don't get called.
+    is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.request`` in the Symfony Framework
 
@@ -399,7 +399,7 @@ return a ``Response``.
 .. note::
 
     When setting a response for the ``kernel.view`` event, the propagation
-    is stopped, so the lower priority listeners on that event don't get called.
+    is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
@@ -535,7 +535,7 @@ below for more details).
 .. note::
 
     When setting a response for the ``kernel.exception`` event, the propagation
-    is stopped, so the lower priority listeners on that event don't get called.
+    is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
