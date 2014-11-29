@@ -88,7 +88,7 @@ your Git repository which contains the following files:
         disk: 2048
 
 An example of these configurations can be found on `GitHub`_. The list of
-available services can be found `here`_.
+available services can be found on the `Platform.sh documentation <configure-services>`_.
 
 Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,6 +176,12 @@ Push your code base to the newly added remote:
 That's it! Your application is being deployed on Platform.sh and you'll soon be
 able to access it in your browser.
 
+Every code change that you do from now on will be pushed to Git in order to 
+redeploy your environment on Platform.sh.
+
+More information about migrating your database and files can be found on the 
+`Platform.sh documentation <migrate-existing-site>`_
+
 Deploy a new Site
 -----------------
  
@@ -185,12 +191,13 @@ through the checkout process.
 Once your project is ready, give it a name and choose: **Create a new site**.
 Choose the *Symfony* stack and a starting point such as *Standard*.
 
-That's it! Your Symfony application will be bootstrapped and deployed. You'll soon
-be able to see it in your browser.
+That's it! Your Symfony application will be bootstrapped and deployed. You'll 
+soon be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh
 .. _`Platform.sh documentation`: https://docs.platform.sh/toolstacks/symfony/symfony-getting-started
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
-.. _`here`: https://docs.platform.sh/reference/configuration-files/#configure-services
+.. _`configure-services`: https://docs.platform.sh/reference/configuration-files/#configure-services
+.. _`migrate-existing-site`: https://docs.platform.sh/toolstacks/symfony/migrate-existing-site/
