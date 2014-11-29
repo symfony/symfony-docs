@@ -8,21 +8,19 @@ This step-by-step cookbook describes how to deploy a Symfony web application to
 `Platform.sh`_. You can read more about using Symfony with Platform.sh on the 
 official `Platform.sh documentation`_.
 
-Deploy an existing site
+Deploy an Existing Site
 -----------------------
 
-In this guide, we assume your codebase is already versioned with Git.
+In this guide, it is assumed your codebase is already versioned with Git.
 
-Get a project on Platform.sh
+Get a Project on Platform.sh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 You need to subscribe to a `Platform.sh project`_. Choose the development plan
-and go through the checkout process.
+and go through the checkout process. Once your project is ready, give it a name 
+and choose: **Import an existing site**.
 
-Once your project is ready, give it a name and choose: **Import an existing
-site**.
-
-Prepare your Application
+Prepare Your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 To deploy your Symfony application on Platform.sh, you simply need to add a 
@@ -32,6 +30,7 @@ configuration files`_).
 
 .. code-block:: yaml
 
+    # .platform.app.yaml
     # This file describes an application. You can have multiple applications
     # in the same project.
 
@@ -71,13 +70,6 @@ configuration files`_).
         deploy: |
           app/console --env=prod cache:clear
 
-    # The configuration of scheduled execution.
-    # see http://symfony.com/doc/current/components/console/introduction.html
-    #crons:
-    #    symfony:
-    #        spec: "*/20 * * * *"
-    #        cmd: "php cron.php example:test"
-
 For best practices, you should also add a ``.platform`` folder at the root of
 your Git repository which contains the following files:
 
@@ -97,13 +89,13 @@ your Git repository which contains the following files:
 
 An example of these configurations can be found on `GitHub`_.
 
-Configure database access
+Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Platform.sh overrides your database specific configuration via importing the
 following file:
 
-.. code-block:: yaml
+.. code-block:: php
     
     # app/config/parameters_platform.php
     <?php
@@ -128,7 +120,7 @@ following file:
       $container->setParameter('database_path', '');
     }
 
-    # Hack.
+    # Store session into /tmp.
     ini_set('session.save_path', '/tmp/sessions');
 
 Make sure this file is listed in your *imports*:
@@ -147,7 +139,11 @@ command that you see on the Platform.sh web UI):
 
 .. code-block:: bash
 
-    $ git remote add platform kjh43kbobssae@git.eu.platform.sh:kjh43kbobssae.git
+    $ git remote add platform [PROJECT-ID]@git.[CLUSTER].platform.sh:[PROJECT].git
+
+
+* PROJECT-ID: Unique identifier of your project. Something like: *kjh43kbobssae*.
+* CLUSTER: Server location where your project is deployed. It can be *eu* or *us*.
 
 Commit the Platform.sh specific files created in the previous section:
 
@@ -179,7 +175,7 @@ Push your code base to the newly added remote:
 That's it! Your application is being deployed on Platform.sh and you'll soon be
 able to access it in your browser.
 
-Deploy a new site
+Deploy a new Site
 -----------------
  
 You can start a new `Platform.sh project`_. Choose the development plan and go 
