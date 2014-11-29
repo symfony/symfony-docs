@@ -337,5 +337,5 @@ in a matter of seconds.
 .. _`Doctrine project`: http://www.doctrine-project.org/
 .. _`fixture class`: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`: http://www.php-fig.org/psr/psr-2//contributing/code/standards.htm
+.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PHP-CS-Fixer`: https://github.com/fabpot/PHP-CS-Fixer
