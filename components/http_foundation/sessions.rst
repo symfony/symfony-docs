@@ -107,10 +107,10 @@ Session Attributes
     Returns true if the attribute exists.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`
-    Sets multiple attributes at once: takes a keyed array and sets each key => value pair;
+    Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`
-    Deletes an attribute by key;
+    Deletes an attribute by key.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`
     Clear all attributes.
@@ -123,7 +123,7 @@ an array. A few methods exist for "Bag" management:
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getBag`
     Gets a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
-    bag name;
+    bag name.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`
     Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
@@ -131,6 +131,7 @@ an array. A few methods exist for "Bag" management:
 
 Session Metadata
 ................
+
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`
     Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
@@ -157,16 +158,16 @@ bag types if necessary.
 :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` has
 the following API which is intended mainly for internal purposes:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getStorageKey`:
-  Returns the key which the bag will ultimately store its array under in ``$_SESSION``.
-  Generally this value can be left at its default and is for internal use.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getStorageKey`
+    Returns the key which the bag will ultimately store its array under in ``$_SESSION``.
+    Generally this value can be left at its default and is for internal use.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::initialize`:
-  This is called internally by Symfony session storage classes to link bag data
-  to the session.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::initialize`
+    This is called internally by Symfony session storage classes to link bag data
+    to the session.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`:
-  Returns the name of the session bag.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`
+    Returns the name of the session bag.
 
 Attributes
 ~~~~~~~~~~
@@ -175,11 +176,11 @@ The purpose of the bags implementing the :class:`Symfony\\Component\\HttpFoundat
 is to handle session attribute storage. This might include things like user ID,
 and remember me login settings or other user based state information.
 
-* :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
-  This is the standard default implementation.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
+    This is the standard default implementation.
 
-* :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-  This implementation allows for attributes to be stored in a structured namespace.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
+    This implementation allows for attributes to be stored in a structured namespace.
 
 Any plain key-value storage system is limited in the extent to which
 complex data can be stored since each key must be unique. You can achieve
@@ -210,29 +211,29 @@ This way you can easily access a key within the stored array directly and easily
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
 has a simple API
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`:
-  Sets an attribute by key;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`
+    Sets an attribute by key.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`:
-  Gets an attribute by key;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`
+    Gets an attribute by key.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`:
-  Gets all attributes as an array of key => value;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`
+    Gets all attributes as an array of key => value.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`:
-  Returns true if the attribute exists;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
+    Returns true if the attribute exists.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::keys`:
-  Returns an array of stored attribute keys;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::keys`
+    Returns an array of stored attribute keys.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`:
-  Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
+    Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`:
-  Deletes an attribute by key;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`
+    Deletes an attribute by key.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`:
-  Clear the bag;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
+    Clear the bag.
 
 Flash Messages
 ~~~~~~~~~~~~~~
@@ -246,49 +247,49 @@ updated page or an error page. Flash messages set in the previous page request
 would be displayed immediately on the subsequent page load for that session.
 This is however just one application for flash messages.
 
-* :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\AutoExpireFlashBag`
-   In this implementation, messages set in one page-load will
-   be available for display only on the next page load. These messages will auto
-   expire regardless of if they are retrieved or not.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\AutoExpireFlashBag`
+    In this implementation, messages set in one page-load will
+    be available for display only on the next page load. These messages will auto
+    expire regardless of if they are retrieved or not.
 
-* :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBag`
-   In this implementation, messages will remain in the session until
-   they are explicitly retrieved or cleared. This makes it possible to use ESI
-   caching.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBag`
+    In this implementation, messages will remain in the session until
+    they are explicitly retrieved or cleared. This makes it possible to use ESI
+    caching.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
 has a simple API
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::add`:
-  Adds a flash message to the stack of specified type;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::add`
+    Adds a flash message to the stack of specified type.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::set`:
-  Sets flashes by type; This method conveniently takes both single messages as
-  a ``string`` or multiple messages in an ``array``.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::set`
+    Sets flashes by type; This method conveniently takes both single messages as
+    a ``string`` or multiple messages in an ``array``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::get`:
-  Gets flashes by type and clears those flashes from the bag;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::get`
+    Gets flashes by type and clears those flashes from the bag.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::setAll`:
-  Sets all flashes, accepts a keyed array of arrays ``type => array(messages)``;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::setAll`
+    Sets all flashes, accepts a keyed array of arrays ``type => array(messages)``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::all`:
-  Gets all flashes (as a keyed array of arrays) and clears the flashes from the bag;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::all`
+    Gets all flashes (as a keyed array of arrays) and clears the flashes from the bag.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`:
-  Gets flashes by type (read only);
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
+    Gets flashes by type (read only).
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`:
-  Gets all flashes (read only) as keyed array of arrays;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`
+    Gets all flashes (read only) as keyed array of arrays.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`:
-  Returns true if the type exists, false if not;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`
+    Returns true if the type exists, false if not.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::keys`:
-  Returns an array of the stored flash types;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::keys`
+    Returns an array of the stored flash types.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::clear`:
-  Clears the bag;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::clear`
+    Clears the bag.
 
 For simple applications it is usually sufficient to have one flash message per
 type, for example a confirmation notice after a form is submitted. However,

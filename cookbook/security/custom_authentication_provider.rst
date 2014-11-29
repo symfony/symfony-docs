@@ -333,18 +333,22 @@ create a class which implements
 The :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`
 requires the following methods:
 
-* ``create`` method, which adds the listener and authentication provider
-  to the DI container for the appropriate security context;
+``create``
+    Method which adds the listener and authentication provider
+    to the DI container for the appropriate security context;
 
-* ``getPosition`` method, which must be of type ``pre_auth``, ``form``, ``http``,
-  and ``remember_me`` and defines the position at which the provider is called;
+``getPosition``
+    Method which must be of type ``pre_auth``, ``form``, ``http``,
+    and ``remember_me`` and defines the position at which the provider is called;
 
-* ``getKey`` method which defines the configuration key used to reference
-  the provider in the firewall configuration;
+``getKey``
+    Method which defines the configuration key used to reference
+    the provider in the firewall configuration;
 
-* ``addConfiguration`` method, which is used to define the configuration
-  options underneath the configuration key in your security configuration.
-  Setting configuration options are explained later in this chapter.
+``addConfiguration``
+    Method which is used to define the configuration
+    options underneath the configuration key in your security configuration.
+    Setting configuration options are explained later in this chapter.
 
 .. note::
 
