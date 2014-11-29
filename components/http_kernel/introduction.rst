@@ -391,6 +391,11 @@ At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
 return a ``Response``.
 
+.. note::
+
+    When setting a response for the ``kernel.view`` event, the propagation
+    is stopped, so the lower priority listeners on that event don't get called.
+
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
@@ -521,6 +526,11 @@ creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
+
+.. note::
+
+    When setting a response for the ``kernel.exception`` event, the propagation
+    is stopped, so the lower priority listeners on that event don't get called.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
