@@ -114,7 +114,7 @@ Configuring Symfony to run in the prod environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you don’t explicitly configure the environment (``dev``, ``prod`` etc) to use, Symfony will, by default, use the ``dev`` environment in console commands and at runtime. That would break our build, because in dev environments, Symfony uses the ``SensioGeneratorBundle`` to perform certain tasks, but that bundle is not installed upon a push - `Composer does not install dev packages when pushing to Heroku`_.
-For Symfony to know it needs to use the ``prod`` environment at all times, it reads from the ``SYMFONY_ENV`` environment variable. You can simply `set environment variables using the ``heroku config`` feature`_, so run this one command as the last step before deploying your app for the first time:
+For Symfony to know it needs to use the ``prod`` environment at all times, it reads from the ``SYMFONY_ENV`` environment variable. You can simply `set environment variables`_ using the ``heroku config`` feature, so run this one command as the last step before deploying your app for the first time:
 
 .. code-block:: bash
 
@@ -206,4 +206,4 @@ You should be seeing your Symfony application in your browser.
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
 .. _`Composer does not install dev packages when pushing to Heroku`: https://devcenter.heroku.com/articles/php-support#build-behavior
-.. _`set environment variables using the ``heroku config`` feature`: https://devcenter.heroku.com/articles/config-vars
+.. _`set environment variables`: https://devcenter.heroku.com/articles/config-vars
