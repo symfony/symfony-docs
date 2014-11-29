@@ -65,7 +65,7 @@ The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class implemen
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple API
 as follows divided into a couple of groups.
 
-Session workflow
+Session Workflow
 ................
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`
@@ -91,7 +91,7 @@ Session workflow
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setName`
     Sets the session name. Do not use ``session_name()``.
 
-Session attributes
+Session Attributes
 ..................
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::set`
@@ -129,7 +129,7 @@ an array. A few methods exist for "Bag" management:
     Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
     This is just a shortcut for convenience.
 
-Session metadata
+Session Metadata
 ................
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`
