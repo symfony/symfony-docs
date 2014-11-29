@@ -326,7 +326,7 @@ Coding Standards
 
 The Symfony source code follows the `PSR-1`_ and `PSR-2`_ coding standards that
 were defined by the PHP community. You can learn more about
-`the Symfony Code Standards`_ and even use the `PHP-CS-Fixer`_, which is
+:doc:`/contributing/code/standards` and even use the `PHP-CS-Fixer`_, which is
 a command-line utility that can fix the coding standards of an entire codebase
 in a matter of seconds.
 
@@ -335,5 +335,4 @@ in a matter of seconds.
 .. _`fixture class`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
-.. _`the Symfony Code Standards`: http://symfony.com/doc/current/contributing/code/standards.html
 .. _`PHP-CS-Fixer`: https://github.com/FriendsOfPHP/PHP-CS-Fixer
