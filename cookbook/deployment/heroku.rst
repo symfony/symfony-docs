@@ -110,6 +110,18 @@ create the ``Procfile`` file and to add it to the repository:
     [master 35075db] Procfile for Apache and PHP
      1 file changed, 1 insertion(+)
 
+Configuring Symfony to run in the prod environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you don’t explicitly configure the environment (``dev``, ``prod`` etc) to use, Symfony will, by default, use the ``dev`` environment in console commands and at runtime. That would break our build, because in dev environments, Symfony uses the ``SensioGeneratorBundle`` to perform certain tasks, but that bundle is not installed upon a push - `Composer does not install dev packages when pushing to Heroku`_.
+For Symfony to know it needs to use the ``prod`` environment at all times, it reads from the ``SYMFONY_ENV`` environment variable. You can simply `set environment variables using the ``heroku config`` feature`_, so run this one command as the last step before deploying your app for the first time:
+
+.. code-block:: bash
+
+    $heroku config:set SYMFONY_ENV=prod
+    Setting config vars and restarting mighty-hamlet-1981... done, v3
+    SYMFONY_ENV: prod
+
 Pushing to Heroku
 ~~~~~~~~~~~~~~~~~
 
@@ -193,3 +205,5 @@ You should be seeing your Symfony application in your browser.
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
+.. _`Composer does not install dev packages when pushing to Heroku`: https://devcenter.heroku.com/articles/php-support#build-behavior
+.. _`set environment variables using the ``heroku config`` feature`: https://devcenter.heroku.com/articles/config-vars
