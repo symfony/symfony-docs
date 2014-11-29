@@ -121,89 +121,6 @@ Using ``@Security``, this looks like:
         // ...
     }
 
-Using Expressions for Complex Security Restrictions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If your security logic is a little bit more complex, you can use an `expression`_
-inside ``@Security``. In the following example, a user can only access the
-controller if their email matches the value returned by the ``getAuthorEmail``
-method on the ``Post`` object:
-
-.. code-block:: php
-
-    use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-    /**
-     * @Route("/{id}/edit", name="admin_post_edit")
-     * @Security("user.getEmail() == post.getAuthorEmail()")
-     */
-    public function editAction(Post $post)
-    {
-        // ...
-    }
-
-Notice that this requires the use of the `ParamConverter`_, which automatically
-queries for the ``Post`` object and puts it on the ``$post`` argument. This
-is what makes it possible to use the ``post`` variable in the expression.
-
-This has one major drawback: an expression in an annotation cannot easily
-be reused in other parts of the application. Imagine that you want to add
-a link in a template that will only be seen by authors. Right now you'll
-need to repeat the expression code using Twig syntax:
-
-.. code-block:: html+jinja
-
-    {% if app.user and app.user.email == post.authorEmail %}
-        <a href=""> ... </a>
-    {% endif %}
-
-The easiest solution - if your logic is simple enough - is to add a new method
-to the ``Post`` entity that checks if a given user is its author:
-
-.. code-block:: php
-
-    // src/AppBundle/Entity/Post.php
-    // ...
-
-    class Post
-    {
-        // ...
-
-        /**
-         * Is the given User the author of this Post?
-         *
-         * @return bool
-         */
-        public function isAuthor(User $user = null)
-        {
-            return $user && $user->getEmail() == $this->getAuthorEmail();
-        }
-    }
-
-Now you can reuse this method both in the template and in the security expression:
-
-.. code-block:: php
-
-    use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-    /**
-     * @Route("/{id}/edit", name="admin_post_edit")
-     * @Security("post.isAuthor(user)")
-     */
-    public function editAction(Post $post)
-    {
-        // ...
-    }
-
-.. code-block:: html+jinja
-
-    {% if post.isAuthor(app.user) %}
-        <a href=""> ... </a>
-    {% endif %}
-
 .. _best-practices-directy-isGranted:
 
 Checking Permissions without @Security
@@ -349,13 +266,11 @@ develop `your own user provider`_ and `your own authentication provider`_.
 
 .. _`Security Cookbook Section`: http://symfony.com/doc/current/cookbook/security/index.html
 .. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
 .. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
 .. _`Acces Control List`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
-.. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`Remember Me feature`: http://symfony.com/doc/current/cookbook/security/remember_me.html
 .. _`impersonate users`: http://symfony.com/doc/current/cookbook/security/impersonating_user.html
