@@ -66,6 +66,7 @@ The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple A
 as follows divided into a couple of groups.
 
 Session workflow
+................
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`
     Starts the session - do not use ``session_start()``.
@@ -91,6 +92,7 @@ Session workflow
     Sets the session name. Do not use ``session_name()``.
 
 Session attributes
+..................
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::set`
     Sets an attribute by key.
@@ -128,6 +130,7 @@ an array. A few methods exist for "Bag" management:
     This is just a shortcut for convenience.
 
 Session metadata
+................
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`
     Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
