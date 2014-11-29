@@ -77,15 +77,18 @@ to web designers and, in several ways, more powerful than PHP templates:
 
 Twig defines three types of special syntax:
 
-* ``{{ ... }}``: "Says something": prints a variable or the result of an
-  expression to the template;
+``{{ ... }}``
+    "Says something": prints a variable or the result of an expression to the
+    template.
 
-* ``{% ... %}``: "Does something": a **tag** that controls the logic of the
-  template; it is used to execute statements such as for-loops for example.
+``{% ... %}``
+    "Does something": a **tag** that controls the logic of the template; it is
+    used to execute statements such as for-loops for example.
 
-* ``{# ... #}``: "Comment something": it's the equivalent of the PHP
-  ``/* comment */`` syntax. It's used to add single or multi-line comments.
-  The content of the comments isn't included in the rendered pages.
+``{# ... #}``
+    "Comment something": it's the equivalent of the PHP ``/* comment */`` syntax.
+    It's used to add single or multi-line comments. The content of the comments
+    isn't included in the rendered pages.
 
 Twig also contains **filters**, which modify content before being rendered.
 The following makes the ``title`` variable all uppercase before rendering

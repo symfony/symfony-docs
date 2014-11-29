@@ -13,10 +13,14 @@ Understanding the Directory Structure
 The directory structure of a Symfony :term:`application` is rather flexible,
 but the recommended structure is as follows:
 
-* ``app/``: the application configuration, templates and translations;
-* ``src/``: the project's PHP code;
-* ``vendor/``: the third-party dependencies;
-* ``web/``: the web root directory.
+``app/``
+    The application configuration, templates and translations.
+``src/``
+    The project's PHP code.
+``vendor/``
+    The third-party dependencies.
+``web/``
+    The web root directory.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -52,10 +56,11 @@ configuration and as such, it is stored in the ``app/`` directory.
 
 This class must implement two methods:
 
-* ``registerBundles()`` must return an array of all bundles needed to run the
-  application, as explained in the next section;
-* ``registerContainerConfiguration()`` loads the application configuration
-  (more on this later).
+``registerBundles()``
+    Must return an array of all bundles needed to run the application, as explained
+    in the next section.
+``registerContainerConfiguration()``
+    Loads the application configuration (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
 can use any PHP class without doing anything at all! All dependencies
