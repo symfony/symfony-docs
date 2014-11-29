@@ -1,5 +1,6 @@
 .. index::
-   single: Events; Create listener, Create subscriber
+   single: Events; Create listener
+   single: Create subscriber
 
 How to Create Event Listeners and Subscribers
 =============================================
