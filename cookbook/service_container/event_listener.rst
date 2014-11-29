@@ -19,7 +19,7 @@ event is just one of the core kernel events.
 Creating an Event Listener
 --------------------------
 
-The most common way to listen to an event is to register an event listener:
+The most common way to listen to an event is to register an event listener::
 
     // src/Acme/DemoBundle/EventListener/AcmeExceptionListener.php
     namespace Acme\DemoBundle\EventListener;
