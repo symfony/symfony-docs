@@ -45,23 +45,23 @@ role. Before you add security, the class looks something like this:
     }
 
 Your goal is to check the user's role when the ``sendNewsletter()`` method is
-called. The first step towards this is to inject the ``security.context``
+called. The first step towards this is to inject the ``security.authorization_checker``
 service into the object. Since it won't make sense *not* to perform the security
 check, this is an ideal candidate for constructor injection, which guarantees
-that the security context object will be available inside the ``NewsletterManager``
+that the authorization checker object will be available inside the ``NewsletterManager``
 class::
 
     namespace Acme\HelloBundle\Newsletter;
 
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\AuthorizationCheckerInterface;
 
     class NewsletterManager
     {
-        protected $securityContext;
+        protected $authorizationChecker;
 
-        public function __construct(SecurityContextInterface $securityContext)
+        public function __construct(AuthorizationCheckerInterface $securityContext)
         {
-            $this->securityContext = $securityContext;
+            $this->authorizationChecker = $authorizationChecker;
         }
 
         // ...
@@ -114,21 +114,21 @@ The injected service can then be used to perform the security check when the
     namespace Acme\HelloBundle\Newsletter;
 
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\AuthorizationCheckerInterface;
     // ...
 
     class NewsletterManager
     {
-        protected $securityContext;
+        protected $authorizationChecker;
 
-        public function __construct(SecurityContextInterface $securityContext)
+        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
         {
-            $this->securityContext = $securityContext;
+            $this->authorizationChecker = $authorizationChecker;
         }
 
         public function sendNewsletter()
         {
-            if (false === $this->securityContext->isGranted('ROLE_NEWSLETTER_ADMIN')) {
+            if (false === $this->authorizationChecker->isGranted('ROLE_NEWSLETTER_ADMIN')) {
                 throw new AccessDeniedException();
             }
 
