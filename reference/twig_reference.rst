@@ -8,7 +8,7 @@ Symfony Twig Extensions
 
 Twig is the default template engine for Symfony. By itself, it already contains
 a lot of built-in functions, filters, tags and tests (learn more about them
-from the the `Twig Reference`_).
+from the `Twig Reference`_).
 
 Symfony adds more custom extensions on top of Twig to integrate some components
 into the Twig templates. You can find more information about the custom

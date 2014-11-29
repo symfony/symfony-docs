@@ -235,4 +235,4 @@ properties not in the class declaration).
 
 .. tip::
 
-    Before writting your own casters, you should check the existing ones.
+    Before writing your own casters, you should check the existing ones.
