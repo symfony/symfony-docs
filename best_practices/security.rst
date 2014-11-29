@@ -6,7 +6,8 @@ Authentication and Firewalls (i.e. Getting the User's Credentials)
 
 You can configure Symfony to authenticate your users using any method you
 want and to load user information from any source. This is a complex topic,
-but the `Security Cookbook Section`_ has a lot of information about this.
+but the :doc:`Security Cookbook Section </cookbook/security/index>` has a
+lot of information about this.
 
 Regardless of your needs, authentication is configured in ``security.yml``,
 primarily under the ``firewalls`` key.
@@ -72,8 +73,9 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in `security.yml`_, the :ref:`@Security annotation <best-practices-security-annotation>`
-and using :ref:`isGranted <best-practices-directy-isGranted>` on the ``security.context``
+configuration in :doc:`security.yml </reference/configuration/security>` the
+:ref:`@Security annotation <best-practices-security-annotation>` and using
+:ref:`isGranted <best-practices-directy-isGranted>` on the ``security.context``
 service directly.
 
 .. best-practice::
@@ -240,8 +242,8 @@ Security Voters
 
 If your security logic is complex and can't be centralized into a method
 like ``isAuthor()``, you should leverage custom voters. These are an order
-of magnitude easier than `ACL's`_ and will give you the flexibility you need
-in almost all cases.
+of magnitude easier than :doc:`ACL's </cookbook/security/acl>` and will give
+you the flexibility you need in almost all cases.
 
 First, create a voter class. The following example shows a voter that implements
 the same ``getAuthorEmail`` logic you used above:
@@ -337,27 +339,18 @@ The `FOSUserBundle`_, developed by the Symfony community, adds support for a
 database-backed user system in Symfony2. It also handles common tasks like
 user registration and forgotten password functionality.
 
-Enable the `Remember Me feature`_ to allow your users to stay logged in for
-a long period of time.
+Enable the :doc:`Remember Me feature </cookbook/security/remember_me>` to
+allow your users to stay logged in for a long period of time.
 
 When providing customer support, sometimes it's necessary to access the application
 as some *other* user so that you can reproduce the problem. Symfony provides
-the ability to `impersonate users`_.
+the ability to :doc:`impersonate users </cookbook/security/impersonating_user>`.
 
 If your company uses a user login method not supported by Symfony, you can
-develop `your own user provider`_ and `your own authentication provider`_.
+develop :doc:`your own user provider </cookbook/security/custom_provider>` and
+:doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
 
-.. _`Security Cookbook Section`: http://symfony.com/doc/current/cookbook/security/index.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
-.. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
-.. _`Acces Control List`: http://symfony.com/doc/current/cookbook/security/acl.html
-.. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _`Remember Me feature`: http://symfony.com/doc/current/cookbook/security/remember_me.html
-.. _`impersonate users`: http://symfony.com/doc/current/cookbook/security/impersonating_user.html
-.. _`your own user provider`: http://symfony.com/doc/current/cookbook/security/custom_provider.html
-.. _`your own authentication provider`: http://symfony.com/doc/current/cookbook/security/custom_authentication_provider.html
