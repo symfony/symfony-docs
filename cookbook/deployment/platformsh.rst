@@ -87,7 +87,8 @@ your Git repository which contains the following files:
         type: mysql
         disk: 2048
 
-An example of these configurations can be found on `GitHub`_.
+An example of these configurations can be found on `GitHub`_. The list of
+available services can be found `here`_.
 
 Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,3 +193,4 @@ be able to see it in your browser.
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
+.. _`here`: https://docs.platform.sh/reference/configuration-files/#configure-services
