@@ -169,7 +169,7 @@ attributes).
 
 .. note::
 
-    When setting a response for the ``kernel.view`` event, the propagation
+    When setting a response for the ``kernel.request`` event, the propagation
     is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.request`` in the Symfony Framework
