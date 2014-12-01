@@ -108,10 +108,10 @@ Creating an Event Subscriber
 ----------------------------
 
 Another way to listen to events is via an event subscriber. An event subscriber
-can define one or various method that listen to one or various events,
+can define one or various methods that listen to one or various events,
 and can set a priority for each method. To learn more about event subscribers,
 see `The EventDispatcher component`_. The following example shows a subscriber
-that subscribes various methods to the kernel.exception event::
+that subscribes various methods to the ``kernel.exception`` event::
 
     // src/Acme/DemoBundle/EventListener/ExceptionSubscriber.php
     namespace Acme\DemoBundle\EventSubscriber;
