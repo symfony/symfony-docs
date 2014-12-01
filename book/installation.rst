@@ -59,7 +59,7 @@ Distribution:
 
 .. code-block:: bash
 
-    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony '~2.5'
+    $ php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony '~3.0'
 
 .. tip::
 
@@ -112,10 +112,10 @@ one of the following commands (replacing ``###`` with your actual filename):
 .. code-block:: bash
 
     # for .tgz file
-    $ tar zxvf Symfony_Standard_Vendors_2.5.###.tgz
+    $ tar zxvf Symfony_Standard_Vendors_3.0.###.tgz
 
     # for a .zip file
-    $ unzip Symfony_Standard_Vendors_2.5.###.zip
+    $ unzip Symfony_Standard_Vendors_3.0.###.zip
 
 If you've downloaded "without vendors", you'll definitely need to read the
 next section.
