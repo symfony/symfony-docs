@@ -182,9 +182,18 @@ is an event subscriber:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <service id="kernel.listener.your_subscriber_name" class="Acme\DemoBundle\EventSubscriber\AcmeExceptionSubscriber">
-            <tag name="kernel.event_subscriber" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services">
+
+            <services>
+                <service id="acme_exception_subscriber"
+                    class="Acme\DemoBundle\EventSubscriber\AcmeExceptionSubscriber">
+
+                    <tag name="kernel.event_subscriber"/>
+
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
