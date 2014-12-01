@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-01T09:17:05Z
+
+This also exists in the yaml version, isn't it?
+
+---------------------------------------------------------------------------
+
+by rubenrua at 2014-12-01T10:48:14Z
+
+`@=` is only OK in the YAML version:
+
+https://github.com/symfony/symfony/blob/2.7/src/Symfony/Component/DependencyInjection/Loader/YamlFileLoader.php#L357
+
+This pull request fix the XML and PHP versions.
