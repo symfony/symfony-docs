@@ -11,8 +11,8 @@ component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\Kerne
 
 To hook into an event and add your own custom logic, you have to create
 a service that will act as an event listener on that event. You can do that in two different ways, 
-creating an Event Listener or an Event Subscriber instead. In this entry,
-you will see the two ways of creating a service that will act as an Exception Listener, allowing
+creating an event listener or an event subscriber instead. In this entry,
+you will see the two ways of creating a service that will act as an exception listener, allowing
 you to modify how exceptions are shown by your application. The ``KernelEvents::EXCEPTION``
 event is just one of the core kernel events.
 
