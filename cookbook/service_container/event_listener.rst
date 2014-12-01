@@ -199,8 +199,11 @@ is an event subscriber:
 
         // app/config/config.php
         $container
-            ->register('kernel.listener.your_subscriber_name', 'Acme\DemoBundle\EventSubscriber\AcmeExceptionSubscriber')
-            ->addTag('kernel.event_subscriber'))
+            ->register(
+                'acme_exception_subscriber',
+                'Acme\DemoBundle\EventSubscriber\AcmeExceptionSubscriber'
+            )
+            ->addTag('kernel.event_subscriber')
         ;
 
 Request Events, Checking Types
