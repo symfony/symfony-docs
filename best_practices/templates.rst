@@ -156,9 +156,5 @@ name is irrelevant because you never use it in your own code):
             tags:
                 - { name: twig.extension }
 
-
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/
-.. _`Twig global variables`: http://symfony.com/doc/master/cookbook/templating/global_variables.html
-.. _`override error pages`: http://symfony.com/doc/current/cookbook/controller/error_pages.html
-.. _`render a template without using a controller`: http://symfony.com/doc/current/cookbook/templating/render_without_controller.html

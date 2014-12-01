@@ -206,7 +206,6 @@ Pre and Post Hooks
 ------------------
 
 If you need to execute some code before or after the execution of your controllers,
-you can use the EventDispatcher component to `set up before/after filters`_.
+you can use the EventDispatcher component to :doc:`/cookbook/event_dispatcher/before_after_filters`.
 
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`set up before/after filters`: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html
