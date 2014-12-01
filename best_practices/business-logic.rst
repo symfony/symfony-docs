@@ -339,4 +339,4 @@ in a matter of seconds.
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`the Symfony Code Standards`: http://symfony.com/doc/current/contributing/code/standards.html
-.. _`PHP-CS-Fixer`: https://github.com/fabpot/PHP-CS-Fixer
+.. _`PHP-CS-Fixer`: https://github.com/FriendsOfPHP/PHP-CS-Fixer

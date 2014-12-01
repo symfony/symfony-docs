@@ -18,7 +18,7 @@ register the mappings for your model classes.
 
 .. versionadded:: 2.3
     The base mapping compiler pass was introduced in Symfony 2.3. The Doctrine bundles
-    support it from DoctrineBundle >= 1.2.1, MongoDBBundle >= 3.0.0,
+    support it from DoctrineBundle >= 1.3.0, MongoDBBundle >= 3.0.0,
     PHPCRBundle >= 1.0.0-alpha2 and the (unversioned) CouchDBBundle supports the
     compiler pass since the `CouchDB Mapping Compiler Pass pull request`_
     was merged.
