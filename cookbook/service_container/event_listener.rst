@@ -116,9 +116,6 @@ a subscriber that subscribes various methods to the kernel.exception event::
     namespace Acme\DemoBundle\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
     class AcmeExceptionSubscriber implements EventSubscriberInterface
     {
