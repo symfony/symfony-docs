@@ -69,9 +69,11 @@ To use the class, use ``createForm`` and instantiate the new class:
 Registering Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also `register your form type as a service`_. But this is *not* recommended
-unless you plan to reuse the new form type in many places or embed it in
-other forms directly or via the `collection type`_.
+You can also
+:ref:`register your form type as a service <form-cookbook-form-field-service>`.
+But this is *not* recommended unless you plan to reuse the new form type in many
+places or embed it in other forms directly or via the
+:doc:`collection type </reference/forms/types/collection>`.
 
 For most forms that are used only to edit or create something, registering
 the form as a service is over-kill, and makes it more difficult to figure
@@ -169,7 +171,7 @@ fields:
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See `How to Customize Form Rendering`_ for more information on this and how
+See :doc:`/cookbook/form/form_customization` for more information on this and how
 you can control *how* the form renders at a global level using form theming.
 
 Handling Form Submits
@@ -210,8 +212,3 @@ Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
 for clarity. This isn't technically needed, since ``isValid()`` first calls
 ``isSubmitted()``. But without this, the flow doesn't read well as it *looks*
 like the form is *always* processed (even on the GET request).
-
-.. _`register your form type as a service`: http://symfony.com/doc/current/cookbook/form/create_custom_field_type.html#creating-your-field-type-as-a-service
-.. _`collection type`: http://symfony.com/doc/current/reference/forms/types/collection.html
-.. _`How to Customize Form Rendering`: http://symfony.com/doc/current/cookbook/form/form_customization.html
-.. _`form event system`: http://symfony.com/doc/current/cookbook/form/dynamic_form_modification.html
