@@ -195,7 +195,7 @@ it in the view::
     use Symfony\Component\Form\FormView;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\PropertyAccess\PropertyAccess;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
@@ -212,9 +212,9 @@ it in the view::
         /**
          * Add the image_path option
          *
-         * @param OptionsResolverInterface $resolver
+         * @param OptionsResolver $resolver
          */
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function setDefaultOptions(OptionsResolver $resolver)
         {
             $resolver->setOptional(array('image_path'));
         }

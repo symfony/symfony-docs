@@ -24,11 +24,11 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class GenderType extends AbstractType
     {
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function setDefaultOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => array(
@@ -342,7 +342,7 @@ method to ``GenderType``, which receives the gender configuration::
     // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
 
@@ -356,7 +356,7 @@ method to ``GenderType``, which receives the gender configuration::
             $this->genderChoices = $genderChoices;
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function setDefaultOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => $this->genderChoices,
