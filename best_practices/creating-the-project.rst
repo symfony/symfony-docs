@@ -220,7 +220,8 @@ Extending the Directory Structure
 ---------------------------------
 
 If your project or infrastructure requires some changes to the default directory
-structure of Symfony, you can `override the location of the main directories`_:
+structure of Symfony, you can
+:doc:`override the location of the main directories </cookbook/configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
 
 In addition, Symfony3 will use a slightly different directory structure when
@@ -247,6 +248,5 @@ the Symfony2 directory structure.
 .. _`Composer`: https://getcomposer.org/
 .. _`Get Started`: https://getcomposer.org/doc/00-intro.md
 .. _`Composer download page`: https://getcomposer.org/download/
-.. _`override the location of the main directories`: http://symfony.com/doc/current/cookbook/configuration/override_dir_structure.html
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/article/73/signing-project-releases
