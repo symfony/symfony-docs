@@ -716,14 +716,16 @@ the correct values of a number of field options.
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
-* ``required``: The ``required`` option can be guessed based on the validation
-  rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata
-  (i.e. is the field ``nullable``). This is very useful, as your client-side
-  validation will automatically match your validation rules.
+``required``
+    The ``required`` option can be guessed based on the validation rules (i.e. is
+    the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
+    field ``nullable``). This is very useful, as your client-side validation will
+    automatically match your validation rules.
 
-* ``max_length``: If the field is some sort of text field, then the ``max_length``
-  option can be guessed from the validation constraints (if ``Length`` or
-  ``Range`` is used) or from the Doctrine metadata (via the field's length).
+``max_length``
+    If the field is some sort of text field, then the ``max_length`` option can be
+    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
+    from the Doctrine metadata (via the field's length).
 
 .. note::
 
@@ -771,12 +773,13 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 You already know the ``form_start()`` and ``form_end()`` functions, but what do
 the other functions do?
 
-* ``form_errors(form)`` - Renders any errors global to the whole form
-  (field-specific errors are displayed next to each field);
+``form_errors(form)``
+    Renders any errors global to the whole form (field-specific errors are displayed
+    next to each field).
 
-* ``form_row(form.dueDate)`` - Renders the label, any errors, and the HTML
-  form widget for the given field (e.g. ``dueDate``) inside, by default, a
-  ``div`` element.
+``form_row(form.dueDate)``
+    Renders the label, any errors, and the HTML form widget for the given field
+    (e.g. ``dueDate``) inside, by default, a ``div`` element.
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag by

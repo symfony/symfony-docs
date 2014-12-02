@@ -809,14 +809,15 @@ user registers and when a user updates their contact information later:
 
 With this configuration, there are three validation groups:
 
-* ``Default`` - contains the constraints in the current class and all
-  referenced classes that belong to no other group;
+``Default``
+    Contains the constraints in the current class and all referenced classes
+    that belong to no other group.
 
-* ``User`` - equivalent to all constraints of the ``User`` object in the
-  ``Default`` group;
+``User``
+    Equivalent to all constraints of the ``User`` object in the ``Default`` group.
 
-* ``registration`` - contains the constraints on the ``email`` and ``password``
-  fields only.
+``registration``
+    Contains the constraints on the ``email`` and ``password`` fields only.
 
 To tell the validator to use a specific group, pass one or more group names
 as the second argument to the ``validate()`` method::

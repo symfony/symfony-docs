@@ -384,15 +384,16 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-* ``app/Resources/views/``: The applications ``views`` directory can contain
-  application-wide base templates (i.e. your application's layouts and
-  templates of the application bundle) as well as templates that override
-  third party bundle templates (see :ref:`overriding-bundle-templates`);
+``app/Resources/views/``
+    The applications ``views`` directory can contain application-wide base templates
+    (i.e. your application's layouts and templates of the application bundle) as
+    well as templates that override third party bundle templates
+    (see :ref:`overriding-bundle-templates`).
 
-* ``path/to/bundle/Resources/views/``: Each third party bundle houses its
-  templates in its ``Resources/views/`` directory (and subdirectories). When you
-  plan to share your bundle, you should put the templates in the bundle instead
-  of the ``app/`` directory.
+``path/to/bundle/Resources/views/``
+    Each third party bundle houses its templates in its ``Resources/views/``
+    directory (and subdirectories). When you plan to share your bundle, you should
+    put the templates in the bundle instead of the ``app/`` directory.
 
 Most of the templates you'll use live in the ``app/Resources/views/``
 directory. The path you'll use will be relative to this directory. For example,
@@ -1123,12 +1124,18 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-* ``app.security`` - The security context.
-* ``app.user`` - The current user object.
-* ``app.request`` - The request object.
-* ``app.session`` - The session object.
-* ``app.environment`` - The current environment (dev, prod, etc).
-* ``app.debug`` - True if in debug mode. False otherwise.
+``app.security``
+    The security context.
+``app.user``
+    The current user object.
+``app.request``
+    The request object.
+``app.session``
+    The session object.
+``app.environment``
+    The current environment (dev, prod, etc).
+``app.debug``
+    True if in debug mode. False otherwise.
 
 .. configuration-block::
 
