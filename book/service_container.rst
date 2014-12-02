@@ -694,8 +694,10 @@ To learn more about the expression language syntax, see :doc:`/components/expres
 
 In this context, you have access to 2 functions:
 
-* ``service`` - returns a given service (see the example above);
-* ``parameter`` - returns a specific parameter value (syntax is just like ``service``)
+``service``
+    Returns a given service (see the example above).
+``parameter``
+    Returns a specific parameter value (syntax is just like ``service``).
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
 via a ``container`` variable. Here's another example:
