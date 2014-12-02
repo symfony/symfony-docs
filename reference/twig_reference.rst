@@ -403,7 +403,7 @@ transchoice
 
 .. code-block:: jinja
 
-    {{ message|transchoice(count, arguments, domai, locale) }}
+    {{ message|transchoice(count, arguments, domain, locale) }}
 
 ``message``
     **type**: ``string``
