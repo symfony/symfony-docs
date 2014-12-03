@@ -149,4 +149,3 @@ configuration:
 
 Make sure that your database runs on localhost and has the defined database and
 user credentials set up.
-
