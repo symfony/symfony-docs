@@ -11,3 +11,5 @@ Testing
     database
     doctrine
     bootstrap
+    alternatives
+    
