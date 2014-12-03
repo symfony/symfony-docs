@@ -88,7 +88,7 @@ your Git repository which contains the following files:
         disk: 2048
 
 An example of these configurations can be found on `GitHub`_. The list of
-available services can be found on the `Platform.sh documentation <configure-services>`_.
+`available services <configure-services>`_ can be found on the Platform.sh documentation.
 
 Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,8 +179,8 @@ able to access it in your browser.
 Every code change that you do from now on will be pushed to Git in order to 
 redeploy your environment on Platform.sh.
 
-More information about migrating your database and files can be found on the 
-`Platform.sh documentation <migrate-existing-site>`_
+More information about `migrating your database and files <migrate-existing-site>`_ can be found on the 
+Platform.sh documentation.
 
 Deploy a new Site
 -----------------
