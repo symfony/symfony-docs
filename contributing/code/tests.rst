@@ -41,7 +41,7 @@ Step 2: Install vendors
 
 .. code-block:: bash
 
-    $ php composer.phar --dev install
+    $ php composer.phar install
 
 .. note::
 
