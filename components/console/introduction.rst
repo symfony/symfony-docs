@@ -377,6 +377,8 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/progresshelper`: shows a progress bar
 * :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 
+.. _component-console-testing-commands:
+
 Testing Commands
 ----------------
 
