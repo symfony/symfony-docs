@@ -33,6 +33,7 @@ On **Linux** and **Mac OS X** systems, execute the following console commands:
 
     $ curl -LsS http://symfony.com/installer > symfony.phar
     $ sudo mv symfony.phar /usr/local/bin/symfony
+    $ chmod u+x /usr/local/bin/symfony
 
 .. note::
 
