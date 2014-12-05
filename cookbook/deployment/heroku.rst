@@ -50,6 +50,33 @@ change the value of ``path`` from
 Once the application is deployed, run ``heroku logs --tail`` to keep the
 stream of logs from Heroku open in your terminal.
 
+
+Build priority in Composer 
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Check that you call ``clearCache`` in the end of your app build, otherwise there can be situations
+when during the build you will generate hardcored links to heroku ``/tmp`` path. Typical Symfony2 
+build steps in ``composer.json`` should look like this:
+
+.. code-block:: yaml
+
+    "post-install-cmd": [
+        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+    ],
+    "post-update-cmd": [
+        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+    ]
+
 Creating a new Application on Heroku
 ------------------------------------
 
@@ -109,6 +136,25 @@ create the ``Procfile`` file and to add it to the repository:
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
      1 file changed, 1 insertion(+)
+
+Configuring Symfony to run in the prod environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you don’t explicitly configure the environment (``dev``, ``prod`` etc)
+to use, Symfony will, by default, use the ``dev`` environment in console
+commands and at runtime. That would break our build, because in dev environments, 
+Symfony uses the ``SensioGeneratorBundle``to perform certain tasks, but that bundle
+is not installed upon a push - `Composer does not install dev packages when pushing to Heroku`_.
+For Symfony to know it needs to use the ``prod`` environment at all times, it reads
+from the ``SYMFONY_ENV`` environment variable. You can simply `set environment variables`_ using
+the ``heroku config`` feature, so run this one command as the last step before deploying
+your app for the first time:
+
+.. code-block:: bash
+
+    $heroku config:set SYMFONY_ENV=prod
+    Setting config vars and restarting mighty-hamlet-1981... done, v3
+    SYMFONY_ENV: prod
 
 Pushing to Heroku
 ~~~~~~~~~~~~~~~~~
@@ -193,3 +239,5 @@ You should be seeing your Symfony application in your browser.
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
+.. _`Composer does not install dev packages when pushing to Heroku`: https://devcenter.heroku.com/articles/php-support#build-behavior
+.. _`set environment variables`: https://devcenter.heroku.com/articles/config-vars
