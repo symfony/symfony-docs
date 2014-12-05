@@ -111,7 +111,7 @@ create the ``Procfile`` file and to add it to the repository:
     [master 35075db] Procfile for Apache and PHP
      1 file changed, 1 insertion(+)
 
-Setting the ``prod`` environment
+Setting the ``prod`` Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During a deploy, Heroku runs ``composer install --no-dev`` to install all of the
