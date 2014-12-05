@@ -126,7 +126,7 @@ steps should use the same ``prod`` environment as well.
 Thankfully, the solution to this problem is very simple: Symfony will pick up an
 environment variable named ``SYMFONY_ENV`` and use that environment if nothing
 else is explicitly set. As Heroku exposes all `config vars`_ as environment
-variables, we can issue a single command to prepare our app for a deployment:
+variables, you can issue a single command to prepare your app for a deployment:
 
 .. code-block:: bash
 
