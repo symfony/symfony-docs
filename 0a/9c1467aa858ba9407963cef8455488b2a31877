@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-04T15:13:52Z
+
+What do you think about removing the parameters entirely and putting the class names directly into the service definitions? There is no benefit in using the parameters.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-11-05T07:40:28Z
+
+Following the Symfony best practices it would make sense to remove the parameters.
+Will try to do it later when having some free time
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-05T16:37:45Z
+
+:+1: looks good
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-11-29T08:47:27Z
+
+ping @WouterJ @stof Updated, it should be ready for merge now
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T09:20:44Z
+
+I agree. @WouterJ or @weaverryan can merge this once they have some time. Thank you for your great job as always @ifdattic!
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2014-11-29T09:23:16Z
+
+Glad to help and happy being a part of a wonderful community
