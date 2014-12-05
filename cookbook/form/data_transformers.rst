@@ -133,7 +133,7 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
             );
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function setDefaultOptions(OptionsResolver $resolver)
         {
             $resolver
                 ->setDefaults(array(
@@ -254,7 +254,7 @@ First, create the custom field type class::
     use Symfony\Component\Form\FormBuilderInterface;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class IssueSelectorType extends AbstractType
     {
@@ -277,7 +277,7 @@ First, create the custom field type class::
             $builder->addModelTransformer($transformer);
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function setDefaultOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',
