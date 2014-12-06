@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-13T11:15:33Z
+
+-1, it isn't done in the Symfony standard, so it shouldn't belong here. /cc @fabpot
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-13T11:18:14Z
+
+:-1: for the same reasons
+
+---------------------------------------------------------------------------
+
+by stof at 2014-11-13T12:48:45Z
+
+Symfony does not put spaces around ``!`` (the Symfony rule would be the opposite actually)
+
+---------------------------------------------------------------------------
+
+by bryanagee at 2014-11-13T15:53:00Z
+
+That makes sense. I will submit a pull request with the opposite
+clarification.
+On Nov 13, 2014 4:48 AM, "Christophe Coevoet" <notifications@github.com>
+wrote:
+
+> Symfony does not put spaces around ! (the Symfony rule would be the
+> opposite actually)
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/4457#issuecomment-62885418>.
+>
+
+---------------------------------------------------------------------------
+
+by bryanagee at 2014-11-13T17:18:10Z
+
+Alright; as discussed, I have added a clarification to the opposite affect.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-13T17:49:28Z
+
+I'm still not sure if it is really necessary to add this clarification. Let's see what the others think.
+
+---------------------------------------------------------------------------
+
+by bryanagee at 2014-11-13T19:50:56Z
+
+@xabbuh  Thanks--I corrected the errors you mentioned.
+
+Personally, I think the clarification is worth while as it would save folks like me some time. All the well-organized projects I had worked on until recently have had the bang spacing, and the current wording would seem to say that is the right way.
+
+The only reason I discovered the discrepancy was my having another pull request to a symfony-based project critiqued on that front, and reading a more specific coding standard would have saved me the trouble of having to go back through and adjust them all.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-11-13T20:39:15Z
+
+the right way to say it would be ``Add a space around binary operators (except the concatenation)``. the sentence here does not apply to any of the unary operators (``!``, ``++``, ``--``)
+
+---------------------------------------------------------------------------
+
+by bryanagee at 2014-11-13T21:53:09Z
+
+@stof: I modified the language as you suggested. What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-24T15:17:32Z
+
+@stof This looks sensible to me, but I'd like to have your +1 on it before I merge.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-02T13:38:13Z
+
+:+1:
