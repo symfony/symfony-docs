@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------
+
+by dzuelke at 2014-12-05T08:37:05Z
+
+@stof / @fabpot, any thoughts?
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-05T10:34:02Z
+
+looks good to me
+
+---------------------------------------------------------------------------
+
+by dzuelke at 2014-12-05T11:34:36Z
+
+Wanna merge it? And where do you think general docs on that env var should go?
+
+> On 05.12.2014, at 11:34, Christophe Coevoet <notifications@github.com> wrote:
+>
+> looks good to me
+>
+> —
+> Reply to this email directly or view it on GitHub.
+>
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-05T11:37:08Z
+
+> Wanna merge it?
+
+I'm not a member of the doc core team. I don't have merge rights on this repo
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-05T15:26:50Z
+
+@dzuelke thanks for this nice improvement and for documenting the `SYMFONY_ENV` usage.
+
+You are right about the necessity of documenting more these variables (there is an opened issue related to this: #4162). However, as this is a quick fix for Heroku, my proposal for doc managers (@weaverryan, @WouterJ and @xabbuh) would be to merge this PR right away and keep #4162 open to discuss more about where and how to document these variables.
+
+---------------------------------------------------------------------------
+
+by dzuelke at 2014-12-05T15:28:36Z
+
+:+1: @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-05T16:46:05Z
+
+I only see some minor issues. Besides that :+1:.
+
+---------------------------------------------------------------------------
+
+by dzuelke at 2014-12-06T19:38:20Z
+
+Is this ready for a merge, @weaverryan ?
