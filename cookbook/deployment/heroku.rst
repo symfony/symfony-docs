@@ -69,14 +69,21 @@ You are now ready to deploy the application as explained in the next section.
 Deploying your Application on Heroku
 ------------------------------------
 
-To deploy your application to Heroku, you must first create a ``Procfile``,
-which tells Heroku what command to use to launch the web server with the
-correct document root. After that, you will ensure that your Symfony application
-runs the ``prod`` environment, and then you'll be ready to ``git push`` to
-Heroku for your first deploy!
+Before your first deploy, you need to do just 2 more things, which are explained
+below:
 
-Creating a Procfile
-~~~~~~~~~~~~~~~~~~~
+1. :ref:`Create a Procfile <heroku-procfile>`
+
+2. :ref:`Set the Environment to prod <heroku-setting-env-to-prod>`
+
+Then you'll be ready for the last step:
+
+3. :ref:`Push your Code to Heroku <heroku-push-code>`
+
+.. _heroku-procfile:
+
+1) Create a Procfile
+~~~~~~~~~~~~~~~~~~~~
 
 By default, Heroku will launch an Apache web server together with PHP to serve
 applications. However, two special circumstances apply to Symfony applications:
@@ -111,8 +118,10 @@ create the ``Procfile`` file and to add it to the repository:
     [master 35075db] Procfile for Apache and PHP
      1 file changed, 1 insertion(+)
 
-Setting the ``prod`` Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _heroku-setting-env-to-prod:
+
+2) Set the Environment to prod
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 During a deploy, Heroku runs ``composer install --no-dev`` to install all of the
 dependencies your application requires. However, typical `post-install-commands`_
@@ -132,8 +141,10 @@ variables, you can issue a single command to prepare your app for a deployment:
 
     $ heroku config:set SYMFONY_ENV=prod
 
-Pushing to Heroku
-~~~~~~~~~~~~~~~~~
+.. _heroku-push-code:
+
+3) Push your Code to Heroku
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next up, it's finally time to deploy your application to Heroku. If you are
 doing this for the very first time, you may see a message such as the following:
