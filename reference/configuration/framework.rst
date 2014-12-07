@@ -48,6 +48,9 @@ Configuration
 * `profiler`_
     * `collect`_
     * :ref:`enabled <profiler.enabled>`
+* `translator`_
+    * :ref:`enabled <translator.enabled>`
+    * `fallback`_
 
 secret
 ~~~~~~
@@ -494,6 +497,27 @@ collect information on-demand, you can set the ``collect`` flag to ``false``
 and activate the data collectors by hand::
 
     $profiler->enable();
+
+translator
+~~~~~~~~~~
+
+.. _translator.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable the ``translator`` service in the service container.
+
+fallback
+........
+
+**default**: ``en``
+
+This option is used when the translation key for the current locale wasn't found.
+
+For more details, see :doc:`/book/translation`.
 
 Full default Configuration
 --------------------------
