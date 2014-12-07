@@ -644,6 +644,10 @@ API. The ``api`` option is used to switch between the different implementations:
     legacy implementation and the ``2.5`` implementation. You have to use
     PHP 5.3.9 or higher to be able to use this implementation.
 
+To capture these logs in the ``prod`` environment, configure a
+:doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for
+the ``translation`` channel and set its ``level`` to ``debug``.
+
 Full default Configuration
 --------------------------
 
