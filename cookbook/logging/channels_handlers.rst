@@ -4,37 +4,47 @@
 How to Log Messages to different Files
 ======================================
 
-The Symfony Standard Edition contains a bunch of channels for logging: ``doctrine``,
-``event``, ``security`` and ``request``. Each channel corresponds to a logger
-service (``monolog.logger.XXX``) in the container and is injected to the
-concerned service. The purpose of channels is to be able to organize different
-types of log messages.
+The Symfony Framework organizes log messages into channels. By default, there
+are several channels, including ``doctrine``, ``event``, ``security``, ``request``
+and more. The channel is printed in the log message and can also be used
+to direct different channels to different places/files.
 
 By default, Symfony logs every message into a single file (regardless of
 the channel).
 
+.. note::
+
+    Each channel corresponds to a logger service (``monolog.logger.XXX``)
+    in the container (use the ``container:debug`` command to see a full list)
+    and those are injected into different services.
+
+.. _logging-channel-handler:
+
 Switching a Channel to a different Handler
 ------------------------------------------
 
-Now, suppose you want to log the ``doctrine`` channel to a different file.
-
-To do so, just create a new handler and configure it like this:
+Now, suppose you want to log the ``security`` channel to a different file
+in the ``prod`` environment. To do this, just create a new handler and configure
+it to log only messages from the ``security`` channel:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
+                security:
+                    # log all messages (since debug is the lowest level)
+                    level:    debug
+                    type:     stream
+                    path:     "%kernel.logs_dir%/security.log"
+                    channels: [security]
+
+                # an example of *not* logging security channel messages
                 main:
-                    type:     stream
-                    path:     /var/log/symfony.log
-                    channels: ["!doctrine"]
-                doctrine:
-                    type:     stream
-                    path:     /var/log/doctrine.log
-                    channels: [doctrine]
+                    # ...
+                    # channels: ["!security"]
 
     .. code-block:: xml
 
@@ -48,16 +58,18 @@ To do so, just create a new handler and configure it like this:
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
         >
             <monolog:config>
-                <monolog:handler name="main" type="stream" path="/var/log/symfony.log">
+                <monolog:handler name="security" type="stream" path="%kernel.logs_dir%/security.log">
                     <monolog:channels>
-                        <monolog:channel>!doctrine</monolog:channel>
+                        <monolog:channel>security</monolog:channel>
                     </monolog:channels>
                 </monolog:handler>
 
-                <monolog:handler name="doctrine" type="stream" path="/var/log/doctrine.log">
+                <monolog:handler name="main" type="stream" path="%kernel.logs_dir%/security.log">
+                    <!--
                     <monolog:channels>
-                        <monolog:channel>doctrine</monolog:channel>
+                        <monolog:channel>!security</monolog:channel>
                     </monolog:channels>
+                    -->
                 </monolog:handler>
             </monolog:config>
         </container>
@@ -67,19 +79,21 @@ To do so, just create a new handler and configure it like this:
         // app/config/config.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
-                'main'     => array(
+                'security' => array(
                     'type'     => 'stream',
-                    'path'     => '/var/log/symfony.log',
+                    'path'     => '%kernel.logs_dir%/security.log',
                     'channels' => array(
-                        '!doctrine',
+                        'security',
                     ),
                 ),
-                'doctrine' => array(
+                'main'     => array(
                     'type'     => 'stream',
-                    'path'     => '/var/log/doctrine.log',
+                    'path'     => '%kernel.logs_dir%/security.log',
+                    /*
                     'channels' => array(
-                        'doctrine',
+                        '!security',
                     ),
+                    */
                 ),
             ),
         ));
