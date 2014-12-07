@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by pborreli at 2014-11-29T09:32:49Z
+
+ping @fabpot
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T09:39:08Z
+
+@pborreli Thank you! Besides my minor comment, this all makes pretty much sense.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-29T12:58:07Z
+
+The typo fixes in `components/var_dumper` apply to 2.6 and the rest applies to 2.3. Could you please remove the 2.6 typo fixes from this PR and create a new one for them? Thanks!
+
+---------------------------------------------------------------------------
+
+by pborreli at 2014-11-30T18:21:55Z
+
+will do it ASAP, thanks
