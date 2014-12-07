@@ -19,9 +19,11 @@ November, 2014
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+- `33554fc <https://github.com/symfony/symfony-docs/commit/33554fcbb06408b222cb0c36af606f113c35afb0>`_ #4456 New validation API usage in Class Constraint Validator (skwi)
 - `135aae6 <https://github.com/symfony/symfony-docs/commit/135aae6caa9508b12a2960579ea0af4dacd3e479>`_ #4433 Completely re-reading the controller chapter (weaverryan)
 - `422e0f1 <https://github.com/symfony/symfony-docs/commit/422e0f12a4412f9e1668094eb19df4163bc6f2d8>`_ #4465 Modifying the best practice to use form_start() instead of <form (weaverryan, WouterJ)
 - `0a21446 <https://github.com/symfony/symfony-docs/commit/0a21446430347724f8ef29aa51ff15fd0284f22e>`_ #4463 [BestPractices] Proposing that we make the service names *just* a little bit longer (weaverryan)
+- `766e01f <https://github.com/symfony/symfony-docs/commit/766e01fa0698203db0661b11cdf941daac657459>`_ #4169 [Components][Form] document $deep and $flatten of getErrors() (xabbuh)
 - `1d88a1b <https://github.com/symfony/symfony-docs/commit/1d88a1b6b029d4dd2e14534f44e3b1b6b745caf9>`_ #4443 Added the release dates for the upcoming Symfony 3 versions (javiereguiluz)
 - `f2ab245 <https://github.com/symfony/symfony-docs/commit/f2ab245ac945e86fe4c6553efe37acb6556a23bd>`_ #4374 [WCM] Revamped the Quick Start tutorial (javiereguiluz)
 - `2c190ed <https://github.com/symfony/symfony-docs/commit/2c190ed8af7517607931dca6da41b4f7ad987b6c>`_ #4427 Update most important book articles to follow the best practices (WouterJ)
@@ -35,15 +37,18 @@ Fixed Documentation
 
 - `9d599a0 <https://github.com/symfony/symfony-docs/commit/9d599a054007474f1b65d2c7b04f634c5faf74d0>`_ minor #4544 #4273 - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook (ternel)
 - `6aabece <https://github.com/symfony/symfony-docs/commit/6aabece040cda7976a6b702bf4e7a8cd2818e007>`_ #4273 - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook
+- `e96ebd3 <https://github.com/symfony/symfony-docs/commit/e96ebd3a36ac73800bf31b6ddaa9a63ad37b3da4>`_ #4522 Add missing brackets to PropertyAccessor examples (loonytoons)
 - `4f66d48 <https://github.com/symfony/symfony-docs/commit/4f66d4842d8c1d515f2c4430db889af021b1b0cf>`_ #4506 SetDescription required on Product entities (yearofthegus)
 - `85bf906 <https://github.com/symfony/symfony-docs/commit/85bf906dfa3f0a09847db005e1f04216e080e4c1>`_ #4444 fix elseif statement (MightyBranch)
 - `ad14e78 <https://github.com/symfony/symfony-docs/commit/ad14e7803ed8be7f066ee67c748d00c3ddaf3d8b>`_ #4494 Updated the Symfony Installer installation instructions (javiereguiluz)
+- `7cc4287 <https://github.com/symfony/symfony-docs/commit/7cc42876e4ce134695d4b3069d27a8e6e927e5af>`_ #4442 replace doc role for bundle docs with external ref (xabbuh)
 - `33bf462 <https://github.com/symfony/symfony-docs/commit/33bf4627545e212a10af5180b790428ebacf0ae3>`_ #4407 [Components][Console] array options need array default values (xabbuh)
 - `2ab2e1f <https://github.com/symfony/symfony-docs/commit/2ab2e1f712c693f039297311c9396ef120a48ec1>`_ #4342 Reworded a misleading Doctrine explanation (javiereguiluz)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- `a109c4b <https://github.com/symfony/symfony-docs/commit/a109c4b739e35bcf600868df801bd5cefb911cbc>`_ #4537 Update link to remove absolute URL (jms85, dangarzon)
 - `05f5dba <https://github.com/symfony/symfony-docs/commit/05f5dbacac092554ab3398601be92120945cd221>`_ #4536 Add Ryan Weaver as 10th core team member (ifdattic)
 - `7b1ff2a <https://github.com/symfony/symfony-docs/commit/7b1ff2a33964ee29adbd2e240a3bc382b9ca16a3>`_ #4554 Changed url to PHP-CS-FIXER repository (jzawadzki)
 - `9d599a0 <https://github.com/symfony/symfony-docs/commit/9d599a054007474f1b65d2c7b04f634c5faf74d0>`_ #4544 bug #4273 - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook (ternel)
@@ -51,6 +56,7 @@ Minor Documentation Changes
 - `5aaba1e <https://github.com/symfony/symfony-docs/commit/5aaba1e336cc85254882c28f34389725d65636df>`_ #4529 Best Practices: Update link title to match cookbook article title (dangarzon)
 - `ab8e7f5 <https://github.com/symfony/symfony-docs/commit/ab8e7f59ec106d5aade1c696f8731671455aee83>`_ #4530 Book: Update link title to match cookbook article title (dangarzon)
 - `bf61658 <https://github.com/symfony/symfony-docs/commit/bf616581f4ccce6d355413595fb6fe69831fc553>`_ #4523 Add missing semicolons to PropertyAccess examples (loonytoons)
+- `8beadce <https://github.com/symfony/symfony-docs/commit/8beadce92dbc15b1c40d443abbf33e2ae4b86007>`_ #4496 [Book][Security] link to a bundle's current (not master) docs (xabbuh)
 - `5db8386 <https://github.com/symfony/symfony-docs/commit/5db83862999bb2e8c2a30c6bc36cc0cf7a6a24a9>`_ #4462 [Reference] Fixed lots of things using the review bot (WouterJ)
 - `dbfaac1 <https://github.com/symfony/symfony-docs/commit/dbfaac1f1b307a6143e3f8b5a1c326c0b330d662>`_ #4459 Fix up the final sentence to be a bit cleaner. (micheal)
 - `3761e50 <https://github.com/symfony/symfony-docs/commit/3761e50b36cb274af2d0de72a129ad2010d9c5ca>`_ #4514 [Contributing][Documentation] typo fix (xabbuh)
