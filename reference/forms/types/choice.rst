@@ -108,7 +108,7 @@ Using the `choice_label_format` option, you can use a pre-defined format for eac
         'choice_label_format' => 'my_form.choices.%name%.%choice%'
     ));
 
-You can also define this option [on the form itself](/reference/forms/types/options/form.rst.inc#choice_label_format).
+You can also define this option [on the form itself](/reference/forms/types/options/form.rst.inc).
 
 
 choice_list
