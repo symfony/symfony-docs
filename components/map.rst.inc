@@ -23,6 +23,7 @@
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
   * :doc:`/components/console/changing_default_command`
+  * :doc:`/components/console/console_arguments`
   * :doc:`/components/console/events`
   * :doc:`/components/console/logger`
   * :doc:`/components/console/helpers/index`

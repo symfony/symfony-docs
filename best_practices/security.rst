@@ -75,7 +75,7 @@ Authorization (i.e. Denying Access)
 Symfony gives you several ways to enforce authorization, including the ``access_control``
 configuration in :doc:`security.yml </reference/configuration/security>` the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
-:ref:`isGranted <best-practices-directy-isGranted>` on the ``security.context``
+:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
 service directly.
 
 .. best-practice::
@@ -206,7 +206,7 @@ Now you can reuse this method both in the template and in the security expressio
         <a href=""> ... </a>
     {% endif %}
 
-.. _best-practices-directy-isGranted:
+.. _best-practices-directly-isGranted:
 
 Checking Permissions without @Security
 --------------------------------------
@@ -352,5 +352,7 @@ develop :doc:`your own user provider </cookbook/security/custom_provider>` and
 
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
+.. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
+.. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

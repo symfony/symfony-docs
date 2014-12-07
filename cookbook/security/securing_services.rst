@@ -78,23 +78,16 @@ Then in your service configuration, you can inject the service:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-
         services:
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:     "Acme\HelloBundle\Newsletter\NewsletterManager"
                 arguments: ["@security.authorization_checker"]
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-        </parameters>
-
         <services>
-            <service id="newsletter_manager" class="%newsletter_manager.class%">
+            <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                 <argument type="service" id="security.authorization_checker"/>
             </service>
         </services>
@@ -105,10 +98,8 @@ Then in your service configuration, you can inject the service:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
-
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%',
+            'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(new Reference('security.authorization_checker'))
         ));
 
@@ -176,7 +167,7 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
         <!-- ... -->
 
         <services>
-            <service id="newsletter_manager" class="%newsletter_manager.class%">
+            <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                 <!-- ... -->
                 <tag name="security.secure_service" />
             </service>
@@ -189,7 +180,7 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            '%newsletter_manager.class%',
+            'Acme\HelloBundle\Newsletter\NewsletterManager',
             // ...
         ));
         $definition->addTag('security.secure_service');

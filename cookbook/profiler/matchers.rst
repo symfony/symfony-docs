@@ -100,25 +100,16 @@ Then, you need to configure the service:
 
     .. code-block:: yaml
 
-        parameters:
-            acme_demo.profiler.matcher.super_admin.class: Acme\DemoBundle\Profiler\SuperAdminMatcher
-
         services:
             acme_demo.profiler.matcher.super_admin:
-                class: "%acme_demo.profiler.matcher.super_admin.class%"
+                class: Acme\DemoBundle\Profiler\SuperAdminMatcher
                 arguments: ["@security.authorization_checker"]
 
     .. code-block:: xml
 
-        <parameters>
-            <parameter
-                key="acme_demo.profiler.matcher.super_admin.class"
-            >Acme\DemoBundle\Profiler\SuperAdminMatcher</parameter>
-        </parameters>
-
         <services>
             <service id="acme_demo.profiler.matcher.super_admin"
-                class="%acme_demo.profiler.matcher.super_admin.class%">
+                class="Acme\DemoBundle\Profiler\SuperAdminMatcher">
                 <argument type="service" id="security.authorization_checker" />
         </services>
 
@@ -127,13 +118,8 @@ Then, you need to configure the service:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setParameter(
-            'acme_demo.profiler.matcher.super_admin.class',
-            'Acme\DemoBundle\Profiler\SuperAdminMatcher'
-        );
-
         $container->setDefinition('acme_demo.profiler.matcher.super_admin', new Definition(
-            '%acme_demo.profiler.matcher.super_admin.class%',
+            'Acme\DemoBundle\Profiler\SuperAdminMatcher',
             array(new Reference('security.authorization_checker'))
         );
 

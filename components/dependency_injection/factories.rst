@@ -120,8 +120,8 @@ Passing Arguments to the Factory Method
 ---------------------------------------
 
 If you need to pass arguments to the factory method, you can use the ``arguments``
-options inside the service container. For example, suppose the ``get`` method
-in the previous example takes the ``templating`` service as an argument:
+options inside the service container. For example, suppose the ``createNewsletterManager``
+method in the previous example takes the ``templating`` service as an argument:
 
 .. configuration-block::
 
