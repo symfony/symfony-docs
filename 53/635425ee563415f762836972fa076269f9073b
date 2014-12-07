@@ -1,0 +1,175 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-25T08:49:15Z
+
+upstream PR has been merged!
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-25T15:00:24Z
+
+@WouterJ ping, it's updated and ready to go
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-25T15:18:53Z
+
+@iltar great. @weaverryan will merge it when he has time :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-25T17:02:54Z
+
+Wow, *big* feature change (in a good way). Give me a few days to pull this down and make sure we're talking consistently throughout the docs.
+
+I *think* I'd prefer to completely update the docs. In other words, I'd like to fully remove references to `security.context`, `SecurityContext` etc from the 2.6 version of the docs (except for some `versionadded` mentions, which will help direct people looking for these). But I'm certainly open to opinions on this, especially thinking about future support requests and what will help confuse people the least.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-25T17:09:00Z
+
+I'm totally for that suggestion. I think I've removed nearly all hard references to the `SecurityContext` and `SecurityContextInterface`. Considering this is my first PR to the docs, I'm sure I missed something as I could only rely on project wide file searching, but @WouterJ helped me through it a lot.
+
+The code in Symfony however, still uses the `SecurityContext(Interface)` at a lot of places. I'm thinking about occasional PRs if possible to phase it out and help the core team upgrading it to 3.0 whenever I have time, it would be nice to have the docs in line with that during 2.6 release.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-25T19:40:39Z
+
+Well, for places where we can do it in a BC way, we should probably update the Symfony codebase as well
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-25T19:46:39Z
+
+I haven't followed the discussions about the security split, so excuse me if my question is stupid: *Why is the new way to do things much more verbose than the old way?*
+
+OLD: $this->get('security.context')->getToken();
+NEW: $this->get('security.token_storage')->getToken();
+
+OLD: $this->get('security.context')->isGranted();
+NEW: $this->get('security.authorization_checker')->isGranted();
+
+OLD: use Symfony\Component\Security\Core\SecurityContextInterface;
+NEW: use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+OLD: use Symfony\Component\Security\SecurityContext;
+NEW: use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-25T19:53:54Z
+
+@javiereguiluz the goal was not about making it shorter, but about splitting the responsibilities in 2, which helps preventing circular references involving the SecurityContext when you only need the access to the token storage (which does not depend on anything while the whole security system depends on lots of things, including Doctrine most of the time because of your user provider).
+
+The TokenStorageInterface could probably get a shorter name by moving it a bit higher in the namespace tree, but it makes sense to have it under ``Authentication`` actually, now that it has a single responsibility.
+
+Btw, in controllers, the new way is ``$this->isGranted()`` because of the new shortcuts :smile:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-25T20:09:16Z
+
+I think we may need to bootstrap some kind of *"Public API DX Initiative"* soon. Things like this shouldn't be exposed to developers: `SecuritySessionStorageInterface::AUTHENTICATION_ERROR` (writing 54 characters to use a constant is too much).
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-26T07:10:01Z
+
+@javiereguiluz, you won't have to use that any more for 90% of the cases. A PR has been added for this recently which resulted in adding: [Symfony\Component\Security\Http\Authentication\AuthenticationUtils](https://github.com/symfony/symfony/blob/05815adb227eb3adf891a60ec1eb27d8d64f51d6/src/Symfony/Component/Security/Http/Authentication/AuthenticationUtils.php)
+
+Most calls to the `AuthenticationChecker` can be done via: `is_granted()` in twig/expressions, `@Security` in the FrameworkExtraBundle, `@Secure` in the JMSSecurityExtraBundle and `access_control` in your `security.yml`. Most cases where you need the token, you can actually create a ParamConverter to inject your user, which saves you a lot of boiler plating. If you don't need that, you inject the `TokenStorage`.
+
+DX wise I don't think it becomes worse, unless you count the fact that people use the container directly and that your `use` statements become slightly bigger. I think it's also a part where a more specific name should + the developer experience; `isGranted()` fits better with the `AuthenticationChecker` than `SecurityContext`. Same goes for `getToken` on the `TokenStorage`.
+
+If you have any proposals for better names, they are always welcome of course!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-26T07:18:48Z
+
+@iltar if developers aren't going to use all this directly, then we're fine :)
+
+We could think about better naming, but it should be a coordinated effort. I'd like for instance to rename the constants as follows, but this cannot be done isolated from other renaming:
+
+```
+OLD      : SecurityContextInterface::AUTHENTICATION_ERROR
+NEW      : SecuritySessionStorageInterface::AUTHENTICATION_ERROR
+PROPOSAL : Security::AUTH_ERROR
+```
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-26T07:43:04Z
+
+I like the proposal, it should not be very hard to change the name of the constants. While we're at it, what about the other 2 constants?
+
+```php
+final class Security
+{
+    const ACCESS_DENIED_ERROR  = '_security.403_error';
+    const AUTH_ERROR           = '_security.last_error';
+    const LAST_USERNAME        = '_security.last_username';
+}
+
+interface SecurityContextInterface extends TokenStorageInterface, AuthorizationCheckerInterface
+{
+    const ACCESS_DENIED_ERROR  = Security::ACCESS_DENIED_ERROR;
+    const AUTHENTICATION_ERROR = Security::AUTH_ERROR;
+    const LAST_USERNAME        = Security::LAST_USERNAME;
+}
+```
+
+I think this is the only way to make it Backwards Compatibly and being able to follow the PSR regarding Interface.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-26T13:40:21Z
+
+@javiereguiluz We also have [a new utility class](https://github.com/symfony/symfony/pull/11324) in Symfony 2.6 dealing with retrieving the last username and the last authentication error, so people will most likely not need to deal with these constants directly either. Thus, for anyone using FOSUserBundle to render the login page, the bundle handles it for them already too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-09-27T10:07:32Z
+
+@iltar about the constant name proposed earlier (`Security::AUTH_ERROR`) if we finally use it, we must be sure that is consistent with what we do in other parts of the framework. Using `auth` instead of `authentication` is very common for developers because that's an awful word. But if framework never uses these contractions, we should use `Security::AUTHENTICATION_ERROR` instead.
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-27T11:09:28Z
+
+That will raise the question, when is "Auth" used for "Authentication" and when for "Authorization".
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-29T07:44:50Z
+
+@javiereguiluz @stof See PR symfony/symfony#12074 for the change proposed
+
+edit: Updated this PR with `Security`
+
+---------------------------------------------------------------------------
+
+by iltar at 2014-09-29T11:43:26Z
+
+@weaverryan the last update regarding `Security::` is merged into the main symfony repo and documentation is updated according to this change
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T09:54:15Z
+
+ping @weaverryan This is a really nice PR which should be merged before 2.6 is released
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-31T15:04:58Z
+
+Thanks - I haven't forgotten! (the Finished label actually helps that a lot).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-29T13:30:15Z
+
+Please, @weaverryan, merge this ;) People are now searching for what replaced the deprecated SecurityContext (even the sound of symfony guys were confused).
