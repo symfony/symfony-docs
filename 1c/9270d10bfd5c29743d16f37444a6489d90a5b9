@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-03T17:46:57Z
+
+:+1: For now this makes sense. But I think we should find a more generic way.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-06T10:17:18Z
+
+@dangarzon thanks for fixing the installation instructions.
+
+Regarding the comments about making it easier to update these values for new Symfony versions, I don't think it's worth it. Reason? Soon we'll replace all this information with the new Symfony installer.
