@@ -13,6 +13,76 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+November, 2014
+--------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `135aae6 <https://github.com/symfony/symfony-docs/commit/135aae6caa9508b12a2960579ea0af4dacd3e479>`_ #4433 Completely re-reading the controller chapter (weaverryan)
+- `422e0f1 <https://github.com/symfony/symfony-docs/commit/422e0f12a4412f9e1668094eb19df4163bc6f2d8>`_ #4465 Modifying the best practice to use form_start() instead of <form (weaverryan, WouterJ)
+- `0a21446 <https://github.com/symfony/symfony-docs/commit/0a21446430347724f8ef29aa51ff15fd0284f22e>`_ #4463 [BestPractices] Proposing that we make the service names *just* a little bit longer (weaverryan)
+- `1d88a1b <https://github.com/symfony/symfony-docs/commit/1d88a1b6b029d4dd2e14534f44e3b1b6b745caf9>`_ #4443 Added the release dates for the upcoming Symfony 3 versions (javiereguiluz)
+- `f2ab245 <https://github.com/symfony/symfony-docs/commit/f2ab245ac945e86fe4c6553efe37acb6556a23bd>`_ #4374 [WCM] Revamped the Quick Start tutorial (javiereguiluz)
+- `2c190ed <https://github.com/symfony/symfony-docs/commit/2c190ed8af7517607931dca6da41b4f7ad987b6c>`_ #4427 Update most important book articles to follow the best practices (WouterJ)
+- `12a09ab <https://github.com/symfony/symfony-docs/commit/12a09ab7806b4f57d109929fa03c770cc7e03169>`_ #4377 Added interlinking and fixed install template for reusable bundles (WouterJ)
+- `8259d71 <https://github.com/symfony/symfony-docs/commit/8259d712997ef2b94cc6b4490c46e603db64bcd9>`_ #4425 Updating component usage to use composer require (weaverryan)
+- `0e80aba <https://github.com/symfony/symfony-docs/commit/0e80aba9c96efc4c6c70c0920d679182571fe97e>`_ #4369 [reference][configuration][security]Added key_length for pbkdf2 encoder (Guillaume-Rossignol)
+- `5165419 <https://github.com/symfony/symfony-docs/commit/51654191bea12960f64ead9a00cf0c293532246a>`_ #4295 [Security] Hidden front controller for Nginx (phansys)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `9d599a0 <https://github.com/symfony/symfony-docs/commit/9d599a054007474f1b65d2c7b04f634c5faf74d0>`_ minor #4544 #4273 - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook (ternel)
+- `6aabece <https://github.com/symfony/symfony-docs/commit/6aabece040cda7976a6b702bf4e7a8cd2818e007>`_ #4273 - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook
+- `4f66d48 <https://github.com/symfony/symfony-docs/commit/4f66d4842d8c1d515f2c4430db889af021b1b0cf>`_ #4506 SetDescription required on Product entities (yearofthegus)
+- `85bf906 <https://github.com/symfony/symfony-docs/commit/85bf906dfa3f0a09847db005e1f04216e080e4c1>`_ #4444 fix elseif statement (MightyBranch)
+- `ad14e78 <https://github.com/symfony/symfony-docs/commit/ad14e7803ed8be7f066ee67c748d00c3ddaf3d8b>`_ #4494 Updated the Symfony Installer installation instructions (javiereguiluz)
+- `33bf462 <https://github.com/symfony/symfony-docs/commit/33bf4627545e212a10af5180b790428ebacf0ae3>`_ #4407 [Components][Console] array options need array default values (xabbuh)
+- `2ab2e1f <https://github.com/symfony/symfony-docs/commit/2ab2e1f712c693f039297311c9396ef120a48ec1>`_ #4342 Reworded a misleading Doctrine explanation (javiereguiluz)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `05f5dba <https://github.com/symfony/symfony-docs/commit/05f5dbacac092554ab3398601be92120945cd221>`_ #4536 Add Ryan Weaver as 10th core team member (ifdattic)
+- `7b1ff2a <https://github.com/symfony/symfony-docs/commit/7b1ff2a33964ee29adbd2e240a3bc382b9ca16a3>`_ #4554 Changed url to PHP-CS-FIXER repository (jzawadzki)
+- `9d599a0 <https://github.com/symfony/symfony-docs/commit/9d599a054007474f1b65d2c7b04f634c5faf74d0>`_ #4544 bug #4273 - fix doctrine version in How to Provide Model Classes for several Doctrine Implementations cookbook (ternel)
+- `7b3500c <https://github.com/symfony/symfony-docs/commit/7b3500ca43b1f411657f6aa37cd4d84aed8ff525>`_ #4542 Update conventions.rst (csuarez)
+- `5aaba1e <https://github.com/symfony/symfony-docs/commit/5aaba1e336cc85254882c28f34389725d65636df>`_ #4529 Best Practices: Update link title to match cookbook article title (dangarzon)
+- `ab8e7f5 <https://github.com/symfony/symfony-docs/commit/ab8e7f59ec106d5aade1c696f8731671455aee83>`_ #4530 Book: Update link title to match cookbook article title (dangarzon)
+- `bf61658 <https://github.com/symfony/symfony-docs/commit/bf616581f4ccce6d355413595fb6fe69831fc553>`_ #4523 Add missing semicolons to PropertyAccess examples (loonytoons)
+- `5db8386 <https://github.com/symfony/symfony-docs/commit/5db83862999bb2e8c2a30c6bc36cc0cf7a6a24a9>`_ #4462 [Reference] Fixed lots of things using the review bot (WouterJ)
+- `dbfaac1 <https://github.com/symfony/symfony-docs/commit/dbfaac1f1b307a6143e3f8b5a1c326c0b330d662>`_ #4459 Fix up the final sentence to be a bit cleaner. (micheal)
+- `3761e50 <https://github.com/symfony/symfony-docs/commit/3761e50b36cb274af2d0de72a129ad2010d9c5ca>`_ #4514 [Contributing][Documentation] typo fix (xabbuh)
+- `21afb4c <https://github.com/symfony/symfony-docs/commit/21afb4c7c27d4737a5f6d471c88422303264d752>`_ #4445 Removed unnecessary use statement (Alex Salguero)
+- `3969fd6 <https://github.com/symfony/symfony-docs/commit/3969fd6d3e85966973692961e2c6b13437c653f2>`_ #4432 [Reference][Twig] tweaks to the Twig reference (xabbuh)
+- `188dd1f <https://github.com/symfony/symfony-docs/commit/188dd1f17f96c7d31950ba30314683fae0614ba3>`_ #4400 Continues #4307 (SamanShafigh, WouterJ)
+- `c008733 <https://github.com/symfony/symfony-docs/commit/c008733b9ee8d7e12507ab2cf813d03808b49ab5>`_ #4399 Explain form() and form_widget() in form customization (oopsFrogs, WouterJ)
+- `2139754 <https://github.com/symfony/symfony-docs/commit/2139754cbb0c7ef871daae30a7eff4205dc83794>`_ #4253 Adder and remover sidenote (kshishkin)
+- `b81eb4d <https://github.com/symfony/symfony-docs/commit/b81eb4db59de238334b477a5fbdc1d336b82e4f0>`_ #4488 Terrible mistake! Comma instead of semicolon... (nuvolapl)
+- `0ee3ae7 <https://github.com/symfony/symfony-docs/commit/0ee3ae74457af8082364fafa7b4b1d7d6a6eab17>`_ #4481 [Cookbook][Cache] add syntax highlighting for Varnish code blocks (xabbuh)
+- `0577559 <https://github.com/symfony/symfony-docs/commit/057755984ebdf7c334ec69cce62b61f9daf296ae>`_ #4418 use the C lexer for Varnish config examples (xabbuh)
+- `97d8f61 <https://github.com/symfony/symfony-docs/commit/97d8f616f02e49daeb93dfc5719be312a3317292>`_ #4403 Improved naming (WouterJ)
+- `6298595 <https://github.com/symfony/symfony-docs/commit/6298595e44c6f1ce759114668000477fb5da5e4e>`_ #4453 Fixed make file (WouterJ)
+- `0c7dd72 <https://github.com/symfony/symfony-docs/commit/0c7dd721e1b3ae633de989448e9ffa7c77d849cd>`_ #4475 Fixed typos (pborreli)
+- `b847b2d <https://github.com/symfony/symfony-docs/commit/b847b2d8af6720117b4ebbd421ac0da15c769075>`_ #4480 Fix spelling (nurikabe)
+- `0d91cc5 <https://github.com/symfony/symfony-docs/commit/0d91cc5dd90a5febc76d54ba16853db3aae9217c>`_ #4461 Update doctrine.rst (guiguiboy)
+- `81fc1c6 <https://github.com/symfony/symfony-docs/commit/81fc1c6000bb64ce02868cee8e618041d0f9766f>`_ #4448 [Book][HTTP Cache] moved inlined URL to the bottom of the file (xabbuh)
+- `6995b07 <https://github.com/symfony/symfony-docs/commit/6995b07f2330004f466da5f86b599acc402a4d72>`_ #4435 consistent table headlines (xabbuh)
+- `0380d34 <https://github.com/symfony/symfony-docs/commit/0380d340674fc0e9776f30e0f737a6730ba9f232>`_ #4447 [Book] tweaks to #4427 (xabbuh)
+- `eb0d8ac <https://github.com/symfony/symfony-docs/commit/eb0d8acc985417368878b77e6313f4b4a748f168>`_ #4441 Updated first code-block``::`` bash (Nitaco)
+- `41bc061 <https://github.com/symfony/symfony-docs/commit/41bc061762b8cf73e8ef0d9317a1af68a2a4c564>`_ #4106 removed references to documentation from external sources (fabpot, WouterJ)
+- `c9a8dff <https://github.com/symfony/symfony-docs/commit/c9a8dffbb352ba3b61003fabaa6cd2e9fe63b038>`_ #4352 [Best Practices] update best practices index (xabbuh)
+- `8a93c95 <https://github.com/symfony/symfony-docs/commit/8a93c958a3ab0450cb841e36d1653b3c3d96706b>`_ #4437 Correct link to scopes page (mayeco)
+- `91eb652 <https://github.com/symfony/symfony-docs/commit/91eb65253b854a65435d4d943507c5b736e6cce4>`_ #4438 Fix typo: Objected => Object (ifdattic)
+- `5d6d0c2 <https://github.com/symfony/symfony-docs/commit/5d6d0c2c16178a214e67ffa2fbaac7879f53e54d>`_ #4436 remove semicolons in PHP templates (xabbuh)
+- `97c4b2e <https://github.com/symfony/symfony-docs/commit/97c4b2e152c42fc5bb953e41666117fea6619b5e>`_ #4434 remove unused label (xabbuh)
+- `4be6786 <https://github.com/symfony/symfony-docs/commit/4be678650bfcd4fe6ce208261485081fd9854bb1>`_ #4326 [Components][Form] Grammar improvement (fabschurt)
+- `a27238e <https://github.com/symfony/symfony-docs/commit/a27238e1084c18692dd2e159fcf741ce07e32df9>`_ #4313 Improved and fixed twig reference (WouterJ)
+- `1ce9dc5 <https://github.com/symfony/symfony-docs/commit/1ce9dc5bfbdedacd093f35282327f577a34bdb45>`_ #4398 A few small improvements to the EventDispatcher Component docs (GeertDD)
+- `42abc66 <https://github.com/symfony/symfony-docs/commit/42abc66af0620c8f0bf0b2057764327c0cadc561>`_ #4421 [Best Practices] removed unused links in business-logic (77web)
+- `61c0bc5 <https://github.com/symfony/symfony-docs/commit/61c0bc57dd5d4b6391dbd85585e4ed24fe3469af>`_ #4419 [DependencyInjection] Add missing space in code (michaelperrin)
+
 October, 2014
 -------------
 
