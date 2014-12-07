@@ -85,10 +85,10 @@ application right away.
 
 .. note::
 
-    When creating the project, the Symfony Installer will check if your system
-    meets the requirements that have to be fulfilled to run your new Symfony
-    application. You can later on perform the requirements check again at will
-    using the Symfony console application:
+   When creating the project, the Symfony Installer will check if your system
+   meets the requirements that have to be fulfilled to run your new Symfony
+   application. You can later on perform the requirements check again at will
+   using the Symfony console application:
 
    .. code-block:: bash
 
