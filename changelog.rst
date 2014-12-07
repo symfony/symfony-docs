@@ -21,8 +21,14 @@ New Documentation
 
 - `33554fc <https://github.com/symfony/symfony-docs/commit/33554fcbb06408b222cb0c36af606f113c35afb0>`_ #4456 New validation API usage in Class Constraint Validator (skwi)
 - `135aae6 <https://github.com/symfony/symfony-docs/commit/135aae6caa9508b12a2960579ea0af4dacd3e479>`_ #4433 Completely re-reading the controller chapter (weaverryan)
+- `f748378 <https://github.com/symfony/symfony-docs/commit/f748378399689ba1b126821895f4c443c20cc568>`_ #4498 Use new factory syntax (WouterJ)
+- `59f0374 <https://github.com/symfony/symfony-docs/commit/59f037432effc2ab243d40a16667d87865a1e45c>`_ #4490 Documented ExpressionLanguage extensibility (WouterJ)
+- `ed241ab <https://github.com/symfony/symfony-docs/commit/ed241ab0d4d8afcc78bca39f9e5ee8168bf3a6cb>`_ #4487 Documented html5 option (WouterJ)
+- `48a5af3 <https://github.com/symfony/symfony-docs/commit/48a5af3a057c075e3d86639857ecaaed561984c7>`_ #4486 Renamed empty_value to placeholder (WouterJ)
 - `422e0f1 <https://github.com/symfony/symfony-docs/commit/422e0f12a4412f9e1668094eb19df4163bc6f2d8>`_ #4465 Modifying the best practice to use form_start() instead of <form (weaverryan, WouterJ)
 - `0a21446 <https://github.com/symfony/symfony-docs/commit/0a21446430347724f8ef29aa51ff15fd0284f22e>`_ #4463 [BestPractices] Proposing that we make the service names *just* a little bit longer (weaverryan)
+- `9a22865 <https://github.com/symfony/symfony-docs/commit/9a22865bd9e0ea68cb0ef74f762dd69f4d905db7>`_ #4446 [Book][Templating] refer to the VarDumper component for dump() (xabbuh)
+- `ed5c61f <https://github.com/symfony/symfony-docs/commit/ed5c61faa37e06aa6c21b8036ecb32403b1b846c>`_ #4411 Added a reference to the Bootstrap 3 form theme (javiereguiluz)
 - `766e01f <https://github.com/symfony/symfony-docs/commit/766e01fa0698203db0661b11cdf941daac657459>`_ #4169 [Components][Form] document $deep and $flatten of getErrors() (xabbuh)
 - `1d88a1b <https://github.com/symfony/symfony-docs/commit/1d88a1b6b029d4dd2e14534f44e3b1b6b745caf9>`_ #4443 Added the release dates for the upcoming Symfony 3 versions (javiereguiluz)
 - `f2ab245 <https://github.com/symfony/symfony-docs/commit/f2ab245ac945e86fe4c6553efe37acb6556a23bd>`_ #4374 [WCM] Revamped the Quick Start tutorial (javiereguiluz)
@@ -30,7 +36,11 @@ New Documentation
 - `12a09ab <https://github.com/symfony/symfony-docs/commit/12a09ab7806b4f57d109929fa03c770cc7e03169>`_ #4377 Added interlinking and fixed install template for reusable bundles (WouterJ)
 - `8259d71 <https://github.com/symfony/symfony-docs/commit/8259d712997ef2b94cc6b4490c46e603db64bcd9>`_ #4425 Updating component usage to use composer require (weaverryan)
 - `0e80aba <https://github.com/symfony/symfony-docs/commit/0e80aba9c96efc4c6c70c0920d679182571fe97e>`_ #4369 [reference][configuration][security]Added key_length for pbkdf2 encoder (Guillaume-Rossignol)
+- `d1afa4d <https://github.com/symfony/symfony-docs/commit/d1afa4d2f5c5bafa25618152b33e8ca5330e082b>`_ #4243 [WIP] var-dumper component (nicolas-grekas)
 - `5165419 <https://github.com/symfony/symfony-docs/commit/51654191bea12960f64ead9a00cf0c293532246a>`_ #4295 [Security] Hidden front controller for Nginx (phansys)
+- `23f790a <https://github.com/symfony/symfony-docs/commit/23f790a3f2abee8dece1a0e631bf6ac5be1e28c2>`_ #4058 Skip console commands from event listeners (tPl0ch)
+- `4b98d48 <https://github.com/symfony/symfony-docs/commit/4b98d48ba630851004df159256fb3fbbb0be79d4>`_ #3386 [Translation] added method to expose collected message (Grygir)
+- `242d4f6 <https://github.com/symfony/symfony-docs/commit/242d4f68726ad3d6445ff97e05809ca2bebed176>`_ #4319 Documentation for debug:event-dispatcher command (matthieuauger)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -57,6 +67,7 @@ Minor Documentation Changes
 - `ab8e7f5 <https://github.com/symfony/symfony-docs/commit/ab8e7f59ec106d5aade1c696f8731671455aee83>`_ #4530 Book: Update link title to match cookbook article title (dangarzon)
 - `bf61658 <https://github.com/symfony/symfony-docs/commit/bf616581f4ccce6d355413595fb6fe69831fc553>`_ #4523 Add missing semicolons to PropertyAccess examples (loonytoons)
 - `8beadce <https://github.com/symfony/symfony-docs/commit/8beadce92dbc15b1c40d443abbf33e2ae4b86007>`_ #4496 [Book][Security] link to a bundle's current (not master) docs (xabbuh)
+- `43809b1 <https://github.com/symfony/symfony-docs/commit/43809b1f9a13fb4c20d8ac4d3b573fb73d614a28>`_ #4479 remove versionadded directives for old versions (xabbuh)
 - `5db8386 <https://github.com/symfony/symfony-docs/commit/5db83862999bb2e8c2a30c6bc36cc0cf7a6a24a9>`_ #4462 [Reference] Fixed lots of things using the review bot (WouterJ)
 - `dbfaac1 <https://github.com/symfony/symfony-docs/commit/dbfaac1f1b307a6143e3f8b5a1c326c0b330d662>`_ #4459 Fix up the final sentence to be a bit cleaner. (micheal)
 - `3761e50 <https://github.com/symfony/symfony-docs/commit/3761e50b36cb274af2d0de72a129ad2010d9c5ca>`_ #4514 [Contributing][Documentation] typo fix (xabbuh)
