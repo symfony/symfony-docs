@@ -101,6 +101,16 @@ is the item value and the array value is the item's label::
     to ensure that the user input is validated properly and useless database
     updates caused by a data type mismatch are avoided.
 
+Using the `choice_label_format` option, you can use a pre-defined format for each choice's label::
+
+    $builder->add('gender', 'choice', array(
+        // ...
+        'choice_label_format' => 'my_form.choices.%name%.%choice%'
+    ));
+
+You can also define this option [on the form itself](/reference/forms/types/options/form.rst.inc#choice_label_format).
+
+
 choice_list
 ~~~~~~~~~~~
 
@@ -179,6 +189,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
