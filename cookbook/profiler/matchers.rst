@@ -70,24 +70,29 @@ something like::
     // src/Acme/DemoBundle/Profiler/SuperAdminMatcher.php
     namespace Acme\DemoBundle\Profiler;
 
-    use Symfony\Component\Security\Core\SecurityContext;
+    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
     class SuperAdminMatcher implements RequestMatcherInterface
     {
-        protected $securityContext;
+        protected $authorizationChecker;
 
-        public function __construct(SecurityContext $securityContext)
+        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
         {
-            $this->securityContext = $securityContext;
+            $this->authorizationChecker = $authorizationChecker;
         }
 
         public function matches(Request $request)
         {
-            return $this->securityContext->isGranted('ROLE_SUPER_ADMIN');
+            return $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN');
         }
     }
+
+.. versionadded:: 2.6
+    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Authorization\\AuthorizationCheckerInterface` was
+    introduced in Symfony 2.6. Prior, you had to use the ``isGranted`` method of
+    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
 
 Then, you need to configure the service:
 
@@ -101,7 +106,7 @@ Then, you need to configure the service:
         services:
             acme_demo.profiler.matcher.super_admin:
                 class: "%acme_demo.profiler.matcher.super_admin.class%"
-                arguments: ["@security.context"]
+                arguments: ["@security.authorization_checker"]
 
     .. code-block:: xml
 
@@ -114,7 +119,7 @@ Then, you need to configure the service:
         <services>
             <service id="acme_demo.profiler.matcher.super_admin"
                 class="%acme_demo.profiler.matcher.super_admin.class%">
-                <argument type="service" id="security.context" />
+                <argument type="service" id="security.authorization_checker" />
         </services>
 
     .. code-block:: php
@@ -129,8 +134,12 @@ Then, you need to configure the service:
 
         $container->setDefinition('acme_demo.profiler.matcher.super_admin', new Definition(
             '%acme_demo.profiler.matcher.super_admin.class%',
-            array(new Reference('security.context'))
+            array(new Reference('security.authorization_checker'))
         );
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 Now the service is registered, the only thing left to do is configure the
 profiler to use this service as the matcher:
