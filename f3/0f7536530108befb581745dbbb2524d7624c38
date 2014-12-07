@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-07-23T22:02:16Z
+
+I think it's a bit too long for the book chapter and a bit too short in the config reference. What do you think about moving the information about the `logging` setting to the config reference and replacing the book section with a simple `.. note::`, including a reference to the config reference?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-07-24T07:02:54Z
+
+Can you add [WCM] (which means Waiting Code Merge) to the pull request title?
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2014-07-24T07:04:13Z
+
+@xabbuh done :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-18T07:28:23Z
+
+Looks good to me. :+1:
