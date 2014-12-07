@@ -123,6 +123,8 @@ Using ``@Security``, this looks like:
         // ...
     }
 
+.. _best-practices-directly-isGranted:
+
 Checking Permissions without @Security
 --------------------------------------
 
