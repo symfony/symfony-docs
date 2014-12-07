@@ -67,7 +67,7 @@ DebugBundle and Twig Integration
 
 The ``DebugBundle`` allows greater integration of the component into the
 Symfony full stack framework. It is enabled by default in the *dev* and *test*
-environement of the standard edition since version 2.6.
+environment of the standard edition since version 2.6.
 
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
@@ -131,7 +131,7 @@ then its dump representation::
 
 .. note::
 
-    The gray arrow is a toggle button for hidding/showing children of
+    The gray arrow is a toggle button for hiding/showing children of
     nested structures.
 
 .. code-block:: php
@@ -232,7 +232,7 @@ then its dump representation::
         "When a dump goes over its maximum items limit,\n"
         ."or when some special objects are encountered,\n"
         ."children can be replaced by an ellipsis and\n"
-        ."optionnally followed by a number that says how\n"
+        ."optionally followed by a number that says how\n"
         ."many have been removed; `9` in this case.\n"
     );
     dump($var);
