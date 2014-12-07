@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-28T21:44:54Z
+
+I think it makes sense to add this.
+
+@thePanz and I tried to make it work by adding the same configuration to the `.htaccess` file with no success. I'm not sure if there is anything in Apache restricting the usage to only work in the virtual host container. However, adding these comments doesn't really hurt and hopefully makes people aware of possible future issues.
