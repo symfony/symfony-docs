@@ -139,12 +139,12 @@ view layer:
 
 .. code-block:: html+jinja
 
-    <form method="POST" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         {{ form_widget(form) }}
 
         <input type="submit" value="Create"
                class="btn btn-default pull-right" />
-    </form>
+    {{ form_end(form) }}
 
 Rendering the Form
 ------------------
