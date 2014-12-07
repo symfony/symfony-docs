@@ -9,7 +9,7 @@ Symfony test suite to check that you have not broken anything.
 PHPUnit
 -------
 
-To run the Symfony test suite, `install PHPUnit`_ 3.7 (or later) first.
+To run the Symfony test suite, `install PHPUnit`_ 4.2 (or later) first.
 
 Dependencies (optional)
 -----------------------
