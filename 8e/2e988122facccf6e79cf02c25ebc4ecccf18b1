@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-07T12:23:22Z
+
+Thanks for the PR, @xelaris! It looks like a complete valid change (after the best practices were created, the authors of it wanted to undeprecate form_enctype, but after a discussion they decided to promote `form_start` and `form_end` instead).
+
+I wonder why Ryan didn't update this one in https://github.com/symfony/symfony-docs/pull/4465 , maybe he overlooked this example? @weaverryan can you please merge this PR if you think this change is correct?
