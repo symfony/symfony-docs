@@ -31,6 +31,8 @@ New Documentation
 - `ed5c61f <https://github.com/symfony/symfony-docs/commit/ed5c61faa37e06aa6c21b8036ecb32403b1b846c>`_ #4411 Added a reference to the Bootstrap 3 form theme (javiereguiluz)
 - `766e01f <https://github.com/symfony/symfony-docs/commit/766e01fa0698203db0661b11cdf941daac657459>`_ #4169 [Components][Form] document $deep and $flatten of getErrors() (xabbuh)
 - `1d88a1b <https://github.com/symfony/symfony-docs/commit/1d88a1b6b029d4dd2e14534f44e3b1b6b745caf9>`_ #4443 Added the release dates for the upcoming Symfony 3 versions (javiereguiluz)
+- `3329bd2 <https://github.com/symfony/symfony-docs/commit/3329bd2e1fd17c2ad0ef3c7d3700922ba009ff5c>`_ #4424 [#4243] Tweaks to the new var-dumper component (weaverryan, nicolas-grekas)
+- `9caea6f <https://github.com/symfony/symfony-docs/commit/9caea6f5b0a4e2e3ecfeb8f9e32199db2bdba47c>`_ #4336 [Form] Add entity manager instance support for em option (egeloen)
 - `f2ab245 <https://github.com/symfony/symfony-docs/commit/f2ab245ac945e86fe4c6553efe37acb6556a23bd>`_ #4374 [WCM] Revamped the Quick Start tutorial (javiereguiluz)
 - `2c190ed <https://github.com/symfony/symfony-docs/commit/2c190ed8af7517607931dca6da41b4f7ad987b6c>`_ #4427 Update most important book articles to follow the best practices (WouterJ)
 - `12a09ab <https://github.com/symfony/symfony-docs/commit/12a09ab7806b4f57d109929fa03c770cc7e03169>`_ #4377 Added interlinking and fixed install template for reusable bundles (WouterJ)
