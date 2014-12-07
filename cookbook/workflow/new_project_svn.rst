@@ -46,28 +46,27 @@ widespread standard structure:
 Initial Project Setup
 ---------------------
 
-To get started, you'll need to download Symfony and get the basic Subversion setup:
+To get started, you'll need to download Symfony and get the basic Subversion setup.
+First, download and get your Symfony project running by following the
+:doc:`Installation </book/installation>` chapter.
 
-1. Download the `Symfony Standard Edition`_ with or without vendors.
+Once you have your new project directory and things are working, follow along
+with these steps:
 
-2. Unzip/untar the distribution. It will create a folder called Symfony with
-   your new project structure, config files, etc. Rename it to whatever you
-   like.
-
-3. Checkout the Subversion repository that will host this project. Suppose
+1. Checkout the Subversion repository that will host this project. Suppose
    it is hosted on `Google code`_ and called ``myproject``:
 
    .. code-block:: bash
 
         $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
-4. Copy the Symfony project files in the Subversion folder:
+2. Copy the Symfony project files in the Subversion folder:
 
    .. code-block:: bash
 
         $ mv Symfony/* myproject/
 
-5. Now, set the ignore rules. Not everything *should* be stored in your Subversion
+3. Now, set the ignore rules. Not everything *should* be stored in your Subversion
    repository. Some files (like the cache) are generated and others (like
    the database configuration) are meant to be customized on each machine.
    This makes use of the ``svn:ignore`` property, so that specific files can
@@ -88,21 +87,21 @@ To get started, you'll need to download Symfony and get the basic Subversion set
 
         $ svn ci -m "commit basic Symfony ignore list (vendor, app/bootstrap*, app/config/parameters.yml, app/cache/*, app/logs/*, web/bundles)"
 
-6. The rest of the files can now be added and committed to the project:
+4. The rest of the files can now be added and committed to the project:
 
    .. code-block:: bash
 
         $ svn add --force .
         $ svn ci -m "add basic Symfony Standard 2.X.Y"
 
-7. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
+5. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
    The ``parameters.yml`` file is ignored by svn (see above) so that
    machine-specific settings like database passwords aren't committed. By
    creating the ``parameters.yml.dist`` file, new developers can quickly clone
    the project, copy this file to ``parameters.yml``, customize it, and start
    developing.
 
-8. Finally, download all of the third-party vendor libraries by
+6. Finally, download all of the third-party vendor libraries by
    executing Composer. For details, see :ref:`installation-updating-vendors`.
 
 .. tip::

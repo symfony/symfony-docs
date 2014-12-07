@@ -19,24 +19,10 @@ that's stored using the `Git`_ source control management system.
 Initial Project Setup
 ---------------------
 
-To get started, you'll need to download Symfony and initialize your local
-git repository:
+To get started, you'll need to download Symfony and get things running. See
+the :doc:`/book/installation` chapter for details.
 
-#. Download the `Symfony Standard Edition`_ using Composer:
-
-   .. code-block:: bash
-
-        $ php composer.phar create-project symfony/framework-standard-edition path/ '~2.5'
-
-   .. tip::
-
-       Add the ``-vvv`` flag to see everything that Composer is doing - this is
-       especially useful on a slow connection where it may seem that nothing is
-       happening.
-
-   Composer will now download the Standard Distribution along with all of the
-   required vendor libraries. For more information about downloading Symfony using
-   Composer, see `Installing Symfony using Composer`_.
+Once your project is running, just follow these simple steps:
 
 #. Initialize your Git repository:
 
@@ -89,16 +75,6 @@ to learn more about how to configure and develop inside your application.
 .. _cookbook-managing-vendor-libraries:
 
 .. include:: _vendor_deps.rst.inc
-
-Vendors and Submodules
-~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of using the ``composer.json`` system for managing your vendor
-libraries, you may instead choose to use native `git submodules`_. There
-is nothing wrong with this approach, though the ``composer.json`` system
-is the official way to solve this problem and probably much easier to
-deal with. Unlike Git submodules, Composer is smart enough to calculate
-which libraries depend on which other libraries.
 
 Storing your Project on a remote Server
 ---------------------------------------
