@@ -62,6 +62,8 @@ Full Default Configuration
                         MultipleActiveResultSets:  ~
                         driver:               pdo_mysql
                         platform_service:     ~
+
+                        # when true, queries are logged to a "doctrine" monolog channel
                         logging:              "%kernel.debug%"
                         profiling:            "%kernel.debug%"
                         driver_class:         ~
