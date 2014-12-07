@@ -140,12 +140,9 @@ the class namespace as a parameter:
     # app/config/services.yml
 
     # service definition with class namespace as parameter
-    parameters:
-        slugger.class: AppBundle\Utils\Slugger
-
     services:
         app.slugger:
-            class: "%slugger.class%"
+            class: AppBundle\Utils\Slugger
 
 This practice is cumbersome and completely unnecessary for your own services:
 
@@ -335,7 +332,7 @@ in a matter of seconds.
 
 .. _`full definition`: http://en.wikipedia.org/wiki/Business_logic
 .. _`Doctrine project`: http://www.doctrine-project.org/
-.. _`fixture class`: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
+.. _`fixture class`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`the Symfony Code Standards`: http://symfony.com/doc/current/contributing/code/standards.html

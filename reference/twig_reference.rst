@@ -8,7 +8,7 @@ Symfony Twig Extensions
 
 Twig is the default template engine for Symfony. By itself, it already contains
 a lot of built-in functions, filters, tags and tests (learn more about them
-from the the `Twig Reference`_).
+from the `Twig Reference`_).
 
 Symfony adds more custom extensions on top of Twig to integrate some components
 into the Twig templates. You can find more information about the custom
@@ -682,6 +682,10 @@ The available attributes are:
 * ``app.environment``
 * ``app.debug``
 * ``app.security``
+
+.. versionadded:: 2.6
+     The ``app.security`` global is deprecated as of 2.6. The user is already available
+     as ``app.user`` and ``is_granted()`` is registered as function.
 
 Symfony Standard Edition Extensions
 -----------------------------------

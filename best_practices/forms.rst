@@ -15,9 +15,7 @@ Building Forms
 The Form component allows you to build forms right inside your controller
 code. Honestly, unless you need to reuse the form somewhere else, that's
 totally fine. But for organize and reuse, we recommend that you define each
-form in its own PHP class:
-
-.. code-block:: php
+form in its own PHP class::
 
     namespace AppBundle\Form;
 
@@ -51,9 +49,7 @@ form in its own PHP class:
         }
     }
 
-To use the class, use ``createForm`` and instantiate the new class:
-
-.. code-block:: php
+To use the class, use ``createForm`` and instantiate the new class::
 
     use AppBundle\Form\PostType;
     // ...
@@ -110,9 +106,7 @@ directly in your form class, this would effectively limit the scope of that form
 
 This form *may* have been designed for creating posts, but if you wanted
 to reuse it for editing posts, the button label would be wrong. Instead,
-some developers configure form buttons in the controller:
-
-.. code-block:: php
+some developers configure form buttons in the controller::
 
     namespace AppBundle\Controller\Admin;
 

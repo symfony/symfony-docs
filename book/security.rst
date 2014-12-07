@@ -438,7 +438,7 @@ Next, create the controller that will display the login form::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
+    use Symfony\Component\Security\Core\Security;
 
     class SecurityController extends Controller
     {
@@ -447,19 +447,19 @@ Next, create the controller that will display the login form::
             $session = $request->getSession();
 
             // get the login error if there is one
-            if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
                 $error = $request->attributes->get(
-                    SecurityContextInterface::AUTHENTICATION_ERROR
+                    Security::AUTHENTICATION_ERROR
                 );
-            } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-                $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-                $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+            } elseif (null !== $session && $session->has(Security::AUTHENTICATION_ERROR)) {
+                $error = $session->get(Security::AUTHENTICATION_ERROR);
+                $session->remove(Security::AUTHENTICATION_ERROR);
             } else {
                 $error = '';
             }
 
             // last username entered by the user
-            $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+            $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
 
             return $this->render(
                 'AcmeSecurityBundle:Security:login.html.twig',
@@ -713,7 +713,7 @@ see :doc:`/cookbook/security/form_login`.
     ``/login_check`` doesn't match any firewall, you'll receive a ``Unable
     to find the controller for path "/login_check"`` exception.
 
-    **4. Multiple firewalls don't share security context**
+    **4. Multiple firewalls don't share the same security context**
 
     If you're using multiple firewalls and you authenticate against one firewall,
     you will *not* be authenticated against any other firewalls automatically.
@@ -1174,7 +1174,7 @@ authorization from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
@@ -1185,6 +1185,10 @@ authorization from inside a controller::
 
 .. versionadded:: 2.5
     The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
+
+.. versionadded:: 2.6
+     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException`
 method creates a special :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
@@ -1618,13 +1622,17 @@ Retrieving the User Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.context`` service. From inside a controller, this will
+via the ``security.token_storage`` service. From inside a controller, this will
 look like::
 
     public function indexAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
     }
+
+.. versionadded:: 2.6
+    The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``getToken()`` method of the ``security.context`` service.
 
 In a controller this can be shortcut to:
 
@@ -1895,12 +1903,16 @@ authorization from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
         // ...
     }
+
+.. versionadded:: 2.6
+     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 .. caution::
 
@@ -1925,7 +1937,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     public function indexAction()
     {
-        if (!$this->get('security.context')->isGranted(new Expression(
+        if (!$this->get('security.authorization_checker')->isGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
         ))) {
             throw new AccessDeniedException();
@@ -1933,6 +1945,10 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
         // ...
     }
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
 user object's ``isSuperAdmin()`` method returns ``true``, then access will
@@ -1979,10 +1995,10 @@ Additionally, you have access to a number of functions inside the expression:
         use Symfony\Component\ExpressionLanguage\Expression;
         // ...
 
-        $sc = $this->get('security.context');
-        $access1 = $sc->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        $authorizationChecker = $this->get('security.authorization_checker');
+        $access1 = $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $access2 = $sc->isGranted(new Expression(
+        $access2 = $authorizationChecker->isGranted(new Expression(
             'is_remember_me() or is_fully_authenticated()'
         ));
 
