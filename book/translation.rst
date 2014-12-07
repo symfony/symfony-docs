@@ -400,6 +400,15 @@ checks translation resources for several different locales:
 3. If the translation still isn't found, Symfony uses the ``fallback`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
 
+.. versionadded:: 2.6
+    The ability to log missing translations was introduced in Symfony 2.6.
+
+.. note::
+
+    When Symfony doesn't find a translation in the given locale, it will 
+    add the missing translation to the log file. For details, 
+    see :ref:`reference-framework-translator-logging`.
+
 .. _book-translation-user-locale:
 
 Handling the User's Locale
