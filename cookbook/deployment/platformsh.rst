@@ -25,17 +25,18 @@ Prepare Your Application
 
 To deploy your Symfony application on Platform.sh, you simply need to add a 
 ``.platform.app.yaml`` at the root of your Git repository which will tell
-Platform.sh how to deploy your application (read more about `Platform.sh 
-configuration files`_).
+Platform.sh how to deploy your application (read more about 
+`Platform.sh configuration files`_).
 
 .. code-block:: yaml
 
     # .platform.app.yaml
+    
     # This file describes an application. You can have multiple applications
     # in the same project.
 
     # The name of this app. Must be unique within a project.
-    name: php
+    name: myphpproject
 
     # The toolstack used to build the application.
     toolstack: "php:symfony"
@@ -98,27 +99,27 @@ following file:
 
 .. code-block:: php
     
-    # app/config/parameters_platform.php
+    // app/config/parameters_platform.php
     <?php
     $relationships = getenv("PLATFORM_RELATIONSHIPS");
-    if (!$relationships) {
-      return;
+        if (!$relationships) {
+            return;
     }
 
-    $relationships = json_decode(base64_decode($relationships), TRUE);
+    $relationships = json_decode(base64_decode($relationships), true);
 
     foreach ($relationships['database'] as $endpoint) {
-      if (empty($endpoint['query']['is_master'])) {
-        continue;
-      }
+        if (empty($endpoint['query']['is_master'])) {
+          continue;
+        }
 
-      $container->setParameter('database_driver', 'pdo_' . $endpoint['scheme']);
-      $container->setParameter('database_host', $endpoint['host']);
-      $container->setParameter('database_port', $endpoint['port']);
-      $container->setParameter('database_name', $endpoint['path']);
-      $container->setParameter('database_user', $endpoint['username']);
-      $container->setParameter('database_password', $endpoint['password']);
-      $container->setParameter('database_path', '');
+        $container->setParameter('database_driver', 'pdo_' . $endpoint['scheme']);
+        $container->setParameter('database_host', $endpoint['host']);
+        $container->setParameter('database_port', $endpoint['port']);
+        $container->setParameter('database_name', $endpoint['path']);
+        $container->setParameter('database_user', $endpoint['username']);
+        $container->setParameter('database_password', $endpoint['password']);
+        $container->setParameter('database_path', '');
     }
 
     # Store session into /tmp.
@@ -140,11 +141,12 @@ command that you see on the Platform.sh web UI):
 
 .. code-block:: bash
 
-    $ git remote add platform [PROJECT-ID]@git.[CLUSTER].platform.sh:[PROJECT].git
+    $ git remote add platform [PROJECT-ID]@git.[CLUSTER].platform.sh:[PROJECT-ID].git
 
-
-* PROJECT-ID: Unique identifier of your project. Something like: *kjh43kbobssae*.
-* CLUSTER: Server location where your project is deployed. It can be *eu* or *us*.
+``PROJECT-ID``
+    Unique identifier of your project. Something like ``kjh43kbobssae``
+``CLUSTER``
+    Server location where your project is deplyed. It can be ``eu`` or ``us``
 
 Commit the Platform.sh specific files created in the previous section:
 
@@ -158,20 +160,7 @@ Push your code base to the newly added remote:
 
 .. code-block:: bash
 
-    $ git push -u platform master
-
-    Counting objects: 27, done.
-    Delta compression using up to 4 threads.
-    Compressing objects: 100% (11/11), done.
-    Writing objects: 100% (16/16), 2.47 KiB | 0 bytes/s, done.
-    Total 16 (delta 7), reused 12 (delta 5)
-
-    Processing activity environment.push
-      Found 213 new commits.
-
-      Building application 'php' with toolstack 'php:symfony' (tree: 2248cf8)
-        Found a `composer.json`, installing dependencies.
-    ...
+    $ git push platform master
 
 That's it! Your application is being deployed on Platform.sh and you'll soon be
 able to access it in your browser.
