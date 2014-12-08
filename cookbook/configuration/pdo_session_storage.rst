@@ -221,10 +221,10 @@ following (MySQL):
 .. code-block:: sql
 
     CREATE TABLE `session` (
-        `session_id` VARBINARY(128) NOT NULL PRIMARY KEY,
-        `session_data` BLOB NOT NULL,
-        `session_time` INTEGER UNSIGNED NOT NULL,
-        `session_lifetime` MEDIUMINT NOT NULL
+        `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY,
+        `sess_data` BLOB NOT NULL,
+        `sess_time` INTEGER UNSIGNED NOT NULL,
+        `sess_lifetime` MEDIUMINT NOT NULL
     ) COLLATE utf8_bin, ENGINE = InnoDB;
 
 PostgreSQL
@@ -235,10 +235,10 @@ For PostgreSQL, the statement should look like this:
 .. code-block:: sql
 
     CREATE TABLE session (
-        session_id VARCHAR(128) NOT NULL PRIMARY KEY,
-        session_data BYTEA NOT NULL,
-        session_time INTEGER NOT NULL,
-        session_lifetime INTEGER NOT NULL
+        sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
+        sess_data BYTEA NOT NULL,
+        sess_time INTEGER NOT NULL,
+        sess_lifetime INTEGER NOT NULL
     );
 
 Microsoft SQL Server
@@ -249,12 +249,12 @@ For MSSQL, the statement might look like the following:
 .. code-block:: sql
 
     CREATE TABLE [dbo].[session](
-        [session_id] [nvarchar](255) NOT NULL,
-        [session_data] [ntext] NOT NULL,
-        [session_time] [int] NOT NULL,
-        [session_lifetime] [int] NOT NULL,
+        [sess_id] [nvarchar](255) NOT NULL,
+        [sess_data] [ntext] NOT NULL,
+        [sess_time] [int] NOT NULL,
+        [sess_lifetime] [int] NOT NULL,
         PRIMARY KEY CLUSTERED(
-            [session_id] ASC
+            [sess_id] ASC
         ) WITH (
             PAD_INDEX  = OFF,
             STATISTICS_NORECOMPUTE  = OFF,
