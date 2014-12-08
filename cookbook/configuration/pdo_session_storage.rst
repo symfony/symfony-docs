@@ -4,6 +4,12 @@
 How to Use PdoSessionHandler to Store Sessions in the Database
 ==============================================================
 
+.. caution::
+
+    There was a backwards-compatability break in Symfony 2.6: the database
+    schema changed slightly. See :ref:`Symfony 2.6 Changes <pdo-session-handle-26-changes>`
+    for details.
+
 The default Symfony session storage writes the session information to
 file(s). Most medium to large websites use a database to store the session
 values instead of files, because databases are easier to use and scale in a
@@ -24,18 +30,11 @@ configuration format of your choice):
                 # ...
                 handler_id: session.handler.pdo
 
-        parameters:
-            pdo.db_options:
-                db_table:        session
-                db_id_col:       session_id
-                db_data_col:     session_data
-                db_time_col:     session_time
-                db_lifetime_col: session_lifetime
-
         services:
             pdo:
                 class: PDO
                 arguments:
+                    # see below for how to use your existing DB config
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
                     password: mypassword
@@ -44,7 +43,7 @@ configuration format of your choice):
 
             session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-                arguments: ["@pdo", "%pdo.db_options%"]
+                arguments: ["@pdo"]
 
     .. code-block:: xml
 
@@ -52,16 +51,6 @@ configuration format of your choice):
         <framework:config>
             <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
         </framework:config>
-
-        <parameters>
-            <parameter key="pdo.db_options" type="collection">
-                <parameter key="db_table">session</parameter>
-                <parameter key="db_id_col">session_id</parameter>
-                <parameter key="db_data_col">session_data</parameter>
-                <parameter key="db_time_col">session_time</parameter>
-                <parameter key="db_lifetime_col">session_lifetime</parameter>
-            </parameter>
-        </parameters>
 
         <services>
             <service id="pdo" class="PDO">
@@ -76,7 +65,6 @@ configuration format of your choice):
 
             <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
-                <argument>%pdo.db_options%</argument>
             </service>
         </services>
 
@@ -94,14 +82,6 @@ configuration format of your choice):
             ),
         ));
 
-        $container->setParameter('pdo.db_options', array(
-            'db_table'        => 'session',
-            'db_id_col'       => 'session_id',
-            'db_data_col'     => 'session_data',
-            'db_time_col'     => 'session_time',
-            'db_lifetime_col' => 'session_lifetime',
-        ));
-
         $pdoDefinition = new Definition('PDO', array(
             'mysql:dbname=mydatabase',
             'myuser',
@@ -112,15 +92,70 @@ configuration format of your choice):
 
         $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             new Reference('pdo'),
-            '%pdo.db_options%',
         ));
         $container->setDefinition('session.handler.pdo', $storageDefinition);
 
-* ``db_table``: The name of the session table in your database
-* ``db_id_col``: The name of the id column in your session table (VARCHAR(128))
-* ``db_data_col``: The name of the value column in your session table (BLOB)
-* ``db_time_col``: The name of the time column in your session table (INTEGER)
-* ``db_lifetime_col``: The name of the lifetime column in your session table (INTEGER)
+Configuring the Table and Column Names
+--------------------------------------
+
+This will expect a ``sessions`` table with a number of different columns.
+The table name, and all of the column names, can be configured by passing
+a second array argument to ``PdoSessionHandler``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            # ...
+            session.handler.pdo:
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+                arguments:
+                    - "@pdo"
+                    - { 'db_table': 'sessions'}
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+
+        <services>
+
+            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
+                <argument type="service" id="pdo" />
+                <argument type="collection">
+                    <argument key="db_table">sessions</argument>
+                </argument>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        // ...
+
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
+            new Reference('pdo'),
+            array('db_table' => 'session')
+        ));
+        $container->setDefinition('session.handler.pdo', $storageDefinition);
+
+.. versionadded:: 2.6
+    The ``db_lifetime_col`` was introduced in Symfony 2.6 This column did
+    not exist previously.
+
+The following things can be configured:
+
+* ``db_table``: (default ``session``) The name of the session table in your
+  database;
+* ``db_id_col``: (default ``sess_id``) The name of the id column in your
+  session table (VARCHAR(128));
+* ``db_data_col``: (default ``sess_data``) The name of the value column in
+  your session table (BLOB);
+* ``db_time_col``: (default ``sess_time``) The name of the time column in
+  your session table (INTEGER);
+* ``db_lifetime_col``: (default ``sess_lifetime``) The name of the lifetime
+  column in your session table (INTEGER).
 
 Sharing your Database Connection Information
 --------------------------------------------
@@ -162,6 +197,20 @@ of your project's data, you can use the connection settings from the
 
 Example SQL Statements
 ----------------------
+
+.. _pdo-session-handle-26-changes:
+
+.. sidebar:: Schema Changes needed when Upgrading to Symfony 2.6
+
+    If you use the `PdoSessionHandler` prior to Symfony 2.6 and upgrade, you'll
+    need to make a few changes to your session table:
+
+    * A new session lifetime (``sess_lifetime`` by default) integer column
+      needs to be added;
+    * The data column (``sess_data`` by default) needs to be changed to a
+      BLOG type.
+
+    Check the SQL statements below for more details.
 
 MySQL
 ~~~~~
