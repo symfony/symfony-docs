@@ -101,7 +101,6 @@ is the item value and the array value is the item's label::
     to ensure that the user input is validated properly and useless database
     updates caused by a data type mismatch are avoided.
 
-
 choice_list
 ~~~~~~~~~~~
 

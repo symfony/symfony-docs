@@ -43,6 +43,5 @@ For the format itself, you have access to the following placeholders:
 
 .. tip::
 
-    If you would like all your forms to use the same format for the choice-labels, just
-    [create a Form extension](http://symfony.com/doc/current/cookbook/form/create_form_type_extension.html),
+    If you would like all your forms to use the same format, just [create a Form extension](http://symfony.com/doc/current/cookbook/form/create_form_type_extension.html);
     have it extend the type ``form``, and add the `choice_label_format` as one of it's default options.
