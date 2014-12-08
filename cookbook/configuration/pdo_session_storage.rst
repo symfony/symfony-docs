@@ -140,12 +140,13 @@ of your project's data, you can use the connection settings from the
 
     .. code-block:: yaml
 
-        pdo:
-            class: PDO
-            arguments:
-                - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                - "%database_user%"
-                - "%database_password%"
+        services:
+            pdo:
+                class: PDO
+                arguments:
+                    - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
+                    - "%database_user%"
+                    - "%database_password%"
 
     .. code-block:: xml
 
