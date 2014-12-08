@@ -41,7 +41,7 @@ Step 2: Install vendors
 
 .. code-block:: bash
 
-    $ php composer.phar --dev install
+    $ php composer.phar install
 
 .. note::
 
@@ -56,14 +56,14 @@ Step 2: Install vendors
     .. code-block:: bash
 
         $ php installer
-        $ php composer.phar --dev install
+        $ php composer.phar install
 
 After installation, you can update the vendors to their latest version with
 the follow command:
 
 .. code-block:: bash
 
-    $ php composer.phar --dev update
+    $ php composer.phar update
 
 Running
 -------
