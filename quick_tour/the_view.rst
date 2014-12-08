@@ -126,7 +126,7 @@ Open the ``app/Resources/views/base.html.twig`` file that corresponds to the
 
 The ``{% block %}`` tags tell the template engine that a child template may
 override those portions of the template. In this example, the ``index.html.twig``
-template overrides the ``content`` block, but not the ``title`` block, which will
+template overrides the ``body`` block, but not the ``title`` block, which will
 display the default content defined in the ``base.html.twig`` template.
 
 Using Tags, Filters, and Functions
