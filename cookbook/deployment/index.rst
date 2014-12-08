@@ -5,6 +5,6 @@ Deployment
     :maxdepth: 2
 
     tools
-    platformsh
     azure-website
     heroku
+    platformsh
