@@ -95,9 +95,7 @@ Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Platform.sh overrides your database specific configuration via importing the
-following file:
-
-.. code-block:: php
+following file::
     
     // app/config/parameters_platform.php
     <?php
