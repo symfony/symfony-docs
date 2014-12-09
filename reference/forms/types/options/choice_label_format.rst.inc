@@ -17,7 +17,7 @@ Using this option, you can use a pre-defined format for each choice's label::
         )
     ));
 
-In the given example we would then end up with the following (translateable) labels::
+From the given example above, the resulting labels would look like this:
 
     my_form.choices.fruits.apple
     my_form.choices.fruits.banana
@@ -43,5 +43,5 @@ For the format itself, you have access to the following placeholders:
 
 .. tip::
 
-    If you would like all your forms to use the same format, just [create a Form extension](http://symfony.com/doc/current/cookbook/form/create_form_type_extension.html);
+    If you would like all your forms to use the same format, just :doc:`create a Form extension </cookbook/form/create_form_type_extension>`;
     have it extend the type ``form``, and add the `choice_label_format` as one of it's default options.
