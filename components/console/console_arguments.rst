@@ -1,8 +1,6 @@
 .. index::
     single: Console; Console arguments
 
-.. _understand-how-console-arguments-are-handled:
-
 Understanding how Console Arguments Are Handled
 ===============================================
 
