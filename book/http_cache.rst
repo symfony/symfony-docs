@@ -328,6 +328,13 @@ its creation more manageable::
     // set a custom Cache-Control directive
     $response->headers->addCacheControlDirective('must-revalidate', true);
 
+.. tip::
+
+    If you need to set cache headers for many different controller actions,
+    you might want to look into the FOSHttpCacheBundle_. It provides a way
+    to define cache headers based on the URL pattern and other request
+    properties.
+
 Public vs private Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1051,21 +1058,35 @@ Cache Invalidation
     "There are only two hard things in Computer Science: cache invalidation
     and naming things." -- Phil Karlton
 
-You should never need to invalidate cached data because invalidation is already
-taken into account natively in the HTTP cache models. If you use validation,
-you never need to invalidate anything by definition; and if you use expiration
-and need to invalidate a resource, it means that you set the expires date
-too far away in the future.
+Once an URL is cached by a caching reverse proxy, the proxy will not ask the
+application for that content anymore. This allows the cache to do fast
+responses and reduces the load on your application. However, you risk
+delivering outdated content. A way out of this dilemma is to use long
+cache lifetimes, but to actively notify the caching proxy when content
+changes. Reverse proxies usually provide a channel to receive such
+notifications, usually through special HTTP requests.
 
-.. note::
+.. tip::
 
-    Since invalidation is a topic specific to each type of reverse proxy,
-    if you don't worry about invalidation, you can switch between reverse
-    proxies without changing anything in your application code.
+    While cache invalidation sounds powerful, avoid it when possible. If you
+    fail to invalidate something, outdated caches will stay for a potentially
+    long time. Instead, use short cache lifetimes or use the validation model,
+    and adjust your controllers to perform efficient validation checks as
+    explained in :ref:`optimizing-cache-validation`.
 
-Actually, all reverse proxies provide ways to purge cached data, but you
-should avoid them as much as possible. The most standard way is to purge the
-cache for a given URL by requesting it with the special ``PURGE`` HTTP method.
+    Furthermore, since invalidation is a topic specific to each type of reverse
+    proxy, using this concept will tie you to a specific reverse proxy or need
+    additional efforts to support different proxies.
+
+Sometimes, however, you need that extra performance you can get when
+explicitly invalidating. For invalidation, your application needs to detect
+when content changes and tell the cache to remove the URLs which contain
+that data from its cache.
+
+If one content corresponds to one URL, the ``PURGE`` model works well.
+You send a request to the cache proxy with the HTTP method ``PURGE`` instead
+of ``GET`` and make the cache proxy detect this and remove the data from the
+cache instead of going to Symfony to get a response.
 
 Here is how you can configure the Symfony reverse proxy to support the
 ``PURGE`` HTTP method::
@@ -1085,11 +1106,15 @@ Here is how you can configure the Symfony reverse proxy to support the
                 return parent::invalidate($request, $catch);
             }
 
+            if ('127.0.0.1' !== $request->getClientIp()) {
+                return new Response('Invalid HTTP method', Response::HTTP_BAD_REQUEST);
+            }
+
             $response = new Response();
             if ($this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(200, 'Purged');
             } else {
-                $response->setStatusCode(404, 'Not purged');
+                $response->setStatusCode(200, 'Not found');
             }
 
             return $response;
@@ -1100,6 +1125,18 @@ Here is how you can configure the Symfony reverse proxy to support the
 
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data.
+
+In many applications, content is used in various URLs. More flexible concepts
+exist for those cases:
+
+* **Banning** invalidates responses matching regular expressions on the
+  URL or other criteria.
+* **Cache tagging** lets you add a tag for each content used in a response
+  so that you can invalidate all URLs containing a certain content.
+
+If you need such features, you should use the `FOSHttpCacheBundle`_. This
+bundle documents the configuration for the caching proxy and provides
+services to send invalidation requests based on URLs and Symfony routes.
 
 Summary
 -------
@@ -1128,3 +1165,4 @@ Learn more from the Cookbook
 .. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache
 .. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
 .. _`ESI`: http://www.w3.org/TR/esi-lang
+.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
