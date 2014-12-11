@@ -60,6 +60,87 @@ If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
 the port where the PHP application is running when generating absolute URLs,
 e.g. ``http://example.com:8080/my/path``.
 
+Session Cookies and Caching
+---------------------------
+
+By default, a sane caching proxy does not cache anything when a request is sent
+with :ref:`cookies or a basic authentication header<http-cache-introduction>`.
+This is because the content of the page is supposed to depend on the cookie
+value or authentication header.
+
+If you know for sure that the backend never uses sessions or basic
+authentication, have varnish remove the corresponding header from requests to
+prevent clients from bypassing the cache. In practice, you will need sessions
+at least for some parts of the site, e.g. when using forms with
+:ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to only
+start a session when actually needed, and clear the session when it is no
+longer needed.
+
+.. todo link to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
+
+Cookies can also be created in Javascript and used only in the frontend, e.g.
+Google analytics. These cookies do not matter for the backend and should not
+affect the caching decision. Configure your Varnish cache to
+`clean the cookies header`_. Unless you changed the PHP configuration, your session
+cookie has the name PHPSESSID:
+
+.. code-block:: varnish4
+
+    sub vcl_recv {
+        if (req.http.Cookie) {
+            set req.http.Cookie = ";" + req.http.Cookie;
+            set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+            set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+            if (req.http.Cookie == "") {
+                remove req.http.Cookie;
+            }
+        }
+    }
+
+If only small parts of your application depend on cookies (e.g. you display the
+username in the header), you can use :ref:`ESI <edge-side-includes>` for those
+fragments. Configure Varnish to store and look up requests in its cache even if
+Cookies are present in the request:
+
+.. code-block:: varnish4
+
+    sub vcl_recv() {
+        if (req.http.Cookie) {
+            /* Force cache lookup for requests with cookies */
+            return (lookup);
+        }
+    }
+
+You need to make sure that your backend correctly sets the ``Vary`` header to
+tell which responses vary on the cookie and which are the same::
+
+    public function loginAction()
+    {
+        // ...
+        $response->setVary('Cookie');
+        // ...
+    }
+
+Only set the ``Vary: Cookie`` header on actions that actually depend on whether
+the user is logged in, but not on any other actions.
+
+.. caution::
+
+    Be sure to test your setup. If you do not ``Vary`` content that depends on
+    the session, users will see content from somebody else. If you ``Vary`` too
+    much, the Varnish cache will be filled with duplicate content for every
+    user, rendering the cache pointless as cache hits will become rare.
+
+.. tip::
+
+    If content is not different for every user, but depends on the roles of a
+    user, a solution is to separate the cache per group. This pattern is
+    implemented and explained by the FOSHttpCacheBundle_ under the name
+    *User Context*.
+
 Ensure Consistent Caching Behaviour
 -----------------------------------
 
@@ -169,6 +250,7 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Varnish`: https://www.varnish-cache.org
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
+.. _`Clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/

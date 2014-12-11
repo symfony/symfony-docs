@@ -383,6 +383,8 @@ This has two very reasonable consequences:
   blog post). Caching them would prevent certain requests from hitting and
   mutating your application.
 
+.. _http-cache-defaults:
+
 Caching Rules and Defaults
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
