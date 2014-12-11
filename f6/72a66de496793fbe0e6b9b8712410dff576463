@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-11T09:03:44Z
+
+:+1: Why not? Consistency is always nice in the docs.
+
+@kix We need however take into account that someone might already refer to the old headline. Therefore we should add a label to keep the old anchor working. Can you please add one just before the headline? It would basically then look like this ("are" should actually be capitalised too):
+
+```rst
+.. _understand-how-console-arguments-are-handled:
+
+Understanding how Console Arguments Are Handled
+===============================================
+```
+
+---------------------------------------------------------------------------
+
+by kix at 2014-12-11T09:40:49Z
+
+@xabbuh, :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-11T09:44:22Z
+
+Thanks @kix
