@@ -8,7 +8,7 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
-|                | - `payload`_                                                        |
+|                | - `checkDNS`_                                                       |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -20,6 +20,16 @@ Basic Usage
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
+                        message: The url "{{ value }}" is not a valid url.
+                        protocols: [http, https]
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -30,18 +40,13 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Url()
+             * @Assert\Url(
+             *    message = "The url '{{ value }}' is not a valid url",
+             *    protocols = {"http", "https"}
+             * )
              */
              protected $bioUrl;
         }
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioUrl:
-                    - Url: ~
 
     .. code-block:: xml
 
@@ -53,7 +58,13 @@ Basic Usage
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="bioUrl">
-                    <constraint name="Url" />
+                    <constraint name="Url">
+                        <option name="message">The url "{{ value }}" is not a valid url.</option>
+                        <option name="protocols">
+                            <value>http</value>
+                            <value>https</value>
+                        </option>
+                    </constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -70,7 +81,10 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'message' => 'The url "{{ value }}" is not a valid url.',
+                    'protocols' => array('http', 'https'),
+                )));
             }
         }
 
@@ -91,6 +105,90 @@ protocols
 
 The protocols that will be considered to be valid. For example, if you also
 needed ``ftp://`` type URLs to be valid, you'd redefine the ``protocols``
-array, listing ``http``, ``https`` and also ``ftp``.
+array, listing ``http``, ``https``, and also ``ftp``.
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+checkDNS
+~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+By default, this constraint just validates the syntax of the given URL. If you
+also need to check whether the associated host exists, set the ``checkDNS``
+option to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
+                        message: The url "{{ value }}" is not a valid url.
+                        protocols: [http, https]
+                        checkDNS: true
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Url(
+             *    message = "The url '{{ value }}' is not a valid url",
+             *    protocols = {"http", "https"}
+             *    checkDNS = true
+             * )
+             */
+             protected $bioUrl;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url">
+                        <option name="message">The url "{{ value }}" is not a valid url.</option>
+                        <option name="protocols">
+                            <value>http</value>
+                            <value>https</value>
+                        </option>
+                        <option name="checkDNS">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'message' => 'The url "{{ value }}" is not a valid url.',
+                    'protocols' => array('http', 'https'),
+                    'checkDNS' => true,
+                )));
+            }
+        }
+
+This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
+of the ``ANY`` DNS record corresponding to the host associated with the given URL.
