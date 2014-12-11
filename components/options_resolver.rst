@@ -382,7 +382,7 @@ pretend that the ``host`` should always start with ``http://``. To do that,
 you can write normalizers. These closures will be executed after all options
 are passed and should return the normalized value. You can configure these
 normalizers by calling
-:method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizers`::
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizers`::
 
     // ...
     protected function setDefaultOptions(OptionsResolverInterface $resolver)

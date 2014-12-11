@@ -1,8 +1,8 @@
 .. index::
     single: Console; Console arguments
 
-Understand how Console Arguments are Handled
-============================================
+Understanding how Console Arguments Are Handled
+===============================================
 
 It can be difficult to understand the way arguments are handled by the console application.
 The Symfony Console application, like many other CLI utility tools, follows the behavior
