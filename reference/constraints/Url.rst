@@ -25,7 +25,9 @@ Basic Usage
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: ~
+                    - Url:
+                        message: The url "{{ value }}" is not a valid url.
+                        protocols: [http, https]
 
     .. code-block:: php-annotations
 
@@ -37,7 +39,10 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Url()
+             * @Assert\Url(
+             *    message = "The url '{{ value }}' is not a valid url",
+             *    protocols = {"http", "https"}
+             * )
              */
              protected $bioUrl;
         }
@@ -52,7 +57,13 @@ Basic Usage
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="bioUrl">
-                    <constraint name="Url" />
+                    <constraint name="Url">
+                        <option name="message">The url "{{ value }}" is not a valid url.</option>
+                        <option name="protocols">
+                            <value>http</value>
+                            <value>https</value>
+                        </option>
+                    </constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -69,7 +80,10 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'message' => 'The url "{{ value }}" is not a valid url.',
+                    'protocols' => array('http', 'https'),
+                )));
             }
         }
 
