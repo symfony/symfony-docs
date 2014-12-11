@@ -427,7 +427,7 @@ Sometimes, option values need to be normalized before you can use them. For
 instance, assume that the ``host`` should always start with ``http://``. To do
 that, you can write normalizers. Normalizers are executed after validating an
 option. You can configure a normalizer by calling
-:method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizer`::
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`::
 
     // ...
     class Mailer
@@ -449,9 +449,9 @@ option. You can configure a normalizer by calling
     }
 
 .. versionadded:: 2.6
-    The method :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizer`
+    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`
     was introduced in Symfony 2.6. Before, you had to use
-    :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizers`.
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizers`.
 
 The normalizer receives the actual ``$value`` and returns the normalized form.
 You see that the closure also takes an ``$options`` parameter. This is useful
@@ -588,9 +588,9 @@ comes from the default::
     }
 
 .. versionadded:: 2.6
-    The method :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setDefined`
+    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefined`
     was introduced in Symfony 2.6. Before, you had to use
-    :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setOptional`.
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setOptional`.
 
 You can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefined`
 to define an option without setting a default value. Then the option will only
@@ -644,8 +644,8 @@ options in one go::
     }
 
 .. versionadded:: 2.6
-    The method :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::isDefined`
-    and :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::getDefinedOptions`
+    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isDefined`
+    and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getDefinedOptions`
     were introduced in Symfony 2.6.
 
 The methods :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isDefined`
