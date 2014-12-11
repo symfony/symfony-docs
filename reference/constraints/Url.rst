@@ -8,6 +8,7 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
+|                | _ `checkDNS`_                                                       |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -26,6 +27,9 @@ Basic Usage
             properties:
                 bioUrl:
                     - Url: ~
+                        message: The url "{{ value }}" is not a valid url.
+                        protocols: [http, https]
+                        checkDNS: true
 
     .. code-block:: php-annotations
 
@@ -37,7 +41,11 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Url()
+             * @Assert\Url(
+             *    message = "The url '{{ value }}' is not a valid url",
+             *    protocols = {"http", "https"}
+             *    checkDNS = true
+             * )
              */
              protected $bioUrl;
         }
@@ -52,7 +60,14 @@ Basic Usage
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="bioUrl">
-                    <constraint name="Url" />
+                    <constraint name="Url">
+                        <option name="message">The url "{{ value }}" is not a valid url.</option>
+                        <option name="protocols">
+                            <value>http</value>
+                            <value>https</value>
+                        </option>
+                        <option name="checkDNS">true</option>
+                    </constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -69,7 +84,11 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'message' => 'The url "{{ value }}" is not a valid url.',
+                    'protocols' => array('http', 'https'),
+                    'checkDNS' => true,
+                )));
             }
         }
 
@@ -91,3 +110,11 @@ protocols
 The protocols that will be considered to be valid. For example, if you also
 needed ``ftp://`` type URLs to be valid, you'd redefine the ``protocols``
 array, listing ``http``, ``https``, and also ``ftp``.
+
+checkDNS
+~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to check
+the validity of ANY record of the host of the given url.
