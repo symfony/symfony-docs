@@ -19,6 +19,16 @@ Basic Usage
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: ~
+                        message: The url "{{ value }}" is not a valid url.
+                        protocols: [http, https]
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -29,18 +39,13 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Url()
+             * @Assert\Url(
+             *    message = "The url '{{ value }}' is not a valid url",
+             *    protocols = {"http", "https"}
+             * )
              */
              protected $bioUrl;
         }
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioUrl:
-                    - Url: ~
 
     .. code-block:: xml
 
@@ -52,7 +57,13 @@ Basic Usage
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="bioUrl">
-                    <constraint name="Url" />
+                    <constraint name="Url">
+                        <option name="message">The url "{{ value }}" is not a valid url.</option>
+                        <option name="protocols">
+                            <value>http</value>
+                            <value>https</value>
+                        </option>
+                    </constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -69,7 +80,10 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'message' => 'The url "{{ value }}" is not a valid url.',
+                    'protocols' => array('http', 'https'),
+                )));
             }
         }
 
