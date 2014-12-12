@@ -77,7 +77,7 @@ register.
 
     class StringExpressionLanguageProvider implements ExpressionFunctionProviderInterface
     {
-	    public function getFunctions()
+        public function getFunctions()
         {
             return array(
                 new ExpressionFunction('lowercase', function ($str) {
@@ -88,7 +88,7 @@ register.
                     }
 
                     return strtolower($str);
-                })
+                }),
             );
         }
     }
