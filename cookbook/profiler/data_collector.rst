@@ -208,3 +208,8 @@ AcmeDebugBundle:
                 'id'       => 'your_collector_name',
             ))
         ;
+
+.. caution::
+
+    Make sure the ``id`` attribute is the same string you used for the
+    ``getName()`` method.
