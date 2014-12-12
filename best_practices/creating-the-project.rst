@@ -1,8 +1,8 @@
 Creating the Project
 ====================
 
-Symfony Installer
------------------
+Installing Symfony
+------------------
 
 In the past, Symfony projects were created with `Composer`_, the dependency manager
 for PHP applications. However, the current recommendation is to use the **Symfony
