@@ -151,7 +151,7 @@ All blocks have access to the ``collector`` object.
         echo base64_encode(file_get_contents($_SERVER['argv'][1]));
 
 To enable the template, add a ``template`` attribute to the ``data_collector``
-tag in your configuration. For example, assuming your template is in some
+tag in your configuration. Make sure the ``id`` attribute is the same string you used for the getName() method.  For example, assuming your template is in some
 ``AcmeDebugBundle``:
 
 .. configuration-block::
