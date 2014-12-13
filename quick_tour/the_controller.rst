@@ -205,7 +205,7 @@ different controller using the ``forward()`` method::
         public function indexAction()
         {
             return $this->forward('AppBundle:Blog:index', array(
-                'name'  => 'Fabien'
+                'name'  => 'Fabien',
             ));
         }
     }
