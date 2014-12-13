@@ -1,5 +1,5 @@
-HTTP Kernel
-===========
+HttpKernel
+==========
 
 .. toctree::
     :maxdepth: 2

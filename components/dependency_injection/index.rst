@@ -1,5 +1,5 @@
-﻿Dependency Injection
-====================
+﻿DependencyInjection
+===================
 
 .. toctree::
     :maxdepth: 2
@@ -14,5 +14,5 @@
     configurators
     parentservices
     advanced
+    lazy_services
     workflow
-

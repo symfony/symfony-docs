@@ -1,7 +1,7 @@
 .. index::
    single: Validation; Custom constraints
 
-How to create a Custom Validation Constraint
+How to Create a custom Validation Constraint
 ============================================
 
 You can create a custom constraint by extending the base constraint class,
@@ -9,8 +9,8 @@ You can create a custom constraint by extending the base constraint class,
 As an example you're going to create a simple validator that checks if a string
 contains only alphanumeric characters.
 
-Creating Constraint class
--------------------------
+Creating the Constraint Class
+-----------------------------
 
 First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
@@ -49,10 +49,10 @@ includes some simple default logic::
     }
 
 In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
-Symfony2 will automatically look for another class, ``MyConstraintValidator``
+Symfony will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method: ``isValid``::
+The validator class is also simple, and only has one required method ``validate()``::
 
     // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace Acme\DemoBundle\Validator\Constraints;
@@ -62,27 +62,30 @@ The validator class is also simple, and only has one required method: ``isValid`
 
     class ContainsAlphanumericValidator extends ConstraintValidator
     {
-        public function isValid($value, Constraint $constraint)
+        public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-                $this->setMessage($constraint->message, array('%string%' => $value));
-
-                return false;
+                $this->context->addViolation(
+                    $constraint->message,
+                    array('%string%' => $value)
+                );
             }
-
-            return true;
         }
     }
 
 .. note::
 
-    Don't forget to call ``setMessage`` to construct an error message when the
-    value is invalid.
+    The ``validate`` method does not return a value; instead, it adds violations
+    to the validator's ``context`` property with an ``addViolation`` method
+    call if there are validation failures. Therefore, a value could be considered
+    as being valid if it causes no violations to be added to the context.
+    The first parameter of the ``addViolation`` call is the error message to
+    use for that violation.
 
 Using the new Validator
 -----------------------
 
-Using custom validators is very easy, just as the ones provided by Symfony2 itself:
+Using custom validators is very easy, just as the ones provided by Symfony itself:
 
 .. configuration-block::
 
@@ -191,40 +194,38 @@ validator::
         return 'alias_name';
     }
 
-As mentioned above, Symfony2 will automatically look for a class named after
-the constraint, with ``Validator`` appended.  If your constraint validator
+As mentioned above, Symfony will automatically look for a class named after
+the constraint, with ``Validator`` appended. If your constraint validator
 is defined as a service, it's important that you override the
 ``validatedBy()`` method to return the alias used when defining your service,
-otherwise Symfony2 won't use the constraint validator service, and will
+otherwise Symfony won't use the constraint validator service, and will
 instantiate the class instead, without any dependencies injected.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Beside validating a class property, a constraint can have a class scope by
-providing a target::
+providing a target in its ``Constraint`` class::
 
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }
 
-With this, the validator ``isValid()`` method gets an object as its first argument::
+With this, the validator ``validate()`` method gets an object as its first argument::
 
     class ProtocolClassValidator extends ConstraintValidator
     {
-        public function isValid($protocol, Constraint $constraint)
+        public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-
-                $propertyPath = $this->context->getPropertyPath().'.foo';
-                $this->context->setPropertyPath($propertyPath);
-                $this->context->addViolation($constraint->getMessage(), array(), null);
-
-                return false;
+                $this->context->addViolationAt(
+                    'foo',
+                    $constraint->message,
+                    array(),
+                    null
+                );
             }
-
-            return true;
         }
     }
 

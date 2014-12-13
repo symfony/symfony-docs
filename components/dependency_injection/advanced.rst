@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Advanced configuration
+   single: DependencyInjection; Advanced configuration
 
 Advanced Container Configuration
 ================================
@@ -18,11 +18,13 @@ However, there are use-cases when you don't want a service to be public. This
 is common when a service is only defined because it could be used as an
 argument for another service.
 
+.. _inlined-private-services:
+
 .. note::
 
-    If you use a private service as an argument to more than one other service,
-    this will result in two different instances being used as the instantiation
-    of the private service is done inline (e.g. ``new PrivateFooBar()``).
+    If you use a private service as an argument to only one other service,
+    this will result in an inlined instantiation (e.g. ``new PrivateFooBar()``)
+    inside this other service, making it publicly unavailable at runtime.
 
 Simply said: A service will be private when you do not want to access it
 directly from your code.
@@ -40,9 +42,19 @@ Here is an example:
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo" public="false" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Example\Foo" public="false" />
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Example\Foo');
         $definition->setPublic(false);
@@ -58,6 +70,61 @@ below) to access this service (via the alias).
 .. note::
 
    Services are by default public.
+
+Synthetic Services
+------------------
+
+Synthetic services are services that are injected into the container instead
+of being created by the container.
+
+For example, if you're using the :doc:`HttpKernel </components/http_kernel/introduction>`
+component with the DependencyInjection component, then the ``request``
+service is injected in the
+:method:`ContainerAwareHttpKernel::handle() <Symfony\\Component\\HttpKernel\\DependencyInjection\\ContainerAwareHttpKernel::handle>`
+method when entering the request :doc:`scope </cookbook/service_container/scopes>`.
+The class does not exist when there is no request, so it can't be included in
+the container configuration. Also, the service should be different for every
+subrequest in the application.
+
+To create a synthetic service, set ``synthetic`` to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            request:
+                synthetic: true
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="request" synthetic="true" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container
+            ->setDefinition('request', new Definition())
+            ->setSynthetic(true);
+
+As you see, only the ``synthetic`` option is set. All other options are only used
+to configure how a service is created by the container. As the service isn't
+created by the container, these options are omitted.
+
+Now, you can inject the class by using
+:method:`Container::set <Symfony\\Component\\DependencyInjection\\Container::set>`::
+
+    // ...
+    $container->set('request', new MyRequest(...));
 
 Aliasing
 --------
@@ -78,14 +145,23 @@ services.
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo"/>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <service id="bar" alias="foo" />
+            <services>
+                <service id="foo" class="Example\Foo" />
+
+                <service id="bar" alias="foo" />
+            </services>
+        </container>
 
     .. code-block:: php
 
-        $definition = new Definition('Example\Foo');
-        $container->setDefinition('foo', $definition);
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->setDefinition('foo', new Definition('Example\Foo'));
 
         $containerBuilder->setAlias('bar', 'foo');
 
@@ -94,7 +170,19 @@ service by asking for the ``bar`` service like this::
 
     $container->get('bar'); // Would return the foo service
 
-Requiring files
+.. tip::
+
+    In YAML, you can also use a shortcut to alias a service:
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Example\Foo
+           bar: "@foo"
+
+
+Requiring Files
 ---------------
 
 There might be use cases when you need to include another file just before
@@ -111,15 +199,25 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo\Bar">
-            <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Example\Foo\Bar">
+                    <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Example\Foo\Bar');
         $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
         $container->setDefinition('foo', $definition);
 
-Notice that Symfony will internally call the PHP function require_once
-which means that your file will be included only once per request. 
+Notice that Symfony will internally call the PHP statement ``require_once``,
+which means that your file will be included only once per request.

@@ -1,7 +1,7 @@
 .. index::
    single: Security; User Provider
 
-How to create a custom User Provider
+How to Create a custom User Provider
 ====================================
 
 Part of Symfony's standard authentication process depends on "user providers".
@@ -22,17 +22,26 @@ create a ``User`` class that represents that data. The ``User`` can look
 however you want and contain any data. The only requirement is that the
 class implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 The methods in this interface should therefore be defined in the custom user
-class: ``getRoles()``, ``getPassword()``, ``getSalt()``, ``getUsername()``,
-``eraseCredentials()``, ``equals()``.
+class: :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getRoles`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getPassword`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getSalt`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredentials`.
+It may also be useful to implement the
+:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface` interface,
+which defines a method to check if the user is equal to the current user. This
+interface requires an :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo`
+method.
 
-Let's see this in action::
+This is how your ``WebserviceUser`` class looks in action::
 
     // src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
     namespace Acme\WebserviceUserBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\User\EquatableInterface;
 
-    class WebserviceUser implements UserInterface
+    class WebserviceUser implements UserInterface, EquatableInterface
     {
         private $username;
         private $password;
@@ -71,7 +80,7 @@ Let's see this in action::
         {
         }
 
-        public function equals(UserInterface $user)
+        public function isEqualTo(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
                 return false;
@@ -81,7 +90,7 @@ Let's see this in action::
                 return false;
             }
 
-            if ($this->getSalt() !== $user->getSalt()) {
+            if ($this->salt !== $user->getSalt()) {
                 return false;
             }
 
@@ -95,8 +104,6 @@ Let's see this in action::
 
 If you have more information about your users - like a "first name" - then
 you can add a ``firstName`` field to hold that data.
-
-For more details on each of the methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 Create a User Provider
 ----------------------
@@ -137,13 +144,17 @@ Here's an example of how this might look::
                 return new WebserviceUser($username, $password, $salt, $roles);
             }
 
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UsernameNotFoundException(
+                sprintf('Username "%s" does not exist.', $username)
+            );
         }
 
         public function refreshUser(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
-                throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+                throw new UnsupportedUserException(
+                    sprintf('Instances of "%s" are not supported.', get_class($user))
+                );
             }
 
             return $this->loadUserByUsername($user->getUsername());
@@ -165,22 +176,15 @@ Now you make the user provider available as a service:
     .. code-block:: yaml
 
         # src/Acme/WebserviceUserBundle/Resources/config/services.yml
-        parameters:
-            webservice_user_provider.class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
-
         services:
             webservice_user_provider:
-                class: "%webservice_user_provider.class%"
+                class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
 
     .. code-block:: xml
 
         <!-- src/Acme/WebserviceUserBundle/Resources/config/services.xml -->
-        <parameters>
-            <parameter key="webservice_user_provider.class">Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider</parameter>
-        </parameters>
-
         <services>
-            <service id="webservice_user_provider" class="%webservice_user_provider.class%"></service>
+            <service id="webservice_user_provider" class="Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider" />
         </services>
 
     .. code-block:: php
@@ -188,9 +192,10 @@ Now you make the user provider available as a service:
         // src/Acme/WebserviceUserBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('webservice_user_provider.class', 'Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider');
-
-        $container->setDefinition('webservice_user_provider', new Definition('%webservice_user_provider.class%');
+        $container->setDefinition(
+            'webservice_user_provider',
+            new Definition('Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider')
+        );
 
 .. tip::
 
@@ -214,7 +219,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
     .. code-block:: yaml
 
-        // app/config/security.yml
+        # app/config/security.yml
         security:
             providers:
                 webservice:
@@ -269,12 +274,12 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
 The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
-a user submits her password, the password is appended to the salt value and
+a user submits their password, the salt value is appended to the password and
 then encoded using this algorithm before being compared to the hashed password
 returned by your ``getPassword()`` method. Additionally, depending on your
 options, the password may be encoded multiple times and encoded to base64.
 
-.. sidebar:: Specifics on how passwords are encoded
+.. sidebar:: Specifics on how Passwords are Encoded
 
     Symfony uses a specific method to combine the salt and encode the password
     before comparing it to your encoded password. If ``getSalt()`` returns

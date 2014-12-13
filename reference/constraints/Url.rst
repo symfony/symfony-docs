@@ -4,7 +4,7 @@ Url
 Validates that a value is a valid URL string.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |
@@ -21,17 +21,17 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url:
+                    - Url: ~
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -45,20 +45,26 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="bioUrl">
-                <constraint name="Url" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
-        use Symfomy\Component\Validator\Mapping\ClassMetadata;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-  
+
         class Author
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -66,14 +72,14 @@ Basic Usage
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
             }
         }
-  
+
 Options
 -------
 
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid URL``
+**type**: ``string`` **default**: ``This value is not a valid URL.``
 
 This message is shown if the URL is invalid.
 

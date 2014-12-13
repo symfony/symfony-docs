@@ -1,7 +1,7 @@
 Conventions
 ===========
 
-The :doc:`standards` document describes the coding standards for the Symfony2
+The :doc:`standards` document describes the coding standards for the Symfony
 projects and the internal and third-party bundles. This document describes
 coding standards and conventions used in the core framework to make it more
 consistent and predictable. You are encouraged to follow them in your own
@@ -13,18 +13,18 @@ Method Names
 When an object has a "main" many relation with related "things"
 (objects, parameters, ...), the method names are normalized:
 
-  * ``get()``
-  * ``set()``
-  * ``has()``
-  * ``all()``
-  * ``replace()``
-  * ``remove()``
-  * ``clear()``
-  * ``isEmpty()``
-  * ``add()``
-  * ``register()``
-  * ``count()``
-  * ``keys()``
+* ``get()``
+* ``set()``
+* ``has()``
+* ``all()``
+* ``replace()``
+* ``remove()``
+* ``clear()``
+* ``isEmpty()``
+* ``add()``
+* ``register()``
+* ``count()``
+* ``keys()``
 
 The usage of these methods are only allowed when it is clear that there
 is a main relation:
@@ -103,7 +103,4 @@ A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
 the migration starting one or two minor versions before the version where the
 feature will be removed (depending on the criticality of the removal)::
 
-    trigger_error(
-        'XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.',
-        E_USER_DEPRECATED
-    );
+    trigger_error('XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.', E_USER_DEPRECATED);

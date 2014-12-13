@@ -1,10 +1,10 @@
 .. index::
    single: Doctrine; Multiple entity managers
 
-How to work with Multiple Entity Managers and Connections
+How to Work with multiple Entity Managers and Connections
 =========================================================
 
-You can use multiple Doctrine entity managers or connections in a Symfony2
+You can use multiple Doctrine entity managers or connections in a Symfony
 application. This is necessary if you are using different databases or even
 vendors with entirely different sets of entities. In other words, one entity
 manager that connects to one database will handle some entities while another
@@ -24,7 +24,7 @@ The following configuration code shows how you can configure two entity managers
 
         doctrine:
             dbal:
-                default_connection:   default
+                default_connection: default
                 connections:
                     default:
                         driver:   "%database_driver%"
@@ -44,22 +44,21 @@ The following configuration code shows how you can configure two entity managers
                         charset:  UTF8
 
             orm:
-                default_entity_manager:   default
+                default_entity_manager: default
                 entity_managers:
                     default:
-                        connection:       default
+                        connection: default
                         mappings:
-                            AcmeDemoBundle: ~
+                            AcmeDemoBundle:  ~
                             AcmeStoreBundle: ~
                     customer:
-                        connection:       customer
+                        connection: customer
                         mappings:
                             AcmeCustomerBundle: ~
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8"?>
-
         <srv:container xmlns="http://symfony.com/schema/dic/doctrine"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -188,11 +187,14 @@ the default entity manager (i.e. ``default``) is returned::
     {
         public function indexAction()
         {
-            // both return the "default" em
+            // All three return the "default" entity manager
             $em = $this->get('doctrine')->getManager();
             $em = $this->get('doctrine')->getManager('default');
+            $em = $this->get('doctrine.orm.default_entity_manager');
 
-            $customerEm =  $this->get('doctrine')->getManager('customer');
+            // Both of these return the "customer" entity manager
+            $customerEm = $this->get('doctrine')->getManager('customer');
+            $customerEm = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
 
@@ -200,7 +202,7 @@ You can now use Doctrine just as you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
 
-The same applies to repository call::
+The same applies to repository calls::
 
     class UserController extends Controller
     {
@@ -225,3 +227,4 @@ The same applies to repository call::
             ;
         }
     }
+

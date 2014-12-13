@@ -5,3 +5,4 @@ Routing
     :maxdepth: 2
 
     introduction
+    hostname_pattern

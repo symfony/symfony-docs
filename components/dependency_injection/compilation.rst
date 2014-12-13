@@ -1,5 +1,5 @@
 ﻿.. index::
-   single: Dependency Injection; Compilation
+   single: DependencyInjection; Compilation
 
 Compiling the Container
 =======================
@@ -7,13 +7,15 @@ Compiling the Container
 The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
 making the container more efficient by resolving parameters and removing
-unused services.
+unused services. Also, certain features - like using
+:doc:`parent services </components/dependency_injection/parentservices>` -
+require the container to be compiled.
 
 It is compiled by running::
 
     $container->compile();
 
-The compile method uses *Compiler Passes* for the compilation. The *Dependency Injection*
+The compile method uses *Compiler Passes* for the compilation. The DependencyInjection
 component comes with several passes which are automatically registered for
 compilation. For example the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CheckDefinitionValidityPass`
 checks for various potential issues with the definitions that have been set
@@ -40,7 +42,7 @@ and can be registered with the container with::
 
     $container->registerExtension($extension);
 
-The main work of the extension is done in the ``load`` method. In the load method
+The main work of the extension is done in the ``load`` method. In the ``load`` method
 you can load configuration from one or more configuration files as well as
 manipulate the container definitions using the methods shown in :doc:`/components/dependency_injection/definitions`.
 
@@ -148,7 +150,7 @@ like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config Component</components/config/introduction>` to merge
+to use :doc:`the Config component </components/config/introduction>` to merge
 and validate the config values. Using the configuration processing you could
 access the config value this way::
 
@@ -201,12 +203,11 @@ The XML version of the config would then look like this:
             <acme_demo:foo>fooValue</acme_hello:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
-
     </container>
 
 .. note::
 
-    In the Symfony2 full stack framework there is a base Extension class which
+    In the Symfony full stack framework there is a base Extension class which
     implements these methods as well as a shortcut method for processing the
     configuration. See :doc:`/cookbook/bundles/extension` for more details.
 
@@ -264,7 +265,6 @@ but also load a secondary one only if a certain parameter is set::
         $container->loadFromExtension($extension->getAlias());
         $container->compile();
 
-
 .. note::
 
     If you need to manipulate the configuration loaded by an extension then
@@ -273,6 +273,36 @@ but also load a secondary one only if a certain parameter is set::
     after the extensions have been processed.
 
 .. _components-dependency-injection-compiler-passes:
+
+Prepending Configuration Passed to the Extension
+------------------------------------------------
+
+.. versionadded:: 2.2
+    The ability to prepend the configuration of a bundle was introduced in
+    Symfony 2.2.
+
+An Extension can prepend the configuration of any Bundle before the ``load()``
+method is called by implementing :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
+
+    use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+    // ...
+
+    class AcmeDemoExtension implements ExtensionInterface, PrependExtensionInterface
+    {
+        // ...
+
+        public function prepend()
+        {
+            // ...
+
+            $container->prependExtensionConfig($name, $config);
+
+            // ...
+        }
+    }
+
+For more details, see :doc:`/cookbook/bundles/prepend_extension`, which is
+specific to the Symfony Framework, but contains more details about this feature.
 
 Creating a Compiler Pass
 ------------------------

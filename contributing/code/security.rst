@@ -48,12 +48,55 @@ confirmed, the core-team works on a solution following these steps:
 
     While we are working on a patch, please do not reveal the issue publicly.
 
+.. note::
+
+    The resolution takes anywhere between a couple of days to a month depending
+    on its complexity and the coordination with the downstream projects (see
+    next paragraph).
+
+Collaborating with Downstream Open-Source Projects
+--------------------------------------------------
+
+As Symfony is used by many large Open-Source projects, we standardized the way
+the Symfony security team collaborates on security issues with downstream
+projects. The process works as follows:
+
+1. After the Symfony security team has acknowledged a security issue, it
+immediately sends an email to the downstream project security teams to inform
+them of the issue;
+
+2. The Symfony security team creates a private Git repository to ease the
+collaboration on the issue and access to this repository is given to the
+Symfony security team, to the Symfony contributors that are impacted by the
+issue, and to one representative of each downstream projects;
+
+3. All people with access to the private repository work on a solution to
+solve the issue via pull requests, code reviews, and comments;
+
+4. Once the fix is found, all involved projects collaborate to find the best
+date for a joint release (there is no guarantee that all releases will be at
+the same time but we will try hard to make them at about the same time). When
+the issue is not known to be exploited in the wild, a period of two weeks
+seems like a reasonable amount of time.
+
+The list of downstream projects participating in this process is kept as small
+as possible in order to better manage the flow of confidential information
+prior to disclosure. As such, projects are included at the sole discretion of
+the Symfony security team.
+
+As of today, the following projects have validated this process and are part
+of the downstream projects included in this process:
+
+* Drupal (releases typically happen on Wednesdays)
+* eZPublish
+
 Security Advisories
 -------------------
 
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
+* July 15, 2014: `Security releases: Symfony 2.3.18, 2.4.8, and 2.5.2 released <http://symfony.com/blog/security-releases-cve-2014-4931-symfony-2-3-18-2-4-8-and-2-5-2-released>`_ (`CVE-2014-4931 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4931>`_)
 * October 10, 2013: `Security releases: Symfony 2.0.25, 2.1.13, 2.2.9, and 2.3.6 released <http://symfony.com/blog/security-releases-cve-2013-5958-symfony-2-0-25-2-1-13-2-2-9-and-2-3-6-released>`_ (`CVE-2013-5958 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-5958>`_)
 * August 7, 2013: `Security releases: Symfony 2.0.24, 2.1.12, 2.2.5, and 2.3.3 released <http://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released>`_ (`CVE-2013-4751 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4751>`_ and `CVE-2013-4752 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4752>`_)
 * January 17, 2013: `Security release: Symfony 2.0.22 and 2.1.7 released <http://symfony.com/blog/security-release-symfony-2-0-22-and-2-1-7-released>`_ (`CVE-2013-1348 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1348>`_ and `CVE-2013-1397 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1397>`_)

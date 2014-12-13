@@ -1,7 +1,7 @@
 .. index::
    single: Form; Custom form rendering
 
-How to customize Form Rendering
+How to Customize Form Rendering
 ===============================
 
 Symfony gives you a wide variety of ways to customize how a form is rendered.
@@ -24,7 +24,7 @@ method:
 
     .. code-block:: php
 
-        <?php echo $view['form']->row($form['age']) }} ?>
+        <?php echo $view['form']->row($form['age']); ?>
 
 You can also render each of the three parts of the field individually:
 
@@ -41,9 +41,9 @@ You can also render each of the three parts of the field individually:
     .. code-block:: php
 
         <div>
-            <?php echo $view['form']->label($form['age']) }} ?>
-            <?php echo $view['form']->errors($form['age']) }} ?>
-            <?php echo $view['form']->widget($form['age']) }} ?>
+            <?php echo $view['form']->label($form['age']); ?>
+            <?php echo $view['form']->errors($form['age']); ?>
+            <?php echo $view['form']->widget($form['age']); ?>
         </div>
 
 In both cases, the form label, errors and HTML widget are rendered by using
@@ -67,11 +67,19 @@ just one line:
 
     .. code-block:: jinja
 
+        {# renders all fields #}
         {{ form_widget(form) }}
+
+        {# renders all fields *and* the form start and end tags #}
+        {{ form(form) }}
 
     .. code-block:: php
 
-        <?php echo $view['form']->widget($form) }} ?>
+        <!-- renders all fields -->
+        <?php echo $view['form']->widget($form) ?>
+
+        <!-- renders all fields *and* the form start and end tags -->
+        <?php echo $view['form']->form($form) ?>
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
@@ -83,8 +91,8 @@ What are Form Themes?
 ---------------------
 
 Symfony uses form fragments - a small piece of a template that renders just
-one part of a form - to render every part of a form - - field labels, errors,
-``input`` text fields, ``select`` tags, etc
+one part of a form - to render each part of a form - field labels, errors,
+``input`` text fields, ``select`` tags, etc.
 
 The fragments are defined as blocks in Twig and as template files in PHP.
 
@@ -100,7 +108,7 @@ to render every part of a form.
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
 
-For example, when the widget of a ``integer`` type field is rendered, an ``input``
+For example, when the widget of an ``integer`` type field is rendered, an ``input``
 ``number`` field is generated
 
 .. configuration-block::
@@ -119,15 +127,15 @@ renders:
 
     <input type="number" id="form_age" name="form[age]" required="required" value="33" />
 
-Internally, Symfony uses the ``integer_widget`` fragment  to render the field.
+Internally, Symfony uses the ``integer_widget`` fragment to render the field.
 This is because the field type is ``integer`` and you're rendering its ``widget``
 (as opposed to its ``label`` or ``errors``).
 
 In Twig that would default to the block ``integer_widget`` from the `form_div_layout.html.twig`_
 template.
 
-In PHP it would rather be the ``integer_widget.html.php`` file located in ``FrameworkBundle/Resources/views/Form``
-folder.
+In PHP it would rather be the ``integer_widget.html.php`` file located in
+the ``FrameworkBundle/Resources/views/Form`` folder.
 
 The default implementation of the ``integer_widget`` fragment looks like this:
 
@@ -138,33 +146,33 @@ The default implementation of the ``integer_widget`` fragment looks like this:
         {# form_div_layout.html.twig #}
         {% block integer_widget %}
             {% set type = type|default('number') %}
-            {{ block('field_widget') }}
+            {{ block('form_widget_simple') }}
         {% endblock integer_widget %}
 
     .. code-block:: html+php
 
         <!-- integer_widget.html.php -->
-        <?php echo $view['form']->renderBlock('field_widget', array('type' => isset($type) ? $type : "number")) ?>
+        <?php echo $view['form']->block($form, 'form_widget_simple', array('type' => isset($type) ? $type : "number")) ?>
 
-As you can see, this fragment itself renders another fragment - ``field_widget``:
+As you can see, this fragment itself renders another fragment - ``form_widget_simple``:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
         {# form_div_layout.html.twig #}
-        {% block field_widget %}
+        {% block form_widget_simple %}
             {% set type = type|default('text') %}
-            <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
-        {% endblock field_widget %}
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% endblock form_widget_simple %}
 
     .. code-block:: html+php
 
-        <!-- FrameworkBundle/Resources/views/Form/field_widget.html.php -->
+        <!-- FrameworkBundle/Resources/views/Form/form_widget_simple.html.php -->
         <input
-            type="<?php echo isset($type) ? $view->escape($type) : "text" ?>"
-            value="<?php echo $view->escape($value) ?>"
-            <?php echo $view['form']->renderBlock('attributes') ?>
+            type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
+            <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
+            <?php echo $view['form']->block($form, 'widget_attributes') ?>
         />
 
 The point is, the fragments dictate the HTML output of each part of a form. To
@@ -180,11 +188,11 @@ this folder.
 
 .. _cookbook-form-customization-sidebar:
 
-.. sidebar:: Knowing which block to customize
+.. sidebar:: Knowing which Block to Customize
 
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
-    you need to customize textarea fields, you would customize ``textarea_widget``.
+    you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
 
     As you can see, the fragment name is a combination of the field type and
     which part of the field is being rendered (e.g. ``widget``, ``label``,
@@ -192,11 +200,11 @@ this folder.
     just input ``text`` fields, you should customize the ``text_errors`` fragment.
 
     More commonly, however, you'll want to customize how errors are displayed
-    across *all* fields. You can do this by customizing the ``field_errors``
+    across *all* fields. You can do this by customizing the ``form_errors``
     fragment. This takes advantage of field type inheritance. Specifically,
-    since the ``text`` type extends from the ``field`` type, the form component
+    since the ``text`` type extends from the ``form`` type, the Form component
     will first look for the type-specific fragment (e.g. ``text_errors``) before
-    falling back to its parent fragment name if it doesn't exist (e.g. ``field_errors``).
+    falling back to its parent fragment name if it doesn't exist (e.g. ``form_errors``).
 
     For more information on this topic, see :ref:`form-template-blocks`.
 
@@ -242,7 +250,7 @@ directly in the template that's actually rendering the form.
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
-            {{ block('field_widget') }}
+            {{ block('form_widget_simple') }}
         </div>
     {% endblock %}
 
@@ -265,7 +273,7 @@ several (or all) forms in your application, read on to the next section.
 
 .. _cookbook-form-twig-separate-template:
 
-Method 2: Inside a Separate Template
+Method 2: Inside a separate Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to put the customized ``integer_widget`` form block in a
@@ -278,7 +286,7 @@ can now re-use the form customization across many templates:
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
-            {{ block('field_widget') }}
+            {{ block('form_widget_simple') }}
         </div>
     {% endblock %}
 
@@ -298,6 +306,40 @@ When the ``form.age`` widget is rendered, Symfony will use the ``integer_widget`
 block from the new template and the ``input`` tag will be wrapped in the
 ``div`` element specified in the customized block.
 
+Multiple Templates
+..................
+
+A form can also be customized by applying several templates. To do this, pass the
+name of all the templates as an array using the ``with`` keyword:
+
+.. code-block:: html+jinja
+
+    {% form_theme form with ['::common.html.twig', ':Form:fields.html.twig',
+                             'AcmeDemoBundle:Form:fields.html.twig'] %}
+
+    {# ... #}
+
+The templates can be located at different bundles and they can even be stored
+at the global ``app/Resources/views/`` directory.
+
+Child Forms
+...........
+
+You can also apply a form theme to a specific child of your form:
+
+.. code-block:: html+jinja
+
+    {% form_theme form.child 'AcmeDemoBundle:Form:fields.html.twig' %}
+
+This is useful when you want to have a custom theme for a nested form that's
+different than the one of your main form. Just specify both your themes:
+
+.. code-block:: html+jinja
+
+    {% form_theme form 'AcmeDemoBundle:Form:fields.html.twig' %}
+
+    {% form_theme form.child 'AcmeDemoBundle:Form:fields_child.html.twig' %}
+
 .. _cookbook-form-php-theming:
 
 Form Theming in PHP
@@ -314,7 +356,7 @@ file in order to customize the ``integer_widget`` fragment.
 
     <!-- src/Acme/DemoBundle/Resources/views/Form/integer_widget.html.php -->
     <div class="integer_widget">
-        <?php echo $view['form']->renderBlock('field_widget', array('type' => isset($type) ? $type : "number")) ?>
+        <?php echo $view['form']->block($form, 'form_widget_simple', array('type' => isset($type) ? $type : "number")) ?>
     </div>
 
 Now that you've created the customized form template, you need to tell Symfony
@@ -325,7 +367,7 @@ tell Symfony to use the theme via the ``setTheme`` helper method:
 
 .. code-block:: php
 
-    <?php $view['form']->setTheme($form, array('AcmeDemoBundle:Form')) ;?>
+    <?php $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
 
     <?php $view['form']->widget($form['age']) ?>
 
@@ -333,9 +375,16 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
 
+If you want to apply a theme to a specific child form, pass it to the ``setTheme``
+method:
+
+.. code-block:: php
+
+    <?php $view['form']->setTheme($form['child'], 'AcmeDemoBundle:Form/Child'); ?>
+
 .. _cookbook-form-twig-import-base-blocks:
 
-Referencing Base Form Blocks (Twig specific)
+Referencing base Form Blocks (Twig specific)
 --------------------------------------------
 
 So far, to override a particular form block, the best method is to copy
@@ -369,7 +418,7 @@ via ``base_integer_widget``:
         </div>
     {% endblock %}
 
-Referencing Base Blocks from an External Template
+Referencing base Blocks from an external Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your form customizations live inside an external template, you can reference
@@ -399,7 +448,7 @@ Making Application-wide Customizations
 
 If you'd like a certain form customization to be global to your application,
 you can accomplish this by making the form customizations in an external
-template and then importing it inside your application configuration:
+template and then importing it inside your application configuration.
 
 Twig
 ~~~~
@@ -422,11 +471,11 @@ form is rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
-                <twig:form>
-                    <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
-                </twig:form>
-                <!-- ... -->
+        <twig:config>
+            <twig:form>
+                <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
+            </twig:form>
+            <!-- ... -->
         </twig:config>
 
     .. code-block:: php
@@ -459,11 +508,11 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config ...>
-                <twig:form>
-                    <resource>form_table_layout.html.twig</resource>
-                </twig:form>
-                <!-- ... -->
+        <twig:config>
+            <twig:form>
+                <resource>form_table_layout.html.twig</resource>
+            </twig:form>
+            <!-- ... -->
         </twig:config>
 
     .. code-block:: php
@@ -508,11 +557,10 @@ form is rendered.
                         - 'AcmeDemoBundle:Form'
             # ...
 
-
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <framework:templating>
                 <framework:form>
                     <resource>AcmeDemoBundle:Form</resource>
@@ -520,7 +568,6 @@ form is rendered.
             </framework:templating>
             <!-- ... -->
         </framework:config>
-
 
     .. code-block:: php
 
@@ -556,7 +603,7 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <framework:templating>
                 <framework:form>
                     <resource>FrameworkBundle:FormTable</resource>
@@ -590,15 +637,16 @@ your template file rather than adding the template as a resource:
 Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.
 
-How to customize an Individual field
+How to Customize an individual Field
 ------------------------------------
 
 So far, you've seen the different ways you can customize the widget output
 of all text field types. You can also customize individual fields. For example,
-suppose you have two ``text`` fields - ``first_name`` and ``last_name`` - but
-you only want to customize one of the fields. This can be accomplished by
-customizing a fragment whose name is a combination of the field id attribute and
-which part of the field is being customized. For example:
+suppose you have two ``text`` fields in a ``product`` form - ``name`` and
+``description`` - but you only want to customize one of the fields. This can be
+accomplished by customizing a fragment whose name is a combination of the field's
+``id`` attribute and which part of the field is being customized. For example, to
+customize the ``name`` field only:
 
 .. configuration-block::
 
@@ -608,7 +656,7 @@ which part of the field is being customized. For example:
 
         {% block _product_name_widget %}
             <div class="text_widget">
-                {{ block('field_widget') }}
+                {{ block('form_widget_simple') }}
             </div>
         {% endblock %}
 
@@ -622,9 +670,8 @@ which part of the field is being customized. For example:
         <?php echo $view['form']->widget($form['name']); ?>
 
         <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_widget.html.php -->
-
         <div class="text_widget">
-              echo $view['form']->renderBlock('field_widget') ?>
+              echo $view['form']->block('form_widget_simple') ?>
         </div>
 
 Here, the ``_product_name_widget`` fragment defines the template to use for the
@@ -637,13 +684,29 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
    ``ProductType`` equates to ``product``). If you're not sure what your
    form name is, just view the source of your generated form.
 
+   If you want to change the ``product`` or ``name`` portion of the block
+   name ``_product_name_widget`` you can set the ``block_name`` option in your
+   form type::
+
+        use Symfony\Component\Form\FormBuilderInterface;
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            // ...
+
+            $builder->add('name', 'text', array(
+                'block_name' => 'custom_name',
+            ));
+        }
+
+   Then the block name will be ``_product_custom_name_widget``.
+
 You can also override the markup for an entire field row using the same method:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {# _product_name_row.html.twig #}
         {% form_theme form _self %}
 
         {% block _product_name_row %}
@@ -654,23 +717,29 @@ You can also override the markup for an entire field row using the same method:
             </div>
         {% endblock %}
 
+        {{ form_row(form.name) }}
+
     .. code-block:: html+php
 
-        <!-- _product_name_row.html.php -->
+        <!-- Main template -->
+        <?php echo $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
 
+        <?php echo $view['form']->row($form['name']); ?>
+
+        <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
             <?php echo $view['form']->widget($form) ?>
         </div>
 
-Other Common Customizations
+Other common Customizations
 ---------------------------
 
 So far, this recipe has shown you several different ways to customize a single
 piece of how a form is rendered. The key is to customize a specific fragment that
 corresponds to the portion of the form you want to control (see
-:ref:`naming form blocks<cookbook-form-customization-sidebar>`).
+:ref:`naming form blocks <cookbook-form-customization-sidebar>`).
 
 In the next sections, you'll see how you can make several common form customizations.
 To apply these customizations, use one of the methods described in the
@@ -680,10 +749,10 @@ Customizing Error Output
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
-   The form component only handles *how* the validation errors are rendered,
+   The Form component only handles *how* the validation errors are rendered,
    and not the actual validation error messages. The error messages themselves
    are determined by the validation constraints you apply to your objects.
-   For more information, see the chapter on :doc:`validation</book/validation>`.
+   For more information, see the chapter on :doc:`validation </book/validation>`.
 
 There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered
@@ -708,37 +777,33 @@ By default, the errors are rendered inside an unordered list:
     </ul>
 
 To override how errors are rendered for *all* fields, simply copy, paste
-and customize the ``field_errors`` fragment.
+and customize the ``form_errors`` fragment.
 
 .. configuration-block::
 
     .. code-block:: html+jinja
-        
-        {# fields_errors.html.twig #}
-        {% block field_errors %}
+
+        {# form_errors.html.twig #}
+        {% block form_errors %}
             {% spaceless %}
                 {% if errors|length > 0 %}
-                <ul class="error_list">
+                <ul>
                     {% for error in errors %}
-                        <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                        <li>{{ error.message }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
             {% endspaceless %}
-        {% endblock field_errors %}
+        {% endblock form_errors %}
 
     .. code-block:: html+php
 
-        <!-- fields_errors.html.php -->
+        <!-- form_errors.html.php -->
         <?php if ($errors): ?>
-            <ul class="error_list">
+            <ul>
                 <?php foreach ($errors as $error): ?>
-                    <li><?php echo $view['translator']->trans(
-                        $error->getMessageTemplate(),
-                        $error->getMessageParameters(),
-                        'validators'
-                    ) ?></li>
-                <?php endforeach; ?>
+                    <li><?php echo $error->getMessage() ?></li>
+                <?php endforeach ?>
             </ul>
         <?php endif ?>
 
@@ -747,8 +812,17 @@ and customize the ``field_errors`` fragment.
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 You can also customize the error output for just one specific field type.
-For example, certain errors that are more global to your form (i.e. not specific
-to just one field) are rendered separately, usually at the top of your form:
+To customize *only* the markup used for these errors, follow the same directions
+as above but put the contents in a relative ``_errors`` block (or file in case
+of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
+
+.. tip::
+
+    See :ref:`form-template-blocks` to find out which specific block or file you
+    have to customize.
+
+Certain errors that are more global to your form (i.e. not specific to just one
+field) are rendered separately, usually at the top of your form:
 
 .. configuration-block::
 
@@ -761,9 +835,46 @@ to just one field) are rendered separately, usually at the top of your form:
         <?php echo $view['form']->render($form); ?>
 
 To customize *only* the markup used for these errors, follow the same directions
-as above, but now call the block ``form_errors`` (Twig) / the file ``form_errors.html.php``
-(PHP). Now, when errors for the ``form`` type are rendered, your customized
-fragment will be used instead of the default ``field_errors``.
+as above, but now check if the ``compound`` variable is set to ``true``. If it
+is ``true``, it means that what's being currently rendered is a collection of
+fields (e.g. a whole form), and not just an individual field.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# form_errors.html.twig #}
+        {% block form_errors %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                    {% if compound %}
+                        <ul>
+                            {% for error in errors %}
+                                <li>{{ error.message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        {# ... display the errors for a single field #}
+                    {% endif %}
+                {% endif %}
+            {% endspaceless %}
+        {% endblock form_errors %}
+
+    .. code-block:: html+php
+
+        <!-- form_errors.html.php -->
+        <?php if ($errors): ?>
+            <?php if ($compound): ?>
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo $error->getMessage() ?></li>
+                    <?php endforeach ?>
+                </ul>
+            <?php else: ?>
+                <!-- ... render the errors for a single field -->
+            <?php endif ?>
+        <?php endif ?>
+
 
 Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -771,25 +882,25 @@ Customizing the "Form Row"
 When you can manage it, the easiest way to render a form field is via the
 ``form_row`` function, which renders the label, errors and HTML widget of
 a field. To customize the markup used for rendering *all* form field rows,
-override the ``field_row`` fragment. For example, suppose you want to add a
+override the ``form_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {# field_row.html.twig #}
-        {% block field_row %}
+        {# form_row.html.twig #}
+        {% block form_row %}
             <div class="form_row">
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
             </div>
-        {% endblock field_row %}
+        {% endblock form_row %}
 
     .. code-block:: html+php
 
-        <!-- field_row.html.php -->
+        <!-- form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -804,17 +915,17 @@ Adding a "Required" Asterisk to Field Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to denote all of your required fields with a required asterisk (``*``),
-you can do this by customizing the ``field_label`` fragment.
+you can do this by customizing the ``form_label`` fragment.
 
 In Twig, if you're making the form customization inside the same template as your
 form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
 
-    {% use 'form_div_layout.html.twig' with field_label as base_field_label %}
+    {% use 'form_div_layout.html.twig' with form_label as base_form_label %}
 
-    {% block field_label %}
-        {{ block('base_field_label') }}
+    {% block form_label %}
+        {{ block('base_form_label') }}
 
         {% if required %}
             <span class="required" title="This field is required">*</span>
@@ -828,7 +939,7 @@ the following:
 
     {% extends 'form_div_layout.html.twig' %}
 
-    {% block field_label %}
+    {% block form_label %}
         {{ parent() }}
 
         {% if required %}
@@ -841,10 +952,13 @@ original template:
 
 .. code-block:: html+php
 
-    <!-- field_label.html.php -->
+    <!-- form_label.html.php -->
 
     <!-- original content -->
-    <label for="<?php echo $view->escape($id) ?>" <?php foreach($attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label)) ?></label>
+    <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
+    <?php if (!$compound) { $label_attr['for'] = $id; } ?>
+    <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
+    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
 
     <!-- customization -->
     <?php if ($required) : ?>
@@ -855,34 +969,45 @@ original template:
 
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
-Adding "help" messages
+.. sidebar:: Using CSS only
+
+    By default, ``label`` tags of required fields are rendered with a
+    ``required`` CSS class. Thus, you can also add an asterisk using CSS only:
+
+    .. code-block:: css
+
+        label.required:before {
+            content: "* ";
+        }
+
+Adding "help" Messages
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can also customize your form widgets to have an optional "help" message.
 
-In Twig, If you're making the form customization inside the same template as your
+In Twig, if you're making the form customization inside the same template as your
 form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
 
-    {% use 'form_div_layout.html.twig' with field_widget as base_field_widget %}
+    {% use 'form_div_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
 
-    {% block field_widget %}
-        {{ block('base_field_widget') }}
+    {% block form_widget_simple %}
+        {{ block('base_form_widget_simple') }}
 
         {% if help is defined %}
             <span class="help">{{ help }}</span>
         {% endif %}
     {% endblock %}
 
-In twig, If you're making the form customization inside a separate template, use
+In Twig, if you're making the form customization inside a separate template, use
 the following:
 
 .. code-block:: html+jinja
 
     {% extends 'form_div_layout.html.twig' %}
 
-    {% block field_widget %}
+    {% block form_widget_simple %}
         {{ parent() }}
 
         {% if help is defined %}
@@ -895,13 +1020,13 @@ original template:
 
 .. code-block:: html+php
 
-    <!-- field_widget.html.php -->
+    <!-- form_widget_simple.html.php -->
 
     <!-- Original content -->
     <input
-        type="<?php echo isset($type) ? $view->escape($type) : "text" ?>"
-        value="<?php echo $view->escape($value) ?>"
-        <?php echo $view['form']->renderBlock('attributes') ?>
+        type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
+        <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
+        <?php echo $view['form']->block($form, 'widget_attributes') ?>
     />
 
     <!-- Customization -->
@@ -929,7 +1054,7 @@ Using Form Variables
 --------------------
 
 Most of the functions available for rendering different parts of a form (e.g.
-the form widget, form label, form errors, etc) also allow you to make certain
+the form widget, form label, form errors, etc.) also allow you to make certain
 customizations directly. Look at the following example:
 
 .. configuration-block::
@@ -951,4 +1076,4 @@ customizations directly. Look at the following example:
 The array passed as the second argument contains form "variables". For
 more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.3/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

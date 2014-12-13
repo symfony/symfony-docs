@@ -11,18 +11,24 @@ you want to use for your number.
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
-| Options     | - `rounding_mode`_                                                   |
+| Options     | - `grouping`_                                                        |
 |             | - `precision`_                                                       |
-|             | - `grouping`_                                                        |
+|             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
-| Inherited   | - `required`_                                                        |
-| options     | - `label`_                                                           |
-|             | - `read_only`_                                                       |
+| Inherited   | - `data`_                                                            |
+| options     | - `disabled`_                                                        |
+|             | - `empty_data`_                                                      |
 |             | - `error_bubbling`_                                                  |
+|             | - `error_mapping`_                                                   |
 |             | - `invalid_message`_                                                 |
 |             | - `invalid_message_parameters`_                                      |
+|             | - `label`_                                                           |
+|             | - `label_attr`_                                                      |
+|             | - `mapped`_                                                          |
+|             | - `read_only`_                                                       |
+|             | - `required`_                                                        |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                           |
+| Parent type | :doc:`form </reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
@@ -30,15 +36,9 @@ you want to use for your number.
 Field Options
 -------------
 
-precision
-~~~~~~~~~
+.. include:: /reference/forms/types/options/grouping.rst.inc
 
-**type**: ``integer`` **default**: Locale-specific (usually around ``3``)
-
-This specifies how many decimals will be allowed until the field rounds
-the submitted value (via ``rounding_mode``). For example, if ``precision``
-is set to ``2``, a submitted value of ``20.123`` will be rounded to,
-for example, ``20.12`` (depending on your ``rounding_mode``).
+.. include:: /reference/forms/types/options/precision.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
@@ -48,14 +48,14 @@ rounding_mode
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
-    
+
 *   ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
     round towards zero.
 
 *   ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Rounding mode to
     round towards negative infinity.
 
-*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round 
+*   ``IntegerToLocalizedStringTransformer::ROUND_UP`` Rounding mode to round
     away from zero.
 
 *   ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Rounding mode
@@ -73,21 +73,37 @@ option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\D
     round towards "nearest neighbor" unless both neighbors are equidistant,
     in which case round up.
 
-.. include:: /reference/forms/types/options/grouping.rst.inc
-
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/required.rst.inc
+.. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/label.rst.inc
+.. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc

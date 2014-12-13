@@ -1,18 +1,25 @@
 .. index::
-   single: Session; Database Storage
+    single: Session; Database Storage
 
-How to use PdoSessionStorage to store Sessions in the Database
+How to Use PdoSessionHandler to Store Sessions in the Database
 ==============================================================
 
-The default session storage of Symfony2 writes the session information to
+The default Symfony session storage writes the session information to
 file(s). Most medium to large websites use a database to store the session
 values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
-Symfony2 has a built-in solution for database session storage called
-:class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\PdoSessionStorage`.
+Symfony has a built-in solution for database session storage called
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
+
+.. versionadded:: 2.1
+    In Symfony 2.1 the class and namespace are slightly modified. You can now
+    find the session storage classes in the ``Session\Storage`` namespace:
+    ``Symfony\Component\HttpFoundation\Session\Storage``. Also
+    note that in Symfony 2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony 2.0.
+    Below, you'll notice that ``%session.storage.options%`` is not used anymore.
 
 .. configuration-block::
 
@@ -22,7 +29,7 @@ configuration format of your choice):
         framework:
             session:
                 # ...
-                storage_id:     session.storage.pdo
+                handler_id: session.handler.pdo
 
         parameters:
             pdo.db_options:
@@ -38,16 +45,18 @@ configuration format of your choice):
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
                     password: mypassword
+                calls:
+                    - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
 
-            session.storage.pdo:
-                class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: ["@pdo", "%session.storage.options%", "%pdo.db_options%"]
+            session.handler.pdo:
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+                arguments: ["@pdo", "%pdo.db_options%"]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session storage-id="session.storage.pdo" default-locale="en" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -64,11 +73,14 @@ configuration format of your choice):
                 <argument>mysql:dbname=mydatabase</argument>
                 <argument>myuser</argument>
                 <argument>mypassword</argument>
+                <call method="setAttribute">
+                    <argument type="constant">PDO::ATTR_ERRMODE</argument>
+                    <argument type="constant">PDO::ERRMODE_EXCEPTION</argument>
+                </call>
             </service>
 
-            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage">
+            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
-                <argument>%session.storage.options%</argument>
                 <argument>%pdo.db_options%</argument>
             </service>
         </services>
@@ -82,9 +94,8 @@ configuration format of your choice):
         $container->loadFromExtension('framework', array(
             ...,
             'session' => array(
-                // ...
-
-                'storage_id' => 'session.storage.pdo',
+                // ...,
+                'handler_id' => 'session.handler.pdo',
             ),
         ));
 
@@ -100,14 +111,14 @@ configuration format of your choice):
             'myuser',
             'mypassword',
         ));
+        $pdoDefinition->addMethodCall('setAttribute', array(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION));
         $container->setDefinition('pdo', $pdoDefinition);
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             new Reference('pdo'),
-            '%session.storage.options%',
             '%pdo.db_options%',
         ));
-        $container->setDefinition('session.storage.pdo', $storageDefinition);
+        $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 * ``db_table``: The name of the session table in your database
 * ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
@@ -123,18 +134,19 @@ database for the session data.
 
 But if you'd like to store the session data in the same database as the rest
 of your project's data, you can use the connection settings from the
-parameter.ini by referencing the database-related parameters defined there:
+``parameters.yml`` file by referencing the database-related parameters defined there:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        pdo:
-            class: PDO
-            arguments:
-                - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                - "%database_user%"
-                - "%database_password%"
+        services:
+            pdo:
+                class: PDO
+                arguments:
+                    - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
+                    - "%database_user%"
+                    - "%database_password%"
 
     .. code-block:: xml
 
@@ -192,16 +204,16 @@ For MSSQL, the statement might look like the following:
 .. code-block:: sql
 
     CREATE TABLE [dbo].[session](
-	    [session_id] [nvarchar](255) NOT NULL,
-	    [session_value] [ntext] NOT NULL,
+        [session_id] [nvarchar](255) NOT NULL,
+        [session_value] [ntext] NOT NULL,
         [session_time] [int] NOT NULL,
-		PRIMARY KEY CLUSTERED(
-			[session_id] ASC
-		) WITH (
-		    PAD_INDEX  = OFF,
-		    STATISTICS_NORECOMPUTE  = OFF,
-		    IGNORE_DUP_KEY = OFF,
-		    ALLOW_ROW_LOCKS  = ON,
-		    ALLOW_PAGE_LOCKS  = ON
-		) ON [PRIMARY]
+        PRIMARY KEY CLUSTERED(
+            [session_id] ASC
+        ) WITH (
+            PAD_INDEX  = OFF,
+            STATISTICS_NORECOMPUTE  = OFF,
+            IGNORE_DUP_KEY = OFF,
+            ALLOW_ROW_LOCKS  = ON,
+            ALLOW_PAGE_LOCKS  = ON
+        ) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

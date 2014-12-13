@@ -1,7 +1,7 @@
 .. index::
    single: Request; Add a request format and mime type
 
-How to register a new Request Format and Mime Type
+How to Register a new Request Format and Mime Type
 ==================================================
 
 Every ``Request`` has a "format" (e.g. ``html``, ``json``), which is used
@@ -61,14 +61,17 @@ files and register it as a listener by adding the ``kernel.event_listener`` tag:
 
         <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
-
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
-            <service id="acme.demobundle.listener.request" class="Acme\DemoBundle\RequestListener">
-                <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
-            </service>
+                <service id="acme.demobundle.listener.request"
+                    class="Acme\DemoBundle\RequestListener">
+                    <tag name="kernel.event_listener"
+                        event="kernel.request"
+                        method="onKernelRequest"
+                    />
+                </service>
             </services>
         </container>
 

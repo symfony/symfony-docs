@@ -20,9 +20,9 @@ This can be customized when rendering the field:
 .. configuration-block::
 
     .. code-block:: jinja
-    
+
         {{ form_widget(form.foo_choices, { 'separator': '=====' }) }}
 
     .. code-block:: php
-    
+
         <?php echo $view['form']->widget($form['foo_choices'], array('separator' => '=====')) ?>

@@ -1,5 +1,5 @@
 .. index::
-    single: Yaml; Yaml Format
+    single: Yaml; YAML Format
 
 The YAML Format
 ===============

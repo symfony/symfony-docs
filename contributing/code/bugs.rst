@@ -1,8 +1,8 @@
 Reporting a Bug
 ===============
 
-Whenever you find a bug in Symfony2, we kindly ask you to report it. It helps
-us make a better Symfony2.
+Whenever you find a bug in Symfony, we kindly ask you to report it. It helps
+us make a better Symfony.
 
 .. caution::
 
@@ -25,13 +25,18 @@ If your problem definitely looks like a bug, report it using the official bug
 * Describe the steps needed to reproduce the bug with short code examples
   (providing a unit test that illustrates the bug is best);
 
+* If the bug you experienced affects more than one layer, providing a simple
+  failing unit test may not be sufficient. In this case, please fork the
+  `Symfony Standard Edition`_ and reproduce your issue on a new branch;
+
 * Give as much detail as possible about your environment (OS, PHP version,
   Symfony version, enabled extensions, ...);
 
 * *(optional)* Attach a :doc:`patch <patches>`.
 
-.. _documentation: http://symfony.com/doc/2.0/
+.. _documentation: http://symfony.com/doc/current/
 .. _users mailing-list: http://groups.google.com/group/symfony2
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony
 .. _tracker: https://github.com/symfony/symfony/issues
+.. _Symfony Standard Edition: https://github.com/symfony/symfony-standard/

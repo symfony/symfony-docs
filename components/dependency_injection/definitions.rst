@@ -1,6 +1,5 @@
 ﻿.. index::
-   single: Dependency Injection; Service definitions
-
+   single: DependencyInjection; Service definitions
 
 Working with Container Service Definitions
 ==========================================
@@ -34,14 +33,14 @@ it to the container using::
 
     $container->setDefinition($id, $definition);
 
-Working with a definition
+Working with a Definition
 -------------------------
 
-Creating a new definition
+Creating a new Definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create a new definition rather than manipulate one retrieved
-from then container then the definition class is :class:`Symfony\\Component\\DependencyInjection\\Definition`.
+from the container then the definition class is :class:`Symfony\\Component\\DependencyInjection\\Definition`.
 
 Class
 ~~~~~
@@ -67,14 +66,14 @@ To get an array of the constructor arguments for a definition you can use::
 or to get a single argument by its position::
 
     $definition->getArgument($index);
-    //e.g. $definition->getArguments(0) for the first argument
+    // e.g. $definition->getArgument(0) for the first argument
 
 You can add a new argument to the end of the arguments array using::
 
     $definition->addArgument($argument);
 
 The argument can be a string, an array, a service parameter by using ``%parameter_name%``
-or a service id by using ::
+or a service id by using::
 
     use Symfony\Component\DependencyInjection\Reference;
 
@@ -89,7 +88,7 @@ In a similar way you can replace an already set argument by index using::
 You can also replace all the arguments (or set some if there are none) with
 an array of arguments::
 
-    $definition->replaceArguments($arguments);
+    $definition->setArguments($arguments);
 
 Method Calls
 ~~~~~~~~~~~~
@@ -105,7 +104,7 @@ Add a method call with::
 
    $definition->addMethodCall($method, $arguments);
 
-Where ``$method`` is the method name and $arguments is an array of the arguments
+Where ``$method`` is the method name and ``$arguments`` is an array of the arguments
 to call the method with. The arguments can be strings, arrays, parameters or
 service ids as with the constructor arguments.
 
@@ -123,6 +122,6 @@ You can also replace any existing method calls with an array of new ones with::
 .. note::
 
     The methods here that change service definitions can only be used before
-    the container is compiled, once the container is compiled you cannot
+    the container is compiled. Once the container is compiled you cannot
     manipulate service definitions further. To learn more about compiling
     the container see :doc:`/components/dependency_injection/compilation`.

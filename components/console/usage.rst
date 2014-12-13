@@ -5,16 +5,16 @@ Using Console Commands, Shortcuts and Built-in Commands
 =======================================================
 
 In addition to the options you specify for your commands, there are some
-built-in options as well as a couple of built-in commands for the console component.
+built-in options as well as a couple of built-in commands for the Console component.
 
 .. note::
 
-    These examples assume you have added a file ``app/console`` to run at
+    These examples assume you have added a file ``application.php`` to run at
     the cli::
 
         #!/usr/bin/env php
-        # app/console
         <?php
+        // application.php
 
         use Symfony\Component\Console\Application;
 
@@ -30,26 +30,26 @@ and the registered commands:
 
 .. code-block:: bash
 
-    $ php app/console list
+    $ php application.php list
 
 You can get the same output by not running any command as well
 
 .. code-block:: bash
 
-    $ php app/console
+    $ php application.php
 
 The help command lists the help information for the specified command. For
 example, to get the help for the ``list`` command:
 
 .. code-block:: bash
 
-    $ php app/console help list
+    $ php application.php help list
 
 Running ``help`` without specifying a command will list the global options:
 
 .. code-block:: bash
 
-    $ php app/console help
+    $ php application.php help
 
 Global Options
 ~~~~~~~~~~~~~~
@@ -59,23 +59,33 @@ get help for the list command:
 
 .. code-block:: bash
 
-    $ php app/console list --help
-    $ php app/console list -h
+    $ php application.php list --help
+    $ php application.php list -h
 
 You can suppress output with:
 
 .. code-block:: bash
 
-    $ php app/console list --quiet
-    $ php app/console list -q
+    $ php application.php list --quiet
+    $ php application.php list -q
 
 You can get more verbose messages (if this is supported for a command)
 with:
 
 .. code-block:: bash
 
-    $ php app/console list --verbose
-    $ php app/console list -v
+    $ php application.php list --verbose
+    $ php application.php list -v
+
+The verbose flag can optionally take a value between 1 (default) and 3 to
+output even more verbose messages:
+
+.. code-block:: bash
+
+    $ php application.php list --verbose=2
+    $ php application.php list -vv
+    $ php application.php list --verbose=3
+    $ php application.php list -vvv
 
 If you set the optional arguments to give your application a name and version::
 
@@ -85,8 +95,8 @@ then you can use:
 
 .. code-block:: bash
 
-    $ php app/console list --version
-    $ php app/console list -V
+    $ php application.php list --version
+    $ php application.php list -V
 
 to get this information output:
 
@@ -104,20 +114,20 @@ You can force turning on ANSI output coloring with:
 
 .. code-block:: bash
 
-    $ php app/console list --ansi
+    $ php application.php list --ansi
 
 or turn it off with:
 
 .. code-block:: bash
 
-    $ php app/console list --no-ansi
+    $ php application.php list --no-ansi
 
 You can suppress any interactive questions from the command you are running with:
 
 .. code-block:: bash
 
-    $ php app/console list --no-interaction
-    $ php app/console list -n
+    $ php application.php list --no-interaction
+    $ php application.php list -n
 
 Shortcut Syntax
 ~~~~~~~~~~~~~~~
@@ -128,7 +138,7 @@ commands, then you can run ``help`` like this:
 
 .. code-block:: bash
 
-    $ php app/console h
+    $ php application.php h
 
 If you have commands using ``:`` to namespace commands then you just have
 to type the shortest unambiguous text for each part. If you have created the
@@ -137,7 +147,7 @@ can run it with:
 
 .. code-block:: bash
 
-    $ php app/console d:g Fabien
+    $ php application.php d:g Fabien
 
 If you enter a short command that's ambiguous (i.e. there are more than one
 command that match), then no command will be run and some suggestions of

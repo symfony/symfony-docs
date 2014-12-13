@@ -1,17 +1,17 @@
 .. index::
-   single: Apache Router
+    single: Apache Router
 
-How to use the Apache Router
+How to Use the Apache Router
 ============================
 
-Symfony2, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
-One of these ways is by letting apache handle routes directly, rather than using Symfony2 for this task.
+Symfony, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
+One of these ways is by letting Apache handle routes directly, rather than using Symfony for this task.
 
 Change Router Configuration Parameters
 --------------------------------------
 
 To dump Apache routes you must first tweak some configuration parameters to tell
-Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
+Symfony to use the ``ApacheUrlMatcher`` instead of the default one:
 
 .. configuration-block::
 
@@ -45,14 +45,14 @@ Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
 
     Note that :class:`Symfony\\Component\\Routing\\Matcher\\ApacheUrlMatcher`
     extends :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher` so even
-    if you don't regenerate the url_rewrite rules, everything will work (because
+    if you don't regenerate the mod_rewrite rules, everything will work (because
     at the end of ``ApacheUrlMatcher::match()`` a call to ``parent::match()``
     is done).
 
-Generating mod_rewrite rules
+Generating mod_rewrite Rules
 ----------------------------
 
-To test that it's working, let's create a very basic route for demo bundle:
+To test that it's working, create a very basic route for the AcmeDemoBundle:
 
 .. configuration-block::
 
@@ -60,13 +60,13 @@ To test that it's working, let's create a very basic route for demo bundle:
 
         # app/config/routing.yml
         hello:
-            pattern:  /hello/{name}
+            path: /hello/{name}
             defaults: { _controller: AcmeDemoBundle:Demo:hello }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
+        <route id="hello" path="/hello/{name}">
             <default key="_controller">AcmeDemoBundle:Demo:hello</default>
         </route>
 
@@ -77,7 +77,7 @@ To test that it's working, let's create a very basic route for demo bundle:
             '_controller' => 'AcmeDemoBundle:Demo:hello',
         )));
 
-Now generate **url_rewrite** rules:
+Now generate the mod_rewrite rules:
 
 .. code-block:: bash
 
@@ -95,7 +95,7 @@ Which should roughly output the following:
     RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
     RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AcmeDemoBundle\:Demo\:hello]
 
-You can now rewrite `web/.htaccess` to use the new rules, so with this example
+You can now rewrite ``web/.htaccess`` to use the new rules, so with this example
 it should look like this:
 
 .. code-block:: apache
@@ -114,12 +114,12 @@ it should look like this:
 
 .. note::
 
-   Procedure above should be done each time you add/change a route if you want to take full advantage of this setup
+   The procedure above should be done each time you add/change a route if you want to take full advantage of this setup.
 
 That's it!
-You're now all set to use Apache Route rules.
+You're now all set to use Apache routes.
 
-Additional tweaks
+Additional Tweaks
 -----------------
 
 To save a little bit of processing time, change occurrences of ``Request``
@@ -129,11 +129,11 @@ to ``ApacheRequest`` in ``web/app.php``::
 
     require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
-    //require_once __DIR__.'/../app/AppCache.php';
+    // require_once __DIR__.'/../app/AppCache.php';
 
     use Symfony\Component\HttpFoundation\ApacheRequest;
 
     $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
-    //$kernel = new AppCache($kernel);
+    // $kernel = new AppCache($kernel);
     $kernel->handle(ApacheRequest::createFromGlobals())->send();

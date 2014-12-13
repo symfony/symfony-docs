@@ -4,8 +4,8 @@
 How to Use Assetic for Asset Management
 =======================================
 
-Assetic combines two major ideas: :ref:`assets<cookbook-assetic-assets>` and
-:ref:`filters<cookbook-assetic-filters>`. The assets are files such as CSS,
+Assetic combines two major ideas: :ref:`assets <cookbook-assetic-assets>` and
+:ref:`filters <cookbook-assetic-filters>`. The assets are files such as CSS,
 JavaScript and image files. The filters are things that can be applied to
 these files before they are served to the browser. This allows a separation
 between the asset files stored in the application and the files actually presented
@@ -43,8 +43,9 @@ Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.
 
-You can use Assetic to process both :ref:`CSS stylesheets<cookbook-assetic-including-css>`
-and :ref:`JavaScript files<cookbook-assetic-including-javascript>`. The philosophy
+You can use Assetic to process :ref:`CSS stylesheets <cookbook-assetic-including-css>`,
+:ref:`JavaScript files <cookbook-assetic-including-javascript>` and
+:ref:`images <cookbook-assetic-including-image>`. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.
 
 .. _cookbook-assetic-including-javascript:
@@ -52,9 +53,7 @@ behind adding either is basically the same, but with a slightly different syntax
 Including JavaScript Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To include JavaScript files, use the ``javascript`` tag in any template.
-This will most commonly live in the ``javascripts`` block, if you're using
-the default block names from the Symfony Standard Distribution:
+To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. configuration-block::
 
@@ -70,7 +69,23 @@ the default block names from the Symfony Standard Distribution:
             array('@AcmeFooBundle/Resources/public/js/*')
         ) as $url): ?>
             <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
+
+.. note::
+
+    If you're using the default block names from the Symfony Standard Edition,
+    the ``javascripts`` tag will most commonly live in the ``javascripts``
+    block:
+
+    .. code-block:: html+jinja
+
+        {# ... #}
+        {% block javascripts %}
+            {% javascripts '@AcmeFooBundle/Resources/public/js/*' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+        {# ... #}
 
 .. tip::
 
@@ -94,9 +109,7 @@ Including CSS Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To bring in CSS stylesheets, you can use the same methodologies seen
-above, except with the ``stylesheets`` tag. If you're using the default
-block names from the Symfony Standard Distribution, this will usually live
-inside a ``stylesheets`` block:
+above, except with the ``stylesheets`` tag:
 
 .. configuration-block::
 
@@ -113,11 +126,27 @@ inside a ``stylesheets`` block:
             array('cssrewrite')
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
+
+.. note::
+
+    If you're using the default block names from the Symfony Standard Edition,
+    the ``stylesheets`` tag will most commonly live in the ``stylesheets``
+    block:
+
+    .. code-block:: html+jinja
+
+        {# ... #}
+        {% block stylesheets %}
+            {% stylesheets 'bundles/acme_foo/css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        {# ... #}
 
 But because Assetic changes the paths to your assets, this *will* break any
 background images (or other paths) that uses relative paths, unless you use
-the :ref:`cssrewrite<cookbook-assetic-cssrewrite>` filter.
+the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
 
 .. note::
 
@@ -127,6 +156,32 @@ the :ref:`cssrewrite<cookbook-assetic-cssrewrite>` filter.
     publicly-accessible path: ``bundles/acme_foo/css``. You can use either, except
     that there is a known issue that causes the ``cssrewrite`` filter to fail
     when using the ``@AcmeFooBundle`` syntax for CSS Stylesheets.
+
+.. _cookbook-assetic-including-image:
+
+Including Images
+~~~~~~~~~~~~~~~~
+
+To include an image you can use the ``image`` tag.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% image '@AcmeFooBundle/Resources/public/images/example.jpg' %}
+            <img src="{{ asset_url }}" alt="Example" />
+        {% endimage %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->image(
+            array('@AcmeFooBundle/Resources/public/images/example.jpg')
+        ) as $url): ?>
+            <img src="<?php echo $view->escape($url) ?>" alt="Example" />
+        <?php endforeach ?>
+
+You can also use Assetic for image optimization. More information in
+:doc:`/cookbook/assetic/jpeg_optimize`.
 
 .. _cookbook-assetic-cssrewrite:
 
@@ -176,7 +231,7 @@ but still serve them as a single file:
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 In the ``dev`` environment, each file is still served individually, so that
 you can debug problems more easily. However, in the ``prod`` environment
@@ -213,7 +268,80 @@ combine third party assets, such as jQuery, with your own into a single file:
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
+
+Using Named Assets
+~~~~~~~~~~~~~~~~~~
+
+AsseticBundle configuration directives allow you to define named asset sets.
+You can do so by defining the input files, filters and output files in your
+configuration under the ``assetic`` section. Read more in the
+:doc:`assetic config reference </reference/configuration/assetic>`.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            assets:
+                jquery_and_ui:
+                    inputs:
+                        - '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js'
+                        - '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+
+            <assetic:config>
+                <assetic:asset name="jquery_and_ui">
+                    <assetic:input>@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js</assetic:input>
+                    <assetic:input>@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js</assetic:input>
+                </assetic:asset>
+            </assetic:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'assets' => array(
+                'jquery_and_ui' => array(
+                    'inputs' => array(
+                        '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
+                        '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js',
+                    ),
+                ),
+            ),
+        );
+
+After you have defined the named assets, you can reference them in your templates
+with the ``@named_asset`` notation:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% javascripts
+            '@jquery_and_ui'
+            '@AcmeFooBundle/Resources/public/js/*' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->javascripts(
+            array(
+                '@jquery_and_ui',
+                '@AcmeFooBundle/Resources/public/js/*',
+            )
+        ) as $url): ?>
+            <script src="<?php echo $view->escape($url) ?>"></script>
+        <?php endforeach ?>
 
 .. _cookbook-assetic-filters:
 
@@ -228,7 +356,7 @@ In fact, Assetic has a long list of available filters.
 
 Many of the filters do not do the work directly, but use existing third-party
 libraries to do the heavy-lifting. This means that you'll often need to install
-a third-party library to use a filter.  The great advantage of using Assetic
+a third-party library to use a filter. The great advantage of using Assetic
 to invoke these libraries (as opposed to using them directly) is that instead
 of having to run them manually after you work on the files, Assetic will
 take care of this for you and remove this step altogether from your development
@@ -238,7 +366,7 @@ To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
 available to use (you'll use the filter below).
 
-For example to use the JavaScript YUI Compressor the following config should
+For example to use the UglifyJS JavaScript minifier the following config should
 be added:
 
 .. configuration-block::
@@ -248,16 +376,16 @@ be added:
         # app/config/config.yml
         assetic:
             filters:
-                yui_js:
-                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                uglifyjs2:
+                    bin: /usr/local/bin/uglifyjs
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <assetic:config>
             <assetic:filter
-                name="yui_js"
-                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                name="uglifyjs2"
+                bin="/usr/local/bin/uglifyjs" />
         </assetic:config>
 
     .. code-block:: php
@@ -265,8 +393,8 @@ be added:
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
             'filters' => array(
-                'yui_js' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                'uglifyjs2' => array(
+                    'bin' => '/usr/local/bin/uglifyjs',
                 ),
             ),
         ));
@@ -278,7 +406,7 @@ into your template:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
@@ -286,15 +414,15 @@ into your template:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')
+            array('uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 A more detailed guide about configuring and using Assetic filters as well as
-details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompressor`.
+details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/uglifyjs`.
 
-Controlling the URL used
+Controlling the URL Used
 ------------------------
 
 If you wish to, you can control the URLs that Assetic produces. This is
@@ -316,7 +444,7 @@ done from the template and is relative to the public document root:
             array('output' => 'js/compiled/main.js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -343,7 +471,7 @@ it might be downright frustrating.
 Fortunately, Assetic provides a way to dump your assets to real files, instead
 of being generated dynamically.
 
-Dumping Asset Files in the ``prod`` environment
+Dumping Asset Files in the ``prod`` Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``prod`` environment, your JS and CSS files are represented by a single
@@ -352,12 +480,14 @@ in your source, you'll likely just see something like this:
 
 .. code-block:: html
 
-    <script src="/app_dev.php/js/abcd123.js"></script>
+    <script src="/js/abcd123.js"></script>
 
 Moreover, that file does **not** actually exist, nor is it dynamically rendered
 by Symfony (as the asset files are in the ``dev`` environment). This is on
 purpose - letting Symfony generate these files dynamically in a production
 environment is just too slow.
+
+.. _cookbook-assetic-dump-prod:
 
 Instead, each time you use your app in the ``prod`` environment (and therefore,
 each time you deploy), you should run the following task:
@@ -370,7 +500,7 @@ This will physically generate and write each file that you need (e.g. ``/js/abcd
 If you update any of your assets, you'll need to run this again to regenerate
 the file.
 
-Dumping Asset Files in the ``dev`` environment
+Dumping Asset Files in the ``dev`` Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, each asset path generated in the ``dev`` environment is handled
@@ -400,10 +530,6 @@ the following change in your ``config_dev.yml`` file:
         $container->loadFromExtension('assetic', array(
             'use_controller' => false,
         ));
-
-.. note::
-
-    You'll also have to remove the ``_assetic`` route in your ``app/config_dev.yml`` file.
 
 Next, since Symfony is no longer generating these assets for you, you'll
 need to dump them manually. To do so, run the following:
@@ -441,4 +567,4 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
             array('output' => 'js/compiled/main.js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>

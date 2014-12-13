@@ -8,6 +8,16 @@ Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
 
+.. caution::
+
+    The YUI Compressor is `no longer maintained by Yahoo`_ but by an independent
+    volunteer. Moreover, Yahoo has decided to `stop all new development on YUI`_
+    and to move to other modern alternatives such as Node.js.
+
+    That's why you are **strongly advised** to avoid using YUI utilities unless
+    strictly necessary. Read :doc:`/cookbook/assetic/uglifyjs` for a modern and
+    up-to-date alternative.
+
 Download the YUI Compressor JAR
 -------------------------------
 
@@ -60,10 +70,10 @@ stylesheets:
                 ),
             ),
         ));
-        
+
 .. note::
 
-    Windows users need to remember to update config to proper java location. 
+    Windows users need to remember to update config to proper Java location.
     In Windows7 x64 bit by default it's ``C:\Program Files (x86)\Java\jre6\bin\java.exe``.
 
 You now have access to two new Assetic filters in your application:
@@ -92,13 +102,13 @@ the view layer, this work is done in your templates:
             array('yui_js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
     The above example assumes that you have a bundle called ``AcmeFooBundle``
     and your JavaScript files are in the ``Resources/public/js`` directory under
-    your bundle. This isn't important however - you can include your Javascript
+    your bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
 
 With the addition of the ``yui_js`` filter to the asset tags above, you should
@@ -120,7 +130,7 @@ can be repeated to minify your stylesheets.
             array('yui_css')
         ) as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Disable Minification in Debug Mode
 ----------------------------------
@@ -146,18 +156,18 @@ apply this filter when debug mode is off.
             array('?yui_js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
-
+        <?php endforeach ?>
 
 .. tip::
 
     Instead of adding the filter to the asset tags, you can also globally
-    enable it by adding the apply-to attribute to the filter configuration, for
-    example in the yui_js filter ``apply_to: "\.js$"``. To only have the filter
-    applied in production, add this to the config_prod file rather than the
+    enable it by adding the ``apply_to`` attribute to the filter configuration, for
+    example in the ``yui_js`` filter ``apply_to: "\.js$"``. To only have the filter
+    applied in production, add this to the ``config_prod`` file rather than the
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
 
-
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
-.. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/
+.. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
+.. _`no longer maintained by Yahoo`: http://www.yuiblog.com/blog/2013/01/24/yui-compressor-has-a-new-owner/
+.. _`stop all new development on YUI`: http://yahooeng.tumblr.com/post/96098168666/important-announcement-regarding-yui

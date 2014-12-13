@@ -1,7 +1,7 @@
 .. index::
    single: Security; "Remember me"
 
-How to add "Remember Me" Login Functionality
+How to Add "Remember Me" Login Functionality
 ============================================
 
 Once a user is authenticated, their credentials are typically stored in the
@@ -61,7 +61,7 @@ remember me functionality, as it will not always be appropriate. The usual
 way of doing this is to add a checkbox to the login form. By giving the checkbox
 the name ``_remember_me``, the cookie will automatically be set when the checkbox
 is checked and the user successfully logs in. So, your specific login form
-might ultimately look like this:
+might ultimately looks like this:
 
 .. configuration-block::
 
@@ -90,7 +90,7 @@ might ultimately look like this:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
@@ -109,10 +109,10 @@ might ultimately look like this:
 The user will then automatically be logged in on subsequent visits while
 the cookie remains valid.
 
-Forcing the User to Re-authenticate before accessing certain Resources
+Forcing the User to Re-authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
 
-When the user returns to your site, he/she is authenticated automatically based
+When the user returns to your site, they are authenticated automatically based
 on the information stored in the remember me cookie. This allows the user
 to access protected resources as if the user had actually authenticated upon
 visiting the site.
@@ -122,7 +122,7 @@ before accessing certain resources. For example, you might allow "remember me"
 users to see basic account information, but then require them to actually
 re-authenticate before modifying that information.
 
-The security component provides an easy way to do this. In addition to roles
+The Security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:
 
@@ -195,16 +195,16 @@ which can secure your controller using annotations:
     * If a non-authenticated (or anonymously authenticated user) tries to
       access the account area, the user will be asked to authenticate.
 
-    * Once the user has entered his username and password, assuming the
+    * Once the user has entered their username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
       any page in the account section, including the ``editAction`` controller.
 
-    * If the user's session ends, when the user returns to the site, he will
+    * If the user's session ends, when the user returns to the site, they will
       be able to access every account page - except for the edit page - without
-      being forced to re-authenticate. However, when he tries to access the
-      ``editAction`` controller, he will be forced to re-authenticate, since
-      he is not, yet, fully authenticated.
+      being forced to re-authenticate. However, when they try to access the
+      ``editAction`` controller, they will be forced to re-authenticate, since
+      they are not, yet, fully authenticated.
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.

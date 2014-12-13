@@ -18,7 +18,7 @@ can do anything, including creating and assigning validation errors.
     add validator "violations".
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`class<validation-class-target>`                                  |
+| Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `methods`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -57,13 +57,19 @@ Setup
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <constraint name="Callback">
-                <option name="methods">
-                    <value>isAuthorValid</value>
-                </option>
-            </constraint>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <constraint name="Callback">
+                    <option name="methods">
+                        <value>isAuthorValid</value>
+                    </option>
+                </constraint>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -86,28 +92,26 @@ Setup
 The Callback Method
 -------------------
 
-The callback method is passed a special ``ExecutionContext`` object. You
+The callback method is passed a special ``ExecutionContextInterface`` object. You
 can set "violations" directly on this object and determine to which field
 those errors should be attributed::
 
     // ...
-    use Symfony\Component\Validator\ExecutionContext;
-    
+    use Symfony\Component\Validator\ExecutionContextInterface;
+
     class Author
     {
         // ...
         private $firstName;
-    
-        public function isAuthorValid(ExecutionContext $context)
+
+        public function isAuthorValid(ExecutionContextInterface $context)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array();
-        
+
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $propertyPath = $context->getPropertyPath() . '.firstName';
-                $context->setPropertyPath($propertyPath);
-                $context->addViolation('This name sounds totally fake!', array(), null);
+                $context->addViolationAt('firstname', 'This name sounds totally fake!', array(), null);
             }
         }
     }
@@ -118,7 +122,7 @@ Options
 methods
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` **default**: ``array()`` [:ref:`default option <validation-default-option>`]
 
 This is an array of the methods that should be executed during the validation
 process. Each method can be one of the following formats:
@@ -127,7 +131,7 @@ process. Each method can be one of the following formats:
 
     If the name of a method is a simple string (e.g. ``isAuthorValid``), that
     method will be called on the same object that's being validated and the
-    ``ExecutionContext`` will be the only argument (see the above example).
+    ``ExecutionContextInterface`` will be the only argument (see the above example).
 
 2) **Static array callback**
 
@@ -151,7 +155,7 @@ process. Each method can be one of the following formats:
 
             /**
              * @Assert\Callback(methods={
-             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid"}
+             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid" }
              * })
              */
             class Author
@@ -161,14 +165,22 @@ process. Each method can be one of the following formats:
         .. code-block:: xml
 
             <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-            <class name="Acme\BlogBundle\Entity\Author">
-                <constraint name="Callback">
-                    <option name="methods">
-                        <value>Acme\BlogBundle\MyStaticValidatorClass</value>
-                        <value>isAuthorValid</value>
-                    </option>
-                </constraint>
-            </class>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+                <class name="Acme\BlogBundle\Entity\Author">
+                    <constraint name="Callback">
+                        <option name="methods">
+                            <value>
+                                <value>Acme\BlogBundle\MyStaticValidatorClass</value>
+                                <value>isAuthorValid</value>
+                            </value>
+                        </option>
+                    </constraint>
+                </class>
+            </constraint-mapping>
 
         .. code-block:: php
 
@@ -184,23 +196,25 @@ process. Each method can be one of the following formats:
                 public static function loadValidatorMetadata(ClassMetadata $metadata)
                 {
                     $metadata->addConstraint(new Callback(array(
-                        'methods' => array('isAuthorValid'),
+                        'methods' => array(
+                            array('Acme\BlogBundle\MyStaticValidatorClass', 'isAuthorValid'),
+                        ),
                     )));
                 }
             }
 
     In this case, the static method ``isAuthorValid`` will be called on the
     ``Acme\BlogBundle\MyStaticValidatorClass`` class. It's passed both the original
-    object being validated (e.g. ``Author``) as well as the ``ExecutionContext``::
+    object being validated (e.g. ``Author``) as well as the ``ExecutionContextInterface``::
 
         namespace Acme\BlogBundle;
-    
-        use Symfony\Component\Validator\ExecutionContext;
+
+        use Symfony\Component\Validator\ExecutionContextInterface;
         use Acme\BlogBundle\Entity\Author;
-    
+
         class MyStaticValidatorClass
         {
-            public static function isAuthorValid(Author $author, ExecutionContext $context)
+            public static function isAuthorValid(Author $author, ExecutionContextInterface $context)
             {
                 // ...
             }
@@ -212,5 +226,5 @@ process. Each method can be one of the following formats:
         the option to make your callback either a PHP closure or a non-static
         callback. It is *not* currently possible, however, to specify a :term:`service`
         as a constraint. To validate using a service, you should
-        :doc:`create a custom validation constraint</cookbook/validation/custom_constraint>`
+        :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
         and add that new constraint to your class.

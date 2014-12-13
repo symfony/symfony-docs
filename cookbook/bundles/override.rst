@@ -53,7 +53,7 @@ in the core FrameworkBundle:
 
         # app/config/config.yml
         parameters:
-            translator.class:      Acme\HelloBundle\Translation\Translator
+            translator.class: Acme\HelloBundle\Translation\Translator
 
     .. code-block:: xml
 
@@ -71,7 +71,7 @@ Secondly, if the class is not available as a parameter, you want to make sure th
 class is always overridden when your bundle is used, or you need to modify
 something beyond just the class name, you should use a compiler pass::
 
-    // src/Acme/FooBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
+    // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
     namespace Acme\DemoBundle\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -93,7 +93,7 @@ See :doc:`/cookbook/service_container/compiler_passes` for information on how to
 compiler passes. If you want to do something beyond just overriding the class -
 like adding a method call - you can only use the compiler pass method.
 
-Entities & Entity mapping
+Entities & Entity Mapping
 -------------------------
 
 Due to the way Doctrine works, it is not possible to override entity mapping
@@ -117,10 +117,58 @@ rather than::
 
     $builder->add('name', new CustomType());
 
-Validation metadata
+.. _override-validation:
+
+Validation Metadata
 -------------------
 
-In progress...
+Symfony loads all validation configuration files from every bundle and
+combines them into one validation metadata tree. This means you are able to
+add new constraints to a property, but you cannot override them.
+
+To override this, the 3rd party bundle needs to have configuration for
+:ref:`validation groups <book-validation-validation-groups>`. For instance,
+the FOSUserBundle has this configuration. To create your own validation, add
+the constraints to a new validation group:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Fos\UserBundle\Model\User:
+            properties:
+                plainPassword:
+                    - NotBlank:
+                        groups: [AcmeValidation]
+                    - Length:
+                        min: 6
+                        minMessage: fos_user.password.short
+                        groups: [AcmeValidation]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Fos\UserBundle\Model\User">
+                <property name="password">
+                    <constraint name="Length">
+                        <option name="min">6</option>
+                        <option name="minMessage">fos_user.password.short</option>
+                        <option name="groups">
+                            <value>AcmeValidation</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+Now, update the FOSUserBundle configuration, so it uses your validation groups
+instead of the original ones.
 
 .. _override-translations:
 
@@ -129,11 +177,11 @@ Translations
 
 Translations are not related to bundles, but to domains. That means that you
 can override the translations from any translation file, as long as it is in
-:ref:`the correct domain <translation-domains>`.
+:ref:`the correct domain <using-message-domains>`.
 
 .. caution::
 
-    The last translation file always wins. That mean that you need to make
+    The last translation file always wins. That means that you need to make
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
 

@@ -6,7 +6,7 @@ a value is simply not blank (not a blank string), see the  :doc:`/reference/cons
 constraint.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 +----------------+-----------------------------------------------------------------------+
@@ -25,7 +25,7 @@ were not strictly equal to ``null``, you would:
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 firstName:
@@ -49,11 +49,17 @@ were not strictly equal to ``null``, you would:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="firstName">
-                <constraint name="NotNull" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="NotNull" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -77,6 +83,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should not be null``
+**type**: ``string`` **default**: ``This value should not be null.``
 
 This is the message that will be shown if the value is ``null``.

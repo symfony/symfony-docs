@@ -1,7 +1,7 @@
 .. index::
    single: Debugging
 
-How to optimize your development Environment for debugging
+How to Optimize your Development Environment for Debugging
 ==========================================================
 
 When you work on a Symfony project on your local machine, you should use the
@@ -30,14 +30,12 @@ The ``app_dev.php`` front controller reads as follows by default::
 
     // ...
 
-    require_once __DIR__.'/../app/bootstrap.php.cache';
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
-
-    use Symfony\Component\HttpFoundation\Request;
 
     $kernel = new AppKernel('dev', true);
     $kernel->loadClassCache();
-    $kernel->handle(Request::createFromGlobals())->send();
+    $request = Request::createFromGlobals();
 
 To make your debugger happier, disable all PHP class caches by removing the
 call to ``loadClassCache()`` and by replacing the require statements like
@@ -45,16 +43,13 @@ below::
 
     // ...
 
-    // require_once __DIR__.'/../app/bootstrap.php.cache';
-    require_once __DIR__.'/../vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-    require_once __DIR__.'/../app/autoload.php';
+    // $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
+    $loader = require_once __DIR__.'/../app/autoload.php';
     require_once __DIR__.'/../app/AppKernel.php';
-
-    use Symfony\Component\HttpFoundation\Request;
 
     $kernel = new AppKernel('dev', true);
     // $kernel->loadClassCache();
-    $kernel->handle(Request::createFromGlobals())->send();
+    $request = Request::createFromGlobals();
 
 .. tip::
 

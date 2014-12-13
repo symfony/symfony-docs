@@ -1,7 +1,7 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
-How to extend a Class without using Inheritance
+How to Extend a Class without Using Inheritance
 ===============================================
 
 To allow multiple classes to add methods to another one, you can define the
@@ -77,7 +77,7 @@ use this pattern of class extension:
             $this->stopPropagation();
         }
 
-        public function getReturnValue($val)
+        public function getReturnValue()
         {
             return $this->returnValue;
         }

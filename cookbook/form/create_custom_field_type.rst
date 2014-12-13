@@ -16,7 +16,7 @@ Defining the Field Type
 
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
-will be called `GenderType` and the file will be stored in the default location
+will be called ``GenderType`` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
@@ -24,21 +24,21 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class GenderType extends AbstractType
     {
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'choices' => array(
                     'm' => 'Male',
                     'f' => 'Female',
-                ),
-            );
+                )
+            ));
         }
 
-        public function getParent(array $options)
+        public function getParent()
         {
             return 'choice';
         }
@@ -70,17 +70,17 @@ important:
   set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
   for more details.
 
-* ``getDefaultOptions()`` - This defines options for your form type that
+* ``setDefaultOptions()`` - This defines options for your form type that
   can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see `FieldType`_), but you can create any
-  others that you need here.
+  options common to all fields (see :doc:`/reference/forms/types/form`),
+  but you can create any others that you need here.
 
 .. tip::
 
     If you're creating a field that consists of many fields, then be sure
     to set your "parent" type as ``form`` or something that extends ``form``.
     Also, if you need to modify the "view" of any of your child types from
-    your parent type, use the ``buildViewBottomUp()`` method.
+    your parent type, use the ``finishView()`` method.
 
 The ``getName()`` method returns an identifier which should be unique in
 your application. This is used in various places, such as when customizing
@@ -99,10 +99,10 @@ part by the value of your ``getName()`` method. For more information, see
 
 In this case, since the parent field is ``choice``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``choice``
-type. But for the sake of this example, let's suppose that when your field
-is "expanded" (i.e. radio buttons or checkboxes, instead of a select field),
-you want to always render it in a ``ul`` element. In your form theme template
-(see above link for details), create a ``gender_widget`` block to handle this:
+type. But for the sake of this example, suppose that when your field is "expanded"
+(i.e. radio buttons or checkboxes, instead of a select field), you want to
+always render it in a ``ul`` element. In your form theme template (see above
+link for details), create a ``gender_widget`` block to handle this:
 
 .. configuration-block::
 
@@ -129,7 +129,7 @@ you want to always render it in a ``ul`` element. In your form theme template
 
     .. code-block:: html+php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.twig -->
+        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -150,6 +150,8 @@ you want to always render it in a ``ul`` element. In your form theme template
     be ``gender_widget``, according to the value returned by ``getName``.
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
+
+    When using Twig this is:
 
     .. configuration-block::
 
@@ -181,6 +183,51 @@ you want to always render it in a ``ul`` element. In your form theme template
                 ),
             ));
 
+    For the PHP templating engine, your configuration should look like this:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                templating:
+                    form:
+                        resources:
+                            - 'AcmeDemoBundle:Form'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:templating>
+                        <framework:form>
+                            <framework:resource>AcmeDemoBundle:Form</twig:resource>
+                        </framework:form>
+                    </framework:templating>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'templating' => array(
+                    'form' => array(
+                        'resources' => array(
+                            'AcmeDemoBundle:Form',
+                        ),
+                    ),
+                ),
+            ));
+
 Using the Field Type
 --------------------
 
@@ -191,11 +238,11 @@ new instance of the type in one of your forms::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class AuthorType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', new GenderType(), array(
                 'empty_value' => 'Choose a gender',
@@ -206,6 +253,8 @@ new instance of the type in one of your forms::
 But this only works because the ``GenderType()`` is very simple. What if
 the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
+
+.. _form-cookbook-form-field-service:
 
 Creating your Field Type as a Service
 -------------------------------------
@@ -294,6 +343,10 @@ method to ``GenderType``, which receives the gender configuration::
     // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
 
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    // ...
+
     // ...
     class GenderType extends AbstractType
     {
@@ -304,11 +357,11 @@ method to ``GenderType``, which receives the gender configuration::
             $this->genderChoices = $genderChoices;
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'choices' => $this->genderChoices,
-            );
+            ));
         }
 
         // ...
@@ -320,11 +373,14 @@ configuration, using the field is now much easier::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
     namespace Acme\DemoBundle\Form\Type;
+
+    use Symfony\Component\Form\FormBuilderInterface;
+
     // ...
 
     class AuthorType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', 'gender', array(
                 'empty_value' => 'Choose a gender',

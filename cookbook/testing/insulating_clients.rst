@@ -1,11 +1,11 @@
 .. index::
    single: Tests; Insulating clients
 
-How to test the Interaction of several Clients
+How to Test the Interaction of several Clients
 ==============================================
 
-If you need to simulate an interaction between different Clients (think of a
-chat for instance), create several Clients::
+If you need to simulate an interaction between different clients (think of a
+chat for instance), create several clients::
 
     $harry = static::createClient();
     $sally = static::createClient();

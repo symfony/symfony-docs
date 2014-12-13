@@ -2,11 +2,13 @@
 
   * :doc:`Bugs </contributing/code/bugs>`
   * :doc:`Patches </contributing/code/patches>`
+  * :doc:`The Core Team </contributing/code/core_team>`
   * :doc:`Security </contributing/code/security>`
   * :doc:`Tests </contributing/code/tests>`
+  * :doc:`Backwards Compatibility </contributing/code/bc>`
   * :doc:`Coding Standards</contributing/code/standards>`
   * :doc:`Code Conventions</contributing/code/conventions>`
-  * :doc:`Git</contributing/code/git>`  
+  * :doc:`Git</contributing/code/git>`
   * :doc:`License </contributing/code/license>`
 
 * **Documentation**
@@ -20,5 +22,4 @@
 * **Community**
 
   * :doc:`Release Process </contributing/community/releases>`
-  * :doc:`IRC Meetings </contributing/community/irc>`
   * :doc:`Other Resources </contributing/community/other>`

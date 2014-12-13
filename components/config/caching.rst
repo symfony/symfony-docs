@@ -1,7 +1,7 @@
 .. index::
    single: Config; Caching based on resources
 
-Caching based on resources
+Caching Based on Resources
 ==========================
 
 When all configuration resources are loaded, you may want to process the configuration

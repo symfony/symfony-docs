@@ -8,7 +8,7 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony2 ships with a `Validator`_ component that makes this task easy and
+Symfony ships with a `Validator`_ component that makes this task easy and
 transparent. This component is based on the
 `JSR303 Bean Validation specification`_.
 
@@ -33,7 +33,7 @@ your application::
 So far, this is just an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you whether or not the data
 of an object is valid. For this to work, you'll configure a list of rules
-(called :ref:`constraints<validation-constraints>`) that the object must
+(called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules can be specified via a number of
 different formats (YAML, XML, annotations, or PHP).
 
@@ -101,7 +101,7 @@ following:
 .. tip::
 
     Protected and private properties can also be validated, as well as "getter"
-    methods (see `validator-constraint-targets`).
+    methods (see :ref:`validator-constraint-targets`).
 
 .. index::
    single: Validation; Using the validator
@@ -113,8 +113,9 @@ Next, to actually validate an ``Author`` object, use the ``validate`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify whether or not the data on the object satisfies those
-constraints. If validation fails, an array of errors is returned. Take this
-simple example from inside a controller::
+constraints. If validation fails, a non-empty list of errors
+(class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) is
+returned. Take this simple example from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
@@ -129,10 +130,17 @@ simple example from inside a controller::
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
-            return new Response(print_r($errors, true));
-        } else {
-            return new Response('The author is valid! Yes!');
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging
+             */
+            $errorsString = (string) $errors;
+
+            return new Response($errorsString);
         }
+
+        return new Response('The author is valid! Yes!');
     }
 
 If the ``$name`` property is empty, you will see the following error
@@ -161,8 +169,6 @@ You could also pass the collection of errors into a template.
         return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
             'errors' => $errors,
         ));
-    } else {
-        // ...
     }
 
 Inside the template, you can output the list of errors exactly as needed:
@@ -186,7 +192,7 @@ Inside the template, you can output the list of errors exactly as needed:
         <ul>
         <?php foreach ($errors as $error): ?>
             <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
         </ul>
 
 .. note::
@@ -205,8 +211,8 @@ Validation and Forms
 The ``validator`` service can be used at any time to validate any object.
 In reality, however, you'll usually work with the ``validator`` indirectly
 when working with forms. Symfony's form library uses the ``validator`` service
-internally to validate the underlying object after values have been submitted
-and bound. The constraint violations on the object are converted into ``FieldError``
+internally to validate the underlying object after values have been submitted.
+The constraint violations on the object are converted into ``FieldError``
 objects that can easily be displayed with your form. The typical form submission
 workflow looks like the following from inside a controller::
 
@@ -220,14 +226,12 @@ workflow looks like the following from inside a controller::
         $author = new Author();
         $form = $this->createForm(new AuthorType(), $author);
 
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                // the validation passed, do something with the $author object
+        if ($form->isValid()) {
+            // the validation passed, do something with the $author object
 
-                return $this->redirect($this->generateUrl(...));
-            }
+            return $this->redirect($this->generateUrl(...));
         }
 
         return $this->render('BlogBundle:Author:form.html.twig', array(
@@ -239,7 +243,7 @@ workflow looks like the following from inside a controller::
 
     This example uses an ``AuthorType`` form class, which is not shown here.
 
-For more information, see the :doc:`Forms</book/forms>` chapter.
+For more information, see the :doc:`Forms </book/forms>` chapter.
 
 .. index::
    pair: Validation; Configuration
@@ -249,7 +253,7 @@ For more information, see the :doc:`Forms</book/forms>` chapter.
 Configuration
 -------------
 
-The Symfony2 validator is enabled by default, but you must explicitly enable
+The Symfony validator is enabled by default, but you must explicitly enable
 annotations if you're using the annotation method to specify your constraints:
 
 .. configuration-block::
@@ -263,9 +267,17 @@ annotations if you're using the annotation method to specify your constraints:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:validation enable-annotations="true" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation enable-annotations="true" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -290,14 +302,14 @@ to its class and then pass it to the ``validator`` service.
 
 Behind the scenes, a constraint is simply a PHP object that makes an assertive
 statement. In real life, a constraint could be: "The cake must not be burned".
-In Symfony2, constraints are similar: they are assertions that a condition
+In Symfony, constraints are similar: they are assertions that a condition
 is true. Given a value, a constraint will tell you whether or not that value
 adheres to the rules of the constraint.
 
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 packages a large number of the most commonly-needed constraints:
+Symfony packages a large number of the most commonly-needed constraints:
 
 .. include:: /reference/constraints/map.rst.inc
 
@@ -312,8 +324,8 @@ the ":doc:`/cookbook/validation/custom_constraint`" article of the cookbook.
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some constraints, like :doc:`NotBlank</reference/constraints/NotBlank>`,
-are simple whereas others, like the :doc:`Choice</reference/constraints/Choice>`
+Some constraints, like :doc:`NotBlank </reference/constraints/NotBlank>`,
+are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>`
 constraint, have several configuration options available. Suppose that the
 ``Author`` class has another property, ``gender`` that can be set to either
 "male" or "female":
@@ -490,7 +502,7 @@ to use, but the second allows you to specify more complex validation rules.
 Properties
 ~~~~~~~~~~
 
-Validating class properties is the most basic validation technique. Symfony2
+Validating class properties is the most basic validation technique. Symfony
 allows you to validate private, protected or public properties. The next
 listing shows you how to configure the ``$firstName`` property of an ``Author``
 class to have at least 3 characters.
@@ -504,7 +516,8 @@ class to have at least 3 characters.
             properties:
                 firstName:
                     - NotBlank: ~
-                    - MinLength: 3
+                    - Length:
+                        min: 3
 
     .. code-block:: php-annotations
 
@@ -517,7 +530,7 @@ class to have at least 3 characters.
         {
             /**
              * @Assert\NotBlank()
-             * @Assert\MinLength(3)
+             * @Assert\Length(min = "3")
              */
             private $firstName;
         }
@@ -525,12 +538,20 @@ class to have at least 3 characters.
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="firstName">
-                <constraint name="NotBlank" />
-                <constraint name="MinLength">3</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="NotBlank" />
+                    <constraint name="Length">
+                        <option name="min">3</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -539,7 +560,7 @@ class to have at least 3 characters.
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Constraints\Length;
 
         class Author
         {
@@ -548,7 +569,9 @@ class to have at least 3 characters.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new NotBlank());
-                $metadata->addPropertyConstraint('firstName', new MinLength(3));
+                $metadata->addPropertyConstraint(
+                    'firstName',
+                    new Length(array("min" => 3)));
             }
         }
 
@@ -558,7 +581,7 @@ class to have at least 3 characters.
 Getters
 ~~~~~~~
 
-Constraints can also be applied to the return value of a method. Symfony2
+Constraints can also be applied to the return value of a method. Symfony
 allows you to add a constraint to any public method whose name starts with
 "get" or "is". In this guide, both of these types of methods are referred
 to as "getters".
@@ -600,13 +623,19 @@ this method must return ``true``:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <getter property="passwordLegal">
-                <constraint name="True">
-                    <option name="message">The password cannot match your first name</option>
-                </constraint>
-            </getter>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <getter property="passwordLegal">
+                    <constraint name="True">
+                        <option name="message">The password cannot match your first name</option>
+                    </constraint>
+                </getter>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -630,7 +659,7 @@ Now, create the ``isPasswordLegal()`` method, and include the logic you need::
 
     public function isPasswordLegal()
     {
-        return ($this->firstName != $this->password);
+        return $this->firstName != $this->password;
     }
 
 .. note::
@@ -646,7 +675,7 @@ Classes
 ~~~~~~~
 
 Some constraints apply to the entire class being validated. For example,
-the :doc:`Callback</reference/constraints/Callback>` constraint is a generic
+the :doc:`Callback </reference/constraints/Callback>` constraint is a generic
 constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
@@ -664,7 +693,7 @@ on that class. To do this, you can organize each constraint into one or more
 constraints.
 
 For example, suppose you have a ``User`` class, which is used both when a
-user registers and when a user updates his/her contact information later:
+user registers and when a user updates their contact information later:
 
 .. configuration-block::
 
@@ -677,9 +706,10 @@ user registers and when a user updates his/her contact information later:
                     - Email: { groups: [registration] }
                 password:
                     - NotBlank: { groups: [registration] }
-                    - MinLength: { limit: 7, groups: [registration] }
+                    - Length: { min: 7, groups: [registration] }
                 city:
-                    - MinLength: 2
+                    - Length:
+                        min: 2
 
     .. code-block:: php-annotations
 
@@ -698,12 +728,12 @@ user registers and when a user updates his/her contact information later:
 
             /**
             * @Assert\NotBlank(groups={"registration"})
-            * @Assert\MinLength(limit=7, groups={"registration"})
+            * @Assert\Length(min=7, groups={"registration"})
             */
             private $password;
 
             /**
-            * @Assert\MinLength(2)
+            * @Assert\Length(min = "2")
             */
             private $city;
         }
@@ -711,31 +741,39 @@ user registers and when a user updates his/her contact information later:
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\User">
-            <property name="email">
-                <constraint name="Email">
-                    <option name="groups">
-                        <value>registration</value>
-                    </option>
-                </constraint>
-            </property>
-            <property name="password">
-                <constraint name="NotBlank">
-                    <option name="groups">
-                        <value>registration</value>
-                    </option>
-                </constraint>
-                <constraint name="MinLength">
-                    <option name="limit">7</option>
-                    <option name="groups">
-                        <value>registration</value>
-                    </option>
-                </constraint>
-            </property>
-            <property name="city">
-                <constraint name="MinLength">7</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\User">
+                <property name="email">
+                    <constraint name="Email">
+                        <option name="groups">
+                            <value>registration</value>
+                        </option>
+                    </constraint>
+                </property>
+                <property name="password">
+                    <constraint name="NotBlank">
+                        <option name="groups">
+                            <value>registration</value>
+                        </option>
+                    </constraint>
+                    <constraint name="Length">
+                        <option name="min">7</option>
+                        <option name="groups">
+                            <value>registration</value>
+                        </option>
+                    </constraint>
+                </property>
+                <property name="city">
+                    <constraint name="Length">
+                        <option name="min">7</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -745,7 +783,7 @@ user registers and when a user updates his/her contact information later:
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Email;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Constraints\Length;
 
         class User
         {
@@ -758,21 +796,24 @@ user registers and when a user updates his/her contact information later:
                 $metadata->addPropertyConstraint('password', new NotBlank(array(
                     'groups' => array('registration'),
                 )));
-                $metadata->addPropertyConstraint('password', new MinLength(array(
-                    'limit'  => 7,
-                    'groups' => array('registration'),
+                $metadata->addPropertyConstraint('password', new Length(array(
+                    'min'  => 7,
+                    'groups' => array('registration')
                 )));
 
-                $metadata->addPropertyConstraint('city', new MinLength(3));
+                $metadata->addPropertyConstraint(
+                    'city',
+                    Length(array("min" => 3)));
             }
         }
 
-With this configuration, there are two validation groups:
+With this configuration, there are three validation groups:
 
-* ``Default`` - contains the constraints not assigned to any other group;
+* ``Default`` - contains the constraints in the current class and all
+  referenced classes that belong to no other group;
 
-* ``User`` - contains the constraints that belongs to group ``Default``
-  (this group is useful for :ref:`book-validation-group-sequence`);
+* ``User`` - equivalent to all constraints of the ``User`` object in the
+  ``Default`` group;
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
@@ -798,13 +839,8 @@ Group Sequence
 --------------
 
 In some cases, you want to validate your groups by steps. To do this, you can
-use the ``GroupSequence`` feature. In the case, an object defines a group sequence,
-and then the groups in the group sequence are validated in order.
-
-.. tip::
-
-    Group sequences cannot contain the group ``Default``, as this would create
-    a loop. Instead, use the group ``{ClassName}`` (e.g. ``User``) instead.
+use the ``GroupSequence`` feature. In this case, an object defines a group
+sequence, which determines the order groups should be validated.
 
 For example, suppose you have a ``User`` class and want to validate that the
 username and the password are different only if all other validation passes
@@ -839,7 +875,7 @@ username and the password are different only if all other validation passes
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
-         * @Assert\GroupSequence({"Strict", "User"})
+         * @Assert\GroupSequence({"User", "Strict"})
          */
         class User implements UserInterface
         {
@@ -865,26 +901,32 @@ username and the password are different only if all other validation passes
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\User">
-            <property name="username">
-                <constraint name="NotBlank" />
-            </property>
-            <property name="password">
-                <constraint name="NotBlank" />
-            </property>
-            <getter property="passwordLegal">
-                <constraint name="True">
-                    <option name="message">The password cannot match your username</option>
-                    <option name="groups">
-                        <value>Strict</value>
-                    </option>
-                </constraint>
-            </getter>
-            <group-sequence>
-                <value>User</value>
-                <value>Strict</value>
-            </group-sequence>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\User">
+                <property name="username">
+                    <constraint name="NotBlank" />
+                </property>
+                <property name="password">
+                    <constraint name="NotBlank" />
+                </property>
+                <getter property="passwordLegal">
+                    <constraint name="True">
+                        <option name="message">The password cannot match your username</option>
+                        <option name="groups">
+                            <value>Strict</value>
+                        </option>
+                    </constraint>
+                </getter>
+                <group-sequence>
+                    <value>User</value>
+                    <value>Strict</value>
+                </group-sequence>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -898,13 +940,22 @@ username and the password are different only if all other validation passes
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('username', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('password', new Assert\NotBlank());
+                $metadata->addPropertyConstraint(
+                    'username',
+                    new Assert\NotBlank()
+                );
+                $metadata->addPropertyConstraint(
+                    'password',
+                    new Assert\NotBlank()
+                );
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\True(array(
-                    'message' => 'The password cannot match your first name',
-                    'groups'  => array('Strict'),
-                )));
+                $metadata->addGetterConstraint(
+                    'passwordLegal',
+                    new Assert\True(array(
+                        'message' => 'The password cannot match your first name',
+                        'groups'  => array('Strict'),
+                    ))
+                );
 
                 $metadata->setGroupSequence(array('User', 'Strict'));
             }
@@ -913,6 +964,207 @@ username and the password are different only if all other validation passes
 In this example, it will first validate all constraints in the group ``User``
 (which is the same as the ``Default`` group). Only if all constraints in
 that group are valid, the second group, ``Strict``, will be validated.
+
+.. caution::
+
+    As you have already seen in the previous section, the ``Default`` group
+    and the group containing the class name (e.g. ``User``) were identical.
+    However, when using Group Sequences, they are no longer identical. The
+    ``Default`` group will now reference the group sequence, instead of all
+    constraints that do not belong to any group.
+
+    This means that you have to use the ``{ClassName}`` (e.g. ``User``) group
+    when specifying a group sequence. When using ``Default``, you get an
+    infinite recursion (as the ``Default`` group references the group
+    sequence, which will contain the ``Default`` group which references the
+    same group sequence, ...).
+
+Group Sequence Providers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine a ``User`` entity which can be a normal user or a premium user. When
+it's a premium user, some extra constraints should be added to the user entity
+(e.g. the credit card details). To dynamically determine which groups should
+be activated, you can create a Group Sequence Provider. First, create the
+entity and a new constraint group called ``Premium``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\User:
+            properties:
+                name:
+                    - NotBlank: ~
+                creditCard:
+                    - CardScheme:
+                        schemes: [VISA]
+                        groups: [Premium]
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            // ...
+
+            /**
+             * @Assert\NotBlank()
+             */
+            private $name;
+
+            /**
+             * @Assert\CardScheme(
+             *     schemes={"VISA"},
+             *     groups={"Premium"},
+             * )
+             */
+            private $creditCard;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\DemoBundle\Entity\User">
+                <property name="name">
+                    <constraint name="NotBlank" />
+                </property>
+
+                <property name="creditCard">
+                    <constraint name="CardScheme">
+                        <option name="schemes">
+                            <value>VISA</value>
+                        </option>
+                        <option name="groups">
+                            <value>Premium</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class User
+        {
+            private $name;
+            private $creditCard;
+
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank());
+                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme(
+                    'schemes' => array('VISA'),
+                    'groups'  => array('Premium'),
+                ));
+            }
+        }
+
+Now, change the ``User`` class to implement
+:class:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface` and
+add the
+:method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
+which should return an array of groups to use::
+
+    // src/Acme/DemoBundle/Entity/User.php
+    namespace Acme\DemoBundle\Entity;
+
+    // ...
+    use Symfony\Component\Validator\GroupSequenceProviderInterface;
+
+    class User implements GroupSequenceProviderInterface
+    {
+        // ...
+
+        public function getGroupSequence()
+        {
+            $groups = array('User');
+
+            if ($this->isPremium()) {
+                $groups[] = 'Premium';
+            }
+
+            return $groups;
+        }
+    }
+
+At last, you have to notify the Validator component that your ``User`` class
+provides a sequence of groups to be validated:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\User:
+            group_sequence_provider: true
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        // ...
+
+        /**
+         * @Assert\GroupSequenceProvider
+         */
+        class User implements GroupSequenceProviderInterface
+        {
+            // ...
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\DemoBundle\Entity\User">
+                <group-sequence-provider />
+                <!-- ... -->
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Entity/User.php
+        namespace Acme\DemoBundle\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class User implements GroupSequenceProviderInterface
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->setGroupSequenceProvider(true);
+                // ...
+            }
+        }
 
 .. _book-validation-raw-values:
 
@@ -954,18 +1206,18 @@ it looks like this::
 By calling ``validateValue`` on the validator, you can pass in a raw value and
 the constraint object that you want to validate that value against. A full
 list of the available constraints - as well as the full class name for each
-constraint - is available in the :doc:`constraints reference</reference/constraints>`
+constraint - is available in the :doc:`constraints reference </reference/constraints>`
 section .
 
 The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
-which holds the error message on its `getMessage` method.
+which holds the error message on its ``getMessage`` method.
 
 Final Thoughts
 --------------
 
-The Symfony2 ``validator`` is a powerful tool that can be leveraged to
+The Symfony ``validator`` is a powerful tool that can be leveraged to
 guarantee that the data of any object is "valid". The power behind validation
 lies in "constraints", which are rules that you can apply to properties or
 getter methods of your object. And while you'll most commonly use the validation

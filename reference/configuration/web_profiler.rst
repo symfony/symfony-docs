@@ -1,10 +1,10 @@
 .. index::
-   single: Configuration reference; WebProfiler
+    single: Configuration reference; WebProfiler
 
-WebProfilerBundle Configuration
-===============================
+WebProfilerBundle Configuration ("web_profiler")
+================================================
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 .. configuration-block::
@@ -12,12 +12,13 @@ Full Default Configuration
     .. code-block:: yaml
 
         web_profiler:
-            
-            # display secondary information, disable to make the toolbar shorter
-            verbose:             true
+
+            # DEPRECATED, it is not useful anymore and can be removed safely from your configuration
+            verbose:              true
 
             # display the web debug toolbar at the bottom of pages with a summary of profiler info
-            toolbar:             false
+            toolbar:              false
+            position:             bottom
 
             # gives you the opportunity to look at the collected data before following the redirect
             intercept_redirects: false

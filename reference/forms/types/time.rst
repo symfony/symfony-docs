@@ -15,21 +15,28 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `widget`_                                                                 |
-|                      | - `input`_                                                                  |
-|                      | - `with_seconds`_                                                           |
+| Options              | - `empty_value`_                                                            |
 |                      | - `hours`_                                                                  |
+|                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
+|                      | - `model_timezone`_                                                         |
 |                      | - `seconds`_                                                                |
-|                      | - `data_timezone`_                                                          |
-|                      | - `user_timezone`_                                                          |
+|                      | - `view_timezone`_                                                          |
+|                      | - `widget`_                                                                 |
+|                      | - `with_minutes`_                                                           |
+|                      | - `with_seconds`_                                                           |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `invalid_message`_                                                        |
-| options              | - `invalid_message_parameters`_                                             |
-|                      | - `virtual`_                                                                |
+| Inherited            | - `data`_                                                                   |
+| Options              | - `disabled`_                                                               |
+|                      | - `error_mapping`_                                                          |
+|                      | - `inherit_data`_                                                           |
+|                      | - `invalid_message`_                                                        |
+|                      | - `invalid_message_parameters`_                                             |
+|                      | - `mapped`_                                                                 |
+|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+
@@ -44,7 +51,7 @@ options are ``input`` and ``widget``.
 
 Suppose that you have a ``startTime`` field whose underlying time data is a
 ``DateTime`` object. The following configures the ``time`` type for that
-field as three different choice fields:
+field as two different choice fields:
 
 .. code-block:: php
 
@@ -70,19 +77,9 @@ values.
 Field Options
 -------------
 
-widget
-~~~~~~
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
-**type**: ``string`` **default**: ``choice``
-
-The basic way in which this field should be rendered. Can be one of the following:
-
-* ``choice``: renders two (or three if `with_seconds`_ is true) select inputs.
-
-* ``text``: renders a two or three text inputs (hour, minute, second).
-
-* ``single_text``: renders a single input of type text. User's input will
-  be validated against the form ``hh:mm`` (or ``hh:mm:ss`` if using seconds).
+.. include:: /reference/forms/types/options/hours.rst.inc
 
 input
 ~~~~~
@@ -100,17 +97,39 @@ your underlying object. Valid values are:
 The value that comes back from the form will also be normalized back into
 this format.
 
-.. include:: /reference/forms/types/options/with_seconds.rst.inc
-
-.. include:: /reference/forms/types/options/hours.rst.inc
-
 .. include:: /reference/forms/types/options/minutes.rst.inc
+
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+widget
+~~~~~~
+
+**type**: ``string`` **default**: ``choice``
+
+The basic way in which this field should be rendered. Can be one of the following:
+
+* ``choice``: renders one, two (default) or three select inputs (hour, minute,
+  second), depending on the `with_minutes`_ and `with_seconds`_ options.
+
+* ``text``: renders one, two (default) or three text inputs (hour, minute,
+  second), depending on the `with_minutes`_ and `with_seconds`_ options.
+
+* ``single_text``: renders a single input of type ``time``. User's input will
+  be validated against the form ``hh:mm`` (or ``hh:mm:ss`` if using seconds).
+
+.. caution::
+
+    Combining the widget type ``single_text`` and the `with_minutes`_ option
+    set to ``false`` can cause unexpected behavior in the client as the input
+    type ``time`` might not support selecting an hour only.
+
+.. include:: /reference/forms/types/options/with_minutes.rst.inc
+
+.. include:: /reference/forms/types/options/with_seconds.rst.inc
 
 Overridden Options
 ------------------
@@ -127,15 +146,39 @@ error_bubbling
 
 **default**: ``false``
 
-Inherited options
+Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/virtual.rst.inc
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+Form Variables
+--------------
+
++--------------+-------------+----------------------------------------------------------------------+
+| Variable     | Type        | Usage                                                                |
++==============+=============+======================================================================+
+| widget       | ``mixed``   | The value of the `widget`_ option.                                   |
++--------------+-------------+----------------------------------------------------------------------+
+| with_minutes | ``Boolean`` | The value of the `with_minutes`_ option.                             |
++--------------+-------------+----------------------------------------------------------------------+
+| with_seconds | ``Boolean`` | The value of the `with_seconds`_ option.                             |
++--------------+-------------+----------------------------------------------------------------------+
+| type         | ``string``  | Only present when widget is ``single_text`` and HTML5 is activated,  |
+|              |             | contains the input type to use (``datetime``, ``date`` or ``time``). |
++--------------+-------------+----------------------------------------------------------------------+

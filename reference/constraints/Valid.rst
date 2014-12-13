@@ -6,12 +6,15 @@ as properties on an object being validated. This allows you to validate an
 object and all sub-objects associated with it.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
+|                | - `deep`_                                                           |
 +----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
 +----------------+---------------------------------------------------------------------+
+
+.. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
 
 Basic Usage
 -----------
@@ -23,7 +26,7 @@ an ``Address`` instance in the ``$address`` property.
 .. code-block:: php
 
     // src/Acme/HelloBundle/Entity/Address.php
-    namespace Amce\HelloBundle\Entity;
+    namespace Acme\HelloBundle\Entity;
 
     class Address
     {
@@ -34,7 +37,7 @@ an ``Address`` instance in the ``$address`` property.
 .. code-block:: php
 
     // src/Acme/HelloBundle/Entity/Author.php
-    namespace Amce\HelloBundle\Entity;
+    namespace Acme\HelloBundle\Entity;
 
     class Author
     {
@@ -54,13 +57,15 @@ an ``Address`` instance in the ``$address`` property.
                     - NotBlank: ~
                 zipCode:
                     - NotBlank: ~
-                    - MaxLength: 5
+                    - Length:
+                        max: 5
 
         Acme\HelloBundle\Entity\Author:
             properties:
                 firstName:
                     - NotBlank: ~
-                    - MinLength: 4
+                    - Length:
+                        min: 4
                 lastName:
                     - NotBlank: ~
 
@@ -80,7 +85,7 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\MaxLength(5)
+             * @Assert\Length(max = 5)
              */
             protected $zipCode;
         }
@@ -88,11 +93,13 @@ an ``Address`` instance in the ``$address`` property.
         // src/Acme/HelloBundle/Entity/Author.php
         namespace Acme\HelloBundle\Entity;
 
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
              * @Assert\NotBlank
-             * @Assert\MinLength(4)
+             * @Assert\Length(min = 4)
              */
             protected $firstName;
 
@@ -107,25 +114,35 @@ an ``Address`` instance in the ``$address`` property.
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Entity\Address">
-            <property name="street">
-                <constraint name="NotBlank" />
-            </property>
-            <property name="zipCode">
-                <constraint name="NotBlank" />
-                <constraint name="MaxLength">5</constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-        <class name="Acme\HelloBundle\Entity\Author">
-            <property name="firstName">
-                <constraint name="NotBlank" />
-                <constraint name="MinLength">4</constraint>
-            </property>
-            <property name="lastName">
-                <constraint name="NotBlank" />
-            </property>
-        </class>
+            <class name="Acme\HelloBundle\Entity\Address">
+                <property name="street">
+                    <constraint name="NotBlank" />
+                </property>
+                <property name="zipCode">
+                    <constraint name="NotBlank" />
+                    <constraint name="Length">
+                        <option name="max">5</option>
+                    </constraint>
+                </property>
+            </class>
+
+            <class name="Acme\HelloBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="NotBlank" />
+                    <constraint name="Length">
+                        <option name="min">4</option>
+                    </constraint>
+                </property>
+                <property name="lastName">
+                    <constraint name="NotBlank" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -144,7 +161,7 @@ an ``Address`` instance in the ``$address`` property.
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('zipCode', new Assert\MaxLength(5));
+                $metadata->addPropertyConstraint('zipCode', new Assert\Length(array("max" => 5)));
             }
         }
 
@@ -163,7 +180,7 @@ an ``Address`` instance in the ``$address`` property.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('firstName', new Assert\MinLength(4));
+                $metadata->addPropertyConstraint('firstName', new Assert\Length(array("min" => 4)));
                 $metadata->addPropertyConstraint('lastName', new Assert\NotBlank());
             }
         }
@@ -177,7 +194,7 @@ property.
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Author:
+        Acme\HelloBundle\Entity\Author:
             properties:
                 address:
                     - Valid: ~
@@ -200,11 +217,17 @@ property.
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Entity\Author">
-            <property name="address">
-                <constraint name="Valid" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\HelloBundle\Entity\Author">
+                <property name="address">
+                    <constraint name="Valid" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -227,8 +250,10 @@ property.
 If you validate an author with an invalid address now, you can see that the
 validation of the ``Address`` fields failed.
 
-    Acme\HelloBundle\Author.address.zipCode:
-    This value is too long. It should have 5 characters or less
+.. code-block:: text
+
+    Acme\\HelloBundle\\Author.address.zipCode:
+        This value is too long. It should have 5 characters or less.
 
 Options
 -------
@@ -240,4 +265,13 @@ traverse
 
 If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is set
+to ``true``.
+
+deep
+~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this constraint is applied to a property that holds an array of objects,
+then each object in that array will be validated recursively if this option is set
 to ``true``.

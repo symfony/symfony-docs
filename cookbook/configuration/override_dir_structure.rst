@@ -1,7 +1,7 @@
 .. index::
-   single: Override Symfony
+    single: Override Symfony
 
-How to override Symfony's Default Directory Structure
+How to Override Symfony's default Directory Structure
 =====================================================
 
 Symfony automatically ships with a default directory structure. You can
@@ -10,22 +10,23 @@ directory structure is:
 
 .. code-block:: text
 
-    app/
-        cache/
-        config/
-        logs/
-        ...
-    src/
-        ...
-    vendor/
-        ...
-    web/
-        app.php
-        ...
+    your-project/
+    ├─ app/
+    │  ├─ cache/
+    │  ├─ config/
+    │  ├─ logs/
+    │  └─ ...
+    ├─ src/
+    │  └─ ...
+    ├─ vendor/
+    │  └─ ...
+    └─ web/
+       ├─ app.php
+       └─ ...
 
 .. _override-cache-dir:
 
-Override the ``cache`` directory
+Override the ``cache`` Directory
 --------------------------------
 
 You can override the cache directory by overriding the ``getCacheDir`` method
@@ -51,13 +52,13 @@ the location of the cache directory to ``app/{environment}/cache``.
 .. caution::
 
     You should keep the ``cache`` directory different for each environment,
-    otherwise some unexpected behaviour may happen. Each environment generates
+    otherwise some unexpected behavior may happen. Each environment generates
     its own cached config files, and so each needs its own directory to store
     those cache files.
 
 .. _override-logs-dir:
 
-Override the ``logs`` directory
+Override the ``logs`` Directory
 -------------------------------
 
 Overriding the ``logs`` directory is the same as overriding the ``cache``
@@ -79,7 +80,7 @@ method::
 
 Here you have changed the location of the directory to ``app/{environment}/logs``.
 
-Override the ``web`` directory
+Override the ``web`` Directory
 ------------------------------
 
 If you need to rename or move your ``web`` directory, the only thing you
@@ -90,6 +91,19 @@ may need to modify the paths inside these files::
 
     require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
     require_once __DIR__.'/../Symfony/app/AppKernel.php';
+
+Since Symfony 2.1 (in which Composer is introduced), you also need to change
+the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
+
+.. code-block:: javascript
+
+    {
+        ...
+        "extra": {
+            ...
+            "symfony-web-dir": "my_new_web_dir"
+        }
+    }
 
 .. tip::
 
@@ -133,9 +147,47 @@ may need to modify the paths inside these files::
                 'read_from' => '%kernel.root_dir%/../../public_html',
             ));
 
-    Now you just need to dump the assets again and your application should
+    Now you just need to clear the cache and dump the assets again and your application should
     work:
 
     .. code-block:: bash
-
+    
+        $ php app/console cache:clear --env=prod
         $ php app/console assetic:dump --env=prod --no-debug
+
+Override the ``vendor`` Directory
+---------------------------------
+
+To override the ``vendor`` directory you have to introduce changes
+in the following files:
+
+* ``app/autoload.php``
+* ``composer.json``
+
+The change in the ``composer.json`` takes the form:
+
+.. code-block:: json
+
+    {
+        ...
+        "config": {
+            "bin-dir": "bin",
+            "vendor-dir": "/some/dir/vendor"
+        },
+        ...
+    }
+
+In ``app/autoload.php`` you need to modify the path leading to
+``vendor/autoload.php`` file::
+
+    // app/autoload.php
+    /**
+     * @var ClassLoader $loader
+     */
+    $loader = require '/some/dir/vendor/autoload.php';
+
+.. tip::
+
+    This modification can be of interest if you work using virtual
+    environment and cannot use NFS. For example, when running
+    Symfony app using Vagrant/VirtualBox guest operating system.

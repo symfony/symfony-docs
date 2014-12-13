@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Simulating authentication
 
-How to simulate Authentication with a Token in a Functional Test
+How to Simulate Authentication with a Token in a Functional Test
 ================================================================
 
 Authenticating requests in functional tests might slow down the suite.
@@ -12,7 +12,7 @@ One of the solutions is to configure your firewall to use ``http_basic`` in
 the test environment as explained in
 :doc:`/cookbook/testing/http_authentication`.
 Another way would be to create a token yourself and store it in a session.
-While doing this, you have to make sure that appropriate cookie is sent
+While doing this, you have to make sure that an appropriate cookie is sent
 with a request. The following example demonstrates this technique::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
@@ -35,7 +35,7 @@ with a request. The following example demonstrates this technique::
         {
             $this->logIn();
 
-            $this->client->request('GET', '/demo/secured/hello/Fabien');
+            $crawler = $this->client->request('GET', '/demo/secured/hello/Fabien');
 
             $this->assertTrue($this->client->getResponse()->isSuccessful());
             $this->assertGreaterThan(0, $crawler->filter('html:contains("Hello Fabien")')->count());
@@ -57,5 +57,5 @@ with a request. The following example demonstrates this technique::
 
 .. note::
 
-    The technique described in :doc:`/cookbook/testing/http_authentication`.
-    is cleaner and therefore preferred way.
+    The technique described in :doc:`/cookbook/testing/http_authentication`
+    is cleaner and therefore the preferred way.

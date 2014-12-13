@@ -1,5 +1,5 @@
 .. index::
-   single: Dependency Injection; Service configurators
+   single: DependencyInjection; Service configurators
 
 Configuring Services with a Service Configurator
 ================================================
@@ -12,7 +12,7 @@ in a class. The service instance is passed to the callable, allowing the
 configurator to do whatever it needs to configure the service after its
 creation.
 
-A Service Configurator can be used, for example, when you a have a service that
+A Service Configurator can be used, for example, when you have a service that
 requires complex setup based on configuration settings coming from different
 sources/services. Using an external configurator, you can maintain the service
 implementation cleanly and keep it decoupled from the other objects that provide
@@ -44,7 +44,6 @@ defining a ``NewsletterManager`` class like this::
         // ...
     }
 
-
 and also a ``GreetingCardManager`` class::
 
     class GreetingCardManager implements EmailFormatterAwareInterface
@@ -64,7 +63,6 @@ and also a ``GreetingCardManager`` class::
 
         // ...
     }
-
 
 As mentioned before, the goal is to set the formatters at runtime depending on
 application settings. To do this, you also have an ``EmailFormatterManager``
@@ -155,33 +153,42 @@ The service config for the above classes would look something like this:
                     - [setMailer, ["@my_mailer"]]
                 configurator: ["@email_configurator", configure]
 
-
     .. code-block:: xml
 
-        <services>
-            <service id="my_mailer" ...>
-              <!-- ... -->
-            </service>
-            <service id="email_formatter_manager" class="EmailFormatterManager">
-              <!-- ... -->
-            </service>
-            <service id="email_configurator" class="EmailConfigurator">
-                <argument type="service" id="email_formatter_manager" />
-              <!-- ... -->
-            </service>
-            <service id="newsletter_manager" class="NewsletterManager">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
-                <configurator service="email_configurator" method="configure" />
-            </service>
-            <service id="greeting_card_manager" class="GreetingCardManager">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
-                <configurator service="email_configurator" method="configure" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="my_mailer">
+                    <!-- ... -->
+                </service>
+
+                <service id="email_formatter_manager" class="EmailFormatterManager">
+                    <!-- ... -->
+                </service>
+
+                <service id="email_configurator" class="EmailConfigurator">
+                    <argument type="service" id="email_formatter_manager" />
+                    <!-- ... -->
+                </service>
+
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
+                    <configurator service="email_configurator" method="configure" />
+                </service>
+
+                <service id="greeting_card_manager" class="GreetingCardManager">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
+                    <configurator service="email_configurator" method="configure" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

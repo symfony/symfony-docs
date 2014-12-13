@@ -1,22 +1,21 @@
 .. index::
    single: Routing; Scheme requirement
 
-How to force routes to always use HTTPS or HTTP
+How to Force Routes to always Use HTTPS or HTTP
 ===============================================
 
 Sometimes, you want to secure some routes and be sure that they are always
 accessed via the HTTPS protocol. The Routing component allows you to enforce
-the URI scheme via the ``_scheme`` requirement:
+the URI scheme via schemes:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         secure:
-            pattern:  /secure
+            path:     /secure
             defaults: { _controller: AcmeDemoBundle:Main:secure }
-            requirements:
-                _scheme:  https
+            schemes:  [https]
 
     .. code-block:: xml
 
@@ -26,9 +25,8 @@ the URI scheme via the ``_scheme`` requirement:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="secure" pattern="/secure">
+            <route id="secure" path="/secure" schemes="https">
                 <default key="_controller">AcmeDemoBundle:Main:secure</default>
-                <requirement key="_scheme">https</requirement>
             </route>
         </routes>
 
@@ -40,9 +38,7 @@ the URI scheme via the ``_scheme`` requirement:
         $collection = new RouteCollection();
         $collection->add('secure', new Route('/secure', array(
             '_controller' => 'AcmeDemoBundle:Main:secure',
-        ), array(
-            '_scheme' => 'https',
-        )));
+        ), array(), array(), '', array('https')));
 
         return $collection;
 
@@ -55,7 +51,7 @@ will automatically generate an absolute URL with HTTPS as the scheme:
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
-    # generates /secure
+    {# generates /secure #}
 
     {# If the current scheme is HTTP #}
     {{ path('secure') }}
@@ -65,12 +61,13 @@ The requirement is also enforced for incoming requests. If you try to access
 the ``/secure`` path with HTTP, you will automatically be redirected to the
 same URL, but with the HTTPS scheme.
 
-The above example uses ``https`` for the ``_scheme``, but you can also force a
-URL to always use ``http``.
+The above example uses ``https`` for the scheme, but you can also force a URL
+to always use ``http``.
 
 .. note::
 
-    The Security component provides another way to enforce HTTP or HTTPs via
+    The Security component provides another way to enforce HTTP or HTTPS via
     the ``requires_channel`` setting. This alternative method is better suited
     to secure an "area" of your website (all URLs under ``/admin``) or when
-    you want to secure URLs defined in a third party bundle.
+    you want to secure URLs defined in a third party bundle (see
+    :doc:`/cookbook/security/force_https` for more details).

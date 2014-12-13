@@ -1,19 +1,19 @@
 .. index::
    single: Doctrine; File uploads
 
-How to handle File Uploads with Doctrine
+How to Handle File Uploads with Doctrine
 ========================================
 
 Handling file uploads with Doctrine entities is no different than handling
 any other file upload. In other words, you're free to move the file in your
 controller after handling a form submission. For examples of how to do this,
-see the :doc:`file type reference</reference/forms/types/file>` page.
+see the :doc:`file type reference </reference/forms/types/file>` page.
 
 If you choose to, you can also integrate the file upload into your entity
 lifecycle (i.e. creation, update and removal). In this case, as your entity
 is created, updated, and removed from Doctrine, the file uploading and removal
 processing will take place automatically (without needing to do anything in
-your controller);
+your controller).
 
 To make this work, you'll need to take care of a number of details, which
 will be covered in this cookbook entry.
@@ -21,7 +21,7 @@ will be covered in this cookbook entry.
 Basic Setup
 -----------
 
-First, create a simple ``Doctrine`` Entity class to work with::
+First, create a simple Doctrine entity class to work with::
 
     // src/Acme/DemoBundle/Entity/Document.php
     namespace Acme\DemoBundle\Entity;
@@ -91,14 +91,14 @@ file.
 .. tip::
 
     If you have not done so already, you should probably read the
-    :doc:`file</reference/forms/types/file>` type documentation first to
+    :doc:`file </reference/forms/types/file>` type documentation first to
     understand how the basic upload process works.
 
 .. note::
 
     If you're using annotations to specify your validation rules (as shown
     in this example), be sure that you've enabled validation by annotation
-    (see :ref:`validation configuration<book-validation-configuration>`).
+    (see :ref:`validation configuration <book-validation-configuration>`).
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might
@@ -202,7 +202,7 @@ rules::
         class Document
         {
             // ...
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('file', new Assert\File(array(
@@ -213,7 +213,7 @@ rules::
 
 .. note::
 
-    As you are using the ``File`` constraint, Symfony2 will automatically guess
+    As you are using the ``File`` constraint, Symfony will automatically guess
     that the form field is a file upload input. That's why you did not have
     to set it explicitly when creating the form above (``->add('file')``).
 
@@ -222,60 +222,33 @@ The following controller shows you how to handle the entire process::
     // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     /**
      * @Template()
      */
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
         $document = new Document();
         $form = $this->createFormBuilder($document)
             ->add('name')
             ->add('file')
-            ->getForm()
-        ;
+            ->getForm();
 
-        if ($this->getRequest()->getMethod() === 'POST') {
-            $form->bindRequest($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+        $form->handleRequest($request);
 
-                $em->persist($document);
-                $em->flush();
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
 
-                return $this->redirect($this->generateUrl(...));
-            }
+            $em->persist($document);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl(...));
         }
 
         return array('form' => $form->createView());
     }
-
-.. note::
-
-    When writing the template, don't forget to set the ``enctype`` attribute:
-
-    .. configuration-block::
-
-        .. code-block:: html+jinja
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
-
-                <input type="submit" value="Upload Document" />
-            </form>
-
-        .. code-block:: html+php
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" <?php echo $view['form']->enctype($form) ?>>
-                <?php echo $view['form']->widget($form) ?>
-
-                <input type="submit" value="Upload Document" />
-            </form>
 
 The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``
@@ -287,7 +260,7 @@ a new ``upload()`` method on the ``Document`` class, which you'll create
 in a moment to handle the file upload::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $document->upload();
 
@@ -326,6 +299,15 @@ object, which is what's returned after a ``file`` field is submitted::
 
 Using Lifecycle Callbacks
 -------------------------
+
+.. caution::
+
+    Using lifecycle callbacks is a limited technique that has some drawbacks.
+    If you want to remove the hardcoded ``__DIR__`` reference inside
+    the ``Document::getUploadRootDir()`` method, the best way is to start
+    using explicit :doc:`doctrine listeners </cookbook/doctrine/event_listeners_subscribers>`.
+    There you will be able to inject kernel parameters such as ``kernel.root_dir``
+    to be able to build absolute paths.
 
 Even if this implementation works, it suffers from a major flaw: What if there
 is a problem when the entity is persisted? The file would have already moved
@@ -422,11 +404,20 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
+            $file = $this->getAbsolutePath();
+            if ($file) {
                 unlink($file);
             }
         }
     }
+
+.. caution::
+
+   If changes to your entity are handled by a Doctrine event listener or event
+   subscriber, the ``preUpdate()`` callback must notify Doctrine about the changes
+   being done.
+   For full reference on preUpdate event restrictions, see `preUpdate`_ in the
+   Doctrine Events documentation.
 
 The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
@@ -436,7 +427,7 @@ Now that the moving of the file is handled atomically by the entity, the
 call to ``$document->upload()`` should be removed from the controller::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $em->persist($document);
         $em->flush();
@@ -454,13 +445,13 @@ call to ``$document->upload()`` should be removed from the controller::
 .. caution::
 
     The ``PreUpdate`` and ``PostUpdate`` callbacks are only triggered if there
-    is a change in one of the entity's field that are persisted. This means
+    is a change in one of the entity's fields that are persisted. This means
     that, by default, if you modify only the ``$file`` property, these events
     will not be triggered, as the property itself is not directly persisted
     via Doctrine. One solution would be to use an ``updated`` field that's
     persisted to Doctrine, and to modify it manually when changing the file.
 
-Using the ``id`` as the filename
+Using the ``id`` as the Filename
 --------------------------------
 
 If you want to use the ``id`` as the name of the file, the implementation is
@@ -564,3 +555,5 @@ You'll notice in this case that you need to do a little bit more work in
 order to remove the file. Before it's removed, you must store the file path
 (since it depends on the id). Then, once the object has been fully removed
 from the database, you can safely delete the file (in ``PostRemove``).
+
+.. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate

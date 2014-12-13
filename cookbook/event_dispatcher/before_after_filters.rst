@@ -1,7 +1,7 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
-How to setup before and after Filters
+How to Setup before and after Filters
 =====================================
 
 It is quite common in web application development to need some logic to be
@@ -11,9 +11,9 @@ or hooks.
 In symfony1, this was achieved with the preExecute and postExecute methods.
 Most major frameworks have similar methods but there is no such thing in Symfony2.
 The good news is that there is a much better way to interfere with the
-Request -> Response process using the :doc:`EventDispatcher component</components/event_dispatcher/introduction>`.
+Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
 
-Token validation Example
+Token Validation Example
 ------------------------
 
 Imagine that you need to develop an API where some controllers are public
@@ -30,7 +30,7 @@ token.
     in config and neither database setup nor authentication via the Security
     component will be used.
 
-Before filters with the ``kernel.controller`` Event
+Before Filters with the ``kernel.controller`` Event
 ---------------------------------------------------
 
 First, store some basic token configuration using ``config.yml`` and the
@@ -64,7 +64,7 @@ parameters key:
             'client2' => 'pass2',
         ));
 
-Tag Controllers to be checked
+Tag Controllers to Be Checked
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ``kernel.controller`` listener gets notified on *every* request, right before
@@ -125,7 +125,8 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
             $controller = $event->getController();
 
             /*
-             * $controller passed can be either a class or a Closure. This is not usual in Symfony2 but it may happen.
+             * $controller passed can be either a class or a Closure.
+             * This is not usual in Symfony but it may happen.
              * If it is a class, it comes in array format
              */
             if (!is_array($controller)) {
@@ -186,10 +187,10 @@ implements ``TokenAuthenticatedController``, token authentication is
 applied. This lets you have a "before" filter on any controller that you
 want.
 
-After filters with the ``kernel.response`` Event
+After Filters with the ``kernel.response`` Event
 ------------------------------------------------
 
-In addition to having a "hook" that's executed before your controller, you
+In addition to having a "hook" that's executed *before* your controller, you
 can also add a hook that's executed *after* your controller. For this example,
 imagine that you want to add a sha1 hash (with a salt using that token) to
 all responses that have passed this token authentication.

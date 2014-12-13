@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Doctrine
 
-How to test Doctrine Repositories
+How to Test Doctrine Repositories
 =================================
 
 Unit testing Doctrine repositories in a Symfony project is not recommended.
@@ -41,7 +41,7 @@ which makes all of this quite easy::
             static::$kernel->boot();
             $this->em = static::$kernel->getContainer()
                 ->get('doctrine')
-                ->getEntityManager()
+                ->getManager()
             ;
         }
 

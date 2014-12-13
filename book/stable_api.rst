@@ -1,10 +1,12 @@
 .. index::
    single: Stable API
 
-The Symfony2 Stable API
-=======================
+.. _the-symfony2-stable-api:
 
-The Symfony2 stable API is a subset of all Symfony2 published public methods
+The Symfony Stable API
+======================
+
+The Symfony stable API is a subset of all Symfony published public methods
 (components and core bundles) that share the following properties:
 
 * The namespace and class name won't change;
@@ -20,6 +22,10 @@ everything not tagged explicitly is not part of the stable API.
 
 .. tip::
 
+    Read more about the stable API in :doc:`/contributing/code/bc`.
+
+.. tip::
+
     Any third party bundle should also publish its own stable API.
 
 As of Symfony 2.0, the following components have a public tagged API:
@@ -31,10 +37,10 @@ As of Symfony 2.0, the following components have a public tagged API:
 * DependencyInjection
 * DomCrawler
 * EventDispatcher
+* Filesystem (as of Symfony 2.1)
 * Finder
 * HttpFoundation
 * HttpKernel
-* Locale
 * Process
 * Routing
 * Templating

@@ -5,10 +5,11 @@ Validates that a value is a valid email address. The underlying value is
 cast to a string before being validated.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
+|                | - `checkHost`_                                                      |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Email`          |
 +----------------+---------------------------------------------------------------------+
@@ -22,24 +23,24 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 email:
                     - Email:
                         message: The email "{{ value }}" is not a valid email.
                         checkMX: true
-        
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            /** 
+            /**
              * @Assert\Email(
              *     message = "The email '{{ value }}' is not a valid email.",
              *     checkMX = true
@@ -70,7 +71,7 @@ Basic Usage
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -91,7 +92,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid email address``
+**type**: ``string`` **default**: ``This value is not a valid email address.``
 
 This message is shown if the underlying data is not a valid email address.
 
@@ -100,7 +101,14 @@ checkMX
 
 **type**: ``Boolean`` **default**: ``false``
 
-If true, then the `checkdnsrr`_ PHP function will be used to check the validity
-of the MX record of the host of the given email.
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
+check the validity of the MX record of the host of the given email.
 
-.. _`checkdnsrr`: http://www.php.net/manual/en/function.checkdnsrr.php
+checkHost
+~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
+check the validity of the MX *or* the A *or* the AAAA record of the host
+of the given email.

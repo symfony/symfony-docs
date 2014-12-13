@@ -1,7 +1,7 @@
 .. index::
    single: Console; Enabling logging
 
-How to enable logging in Console Commands
+How to Enable Logging in Console Commands
 =========================================
 
 The Console component doesn't provide any logging capabilities out of the box.
@@ -17,13 +17,13 @@ There are basically two logging cases you would need:
  * Manually logging some information from your command;
  * Logging uncaught Exceptions.
 
-Manually logging from a console Command
+Manually Logging from a Console Command
 ---------------------------------------
 
 This one is really simple. When you create a console command within the full
 framework as described in ":doc:`/cookbook/console/console_command`", your command
 extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`.
-This means that you  can simply access the standard logger service through the
+This means that you can simply access the standard logger service through the
 container and use it to do the logging::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
@@ -34,7 +34,7 @@ container and use it to do the logging::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
-    use Symfony\Component\HttpKernel\Log\LoggerInterface;
+    use Psr\Log\LoggerInterface;
 
     class GreetCommand extends ContainerAwareCommand
     {
@@ -54,9 +54,8 @@ container and use it to do the logging::
 
             if ($input->getOption('yell')) {
                 $text = strtoupper($text);
-                $logger->warn('Yelled: '.$text);
-            }
-            else {
+                $logger->warning('Yelled: '.$text);
+            } else {
                 $logger->info('Greeted: '.$text);
             }
 
@@ -67,188 +66,198 @@ container and use it to do the logging::
 Depending on the environment in which you run your command (and your logging
 setup), you should see the logged entries in ``app/logs/dev.log`` or ``app/logs/prod.log``.
 
-Enabling automatic Exceptions logging
+Enabling automatic Exceptions Logging
 -------------------------------------
 
-To get your console application to automatically log uncaught exceptions
-for all of your commands, you'll need to do a little bit more work.
+To get your console application to automatically log uncaught exceptions for
+all of your commands, you can use :doc:`console events</components/console/events>`.
 
-First, create a new sub-class of :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
-and override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run`
-method, where exception handling should happen:
+.. versionadded:: 2.3
+    Console events were introduced in Symfony 2.3.
 
-.. caution::
+First configure a listener for console exception events in the service container:
 
-    Due to the nature of the core :class:`Symfony\\Component\\Console\\Application`
-    class, much of the :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
-    method has to be duplicated and even a private property ``originalAutoExit``
-    re-implemented. This serves as an example of what you *could* do in your
-    code, though there is a high risk that something may break when upgrading
-    to future versions of Symfony.
+.. configuration-block::
 
+    .. code-block:: yaml
 
-.. code-block:: php
+        # app/config/services.yml
+        services:
+            kernel.listener.command_dispatch:
+                class: Acme\DemoBundle\EventListener\ConsoleExceptionListener
+                arguments:
+                    logger: "@logger"
+                tags:
+                    - { name: kernel.event_listener, event: console.exception }
 
-    // src/Acme/DemoBundle/Console/Application.php
-    namespace Acme\DemoBundle\Console;
+    .. code-block:: xml
 
-    use Symfony\Bundle\FrameworkBundle\Console\Application as BaseApplication;
-    use Symfony\Component\Console\Input\InputInterface;
-    use Symfony\Component\Console\Output\OutputInterface;
-    use Symfony\Component\Console\Output\ConsoleOutputInterface;
-    use Symfony\Component\HttpKernel\Log\LoggerInterface;
-    use Symfony\Component\HttpKernel\KernelInterface;
-    use Symfony\Component\Console\Output\ConsoleOutput;
-    use Symfony\Component\Console\Input\ArgvInput;
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    class Application extends BaseApplication
+            <services>
+                <service id="kernel.listener.command_dispatch" class="Acme\DemoBundle\EventListener\ConsoleExceptionListener">
+                    <argument type="service" id="logger"/>
+                    <tag name="kernel.event_listener" event="console.exception" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $definitionConsoleExceptionListener = new Definition(
+            'Acme\DemoBundle\EventListener\ConsoleExceptionListener',
+            array(new Reference('logger'))
+        );
+        $definitionConsoleExceptionListener->addTag(
+            'kernel.event_listener',
+            array('event' => 'console.exception')
+        );
+        $container->setDefinition(
+            'kernel.listener.command_dispatch',
+            $definitionConsoleExceptionListener
+        );
+
+Then implement the actual listener::
+
+    // src/Acme/DemoBundle/EventListener/ConsoleExceptionListener.php
+    namespace Acme\DemoBundle\EventListener;
+
+    use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+    use Psr\Log\LoggerInterface;
+
+    class ConsoleExceptionListener
     {
-        private $originalAutoExit;
+        private $logger;
 
-        public function __construct(KernelInterface $kernel)
+        public function __construct(LoggerInterface $logger)
         {
-            parent::__construct($kernel);
-            $this->originalAutoExit = true;
+            $this->logger = $logger;
         }
 
-        /**
-         * Runs the current application.
-         *
-         * @param InputInterface  $input  An Input instance
-         * @param OutputInterface $output An Output instance
-         *
-         * @return integer 0 if everything went fine, or an error code
-         *
-         * @throws \Exception When doRun returns Exception
-         *
-         * @api
-         */
-        public function run(InputInterface $input = null, OutputInterface $output = null)
+        public function onConsoleException(ConsoleExceptionEvent $event)
         {
-            // make the parent method throw exceptions, so you can log it
-            $this->setCatchExceptions(false);
+            $command = $event->getCommand();
+            $exception = $event->getException();
 
-            if (null === $input) {
-                $input = new ArgvInput();
-            }
+            $message = sprintf(
+                '%s: %s (uncaught exception) at %s line %s while running console command `%s`',
+                get_class($exception),
+                $exception->getMessage(),
+                $exception->getFile(),
+                $exception->getLine(),
+                $command->getName()
+            );
 
-            if (null === $output) {
-                $output = new ConsoleOutput();
-            }
-
-            try {
-                $statusCode = parent::run($input, $output);
-            } catch (\Exception $e) {
-
-                /** @var $logger LoggerInterface */
-                $logger = $this->getKernel()->getContainer()->get('logger');
-
-                $message = sprintf(
-                    '%s: %s (uncaught exception) at %s line %s while running console command `%s`',
-                    get_class($e),
-                    $e->getMessage(),
-                    $e->getFile(),
-                    $e->getLine(),
-                    $this->getCommandName($input)
-                );
-                $logger->crit($message);
-
-                if ($output instanceof ConsoleOutputInterface) {
-                    $this->renderException($e, $output->getErrorOutput());
-                } else {
-                    $this->renderException($e, $output);
-                }
-                $statusCode = $e->getCode();
-
-                $statusCode = is_numeric($statusCode) && $statusCode ? $statusCode : 1;
-            }
-
-            if ($this->originalAutoExit) {
-                if ($statusCode > 255) {
-                    $statusCode = 255;
-                }
-                // @codeCoverageIgnoreStart
-                exit($statusCode);
-                // @codeCoverageIgnoreEnd
-            }
-
-            return $statusCode;
+            $this->logger->error($message);
         }
-
-        public function setAutoExit($bool)
-        {
-            // parent property is private, so we need to intercept it in a setter
-            $this->originalAutoExit = (Boolean) $bool;
-            parent::setAutoExit($bool);
-        }
-
     }
 
-In the code above, you disable exception catching so the parent ``run`` method
-will throw all exceptions. When an exception is caught, you simple log it by
-accessing the ``logger`` service from the service container and then handle
-the rest of the logic in the same way that the parent ``run`` method does
-(specifically, since the parent :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
-method will not handle exceptions rendering and status code handling when
-``catchExceptions`` is set to false, it has to be done in the overridden
-method).
+In the code above, when any command throws an exception, the listener will
+receive an event. You can simply log it by passing the logger service via the
+service configuration. Your method receives a
+:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` object,
+which has methods to get information about the event and the exception.
 
-For the extended Application class to work properly with in console shell mode,
-you have to do a small trick to intercept the ``autoExit`` setter and store the
-setting in a different property, since the parent property is private.
-
-Now to be able to use your extended ``Application`` class you need to adjust
-the ``app/console`` script to use the new class instead of the default::
-
-    // app/console
-
-    // ...
-    // replace the following line:
-    // use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Acme\DemoBundle\Console\Application;
-
-    // ...
-
-That's it! Thanks to autoloader, your class will now be used instead of original
-one.
-
-Logging non-0 exit statuses
+Logging non-0 Exit Statuses
 ---------------------------
 
 The logging capabilities of the console can be further extended by logging
 non-0 exit statuses. This way you will know if a command had any errors, even
 if no exceptions were thrown.
 
-In order to do that, you'd have to modify the ``run()`` method of your extended
-``Application`` class in the following way::
+First configure a listener for console terminate events in the service container:
 
-    public function run(InputInterface $input = null, OutputInterface $output = null)
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            kernel.listener.command_dispatch:
+                class: Acme\DemoBundle\EventListener\ErrorLoggerListener
+                arguments:
+                    logger: "@logger"
+                tags:
+                    - { name: kernel.event_listener, event: console.terminate }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="kernel.listener.command_dispatch" class="Acme\DemoBundle\EventListener\ErrorLoggerListener">
+                    <argument type="service" id="logger"/>
+                    <tag name="kernel.event_listener" event="console.terminate" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $definitionErrorLoggerListener = new Definition(
+            'Acme\DemoBundle\EventListener\ErrorLoggerListener',
+            array(new Reference('logger'))
+        );
+        $definitionErrorLoggerListener->addTag(
+            'kernel.event_listener',
+            array('event' => 'console.terminate')
+        );
+        $container->setDefinition(
+            'kernel.listener.command_dispatch',
+            $definitionErrorLoggerListener
+        );
+
+Then implement the actual listener::
+
+    // src/Acme/DemoBundle/EventListener/ErrorLoggerListener.php
+    namespace Acme\DemoBundle\EventListener;
+
+    use Symfony\Component\Console\Event\ConsoleTerminateEvent;
+    use Psr\Log\LoggerInterface;
+
+    class ErrorLoggerListener
     {
-        // make the parent method throw exceptions, so you can log it
-        $this->setCatchExceptions(false);
+        private $logger;
 
-        // store the autoExit value before resetting it - you'll need it later
-        $autoExit = $this->originalAutoExit;
-        $this->setAutoExit(false);
-
-        // ...
-
-        if ($autoExit) {
-            if ($statusCode > 255) {
-                $statusCode = 255;
-            }
-
-            // log non-0 exit codes along with command name
-            if ($statusCode !== 0) {
-                /** @var $logger LoggerInterface */
-                $logger = $this->getKernel()->getContainer()->get('logger');
-                $logger->warn(sprintf('Command `%s` exited with status code %d', $this->getCommandName($input), $statusCode));
-            }
-
-            // @codeCoverageIgnoreStart
-            exit($statusCode);
-            // @codeCoverageIgnoreEnd
+        public function __construct(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
         }
 
-        return $statusCode;
+        public function onConsoleTerminate(ConsoleTerminateEvent $event)
+        {
+            $statusCode = $event->getExitCode();
+            $command = $event->getCommand();
+
+            if ($statusCode === 0) {
+                return;
+            }
+
+            if ($statusCode > 255) {
+                $statusCode = 255;
+                $event->setExitCode($statusCode);
+            }
+
+            $this->logger->warning(sprintf(
+                'Command `%s` exited with status code %d',
+                $command->getName(),
+                $statusCode
+            ));
+        }
     }

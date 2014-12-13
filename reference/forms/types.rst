@@ -8,43 +8,52 @@ Form Types Reference
    :maxdepth: 1
    :hidden:
 
-   types/birthday
-   types/checkbox
-   types/choice
-   types/collection
-   types/country
-   types/csrf
-   types/date
-   types/datetime
+   types/text
+   types/textarea
    types/email
-   types/entity
-   types/file
-   types/field
-   types/form
-   types/hidden
    types/integer
-   types/language
-   types/locale
    types/money
    types/number
    types/password
    types/percent
-   types/radio
-   types/repeated
    types/search
-   types/text
-   types/textarea
-   types/time
-   types/timezone
    types/url
 
+   types/choice
+   types/entity
+   types/country
+   types/language
+   types/locale
+   types/timezone
+   types/currency
+
+   types/date
+   types/datetime
+   types/time
+   types/birthday
+
+   types/checkbox
+   types/file
+   types/radio
+
+   types/collection
+   types/repeated
+
+   types/hidden
+
+   types/button
+   types/reset
+   types/submit
+
+   types/form
+
 A form is composed of *fields*, each of which are built with the help of
-a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony2 comes
+a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony comes
 standard with a large list of field types that can be used in your application.
 
 Supported Field Types
 ---------------------
 
-The following field types are natively available in Symfony2:
+The following field types are natively available in Symfony:
 
 .. include:: /reference/forms/types/map.rst.inc

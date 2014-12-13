@@ -4,7 +4,7 @@
 How to Create a Form Type Extension
 ===================================
 
-:doc:`Custom form field types<create_custom_field_type>` are great when
+:doc:`Custom form field types <create_custom_field_type>` are great when
 you need field types with a specific purpose, such as a gender selector,
 or a VAT number input.
 
@@ -39,9 +39,9 @@ template. But field type extensions allow you to do this in a nice DRY fashion.
 Defining the Form Type Extension
 --------------------------------
 
-Your first task will be to create the form type extension class. Let's
-call it ``ImageTypeExtension``. By standard, form extensions usually live
-in the ``Form\Extension`` directory of one of your bundles.
+Your first task will be to create the form type extension class (called ``ImageTypeExtension``
+in this article). By standard, form extensions usually live in the ``Form\Extension``
+directory of one of your bundles.
 
 When creating a form type extension, you can either implement the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface
@@ -83,14 +83,12 @@ to override one of the following methods:
 
 * ``buildView()``
 
-* ``getDefaultOptions()``
+* ``setDefaultOptions()``
 
-* ``getAllowedOptionValues()``
-
-* ``buildViewBottomUp()``
+* ``finishView()``
 
 For more information on what those methods do, you can refer to the
-:doc:`Creating Custom Field Types</cookbook/form/create_custom_field_type>`
+:doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 cookbook article.
 
 Registering your Form Type Extension as a Service
@@ -135,9 +133,9 @@ Adding the extension Business Logic
 -----------------------------------
 
 The goal of your extension is to display nice images next to file inputs
-(when the underlying model contains images). For that purpose, let's assume
-that you use an approach similar to the one described in
-:doc:`How to handle File Uploads with Doctrine</cookbook/doctrine/file_uploads>`:
+(when the underlying model contains images). For that purpose, suppose that
+you use an approach similar to the one described in
+:doc:`How to handle File Uploads with Doctrine </cookbook/doctrine/file_uploads>`:
 you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
 database)::
@@ -165,13 +163,13 @@ database)::
         // ...
 
         /**
-         * Get the image url
+         * Get the image URL
          *
          * @return null|string
          */
         public function getWebPath()
         {
-            // ... $webPath being the full image url, to be used in templates
+            // ... $webPath being the full image URL, to be used in templates
 
             return $webPath;
         }
@@ -180,24 +178,24 @@ database)::
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
 
-#. Override the ``getDefaultOptions`` method in order to add an image_path
+#. Override the ``setDefaultOptions`` method in order to add an ``image_path``
    option;
 #. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
-   url to the view.
+   URL to the view.
 
 The logic is the following: when adding a form field of type ``file``,
 you will be able to specify a new option: ``image_path``. This option will
-tell the file field how to get the actual image url in order to display
+tell the file field how to get the actual image URL in order to display
 it in the view::
 
     // src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
     namespace Acme\DemoBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
-    use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\FormView;
     use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\Form\Util\PropertyPath;
+    use Symfony\Component\PropertyAccess\PropertyAccess;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
@@ -214,45 +212,34 @@ it in the view::
         /**
          * Add the image_path option
          *
+         * @param OptionsResolverInterface $resolver
+         */
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        {
+            $resolver->setOptional(array('image_path'));
+        }
+
+        /**
+         * Pass the image URL to the view
+         *
+         * @param FormView $view
+         * @param FormInterface $form
          * @param array $options
          */
-        public function getDefaultOptions(array $options)
+        public function buildView(FormView $view, FormInterface $form, array $options)
         {
-            return array('image_path' => null);
-        }
-
-        /**
-         * Store the image_path option as a builder attribute
-         *
-         * @param FormBuilder $builder
-         * @param array       $options
-         */
-        public function buildForm(FormBuilder $builder, array $options)
-        {
-            if (null !== $options['image_path']) {
-                $builder->setAttribute('image_path', $options['image_path']);
-            }
-        }
-
-        /**
-         * Pass the image url to the view
-         *
-         * @param FormView      $view
-         * @param FormInterface $form
-         */
-        public function buildView(FormView $view, FormInterface $form)
-        {
-            if ($form->hasAttribute('image_path')) {
+            if (array_key_exists('image_path', $options)) {
                 $parentData = $form->getParent()->getData();
 
-                if (null != $parentData) {
-                    $propertyPath = new PropertyPath($form->getAttribute('image_path'));
-                    $imageUrl = $propertyPath->getValue($parentData);
+                if (null !== $parentData) {
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $imageUrl = $accessor->getValue($parentData, $options['image_path']);
                 } else {
-                    $imageUrl = null;
+                     $imageUrl = null;
                 }
+
                 // set an "image_url" variable that will be available when rendering this field
-                $view->set('image_url', $imageUrl);
+                $view->vars['image_url'] = $imageUrl;
             }
         }
 
@@ -279,7 +266,7 @@ Specifically, you need to override the ``file_widget`` block:
         {% block file_widget %}
             {% spaceless %}
 
-            {{ block('field_widget') }}
+            {{ block('form_widget') }}
             {% if image_url is not null %}
                 <img src="{{ asset(image_url) }}"/>
             {% endif %}
@@ -313,11 +300,11 @@ next to the file field. For example::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class MediaType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('name', 'text')

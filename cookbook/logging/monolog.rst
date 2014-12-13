@@ -1,32 +1,32 @@
 .. index::
    single: Logging
 
-How to use Monolog to write Logs
+How to Use Monolog to Write Logs
 ================================
 
-Monolog_ is a logging library for PHP 5.3 used by Symfony2. It is
+Monolog_ is a logging library for PHP 5.3 used by Symfony. It is
 inspired by the Python LogBook library.
 
 Usage
 -----
 
-To log a message simply get the logger service from the container in
+To log a message simply get the ``logger`` service from the container in
 your controller::
 
     public function indexAction()
     {
         $logger = $this->get('logger');
         $logger->info('I just got the logger');
-        $logger->err('An error occurred');
+        $logger->error('An error occurred');
 
         // ...
     }
 
-The ``logger`` service has different methods for different the logging levels.
+The ``logger`` service has different methods for different logging levels.
 See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
 on which methods are available.
 
-Handlers and Channels: Writing logs to different Locations
+Handlers and Channels: Writing Logs to different Locations
 ----------------------------------------------------------
 
 In Monolog each logger defines a logging channel, which organizes your log
@@ -36,7 +36,7 @@ to write the logs (the handlers can be shared).
 .. tip::
 
     When injecting the logger in a service you can
-    :ref:`use a custom channel<dic_tags-monolog>` control which "channel"
+    :ref:`use a custom channel <dic_tags-monolog>` control which "channel"
     the logger will log to.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
@@ -46,10 +46,10 @@ The basic handler is the ``StreamHandler`` which writes logs in a stream
 Monolog comes also with a powerful built-in handler for the logging in
 prod environment: ``FingersCrossedHandler``. It allows you to store the
 messages in a buffer and to log them only if a message reaches the
-action level (ERROR in the configuration provided in the standard
-edition) by forwarding the messages to another handler.
+action level (``error`` in the configuration provided in the Standard
+Edition) by forwarding the messages to another handler.
 
-Using several handlers
+Using several Handlers
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The logger uses a stack of handlers which are called successively. This
@@ -80,6 +80,7 @@ allows you to log the messages in several ways easily.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -113,7 +114,7 @@ allows you to log the messages in several ways easily.
         </container>
 
     .. code-block:: php
-        
+
         // app/config/config.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
@@ -121,22 +122,22 @@ allows you to log the messages in several ways easily.
                     'type'  => 'stream',
                     'path'  => '/var/log/symfony.log',
                     'level' => 'error',
-                ),    
+                ),
                 'main' => array(
                     'type'         => 'fingers_crossed',
                     'action_level' => 'warning',
                     'handler'      => 'file',
-                ),    
+                ),
                 'file' => array(
                     'type'  => 'stream',
                     'level' => 'debug',
-                ),   
+                ),
                 'syslog' => array(
                     'type'  => 'syslog',
                     'level' => 'error',
-                ),    
+                ),
             ),
-        ));        
+        ));
 
 The above configuration defines a stack of handlers which will be called
 in the order where they are defined.
@@ -153,7 +154,7 @@ in the order where they are defined.
     because the order matters and a merge does not allow to control the
     order.
 
-Changing the formatter
+Changing the Formatter
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The handler uses a ``Formatter`` to format the record before logging
@@ -180,6 +181,7 @@ easily. Your formatter must implement
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -216,7 +218,7 @@ easily. Your formatter must implement
             ),
         ));
 
-Adding some extra data in the log messages
+Adding some extra Data in the Log Messages
 ------------------------------------------
 
 Monolog allows to process the record before logging it to add some
@@ -226,7 +228,7 @@ only for a specific handler.
 A processor is simply a callable receiving the record as its first argument.
 
 Processors are configured using the ``monolog.processor`` DIC tag. See the
-:ref:`reference about it<dic_tags-monolog-processor>`.
+:ref:`reference about it <dic_tags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,7 +241,7 @@ using a processor.
 
     namespace Acme\MyBundle;
 
-    use Symfony\Component\HttpFoundation\Session;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
     class SessionRequestProcessor
     {
@@ -271,6 +273,7 @@ using a processor.
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         services:
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
@@ -293,6 +296,8 @@ using a processor.
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -346,7 +351,100 @@ using a processor.
 
 .. note::
 
-    If you use several handlers, you can also register the processor at the
-    handler level instead of globally.
+    If you use several handlers, you can also register a processor at the
+    handler level or at the channel level instead of registering it globally
+    (see the following sections).
+
+Registering Processors per Handler
+----------------------------------
+
+You can register a processor per handler using the ``handler`` option of
+the ``monolog.processor`` tag:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            monolog.processor.session_request:
+                class: Acme\MyBundle\SessionRequestProcessor
+                arguments:  ["@session"]
+                tags:
+                    - { name: monolog.processor, method: processRecord, handler: main }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
+        >
+            <services>
+                <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
+                    <argument type="service" id="session" />
+                    <tag name="monolog.processor" method="processRecord" handler="main" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container
+            ->register('monolog.processor.session_request', 'Acme\MyBundle\SessionRequestProcessor')
+            ->addArgument(new Reference('session'))
+            ->addTag('monolog.processor', array('method' => 'processRecord', 'handler' => 'main'));
+
+Registering Processors per Channel
+----------------------------------
+
+You can register a processor per channel using the ``channel`` option of
+the ``monolog.processor`` tag:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            monolog.processor.session_request:
+                class: Acme\MyBundle\SessionRequestProcessor
+                arguments:  ["@session"]
+                tags:
+                    - { name: monolog.processor, method: processRecord, channel: main }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
+        >
+            <services>
+                <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
+                    <argument type="service" id="session" />
+                    <tag name="monolog.processor" method="processRecord" channel="main" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container
+            ->register('monolog.processor.session_request', 'Acme\MyBundle\SessionRequestProcessor')
+            ->addArgument(new Reference('session'))
+            ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));
 
 .. _Monolog: https://github.com/Seldaek/monolog

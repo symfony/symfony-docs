@@ -4,35 +4,33 @@
 Internals
 =========
 
-Looks like you want to understand how Symfony2 works and how to extend it.
+Looks like you want to understand how Symfony works and how to extend it.
 That makes me very happy! This section is an in-depth explanation of the
-Symfony2 internals.
+Symfony internals.
 
 .. note::
 
-    You need to read this section only if you want to understand how Symfony2
-    works behind the scene, or if you want to extend Symfony2.
+    You only need to read this section if you want to understand how Symfony
+    works behind the scenes, or if you want to extend Symfony.
 
 Overview
 --------
 
-The Symfony2 code is made of several independent layers. Each layer is built
+The Symfony code is made of several independent layers. Each layer is built
 on top of the previous one.
 
 .. tip::
 
-    Autoloading is not managed by the framework directly; it's done
-    independently with the help of the
-    :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` class
-    and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
-    </components/class_loader>` for more information.
+    Autoloading is not managed by the framework directly; it's done by using
+    Composer's autoloader (``vendor/autoload.php``), which is included in
+    the ``app/autoload.php`` file.
 
-``HttpFoundation`` Component
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+HttpFoundation Component
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The deepest level is the :namespace:`Symfony\\Component\\HttpFoundation`
 component. HttpFoundation provides the main objects needed to deal with HTTP.
-It is an Object-Oriented abstraction of some native PHP functions and
+It is an object-oriented abstraction of some native PHP functions and
 variables:
 
 * The :class:`Symfony\\Component\\HttpFoundation\\Request` class abstracts
@@ -48,10 +46,10 @@ variables:
 
 .. note::
 
-    Read more about the :doc:`HttpFoundation Component </components/http_foundation/introduction>`.
+    Read more about the :doc:`HttpFoundation component </components/http_foundation/introduction>`.
 
-``HttpKernel`` Component
-~~~~~~~~~~~~~~~~~~~~~~~~
+HttpKernel Component
+~~~~~~~~~~~~~~~~~~~~
 
 On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
 component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
@@ -60,16 +58,16 @@ handled. It also provides extension points and tools that makes it the ideal
 starting point to create a Web framework without too much overhead.
 
 It also optionally adds configurability and extensibility, thanks to the
-Dependency Injection component and a powerful plugin system (bundles).
+DependencyInjection component and a powerful plugin system (bundles).
 
 .. seealso::
 
-    Read more about the :doc:`HttpKernel Component </components/http_kernel/introduction>`,
+    Read more about the :doc:`HttpKernel component </components/http_kernel/introduction>`,
     :doc:`Dependency Injection </book/service_container>` and
     :doc:`Bundles </cookbook/bundles/best_practices>`.
 
-``FrameworkBundle`` Bundle
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+FrameworkBundle
+~~~~~~~~~~~~~~~
 
 The :namespace:`Symfony\\Bundle\\FrameworkBundle` bundle is the bundle that
 ties the main components and libraries together to make a lightweight and fast
@@ -83,11 +81,11 @@ Kernel
 ------
 
 The :class:`Symfony\\Component\\HttpKernel\\HttpKernel` class is the central
-class of Symfony2 and is responsible for handling client requests. Its main
+class of Symfony and is responsible for handling client requests. Its main
 goal is to "convert" a :class:`Symfony\\Component\\HttpFoundation\\Request`
 object to a :class:`Symfony\\Component\\HttpFoundation\\Response` object.
 
-Every Symfony2 Kernel implements
+Every Symfony Kernel implements
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
 
     function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
@@ -129,13 +127,13 @@ method returns an array of arguments to pass to the Controller callable. The
 default implementation automatically resolves the method arguments, based on
 the Request attributes.
 
-.. sidebar:: Matching Controller method arguments from Request attributes
+.. sidebar:: Matching Controller Method Arguments from Request Attributes
 
-    For each method argument, Symfony2 tries to get the value of a Request
+    For each method argument, Symfony tries to get the value of a Request
     attribute with the same name. If it is not defined, the argument default
     value is used if defined::
 
-        // Symfony2 will look for an 'id' attribute (mandatory)
+        // Symfony will look for an 'id' attribute (mandatory)
         // and an 'admin' one (optional)
         public function showAction($id, $admin = true)
         {
@@ -148,10 +146,10 @@ the Request attributes.
 Handling Requests
 ~~~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method 
-takes a ``Request`` and *always* returns a ``Response``. To convert the 
-``Request``, ``handle()`` relies on the Resolver and an ordered chain of 
-Event notifications (see the next section for more information about each 
+The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method
+takes a ``Request`` and *always* returns a ``Response``. To convert the
+``Request``, ``handle()`` relies on the Resolver and an ordered chain of
+Event notifications (see the next section for more information about each
 Event):
 
 #. Before doing anything else, the ``kernel.request`` event is notified -- if
@@ -174,7 +172,10 @@ Event):
 #. Listeners of the ``kernel.response`` event can manipulate the ``Response``
    (content and headers);
 
-#. The Response is returned.
+#. The Response is returned;
+
+#. Listeners of the ``kernel.terminate`` event can perform tasks after the
+   Response has been served.
 
 If an Exception is thrown during processing, the ``kernel.exception`` is
 notified and listeners are given a chance to convert the Exception to a
@@ -211,14 +212,14 @@ Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType` 
-  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
+  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
   or ``HttpKernelInterface::SUB_REQUEST``);
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
   - returns the Kernel handling the request;
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest` 
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
   - returns the current ``Request`` being handled.
 
 ``getRequestType()``
@@ -237,8 +238,8 @@ add the following code at the beginning of your listener method::
 
 .. tip::
 
-    If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-    :doc:`Event Dispatcher Component Documentation</components/event_dispatcher/introduction>`
+    If you are not yet familiar with the Symfony EventDispatcher, read the
+    :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`
     section first.
 
 .. index::
@@ -256,7 +257,7 @@ or setup variables so that a Controller can be called after the event. Any
 listener can return a ``Response`` object via the ``setResponse()`` method on
 the event. In this case, all other listeners won't be called.
 
-This event is used by ``FrameworkBundle`` to populate the ``_controller``
+This event is used by the FrameworkBundle to populate the ``_controller``
 ``Request`` attribute, via the
 :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`. RequestListener
 uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
@@ -275,7 +276,7 @@ the ``Request`` and determine the Controller name (stored in the
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
-This event is not used by ``FrameworkBundle``, but can be an entry point used
+This event is not used by the FrameworkBundle, but can be an entry point used
 to modify the controller that should be executed::
 
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -301,7 +302,7 @@ to modify the controller that should be executed::
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
-This event is not used by ``FrameworkBundle``, but it can be used to implement
+This event is not used by the FrameworkBundle, but it can be used to implement
 a view sub-system. This event is called *only* if the Controller does *not*
 return a ``Response`` object. The purpose of the event is to allow some other
 return value to be converted into a ``Response``.
@@ -344,7 +345,7 @@ The purpose of this event is to allow other systems to modify or replace the
         // ... modify the response object
     }
 
-The ``FrameworkBundle`` registers several listeners:
+The FrameworkBundle registers several listeners:
 
 * :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`:
   collects data for the current request;
@@ -364,6 +365,21 @@ The ``FrameworkBundle`` registers several listeners:
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
 .. index::
+   single: Event; kernel.terminate
+
+``kernel.terminate`` Event
+..........................
+
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
+
+The purpose of this event is to perform "heavier" tasks after the response
+was already served to the client.
+
+.. seealso::
+
+    Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
+
+.. index::
    single: Event; kernel.exception
 
 .. _kernel-kernel.exception:
@@ -373,7 +389,7 @@ The ``FrameworkBundle`` registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-``FrameworkBundle`` registers an
+The FrameworkBundle registers an
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
 ``exception_listener.controller`` parameter -- must be in the
@@ -397,19 +413,32 @@ and set a new ``Exception`` object, or do nothing::
         // $event->setException($exception);
     }
 
-.. index::
-   single: Event Dispatcher
+.. note::
 
-The Event Dispatcher
---------------------
+    As Symfony ensures that the Response status code is set to the most
+    appropriate one depending on the exception, setting the status on the
+    response won't work. If you want to overwrite the status code (which you
+    should not without a good reason), set the ``X-Status-Code`` header::
 
-The event dispatcher is a standalone component that is responsible for much
-of the underlying logic and flow behind a Symfony request. For more information,
-see the :doc:`Event Dispatcher Component Documentation</components/event_dispatcher/introduction>`.
+        return new Response(
+            'Error',
+            404 // ignored,
+            array('X-Status-Code' => 200)
+        );
 
 .. seealso::
 
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
+
+.. index::
+   single: EventDispatcher
+
+The EventDispatcher
+-------------------
+
+The EventDispatcher is a standalone component that is responsible for much
+of the underlying logic and flow behind a Symfony request. For more information,
+see the :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`.
 
 .. index::
    single: Profiler
@@ -419,15 +448,15 @@ see the :doc:`Event Dispatcher Component Documentation</components/event_dispatc
 Profiler
 --------
 
-When enabled, the Symfony2 profiler collects useful information about each
+When enabled, the Symfony profiler collects useful information about each
 request made to your application and store them for later analysis. Use the
 profiler in the development environment to help you to debug your code and
 enhance performance; use it in the production environment to explore problems
 after the fact.
 
-You rarely have to deal with the profiler directly as Symfony2 provides
+You rarely have to deal with the profiler directly as Symfony provides
 visualizer tools like the Web Debug Toolbar and the Web Profiler. If you use
-the Symfony2 Standard Edition, the profiler, the web debug toolbar, and the
+the Symfony Standard Edition, the profiler, the web debug toolbar, and the
 web profiler are all already configured with sensible settings.
 
 .. note::
@@ -460,7 +489,7 @@ token link (a string made of 13 random characters) to access the Web Profiler.
     If the token is not clickable, it means that the profiler routes are not
     registered (see below for configuration information).
 
-Analyzing Profiling data with the Web Profiler
+Analyzing Profiling Data with the Web Profiler
 ..............................................
 
 The Web Profiler is a visualization tool for profiling data that you can use
@@ -490,21 +519,24 @@ HTTP header of the Response::
     want to get the token for an Ajax request, use a tool like Firebug to get
     the value of the ``X-Debug-Token`` HTTP header.
 
-Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find` 
+Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find`
 method to access tokens based on some criteria::
 
     // get the latest 10 tokens
-    $tokens = $container->get('profiler')->find('', '', 10);
+    $tokens = $container->get('profiler')->find('', '', 10, '', '');
 
     // get the latest 10 tokens for all URL containing /admin/
-    $tokens = $container->get('profiler')->find('', '/admin/', 10);
+    $tokens = $container->get('profiler')->find('', '/admin/', 10, '', '');
 
     // get the latest 10 tokens for local requests
-    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
+    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, '', '');
+
+    // get the latest 10 tokens for requests that happened between 2 and 4 days ago
+    $tokens = $container->get('profiler')->find('', '', 10, '4 days ago', '2 days ago');
 
 If you want to manipulate profiling data on a different machine than the one
-where the information were generated, use the 
-:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and 
+where the information were generated, use the
+:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::import` methods::
 
     // on the production machine
@@ -520,7 +552,7 @@ where the information were generated, use the
 Configuration
 .............
 
-The default Symfony2 configuration comes with sensible settings for the
+The default Symfony configuration comes with sensible settings for the
 profiler, the web debug toolbar, and the web profiler. Here is for instance
 the configuration for the development environment:
 
@@ -536,49 +568,48 @@ the configuration for the development environment:
         web_profiler:
             toolbar: true
             intercept_redirects: true
-            verbose: true
 
     .. code-block:: xml
 
-        <!-- xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler" -->
-        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <!-- load the profiler -->
-        <framework:config>
-            <framework:profiler only-exceptions="false" />
-        </framework:config>
+            <!-- load the profiler -->
+            <framework:config>
+                <framework:profiler only-exceptions="false" />
+            </framework:config>
 
-        <!-- enable the web profiler -->
-        <webprofiler:config
-            toolbar="true"
-            intercept-redirects="true"
-            verbose="true"
-        />
+            <!-- enable the web profiler -->
+            <webprofiler:config
+                toolbar="true"
+                intercept-redirects="true" />
+        </container>
 
     .. code-block:: php
 
         // load the profiler
         $container->loadFromExtension('framework', array(
-            'profiler' => array('only-exceptions' => false),
+            'profiler' => array('only_exceptions' => false),
         ));
 
         // enable the web profiler
         $container->loadFromExtension('web_profiler', array(
             'toolbar'             => true,
-            'intercept-redirects' => true,
-            'verbose'             => true,
+            'intercept_redirects' => true,
         ));
 
-When ``only-exceptions`` is set to ``true``, the profiler only collects data
+When ``only_exceptions`` is set to ``true``, the profiler only collects data
 when an exception is thrown by the application.
 
-When ``intercept-redirects`` is set to ``true``, the web profiler intercepts
+When ``intercept_redirects`` is set to ``true``, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
-
-When ``verbose`` is set to ``true``, the Web Debug Toolbar displays a lot of
-information. Setting ``verbose`` to ``false`` hides some secondary information
-to make the toolbar shorter.
 
 If you enable the web profiler, you also need to mount the profiler routes:
 
@@ -587,106 +618,38 @@ If you enable the web profiler, you also need to mount the profiler routes:
     .. code-block:: yaml
 
         _profiler:
-            resource: @WebProfilerBundle/Resources/config/routing/profiler.xml
+            resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
             prefix:   /_profiler
 
     .. code-block:: xml
 
-        <import resource="@WebProfilerBundle/Resources/config/routing/profiler.xml" prefix="/_profiler" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import
+                resource="@WebProfilerBundle/Resources/config/routing/profiler.xml"
+                prefix="/_profiler" />
+        </routes>
 
     .. code-block:: php
 
-        $collection->addCollection($loader->import("@WebProfilerBundle/Resources/config/routing/profiler.xml"), '/_profiler');
+        use Symfony\Component\Routing\RouteCollection;
+
+        $profiler = $loader->import('@WebProfilerBundle/Resources/config/routing/profiler.xml');
+        $profiler->addPrefix('/_profiler');
+
+        $collection = new RouteCollection();
+        $collection->addCollection($profiler);
 
 As the profiler adds some overhead, you might want to enable it only under
-certain circumstances in the production environment. The ``only-exceptions``
-settings limits profiling to 500 pages, but what if you want to get
+certain circumstances in the production environment. The ``only_exceptions``
+settings limits profiling to exceptions, but what if you want to get
 information when the client IP comes from a specific address, or for a limited
-portion of the website? You can use a request matcher:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # enables the profiler only for request coming for the 192.168.0.0 network
-        framework:
-            profiler:
-                matcher: { ip: 192.168.0.0/24 }
-
-        # enables the profiler only for the /admin URLs
-        framework:
-            profiler:
-                matcher: { path: "^/admin/" }
-
-        # combine rules
-        framework:
-            profiler:
-                matcher: { ip: 192.168.0.0/24, path: "^/admin/" }
-
-        # use a custom matcher instance defined in the "custom_matcher" service
-        framework:
-            profiler:
-                matcher: { service: custom_matcher }
-
-    .. code-block:: xml
-
-        <!-- enables the profiler only for request coming for the 192.168.0.0 network -->
-        <framework:config>
-            <framework:profiler>
-                <framework:matcher ip="192.168.0.0/24" />
-            </framework:profiler>
-        </framework:config>
-
-        <!-- enables the profiler only for the /admin URLs -->
-        <framework:config>
-            <framework:profiler>
-                <framework:matcher path="^/admin/" />
-            </framework:profiler>
-        </framework:config>
-
-        <!-- combine rules -->
-        <framework:config>
-            <framework:profiler>
-                <framework:matcher ip="192.168.0.0/24" path="^/admin/" />
-            </framework:profiler>
-        </framework:config>
-
-        <!-- use a custom matcher instance defined in the "custom_matcher" service -->
-        <framework:config>
-            <framework:profiler>
-                <framework:matcher service="custom_matcher" />
-            </framework:profiler>
-        </framework:config>
-
-    .. code-block:: php
-
-        // enables the profiler only for request coming for the 192.168.0.0 network
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
-                'matcher' => array('ip' => '192.168.0.0/24'),
-            ),
-        ));
-
-        // enables the profiler only for the /admin URLs
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
-                'matcher' => array('path' => '^/admin/'),
-            ),
-        ));
-
-        // combine rules
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
-                'matcher' => array('ip' => '192.168.0.0/24', 'path' => '^/admin/'),
-            ),
-        ));
-
-        # use a custom matcher instance defined in the "custom_matcher" service
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
-                'matcher' => array('service' => 'custom_matcher'),
-            ),
-        ));
+portion of the website? You can use a Profiler Matcher, learn more about that
+in ":doc:`/cookbook/profiler/matchers`".
 
 Learn more from the Cookbook
 ----------------------------
@@ -695,5 +658,3 @@ Learn more from the Cookbook
 * :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
-
-.. _`Symfony2 Dependency Injection component`: https://github.com/symfony/DependencyInjection
