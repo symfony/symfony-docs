@@ -295,7 +295,7 @@ In a template, you can also access the ``Request`` object via the special
 
     {{ app.request.query.get('page') }}
 
-    {{ app.request.parameter('page') }}
+    {{ app.request.request.get('page') }}
 
 Persisting Data in the Session
 ------------------------------
