@@ -152,7 +152,7 @@ All blocks have access to the ``collector`` object.
 
 To enable the template, add a ``template`` attribute to the ``data_collector``
 tag in your configuration. Make sure the ``id`` attribute is the same string you used 
-for the ``getName()`` method.  For example, assuming your template is in some
+for the ``getName()`` method. For example, assuming your template is in some
 ``AcmeDebugBundle``:
 
 .. configuration-block::
