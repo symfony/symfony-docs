@@ -136,8 +136,12 @@ For example:
 
 .. code-block:: php
 
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
     /**
      * @Route("/{id}", name="admin_post_show")
+     * @ParamConverter("post", class="AppBundle:Post")
      */
     public function showAction(Post $post)
     {
