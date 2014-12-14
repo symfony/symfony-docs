@@ -121,6 +121,7 @@ releases, starting from Symfony 1.0.0:
 * March 21, 2008: `symfony 1.0.12 is (finally) out ! <http://symfony.com/blog/symfony-1-0-12-is-finally-out>`_
 * June 25, 2007: `symfony 1.0.5 released (security fix) <http://symfony.com/blog/symfony-1-0-5-released-security-fix>`_
 
-.. _Git repository:      https://github.com/symfony/symfony
-.. _blog:                http://symfony.com/blog/
+.. _Git repository: https://github.com/symfony/symfony
+.. _blog: http://symfony.com/blog/
 .. _Security Advisories: http://symfony.com/blog/category/security-advisories
+.. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
