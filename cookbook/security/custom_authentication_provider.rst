@@ -20,9 +20,9 @@ The following chapter demonstrates how to create a custom authentication
 provider for WSSE authentication. The security protocol for WSSE provides
 several security benefits:
 
-1. Username / Password encryption
-2. Safe guarding against replay attacks
-3. No web server configuration required
+#. Username / Password encryption
+#. Safe guarding against replay attacks
+#. No web server configuration required
 
 WSSE is very useful for the securing of web services, may they be SOAP or
 REST.
