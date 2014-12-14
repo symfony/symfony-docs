@@ -2055,6 +2055,26 @@ to work correctly. Just pass a file name to enable it::
     You can also access a secure random instance directly from the Symfony
     dependency injection container; its name is ``security.secure_random``.
 
+Checking Dependencies Security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``security:check`` command was introduced in Symfony 2.6.
+
+When using lots of dependencies in your Symfony projects, odds are that some of
+them contain security vulnerabilities. That's why Symfony includes a command
+called ``security:check`` that checks whether any of your installed dependencies
+contain a known security vulnerability:
+
+.. code-block:: bash
+
+    $ php app/console security:check
+
+A good security practice is to execute this command regularly to be able to
+update or replace compromised dependencies as soon as possible. Internally,
+this command uses the public `security advisories database`_ published by the
+FriendsOfPHP organization.
+
 Final Words
 -----------
 
@@ -2088,3 +2108,4 @@ Learn more from the Cookbook
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
+.. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
