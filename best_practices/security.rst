@@ -253,7 +253,7 @@ Learn More
 ----------
 
 The `FOSUserBundle`_, developed by the Symfony community, adds support for a
-database-backed user system in Symfony2. It also handles common tasks like
+database-backed user system in Symfony. It also handles common tasks like
 user registration and forgotten password functionality.
 
 Enable the :doc:`Remember Me feature </cookbook/security/remember_me>` to
