@@ -2058,8 +2058,8 @@ to work correctly. Just pass a file name to enable it::
 Checking Dependencies Security
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The ``security:check`` command was introduced in Symfony 2.6.
+.. versionadded:: 2.5
+    The ``security:check`` command was introduced in Symfony 2.5.
 
 When using lots of dependencies in your Symfony projects, odds are that some of
 them contain security vulnerabilities. That's why Symfony includes a command
