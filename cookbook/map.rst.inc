@@ -68,6 +68,7 @@
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
   * :doc:`/cookbook/doctrine/console`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
 
 * :doc:`/cookbook/email/index`
 
