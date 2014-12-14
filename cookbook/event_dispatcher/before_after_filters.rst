@@ -9,7 +9,7 @@ executed just before or just after your controller actions acting as filters
 or hooks.
 
 In symfony1, this was achieved with the preExecute and postExecute methods.
-Most major frameworks have similar methods but there is no such thing in Symfony2.
+Most major frameworks have similar methods but there is no such thing in Symfony.
 The good news is that there is a much better way to interfere with the
 Request -> Response process using the :doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
 
