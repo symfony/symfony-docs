@@ -816,10 +816,28 @@ With this configuration, there are three validation groups:
   referenced classes that belong to no other group;
 
 * ``User`` - equivalent to all constraints of the ``User`` object in the
-  ``Default`` group;
+  ``Default`` group; This is always the name of the class.
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
+
+Constraints in the default group of an class are the constraints with either no explicit
+group definition or with an explicit group with either the class name or ``Default``.
+
+.. caution::
+
+    You must be aware that there is a substantial difference between the ``Default`` and the
+    ``User`` group. Both do not have any different effect on the ``User`` entity. However, if
+    you have an embedded entity with an `Valid` Constraint using the ``Default`` group will
+    ensure that the child entity is validated against its default constraints.
+
+    If you would validate with the ``User`` constraint only the constraints in the embedded
+    entity with the group ``User`` would be validated.
+
+    In case you have inheritance in your data model and you validate with the class name of
+    the subclass in the subclass and in the baseclass all constraints in the default group
+    will be validated. If you use the name of the baseclass only the constraints in the base
+    class will be validated.
 
 To tell the validator to use a specific group, pass one or more group names
 as the third argument to the ``validate()`` method::
