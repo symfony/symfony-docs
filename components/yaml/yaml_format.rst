@@ -23,6 +23,9 @@ The syntax for scalars is similar to the PHP syntax.
 Strings
 ~~~~~~~
 
+Strings in YAML can be wrapped both in single and double quotes. In some cases,
+they can also be unquoted:
+
 .. code-block:: yaml
 
     A string in YAML
@@ -31,26 +34,50 @@ Strings
 
     'A singled-quoted string in YAML'
 
-.. tip::
+.. code-block:: yaml
 
-    In a single quoted string, a single quote ``'`` must be doubled:
+    "A double-quoted string in YAML"
 
-    .. code-block:: yaml
+Quoted styles are useful when a string starts or ends with one or more
+relevant spaces, because unquoted strings are trimmed on both ends when parsing
+their contents.
 
-        'A single quote '' in a single-quoted string'
+When using single-quoted strings, any single quote ``'`` inside its contents
+must be doubled to escape it:
+
+  .. code-block:: yaml
+
+      'A single quote '' inside a single-quoted string'
+
+The double-quoted style provides a way to express arbitrary strings, by
+using ``\`` escape sequences. It is very useful when you need to embed a
+``\n`` or a Unicode character in a string.
 
 .. code-block:: yaml
 
     "A double-quoted string in YAML\n"
 
-Quoted styles are useful when a string starts or ends with one or more
-relevant spaces.
+If the string contains any of the following characters, it must be escaped with
+single quotes:
 
-.. tip::
+=====  =====  =====  =====  =====
+``:``  ``{``  ``}``  ``[``  ``]``
+``,``  ``&``  ``*``  ``#``  ``?``
+``|``  ``-``  ``<``  ``>``  ``=``
+``!``  ``%``  ``@``  ``\```
+=====  =====  =====  =====  =====
 
-    The double-quoted style provides a way to express arbitrary strings, by
-    using ``\`` escape sequences. It is very useful when you need to embed a
-    ``\n`` or a unicode character in a string.
+If the string contains any of the following control characters, it must be
+escaped with double quotes. In addition, the escaping must use a double slash
+``\\`` to avoid parsing issues:
+
+========  ========  ========  ========  ========  ========  ========  ========
+``\0``    ``\x01``  ``\x02``  ``\x03``  ``\x04``  ``\x05``  ``\x06``  ``\a``
+``\b``    ``\t``    ``\n``    ``\v``    ``\f``    ``\r``    ``\x0e``  ``\x0f``
+``\x10``  ``\x11``  ``\x12``  ``\x13``  ``\x14``  ``\x15``  ``\x16``  ``\x17``
+``\x18``  ``\x19``  ``\x1a``  ``\e``    ``\x1c``  ``\x1d``  ``\x1e``  ``\x1f``
+``\N``    ``\_``    ``\L``    ``\P``
+========  ========  ========  ========  ========  ========  ========  ========
 
 When a string contains line breaks, you can use the literal style, indicated
 by the pipe (``|``), to indicate that the string will span several lines. In
