@@ -8,7 +8,7 @@ In the past, Symfony projects were created with `Composer`_, the dependency mana
 for PHP applications. However, the current recommendation is to use the **Symfony
 Installer**, which has to be installed before creating your first project.
 
-Linux and Mac OS X systems
+Linux and Mac OS X Systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Open your command console and execute the following:
@@ -22,7 +22,7 @@ Open your command console and execute the following:
 Now you can execute the Symfony Installer as a global system command called
 ``symfony``.
 
-Windows systems
+Windows Systems
 ~~~~~~~~~~~~~~~
 
 Open your command console and execute the following:
