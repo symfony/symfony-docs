@@ -181,9 +181,7 @@ In ``app/autoload.php`` you need to modify the path leading to ``vendor/autoload
 file::
 
     // app/autoload.php
-    /**
-     * @var ClassLoader $loader
-     */
+
     $loader = require '/some/dir/vendor/autoload.php';
 
 .. tip::
