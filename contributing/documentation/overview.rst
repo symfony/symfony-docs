@@ -170,7 +170,7 @@ Now you can **sync your fork** by executing the following command:
     $ git merge upstream/2.3
 
 This command will update the ``2.3`` branch, which is the one you used to
-create the new branch for your changes. If have used another base branch,
+create the new branch for your changes. If you have used another base branch,
 e.g. ``master``, replace the ``2.3`` with the appropriate branch name.
 
 Great! Now you can proceed by following the same steps explained in the previous

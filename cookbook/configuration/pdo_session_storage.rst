@@ -26,10 +26,11 @@ configuration format of your choice):
 
         parameters:
             pdo.db_options:
-                db_table:    session
-                db_id_col:   session_id
-                db_data_col: session_value
-                db_time_col: session_time
+                db_table:        session
+                db_id_col:       session_id
+                db_data_col:     session_data
+                db_time_col:     session_time
+                db_lifetime_col: session_lifetime
 
         services:
             pdo:
@@ -56,8 +57,9 @@ configuration format of your choice):
             <parameter key="pdo.db_options" type="collection">
                 <parameter key="db_table">session</parameter>
                 <parameter key="db_id_col">session_id</parameter>
-                <parameter key="db_data_col">session_value</parameter>
+                <parameter key="db_data_col">session_data</parameter>
                 <parameter key="db_time_col">session_time</parameter>
+                <parameter key="db_lifetime_col">session_lifetime</parameter>
             </parameter>
         </parameters>
 
@@ -93,10 +95,11 @@ configuration format of your choice):
         ));
 
         $container->setParameter('pdo.db_options', array(
-            'db_table'      => 'session',
-            'db_id_col'     => 'session_id',
-            'db_data_col'   => 'session_value',
-            'db_time_col'   => 'session_time',
+            'db_table'        => 'session',
+            'db_id_col'       => 'session_id',
+            'db_data_col'     => 'session_data',
+            'db_time_col'     => 'session_time',
+            'db_lifetime_col' => 'session_lifetime',
         ));
 
         $pdoDefinition = new Definition('PDO', array(
@@ -114,9 +117,10 @@ configuration format of your choice):
         $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 * ``db_table``: The name of the session table in your database
-* ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
-* ``db_data_col``: The name of the value column in your session table (TEXT or CLOB)
+* ``db_id_col``: The name of the id column in your session table (VARCHAR(128))
+* ``db_data_col``: The name of the value column in your session table (BLOB)
 * ``db_time_col``: The name of the time column in your session table (INTEGER)
+* ``db_lifetime_col``: The name of the lifetime column in your session table (INTEGER)
 
 Sharing your Database Connection Information
 --------------------------------------------
@@ -133,12 +137,13 @@ of your project's data, you can use the connection settings from the
 
     .. code-block:: yaml
 
-        pdo:
-            class: PDO
-            arguments:
-                - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                - "%database_user%"
-                - "%database_password%"
+        services:
+            pdo:
+                class: PDO
+                arguments:
+                    - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
+                    - "%database_user%"
+                    - "%database_password%"
 
     .. code-block:: xml
 
@@ -168,11 +173,11 @@ following (MySQL):
 .. code-block:: sql
 
     CREATE TABLE `session` (
-        `session_id` varchar(255) NOT NULL,
-        `session_value` text NOT NULL,
-        `session_time` int(11) NOT NULL,
-        PRIMARY KEY (`session_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        `session_id` VARBINARY(128) NOT NULL PRIMARY KEY,
+        `session_data` BLOB NOT NULL,
+        `session_time` INTEGER UNSIGNED NOT NULL,
+        `session_lifetime` MEDIUMINT NOT NULL
+    ) COLLATE utf8_bin, ENGINE = InnoDB;
 
 PostgreSQL
 ~~~~~~~~~~
@@ -182,10 +187,10 @@ For PostgreSQL, the statement should look like this:
 .. code-block:: sql
 
     CREATE TABLE session (
-        session_id character varying(255) NOT NULL,
-        session_value text NOT NULL,
-        session_time integer NOT NULL,
-        CONSTRAINT session_pkey PRIMARY KEY (session_id)
+        session_id VARCHAR(128) NOT NULL PRIMARY KEY,
+        session_data BYTEA NOT NULL,
+        session_time INTEGER NOT NULL,
+        session_lifetime INTEGER NOT NULL
     );
 
 Microsoft SQL Server
@@ -197,8 +202,9 @@ For MSSQL, the statement might look like the following:
 
     CREATE TABLE [dbo].[session](
         [session_id] [nvarchar](255) NOT NULL,
-        [session_value] [ntext] NOT NULL,
+        [session_data] [ntext] NOT NULL,
         [session_time] [int] NOT NULL,
+        [session_lifetime] [int] NOT NULL,
         PRIMARY KEY CLUSTERED(
             [session_id] ASC
         ) WITH (

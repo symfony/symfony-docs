@@ -393,6 +393,8 @@ to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 ``app/Resources/views/Blog/index.html.twig``, you'll use the
 ``Blog/index.html.twig`` path.
 
+.. _template-referencing-in-bundle:
+
 Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1166,6 +1168,12 @@ automatically:
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif ?>
 
+.. versionadded:: 2.6
+    The global ``app.security`` variable (or the ``$app->getSecurity()``
+    method in PHP templates) is deprecated as of Symfony 2.6. Use `app.user` 
+    (`$app->getUser()`) and `is_granted()` (`$view['security']->isGranted()`)
+    instead.
+
 .. tip::
 
     You can add your own global template variables. See the cookbook example
@@ -1487,12 +1495,33 @@ in a JavaScript string, use the ``js`` context:
 Debugging
 ---------
 
-When using PHP, you can use :phpfunction:`var_dump` if you need to quickly find
-the value of a variable passed. This is useful, for example, inside your
-controller. The same can be achieved when using Twig thanks to the Debug
-extension.
+When using PHP, you can use the
+:ref:`dump() function from the VarDumper component <components-var-dumper-dump>`
+if you need to quickly find the value of a variable passed. This is useful,
+for example, inside your controller::
 
-Template parameters can then be dumped using the ``dump`` function:
+    // src/AppBundle/Controller/ArticleController.php
+    namespace AppBundle\Controller;
+
+    // ...
+
+    class ArticleController extends Controller
+    {
+        public function recentListAction()
+        {
+            $articles = ...;
+            dump($articles);
+
+            // ...
+        }
+    }
+
+.. note::
+
+    The output of the ``dump()`` function is then rendered in the web developer
+    toolbar.
+
+The same mechanism can be used in Twig templates thanks to ``dump`` function:
 
 .. code-block:: html+jinja
 

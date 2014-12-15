@@ -877,7 +877,3 @@ then instead of these properties being checked, your ``isEqualTo`` method
 is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
-    and the ``EquatableInterface`` was introduced in its place.

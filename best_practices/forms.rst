@@ -15,9 +15,7 @@ Building Forms
 The Form component allows you to build forms right inside your controller
 code. Honestly, unless you need to reuse the form somewhere else, that's
 totally fine. But for organize and reuse, we recommend that you define each
-form in its own PHP class:
-
-.. code-block:: php
+form in its own PHP class::
 
     namespace AppBundle\Form;
 
@@ -51,9 +49,7 @@ form in its own PHP class:
         }
     }
 
-To use the class, use ``createForm`` and instantiate the new class:
-
-.. code-block:: php
+To use the class, use ``createForm`` and instantiate the new class::
 
     use AppBundle\Form\PostType;
     // ...
@@ -69,9 +65,11 @@ To use the class, use ``createForm`` and instantiate the new class:
 Registering Forms as Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also `register your form type as a service`_. But this is *not* recommended
-unless you plan to reuse the new form type in many places or embed it in
-other forms directly or via the `collection type`_.
+You can also
+:ref:`register your form type as a service <form-cookbook-form-field-service>`.
+But this is *not* recommended unless you plan to reuse the new form type in many
+places or embed it in other forms directly or via the
+:doc:`collection type </reference/forms/types/collection>`.
 
 For most forms that are used only to edit or create something, registering
 the form as a service is over-kill, and makes it more difficult to figure
@@ -108,9 +106,7 @@ directly in your form class, this would effectively limit the scope of that form
 
 This form *may* have been designed for creating posts, but if you wanted
 to reuse it for editing posts, the button label would be wrong. Instead,
-some developers configure form buttons in the controller:
-
-.. code-block:: php
+some developers configure form buttons in the controller::
 
     namespace AppBundle\Controller\Admin;
 
@@ -143,12 +139,12 @@ view layer:
 
 .. code-block:: html+jinja
 
-    <form method="POST" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         {{ form_widget(form) }}
 
         <input type="submit" value="Create"
                class="btn btn-default pull-right" />
-    </form>
+    {{ form_end(form) }}
 
 Rendering the Form
 ------------------
@@ -157,33 +153,19 @@ There are a lot of ways to render your form, ranging from rendering the entire
 thing in one line to rendering each part of each field independently. The
 best way depends on how much customization you need.
 
-The simplest way - which is especially useful during development - is to render
-the form tags manually and then use ``form_widget()`` to render all of the fields:
+One of the simplest ways - which is especially useful during development -
+is to render the form tags and use ``form_widget()`` to render all of the
+fields:
 
 .. code-block:: html+jinja
 
-    <form method="POST" {{ form_enctype(form) }}>
+    {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
         {{ form_widget(form) }}
-    </form>
-
-.. best-practice::
-
-    Don't use the ``form()`` or ``form_start()`` functions to render the
-    starting and ending form tags.
-
-Experienced Symfony developers will recognize that we're rendering the ``<form>``
-tags manually instead of using the ``form_start()`` or ``form()`` functions.
-While those are convenient, they take away from some clarity with little
-benefit.
-
-.. tip::
-
-    The exception is a delete form because it's really just one button and
-    so benefits from some of these extra shortcuts.
+    {{ form_end(form) }}
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See `How to Customize Form Rendering`_ for more information on this and how
+See :doc:`/cookbook/form/form_customization` for more information on this and how
 you can control *how* the form renders at a global level using form theming.
 
 Handling Form Submits
@@ -224,8 +206,3 @@ Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
 for clarity. This isn't technically needed, since ``isValid()`` first calls
 ``isSubmitted()``. But without this, the flow doesn't read well as it *looks*
 like the form is *always* processed (even on the GET request).
-
-.. _`register your form type as a service`: http://symfony.com/doc/current/cookbook/form/create_custom_field_type.html#creating-your-field-type-as-a-service
-.. _`collection type`: http://symfony.com/doc/current/reference/forms/types/collection.html
-.. _`How to Customize Form Rendering`: http://symfony.com/doc/current/cookbook/form/form_customization.html
-.. _`form event system`: http://symfony.com/doc/current/cookbook/form/dynamic_form_modification.html

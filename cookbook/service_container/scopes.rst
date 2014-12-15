@@ -345,26 +345,17 @@ The service config for this class would look something like this:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            my_mailer.class: Acme\HelloBundle\Mail\Mailer
-
         services:
             my_mailer:
-                class:     "%my_mailer.class%"
+                class:     Acme\HelloBundle\Mail\Mailer
                 arguments: ["@service_container"]
                 # scope: container can be omitted as it is the default
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="my_mailer.class">Acme\HelloBundle\Mail\Mailer</parameter>
-        </parameters>
-
         <services>
-            <service id="my_mailer" class="%my_mailer.class%">
+            <service id="my_mailer" class="Acme\HelloBundle\Mail\Mailer">
                  <argument type="service" id="service_container" />
             </service>
         </services>
@@ -375,11 +366,8 @@ The service config for this class would look something like this:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mail\Mailer');
-
         $container->setDefinition('my_mailer', new Definition(
-            '%my_mailer.class%',
+            'Acme\HelloBundle\Mail\Mailer',
             array(new Reference('service_container'))
         ));
 

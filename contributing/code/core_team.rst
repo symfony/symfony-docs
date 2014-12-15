@@ -63,7 +63,8 @@ Active Core Members
 
   * **Jakub Zalas** (:decider:`jakzal`);
   * **Jordi Boggiano** (:decider:`seldaek`);
-  * **Lukas Kahwe Smith** (:decider:`lsmith77`).
+  * **Lukas Kahwe Smith** (:decider:`lsmith77`);
+  * **Ryan Weaver** (:decider:`weaverryan`).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

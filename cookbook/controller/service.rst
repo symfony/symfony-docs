@@ -54,24 +54,15 @@ Then you can define it as a service as follows:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            acme.controller.hello.class: Acme\HelloBundle\Controller\HelloController
-
         services:
             acme.hello.controller:
-                class: "%acme.controller.hello.class%"
+                class: Acme\HelloBundle\Controller\HelloController
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="acme.controller.hello.class">Acme\HelloBundle\Controller\HelloController</parameter>
-        </parameters>
-
         <services>
-            <service id="acme.hello.controller" class="%acme.controller.hello.class%" />
+            <service id="acme.hello.controller" class="Acme\HelloBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
@@ -79,14 +70,8 @@ Then you can define it as a service as follows:
         // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setParameter(
-            'acme.controller.hello.class',
-            'Acme\HelloBundle\Controller\HelloController'
-        );
-
         $container->setDefinition('acme.hello.controller', new Definition(
-            '%acme.controller.hello.class%'
+            'Acme\HelloBundle\Controller\HelloController'
         ));
 
 Referring to the Service
@@ -212,27 +197,16 @@ argument:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            acme.controller.hello.class: Acme\HelloBundle\Controller\HelloController
-
         services:
             acme.hello.controller:
-                class:     "%acme.controller.hello.class%"
+                class:     Acme\HelloBundle\Controller\HelloController
                 arguments: ["@templating"]
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter
-                key="acme.controller.hello.class"
-            >Acme\HelloBundle\Controller\HelloController</parameter>
-        </parameters>
-
         <services>
-            <service id="acme.hello.controller" class="%acme.controller.hello.class%">
+            <service id="acme.hello.controller" class="Acme\HelloBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
@@ -243,14 +217,8 @@ argument:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter(
-            'acme.controller.hello.class',
-            'Acme\HelloBundle\Controller\HelloController'
-        );
-
         $container->setDefinition('acme.hello.controller', new Definition(
-            '%acme.controller.hello.class%',
+            'Acme\HelloBundle\Controller\HelloController',
             array(new Reference('templating'))
         ));
 

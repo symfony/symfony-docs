@@ -48,6 +48,13 @@ Configuration
 * `profiler`_
     * `collect`_
     * :ref:`enabled <profiler.enabled>`
+* `translator`_
+    * :ref:`enabled <translator.enabled>`
+    * `fallback`_
+    * `logging`_
+* `property_accessor`_
+    * `magic_call`_
+    * `throw_exception_on_invalid_index`_
 
 secret
 ~~~~~~
@@ -495,6 +502,62 @@ and activate the data collectors by hand::
 
     $profiler->enable();
 
+translator
+~~~~~~~~~~
+
+.. _translator.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable the ``translator`` service in the service container.
+
+fallback
+........
+
+**default**: ``en``
+
+This option is used when the translation key for the current locale wasn't found.
+
+For more details, see :doc:`/book/translation`.
+
+.. _reference-framework-translator-logging:
+
+logging
+.......
+
+.. versionadded:: 2.6
+    The ``logging`` option was introduced in Symfony 2.6.
+
+**default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
+
+When ``true``, a log entry is made whenever the translator cannot find a translation
+for a given key. The logs are made to the ``translation`` channel and at the
+``debug`` for level for keys where there is a translation in the fallback
+locale and the ``warning`` level if there is no translation to use at all.
+
+property_accessor
+~~~~~~~~~~~~~~~~~
+
+magic_call
+..........
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __call() method <components-property-access-magic-call>` when
+its ``getValue()`` method is called.
+
+throw_exception_on_invalid_index
+................................
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service throws an exception when you
+try to access an invalid index of an array.
+
 Full default Configuration
 --------------------------
 
@@ -612,6 +675,7 @@ Full default Configuration
             translator:
                 enabled:              false
                 fallback:             en
+                logging:              "%kernel.debug%"
 
             # validation configuration
             validation:
