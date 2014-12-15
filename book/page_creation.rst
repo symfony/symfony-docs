@@ -489,12 +489,15 @@ Though entirely flexible, by default, each Symfony :term:`application` has
 the same basic and recommended directory structure:
 
 * ``app/``: This directory contains the application configuration;
-
 * ``src/``: All the project PHP code is stored under this directory;
-
 * ``vendor/``: Any vendor libraries are placed here by convention;
-
 * ``web/``: This is the web root directory and contains any publicly accessible files;
+
+.. note::
+
+    You can easily override the default directory structure. See
+    :doc:`/cookbook/configuration/override_dir_structure` for more
+    information.
 
 .. _the-web-directory:
 
