@@ -2059,7 +2059,9 @@ Checking Dependencies Security
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.5
-    The ``security:check`` command was introduced in Symfony 2.5.
+    The ``security:check`` command was introduced in Symfony 2.5. This command is
+    included in ``SensioDistributionBundle``, which has to be registered in your
+    application in order to use this command.
 
 When using lots of dependencies in your Symfony projects, odds are that some of
 them contain security vulnerabilities. That's why Symfony includes a command
