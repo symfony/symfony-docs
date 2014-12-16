@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-23T20:25:16Z
+
+Thanks @xabbuh, except from one comment, I've applied them all. Let's merge this quickly, just a few days left :)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-15T10:53:18Z
+
+The PR is ready now
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-15T11:21:19Z
+
+@WouterJ thanks for writing this PR. My only concern is the extensive use of the `program` term. I'd prefer the use of `task` or `process` terms, but I don't know if they are accurate enough.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-15T11:23:25Z
+
+The problem with process is that it seems to refer to the Process component, while this helper is created to work with any task/process/program (tbh, I don't also like it to add examples using the Process component, but I couldn't find another easier example).
