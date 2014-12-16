@@ -136,6 +136,8 @@ For example:
 
 .. code-block:: php
 
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    
     /**
      * @Route("/{id}", name="admin_post_show")
      */
