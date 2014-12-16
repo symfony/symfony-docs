@@ -545,7 +545,7 @@ command will automatically regenerate assets *as they change*:
 
 .. code-block:: bash
 
-    $ php app/console assetic:dump --watch
+    $ php app/console assetic:watch
 
 Since running this command in the ``dev`` environment may generate a bunch
 of files, it's usually a good idea to point your generated asset files to
