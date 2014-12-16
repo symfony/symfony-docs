@@ -540,12 +540,16 @@ need to dump them manually. To do so, run the following:
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
-you update an asset. Fortunately, by passing the ``--watch`` option, the
-command will automatically regenerate assets *as they change*:
+you update an asset. Fortunately, by using ``assetic:watch`` command, the
+assets will be regenerated automatically *as they change*:
 
 .. code-block:: bash
 
     $ php app/console assetic:watch
+
+The ``assetic:watch`` command was introduced in AsseticBundle 2.4. In prior 
+versions, you had to use the ``--watch`` option of the ``assetic:dump`` 
+command for the same behavior.
 
 Since running this command in the ``dev`` environment may generate a bunch
 of files, it's usually a good idea to point your generated assets files to
