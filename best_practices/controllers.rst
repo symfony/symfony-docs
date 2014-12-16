@@ -141,7 +141,6 @@ For example:
 
     /**
      * @Route("/{id}", name="admin_post_show")
-     * @ParamConverter("post", class="AppBundle:Post")
      */
     public function showAction(Post $post)
     {
