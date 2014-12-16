@@ -8,3 +8,4 @@ Sessions
     locale_sticky_session
     sessions_directory
     php_bridge
+    avoid_session_start
