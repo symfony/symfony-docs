@@ -7,7 +7,6 @@ The Console Helpers
 .. toctree::
     :hidden:
 
-    debug_formatter
     dialoghelper
     formatterhelper
     processhelper
@@ -16,6 +15,7 @@ The Console Helpers
     questionhelper
     table
     tablehelper
+    debug_formatter
 
 The Console component comes with some useful helpers. These helpers contain
 function to ease some common tasks.
