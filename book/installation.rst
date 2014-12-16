@@ -370,6 +370,7 @@ a wide variety of articles about solving specific problems with Symfony.
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony
+.. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`Symfony CMF Standard Edition`: https://github.com/symfony-cmf/symfony-cmf-standard
 .. _`Symfony CMF`: http://cmf.symfony.com/
 .. _`Symfony REST Edition`: https://github.com/gimler/symfony-rest-edition
