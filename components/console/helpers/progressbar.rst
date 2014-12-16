@@ -45,8 +45,7 @@ you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
 
 .. versionadded:: 2.6
-    The ``setProgress()`` method was introduced in Symfony 2.6. Previously it was
-    called ``setCurrent()``.
+    The ``setProgress()`` method was called ``setCurrent()`` prior to Symfony 2.6.
 
 .. caution::
 
@@ -309,8 +308,7 @@ that displays the number of remaining steps::
     );
 
 .. versionadded:: 2.6
-    The ``getProgress()`` method was introduced in Symfony 2.6. Previously it was
-    called ``getStep()``.
+    The ``getProgress()`` method was called ``getStep()`` prior to Symfony 2.6.
 
 Custom Messages
 ~~~~~~~~~~~~~~~
