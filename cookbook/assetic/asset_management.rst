@@ -540,7 +540,7 @@ need to dump them manually. To do so, run the following:
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
-you update an asset. Fortunately, by using ``assetic:watch`` command, the
+you update an asset. Fortunately, by using the ``assetic:watch`` command,
 assets will be regenerated automatically *as they change*:
 
 .. code-block:: bash
