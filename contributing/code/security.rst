@@ -95,6 +95,11 @@ of the downstream projects included in this process:
 Security Advisories
 -------------------
 
+.. tip::
+
+    You can check your Symfony application for known security vulnerabilities
+    using the ``security:check`` command.
+
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
