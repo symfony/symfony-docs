@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-13T18:56:37Z
+
+looks like a valid change to me. Btw, this should be merged into 2.3 (as that's the oldest still maintained branch of the docs). You don't have to create a new PR for it, if it doesn't conflict we can easily switch branches when merging.
+
+---------------------------------------------------------------------------
+
+by keefekwan at 2014-12-13T22:20:46Z
+
+@WouterJ In regards to the 2.3 merge in your comment does this need to be done by me or someone else? (same thing with the other pull request if I need to do something on my end to merge?)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-13T22:51:56Z
+
+@keefekwan when creating a PR, you can change branches (both the branch with changes as the branch the PR is based on). For fixes, the pull request should be based on 2.3 (unless it was introduced in a new version).
+
+For now (this PR and the other PRs), you don't have to do anything. The PRs will be merged by @weaverryan and he can take care of this very well :)
+
+---------------------------------------------------------------------------
+
+by keefekwan at 2014-12-13T23:26:53Z
+
+@WouterJ Gotcha! Thanks for the information, mate!
+
+---------------------------------------------------------------------------
+
+by keefekwan at 2014-12-16T20:45:19Z
+
+Shall I just close this pull request altogether as no changes were made?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T20:52:47Z
+
+@keefekwan I think it's good now. The `use` statement for the `Route` annotation was not present before. :+1:
