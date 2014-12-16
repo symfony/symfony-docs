@@ -243,7 +243,7 @@ it's released:
     └─ web/
 
 The changes are pretty superficial, but for now, we recommend that you use
-the Symfony2 directory structure.
+the Symfony directory structure.
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Get Started`: https://getcomposer.org/doc/00-intro.md

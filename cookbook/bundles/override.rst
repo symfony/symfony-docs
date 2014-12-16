@@ -18,7 +18,7 @@ For information on overriding templates, see
 Routing
 -------
 
-Routing is never automatically imported in Symfony2. If you want to include
+Routing is never automatically imported in Symfony. If you want to include
 the routes from any bundle, then they must be manually imported from somewhere
 in your application (e.g. ``app/config/routing.yml``).
 

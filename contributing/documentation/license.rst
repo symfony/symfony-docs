@@ -3,7 +3,7 @@
 Symfony Documentation License
 =============================
 
-The Symfony2 documentation is licensed under a Creative Commons
+The Symfony documentation is licensed under a Creative Commons
 Attribution-Share Alike 3.0 Unported License (`CC BY-SA 3.0`_).
 
 **You are free:**
