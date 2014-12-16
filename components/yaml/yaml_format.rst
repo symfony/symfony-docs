@@ -45,8 +45,9 @@ must be doubled to escape it:
 
     'A single quote '' inside a single-quoted string'
 
-If the string contains any of the following characters, it must be escaped with
-single quotes:
+Strings containing any of the following characters must be quoted. Although you
+can use double quotes, for these characters is more convenient to use single
+quotes, which avoids having to escape any backslash ``\``:
 
 * ``:``
 * ``{``
@@ -69,16 +70,15 @@ single quotes:
 * ``\```
 
 The double-quoted style provides a way to express arbitrary strings, by
-using ``\`` escape sequences. It is very useful when you need to embed a
-``\n`` or a Unicode character in a string.
+using ``\`` to escape characters and sequences. For instance, it is very useful
+when you need to embed a ``\n`` or a Unicode character in a string.
 
 .. code-block:: yaml
 
     "A double-quoted string in YAML\n"
 
 If the string contains any of the following control characters, it must be
-escaped with double quotes. In addition, the escaping must use a double slash
-``\\`` to avoid parsing issues:
+escaped with double quotes:
 
 * ``\0``
 * ``\x01``
