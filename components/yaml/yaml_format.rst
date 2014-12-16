@@ -46,7 +46,7 @@ must be doubled to escape it:
     'A single quote '' inside a single-quoted string'
 
 Strings containing any of the following characters must be quoted. Although you
-can use double quotes, for these characters is more convenient to use single
+can use double quotes, for these characters it is more convenient to use single
 quotes, which avoids having to escape any backslash ``\``:
 
 * ``:``
