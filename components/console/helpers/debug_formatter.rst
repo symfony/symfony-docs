@@ -9,14 +9,24 @@ Debug Formatter Helper
 
 The :class:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper` provides
 functions to output debug information when running an external program, for
-instance a process or HTTP request. It is included in the default helper set
-and you can get it by calling
-:method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
+instance a process or HTTP request. For example, if you used it to output
+the results of running ``ls -la`` on a UNIX system, it might output something
+like this:
+
+.. image:: /images/components/console/debug_formatter.png
+   :align: center
+
+Using the debug_formatter
+-------------------------
+
+The formatter is included in the default helper set and you can get it by
+calling :method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
 
     $debugFormatter = $this->getHelper('debug_formatter');
 
-The formatter only formats strings, which you can use to output to the console,
-but also to log the information or do anything else.
+The formatter accepts strings and returns a formatted string, which you can
+use to output to the console (or you could even log the information or do
+something else).
 
 All methods of this helper have an identifier as the first argument. This is a
 unique value for each program. This way, the helper can debug information for
@@ -39,9 +49,13 @@ display information that the program is started::
 
     // ...
     $process = new Process(...);
-    $process->run();
 
-    $output->writeln($debugFormatter->start(spl_object_hash($process), 'Some process description'));
+    $output->writeln($debugFormatter->start(
+        spl_object_hash($process),
+        'Some process description')
+    );
+
+    $process->run();
 
 This will output:
 
@@ -51,7 +65,11 @@ This will output:
 
 You can tweak the prefix using the third argument::
 
-    $output->writeln($debugFormatter->start(spl_object_hash($process), 'Some process description', 'STARTED');
+    $output->writeln($debugFormatter->start(
+        spl_object_hash($process),
+        'Some process description',
+        'STARTED'
+    );
     // will output:
     //  STARTED Some process description
 
@@ -69,7 +87,11 @@ using
 
     $process->run(function ($type, $buffer) use ($output, $debugFormatter, $process) {
         $output->writeln(
-            $debugFormatter->progress(spl_object_hash($process), $buffer, Process::ERR === $type)
+            $debugFormatter->progress(
+                spl_object_hash($process),
+                $buffer,
+                Process::ERR === $type
+            )
         );
     });
     // ...
