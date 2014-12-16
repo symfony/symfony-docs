@@ -147,6 +147,7 @@
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/firewall_restriction`
+  * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
