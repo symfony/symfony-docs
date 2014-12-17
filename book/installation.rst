@@ -106,10 +106,9 @@ Symfony versions and which one to use for your projects.
 Creating Symfony Applications without the Installer
 ---------------------------------------------------
 
-Due to technical reasons, some of the past Symfony versions aren't compatible
-with the Symfony Installer. In addition, if you still use PHP 5.3, you can't
-execute the installer. In those cases, you must use the alternative installation
-method based con `Composer`_.
+If you still use PHP 5.3, or if you can't execute the installer for any reason,
+you can create Symfony applications using the alternative installation method
+based con `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
 also be used to create new applications based on the Symfony framework. If you
