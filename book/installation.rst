@@ -77,6 +77,12 @@ addition, the installer checks if your system meets the technical requirements
 to execute Symfony applications. If not, you'll see the list of changes needed
 to meet those requirements.
 
+.. tip::
+
+    For security reasons, all Symfony versions are digitally signed before
+    distributing them. If you want to verify the integrity of any Symfony
+    version, follow the steps `explained in this post`_.
+
 Basing your Project on a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -366,6 +372,7 @@ a wide variety of articles about solving specific problems with Symfony.
     at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 .. _`Symfony Release process`: http://symfony.com/doc/current/contributing/community/releases.html
+.. _`explained in this post`: http://fabien.potencier.org.nyud.net/article/73/signing-project-releases
 .. _`Composer`: http://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
