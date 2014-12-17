@@ -24,7 +24,7 @@ The ``web/`` Directory
 The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where each :term:`front controller`
 lives, such as the production controller shown here::
-
+t
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
@@ -246,7 +246,7 @@ the Twig templating system and some other third party libraries and bundles.
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony applications can contain tons of configuration files defined in several
+Symfony applications can contain several configuration files defined in several
 formats (YAML, XML, PHP, etc.) Instead of parsing and combining all those files
 for each request, Symfony uses its own cache system. In fact, the application
 configuration is only parsed for the very first request and then compiled down
