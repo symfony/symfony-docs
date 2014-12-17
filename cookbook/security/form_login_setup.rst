@@ -4,9 +4,9 @@ How to Build a Traditional Login Form
 .. tip::
 
     If you need a login form and are storing users in some sort of a database,
-    then see you should consider using `FOSUserBundle`_, which helps you
-    build your ``User`` object and gives you many routes and controllers
-    for common tasks like login, registration and forgot password.
+    then you should consider using `FOSUserBundle`_, which helps you build
+    your ``User`` object and gives you many routes and controllers for common
+    tasks like login, registration and forgot password.
 
 In this entry, you'll build a traditional login form. Of course, when the
 user logs in, you can load your users from anywhere - like the database.
@@ -69,7 +69,9 @@ First, enable form login under your firewall:
 
 .. tip::
 
-    The ``login_path`` and ``check_path`` can also be route names.
+    The ``login_path`` and ``check_path`` can also be route names (but cannot
+    have mandatory wildcards - e.g. ``/login/{foo}`` where ``foo`` has no
+    default value).
 
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form ``/login``. Implementing this login form
@@ -99,7 +101,6 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
     
         // src/AppBundle/Controller/SecurityController.php
         // ...
-
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         class SecurityController extends Controller
@@ -410,6 +411,7 @@ for the login page:
 
         # ...
         firewalls:
+            # order matters! This must be before the ^/ firewall
             login_firewall:
                 pattern:   ^/login$
                 anonymous: ~

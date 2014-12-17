@@ -1,4 +1,4 @@
-How does the Security access_control Work?
+How Does the Security access_control Work?
 ==========================================
 
 For each incoming request, Symfony checks each ``access_control`` entry
@@ -150,33 +150,24 @@ options:
 
 .. _book-security-securing-ip:
 
-Securing by IP
---------------
+Matching access_control By IP
+-----------------------------
 
-Certain situations may arise when you may need to restrict access to a given
-path based on IP. This is particularly relevant in the case of
-:ref:`Edge Side Includes <edge-side-includes>` (ESI), for example. When ESI is
-enabled, it's recommended to secure access to ESI URLs. Indeed, some ESI may
-contain some private content like the current logged in user's information. To
-prevent any direct access to these resources from a web browser (by guessing the
-ESI URL pattern), the ESI route **must** be secured to be only visible from
-the trusted reverse proxy cache.
-
-.. versionadded:: 2.3
-    Version 2.3 allows multiple IP addresses in a single rule with the ``ips: [a, b]``
-    construct.  Prior to 2.3, users should create one rule per IP address to match and
-    use the ``ip`` key instead of ``ips``.
+Certain situations may arise when you need to have an ``access_control``
+entry that *only* matches requests coming from some IP address or range.
+For example, this *could* be used to deny access to a URL pattern to all
+requests *except* those from a trusted, internal server.
 
 .. caution::
 
-    As you'll read in the explanation below the example, the ``ip`` option
-    does not restrict to a specific IP address. Instead, using the ``ip``
+    As you'll read in the explanation below the example, the ``ips`` option
+    does not restrict to a specific IP address. Instead, using the ``ips``
     key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down
     the ``access_control`` list.
 
-Here is an example of how you might secure all ESI routes that start with a
-given prefix, ``/esi``, from outside access:
+Here is an example of how you configure some example ``/internal*`` URL
+pattern so that it is only accessible by requests from the local server itself:
 
 .. configuration-block::
 
@@ -186,8 +177,9 @@ given prefix, ``/esi``, from outside access:
         security:
             # ...
             access_control:
-                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
-                - { path: ^/esi, roles: ROLE_NO_ACCESS }
+                # 
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+                - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
@@ -227,19 +219,19 @@ given prefix, ``/esi``, from outside access:
             ),
         ));
 
-Here is how it works when the path is ``/esi/something`` coming from the
-``10.0.0.1`` IP:
+Here is how it works when the path is ``/internal/something`` coming from
+the external IP address ``10.0.0.1``:
 
 * The first access control rule is ignored as the ``path`` matches but the
-  ``ip`` does not match either of the IPs listed;
+  IP address does not match either of the IPs listed;
 
 * The second access control rule is enabled (the only restriction being the
-  ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
-  role as it's not defined, access is denied (the ``ROLE_NO_ACCESS`` role can
-  be anything that does not match an existing role, it just serves as a trick
-  to always deny access).
+  ``path``) and so it matches. If you make sure that no users ever have
+  ``ROLE_NO_ACCESS``, then access is denied (``ROLE_NO_ACCESS`` can be anything
+  that does not match an existing role, it just serves as a trick to always
+  deny access).
 
-Now, if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
+But if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
 address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the

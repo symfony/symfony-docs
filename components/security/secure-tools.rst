@@ -1,13 +1,9 @@
 Securely Comparing Strings and Generating Random Numbers
 ========================================================
 
-.. versionadded:: 2.2
-    The ``StringUtils`` and ``SecureRandom`` classes were introduced in Symfony
-    2.2
-
-The Symfony Security component comes with a collection of nice utilities related
-to security. These utilities are used by Symfony, but you should also use
-them if you want to solve the problem they address.
+The Symfony Security component comes with a collection of nice utilities
+related to security. These utilities are used by Symfony, but you should
+also use them if you want to solve the problem they address.
 
 Comparing Strings
 ~~~~~~~~~~~~~~~~~
@@ -22,10 +18,15 @@ algorithm; you can use the same strategy in your own code thanks to the
 
     use Symfony\Component\Security\Core\Util\StringUtils;
 
-    // is password1 equals to password2?
-    $bool = StringUtils::equals($password1, $password2);
+    // is some known string (e.g. password) equal to some user input?
+    $bool = StringUtils::equals($knownString, $userInput);
 
-Generating a secure random Number
+.. caution::
+
+    To avoid timing attacks, the known string must be the first argument
+    and the user-entered string the second.
+
+Generating a Secure random Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whenever you need to generate a secure random number, you are highly
@@ -39,12 +40,14 @@ encouraged to use the Symfony
 
 The
 :method:`Symfony\\Component\\Security\\Core\\Util\\SecureRandom::nextBytes`
-methods returns a random string composed of the number of characters passed as
+method returns a random string composed of the number of characters passed as
 an argument (10 in the above example).
 
-The SecureRandom class works better when OpenSSL is installed but when it's
+The SecureRandom class works better when OpenSSL is installed. But when it's
 not available, it falls back to an internal algorithm, which needs a seed file
 to work correctly. Just pass a file name to enable it::
+
+    use Symfony\Component\Security\Core\Util\SecureRandom;
 
     $generator = new SecureRandom('/some/path/to/store/the/seed.txt');
     $random = $generator->nextBytes(10);
