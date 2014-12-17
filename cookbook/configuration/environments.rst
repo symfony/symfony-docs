@@ -241,9 +241,9 @@ executing any command:
 ``SYMFONY_DEBUG``
     If ``0``, debug mode is disabled. Otherwise, debug mode is enabled.
 
-These environment variables are very useful for production servers, because they
-allow you to ensure that commands are always run on ``prod`` environment without
-having to add any command option.
+These environment variables are very useful for production servers because they
+allow you to ensure that commands are always run the on ``prod`` environment
+without having to add any command option.
 
 .. index::
    single: Environments; Creating a new environment
