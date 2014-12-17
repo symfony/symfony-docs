@@ -212,6 +212,37 @@ environment by using this code and changing the environment string.
     mode. You'll need to enable that in your front controller by calling
     :method:`Symfony\\Component\\Debug\\Debug::enable`.
 
+Selecting the Environment for Console Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, Symfony commands are executed in the ``dev`` environment and with the
+debug mode enabled. Use ``--env`` and ``-no-debug`` options to modify this behavior:
+
+.. code-block:: bash
+
+    # 'dev' environment and debug enabled
+    $ php app/console command_name
+
+    # 'prod' environment and debug enabled
+    $ php app/console command_name --env=prod
+
+    # 'prod' environment and debug disabled
+    $ php app/console command_name --env=prod --no-debug
+
+In addition to ``--env`` and ``--debug`` options, Symfony commands behavior can
+also be controlled with environment variables. The Symfony console application
+checks the existence and value of these environment variables before executing
+any command:
+
+* ``SYMFONY_ENV``, sets the execution environment of the command to the value of
+  this variable.
+* ``SYMFONY_DEBUG``, if ``true``, debug mode is enabled for the command. If
+  ``false``, debug mode is disabled.
+
+These environment variables are very useful for production servers, because they
+allow you to ensure that commands are always run on ``prod`` environment without
+having to add any command option.
+
 .. index::
    single: Environments; Creating a new environment
 
