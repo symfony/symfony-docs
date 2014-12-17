@@ -8,4 +8,4 @@ Security
     firewall
     authentication
     authorization
-    secure-tools
+    secure_tools

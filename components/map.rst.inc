@@ -114,7 +114,7 @@
   * :doc:`/components/security/firewall`
   * :doc:`/components/security/authentication`
   * :doc:`/components/security/authorization`
-  * :doc:`/components/security/secure-tools`
+  * :doc:`/components/security/secure_tools`
 
 * **Serializer**
 
