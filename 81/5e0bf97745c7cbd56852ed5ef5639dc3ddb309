@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-29T19:34:18Z
+
+@pedronofuentes let me know when you think you're ready. I'll merge it into the docs then.
+
+Btw, don't worry if you didn't catch all listings. You did a great job already! These things will finish over time.
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-12-02T17:19:25Z
+
+I added these changes:
+
+http://symfony.com/doc/current/book/security.html#complex-access-controls-with-expressions
+http://symfony.com/doc/current/book/service_container.html#using-the-expression-language
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-02T19:03:38Z
+
+Looks good. Let's wait for Travis.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-17T09:13:09Z
+
+@WouterJ this PR looks *mergeable*, right?
