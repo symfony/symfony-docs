@@ -4,14 +4,14 @@
 Avoid Starting Sessions for Anonymous Users
 ===========================================
 
-Sessions in Symfony applications are automatically started when they are necessary.
+Sessions in Symfony applications are automatically started whenever they are necessary.
 This includes writing in the user's session, creating a flash message and logging
 in users. In order to start the session, Symfony creates a cookie which will be
-sent for every request.
+added to every user request.
 
-However, there are other scenarios when a session is started and therefore, a
+However, there are other scenarios when a session is started automatically and a
 cookie will be created even for anonymous users. First, consider the following
-code commonly used to display flash messages:
+template code commonly used to display flash messages:
 
 .. code-block:: html+jinja
 
@@ -37,7 +37,7 @@ cookie. To avoid this behavior, add a check before trying to access the flash me
     {% endif %}
 
 Another scenario where session cookies will be automatically sent is when the
-requested URL is covered by a firewall, no matter if anonymous users can access
+requested URL is covered by a firewall, even when anonymous users can access
 to that URL:
 
 .. code-block:: yaml
@@ -51,4 +51,4 @@ to that URL:
                 anonymous:  ~
 
 This behavior is caused because in Symfony applications, anonymous users are
-technically authenticated,.
+technically authenticated.
