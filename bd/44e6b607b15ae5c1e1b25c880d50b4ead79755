@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T20:13:33Z
+
+I think "tens of" is correct. Let's see what our native speaker @weaverryan thinks.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-16T21:57:36Z
+
+It was meant to be "tens" but it's not a super common phrase. The problem with tons is that it has a negative connotation. Our point here is not to say that there are a ton of config files, but that there *are* config files and they have different formats. I think we should keep it or (better) rephrase the whole sentence :).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T22:08:57Z
+
+@weaverryan Is some thing like "lots of configuration files" more clear?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-17T03:13:46Z
+
+Let's use "several" :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-17T13:44:23Z
+
+@albabar Can you update the pull request with @weaverryan's suggestion?
+
+---------------------------------------------------------------------------
+
+by albabar at 2014-12-17T14:31:58Z
+
+Updated. @xabbuh
