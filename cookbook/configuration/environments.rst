@@ -230,15 +230,16 @@ behavior:
     # 'test' environment and debug disabled
     $ php app/console command_name --env=test --no-debug
 
-In addition to the ``--env`` and ``--debug`` options, Symfony commands behavior
-can also be controlled with environment variables. The Symfony console application
-checks the existence and value of these environment variables before executing
-any command:
+In addition to the ``--env`` and ``--debug`` options, the behavior of Symfony
+commands can also be controlled with environment variables. The Symfony console
+application checks the existence and value of these environment variables before
+executing any command:
 
-* ``SYMFONY_ENV``, sets the execution environment of the command to the value of
-  this variable (``dev``, ``prod``, ``test``, etc.);
-* ``SYMFONY_DEBUG``, if ``0``, debug mode is disabled. Otherwise, debug mode is
-  enabled.
+``SYMFONY_ENV``
+    Sets the execution environment of the command to the value of this variable
+    (``dev``, ``prod``, ``test``, etc.);
+``SYMFONY_DEBUG``
+    If ``0``, debug mode is disabled. Otherwise, debug mode is enabled.
 
 These environment variables are very useful for production servers, because they
 allow you to ensure that commands are always run on ``prod`` environment without
