@@ -246,7 +246,7 @@ the Twig templating system and some other third party libraries and bundles.
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony applications can contain tens of configuration files defined in several
+Symfony applications can contain several configuration files defined in several
 formats (YAML, XML, PHP, etc.) Instead of parsing and combining all those files
 for each request, Symfony uses its own cache system. In fact, the application
 configuration is only parsed for the very first request and then compiled down
