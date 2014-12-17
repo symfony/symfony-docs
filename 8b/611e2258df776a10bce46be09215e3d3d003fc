@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-06T16:35:49Z
+
+Is there a reason for this to be 2.5+, while the component was introduced in 2.4?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-06T16:36:28Z
+
+Didn't we agree to merge fixes only into maintained branches?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-06T16:37:24Z
+
+Oh, wow. You can just ignore me :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T16:38:13Z
+
+:+1: thanks @xabbuh!
