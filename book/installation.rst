@@ -323,7 +323,8 @@ applications:
 Using Source Control
 --------------------
 
-If you're using a version control system like `Git`_, you can safely commit all your project's code. The reason is that Symfony applications already contain a
+If you're using a version control system like `Git`_, you can safely commit all
+your project's code. The reason is that Symfony applications already contain a
 ``.gitignore`` file specially prepared for Symfony.
 
 For specific instructions on how best to setup your project to be stored
