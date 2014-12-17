@@ -96,7 +96,7 @@ number as the second argument of the ``new`` command:
     $ symfony new my_project_name 2.3.23
 
     # Windows
-    c:\projects\> php symfony.phar new my_project_name 2.5.8
+    c:\projects\> php symfony.phar new my_project_name 2.3.23
 
 Read the `Symfony Release process`_ to better understand why there are several
 Symfony versions and which one to use for your projects.
