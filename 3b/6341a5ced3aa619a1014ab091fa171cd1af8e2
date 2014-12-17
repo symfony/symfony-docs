@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T19:23:32Z
+
+Good catch. :+1: Can you also add the `host_restriction` entry to `/cookbook/map.rst.inc`. It's seems missing there.
+
+---------------------------------------------------------------------------
+
+by vlad-ghita at 2014-12-17T05:20:03Z
+
+> Can you also add the `host_restriction` entry to `/cookbook/map.rst.inc`
+
+Done!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-17T12:18:12Z
+
+Hmm, in which branch should this be merged?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-17T13:16:58Z
+
+@WouterJ Both documents have been introduced in the `2.4` branch. So merging into `2.5` seems to be the way to go.
