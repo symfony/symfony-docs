@@ -235,7 +235,7 @@ checks the existence and value of these environment variables before executing
 any command:
 
 * ``SYMFONY_ENV``, sets the execution environment of the command to the value of
-  this variable (``dev``, ``prod``, ``test``, etc.)
+  this variable (``dev``, ``prod``, ``test``, etc.);
 * ``SYMFONY_DEBUG``, if ``0``, debug mode is disabled. Otherwise, debug mode is
   enabled.
 
