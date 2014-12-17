@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-23T21:38:37Z
+
+Like it :+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-06T01:12:54Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-06T10:14:48Z
+
+Probably I'm very late to this discussion, but here it is my comment.
+
+I like what @xabbuh has done and everything is correct. But what do you think about transforming that long paragraph into a more actionable list-based format. Something like this:
+
+```
+Before working on a patch, you must determine on which branch you need to work:
+
+* ``2.3``, if you are fixing a bug for an existing feature;
+* ``2.7``, if you are adding a new feature which is backward compatible;
+* ``master``, if you are adding a new and backward incompatible feature.
+
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-06T10:32:31Z
+
+@javiereguiluz NIce suggestion. What do the others think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-06T16:28:43Z
+
+@javiereguiluz it's never too late :)
+
+I think it's a great suggestion which would make things a lot easier to understand.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-06T16:49:39Z
+
+Updated the pull request.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-15T12:15:56Z
+
+Anything else you see that should be changed?
