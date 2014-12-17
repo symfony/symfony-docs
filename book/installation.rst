@@ -19,9 +19,9 @@ only once and then it can create any number of Symfony applications.
 .. note::
 
     The installer requires PHP 5.4 or higher. If you still use the legacy
-    PHP 5.3 version, you cannot use the Symfony Installer. In that case, read the next
+    PHP 5.3 version, you cannot use the Symfony Installer. Read
     :ref:`Creating Symfony Applications without the Installer <book-creating-applications-without-the-installer>`
-    section.
+    section to know how to proceed.
 
 Depending on your operating system, the installer must be installed in different
 ways.
