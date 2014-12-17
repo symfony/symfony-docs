@@ -24,7 +24,7 @@ The ``web/`` Directory
 The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where each :term:`front controller`
 lives, such as the production controller shown here::
-t
+
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
