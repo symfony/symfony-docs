@@ -54,7 +54,8 @@ execute it as follows:
 
 .. code-block:: bash
 
-    c:\> php symfony.phar
+    c:\> move symfony.phar c:\projects
+    c:\projects\> php symfony.phar
 
 Creating the Symfony Application
 --------------------------------
