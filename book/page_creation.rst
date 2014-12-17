@@ -493,7 +493,7 @@ the same basic and recommended directory structure:
 * ``vendor/``: Any vendor libraries are placed here by convention;
 * ``web/``: This is the web root directory and contains any publicly accessible files;
 
-.. note::
+.. seealso::
 
     You can easily override the default directory structure. See
     :doc:`/cookbook/configuration/override_dir_structure` for more
