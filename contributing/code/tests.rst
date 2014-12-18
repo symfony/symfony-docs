@@ -112,5 +112,5 @@ browser.
     The code coverage only works if you have Xdebug enabled and all
     dependencies installed.
 
-.. _install PHPUnit: http://www.phpunit.de/manual/current/en/installation.html
+.. _install PHPUnit: https://phpunit.de/manual/current/en/installation.html
 .. _`Composer`: http://getcomposer.org/
