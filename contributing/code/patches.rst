@@ -15,7 +15,7 @@ software:
 
 * Git;
 * PHP version 5.3.3 or above;
-* PHPUnit 3.6.4 or above.
+* `PHPUnit`_ 4.2 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -415,3 +415,4 @@ messages of all the commits. When you are finished, execute the push command.
 .. _`fabbot`:                              http://fabbot.io
 .. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
+.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html
