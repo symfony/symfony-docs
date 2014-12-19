@@ -49,9 +49,8 @@ firewall listener:
             ),
         ));
 
-
 To adjust the max idle time before the session is marked as expired, you can
-set the ``max_idle_time`` option value in seconds. By default the value of this
+set the ``max_idle_time`` option value in seconds. By default, the value of this
 option is equal to the ``session.gc_maxlifetime`` configuration option of PHP.
 The ``max_idle_time`` option value **should be less or equal** to the
 ``session.gc_maxlifetime`` value.
@@ -96,7 +95,7 @@ The ``max_idle_time`` option value **should be less or equal** to the
                     // ...
                     'session_expiration' => array(
                         'max_idle_time' => 600,
-                    )
+                    ),
                 ),
             ),
         ));
@@ -145,7 +144,7 @@ to this URL and no exception will be thrown:
                     // ...
                     'session_expiration' => array(
                         'expiration_url' => '/session-expired',
-                    )
+                    ),
                 ),
             ),
         ));
