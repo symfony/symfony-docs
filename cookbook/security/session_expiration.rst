@@ -1,7 +1,7 @@
 .. index::
-    single: Security; Expiration of Idle sessions
+    single: Security; Expiration of Idle Sessions
 
-Expiration of Idle sessions
+Expiration of Idle Sessions
 ===========================
 
 To be able to expire idle sessions, you have to activate the ``session_expiration``
