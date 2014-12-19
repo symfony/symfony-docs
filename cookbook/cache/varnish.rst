@@ -83,17 +83,6 @@ configuration if you are still using Varnish 3:
             }
         }
 
-    .. code-block:: varnish2
-
-        sub vcl_fetch {
-            // By default, Varnish2 ignores Pragma: nocache and Cache-Control: no-cache and private
-            if (beresp.http.Cache-Control ~ "no-cache" ||
-                beresp.http.Cache-Control ~ "private"
-            ) {
-                return (hit_for_pass);
-            }
-        }
-
 Enable Edge Side Includes (ESI)
 -------------------------------
 
@@ -150,22 +139,6 @@ Symfony adds automatically:
                 set beresp.do_esi = true;
             }
         }
-
-    .. code-block:: varnish2
-
-        sub vcl_fetch {
-            // Check for ESI acknowledgement and remove Surrogate-Control header
-            if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
-                unset beresp.http.Surrogate-Control;
-                esi;
-            }
-        }
-
-.. caution::
-
-    Compression with ESI was not supported in Varnish until version 3.0
-    (read `GZIP and Varnish`_). If you're not using Varnish 3.0, put a web
-    server in front of Varnish to perform the compression.
 
 .. tip::
 
