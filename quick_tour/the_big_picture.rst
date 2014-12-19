@@ -269,7 +269,7 @@ Working with Environments
 
 Now that you have a better understanding of how Symfony works, take a closer
 look at the bottom of any Symfony rendered page. You should notice a small
-bar with the Symfony logo. This is the "Web Debug Toolbar" and it is a Symfony
+bar with the Symfony logo. This is the "web debug toolbar" and it is a Symfony
 developer's best friend!
 
 .. image:: /images/quick_tour/web_debug_toolbar.png
@@ -310,8 +310,8 @@ URL, you can visit ``http://localhost:8000/app_dev.php`` URL.
 The main difference between environments is that ``dev`` is optimized to
 provide lots of information to the developer, which means worse application
 performance. Meanwhile, ``prod`` is optimized to get the best performance,
-which means that debug information is disabled, as well as the Web Debug
-Toolbar.
+which means that debug information is disabled, as well as the web debug
+toolbar.
 
 The other difference between environments is the configuration options used
 to execute the application. When you access the ``dev`` environment, Symfony

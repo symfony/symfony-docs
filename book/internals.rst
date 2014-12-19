@@ -351,7 +351,7 @@ The FrameworkBundle registers several listeners:
     Collects data for the current request.
 
 :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`
-    Injects the Web Debug Toolbar.
+    Injects the web debug toolbar.
 
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`
     Fixes the Response ``Content-Type`` based on the request format.
@@ -455,7 +455,7 @@ enhance performance; use it in the production environment to explore problems
 after the fact.
 
 You rarely have to deal with the profiler directly as Symfony provides
-visualizer tools like the Web Debug Toolbar and the Web Profiler. If you use
+visualizer tools like the web debug toolbar and the web profiler. If you use
 the Symfony Standard Edition, the profiler, the web debug toolbar, and the
 web profiler are all already configured with sensible settings.
 
@@ -481,7 +481,7 @@ bottom of all pages. It displays a good summary of the profiling data that
 gives you instant access to a lot of useful information when something does
 not work as expected.
 
-If the summary provided by the Web Debug Toolbar is not enough, click on the
+If the summary provided by the web debug toolbar is not enough, click on the
 token link (a string made of 13 random characters) to access the Web Profiler.
 
 .. note::
