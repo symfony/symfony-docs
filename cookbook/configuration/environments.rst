@@ -216,7 +216,7 @@ Selecting the Environment for Console Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, Symfony commands are executed in the ``dev`` environment and with the
-debug mode enabled. Use the ``--env`` and ``-no-debug`` options to modify this
+debug mode enabled. Use the ``--env`` and ``--no-debug`` options to modify this
 behavior:
 
 .. code-block:: bash
@@ -242,8 +242,8 @@ executing any command:
     If ``0``, debug mode is disabled. Otherwise, debug mode is enabled.
 
 These environment variables are very useful for production servers because they
-allow you to ensure that commands are always run the on ``prod`` environment
-without having to add any command option.
+allow you to ensure that commands always run in the ``prod`` environment without
+having to add any command option.
 
 .. index::
    single: Environments; Creating a new environment
