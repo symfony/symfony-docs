@@ -58,7 +58,7 @@ As you can see, this URL contains the PHP script to be used as the front
 controller. You can use that to easily switch the front controller or use
 a custom one by placing it in the ``web/`` directory (e.g. ``app_cache.php``).
 
-When using Apache and the `RewriteRule shipped with the Standard Edition`_,
+When using Apache and the `RewriteRule shipped with the Symfony Standard Edition`_,
 you can omit the filename from the URL and the RewriteRule will use ``app.php``
 as the default one.
 
@@ -145,7 +145,7 @@ configuration from the right *environment*.
 
 Environments have been covered extensively
 :doc:`in the previous chapter </cookbook/configuration/environments>`,
-and you probably remember that the Standard Edition comes with three
+and you probably remember that the Symfony Standard Edition comes with three
 of them - ``dev``, ``prod`` and ``test``.
 
 More technically, these names are nothing more than strings passed from the
@@ -153,7 +153,7 @@ front controller to the ``AppKernel``'s constructor. This name can then be
 used in the :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
 method to decide which configuration files to load.
 
-The Standard Edition's `AppKernel`_ class implements this method by simply
+The Symfony Standard Edition's `AppKernel`_ class implements this method by simply
 loading the ``app/config/config_*environment*.yml`` file. You are, of course,
 free to implement this method differently if you need a more sophisticated
 way of loading your configuration.
@@ -165,5 +165,5 @@ way of loading your configuration.
 .. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
 .. _decorate: http://en.wikipedia.org/wiki/Decorator_pattern
-.. _RewriteRule shipped with the Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
+.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
 .. _template methods: http://en.wikipedia.org/wiki/Template_method_pattern

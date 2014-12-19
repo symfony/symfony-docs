@@ -20,7 +20,7 @@ So, sit back and relax as you travel from "then" to "now".
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Standard Edition`_ -
+When looking at a Symfony2 project - for example, the `Symfony Standard Edition`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -162,7 +162,7 @@ settings defined and Composer takes care of everything for you.
 For this to work, all third-party libraries used by your project must be
 defined in the ``composer.json`` file.
 
-If you look at the ``HelloController`` from the Symfony2 Standard Edition you
+If you look at the ``HelloController`` from the Symfony Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
 AcmeDemoBundle is not defined in your ``composer.json`` file. Nonetheless are
 the files autoloaded. This is because you can tell Composer to autoload files
@@ -365,5 +365,5 @@ primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
 .. _`Composer`: http://getcomposer.org
-.. _`Symfony2 Standard Edition`: https://github.com/symfony/symfony-standard
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`the Composer documentation`: http://getcomposer.org/doc/04-schema.md#autoload
