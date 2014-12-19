@@ -89,7 +89,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
 .. tip::
 
-    You can also include CSS Stylesheets: see :ref:`cookbook-assetic-including-css`.
+    You can also include CSS stylesheets: see :ref:`cookbook-assetic-including-css`.
 
 In this example, all of the files in the ``Resources/public/js/`` directory
 of the AppBundle will be loaded and served from a different location.
@@ -155,7 +155,7 @@ the :ref:`cssrewrite <cookbook-assetic-cssrewrite>` filter.
     but that in this example, you referred to the CSS files using their actual,
     publicly-accessible path: ``bundles/app/css``. You can use either, except
     that there is a known issue that causes the ``cssrewrite`` filter to fail
-    when using the ``@AppBundle`` syntax for CSS Stylesheets.
+    when using the ``@AppBundle`` syntax for CSS stylesheets.
 
 .. _cookbook-assetic-including-image:
 
