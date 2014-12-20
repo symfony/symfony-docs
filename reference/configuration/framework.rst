@@ -55,6 +55,8 @@ Configuration
     * `cache`_
     * `enable_annotations`_
     * `translation_domain`_
+    * `strict_email`_
+    * `api`_
 
 secret
 ~~~~~~
@@ -531,11 +533,8 @@ cache
 
 **type**: ``string``
 
-This value is used to determine the service that is used to persist class
-metadata in a cache. The actual service name is built by prefixing the configured
-value with ``validator.mapping.cache.`` (e.g. if the value is ``apc``, the
-``validator.mapping.cache.apc`` service will be injected). The service has
-to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+The service that is used to persist class metadata in a cache. The service
+has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
 enable_annotations
 ..................
@@ -551,6 +550,41 @@ translation_domain
 
 The translation domain that is used when translating validation constraint
 error messages.
+
+strict_email
+............
+
+.. versionadded:: 2.5
+    The ``strict_email`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, the `egulias/email-validator`_ library will be
+used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
+the validator uses a simple regular expression to validate email addresses.
+
+api
+...
+
+.. versionadded:: 2.5
+    The ``api`` option was introduced in Symfony 2.5.
+
+**type**: ``string``
+
+Starting with Symfony 2.5, the Validator component introduced a new validation
+API. The ``api`` option is used to switch between the different implementations:
+
+``2.4``
+    Use the vaidation API that is compatible with older Symfony versions.
+
+``2.5``
+    Use the validation API introduced in Symfony 2.5.
+
+``2.5-bc`` or ``auto``
+    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
+    Symfony will use an API implementation that is compatible with both the
+    legacy implementation and the ``2.5`` implementation. You have to use
+    PHP 5.3.9 or higher to be able to use this implementation.
 
 Full default Configuration
 --------------------------
