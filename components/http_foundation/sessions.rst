@@ -65,73 +65,76 @@ The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class implemen
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple API
 as follows divided into a couple of groups.
 
-Session workflow
+Session Workflow
+................
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`:
-  Starts the session - do not use ``session_start()``;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`
+    Starts the session - do not use ``session_start()``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
-  Regenerates the session ID - do not use ``session_regenerate_id()``.
-  This method can optionally change the lifetime of the new cookie that will
-  be emitted by calling this method;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`
+    Regenerates the session ID - do not use ``session_regenerate_id()``.
+    This method can optionally change the lifetime of the new cookie that will
+    be emitted by calling this method.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
-  Clears all session data and regenerates session ID. Do not use ``session_destroy()``;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`
+    Clears all session data and regenerates session ID. Do not use ``session_destroy()``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
-  session ID. Do not use ``session_id()``;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`
+    Gets the session ID. Do not use ``session_id()``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`: Sets the
-  session ID. Do not use ``session_id()``;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`
+    Sets the session ID. Do not use ``session_id()``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getName`: Gets the
-  session name. Do not use ``session_name()``;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getName`
+    Gets the session name. Do not use ``session_name()``.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setName`: Sets the
-  session name. Do not use ``session_name()``.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setName`
+    Sets the session name. Do not use ``session_name()``.
 
-Session attributes
+Session Attributes
+..................
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::set`:
-  Sets an attribute by key;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::set`
+    Sets an attribute by key.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::get`:
-  Gets an attribute by key;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::get`
+    Gets an attribute by key.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::all`:
-  Gets all attributes as an array of key => value;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::all`
+    Gets all attributes as an array of key => value.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`:
-  Returns true if the attribute exists;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`
+    Returns true if the attribute exists.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`:
-  Sets multiple attributes at once: takes a keyed array and sets each key => value pair;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`
+    Sets multiple attributes at once: takes a keyed array and sets each key => value pair;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`:
-  Deletes an attribute by key;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`
+    Deletes an attribute by key;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`:
-  Clear all attributes.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`
+    Clear all attributes.
 
 The attributes are stored internally in a "Bag", a PHP object that acts like
 an array. A few methods exist for "Bag" management:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`:
-  Registers a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`
+    Registers a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getBag`:
-  Gets a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
-  bag name;
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getBag`
+    Gets a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
+    bag name;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`:
-  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
-  This is just a shortcut for convenience.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`
+    Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
+    This is just a shortcut for convenience.
 
-Session metadata
+Session Metadata
+................
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
-  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
-  which contains information about the session.
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`
+    Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
+    which contains information about the session.
 
 Session Data Management
 ~~~~~~~~~~~~~~~~~~~~~~~

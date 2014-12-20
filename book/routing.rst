@@ -967,10 +967,12 @@ header matches ``firefox``.
 You can do any complex logic you need in the expression by leveraging two
 variables that are passed into the expression:
 
-* ``context``: An instance of :class:`Symfony\\Component\\Routing\\RequestContext`,
-  which holds the most fundamental information about the route being matched;
-* ``request``: The Symfony :class:`Symfony\\Component\\HttpFoundation\\Request`
-  object (see :ref:`component-http-foundation-request`).
+``context``
+    An instance of :class:`Symfony\\Component\\Routing\\RequestContext`, which
+    holds the most fundamental information about the route being matched.
+``request``
+    The Symfony :class:`Symfony\\Component\\HttpFoundation\\Request` object
+    (see :ref:`component-http-foundation-request`).
 
 .. caution::
 
@@ -1113,12 +1115,15 @@ As you've seen, each routing parameter or default value is eventually available
 as an argument in the controller method. Additionally, there are three parameters
 that are special: each adds a unique piece of functionality inside your application:
 
-* ``_controller``: As you've seen, this parameter is used to determine which
-  controller is executed when the route is matched;
+``_controller``
+    As you've seen, this parameter is used to determine which controller is
+    executed when the route is matched.
 
-* ``_format``: Used to set the request format (:ref:`read more <book-routing-format-param>`);
+``_format``
+    Used to set the request format (:ref:`read more <book-routing-format-param>`).
 
-* ``_locale``: Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
+``_locale``
+    Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
 
 .. index::
    single: Routing; Controllers

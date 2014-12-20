@@ -488,13 +488,17 @@ you'll know where to find and put different types of files and why.
 Though entirely flexible, by default, each Symfony :term:`application` has
 the same basic and recommended directory structure:
 
-* ``app/``: This directory contains the application configuration;
+``app/``
+    This directory contains the application configuration.
 
-* ``src/``: All the project PHP code is stored under this directory;
+``src/``
+    All the project PHP code is stored under this directory.
 
-* ``vendor/``: Any vendor libraries are placed here by convention;
+``vendor/``
+    Any vendor libraries are placed here by convention.
 
-* ``web/``: This is the web root directory and contains any publicly accessible files;
+``web/``
+    This is the web root directory and contains any publicly accessible files.
 
 .. _the-web-directory:
 
@@ -554,11 +558,13 @@ needs to know about your application. You don't even need to worry about
 these methods when starting - Symfony fills them in for you with sensible
 defaults.
 
-* ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (see :ref:`page-creation-bundles`);
+``registerBundles()``
+    Returns an array of all bundles needed to run the application (see
+    :ref:`page-creation-bundles`).
 
-* ``registerContainerConfiguration()``: Loads the main application configuration
-  resource file (see the `Application Configuration`_ section).
+``registerContainerConfiguration()``
+    Loads the main application configuration resource file (see the
+    `Application Configuration`_ section).
 
 In day-to-day development, you'll mostly use the ``app/`` directory to modify
 configuration and routing files in the ``app/config/`` directory (see
@@ -743,23 +749,27 @@ bundle system follows a set of conventions that help to keep code consistent
 between all Symfony bundles. Take a look at ``AcmeDemoBundle``, as it contains
 some of the most common elements of a bundle:
 
-* ``Controller/`` contains the controllers of the bundle (e.g. ``RandomController.php``);
+``Controller/``
+    Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
-* ``DependencyInjection/`` holds certain dependency injection extension classes,
-  which may import service configuration, register compiler passes or more
-  (this directory is not necessary);
+``DependencyInjection/``
+    Holds certain dependency injection extension classes, which may import service
+    configuration, register compiler passes or more (this directory is not
+    necessary).
 
-* ``Resources/config/`` houses configuration, including routing configuration
-  (e.g. ``routing.yml``);
+``Resources/config/``
+    Houses configuration, including routing configuration (e.g. ``routing.yml``).
 
-* ``Resources/views/`` holds templates organized by controller name (e.g.
-  ``Hello/index.html.twig``);
+``Resources/views/``
+    Holds templates organized by controller name (e.g. ``Hello/index.html.twig``).
 
-* ``Resources/public/`` contains web assets (images, stylesheets, etc) and is
-  copied or symbolically linked into the project ``web/`` directory via
-  the ``assets:install`` console command;
+``Resources/public/``
+    Contains web assets (images, stylesheets, etc) and is copied or symbolically
+    linked into the project ``web/`` directory via the ``assets:install`` console
+    command.
 
-* ``Tests/`` holds all tests for the bundle.
+``Tests/``
+    Holds all tests for the bundle.
 
 A bundle can be as small or large as the feature it implements. It contains
 only the files you need and nothing else.

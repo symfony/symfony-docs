@@ -69,6 +69,7 @@
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
   * :doc:`/cookbook/doctrine/console`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
 
 * :doc:`/cookbook/email/index`
 
@@ -147,6 +148,7 @@
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/firewall_restriction`
+  * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
@@ -175,6 +177,7 @@
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
   * :doc:`/cookbook/session/limit_metadata_writes`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
 
 * **symfony1**
 

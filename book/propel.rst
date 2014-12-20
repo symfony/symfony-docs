@@ -467,14 +467,22 @@ To add a hook, just add a new method to the object class::
 
 Propel provides the following hooks:
 
-* ``preInsert()`` code executed before insertion of a new object
-* ``postInsert()`` code executed after insertion of a new object
-* ``preUpdate()`` code executed before update of an existing object
-* ``postUpdate()`` code executed after update of an existing object
-* ``preSave()`` code executed before saving an object (new or existing)
-* ``postSave()`` code executed after saving an object (new or existing)
-* ``preDelete()`` code executed before deleting an object
-* ``postDelete()`` code executed after deleting an object
+``preInsert()``
+    Code executed before insertion of a new object.
+``postInsert()``
+    Code executed after insertion of a new object.
+``preUpdate()``
+    Code executed before update of an existing object.
+``postUpdate()``
+    Code executed after update of an existing object.
+``preSave()``
+    Code executed before saving an object (new or existing).
+``postSave()``
+    Code executed after saving an object (new or existing).
+``preDelete()``
+    Code executed before deleting an object.
+``postDelete()``
+    Code executed after deleting an object.
 
 Behaviors
 ---------
