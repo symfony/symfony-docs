@@ -94,20 +94,12 @@ with these steps:
         $ svn add --force .
         $ svn ci -m "add basic Symfony Standard 2.X.Y"
 
-#. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
-   The ``parameters.yml`` file is ignored by svn (see above) so that
-   machine-specific settings like database passwords aren't committed. By
-   creating the ``parameters.yml.dist`` file, new developers can quickly clone
-   the project, copy this file to ``parameters.yml``, customize it, and start
-   developing.
-
-#. Finally, download all of the third-party vendor libraries by
-   executing Composer. For details, see :ref:`installation-updating-vendors`.
-
-.. tip::
-
-	If you rely on any "dev" versions, then Git may be used to install
-	those libraries, since there is no archive available for download.
+That's it! Since the ``app/config/parameters.yml`` file is ignored, you can
+store machine-specific settings like database passwords here without committing
+them. The ``parameters.yml.dist`` file *is* committed, but is not read by
+Symfony. And by adding any new keys you need to both files, new developers
+can quickly clone the project, copy this file to ``parameters.yml``, customize
+it, and start developing.
 
 At this point, you have a fully-functional Symfony project stored in your
 Subversion repository. The development can start with commits in the Subversion
