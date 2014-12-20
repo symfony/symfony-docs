@@ -59,7 +59,7 @@ event is just one of the core kernel events::
 
 .. note::
 
-    When setting a response for the ``kernel.request``, ``kernel.view`` and
+    When setting a response for the ``kernel.request``, ``kernel.view`` or
     ``kernel.exception`` events, the propagation is stopped, so the lower
     priority listeners on that event don't get called.
 
