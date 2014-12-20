@@ -1036,12 +1036,15 @@ As you've seen, each routing parameter or default value is eventually available
 as an argument in the controller method. Additionally, there are three parameters
 that are special: each adds a unique piece of functionality inside your application:
 
-* ``_controller``: As you've seen, this parameter is used to determine which
-  controller is executed when the route is matched;
+``_controller``
+    As you've seen, this parameter is used to determine which controller is
+    executed when the route is matched.
 
-* ``_format``: Used to set the request format (:ref:`read more <book-routing-format-param>`);
+``_format``
+    Used to set the request format (:ref:`read more <book-routing-format-param>`).
 
-* ``_locale``: Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
+``_locale``
+    Used to set the locale on the request (:ref:`read more <book-translation-locale-url>`).
 
 .. index::
    single: Routing; Controllers

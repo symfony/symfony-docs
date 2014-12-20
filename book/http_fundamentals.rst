@@ -515,30 +515,32 @@ libraries that can be used inside *any* PHP project. These libraries, called
 the *Symfony Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
-* :doc:`HttpFoundation </components/http_foundation/introduction>` - Contains
-  the ``Request`` and ``Response`` classes, as well as other classes for handling
-  sessions and file uploads;
+:doc:`HttpFoundation </components/http_foundation/introduction>`
+    Contains the ``Request`` and ``Response`` classes, as well as other classes for
+    handling sessions and file uploads.
 
-* :doc:`Routing </components/routing/introduction>` - Powerful and fast routing system that
-  allows you to map a specific URI (e.g. ``/contact``) to some information
-  about how that request should be handled (e.g. execute the ``contactAction()``
-  method);
+:doc:`Routing </components/routing/introduction>`
+    Powerful and fast routing system that allows you to map a specific URI
+    (e.g. ``/contact``) to some information about how that request should be handled
+    (e.g. execute the ``contactAction()`` method).
 
-* :doc:`Form </components/form/introduction>` - A full-featured and flexible
-  framework for creating forms and handling form submissions;
+:doc:`Form </components/form/introduction>`
+    A full-featured and flexible framework for creating forms and handling form
+    submissions.
 
-* `Validator`_ - A system for creating rules about data and then validating
-  whether or not user-submitted data follows those rules;
+`Validator`_
+    A system for creating rules about data and then validating whether or not
+    user-submitted data follows those rules.
 
-* :doc:`Templating </components/templating/introduction>` - A toolkit for rendering
-  templates, handling template inheritance (i.e. a template is decorated with
-  a layout) and performing other common template tasks;
+:doc:`Templating </components/templating/introduction>`
+    A toolkit for rendering templates, handling template inheritance (i.e. a
+    template is decorated with a layout) and performing other common template tasks.
 
-* :doc:`Security </components/security/introduction>` - A powerful library for
-  handling all types of security inside an application;
+:doc:`Security </components/security/introduction>`
+    A powerful library for handling all types of security inside an application.
 
-* :doc:`Translation </components/translation/introduction>` - A framework for
-  translating strings in your application.
+:doc:`Translation </components/translation/introduction>`
+    A framework for translating strings in your application.
 
 Each and every one of these components is decoupled and can be used in *any*
 PHP project, regardless of whether or not you use the Symfony framework.
