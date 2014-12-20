@@ -1,0 +1,135 @@
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-11-29T12:03:16Z
+
+Work in progress. I'm still looking for other listings to normalize them.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-29T13:28:32Z
+
+I found some more for you:
+
+* http://symfony.com/doc/current/components/http_foundation/introduction.html
+* http://symfony.com/doc/current/book/templating.html (after "Twig defines three types of special syntax:")
+* http://symfony.com/doc/current/quick_tour/the_view.html#getting-familiar-with-twig
+* http://symfony.com/doc/current/quick_tour/the_architecture.html#understanding-the-directory-structure
+* http://symfony.com/doc/current/quick_tour/the_architecture.html#the-app-directory
+* http://symfony.com/doc/current/book/page_creation.html#the-application-app-directory
+* http://symfony.com/doc/current/book/page_creation.html#bundle-directory-structure
+* http://symfony.com/doc/current/book/page_creation.html#the-directory-structure
+* http://symfony.com/doc/current/book/routing.html#completely-customized-route-matching-with-conditions
+* http://symfony.com/doc/current/book/routing.html#special-routing-parameters
+* http://symfony.com/doc/current/book/propel.html#lifecycle-callbacks
+* http://symfony.com/doc/current/book/testing.html#traversing
+
+I'm sure there are more :) Could you please update these as well?
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-11-29T13:31:03Z
+
+Sure!
+
+I'm reviewing the docs looking for them. Thank you for the list :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T15:27:56Z
+
+Looks good so far. Let's see what Travis reports.
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-11-29T16:08:36Z
+
+Thanks. I have pending to look for more fixes in other parts of the docs.
+
+—
+Pedro
+
+On Sat, Nov 29, 2014 at 4:28 PM, Christian Flothmann
+<notifications@github.com> wrote:
+
+> Looks good so far. Let's see what Travis reports.
+> ---
+> Reply to this email directly or view it on GitHub:
+> https://github.com/symfony/symfony-docs/pull/4539#issuecomment-64955171
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-01T20:04:47Z
+
+@pedronofuentes Travis is happy with your changes. :) Just let us know when you think you're finished or when you need additional help.
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-12-02T17:10:09Z
+
+@xabbuh I had pending some changes in the Book section:
+
+http://symfony.com/doc/current/book/http_fundamentals.html#standalone-tools-the-symfony-components
+http://symfony.com/doc/current/book/templating.html#template-naming-and-locations
+http://symfony.com/doc/current/book/templating.html#global-template-variables
+http://symfony.com/doc/current/book/validation.html#validation-groups
+http://symfony.com/doc/current/book/forms.html#field-type-options-guessing
+http://symfony.com/doc/current/book/forms.html#rendering-a-form-in-a-template
+http://symfony.com/doc/current/book/http_cache.html#symfony-reverse-proxy
+http://symfony.com/doc/current/book/http_cache.html#public-vs-private-responses
+http://symfony.com/doc/current/book/http_cache.html#using-esi-in-symfony
+http://symfony.com/doc/current/book/internals.html#events
+http://symfony.com/doc/current/book/internals.html#kernel-response-event
+
+My idea is continue with the next big sections. But maybe it's better to merge this pull request (if Travis wants) and I would make another one if I see more changes.
+
+Is that OK?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-02T18:59:57Z
+
+@pedronofuentes I think it's okay to merge this now.
+
+@WouterJ What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-17T09:12:17Z
+
+I'd love to see this PR merged. @WouterJ is there anything left that should be completed? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-17T09:15:44Z
+
+@WouterJ Can you merge as is or do we need a rebase?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-17T12:20:21Z
+
+I can't merge this using GH atm, it would be easier if it was rebased.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-17T13:12:08Z
+
+@pedronofuentes Can you rebase here?
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-12-17T13:30:49Z
+
+@xabbuh of course.
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-12-17T16:41:20Z
+
+@xabbuh done!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-17T16:42:40Z
+
+@pedronofuentes thanks for your great work removing these inconsistencies!
