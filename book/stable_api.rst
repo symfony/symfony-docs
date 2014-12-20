@@ -20,6 +20,10 @@ in the stable API is in order to fix a security issue.
 The stable API is based on a whitelist, tagged with `@api`. Therefore,
 everything not tagged explicitly is not part of the stable API.
 
+.. seealso::
+
+    You can browse the Symfony API documentation on `api.symfony.com`_.
+
 .. tip::
 
     Read more about the stable API in :doc:`/contributing/code/bc`.
@@ -47,3 +51,5 @@ As of Symfony 2.0, the following components have a public tagged API:
 * Translation
 * Validator
 * Yaml
+
+.. _`api.symfony.com`: http://api.symfony.com
