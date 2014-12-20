@@ -13,10 +13,14 @@ Understanding the Directory Structure
 The directory structure of a Symfony :term:`application` is rather flexible,
 but the recommended structure is as follows:
 
-* ``app/``: the application configuration, templates and translations;
-* ``src/``: the project's PHP code;
-* ``vendor/``: the third-party dependencies;
-* ``web/``: the web root directory.
+``app/``
+    The application configuration, templates and translations.
+``src/``
+    The project's PHP code.
+``vendor/``
+    The third-party dependencies.
+``web/``
+    The web root directory.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -52,10 +56,11 @@ configuration and as such, it is stored in the ``app/`` directory.
 
 This class must implement two methods:
 
-* ``registerBundles()`` must return an array of all bundles needed to run the
-  application, as explained in the next section;
-* ``registerContainerConfiguration()`` loads the application configuration
-  (more on this later).
+``registerBundles()``
+    Must return an array of all bundles needed to run the application, as explained
+    in the next section.
+``registerContainerConfiguration()``
+    Loads the application configuration (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
 can use any PHP class without doing anything at all! All dependencies
@@ -246,7 +251,7 @@ the Twig templating system and some other third party libraries and bundles.
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony applications can contain tens of configuration files defined in several
+Symfony applications can contain several configuration files defined in several
 formats (YAML, XML, PHP, etc.) Instead of parsing and combining all those files
 for each request, Symfony uses its own cache system. In fact, the application
 configuration is only parsed for the very first request and then compiled down

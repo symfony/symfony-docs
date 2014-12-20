@@ -427,20 +427,20 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: xml
 
-       <!-- app/config/security.xml -->
-       <security:config>
-          <firewall name="somename" context="my_context">
-            <! ... ->
-          </firewall>
-          <firewall name="othername" context="my_context">
-            <! ... ->
-          </firewall>
-       </security:config>
+        <!-- app/config/security.xml -->
+        <security:config>
+            <firewall name="somename" context="my_context">
+                <! ... ->
+            </firewall>
+            <firewall name="othername" context="my_context">
+                <! ... ->
+            </firewall>
+        </security:config>
 
     .. code-block:: php
 
-       // app/config/security.php
-       $container->loadFromExtension('security', array(
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'somename' => array(
                     // ...
@@ -451,7 +451,7 @@ multiple firewalls, the "context" could actually be shared:
                     'context' => 'my_context'
                 ),
             ),
-       ));
+        ));
 
 HTTP-Digest Authentication
 --------------------------
@@ -460,38 +460,38 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 
 .. configuration-block::
 
-   .. code-block:: yaml
+    .. code-block:: yaml
 
-      # app/config/security.yml
-      security:
-         firewalls:
-            somename:
-              http_digest:
-               key: "a_random_string"
-               realm: "secure-api"
+        # app/config/security.yml
+        security:
+            firewalls:
+                somename:
+                    http_digest:
+                        key: "a_random_string"
+                        realm: "secure-api"
 
-   .. code-block:: xml
+    .. code-block:: xml
 
-      <!-- app/config/security.xml -->
-      <security:config>
-         <firewall name="somename">
-            <http-digest key="a_random_string" realm="secure-api" />
-         </firewall>
-      </security:config>
+        <!-- app/config/security.xml -->
+        <security:config>
+            <firewall name="somename">
+                <http-digest key="a_random_string" realm="secure-api" />
+            </firewall>
+        </security:config>
 
-   .. code-block:: php
+    .. code-block:: php
 
-      // app/config/security.php
-      $container->loadFromExtension('security', array(
-           'firewalls' => array(
-               'somename' => array(
-                   'http_digest' => array(
-                       'key'   => 'a_random_string',
-                       'realm' => 'secure-api',
-                   ),
-               ),
-           ),
-      ));
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'somename' => array(
+                    'http_digest' => array(
+                        'key'   => 'a_random_string',
+                        'realm' => 'secure-api',
+                    ),
+                ),
+            ),
+        ));
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

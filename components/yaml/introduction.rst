@@ -82,7 +82,7 @@ yourself by referencing common configuration bits.
 Using the Symfony YAML Component
 --------------------------------
 
-The Symfony2 Yaml component is very simple and consists of two main classes:
+The Symfony Yaml component is very simple and consists of two main classes:
 one parses YAML strings (:class:`Symfony\\Component\\Yaml\\Parser`), and the
 other dumps a PHP array to a YAML string
 (:class:`Symfony\\Component\\Yaml\\Dumper`).

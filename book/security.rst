@@ -1962,28 +1962,34 @@ syntax, see :doc:`/components/expression_language/syntax`.
 
 Inside the expression, you have access to a number of variables:
 
-* ``user`` The user object (or the string ``anon`` if you're not authenticated);
-* ``roles`` The array of roles the user has, including from the
-  :ref:`role hierarchy <book-security-role-hierarchy>` but not including
-  the ``IS_AUTHENTICATED_*`` attributes (see the functions below);
-* ``object``: The object (if any) that's passed as the second argument to
-  ``isGranted`` ;
-* ``token`` The token object;
-* ``trust_resolver``: The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
-   object: you'll probably use the ``is_*`` functions below instead.
+``user``
+    The user object (or the string ``anon`` if you're not authenticated).
+``roles``
+    The array of roles the user has, including from the
+    :ref:`role hierarchy <book-security-role-hierarchy>` but not including the
+    ``IS_AUTHENTICATED_*`` attributes (see the functions below).
+``object``
+     The object (if any) that's passed as the second argument to ``isGranted``.
+``token``
+    The token object.
+``trust_resolver``
+    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
+    object: you'll probably use the ``is_*`` functions below instead.
 
 Additionally, you have access to a number of functions inside the expression:
 
-* ``is_authenticated``: Returns ``true`` if the user is authenticated via "remember-me"
-  or authenticated "fully" - i.e. returns true if the user is "logged in";
-* ``is_anonymous``: Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with
-  the ``isGranted`` function;
-* ``is_remember_me``: Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``,
-  see below;
-* ``is_fully_authenticated``: Similar, but not equal to ``IS_AUTHENTICATED_FULLY``,
-  see below;
-* ``has_role``: Checks to see if the user has the given role - equivalent
-  to an expression like ``'ROLE_ADMIN' in roles``.
+``is_authenticated``
+    Returns ``true`` if the user is authenticated via "remember-me" or authenticated
+    "fully" - i.e. returns true if the user is "logged in".
+``is_anonymous``
+    Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with the ``isGranted`` function.
+``is_remember_me``
+    Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
+``is_fully_authenticated``
+    Similar, but not equal to ``IS_AUTHENTICATED_FULLY``, see below.
+``has_role``
+    Checks to see if the user has the given role - equivalent to an expression like
+    ``'ROLE_ADMIN' in roles``.
 
 .. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 

@@ -202,34 +202,39 @@ method::
 
 Here is a list of the main options:
 
-* ``default_ttl``: The number of seconds that a cache entry should be
-  considered fresh when no explicit freshness information is provided in a
-  response. Explicit ``Cache-Control`` or ``Expires`` headers override this
-  value (default: ``0``);
+``default_ttl``
+    The number of seconds that a cache entry should be considered fresh when no
+    explicit freshness information is provided in a response. Explicit
+    ``Cache-Control`` or ``Expires`` headers override this value (default: ``0``).
 
-* ``private_headers``: Set of request headers that trigger "private"
-  ``Cache-Control`` behavior on responses that don't explicitly state whether
-  the response is ``public`` or ``private`` via a ``Cache-Control`` directive.
-  (default: ``Authorization`` and ``Cookie``);
+``private_headers``
+    Set of request headers that trigger "private" ``Cache-Control`` behavior on
+    responses that don't explicitly state whether the response is ``public`` or
+    ``private`` via a ``Cache-Control`` directive (default: ``Authorization``
+    and ``Cookie``).
 
-* ``allow_reload``: Specifies whether the client can force a cache reload by
-  including a ``Cache-Control`` "no-cache" directive in the request. Set it to
-  ``true`` for compliance with RFC 2616 (default: ``false``);
+``allow_reload``
+    Specifies whether the client can force a cache reload by including a
+    ``Cache-Control`` "no-cache" directive in the request. Set it to ``true`` for
+    compliance with RFC 2616 (default: ``false``).
 
-* ``allow_revalidate``: Specifies whether the client can force a cache
-  revalidate by including a ``Cache-Control`` "max-age=0" directive in the
-  request. Set it to ``true`` for compliance with RFC 2616 (default: false);
+``allow_revalidate``
+    Specifies whether the client can force a cache revalidate by including a
+    ``Cache-Control`` "max-age=0" directive in the request. Set it to ``true`` for
+    compliance with RFC 2616 (default: false).
 
-* ``stale_while_revalidate``: Specifies the default number of seconds (the
-  granularity is the second as the Response TTL precision is a second) during
-  which the cache can immediately return a stale response while it revalidates
-  it in the background (default: ``2``); this setting is overridden by the
-  ``stale-while-revalidate`` HTTP ``Cache-Control`` extension (see RFC 5861);
+``stale_while_revalidate``
+    Specifies the default number of seconds (the granularity is the second as the
+    Response TTL precision is a second) during which the cache can immediately
+    return a stale response while it revalidates it in the background (default:
+    ``2``); this setting is overridden by the ``stale-while-revalidate`` HTTP
+    ``Cache-Control`` extension (see RFC 5861).
 
-* ``stale_if_error``: Specifies the default number of seconds (the granularity
-  is the second) during which the cache can serve a stale response when an
-  error is encountered (default: ``60``). This setting is overridden by the
-  ``stale-if-error`` HTTP ``Cache-Control`` extension (see RFC 5861).
+``stale_if_error``
+    Specifies the default number of seconds (the granularity is the second) during
+    which the cache can serve a stale response when an error is encountered
+    (default: ``60``). This setting is overridden by the ``stale-if-error`` HTTP
+    ``Cache-Control`` extension (see RFC 5861).
 
 If ``debug`` is ``true``, Symfony automatically adds a ``X-Symfony-Cache``
 header to the response containing useful information about cache hits and
@@ -339,11 +344,12 @@ and then returned to every subsequent user who asked for their account page!
 
 To handle this situation, every response may be set to be public or private:
 
-* *public*: Indicates that the response may be cached by both private and
-  shared caches;
+*public*
+    Indicates that the response may be cached by both private and shared caches.
 
-* *private*: Indicates that all or part of the response message is intended
-  for a single user and must not be cached by a shared cache.
+*private*
+    Indicates that all or part of the response message is intended for a single
+    user and must not be cached by a shared cache.
 
 Symfony conservatively defaults each response to be private. To take advantage
 of shared caches (like the Symfony reverse proxy), the response will need
@@ -1033,12 +1039,14 @@ possible.
 
 The ``render_esi`` helper supports two other useful options:
 
-* ``alt``: used as the ``alt`` attribute on the ESI tag, which allows you
-  to specify an alternative URL to be used if the ``src`` cannot be found;
+``alt``
+    Used as the ``alt`` attribute on the ESI tag, which allows you to specify an
+    alternative URL to be used if the ``src`` cannot be found.
 
-* ``ignore_errors``: if set to true, an ``onerror`` attribute will be added
-  to the ESI with a value of ``continue`` indicating that, in the event of
-  a failure, the gateway cache will simply remove the ESI tag silently.
+``ignore_errors``
+    If set to true, an ``onerror`` attribute will be added to the ESI with a value
+    of ``continue`` indicating that, in the event of a failure, the gateway cache
+    will simply remove the ESI tag silently.
 
 .. index::
     single: Cache; Invalidation
