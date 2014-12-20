@@ -532,31 +532,28 @@ selects the last one on the page, and then selects its immediate parent element:
 
 Many other methods are also available:
 
-+------------------------+----------------------------------------------------+
-| Method                 | Description                                        |
-+========================+====================================================+
-| ``filter('h1.title')`` | Nodes that match the CSS selector                  |
-+------------------------+----------------------------------------------------+
-| ``filterXpath('h1')``  | Nodes that match the XPath expression              |
-+------------------------+----------------------------------------------------+
-| ``eq(1)``              | Node for the specified index                       |
-+------------------------+----------------------------------------------------+
-| ``first()``            | First node                                         |
-+------------------------+----------------------------------------------------+
-| ``last()``             | Last node                                          |
-+------------------------+----------------------------------------------------+
-| ``siblings()``         | Siblings                                           |
-+------------------------+----------------------------------------------------+
-| ``nextAll()``          | All following siblings                             |
-+------------------------+----------------------------------------------------+
-| ``previousAll()``      | All preceding siblings                             |
-+------------------------+----------------------------------------------------+
-| ``parents()``          | Returns the parent nodes                           |
-+------------------------+----------------------------------------------------+
-| ``children()``         | Returns children nodes                             |
-+------------------------+----------------------------------------------------+
-| ``reduce($lambda)``    | Nodes for which the callable does not return false |
-+------------------------+----------------------------------------------------+
+``filter('h1.title')``
+    Nodes that match the CSS selector.
+``filterXpath('h1')``
+    Nodes that match the XPath expression.
+``eq(1)``
+    Node for the specified index.
+``first()``
+    First node.
+``last()``
+    Last node.
+``siblings()``
+    Siblings.
+``nextAll()``
+    All following siblings.
+``previousAll()``
+    All preceding siblings.
+``parents()``
+    Returns the parent nodes.
+``children()``
+    Returns children nodes.
+``reduce($lambda)``
+    Nodes for which the callable does not return false.
 
 Since each of these methods returns a new ``Crawler`` instance, you can
 narrow down your node selection by chaining the method calls::

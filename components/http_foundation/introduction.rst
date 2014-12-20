@@ -90,47 +90,47 @@ instance (or a sub-class of), which is a data holder class:
 All :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instances have
 methods to retrieve and update its data:
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`: Returns
-  the parameters;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`
+    Returns the parameters.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::keys`: Returns
-  the parameter keys;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::keys`
+    Returns the parameter keys.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::replace`:
-  Replaces the current parameters by a new set;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::replace`
+    Replaces the current parameters by a new set.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::add`: Adds
-  parameters;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::add`
+    Adds parameters.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`: Returns a
-  parameter by name;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`
+    Returns a parameter by name.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::set`: Sets a
-  parameter by name;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::set`
+    Sets a parameter by name.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`: Returns
-  ``true`` if the parameter is defined;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`
+    Returns ``true`` if the parameter is defined.
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`: Removes
-  a parameter.
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`
+    Removes a parameter.
 
 The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
 has some methods to filter the input values:
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`: Returns
-  the alphabetic characters of the parameter value;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`
+    Returns the alphabetic characters of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`: Returns
-  the alphabetic characters and digits of the parameter value;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
+    Returns the alphabetic characters and digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`: Returns
-  the digits of the parameter value;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
+    Returns the digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`: Returns the
-  parameter value converted to integer;
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
+    Returns the parameter value converted to integer;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`: Filters the
-  parameter by using the PHP :phpfunction:`filter_var` function.
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
+    Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
 All getters takes up to three arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
@@ -241,14 +241,14 @@ Accessing `Accept-*` Headers Data
 You can easily access basic data extracted from ``Accept-*`` headers
 by using the following methods:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`:
-  returns the list of accepted content types ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
+    Returns the list of accepted content types ordered by descending quality.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`:
-  returns the list of accepted languages ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`
+    Returns the list of accepted languages ordered by descending quality.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  returns the list of accepted charsets ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`
+    Returns the list of accepted charsets ordered by descending quality.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`:
   returns the list of accepted charsets ordered by descending quality;

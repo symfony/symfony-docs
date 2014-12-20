@@ -216,18 +216,18 @@ Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
-  or ``HttpKernelInterface::SUB_REQUEST``);
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
+    Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` or
+    ``HttpKernelInterface::SUB_REQUEST``).
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-  - checks if it is a master request;
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+    Checks if it is a master request.
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
-  - returns the Kernel handling the request;
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
+    Returns the Kernel handling the request.
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
-  - returns the current ``Request`` being handled.
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
+    Returns the current ``Request`` being handled.
 
 ``isMasterRequest()``
 .....................
@@ -354,18 +354,18 @@ The purpose of this event is to allow other systems to modify or replace the
 
 The FrameworkBundle registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`:
-  collects data for the current request;
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`
+    Collects data for the current request.
 
-* :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`:
-  injects the Web Debug Toolbar;
+:class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`
+    Injects the Web Debug Toolbar.
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`: fixes the
-  Response ``Content-Type`` based on the request format;
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`
+    Fixes the Response ``Content-Type`` based on the request format.
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`: adds a
-  ``Surrogate-Control`` HTTP header when the Response needs to be parsed for
-  ESI tags.
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`
+    Adds a ``Surrogate-Control`` HTTP header when the Response needs to be parsed
+    for ESI tags.
 
 .. seealso::
 
