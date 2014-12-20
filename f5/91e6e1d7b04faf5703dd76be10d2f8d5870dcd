@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-29T12:35:17Z
+
+This also [applies to the kernel.request event](https://github.com/symfony/symfony/blob/2.7/src/Symfony/Component/HttpKernel/HttpKernel.php#L125-130), doesn't it?
+
+---------------------------------------------------------------------------
+
+by Lumbendil at 2014-11-29T12:45:19Z
+
+@xabbuh you're right, I looked for the uses of the subclasses but not of the main class, good catch.
+
+I'll update this PR in no time.
