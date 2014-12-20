@@ -12,7 +12,7 @@ The EventDispatcher Component
 Introduction
 ------------
 
-Object Oriented code has gone a long way to ensuring code extensibility. By
+Object-oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
 behaviors. But if they want to share the changes with other developers who have
