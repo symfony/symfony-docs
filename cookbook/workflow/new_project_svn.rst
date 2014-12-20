@@ -53,20 +53,20 @@ First, download and get your Symfony project running by following the
 Once you have your new project directory and things are working, follow along
 with these steps:
 
-1. Checkout the Subversion repository that will host this project. Suppose
+#. Checkout the Subversion repository that will host this project. Suppose
    it is hosted on `Google code`_ and called ``myproject``:
 
    .. code-block:: bash
 
         $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
-2. Copy the Symfony project files in the Subversion folder:
+#. Copy the Symfony project files in the Subversion folder:
 
    .. code-block:: bash
 
         $ mv Symfony/* myproject/
 
-3. Now, set the ignore rules. Not everything *should* be stored in your Subversion
+#. Now, set the ignore rules. Not everything *should* be stored in your Subversion
    repository. Some files (like the cache) are generated and others (like
    the database configuration) are meant to be customized on each machine.
    This makes use of the ``svn:ignore`` property, so that specific files can
@@ -87,21 +87,21 @@ with these steps:
 
         $ svn ci -m "commit basic Symfony ignore list (vendor, app/bootstrap*, app/config/parameters.yml, app/cache/*, app/logs/*, web/bundles)"
 
-4. The rest of the files can now be added and committed to the project:
+#. The rest of the files can now be added and committed to the project:
 
    .. code-block:: bash
 
         $ svn add --force .
         $ svn ci -m "add basic Symfony Standard 2.X.Y"
 
-5. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
+#. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
    The ``parameters.yml`` file is ignored by svn (see above) so that
    machine-specific settings like database passwords aren't committed. By
    creating the ``parameters.yml.dist`` file, new developers can quickly clone
    the project, copy this file to ``parameters.yml``, customize it, and start
    developing.
 
-6. Finally, download all of the third-party vendor libraries by
+#. Finally, download all of the third-party vendor libraries by
    executing Composer. For details, see :ref:`installation-updating-vendors`.
 
 .. tip::
