@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by 1ed at 2014-12-03T15:06:08Z
+
+I think it should be mentioned that the installer requires php-5.4 instead of 5.3 as symfony. Running it on 5.3 will give a syntax error
+```
+$ symfony.phar
+
+Parse error: syntax error, unexpected '[' in phar:///root/symfony.phar/vendor/guzzlehttp/guzzle/src/functions.php on line 24
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-03T15:10:58Z
+
+@1ed thanks for reporting this error.
+
+Ironically, we have a special error message for people not using PHP 5.4: https://github.com/symfony/symfony-installer/blob/master/src/Symfony/Installer/NewCommand.php#L78-89
+
+Does anyone know how to display this error before displaying the syntax error related to Guzzle using 5.4?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-03T16:21:12Z
+
+@javiereguiluz The issue is that the Composer autoloader immediately loads all files that are registered under a package's autoload files key.
+
+---------------------------------------------------------------------------
+
+by 1ed at 2014-12-03T16:26:24Z
+
+I've just made a quick test, it can be made via a custom stub file. I will get back to it later and create a PR or an issue at symfony-installer.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-03T16:30:42Z
+
+@1ed Sorry, I didn't read your comment before, but submitted a pull request in the meantime: symfony/symfony-installer#66
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-03T20:19:05Z
+
+why not providing installing using composer and using the installer?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-04T09:42:51Z
+
+@timglabisch I'm not sure about adding alternatives. The point of "Best Practices" is to have (ideally) just one recommended way of doing things. If that's the case, the installer is definitely the thing to recommend.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-04T19:36:33Z
+
+@javiereguiluz you're right, in the context of best practice we just should add a notice that you can use composer if you want.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-12T09:49:58Z
+
+I've addressed the comments made above. Please, if you can, merge this PR as soon as possible because it's important to have updated and accurate installation instructions. Thanks!
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T14:10:07Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T15:41:38Z
+
+Very nice work. :+1:
