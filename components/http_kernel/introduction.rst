@@ -167,6 +167,11 @@ return a ``Response`` directly, or to add information to the ``Request``
 (e.g. setting the locale or setting some other information on the ``Request``
 attributes).
 
+.. note::
+
+    When setting a response for the ``kernel.request`` event, the propagation
+    is stopped. This means listeners with lower priority won't be executed.
+
 .. sidebar:: ``kernel.request`` in the Symfony Framework
 
     The most important listener to ``kernel.request`` in the Symfony Framework
@@ -391,6 +396,11 @@ At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
 return a ``Response``.
 
+.. note::
+
+    When setting a response for the ``kernel.view`` event, the propagation
+    is stopped. This means listeners with lower priority won't be executed.
+
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
@@ -521,6 +531,11 @@ creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
+
+.. note::
+
+    When setting a response for the ``kernel.exception`` event, the propagation
+    is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
