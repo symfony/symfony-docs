@@ -220,3 +220,4 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
+  * :doc:`/cookbook/workflow/vagrant_configuration`
