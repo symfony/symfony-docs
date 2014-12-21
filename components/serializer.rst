@@ -122,29 +122,6 @@ The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::
 is the object to be serialized and the second is used to choose the proper encoder,
 in this case :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
 
-Ignoring Attributes when Serializing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The :method:`GetSetMethodNormalizer::setIgnoredAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes>`
-    method was introduced in Symfony 2.3.
-
-As an option, there's a way to ignore attributes from the origin object when
-serializing. To remove those attributes use the
-:method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
-method on the normalizer definition::
-
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-
-    $normalizer = new GetSetMethodNormalizer();
-    $normalizer->setIgnoredAttributes(array('age'));
-    $encoder = new JsonEncoder();
-
-    $serializer = new Serializer(array($normalizer), array($encoder));
-    $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsman":false}
-
 Deserializing an Object
 -----------------------
 
@@ -167,6 +144,152 @@ needs three parameters:
 #. The information to be decoded
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
+
+Attributes Groups
+-----------------
+
+.. versionadded:: 2.7
+The support of serialization and deserialization groups was introduced
+    in Symfony 2.7.
+
+Sometimes, you want to serialize different sets of attributes from your
+entities. Groups are a handy way to achieve this need.
+
+Assume you have the following plain-old-PHP object::
+
+    namespace Acme;
+
+    class MyObj
+    {
+        public $foo;
+        public $bar;
+    }
+
+The definition of serialization can be specified using annotations, XML
+or YAML. The :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
+that will be used by the normalizer must be aware of the format to use.
+
+Initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
+like the following::
+
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    // For annotations
+    usr Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    // For XML
+    // use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
+    // For YAML
+    // use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    // For XML
+    // $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
+    // For YAML
+    // $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yml'));
+
+Then, create your groups definition:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\Groups;
+
+        class MyObj
+        {
+            /**
+             * @Groups({"group1", "group2"})
+             */
+            public $foo;
+
+            /**
+             * @Groups({"group3"})
+             */
+            public $bar;
+        }
+
+    .. code-block:: yaml
+
+        Acme\MyObj:
+            attributes:
+                foo:
+                    groups: ['group1', 'group2']
+                bar:
+                    groups: ['group3']
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="Acme\MyObj">
+                <attribute name="foo">
+                    <group>group1</group>
+                    <group>group2</group>
+                </attribute>
+
+                <attribute name="bar">
+                    <group>group3</group>
+                </attribute>
+            </class>
+        </serializer>
+
+You are now able to serialize only attributes in the groups you want::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    $obj = new MyObj();
+    $obj->foo = 'foo';
+    $obj->bar = 'bar';
+
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $serializer = new Serializer(array($normalizer));
+
+    $data = $serializer->normalize($obj, null, array('groups' => array('group1')));
+    // $data = ['foo' => 'foo'];
+
+    $obj2 = $serializer->denormalize(
+        array('foo' => 'foo', 'bar' => 'bar'),
+        'MyObj',
+        null,
+        array('groups' => array('group1', 'group3'))
+    );
+    // $obj2 = MyObj(foo: 'foo', bar: 'bar')
+
+.. _ignoring-attributes-when-serializing:
+
+Ignoring Attributes
+-------------------
+
+.. versionadded:: 2.3
+The :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
+    method was introduced in Symfony 2.3.
+
+.. versionadded:: 2.7
+Prior to Symfony 2.7, attributes were only ignored while serializing. Since Symfony
+    2.7, they are ignored when deserializing too.
+
+As an option, there's a way to ignore attributes from the origin object. To remove
+those attributes use the
+:method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
+method on the normalizer definition::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
+    $normalizer = new GetSetMethodNormalizer();
+    $normalizer->setIgnoredAttributes(array('age'));
+    $encoder = new JsonEncoder();
+
+    $serializer = new Serializer(array($normalizer), array($encoder));
+    $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsman":false}
 
 Converting Property Names when Serializing and Deserializing
 ------------------------------------------------------------
@@ -434,14 +557,10 @@ having unique identifiers::
     echo $serializer->serialize($org, 'json');
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
-JMSSerializer
--------------
+.. seealso::
 
-A popular third-party library, `JMS serializer`_, provides a more
-sophisticated albeit more complex solution. This library includes the
-ability to configure how your objects should be serialized/deserialized via
-annotations (as well as YAML, XML and PHP), integration with the Doctrine ORM,
-and handling of other complex cases.
+    A popular alternative to the Symfony Serializer Component is the third-party
+    library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
