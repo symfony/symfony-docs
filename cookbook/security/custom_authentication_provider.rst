@@ -335,15 +335,15 @@ requires the following methods:
 
 ``create``
     Method which adds the listener and authentication provider
-    to the DI container for the appropriate security context;
+    to the DI container for the appropriate security context.
 
 ``getPosition``
     Method which must be of type ``pre_auth``, ``form``, ``http``,
-    and ``remember_me`` and defines the position at which the provider is called;
+    and ``remember_me`` and defines the position at which the provider is called.
 
 ``getKey``
     Method which defines the configuration key used to reference
-    the provider in the firewall configuration;
+    the provider in the firewall configuration.
 
 ``addConfiguration``
     Method which is used to define the configuration

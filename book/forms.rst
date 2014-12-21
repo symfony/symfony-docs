@@ -167,16 +167,19 @@ helper functions:
 
 That's it! Just three lines are needed to render the complete form:
 
-* ``form_start(form)`` - Renders the start tag of the form, including the
-  correct enctype attribute when using file uploads;
+``form_start(form)``
+    Renders the start tag of the form, including the correct enctype attribute
+    when using file uploads.
 
-* ``form_widget(form)`` - Renders all of the fields, which includes the field
-  element itself, a label and any validation error messages for the field;
+``form_widget(form)``
+    Renders all of the fields, which includes the field element itself, a label
+    and any validation error messages for the field.
 
-* ``form_end()`` - Renders the end tag of the form and any fields that have not
-  yet been rendered, in case you rendered each field yourself. This is useful
-  for rendering hidden fields and taking advantage of the automatic
-  :ref:`CSRF Protection <forms-csrf>`.
+``form_end()``
+    Renders the end tag of the form and any fields that have not
+    yet been rendered, in case you rendered each field yourself. This is useful
+    for rendering hidden fields and taking advantage of the automatic
+    :ref:`CSRF Protection <forms-csrf>`.
 
 .. seealso::
 
