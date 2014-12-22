@@ -51,7 +51,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # vi: set ft=ruby :
 
         Vagrant.configure("2") do |config|
-          config.vm.box = "hashicorp/precise32"
+          config.vm.box = "ubuntu/trusty32"
 
           config.vm.network :private_network, ip: "192.168.33.10"
 
@@ -71,9 +71,8 @@ You will be creating a set of files under a new ``vagrant`` directory:
 
    This is the main configuration file used by Vagrant. The ``config.vm.box``
    value specifies that a preconfigured "box" will be used for the base virtual
-   machine. This ``hashicorp/precise32`` reference happens to be a 32bit Ubuntu
-   Linux machine with certain packages already installed (e.g. `Puppet`_) and
-   is used extensively within the `Vagrant Docs`_.
+   machine. This ``ubuntu/trusty32`` reference happens to be a 32bit Ubuntu
+   Linux machine with certain packages already installed (e.g. `Puppet`_).
 
    The ``config.vm.network`` will create a `private network`_ and specify the IP
    address of the virtual machine in that network. You can change the IP
@@ -112,19 +111,19 @@ You will be creating a set of files under a new ``vagrant`` directory:
         fi
 
         if [ ! -d "/etc/puppet/modules/apache" ]; then
-            puppet module install -v 1.0.1 puppetlabs-apache;
+            puppet module install -v 1.2.0 puppetlabs-apache;
         fi
 
         if [ ! -d "/etc/puppet/modules/mysql" ]; then
-            puppet module install -v 2.2.3 puppetlabs-mysql;
+            puppet module install -v 3.1.0 puppetlabs-mysql;
         fi
 
         if [ ! -d "/etc/puppet/modules/apt" ]; then
-            puppet module install -v 1.4.2 puppetlabs-apt;
+            puppet module install -v 1.7.0 puppetlabs-apt;
         fi
 
         if [ ! -d "/etc/puppet/modules/git" ]; then
-            puppet module install -v 0.0.3 puppetlabs-git;
+            puppet module install -v 0.3.0 puppetlabs-git;
         fi
 
    This script will be executed within the virtual machine to install necessary
@@ -288,14 +287,14 @@ You will be creating a set of files under a new ``vagrant`` directory:
         }
 
         file_line { 'php5_apache2_xdebug_max_nesting_level':
-            path    => '/etc/php5/apache2/conf.d/xdebug.ini',
+            path    => '/etc/php5/apache2/conf.d/20-xdebug.ini',
             line    => 'xdebug.max_nesting_level = 250',
             require => [ Class['apache::mod::php'], Package['php5-xdebug'] ],
             notify  => Service['httpd'],
         }
 
         file_line { 'php5_cli_xdebug_max_nesting_level':
-            path    => '/etc/php5/cli/conf.d/xdebug.ini',
+            path    => '/etc/php5/cli/conf.d/20-xdebug.ini',
             line    => 'xdebug.max_nesting_level = 250',
             require => [ Class['apache::mod::php'], Package['php5-xdebug'] ],
             notify  => Service['httpd'],
@@ -305,28 +304,28 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # Enable Xdebug support
 
         file_line { 'php5_apache2_xdebug_remote_enable':
-            path    => '/etc/php5/apache2/conf.d/xdebug.ini',
+            path    => '/etc/php5/apache2/conf.d/20-xdebug.ini',
             line    => 'xdebug.remote_enable = on',
             require => [ Class['apache::mod::php'], Package['php5-xdebug'] ],
             notify  => Service['httpd'],
         }
 
         file_line { 'php5_cli_xdebug_remote_enable':
-            path    => '/etc/php5/cli/conf.d/xdebug.ini',
+            path    => '/etc/php5/cli/conf.d/20-xdebug.ini',
             line    => 'xdebug.remote_enable = on',
             require => [ Class['apache::mod::php'], Package['php5-xdebug'] ],
             notify  => Service['httpd'],
         }
 
         file_line { 'php5_apache2_xdebug_remote_connect_back':
-            path    => '/etc/php5/apache2/conf.d/xdebug.ini',
+            path    => '/etc/php5/apache2/conf.d/20-xdebug.ini',
             line    => 'xdebug.remote_connect_back = on',
             require => [ Class['apache::mod::php'], Package['php5-xdebug'] ],
             notify  => Service['httpd'],
         }
 
         file_line { 'php5_cli_xdebug_remote_connect_back':
-            path    => '/etc/php5/cli/conf.d/xdebug.ini',
+            path    => '/etc/php5/cli/conf.d/20-xdebug.ini',
             line    => 'xdebug.remote_connect_back = on',
             require => [ Class['apache::mod::php'], Package['php5-xdebug'] ],
             notify  => Service['httpd'],
@@ -466,7 +465,6 @@ another developer's machine.
 .. _`VirtualBox`: https://www.virtualbox.org/wiki/Downloads
 .. _`Vagrant`: http://www.vagrantup.com/downloads.html
 .. _`Puppet`: http://www.puppetlabs.com/
-.. _`Vagrant Docs`: http://docs.vagrantup.com/v2/
 .. _`private network`: http://docs.vagrantup.com/v2/networking/private_network.html
 .. _`NFS setting`: http://docs.vagrantup.com/v2/synced-folders/nfs.html
 .. _`Vagrantfile`: http://docs.vagrantup.com/v2/vagrantfile/index.html
