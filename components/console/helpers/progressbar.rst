@@ -42,7 +42,10 @@ number of units, and advance the progress as the command executes::
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
-:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setCurrent` method.
+:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
+
+.. versionadded:: 2.6
+    The ``setProgress()`` method was called ``setCurrent()`` prior to Symfony 2.6.
 
 .. caution::
 
@@ -300,9 +303,12 @@ that displays the number of remaining steps::
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
         function (ProgressBar $bar, OutputInterface $output) {
-            return $bar->getMaxSteps() - $bar->getStep();
+            return $bar->getMaxSteps() - $bar->getProgress();
         }
     );
+
+.. versionadded:: 2.6
+    The ``getProgress()`` method was called ``getStep()`` prior to Symfony 2.6.
 
 Custom Messages
 ~~~~~~~~~~~~~~~
