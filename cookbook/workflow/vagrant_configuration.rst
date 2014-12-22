@@ -34,7 +34,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
     vagrant/puppet/modules.sh
     vagrant/puppet/manifests/symfony.pp
 
-1. Create a new set of directories at the root of your project to store the
+#. Create a new set of directories at the root of your project to store the
    Vagrant configuration files:
 
    .. code-block:: bash
@@ -43,7 +43,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
         $ mkdir vagrant/puppet
         $ mkdir vagrant/puppet/manifests
 
-2. Create a new file ``vagrant/Vagrantfile`` and paste the following into it.
+#. Create a new file ``vagrant/Vagrantfile`` and paste the following into it.
 
    .. code-block:: text
 
@@ -102,7 +102,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
    use to customize your virtual machine. These are just the basics to get you
    started.
 
-3. Create a new file ``vagrant/puppet/modules.sh`` and paste the following
+#. Create a new file ``vagrant/puppet/modules.sh`` and paste the following
    into it.
 
    .. code-block:: text
@@ -132,7 +132,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
    This script will be executed within the virtual machine to install necessary
    Puppet modules for the next script.
 
-4. Create a new file ``vagrant/puppet/manifests/symfony.pp`` and paste the
+#. Create a new file ``vagrant/puppet/manifests/symfony.pp`` and paste the
    following into it.
 
    .. code-block:: text
@@ -329,7 +329,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
    ``vagrant/Vagrantfile``) to have access to view your project website during
    development.
 
-5. Create a new file ``vagrant/.gitignore`` and paste the following into it.
+#. Create a new file ``vagrant/.gitignore`` and paste the following into it.
 
    .. code-block:: text
 
@@ -341,13 +341,13 @@ You will be creating a set of files under a new ``vagrant`` directory:
    file will prevent the ``vagrant/.vagrant`` directory from being listed in
    the ``git status`` command.
 
-6. Switch to the vagrant directory.
+#. Switch to the vagrant directory.
 
    .. code-block:: bash
 
         $ cd vagrant
 
-7. Create the development virtual machine.
+#. Create the development virtual machine.
 
    .. code-block:: bash
 
