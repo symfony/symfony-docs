@@ -370,6 +370,7 @@ use. Just update your ``app/config/parameters.yml`` file:
 
 .. code-block:: yaml
 
+    # app/config/parameters.yml
     parameters:
         database_driver:   pdo_mysql
         database_host:     127.0.0.1
@@ -378,7 +379,7 @@ use. Just update your ``app/config/parameters.yml`` file:
         database_user:     symfony
         database_password: symfony
 
-The database name, user, and password are "symfony".
+The database name, user, and password are set to "symfony".
 
 Other Vagrant Commands
 ----------------------
