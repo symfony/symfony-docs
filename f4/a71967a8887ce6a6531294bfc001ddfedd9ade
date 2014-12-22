@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-18T17:07:10Z
+
+afaik the only open thing on this one is now the question whether to drop varnish 2 examples.
+
+can any of the mergers do a decision here? otherwise i propose to keep it for now and remove it in a separate PR.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-19T11:17:54Z
+
+updated.
+
+---------------------------------------------------------------------------
+
+by ddeboer at 2014-12-19T15:52:52Z
+
+@dbu Looks good. Last small point about HTTP 1.1 and the Pragma section: I think it makes the docs much clearer if we could just leave that out. The [HTTP Cache](http://symfony.com/doc/current/book/http_cache.html) doc chapter doesn’t mention Pragma either. (It’s true that Symfony’s Request/Response still support it, though.)
+
+On Varnish 2 support: let’s drop it; it’s from 2008, all current-generation Linux distributions (Wheezy, Trusty, etc.) ship with 3.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-19T16:54:12Z
+
+i dropped the pragma mentions. and i dropped varnish 2. even RHEL 6 is on varnish 3 so indeed no point in keeping super legacy around.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-22T14:42:27Z
+
+@weaverryan imho this would be ready to merge. may i ask you to have a look? once its through, i will continue on #4628 trying to figure out cookie handling.
