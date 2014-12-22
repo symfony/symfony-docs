@@ -51,9 +51,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # vi: set ft=ruby :
 
         Vagrant.configure("2") do |config|
-          config.vm.box = "precise32"
-
-          config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+          config.vm.box = "hashicorp/precise32"
 
           config.vm.network :private_network, ip: "192.168.33.10"
 
@@ -72,10 +70,10 @@ You will be creating a set of files under a new ``vagrant`` directory:
         end
 
    This is the main configuration file used by Vagrant. The ``config.vm.box``
-   and ``config.vm.box_url`` values specify that a preconfigured "box" will be
-   used for the base virtual machine. This ``precise32.box`` file happens to be
-   a 32bit Ubuntu Linux machine with certain packages already installed (e.g.
-   `Puppet`_) and is used extensively within the `Vagrant Docs`_.
+   value specifies that a preconfigured "box" will be used for the base virtual
+   machine. This ``hashicorp/precise32`` reference happens to be a 32bit Ubuntu
+   Linux machine with certain packages already installed (e.g. `Puppet`_) and
+   is used extensively within the `Vagrant Docs`_.
 
    The ``config.vm.network`` will create a `private network`_ and specify the IP
    address of the virtual machine in that network. You can change the IP
