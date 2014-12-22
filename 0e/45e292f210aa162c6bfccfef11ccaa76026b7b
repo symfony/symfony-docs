@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T08:44:22Z
+
+Are you sure that you can simply replace `setCurrent()` with `setProgress()`? I tried that in the Symfony Installer, but then got no progress bar output at all.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T08:53:45Z
+
+@xabbuh I didn't try the code myself. I only read the new code:
+
+`getStep()` just calls `getProgress()`
+
+https://github.com/symfony/symfony/blob/2.7/src/Symfony/Component/Console/Helper/ProgressBar.php#L171-181
+
+`setCurrent()` just calls `setProgress()`
+
+https://github.com/symfony/symfony/blob/2.7/src/Symfony/Component/Console/Helper/ProgressBar.php#L358-370
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T09:16:52Z
+
+@javiereguiluz That's what I thought too. I will try it again with the installer tonight.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-17T22:47:50Z
+
+@javiereguiluz I just checked again changing the Symfony Installer code. Can you please try out https://github.com/xabbuh/symfony-installer/tree/progress-bar-methods? The only difference to the `master` branch is the usage of `setProgress()` instead of `setCurrent()`.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-18T07:33:22Z
+
+@xabbuh I've tested your code and it works for me. I can see the same progress bar and the same behavior as before.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-18T09:33:48Z
+
+@javiereguiluz Hm, this is a bit weird, but probably just related to my system. Tested it on another computer where it works as expected. So, I think this is good to be merged. Thank you (especially for testing!).
