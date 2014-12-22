@@ -147,6 +147,7 @@ You will be creating a set of files under a new ``vagrant`` directory:
         # install Apache
         class { 'apache':
             mpm_module => 'prefork',
+            sendfile   => 'Off',
         }
         class { 'apache::mod::php': }
 
