@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-14T21:57:15Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T07:47:05Z
+
+Personally I'm strongly against this change. In my opinion this magic syntax only complicates things.
+
+As @weaverryan said in another PR, this makes it much harder to read the source document. Moreover, it complicates referencing to each list point (e.g. *"as explained in the fourth list item ..."*, you have to count items manually). Lastly, it could add errors when you change the list but not the related explanation (e.g. in the text you are referring to the fourth element, but you change the list, the numbers change magically and the text is now wrong).
+
+Symfony is known for fighting magic with its code ... I think we should do the same with its doc.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T09:23:44Z
+
+> Moreover, it complicates referencing to each list point (e.g. "as explained in the fourth list item ...", you have to count items manually).
+
+I see that point. Though I think that referring to an item this way isn't the best practice at all. If you did that, other people modifying the list later need to be aware of the fact that the item is referenced in the text which can easily be missed leading to inconsistent articles.
+
+The advantage of this syntax is that you keep the diff small when an item is removed from the middle of the list or is added in the middle of the list.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-16T09:41:12Z
+
+Symfony is also known for coding standards to prevent diff that don't belong to the actual change made (suffixing each array item with a comma and not outlining the `=>` in an array are 2 of these standards).
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T09:52:11Z
+
+> Moreover, it complicates referencing to each list point (e.g. "as explained in the fourth list item ...", you have to count items manually). Lastly, it could add errors when you change the list but not the related explanation (e.g. in the text you are referring to the fourth element, but you change the list, the numbers change magically and the text is now wrong).
+
+Keeping the explicit numbering would not avoid such errors, but only make them harder to understand (because the source would display the number you use): the generated HTML uses a ``<ol>``, and so will not use the numbers written in the rST but sequential numbers even when the source is wrong about them.
+
+I'm :+1: for this change
