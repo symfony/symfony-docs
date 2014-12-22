@@ -408,7 +408,7 @@ Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony uses a **bundle**:**directory**:**filename** string syntax for
-templates that live inside a bundle. This allows for several different types of
+templates that live inside a bundle. This allows for several types of
 templates, each which lives in a specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
@@ -504,7 +504,7 @@ Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You'll often want to include the same template or code fragment on several
-different pages. For example, in an application with "news articles", the
+pages. For example, in an application with "news articles", the
 template code displaying an article might be used on the article detail page,
 on a page displaying the most popular articles, or in a list of the latest
 articles.
@@ -1521,7 +1521,7 @@ Templates are a generic way to render content in *any* format. And while in
 most cases you'll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.
 
-For example, the same "resource" is often rendered in several different formats.
+For example, the same "resource" is often rendered in several formats.
 To render an article index page in XML, simply include the format in the
 template name:
 

@@ -126,7 +126,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
         </body>
     </html>
 
-By convention, the file that contains all of the application logic - ``index.php`` -
+By convention, the file that contains all the application logic - ``index.php`` -
 is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
@@ -177,7 +177,7 @@ of the application are isolated in a new file called ``model.php``:
 
 .. tip::
 
-   The filename ``model.php`` is used because the logic and data access of
+   The file name ``model.php`` is used because the logic and data access of
    an application is traditionally known as the "model" layer. In a well-organized
    application, the majority of the code representing your "business logic"
    should live in the model (as opposed to living in a controller). And unlike
@@ -244,7 +244,7 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that allows for the reuse of the
+You've now introduced a methodology that allows reusing the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
 uses a Templating component that allows this to be accomplished cleanly

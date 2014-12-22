@@ -171,7 +171,7 @@ Firewalls (Authentication)
 
 When a user makes a request to a URL that's protected by a firewall, the
 security system is activated. The job of the firewall is to determine whether
-or not the user needs to be authenticated, and if they do, to send a response
+the user needs to be authenticated, and if they do, to send a response
 back to the user initiating the authentication process.
 
 A firewall is activated when the URL of an incoming request matches the configured
@@ -708,7 +708,7 @@ see :doc:`/cookbook/security/form_login`.
     Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
     is behind the firewall you're using for your form login (in this example,
     the single firewall matches *all* URLs, including ``/login_check``). If
-    ``/login_check`` doesn't match any firewall, you'll receive a ``Unable
+    ``/login_check`` doesn't match any firewall, you'll receive an ``Unable
     to find the controller for path "/login_check"`` exception.
 
     **4. Multiple firewalls don't share security context**
@@ -825,7 +825,7 @@ things:
 ...................
 
 Symfony creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
-for each ``access_control`` entry, which determines whether or not a given
+for each ``access_control`` entry, which determines whether a given
 access control should be used on this request. The following ``access_control``
 options are used for matching:
 
@@ -1458,7 +1458,7 @@ key in ``app/config/security.yml``.
 
     When you allow a user to submit a plaintext password (e.g. registration
     form, change password form), you *must* have validation that guarantees
-    that the password is 4096 characters or less. Read more details in
+    that the password is 4096 characters or fewer. Read more details in
     :ref:`How to implement a simple Registration Form <cookbook-registration-password-max>`.
 
 Retrieving the User Object
@@ -1659,7 +1659,7 @@ Roles
 
 The idea of a "role" is key to the authorization process. Each user is assigned
 a set of roles and then each resource requires one or more roles. If the user
-has any one of the required roles, access is granted. Otherwise access is denied.
+has any one of the required roles, access is granted. Otherwise, access is denied.
 
 Roles are pretty simple, and are basically strings that you can invent and
 use as needed (though roles are objects internally). For example, if you
@@ -2062,7 +2062,7 @@ Security can be a deep and complex issue to solve correctly in your application.
 Fortunately, Symfony's Security component follows a well-proven security
 model based around *authentication* and *authorization*. Authentication,
 which always happens first, is handled by a firewall whose job is to determine
-the identity of the user through several different methods (e.g. HTTP authentication,
+the identity of the user through several methods (e.g. HTTP authentication,
 login form, etc). In the cookbook, you'll find examples of other methods
 for handling authentication, including how to implement a "remember me" cookie
 functionality.

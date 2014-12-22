@@ -236,7 +236,7 @@ Here is a list of the main options:
     (default: ``60``). This setting is overridden by the ``stale-if-error`` HTTP
     ``Cache-Control`` extension (see RFC 5861).
 
-If ``debug`` is ``true``, Symfony automatically adds a ``X-Symfony-Cache``
+If ``debug`` is ``true``, Symfony automatically adds an ``X-Symfony-Cache``
 header to the response containing useful information about cache hits and
 misses.
 
@@ -427,7 +427,7 @@ on a cache to store and return "fresh" responses.
     model of the specification dominates your work. Unfortunately, the actual
     specification document - `RFC 2616`_ - can be difficult to read.
 
-    There is an on-going effort (`HTTP Bis`_) to rewrite the RFC 2616. It does
+    There is an ongoing effort (`HTTP Bis`_) to rewrite the RFC 2616. It does
     not describe a new version of HTTP, but mostly clarifies the original HTTP
     specification. The organization is also improved as the specification
     is split into seven parts; everything related to HTTP caching can be
@@ -482,7 +482,7 @@ The resulting HTTP header will look like this:
     timezone as required by the specification.
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to
-send the ``Date`` header. Consequently the cache (e.g. the browser) might
+send the ``Date`` header. Consequently, the cache (e.g. the browser) might
 need to rely on the local clock to evaluate the ``Expires`` header making
 the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
@@ -529,7 +529,7 @@ stale.
 
 The validation model addresses this issue. Under this model, the cache continues
 to store responses. The difference is that, for each request, the cache asks
-the application whether or not the cached response is still valid. If the
+the application whether the cached response is still valid. If the
 cache *is* still valid, your application should return a 304 status code
 and no content. This tells the cache that it's ok to return the cached response.
 

@@ -174,7 +174,7 @@ is never created. This saves memory and increases the speed of your application.
 This also means that there's very little or no performance hit for defining
 lots of services. Services that are never used are never constructed.
 
-As an added bonus, the ``Mailer`` service is only created once and the same
+As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
@@ -525,7 +525,7 @@ In this case, the extension allows you to customize the ``error_handler``,
 the FrameworkBundle uses the options specified here to define and configure
 the services specific to it. The bundle takes care of creating all the necessary
 ``parameters`` and ``services`` for the service container, while still allowing
-much of the configuration to be easily customized. As an added bonus, most
+much of the configuration to be easily customized. As a bonus, most
 service container extensions are also smart enough to perform validation -
 notifying you of options that are missing or the wrong data type.
 
@@ -964,7 +964,7 @@ console. To show all services and the class for each service, run:
 
     $ php app/console container:debug
 
-By default only public services are shown, but you can also view private services:
+By default, only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 

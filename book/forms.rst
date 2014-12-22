@@ -170,7 +170,7 @@ That's it! Just three lines are needed to render the complete form:
 * ``form_start(form)`` - Renders the start tag of the form, including the
   correct enctype attribute when using file uploads;
 
-* ``form_widget(form)`` - Renders all of the fields, which includes the field
+* ``form_widget(form)`` - Renders all the fields, which includes the field
   element itself, a label and any validation error messages for the field;
 
 * ``form_end()`` - Renders the end tag of the form and any fields that have not
@@ -262,7 +262,7 @@ possible paths:
    .. note::
 
        You can use the method :method:`Symfony\\Component\\Form\\FormInterface::isSubmitted`
-       to check whether a form was submitted, regardless of whether or not the
+       to check whether a form was submitted, regardless of whether the
        submitted data is actually valid.
 
 #. When the user submits the form with valid data, the submitted data is again
@@ -330,9 +330,9 @@ Form Validation
 In the previous section, you learned how a form can be submitted with valid
 or invalid data. In Symfony, validation is applied to the underlying object
 (e.g. ``Task``). In other words, the question isn't whether the "form" is
-valid, but whether or not the ``$task`` object is valid after the form has
+valid, but whether the ``$task`` object is valid after the form has
 applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
-that asks the ``$task`` object whether or not it has valid data.
+that asks the ``$task`` object whether it has valid data.
 
 Validation is done by adding a set of rules (called constraints) to a class. To
 see this in action, add validation constraints so that the ``task`` field cannot
@@ -639,7 +639,7 @@ the documentation for each type.
     option on your field to ``false`` or
     :ref:`disable HTML5 validation <book-forms-html5-validation-disable>`.
 
-    Also note that setting the ``required`` option to ``true`` will **not**
+    Also, note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
     user submits a blank value for the field (either with an old browser
     or web service, for example), it will be accepted as a valid value unless
@@ -1486,7 +1486,7 @@ In Twig, every block needed is defined in a single template file (e.g.
 file, you can see every block needed to render a form and every default field
 type.
 
-In PHP, the fragments are individual template files. By default they are located in
+In PHP, the fragments are individual template files. By default, they are located in
 the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
 
 Each fragment name follows the same basic pattern and is broken up into two pieces,
