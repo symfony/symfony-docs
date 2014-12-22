@@ -1,10 +1,11 @@
 Language
 ========
 
-Validates that a value is a valid language code.
+Validates that a value is a valid language *Unicode language identifier*
+(e.g. ``fr`` or ``zh-Hant``).
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -20,23 +21,23 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Entity\User:
             properties:
                 preferredLanguage:
-                    - Language:
+                    - Language: ~
 
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
-  
+
         class User
         {
             /**
-             * @Assert\Language
+             * @Assert\Language()
              */
              protected $preferredLanguage;
         }
@@ -44,17 +45,23 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
-        <class name="Acme\UserBundle\Entity\User">
-            <property name="preferredLanguage">
-                <constraint name="Language" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\UserBundle\Entity\User">
+                <property name="preferredLanguage">
+                    <constraint name="Language" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -72,6 +79,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid language``
+**type**: ``string`` **default**: ``This value is not a valid language.``
 
 This message is shown if the string is not a valid language code.

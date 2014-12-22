@@ -7,8 +7,8 @@ Twig Template Form Function and Variable Reference
 When working with forms in a template, there are two powerful things at your
 disposal:
 
-* :ref:`Functions<reference-form-twig-functions>` for rendering each part of a form
-* :ref:`Variables<twig-reference-form-variables>` for getting *any* information about any field
+* :ref:`Functions <reference-form-twig-functions>` for rendering each part of a form
+* :ref:`Variables <twig-reference-form-variables>` for getting *any* information about any field
 
 You'll use functions often to render your fields. Variables, on the other
 hand, are less commonly-used, but infinitely powerful since you can access
@@ -23,6 +23,66 @@ This reference manual covers all the possible Twig functions available for
 rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
+
+.. _reference-forms-twig-form:
+
+form(view, variables)
+---------------------
+
+Renders the HTML of a complete form.
+
+.. code-block:: jinja
+
+    {# render the form and change the submission method #}
+    {{ form(form, {'method': 'GET'}) }}
+
+You will mostly use this helper for prototyping or if you use custom form
+themes. If you need more flexibility in rendering the form, you should use
+the other helpers to render individual parts of the form instead:
+
+.. code-block:: jinja
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.dueDate) }}
+
+        {{ form_row(form.submit, { 'label': 'Submit me' }) }}
+    {{ form_end(form) }}
+
+.. _reference-forms-twig-start:
+
+form_start(view, variables)
+---------------------------
+
+Renders the start tag of a form. This helper takes care of printing the
+configured method and target action of the form. It will also include the
+correct ``enctype`` property if the form contains upload fields.
+
+.. code-block:: jinja
+
+    {# render the start tag and change the submission method #}
+    {{ form_start(form, {'method': 'GET'}) }}
+
+.. _reference-forms-twig-end:
+
+form_end(view, variables)
+-------------------------
+
+Renders the end tag of a form.
+
+.. code-block:: jinja
+
+    {{ form_end(form) }}
+
+This helper also outputs ``form_rest()`` unless you set ``render_rest`` to
+false:
+
+.. code-block:: jinja
+
+    {# don't render unrendered fields #}
+    {{ form_end(form, {'render_rest': false}) }}
 
 .. _reference-forms-twig-label:
 
@@ -119,6 +179,11 @@ obvious (since it'll render the field for you).
 form_enctype(view)
 ------------------
 
+.. note::
+
+    This helper was deprecated in Symfony 2.3 and will be removed in Symfony 3.0.
+    You should use ``form_start()`` instead.
+
 If the form contains at least one file upload field, this will render the
 required ``enctype="multipart/form-data"`` form attribute. It's always a
 good idea to include this in your form tag:
@@ -126,6 +191,24 @@ good idea to include this in your form tag:
 .. code-block:: html+jinja
 
     <form action="{{ path('form_submit') }}" method="post" {{ form_enctype(form) }}>
+
+Form Tests Reference
+--------------------
+
+Tests can be executed by using the ``is`` operator in Twig to create a
+condition. Read `the Twig documentation`_ for more information.
+
+.. _form-twig-selectedchoice:
+
+selectedchoice(selected_value)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This test will check if the current choice is equal to the ``selected_value``
+or if the current choice is in the array (when ``selected_value`` is an array).
+
+.. code-block:: jinja
+
+    <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
 
 .. _`twig-reference-form-variables`:
 
@@ -183,8 +266,8 @@ to see what options you have available.
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the form component calls ``buildView`` and ``buildViewBottomUp``
-    on each "node" of your form tree. To see what "view" variables a particularly
+    object of your form when the Form component calls ``buildView`` and ``finishView``
+    on each "node" of your form tree. To see what "view" variables a particular
     field has, find the source code for the form field (and its parent fields)
     and look at the above two functions.
 
@@ -230,51 +313,66 @@ object:
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
-.. versionadded:: 2.1
-    The ``valid``, ``label_attr``, ``compound``, and ``disabled`` variables
-    are new in Symfony 2.1.
+.. versionadded:: 2.3
+    The ``method`` and ``action`` variables were introduced in Symfony 2.3.
 
-+-----------------+-----------------------------------------------------------------------------------------+
-| Variable        | Usage                                                                                   |
-+=================+=========================================================================================+
-| ``id``          | The ``id`` HTML attribute to be rendered                                                |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``name``        | The name of the field (e.g. ``title``) - but not the ``name``                           |
-|                 | HTML attribute, which is ``full_name``                                                  |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``full_name``   | The ``name`` HTML attribute to be rendered                                              |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``errors``      | An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).  |
-|                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
-|                 | since this only returns "global" errors: some individual fields may have errors         |
-|                 | Instead, use the ``valid`` option                                                       |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``valid``       | Returns ``true`` or ``false`` depending on whether the whole form is valid              |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``value``       | The value that will be used when rendering (commonly the ``value`` HTML attribute)      |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``read_only``   | If ``true``, ``readonly="readonly"`` is added to the field                              |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``disabled``    | If ``true``, ``disabled="disabled"`` is added to the field                              |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``required``    | If ``true``, a ``required`` attribute is added to the field to activate HTML5           |
-|                 | validation. Additionally, a ``required`` class is added to the label.                   |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``max_length``  | Adds a ``maxlength`` HTML attribute to the element                                      |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``pattern``     | Adds a ``pattern`` HTML attribute to the element                                        |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``label``       | The string label that will be rendered                                                  |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``multipart``   | If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.            |
-|                 | This only applies to the root form element.                                             |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``attr``        | A key-value array that will be rendered as HTML attributes on the field                 |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``label_attr``  | A key-value array that will be rendered as HTML attributes on the label                 |
-+-----------------+-----------------------------------------------------------------------------------------+
-| ``compound``    | Whether or not a field is actually a holder for a group of children fields              |
-|                 | (for example, a ``choice`` field, which is actually a group of checkboxes               |
-+-----------------+-----------------------------------------------------------------------------------------+
++------------------------+-------------------------------------------------------------------------------------+
+| Variable               | Usage                                                                               |
++========================+=====================================================================================+
+| ``form``               | The current ``FormView`` instance.                                                  |
++------------------------+-------------------------------------------------------------------------------------+
+| ``id``                 | The ``id`` HTML attribute to be rendered.                                           |
++------------------------+-------------------------------------------------------------------------------------+
+| ``name``               | The name of the field (e.g. ``title``) - but not the ``name``                       |
+|                        | HTML attribute, which is ``full_name``.                                             |
++------------------------+-------------------------------------------------------------------------------------+
+| ``full_name``          | The ``name`` HTML attribute to be rendered.                                         |
++------------------------+-------------------------------------------------------------------------------------+
+| ``errors``             | An array of any errors attached to *this* specific field                            |
+|                        | (e.g. ``form.title.errors``).                                                       |
+|                        | Note that you can't use ``form.errors`` to determine if a form is valid,            |
+|                        | since this only returns "global" errors: some individual fields may have errors.    |
+|                        | Instead, use the ``valid`` option.                                                  |
++------------------------+-------------------------------------------------------------------------------------+
+| ``valid``              | Returns ``true`` or ``false`` depending on whether the whole form is valid.         |
++------------------------+-------------------------------------------------------------------------------------+
+| ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute). |
++------------------------+-------------------------------------------------------------------------------------+
+| ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field.                         |
++------------------------+-------------------------------------------------------------------------------------+
+| ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field.                         |
++------------------------+-------------------------------------------------------------------------------------+
+| ``required``           | If ``true``, a ``required`` attribute is added to the field to activate HTML5       |
+|                        | validation. Additionally, a ``required`` class is added to the label.               |
++------------------------+-------------------------------------------------------------------------------------+
+| ``max_length``         | Adds a ``maxlength`` HTML attribute to the element.                                 |
++------------------------+-------------------------------------------------------------------------------------+
+| ``pattern``            | Adds a ``pattern`` HTML attribute to the element.                                   |
++------------------------+-------------------------------------------------------------------------------------+
+| ``label``              | The string label that will be rendered.                                             |
++------------------------+-------------------------------------------------------------------------------------+
+| ``multipart``          | If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.        |
+|                        | This only applies to the root form element.                                         |
++------------------------+-------------------------------------------------------------------------------------+
+| ``attr``               | A key-value array that will be rendered as HTML attributes on the field.            |
++------------------------+-------------------------------------------------------------------------------------+
+| ``label_attr``         | A key-value array that will be rendered as HTML attributes on the label.            |
++------------------------+-------------------------------------------------------------------------------------+
+| ``compound``           | Whether or not a field is actually a holder for a group of children fields          |
+|                        | (for example, a ``choice`` field, which is actually a group of checkboxes.          |
++------------------------+-------------------------------------------------------------------------------------+
+| ``block_prefixes``     | An array of all the names of the parent types.                                      |
++------------------------+-------------------------------------------------------------------------------------+
+| ``translation_domain`` | The domain of the translations for this form.                                       |
++------------------------+-------------------------------------------------------------------------------------+
+| ``cache_key``          | A unique key which is used for caching.                                             |
++------------------------+-------------------------------------------------------------------------------------+
+| ``data``               | The normalized data of the type.                                                    |
++------------------------+-------------------------------------------------------------------------------------+
+| ``method``             | The method of the current form (POST, GET, etc.).                                   |
++------------------------+-------------------------------------------------------------------------------------+
+| ``action``             | The action of the current form.                                                     |
++------------------------+-------------------------------------------------------------------------------------+
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`the Twig documentation`: http://twig.sensiolabs.org/doc/templates.html#test-operator

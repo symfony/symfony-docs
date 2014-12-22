@@ -1,11 +1,11 @@
 .. index::
    single: Security; Custom authentication provider
 
-How to create a custom Authentication Provider
+How to Create a custom Authentication Provider
 ==============================================
 
 If you have read the chapter on :doc:`/book/security`, you understand the
-distinction Symfony2 makes between authentication and authorization in the
+distinction Symfony makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
 in the authentication process, and how to implement a custom authentication
 provider. Because authentication and authorization are separate concepts,
@@ -29,7 +29,7 @@ REST.
 
 There is plenty of great documentation on `WSSE`_, but this article will
 focus not on the security protocol, but rather the manner in which a custom
-protocol can be added to your Symfony2 application. The basis of WSSE is
+protocol can be added to your Symfony application. The basis of WSSE is
 that a request header is checked for encrypted credentials, verified using
 a timestamp and `nonce`_, and authenticated for the requested user using a
 password digest.
@@ -42,7 +42,7 @@ password digest.
 The Token
 ---------
 
-The role of the token in the Symfony2 security context is an important one.
+The role of the token in the Symfony security context is an important one.
 A token represents the user authentication data present in the request. Once
 a request is authenticated, the token retains the user's data, and delivers
 this data across the security context. First, you'll create your token class.
@@ -78,7 +78,7 @@ provider.
 
 .. note::
 
-    The ``WsseUserToken`` class extends the security component's
+    The ``WsseUserToken`` class extends the Security component's
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`
     class, which provides basic token functionality. Implement the
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
@@ -138,20 +138,18 @@ set an authenticated token in the security context if successful.
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
                 $this->securityContext->setToken($authToken);
-                
+
                 return;
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
 
                 // To deny the authentication clear the token. This will redirect to the login page.
-                // $this->securityContext->setToken(null);
+                // Make sure to only clear your token, not those of other authentication listeners.
+                // $token = $this->securityContext->getToken();
+                // if ($token instanceof WsseUserToken && $this->providerKey === $token->getProviderKey()) {
+                //     $this->securityContext->setToken(null);
+                // }
                 // return;
-
-                // Deny authentication with a '403 Forbidden' HTTP response
-                $response = new Response();
-                $response->setStatusCode(403);
-                $event->setResponse($response);
-
             }
 
             // By default deny authorization
@@ -161,7 +159,7 @@ set an authenticated token in the security context if successful.
         }
     }
 
-This listener checks the request for the expected `X-WSSE` header, matches
+This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
@@ -174,9 +172,16 @@ a 403 Response is returned.
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`
     class, is a very useful base class which provides commonly needed functionality
     for security extensions. This includes maintaining the token in the session,
-    providing success / failure handlers, login form urls, and more. As WSSE
+    providing success / failure handlers, login form URLs, and more. As WSSE
     does not require maintaining authentication sessions or login forms, it
     won't be used for this example.
+
+.. note::
+
+    Returning prematurely from the listener is relevant only if you want to chain
+    authentication providers (for example to allow anonymous users). If you want
+    to forbid access to anonymous users and have a nice 403 error, you should set
+    the status code of the response before returning.
 
 The Authentication Provider
 ---------------------------
@@ -223,6 +228,12 @@ the ``PasswordDigest`` header value matches with the user's password.
             throw new AuthenticationException('The WSSE authentication failed.');
         }
 
+        /**
+         * This function is specific to Wsse authentication and is only used to help this example
+         *
+         * For more information specific to the logic here, see
+         * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129
+         */
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
             // Check created time is not in the future
@@ -235,7 +246,8 @@ the ``PasswordDigest`` header value matches with the user's password.
                 return false;
             }
 
-            // Validate nonce is unique within 5 minutes
+            // Validate that the nonce is *not* used in the last 5 minutes
+            // if it has, this could be a replay attack
             if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 > time()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
@@ -269,9 +281,9 @@ The Factory
 -----------
 
 You have created a custom token, custom listener, and custom provider. Now
-you need to tie them all together. How do you make your provider available
-to your security configuration? The answer is by using a ``factory``. A factory
-is where you hook into the security component, telling it the name of your
+you need to tie them all together. How do you make a unique provider available
+for every firewall? The answer is by using a *factory*. A factory
+is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
@@ -328,7 +340,7 @@ requires the following methods:
   and ``remember_me`` and defines the position at which the provider is called;
 
 * ``getKey`` method which defines the configuration key used to reference
-  the provider;
+  the provider in the firewall configuration;
 
 * ``addConfiguration`` method, which is used to define the configuration
   options underneath the configuration key in your security configuration.
@@ -370,13 +382,12 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         # src/Acme/DemoBundle/Resources/config/services.yml
         services:
             wsse.security.authentication.provider:
-                class:  Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
+                class: Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
                 arguments: ["", "%kernel.cache_dir%/security/nonces"]
 
             wsse.security.authentication.listener:
-                class:  Acme\DemoBundle\Security\Firewall\WsseListener
+                class: Acme\DemoBundle\Security\Firewall\WsseListener
                 arguments: ["@security.context", "@security.authentication.manager"]
-
 
     .. code-block:: xml
 
@@ -427,9 +438,6 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
 
-.. versionadded:: 2.1
-    Before 2.1, the factory below was added via ``security.yml`` instead.
-
 .. code-block:: php
 
     // src/Acme/DemoBundle/AcmeDemoBundle.php
@@ -460,12 +468,14 @@ You are finished! You can now define parts of your app as under WSSE protection.
             firewalls:
                 wsse_secured:
                     pattern:   /api/.*
+                    stateless: true
                     wsse:      true
 
     .. code-block:: xml
 
         <config>
             <firewall name="wsse_secured" pattern="/api/.*">
+                <stateless />
                 <wsse />
             </firewall>
         </config>
@@ -476,16 +486,16 @@ You are finished! You can now define parts of your app as under WSSE protection.
             'firewalls' => array(
                 'wsse_secured' => array(
                     'pattern' => '/api/.*',
+                    'stateless'    => true,
                     'wsse'    => true,
                 ),
             ),
         ));
-    
 
-Congratulations!  You have written your very own custom security authentication
+Congratulations! You have written your very own custom security authentication
 provider!
 
-A Little Extra
+A little Extra
 --------------
 
 How about making your WSSE authentication provider a bit more exciting? The
@@ -519,7 +529,7 @@ the ``addConfiguration`` method.
     }
 
 Now, in the ``create`` method of the factory, the ``$config`` argument will
-contain a 'lifetime' key, set to 5 minutes (300 seconds) unless otherwise
+contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
 in order to put it to use.
 
@@ -550,7 +560,7 @@ in order to put it to use.
     should use instead of the hard-coded 300 seconds. These two steps are
     not shown here.
 
-The lifetime of each wsse request is now configurable, and can be
+The lifetime of each WSSE request is now configurable, and can be
 set to any desirable value per firewall.
 
 .. configuration-block::
@@ -561,6 +571,7 @@ set to any desirable value per firewall.
             firewalls:
                 wsse_secured:
                     pattern:   /api/.*
+                    stateless: true
                     wsse:      { lifetime: 30 }
 
     .. code-block:: xml
@@ -569,6 +580,7 @@ set to any desirable value per firewall.
             <firewall name="wsse_secured"
                 pattern="/api/.*"
             >
+                <stateless />
                 <wsse lifetime="30" />
             </firewall>
         </config>
@@ -579,6 +591,7 @@ set to any desirable value per firewall.
             'firewalls' => array(
                 'wsse_secured' => array(
                     'pattern' => '/api/.*',
+                    'stateless' => true,
                     'wsse'    => array(
                         'lifetime' => 30,
                     ),

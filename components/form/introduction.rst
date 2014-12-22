@@ -8,7 +8,7 @@ The Form Component
     The Form component allows you to easily create, process and reuse HTML
     forms.
 
-The form component is a tool to help you solve the problem of allowing end-users
+The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
 traditionally this has been through HTML forms, the component focuses on
 processing data to and from your client and application, whether that data
@@ -19,8 +19,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Form);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Form).
 
 Configuration
 -------------
@@ -30,7 +30,7 @@ Configuration
     If you are working with the full-stack Symfony framework, the Form component
     is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
 
-In Symfony2, forms are represented by objects and these objects are built
+In Symfony, forms are represented by objects and these objects are built
 by using a *form factory*. Building a form factory is simple::
 
     use Symfony\Component\Form\Forms;
@@ -50,7 +50,7 @@ support for very important features:
 * **Validation:** Integration with a validation library to generate error
   messages for submitted data.
 
-The Symfony2 Form component relies on other libraries to solve these problems.
+The Symfony Form component relies on other libraries to solve these problems.
 Most of the time you will use Twig and the Symfony
 :doc:`HttpFoundation </components/http_foundation/introduction>`,
 Translation and Validator components, but you can replace any of these with
@@ -66,32 +66,46 @@ factory.
 Request Handling
 ~~~~~~~~~~~~~~~~
 
-To process form data, you'll need to grab information off of the request
-(typically ``$_POST`` data) and pass the array of submitted data to
-:method:`Symfony\\Component\\Form\\Form::bind`.  The Form component optionally
-integrates with Symfony's
-:doc:`HttpFoundation </components/http_foundation/introduction>` component to
-make this even easier.
+.. versionadded:: 2.3
+    The ``handleRequest()`` method was introduced in Symfony 2.3.
 
-To integrate the HttpFoundation component, add the
-:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\HttpFoundationExtension`
-to your form factory::
+To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
+method::
 
-    use Symfony\Component\Form\Forms;
-    use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+    $form->handleRequest();
 
-    $formFactory = Forms::createFormFactoryBuilder()
-        ->addExtension(new HttpFoundationExtension())
-        ->getFormFactory();
+Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
+object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
+``$_GET``) based on the HTTP method configured on the form (POST is default).
 
-Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request``
-object to :method:`Symfony\\Component\\Form\\Form::bind` instead of the raw
-array of submitted values.
+.. seealso::
 
-.. note::
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
 
-    For more information about the ``HttpFoundation`` component or how to
-    install it, see :doc:`/components/http_foundation/introduction`.
+.. sidebar:: Integration with the HttpFoundation Component
+
+    If you use the HttpFoundation component, then you should add the
+    :class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
+    to your form factory::
+
+        use Symfony\Component\Form\Forms;
+        use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+
+        $formFactory = Forms::createFormFactoryBuilder()
+            ->addExtension(new HttpFoundationExtension())
+            ->getFormFactory();
+
+    Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
+    object to :method:`Symfony\\Component\\Form\\Form::handleRequest`::
+
+        $form->handleRequest($request);
+
+    .. note::
+
+        For more information about the HttpFoundation component or how to
+        install it, see :doc:`/components/http_foundation/introduction`.
 
 CSRF Protection
 ~~~~~~~~~~~~~~~
@@ -129,7 +143,7 @@ and validated when binding the form.
 
 .. tip::
 
-    If you're not using the HttpFoundation component, load use
+    If you're not using the HttpFoundation component, you can use
     :class:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\DefaultCsrfProvider`
     instead, which relies on PHP's native session handling::
 
@@ -146,20 +160,20 @@ errors, and labels). If you use `Twig`_ as your template engine, the Form
 component offers a rich integration.
 
 To use the integration, you'll need the ``TwigBridge``, which provides integration
-between Twig and several Symfony2 components. If you're using Composer, you
-could install the latest 2.1 version by adding the following ``require``
+between Twig and several Symfony components. If you're using Composer, you
+could install the latest 2.3 version by adding the following ``require``
 line to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/twig-bridge": "2.1.*"
+            "symfony/twig-bridge": "2.3.*"
         }
     }
 
 The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
-that help you render each the HTML widget, label and error for each field
+that help you render the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
@@ -173,8 +187,10 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     $defaultFormTheme = 'form_div_layout.html.twig';
 
     $vendorDir = realpath(__DIR__ . '/../vendor');
-    // the path to TwigBridge so Twig can locate the form_div_layout.html.twig file
-    $vendorTwigBridgeDir = $vendorDir . '/symfony/twig-bridge/Symfony/Bridge/Twig';
+    // the path to TwigBridge so Twig can locate the
+    // form_div_layout.html.twig file
+    $vendorTwigBridgeDir =
+        $vendorDir . '/symfony/twig-bridge/Symfony/Bridge/Twig';
     // the path to your other templates
     $viewsDir = realpath(__DIR__ . '/../views');
 
@@ -185,7 +201,9 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
     // add the FormExtension to Twig
-    $twig->addExtension(new FormExtension(new TwigRenderer($formEngine, $csrfProvider)));
+    $twig->addExtension(
+        new FormExtension(new TwigRenderer($formEngine, $csrfProvider))
+    );
 
     // create your form factory as normal
     $formFactory = Forms::createFormFactoryBuilder()
@@ -218,20 +236,20 @@ text and other strings.
 
 To add these Twig filters, you can either use the built-in
 :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension` that integrates
-with Symfony's ``Translation`` component, or add the 2 Twig filters yourself,
+with Symfony's Translation component, or add the 2 Twig filters yourself,
 via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
-``Translation`` and :doc:`Config </components/config/introduction>` components
-installed. If you're using Composer, you could get the latest 2.1 version
+Translation and :doc:`Config </components/config/introduction>` components
+installed. If you're using Composer, you could get the latest 2.3 version
 of each of these by adding the following to your ``composer.json`` file:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/translation": "2.1.*",
-            "symfony/config": "2.1.*"
+            "symfony/translation": "2.3.*",
+            "symfony/config": "2.3.*"
         }
     }
 
@@ -275,13 +293,13 @@ array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
 it's installed in your application. If you're using Composer and want to
-install the latest 2.1 version, add this to your ``composer.json``:
+install the latest 2.3 version, add this to your ``composer.json``:
 
 .. code-block:: json
 
     {
         "require": {
-            "symfony/validator": "2.1.*"
+            "symfony/validator": "2.3.*"
         }
     }
 
@@ -299,7 +317,8 @@ Your integration with the Validation component will look something like this::
 
     $vendorDir = realpath(__DIR__ . '/../vendor');
     $vendorFormDir = $vendorDir . '/symfony/form/Symfony/Component/Form';
-    $vendorValidatorDir = $vendorDir . '/symfony/validator/Symfony/Component/Validator';
+    $vendorValidatorDir =
+        $vendorDir . '/symfony/validator/Symfony/Component/Validator';
 
     // create the validator - details will vary
     $validator = Validation::createValidator();
@@ -335,12 +354,12 @@ and then access it whenever you need to build a form.
 
 .. note::
 
-    In this document, the form factory is always a locally variable called
+    In this document, the form factory is always a local variable called
     ``$formFactory``. The point here is that you will probably need to create
     this object in some more "global" way so you can access it from anywhere.
 
 Exactly how you gain access to your one form factory is up to you. If you're
-using a :term`Service Container`, then you should add the form factory to
+using a :term:`Service Container`, then you should add the form factory to
 your container and grab it out whenever you need to. If your application
 uses global or static variables (not usually a good idea), then you can store
 the object on some static class or do something similar.
@@ -351,12 +370,12 @@ it throughout your application.
 
 .. _component-form-intro-create-simple-form:
 
-Creating a Simple Form
+Creating a simple Form
 ----------------------
 
 .. tip::
 
-    If you're using the Symfony2 framework, then the form factory is available
+    If you're using the Symfony framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder``
@@ -412,10 +431,10 @@ comes with a lot of :doc:`built-in types </reference/forms/types>`.
 Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
 it and :ref:`process the form submission <component-form-intro-handling-submission>`.
 
-Setting Default Values
+Setting default Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you need you form to load with some default values (or you're building
+If you need your form to load with some default values (or you're building
 an "edit" form), simply pass in the default data when creating your form
 builder:
 
@@ -476,19 +495,56 @@ as this is, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
 to do that in the ":ref:`form-rendering-template`" section.
 
+Changing a Form's Method and Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ability to configure the form method and action was introduced in
+    Symfony 2.3.
+
+By default, a form is submitted to the same URI that rendered the form with
+an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
+and :ref:`form-option-method` options (the ``method`` option is also used
+by ``handleRequest()`` to determine whether a form has been submitted):
+
+.. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $formBuilder = $formFactory->createBuilder('form', null, array(
+            'action' => '/search',
+            'method' => 'GET',
+        ));
+
+        // ...
+
+    .. code-block:: php-symfony
+
+        // ...
+
+        public function searchAction()
+        {
+            $formBuilder = $this->createFormBuilder('form', null, array(
+                'action' => '/search',
+                'method' => 'GET',
+            ));
+
+            // ...
+        }
+
 .. _component-form-intro-handling-submission:
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To handle form submissions, use the :method:`Symfony\\Component\\Form\\Form::bind`
+To handle form submissions, use the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method:
 
 .. configuration-block::
 
     .. code-block:: php-standalone
 
-        use Symfony\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
         $form = $formFactory->createBuilder()
@@ -498,19 +554,17 @@ method:
 
         $request = Request::createFromGlobals();
 
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $data = $form->getData();
+        if ($form->isValid()) {
+            $data = $form->getData();
 
-                // ... perform some action, such as saving the data to the database
+            // ... perform some action, such as saving the data to the database
 
-                $response = new RedirectResponse('/task/success');
-                $response->prepare($request);
+            $response = new RedirectResponse('/task/success');
+            $response->prepare($request);
 
-                return $response->send();
-            }
+            return $response->send();
         }
 
         // ...
@@ -526,17 +580,14 @@ method:
                 ->add('dueDate', 'date')
                 ->getForm();
 
-            // only process the form if the request is a POST request
-            if ($request->isMethod('POST')) {
-                $form->bind($request);
+            $form->handleRequest($request);
 
-                if ($form->isValid()) {
-                    $data = $form->getData();
+            if ($form->isValid()) {
+                $data = $form->getData();
 
-                    // ... perform some action, such as saving the data to the database
+                // ... perform some action, such as saving the data to the database
 
-                    return $this->redirect($this->generateUrl('task_success'));
-                }
+                return $this->redirect($this->generateUrl('task_success'));
             }
 
             // ...
@@ -547,25 +598,15 @@ This defines a common form "workflow", which contains 3 different possibilities:
 1) On the initial GET request (i.e. when the user "surfs" to your page),
    build your form and render it;
 
-If the request is a POST, process the submitted data (via ``bind``). Then:
+If the request is a POST, process the submitted data (via ``handleRequest()``).
+Then:
 
-2) if the form is invalid, re-render the form (which will now contain errors)
-3) if the form is valid, perform some action and redirect;
+2) if the form is invalid, re-render the form (which will now contain errors);
+3) if the form is valid, perform some action and redirect.
 
-.. note::
-
-    If you're not using HttpFoundation, just pass the POST'ed data directly
-    to ``bind``::
-
-        if (isset($_POST[$form->getName()])) {
-            $form->bind($_POST[$form->getName())
-
-            // ...
-        }
-
-    If you're uploading files, you'll need to do a little bit more work by
-    merging the ``$_POST`` array with the ``$_FILES`` array before passing
-    it into ``bind``.
+Luckily, you don't need to decide whether or not a form has been submitted.
+Just pass the current request to the ``handleRequest()`` method. Then, the Form
+component will do all the necessary work for you.
 
 .. _component-form-intro-validation:
 
@@ -618,6 +659,33 @@ and the errors will display next to the fields on error.
 
     For a list of all of the built-in validation constraints, see
     :doc:`/reference/constraints`.
+
+Accessing Form Errors
+~~~~~~~~~~~~~~~~~~~~~
+
+You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
+method to access the list of errors. Each element is a :class:`Symfony\\Component\\Form\\FormError`
+object::
+
+    $form = ...;
+
+    // ...
+
+    // an array of FormError objects, but only errors attached to this form level (e.g. "global errors)
+    $errors = $form->getErrors();
+
+    // an array of FormError objects, but only errors attached to the "firstName" field
+    $errors = $form['firstName']->getErrors();
+
+    // a string representation of all errors of the whole form tree
+    $errors = $form->getErrorsAsString();
+
+.. note::
+
+    If you enable the :ref:`error_bubbling <reference-form-option-error-bubbling>`
+    option on a field, calling ``getErrors()`` on the parent form will include
+    errors from that field. However, there is no way to determine which field
+    an error was originally attached to.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org

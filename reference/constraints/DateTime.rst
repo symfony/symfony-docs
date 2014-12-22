@@ -6,7 +6,7 @@ object or a string (or an object that can be cast into a string) that follows
 a valid YYYY-MM-DD HH:MM:SS format.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -46,11 +46,17 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="createdAt">
-                <constraint name="DateTime" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="createdAt">
+                    <constraint name="DateTime" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -74,6 +80,6 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid datetime``
+**type**: ``string`` **default**: ``This value is not a valid datetime.``
 
 This message is shown if the underlying data is not a valid datetime.

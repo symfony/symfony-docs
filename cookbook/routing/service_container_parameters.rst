@@ -1,11 +1,8 @@
 .. index::
    single: Routing; Service Container Parameters
 
-How to use Service Container Parameters in your Routes
+How to Use Service Container Parameters in your Routes
 ======================================================
-
-.. versionadded:: 2.1
-    The ability to use parameters in your routes was added in Symfony 2.1.
 
 Sometimes you may find it useful to make some parts of your routes
 globally configurable. For instance, if you build an internationalized
@@ -21,21 +18,22 @@ inside your routing configuration:
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         contact:
-            pattern:  /{_locale}/contact
+            path:     /{_locale}/contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
             requirements:
-                _locale: %acme_demo.locales%
+                _locale: "%acme_demo.locales%"
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="contact" pattern="/{_locale}/contact">
+            <route id="contact" path="/{_locale}/contact">
                 <default key="_controller">AcmeDemoBundle:Main:contact</default>
                 <requirement key="_locale">%acme_demo.locales%</requirement>
             </route>
@@ -43,6 +41,7 @@ inside your routing configuration:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -75,35 +74,37 @@ in your container:
 
     .. code-block:: php
 
-        # app/config/config.php
+        // app/config/config.php
         $container->setParameter('acme_demo.locales', 'en|es');
 
-You can also use a parameter to define your route pattern (or part of your
-pattern):
+You can also use a parameter to define your route path (or part of your
+path):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         some_route:
-            pattern:  /%acme_demo.route_prefix%/contact
+            path:     /%acme_demo.route_prefix%/contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
 
     .. code-block:: xml
 
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="some_route" pattern="/%acme_demo.route_prefix%/contact">
+            <route id="some_route" path="/%acme_demo.route_prefix%/contact">
                 <default key="_controller">AcmeDemoBundle:Main:contact</default>
             </route>
         </routes>
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -117,5 +118,14 @@ pattern):
 .. note::
 
     Just like in normal service container configuration files, if you actually
-    need a ``%`` in  your route, you can escape the percent sign by doubling
+    need a ``%`` in your route, you can escape the percent sign by doubling
     it, e.g. ``/score-50%%``, which would resolve to ``/score-50%``.
+
+    However, as the ``%`` characters included in any URL are automatically encoded,
+    the resulting URL of this example would be ``/score-50%25`` (``%25`` is the
+    result of encoding the ``%`` character).
+
+.. seealso::
+
+    For parameter handling within a Dependency Injection class see
+    :doc:`/cookbook/configuration/using_parameters_in_dic`.

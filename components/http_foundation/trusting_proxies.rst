@@ -4,21 +4,31 @@
 Trusting Proxies
 ================
 
+.. tip::
+
+    If you're using the Symfony Framework, start by reading
+    :doc:`/cookbook/request/load_balancer_reverse_proxy`.
+
 If you find yourself behind some sort of proxy - like a load balancer - then
 certain header information may be sent to you using special ``X-Forwarded-*``
 headers. For example, the ``Host`` HTTP header is usually used to return
 the requested host. But when you're behind a proxy, the true host may be
 stored in a ``X-Forwarded-Host`` header.
 
-Since HTTP headers can be spoofed, Symfony2 does *not* trust these proxy
+Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
-your proxy::
+your proxy.
+
+.. versionadded:: 2.3
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
+    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Request;
 
-    $request = Request::createFromGlobals();
-    // only trust proxy headers coming from this IP address
-    $request->setTrustedProxies(array('192.0.0.1'));
+    // only trust proxy headers coming from this IP addresses
+    Request::setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
 
 Configuring Header Names
 ------------------------
@@ -33,12 +43,12 @@ By default, the following proxy headers are trusted:
 If your reverse proxy uses a different header name for any of these, you
 can configure that header name via :method:`Symfony\\Component\\HttpFoundation\\Request::setTrustedHeaderName`::
 
-    $request->setTrustedHeaderName(Request::HEADER_CLIENT_IP, 'X-Proxy-For');
-    $request->setTrustedHeaderName(Request::HEADER_CLIENT_HOST, 'X-Proxy-Host');
-    $request->setTrustedHeaderName(Request::HEADER_CLIENT_PORT, 'X-Proxy-Port');
-    $request->setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, 'X-Proxy-Proto');
+    Request::setTrustedHeaderName(Request::HEADER_CLIENT_IP, 'X-Proxy-For');
+    Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, 'X-Proxy-Host');
+    Request::setTrustedHeaderName(Request::HEADER_CLIENT_PORT, 'X-Proxy-Port');
+    Request::setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, 'X-Proxy-Proto');
 
-Not trusting certain Headers
+Not Trusting certain Headers
 ----------------------------
 
 By default, if you whitelist your proxy's IP address, then all four headers
@@ -46,4 +56,4 @@ listed above are trusted. If you need to trust some of these headers but
 not others, you can do that as well::
 
     // disables trusting the ``X-Forwarded-Proto`` header, the default header is used
-    $request->setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, '');
+    Request::setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, '');

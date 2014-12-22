@@ -5,7 +5,7 @@
 The DomCrawler Component
 ========================
 
-    The DomCrawler Component eases DOM navigation for HTML and XML documents.
+    The DomCrawler component eases DOM navigation for HTML and XML documents.
 
 .. note::
 
@@ -17,8 +17,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/DomCrawler);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/DomCrawler).
 
 Usage
 -----
@@ -52,6 +52,16 @@ Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
 interacting with html links and forms as you traverse through the HTML tree.
 
+.. note::
+
+    The DomCrawler will attempt to automatically fix your HTML to match the
+    official specification. For example, if you nest a ``<p>`` tag inside
+    another ``<p>`` tag, it will be moved to be a sibling of the parent tag.
+    This is expected and is part of the HTML5 spec. But if you're getting
+    unexpected behavior, this could be a cause. And while the DomCrawler
+    isn't meant to dump content, you can see the "fixed" version of your HTML
+    by :ref:`dumping it <component-dom-crawler-dumping>`.
+
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -63,17 +73,22 @@ Using XPath expressions is really easy::
 
     ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
-Filtering is even easier if you have the ``CssSelector`` Component installed.
+Filtering is even easier if you have the CssSelector component installed.
 This allows you to use jQuery-like selectors to traverse::
 
     $crawler = $crawler->filter('body > p');
 
 Anonymous function can be used to filter with more complex criteria::
 
-    $crawler = $crawler->filter('body > p')->reduce(function ($node, $i) {
-        // filter even nodes
-        return ($i % 2) == 0;
-    });
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $crawler = $crawler
+        ->filter('body > p')
+        ->reduce(function (Crawler $node, $i) {
+            // filter even nodes
+            return ($i % 2) == 0;
+        });
 
 To remove a node the anonymous function must return false.
 
@@ -137,11 +152,19 @@ Extract attribute and/or node values from the list of nodes::
 
 Call an anonymous function on each node of the list::
 
-    $nodeValues = $crawler->filter('p')->each(function ($node, $i) {
+    use Symfony\Component\DomCrawler\Crawler;
+    // ...
+
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
         return $node->text();
     });
 
-The anonymous function receives the position and the node as arguments.
+.. versionadded:: 2.3
+    As seen here, in Symfony 2.3, the ``each`` and ``reduce`` Closure functions
+    are passed a ``Crawler`` as the first argument. Previously, that argument
+    was a :phpclass:`DOMNode`.
+
+The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
 Adding the Content
@@ -184,6 +207,8 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNode($node);
     $crawler->add($document);
 
+.. _component-dom-crawler-dumping:
+
 .. sidebar:: Manipulating and Dumping a ``Crawler``
 
     These methods on the ``Crawler`` are intended to initially populate your
@@ -193,20 +218,22 @@ and :phpclass:`DOMNode` objects:
     on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
     For example, you could get the HTML of a ``Crawler`` with something like
     this::
-    
+
         $html = '';
 
         foreach ($crawler as $domElement) {
             $html .= $domElement->ownerDocument->saveHTML($domElement);
         }
 
-Form and Link support
-~~~~~~~~~~~~~~~~~~~~~
+    Or you can get the HTML of the first node using
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
 
-Special treatment is given to links and forms inside the DOM tree.
+        $html = $crawler->html();
+
+    The ``html`` method is new in Symfony 2.3.
 
 Links
-.....
+~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
 the ``selectLink`` method on an existing crawler. This returns a Crawler
@@ -234,7 +261,7 @@ methods to get more information about the selected link itself::
     URI that you can act on.
 
 Forms
-.....
+~~~~~
 
 Special treatment is also given to forms. A ``selectButton()`` method is
 available on the Crawler which returns another Crawler that matches a button
@@ -309,7 +336,7 @@ and uploading files::
     // select an option
     $form['registration[birthday][year]']->select(1984);
 
-    // select many options from a "multiple" select or checkboxes
+    // select many options from a "multiple" select
     $form['registration[interests]']->select(array('symfony', 'cookies'));
 
     // even fake a file upload

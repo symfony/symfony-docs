@@ -1,8 +1,10 @@
 .. index::
     single: Web Services; SOAP
 
-How to Create a SOAP Web Service in a Symfony2 Controller
-=========================================================
+.. _how-to-create-a-soap-web-service-in-a-symfony2-controller:
+
+How to Create a SOAP Web Service in a Symfony Controller
+========================================================
 
 Setting up a controller to act as a SOAP server is simple with a couple
 tools. You must, of course, have the `PHP SOAP`_ extension installed.
@@ -44,7 +46,6 @@ In this case, the SOAP service will allow the client to call a method called
 
             $this->mailer->send($message);
 
-
             return 'Hello, '.$name;
         }
     }
@@ -80,7 +81,6 @@ a ``HelloService`` object properly:
             ->register('hello_service', 'Acme\SoapBundle\Services\HelloService')
             ->addArgument(new Reference('mailer'));
 
-
 Below is an example of a controller that is capable of handling a SOAP
 request. If ``indexAction()`` is accessible via the route ``/soap``, then the
 WSDL document can be retrieved via ``/soap?wsdl``.
@@ -115,12 +115,12 @@ methods control `output buffering`_ which allows you to "trap" the echoed
 output of ``$server->handle()``. This is necessary because Symfony expects
 your controller to return a ``Response`` object with the output as its "content".
 You must also remember to set the "Content-Type" header to "text/xml", as
-this is what the client  will expect. So, you use ``ob_start()`` to start
+this is what the client will expect. So, you use ``ob_start()`` to start
 buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
 into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
-Below is an example calling the service using `NuSOAP`_ client. This example
+Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
@@ -170,7 +170,7 @@ An example WSDL is below.
             <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
             <operation name="hello">
                 <soap:operation soapAction="urn:arnleadservicewsdl#hello" style="rpc"/>
-                
+
                 <input>
                     <soap:body use="encoded" namespace="urn:hellowsdl"
                         encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
@@ -189,7 +189,6 @@ An example WSDL is below.
             </port>
         </service>
     </definitions>
-
 
 .. _`PHP SOAP`:          http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`:            http://sourceforge.net/projects/nusoap

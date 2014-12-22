@@ -1,11 +1,11 @@
 .. index::
    single: Security; Customizing form login
 
-How to customize your Form Login
+How to Customize your Form Login
 ================================
 
-Using a :ref:`form login<book-security-form-login>` for authentication is
-a common, and flexible, method for handling authentication in Symfony2. Pretty
+Using a :ref:`form login <book-security-form-login>` for authentication is
+a common, and flexible, method for handling authentication in Symfony. Pretty
 much every aspect of the form login can be customized. The full, default
 configuration is shown in the next section.
 
@@ -23,7 +23,7 @@ You can change where the login form redirects after a successful login using
 the various config options. By default the form will redirect to the URL the
 user requested (i.e. the URL which triggered the login form being shown).
 For example, if the user requested ``http://www.example.com/admin/post/18/edit``,
-then after she successfully logs in, she will eventually be sent back to
+then after they successfully log in, they will eventually be sent back to
 ``http://www.example.com/admin/post/18/edit``.
 This is done by storing the requested URL in the session.
 If no URL is present in the session (perhaps the user went
@@ -33,13 +33,13 @@ in several ways.
 
 .. note::
 
-    As mentioned, by default the user is redirected back to the page he originally
-    requested. Sometimes, this can cause problems, like if a background AJAX
+    As mentioned, by default the user is redirected back to the page originally
+    requested. Sometimes, this can cause problems, like if a background Ajax
     request "appears" to be the last visited URL, causing the user to be
     redirected there. For information on controlling this behavior, see
     :doc:`/cookbook/security/target_path`.
 
-Changing the Default Page
+Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, the default page can be set (i.e. the page the user is redirected to
@@ -88,11 +88,11 @@ if no previous page was stored in the session). To set it to the
 Now, when no URL is set in the session, users will be sent to the
 ``default_security_target`` route.
 
-Always Redirect to the Default Page
+Always Redirect to the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can make it so that users are always redirected to the default page regardless
-of what URL they had requested previously by setting the 
+of what URL they had requested previously by setting the
 ``always_use_default_target_path`` option to true:
 
 .. configuration-block::
@@ -106,7 +106,7 @@ of what URL they had requested previously by setting the
                     form_login:
                         # ...
                         always_use_default_target_path: true
-                        
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -139,7 +139,7 @@ Using the Referring URL
 
 In case no previous URL was stored in the session, you may wish to try using
 the ``HTTP_REFERER`` instead, as this will often be the same. You can do
-this by setting ``use_referer`` to true (it defaults to false): 
+this by setting ``use_referer`` to true (it defaults to false):
 
 .. configuration-block::
 
@@ -180,14 +180,10 @@ this by setting ``use_referer`` to true (it defaults to false):
             ),
         ));
 
-.. versionadded:: 2.1
-    As of 2.1, if the referer is equal to the ``login_path`` option, the
-    user will be redirected to the ``default_target_path``.
-
 Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also override where the user is redirected to via the form itself by 
+You can also override where the user is redirected to via the form itself by
 including a hidden field with the name ``_target_path``. For example, to
 redirect to the URL defined by some ``account`` route, use the following:
 
@@ -217,7 +213,7 @@ redirect to the URL defined by some ``account`` route, use the following:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
@@ -227,13 +223,13 @@ redirect to the URL defined by some ``account`` route, use the following:
             <input type="password" id="password" name="_password" />
 
             <input type="hidden" name="_target_path" value="account" />
-            
+
             <input type="submit" name="login" />
         </form>
 
 Now, the user will be redirected to the value of the hidden form field. The
-value attribute can be a relative path, absolute URL, or a route name. You 
-can even change the name of the hidden form field by changing the ``target_path_parameter`` 
+value attribute can be a relative path, absolute URL, or a route name. You
+can even change the name of the hidden form field by changing the ``target_path_parameter``
 option to another value.
 
 .. configuration-block::
@@ -291,7 +287,7 @@ back to the login form itself. You can set this to a different route (e.g.
                     form_login:
                         # ...
                         failure_path: login_failure
-                        
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->

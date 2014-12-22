@@ -1,4 +1,4 @@
-Our Backwards Compatibility Promise
+Our backwards Compatibility Promise
 ===================================
 
 Ensuring smooth upgrades of your projects is our first priority. That's why
@@ -39,7 +39,7 @@ If you are using Symfony in your projects, the following guidelines will help
 you to ensure smooth upgrades to all future minor releases of your Symfony
 version.
 
-Using Our Interfaces
+Using our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
 
 All interfaces shipped with Symfony can be used in type hints. You can also call
@@ -101,7 +101,7 @@ backwards compatibility promise:
 
 .. include:: _api_tagging.rst.inc
 
-Using Our Classes
+Using our Classes
 ~~~~~~~~~~~~~~~~~
 
 All classes provided by Symfony may be instantiated and accessed through their
@@ -138,7 +138,7 @@ your overridden method wouldn't match anymore and generate a fatal error.
 .. note::
 
     As with interfaces, we limit ourselves to changes that can be upgraded
-    easily. We will document the precise ugprade instructions in the UPGRADE
+    easily. We will document the precise upgrade instructions in the UPGRADE
     file in Symfony's root directory.
 
 In some cases, only specific properties and methods are tagged with the ``@api``
@@ -238,7 +238,7 @@ Symfony's classes:
 Type of Change                                      Regular         API
 ==================================================  ==============  ==============
 Remove entirely                                     No              No
-Make final                                          Yes [2]_        No
+Make final                                          No              No
 Make abstract                                       No              No
 Change name or namespace                            No              No
 Change parent class                                 Yes [7]_        Yes [7]_
@@ -307,6 +307,9 @@ Add type hint to an argument                        Yes             Yes
 Remove type hint of an argument                     Yes             Yes
 Change argument type                                Yes             Yes
 Change return type                                  Yes             Yes
+**Static Methods**
+Turn non static into static                         No              No
+Turn static into non static                         No              No
 ==================================================  ==============  ==============
 
 .. [1] Your code may be broken by changes in the Symfony code. Such changes will

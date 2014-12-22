@@ -1,7 +1,7 @@
 .. index::
-   single: Environments; External parameters
+    single: Environments; External parameters
 
-How to Set External Parameters in the Service Container
+How to Set external Parameters in the Service Container
 =======================================================
 
 In the chapter :doc:`/cookbook/configuration/environments`, you learned how
@@ -14,9 +14,13 @@ Environment Variables
 ---------------------
 
 Symfony will grab any environment variable prefixed with ``SYMFONY__`` and
-set it as a parameter in the service container.  Double underscores are replaced
-with a period, as a period is not a valid character in an environment variable
-name.
+set it as a parameter in the service container. Some transformations are 
+applied to the resulting parameter name:
+
+* ``SYMFONY__`` prefix is removed;
+* Parameter name is lowercased;
+* Double underscores are replaced with a period, as a period is not 
+  a valid character in an environment variable name.
 
 For example, if you're using Apache, environment variables can be set using
 the following ``VirtualHost`` configuration:
@@ -24,7 +28,7 @@ the following ``VirtualHost`` configuration:
 .. code-block:: apache
 
     <VirtualHost *:80>
-        ServerName      Symfony2
+        ServerName      Symfony
         DocumentRoot    "/path/to/symfony_2_app/web"
         DirectoryIndex  index.php index.html
         SetEnv          SYMFONY__DATABASE__USER user
@@ -39,7 +43,7 @@ the following ``VirtualHost`` configuration:
 .. note::
 
     The example above is for an Apache configuration, using the `SetEnv`_
-    directive.  However, this will work for any web server which supports
+    directive. However, this will work for any web server which supports
     the setting of environment variables.
 
     Also, in order for your console to work (which does not use Apache),
@@ -65,7 +69,7 @@ You can now reference these parameters wherever you need them.
         doctrine:
             dbal:
                 driver    pdo_mysql
-                dbname:   symfony2_project
+                dbname:   symfony_project
                 user:     "%database.user%"
                 password: "%database.password%"
 
@@ -77,7 +81,7 @@ You can now reference these parameters wherever you need them.
         <doctrine:config>
             <doctrine:dbal
                 driver="pdo_mysql"
-                dbname="symfony2_project"
+                dbname="symfony_project"
                 user="%database.user%"
                 password="%database.password%"
             />
@@ -88,11 +92,19 @@ You can now reference these parameters wherever you need them.
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'driver'   => 'pdo_mysql',
-                'dbname'   => 'symfony2_project',
+                'dbname'   => 'symfony_project',
                 'user'     => '%database.user%',
                 'password' => '%database.password%',
             )
         ));
+
+.. note::
+
+    Even in debug mode, setting or changing an environment variable
+    requires your cache to be cleared to make the parameter available.
+    In debug mode, this is required since only a change to a configuration
+    file that is loaded by Symfony triggers your configuration to be
+    re-evaluated.
 
 Constants
 ---------
@@ -133,8 +145,8 @@ in the container. The following imports a file named ``parameters.php``.
     closure resources are all supported by the ``imports`` directive.
 
 In ``parameters.php``, tell the service container the parameters that you wish
-to set. This is useful when important configuration is in a nonstandard
-format. The example below includes a Drupal database's configuration in
+to set. This is useful when important configuration is in a non-standard
+format. The example below includes a Drupal database configuration in
 the Symfony service container.
 
 .. code-block:: php

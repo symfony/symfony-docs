@@ -1,7 +1,7 @@
-Managing Vendor Libraries with composer.json
---------------------------------------------
+Managing Vendor Libraries with ``composer.json``
+------------------------------------------------
 
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
 Every Symfony project uses a group of third-party "vendor" libraries. One
@@ -11,7 +11,7 @@ you need for each.
 
 By default, these libraries are downloaded by running a ``php composer.phar install``
 "downloader" binary. This ``composer.phar`` file is from a library called
-`Composer`_ and you can read more about installing it in the :ref:`Installation<installation-updating-vendors>`
+`Composer`_ and you can read more about installing it in the :ref:`Installation <installation-updating-vendors>`
 chapter.
 
 The ``composer.phar`` file reads from the ``composer.json`` file at the root
@@ -24,29 +24,12 @@ To upgrade your libraries to new versions, run ``php composer.phar update``.
 
 .. tip::
 
-    If you want to add a new package to your application, modify the ``composer.json``
-    file:
-
-    .. code-block:: json
-
-        {
-            "require": {
-                ...
-                "doctrine/doctrine-fixtures-bundle": "@dev"
-            }
-        }
-
-    and then execute the ``update`` command for this specific package, i.e.:
+    If you want to add a new package to your application, run the composer
+    ``require`` command:
 
     .. code-block:: bash
 
-        $ php composer.phar update doctrine/doctrine-fixtures-bundle
-
-    You can also combine both steps into a single command:
-
-    .. code-block:: bash
-
-        $ php composer.phar require doctrine/doctrine-fixtures-bundle:@dev
+        $ php composer.phar require doctrine/doctrine-fixtures-bundle
 
 To learn more about Composer, see `GetComposer.org`_:
 
@@ -59,7 +42,7 @@ and download the exact same set of vendor libraries. This means that you're
 controlling exactly what each vendor library looks like, without needing to
 actually commit them to *your* repository.
 
-So, whenever a developer uses your project, he/she should run the ``php composer.phar install``
+So, whenever a developer uses your project, they should run the ``php composer.phar install``
 script to ensure that all of the needed vendor libraries are downloaded.
 
 .. sidebar:: Upgrading Symfony

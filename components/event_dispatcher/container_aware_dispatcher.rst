@@ -1,19 +1,16 @@
 .. index::
-   single: Event Dispatcher; Service container aware
+   single: EventDispatcher; Service container aware
 
 The Container Aware Event Dispatcher
 ====================================
-
-.. versionadded:: 2.1
-    This feature was moved into the EventDispatcher component in Symfony 2.1.
 
 Introduction
 ------------
 
 The :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher` is
-a special event dispatcher implementation which is coupled to the service container
-that is part of :doc:`the Dependency Injection component</components/dependency_injection/introduction>`.
-It allows services to be specified as event listeners making the event dispatcher
+a special EventDispatcher implementation which is coupled to the service container
+that is part of :doc:`the DependencyInjection component </components/dependency_injection/introduction>`.
+It allows services to be specified as event listeners making the EventDispatcher
 extremely powerful.
 
 Services are lazy loaded meaning the services attached as listeners will only be
@@ -34,7 +31,7 @@ into the :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatc
 Adding Listeners
 ----------------
 
-The *Container Aware Event Dispatcher* can either load specified services
+The *Container Aware EventDispatcher* can either load specified services
 directly, or services that implement :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`.
 
 The following examples assume the service container has been loaded with any

@@ -4,11 +4,8 @@ Count
 Validates that a given collection's (i.e. an array or an object that implements Countable)
 element count is *between* some minimum and maximum value.
 
-.. versionadded:: 2.1
-    The Count constraint was added in Symfony 2.1.
-
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `min`_                                                            |
 |                | - `max`_                                                            |
@@ -64,16 +61,22 @@ you might add the following:
     .. code-block:: xml
 
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
-        <class name="Acme\EventBundle\Entity\Participant">
-            <property name="emails">
-                <constraint name="Count">       
-                    <option name="min">1</option> 
-                    <option name="max">5</option> 
-                    <option name="minMessage">You must specify at least one email</option>
-                    <option name="maxMessage">You cannot specify more than {{ limit }} emails</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Participant">
+                <property name="emails">
+                    <constraint name="Count">
+                        <option name="min">1</option>
+                        <option name="max">5</option>
+                        <option name="minMessage">You must specify at least one email</option>
+                        <option name="maxMessage">You cannot specify more than {{ limit }} emails</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -102,7 +105,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "min" count value. Validation will fail if the given
 collection elements count is **less** than this min value.
@@ -110,7 +113,7 @@ collection elements count is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "max" count value. Validation will fail if the given
 collection elements count is **greater** than this max value.
@@ -118,21 +121,21 @@ collection elements count is **greater** than this max value.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``.
+**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``
 
 The message that will be shown if the underlying collection elements count is less than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or less.``.
+**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or less.``
 
 The message that will be shown if the underlying collection elements count is more than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``.
+**type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
-The message that will be shown if min and max values are equal and the underlying collection elements 
+The message that will be shown if min and max values are equal and the underlying collection elements
 count is not exactly this value.

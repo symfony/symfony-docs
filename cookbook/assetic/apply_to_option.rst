@@ -1,16 +1,16 @@
 .. index::
    single: Assetic; Apply filters
 
-How to Apply an Assetic Filter to a Specific File Extension
+How to Apply an Assetic Filter to a specific File Extension
 ===========================================================
 
 Assetic filters can be applied to individual files, groups of files or even,
 as you'll see here, files that have a specific extension. To show you how
-to handle each option, let's suppose that you want to use Assetic's CoffeeScript
-filter, which compiles CoffeeScript files into Javascript.
+to handle each option, suppose that you want to use Assetic's CoffeeScript
+filter, which compiles CoffeeScript files into JavaScript.
 
-The main configuration is just the paths to coffee and node. These default
-respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
+The main configuration is just the paths to coffee, node and node_modules.
+An example configuration might look like this:
 
 .. configuration-block::
 
@@ -20,8 +20,9 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
         assetic:
             filters:
                 coffee:
-                    bin: /usr/bin/coffee
-                    node: /usr/bin/node
+                    bin:        /usr/bin/coffee
+                    node:       /usr/bin/node
+                    node_paths: [/usr/lib/node_modules/]
 
     .. code-block:: xml
 
@@ -29,8 +30,10 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
         <assetic:config>
             <assetic:filter
                 name="coffee"
-                bin="/usr/bin/coffee"
-                node="/usr/bin/node" />
+                bin="/usr/bin/coffee/"
+                node="/usr/bin/node/">
+                <assetic:node-path>/usr/lib/node_modules/</assetic:node-path>
+            </assetic:filter>
         </assetic:config>
 
     .. code-block:: php
@@ -41,11 +44,12 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
                 'coffee' => array(
                     'bin'  => '/usr/bin/coffee',
                     'node' => '/usr/bin/node',
+                    'node_paths' => array('/usr/lib/node_modules/'),
                 ),
             ),
         ));
 
-Filter a Single File
+Filter a single File
 --------------------
 
 You can now serve up a single CoffeeScript file as JavaScript from within your
@@ -66,12 +70,12 @@ templates:
             array('coffee')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
-This is all that's needed to compile this CoffeeScript file and server it
+This is all that's needed to compile this CoffeeScript file and serve it
 as the compiled JavaScript.
 
-Filter Multiple Files
+Filter multiple Files
 ---------------------
 
 You can also combine multiple CoffeeScript files into a single output file:
@@ -96,14 +100,14 @@ You can also combine multiple CoffeeScript files into a single output file:
             array('coffee')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Both the files will now be served up as a single file compiled into regular
 JavaScript.
 
 .. _cookbook-assetic-apply-to:
 
-Filtering based on a File Extension
+Filtering Based on a File Extension
 -----------------------------------
 
 One of the great advantages of using Assetic is reducing the number of asset
@@ -115,7 +119,7 @@ work as the regular JavaScript files will not survive the CoffeeScript compilati
 
 This problem can be avoided by using the ``apply_to`` option in the config,
 which allows you to specify that a filter should always be applied to particular
-file extensions. In this case you can specify that the Coffee filter is
+file extensions. In this case you can specify that the ``coffee`` filter is
 applied to all ``.coffee`` files:
 
 .. configuration-block::
@@ -126,9 +130,10 @@ applied to all ``.coffee`` files:
         assetic:
             filters:
                 coffee:
-                    bin: /usr/bin/coffee
-                    node: /usr/bin/node
-                    apply_to: "\.coffee$"
+                    bin:        /usr/bin/coffee
+                    node:       /usr/bin/node
+                    node_paths: [/usr/lib/node_modules/]
+                    apply_to:   "\.coffee$"
 
     .. code-block:: xml
 
@@ -139,6 +144,7 @@ applied to all ``.coffee`` files:
                 bin="/usr/bin/coffee"
                 node="/usr/bin/node"
                 apply_to="\.coffee$" />
+                <assetic:node-paths>/usr/lib/node_modules/</assetic:node-path>
         </assetic:config>
 
     .. code-block:: php
@@ -149,6 +155,7 @@ applied to all ``.coffee`` files:
                 'coffee' => array(
                     'bin'      => '/usr/bin/coffee',
                     'node'     => '/usr/bin/node',
+                    'node_paths' => array('/usr/lib/node_modules/'),
                     'apply_to' => '\.coffee$',
                 ),
             ),
@@ -179,4 +186,4 @@ being run through the CoffeeScript filter):
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>

@@ -6,7 +6,7 @@ set of *valid* choices. It can also be used to validate that each item in
 an array of items is one of those valid choices.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `choices`_                                                          |
 |                | - `callback`_                                                         |
@@ -64,17 +64,23 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="gender">
-                <constraint name="Choice">
-                    <option name="choices">
-                        <value>male</value>
-                        <value>female</value>
-                    </option>
-                    <option name="message">Choose a valid gender.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="gender">
+                    <constraint name="Choice">
+                        <option name="choices">
+                            <value>male</value>
+                            <value>female</value>
+                        </option>
+                        <option name="message">Choose a valid gender.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -118,7 +124,7 @@ form element.
         }
     }
 
-You can pass the name of this method to the `callback_` option of the ``Choice``
+You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.
 
 .. configuration-block::
@@ -149,13 +155,19 @@ constraint.
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="gender">
-                <constraint name="Choice">
-                    <option name="callback">getGenders</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="gender">
+                    <constraint name="Choice">
+                        <option name="callback">getGenders</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -208,16 +220,22 @@ you can pass the class name and the method as an array.
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="gender">
-                <constraint name="Choice">
-                    <option name="callback">
-                        <value>Util</value>
-                        <value>getGenders</value>
-                    </option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="gender">
+                    <constraint name="Choice">
+                        <option name="callback">
+                            <value>Util</value>
+                            <value>getGenders</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -245,7 +263,7 @@ Available Options
 choices
 ~~~~~~~
 
-**type**: ``array`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` [:ref:`default option <validation-default-option>`]
 
 A required option (unless `callback`_ is specified) - this is the array
 of options that should be considered in the valid set. The input value
@@ -293,7 +311,7 @@ will fail.
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``The value you selected is not a valid choice``
+**type**: ``string`` **default**: ``The value you selected is not a valid choice.``
 
 This is the message that you will receive if the ``multiple`` option is set
 to ``false``, and the underlying value is not in the valid array of choices.
@@ -301,7 +319,7 @@ to ``false``, and the underlying value is not in the valid array of choices.
 multipleMessage
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``One or more of the given values is invalid``
+**type**: ``string`` **default**: ``One or more of the given values is invalid.``
 
 This is the message that you will receive if the ``multiple`` option is set
 to ``true``, and one of the values on the underlying array being checked
@@ -310,7 +328,7 @@ is not in the array of valid choices.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``You must select at least {{ limit }} choices``
+**type**: ``string`` **default**: ``You must select at least {{ limit }} choices.``
 
 This is the validation error message that's displayed when the user chooses
 too few choices per the `min`_ option.
@@ -318,7 +336,7 @@ too few choices per the `min`_ option.
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``You must select at most {{ limit }} choices``
+**type**: ``string`` **default**: ``You must select at most {{ limit }} choices.``
 
 This is the validation error message that's displayed when the user chooses
 too many options per the `max`_ option.

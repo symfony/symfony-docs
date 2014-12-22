@@ -5,7 +5,7 @@
 The Routing Component
 =====================
 
-   The Routing Component maps an HTTP request to a set of configuration
+   The Routing component maps an HTTP request to a set of configuration
    variables.
 
 Installation
@@ -13,8 +13,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Routing);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/routing`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/routing`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Routing).
 
 Usage
 -----
@@ -25,7 +25,7 @@ In order to set up a basic routing system you need three parts:
 * A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information about the request
 * A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the request to a single route
 
-Let's see a quick example. Notice that this assumes that you've already configured
+Here is a quick example. Notice that this assumes that you've already configured
 your autoloader to load the Routing component::
 
     use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -49,12 +49,12 @@ your autoloader to load the Routing component::
     Be careful when using ``$_SERVER['REQUEST_URI']``, as it may include
     any query parameters on the URL, which will cause problems with route
     matching. An easy way to solve this is to use the HttpFoundation component
-    as explained :ref:`below<components-routing-http-foundation>`.
+    as explained :ref:`below <components-routing-http-foundation>`.
 
 You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
 
-The :method:`RouteCollection::add()<Symfony\\Component\\Routing\\RouteCollection::add>`
+The :method:`RouteCollection::add() <Symfony\\Component\\Routing\\RouteCollection::add>`
 method takes two arguments. The first is the name of the route. The second
 is a :class:`Symfony\\Component\\Routing\\Route` object, which expects a
 URL path and some array of custom variables in its constructor. This array
@@ -67,31 +67,45 @@ If no matching route can be found a
 In addition to your array of custom variables, a ``_route`` key is added,
 which holds the name of the matched route.
 
-Defining routes
+Defining Routes
 ~~~~~~~~~~~~~~~
 
-A full route definition can contain up to four parts:
+A full route definition can contain up to seven parts:
 
-1. The URL pattern route. This is matched against the URL passed to the `RequestContext`,
-and can contain named wildcard placeholders (e.g. ``{placeholders}``)
-to match dynamic parts in the URL.
+1. The URL path route. This is matched against the URL passed to the `RequestContext`,
+   and can contain named wildcard placeholders (e.g. ``{placeholders}``)
+   to match dynamic parts in the URL.
 
 2. An array of default values. This contains an array of arbitrary values
-that will be returned when the request matches the route.
+   that will be returned when the request matches the route.
 
 3. An array of requirements. These define constraints for the values of the
-placeholders as regular expressions.
+   placeholders as regular expressions.
 
 4. An array of options. These contain internal settings for the route and
-are the least commonly needed.
+   are the least commonly needed.
+
+5. A host. This is matched against the host of the request. See
+   :doc:`/components/routing/hostname_pattern` for more details.
+
+6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
+
+7. An array of methods. These enforce a certain HTTP request method (``HEAD``,
+   ``GET``, ``POST``, ...).
+
+.. versionadded:: 2.2
+    Host matching support was introduced in Symfony 2.2
 
 Take the following route, which combines several of these ideas::
 
    $route = new Route(
        '/archive/{month}', // path
        array('controller' => 'showArchive'), // default values
-       array('month' => '[0-9]{4}-[0-9]{2}'), // requirements
-       array() // options
+       array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
+       array(), // options
+       '{subdomain}.example.com', // host
+       array(), // schemes
+       array() // methods
    );
 
    // ...
@@ -99,8 +113,9 @@ Take the following route, which combines several of these ideas::
    $parameters = $matcher->match('/archive/2012-01');
    // array(
    //     'controller' => 'showArchive',
-   //     'month'      => '2012-01',
-   //     '_route'     => ...
+   //     'month' => '2012-01',
+   //     'subdomain' => 'www',
+   //     '_route' => ...
    //  )
 
    $parameters = $matcher->match('/archive/foo');
@@ -110,24 +125,9 @@ In this case, the route is matched by ``/archive/2012-01``, because the ``{month
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
 
-Besides the regular expression constraints there are two special requirements
-you can define:
-
-* ``_method`` enforces a certain HTTP request method (``HEAD``, ``GET``, ``POST``, ...)
-* ``_scheme`` enforces a certain HTTP scheme (``http``, ``https``)
-
-For example, the following route would only accept requests to /foo with
-the POST method and a secure connection::
-
-   $route = new Route(
-       '/foo',
-       array(),
-       array('_method' => 'post', '_scheme' => 'https' )
-   );
-
 .. tip::
 
-    If you want to match all urls which start with a certain path and end in an
+    If you want to match all URLs which start with a certain path and end in an
     arbitrary suffix you can use the following route definition::
 
         $route = new Route(
@@ -141,20 +141,26 @@ Using Prefixes
 
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
-This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements and default options to all routes of a subtree::
+This way you can build a tree of routes. Additionally you can define a prefix
+and default values for the parameters, requirements, options, schemes and the
+host to all routes of a subtree using methods provided by the
+``RouteCollection`` class::
 
     $rootCollection = new RouteCollection();
 
     $subCollection = new RouteCollection();
     $subCollection->add(...);
     $subCollection->add(...);
+    $subCollection->addPrefix('/prefix');
+    $subCollection->addDefaults(array(...));
+    $subCollection->addRequirements(array(...));
+    $subCollection->addOptions(array(...));
+    $subCollection->setHost('admin.example.com');
+    $subCollection->setMethods(array('POST'));
+    $subCollection->setSchemes(array('https'));
 
-    $rootCollection->addCollection(
-        $subCollection,
-        '/prefix',
-        array('_scheme' => 'https')
-    );
+    $rootCollection->addCollection($subCollection);
+
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,14 +175,16 @@ with this class via its constructor::
         $host = 'localhost',
         $scheme = 'http',
         $httpPort = 80,
-        $httpsPort = 443
+        $httpsPort = 443,
+        $path = '/',
+        $queryString = ''
     )
 
 .. _components-routing-http-foundation:
 
 Normally you can pass the values from the ``$_SERVER`` variable to populate the
 :class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
-:doc:`HttpFoundation</components/http_foundation/index>` component, you can use its
+:doc:`HttpFoundation </components/http_foundation/index>` component, you can use its
 :class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 
@@ -208,9 +216,9 @@ a certain route::
 
 .. note::
 
-    If you have defined the ``_scheme`` requirement, an absolute URL is generated
-    if the scheme of the current :class:`Symfony\\Component\\Routing\\RequestContext`
-    does not match the requirement.
+    If you have defined a scheme, an absolute URL is generated if the scheme
+    of the current :class:`Symfony\\Component\\Routing\\RequestContext` does
+    not match the requirement.
 
 Load Routes from a File
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,11 +240,11 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
 
     # routes.yml
     route1:
-        pattern: /foo
+        path:     /foo
         defaults: { _controller: 'MyController::fooAction' }
 
     route2:
-        pattern: /foo/bar
+        path:     /foo/bar
         defaults: { _controller: 'MyController::foobarAction' }
 
 To load this file, you can use the following code. This assumes that your
@@ -257,7 +265,7 @@ other loaders that work the same way:
 * :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
 
 If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
-have to provide the name of a php file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
+have to provide the name of a PHP file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
 
     // RouteProvider.php
     use Symfony\Component\Routing\RouteCollection;

@@ -8,7 +8,7 @@ string "``1``".
 Also see :doc:`False <False>`.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+
@@ -50,7 +50,8 @@ Then you can constrain this method with ``True``.
         Acme\BlogBundle\Entity\Author:
             getters:
                 tokenValid:
-                    - "True": { message: "The token is invalid." }
+                    - 'True':
+                        message: The token is invalid.
 
     .. code-block:: php-annotations
 
@@ -75,13 +76,19 @@ Then you can constrain this method with ``True``.
     .. code-block:: xml
 
         <!-- src/Acme/Blogbundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <getter property="tokenValid">
-                <constraint name="True">
-                    <option name="message">The token is invalid.</option>
-                </constraint>
-            </getter>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <getter property="tokenValid">
+                    <constraint name="True">
+                        <option name="message">The token is invalid.</option>
+                    </constraint>
+                </getter>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -90,11 +97,11 @@ Then you can constrain this method with ``True``.
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\True;
-        
+
         class Author
         {
             protected $token;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('tokenValid', new True(array(
@@ -110,12 +117,17 @@ Then you can constrain this method with ``True``.
 
 If the ``isTokenValid()`` returns false, the validation will fail.
 
+.. caution::
+
+    When using YAML, be sure to surround ``True`` with quotes (``'True'``)
+    or else YAML will convert this into a ``true`` Boolean value.
+
 Options
 -------
 
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be true``
+**type**: ``string`` **default**: ``This value should be true.``
 
 This message is shown if the underlying data is not true.

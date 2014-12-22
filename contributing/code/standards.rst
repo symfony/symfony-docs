@@ -1,9 +1,9 @@
 Coding Standards
 ================
 
-When contributing code to Symfony2, you must follow its coding standards. To
+When contributing code to Symfony, you must follow its coding standards. To
 make a long story short, here is the golden rule: **Imitate the existing
-Symfony2 code**. Most open-source Bundles and libraries used by Symfony2 also
+Symfony code**. Most open-source Bundles and libraries used by Symfony also
 follow the same guidelines, and you should too.
 
 Remember that the main advantage of standards is that every piece of code
@@ -52,31 +52,41 @@ example containing most features described below:
          * @param array  $options
          *
          * @return string|null Transformed input
+         *
+         * @throws \RuntimeException
          */
         private function transformText($dummy, array $options = array())
         {
             $mergedOptions = array_merge(
-                $options,
                 array(
                     'some_default' => 'values',
                     'another_default' => 'more values',
-                )
+                ),
+                $options
             );
 
             if (true === $dummy) {
                 return;
             }
+
             if ('string' === $dummy) {
                 if ('values' === $mergedOptions['some_default']) {
-                    $dummy = substr($dummy, 0, 5);
-                } else {
-                    $dummy = ucwords($dummy);
+                    return substr($dummy, 0, 5);
                 }
-            } else {
-                throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
+
+                return ucwords($dummy);
             }
 
-            return $dummy;
+            throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
+        }
+        
+        private function reverseBoolean($value = null, $theSwitch = false)
+        {
+            if (!$theSwitch) {
+                return;
+            }
+
+            return !$value;
         }
     }
 
@@ -85,9 +95,12 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (``==``, ``&&``, ...);
+* Add a single space around binary operators (``==``, ``&&``, ...), with 
+  the exception of the concatenation (``.``) operator;
 
-* Add a comma after each array item in a multi-line array, even after the	
+* Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
+
+* Add a comma after each array item in a multi-line array, even after the
   last one;
 
 * Add a blank line before ``return`` statements, unless the return is alone
@@ -102,7 +115,10 @@ Structure
 
 * Declare class properties before methods;
 
-* Declare public methods first, then protected ones and finally private ones;
+* Declare public methods first, then protected ones and finally private ones.
+  The exceptions to this rule are the class constructor and the ``setUp`` and
+  ``tearDown`` methods of PHPUnit tests, which should always be the first methods
+  to increase readability;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
@@ -119,7 +135,7 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Prefix abstract classes with ``Abstract``. Please note some early Symfony2 classes
+* Prefix abstract classes with ``Abstract``. Please note some early Symfony classes
   do not follow this convention and have not been renamed for backward compatibility
   reasons. However all new abstract classes must follow this naming convention;
 
@@ -131,8 +147,28 @@ Naming Conventions
 
 * Use alphanumeric characters and underscores for file names;
 
+* For type-hinting in PHPDocs and casting, use ``bool`` (instead of ``boolean``
+  or ``Boolean``), ``int`` (instead of ``integer``), ``float`` (instead of
+  ``double`` or ``real``);
+
 * Don't forget to look at the more verbose :doc:`conventions` document for
   more subjective naming considerations.
+
+.. _service-naming-conventions:
+
+Service Naming Conventions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* A service name contains groups, separated by dots;
+
+* The DI alias of the bundle is the first group (e.g. ``fos_user``);
+
+* Use lowercase letters for service and parameter names;
+
+* A group name uses the underscore notation;
+
+* Each service has a corresponding parameter containing the class name,
+  following the ``SERVICE NAME.class`` convention.
 
 Documentation
 -------------
@@ -149,6 +185,6 @@ License
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
-.. _`PSR-0`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
-.. _`PSR-1`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
-.. _`PSR-2`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+.. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
+.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/

@@ -5,7 +5,7 @@
 Testing with Sessions
 =====================
 
-Symfony2 is designed from the ground up with code-testability in mind. In order
+Symfony is designed from the ground up with code-testability in mind. In order
 to make your code which utilizes session easily testable we provide two separate
 mock storage mechanisms for both unit testing and functional testing.
 
@@ -18,7 +18,7 @@ starting one allowing you to test your code without complications. You may also
 run multiple instances in the same PHP process.
 
 The mock storage drivers do not read or write the system globals
-`session_id()` or `session_name()`. Methods are provided to simulate this if
+``session_id()`` or ``session_name()``. Methods are provided to simulate this if
 required:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getId`: Gets the
@@ -56,4 +56,3 @@ separate PHP processes, simply change the storage engine to
     use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
     $session = new Session(new MockFileSessionStorage());
-

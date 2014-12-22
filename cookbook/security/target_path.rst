@@ -1,25 +1,25 @@
 .. index::
    single: Security; Target redirect path
 
-How to change the Default Target Path Behavior
+How to Change the default Target Path Behavior
 ==============================================
 
-By default, the security component retains the information of the last request
+By default, the Security component retains the information of the last request
 URI in a session variable named ``_security.main.target_path`` (with ``main`` being
 the name of the firewall, defined in ``security.yml``). Upon a successful
-login, the user is redirected to this path, as to help her continue from the
-last known page she visited.
+login, the user is redirected to this path, as to help them continue from the
+last known page they visited.
 
-On some occasions, this is unexpected. For example when the last request
-URI was an HTTP POST against a route which is configured to allow only a POST
-method, the user is redirected to this route only to get a 404 error.
+In some situations, this is not ideal. For example, when the last request
+URI was an XMLHttpRequest which returned a non-HTML or partial HTML response,
+the user is redirected back to a page which the browser cannot render.
 
 To get around this behavior, you would simply need to extend the ``ExceptionListener``
 class and override the default method named ``setTargetPath()``.
 
 First, override the ``security.exception_listener.class`` parameter in your
 configuration file. This can be done from your main configuration file (in
-`app/config`) or from a configuration file being imported from a bundle:
+``app/config``) or from a configuration file being imported from a bundle:
 
 .. configuration-block::
 
@@ -56,9 +56,10 @@ Next, create your own ``ExceptionListener``::
     {
         protected function setTargetPath(Request $request)
         {
-            // Do not save target path for XHR and non-GET requests
+            // Do not save target path for XHR requests
             // You can add any more logic here you want
-            if ($request->isXmlHttpRequest() || 'GET' !== $request->getMethod()) {
+            // Note that non-GET requests are already ignored
+            if ($request->isXmlHttpRequest()) {
                 return;
             }
 
@@ -66,4 +67,4 @@ Next, create your own ``ExceptionListener``::
         }
     }
 
-Add as much or few logic here as required for your scenario!
+Add as much or as little logic here as required for your scenario!

@@ -17,18 +17,14 @@ Configuration
 * `Cache Directory`_
 * `Log Directory`_
 
-.. versionadded:: 2.1
-    The :method:`Symfony\\Component\\HttpKernel\\Kernel::getCharset` method is new
-    in Symfony 2.1
-
 Charset
 ~~~~~~~
 
 **type**: ``string`` **default**: ``UTF-8``
 
-This returns the charset that is used in the application. To change it, override the
-:method:`Symfony\\Component\\HttpKernel\\Kernel::getCharset` method and return another
-charset, for instance::
+This returns the charset that is used in the application. To change it,
+override the :method:`Symfony\\Component\\HttpKernel\\Kernel::getCharset`
+method and return another charset, for instance::
 
     // app/AppKernel.php
 
@@ -44,12 +40,13 @@ charset, for instance::
 Kernel Name
 ~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``app`` (i.e. the directory name holding the kernel class)
+**type**: ``string`` **default**: ``app`` (i.e. the directory name holding
+the kernel class)
 
 To change this setting, override the :method:`Symfony\\Component\\HttpKernel\\Kernel::getName`
-method. Alternatively, move your kernel into a different directory. For example,
-if you moved the kernel into a ``foo`` directory (instead of ``app``), the
-kernel name will be ``foo``.
+method. Alternatively, move your kernel into a different directory. For
+example, if you moved the kernel into a ``foo`` directory (instead of ``app``),
+the kernel name will be ``foo``.
 
 The name of the kernel isn't usually directly important - it's used in the
 generation of cache files. If you have an application with multiple kernels,

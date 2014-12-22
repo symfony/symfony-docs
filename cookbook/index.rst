@@ -4,30 +4,32 @@ The Cookbook
 .. toctree::
     :hidden:
 
-    workflow/index
-    controller/index
-    routing/index
     assetic/index
-    doctrine/index
-    form/index
-    validation/index
+    bundles/index
+    cache/index
     configuration/index
+    console/index
+    controller/index
+    debugging
+    deployment/index
+    doctrine/index
+    email/index
+    event_dispatcher/index
+    form/index
+    logging/index
+    profiler/index
+    request/index
+    routing/index
+    security/index
+    serializer
     service_container/index
     session/index
-    bundles/index
-    email/index
-    testing/index
-    security/index
-    cache/index
-    templating/index
-    logging/index
-    console/index
-    debugging
-    event_dispatcher/index
-    request/index
-    profiler/index
-    web_services/index
     symfony1
-    deployment-tools
+    templating/index
+    testing/index
+    validation/index
+    web_server/index
+    web_services/index
+    workflow/index
 
 .. include:: /cookbook/map.rst.inc

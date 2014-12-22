@@ -1,15 +1,12 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
 The Generic Event Object
 ========================
 
-.. versionadded:: 2.1
-    The ``GenericEvent`` event class was added in Symfony 2.1
-
 The base :class:`Symfony\\Component\\EventDispatcher\\Event` class provided by the
-``Event Dispatcher`` component is deliberately sparse to allow the creation of
-API specific event objects by inheritance using OOP. This allow for elegant and
+EventDispatcher component is deliberately sparse to allow the creation of
+API specific event objects by inheritance using OOP. This allows for elegant and
 readable code in complex applications.
 
 The :class:`Symfony\\Component\\EventDispatcher\\GenericEvent` is available
@@ -96,7 +93,7 @@ Filtering data::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
-    $event = new GenericEvent($subject, array('data' => 'foo'));
+    $event = new GenericEvent($subject, array('data' => 'Foo'));
     $dispatcher->dispatch('foo', $event);
 
     echo $event['data'];
@@ -105,6 +102,6 @@ Filtering data::
     {
         public function filter(GenericEvent $event)
         {
-            strtolower($event['data']);
+            $event['data'] = strtolower($event['data']);
         }
     }

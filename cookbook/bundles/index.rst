@@ -10,3 +10,5 @@ Bundles
     override
     remove
     extension
+    configuration
+    prepend_extension

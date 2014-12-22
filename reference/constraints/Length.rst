@@ -3,11 +3,8 @@ Length
 
 Validates that a given string length is *between* some minimum and maximum value.
 
-.. versionadded:: 2.1
-    The Length constraint was added in Symfony 2.1.
-
 +----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                |
+| Applies to     | :ref:`property or method <validation-property-target>`               |
 +----------------+----------------------------------------------------------------------+
 | Options        | - `min`_                                                             |
 |                | - `max`_                                                             |
@@ -38,8 +35,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     - Length:
                         min: 2
                         max: 50
-                        minMessage: "Your first name must be at least {{ limit }} characters length"
-                        maxMessage: "Your first name cannot be longer than {{ limit }} characters length"
+                        minMessage: "Your first name must be at least {{ limit }} characters long"
+                        maxMessage: "Your first name cannot be longer than {{ limit }} characters long"
 
     .. code-block:: php-annotations
 
@@ -52,10 +49,10 @@ To verify that the ``firstName`` field length of a class is between "2" and
         {
             /**
              * @Assert\Length(
-             *      min = "2",
-             *      max = "50",
-             *      minMessage = "Your first name must be at least {{ limit }} characters length",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters length"
+             *      min = 2,
+             *      max = 50,
+             *      minMessage = "Your first name must be at least {{ limit }} characters long",
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters long"
              * )
              */
              protected $firstName;
@@ -64,16 +61,22 @@ To verify that the ``firstName`` field length of a class is between "2" and
     .. code-block:: xml
 
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
-        <class name="Acme\EventBundle\Entity\Participant">
-            <property name="firstName">
-                <constraint name="Length">
-                    <option name="min">2</option>
-                    <option name="max">50</option>
-                    <option name="minMessage">Your first name must be at least {{ limit }} characters length</option>
-                    <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters length</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EventBundle\Entity\Participant">
+                <property name="firstName">
+                    <constraint name="Length">
+                        <option name="min">2</option>
+                        <option name="max">50</option>
+                        <option name="minMessage">Your first name must be at least {{ limit }} characters long</option>
+                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters long</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -90,8 +93,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                 $metadata->addPropertyConstraint('firstName', new Assert\Length(array(
                     'min'        => 2,
                     'max'        => 50,
-                    'minMessage' => 'Your first name must be at least {{ limit }} characters length',
-                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters length',
+                    'minMessage' => 'Your first name must be at least {{ limit }} characters long',
+                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters long',
                 )));
             }
         }
@@ -102,7 +105,7 @@ Options
 min
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "min" length value. Validation will fail if the given
 value's length is **less** than this min value.
@@ -110,7 +113,7 @@ value's length is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer``
 
 This required option is the "max" length value. Validation will fail if the given
 value's length is **greater** than this max value.
@@ -128,21 +131,21 @@ is used.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``.
+**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
 The message that will be shown if the underlying value's length is less than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``.
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
 The message that will be shown if the underlying value's length is more than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``.
+**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
 The message that will be shown if min and max values are equal and the underlying
 value's length is not exactly this value.

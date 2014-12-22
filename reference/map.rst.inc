@@ -3,7 +3,7 @@
   Ever wondered what configuration options you have available to you in files
   such as ``app/config/config.yml``? In this section, all the available configuration
   is broken down by the key (e.g. ``framework``) that defines each possible
-  section of your Symfony2 configuration.
+  section of your Symfony configuration.
 
   * :doc:`framework </reference/configuration/framework>`
   * :doc:`doctrine </reference/configuration/doctrine>`
@@ -18,11 +18,11 @@
 
 * **Forms and Validation**
 
-  * :doc:`Form Field Type Reference</reference/forms/types>`
+  * :doc:`Form Field Type Reference </reference/forms/types>`
   * :doc:`Validation Constraints Reference </reference/constraints>`
-  * :doc:`Twig Template Function and Variable Reference</reference/forms/twig_reference>`
+  * :doc:`Twig Template Function and Variable Reference </reference/forms/twig_reference>`
 
-* :doc:`Twig Extensions (forms, filters, tags, etc) Reference</reference/twig_reference>`
+* :doc:`Twig Extensions (forms, filters, tags, etc) Reference </reference/twig_reference>`
 
 * **Other Areas**
 

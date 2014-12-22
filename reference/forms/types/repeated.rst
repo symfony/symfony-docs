@@ -6,28 +6,29 @@ repeated Field Type
 
 This is a special field "group", that creates two identical fields whose
 values must match (or a validation error is thrown). The most common use
-is when you need the user to repeat his or her password or email to verify
+is when you need the user to repeat their password or email to verify
 accuracy.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | input ``text`` field by default, but see `type`_ option                |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `type`_                                                              |
-|             | - `options`_                                                           |
+| Options     | - `first_name`_                                                        |
 |             | - `first_options`_                                                     |
-|             | - `second_options`_                                                    |
-|             | - `first_name`_                                                        |
+|             | - `options`_                                                           |
 |             | - `second_name`_                                                       |
+|             | - `second_options`_                                                    |
+|             | - `type`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `error_bubbling`_                                                    |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `invalid_message`_                                                   |
-| options     | - `invalid_message_parameters`_                                        |
+| Inherited   | - `data`_                                                              |
+| options     | - `error_mapping`_                                                     |
+|             | - `invalid_message`_                                                   |
+|             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
-|             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/form>`                              |
+| Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |
 +-------------+------------------------------------------------------------------------+
@@ -79,6 +80,7 @@ To render each field individually, use something like this:
 
     .. code-block:: jinja
 
+        {# .first and .second may vary in your use - see the note below #}
         {{ form_row(form.password.first) }}
         {{ form_row(form.password.second) }}
 
@@ -89,8 +91,10 @@ To render each field individually, use something like this:
 
 .. note::
 
-    The sub-field names are ``first`` and ``second`` by default, but can
-    be controlled via the `first_name`_ and `second_name`_ options.
+    The names ``first`` and ``second`` are the default names for the two
+    sub-fields. However, these names can be controlled via the `first_name`_
+    and `second_name`_ options. If you've set these options, then use those
+    values instead of ``first`` and ``second`` when rendering.
 
 Validation
 ~~~~~~~~~~
@@ -106,13 +110,30 @@ be displayed when the two fields do not match each other.
 Field Options
 -------------
 
-type
-~~~~
+first_name
+~~~~~~~~~~
 
-**type**: ``string`` **default**: ``text``
+**type**: ``string`` **default**: ``first``
 
-The two underlying fields will be of this field type. For example, passing
-a type of ``password`` will render two password fields.
+This is the actual field name to be used for the first field. This is mostly
+meaningless, however, as the actual data entered into both of the fields will
+be available under the key assigned to the ``repeated`` field itself (e.g.
+``password``). However, if you don't specify a label, this field name is used
+to "guess" the label for you.
+
+first_options
+~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+Additional options (will be merged into `options` above) that should be passed
+*only* to the first field. This is especially useful for customizing the
+label::
+
+    $builder->add('password', 'repeated', array(
+        'first_options'  => array('label' => 'Password'),
+        'second_options' => array('label' => 'Repeat Password'),
+    ));
 
 options
 ~~~~~~~
@@ -125,52 +146,29 @@ For example, if the ``type`` option is set to ``password``, this array might
 contain the options ``always_empty`` or ``required`` - both options that are
 supported by the ``password`` field type.
 
-first_options
-~~~~~~~~~~~~~
-
-**type**: ``array`` **default**: ``array()``
-
-.. versionadded:: 2.1
-    The ``first_options`` option is new in Symfony 2.1.
-
-Additional options (will be merged into `options` above) that should be passed
-*only* to the first field. This is especially useful for customizing the
-label::
-
-    $builder->add('password', 'repeated', array(
-        'first_options'  => array('label' => 'Password'),
-        'second_options' => array('label' => 'Repeat Password'),
-    ));
-
-second_options
-~~~~~~~~~~~~~~
-
-**type**: ``array`` **default**: ``array()``
-
-.. versionadded:: 2.1
-    The ``second_options`` option is new in Symfony 2.1.
-
-Additional options (will be merged into `options` above) that should be passed
-*only* to the second field. This is especially useful for customizing the
-label (see `first_options`_).
-
-first_name
-~~~~~~~~~~
-
-**type**: ``string`` **default**: ``first``
-
-This is the actual field name to be used for the first field. This is mostly
-meaningless, however, as the actual data entered into both of the fields will
-be available under the key assigned to the ``repeated`` field itself (e.g.
-``password``). However, if you don't specify a label, this field name is used
-to "guess" the label for you.
-
 second_name
 ~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``second``
 
 The same as ``first_name``, but for the second field.
+
+second_options
+~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+Additional options (will be merged into `options` above) that should be passed
+*only* to the second field. This is especially useful for customizing the
+label (see `first_options`_).
+
+type
+~~~~
+
+**type**: ``string`` **default**: ``text``
+
+The two underlying fields will be of this field type. For example, passing
+a type of ``password`` will render two password fields.
 
 Overridden Options
 ------------------
@@ -180,15 +178,17 @@ error_bubbling
 
 **default**: ``false``
 
-Inherited options
+Inherited Options
 -----------------
 
-These options inherit from the :doc:`date</reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/data.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc

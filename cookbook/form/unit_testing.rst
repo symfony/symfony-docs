@@ -4,7 +4,7 @@
 How to Unit Test your Forms
 ===========================
 
-The Form Component consists of 3 core objects: a form type (implementing
+The Form component consists of 3 core objects: a form type (implementing
 :class:`Symfony\\Component\\Form\\FormTypeInterface`), the
 :class:`Symfony\\Component\\Form\\Form` and the
 :class:`Symfony\\Component\\Form\\FormView`.
@@ -17,30 +17,35 @@ is done in a real application. It is simple to bootstrap and you can trust
 the Symfony components enough to use them as a testing base.
 
 There is already a class that you can benefit from for simple FormTypes
-testing: :class:`Symfony\\Component\\Form\\Tests\\Extension\\Core\\Type\\TypeTestCase`.
-It is used to test the core types and you can use it to test your types too.
+testing: :class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to
+test the core types and you can use it to test your types too.
+
+.. versionadded:: 2.3
+    The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
+    namespace in 2.3. Previously, the class was located in
+    ``Symfony\Component\Form\Tests\Extension\Core\Type``.
 
 .. note::
 
-    Depending on the way you installed your Symfony or Symfony Form Component
-    the tests may not be downloaded. Use the --prefer-source option with
-    composer if this is the case.
+    Depending on the way you installed your Symfony or Symfony Form component
+    the tests may not be downloaded. Use the ``--prefer-source`` option with
+    Composer if this is the case.
 
 The Basics
 ----------
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTest.php
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testBindValidData()
+        public function testSubmitValidData()
         {
             $formData = array(
                 'test' => 'test',
@@ -53,7 +58,8 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $object = new TestObject();
             $object->fromArray($formData);
 
-            $form->bind($formData);
+            // submit the data to the form directly
+            $form->submit($formData);
 
             $this->assertTrue($form->isSynchronized());
             $this->assertEquals($object, $form->getData());
@@ -67,7 +73,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
         }
     }
 
-So, what does it test? Let's explain it line by line.
+So, what does it test? Here comes a detailed explanation.
 
 First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm`` function and options resolution. This should
@@ -77,10 +83,10 @@ be the first test you write::
     $form = $this->factory->create($type);
 
 This test checks that none of your data transformers used by the form
-failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized``
+failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
 method is only set to ``false`` if a data transformer throws an exception::
 
-    $form->bind($formData);
+    $form->submit($formData);
     $this->assertTrue($form->isSynchronized());
 
 .. note::
@@ -89,7 +95,7 @@ method is only set to ``false`` if a data transformer throws an exception::
     active in the test case and it relies on validation configuration.
     Instead, unit test your custom constraints directly.
 
-Next, verify the binding and mapping of the form. The test below
+Next, verify the submission and mapping of the form. The test below
 checks if all the fields are correctly specified::
 
     $this->assertEquals($object, $form->getData());
@@ -104,7 +110,7 @@ widgets you want to display are available in the children property::
         $this->assertArrayHasKey($key, $children);
     }
 
-Adding a Type your Form depends on
+Adding a Type your Form Depends on
 ----------------------------------
 
 Your form may depend on other types that are defined as services. It
@@ -117,21 +123,28 @@ might look like this::
 
 To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
-before creating the parent form::
+before creating the parent form using the ``PreloadedExtension`` class::
 
     // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\PreloadedExtension;
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testBindValidData()
+        protected function getExtensions()
         {
-            $this->factory->addType(new TestChildType());
+            $childType = new TestChildType();
+            return array(new PreloadedExtension(array(
+                $childType->getName() => $childType,
+            ), array()));
+        }
 
+        public function testSubmitValidData()
+        {
             $type = new TestedType();
             $form = $this->factory->create($type);
 
@@ -149,7 +162,7 @@ Adding custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions</cookbook/form/create_form_type_extension>`. One of the
+:doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
@@ -160,18 +173,26 @@ on other extensions. You need add those extensions to the factory object::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
+    use Symfony\Component\Validator\ConstraintViolationList;
 
     class TestedTypeTest extends TypeTestCase
     {
         protected function setUp()
         {
             parent::setUp();
+            
+            $validator = $this->getMock('\Symfony\Component\Validator\ValidatorInterface');
+            $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
 
             $this->factory = Forms::createFormFactoryBuilder()
+                ->addExtensions($this->getExtensions())
                 ->addTypeExtension(
                     new FormTypeValidatorExtension(
-                        $this->getMock('Symfony\Component\Validator\ValidatorInterface')
+                        $validator
                     )
                 )
                 ->addTypeGuesser(
@@ -188,7 +209,7 @@ on other extensions. You need add those extensions to the factory object::
         }
 
         // ... your tests
-    } 
+    }
 
 Testing against different Sets of Data
 --------------------------------------
@@ -201,7 +222,7 @@ a good opportunity to use them::
 
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
-    use Symfony\Component\Form\Tests\Extension\Core\Type\TypeTestCase;
+    use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
     {

@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Doctrine
 
-How to test Doctrine Repositories
+How to Test Doctrine Repositories
 =================================
 
 Unit testing Doctrine repositories in a Symfony project is not recommended.

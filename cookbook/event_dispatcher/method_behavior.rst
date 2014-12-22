@@ -1,7 +1,7 @@
 .. index::
-   single: Event Dispatcher
+   single: EventDispatcher
 
-How to customize a Method Behavior without using Inheritance
+How to Customize a Method Behavior without Using Inheritance
 ============================================================
 
 Doing something before or after a Method Call

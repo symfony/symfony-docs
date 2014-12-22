@@ -1,8 +1,11 @@
 .. index::
-   pair: Monolog; Configuration reference
+    pair: Monolog; Configuration reference
 
-Monolog Configuration Reference
-===============================
+MonologBundle Configuration ("monolog")
+=======================================
+
+Full Default Configuration
+--------------------------
 
 .. configuration-block::
 
@@ -18,8 +21,6 @@ Monolog Configuration Reference
                     level:               ERROR
                     bubble:              false
                     formatter:           my_formatter
-                    processors:
-                        - some_callable
                 main:
                     type:                fingers_crossed
                     action_level:        WARNING
@@ -29,7 +30,10 @@ Monolog Configuration Reference
                     type:                service
                     id:                  my_handler
 
-                # Default options and values for some "my_custom_handler" 
+                # Default options and values for some "my_custom_handler"
+                # Note: many of these options are specific to the "type".
+                # For example, the "service" type doesn't use any options
+                # except id and channels
                 my_custom_handler:
                     type:                 ~ # Required
                     id:                   ~
@@ -52,12 +56,10 @@ Monolog Configuration Reference
                     from_email:           ~
                     to_email:             ~
                     subject:              ~
+                    mailer:               ~
                     email_prototype:
                         id:                   ~ # Required (when the email_prototype is used)
                         method:               ~
-                    channels:
-                        type:                 ~
-                        elements:             []
                     formatter:            ~
 
     .. code-block:: xml
@@ -65,8 +67,11 @@ Monolog Configuration Reference
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
+        >
 
             <monolog:config>
                 <monolog:handler

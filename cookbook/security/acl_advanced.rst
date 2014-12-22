@@ -1,7 +1,7 @@
 .. index::
    single: Security; Advanced ACL concepts
 
-How to use Advanced ACL Concepts
+How to Use advanced ACL Concepts
 ================================
 
 The aim of this chapter is to give a more in-depth view of the ACL system, and
@@ -10,10 +10,10 @@ also explain some of the design decisions behind it.
 Design Concepts
 ---------------
 
-Symfony2's object instance security capabilities are based on the concept of
+Symfony's object instance security capabilities are based on the concept of
 an Access Control List. Every domain object **instance** has its own ACL. The
 ACL instance holds a detailed list of Access Control Entries (ACEs) which are
-used to make access decisions. Symfony2's ACL system focuses on two main
+used to make access decisions. Symfony's ACL system focuses on two main
 objectives:
 
 - providing a way to efficiently retrieve a large amount of ACLs/ACEs for your
@@ -21,7 +21,7 @@ objectives:
 - providing a way to easily make decisions of whether a person is allowed to
   perform an action on a domain object or not.
 
-As indicated by the first point, one of the main capabilities of Symfony2's
+As indicated by the first point, one of the main capabilities of Symfony's
 ACL system is a high-performance way of retrieving ACLs/ACEs. This is
 extremely important since each ACL might have several ACEs, and inherit from
 another ACL in a tree-like fashion. Therefore, no ORM is leveraged, instead
@@ -39,13 +39,11 @@ domain object, the ACL system will first create an object identity from your
 domain object, and then pass this object identity to the ACL provider for
 further processing.
 
-
 Security Identities
 ~~~~~~~~~~~~~~~~~~~
 
 This is analog to the object identity, but represents a user, or a role in
 your application. Each role, or user has its own security identity.
-
 
 Database Table Structure
 ------------------------
@@ -55,8 +53,10 @@ tables are ordered from least rows to most rows in a typical application:
 
 - *acl_security_identities*: This table records all security identities (SID)
   which hold ACEs. The default implementation ships with two security
-  identities: ``RoleSecurityIdentity``, and ``UserSecurityIdentity``
-- *acl_classes*: This table maps class names to a unique id which can be
+  identities:
+  :class:`Symfony\\Component\\Security\\Acl\\Domain\\RoleSecurityIdentity` and
+  :class:`Symfony\\Component\\Security\\Acl\\Domain\\UserSecurityIdentity`.
+- *acl_classes*: This table maps class names to a unique ID which can be
   referenced from other tables.
 - *acl_object_identities*: Each row in this table represents a single domain
   object instance.
@@ -66,19 +66,20 @@ tables are ordered from least rows to most rows in a typical application:
   with the most rows. It can contain tens of millions without significantly
   impacting performance.
 
+.. _cookbook-security-acl-field_scope:
 
 Scope of Access Control Entries
 -------------------------------
 
 Access control entries can have different scopes in which they apply. In
-Symfony2, there are basically two different scopes:
+Symfony, there are basically two different scopes:
 
 - Class-Scope: These entries apply to all objects with the same class.
 - Object-Scope: This was the scope solely used in the previous chapter, and
   it only applies to one specific object.
 
 Sometimes, you will find the need to apply an ACE only to a specific field of
-the object. Let's say you want the ID only to be viewable by an administrator,
+the object. Suppose you want the ID only to be viewable by an administrator,
 but not by your customer service. To solve this common problem, two more sub-scopes
 have been added:
 
@@ -176,12 +177,13 @@ Process for Reaching Authorization Decisions
 The ACL class provides two methods for determining whether a security identity
 has the required bitmasks, ``isGranted`` and ``isFieldGranted``. When the ACL
 receives an authorization request through one of these methods, it delegates
-this request to an implementation of PermissionGrantingStrategy. This allows
-you to replace the way access decisions are reached without actually modifying
-the ACL class itself.
+this request to an implementation of
+:class:`Symfony\\Component\\Security\\Acl\\Domain\\PermissionGrantingStrategy`.
+This allows you to replace the way access decisions are reached without actually
+modifying the ACL class itself.
 
-The PermissionGrantingStrategy first checks all your object-scope ACEs if none
-is applicable, the class-scope ACEs will be checked, if none is applicable,
+The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If none
+is applicable, the class-scope ACEs will be checked. If none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.
 

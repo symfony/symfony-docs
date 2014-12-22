@@ -93,7 +93,7 @@ authentication providers, each supporting a different type of token.
 
 .. _authentication_providers:
 
-Authentication providers
+Authentication Providers
 ------------------------
 
 Each provider (since it implements
@@ -110,7 +110,7 @@ Authenticating Users by their Username and Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An authentication provider will attempt to authenticate a user based on
-the credentials he provided. Usually these are a username and a password.
+the credentials they provided. Usually these are a username and a password.
 Most web applications store their user's username and a hash of the user's
 password combined with a randomly generated salt. This means that the average
 authentication would consist of fetching the salt and the hashed password
@@ -162,7 +162,7 @@ password was valid::
     It is also possible to let multiple user providers try to find the user's
     data, using the :class:`Symfony\\Component\\Security\\Core\\User\\ChainUserProvider`.
 
-The Password encoder Factory
+The Password Encoder Factory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\DaoAuthenticationProvider`
@@ -190,26 +190,82 @@ Each encoder should implement :class:`Symfony\\Component\\Security\\Core\\Encode
 or be an array with a ``class`` and an ``arguments`` key, which allows the
 encoder factory to construct the encoder only when it is needed.
 
-Password Encoders
-~~~~~~~~~~~~~~~~~
+Creating a custom Password Encoder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are many built-in password encoders. But if you need to create your
+own, it just needs to follow these rules:
+
+#. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
+
+#. The implementations of
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::encodePassword`
+   and
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::isPasswordValid`
+   must first of all make sure the password is not too long, i.e. the password length is no longer
+   than 4096 characters. This is for security reasons (see `CVE-2013-5750`_), and you can use the
+   :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`
+   method for this check::
+
+       use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+
+       class FoobarEncoder extends BasePasswordEncoder
+       {
+           public function encodePassword($raw, $salt)
+           {
+               if ($this->isPasswordTooLong($raw)) {
+                   throw new BadCredentialsException('Invalid password.');
+               }
+
+               // ...
+           }
+
+           public function isPasswordValid($encoded, $raw, $salt)
+           {
+               if ($this->isPasswordTooLong($raw)) {
+                   return false;
+               }
+
+               // ...
+       }
+
+Using Password Encoders
+~~~~~~~~~~~~~~~~~~~~~~~
 
 When the :method:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactory::getEncoder`
 method of the password encoder factory is called with the user object as
 its first argument, it will return an encoder of type :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
 which should be used to encode this user's password::
 
-    // fetch a user of type Acme\Entity\LegacyUser
-    $user = ...
+    // a Acme\Entity\LegacyUser instance
+    $user = ...;
+
+    // the password that was submitted, e.g. when registering
+    $plainPassword = ...;
 
     $encoder = $encoderFactory->getEncoder($user);
 
     // will return $weakEncoder (see above)
+    $encodedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
 
-    $encodedPassword = $encoder->encodePassword($password, $user->getSalt());
+    $user->setPassword($encodedPassword);
 
-    // check if the password is valid:
+    // ... save the user
+
+Now, when you want to check if the submitted password (e.g. when trying to log
+in) is correct, you can use::
+
+    // fetch the Acme\Entity\LegacyUser
+    $user = ...;
+    
+    // the submitted password, e.g. from the login form
+    $plainPassword = ...;
 
     $validPassword = $encoder->isPasswordValid(
-        $user->getPassword(),
-        $password,
-        $user->getSalt());
+        $user->getPassword(), // the encoded password
+        $plainPassword,       // the submitted password
+        $user->getSalt()
+    );
+
+.. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
+.. _`BasePasswordEncoder::checkPasswordLength`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/BasePasswordEncoder.php

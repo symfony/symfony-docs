@@ -1,7 +1,7 @@
 .. index::
    single: Security; Access Control Lists (ACLs)
 
-How to use Access Control Lists (ACLs)
+How to Use Access Control Lists (ACLs)
 ======================================
 
 In complex applications, you will often face the problem that access decisions
@@ -9,12 +9,23 @@ cannot only be based on the person (``Token``) who is requesting access, but
 also involve a domain object that access is being requested for. This is where
 the ACL system comes in.
 
+.. sidebar:: Alternatives to ACLs
+
+    Using ACL's isn't trivial, and for simpler use cases, it may be overkill.
+    If your permission logic could be described by just writing some code (e.g.
+    to check if a Blog is owned by the current User), then consider using
+    :doc:`voters </cookbook/security/voters_data_permission>`. A voter is passed the object
+    being voted on, which you can use to make complex decisions and effectively
+    implement your own ACL. Enforcing authorization (e.g. the ``isGranted``
+    part) will look similar to what you see in this entry, but your voter
+    class will handle the logic behind the scenes, instead of the ACL system.
+
 Imagine you are designing a blog system where your users can comment on your
-posts. Now, you want a user to be able to edit his own comments, but not those
+posts. Now, you want a user to be able to edit their own comments, but not those
 of other users; besides, you yourself want to be able to edit all comments. In
 this scenario, ``Comment`` would be the domain object that you want to
 restrict access to. You could take several approaches to accomplish this using
-Symfony2, two basic approaches are (non-exhaustive):
+Symfony, two basic approaches are (non-exhaustive):
 
 - *Enforce security in your business methods*: Basically, that means keeping a
   reference inside each ``Comment`` to all users who have access, and then
@@ -58,7 +69,6 @@ First, you need to configure the connection the ACL system is supposed to use:
             'connection' => 'default',
         ));
 
-
 .. note::
 
     The ACL system requires a connection from either Doctrine DBAL (usable by
@@ -77,11 +87,15 @@ Fortunately, there is a task for this. Simply run the following command:
 Getting Started
 ---------------
 
-Coming back to the small example from the beginning, let's implement ACL for
-it.
+Coming back to the small example from the beginning, you can now implement
+ACL for it.
 
-Creating an ACL, and adding an ACE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Once the ACL is created, you can grant access to objects by creating an
+Access Control Entity (ACE) to solidify the relationship between the entity
+and your user.
+
+Creating an ACL and Adding an ACE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: php
 
@@ -94,7 +108,7 @@ Creating an ACL, and adding an ACE
     use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
     use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
-    class BlogController
+    class BlogController extends Controller
     {
         // ...
 
@@ -102,7 +116,7 @@ Creating an ACL, and adding an ACE
         {
             $comment = new Comment();
 
-            // ... setup $form, and bind data
+            // ... setup $form, and submit data
 
             if ($form->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
@@ -175,7 +189,7 @@ Checking Access
     }
 
 In this example, you check whether the user has the ``EDIT`` permission.
-Internally, Symfony2 maps the permission to several integer bitmasks, and
+Internally, Symfony maps the permission to several integer bitmasks, and
 checks whether the user has any of them.
 
 .. note::

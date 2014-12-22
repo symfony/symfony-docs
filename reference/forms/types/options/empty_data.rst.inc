@@ -1,24 +1,19 @@
 empty_data
 ~~~~~~~~~~
 
-**type**: ``mixed`` **default**: ``array()`` if ``multiple`` or ``expanded``, ``''`` otherwise
+**type**: ``mixed``
 
-This option determines what value the field will return when the ``empty_value``
-choice is selected.
+.. This file should only be included with start-after or end-before that's set to
+   this placeholder value. Its purpose is to let us include only part of this file.
 
-The true default value of this option depends on the field options:
+DEFAULT_PLACEHOLDER
 
-* If ``compound`` is ``true`` and ``data_class`` is set, then ``new $data_class()``;
-* If ``compound`` is ``true`` and no ``data_class`` is set, then ``array()``;
-* If ``compound`` is ``false``, then ``null``.
+This option determines what value the field will return when the submitted
+value is empty.
 
-.. tip::
-
-    The ``compound`` option is set to ``true`` when the field actually represents
-    a collection of fields (e.g. a form of fields).
-
-For example, if you want the ``gender`` field to be set to ``null`` when no
-value is selected, you can do it like this:
+But you can customize this to your needs. For example, if you want the
+``gender`` choice field to be explicitly set to ``null`` when no value is
+selected, you can do it like this:
 
 .. code-block:: php
 
@@ -35,4 +30,4 @@ value is selected, you can do it like this:
 .. note::
 
     If you want to set the ``empty_data`` option for your entire form class,
-    see the cookbook article :doc:`/cookbook/form/use_empty_data`
+    see the cookbook article :doc:`/cookbook/form/use_empty_data`.

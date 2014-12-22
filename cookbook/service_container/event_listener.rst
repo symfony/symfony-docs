@@ -1,14 +1,14 @@
 .. index::
    single: Events; Create listener
 
-How to create an Event Listener
+How to Create an Event Listener
 ===============================
 
 Symfony has various events and hooks that can be used to trigger custom
 behavior in your application. Those events are thrown by the HttpKernel
 component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class.
 
-To hook into an event and add your own custom logic, you have to  create
+To hook into an event and add your own custom logic, you have to create
 a service that will act as an event listener on that event. In this entry,
 you will create a service that will act as an Exception Listener, allowing
 you to modify how exceptions are shown by your application. The ``KernelEvents::EXCEPTION``
@@ -57,6 +57,12 @@ event is just one of the core kernel events::
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
     To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
 
+.. note::
+
+    When setting a response for the ``kernel.request``, ``kernel.view`` or
+    ``kernel.exception`` events, the propagation is stopped, so the lower
+    priority listeners on that event don't get called.
+
 Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
 using a special "tag":
@@ -91,10 +97,10 @@ using a special "tag":
 
     There is an additional tag option ``priority`` that is optional and defaults
     to 0. This value can be from -255 to 255, and the listeners will be executed
-    in the order of their priority. This is useful when you need to guarantee
-    that one listener is executed before another.
+    in the order of their priority (highest to lowest). This is useful when
+    you need to guarantee that one listener is executed before another.
 
-Request events, checking types
+Request Events, Checking Types
 ------------------------------
 
 A single page can make several requests (one master request, and then multiple

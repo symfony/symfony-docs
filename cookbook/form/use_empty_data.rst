@@ -1,13 +1,13 @@
 .. index::
    single: Form; Empty data
 
-How to configure Empty Data for a Form Class
+How to Configure empty Data for a Form Class
 ============================================
 
 The ``empty_data`` option allows you to specify an empty data set for your
-form class. This empty data set would be used if you bind your form, but
+form class. This empty data set would be used if you submit your form, but
 haven't called ``setData()`` on your form or passed in data when you created
-you form. For example::
+your form. For example::
 
     public function indexAction()
     {
@@ -61,7 +61,7 @@ that constructor with no arguments::
 
 You can instantiate your class however you want. In this example, we pass
 some dependency into the ``BlogType`` when we instantiate it, then use that
-to instantiate the ``Blog`` object. The point is, you can set ``empty_data``
+to instantiate the ``Blog`` class. The point is, you can set ``empty_data``
 to the exact "new" object that you want to use.
 
 Option 2: Provide a Closure

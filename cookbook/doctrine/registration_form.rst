@@ -2,7 +2,7 @@
    single: Doctrine; Simple Registration Form
    single: Form; Simple Registration Form
 
-How to implement a simple Registration Form
+How to Implement a simple Registration Form
 ===========================================
 
 Some forms have extra fields whose values don't need to be stored in the
@@ -10,7 +10,7 @@ database. For example, you may want to create a registration form with some
 extra fields (like a "terms accepted" checkbox field) and embed the form
 that actually stores the account information.
 
-The simple User model
+The simple User Model
 ---------------------
 
 You have a simple ``User`` entity mapped to the database::
@@ -45,6 +45,7 @@ You have a simple ``User`` entity mapped to the database::
         /**
          * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
+         * @Assert\Length(max = 4096)
          */
         protected $plainPassword;
 
@@ -82,8 +83,23 @@ the class.
 .. note::
 
     If you want to integrate this User within the security system, you need
-    to implement the :ref:`UserInterface<book-security-user-entity>` of the
-    security component.
+    to implement the :ref:`UserInterface <book-security-user-entity>` of the
+    Security component.
+
+.. _cookbook-registration-password-max:
+
+.. sidebar:: Why the 4096 Password Limit?
+
+    Notice that the ``plainPassword`` field has a max length of 4096 characters.
+    For security purposes (`CVE-2013-5750`_), Symfony limits the plain password
+    length to 4096 characters when encoding it. Adding this constraint makes
+    sure that your form will give a validation error if anyone tries a super-long
+    password.
+
+    You'll need to add this constraint anywhere in your application where
+    your user submits a plaintext password (e.g. change password form). The
+    only place where you don't need to worry about this is your login form,
+    since Symfony's Security component handles this for you.
 
 Create a Form for the Model
 ---------------------------
@@ -123,14 +139,14 @@ Next, create the form for the ``User`` model::
     }
 
 There are just two fields: ``email`` and ``plainPassword`` (repeated to confirm
-the entered password). The ``data_class`` option tells the form the name of
-data class (i.e. your ``User`` entity).
+the entered password). The ``data_class`` option tells the form the name of the
+underlying data class (i.e. your ``User`` entity).
 
 .. tip::
 
-    To explore more things about the form component, read :doc:`/book/forms`.
+    To explore more things about the Form component, read :doc:`/book/forms`.
 
-Embedding the User form into a Registration Form
+Embedding the User Form into a Registration Form
 ------------------------------------------------
 
 The form that you'll use for the registration page is not the same as the
@@ -200,6 +216,7 @@ Next, create the form for this ``Registration`` model::
                 'checkbox',
                 array('property_path' => 'termsAccepted')
             );
+            $builder->add('Register', 'submit');
         }
 
         public function getName()
@@ -208,7 +225,7 @@ Next, create the form for this ``Registration`` model::
         }
     }
 
-You don't need to use special method for embedding the ``UserType`` form.
+You don't need to use a special method for embedding the ``UserType`` form.
 A form is a field, too - so you can add this like any other field, with the
 expectation that the ``Registration.user`` property will hold an instance
 of the ``User`` class.
@@ -223,7 +240,6 @@ controller for displaying the registration form::
     namespace Acme\AccountBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Response;
 
     use Acme\AccountBundle\Form\Type\RegistrationType;
     use Acme\AccountBundle\Form\Model\Registration;
@@ -232,10 +248,10 @@ controller for displaying the registration form::
     {
         public function registerAction()
         {
-            $form = $this->createForm(
-                new RegistrationType(),
-                new Registration()
-            );
+            $registration = new Registration();
+            $form = $this->createForm(new RegistrationType(), $registration, array(
+                'action' => $this->generateUrl('account_create'),
+            ));
 
             return $this->render(
                 'AcmeAccountBundle:Account:register.html.twig',
@@ -244,27 +260,26 @@ controller for displaying the registration form::
         }
     }
 
-and its template:
+And its template:
 
 .. code-block:: html+jinja
 
     {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
-    <form action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+    {{ form(form) }}
 
-        <input type="submit" />
-    </form>
-
-Finally, create the controller which handles the form submission.  This performs
+Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database::
 
-    public function createAction()
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
+
+    public function createAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
-        $form->bind($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $registration = $form->getData();
@@ -281,7 +296,72 @@ the validation and saves the data into the database::
         );
     }
 
+Add new Routes
+--------------
+
+Next, update your routes. If you're placing your routes inside your bundle
+(as shown here), don't forget to make sure that the routing file is being
+:ref:`imported <routing-include-external-resources>`.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/AccountBundle/Resources/config/routing.yml
+        account_register:
+            path:     /register
+            defaults: { _controller: AcmeAccountBundle:Account:register }
+
+        account_create:
+            path:     /register/create
+            defaults: { _controller: AcmeAccountBundle:Account:create }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/AccountBundle/Resources/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="account_register" path="/register">
+                <default key="_controller">AcmeAccountBundle:Account:register</default>
+            </route>
+
+            <route id="account_create" path="/register/create">
+                <default key="_controller">AcmeAccountBundle:Account:create</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // src/Acme/AccountBundle/Resources/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('account_register', new Route('/register', array(
+            '_controller' => 'AcmeAccountBundle:Account:register',
+        )));
+        $collection->add('account_create', new Route('/register/create', array(
+            '_controller' => 'AcmeAccountBundle:Account:create',
+        )));
+
+        return $collection;
+
+Update your Database Schema
+---------------------------
+
+Of course, since you've added a ``User`` entity during this tutorial, make
+sure that your database schema has been updated properly:
+
+.. code-block:: bash
+
+   $ php app/console doctrine:schema:update --force
+
 That's it! Your form now validates, and allows you to save the ``User``
 object to the database. The extra ``terms`` checkbox on the ``Registration``
 model class is used during validation, but not actually used afterwards when
 saving the User to the database.
+
+.. _`CVE-2013-5750`: http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form

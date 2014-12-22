@@ -2,15 +2,15 @@
    single: Yaml
    single: Components; Yaml
 
-The YAML Component
+The Yaml Component
 ==================
 
-    The YAML Component loads and dumps YAML files.
+    The Yaml component loads and dumps YAML files.
 
-What is it?
+What is It?
 -----------
 
-The Symfony2 YAML Component parses YAML strings to convert them to PHP arrays.
+The Symfony Yaml component parses YAML strings to convert them to PHP arrays.
 It is also able to convert PHP arrays to YAML strings.
 
 `YAML`_, *YAML Ain't Markup Language*, is a human friendly data serialization
@@ -18,8 +18,8 @@ standard for all programming languages. YAML is a great format for your
 configuration files. YAML files are as expressive as XML files and as readable
 as INI files.
 
-The Symfony2 YAML Component implements the YAML 1.2 version of the
-specification.
+The Symfony Yaml Component implements a selected subset of features defined in
+the `YAML 1.2 version specification`_.
 
 .. tip::
 
@@ -31,8 +31,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Yaml);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Yaml).
 
 Why?
 ----
@@ -40,8 +40,10 @@ Why?
 Fast
 ~~~~
 
-One of the goal of Symfony YAML is to find the right balance between speed and
-features. It supports just the needed feature to handle configuration files.
+One of the goals of Symfony Yaml is to find the right balance between speed and
+features. It supports just the needed features to handle configuration files.
+Notable lacking features are: document directives, multi-line quoted messages,
+compact block collections and multi-document files.
 
 Real Parser
 ~~~~~~~~~~~
@@ -50,14 +52,14 @@ It sports a real parser and is able to parse a large subset of the YAML
 specification, for all your configuration needs. It also means that the parser
 is pretty robust, easy to understand, and simple enough to extend.
 
-Clear error messages
+Clear Error Messages
 ~~~~~~~~~~~~~~~~~~~~
 
 Whenever you have a syntax problem with your YAML files, the library outputs a
 helpful message with the filename and the line number where the problem
 occurred. It eases the debugging a lot.
 
-Dump support
+Dump Support
 ~~~~~~~~~~~~
 
 It is also able to dump PHP arrays to YAML with object support, and inline
@@ -69,16 +71,18 @@ Types Support
 It supports most of the YAML built-in types like dates, integers, octals,
 booleans, and much more...
 
-Full merge key support
+Full Merge Key Support
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Full support for references, aliases, and full merge key. Don't repeat
 yourself by referencing common configuration bits.
 
-Using the Symfony2 YAML Component
----------------------------------
+.. _using-the-symfony2-yaml-component:
 
-The Symfony2 YAML Component is very simple and consists of two main classes:
+Using the Symfony YAML Component
+--------------------------------
+
+The Symfony Yaml component is very simple and consists of two main classes:
 one parses YAML strings (:class:`Symfony\\Component\\Yaml\\Parser`), and the
 other dumps a PHP array to a YAML string
 (:class:`Symfony\\Component\\Yaml\\Dumper`).
@@ -120,33 +124,27 @@ error occurred:
     As the parser is re-entrant, you can use the same parser object to load
     different YAML strings.
 
-When loading a YAML file, it is sometimes better to use the
+It may also be convenient to use the
 :method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method:
 
 .. code-block:: php
 
     use Symfony\Component\Yaml\Yaml;
 
-    $yaml = Yaml::parse('/path/to/file.yml');
+    $yaml = Yaml::parse(file_get_contents('/path/to/file.yml'));
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` static method takes a YAML
 string or a file containing YAML. Internally, it calls the
 :method:`Symfony\\Component\\Yaml\\Parser::parse` method, but enhances the
 error if something goes wrong by adding the filename to the message.
 
-Executing PHP Inside YAML Files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. caution::
 
-.. versionadded:: 2.1
-    The ``Yaml::enablePhpParsing()`` method is new to Symfony 2.1. Prior to 2.1,
-    PHP was *always* executed when calling the ``parse()`` function.
+    Because it is currently possible to pass a filename to this method, you
+    must validate the input first. Passing a filename is deprecated in
+    Symfony 2.2, and will be removed in Symfony 3.0.
 
-By default, if you include PHP inside a YAML file, it will not be parsed.
-If you do want PHP to be parsed, you must call ``Yaml::enablePhpParsing()``
-before parsing the file to activate this mode. If you only want to allow
-PHP code for a single YAML file, be sure to disable PHP parsing after parsing
-the single file by calling ``Yaml::$enablePhpParsing = false;`` (``$enablePhpParsing``
-is a public property).
+.. _components-yaml-dump:
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
@@ -171,7 +169,7 @@ array to its YAML representation:
 
 .. note::
 
-    Of course, the Symfony2 YAML dumper is not able to dump resources. Also,
+    Of course, the Symfony Yaml dumper is not able to dump resources. Also,
     even if the dumper is able to dump PHP objects, it is considered to be a
     not supported feature.
 
@@ -221,3 +219,4 @@ representation to the inline one:
 
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
+.. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html

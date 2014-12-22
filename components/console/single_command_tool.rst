@@ -1,7 +1,7 @@
 .. index::
-   single: Console; Single command application
+    single: Console; Single command application
 
-Building a Single Command Application
+Building a single Command Application
 =====================================
 
 When building a command line tool, you may not need to provide several commands.
@@ -66,8 +66,8 @@ You can also simplify how you execute the application::
     #!/usr/bin/env php
     <?php
     // command.php
+
     use Acme\Tool\MyApplication;
 
     $application = new MyApplication();
     $application->run();
-

@@ -5,7 +5,7 @@ Validates that a value is a valid email address. The underlying value is
 cast to a string before being validated.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
@@ -23,7 +23,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 email:
@@ -71,7 +71,7 @@ Basic Usage
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -92,7 +92,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid email address``
+**type**: ``string`` **default**: ``This value is not a valid email address.``
 
 This message is shown if the underlying data is not a valid email address.
 
@@ -106,9 +106,6 @@ check the validity of the MX record of the host of the given email.
 
 checkHost
 ~~~~~~~~~
-
-.. versionadded:: 2.1
-    The ``checkHost`` option was added in Symfony 2.1
 
 **type**: ``Boolean`` **default**: ``false``
 

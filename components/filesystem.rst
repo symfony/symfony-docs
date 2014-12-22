@@ -4,19 +4,19 @@
 The Filesystem Component
 ========================
 
-    The Filesystem components provides basic utilities for the filesystem.
+    The Filesystem component provides basic utilities for the filesystem.
 
 .. versionadded:: 2.1
-    The Filesystem Component is new to Symfony 2.1. Previously, the ``Filesystem``
-    class was located in the ``HttpKernel`` component.
+    The Filesystem component was introduced in Symfony 2.1. Previously, the
+    ``Filesystem`` class was located in the HttpKernel component.
 
 Installation
 ------------
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Filesystem);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Filesystem).
 
 Usage
 -----
@@ -47,11 +47,10 @@ endpoint for filesystem operations::
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
-
-Mkdir
+mkdir
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates directory.
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
 On posix filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
@@ -62,11 +61,11 @@ On posix filesystems, directories are created with a default mode value
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Exists
+exists
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
-presence of all files or directories and returns false if a file is missing::
+presence of all files or directories and returns ``false`` if a file is missing::
 
     // this directory exists, return true
     $fs->exists('/tmp/photos');
@@ -79,7 +78,7 @@ presence of all files or directories and returns false if a file is missing::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Copy
+copy
 ~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::copy` is used to copy
@@ -93,7 +92,7 @@ the third boolean argument::
     // image.jpg will be overridden
     $fs->copy('image-ICC.jpg', 'image.jpg', true);
 
-Touch
+touch
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` sets access and
@@ -112,7 +111,7 @@ your own with the second argument. The third argument is the access time::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chown
+chown
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` is used to change
@@ -128,7 +127,7 @@ the owner of a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chgrp
+chgrp
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` is used to change
@@ -139,13 +138,12 @@ the group of a file. The third argument is a boolean recursive option::
     // change the group of the video directory recursively
     $fs->chgrp('/video', 'nginx', true);
 
-
 .. note::
 
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chmod
+chmod
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` is used to change
@@ -161,11 +159,11 @@ the mode of a file. The fourth argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Remove
+remove
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` let's you remove
-files, symlink, directories easily::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` is used to remove
+files, symlinks, directories easily::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
@@ -174,15 +172,15 @@ files, symlink, directories easily::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Rename
+rename
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::rename` is used to rename
 files and directories::
 
-    //rename a file
+    // rename a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
-    //rename a directory
+    // rename a directory
     $fs->rename('/tmp/files', '/path/to/store/files');
 
 symlink
@@ -209,7 +207,7 @@ the relative path of a directory given another one::
         '/var/lib/symfony/src/Symfony/',
         '/var/lib/symfony/src/Symfony/Component'
     );
-    // returns 'videos'
+    // returns 'videos/'
     $fs->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
@@ -224,7 +222,7 @@ isAbsolutePath
 ~~~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsolutePath` returns
-``true`` if the given path is absolute, false otherwise::
+``true`` if the given path is absolute, ``false`` otherwise::
 
     // return true
     $fs->isAbsolutePath('/tmp');
@@ -234,6 +232,24 @@ isAbsolutePath
     $fs->isAbsolutePath('tmp');
     // return false
     $fs->isAbsolutePath('../dir');
+
+dumpFile
+~~~~~~~~
+
+.. versionadded:: 2.3
+    The ``dumpFile()`` was introduced in Symfony 2.3.
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
+dump contents to a file. It does this in an atomic manner: it writes a temporary
+file first and then moves it to the new file location when it's finished.
+This means that the user will always see either the complete old file or
+complete new file (but never a partially-written file)::
+
+    $fs->dumpFile('file.txt', 'Hello World');
+
+The ``file.txt`` file contains ``Hello World`` now.
+
+A desired file mode can be passed as the third argument.
 
 Error Handling
 --------------
