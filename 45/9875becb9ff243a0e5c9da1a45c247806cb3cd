@@ -1,0 +1,63 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-17T09:13:40Z
+
+@WouterJ what do you think about this PR considering that there are other related PR about normalizing method listings?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-18T13:02:28Z
+
+Most of these changes are already included in #4539.
+
+@pedronofuentes Can you maybe update your pull request to include the missing changes from this one?
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-12-18T13:07:12Z
+
+Ok
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-18T13:08:43Z
+
+@pedronofuentes Thank you and sorry for the additional work.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-21T08:04:45Z
+
+@pedronofuentes Did you manage to include the missing changes into #4539 or should we do a rebase here to get the rest merged?
+
+---------------------------------------------------------------------------
+
+by pedronofuentes at 2014-12-21T08:48:35Z
+
+@xabbuh I'm sorry, I couldn't. Can I help somehow?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-21T11:06:41Z
+
+@pedronofuentes Don't worry. :) We can still merge this one.
+
+@ternel Are you able to rebase your pull request?
+
+---------------------------------------------------------------------------
+
+by ternel at 2014-12-21T12:03:22Z
+
+It should be ok @xabbuh :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T09:35:42Z
+
+@ternel Thank you! Looks good. :+1:
+
+---------------------------------------------------------------------------
+
+by ternel at 2014-12-22T09:38:22Z
+
+Thx for your review :)
