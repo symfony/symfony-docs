@@ -104,7 +104,7 @@ method returns **false**:
 .. caution::
 
     When using YAML, be sure to surround ``False`` with quotes (``'False'``)
-    or else YAML will convert this into a ``false`` Boolean value.
+    or else YAML will convert this into a ``false`` boolean value.
 
 Options
 -------

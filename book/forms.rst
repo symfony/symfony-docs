@@ -198,7 +198,7 @@ it into a format that's suitable for being rendered in an HTML form.
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
    "setter" method so that the Form component can get and put data onto the
-   property. For a Boolean property, you can use an "isser" or "hasser" method
+   property. For a boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
 

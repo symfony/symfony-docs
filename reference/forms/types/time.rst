@@ -175,9 +175,9 @@ Form Variables
 +==============+=============+======================================================================+
 | widget       | ``mixed``   | The value of the `widget`_ option.                                   |
 +--------------+-------------+----------------------------------------------------------------------+
-| with_minutes | ``Boolean`` | The value of the `with_minutes`_ option.                             |
+| with_minutes | ``boolean`` | The value of the `with_minutes`_ option.                             |
 +--------------+-------------+----------------------------------------------------------------------+
-| with_seconds | ``Boolean`` | The value of the `with_seconds`_ option.                             |
+| with_seconds | ``boolean`` | The value of the `with_seconds`_ option.                             |
 +--------------+-------------+----------------------------------------------------------------------+
 | type         | ``string``  | Only present when widget is ``single_text`` and HTML5 is activated,  |
 |              |             | contains the input type to use (``datetime``, ``date`` or ``time``). |

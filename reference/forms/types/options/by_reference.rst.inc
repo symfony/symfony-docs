@@ -1,7 +1,7 @@
 by_reference
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 In most cases, if you have a ``name`` field, then you expect ``setName()``
 to be called on the underlying object. In some cases, however, ``setName()``

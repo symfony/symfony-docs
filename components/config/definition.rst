@@ -99,6 +99,8 @@ node definition. Node types are available for:
 
 * scalar (generic type that includes booleans, strings, integers, floats and ``null``)
 * boolean
+* scalar
+* boolean
 * integer (new in 2.2)
 * float (new in 2.2)
 * enum (new in 2.1) (similar to scalar, but it only allows a finite set of values)

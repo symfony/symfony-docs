@@ -120,7 +120,7 @@ If the ``isTokenValid()`` returns false, the validation will fail.
 .. caution::
 
     When using YAML, be sure to surround ``True`` with quotes (``'True'``)
-    or else YAML will convert this into a ``true`` Boolean value.
+    or else YAML will convert this into a ``true`` boolean value.
 
 Options
 -------

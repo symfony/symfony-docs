@@ -87,7 +87,7 @@ http_method_override
 .. versionadded:: 2.3
     The ``http_method_override`` option was introduced in Symfony 2.3.
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
@@ -176,7 +176,7 @@ is set, then the ``ide`` option will be ignored.
 test
 ~~~~
 
-**type**: ``Boolean``
+**type**: ``boolean``
 
 If this configuration parameter is present (and not ``false``), then the
 services related to testing your application (e.g. ``test.client``) are loaded.
@@ -321,14 +321,14 @@ to the cookie specification.
 cookie_secure
 .............
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether cookies should only be sent over secure connections.
 
 cookie_httponly
 ...............
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether cookies should only be accessible through the HTTP protocol.
 This means that the cookie won't be accessible by scripting languages, such
@@ -641,7 +641,7 @@ to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInt
 enable_annotations
 ..................
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If this option is enabled, validation constraints can be defined using annotations.
 

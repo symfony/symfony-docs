@@ -257,7 +257,7 @@ Now, the message would be bound to the ``port`` field with this configuration.
 ignoreNull
 ~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 .. versionadded:: 2.1
     The ``ignoreNull`` option was introduced in Symfony 2.1.
