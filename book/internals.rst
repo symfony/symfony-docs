@@ -238,8 +238,8 @@ add the following code at the beginning of your listener method::
 
 .. tip::
 
-    If you are not yet familiar with the Symfony EventDispatcher, read the
-    :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`
+    If you are not yet familiar with the Symfony EventDispatcher component,
+    read :doc:`its documentation </components/event_dispatcher/introduction>`
     section first.
 
 .. index::
@@ -433,8 +433,10 @@ and set a new ``Exception`` object, or do nothing::
 .. index::
    single: EventDispatcher
 
-The EventDispatcher
--------------------
+.. _the-eventdispatcher:
+
+The EventDispatcher Component
+-----------------------------
 
 The EventDispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,

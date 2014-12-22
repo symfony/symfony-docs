@@ -591,8 +591,8 @@ specifically pass one::
 
     $dispatcher->dispatch('foo.event');
 
-Moreover, the EventDispatcher always returns whichever event object that was
-dispatched, i.e. either the event that was passed or the event that was
+Moreover, the event dispatcher always returns whichever event object that
+was dispatched, i.e. either the event that was passed or the event that was
 created internally by the dispatcher. This allows for nice shortcuts::
 
     if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {
