@@ -88,6 +88,8 @@ an ``Application`` and adds commands to it::
     <?php
     // application.php
 
+    require __DIR__.'/vendor/autoload.php';
+
     use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
