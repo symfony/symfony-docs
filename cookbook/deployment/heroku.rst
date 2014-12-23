@@ -81,9 +81,9 @@ Creating a Procfile
 By default, Heroku will launch an Apache web server together with PHP to serve
 applications. However, two special circumstances apply to Symfony applications:
 
-1. The document root is in the ``web/`` directory and not in the root directory
+#. The document root is in the ``web/`` directory and not in the root directory
    of the application;
-2. The Composer ``bin-dir``, where vendor binaries (and thus Heroku's own boot
+#. The Composer ``bin-dir``, where vendor binaries (and thus Heroku's own boot
    scripts) are placed, is ``bin/`` , and not the default ``vendor/bin``.
 
 .. note::

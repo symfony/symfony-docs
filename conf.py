@@ -101,12 +101,10 @@ lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
-lexers['varnish2'] = CLexer()
 lexers['varnish3'] = CLexer()
 lexers['varnish4'] = CLexer()
 
 config_block = {
-    'varnish2': 'Varnish 2',
     'varnish3': 'Varnish 3',
     'varnish4': 'Varnish 4'
 }

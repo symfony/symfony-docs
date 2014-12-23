@@ -26,9 +26,6 @@ Full Default Configuration
                 #schema_filter:        ^sf2_
 
                 connections:
-                    default:
-                        dbname:               database
-
                     # A collection of different named connections (e.g. default, conn2, etc)
                     default:
                         dbname:               ~
