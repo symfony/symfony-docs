@@ -357,7 +357,7 @@ see the :ref:`book-doctrine-field-types` section.
 
 .. note::
 
-    When using another library or program (i.e. Doxygen) that uses annotations,
+    When using another library or program (e.g. Doxygen) that uses annotations,
     you should place the ``@IgnoreAnnotation`` annotation on the class to
     indicate which annotations Symfony should ignore.
 
