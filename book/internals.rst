@@ -177,12 +177,12 @@ Event):
 #. Listeners of the ``kernel.terminate`` event can perform tasks after the
    Response has been served.
 
-If an Exception is thrown during processing, the ``kernel.exception`` is
-notified and listeners are given a chance to convert the Exception to a
+If an exception is thrown during processing, the ``kernel.exception`` is
+notified and listeners are given a chance to convert the exception into a
 Response. If that works, the ``kernel.response`` event is notified; if not, the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for
+If you don't want exceptions to be caught (for embedded requests for
 instance), disable the ``kernel.exception`` event by passing ``false`` as the
 third argument to the ``handle()`` method.
 
@@ -396,7 +396,7 @@ forwards the ``Request`` to a given Controller (the value of the
 ``class::method`` notation).
 
 A listener on this event can create and set a ``Response`` object, create
-and set a new ``Exception`` object, or do nothing::
+and set a new ``Exception`` object or do nothing::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;

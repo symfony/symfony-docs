@@ -14,8 +14,9 @@ output and process it. This can be especially handful if you already have
 some existing setup for aggregating and analyzing Symfony logs.
 
 There are basically two logging cases you would need:
- * Manually logging some information from your command;
- * Logging uncaught Exceptions.
+
+* Manually logging some information from your command;
+* Logging uncaught exceptions.
 
 Manually Logging from a Console Command
 ---------------------------------------
