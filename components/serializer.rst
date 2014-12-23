@@ -158,9 +158,9 @@ of the ``Person`` class would be encoded in XML format::
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
 
-1. The information to be decoded
-2. The name of the class this information will be decoded to
-3. The encoder used to convert that information into an array
+#. The information to be decoded
+#. The name of the class this information will be decoded to
+#. The encoder used to convert that information into an array
 
 Using Camelized Method Names for Underscored Attributes
 -------------------------------------------------------

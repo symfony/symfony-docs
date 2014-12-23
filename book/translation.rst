@@ -391,13 +391,13 @@ Imagine that the user's locale is ``fr_FR`` and that you're translating the
 key ``Symfony is great``. To find the French translation, Symfony actually
 checks translation resources for several different locales:
 
-1. First, Symfony looks for the translation in a ``fr_FR`` translation resource
+#. First, Symfony looks for the translation in a ``fr_FR`` translation resource
    (e.g. ``messages.fr_FR.xliff``);
 
-2. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
+#. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
    resource (e.g. ``messages.fr.xliff``);
 
-3. If the translation still isn't found, Symfony uses the ``fallback`` configuration
+#. If the translation still isn't found, Symfony uses the ``fallback`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
 
 .. _book-translation-user-locale:
