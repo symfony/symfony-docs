@@ -31,7 +31,7 @@ your application::
     }
 
 So far, this is just an ordinary class that serves some purpose inside your
-application. The goal of validation is to tell you whether the data
+application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules can be specified via a number of
@@ -112,7 +112,7 @@ Using the ``validator`` Service
 Next, to actually validate an ``Author`` object, use the ``validate`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
-of a class and verify whether the data on the object satisfies those
+of a class and verify if the data on the object satisfies those
 constraints. If validation fails, a non-empty list of errors
 (class :class:`Symfony\\Component\\Validator\\ConstraintViolationList`) is
 returned. Take this simple example from inside a controller::
@@ -303,7 +303,7 @@ to its class and then pass it to the ``validator`` service.
 Behind the scenes, a constraint is simply a PHP object that makes an assertive
 statement. In real life, a constraint could be: "The cake must not be burned".
 In Symfony, constraints are similar: they are assertions that a condition
-is true. Given a value, a constraint will tell you whether that value
+is true. Given a value, a constraint will tell you if that value
 adheres to the rules of the constraint.
 
 Supported Constraints

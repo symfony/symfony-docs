@@ -177,7 +177,7 @@ of the application are isolated in a new file called ``model.php``:
 
 .. tip::
 
-   The file name ``model.php`` is used because the logic and data access of
+   The filename ``model.php`` is used because the logic and data access of
    an application is traditionally known as the "model" layer. In a well-organized
    application, the majority of the code representing your "business logic"
    should live in the model (as opposed to living in a controller). And unlike
@@ -244,8 +244,8 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that allows reusing the
-layout. Unfortunately, to accomplish this, you're forced to use a few ugly
+You now have a setup that will allow you to reuse the layout. 
+Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
 uses a Templating component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
