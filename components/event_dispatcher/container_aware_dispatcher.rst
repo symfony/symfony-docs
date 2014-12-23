@@ -53,7 +53,7 @@ method where the ``$callback`` is an array of ``array($serviceId, $methodName)``
 Adding Subscriber Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``EventSubscribers`` can be added using the
+Event subscribers can be added using the
 :method:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher::addSubscriberService`
 method where the first argument is the service ID of the subscriber service,
 and the second argument is the service's class name (which must implement
@@ -64,7 +64,7 @@ and the second argument is the service's class name (which must implement
         'StoreSubscriber'
     );
 
-The ``EventSubscriberInterface`` will be exactly as you would expect::
+The ``EventSubscriberInterface`` is exactly as you would expect::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     // ...
