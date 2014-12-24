@@ -210,7 +210,7 @@ The ``Configuration`` class to handle the sample configuration looks like::
     supporting "prototype" nodes, advanced validation, XML-specific normalization
     and advanced merging. You can read more about this in
     :doc:`the Config component documentation </components/config/definition>`. You
-    can also see it in action by checking out some of the core Configuration
+    can also see it in action by checking out some core Configuration
     classes, such as the one from the `FrameworkBundle Configuration`_ or the
     `TwigBundle Configuration`_.
 
@@ -227,7 +227,7 @@ thrown)::
     }
 
 The ``processConfiguration()`` method uses the configuration tree you've defined
-in the ``Configuration`` class to validate, normalize and merge all of the
+in the ``Configuration`` class to validate, normalize and merge all the
 configuration arrays together.
 
 .. tip::
@@ -253,7 +253,7 @@ configuration arrays together.
         }
 
     This class uses the ``getConfiguration()`` method to get the Configuration
-    instance, you should override it if your Configuration class is not called
+    instance. You should override it, if your Configuration class is not called
     ``Configuration`` or if it is not placed in the same namespace as the
     extension.
 
