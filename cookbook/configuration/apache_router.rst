@@ -4,7 +4,7 @@
 How to Use the Apache Router
 ============================
 
-Symfony, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
+Symfony, while fast out of the box, also provides various ways to increase that speed with a bit of tweaking.
 One of these ways is by letting Apache handle routes directly, rather than using Symfony for this task.
 
 Change Router Configuration Parameters
@@ -122,7 +122,7 @@ You're now all set to use Apache routes.
 Additional Tweaks
 -----------------
 
-To save a little bit of processing time, change occurrences of ``Request``
+To save some processing time, change occurrences of ``Request``
 to ``ApacheRequest`` in ``web/app.php``::
 
     // web/app.php

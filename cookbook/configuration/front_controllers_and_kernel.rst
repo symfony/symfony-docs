@@ -39,7 +39,7 @@ The main purpose of the front controller is to create an instance of the
 and return the resulting response to the browser.
 
 Because every request is routed through it, the front controller can be
-used to perform global initializations prior to setting up the kernel or
+used to perform global initialization prior to setting up the kernel or
 to `decorate`_ the kernel with additional features. Examples include:
 
 * Configuring the autoloader or adding additional autoloading mechanisms;
