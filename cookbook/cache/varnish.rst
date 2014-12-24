@@ -29,17 +29,16 @@ in the Symfony configuration so that Varnish is seen as a trusted proxy and the
 Routing and X-FORWARDED Headers
 -------------------------------
 
-If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
-the port where the PHP application is running when generating absolute URLs,
-e.g. ``http://example.com:8080/my/path``. To ensure that the Symfony router
-generates URLs correctly with Varnish, add the correct port number in the
-``X-Forwarded-Port`` header. This port depends on your setup.
+To ensure that the Symfony Router generates URLs correctly with Varnish,
+an ``X-Forwarded-Port`` header must be present for Symfony to use the
+correct port number.
 
-Suppose that external connections come in on the default HTTP port 80. For HTTPS
-connections, there is another proxy (as Varnish does not do HTTPS itself) on the
-default HTTPS port 443 that handles the SSL termination and forwards the requests
-as HTTP requests to Varnish with a ``X-Forwarded-Proto`` header. In this case,
-add the following to your Varnish configuration:
+This port number corresponds to the port your setup is using to receive external
+connections (``80`` is the default value for HTTP connections). If the application
+also accepts HTTPS connections, there could be another proxy (as Varnish does
+not do HTTPS itself) on the default HTTPS port 443 that handles the SSL termination
+and forwards the requests as HTTP requests to Varnish with an ``X-Forwarded-Proto``
+header. In this case, you need to add the following configuration snippet:
 
 .. code-block:: varnish4
 
@@ -192,7 +191,7 @@ Symfony adds automatically:
 .. tip::
 
     If you followed the advice about ensuring a consistent caching
-    behavior, those vcl functions already exist. Just append the code
+    behaviour, those VCL functions already exist. Just append the code
     to the end of the function, they won't interfere with each other.
 
 .. index::
