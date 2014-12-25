@@ -401,8 +401,8 @@ header when none is set by the developer by following these rules:
 
 .. _http-expiration-validation:
 
-HTTP Expiration and Validation
-------------------------------
+HTTP Expiration, Validation and Invalidation
+--------------------------------------------
 
 The HTTP specification defines two caching models:
 
@@ -419,7 +419,9 @@ The HTTP specification defines two caching models:
   header) to check if the page has changed since being cached.
 
 The goal of both models is to never generate the same response twice by relying
-on a cache to store and return "fresh" responses.
+on a cache to store and return "fresh" responses. To achieve long caching times
+but still provide updated content immediately, *cache invalidation* is
+sometimes used.
 
 .. sidebar:: Reading the HTTP Specification
 
@@ -819,7 +821,7 @@ cache lifetimes, but to actively notify the gateway cache when content
 changes. Reverse proxies usually provide a channel to receive such
 notifications, typically through special HTTP requests.
 
-.. tip::
+.. warning::
 
     While cache invalidation is powerful, avoid it when possible. If you fail
     to invalidate something, outdated caches will be served for a potentially
@@ -835,6 +837,13 @@ Sometimes, however, you need that extra performance you can get when
 explicitly invalidating. For invalidation, your application needs to detect
 when content changes and tell the cache to remove the URLs which contain
 that data from its cache.
+
+.. tip::
+
+    If you want to use cache invalidation, have a look at the
+    `FOSHttpCacheBundle`_. This bundle provides services to help with various
+    cache invalidation concepts, and also documents the configuration for the
+    a couple of common caching proxies.
 
 If one content corresponds to one URL, the ``PURGE`` model works well.
 You send a request to the cache proxy with the HTTP method ``PURGE`` instead
@@ -893,10 +902,6 @@ different URLs. More flexible concepts exist for those cases:
   URL or other criteria.
 * **Cache tagging** lets you add a tag for each content used in a response
   so that you can invalidate all URLs containing a certain content.
-
-If you need such features, you should use the `FOSHttpCacheBundle`_. This
-bundle documents the configuration for the caching proxy and provides
-services to send invalidation requests based on URLs and Symfony routes.
 
 .. index::
 single: Cache; ESI
