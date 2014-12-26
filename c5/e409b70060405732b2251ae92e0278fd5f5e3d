@@ -1,0 +1,63 @@
+---------------------------------------------------------------------------
+
+by pborreli at 2014-11-28T11:22:05Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2014-11-28T11:30:45Z
+
+@pborreli Thanks !
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-28T19:12:15Z
+
+@GuGuss Nice addition! I have left some minor comments.
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2014-11-29T13:28:42Z
+
+Thanks guys for the review.
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2014-12-09T10:27:12Z
+
+Thanks again guys for your review. I think this is ready to go ^^
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2014-12-15T14:42:08Z
+
+Hi guys, any update on this PR?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-19T13:58:45Z
+
+@GuGuss thanks for submitting this article and for adding all the improvements suggested by the reviewers.
+
+@xabbuh @WouterJ in my opinion this PR is ready to be labelled as `finished` and to be merged soon. What do you think?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-19T15:25:21Z
+
+@GuGuss You also have to add a reference to the new document in `/cookbook/map.rst.inc`.
+
+After that, I think this is ready to be merged. Really nice document! :+1:
+
+---------------------------------------------------------------------------
+
+by GuGuss at 2014-12-24T09:36:49Z
+
+Done ! Thanks guys !
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-24T13:14:33Z
+
+:+1:
