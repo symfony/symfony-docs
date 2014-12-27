@@ -400,6 +400,7 @@ header when none is set by the developer by following these rules:
   ``private`` directive automatically (except when ``s-maxage`` is set).
 
 .. _http-expiration-validation:
+.. _http-expiration-and-validation:
 
 HTTP Expiration, Validation and Invalidation
 --------------------------------------------
@@ -775,7 +776,7 @@ at some interval (the expiration) to verify that the content is still valid.
     annotations. See the `FrameworkExtraBundle documentation`_.
 
 .. index::
-    pair: Cache; Configuration
+   pair: Cache; Configuration
 
 More Response Methods
 ~~~~~~~~~~~~~~~~~~~~~
@@ -803,7 +804,7 @@ Additionally, most cache-related HTTP headers can be set via the single
     ));
 
 .. index::
-single: Cache; Invalidation
+   single: Cache; Invalidation
 
 .. _http-cache-invalidation:
 
@@ -821,7 +822,7 @@ cache lifetimes, but to actively notify the gateway cache when content
 changes. Reverse proxies usually provide a channel to receive such
 notifications, typically through special HTTP requests.
 
-.. warning::
+.. caution::
 
     While cache invalidation is powerful, avoid it when possible. If you fail
     to invalidate something, outdated caches will be served for a potentially
@@ -846,7 +847,8 @@ that data from its cache.
     a couple of common caching proxies.
 
 If one content corresponds to one URL, the ``PURGE`` model works well.
-You send a request to the cache proxy with the HTTP method ``PURGE`` instead
+You send a request to the cache proxy with the HTTP method ``PURGE`` (using
+the word "PURGE" is a convention, technically this can be any string) instead
 of ``GET`` and make the cache proxy detect this and remove the data from the
 cache instead of going to Symfony to get a response.
 
@@ -899,13 +901,13 @@ In many applications, the same content bit is used on various pages with
 different URLs. More flexible concepts exist for those cases:
 
 * **Banning** invalidates responses matching regular expressions on the
-  URL or other criteria.
+  URL or other criteria;
 * **Cache tagging** lets you add a tag for each content used in a response
   so that you can invalidate all URLs containing a certain content.
 
 .. index::
-single: Cache; ESI
-  single: ESI
+   single: Cache; ESI
+   single: ESI
 
 .. _edge-side-includes:
 
