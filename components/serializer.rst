@@ -162,38 +162,117 @@ needs three parameters:
 2. The name of the class this information will be decoded to
 3. The encoder used to convert that information into an array
 
-Using Camelized Method Names for Underscored Attributes
--------------------------------------------------------
+Converting Property Names when Serializing and Deserializing
+------------------------------------------------------------
 
-.. versionadded:: 2.3
-    The :method:`GetSetMethodNormalizer::setCamelizedAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes>`
-    method was introduced in Symfony 2.3.
+.. versionadded:: 2.7
+    The :class:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface`
+    interface was introduced in Symfony 2.7.
 
-Sometimes property names from the serialized content are underscored (e.g.
-``first_name``).  Normally, these attributes will use get/set methods like
-``getFirst_name``, when ``getFirstName`` method is what you really want. To
-change that behavior use the
-:method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes`
-method on the normalizer definition::
+Sometimes serialized attributes must be named differently than PHP class'
+properties or getter and setter methods.
 
-    $encoder = new JsonEncoder();
-    $normalizer = new GetSetMethodNormalizer();
-    $normalizer->setCamelizedAttributes(array('first_name'));
+The Serializer Component provides a handy way to translate or map PHP field
+names to serialized names: the Name Converter System.
 
-    $serializer = new Serializer(array($normalizer), array($encoder));
+Given you have the following object::
 
-    $json = <<<EOT
+    namespace Acme;
+
+    class Company
     {
-        "name":       "foo",
-        "age":        "19",
-        "first_name": "bar"
+        public name;
+        public address;
     }
-    EOT;
 
-    $person = $serializer->deserialize($json, 'Acme\Person', 'json');
 
-As a final result, the deserializer uses the ``first_name`` attribute as if
-it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
+And in the serialized form, all attributes must be prefixed by ``org_`` like
+the following::
+
+    {"org_name": "Les-Tilleuls.coop", "org_address": "Euratechnologies, 2 rue Hegel, 59160 Lomme, France"}
+
+A custom Name Converter can handle such cases::
+
+    namespace MySerializer;
+
+    use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+
+    class OrgPrefixNameConverter implements NameConverterInterface
+    {
+        public function normalize($propertyName)
+        {
+            return 'org_'.$propertyName;
+        }
+
+        public function denormalize($propertyName)
+        {
+            return substr($propertyName, 4)
+        }
+    }
+
+The custom normalizer can be used by passing it as second parameter of any
+class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer`,
+including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
+
+    use Acme\Company;
+    use Symfony\Component\Serializer\Encoder\JsonEncoder
+    use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+    use MySerializer\OrgPrefixNameConverter;
+
+    $nameConverter = new OrgPrefixNameConverter();
+    $normalizer = new PropertyNormalizer(null, $nameConverter);
+
+    $serializer = new Serializer(array(new JsonEncoder()), array($normalizer));
+
+    $obj = new Company();
+    $obj->name = 'Les-Tilleuls.coop';
+    $obj->address = 'Euratechnologies, 2 rue Hegel, 59160 Lomme, France';
+
+    $json = $serializer->serialize($obj);
+    $objCopy = $serializer->deserialize($json);
+
+CamelCase to Underscore
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.7
+The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToUnderscoreNameConverter`
+    interface was introduced in Symfony 2.7.
+
+It's common in many formats to use underscores to separate words. However,
+PSR-2 specify that the preferred style for PHP properties and methods is
+CamelCase.
+
+Symfony provides a built-in Name Converter designed to translate between
+underscored and CamelCased styles during serialization and deserialization
+processes::
+
+    use Symfony\Component\Serializer\NameConverter\CamelCaseToUnderscoreNameConverter;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
+    $normalizer = new GetSetMethodNormalizer(null, new CamelCaseToUnderscoreNameConverter());
+
+    class Person
+    {
+        private $givenName;
+
+        public function __construct($givenName)
+        {
+            $this->givenName = $givenName;
+        }
+
+        public function getGivenName()
+        {
+            return $this->givenName;
+        }
+    }
+
+    $kevin = new Person('Kévin');
+    $normalizer->normalize($kevin);
+    // ['given_name' => 'Kévin'];
+
+    $anne = $normalizer->denormalize(array('given_name' => 'Anne'), 'Person');
 
 Serializing Boolean Attributes
 ------------------------------
