@@ -100,8 +100,7 @@ using the following keys:
     The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if you
-have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
+signs (``%``) must be doubled to escape that character. For example, if you use PHPstorm, you will do something like:
 
 .. configuration-block::
 
@@ -109,7 +108,7 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
         # app/config/config.yml
         framework:
-            ide: "pstorm://%%f:%%l"
+            ide: "phpstorm://open?file=%%f&line=%%l"
 
     .. code-block:: xml
 
@@ -121,14 +120,14 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="pstorm://%%f:%%l" />
+            <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'ide' => 'pstorm://%%f:%%l',
+            'ide' => 'phpstorm://open?file=%%f&line=%%l',
         ));
 
 Of course, since every developer uses a different IDE, it's better to set
@@ -651,4 +650,3 @@ Full default Configuration
                 debug:                "%kernel.debug%"
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
-.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
