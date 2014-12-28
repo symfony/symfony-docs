@@ -8,6 +8,7 @@ The Book
     from_flat_php_to_symfony2
     installation
     page_creation
+    app_structure
     controller
     routing
     templating
