@@ -6,7 +6,7 @@ How to Master and Create new Environments
 
 Every application is the combination of code and a set of configuration that
 dictates how that code should function. The configuration may define the
-database being used, whether something should be cached, or how verbose
+database being used, if something should be cached or how verbose
 logging should be. In Symfony, the idea of "environments" is the idea that
 the same codebase can be run using multiple different configurations. For
 example, the ``dev`` environment should use configuration that makes development
