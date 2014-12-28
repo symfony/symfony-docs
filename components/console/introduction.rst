@@ -413,6 +413,8 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 * :doc:`/components/console/helpers/dialoghelper`: (deprecated) interactively ask the user for information
 
+.. _component-console-testing-commands:
+
 Testing Commands
 ----------------
 
