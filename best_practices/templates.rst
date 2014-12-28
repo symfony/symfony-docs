@@ -153,6 +153,7 @@ name is irrelevant because you never use it in your own code):
         app.twig.app_extension:
             class:     AppBundle\Twig\AppExtension
             arguments: ["@markdown"]
+            public: false
             tags:
                 - { name: twig.extension }
 
