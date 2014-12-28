@@ -111,7 +111,7 @@ for the homepage of our app:
         public function indexAction()
         {
             $em = $this->getDoctrine()->getManager();
-            $posts = $em->getRepository('App:Post')->findLatest();
+            $posts = $em->getRepository('AppBundle:Post')->findLatest();
 
             return $this->render('default/index.html.twig', array(
                 'posts' => $posts
@@ -136,6 +136,7 @@ For example:
 
 .. code-block:: php
 
+    use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     
     /**
@@ -146,7 +147,7 @@ For example:
         $deleteForm = $this->createDeleteForm($post);
 
         return $this->render('admin/post/show.html.twig', array(
-            'post'      => $post,
+            'post'        => $post,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -174,7 +175,8 @@ manually. In our application, we have this situation in ``CommentController``:
     {
         $post = $this->getDoctrine()
             ->getRepository('AppBundle:Post')
-            ->findOneBy(array('slug' => $postSlug));
+            ->findOneBy(array('slug' => $postSlug))
+        ;
 
         if (!$post) {
             throw $this->createNotFoundException();
@@ -188,8 +190,10 @@ flexible:
 
 .. code-block:: php
 
+    use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+    use Symfony\Component\HttpFoundation\Request;
 
     /**
      * @Route("/comment/{postSlug}/new", name = "comment_new")
