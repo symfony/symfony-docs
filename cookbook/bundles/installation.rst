@@ -7,11 +7,11 @@ How to Install 3rd Party Bundles
 Most bundles provide their own installation instructions. However, the
 basic steps for installing a bundle are the same:
 
-* `a) Add Composer Dependencies`_
-* `b) Enable the Bundle`_
-* `c) Configure the Bundle`_
+* `A) Add Composer Dependencies`_
+* `B) Enable the Bundle`_
+* `C) Configure the Bundle`_
 
-a) Add Composer Dependencies
+A) Add Composer Dependencies
 ----------------------------
 
 Dependencies are managed with Composer, so if Composer is new to you, learn
@@ -43,7 +43,7 @@ and download the library into the ``vendor/`` directory. If you need a specific
 version, add a ``:`` and the version right after the library name (see
 `composer require`_).
 
-b) Enable the Bundle
+B) Enable the Bundle
 --------------------
 
 At this point, the bundle is installed in your Symfony project (in
@@ -68,7 +68,7 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
         }
     }
 
-c) Configure the Bundle
+C) Configure the Bundle
 -----------------------
 
 It's pretty common for a bundle to need some additional setup or configuration
