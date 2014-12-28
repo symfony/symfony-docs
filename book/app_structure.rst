@@ -31,8 +31,45 @@ how Symfony projects are structured and organized by default. Each Symfony
     For further important information on the directory structure, see 
     :doc:`/best_practices/creating-the-project.html#structuring-the-application`. 
 
+
 The Bundle System
 -----------------
+
+Before you begin building apps, you'll need to create a *bundle*. In Symfony, a :term:`bundle`
+is like a plugin, except that all of the code in your application will live
+inside a bundle.
+
+A bundle is nothing more than a directory that houses everything related
+to a specific feature, including PHP classes, configuration, and even stylesheets
+and JavaScript files (see :ref:`page-creation-bundles`).
+
+
+To create a bundle called ``AcmeDemoBundle`` (an example bundle that you'll
+build in this chapter), run the following command and follow the on-screen
+instructions (use all of the default options):
+
+.. code-block:: bash
+
+    $ php app/console generate:bundle --namespace=Acme/DemoBundle --format=yml
+
+Behind the scenes, a directory is created for the bundle at ``src/Acme/DemoBundle``.
+A line is also automatically added to the ``app/AppKernel.php`` file so that
+the bundle is registered with the kernel::
+
+    // app/AppKernel.php
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...,
+            new Acme\DemoBundle\AcmeDemoBundle(),
+        );
+        // ...
+
+        return $bundles;
+    }
+
+Now that you have a bundle set up, you can begin building your application
+inside the bundle.
 
 A bundle is similar to a plugin in other software, but even better. The key
 difference is that *everything* is a bundle in Symfony, including both the

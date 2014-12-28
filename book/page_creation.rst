@@ -6,7 +6,8 @@
 Creating Pages in Symfony
 =========================
 
-Creating a new page in Symfony is a simple three-step process:
+Creating a new page in Symfony is a simple three-step process, and the first 
+one is already done for you if you just installed Symfony's standard edition:
 
 * *Create a bundle*: A bundle is a structured set of files within a directory 
   that implement a single feature. Each bundle is registered with the kernel;
@@ -59,46 +60,18 @@ process.
 Step 1: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you begin, you'll need to create a *bundle*. In Symfony, a :term:`bundle`
-is like a plugin, except that all of the code in your application will live
-inside a bundle.
+You probably already have a bundle called ``AcmeDemoBundle``; it is included when
+you install Symfony's standard edition. 
 
-A bundle is nothing more than a directory that houses everything related
-to a specific feature, including PHP classes, configuration, and even stylesheets
-and JavaScript files (see :ref:`page-creation-bundles`).
-
-Depending on the way you installed Symfony, you may already have a bundle called
-``AcmeDemoBundle``. Browse the ``src/`` directory of your project and check
+To confirm it is there, browse the ``src/`` directory of your project and check
 if there is a ``DemoBundle/`` directory inside an ``Acme/`` directory. If those
-directories already exist, skip the rest of this section and go directly to
-create the route.
+directories already exist, you're ready to create the route. If not, take a moment
+to create one now.
 
-To create a bundle called ``AcmeDemoBundle`` (an example bundle that you'll
-build in this chapter), run the following command and follow the on-screen
-instructions (use all of the default options):
+.. seealso::
 
-.. code-block:: bash
-
-    $ php app/console generate:bundle --namespace=Acme/DemoBundle --format=yml
-
-Behind the scenes, a directory is created for the bundle at ``src/Acme/DemoBundle``.
-A line is also automatically added to the ``app/AppKernel.php`` file so that
-the bundle is registered with the kernel::
-
-    // app/AppKernel.php
-    public function registerBundles()
-    {
-        $bundles = array(
-            ...,
-            new Acme\DemoBundle\AcmeDemoBundle(),
-        );
-        // ...
-
-        return $bundles;
-    }
-
-Now that you have a bundle set up, you can begin building your application
-inside the bundle.
+    For information about bundles, including quick steps to create a sample bundle, 
+    see :doc:`/book/app_structure#the-bundle-system`. 
 
 Step 2: Create the Route
 ~~~~~~~~~~~~~~~~~~~~~~~~
