@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-12-06T22:40:39Z
+
+Updated.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-12-08T07:21:48Z
+
+Once more.. updated.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-12-24T12:16:07Z
+
+@WouterJ @xabbuh I think this is finished.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-24T12:42:21Z
+
+Yes, it is. Thank you @peterrehm !
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-24T13:11:01Z
+
+@peterrehm We just have to fix the namespace in the `use` statement for the `Application` class. Sorry for missing this earlier.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2014-12-26T09:31:42Z
+
+Updated.
