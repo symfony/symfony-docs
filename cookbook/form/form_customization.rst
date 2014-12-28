@@ -502,7 +502,8 @@ resource to use such a layout:
         # app/config/config.yml
         twig:
             form:
-                resources: ['form_table_layout.html.twig']
+                resources:
+                    - 'form_table_layout.html.twig'
             # ...
 
     .. code-block:: xml

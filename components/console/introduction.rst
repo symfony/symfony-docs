@@ -297,7 +297,7 @@ declare a one-letter shortcut that you can call with a single dash like
 .. tip::
 
     It is also possible to make an option *optionally* accept a value (so that
-    ``--yell`` or ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
+    ``--yell``, ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
     accept an array of values.
 
 For example, add a new option to the command that can be used to specify
@@ -376,6 +376,8 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progresshelper`: shows a progress bar
 * :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
+
+.. _component-console-testing-commands:
 
 Testing Commands
 ----------------
