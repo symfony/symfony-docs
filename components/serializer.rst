@@ -202,7 +202,8 @@ A custom Name Converter can handle such cases::
 
         public function denormalize($propertyName)
         {
-            return substr($propertyName, 4);
+            // remove org_ prefix
+            return 'org_' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
         }
     }
 
@@ -246,32 +247,32 @@ Symfony provides a built-in Name Converter designed to translate between
 snake_case and CamelCased styles during serialization and deserialization
 processes::
 
-    use Symfony\Component\Serializer\NameConverter\CamelCaseToUnderscoreNameConverter;
+    use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-    $normalizer = new GetSetMethodNormalizer(null, new CamelCaseToUnderscoreNameConverter());
+    $normalizer = new GetSetMethodNormalizer(null, new CamelCaseToSnakeCaseNameConverter());
 
     class Person
     {
-        private $givenName;
+        private $firstName;
 
-        public function __construct($givenName)
+        public function __construct($firstName)
         {
-            $this->givenName = $givenName;
+            $this->firstName = $firstName;
         }
 
-        public function getGivenName()
+        public function getFirstName()
         {
-            return $this->givenName;
+            return $this->firstName;
         }
     }
 
     $kevin = new Person('Kévin');
     $normalizer->normalize($kevin);
-    // ['given_name' => 'Kévin'];
+    // ['first_name' => 'Kévin'];
 
-    $anne = $normalizer->denormalize(array('given_name' => 'Anne'), 'Person');
-    // Person object with givenName: 'Anne'
+    $anne = $normalizer->denormalize(array('first_name' => 'Anne'), 'Person');
+    // Person object with firstName: 'Anne'
 
 Serializing Boolean Attributes
 ------------------------------
