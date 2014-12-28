@@ -253,7 +253,7 @@ configuration arrays together.
         }
 
     This class uses the ``getConfiguration()`` method to get the Configuration
-    instance. You should override it, if your Configuration class is not called
+    instance. You should override it if your Configuration class is not called
     ``Configuration`` or if it is not placed in the same namespace as the
     extension.
 
