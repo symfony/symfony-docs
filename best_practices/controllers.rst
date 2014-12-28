@@ -33,6 +33,10 @@ Overall, this means you should aggressively decouple your business logic
 from the framework while, at the same time, aggressively coupling your controllers
 and routing *to* the framework in order to get the most out of it.
 
+As a common way of decoupling the business logic from controllers, is recommended
+to avoid calling repositories or entities from controller. Rather wrap that logic
+in services and let controllers call services.
+
 Routing Configuration
 ---------------------
 
@@ -110,8 +114,7 @@ for the homepage of our app:
          */
         public function indexAction()
         {
-            $em = $this->getDoctrine()->getManager();
-            $posts = $em->getRepository('App:Post')->findLatest();
+            $posts = $this->container->get('app.post')->findLatest();
 
             return $this->render('default/index.html.twig', array(
                 'posts' => $posts
