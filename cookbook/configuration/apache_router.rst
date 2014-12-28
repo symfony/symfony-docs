@@ -4,8 +4,10 @@
 How to Use the Apache Router
 ============================
 
-Symfony, while fast out of the box, also provides various ways to increase that speed with a bit of tweaking.
-One of these ways is by letting Apache handle routes directly, rather than using Symfony for this task.
+Symfony, while fast out of the box, also provides various ways to 
+increase that speed with a bit of tweaking.
+One of these ways is by letting Apache handle routes directly, rather 
+than using Symfony for this task.
 
 Change Router Configuration Parameters
 --------------------------------------
