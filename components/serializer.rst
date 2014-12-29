@@ -170,7 +170,7 @@ Converting Property Names when Serializing and Deserializing
     interface was introduced in Symfony 2.7.
 
 Sometimes serialized attributes must be named differently than properties
-or getter and setter methods of PHP classes.
+or getter / setter methods of PHP classes.
 
 The Serializer Component provides a handy way to translate or map PHP field
 names to serialized names: The Name Converter System.
@@ -187,7 +187,7 @@ Given you have the following object::
 And in the serialized form, all attributes must be prefixed by ``org_`` like
 the following::
 
-    {"org_name": "Les-Tilleuls.coop", "org_address": "Euratechnologies, 2 rue Hegel, 59160 Lomme, France"}
+    {"org_name": "Acme SARL", "org_address": "Euratechnologies, 59000 Lille, France"}
 
 A custom Name Converter can handle such cases::
 
@@ -222,11 +222,11 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $serializer = new Serializer(array(new JsonEncoder()), array($normalizer));
 
     $obj = new Company();
-    $obj->name = 'Les-Tilleuls.coop';
-    $obj->address = 'Euratechnologies, 2 rue Hegel, 59160 Lomme, France';
+    $obj->name = 'Acme SARL';
+    $obj->address = 'Euratechnologies, 59000 Lille, France';
 
     $json = $serializer->serialize($obj);
-    // {"org_name": "Les-Tilleuls.coop", "org_address": "Euratechnologies, 2 rue Hegel, 59160 Lomme, France"}
+    // {"org_name": "Acme SARL", "org_address": "Euratechnologies, 59000 Lille, France"}
     $objCopy = $serializer->deserialize($json);
     // Same data as $obj
 
@@ -239,11 +239,11 @@ CamelCase to snake_case
     The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToUnderscoreNameConverter`
     interface was introduced in Symfony 2.7.
 
-In many formats, it's common to use underscores to separate words (also know
+In many formats, it's common to use underscores to separate words (also known
 as snake_case). However, PSR-1 specifies that the preferred style for PHP
 properties and methods is CamelCase.
 
-Symfony provides a built-in Name Converter designed to translate between
+Symfony provides a built-in name converter designed to transform between
 snake_case and CamelCased styles during serialization and deserialization
 processes::
 
