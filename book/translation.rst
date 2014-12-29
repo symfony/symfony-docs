@@ -392,7 +392,7 @@ Fallback Translation Locales
 
 Imagine that the user's locale is ``fr_FR`` and that you're translating the
 key ``Symfony is great``. To find the French translation, Symfony actually
-checks translation resources for several different locales:
+checks translation resources for several locales:
 
 #. First, Symfony looks for the translation in a ``fr_FR`` translation resource
    (e.g. ``messages.fr_FR.xliff``);
@@ -437,7 +437,7 @@ The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Since you can store the locale of the user in the session, it may be tempting
-to use the same URL to display a resource in many different languages based
+to use the same URL to display a resource in different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
 this violates a fundamental rule of the Web: that a particular URL returns

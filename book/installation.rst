@@ -279,7 +279,7 @@ If there are any issues, correct them now before moving on.
 Updating Symfony Applications
 -----------------------------
 
-At this point, you've create a fully-functional Symfony application in which
+At this point, you've created a fully-functional Symfony application in which
 you'll start to develop your own project. A Symfony application depends on
 a number of external libraries. These are downloaded into the ``vendor/`` directory
 and they are managed exclusively by Composer.
@@ -326,10 +326,10 @@ If you're using a version control system like `Git`_, you can safely commit all
 your project's code. The reason is that Symfony applications already contain a
 ``.gitignore`` file specially prepared for Symfony.
 
-For specific instructions on how best to setup your project to be stored
+For specific instructions on how best to set up your project to be stored
 in Git, see :doc:`/cookbook/workflow/new_project_git`.
 
-Checking out a Versioned Symfony Application
+Checking out a versioned Symfony Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When using Composer to manage application's dependencies, it's recommended to
