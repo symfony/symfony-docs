@@ -47,7 +47,7 @@ Unit Tests
 A unit test is usually a test against a specific PHP class. If you want to
 test the overall behavior of your application, see the section about `Functional Tests`_.
 
-Writing Symfony unit tests is no different than writing standard PHPUnit
+Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
@@ -629,7 +629,7 @@ Just like links, you select forms with the ``selectButton()`` method::
     button.
 
 The ``selectButton()`` method can select ``button`` tags and submit ``input``
-tags. It uses several different parts of the buttons to find them:
+tags. It uses several parts of the buttons to find them:
 
 * The ``value`` attribute value;
 
@@ -787,7 +787,7 @@ PHPUnit Configuration
 
 Each application has its own PHPUnit configuration, stored in the
 ``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``app/phpunit.xml`` file to setup a configuration for your local
+create an ``app/phpunit.xml`` file to set up a configuration for your local
 machine only.
 
 .. tip::

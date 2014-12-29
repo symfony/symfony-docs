@@ -172,7 +172,7 @@ That's it! Just three lines are needed to render the complete form:
     when using file uploads.
 
 ``form_widget(form)``
-    Renders all of the fields, which includes the field element itself, a label
+    Renders all the fields, which includes the field element itself, a label
     and any validation error messages for the field.
 
 ``form_end()``

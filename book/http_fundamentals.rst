@@ -38,7 +38,7 @@ how you develop on the web, the goal of your server is *always* to understand
 simple text requests, and return simple text responses.
 
 Symfony is built from the ground up around that reality. Whether you realize
-it or not, HTTP is something you use everyday. With Symfony, you'll learn
+it or not, HTTP is something you use every day. With Symfony, you'll learn
 how to master it.
 
 .. index::
@@ -545,7 +545,7 @@ regardless of how your project is developed. To name a few:
 :doc:`Translation </components/translation/introduction>`
     A framework for translating strings in your application.
 
-Each and every one of these components is decoupled and can be used in *any*
+Each one of these components is decoupled and can be used in *any*
 PHP project, regardless of whether or not you use the Symfony framework.
 Every part is made to be used if needed and replaced when necessary.
 
