@@ -102,6 +102,36 @@ method.
 
 For the sake of clarity, some key options are explained in this documentation.
 
+Session Cache Limiting
+~~~~~~~~~~~~~~~~~~~~~~
+
+To avoid users seeing stale data, it's common for session-enabled resources to be
+sent with headers that disable caching. For this purpose PHP Sessions has the
+``sessions.cache_limiter`` option, which determines which headers, if any, will be
+sent with the response when the session in started.
+
+Upon construction,
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+sets this global option to ``""`` (send no headers) in case the developer wishes to
+use a :class:`Symfony\\Component\\HttpFoundation\\Response` object to manage
+response headers.
+
+.. caution::
+
+    If you rely on PHP Sessions to manage HTTP caching, you *must* manually set the
+    ``cache_limiter`` option in
+    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+    to a non-empty value.
+
+    For example, you may set it to PHP's default value during construction:
+
+    Example usage::
+
+        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+        $options['cache_limiter'] = session_cache_limiter();
+        $storage = new NativeSessionStorage($options);
+
 Session Cookie Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~
 
