@@ -763,7 +763,7 @@ of the most common elements of a bundle:
     Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
 ``DependencyInjection/``
-    Holds certain dependency injection extension classes, which may import service
+    Holds certain Dependency Injection Extension classes, which may import service
     configuration, register compiler passes or more (this directory is not
     necessary).
 

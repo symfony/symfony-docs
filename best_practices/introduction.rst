@@ -62,8 +62,8 @@ Symfony to follow everything. If you are totally new to Symfony, welcome!
 Start with :doc:`The Quick Tour </quick_tour/the_big_picture>` tutorial first.
 
 We've deliberately kept this guide short. We won't repeat explanations that
-you can find in the vast Symfony documentation, like discussions about dependency
-injection or front controllers. We'll solely focus on explaining how to do
+you can find in the vast Symfony documentation, like discussions about Dependency
+Injection or front controllers. We'll solely focus on explaining how to do
 what you already know.
 
 The Application

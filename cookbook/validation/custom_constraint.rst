@@ -159,8 +159,8 @@ Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the dependency injection
-container. This service must include the ``validator.constraint_validator``
+it will need to be configured as a service in the Dependency Injection
+Container. This service must include the ``validator.constraint_validator``
 tag and an ``alias`` attribute:
 
 .. configuration-block::
