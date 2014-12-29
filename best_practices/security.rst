@@ -327,9 +327,13 @@ via the even easier shortcut in a controller:
     {
         $post = // query for the post ...
 
-        if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        // or without the shortcut:
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
     }
 
 Learn More
