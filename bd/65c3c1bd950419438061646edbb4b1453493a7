@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-22T23:02:05Z
+
+I left a few comments, but nice catch on this being missing! It looks like several other options are introduced in 2.5 (and maybe also 2.6) - including the very-important api version for 2.5.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-23T09:38:04Z
+
+> I left a few comments, but nice catch on this being missing! It looks like several other options are introduced in 2.5 (and maybe also 2.6) - including the very-important api version for 2.5.
+
+Honestly, I just caught this when I wanted to document the `api` option and then decided to add the whole section first.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-23T22:03:48Z
+
+I moved the `2.5` specific parts into a new pull request (see #4682).
