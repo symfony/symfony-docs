@@ -152,8 +152,7 @@ that follows these best practices:
 
 .. tip::
 
-    If you are using Symfony 2.6 or a newer version, the ``AppBundle`` bundle
-    is already generated for you. If you are using an older Symfony version,
+    If your Symfony installation doesn't come with a pre-generated ``AppBundle``,
     you can generate it by hand executing this command:
 
     .. code-block:: bash
