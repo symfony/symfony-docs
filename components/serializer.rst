@@ -187,7 +187,7 @@ Given you have the following object::
 And in the serialized form, all attributes must be prefixed by ``org_`` like
 the following::
 
-    {"org_name": "Acme SARL", "org_address": "Euratechnologies, 59000 Lille, France"}
+    {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
 
 A custom Name Converter can handle such cases::
 
@@ -222,11 +222,11 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $serializer = new Serializer(array(new JsonEncoder()), array($normalizer));
 
     $obj = new Company();
-    $obj->name = 'Acme SARL';
-    $obj->address = 'Euratechnologies, 59000 Lille, France';
+    $obj->name = 'Acme Inc.';
+    $obj->address = '123 Main Street, Big City';
 
     $json = $serializer->serialize($obj);
-    // {"org_name": "Acme SARL", "org_address": "Euratechnologies, 59000 Lille, France"}
+    // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
     $objCopy = $serializer->deserialize($json);
     // Same data as $obj
 
