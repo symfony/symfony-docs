@@ -133,7 +133,8 @@ directive to pass requests for PHP files to PHP FPM:
         # SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
 
         # For Apache 2.4.9 or higher
-        # Using SetHandler avoids issues with using ProxyPassMatch in combination with mod_rewrite or mod_autoindex
+        # Using SetHandler avoids issues with using ProxyPassMatch in combination 
+        # with mod_rewrite or mod_autoindex
         <FilesMatch \.php$>
             SetHandler proxy:fcgi://127.0.0.1:9000
         </FilesMatch>
