@@ -93,7 +93,7 @@ Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you begin, you'll need to create a *bundle*. In Symfony, a :term:`bundle`
-is like a plugin, except that all of the code in your application will live
+is like a plugin, except that all the code in your application will live
 inside a bundle.
 
 A bundle is nothing more than a directory that houses everything related
@@ -108,7 +108,7 @@ create the route.
 
 To create a bundle called ``AcmeDemoBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
-instructions (use all of the default options):
+instructions (use all the default options):
 
 .. code-block:: bash
 
@@ -327,7 +327,7 @@ An optional, but common, third step in the process is to create a template.
 Optional Step 3: Create the Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Templates allow you to move all of the presentation (e.g. HTML code) into
+Templates allow you to move all the presentation code (e.g. HTML) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, render a template instead:
 
@@ -607,7 +607,7 @@ You'll learn more about each of these directories in later chapters.
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Put simply, the ``src/`` directory contains all of the actual code (PHP code,
+Put simply, the ``src/`` directory contains all the actual code (PHP code,
 templates, configuration files, stylesheets, etc) that drives *your* application.
 When developing, the vast majority of your work will be done inside one or
 more bundles that you create in this directory.
@@ -788,7 +788,7 @@ bundle.
 Application Configuration
 -------------------------
 
-An application consists of a collection of bundles representing all of the
+An application consists of a collection of bundles representing all the
 features and capabilities of your application. Each bundle can be customized
 via configuration files written in YAML, XML or PHP. By default, the main
 configuration file lives in the ``app/config/`` directory and is called

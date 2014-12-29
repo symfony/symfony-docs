@@ -119,7 +119,7 @@ for you:
 .. sidebar:: Setting up the Database to be UTF8
 
     One mistake even seasoned developers make when starting a Symfony project
-    is forgetting to setup default charset and collation on their database,
+    is forgetting to set up default charset and collation on their database,
     ending up with latin type collations, which are default for most databases.
     They might even remember to do it the very first time, but forget that
     it's all gone after running a relatively common command during development:
@@ -339,7 +339,7 @@ see the :ref:`book-doctrine-field-types` section.
 
     You can also check out Doctrine's `Basic Mapping Documentation`_ for
     all details about mapping information. If you use annotations, you'll
-    need to prepend all annotations with ``ORM\`` (e.g. ``ORM\Column(..)``),
+    need to prepend all annotations with ``ORM\`` (e.g. ``ORM\Column(...)``),
     which is not shown in Doctrine's documentation. You'll also need to include
     the ``use Doctrine\ORM\Mapping as ORM;`` statement, which *imports* the
     ``ORM`` annotations prefix.
@@ -357,7 +357,7 @@ see the :ref:`book-doctrine-field-types` section.
 
 .. note::
 
-    When using another library or program (ie. Doxygen) that uses annotations,
+    When using another library or program (e.g. Doxygen) that uses annotations,
     you should place the ``@IgnoreAnnotation`` annotation on the class to
     indicate which annotations Symfony should ignore.
 
@@ -385,7 +385,7 @@ a regular PHP class, you need to create getter and setter methods (e.g. ``getNam
 
     $ php app/console doctrine:generate:entities AppBundle/Entity/Product
 
-This command makes sure that all of the getters and setters are generated
+This command makes sure that all the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
@@ -432,7 +432,7 @@ mapping information) of a bundle or an entire namespace:
 .. note::
 
     Doctrine doesn't care whether your properties are ``protected`` or ``private``,
-    or whether or not you have a getter or setter function for a property.
+    or whether you have a getter or setter function for a property.
     The getters and setters are generated here only because you'll need them
     to interact with your PHP object.
 
@@ -770,7 +770,7 @@ already did in the previous section).
 
 The DQL syntax is incredibly powerful, allowing you to easily join between
 entities (the topic of :ref:`relations <book-doctrine-relations>` will be
-covered later), group, etc. For more information, see the official Doctrine
+covered later), group, etc. For more information, see the official
 `Doctrine Query Language`_ documentation.
 
 Custom Repository Classes
@@ -833,7 +833,7 @@ used earlier to generate the missing getter and setter methods:
     $ php app/console doctrine:generate:entities AppBundle
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
-repository class. This method will query for all of the ``Product`` entities,
+repository class. This method will query for all the ``Product`` entities,
 ordered alphabetically.
 
 .. code-block:: php
@@ -1352,7 +1352,7 @@ Doctrine's `Lifecycle Events documentation`_.
     transforming data in the entity (e.g. setting a created/updated field,
     generating a slug value).
 
-    If you need to do some heavier lifting - like perform logging or send
+    If you need to do some heavier lifting - like performing logging or sending
     an email - you should register an external class as an event listener
     or subscriber and give it access to whatever resources you need. For
     more information, see :doc:`/cookbook/doctrine/event_listeners_subscribers`.
@@ -1362,7 +1362,7 @@ Doctrine's `Lifecycle Events documentation`_.
 Doctrine Field Types Reference
 ------------------------------
 
-Doctrine comes with a large number of field types available. Each of these
+Doctrine comes with numerous field types available. Each of these
 maps a PHP data type to a specific column type in whatever database you're
 using. For each field type, the ``Column`` can be configured further, setting
 the ``length``, ``nullable`` behavior, ``name`` and other options. To see a

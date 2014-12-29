@@ -28,42 +28,24 @@ The test suite needs the following third-party libraries:
 
 To install them all, use `Composer`_:
 
-Step 1: Get `Composer`_
+Step 1: :doc:`Install Composer globally </cookbook/composer>`
+
+Step 2: Install vendors.
 
 .. code-block:: bash
 
-    $ curl -s http://getcomposer.org/installer | php
-
-Make sure you download ``composer.phar`` in the same folder where
-the ``composer.json`` file is located.
-
-Step 2: Install vendors
-
-.. code-block:: bash
-
-    $ php composer.phar install
+    $ composer install
 
 .. note::
 
     Note that the script takes some time to finish.
-
-.. note::
-
-    If you don't have ``curl`` installed, you can also just download the ``installer``
-    file manually at http://getcomposer.org/installer. Place this file into your
-    project and then run:
-
-    .. code-block:: bash
-
-        $ php installer
-        $ php composer.phar install
 
 After installation, you can update the vendors to their latest version with
 the follow command:
 
 .. code-block:: bash
 
-    $ php composer.phar update
+    $ composer --dev update
 
 Running
 -------
