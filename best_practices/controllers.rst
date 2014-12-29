@@ -110,8 +110,9 @@ for the homepage of our app:
          */
         public function indexAction()
         {
-            $em = $this->getDoctrine()->getManager();
-            $posts = $em->getRepository('AppBundle:Post')->findLatest();
+            $posts = $this->getDoctrine()
+                ->getRepository('AppBundle:Post')
+                ->findLatest();
 
             return $this->render('default/index.html.twig', array(
                 'posts' => $posts
@@ -175,8 +176,7 @@ manually. In our application, we have this situation in ``CommentController``:
     {
         $post = $this->getDoctrine()
             ->getRepository('AppBundle:Post')
-            ->findOneBy(array('slug' => $postSlug))
-        ;
+            ->findOneBy(array('slug' => $postSlug));
 
         if (!$post) {
             throw $this->createNotFoundException();
