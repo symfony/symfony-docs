@@ -5,8 +5,8 @@ How to Use the Console
 ======================
 
 The :doc:`/components/console/usage` page of the components documentation looks
-at the global console options. When you use the console as part of the full
-stack framework, some additional global options are available as well.
+at the global console options. When you use the console as part of the full-stack
+framework, some additional global options are available as well.
 
 By default, console commands run in the ``dev`` environment and you may want
 to change this for some commands. For example, you may want to run some commands

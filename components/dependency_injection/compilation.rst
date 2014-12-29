@@ -207,7 +207,7 @@ The XML version of the config would then look like this:
 
 .. note::
 
-    In the Symfony full stack framework there is a base Extension class which
+    In the Symfony full-stack framework there is a base Extension class which
     implements these methods as well as a shortcut method for processing the
     configuration. See :doc:`/cookbook/bundles/extension` for more details.
 
@@ -347,9 +347,9 @@ will then be called when the container is compiled::
 
 .. note::
 
-    Compiler passes are registered differently if you are using the full
-    stack framework, see :doc:`/cookbook/service_container/compiler_passes`
-    for more details.
+    Compiler passes are registered differently if you are using the full-stack
+    framework, see :doc:`/cookbook/service_container/compiler_passes` for
+    more details.
 
 Controlling the Pass Ordering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -510,5 +510,5 @@ to see if the files have changed, if they have the cache will be considered stal
 
 .. note::
 
-    In the full stack framework the compilation and caching of the container
+    In the full-stack framework the compilation and caching of the container
     is taken care of for you.

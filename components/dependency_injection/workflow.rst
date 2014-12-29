@@ -8,11 +8,11 @@ In the preceding pages of this section, there has been little to say about
 where the various files and classes should be located. This is because this
 depends on the application, library or framework in which you want to use
 the container. Looking at how the container is configured and built in the
-Symfony full stack framework will help you see how this all fits together,
-whether you are using the full stack framework or looking to use the service
+Symfony full-stack framework will help you see how this all fits together,
+whether you are using the full-stack framework or looking to use the service
 container in another application.
 
-The full stack framework uses the HttpKernel component to manage the loading
+The full-stack framework uses the HttpKernel component to manage the loading
 of the service container configuration from the application and bundles and
 also handles the compilation and caching. Even if you are not using HttpKernel,
 it should give you an idea of one way of organizing configuration in a modular
