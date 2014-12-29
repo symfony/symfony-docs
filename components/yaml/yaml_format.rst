@@ -118,16 +118,16 @@ escaped with double quotes:
 * ``\P``
 
 Finally, there are other cases when the strings must be quoted, no matter if
-using single or double quotes:
+you're using single or double quotes:
 
-* when the string is ``true`` or ``false`` (otherwise, it would be treated as a
+* When the string is ``true`` or ``false`` (otherwise, it would be treated as a
   boolean value);
-* when the string is ``null`` or ``~`` (otherwise, it would be considered as a
+* When the string is ``null`` or ``~`` (otherwise, it would be considered as a
   ``null`` value);
-* when the string looks like a number, such as integers (e.g. ``2``, ``14``, etc.),
+* When the string looks like a number, such as integers (e.g. ``2``, ``14``, etc.),
   floats (e.g. ``2.6``, ``14.9``) and exponential numbers (e.g. ``12e7``, etc.)
   (otherwise, it would be treated as a numeric value);
-* when the string looks like a date (e.g. ``2014-12-31``) (otherwise it would be
+* When the string looks like a date (e.g. ``2014-12-31``) (otherwise it would be
   automatically converted into a Unix timestamp).
 
 When a string contains line breaks, you can use the literal style, indicated
