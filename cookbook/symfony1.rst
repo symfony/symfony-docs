@@ -4,7 +4,7 @@
 How Symfony2 Differs from Symfony1
 ==================================
 
-The Symfony2 framework embodies a significant evolution when compared with
+The Symfony2 Framework embodies a significant evolution when compared with
 the first version of the framework. Fortunately, with the MVC architecture
 at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
@@ -227,7 +227,7 @@ Bundles and Plugins
 In a symfony1 project, a plugin could contain configuration, modules, PHP
 libraries, assets and anything else related to your project. In Symfony2,
 the idea of a plugin is replaced by the "bundle". A bundle is even more powerful
-than a plugin because the core Symfony2 framework is brought in via a series
+than a plugin because the core Symfony2 Framework is brought in via a series
 of bundles. In Symfony2, bundles are first-class citizens that are so flexible
 that even core code itself is a bundle.
 

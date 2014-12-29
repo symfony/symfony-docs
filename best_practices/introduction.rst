@@ -4,7 +4,7 @@
 The Symfony Framework Best Practices
 ====================================
 
-The Symfony framework is well-known for being *really* flexible and is used
+The Symfony Framework is well-known for being *really* flexible and is used
 to build micro-sites, enterprise applications that handle billions of connections
 and even as the basis for *other* frameworks. Since its release in July 2011,
 the community has learned a lot about what's possible and how to do things *best*.
@@ -19,7 +19,7 @@ What is this Guide About?
 -------------------------
 
 This guide aims to fix that by describing the **best practices for developing
-web apps with the Symfony full-stack framework**. These are best practices that
+web apps with the Symfony full-stack Framework**. These are best practices that
 fit the philosophy of the framework as envisioned by its original creator
 `Fabien Potencier`_.
 
@@ -32,7 +32,7 @@ fit the philosophy of the framework as envisioned by its original creator
 
 This guide is **specially suited** for:
 
-* Websites and web applications developed with the full-stack Symfony framework.
+* Websites and web applications developed with the full-stack Symfony Framework.
 
 For other situations, this guide might be a good **starting point** that you can
 then **extend and fit to your specific needs**:

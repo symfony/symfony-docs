@@ -1096,7 +1096,7 @@ translation.extractor
    The ability to add message extractors was introduced in Symfony 2.1.
 
 When executing the ``translation:update`` command, it uses extractors to
-extract translation messages from a file. By default, the Symfony framework
+extract translation messages from a file. By default, the Symfony Framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
 :class:`Symfony\\Bundle\\FrameworkBundle\\Translation\\PhpExtractor`, which
 help to find and extract translation keys from Twig templates and PHP files.

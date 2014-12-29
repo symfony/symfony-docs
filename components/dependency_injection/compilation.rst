@@ -207,7 +207,7 @@ The XML version of the config would then look like this:
 
 .. note::
 
-    In the Symfony full-stack framework there is a base Extension class which
+    In the Symfony full-stack Framework there is a base Extension class which
     implements these methods as well as a shortcut method for processing the
     configuration. See :doc:`/cookbook/bundles/extension` for more details.
 

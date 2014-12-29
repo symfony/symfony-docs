@@ -55,7 +55,7 @@ On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
 component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
 on top of the Request and Response classes to standardize the way requests are
 handled. It also provides extension points and tools that makes it the ideal
-starting point to create a Web framework without too much overhead.
+starting point to create a web framework without too much overhead.
 
 It also optionally adds configurability and extensibility, thanks to the
 DependencyInjection component and a powerful plugin system (bundles).

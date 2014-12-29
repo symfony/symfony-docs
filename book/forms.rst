@@ -1526,7 +1526,7 @@ file, you can see every block needed to render a form and every default field
 type.
 
 In PHP, the fragments are individual template files. By default they are located in
-the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
+the ``Resources/views/Form`` directory of the FrameworkBundle (`view on GitHub`_).
 
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:

@@ -1082,7 +1082,7 @@ in mind:
   and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
   used to help updated vendor libraries);
 
-* Each feature in Symfony (including the Symfony framework core) is organized
+* Each feature in Symfony (including the Symfony Framework core) is organized
   into a *bundle*, which is a structured set of files for that feature;
 
 * The **configuration** for each bundle lives in the ``Resources/config``
