@@ -1,0 +1,125 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-08-23T16:28:54Z
+
+Previously, we had more detailed installation instructions in ``/book/installation.rst`` and ``/contributing/code/tests.rst``. Both now only link to the Composer documentation. Is that sufficient enough?
+
+I kept the installations notes in the quick tour which already described the global installation method.
+
+I also didn't modify the Azure deployment chapter as I was not sure on whether or not it is possible to perform a working global installation there.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-20T13:32:01Z
+
+1) Yes to linking more to Composer (or maybe that new cookbook entry I just proposed) and less explaining things about Composer inline.
+
+2) Yes, to leaving Azure, at least for now - it definitely doesn't hurt anything in that isolated case anyways.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-20T20:08:51Z
+
+I created a litte cookbook entry about Composer and changed all external Composer references to point to this new article.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-20T22:08:31Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-20T22:10:42Z
+
+:-1: on the cookbook article. It's out of the scope for the Symfony docs. We should fix the composer website instead.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-20T22:11:04Z
+
+or just link to the symfony download page, which has very nice explainations
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-25T17:12:37Z
+
+We can't link to the download page, because the message is hidden. And yea, if we can update the Composer documentation to clearly show the ways to do a global install, let's link to them. So I would say:
+
+1) Merge this now - it's a great user-experience to have these very specific instructions without any other distractions.
+
+2) Update the Composer download page to be equally as clear and then link to them in the future instead.
+
+What do you say? This doc is quite short, so I don't feel that we're re-implementing a lot of docs.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-10-25T19:14:44Z
+
+I agree with you, Ryan.
+
+---------------------------------------------------------------------------
+
+by Nek- at 2014-10-29T09:06:27Z
+
+:-1: for the cookbook. This is indeed the job of composer.
+
+:+1: for the recommandation & usage of global composer install, this will be recommanded also on the composer documentation. More than that, there is already a part of the composer documentation that explain global installation: https://getcomposer.org/doc/00-intro.md#globally
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-04T01:56:19Z
+
+Hey guys!
+
+Remember, the cookbook article is only a few lines long - we're not doing much: https://github.com/symfony/symfony-docs/pull/4173/files#diff-84716be8ffd14db1f5582ac7dd3e876eR1.
+
+You're right that there is a section in the Composer docs (https://getcomposer.org/doc/00-intro.md#globally) that does a pretty good job. But it's not as clear as our new, very short section. This is because we *only* give you the instructions, not any other details or options (but we can link to the Composer docs for more information).
+
+So I'm still a +1 for the cookbook entry, but I'm certainly open to getting a consensus on this.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-12T15:50:04Z
+
+Do we actually have to talk about a global Composer installation at all when @javiereguiluz has updated all installation instructions for the new Symfony Installer (see #4122)?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-12T15:55:25Z
+
+@xabbuh Composer is still relevant for updating Symfony, installing bundles and adding new dependencies. I'm all in for the Composer cookbook.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-12T16:00:15Z
+
+@javiereguiluz Of course, I totally forgot about that.
+
+By the way, someone proposed a couple of days ago to make some parts of the installation instructions on symfony.com available on the symfony/symfony-marketing repository. This could, for example, cover the basic usage of the Symfony Installer as well as the global installation of Composer. Did you think any further about that? Does it seem to be a reasonable option to you?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-12T16:03:27Z
+
+@xabbuh it's indeed very relevant to us. One of my short-term goals is to make all symfony.com pages' contents translatable (I'm referring to static pages, not the documentation). So symfony/marketing is definitely going to be very important in all this.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-28T15:57:33Z
+
+@xabbuh can you please rebase this (I think this mostly means removing the changes in book/installation as it uses the installer now)?
+
+I'm still not very +1 for the cookbook, but we can always remove it when Composer has been improved by the great @weaverryan :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-28T17:35:01Z
+
+It's rebased now.
