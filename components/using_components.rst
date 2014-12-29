@@ -31,16 +31,16 @@ whatever component you want.
 
 .. tip::
 
-    If you get a command not found for ``composer``, you'll need to
-    `Install composer`_. Depending on how you install, you may end up with
-    a ``composer.phar`` file in your directory. In that case, no worries!
-    Just run ``php composer.phar require symfony/finder``.
+    `Install composer`_ if you don't have it already present on your system.
+    Depending on how you install, you may end up with a ``composer.phar``
+    file in your directory. In that case, no worries! Just run
+    ``php composer.phar require symfony/finder``.
 
 If you know you need a specific version of the library, add that to the command:
 
 .. code-block:: bash
 
-    $ composer require symfony/finder:~2.3
+    $ composer require symfony/finder
 
 **3.** Write your code!
 

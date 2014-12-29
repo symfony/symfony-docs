@@ -101,7 +101,7 @@ as you normally do:
 
 .. code-block:: bash
 
-    $ php composer.phar install --no-dev --optimize-autoloader
+    $ composer install --no-dev --optimize-autoloader
 
 .. tip::
 
@@ -142,7 +142,7 @@ setup:
 
 * Running any database migrations
 * Clearing your APC cache
-* Running ``assets:install`` (taken care of already in ``composer.phar install``)
+* Running ``assets:install`` (already taken care of in ``composer install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
 * ...

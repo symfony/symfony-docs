@@ -7,6 +7,7 @@ The Cookbook
     assetic/index
     bundles/index
     cache/index
+    composer
     configuration/index
     console/index
     controller/index
