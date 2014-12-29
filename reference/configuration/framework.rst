@@ -55,6 +55,10 @@ Configuration
 * `property_accessor`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
+* `validation`_
+    * `cache`_
+    * `enable_annotations`_
+    * `translation_domain`_
 
 secret
 ~~~~~~
@@ -558,6 +562,35 @@ throw_exception_on_invalid_index
 When enabled, the ``property_accessor`` service throws an exception when you
 try to access an invalid index of an array.
 
+validation
+~~~~~~~~~~
+
+cache
+.....
+
+**type**: ``string``
+
+This value is used to determine the service that is used to persist class
+metadata in a cache. The actual service name is built by prefix the configured
+value with ``validator.mapping.cache.`` (e.g. if the value is ``apc``, the
+``validator.mapping.cache.apc`` service will be injected). The service has
+to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+
+enable_annotations
+..................
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, validation constraints can be defined using annotations.
+
+translation_domain
+..................
+
+**type**: ``string`` **default**: ``validators``
+
+The translation domain that is used when translating validation constraint
+error messages.
+
 Full default Configuration
 --------------------------
 
@@ -692,3 +725,4 @@ Full default Configuration
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
+.. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
