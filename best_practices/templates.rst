@@ -9,7 +9,7 @@ languages - like `Twig`_ - were created to make templating even better.
 
     Use Twig templating format for your templates.
 
-Generally speaking, PHP templates are much more verbose than in Twig because
+Generally speaking, PHP templates are much more verbose than Twig templates because
 they lack native support for lots of modern features needed by templates,
 like inheritance, automatic escaping and named arguments for filters and
 functions.
