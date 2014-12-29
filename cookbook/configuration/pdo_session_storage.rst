@@ -6,7 +6,7 @@ How to Use PdoSessionHandler to Store Sessions in the Database
 
 .. caution::
 
-    There was a backwards-compatability break in Symfony 2.6: the database
+    There was a backwards-compatibility break in Symfony 2.6: the database
     schema changed slightly. See :ref:`Symfony 2.6 Changes <pdo-session-handle-26-changes>`
     for details.
 
@@ -118,10 +118,9 @@ a second array argument to ``PdoSessionHandler``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <services>
-
-            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
+            <service id="session.handler.pdo"
+                class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
                 <argument type="collection">
                     <argument key="db_table">sessions</argument>
@@ -132,17 +131,22 @@ a second array argument to ``PdoSessionHandler``:
     .. code-block:: php
 
         // app/config/config.php
+
+        use Symfony\Component\DependencyInjection\Definition;
         // ...
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
-            new Reference('pdo'),
-            array('db_table' => 'session')
-        ));
+        $storageDefinition = new Definition(
+            'Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler',
+            array(
+                new Reference('pdo'),
+                array('db_table' => 'session')
+            )
+        );
         $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 .. versionadded:: 2.6
-    The ``db_lifetime_col`` was introduced in Symfony 2.6 This column did
-    not exist previously.
+    The ``db_lifetime_col`` was introduced in Symfony 2.6. Prior to 2.6,
+    this column did not exist.
 
 The following things can be configured:
 
@@ -202,7 +206,7 @@ Example SQL Statements
 
 .. sidebar:: Schema Changes needed when Upgrading to Symfony 2.6
 
-    If you use the `PdoSessionHandler` prior to Symfony 2.6 and upgrade, you'll
+    If you use the ``PdoSessionHandler`` prior to Symfony 2.6 and upgrade, you'll
     need to make a few changes to your session table:
 
     * A new session lifetime (``sess_lifetime`` by default) integer column
@@ -211,6 +215,10 @@ Example SQL Statements
       BLOG type.
 
     Check the SQL statements below for more details.
+
+    To keep the old (2.5 and earlier) functionality, change your class name
+    to use ``LegacyPdoSessionHandler`` instead of ``PdoSessionHandler`` (the
+    legacy class was added in Symfony 2.6.2).
 
 MySQL
 ~~~~~
