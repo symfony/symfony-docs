@@ -19,6 +19,7 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `default_locale`_
 * `trusted_proxies`_
 * `form`_
     * enabled
@@ -76,8 +77,8 @@ http_method_override
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-gets called automatically. It becomes the service container parameter named
-``kernel.http_method_override``. For more information, see
+method gets called automatically. It becomes the service container parameter
+named ``kernel.http_method_override``. For more information, see
 :doc:`/cookbook/routing/method_parameters`.
 
 ide
@@ -150,6 +151,17 @@ This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
 .. _reference-framework-trusted-proxies:
+
+default_locale
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``en``
+
+The default locale is used if no ``_locale`` routing parameter has been set. It
+becomes the service container parameter named ``kernel.default_locale`` and it
+is also available with the
+:method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
+method.
 
 trusted_proxies
 ~~~~~~~~~~~~~~~
