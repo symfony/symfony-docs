@@ -2055,18 +2055,20 @@ to work correctly. Just pass a file name to enable it::
     You can also access a secure random instance directly from the Symfony
     dependency injection container; its name is ``security.secure_random``.
 
-Checking Dependencies Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _book-security-checking-vulnerabilities:
+
+Checking for Known Security Vulnerabilities in Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.5
     The ``security:check`` command was introduced in Symfony 2.5. This command is
     included in ``SensioDistributionBundle``, which has to be registered in your
     application in order to use this command.
 
-When using lots of dependencies in your Symfony projects, odds are that some of
-them contain security vulnerabilities. That's why Symfony includes a command
-called ``security:check`` that checks whether any of your installed dependencies
-contain a known security vulnerability:
+When using lots of dependencies in your Symfony projects, some of them may
+contain security vulnerabilities. That's why Symfony includes a command called
+``security:check`` that checks your ``composer.lock`` file to find any known
+security vulnerability in your installed dependencies:
 
 .. code-block:: bash
 
@@ -2076,6 +2078,12 @@ A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,
 this command uses the public `security advisories database`_ published by the
 FriendsOfPHP organization.
+
+.. tip::
+
+    The ``security:check`` command terminates with a non-zero exit code if
+    any of your dependencies is affected by a known security vulnerability.
+    Therefore, you can easily integrate it in your build process.
 
 Final Words
 -----------
