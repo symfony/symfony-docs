@@ -30,7 +30,7 @@ A functional test can be as easy as this:
 
 .. code-block:: php
 
-    <?php
+    // src/AppBundle/Tests/ApplicationAvailabilityFunctionalTest.php
 
     namespace AppBundle\Tests;
 
