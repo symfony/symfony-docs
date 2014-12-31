@@ -571,7 +571,7 @@ cache
 **type**: ``string``
 
 This value is used to determine the service that is used to persist class
-metadata in a cache. The actual service name is built by prefix the configured
+metadata in a cache. The actual service name is built by prefixing the configured
 value with ``validator.mapping.cache.`` (e.g. if the value is ``apc``, the
 ``validator.mapping.cache.apc`` service will be injected). The service has
 to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
