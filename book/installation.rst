@@ -108,7 +108,7 @@ Creating Symfony Applications without the Installer
 
 If you still use PHP 5.3, or if you can't execute the installer for any reason,
 you can create Symfony applications using the alternative installation method
-based con `Composer`_.
+based on `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
 also be used to create new applications based on the Symfony framework. If you
