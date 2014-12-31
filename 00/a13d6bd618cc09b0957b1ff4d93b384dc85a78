@@ -1,0 +1,93 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-07T22:23:53Z
+
+I left one comment (at a completely random location). I'll review the rest tomorrow
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-08T10:53:42Z
+
+meh, github does not show the diff for the security book (too big diff)
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-08T11:44:24Z
+
+A few comments on the book itself, which cannot be inline because the diff is not visible in the PR because of its size:
+
+```
+
+.. tip::
+
+    Supported algorithms for this method depend on your PHP version. A full list
+    is available by calling the PHP function :phpfunction:`hash_algos`.
+```
+
+This sentence is incomplete. bcrypt and pbkf2 (and plaintext) are implemented using their own encoders in Symfony. They don't rely on the DigestPasswordEncoder (which is the one relying on algorithms know by hash_algos).
+
+```
+
+The process of authorization has two different sides:
+
+#. The user receives a specific set of roles when logging in (e.g. ``ROLE_ADMIN``).
+#. You add code so that a resource (e.g. URL, controller) requires a specific
+   role in order to be accessed.
+```
+
+this description is again mixing roles and permission attributes (see #4158). A user receives roles, but a resource will require a specific permission attribute (which **may** be a role, but may be something else).
+If you let people think resources are requiring roles, it will make things harder when explaining other voters (expressions, ACLs, authentication levels, custom voters)
+
+```
+.. caution::
+
+    All roles **must** begin with the ``ROLE_`` prefix. Otherwise, they won't
+    be handled by Symfony. If you define your own roles with a dedicated
+    ``Role`` class (more advanced), don't use the ``ROLE_`` prefix.
+```
+
+I suggest removing this sentence. If you define something not starting with ``ROLE_``, it will be a different kind of permission attributes, not of roles.
+Thus, there is a discussion about stopping to represent roles as classes in 3.0, but only as strings starting with ``ROLE_``
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-08T13:54:00Z
+
+The section about the ``@Security`` annotation must be removed btw. This feature of FrameworkExtraBundle is not available in Symfony 2.3. It requires 2.4+
+
+```
+``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
+user that has successfull logged in will have this. In fact, there are thre
+special attributes like this:
+```
+Typo here: ``three`` (missing ``e``)
+
+```
+* ``IS_AUTHENTICATED_FULLY``: All "logged-in" users have this;
+* ``IS_AUTHENTICATED_REMEMBERED``: Similar to ``IS_AUTHENTICATED_FULLY``
+  but important if you're using :doc:`remember me functionality </cookbook/security/remember_me>`;
+```
+
+This is confusing, because users will not understand the difference. This should explain than ``IS_AUTHENTICATED_FULLY`` is *not* granted to people being logged-in by a remember me cookie (the one granted to everyone is ``IS_AUTHENTICATED_REMEMBERED``)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-17T23:25:24Z
+
+Guys! Thanks so much for the review on this really long thing. What's cool is that we found several small tweaks where I had just copied and pasted old docs into a new location. In other words, we face-lifted some areas that I hadn't even intended to tweak.
+
+The changes are at sha: 5d842e2fba097520cf03ba3dad73825e92a66a70. The big one is the new "ips" access_control restriction spot, where I had to change the example entirely.
+
+I have a few small comments still pending, but if you have any big blocker concerns, please let me know. Also, as Stof mentioned, the book is not showing up as a diff, so please realize that it *did* change, and I'd appreciate notes on it. Here are my blockers:
+
+* [x] Comments above from Stof (I ran out of time right now so could not process them yet)
+* [ ] XML+PHP code blocks
+* [x] Waiting a couple of days to make sure there are no other big blockers, then merging and celebrating
+
+... and then of course I'll merge up to the other branches and put the new version stuff back :D
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-17T23:31:08Z
+
+@weaverryan Thanks so much for this great work. I'll try to put some time into updated/syncing the code blocks in the next days.
