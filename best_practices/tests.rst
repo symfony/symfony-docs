@@ -38,7 +38,9 @@ A functional test can be as easy as this:
 
     class ApplicationAvailabilityFunctionalTest extends WebTestCase
     {
-        /** @dataProvider provideUrls */
+        /**
+         * @dataProvider urlProvider
+         */
         public function testPageIsSuccessful($url)
         {
             $client = self::createClient();
@@ -47,7 +49,7 @@ A functional test can be as easy as this:
             $this->assertTrue($client->getResponse()->isSuccessful());
         }
 
-        public function provideUrls()
+        public function urlProvider()
         {
             return array(
                 array('/'),
