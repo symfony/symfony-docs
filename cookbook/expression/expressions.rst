@@ -64,7 +64,7 @@ Inside the expression, you have access to a number of variables:
     The user object (or the string ``anon`` if you're not authenticated).
 ``roles``
     The array of roles the user has, including from the
-    :ref:`role hierarchy <book-security-role-hierarchy>` but not including the
+    :ref:`role hierarchy <security-role-hierarchy>` but not including the
     ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``object``
      The object (if any) that's passed as the second argument to ``isGranted``.
