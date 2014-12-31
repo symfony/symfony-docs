@@ -242,8 +242,8 @@ have all the request information at your fingertips::
     $request->headers->get('host');
     $request->headers->get('content_type');
 
-    $request->getMethod();          // GET, POST, PUT, DELETE, HEAD
-    $request->getLanguages();       // an array of languages the client accepts
+    $request->getMethod();    // GET, POST, PUT, DELETE, HEAD
+    $request->getLanguages(); // an array of languages the client accepts
 
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
