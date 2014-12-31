@@ -257,6 +257,7 @@ the controller, and it maps to the ``indexAction`` method of a PHP class
 called ``Acme\DemoBundle\Controller\RandomController``. Start by creating this
 file inside your ``AcmeDemoBundle``::
 
+    <?php
     // src/Acme/DemoBundle/Controller/RandomController.php
     namespace Acme\DemoBundle\Controller;
 
