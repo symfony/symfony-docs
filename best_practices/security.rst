@@ -75,14 +75,14 @@ Authorization (i.e. Denying Access)
 Symfony gives you several ways to enforce authorization, including the ``access_control``
 configuration in :doc:`security.yml </reference/configuration/security>` the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
-:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
+:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.authorization_checker``
 service directly.
 
 .. best-practice::
 
     * For protecting broad URL patterns, use ``access_control``;
     * Whenever possible, use the ``@Security`` annotation;
-    * Check security directly on the ``security.context`` service whenever
+    * Check security directly on the ``security.authorization_checker`` service whenever
       you have a more complex situation.
 
 There are also different ways to centralize your authorization logic, like
@@ -315,7 +315,7 @@ Now, you can use the voter with the ``@Security`` annotation:
         // ...
     }
 
-You can also use this directly with the ``security.context`` service, or
+You can also use this directly with the ``security.authorization_checker`` service, or
 via the even easier shortcut in a controller:
 
 .. code-block:: php
@@ -327,9 +327,13 @@ via the even easier shortcut in a controller:
     {
         $post = // query for the post ...
 
-        if (!$this->get('security.context')->isGranted('edit', $post)) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        // or without the shortcut:
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
     }
 
 Learn More

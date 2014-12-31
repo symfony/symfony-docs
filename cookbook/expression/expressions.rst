@@ -39,7 +39,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     public function indexAction()
     {
-        if (!$this->get('security.context')->isGranted(new Expression(
+        if (!$this->get('security.authorization_checker')->isGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
         ))) {
             throw $this->createAccessDeniedException();
@@ -99,10 +99,10 @@ Additionally, you have access to a number of functions inside the expression:
         use Symfony\Component\ExpressionLanguage\Expression;
         // ...
 
-        $sc = $this->get('security.context');
-        $access1 = $sc->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        $ac = $this->get('security.authorization_checker');
+        $access1 = $ac->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $access2 = $sc->isGranted(new Expression(
+        $access2 = $ac->isGranted(new Expression(
             'is_remember_me() or is_fully_authenticated()'
         ));
 
