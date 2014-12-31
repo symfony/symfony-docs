@@ -60,8 +60,8 @@ If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
 the port where the PHP application is running when generating absolute URLs,
 e.g. ``http://example.com:8080/my/path``.
 
-Session Cookies and Caching
----------------------------
+Cookies and Caching
+-------------------
 
 By default, a sane caching proxy does not cache anything when a request is sent
 with :ref:`cookies or a basic authentication header<http-cache-introduction>`.
@@ -76,13 +76,14 @@ at least for some parts of the site, e.g. when using forms with
 start a session when actually needed, and clear the session when it is no
 longer needed.
 
-.. todo link to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
+.. todo link "CSRF Protection" to https://github.com/symfony/symfony-docs/pull/4141
+.. todo link "only start a session when actually needed" to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
 
-Cookies can also be created in Javascript and used only in the frontend, e.g.
-Google analytics. These cookies do not matter for the backend and should not
-affect the caching decision. Configure your Varnish cache to
-`clean the cookies header`_. Unless you changed the PHP configuration, your session
-cookie has the name PHPSESSID:
+Cookies created in Javascript and used only in the frontend, e.g. when using
+Google analytics are nonetheless sent to the server. These cookies are not
+relevant for the backend and should not affect the caching decision. Configure
+your Varnish cache to `clean the cookies header`_. Unless you changed the
+default configuration of PHP, your session cookie has the name PHPSESSID:
 
 .. code-block:: varnish4
 
@@ -99,40 +100,6 @@ cookie has the name PHPSESSID:
             }
         }
     }
-
-If only small parts of your application depend on cookies (e.g. you display the
-username in the header), you can use :ref:`ESI <edge-side-includes>` for those
-fragments. Configure Varnish to store and look up requests in its cache even if
-Cookies are present in the request:
-
-.. code-block:: varnish4
-
-    sub vcl_recv() {
-        if (req.http.Cookie) {
-            /* Force cache lookup for requests with cookies */
-            return (lookup);
-        }
-    }
-
-You need to make sure that your backend correctly sets the ``Vary`` header to
-tell which responses vary on the cookie and which are the same::
-
-    public function loginAction()
-    {
-        // ...
-        $response->setVary('Cookie');
-        // ...
-    }
-
-Only set the ``Vary: Cookie`` header on actions that actually depend on whether
-the user is logged in, but not on any other actions.
-
-.. caution::
-
-    Be sure to test your setup. If you do not ``Vary`` content that depends on
-    the session, users will see content from somebody else. If you ``Vary`` too
-    much, the Varnish cache will be filled with duplicate content for every
-    user, rendering the cache pointless as cache hits will become rare.
 
 .. tip::
 
