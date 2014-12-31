@@ -17,7 +17,7 @@ To install Composer on Linux or Mac OS X, execute the following two commands:
     $ curl -sS https://getcomposer.org/installer | php
     $ sudo mv composer.phar /usr/local/bin/composer
 
--.. note::
+.. note::
 
     If you don't have ``curl`` installed, you can also just download the
     ``installer`` file manually at http://getcomposer.org/installer and
