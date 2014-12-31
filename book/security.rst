@@ -1054,8 +1054,6 @@ key:
 
 .. _book-security-logging-out:
 
-.. _book-security-logging-out:
-
 Logging Out
 -----------
 
