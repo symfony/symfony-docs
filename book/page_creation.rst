@@ -122,7 +122,7 @@ the bundle is registered with the kernel::
     public function registerBundles()
     {
         $bundles = array(
-            ...,
+            // ...
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
         // ...
@@ -282,7 +282,11 @@ route is matched::
     {
         public function indexAction($limit)
         {
-            return new Response('<html><body>Number: '.rand(1, $limit).'</body></html>');
+            return new Response(
+                '<html><body>Number: '
+                .rand(1, $limit)
+                .'</body></html>'
+            );
         }
     }
 
@@ -420,7 +424,7 @@ Step through the Twig template line-by-line:
 
 The parent template, ``::base.html.twig``, is missing both the **BundleName**
 and **ControllerName** portions of its name (hence the double colon (``::``)
-at the beginning). This means that the template lives outside of the bundles
+at the beginning). This means that the template lives outside of the bundle
 and in the ``app`` directory:
 
 .. configuration-block::
@@ -451,7 +455,8 @@ and in the ``app`` directory:
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <title><?php $view['slots']->output('title', 'Welcome!') ?></title>
                 <?php $view['slots']->output('stylesheets') ?>
-                <link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
+                <link rel="shortcut icon"
+                    href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
             </head>
             <body>
                 <?php $view['slots']->output('_content') ?>
@@ -718,8 +723,8 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     public function registerBundles()
     {
         $bundles = array(
-            ...,
-            // register your bundles
+            // ...
+            // register your bundle
             new Acme\TestBundle\AcmeTestBundle(),
         );
         // ...
@@ -824,9 +829,12 @@ format you prefer:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <imports>
                 <import resource="parameters.yml" />
@@ -1017,8 +1025,10 @@ the configuration file for the ``dev`` environment.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="config.xml" />
@@ -1038,7 +1048,7 @@ the configuration file for the ``dev`` environment.
         $loader->import('config.php');
 
         $container->loadFromExtension('framework', array(
-            'router'   => array(
+            'router' => array(
                 'resource' => '%kernel.root_dir%/config/routing_dev.php',
             ),
             'profiler' => array('only-exceptions' => false),
