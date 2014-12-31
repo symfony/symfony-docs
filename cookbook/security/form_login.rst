@@ -4,9 +4,9 @@
 How to Customize your Form Login
 ================================
 
-Using a :ref:`form login <book-security-form-login>` for authentication is
-a common, and flexible, method for handling authentication in Symfony. Pretty
-much every aspect of the form login can be customized. The full, default
+Using a :doc:`form login </cookbook/security/form_login_setup>` for authentication
+is a common, and flexible, method for handling authentication in Symfony.
+Pretty much every aspect of the form login can be customized. The full, default
 configuration is shown in the next section.
 
 Form Login Configuration Reference
