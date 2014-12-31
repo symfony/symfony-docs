@@ -283,9 +283,7 @@ route is matched::
         public function indexAction($limit)
         {
             return new Response(
-                '<html><body>Number: '
-                .rand(1, $limit)
-                .'</body></html>'
+                '<html><body>Number: '.rand(1, $limit).'</body></html>'
             );
         }
     }
