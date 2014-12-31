@@ -228,7 +228,7 @@ Each part will be explained in the next section.
                 # use the urldecoded format
                 path:                 ~ # Example: ^/path to resource/
                 host:                 ~
-                ip:                   ~
+                ips:                  []
                 methods:              []
                 roles:                []
             role_hierarchy:
