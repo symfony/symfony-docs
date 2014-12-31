@@ -667,6 +667,8 @@ this test is the most effective way.
 Global Variables
 ----------------
 
+.. _reference-twig-global-app:
+
 app
 ~~~
 

@@ -144,6 +144,7 @@
 
 * :doc:`/cookbook/security/index`
 
+  * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
@@ -164,6 +165,8 @@
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
+  * :doc:`/cookbook/security/access_control`
+  * :doc:`/cookbook/security/multiple_user_providers`
 
 * **Serializer**
 
