@@ -90,7 +90,7 @@ something like::
     }
 
 .. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Authorization\\AuthorizationCheckerInterface` was
+    The :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface` was
     introduced in Symfony 2.6. Prior, you had to use the ``isGranted`` method of
     :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
 
