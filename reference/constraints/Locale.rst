@@ -11,6 +11,7 @@ the `ISO 3166-1 alpha-2`_ *country* code (e.g. ``fr_FR`` for French/France).
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Locale`            |
 +----------------+------------------------------------------------------------------------+
@@ -85,6 +86,8 @@ message
 **type**: ``string`` **default**: ``This value is not a valid locale.``
 
 This message is shown if the string is not a valid locale.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`ISO 639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`ISO 3166-1 alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

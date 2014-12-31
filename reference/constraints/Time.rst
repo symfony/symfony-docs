@@ -9,6 +9,7 @@ a valid "HH:MM:SS" format.
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Time`              |
 +----------------+------------------------------------------------------------------------+
@@ -35,7 +36,7 @@ of the day when the event starts:
 
         // src/Acme/EventBundle/Entity/Event.php
         namespace Acme\EventBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Event
@@ -62,10 +63,10 @@ of the day when the event starts:
         </constraint-mapping>
 
     .. code-block:: php
-        
+
         // src/Acme/EventBundle/Entity/Event.php
         namespace Acme\EventBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -86,3 +87,5 @@ message
 **type**: ``string`` **default**: ``This value is not a valid time.``
 
 This message is shown if the underlying data is not a valid time.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

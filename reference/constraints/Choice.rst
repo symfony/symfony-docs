@@ -18,6 +18,7 @@ an array of items is one of those valid choices.
 |                | - `minMessage`_                                                       |
 |                | - `maxMessage`_                                                       |
 |                | - `strict`_                                                           |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`           |
 +----------------+-----------------------------------------------------------------------+
@@ -89,11 +90,11 @@ If your valid choice list is simple, you can pass them in directly via the
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
@@ -176,11 +177,11 @@ constraint.
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
@@ -244,11 +245,11 @@ you can pass the class name and the method as an array.
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
@@ -349,3 +350,5 @@ strict
 If true, the validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array` method
 when checking to see if a value is in the valid choices array.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

@@ -214,6 +214,7 @@
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
+  * :doc:`/cookbook/validation/severity`
 
 * :doc:`/cookbook/web_server/index`
 
