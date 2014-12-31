@@ -364,7 +364,7 @@ a wide variety of articles about solving specific problems with Symfony.
     at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 .. _`Symfony Release process`: http://symfony.com/doc/current/contributing/community/releases.html
-.. _`explained in this post`: http://fabien.potencier.org.nyud.net/article/73/signing-project-releases
+.. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
 .. _`Composer`: http://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
