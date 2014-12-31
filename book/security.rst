@@ -290,8 +290,11 @@ before inserting them into the database? Don't worry, see
 
 .. tip::
 
-    Supported algorithms for this method depend on your PHP version. A full list
-    is available by calling the PHP function :phpfunction:`hash_algos`.
+    Supported algorithms for this method depend on your PHP version, but
+    include the algorithms returned by the PHP function :phpfunction:`hash_algos`
+    as well as a few others (e.g. bcrypt). See the ``encoders`` key in the
+    :doc:`Security Reference Section </reference/configuration/security>`
+    for examples.
 
 D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -320,17 +323,20 @@ Great! Now, you need to learn how to deny access and work with the User object.
 This is called **authorization**, and its job is to decide if a user can
 access some resource (a URL, a model object, a method call, ...).
 
-.. note::
-
-    The authorization system is flexible, and can even support complex ACL's
-    where you determine, for example, if user A can "EDIT" some object B
-    (e.g. a Product). For details, see :doc:`/cookbook/security/voters_data_permission`.
-
 The process of authorization has two different sides:
 
 #. The user receives a specific set of roles when logging in (e.g. ``ROLE_ADMIN``).
 #. You add code so that a resource (e.g. URL, controller) requires a specific
-   role in order to be accessed.
+   "attribute" (most commonly a role like ``ROLE_ADMIN``) in order to be
+   accessed.
+
+.. tip::
+
+    In addition to roles (e.g. ``ROLE_ADMIN``), you can protect a resource
+    using other attributes/strings (e.g. ``EDIT``) and use voters or Symfony's
+    ACL system to give these meaning. This might come in handy if you need
+    to check if user A can "EDIT" some object B (e.g. a Product with id 5).
+    See :ref:`security-secure-objects`.
 
 .. _book-security-roles:
 
@@ -344,9 +350,11 @@ in your table.
 
 .. caution::
 
-    All roles **must** begin with the ``ROLE_`` prefix. Otherwise, they won't
-    be handled by Symfony. If you define your own roles with a dedicated
-    ``Role`` class (more advanced), don't use the ``ROLE_`` prefix.
+    All roles you assign to a user **must** begin with the ``ROLE_`` prefix.
+    Otherwise, they won't be handled by Symfony's security system in the
+    normal way (i.e. unless you're doing something advanced, assigning a
+    role like ``FOO`` to a user and then checking for ``FOO`` as described
+    :ref:`below <security-role-authorization>` will not work).
 
 Roles are simple, and are basically strings that you invent and use as needed.
 For example, if you need to start limiting access to the blog admin section
@@ -362,6 +370,8 @@ it.
 
 You can also specify a :ref:`role hierarchy <security-role-hierarchy>` where
 some roles automatically mean that you also have other roles.
+
+.. _security-role-authorization:
 
 Add Code to Deny Access
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -486,24 +496,6 @@ That's it! If the user isn't logged in yet, they will be asked to login (e.g.
 redirected to the login page). If they *are* logged in, they'll be shown
 the 403 access denied page (which you can :ref:`customize <cookbook-error-pages-by-status-code>`).
 
-.. _book-security-securing-controller-annotations:
-
-Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
-using annotations::
-
-    // ...
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function helloAction($name)
-    {
-        // ...
-    }
-
-For more information, see the `FrameworkExtraBundle documentation`_.
-
 .. _book-security-template:
 
 Access Control in Templates
@@ -575,15 +567,23 @@ user is logged in (you don't care about roles), then you can see ``IS_AUTHENTICA
     You can of course also use this in ``access_control``.
 
 ``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
-user that has successfull logged in will have this. In fact, there are thre
+user that has successfully logged in will have this. In fact, there are three
 special attributes like this:
 
-* ``IS_AUTHENTICATED_FULLY``: All "logged-in" users have this;
-* ``IS_AUTHENTICATED_REMEMBERED``: Similar to ``IS_AUTHENTICATED_FULLY``
-  but important if you're using :doc:`remember me functionality </cookbook/security/remember_me>`;
+* ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
+  if they are logged in because of a "remember me cookie". Even if you don't
+  use the :doc:`remember me functionality </cookbook/security/remember_me>`,
+  you can use this to check if the user is logged in.
+
+* ``IS_AUTHENTICATED_FULLY``: This is similar to ``IS_AUTHENTICATED_REMEMBERED``,
+  but stronger. Users who are logged in only because of a "remember me cookie"
+  will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
+
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/cookbook/security/access_control`.
+
+.. _security-secure-objects:
 
 Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -667,7 +667,7 @@ the User object, and use the ``isGranted`` method (or
         
     }
 
-Retreiving the User in a Template
+Retrieving the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In a Twig Template this object can be accessed via the `app.user <reference-twig-global-app>`_
