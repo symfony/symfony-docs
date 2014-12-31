@@ -49,6 +49,48 @@ configuration looks like this:
                 default:
                     anonymous: ~
 
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <provider name="in_memory">
+                    <memory />
+                </provider>
+
+                <firewall name="dev" pattern="^/(_(profiler|wdt)|css|images|js)/" security=false />
+
+                <firewall name="default">
+                    <anonymous />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'providers' => array(
+                'in_memory' => array(
+                    'memory' => array(),
+                ),
+            ),
+            'firewalls' => array(
+                'dev' => array(
+                    'pattern'    => '^/(_(profiler|wdt)|css|images|js)/',
+                    'security'   => false,
+                ),
+                'default' => array(
+                    'anonymous'  => null,
+                ),
+            ),
+        ));
+
 The ``firewalls`` key is the *heart* of your security configuration. The
 ``dev`` firewall isn't important, it just makes sure that Symfony's development
 tools - which live under URLs like ``/_profiler`` and ``/_wdt`` aren't blocked
@@ -96,6 +138,39 @@ To activate this, add the ``http_basic`` key under your firewall:
                     anonymous: ~
                     http_basic: ~
 
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="default">
+                    <anonymous />
+                    <http-basic />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+            'firewalls' => array(
+                // ...
+                'default' => array(
+                    'anonymous'  => null,
+                    'http_basic' => null,
+                ),
+            ),
+        ));
+
 Simple! To try this, you need to require the user to be logged in to see
 a page. To make things interesting, create a new page at ``/admin``. For
 example, if you use annotations, create something like this::
@@ -131,8 +206,48 @@ user to be logged in to access this URL:
                 # ...
             
             access_control:
-                # require ROLE_ADMIN for /admin/*
+                # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="default">
+                    <!-- ... -->
+                </firewall>
+
+                <access-control>
+                    <!-- require ROLE_ADMIN for /admin* -->
+                    <rule path="^/admin" role="ROLE_ADMIN" />
+                </access-control>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+            'firewalls' => array(
+                // ...
+                'default' => array(
+                    // ...
+                ),
+            ),
+           'access_control' => array(
+               // require ROLE_ADMIN for /admin*
+                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+            ),
+        ));
 
 .. note::
 
@@ -185,6 +300,50 @@ provider, but it's better to think of it as an "in configuration" provider:
                             admin:
                                 password: kitten
                                 roles: 'ROLE_ADMIN'
+            # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <provider name="in_memory">
+                    <memory>
+                        <user name="ryan" password="ryanpass" roles="ROLE_USER" />
+                        <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                    </memory>
+                </provider>
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'providers' => array(
+                'in_memory' => array(
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array(
+                                'password' => 'ryanpass',
+                                'roles' => 'ROLE_USER',
+                            ),
+                            'admin' => array(
+                                'password' => 'kitten',
+                                'roles' => 'ROLE_ADMIN',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            // ...
+        ));
 
 Like with ``firewalls``, you can have multiple ``providers``, but you'll
 probably only need one. If you *do* have multiple, you can configure which
@@ -208,6 +367,37 @@ To fix this, add an ``encoders`` key:
 
             encoders:
                 Symfony\Component\Security\Core\User\User: plaintext
+            # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <encoder class="Symfony\Component\Security\Core\User\User"
+                    algorithm="plaintext" />
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'encoders' => array(
+                'Symfony\Component\Security\Core\User\User' => 'plaintext',
+            ),
+            // ...
+        ));
 
 User providers load user information and put it into a ``User`` object. If
 you :doc:`load users from the database </cookbook/security/entity_provider>`
@@ -258,6 +448,39 @@ else, you'll want to encode their passwords. The best algorithm to use is
                     algorithm: bcrypt
                     cost: 12
 
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <encoder class="Symfony\Component\Security\Core\User\User"
+                    algorithm="bcrypt" cost="12" />
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'encoders' => array(
+                'Symfony\Component\Security\Core\User\User' => array(
+                    'algorithm' => 'plaintext',
+                    'cost' => 12,
+                )
+            ),
+            // ...
+        ));
+
 .. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
 
 Of course, your user's passwords now need to be encoded with this exact algorithm.
@@ -282,6 +505,49 @@ like this:
                             admin:
                                 password: $2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G
                                 roles: 'ROLE_ADMIN'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <provider name="in_memory">
+                    <memory>
+                        <user name="ryan" password="$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli" roles="ROLE_USER" />
+                        <user name="admin" password="$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G" roles="ROLE_ADMIN" />
+                    </memory>
+                </provider>
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'providers' => array(
+                'in_memory' => array(
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array(
+                                'password' => '$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli',
+                                'roles' => 'ROLE_USER',
+                            ),
+                            'admin' => array(
+                                'password' => '$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G',
+                                'roles' => 'ROLE_ADMIN',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            // ...
+        ));
 
 Everything will now work exactly like before. But if you have dynamic users
 (e.g. from a database), how can you programmatically encode the password
@@ -404,8 +670,48 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
                 # ...
             
             access_control:
-                # require ROLE_ADMIN for /admin/*
+                # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="default">
+                    <!-- ... -->
+                </firewall>
+
+                <access-control>
+                    <!-- require ROLE_ADMIN for /admin* -->
+                    <rule path="^/admin" role="ROLE_ADMIN" />
+                </access-control>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+            'firewalls' => array(
+                // ...
+                'default' => array(
+                    // ...
+                ),
+            ),
+           'access_control' => array(
+               // require ROLE_ADMIN for /admin*
+                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+            ),
+        ));
 
 This is great for securing entire sections, but you'll also probably want
 to :ref:`secure your individual controllers <book-security-securing-controller>`
