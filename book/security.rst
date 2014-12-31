@@ -924,8 +924,6 @@ special attributes like this:
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/cookbook/security/access_control`.
 
-.. _security-secure-objects:
-
 .. _book-security-template-expression:
 
 .. versionadded:: 2.4
@@ -952,6 +950,8 @@ You can also use expressions inside your templates:
         <?php endif; ?>
 
 For more details on expressions and security, see :ref:`book-security-expressions`.
+
+.. _security-secure-objects:
 
 Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
