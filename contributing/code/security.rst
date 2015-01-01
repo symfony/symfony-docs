@@ -38,6 +38,8 @@ confirmed, the core-team works on a solution following these steps:
 #. Publish the post on the official Symfony `blog`_ (it must also be added to
    the "`Security Advisories`_" category);
 #. Update the security advisory list (see below).
+#. Update the public `security advisories database`_ maintained by the
+   FriendsOfPHP organization and which is used by the ``security:check`` command.
 
 .. note::
 
@@ -93,6 +95,11 @@ of the downstream projects included in this process:
 Security Advisories
 -------------------
 
+.. tip::
+
+    You can check your Symfony application for known security vulnerabilities
+    using the ``security:check`` command. See :doc:`</book/security/checking-vulnerabilities>`
+
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
@@ -119,6 +126,7 @@ releases, starting from Symfony 1.0.0:
 * March 21, 2008: `symfony 1.0.12 is (finally) out ! <http://symfony.com/blog/symfony-1-0-12-is-finally-out>`_
 * June 25, 2007: `symfony 1.0.5 released (security fix) <http://symfony.com/blog/symfony-1-0-5-released-security-fix>`_
 
-.. _Git repository:      https://github.com/symfony/symfony
-.. _blog:                http://symfony.com/blog/
+.. _Git repository: https://github.com/symfony/symfony
+.. _blog: http://symfony.com/blog/
 .. _Security Advisories: http://symfony.com/blog/category/security-advisories
+.. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
