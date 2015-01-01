@@ -1287,6 +1287,36 @@ cookie will be ever created by Symfony):
     If you use a form login, Symfony will create a cookie even if you set
     ``stateless`` to ``true``.
 
+.. _book-security-checking-vulnerabilities:
+
+Checking for Known Security Vulnerabilities in Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.5
+    The ``security:check`` command was introduced in Symfony 2.5. This command is
+    included in ``SensioDistributionBundle``, which has to be registered in your
+    application in order to use this command.
+
+When using lots of dependencies in your Symfony projects, some of them may
+contain security vulnerabilities. That's why Symfony includes a command called
+``security:check`` that checks your ``composer.lock`` file to find any known
+security vulnerability in your installed dependencies:
+
+.. code-block:: bash
+
+    $ php app/console security:check
+
+A good security practice is to execute this command regularly to be able to
+update or replace compromised dependencies as soon as possible. Internally,
+this command uses the public `security advisories database`_ published by the
+FriendsOfPHP organization.
+
+.. tip::
+
+    The ``security:check`` command terminates with a non-zero exit code if
+    any of your dependencies is affected by a known security vulnerability.
+    Therefore, you can easily integrate it in your build process.
+
 Final Words
 -----------
 
@@ -1315,3 +1345,4 @@ Learn more from the Cookbook
 
 .. _`online tool`: https://www.dailycred.com/blog/12/bcrypt-calculator
 .. _`frameworkextrabundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
