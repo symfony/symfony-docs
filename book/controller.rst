@@ -263,7 +263,7 @@ Take the following more-interesting example:
         class HelloController
         {
             /**
-             * @Route("/hello/{firstName}/{lastName}", name="hello")
+             * @Route("/hello/{firstName}/{lastName}")
              */
             public function indexAction($firstName, $lastName)
             {
@@ -502,7 +502,7 @@ Accessing other Services
 Symfony comes packed with a lot of useful objects, called services. These
 are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of. When you install a new bundle, it probably
-brings in even *more* services.
+brings in even *more* services.las
 
 When extending the base controller class, you can access any Symfony service
 via the ``get()`` method. Here are several common services you might need::
