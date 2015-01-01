@@ -74,20 +74,22 @@ prevent clients from bypassing the cache. In practice, you will need sessions
 at least for some parts of the site, e.g. when using forms with
 :ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to only
 start a session when actually needed, and clear the session when it is no
-longer needed.
+longer needed. Alternatively, you can look into :doc:`../cache/form_csrf_caching`.
 
-.. todo link "CSRF Protection" to https://github.com/symfony/symfony-docs/pull/4141
 .. todo link "only start a session when actually needed" to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
 
 Cookies created in Javascript and used only in the frontend, e.g. when using
 Google analytics are nonetheless sent to the server. These cookies are not
 relevant for the backend and should not affect the caching decision. Configure
-your Varnish cache to `clean the cookies header`_. Unless you changed the
-default configuration of PHP, your session cookie has the name PHPSESSID:
+your Varnish cache to `clean the cookies header`_. You want to keep the
+session cookie, if there is one, and get rid of all other cookies so that pages
+are cached if there is no active session. Unless you changed the default
+configuration of PHP, your session cookie has the name PHPSESSID:
 
 .. code-block:: varnish4
 
     sub vcl_recv {
+        // Remove all cookies except the session ID.
         if (req.http.Cookie) {
             set req.http.Cookie = ";" + req.http.Cookie;
             set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
@@ -96,6 +98,7 @@ default configuration of PHP, your session cookie has the name PHPSESSID:
             set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
             if (req.http.Cookie == "") {
+                // If there are no more cookies, remove the header to get page cached.
                 remove req.http.Cookie;
             }
         }
@@ -106,7 +109,7 @@ default configuration of PHP, your session cookie has the name PHPSESSID:
     If content is not different for every user, but depends on the roles of a
     user, a solution is to separate the cache per group. This pattern is
     implemented and explained by the FOSHttpCacheBundle_ under the name
-    *User Context*.
+    `User Context`_.
 
 Ensure Consistent Caching Behaviour
 -----------------------------------
@@ -221,3 +224,4 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html
