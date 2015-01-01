@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-14T18:50:36Z
+
+We need to be careful, to only merge this into the `2.5` branch and higher since the command isn't part of the `2.3` version of the SensioDistributionBundle.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-14T18:55:42Z
+
+Thanks for your work @javiereguiluz. I'm just wondering if we should also add a note in `/contributing/code/security.rst`. What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-14T19:02:54Z
+
+A comment to the doc merger (probably @weaverryan): I wrongly made this PR against 2.3 and it should be 2.5 because `security:check` command was introduced in Symfony 2.5.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-14T19:07:00Z
+
+@xabbuh I've added a note in https://github.com/symfony/symfony-docs/commit/20de27e7ee5ec6215b29477737a8b5c3242a51bb Please, let me know if that was what you were thinking or not. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-14T19:28:31Z
+
+I thought we could also add a note at "Security Advisories" which explains that you can use the `security:check` command to test for known vulnerabilities.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T07:50:09Z
+
+> I thought we could also add a note at "Security Advisories" which explains that you can use the security:check command to test for known vulnerabilities.
+
+I'm afraid that I do't understand your last comment. Where else should we mention this `security:check` command?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T09:20:26Z
+
+I thought about adding the following block in `/contributing/code/security.rst` (before or after the list of security releases):
+
+```rst
+.. tip::
+
+    You can check your Symfony application for known security vulnerabilities
+    using the ``security:check`` command.
+```
+
+This might be valuable because issues not only occur in the Symfony core, but do also happen in third-party bundle code.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-28T15:26:51Z
+
+ping @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-29T16:19:15Z
+
+@WouterJ I've rebased the PR and fixed everything that reviewers told me. If you agree, we can move this PR to `Finished` state. Thanks!
