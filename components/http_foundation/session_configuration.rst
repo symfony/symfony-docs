@@ -102,6 +102,20 @@ method.
 
 For the sake of clarity, some key options are explained in this documentation.
 
+.. note::
+
+    If you rely on Session settings set outside
+    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`, be aware the
+    constructor sets ``session.cache_limiter`` to ``""``. If you rely on native sessions to manage cache
+    headers, you *must* at least pass this option to the constructor.
+    
+    Example usage::
+
+      use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+      
+      $options['cache_limiter'] = session_cache_limiter();
+      $storage = new NativeSessionStorage($options);
+
 Session Cookie Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~
 
