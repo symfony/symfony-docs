@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-02T14:48:17Z
+
+@xabbuh thanks for this fix! I wonder if we could be more agile for minor changes like this. Creating a pull request and adding the PR table for this seems a bit overkill to me.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-02T14:55:17Z
+
+@javiereguiluz PR tables are by any meaning not required for the documentations (just to lower the barrier). Unfortunately, we can't do anything about creating a PR...
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-02T15:00:49Z
+
+Of course, people with write access could push directly, but that's bad since you won't get notified by these changes.
+
+About the PR tables: I could have left it away, but it's faster to copy and paste it than thinking first if it was required or not. ;)
