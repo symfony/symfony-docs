@@ -95,7 +95,6 @@ manage this is `Gitolite`_.
 
 .. _`Git`: http://git-scm.com/
 .. _`Symfony Standard Edition`: http://symfony.com/download
-.. _`Installing Symfony using Composer`: http://symfony.com/doc/current/book/installation.html#option-1-composer
 .. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
