@@ -532,7 +532,8 @@ method to access tokens based on some criteria::
     $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, '', '');
 
     // get the latest 10 tokens for requests that happened between 2 and 4 days ago
-    $tokens = $container->get('profiler')->find('', '', 10, '4 days ago', '2 days ago');
+    $tokens = $container->get('profiler')
+        ->find('', '', 10, '4 days ago', '2 days ago');
 
 If you want to manipulate profiling data on a different machine than the one
 where the information were generated, use the
@@ -576,9 +577,12 @@ the configuration for the development environment:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/webprofiler
+                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- load the profiler -->
             <framework:config>
@@ -638,7 +642,9 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
         use Symfony\Component\Routing\RouteCollection;
 
-        $profiler = $loader->import('@WebProfilerBundle/Resources/config/routing/profiler.xml');
+        $profiler = $loader->import(
+            '@WebProfilerBundle/Resources/config/routing/profiler.xml'
+        );
         $profiler->addPrefix('/_profiler');
 
         $collection = new RouteCollection();
