@@ -209,7 +209,7 @@ user to be logged in to access this URL:
             # ...
             firewalls:
                 # ...
-            
+
             access_control:
                 # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
@@ -676,7 +676,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
             # ...
             firewalls:
                 # ...
-            
+
             access_control:
                 # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
@@ -870,9 +870,9 @@ in this chapter).
     Be careful with this in your layout or on your error pages! Because of
     some internal Symfony details, to avoid broken error pages in the ``prod``
     environment, wrap calls in these templates with a check for ``app.user``:
-    
+
     .. code-block:: html+jinja
-    
+
         {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
@@ -1036,7 +1036,7 @@ the User object, and use the ``isGranted`` method (or
 
     // boo :(. Never check for the User object to see if they're logged in
     if ($this->getUser()) {
-        
+
     }
 
 Retrieving the User in a Template
@@ -1055,7 +1055,7 @@ key:
 
     .. code-block:: html+php
 
-        <?php if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')): ?>        
+        <?php if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')): ?>
             <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
         <?php endif; ?>
 
@@ -1148,7 +1148,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         return $collection;
 
 And that's it! By sending a user to ``/logout`` (or whatever you configure
-the ``path`` to be), Symfony will un-authenticate the current user. and 
+the ``path`` to be), Symfony will un-authenticate the current user. and
 redirect them the homepage (the value defined by ``target``).
 
 Once the user has been logged out, they will be redirected to whatever path
@@ -1179,6 +1179,9 @@ in the following way from a controller::
         ->encodePassword($user, $plainPassword);
 
     $user->setPassword($encoded);
+
+.. versionadded:: 2.6
+    The ``security.password_encoder`` service was introduced in Symfony 2.6.
 
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``

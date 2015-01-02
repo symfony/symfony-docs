@@ -11,7 +11,7 @@ us make a better Symfony.
 
 Before submitting a bug:
 
-* Double-check the official `documentation`_ to see if you're not misusing the
+* Double-check the official :doc:`documentation </index>` to see if you're not misusing the
   framework;
 
 * Ask for assistance on the `users mailing-list`_, the `forum`_, or on the
@@ -34,7 +34,6 @@ If your problem definitely looks like a bug, report it using the official bug
 
 * *(optional)* Attach a :doc:`patch <patches>`.
 
-.. _documentation: http://symfony.com/doc/current/
 .. _users mailing-list: http://groups.google.com/group/symfony2
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony

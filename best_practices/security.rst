@@ -73,7 +73,7 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>` the
+configuration in :doc:`security.yml </reference/configuration/security>`, the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
 :ref:`isGranted <best-practices-directly-isGranted>` on the ``security.authorization_checker``
 service directly.
@@ -315,7 +315,7 @@ Now, you can use the voter with the ``@Security`` annotation:
         // ...
     }
 
-You can also use this directly with the ``security.authorization_checker`` service, or
+You can also use this directly with the ``security.authorization_checker`` service or
 via the even easier shortcut in a controller:
 
 .. code-block:: php
@@ -354,11 +354,7 @@ If your company uses a user login method not supported by Symfony, you can
 develop :doc:`your own user provider </cookbook/security/custom_provider>` and
 :doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
 
-.. _`Security Cookbook Section`: http://symfony.com/doc/current/cookbook/security/index.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
-.. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
-.. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
