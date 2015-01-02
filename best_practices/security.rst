@@ -74,15 +74,13 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>`, the
-:ref:`@Security annotation <best-practices-security-annotation>` and using
-:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
+configuration in :doc:`security.yml </reference/configuration/security>` and
+using :ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
 service directly.
 
 .. best-practice::
 
     * For protecting broad URL patterns, use ``access_control``;
-    * Whenever possible, use the ``@Security`` annotation;
     * Check security directly on the ``security.context`` service whenever
       you have a more complex situation.
 
@@ -95,44 +93,14 @@ with a custom security voter or with ACL.
     * For restricting access to *any* object by *any* user via an admin
       interface, use the Symfony ACL.
 
-.. _best-practices-security-annotation:
-
-The @Security Annotation
-------------------------
-
-For controlling access on a controller-by-controller basis, use the ``@Security``
-annotation whenever possible. It's easy to read and is placed consistently
-above each action.
-
-In our application, you need the ``ROLE_ADMIN`` in order to create a new post.
-Using ``@Security``, this looks like:
-
-.. code-block:: php
-
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-    // ...
-
-    /**
-     * Displays a form to create a new Post entity.
-     *
-     * @Route("/new", name="admin_post_new")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function newAction()
-    {
-        // ...
-    }
-
 .. _best-practices-directly-isGranted:
+.. _checking-permissions-without-security:
 
-Checking Permissions without @Security
---------------------------------------
+Manually Checking Permissions
+-----------------------------
 
-The above example with ``@Security`` only works because we're using the
-:ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
-access to the a ``post`` variable. If you don't use this, or have some other
-more advanced use-case, you can always do the same security check in PHP:
+If you cannot control the access based on URL patterns, you can always do
+the security checks in PHP:
 
 .. code-block:: php
 
@@ -220,21 +188,7 @@ To enable the security voter in the application, define a new service:
             tags:
                - { name: security.voter }
 
-Now, you can use the voter with the ``@Security`` annotation:
-
-.. code-block:: php
-
-    /**
-     * @Route("/{id}/edit", name="admin_post_edit")
-     * @Security("is_granted('edit', post)")
-     */
-    public function editAction(Post $post)
-    {
-        // ...
-    }
-
-You can also use this directly with the ``security.context`` service or via
-the even easier shortcut in a controller:
+Now, you can use the voter with the ``security.context`` service:
 
 .. code-block:: php
 
@@ -268,5 +222,4 @@ If your company uses a user login method not supported by Symfony, you can
 develop :doc:`your own user provider </cookbook/security/custom_provider>` and
 :doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
 
-.. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
