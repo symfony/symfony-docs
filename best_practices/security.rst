@@ -73,7 +73,7 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>` the
+configuration in :doc:`security.yml </reference/configuration/security>`, the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
 :ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
 service directly.
@@ -232,8 +232,8 @@ Now, you can use the voter with the ``@Security`` annotation:
         // ...
     }
 
-You can also use this directly with the ``security.context`` service, or
-via the even easier shortcut in a controller:
+You can also use this directly with the ``security.context`` service or via
+the even easier shortcut in a controller:
 
 .. code-block:: php
 
