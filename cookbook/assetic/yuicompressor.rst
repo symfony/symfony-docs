@@ -22,7 +22,7 @@ Download the YUI Compressor JAR
 -------------------------------
 
 The YUI Compressor is written in Java and distributed as a JAR. `Download the JAR`_
-from the Yahoo! site and save it to ``app/Resources/java/yuicompressor.jar``.
+from the Yahoo! website and save it to ``app/Resources/java/yuicompressor.jar``.
 
 Configure the YUI Filters
 -------------------------

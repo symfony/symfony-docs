@@ -134,7 +134,7 @@ before translating contents::
         }
     }
 
-However for other services the solution might be more complex. For more details,
+However, for other services the solution might be more complex. For more details,
 see :doc:`/cookbook/service_container/scopes`.
 
 Testing Commands

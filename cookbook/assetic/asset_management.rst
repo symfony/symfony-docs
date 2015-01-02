@@ -91,7 +91,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
 
     You can also include CSS Stylesheets: see :ref:`cookbook-assetic-including-css`.
 
-In this example, all of the files in the ``Resources/public/js/`` directory
+In this example, all the files in the ``Resources/public/js/`` directory
 of the ``AcmeFooBundle`` will be loaded and served from a different location.
 The actual rendered tag might simply look like:
 
@@ -351,7 +351,7 @@ Filters
 Once they're managed by Assetic, you can apply filters to your assets before
 they are served. This includes filters that compress the output of your assets
 for smaller file sizes (and better front-end optimization). Other filters
-can compile JavaScript file from CoffeeScript files and process SASS into CSS.
+can compile CoffeeScript files to JavaScript and process SASS into CSS.
 In fact, Assetic has a long list of available filters.
 
 Many of the filters do not do the work directly, but use existing third-party

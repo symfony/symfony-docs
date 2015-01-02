@@ -25,14 +25,14 @@ Routing and X-FORWARDED Headers
 -------------------------------
 
 To ensure that the Symfony Router generates URLs correctly with Varnish,
-a ``X-Forwarded-Port`` header must be present for Symfony to use the
+an ``X-Forwarded-Port`` header must be present for Symfony to use the
 correct port number.
 
-This port depends on your setup. Lets say that external connections come in
+This port depends on your setup. Let's say that external connections come in
 on the default HTTP port 80. For HTTPS connections, there is another proxy
 (as Varnish does not do HTTPS itself) on the default HTTPS port 443 that
 handles the SSL termination and forwards the requests as HTTP requests to
-Varnish with a ``X-Forwarded-Proto`` header. In this case, you need to add
+Varnish with an ``X-Forwarded-Proto`` header. In this case, you need to add
 the following configuration snippet:
 
 .. code-block:: varnish4
@@ -143,7 +143,7 @@ Symfony adds automatically:
 .. tip::
 
     If you followed the advice about ensuring a consistent caching
-    behaviour, those vcl functions already exist. Just append the code
+    behaviour, those VCL functions already exist. Just append the code
     to the end of the function, they won't interfere with each other.
 
 .. index::

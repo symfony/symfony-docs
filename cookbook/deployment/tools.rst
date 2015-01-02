@@ -192,7 +192,7 @@ Basic scripting:
 
 Platform as a Service Providers:
 
-    PaaS is a relatively new way to deploy your application. Typically a PaaS
+    PaaS is a relatively new way to deploy your application. Typically, a PaaS
     will use a single configuration file in your project's root directory to
     determine how to build an environment on the fly that supports your software.
     One provider with confirmed Symfony support is `PagodaBox`_.

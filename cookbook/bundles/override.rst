@@ -90,8 +90,8 @@ In this example you fetch the service definition of the original service, and se
 its class name to your own class.
 
 See :doc:`/cookbook/service_container/compiler_passes` for information on how to use
-compiler passes. If you want to do something beyond just overriding the class -
-like adding a method call - you can only use the compiler pass method.
+compiler passes. If you want to do something beyond just overriding the class,
+like adding a method call, you can only use the compiler pass method.
 
 Entities & Entity Mapping
 -------------------------
