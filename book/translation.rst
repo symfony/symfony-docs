@@ -502,7 +502,9 @@ as the locale for the current request.
 You can now use the locale to create routes to other translated pages
 in your application.
 
-Setting a default Locale
+.. _book-translation-default-locale:
+
+Setting a Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 What if the user's locale hasn't been determined? You can guarantee that a
