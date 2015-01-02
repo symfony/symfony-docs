@@ -267,9 +267,5 @@ If your company uses a user login method not supported by Symfony, you can
 develop :doc:`your own user provider </cookbook/security/custom_provider>` and
 :doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
 
-.. _`Security Cookbook Section`: http://symfony.com/doc/current/cookbook/security/index.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
-.. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
-.. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

@@ -326,9 +326,9 @@ Coding Standards
 
 The Symfony source code follows the `PSR-1`_ and `PSR-2`_ coding standards that
 were defined by the PHP community. You can learn more about
-:doc:`/contributing/code/standards` and even use the `PHP-CS-Fixer`_, which is
-a command-line utility that can fix the coding standards of an entire codebase
-in a matter of seconds.
+:doc:`the Symfony Coding standards </contributing/code/standards>` and even
+use the `PHP-CS-Fixer`_, which is a command-line utility that can fix the
+coding standards of an entire codebase in a matter of seconds.
 
 .. _`full definition`: http://en.wikipedia.org/wiki/Business_logic
 .. _`Doctrine project`: http://www.doctrine-project.org/
