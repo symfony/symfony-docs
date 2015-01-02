@@ -96,7 +96,7 @@ be non-static.
                 <service id="newsletter_manager.factory" class="NewsletterManagerFactory" />
 
                 <service id="newsletter_manager" class="NewsletterManager">
-                    <factory service="newsletter_manager.factry" method="createNewsletterManager" />
+                    <factory service="newsletter_manager.factory" method="createNewsletterManager" />
                 </service>
             </services>
         </container>
