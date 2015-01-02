@@ -98,8 +98,9 @@ number as the second argument of the ``new`` command:
     # Windows
     c:\projects\> php symfony.phar new my_project_name 2.3.23
 
-Read the `Symfony Release process`_ to better understand why there are several
-Symfony versions and which one to use for your projects.
+Read the :doc:`Symfony Release process </contributing/community/releases>`
+to better understand why there are several Symfony versions and which one
+to use for your projects.
 
 .. _book-creating-applications-without-the-installer:
 
@@ -375,7 +376,6 @@ a wide variety of articles about solving specific problems with Symfony.
     If you want to remove the sample code from your distribution, take a look
     at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
-.. _`Symfony Release process`: http://symfony.com/doc/current/contributing/community/releases.html
 .. _`explained in this post`: http://fabien.potencier.org/article/73/signing-project-releases
 .. _`Composer`: http://getcomposer.org/
 .. _`Composer download page`: https://getcomposer.org/download/
