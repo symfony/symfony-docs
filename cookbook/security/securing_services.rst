@@ -30,8 +30,8 @@ role. Before you add security, the class looks something like this:
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Newsletter/NewsletterManager.php
-    namespace Acme\HelloBundle\Newsletter;
+    // src/AppBundle/Newsletter/NewsletterManager.php
+    namespace AppBundle\Newsletter;
 
     class NewsletterManager
     {
@@ -51,7 +51,7 @@ check, this is an ideal candidate for constructor injection, which guarantees
 that the security context object will be available inside the ``NewsletterManager``
 class::
 
-    namespace Acme\HelloBundle\Newsletter;
+    namespace AppBundle\Newsletter;
 
     use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -73,36 +73,36 @@ Then in your service configuration, you can inject the service:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             newsletter_manager:
-                class:     Acme\HelloBundle\Newsletter\NewsletterManager
+                class:     AppBundle\Newsletter\NewsletterManager
                 arguments: ["@security.context"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
-            <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
+            <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
                 <argument type="service" id="security.context"/>
             </service>
         </services>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('newsletter_manager', new Definition(
-            'Acme\HelloBundle\Newsletter\NewsletterManager',
+            'AppBundle\Newsletter\NewsletterManager',
             array(new Reference('security.context'))
         ));
 
 The injected service can then be used to perform the security check when the
 ``sendNewsletter()`` method is called::
 
-    namespace Acme\HelloBundle\Newsletter;
+    namespace AppBundle\Newsletter;
 
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -148,7 +148,7 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/services.yml
 
         # ...
         services:
@@ -159,11 +159,11 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/services.xml -->
         <!-- ... -->
 
         <services>
-            <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
+            <service id="newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
                 <!-- ... -->
                 <tag name="security.secure_service" />
             </service>
@@ -171,12 +171,12 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\HelloBundle\Newsletter\NewsletterManager',
+            'AppBundle\Newsletter\NewsletterManager',
             array(new Reference('security.context'))
         ));
         $definition->addTag('security.secure_service');
@@ -184,7 +184,7 @@ the :ref:`sidebar <securing-services-annotations-sidebar>` below):
 
 You can then achieve the same results as above using an annotation::
 
-    namespace Acme\HelloBundle\Newsletter;
+    namespace AppBundle\Newsletter;
 
     use JMS\SecurityExtraBundle\Annotation\Secure;
     // ...

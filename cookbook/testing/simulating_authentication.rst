@@ -15,14 +15,14 @@ Another way would be to create a token yourself and store it in a session.
 While doing this, you have to make sure that an appropriate cookie is sent
 with a request. The following example demonstrates this technique::
 
-    // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
-    namespace Acme\DemoBundle\Tests\Controller;
+    // src/AppBundle/Tests/Controller/DefaultControllerTest.php
+    namespace Appbundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\BrowserKit\Cookie;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-    class DemoControllerTest extends WebTestCase
+    class DefaultControllerTest extends WebTestCase
     {
         private $client = null;
 
@@ -35,10 +35,10 @@ with a request. The following example demonstrates this technique::
         {
             $this->logIn();
 
-            $crawler = $this->client->request('GET', '/demo/secured/hello/Fabien');
+            $crawler = $this->client->request('GET', '/admin');
 
             $this->assertTrue($this->client->getResponse()->isSuccessful());
-            $this->assertGreaterThan(0, $crawler->filter('html:contains("Hello Fabien")')->count());
+            $this->assertGreaterThan(0, $crawler->filter('html:contains("Admin Dashboard")')->count());
         }
 
         private function logIn()

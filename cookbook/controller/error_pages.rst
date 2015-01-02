@@ -178,7 +178,7 @@ to point to it.
 
         # app/config/config.yml
         twig:
-            exception_controller:  AcmeFooBundle:Exception:showException
+            exception_controller:  AppBundle:Exception:showException
 
     .. code-block:: xml
 
@@ -191,7 +191,7 @@ to point to it.
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
+                <twig:exception-controller>AppBundle:Exception:showException</twig:exception-controller>
             </twig:config>
         </container>
 
@@ -199,7 +199,7 @@ to point to it.
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'exception_controller' => 'AcmeFooBundle:Exception:showException',
+            'exception_controller' => 'AppBundle:Exception:showException',
             // ...
         ));
 
@@ -265,7 +265,7 @@ another page or rendering specialized error pages.
 
     If your listener calls ``setResponse()`` on the
     :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`,
-    event propagation will be stopped and the response will be sent to 
+    event propagation will be stopped and the response will be sent to
     the client.
 
 This approach allows you to create centralized and layered error
@@ -277,7 +277,7 @@ several) listeners deal with them.
 
     To see an example, have a look at the `ExceptionListener`_ in the
     Security Component.
-    
+
     It handles various security-related exceptions that are thrown in
     your application (like :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`)
     and takes measures like redirecting the user to the login page,

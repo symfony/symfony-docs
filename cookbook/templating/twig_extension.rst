@@ -30,10 +30,10 @@ Create the Extension Class
 To get your custom functionality you must first create a Twig Extension class.
 As an example you'll create a price filter to format a given number into price::
 
-    // src/Acme/DemoBundle/Twig/AcmeExtension.php
-    namespace Acme\DemoBundle\Twig;
+    // src/AppBundle/Twig/AppExtension.php
+    namespace AppBundle\Twig;
 
-    class AcmeExtension extends \Twig_Extension
+    class AppExtension extends \Twig_Extension
     {
         public function getFilters()
         {
@@ -52,7 +52,7 @@ As an example you'll create a price filter to format a given number into price::
 
         public function getName()
         {
-            return 'acme_extension';
+            return 'app_extension';
         }
     }
 
@@ -70,29 +70,29 @@ Now you must let the Service Container know about your newly created Twig Extens
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
-            acme.twig.acme_extension:
-                class: Acme\DemoBundle\Twig\AcmeExtension
+            app.twig_extension:
+                class: AppBundle\Twig\AcmeExtension
                 tags:
                     - { name: twig.extension }
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
-            <service id="acme.twig.acme_extension" class="Acme\DemoBundle\Twig\AcmeExtension">
+            <service id="app.twig_extension" class="AppBundle\Twig\AcmeExtension">
                 <tag name="twig.extension" />
             </service>
         </services>
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->register('acme.twig.acme_extension', '\Acme\DemoBundle\Twig\AcmeExtension')
+            ->register('app.twig_extension', '\AppBundle\Twig\AcmeExtension')
             ->addTag('twig.extension');
 
 .. note::
