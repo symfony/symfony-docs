@@ -468,19 +468,24 @@ would be ``/images/logo.png?version=5``.
 profiler
 ~~~~~~~~
 
-.. versionadded:: 2.2
-    The ``enabled`` option was introduced in Symfony 2.2. Previously, the profiler
-    could only be disabled by omitting the ``framework.profiler`` configuration
-    entirely.
-
 .. _profiler.enabled:
 
 enabled
 .......
 
-**default**: ``true`` in the ``dev`` and ``test`` environments
+.. versionadded:: 2.2
+    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
+    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
+    configuration entirely.
 
-The profiler can be disabled by setting this key to ``false``.
+**type**: ``boolean`` **default**: ``false``
+
+The profiler can be enabled by setting this key to ``true``. When you are
+using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+and ``test`` environments.
+
+collect
+.......
 
 .. versionadded:: 2.3
     The ``collect`` option was introduced in Symfony 2.3. Previously, when
@@ -488,10 +493,7 @@ The profiler can be disabled by setting this key to ``false``.
     but the collectors were disabled. Now, the profiler and the collectors
     can be controlled independently.
 
-collect
-.......
-
-**default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
 to ``true``, the profiler collects data for all requests. If you want to only
@@ -515,7 +517,7 @@ Whether or not to enable the ``translator`` service in the service container.
 fallback
 ........
 
-**default**: ``en``
+**type**: ``string`` **default**: ``en``
 
 This option is used when the translation key for the current locale wasn't found.
 
