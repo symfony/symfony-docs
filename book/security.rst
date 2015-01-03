@@ -655,7 +655,7 @@ There are **two** ways to deny access to something:
 Securing URL patterns (access_control)
 ......................................
 
-The most basic way to secure part of your application is to secure an entire
+The most basic way to secure parts of your application is to secure an entire
 URL pattern. You saw this earlier, where anything matching the regular expression
 ``^/admin`` requires the ``ROLE_ADMIN`` role:
 
@@ -1082,8 +1082,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         return $collection;
 
 And that's it! By sending a user to ``/logout`` (or whatever you configure
-the ``path`` to be), Symfony will un-authenticate the current user. and 
-redirect them the homepage (the value defined by ``target``).
+the ``path`` to be), Symfony will un-authenticate the current user.
 
 Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``).
