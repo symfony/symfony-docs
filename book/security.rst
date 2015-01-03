@@ -1175,8 +1175,8 @@ in the following way from a controller::
     // whatever *your* User object is
     $user = new AppBundle\Entity\User();
     $plainPassword = 'ryanpass';
-    $encoded = $this->container->get('security.password_encoder')
-        ->encodePassword($user, $plainPassword);
+    $encoder = $this->container->get('security.password_encoder');
+    $encoded = $encoder->encodePassword($user, $plainPassword);
 
     $user->setPassword($encoded);
 
