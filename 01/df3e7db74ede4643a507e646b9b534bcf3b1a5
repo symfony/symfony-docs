@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-11T14:54:54Z
+
+btw, what do you think of moving the section on cache invalidation right after cache validation? we explain expiration and validation, then comes totally different stuff, and at the end we go back to invalidation as a 3rd option to manage cache validity.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-11T15:00:57Z
+
+> btw, what do you think of moving the section on cache invalidation right after cache validation? we explain expiration and validation, then comes totally different stuff, and at the end we go back to invalidation as a 3rd option to manage cache validity.
+
+Maybe move it after "Expiration and Validation"?
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-11T15:40:39Z
+
+updated.
+
+> Maybe move it after "Expiration and Validation"?
+
+exactly, i'd like to do that. the problem is that then the diff will not show what i changed in that section anymore. so i prefer to wait until the changes are considered ok, then i will move it up.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-11T15:48:51Z
+
+Looks good given the weak caching knowledge I have. :+1:
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-11T15:51:00Z
+
+thanks. i guess i wait until @weaverryan confirms its ok and then move the section up and let him merge it.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-22T16:22:59Z
+
+@dbu :+1: from me - it reads really well, and I fully agree that we should be less negative and more pragmatic about cache invalidation.
+
+So, feel free to move this up further now - I appreciate you making my life easier :). Also, It *may* make sense to mention FOSHttpCacheBundle near the top of the cache invalidation section. I would hate for someone to have a perfect use-case for it, but then read along and implement their own logic before realizing this tool is available to help them.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-25T17:07:50Z
+
+okay, moved the section to the end of the "validation and expiration" section and the link to fos httpcache up earlier into that section.
+
+---------------------------------------------------------------------------
+
+by dbu at 2015-01-01T14:09:43Z
+
+good to merge? or any more feedback?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-02T15:22:44Z
+
+:+1: Looks ready to be merged.
+
+Happy new year @dbu!
