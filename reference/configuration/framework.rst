@@ -19,6 +19,7 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `default_locale`_
 * `trusted_proxies`_
 * `csrf_protection`_
     * enabled
@@ -81,8 +82,8 @@ http_method_override
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-gets called automatically. It becomes the service container parameter named
-``kernel.http_method_override``. For more information, see
+method gets called automatically. It becomes the service container parameter
+named ``kernel.http_method_override``. For more information, see
 :doc:`/cookbook/routing/method_parameters`.
 
 ide
@@ -155,6 +156,17 @@ This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
 .. _reference-framework-trusted-proxies:
+
+default_locale
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``en``
+
+The default locale is used if no ``_locale`` routing parameter has been set. It
+becomes the service container parameter named ``kernel.default_locale`` and it
+is also available with the
+:method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
+method.
 
 trusted_proxies
 ~~~~~~~~~~~~~~~
@@ -482,9 +494,19 @@ profiler
 enabled
 .......
 
-**default**: ``true`` in the ``dev`` and ``test`` environments
+.. versionadded:: 2.2
+    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
+    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
+    configuration entirely.
 
-The profiler can be disabled by setting this key to ``false``.
+**type**: ``boolean`` **default**: ``false``
+
+The profiler can be enabled by setting this key to ``true``. When you are
+using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+and ``test`` environments.
+
+collect
+.......
 
 .. versionadded:: 2.3
     The ``collect`` option was introduced in Symfony 2.3. Previously, when
@@ -492,10 +514,7 @@ The profiler can be disabled by setting this key to ``false``.
     but the collectors were disabled. Now, the profiler and the collectors
     can be controlled independently.
 
-collect
-.......
-
-**default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
 to ``true``, the profiler collects data for all requests. If you want to only
@@ -519,7 +538,7 @@ Whether or not to enable the ``translator`` service in the service container.
 fallback
 ........
 
-**default**: ``en``
+**type**: ``string`` **default**: ``en``
 
 This option is used when the translation key for the current locale wasn't found.
 

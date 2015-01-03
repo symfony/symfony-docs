@@ -260,41 +260,65 @@ For even more details, see :doc:`/cookbook/security/form_login`.
 The Login Form and Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*   ``login_path`` (type: ``string``, default: ``/login``)
-    This is the route or path that the user will be redirected to (unless
-    ``use_forward`` is set to ``true``) when they try to access a
-    protected resource but isn't fully authenticated.
+login_path
+..........
 
-    This path **must** be accessible by a normal, un-authenticated user,
-    else you may create a redirect loop. For details, see
-    ":ref:`Avoid Common Pitfalls <book-security-common-pitfalls>`".
+**type**: ``string`` **default**: ``/login``
 
-*   ``check_path`` (type: ``string``, default: ``/login_check``)
-    This is the route or path that your login form must submit to. The
-    firewall will intercept any requests (``POST`` requests only, by default)
-    to this URL and process the submitted login credentials.
+This is the route or path that the user will be redirected to (unless ``use_forward``
+is set to ``true``) when they try to access a protected resource but isn't
+fully authenticated.
 
-    Be sure that this URL is covered by your main firewall (i.e. don't create
-    a separate firewall just for ``check_path`` URL).
+This path **must** be accessible by a normal, un-authenticated user, else
+you may create a redirect loop. For details, see
+":ref:`Avoid Common Pitfalls <book-security-common-pitfalls>`".
 
-*   ``use_forward`` (type: ``Boolean``, default: ``false``)
-    If you'd like the user to be forwarded to the login form instead of
-    being redirected, set this option to ``true``.
+check_path
+..........
 
-*   ``username_parameter`` (type: ``string``, default: ``_username``)
-    This is the field name that you should give to the username field of
-    your login form. When you submit the form to ``check_path``, the security
-    system will look for a POST parameter with this name.
+**type**: ``string`` **default**: ``/login_check``
 
-*   ``password_parameter`` (type: ``string``, default: ``_password``)
-    This is the field name that you should give to the password field of
-    your login form. When you submit the form to ``check_path``, the security
-    system will look for a POST parameter with this name.
+This is the route or path that your login form must submit to. The firewall
+will intercept any requests (``POST`` requests only, by default) to this
+URL and process the submitted login credentials.
 
-*   ``post_only`` (type: ``Boolean``, default: ``true``)
-    By default, you must submit your login form to the ``check_path`` URL
-    as a POST request. By setting this option to ``false``, you can send a
-    GET request to the ``check_path`` URL.
+Be sure that this URL is covered by your main firewall (i.e. don't create
+a separate firewall just for ``check_path`` URL).
+
+use_forward
+...........
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you'd like the user to be forwarded to the login form instead of being
+redirected, set this option to ``true``.
+
+username_parameter
+..................
+
+**type**: ``string`` **default**: ``_username``
+
+This is the field name that you should give to the username field of your
+login form. When you submit the form to ``check_path``, the security system
+will look for a POST parameter with this name.
+
+password_parameter
+..................
+
+**type**: ``string`` **default**: ``_password``
+
+This is the field name that you should give to the password field of your
+login form. When you submit the form to ``check_path``, the security system
+will look for a POST parameter with this name.
+
+post_only
+.........
+
+**type**: ``Boolean`` **default**: ``true``
+
+By default, you must submit your login form to the ``check_path`` URL as
+a POST request. By setting this option to ``false``, you can send a GET request
+to the ``check_path`` URL.
 
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~

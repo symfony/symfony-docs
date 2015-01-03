@@ -23,34 +23,64 @@ The syntax for scalars is similar to the PHP syntax.
 Strings
 ~~~~~~~
 
+Strings in YAML can be wrapped both in single and double quotes. In some cases,
+they can also be unquoted:
+
 .. code-block:: yaml
 
     A string in YAML
 
-.. code-block:: yaml
-
     'A singled-quoted string in YAML'
 
-.. tip::
+    "A double-quoted string in YAML"
 
-    In a single quoted string, a single quote ``'`` must be doubled:
+Quoted styles are useful when a string starts or end with one or more relevant
+spaces, because unquoted strings are trimmed on both end when parsing their
+contents. Quotes are required when the string contains special or reserved characters.
 
-    .. code-block:: yaml
+When using single-quoted strings, any single quote ``'`` inside its contents
+must be doubled to escape it:
 
-        'A single quote '' in a single-quoted string'
+.. code-block:: yaml
+
+    'A single quote '' inside a single-quoted string'
+
+Strings containing any of the following characters must be quoted. Although you
+can use double quotes, for these characters it is more convenient to use single
+quotes, which avoids having to escape any backslash ``\``:
+
+* ``:``, ``{``, ``}``, ``[``, ``]``, ``,``, ``&``, ``*``, ``#``, ``?``, ``|``,
+  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, ``\```
+
+The double-quoted style provides a way to express arbitrary strings, by
+using ``\`` to escape characters and sequences. For instance, it is very useful
+when you need to embed a ``\n`` or a Unicode character in a string.
 
 .. code-block:: yaml
 
     "A double-quoted string in YAML\n"
 
-Quoted styles are useful when a string starts or ends with one or more
-relevant spaces.
+If the string contains any of the following control characters, it must be
+escaped with double quotes:
 
-.. tip::
+* ``\0``, ``\x01``, ``\x02``, ``\x03``, ``\x04``, ``\x05``, ``\x06``, ``\a``,
+  ``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\x0e``, ``\x0f``, ``\x10``,
+  ``\x11``, ``\x12``, ``\x13``, ``\x14``, ``\x15``, ``\x16``, ``\x17``, ``\x18``,
+  ``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
+  ``\_``, ``\L``, ``\P``
 
-    The double-quoted style provides a way to express arbitrary strings, by
-    using ``\`` escape sequences. It is very useful when you need to embed a
-    ``\n`` or a unicode character in a string.
+Finally, there are other cases when the strings must be quoted, no matter if
+you're using single or double quotes:
+
+* When the string is ``true`` or ``false`` (otherwise, it would be treated as a
+  boolean value);
+* When the string is ``null`` or ``~`` (otherwise, it would be considered as a
+  ``null`` value);
+* When the string looks like a number, such as integers (e.g. ``2``, ``14``, etc.),
+  floats (e.g. ``2.6``, ``14.9``) and exponential numbers (e.g. ``12e7``, etc.)
+  (otherwise, it would be treated as a numeric value);
+* When the string looks like a date (e.g. ``2014-12-31``) (otherwise it would be
+  automatically converted into a Unix timestamp).
 
 When a string contains line breaks, you can use the literal style, indicated
 by the pipe (``|``), to indicate that the string will span several lines. In
