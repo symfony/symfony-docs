@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-14T15:57:44Z
+
+Thanks, @javiereguiluz ! I've always wondered about the exact rules, as the Yaml specs are not very clear :)
+
+The diff was hard to read, but I tried to make sense of it and review it nonetheless. I may have commented on a wrong diff.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-14T16:02:58Z
+
+@WouterJ thanks for the detailed review! I've added everything you said.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T11:20:32Z
+
+I've added all the comments that you made. I think explanations are now much better. If you agree, let's merge and close some issues :)
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T14:05:43Z
+
+There are a few other cases where using quotes is necessary. This is when the unquoted value would be parsed as another type than a string:
+
+- when the string is ``true`` or ``false`` (which would be parsed as a boolean)
+- when the string is ``null`` or ``~`` (which would be parsed as ``null``)
+- when the string looks like an integer
+- when the string looks like a float (which includes ``12e7`` in YAML too)
+- when the string looks like a date (YAML defines a concept of timestamps, which are parsed to an integer being the Unix timestamp, even though I requested a long time ago to be able to parse it to a DateTime instead to handle it better)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T14:38:54Z
+
+@stof thanks for your list of cases where we should enclose strings with quotes. I've just updated the docs.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T14:54:37Z
+
+:+1:
