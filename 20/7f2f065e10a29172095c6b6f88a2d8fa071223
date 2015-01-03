@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xelaris at 2014-12-30T17:07:17Z
+
+Thanks @xabbuh I have updated the commit. I have just copied the method reference from https://github.com/symfony/symfony-docs/blame/2.3/reference/configuration/framework.rst#L78 Should I change it too? I also think the sentence is missing the word ``method``. Am I right?
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-30T21:21:58Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-30T21:48:58Z
+
+> I have just copied the method reference from https://github.com/symfony/symfony-docs/blame/2.3/reference/configuration/framework.rst#L78 Should I change it too?
+
+Now that I think of this again, the way it is seems to be better given that you can see instantly to which class the method belongs.
+
+> I also think the sentence is missing the word method. Am I right?
+
+I think the same. Can you add it in both sentences?
+
+---------------------------------------------------------------------------
+
+by xelaris at 2014-12-31T02:01:09Z
+
+Updated both sentences
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-31T09:12:43Z
+
+Thank you @xelaris
