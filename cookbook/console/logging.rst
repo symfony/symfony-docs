@@ -156,7 +156,7 @@ Then implement the actual listener::
                 $command->getName()
             );
 
-            $this->logger->error($message);
+            $this->logger->error($message, array('exception' => $exception));
         }
     }
 

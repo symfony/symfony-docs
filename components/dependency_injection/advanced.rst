@@ -20,11 +20,14 @@ argument for another service.
 
 .. _inlined-private-services:
 
-.. note::
+Since a container is not able to detect if a service is retrieved from inside
+the container or the outside, a private service may still be retrieved using
+the ``get()`` method.
 
-    If you use a private service as an argument to only one other service,
-    this will result in an inlined instantiation (e.g. ``new PrivateFooBar()``)
-    inside this other service, making it publicly unavailable at runtime.
+What makes private services special, is that they are converted from services
+to inlined instantiation (e.g. ``new PrivateThing()``) when they are only
+injected once, to increase the container performance. This means that you can
+never be sure if a private service exists in the container.
 
 Simply said: A service will be private when you do not want to access it
 directly from your code.
@@ -60,7 +63,8 @@ Here is an example:
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-Now that the service is private, you *cannot* call::
+Now that the service is private, you *should not* call (should not means, this
+*might* fail, see the explaination above)::
 
     $container->get('foo');
 

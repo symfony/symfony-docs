@@ -13,8 +13,8 @@ Building Forms
     Define your forms as PHP classes.
 
 The Form component allows you to build forms right inside your controller
-code. Honestly, unless you need to reuse the form somewhere else, that's
-totally fine. But for organization and reuse, we recommend that you define each
+code. This is perfectly fine if you don't need to reuse the form somewhere else.
+But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
     namespace AppBundle\Form;

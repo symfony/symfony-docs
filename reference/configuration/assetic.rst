@@ -49,6 +49,9 @@ Full Default Configuration
                 # An array of named filters (e.g. some_filter, some_other_filter)
                 some_filter:                 []
             workers:
+                # see https://github.com/symfony/AsseticBundle/pull/119
+                # Cache can also be busted via the framework.templating.assets_version
+                # setting - see the "framework" configuration section
                 cache_busting:
                     enabled:              false
             twig:
