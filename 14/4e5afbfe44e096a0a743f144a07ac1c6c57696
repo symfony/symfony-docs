@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-08T10:14:26Z
+
+I'm missing something about checking changes in the SE and updating your edition accordingly.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-08T10:41:49Z
+
+> First, the plan is to merge this into 2.6, then backport it to 2.3 (just remove the 2.5 and 2.6 sections about upgrading).
+
+From the git history PoV, merging first into 2.3 would be more logical, given that 2.3 gets merged into other branches
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-08T10:45:38Z
+
+Changes introduced in Symfony 2.4 should also appear here, because people upgrading from Symfony 2.3 are also concerned with them, not only with the 2.4 to 2.5 changes
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-12-08T19:08:17Z
+
+@stof I agree, but I had a practical problem. If I'm describing a 2.6 feature, I'd like to link to it, which is only possible on the 2.6 branch. But honestly, we should then just use external links for these few cases, and merge this into 2.3 as you said
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T12:48:16Z
+
+> I agree, but I had a practical problem. If I'm describing a 2.6 feature, I'd like to link to it, which is only possible on the 2.6 branch. But honestly, we should then just use external links for these few cases, and merge this into 2.3 as you said
+
+What I mean is that it would be better for the Git history PoV to work on the 2.3 branch first, and then add the 2.5 and 2.6 sections later (after merging 2.3 into newer branches) rather than working in 2.6 and the backporting to 2.3 removing some sections (and then reverting the removal after merging 2.3 into 2.6).
+There is no need to describe a 2.6 feature in the 2.3 branch.
