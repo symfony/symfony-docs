@@ -132,8 +132,15 @@ directive to pass requests for PHP files to PHP FPM:
         #
         # SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
 
-        ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
-
+        # For Apache 2.4.9 or higher
+        # Using SetHandler avoids issues with using ProxyPassMatch in combination 
+        # with mod_rewrite or mod_autoindex
+        <FilesMatch \.php$>
+            SetHandler proxy:fcgi://127.0.0.1:9000
+        </FilesMatch>
+        # If you use Apache version below 2.4.9 you must consider update or use this instead
+        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
             # enable the .htaccess rewrites

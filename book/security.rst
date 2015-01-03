@@ -1148,8 +1148,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         return $collection;
 
 And that's it! By sending a user to ``/logout`` (or whatever you configure
-the ``path`` to be), Symfony will un-authenticate the current user. and
-redirect them the homepage (the value defined by ``target``).
+the ``path`` to be), Symfony will un-authenticate the current user.
 
 Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``).

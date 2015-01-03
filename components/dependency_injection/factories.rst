@@ -5,7 +5,7 @@ Using a Factory to Create Services
 ==================================
 
 .. versionadded:: 2.6
-    The new `Symfony\\Component\\DependencyInjection\\Definition::setFactory`
+    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
     method was introduced in Symfony 2.6. Refer to older versions for the
     syntax for factories prior to 2.6.
 
