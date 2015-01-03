@@ -35,7 +35,7 @@ safely by running:
 
     $ composer update
 
-But beware. If you have some bad version constraints in your ``composer.json``,
+But beware. If you have some bad `version constraints`_ in your ``composer.json``,
 (e.g. ``dev-master``), then this could upgrade some non-Symfony libraries
 to new versions that contain backwards-compatibility breaking changes.
 
@@ -83,11 +83,17 @@ Next, use Composer to download new versions of the libraries:
 
     $ composer update symfony/symfony
 
-Updating a minor version like this should *not* cause any dependency issues,
-though it's always possible that an outside library or bundle you're using
-didn't support this new version of Symfony at the version you have of that
-library. In that case, consult the library: you may need to modify its version
-in ``composer.json`` and run a full ``composer update``. 
+You may also want to upgrade the rest of your libraries. If you've done a
+good job with your version constraints in ``composer.json``, you can do this
+safely by running:
+
+.. code-block:: bash
+
+    $ composer update
+
+But beware. If you have some bad `version constraints`_ in your ``composer.json``,
+(e.g. ``dev-master``), then this could upgrade some non-Symfony libraries
+to new versions that contain backwards-compatibility breaking changes.
 
 .. _`upgrade-minor-symfony-code`:
 
@@ -130,3 +136,5 @@ that you might need to make in your project.
 .. _`UPGRADE-2.5`: https://github.com/symfony/symfony/blob/2.5/UPGRADE-2.5.md
 .. _`UPGRADE-2.6`: https://github.com/symfony/symfony/blob/2.6/UPGRADE-2.6.md
 .. _`Symfony Repository`: https://github.com/symfony/symfony
+.. _`Composer Package Versions`: https://getcomposer.org/doc/01-basic-usage.md#package-versions
+.. _`version constraints`: https://getcomposer.org/doc/01-basic-usage.md#package-versions
