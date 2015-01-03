@@ -830,7 +830,7 @@ the string ``Default``.
     When validating *just* the User object, there is no difference between the ``Default`` group
     and the ``User`` group. But, there is a difference if ``User`` has embedded objects. For example,
     imagine ``User`` has an ``address`` property that contains some ``Address`` object and that
-    you've added the :doc:`/reference/constraints/valid` constraint to this property so that it's
+    you've added the :doc:`/reference/constraints/Valid` constraint to this property so that it's
     validated when you validate the ``User`` object.
 
     If you validate ``User`` using the ``Default`` group, then any constraints on the ``Address``
