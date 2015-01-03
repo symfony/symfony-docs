@@ -118,13 +118,6 @@ of Symfony as described above in :ref:`upgrade-minor-symfony-composer`.
 Next, check the `UPGRADE-2.6`_ document for details about any code changes
 that you might need to make in your project.
 
-* If you're using PdoSessionStorage, there was a change in the session schema
-  that **requires** your session table to be updated. See :doc:`/cookbook/configuration/pdo_session_storage`.
-
-* Symfony 2.6 comes with a great new `dump`_ function. To use it, you'll
-  need to add the new ``DebugBundle`` to your ``AppKernel``. See
-  `UPGRADE-2.6-DebugBundle`_ for details.
-
 Upgrading to Symfony 2.5
 ........................
 
