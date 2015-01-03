@@ -841,10 +841,11 @@ the string ``Default``.
     In other words, the ``Default`` group and the class name group (e.g. ``User``) are identical,
     except when the class is embedded in another object that's actually the one being validated.
 
-    In case you have inheritance in your data model and you validate with the class name of
-    the subclass in the subclass and in the baseclass all constraints in the default group
-    will be validated. If you use the name of the baseclass only the constraints in the base
-    class will be validated.
+    If you have inheritance (e.g. ``User extends BaseUser``) and you validate
+    with the class name of the subclass (i.e. ``User``), then all constraints
+    in the ``User`` and ``BaseUser`` will be validated. However, if you validate
+    using the base class (i.e. ``BaseUser``), then only the constraints in
+    the ``BaseUser`` group will be validated.
 
 To tell the validator to use a specific group, pass one or more group names
 as the second argument to the ``validate()`` method::
