@@ -24,12 +24,13 @@ then it's *really* easy:
 
 That's it! You should not encounter any backwards-compatibility breaks or
 need to change anything else in your code. That's because when you started
-your Symfony project, your ``composer.json`` included Symfony using a constraint
-such as ``2.6.*``, where only the *last* version number changes when you update.
+your project, your ``composer.json`` included Symfony using a constraint
+like ``2.6.*``, where only the *last* version number will change when you
+update.
 
 You may also want to upgrade the rest of your libraries. If you've done a
-good job with your version constraints in ``composer.json``, you can do this
-safely by running:
+good job with your `version constraints`_ in ``composer.json``, you can do
+this safely by running:
 
 .. code-block:: bash
 
@@ -41,7 +42,7 @@ to new versions that contain backwards-compatibility breaking changes.
 
 .. _upgrading-minor-version:
 
-Upgrading a Minor Version (e.g. 2.5.3 to 2.6.0)
+Upgrading a Minor Version (e.g. 2.5.3 to 2.6.1)
 -----------------------------------------------
 
 If you're upgrading a minor version (where the middle number changes), then
@@ -53,16 +54,16 @@ in a second how to prepare for them.
 
 There are two steps to upgrading:
 
-#. :ref:`upgrade-minor-symfony-composer`;
-#. :ref:`upgrade-minor-symfony-code`, which includes instructions for each version.
+:ref:`upgrade-minor-symfony-composer`;
+:ref:`upgrade-minor-symfony-code`
 
 .. _`upgrade-minor-symfony-composer`:
 
-Update the Symfony Library via Composer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1) Update the Symfony Library via Composer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, you need to update Symfony by modifying your ``composer.json`` to
-use the new version:
+First, you need to update Symfony by modifying your ``composer.json`` file
+to use the new version:
 
 .. code-block:: json
 
@@ -71,7 +72,7 @@ use the new version:
 
         "require": {
             "php": ">=5.3.3",
-            "symfony/symfony": "~2.6.*",
+            "symfony/symfony": "2.6.*",
             "...": "... no changes to anything else..."
         },
         "...": "...",
@@ -84,8 +85,8 @@ Next, use Composer to download new versions of the libraries:
     $ composer update symfony/symfony
 
 You may also want to upgrade the rest of your libraries. If you've done a
-good job with your version constraints in ``composer.json``, you can do this
-safely by running:
+good job with your `version constraints`_ in ``composer.json``, you can do
+this safely by running:
 
 .. code-block:: bash
 
@@ -97,8 +98,8 @@ to new versions that contain backwards-compatibility breaking changes.
 
 .. _`upgrade-minor-symfony-code`:
 
-Updating Your Code to Work with the new Version
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2) Updating Your Code to Work with the new Version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In theory, you should be done! However, you *may* need to make a few changes
 to your code to get everything working. Additionally, some features you're
@@ -112,7 +113,7 @@ to read to see if you need any code changes.
 
 .. tip::
 
-    Don't see the version here that you're upgrading too? Just find the
+    Don't see the version here that you're upgrading to? Just find the
     UPGRADE-X.X.md file for the appropriate version on the `Symfony Repository`_.
 
 Upgrading to Symfony 2.6
