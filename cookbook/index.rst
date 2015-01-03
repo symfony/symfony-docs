@@ -28,6 +28,7 @@ The Cookbook
     symfony1
     templating/index
     testing/index
+    upgrading
     validation/index
     web_server/index
     web_services/index
