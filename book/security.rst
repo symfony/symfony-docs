@@ -655,7 +655,7 @@ There are **two** ways to deny access to something:
 Securing URL patterns (access_control)
 ......................................
 
-The most basic way to secure parts of your application is to secure an entire
+The most basic way to secure part of your application is to secure an entire
 URL pattern. You saw this earlier, where anything matching the regular expression
 ``^/admin`` requires the ``ROLE_ADMIN`` role:
 
