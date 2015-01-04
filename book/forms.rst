@@ -1847,7 +1847,7 @@ an array.
     You can also access POST values (in this case "name") directly through
     the request object, like so::
 
-        $this->get('request')->request->get('name');
+        $request->request->get('name');
 
     Be advised, however, that in most cases using the ``getData()`` method is
     a better choice, since it returns the data (usually an object) after
