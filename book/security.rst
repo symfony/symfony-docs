@@ -252,14 +252,14 @@ user to be logged in to access this URL:
 Securing a Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
-Protecting your application based on URL patterns is easy, but may not be
-fine-grained enough in certain cases. When necessary, you can easily force
-authorization from inside a controller::
-
 .. versionadded:: 2.6
     The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
     still now), you could check access directly and throw the ``AccessDeniedException`` as shown
     in the example below).
+
+Protecting your application based on URL patterns is easy, but may not be
+fine-grained enough in certain cases. When necessary, you can easily force
+authorization from inside a controller::
 
     // ...
 
@@ -267,6 +267,8 @@ authorization from inside a controller::
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
+        // The second parameter is used to specify on what object the role is tested.
+        //
         // Old way :
         // if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
         //     throw $this->createAccessDeniedException('Unable to access this page!');
@@ -322,7 +324,6 @@ to users that have a specific role.
                 array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
             ),
         ));
->>>>>>> master
 
 .. note::
 

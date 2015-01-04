@@ -192,7 +192,6 @@ method::
 
 The ``redirectToRoute()`` method takes as arguments the route name and an optional
 array of parameters and redirects the user to the URL generated with those arguments.
->>>>>>> master
 
 You can also internally forward the action to another action of the same or
 different controller using the ``forward()`` method::
