@@ -20,6 +20,7 @@
 * :doc:`/cookbook/cache/index`
 
   * :doc:`/cookbook/cache/varnish`
+  * :doc:`/cookbook/cache/form_csrf_caching`
 
 * **Composer**
 
