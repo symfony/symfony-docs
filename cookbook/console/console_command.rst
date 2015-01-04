@@ -225,13 +225,3 @@ you can extend your test from
             // ...
         }
     }
-
-.. versionadded:: 2.5
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` was
-    extracted from :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`
-    in Symfony 2.5. ``WebTestCase`` inherits from ``KernelTestCase``. The
-    ``WebTestCase`` creates an instance of
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Client` via ``createClient()``,
-    while ``KernelTestCase`` creates an instance of
-    :class:`Symfony\\Component\\HttpKernel\\KernelInterface` via
-    ``createKernel()``.

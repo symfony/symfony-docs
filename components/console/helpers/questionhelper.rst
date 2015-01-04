@@ -4,9 +4,6 @@
 Question Helper
 ===============
 
-.. versionadded:: 2.5
-    The Question Helper was introduced in Symfony 2.5.
-
 The :class:`Symfony\\Component\\Console\\Helper\\QuestionHelper` provides
 functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
