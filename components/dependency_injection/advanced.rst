@@ -53,9 +53,9 @@ to be *not* public (i.e. private):
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-What makes private services special is that they are converted from services
-to inlined instantiations (e.g. ``new PrivateThing()``) if they are only
-injected once. This increases the container's performance.
+What makes private services special is that, if they are only injected once,
+they are converted from services to inlined instantiations (e.g. ``new PrivateThing()``).
+This increases the container's performance.
 
 Now that the service is private, you *should not* fetch the service directly
 from the container::
