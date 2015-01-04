@@ -97,7 +97,7 @@ using the following keys:
     The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, if you use PHPstorm, you will do something like:
+signs (``%``) must be doubled to escape that character. For example, if you use PHPstorm on the Mac OS platform, you will do something like:
 
 .. configuration-block::
 
