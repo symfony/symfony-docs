@@ -16,13 +16,6 @@ Using the Symfony Installer is the only recommended way to create new Symfony
 applications. This installer is a PHP application that has to be installed
 only once and then it can create any number of Symfony applications.
 
-.. note::
-
-    The installer requires PHP 5.4 or higher. If you still use the legacy
-    PHP 5.3 version, you cannot use the Symfony Installer. Read the
-    :ref:`book-creating-applications-without-the-installer` section to learn how
-    to proceed.
-
 Depending on your operating system, the installer must be installed in different
 ways.
 
@@ -107,9 +100,8 @@ to use for your projects.
 Creating Symfony Applications without the Installer
 ---------------------------------------------------
 
-If you still use PHP 5.3, or if you can't execute the installer for any reason,
-you can create Symfony applications using the alternative installation method
-based on `Composer`_.
+If you can't execute the installer for any reason, you can create Symfony
+applications using the alternative installation method based on `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
 also be used to create new applications based on the Symfony framework. If you
@@ -167,12 +159,6 @@ This is caused by a directory permission misconfiguration. There are several
 possible solutions depending on your operating system. All of them are
 explained in the :ref:`Setting up Permissions <book-installation-permissions>`
 section.
-
-.. note::
-
-    PHP's internal web server is available in PHP 5.4 or higher versions. If you
-    still use the legacy PHP 5.3 version, you'll have to configure a *virtual host*
-    in your web server.
 
 The ``server:run`` command is only suitable while developing the application. In
 order to run Symfony applications on production servers, you'll have to configure
