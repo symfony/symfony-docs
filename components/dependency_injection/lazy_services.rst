@@ -30,21 +30,19 @@ the `ProxyManager bridge`_:
 
 .. code-block:: bash
 
-    $ php composer.phar require symfony/proxy-manager-bridge:2.3.*
+    $ composer require symfony/proxy-manager-bridge:~2.3
 
 .. note::
 
     If you're using the full-stack framework, the proxy manager bridge is already
-    included but the actual proxy manager needs to be included. Therefore add
+    included but the actual proxy manager needs to be included. So, run:
 
-    .. code-block:: json
+    .. code-block:: bash
 
-        "require": {
-            "ocramius/proxy-manager": "0.5.*"
-        }
+        $ php composer.phar require ocramius/proxy-manager:~0.5
 
-    to your ``composer.json``. Afterwards compile your container and check
-    to make sure that you get a proxy for your lazy services.
+    Afterwards compile your container and check to make sure that you get
+    a proxy for your lazy services.
 
 Configuration
 -------------
@@ -62,9 +60,19 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
     .. code-block:: xml
 
-        <service id="foo" class="Acme\Foo" lazy="true" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Acme\Foo" lazy="true" />
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Acme\Foo');
         $definition->setLazy(true);

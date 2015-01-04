@@ -85,7 +85,7 @@ blank but is no longer than 100 characters in length, you would do the following
              *             @Assert\NotBlank(),
              *             @Assert\Length(
              *                 max = 100,
-             *                 maxMessage = "Your bio is too long!"
+             *                 maxMessage = "Your short bio is too long!"
              *             )
              *         }
              *     },
@@ -117,7 +117,7 @@ blank but is no longer than 100 characters in length, you would do the following
                                 <constraint name="NotBlank" />
                                 <constraint name="Length">
                                     <option name="max">100</option>
-                                    <option name="maxMessage">Your bio is too long!</option>
+                                    <option name="maxMessage">Your short bio is too long!</option>
                                 </constraint>
                             </value>
                         </option>
@@ -144,9 +144,12 @@ blank but is no longer than 100 characters in length, you would do the following
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
                         'personal_email' => new Assert\Email(),
-                        'lastName' => array(
+                        'short_bio' => array(
                             new Assert\NotBlank(),
-                            new Assert\Length(array("max" => 100)),
+                            new Assert\Length(array(
+                                'max' => 100,
+                                'maxMessage' => 'Your short bio is too long!',
+                            )),
                         ),
                     ),
                     'allowMissingFields' => true,
@@ -215,13 +218,11 @@ field is optional but must be a valid email if supplied, you can do the followin
              * @Assert\Collection(
              *     fields={
              *         "personal_email"  = @Assert\Required({@Assert\NotBlank, @Assert\Email}),
-             *         "alternate_email" = @Assert\Optional(@Assert\Email),
+             *         "alternate_email" = @Assert\Optional(@Assert\Email)
              *     }
              * )
              */
-             protected $profileData = array(
-                 'personal_email',
-             );
+             protected $profileData = array('personal_email');
         }
 
     .. code-block:: xml

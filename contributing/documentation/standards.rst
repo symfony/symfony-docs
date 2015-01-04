@@ -43,7 +43,7 @@ Example
 
         echo 'You cannot use the :: shortcut here';
 
-    .. _`Symfony Documentation`: http://symfony.com/doc/current/contributing/documentation/standards.html
+    .. _`Symfony Documentation`: http://symfony.com/doc
 
 Code Examples
 -------------
@@ -80,6 +80,7 @@ Configuration examples should show all supported formats using
 * **Configuration** (including services and routing): YAML, XML, PHP
 * **Validation**: YAML, Annotations, XML, PHP
 * **Doctrine Mapping**: Annotations, YAML, XML, PHP
+* **Translation**: XML, YAML, PHP
 
 Example
 ~~~~~~~
@@ -133,19 +134,23 @@ Files and Directories
       ├─ vendor/
       └─ ...
 
-Language Standards
-------------------
+English Language Standards
+--------------------------
 
-* For sections, use the following capitalization rules:
-  `Capitalization of the first word, and all other words, except for closed-class words`_:
+* **English Dialect**: use the United States English dialect, commonly called
+  `American English`_.
+* **Section titles**: use a variant of the title case, where the first
+  word is always capitalized and all other words are capitalized, except for
+  the closed-class words (read Wikipedia article about `headings and titles`_).
 
-    The Vitamins are in my Fresh California Raisins
+  E.g.: The Vitamins are in my Fresh California Raisins
 
-* Do not use `Serial (Oxford) Commas`_;
-* You should use a form of *you* instead of *we* (i.e. avoid the first person
-  point of view: use the second instead);
-* When referencing a hypothetical person, such as "a user with a session cookie", gender-neutral
-  pronouns (they/their/them) should be used. For example, instead of:
+* **Punctuation**: avoid the use of `Serial (Oxford) Commas`_;
+* **Pronouns**: avoid the use of `nosism`_ and always use *you* instead of *we*.
+  (i.e. avoid the first person point of view: use the second instead);
+* **Gender-neutral language**: when referencing a hypothetical person, such as
+  *"a user with a session cookie"*, use gender-neutral pronouns (they/their/them).
+  For example, instead of:
   * he or she, use they
   * him or her, use them
   * his or her, use their
@@ -154,5 +159,7 @@ Language Standards
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
-.. _`Capitalization of the first word, and all other words, except for closed-class words`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
+.. _`American English`: http://en.wikipedia.org/wiki/American_English
+.. _`headings and titles`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma
+.. _`nosism`: http://en.wikipedia.org/wiki/Nosism

@@ -90,7 +90,7 @@ might ultimately looks like this:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
@@ -166,6 +166,10 @@ In the following example, the action is only allowed if the user has the
 
         // ...
     }
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 You can also choose to install and use the optional JMSSecurityExtraBundle_,
 which can secure your controller using annotations:

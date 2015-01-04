@@ -14,7 +14,7 @@ How to Create a custom Authentication Provider
     * :doc:`/cookbook/security/api_key_authentication`
 
 If you have read the chapter on :doc:`/book/security`, you understand the
-distinction Symfony2 makes between authentication and authorization in the
+distinction Symfony makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
 in the authentication process, and how to implement a custom authentication
 provider. Because authentication and authorization are separate concepts,
@@ -29,16 +29,16 @@ The following chapter demonstrates how to create a custom authentication
 provider for WSSE authentication. The security protocol for WSSE provides
 several security benefits:
 
-1. Username / Password encryption
-2. Safe guarding against replay attacks
-3. No web server configuration required
+#. Username / Password encryption
+#. Safe guarding against replay attacks
+#. No web server configuration required
 
 WSSE is very useful for the securing of web services, may they be SOAP or
 REST.
 
 There is plenty of great documentation on `WSSE`_, but this article will
 focus not on the security protocol, but rather the manner in which a custom
-protocol can be added to your Symfony2 application. The basis of WSSE is
+protocol can be added to your Symfony application. The basis of WSSE is
 that a request header is checked for encrypted credentials, verified using
 a timestamp and `nonce`_, and authenticated for the requested user using a
 password digest.
@@ -51,7 +51,7 @@ password digest.
 The Token
 ---------
 
-The role of the token in the Symfony2 security context is an important one.
+The role of the token in the Symfony security context is an important one.
 A token represents the user authentication data present in the request. Once
 a request is authenticated, the token retains the user's data, and delivers
 this data across the security context. First, you'll create your token class.
@@ -96,13 +96,13 @@ provider.
 The Listener
 ------------
 
-Next, you need a listener to listen on the security context. The listener
+Next, you need a listener to listen on the firewall. The listener
 is responsible for fielding requests to the firewall and calling the authentication
 provider. A listener must be an instance of
 :class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`.
 A security listener should handle the
 :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and
-set an authenticated token in the security context if successful.
+set an authenticated token in the token storage if successful.
 
 .. code-block:: php
 
@@ -111,20 +111,20 @@ set an authenticated token in the security context if successful.
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
     use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
 
     class WsseListener implements ListenerInterface
     {
-        protected $securityContext;
+        protected $tokenStorage;
         protected $authenticationManager;
 
-        public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager)
+        public function __construct(TokenStorageInterface $tokenStorage, AuthenticationManagerInterface $authenticationManager)
         {
-            $this->securityContext = $securityContext;
+            $this->tokenStorage = $tokenStorage;
             $this->authenticationManager = $authenticationManager;
         }
 
@@ -146,7 +146,7 @@ set an authenticated token in the security context if successful.
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
-                $this->securityContext->setToken($authToken);
+                $this->tokenStorage->setToken($authToken);
 
                 return;
             } catch (AuthenticationException $failed) {
@@ -154,9 +154,9 @@ set an authenticated token in the security context if successful.
 
                 // To deny the authentication clear the token. This will redirect to the login page.
                 // Make sure to only clear your token, not those of other authentication listeners.
-                // $token = $this->securityContext->getToken();
+                // $token = $this->tokenStorage->getToken();
                 // if ($token instanceof WsseUserToken && $this->providerKey === $token->getProviderKey()) {
-                //     $this->securityContext->setToken(null);
+                //     $this->tokenStorage->setToken(null);
                 // }
                 // return;
             }
@@ -345,18 +345,22 @@ create a class which implements
 The :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`
 requires the following methods:
 
-* ``create`` method, which adds the listener and authentication provider
-  to the DI container for the appropriate security context;
+``create``
+    Method which adds the listener and authentication provider
+    to the DI container for the appropriate security context.
 
-* ``getPosition`` method, which must be of type ``pre_auth``, ``form``, ``http``,
-  and ``remember_me`` and defines the position at which the provider is called;
+``getPosition``
+    Method which must be of type ``pre_auth``, ``form``, ``http``,
+    and ``remember_me`` and defines the position at which the provider is called.
 
-* ``getKey`` method which defines the configuration key used to reference
-  the provider in the firewall configuration;
+``getKey``
+    Method which defines the configuration key used to reference
+    the provider in the firewall configuration.
 
-* ``addConfiguration`` method, which is used to define the configuration
-  options underneath the configuration key in your security configuration.
-  Setting configuration options are explained later in this chapter.
+``addConfiguration``
+    Method which is used to define the configuration
+    options underneath the configuration key in your security configuration.
+    Setting configuration options are explained later in this chapter.
 
 .. note::
 
@@ -399,7 +403,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
             wsse.security.authentication.listener:
                 class: Acme\DemoBundle\Security\Firewall\WsseListener
-                arguments: ["@security.context", "@security.authentication.manager"]
+                arguments: ["@security.token_storage", "@security.authentication.manager"]
 
     .. code-block:: xml
 
@@ -417,7 +421,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
                 <service id="wsse.security.authentication.listener"
                     class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
-                    <argument type="service" id="security.context"/>
+                    <argument type="service" id="security.token_storage"/>
                     <argument type="service" id="security.authentication.manager" />
                 </service>
             </services>
@@ -441,7 +445,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         $container->setDefinition('wsse.security.authentication.listener',
             new Definition(
                 'Acme\DemoBundle\Security\Firewall\WsseListener', array(
-                    new Reference('security.context'),
+                    new Reference('security.token_storage'),
                     new Reference('security.authentication.manager'),
                 )
             )

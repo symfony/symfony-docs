@@ -60,6 +60,12 @@ event is just one of the core kernel events::
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
     To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
 
+.. note::
+
+    When setting a response for the ``kernel.request``, ``kernel.view`` or
+    ``kernel.exception`` events, the propagation is stopped, so the lower
+    priority listeners on that event don't get called.
+
 Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
 using a special "tag":
@@ -133,3 +139,20 @@ done as follow::
     Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
     interface: ``HttpKernelInterface::MASTER_REQUEST`` and
     ``HttpKernelInterface::SUB_REQUEST``.
+
+Debugging Event Listeners
+-------------------------
+
+You can find out what listeners are registered in the event dispatcher
+using the console. To show all events and their listeners, run:
+
+.. code-block:: bash
+
+    $ php app/console debug:event-dispatcher
+
+You can get registered listeners for a particular event by specifying
+its name:
+
+.. code-block:: bash
+
+    $ php app/console debug:event-dispatcher kernel.exception

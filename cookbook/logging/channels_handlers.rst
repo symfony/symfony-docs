@@ -10,7 +10,7 @@ service (``monolog.logger.XXX``) in the container and is injected to the
 concerned service. The purpose of channels is to be able to organize different
 types of log messages.
 
-By default, Symfony2 logs every messages into a single file (regardless of
+By default, Symfony logs every message into a single file (regardless of
 the channel).
 
 Switching a Channel to a different Handler

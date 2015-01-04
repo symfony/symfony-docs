@@ -2,7 +2,7 @@ Submitting a Patch
 ==================
 
 Patches are the best way to provide a bug fix or to propose enhancements to
-Symfony2.
+Symfony.
 
 Step 1: Setup your Environment
 ------------------------------
@@ -10,12 +10,12 @@ Step 1: Setup your Environment
 Install the Software Stack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before working on Symfony2, setup a friendly environment with the following
+Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
 * PHP version 5.3.3 or above;
-* PHPUnit 3.6.4 or above.
+* `PHPUnit`_ 4.2 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -65,11 +65,11 @@ Set up your user information with your real name and a working email address:
 Get the Symfony Source Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Get the Symfony2 source code:
+Get the Symfony source code:
 
 * Create a `GitHub`_ account and sign in;
 
-* Fork the `Symfony2 repository`_ (click on the "Fork" button);
+* Fork the `Symfony repository`_ (click on the "Fork" button);
 
 * After the "forking action" has completed, clone your fork locally
   (this will create a ``symfony`` directory):
@@ -88,7 +88,7 @@ Get the Symfony2 source code:
 Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that Symfony2 is installed, check that all unit tests pass for your
+Now that Symfony is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
 
 Step 2: Work on your Patch
@@ -105,9 +105,13 @@ Choose the right Branch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Before working on a patch, you must determine on which branch you need to
-work. The branch should be based on the ``master`` branch if you want to add a
-new feature. But if you want to fix a bug, use the oldest but still maintained
-version of Symfony where the bug happens (like ``2.3``).
+work:
+
+* ``2.3``, if you are fixing a bug for an existing feature (you may have
+  to choose a higher branch if the feature you are fixing was introduced
+  in a later version);
+* ``2.7``, if you are adding a new feature which is backward compatible;
+* ``master``, if you are adding a new and backward incompatible feature.
 
 .. note::
 
@@ -266,7 +270,7 @@ pull request message, like in:
 
 The pull request description must include the following checklist at the top
 to ensure that contributions may be reviewed without needless feedback
-loops and that your contributions can be included into Symfony2 as quickly as
+loops and that your contributions can be included into Symfony as quickly as
 possible:
 
 .. code-block:: text
@@ -402,7 +406,7 @@ messages of all the commits. When you are finished, execute the push command.
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
 .. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
-.. _Symfony2 repository:                   https://github.com/symfony/symfony
+.. _Symfony repository:                    https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         https://travis-ci.org/
 .. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
@@ -411,3 +415,4 @@ messages of all the commits. When you are finished, execute the push command.
 .. _`fabbot`:                              http://fabbot.io
 .. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
+.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html

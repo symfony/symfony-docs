@@ -14,28 +14,33 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Options     | - `class`_                                                       |
 |             | - `data_class`_                                                  |
-|             | - `property`_                                                    |
-|             | - `group_by`_                                                    |
-|             | - `query_builder`_                                               |
 |             | - `em`_                                                          |
+|             | - `group_by`_                                                    |
+|             | - `property`_                                                    |
+|             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                     |
 | Options     | - `choice_list`_                                                 |
 +-------------+------------------------------------------------------------------+
-| Inherited   | - `multiple`_                                                    |
-| options     | - `expanded`_                                                    |
+| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type:     |
+| options     |                                                                  |
+|             | - `placeholder`_                                                 |
+|             | - `expanded`_                                                    |
+|             | - `multiple`_                                                    |
 |             | - `preferred_choices`_                                           |
-|             | - `empty_value`_                                                 |
-|             | - `empty_data`_                                                  |
-|             | - `required`_                                                    |
-|             | - `label`_                                                       |
-|             | - `label_attr`_                                                  |
+|             |                                                                  |
+|             | from the :doc:`form </reference/forms/types/form>` type:         |
+|             |                                                                  |
 |             | - `data`_                                                        |
-|             | - `read_only`_                                                   |
 |             | - `disabled`_                                                    |
+|             | - `empty_data`_                                                  |
 |             | - `error_bubbling`_                                              |
 |             | - `error_mapping`_                                               |
+|             | - `label`_                                                       |
+|             | - `label_attr`_                                                  |
 |             | - `mapped`_                                                      |
+|             | - `read_only`_                                                   |
+|             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                    |
 +-------------+------------------------------------------------------------------+
@@ -109,6 +114,25 @@ or the short alias name (as shown prior).
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
 
+em
+~~
+
+**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
+
+If specified, the specified entity manager will be used to load the choices
+instead of the default entity manager.
+
+group_by
+~~~~~~~~
+
+**type**: ``string``
+
+This is a property path (e.g. ``author.name``) used to organize the
+available choices in groups. It only works when rendered as a select tag
+and does so by adding ``optgroup`` elements around options. Choices that do not
+return a value for this property path are rendered directly under the
+select tag, without a surrounding optgroup.
+
 property
 ~~~~~~~~
 
@@ -132,17 +156,6 @@ cast into a string and so must have a ``__toString()`` method.
            'property' => 'translations[en].name',
         ));
 
-group_by
-~~~~~~~~
-
-**type**: ``string``
-
-This is a property path (e.g. ``author.name``) used to organize the
-available choices in groups. It only works when rendered as a select tag
-and does so by adding ``optgroup`` elements around options. Choices that do not
-return a value for this property path are rendered directly under the
-select tag, without a surrounding optgroup.
-
 query_builder
 ~~~~~~~~~~~~~
 
@@ -154,25 +167,8 @@ either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
 the entity.
 
-em
-~~
-
-**type**: ``string`` **default**: the default entity manager
-
-If specified, the specified entity manager will be used to load the choices
-instead of the default entity manager.
-
 Overridden Options
 ------------------
-
-choices
-~~~~~~~
-
-**type**:  array || ``\Traversable`` **default**: ``null``
-
-Instead of allowing the `class`_ and `query_builder`_ options to fetch the
-entities to include for you, you can pass the ``choices`` option directly.
-See :ref:`reference-forms-entity-choices`.
 
 choice_list
 ~~~~~~~~~~~
@@ -184,10 +180,23 @@ for you, by using all of the above options. If you need to override this
 option, you may just consider using the :doc:`/reference/forms/types/choice`
 directly.
 
+choices
+~~~~~~~
+
+**type**:  array | ``\Traversable`` **default**: ``null``
+
+Instead of allowing the `class`_ and `query_builder`_ options to fetch the
+entities to include for you, you can pass the ``choices`` option directly.
+See :ref:`reference-forms-entity-choices`.
+
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -198,8 +207,6 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
     as well. In addition, there is a complete example in the cookbook article
     :doc:`/cookbook/form/form_collections`.
 
-.. include:: /reference/forms/types/options/expanded.rst.inc
-
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. note::
@@ -207,26 +214,34 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
     This option expects an array of entity objects, unlike the ``choice`` field
     that requires an array of keys.
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
-
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The actual default value of this option depends on other field options:
+
+* If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
+  (empty string);
+* Otherwise ``array()`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc

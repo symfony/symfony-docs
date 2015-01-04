@@ -4,9 +4,9 @@
 How to Use PHP instead of Twig for Templates
 ============================================
 
-Symfony2 defaults to Twig for its template engine, but you can still use
+Symfony defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
-Symfony2. Symfony2 adds some nice features on top of PHP to make writing
+Symfony. Symfony adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
 
 Rendering PHP Templates
@@ -60,11 +60,10 @@ below renders the ``index.html.php`` template::
         );
     }
 
-You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
-shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template::
+You can also use the `@Template`_ shortcut to render the default
+``AcmeHelloBundle:Hello:index.html.php`` template::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
@@ -77,6 +76,33 @@ shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template
         return array('name' => $name);
     }
 
+.. caution::
+
+    Enabling the ``php`` and ``twig`` template engines simultaneously is
+    allowed, but it will produce an undesirable side effect in your application:
+    the ``@`` notation for Twig namespaces will no longer be supported for the
+    ``render()`` method::
+
+        public function indexAction()
+        {
+            // ...
+
+            // namespaced templates will no longer work in controllers
+            $this->render('@Acme/Default/index.html.twig');
+
+            // you must use the traditional template notation
+            $this->render('AcmeBundle:Default:index.html.twig');
+        }
+
+    .. code-block:: jinja
+
+        {# inside a Twig template, namespaced templates work as expected #}
+        {{ include('@Acme/Default/index.html.twig') }}
+
+        {# traditional template notation will also work #}
+        {{ include('AcmeBundle:Default:index.html.twig') }}
+
+
 .. index::
   single: Templating; Layout
   single: Layout
@@ -85,7 +111,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, this problem is thought about
+well-known header and footer. In Symfony, this problem is thought about
 differently: a template can be decorated by another one.
 
 The ``index.html.php`` template is decorated by ``layout.html.php``, thanks to
@@ -114,7 +140,7 @@ Now, have a look at the ``layout.html.php`` file:
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another one (``::base.html.php``). Symfony2
+The layout is itself decorated by another one (``::base.html.php``). Symfony
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
 looked for in the ``app/Resources/views/`` directory. This directory stores
@@ -138,7 +164,7 @@ For both layouts, the ``$view['slots']->output('_content')`` expression is
 replaced by the content of the child template, ``index.html.php`` and
 ``layout.html.php`` respectively (more on slots in the next section).
 
-As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In
+As you can see, Symfony provides methods on a mysterious ``$view`` object. In
 a template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods that makes the template engine tick.
 
@@ -229,7 +255,7 @@ If you create a ``fancy`` action, and want to include it into the
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render(
-        new ControllerReference('AcmeHelloBundle:Hello:fancy', array(
+        new \Symfony\Component\HttpKernel\Controller\ControllerReference('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ))
@@ -266,9 +292,9 @@ you more about those.
 Using Template Helpers
 ----------------------
 
-The Symfony2 templating system can be easily extended via helpers. Helpers are
+The Symfony templating system can be easily extended via helpers. Helpers are
 PHP objects that provide features useful in a template context. ``actions`` and
-``slots`` are two of the built-in Symfony2 helpers.
+``slots`` are two of the built-in Symfony helpers.
 
 Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,7 +326,7 @@ Using Assets: Images, JavaScripts and Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides the ``assets`` tag to deal with them easily:
+Symfony provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 
@@ -341,3 +367,5 @@ within an HTML context. The second argument lets you change the context. For
 instance, to output something in a JavaScript script, use the ``js`` context::
 
     <?php echo $view->escape($var, 'js') ?>
+
+.. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view`

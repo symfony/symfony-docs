@@ -19,27 +19,28 @@ day, and year) or three select boxes (see the `widget`_ option).
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `widget`_                                                                 |
-|                      | - `input`_                                                                  |
-|                      | - `empty_value`_                                                            |
-|                      | - `years`_                                                                  |
-|                      | - `months`_                                                                 |
-|                      | - `days`_                                                                   |
+| Options              | - `days`_                                                                   |
+|                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
+|                      | - `html5`_                                                                  |
+|                      | - `input`_                                                                  |
 |                      | - `model_timezone`_                                                         |
+|                      | - `months`_                                                                 |
 |                      | - `view_timezone`_                                                          |
+|                      | - `widget`_                                                                 |
+|                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
-| options              | - `invalid_message`_                                                        |
-|                      | - `invalid_message_parameters`_                                             |
-|                      | - `read_only`_                                                              |
-|                      | - `disabled`_                                                               |
-|                      | - `mapped`_                                                                 |
-|                      | - `inherit_data`_                                                           |
+| options              | - `disabled`_                                                               |
 |                      | - `error_mapping`_                                                          |
+|                      | - `inherit_data`_                                                           |
+|                      | - `invalid_message`_                                                        |
+|                      | - `invalid_message_parameters`_                                             |
+|                      | - `mapped`_                                                                 |
+|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form </reference/forms/types/form>`                                   |
 +----------------------+-----------------------------------------------------------------------------+
@@ -80,44 +81,50 @@ values.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/date_widget.rst.inc
+.. include:: /reference/forms/types/options/days.rst.inc
 
-.. _form-reference-date-input:
-
-.. include:: /reference/forms/types/options/date_input.rst.inc
-
-empty_value
+placeholder
 ~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` or ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. The ``empty_value`` option can be used to
+as a series of ``select`` boxes. The ``placeholder`` option can be used to
 add a "blank" entry to the top of each select box::
 
     $builder->add('dueDate', 'date', array(
-        'empty_value' => '',
+        'placeholder' => '',
     ));
 
 Alternatively, you can specify a string to be displayed for the "blank" value::
 
     $builder->add('dueDate', 'date', array(
-        'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
+        'placeholder' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
     ));
-
-.. include:: /reference/forms/types/options/years.rst.inc
-
-.. include:: /reference/forms/types/options/months.rst.inc
-
-.. include:: /reference/forms/types/options/days.rst.inc
 
 .. _reference-forms-type-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
+.. include:: /reference/forms/types/options/html5.rst.inc
+
+.. _form-reference-date-input:
+
+.. include:: /reference/forms/types/options/date_input.rst.inc
+
 .. include:: /reference/forms/types/options/model_timezone.rst.inc
 
+.. include:: /reference/forms/types/options/months.rst.inc
+
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/date_widget.rst.inc
+
+.. include:: /reference/forms/types/options/years.rst.inc
 
 Overridden Options
 ------------------
@@ -141,19 +148,19 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/disabled.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Field Variables
 ---------------

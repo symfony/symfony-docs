@@ -281,6 +281,19 @@ has a certain value:
         ->end()
     ;
 
+Documenting the Option
+----------------------
+
+All options can be documented using the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
+method.
+
+The info will be printed as a comment when dumping the configuration tree.
+
+.. versionadded:: 2.6
+    Since Symfony 2.6, the info will also be added to the exception message
+    when an invalid type is given.
+
 Optional Sections
 -----------------
 
@@ -381,6 +394,8 @@ with ``append()``::
 This is also useful to help you avoid repeating yourself if you have sections
 of the config that are repeated in different places.
 
+.. _component-config-normalization:
+
 Normalization
 -------------
 
@@ -435,6 +450,8 @@ a second argument::
         ->fixXmlConfig('child', 'children')
         ->children()
             ->arrayNode('children')
+                // ...
+            ->end()
         ->end()
     ;
 

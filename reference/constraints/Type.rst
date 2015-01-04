@@ -23,7 +23,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 age:
@@ -65,7 +65,7 @@ Basic Usage
         </constraint-mapping>
 
     .. code-block:: php
-        
+
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
 

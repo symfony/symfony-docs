@@ -15,17 +15,22 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `value`_                                                          |
-| options     | - `data`_                                                           |
-|             | - `empty_data`_                                                     |
-|             | - `required`_                                                       |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `read_only`_                                                      |
+| Inherited   | from  the :doc:`checkbox </reference/forms/types/checkbox>` type:   |
+| options     |                                                                     |
+|             | - `value`_                                                          |
+|             |                                                                     |
+|             | from the :doc:`form </reference/forms/types/form>` type:            |
+|             |                                                                     |
+|             | - `data`_                                                           |
 |             | - `disabled`_                                                       |
+|             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
+|             | - `read_only`_                                                      |
+|             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`checkbox </reference/forms/types/checkbox>`                   |
 +-------------+---------------------------------------------------------------------+
@@ -44,23 +49,23 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Form Variables
 --------------

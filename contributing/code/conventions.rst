@@ -1,7 +1,7 @@
 Conventions
 ===========
 
-The :doc:`standards` document describes the coding standards for the Symfony2
+The :doc:`standards` document describes the coding standards for the Symfony
 projects and the internal and third-party bundles. This document describes
 coding standards and conventions used in the core framework to make it more
 consistent and predictable. You are encouraged to follow them in your own
@@ -75,7 +75,7 @@ must be used instead (where ``XXX`` is the name of the related thing):
     While "setXXX" and "replaceXXX" are very similar, there is one notable
     difference: "setXXX" may replace, or add new elements to the relation.
     "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
-    key as passed to "replaceXXX" it must throw an exception.
+    key is passed to "replaceXXX" it must throw an exception.
 
 .. _contributing-code-conventions-deprecations:
 
@@ -103,7 +103,4 @@ A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
 the migration starting one or two minor versions before the version where the
 feature will be removed (depending on the criticality of the removal)::
 
-    trigger_error(
-        'XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.',
-        E_USER_DEPRECATED
-    );
+    trigger_error('XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.', E_USER_DEPRECATED);

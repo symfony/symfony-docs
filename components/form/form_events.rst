@@ -61,15 +61,13 @@ The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
 
 :ref:`Form Events Information Table<component-form-event-table>`
 
-+-----------------+-----------+
-|   Data type     | Value     |
-+=================+===========+
-| Model data      | ``null``  |
-+-----------------+-----------+
-| Normalized data | ``null``  |
-+-----------------+-----------+
-| View data       | ``null``  |
-+-----------------+-----------+
+===============  ========
+Data Type        Value
+===============  ========
+Model data       ``null``
+Normalized data  ``null``
+View data        ``null``
+===============  ========
 
 .. caution::
 
@@ -83,7 +81,7 @@ The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
 .. sidebar:: ``FormEvents::PRE_SET_DATA`` in the Form component
 
     The ``collection`` form type relies on the
-    :class:`Symfony\\Component\\Form\\Extension\\Core\\EventListener\\ResizeFormListener`
+    ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
     subscriber, listening to the ``FormEvents::PRE_SET_DATA`` event in order
     to reorder the form's fields depending on the data from the pre-populated
     object, by removing and adding all form rows.
@@ -98,22 +96,20 @@ the form.
 
 :ref:`Form Events Information Table<component-form-event-table>`
 
-+-----------------+------------------------------------------------------+
-| Data type       | Value                                                |
-+=================+======================================================+
-| Model data      | Model data injected into ``setData()``               |
-+-----------------+------------------------------------------------------+
-| Normalized data | Model data transformed using a model transformer     |
-+-----------------+------------------------------------------------------+
-| View data       | Normalized data transformed using a view transformer |
-+-----------------+------------------------------------------------------+
+===============  ====================================================
+Data Type        Value
+===============  ====================================================
+Model data       Model data injected into ``setData()``
+Normalized data  Model data transformed using a model transformer
+View data        Normalized data transformed using a view transformer
+===============  ====================================================
 
 .. sidebar:: ``FormEvents::POST_SET_DATA`` in the Form component
 
     .. versionadded:: 2.4
         The data collector extension was introduced in Symfony 2.4.
 
-    The :class:`Symfony\\Component\\Form\\Extension\\DataCollector\\EventListener\\DataCollectorListener`
+    The ``Symfony\Component\Form\Extension\DataCollector\EventListener\DataCollectorListener``
     class is subscribed to listen to the ``FormEvents::POST_SET_DATA`` event
     in order to collect information about the forms from the denormalized
     model and view data.
@@ -143,22 +139,20 @@ It can be used to:
 
 :ref:`Form Events Information Table<component-form-event-table>`
 
-+-----------------+------------------------------------------+
-| Data type       | Value                                    |
-+=================+==========================================+
-| Model data      | Same as in ``FormEvents::POST_SET_DATA`` |
-+-----------------+------------------------------------------+
-| Normalized data | Same as in ``FormEvents::POST_SET_DATA`` |
-+-----------------+------------------------------------------+
-| View data       | Same as in ``FormEvents::POST_SET_DATA`` |
-+-----------------+------------------------------------------+
+===============  ========================================
+Data Type        Value
+===============  ========================================
+Model data       Same as in ``FormEvents::POST_SET_DATA``
+Normalized data  Same as in ``FormEvents::POST_SET_DATA``
+View data        Same as in ``FormEvents::POST_SET_DATA``
+===============  ========================================
 
 .. sidebar:: ``FormEvents::PRE_SUBMIT`` in the Form component
 
-    The :class:`Symfony\\Component\\Form\\Extension\\Core\\EventListener\\TrimListener`
+    The ``Symfony\Component\Form\Extension\Core\EventListener\TrimListener``
     subscriber subscribes to the ``FormEvents::PRE_SUBMIT`` event in order to
     trim the request's data (for string values).
-    The :class:`Symfony\\Component\\Form\\Extension\\Csrf\\EventListener\\CsrfValidationListener`
+    The ``Symfony\Component\Form\Extension\Csrf\EventListener\CsrfValidationListener``
     subscriber subscribes to the ``FormEvents::PRE_SUBMIT`` event in order to
     validate the CSRF token.
 
@@ -173,15 +167,13 @@ It can be used to change data from the normalized representation of the data.
 
 :ref:`Form Events Information Table<component-form-event-table>`
 
-+-----------------+-------------------------------------------------------------------------------------+
-| Data type       | Value                                                                               |
-+=================+=====================================================================================+
-| Model data      | Same as in ``FormEvents::POST_SET_DATA``                                            |
-+-----------------+-------------------------------------------------------------------------------------+
-| Normalized data | Data from the request reverse-transformed from the request using a view transformer |
-+-----------------+-------------------------------------------------------------------------------------+
-| View data       | Same as in ``FormEvents::POST_SET_DATA``                                            |
-+-----------------+-------------------------------------------------------------------------------------+
+===============  ===================================================================================
+Data Type        Value
+===============  ===================================================================================
+Model data       Same as in ``FormEvents::POST_SET_DATA``
+Normalized data  Data from the request reverse-transformed from the request using a view transformer
+View data        Same as in ``FormEvents::POST_SET_DATA``
+===============  ===================================================================================
 
 .. caution::
 
@@ -189,7 +181,7 @@ It can be used to change data from the normalized representation of the data.
 
 .. sidebar:: ``FormEvents::SUBMIT`` in the Form component
 
-    The :class:`Symfony\\Component\\Form\\Extension\\Core\\EventListener\\ResizeFormListener`
+    The ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
     subscribes to the ``FormEvents::SUBMIT`` event in order to remove the
     fields that need to be removed whenever manipulating a collection of forms
     for which ``allow_delete`` has been enabled.
@@ -205,15 +197,13 @@ It can be used to fetch data after denormalization.
 
 :ref:`Form Events Information Table<component-form-event-table>`
 
-+-----------------+---------------------------------------------------------------+
-| Data type       | Value                                                         |
-+=================+===============================================================+
-| Model data      | Normalized data reverse-transformed using a model transformer |
-+-----------------+---------------------------------------------------------------+
-| Normalized data | Same as in ``FormEvents::POST_SUBMIT``                        |
-+-----------------+---------------------------------------------------------------+
-| View data       | Normalized data transformed using a view transformer          |
-+-----------------+---------------------------------------------------------------+
+===============  =============================================================
+Data Type        Value
+===============  =============================================================
+Model data       Normalized data reverse-transformed using a model transformer
+Normalized data  Same as in ``FormEvents::POST_SUBMIT``
+View data        Normalized data transformed using a view transformer
+===============  =============================================================
 
 .. caution::
 
@@ -224,10 +214,10 @@ It can be used to fetch data after denormalization.
     .. versionadded:: 2.4
         The data collector extension was introduced in Symfony 2.4.
 
-    The :class:`Symfony\\Component\\Form\\Extension\\DataCollector\\EventListener\\DataCollectorListener`
+    The ``Symfony\Component\Form\Extension\DataCollector\EventListener\DataCollectorListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to collect
     information about the forms.
-    The :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
+    The ``Symfony\Component\Form\Extension\Validator\EventListener\ValidationListener``
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
     automatically validate the denormalized object, and update the normalized
     as well as the view's representations.
@@ -248,19 +238,15 @@ processed.
 
 .. _component-form-event-table:
 
-+------------------------+-------------------------------+------------------+
-| Name                   | ``FormEvents`` Constant       | Event's data     |
-+========================+===============================+==================+
-| ``form.pre_set_data``  | ``FormEvents::PRE_SET_DATA``  | Model data       |
-+------------------------+-------------------------------+------------------+
-| ``form.post_set_data`` | ``FormEvents::POST_SET_DATA`` | Model data       |
-+------------------------+-------------------------------+------------------+
-| ``form.pre_bind``      | ``FormEvents::PRE_SUBMIT``    | Request data     |
-+------------------------+-------------------------------+------------------+
-| ``form.bind``          | ``FormEvents::SUBMIT``        | Normalized data  |
-+------------------------+-------------------------------+------------------+
-| ``form.post_bind``     | ``FormEvents::POST_SUBMIT``   | View data        |
-+------------------------+-------------------------------+------------------+
+======================  =============================  ===============
+Name                    ``FormEvents`` Constant        Event's Data
+======================  =============================  ===============
+``form.pre_set_data``   ``FormEvents::PRE_SET_DATA``   Model data
+``form.post_set_data``  ``FormEvents::POST_SET_DATA``  Model data
+``form.pre_bind``       ``FormEvents::PRE_SUBMIT``     Request data
+``form.bind``           ``FormEvents::SUBMIT``         Normalized data
+``form.post_bind``      ``FormEvents::POST_SUBMIT``    View data
+======================  =============================  ===============
 
 .. versionadded:: 2.3
     Before Symfony 2.3, ``FormEvents::PRE_SUBMIT``, ``FormEvents::SUBMIT``

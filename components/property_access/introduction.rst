@@ -175,6 +175,8 @@ The ``getValue`` method can also use the magic ``__get`` method::
 
     echo $accessor->getValue($person, 'Wouter'); // array(...)
 
+.. _components-property-access-magic-call:
+
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -205,7 +207,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
@@ -301,7 +303,7 @@ see `Enable other Features`_.
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::getPropertyAccessorBuilder()
+    $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
@@ -327,7 +329,7 @@ instead::
 
     $person = new Person();
 
-    if ($accessor->isReadable($person, 'firstName') {
+    if ($accessor->isReadable($person, 'firstName')) {
         // ...
     }
 
@@ -338,7 +340,7 @@ method to find out whether a property path can be updated::
 
     $person = new Person();
 
-    if ($accessor->isWritable($person, 'firstName') {
+    if ($accessor->isWritable($person, 'firstName')) {
         // ...
     }
 
@@ -392,7 +394,7 @@ configured to enable extra features. To do that you could use the
     $accessorBuilder->disableMagicCall();
 
     // Check if magic __call handling is enabled
-    $accessorBuilder->isMagicCallEnabled() // true or false
+    $accessorBuilder->isMagicCallEnabled(); // true or false
 
     // At the end get the configured property accessor
     $accessor = $accessorBuilder->getPropertyAccessor();
@@ -405,7 +407,7 @@ configured to enable extra features. To do that you could use the
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
     // ...
-    $accessor = new PropertyAccessor(true) // this enables handling of magic __call
+    $accessor = new PropertyAccessor(true); // this enables handling of magic __call
 
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access

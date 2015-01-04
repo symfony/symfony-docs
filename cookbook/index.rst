@@ -7,6 +7,7 @@ The Cookbook
     assetic/index
     bundles/index
     cache/index
+    composer
     configuration/index
     console/index
     controller/index
@@ -28,7 +29,9 @@ The Cookbook
     symfony1
     templating/index
     testing/index
+    upgrading
     validation/index
+    web_server/index
     web_services/index
     workflow/index
 

@@ -83,7 +83,7 @@ Global Variables
 ----------------
 
 Sometimes, you need to set a variable which is available in all templates
-rendered by an engine (like the ``$app`` variable when using the Symfony2
+rendered by an engine (like the ``$app`` variable when using the Symfony
 framework). These variables can be set by using the
 :method:`Symfony\\Component\\Templating\\PhpEngine::addGlobal` method and they
 can be accessed in the template as normal variables::
@@ -103,7 +103,7 @@ In a template:
 
 .. note::
 
-    The global variables can be overriden by a local variable in the template
+    The global variables can be overridden by a local variable in the template
     with the same name.
 
 Output Escaping
@@ -135,7 +135,8 @@ escaper using the
 Helpers
 -------
 
-The Templating component can be easily extended via helpers. The component has
+The Templating component can be easily extended via helpers. Helpers are PHP objects that 
+provide features useful in a template context. The component has
 2 built-in helpers:
 
 * :doc:`/components/templating/helpers/assetshelper`

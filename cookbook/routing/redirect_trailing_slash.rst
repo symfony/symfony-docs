@@ -44,16 +44,15 @@ system, as explained below:
             defaults: { _controller: AcmeDemoBundle:Redirecting:removeTrailingSlash }
             requirements:
                 url: .*/$
-                _method: GET
+            methods: [GET]
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing">
-            <route id="remove_trailing_slash" path="/{url}">
+            <route id="remove_trailing_slash" path="/{url}" methods="GET">
                 <default key="_controller">AcmeDemoBundle:Redirecting:removeTrailingSlash</default>
                 <requirement key="url">.*/$</requirement>
-                <requirement key="_method">GET</requirement>
             </route>
         </routes>
 
@@ -72,8 +71,11 @@ system, as explained below:
                 ),
                 array(
                     'url' => '.*/$',
-                    '_method' => 'GET',
-                )
+                ),
+                array(),
+                '',
+                array(),
+                array('GET')
             )
         );
 
@@ -87,5 +89,5 @@ system, as explained below:
 
     Make sure to include this route in your routing configuration at the
     very end of your route listing. Otherwise, you risk redirecting real
-    routes (including Symfony2 core routes) that actually *do* have a trailing
+    routes (including Symfony core routes) that actually *do* have a trailing
     slash in their path.

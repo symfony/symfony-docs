@@ -36,7 +36,7 @@ is straightforward::
 
 .. note::
 
-    The autoloader is automatically registered in a Symfony2 application (see
+    The autoloader is automatically registered in a Symfony application (see
     ``app/autoload.php``).
 
 Use the :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix` or

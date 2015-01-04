@@ -73,19 +73,19 @@ Loader too. The default loaders are:
 * :class:`Symfony\\Component\\Translation\\Loader\\CsvFileLoader` - to load
   catalogs from CSV files.
 * :class:`Symfony\\Component\\Translation\\Loader\\IcuDatFileLoader` - to load
-  catalogs form resource bundles.
+  catalogs from resource bundles.
 * :class:`Symfony\\Component\\Translation\\Loader\\IcuResFileLoader` - to load
-  catalogs form resource bundles.
+  catalogs from resource bundles.
 * :class:`Symfony\\Component\\Translation\\Loader\\IniFileLoader` - to load
-  catalogs form ini files.
+  catalogs from ini files.
 * :class:`Symfony\\Component\\Translation\\Loader\\MoFileLoader` - to load
-  catalogs form gettext files.
+  catalogs from gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PhpFileLoader` - to load
   catalogs from PHP files.
 * :class:`Symfony\\Component\\Translation\\Loader\\PoFileLoader` - to load
-  catalogs form gettext files.
+  catalogs from gettext files.
 * :class:`Symfony\\Component\\Translation\\Loader\\QtFileLoader` - to load
-  catalogs form QT XML files.
+  catalogs from QT XML files.
 * :class:`Symfony\\Component\\Translation\\Loader\\XliffFileLoader` - to load
   catalogs from Xliff files.
 * :class:`Symfony\\Component\\Translation\\Loader\\JsonFileLoader` - to load
@@ -94,6 +94,9 @@ Loader too. The default loaders are:
   catalogs from Yaml files (requires the :doc:`Yaml component</components/yaml/introduction>`).
 
 All file loaders require the :doc:`Config component </components/config/index>`.
+
+You can also :doc:`create your own Loader </components/translation/custom_formats>`,
+in case the format is not already supported by one of the default loaders.
 
 At first, you should add one or more loaders to the ``Translator``::
 
@@ -157,12 +160,12 @@ If the message is not located in the catalog of the specific locale, the
 translator will look into the catalog of one or more fallback locales. For
 example, assume you're trying to translate into the ``fr_FR`` locale:
 
-1. First, the translator looks for the translation in the ``fr_FR`` locale;
+#. First, the translator looks for the translation in the ``fr_FR`` locale;
 
-2. If it wasn't found, the translator looks for the translation in the ``fr``
+#. If it wasn't found, the translator looks for the translation in the ``fr``
    locale;
 
-3. If the translation still isn't found, the translator uses the one or more
+#. If the translation still isn't found, the translator uses the one or more
    fallback locales set explicitly on the translator.
 
 For (3), the fallback locales can be set by calling
@@ -200,9 +203,9 @@ loaded like this::
 When translating strings that are not in the default domain (``messages``),
 you must specify the domain as the third argument of ``trans()``::
 
-    $translator->trans('Symfony2 is great', array(), 'admin');
+    $translator->trans('Symfony is great', array(), 'admin');
 
-Symfony2 will now look for the message in the ``admin`` domain of the
+Symfony will now look for the message in the ``admin`` domain of the
 specified locale.
 
 Usage

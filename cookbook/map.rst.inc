@@ -14,11 +14,16 @@
   * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/remove`
   * :doc:`/cookbook/bundles/extension`
+  * :doc:`/cookbook/bundles/configuration`
   * :doc:`/cookbook/bundles/prepend_extension`
 
 * :doc:`/cookbook/cache/index`
 
   * :doc:`/cookbook/cache/varnish`
+
+* **Composer**
+
+  * :doc:`/cookbook/composer`
 
 * :doc:`/cookbook/configuration/index`
 
@@ -30,6 +35,7 @@
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
   * :doc:`/cookbook/configuration/web_server_configuration`
+  * :doc:`/cookbook/configuration/configuration_organization`
 
 * :doc:`/cookbook/console/index`
 
@@ -53,6 +59,7 @@
   * :doc:`/cookbook/deployment/tools`
   * :doc:`/cookbook/deployment/azure-website`
   * :doc:`/cookbook/deployment/heroku`
+  * :doc:`/cookbook/deployment/platformsh`
 
 * :doc:`/cookbook/doctrine/index`
 
@@ -67,6 +74,7 @@
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
   * :doc:`/cookbook/doctrine/console`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
 
 * :doc:`/cookbook/email/index`
 
@@ -119,6 +127,7 @@
 
 * :doc:`/cookbook/request/index`
 
+  * :doc:`/cookbook/request/load_balancer_reverse_proxy`
   * :doc:`/cookbook/request/mime_type`
   * (session) :doc:`/cookbook/session/locale_sticky_session`
 
@@ -131,9 +140,11 @@
   * :doc:`/cookbook/routing/service_container_parameters`
   * :doc:`/cookbook/routing/custom_route_loader`
   * :doc:`/cookbook/routing/redirect_trailing_slash`
+  * :doc:`/cookbook/routing/extra_information`
 
 * :doc:`/cookbook/security/index`
 
+  * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
@@ -143,6 +154,7 @@
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/firewall_restriction`
+  * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
@@ -153,6 +165,8 @@
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
+  * :doc:`/cookbook/security/access_control`
+  * :doc:`/cookbook/security/multiple_user_providers`
 
 * **Serializer**
 
@@ -171,6 +185,7 @@
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
   * :doc:`/cookbook/session/limit_metadata_writes`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
 
 * **symfony1**
 
@@ -194,10 +209,20 @@
   * :doc:`/cookbook/testing/doctrine`
   * :doc:`/cookbook/testing/bootstrap`
   * (email) :doc:`/cookbook/email/testing`
+  * (form) :doc:`/cookbook/form/unit_testing`
+
+* **Upgrading**
+
+  * :doc:`/cookbook/upgrading`
 
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
+
+* :doc:`/cookbook/web_server/index`
+
+  * :doc:`/cookbook/web_server/built_in`
+  * (configuration) :doc:`/cookbook/configuration/web_server_configuration`
 
 * :doc:`/cookbook/web_services/index`
 

@@ -98,10 +98,12 @@ Now you must let the Service Container know about your newly created Twig Extens
 .. note::
 
    Keep in mind that Twig Extensions are not lazily loaded. This means that
-   there's a higher chance that you'll get a **CircularReferenceException**
-   or a **ScopeWideningInjectionException** if any services
-   (or your Twig Extension in this case) are dependent on the request service.
-   For more information take a look at :doc:`/cookbook/service_container/scopes`.
+   there's a higher chance that you'll get a
+   :class:`Symfony\\Component\\DependencyInjection\\Exception\\ServiceCircularReferenceException`
+   or a
+   :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
+   if any services (or your Twig Extension in this case) are dependent on
+   the request service. For more information take a look at :doc:`/cookbook/service_container/scopes`.
 
 Using the custom Extension
 --------------------------
@@ -126,7 +128,7 @@ Learning further
 For a more in-depth look into Twig Extensions, please take a look at the
 `Twig extensions documentation`_.
 
-.. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
+.. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
 .. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2

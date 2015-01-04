@@ -19,7 +19,12 @@ it is broken down.
             handlers:
                 mail:
                     type:         fingers_crossed
+                    # 500 errors are logged at the critical level
                     action_level: critical
+                    # to also log 400 level errors (but not 404's):
+                    # action_level: error
+                    # excluded_404:
+                    #     - ^/
                     handler:      buffered
                 buffered:
                     type:    buffer
@@ -28,6 +33,8 @@ it is broken down.
                     type:       swift_mailer
                     from_email: error@example.com
                     to_email:   error@example.com
+                    # or list of recipients
+                    # to_email:   [dev1@example.com, dev2@example.com, ...]
                     subject:    An Error Occurred!
                     level:      debug
 
@@ -46,6 +53,12 @@ it is broken down.
                     type="fingers_crossed"
                     action-level="critical"
                     handler="buffered"
+                    <!--
+                    To also log 400 level errors (but not 404's):
+                    action-level="error"
+                    And add this child inside this monolog:handler
+                    <monolog:excluded-404>^/</monolog:excluded-404>
+                    -->
                 />
                 <monolog:handler
                     name="buffered"
@@ -54,11 +67,20 @@ it is broken down.
                 />
                 <monolog:handler
                     name="swift"
+                    type="swift_mailer"
                     from-email="error@example.com"
-                    to-email="error@example.com"
                     subject="An Error Occurred!"
-                    level="debug"
-                />
+                    level="debug">
+
+                    <monolog:to-email>error@example.com</monolog:to-email>
+
+                    <!-- or multiple to-email elements -->
+                    <!--
+                    <monolog:to-email>dev1@example.com</monolog:to-email>
+                    <monolog:to-email>dev2@example.com</monolog:to-email>
+                    ...
+                    -->
+                </monolog:handler>
             </monolog:config>
         </container>
 
@@ -70,6 +92,11 @@ it is broken down.
                 'mail' => array(
                     'type'         => 'fingers_crossed',
                     'action_level' => 'critical',
+                    // to also log 400 level errors (but not 404's):
+                    // 'action_level' => 'error',
+                    // 'excluded_404s' => array(
+                    //     '^/',
+                    // ),
                     'handler'      => 'buffered',
                 ),
                 'buffered' => array(
@@ -80,6 +107,8 @@ it is broken down.
                     'type'       => 'swift_mailer',
                     'from_email' => 'error@example.com',
                     'to_email'   => 'error@example.com',
+                    // or a list of recipients
+                    // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
                     'subject'    => 'An Error Occurred!',
                     'level'      => 'debug',
                 ),
@@ -95,7 +124,8 @@ setting means that the output is then passed onto the ``buffered`` handler.
 .. tip::
 
     If you want both 400 level and 500 level errors to trigger an email,
-    set the ``action_level`` to ``error`` instead of ``critical``.
+    set the ``action_level`` to ``error`` instead of ``critical``. See the
+    code above for an example.
 
 The ``buffered`` handler simply keeps all the messages for a request and
 then passes them onto the nested handler in one go. If you do not use this

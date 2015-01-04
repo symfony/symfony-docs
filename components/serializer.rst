@@ -158,9 +158,9 @@ of the ``Person`` class would be encoded in XML format::
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
 
-1. The information to be decoded
-2. The name of the class this information will be decoded to
-3. The encoder used to convert that information into an array
+#. The information to be decoded
+#. The name of the class this information will be decoded to
+#. The encoder used to convert that information into an array
 
 Using Camelized Method Names for Underscored Attributes
 -------------------------------------------------------
@@ -238,6 +238,101 @@ When serializing, you can set a callback to format a specific object property::
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
 
+Handling Circular References
+----------------------------
+
+.. versionadded:: 2.6
+    Handling of circular references was introduced in Symfony 2.6. In previous
+    versions of Symfony, circular references led to infinite loops.
+
+Circular references are common when dealing with entity relations::
+
+    class Organization
+    {
+        private $name;
+        private $members;
+
+        public function setName($name)
+        {
+            $this->name = $name;
+        }
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function setMembers(array $members)
+        {
+            $this->members = $members;
+        }
+
+        public function getMembers()
+        {
+            return $this->members;
+        }
+    }
+
+    class Member
+    {
+        private $name;
+        private $organization;
+
+        public function setName($name)
+        {
+            $this->name = $name;
+        }
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function setOrganization(Organization $organization)
+        {
+            $this->organization = $organization;
+        }
+
+        public function getOrganization()
+        {
+            return $this->organization;
+        }
+    }
+
+To avoid infinite loops, :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
+throws a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
+when such a case is encountered::
+
+    $member = new Member();
+    $member->setName('Kévin');
+
+    $org = new Organization();
+    $org->setName('Les-Tilleuls.coop');
+    $org->setMembers(array($member));
+
+    $member->setOrganization($kevin);
+
+    echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
+
+The ``setCircularReferenceLimit()`` method of this normalizer sets the number
+of times it will serialize the same object before considering it a circular
+reference. Its default value is ``1``.
+
+Instead of throwing an exception, circular references can also be handled
+by custom callables. This is especially useful when serializing entities
+having unique identifiers::
+
+    $encoder = new JsonEncoder();
+    $normalizer = new GetSetMethodNormalizer();
+
+    $normalizer->setCircularReferenceHandler(function ($object) {
+        return $object->getName();
+    });
+
+    $serializer = new Serializer(array($normalizer), array($encoder));
+    echo $serializer->serialize($org, 'json');
+    // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"]}
+
 JMSSerializer
 -------------
 
@@ -245,7 +340,7 @@ A popular third-party library, `JMS serializer`_, provides a more
 sophisticated albeit more complex solution. This library includes the
 ability to configure how your objects should be serialized/deserialized via
 annotations (as well as YAML, XML and PHP), integration with the Doctrine ORM,
-and handling of other complex cases (e.g. circular references).
+and handling of other complex cases.
 
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer

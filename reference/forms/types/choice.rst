@@ -15,25 +15,25 @@ option.
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_list`_                                                             |
-|             | - `multiple`_                                                                |
+|             | - `placeholder`_                                                             |
 |             | - `expanded`_                                                                |
+|             | - `multiple`_                                                                |
 |             | - `preferred_choices`_                                                       |
-|             | - `empty_value`_                                                             |
 +-------------+------------------------------------------------------------------------------+
-| Overridden  | - `empty_data`_                                                              |
-| options     | - `compound`_                                                                |
+| Overridden  | - `compound`_                                                                |
+| options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
 +-------------+------------------------------------------------------------------------------+
-| Inherited   | - `required`_                                                                |
-| options     | - `label`_                                                                   |
-|             | - `label_attr`_                                                              |
-|             | - `data`_                                                                    |
-|             | - `read_only`_                                                               |
+| Inherited   | - `by_reference`_                                                            |
+| options     | - `data`_                                                                    |
 |             | - `disabled`_                                                                |
 |             | - `error_mapping`_                                                           |
-|             | - `mapped`_                                                                  |
 |             | - `inherit_data`_                                                            |
-|             | - `by_reference`_                                                            |
+|             | - `label`_                                                                   |
+|             | - `label_attr`_                                                              |
+|             | - `mapped`_                                                                  |
+|             | - `read_only`_                                                               |
+|             | - `required`_                                                                |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                                    |
 +-------------+------------------------------------------------------------------------------+
@@ -93,28 +93,45 @@ is the item value and the array value is the item's label::
         'choices' => array('m' => 'Male', 'f' => 'Female')
     ));
 
+.. tip::
+
+    When the values to choose from are not integers or strings (but e.g. floats
+    or booleans), you should use the `choice_list`_ option instead. With this
+    option you are able to keep the original data format which is important
+    to ensure that the user input is validated properly and useless database
+    updates caused by a data type mismatch are avoided.
+
 choice_list
 ~~~~~~~~~~~
 
-**type**: ``Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface``
+**type**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\ChoiceListInterface`
 
 This is one way of specifying the options to be used for this field.
 The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
-.. include:: /reference/forms/types/options/multiple.rst.inc
+With this option you can also allow float values to be selected as data.
+
+.. code-block:: php
+
+    use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+
+    // ...
+    $builder->add('status', 'choice', array(
+      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half'))
+    ));
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
+.. include:: /reference/forms/types/options/multiple.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 Overridden Options
 ------------------
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 compound
 ~~~~~~~~
@@ -123,6 +140,18 @@ compound
 
 This option specifies if a form is compound. The value is by default
 overridden by the value of the ``expanded`` option.
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The actual default value of this option depends on other field options:
+
+* If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
+  (empty string);
+* Otherwise ``array()`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 error_bubbling
 ~~~~~~~~~~~~~~
@@ -137,25 +166,25 @@ Inherited Options
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
+.. include:: /reference/forms/types/options/by_reference.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
-.. include:: /reference/forms/types/options/mapped.rst.inc
-
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
-.. include:: /reference/forms/types/options/by_reference.rst.inc
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Field Variables
 ---------------
@@ -173,15 +202,15 @@ Field Variables
 | choices                | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
 |                        |              | the remaining choices.                                            |
 +------------------------+--------------+-------------------------------------------------------------------+
-| separator              | ``string``   | The seperator to use between choice groups.                       |
+| separator              | ``string``   | The separator to use between choice groups.                       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value            | ``mixed``    | The empty value if not already in the list, otherwise             |
+| placeholder            | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                        |              | ``null``.                                                         |
 +------------------------+--------------+-------------------------------------------------------------------+
 | is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
 |                        |              | and returns whether the choice is in the selected value(s).       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value_in_choices | ``Boolean``  | Whether the empty value is in the choice list.                    |
+| placeholder_in_choices | ``Boolean``  | Whether the empty value is in the choice list.                    |
 +------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::

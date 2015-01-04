@@ -28,20 +28,25 @@ you should just use the ``choice`` type directly.
 | Overridden  | - `choices`_                                                           |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `multiple`_                                                          |
-| options     | - `expanded`_                                                          |
-|             | - `preferred_choices`_                                                 |
-|             | - `empty_value`_                                                       |
+| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
+| options     |                                                                        |
+|             | - `placeholder`_                                                       |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `expanded`_                                                          |
+|             | - `multiple`_                                                          |
+|             | - `preferred_choices`_                                                 |
+|             |                                                                        |
+|             | from the :doc:`form </reference/forms/types/form>` type                |
+|             |                                                                        |
+|             | - `data`_                                                              |
+|             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
-|             | - `required`_                                                          |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
-|             | - `data`_                                                              |
-|             | - `read_only`_                                                         |
-|             | - `disabled`_                                                          |
 |             | - `mapped`_                                                            |
+|             | - `read_only`_                                                         |
+|             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`choice </reference/forms/types/choice>`                          |
 +-------------+------------------------------------------------------------------------+
@@ -64,35 +69,45 @@ Inherited Options
 
 These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
 
-.. include:: /reference/forms/types/options/multiple.rst.inc
-
-.. include:: /reference/forms/types/options/expanded.rst.inc
-
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
-
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. include:: /reference/forms/types/options/multiple.rst.inc
+
+.. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
+.. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/required.rst.inc
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The actual default value of this option depends on other field options:
+
+* If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
+  (empty string);
+* Otherwise ``array()`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
-.. include:: /reference/forms/types/options/data.rst.inc
+.. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
-.. include:: /reference/forms/types/options/disabled.rst.inc
-
-.. include:: /reference/forms/types/options/mapped.rst.inc
+.. include:: /reference/forms/types/options/required.rst.inc
 
 .. _`ISO 639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`ISO 3166-1 alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

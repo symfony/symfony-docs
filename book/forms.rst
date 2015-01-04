@@ -5,15 +5,16 @@ Forms
 =====
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
-a web developer. Symfony2 integrates a Form component that makes dealing with
-forms easy. In this chapter, you'll build a complex form from the ground-up,
+a web developer. Symfony integrates a Form component that makes dealing with
+forms easy. In this chapter, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
 .. note::
 
    The Symfony Form component is a standalone library that can be used outside
-   of Symfony2 projects. For more information, see the `Symfony2 Form component`_
-   on GitHub.
+   of Symfony projects. For more information, see the
+   :doc:`Form component documentation </components/form/introduction>` on
+   GitHub.
 
 .. index::
    single: Forms; Create a simple form
@@ -26,13 +27,12 @@ display "tasks". Because your users will need to edit and create tasks, you're
 going to need to build a form. But before you begin, first focus on the generic
 ``Task`` class that represents and stores the data for a single task::
 
-    // src/Acme/TaskBundle/Entity/Task.php
-    namespace Acme\TaskBundle\Entity;
+    // src/AppBundle/Entity/Task.php
+    namespace AppBundle\Entity;
 
     class Task
     {
         protected $task;
-
         protected $dueDate;
 
         public function getTask()
@@ -56,16 +56,6 @@ going to need to build a form. But before you begin, first focus on the generic
         }
     }
 
-.. note::
-
-   If you're coding along with this example, create the ``AcmeTaskBundle``
-   first by running the following command (and accepting all of the default
-   options):
-
-   .. code-block:: bash
-
-        $ php app/console generate:bundle --namespace=Acme/TaskBundle
-
 This class is a "plain-old-PHP-object" because, so far, it has nothing
 to do with Symfony or any other library. It's quite simply a normal PHP object
 that directly solves a problem inside *your* application (i.e. the need to
@@ -80,15 +70,15 @@ Building the Form
 ~~~~~~~~~~~~~~~~~
 
 Now that you've created a ``Task`` class, the next step is to create and
-render the actual HTML form. In Symfony2, this is done by building a form
+render the actual HTML form. In Symfony, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
-    // src/Acme/TaskBundle/Controller/DefaultController.php
-    namespace Acme\TaskBundle\Controller;
+    // src/AppBundle/Controller/DefaultController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Acme\TaskBundle\Entity\Task;
+    use AppBundle\Entity\Task;
     use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
@@ -103,10 +93,10 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
                 ->add('dueDate', 'date')
-                ->add('save', 'submit')
+                ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
-            return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+            return $this->render('Default/new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -119,7 +109,7 @@ from inside a controller::
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
 
-Creating a form requires relatively little code because Symfony2 form objects
+Creating a form requires relatively little code because Symfony form objects
 are built with a "form builder". The form builder's purpose is to allow you
 to write simple form "recipes", and have it do all the heavy-lifting of actually
 building the form.
@@ -128,13 +118,15 @@ In this example, you've added two fields to your form - ``task`` and ``dueDate``
 corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
 You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
 other things, determines which HTML form tag(s) is rendered for that field.
-Finally, you added a submit button for submitting the form to the server.
+
+Finally, you added a submit button with a custom label for submitting the form to
+the server.
 
 .. versionadded:: 2.3
     Support for submit buttons was introduced in Symfony 2.3. Before that, you had
     to add buttons to the form's HTML manually.
 
-Symfony2 comes with many built-in types that will be discussed shortly
+Symfony comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
 .. index::
@@ -152,15 +144,17 @@ helper functions:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-
-        {{ form(form) }}
+        {# app/Resources/views/Default/new.html.twig #}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
-
-        <?php echo $view['form']->form($form) ?>
+        <!-- app/Resources/views/Default/new.html.php -->
+        <?php echo $view['form']->start($form) ?>
+        <?php echo $view['form']->widget($form) ?>
+        <?php echo $view['form']->end($form) ?>
 
 .. image:: /images/book/form-simple.png
     :align: center
@@ -171,12 +165,27 @@ helper functions:
     the same URL that it was displayed in. You will learn later how to
     change the request method and the target URL of the form.
 
-That's it! By printing ``form(form)``, each field in the form is rendered, along
-with a label and error message (if there is one). The ``form`` function also
-surrounds everything in the necessary HTML ``<form>`` tag. As easy as this is,
-it's not very flexible (yet). Usually, you'll want to render each form field
-individually so you can control how the form looks. You'll learn how to do
-that in the ":ref:`form-rendering-template`" section.
+That's it! Just three lines are needed to render the complete form:
+
+``form_start(form)``
+    Renders the start tag of the form, including the correct enctype attribute
+    when using file uploads.
+
+``form_widget(form)``
+    Renders all the fields, which includes the field element itself, a label
+    and any validation error messages for the field.
+
+``form_end()``
+    Renders the end tag of the form and any fields that have not
+    yet been rendered, in case you rendered each field yourself. This is useful
+    for rendering hidden fields and taking advantage of the automatic
+    :ref:`CSRF Protection <forms-csrf>`.
+
+.. seealso::
+
+    As easy as this is, it's not very flexible (yet). Usually, you'll want to
+    render each form field individually so you can control how the form looks.
+    You'll learn how to do that in the ":ref:`form-rendering-template`" section.
 
 Before moving on, notice how the rendered ``task`` input field has the value
 of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
@@ -217,7 +226,7 @@ controller::
         $form = $this->createFormBuilder($task)
             ->add('task', 'text')
             ->add('dueDate', 'date')
-            ->add('save', 'submit')
+            ->add('save', 'submit', array('label' => 'Create Task'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -271,6 +280,12 @@ possible paths:
       from being able to hit the "Refresh" button of their browser and re-post
       the data.
 
+.. seealso::
+
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
+
 .. index::
    single: Forms; Multiple Submit Buttons
 
@@ -289,8 +304,8 @@ To do this, add a second button with the caption "Save and add" to your form::
     $form = $this->createFormBuilder($task)
         ->add('task', 'text')
         ->add('dueDate', 'date')
-        ->add('save', 'submit')
-        ->add('saveAndAdd', 'submit')
+        ->add('save', 'submit', array('label' => 'Create Task'))
+        ->add('saveAndAdd', 'submit', array('label' => 'Save and Add'))
         ->getForm();
 
 In your controller, use the button's
@@ -316,7 +331,7 @@ Form Validation
 ---------------
 
 In the previous section, you learned how a form can be submitted with valid
-or invalid data. In Symfony2, validation is applied to the underlying object
+or invalid data. In Symfony, validation is applied to the underlying object
 (e.g. ``Task``). In other words, the question isn't whether the "form" is
 valid, but whether or not the ``$task`` object is valid after the form has
 applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
@@ -331,8 +346,8 @@ object.
 
     .. code-block:: yaml
 
-        # Acme/TaskBundle/Resources/config/validation.yml
-        Acme\TaskBundle\Entity\Task:
+        # AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Task:
             properties:
                 task:
                     - NotBlank: ~
@@ -342,7 +357,7 @@ object.
 
     .. code-block:: php-annotations
 
-        // Acme/TaskBundle/Entity/Task.php
+        // AppBundle/Entity/Task.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Task
@@ -361,14 +376,14 @@ object.
 
     .. code-block:: xml
 
-        <!-- Acme/TaskBundle/Resources/config/validation.xml -->
+        <!-- AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\TaskBundle\Entity\Task">
+            <class name="AppBundle\Entity\Task">
                 <property name="task">
                     <constraint name="NotBlank" />
                 </property>
@@ -381,7 +396,7 @@ object.
 
     .. code-block:: php
 
-        // Acme/TaskBundle/Entity/Task.php
+        // AppBundle/Entity/Task.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
@@ -427,19 +442,17 @@ corresponding errors printed out with the form.
 
        .. code-block:: html+jinja
 
-           {# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}
-
+           {# app/Resources/views/Default/new.html.twig #}
            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
        .. code-block:: html+php
 
-           <!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php -->
-
+           <!-- app/Resources/views/Default/new.html.php -->
            <?php echo $view['form']->form($form, array(
                'attr' => array('novalidate' => 'novalidate'),
            )) ?>
 
-Validation is a very powerful feature of Symfony2 and has its own
+Validation is a very powerful feature of Symfony and has its own
 :doc:`dedicated chapter </book/validation>`.
 
 .. index::
@@ -502,6 +515,8 @@ fields were submitted. If you want to suppress validation, you can use the
 .. index::
    single: Forms; Validation groups based on submitted data
 
+.. _book-form-validation-groups:
+
 Groups based on the Submitted Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -511,11 +526,12 @@ to an array callback::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+    // ...
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => array(
-                'Acme\AcmeBundle\Entity\Client',
+                'AppBundle\Entity\Client',
                 'determineValidationGroups',
             ),
         ));
@@ -526,22 +542,50 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a ``Closure``::
 
+    use Acme\AcmeBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+    // ...
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
-                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                if (Client::TYPE_PERSON == $data->getType()) {
                     return array('person');
-                } else {
-                    return array('company');
                 }
+
+                return array('company');
             },
         ));
     }
+
+Using the ``validation_groups`` option overrides the default validation
+group which is being used. If you want to validate the default constraints
+of the entity as well you have to adjust the option as follows::
+
+    use Acme\AcmeBundle\Entity\Client;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    // ...
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Client::TYPE_PERSON == $data->getType()) {
+                    return array('Default', 'person');
+                }
+
+                return array('Default', 'company');
+            },
+        ));
+    }
+
+You can find more information about how the validation groups and the default constraints
+work in the book section about :ref:`validation groups <book-validation-validation-groups>`.
 
 .. index::
    single: Forms; Validation groups based on clicked button
@@ -704,14 +748,16 @@ the correct values of a number of field options.
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
-* ``required``: The ``required`` option can be guessed based on the validation
-  rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata
-  (i.e. is the field ``nullable``). This is very useful, as your client-side
-  validation will automatically match your validation rules.
+``required``
+    The ``required`` option can be guessed based on the validation rules (i.e. is
+    the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
+    field ``nullable``). This is very useful, as your client-side validation will
+    automatically match your validation rules.
 
-* ``maxlength``: If the field is some sort of text field, then the ``maxlength``
-  option attribute can be guessed from the validation constraints (if ``Length`` or
-  ``Range`` is used) or from the Doctrine metadata (via the field's length).
+``max_length``
+    If the field is some sort of text field, then the ``max_length`` option can be
+    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
+    from the Doctrine metadata (via the field's length).
 
 .. note::
 
@@ -738,7 +784,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/Default/new.html.twig #}
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
@@ -748,7 +794,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Default/newAction.html.php -->
+        <!-- app/Resources/views/Default/newAction.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
@@ -756,24 +802,20 @@ of code. Of course, you'll usually need much more flexibility when rendering:
             <?php echo $view['form']->row($form['dueDate']) ?>
         <?php echo $view['form']->end($form) ?>
 
-Take a look at each part:
+You already know the ``form_start()`` and ``form_end()`` functions, but what do
+the other functions do?
 
-* ``form_start(form)`` - Renders the start tag of the form.
+``form_errors(form)``
+    Renders any errors global to the whole form (field-specific errors are displayed
+    next to each field).
 
-* ``form_errors(form)`` - Renders any errors global to the whole form
-  (field-specific errors are displayed next to each field);
-
-* ``form_row(form.dueDate)`` - Renders the label, any errors, and the HTML
-  form widget for the given field (e.g. ``dueDate``) inside, by default, a
-  ``div`` element;
-
-* ``form_end()`` - Renders the end tag of the form and any fields that have not
-  yet been rendered. This is useful for rendering hidden fields and taking
-  advantage of the automatic :ref:`CSRF Protection <forms-csrf>`.
+``form_row(form.dueDate)``
+    Renders the label, any errors, and the HTML form widget for the given field
+    (e.g. ``dueDate``) inside, by default, a ``div`` element.
 
 The majority of the work is done by the ``form_row`` helper, which renders
-the label, errors and HTML form widget of each field inside a ``div`` tag
-by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
+the label, errors and HTML form widget of each field inside a ``div`` tag by
+default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
 output can be customized on many different levels.
 
 .. tip::
@@ -960,19 +1002,12 @@ to the ``form()`` or the ``form_start()`` helper:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-        {{ form(form, {'action': path('target_route'), 'method': 'GET'}) }}
-
+        {# app/Resources/views/Default/new.html.twig #}
         {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Default/newAction.html.php -->
-        <?php echo $view['form']->form($form, array(
-            'action' => $view['router']->generate('target_route'),
-            'method' => 'GET',
-        )) ?>
-
+        <!-- app/Resources/views/Default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
             'action' => $view['router']->generate('target_route'),
             'method' => 'GET',
@@ -980,9 +1015,9 @@ to the ``form()`` or the ``form_start()`` helper:
 
 .. note::
 
-    If the form's method is not GET or POST, but PUT, PATCH or DELETE, Symfony2
+    If the form's method is not GET or POST, but PUT, PATCH or DELETE, Symfony
     will insert a hidden field with the name ``_method`` that stores this method.
-    The form will be submitted in a normal POST request, but Symfony2's router
+    The form will be submitted in a normal POST request, but Symfony's router
     is capable of detecting the ``_method`` parameter and will interpret it as
     a PUT, PATCH or DELETE request. Read the cookbook chapter
     ":doc:`/cookbook/routing/method_parameters`" for more information.
@@ -1000,8 +1035,8 @@ However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the task form::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
-    namespace Acme\TaskBundle\Form\Type;
+    // src/AppBundle/Form/Type/TaskType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -1026,10 +1061,10 @@ This new class contains all the directions needed to create the task form
 (note that the ``getName()`` method should return a unique identifier for this
 form "type"). It can be used to quickly build a form object in the controller::
 
-    // src/Acme/TaskBundle/Controller/DefaultController.php
+    // src/AppBundle/Controller/DefaultController.php
 
     // add this new use statement at the top of the class
-    use Acme\TaskBundle\Form\Type\TaskType;
+    use AppBundle\Form\Type\TaskType;
 
     public function newAction()
     {
@@ -1048,7 +1083,7 @@ the choice is ultimately up to you.
 .. sidebar:: Setting the ``data_class``
 
     Every form needs to know the name of the class that holds the underlying
-    data (e.g. ``Acme\TaskBundle\Entity\Task``). Usually, this is just guessed
+    data (e.g. ``AppBundle\Entity\Task``). Usually, this is just guessed
     based off of the object passed to the second argument to ``createForm``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
@@ -1060,7 +1095,7 @@ the choice is ultimately up to you.
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\TaskBundle\Entity\Task',
+                'data_class' => 'AppBundle\Entity\Task',
             ));
         }
 
@@ -1111,37 +1146,38 @@ easy to use in your application.
 
     .. code-block:: yaml
 
-        # src/Acme/TaskBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         services:
             acme_demo.form.type.task:
-                class: Acme\TaskBundle\Form\Type\TaskType
+                class: AppBundle\Form\Type\TaskType
                 tags:
                     - { name: form.type, alias: task }
 
     .. code-block:: xml
 
-        <!-- src/Acme/TaskBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd>
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
-               <service id="acme_demo.form.type.task"
-                class="Acme\TaskBundle\Form\Type\TaskType">
-                  <tag name="form.type" alias="task" />
-               </service>
+                <service
+                    id="acme_demo.form.type.task"
+                    class="AppBundle\Form\Type\TaskType">
+
+                    <tag name="form.type" alias="task" />
+                </service>
             </services>
         </container>
 
     .. code-block:: php
 
-        // src/Acme/TaskBundle/Resources/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
+        // src/AppBundle/Resources/config/services.php
         $container
             ->register(
                 'acme_demo.form.type.task',
-                'Acme\TaskBundle\Form\Type\TaskType'
+                'AppBundle\Form\Type\TaskType'
             )
             ->addTag('form.type', array(
                 'alias' => 'task',
@@ -1150,7 +1186,7 @@ easy to use in your application.
 
 That's it! Now you can use your form type directly in a controller::
 
-    // src/Acme/TaskBundle/Controller/DefaultController.php
+    // src/AppBundle/Controller/DefaultController.php
     // ...
 
     public function newAction()
@@ -1163,7 +1199,7 @@ That's it! Now you can use your form type directly in a controller::
 
 or even use from within the form type of another form::
 
-    // src/Acme/TaskBundle/Form/Type/ListType.php
+    // src/AppBundle/Form/Type/ListType.php
     // ...
 
     class ListType extends AbstractType
@@ -1223,14 +1259,16 @@ objects. For example, a registration form may contain data belonging to
 a ``User`` object as well as many ``Address`` objects. Fortunately, this
 is easy and natural with the Form component.
 
+.. _forms-embedding-single-object:
+
 Embedding a Single Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
 of course, by creating the ``Category`` object::
 
-    // src/Acme/TaskBundle/Entity/Category.php
-    namespace Acme\TaskBundle\Entity;
+    // src/AppBundle/Entity/Category.php
+    namespace AppBundle\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -1251,7 +1289,8 @@ Next, add a new ``category`` property to the ``Task`` class::
         // ...
 
         /**
-         * @Assert\Type(type="Acme\TaskBundle\Entity\Category")
+         * @Assert\Type(type="AppBundle\Entity\Category")
+         * @Assert\Valid()
          */
         protected $category;
 
@@ -1268,11 +1307,17 @@ Next, add a new ``category`` property to the ``Task`` class::
         }
     }
 
+.. tip::
+
+    The ``Valid`` Constraint has been added to the property ``category``. This
+    cascades the validation to the corresponding entity. If you omit this constraint
+    the child entity would not be validated.
+
 Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
 
-    // src/Acme/TaskBundle/Form/Type/CategoryType.php
-    namespace Acme\TaskBundle\Form\Type;
+    // src/AppBundle/Form/Type/CategoryType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -1288,7 +1333,7 @@ create a form class so that a ``Category`` object can be modified by the user::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\TaskBundle\Entity\Category',
+                'data_class' => 'AppBundle\Entity\Category',
             ));
         }
 
@@ -1315,16 +1360,7 @@ class:
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
-the ``TaskType`` class. To activate validation on CategoryType, add
-the ``cascade_validation`` option to ``TaskType``::
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Acme\TaskBundle\Entity\Task',
-            'cascade_validation' => true,
-        ));
-    }
+the ``TaskType`` class.
 
 Render the ``Category`` fields in the same way as the original ``Task`` fields:
 
@@ -1401,7 +1437,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/TaskBundle/Resources/views/Form/fields.html.twig #}
+        {# app/Resources/views/form/fields.html.twig #}
         {% block form_row %}
         {% spaceless %}
             <div class="form_row">
@@ -1414,7 +1450,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Form/form_row.html.php -->
+        <!-- app/Resources/views/form/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -1430,19 +1466,19 @@ renders the form:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-        {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' %}
+        {# app/Resources/views/Default/new.html.twig #}
+        {% form_theme form 'form/fields.html.twig' %}
 
-        {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
+        {% form_theme form 'form/fields.html.twig' 'form/fields2.html.twig' %}
 
-        <!-- ... render the form -->
+        {# ... render the form #}
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
-        <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form')) ?>
+        <!-- app/Resources/views/Default/new.html.php -->
+        <?php $view['form']->setTheme($form, array('Form')) ?>
 
-        <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
+        <?php $view['form']->setTheme($form, array('Form', 'Form2')) ?>
 
         <!-- ... render the form -->
 
@@ -1463,14 +1499,6 @@ To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
 
-.. code-block:: html+jinja
-
-    {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-
-    {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
-
-    {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
-
 For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 
 .. index::
@@ -1485,9 +1513,10 @@ In Symfony, every part of a form that is rendered - HTML form elements, errors,
 labels, etc. - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
-In Twig, every block needed is defined in a single template file (`form_div_layout.html.twig`_)
-that lives inside the `Twig Bridge`_. Inside this file, you can see every block
-needed to render a form and every default field type.
+In Twig, every block needed is defined in a single template file (e.g.
+`form_div_layout.html.twig`_) that lives inside the `Twig Bridge`_. Inside this
+file, you can see every block needed to render a form and every default field
+type.
 
 In PHP, the fragments are individual template files. By default they are located in
 the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
@@ -1518,7 +1547,7 @@ are 4 possible *parts* of a form that can be rendered:
 
 .. note::
 
-    There are actually 2 other *parts*  - ``rows`` and ``rest`` -
+    There are actually 2 other *parts* - ``rows`` and ``rest`` -
     but you should rarely if ever need to worry about overriding them.
 
 By knowing the field type (e.g. ``textarea``) and which part you want to
@@ -1575,9 +1604,8 @@ file:
 
         # app/config/config.yml
         twig:
-            form:
-                resources:
-                    - 'AcmeTaskBundle:Form:fields.html.twig'
+            form_themes:
+                - 'form/fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -1588,13 +1616,11 @@ file:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                    <twig:form>
-                        <twig:resource>AcmeTaskBundle:Form:fields.html.twig</twig:resource>
-                    </twig:form>
-                    <!-- ... -->
+                <twig:theme>form/fields.html.twig</twig:theme>
+                <!-- ... -->
             </twig:config>
         </container>
 
@@ -1602,10 +1628,8 @@ file:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'AcmeTaskBundle:Form:fields.html.twig',
-                ),
+            'form_themes' => array(
+                'form/fields.html.twig',
             ),
             // ...
         ));
@@ -1620,7 +1644,7 @@ to define form output.
 
     .. code-block:: html+jinja
 
-        {% extends '::base.html.twig' %}
+        {% extends 'base.html.twig' %}
 
         {# import "_self" as the form theme #}
         {% form_theme form _self %}
@@ -1650,7 +1674,7 @@ to define form output.
 PHP
 ...
 
-To automatically include the customized templates from the ``Acme/TaskBundle/Resources/views/Form``
+To automatically include the customized templates from the ``app/Resources/views/Form``
 directory created earlier in *all* templates, modify your application configuration
 file:
 
@@ -1663,7 +1687,7 @@ file:
             templating:
                 form:
                     resources:
-                        - 'AcmeTaskBundle:Form'
+                        - 'Form'
         # ...
 
     .. code-block:: xml
@@ -1674,12 +1698,12 @@ file:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:templating>
                     <framework:form>
-                        <framework:resource>AcmeTaskBundle:Form</framework:resource>
+                        <framework:resource>Form</framework:resource>
                     </framework:form>
                 </framework:templating>
                 <!-- ... -->
@@ -1693,15 +1717,15 @@ file:
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'AcmeTaskBundle:Form',
+                        'Form',
                     ),
                 ),
             )
             // ...
         ));
 
-Any fragments inside the ``Acme/TaskBundle/Resources/views/Form`` directory
-are now used globally to define form output.
+Any fragments inside the ``app/Resources/views/Form`` directory are now used
+globally to define form output.
 
 .. index::
    single: Forms; CSRF protection
@@ -1741,7 +1765,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class'      => 'Acme\TaskBundle\Entity\Task',
+                'data_class'      => 'AppBundle\Entity\Task',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
@@ -1898,7 +1922,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
 
-.. _`Symfony2 Form component`: https://github.com/symfony/Form
+.. _`Symfony Form component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

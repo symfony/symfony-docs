@@ -1,19 +1,15 @@
 empty_data
 ~~~~~~~~~~
 
-**type**: ``mixed`` **default**: depends on other field options, see below
+**type**: ``mixed``
+
+.. This file should only be included with start-after or end-before that's set to
+   this placeholder value. Its purpose is to let us include only part of this file.
+
+DEFAULT_PLACEHOLDER
 
 This option determines what value the field will return when the submitted
-value is empty. This may happen when the ``empty_value`` choice in a
-``choice`` field is selected or when an ``input`` field of some type is not
-required and left empty by the user.
-
-The true default value of this option depends on other field options:
-
-* If ``data_class`` is set and ``required`` is ``true``, then ``new $data_class()``;
-* If ``data_class`` is set and ``required`` is ``false``, then ``null``;
-* If ``data_class`` is not set and ``compound`` is ``true``, then ``array()``;
-* If ``data_class`` is not set and ``compound`` is ``false``, then ``''`` (empty string).
+value is empty.
 
 But you can customize this to your needs. For example, if you want the
 ``gender`` choice field to be explicitly set to ``null`` when no value is
@@ -27,7 +23,7 @@ selected, you can do it like this:
             'f' => 'Female'
         ),
         'required'    => false,
-        'empty_value' => 'Choose your gender',
+        'placeholder' => 'Choose your gender',
         'empty_data'  => null
     ));
 

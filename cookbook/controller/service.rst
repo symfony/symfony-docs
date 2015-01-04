@@ -25,7 +25,7 @@ this works fine, controllers can also be specified as services.
     split into multiple controllers.
 
     So, even if you don't specify your controllers as services, you'll likely
-    see this done in some open-source Symfony2 bundles. It's also important
+    see this done in some open-source Symfony bundles. It's also important
     to understand the pros and cons of both approaches.
 
 Defining the Controller as a Service
@@ -54,24 +54,15 @@ Then you can define it as a service as follows:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            acme.controller.hello.class: Acme\HelloBundle\Controller\HelloController
-
         services:
             acme.hello.controller:
-                class: "%acme.controller.hello.class%"
+                class: Acme\HelloBundle\Controller\HelloController
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="acme.controller.hello.class">Acme\HelloBundle\Controller\HelloController</parameter>
-        </parameters>
-
         <services>
-            <service id="acme.hello.controller" class="%acme.controller.hello.class%" />
+            <service id="acme.hello.controller" class="Acme\HelloBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
@@ -79,14 +70,8 @@ Then you can define it as a service as follows:
         // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setParameter(
-            'acme.controller.hello.class',
-            'Acme\HelloBundle\Controller\HelloController'
-        );
-
         $container->setDefinition('acme.hello.controller', new Definition(
-            '%acme.controller.hello.class%'
+            'Acme\HelloBundle\Controller\HelloController'
         ));
 
 Referring to the Service
@@ -132,9 +117,12 @@ the route ``_controller`` value:
 .. tip::
 
     You can also use annotations to configure routing using a controller
-    defined as a service. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
-    for details.
+    defined as a service. See the `FrameworkExtraBundle documentation`_ for
+    details.
+
+.. versionadded:: 2.6
+    If your controller service implements the ``__invoke`` method, you can simply refer to the service id
+    (``acme.hello.controller``).
 
 Alternatives to base Controller Methods
 ---------------------------------------
@@ -209,27 +197,16 @@ argument:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            acme.controller.hello.class: Acme\HelloBundle\Controller\HelloController
-
         services:
             acme.hello.controller:
-                class:     "%acme.controller.hello.class%"
+                class:     Acme\HelloBundle\Controller\HelloController
                 arguments: ["@templating"]
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter
-                key="acme.controller.hello.class"
-            >Acme\HelloBundle\Controller\HelloController</parameter>
-        </parameters>
-
         <services>
-            <service id="acme.hello.controller" class="%acme.controller.hello.class%">
+            <service id="acme.hello.controller" class="Acme\HelloBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
@@ -240,14 +217,8 @@ argument:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter(
-            'acme.controller.hello.class',
-            'Acme\HelloBundle\Controller\HelloController'
-        );
-
         $container->setDefinition('acme.hello.controller', new Definition(
-            '%acme.controller.hello.class%',
+            'Acme\HelloBundle\Controller\HelloController',
             array(new Reference('templating'))
         ));
 
@@ -267,3 +238,4 @@ inject *only* the exact service(s) that you need directly into the controller.
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
+.. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/routing.html

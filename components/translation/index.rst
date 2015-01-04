@@ -6,3 +6,4 @@ Translation
 
     introduction
     usage
+    custom_formats

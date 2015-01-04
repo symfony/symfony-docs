@@ -11,13 +11,13 @@ using both functional and unit tests.
 The PHPUnit Testing Framework
 -----------------------------
 
-Symfony2 integrates with an independent library - called PHPUnit - to give
+Symfony integrates with an independent library - called PHPUnit - to give
 you a rich testing framework. This chapter won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
+    Symfony works with PHPUnit 3.5.11 or later, though version 3.6.4 is
     needed to test the Symfony core code itself.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
@@ -47,7 +47,7 @@ Unit Tests
 A unit test is usually a test against a specific PHP class. If you want to
 test the overall behavior of your application, see the section about `Functional Tests`_.
 
-Writing Symfony2 unit tests is no different than writing standard PHPUnit
+Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
@@ -129,7 +129,7 @@ directory of your bundle. If you want to test the pages handled by your
 ``DemoController`` class, start by creating a new ``DemoControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
-For example, the Symfony2 Standard Edition provides a simple functional test
+For example, the Symfony Standard Edition provides a simple functional test
 for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
@@ -320,7 +320,7 @@ Working with the Test Client
 -----------------------------
 
 The Test Client simulates an HTTP client like a browser and makes requests
-into your Symfony2 application::
+into your Symfony application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
 
@@ -459,7 +459,10 @@ injection container::
 
 Be warned that this does not work if you insulate the client or if you use an
 HTTP layer. For a list of services available in your application, use the
-``container:debug`` console task.
+``debug:container`` console task.
+
+.. versionadded:: 2.6
+    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 .. tip::
 
@@ -501,8 +504,8 @@ force him with the ``followRedirects()`` method::
 
     $client->followRedirects();
 
-If you pass ``false`` to the ``followRedirects()`` method, the redirects 
-will no longer be followed::     
+If you pass ``false`` to the ``followRedirects()`` method, the redirects
+will no longer be followed::
 
     $client->followRedirects(false);
 
@@ -532,31 +535,28 @@ selects the last one on the page, and then selects its immediate parent element:
 
 Many other methods are also available:
 
-+------------------------+----------------------------------------------------+
-| Method                 | Description                                        |
-+========================+====================================================+
-| ``filter('h1.title')`` | Nodes that match the CSS selector                  |
-+------------------------+----------------------------------------------------+
-| ``filterXpath('h1')``  | Nodes that match the XPath expression              |
-+------------------------+----------------------------------------------------+
-| ``eq(1)``              | Node for the specified index                       |
-+------------------------+----------------------------------------------------+
-| ``first()``            | First node                                         |
-+------------------------+----------------------------------------------------+
-| ``last()``             | Last node                                          |
-+------------------------+----------------------------------------------------+
-| ``siblings()``         | Siblings                                           |
-+------------------------+----------------------------------------------------+
-| ``nextAll()``          | All following siblings                             |
-+------------------------+----------------------------------------------------+
-| ``previousAll()``      | All preceding siblings                             |
-+------------------------+----------------------------------------------------+
-| ``parents()``          | Returns the parent nodes                           |
-+------------------------+----------------------------------------------------+
-| ``children()``         | Returns children nodes                             |
-+------------------------+----------------------------------------------------+
-| ``reduce($lambda)``    | Nodes for which the callable does not return false |
-+------------------------+----------------------------------------------------+
+``filter('h1.title')``
+    Nodes that match the CSS selector.
+``filterXpath('h1')``
+    Nodes that match the XPath expression.
+``eq(1)``
+    Node for the specified index.
+``first()``
+    First node.
+``last()``
+    Last node.
+``siblings()``
+    Siblings.
+``nextAll()``
+    All following siblings.
+``previousAll()``
+    All preceding siblings.
+``parents()``
+    Returns the parent nodes.
+``children()``
+    Returns children nodes.
+``reduce($lambda)``
+    Nodes for which the callable does not return false.
 
 Since each of these methods returns a new ``Crawler`` instance, you can
 narrow down your node selection by chaining the method calls::
@@ -632,7 +632,7 @@ Just like links, you select forms with the ``selectButton()`` method::
     button.
 
 The ``selectButton()`` method can select ``button`` tags and submit ``input``
-tags. It uses several different parts of the buttons to find them:
+tags. It uses several parts of the buttons to find them:
 
 * The ``value`` attribute value;
 
@@ -736,7 +736,7 @@ configuration option:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <!-- ... -->
             <swiftmailer:config disable-delivery="true" />
@@ -790,7 +790,7 @@ PHPUnit Configuration
 
 Each application has its own PHPUnit configuration, stored in the
 ``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``app/phpunit.xml`` file to setup a configuration for your local
+create an ``app/phpunit.xml`` file to set up a configuration for your local
 machine only.
 
 .. tip::
@@ -864,6 +864,6 @@ Learn more
 * :doc:`/cookbook/testing/profiling`
 * :doc:`/cookbook/testing/bootstrap`
 
-.. _`DemoControllerTest`: https://github.com/symfony/symfony-standard/blob/master/src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
+.. _`DemoControllerTest`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Resources/skeleton/acme-demo-bundle/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
 .. _`documentation`: http://phpunit.de/manual/current/en/

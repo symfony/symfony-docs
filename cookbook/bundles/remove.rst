@@ -4,7 +4,7 @@
 How to Remove the AcmeDemoBundle
 ================================
 
-The Symfony2 Standard Edition comes with a complete demo that lives inside a
+The Symfony Standard Edition comes with a complete demo that lives inside a
 bundle called AcmeDemoBundle. It is a great boilerplate to refer to while
 starting a project, but you'll probably want to eventually remove it.
 
@@ -80,6 +80,12 @@ can remove the ``Acme`` directory as well.
     to get the path of the bundle::
 
         echo $this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath();
+
+3.1 Remove Bundle Assets
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Remove the assets of the bundle in the web/ directory (e.g.
+``web/bundles/acmedemo`` for the AcmeDemoBundle).
 
 4. Remove Integration in other Bundles
 --------------------------------------

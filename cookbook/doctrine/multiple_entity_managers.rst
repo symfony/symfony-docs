@@ -4,7 +4,7 @@
 How to Work with multiple Entity Managers and Connections
 =========================================================
 
-You can use multiple Doctrine entity managers or connections in a Symfony2
+You can use multiple Doctrine entity managers or connections in a Symfony
 application. This is necessary if you are using different databases or even
 vendors with entirely different sets of entities. In other words, one entity
 manager that connects to one database will handle some entities while another

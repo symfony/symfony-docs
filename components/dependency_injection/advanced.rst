@@ -20,11 +20,14 @@ argument for another service.
 
 .. _inlined-private-services:
 
-.. note::
+Since a container is not able to detect if a service is retrieved from inside
+the container or the outside, a private service may still be retrieved using
+the ``get()`` method.
 
-    If you use a private service as an argument to only one other service,
-    this will result in an inlined instantiation (e.g. ``new PrivateFooBar()``)
-    inside this other service, making it publicly unavailable at runtime.
+What makes private services special, is that they are converted from services
+to inlined instantiation (e.g. ``new PrivateThing()``) when they are only
+injected once, to increase the container performance. This means that you can
+never be sure if a private service exists in the container.
 
 Simply said: A service will be private when you do not want to access it
 directly from your code.
@@ -42,15 +45,26 @@ Here is an example:
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo" public="false" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Example\Foo" public="false" />
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Example\Foo');
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-Now that the service is private, you *cannot* call::
+Now that the service is private, you *should not* call (should not means, this
+*might* fail, see the explaination above)::
 
     $container->get('foo');
 
@@ -88,15 +102,22 @@ To create a synthetic service, set ``synthetic`` to ``true``:
 
     .. code-block:: xml
 
-        <service id="request"
-            synthetic="true" />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="request" synthetic="true" />
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        // ...
-        $container->setDefinition('request', new Definition())
+        $container
+            ->setDefinition('request', new Definition())
             ->setSynthetic(true);
 
 As you see, only the ``synthetic`` option is set. All other options are only used
@@ -128,14 +149,23 @@ services.
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo"/>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <service id="bar" alias="foo" />
+            <services>
+                <service id="foo" class="Example\Foo" />
+
+                <service id="bar" alias="foo" />
+            </services>
+        </container>
 
     .. code-block:: php
 
-        $definition = new Definition('Example\Foo');
-        $container->setDefinition('foo', $definition);
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->setDefinition('foo', new Definition('Example\Foo'));
 
         $containerBuilder->setAlias('bar', 'foo');
 
@@ -173,11 +203,21 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
 
     .. code-block:: xml
 
-        <service id="foo" class="Example\Foo\Bar">
-            <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="Example\Foo\Bar">
+                    <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Example\Foo\Bar');
         $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
@@ -233,7 +273,7 @@ a reference of the old one  as ``bar.inner``:
             ->setPublic(false)
             ->setDecoratedService('foo');
 
-Here is what's going on here: the ``setDecoratedService()` method tells
+Here is what's going on here: the ``setDecoratedService()`` method tells
 the container that the ``bar`` service should replace the ``foo`` service,
 renaming ``foo`` to ``bar.inner``.
 By convention, the old ``foo`` service is going to be renamed ``bar.inner``,

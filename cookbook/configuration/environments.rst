@@ -7,7 +7,7 @@ How to Master and Create new Environments
 Every application is the combination of code and a set of configuration that
 dictates how that code should function. The configuration may define the
 database being used, whether or not something should be cached, or how verbose
-logging should be. In Symfony2, the idea of "environments" is the idea that
+logging should be. In Symfony, the idea of "environments" is the idea that
 the same codebase can be run using multiple different configurations. For
 example, the ``dev`` environment should use configuration that makes development
 easy and friendly, while the ``prod`` environment should use a set of configuration
@@ -19,7 +19,7 @@ optimized for speed.
 Different Environments, different Configuration Files
 -----------------------------------------------------
 
-A typical Symfony2 application begins with three environments: ``dev``,
+A typical Symfony application begins with three environments: ``dev``,
 ``prod``, and ``test``. As discussed, each "environment" simply represents
 a way to execute the same codebase with different configuration. It should
 be no surprise then that each environment loads its own individual configuration
@@ -49,7 +49,7 @@ class:
         }
     }
 
-As you can see, when Symfony2 is loaded, it uses the given environment to
+As you can see, when Symfony is loaded, it uses the given environment to
 determine which configuration file to load. This accomplishes the goal of
 multiple environments in an elegant, powerful and transparent way.
 
@@ -141,7 +141,7 @@ either the ``app.php`` (for the ``prod`` environment) or the ``app_dev.php``
 
    The given URLs assume that your web server is configured to use the ``web/``
    directory of the application as its root. Read more in
-   :doc:`Installing Symfony2 </book/installation>`.
+   :doc:`Installing Symfony </book/installation>`.
 
 If you open up one of these files, you'll quickly see that the environment
 used by each is explicitly set::
@@ -153,8 +153,8 @@ used by each is explicitly set::
 
     // ...
 
-As you can see, the ``prod`` key specifies that this environment will run
-in the ``prod`` environment. A Symfony2 application can be executed in any
+As you can see, the ``prod`` key specifies that this application will run
+in the ``prod`` environment. A Symfony application can be executed in any
 environment by using this code and changing the environment string.
 
 .. note::
@@ -172,7 +172,7 @@ environment by using this code and changing the environment string.
     Important, but unrelated to the topic of *environments* is the ``false``
     argument as the second argument to the ``AppKernel`` constructor. This
     specifies whether or not the application should run in "debug mode". Regardless
-    of the environment, a Symfony2 application can be run with debug mode
+    of the environment, a Symfony application can be run with debug mode
     set to ``true`` or ``false``. This affects many things in the application,
     such as whether or not errors should be displayed or if cache files are
     dynamically rebuilt on each request. Though not a requirement, debug mode
@@ -212,20 +212,53 @@ environment by using this code and changing the environment string.
     mode. You'll need to enable that in your front controller by calling
     :method:`Symfony\\Component\\Debug\\Debug::enable`.
 
+Selecting the Environment for Console Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, Symfony commands are executed in the ``dev`` environment and with the
+debug mode enabled. Use the ``--env`` and ``--no-debug`` options to modify this
+behavior:
+
+.. code-block:: bash
+
+    # 'dev' environment and debug enabled
+    $ php app/console command_name
+
+    # 'prod' environment (debug is always disabled for 'prod')
+    $ php app/console command_name --env=prod
+
+    # 'test' environment and debug disabled
+    $ php app/console command_name --env=test --no-debug
+
+In addition to the ``--env`` and ``--debug`` options, the behavior of Symfony
+commands can also be controlled with environment variables. The Symfony console
+application checks the existence and value of these environment variables before
+executing any command:
+
+``SYMFONY_ENV``
+    Sets the execution environment of the command to the value of this variable
+    (``dev``, ``prod``, ``test``, etc.);
+``SYMFONY_DEBUG``
+    If ``0``, debug mode is disabled. Otherwise, debug mode is enabled.
+
+These environment variables are very useful for production servers because they
+allow you to ensure that commands always run in the ``prod`` environment without
+having to add any command option.
+
 .. index::
    single: Environments; Creating a new environment
 
 Creating a new Environment
 --------------------------
 
-By default, a Symfony2 application has three environments that handle most
+By default, a Symfony application has three environments that handle most
 cases. Of course, since an environment is nothing more than a string that
 corresponds to a set of configuration, creating a new environment is quite
 easy.
 
 Suppose, for example, that before deployment, you need to benchmark your
 application. One way to benchmark the application is to use near-production
-settings, but with Symfony2's ``web_profiler`` enabled. This allows Symfony2
+settings, but with Symfony's ``web_profiler`` enabled. This allows Symfony
 to record information about your application while benchmarking.
 
 The best way to accomplish this is via a new environment called, for example,
@@ -261,6 +294,8 @@ The best way to accomplish this is via a new environment called, for example,
         $container->loadFromExtension('framework', array(
             'profiler' => array('only-exceptions' => false),
         ));
+
+.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
 And with this simple addition, the application now supports a new environment
 called ``benchmark``.
@@ -306,7 +341,7 @@ The new environment is now accessible via::
 Environments and the Cache Directory
 ------------------------------------
 
-Symfony2 takes advantage of caching in many ways: the application configuration,
+Symfony takes advantage of caching in many ways: the application configuration,
 routing configuration, Twig templates and more are cached to PHP objects
 stored in files on the filesystem.
 

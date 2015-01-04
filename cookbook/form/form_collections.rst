@@ -226,7 +226,7 @@ zero tags when first created).
             <ul class="tags">
                 <?php foreach($form['tags'] as $tag): ?>
                     <li><?php echo $view['form']->row($tag['name']) ?></li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         <?php echo $view['form']->end($form) ?>
 
@@ -413,6 +413,10 @@ Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
 into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
 
+.. seealso::
+
+    You can find a working example in this `JSFiddle`_.
+
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
@@ -459,9 +463,9 @@ we talk about next!).
 
 .. caution::
 
-    If no ``addTag`` **and** ``removeTag`` method is found, the form will
-    still use ``setTag`` even if ``by_reference`` is ``false``. You'll learn
-    more about the ``removeTag`` method later in this article.
+    You have to create **both** ``addTag`` and ``removeTag`` methods, 
+    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``. 
+    You'll learn more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
@@ -726,3 +730,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     each Tag object itself.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/

@@ -4,7 +4,7 @@
 How to Use Voters to Check User Permissions
 ===========================================
 
-In Symfony2 you can check the permission to access data by using the
+In Symfony, you can check the permission to access data by using the
 :doc:`ACL module </cookbook/security/acl>`, which is a bit overwhelming
 for many applications. A much easier solution is to work with custom voters,
 which are like simple conditional statements.
@@ -25,8 +25,8 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-security context (i.e. the ``security.context`` service). Each one decides
-if the current user should have access to some resource.
+authorization checker (i.e. the ``security.authorization_checker`` service). Each 
+one decides if the current user should have access to some resource.
 
 Ultimately, Symfony uses one of three different approaches on what to do
 with the feedback from all voters: affirmative, consensus and unanimous.
@@ -61,7 +61,6 @@ edit a particular object. Here's an example implementation:
     // src/Acme/DemoBundle/Security/Authorization/Voter/PostVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -99,8 +98,8 @@ edit a particular object. Here's an example implementation:
             // check if the voter is used correct, only allow one attribute
             // this isn't a requirement, it's just one easy way for you to
             // design your voter
-            if(1 !== count($attributes)) {
-                throw new InvalidArgumentException(
+            if (1 !== count($attributes)) {
+                throw new \InvalidArgumentException(
                     'Only one attribute is allowed for VIEW or EDIT'
                 );
             }
@@ -108,13 +107,13 @@ edit a particular object. Here's an example implementation:
             // set the attribute to check against
             $attribute = $attributes[0];
 
-            // get current logged in user
-            $user = $token->getUser();
-
             // check if the given attribute is covered by this voter
             if (!$this->supportsAttribute($attribute)) {
                 return VoterInterface::ACCESS_ABSTAIN;
             }
+
+            // get current logged in user
+            $user = $token->getUser();
 
             // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
@@ -122,7 +121,7 @@ edit a particular object. Here's an example implementation:
             }
 
             switch($attribute) {
-                case 'view':
+                case self::VIEW:
                     // the data object could have for example a method isPrivate()
                     // which checks the Boolean attribute $private
                     if (!$post->isPrivate()) {
@@ -130,7 +129,7 @@ edit a particular object. Here's an example implementation:
                     }
                     break;
 
-                case 'edit':
+                case self::EDIT:
                     // we assume that our data object has a method getOwner() to
                     // get the current owner user entity for this data object
                     if ($user->getId() === $post->getOwner()->getId()) {
@@ -138,6 +137,8 @@ edit a particular object. Here's an example implementation:
                     }
                     break;
             }
+
+            return VoterInterface::ACCESS_DENIED;
         }
     }
 
@@ -193,7 +194,7 @@ How to Use the Voter in a Controller
 ------------------------------------
 
 The registered voter will then always be asked as soon as the method ``isGranted()``
-from the security context is called.
+from the authorization checker is called.
 
 .. code-block:: php
 
@@ -212,12 +213,16 @@ from the security context is called.
             $post = ...;
 
             // keep in mind, this will call all registered security voters
-            if (false === $this->get('security.context')->isGranted('view', $post)) {
+            if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
                 throw new AccessDeniedException('Unauthorised access!');
             }
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
     }
+
+.. versionadded:: 2.6
+    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
+    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 It's that easy!

@@ -24,7 +24,7 @@ With namespaced paths, the following works as well:
     {% extends "@AcmeDemo/layout.html.twig" %}
     {% include "@AcmeDemo/Foo/bar.html.twig" %}
 
-Both paths are valid and functional by default in Symfony2.
+Both paths are valid and functional by default in Symfony.
 
 .. tip::
 

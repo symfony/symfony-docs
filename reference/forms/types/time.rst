@@ -15,28 +15,29 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `widget`_                                                                 |
+| Options              | - `placeholder`_                                                            |
+|                      | - `hours`_                                                                  |
+|                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
+|                      | - `minutes`_                                                                |
+|                      | - `model_timezone`_                                                         |
+|                      | - `seconds`_                                                                |
+|                      | - `view_timezone`_                                                          |
+|                      | - `widget`_                                                                 |
 |                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
-|                      | - `hours`_                                                                  |
-|                      | - `minutes`_                                                                |
-|                      | - `seconds`_                                                                |
-|                      | - `model_timezone`_                                                         |
-|                      | - `view_timezone`_                                                          |
-|                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `invalid_message`_                                                        |
-| options              | - `invalid_message_parameters`_                                             |
-|                      | - `data`_                                                                   |
-|                      | - `read_only`_                                                              |
-|                      | - `disabled`_                                                               |
-|                      | - `mapped`_                                                                 |
-|                      | - `inherit_data`_                                                           |
+| Inherited            | - `data`_                                                                   |
+| Options              | - `disabled`_                                                               |
 |                      | - `error_mapping`_                                                          |
+|                      | - `inherit_data`_                                                           |
+|                      | - `invalid_message`_                                                        |
+|                      | - `invalid_message_parameters`_                                             |
+|                      | - `mapped`_                                                                 |
+|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+
@@ -77,6 +78,36 @@ values.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/hours.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
+
+input
+~~~~~
+
+**type**: ``string`` **default**: ``datetime``
+
+The format of the *input* data - i.e. the format that the date is stored on
+your underlying object. Valid values are:
+
+* ``string`` (e.g. ``12:17:26``)
+* ``datetime`` (a ``DateTime`` object)
+* ``array`` (e.g. ``array('hour' => 12, 'minute' => 17, 'second' => 26)``)
+* ``timestamp`` (e.g. ``1307232000``)
+
+The value that comes back from the form will also be normalized back into
+this format.
+
+.. include:: /reference/forms/types/options/minutes.rst.inc
+
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/seconds.rst.inc
+
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
+
 widget
 ~~~~~~
 
@@ -99,37 +130,9 @@ The basic way in which this field should be rendered. Can be one of the followin
     set to ``false`` can cause unexpected behavior in the client as the input
     type ``time`` might not support selecting an hour only.
 
-input
-~~~~~
-
-**type**: ``string`` **default**: ``datetime``
-
-The format of the *input* data - i.e. the format that the date is stored on
-your underlying object. Valid values are:
-
-* ``string`` (e.g. ``12:17:26``)
-* ``datetime`` (a ``DateTime`` object)
-* ``array`` (e.g. ``array('hour' => 12, 'minute' => 17, 'second' => 26)``)
-* ``timestamp`` (e.g. ``1307232000``)
-
-The value that comes back from the form will also be normalized back into
-this format.
-
 .. include:: /reference/forms/types/options/with_minutes.rst.inc
 
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
-
-.. include:: /reference/forms/types/options/hours.rst.inc
-
-.. include:: /reference/forms/types/options/minutes.rst.inc
-
-.. include:: /reference/forms/types/options/seconds.rst.inc
-
-.. include:: /reference/forms/types/options/model_timezone.rst.inc
-
-.. include:: /reference/forms/types/options/view_timezone.rst.inc
-
-.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Overridden Options
 ------------------
@@ -151,21 +154,21 @@ Inherited Options
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
+.. include:: /reference/forms/types/options/data.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/data.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/disabled.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
+.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Form Variables
 --------------

@@ -9,9 +9,9 @@ object and all sub-objects associated with it.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
-|                | - `message`_                                                        |
+|                | - `deep`_                                                           |
 +----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
 +----------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
@@ -26,7 +26,7 @@ an ``Address`` instance in the ``$address`` property.
 .. code-block:: php
 
     // src/Acme/HelloBundle/Entity/Address.php
-    namespace Amce\HelloBundle\Entity;
+    namespace Acme\HelloBundle\Entity;
 
     class Address
     {
@@ -85,7 +85,7 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\Length(max = "5")
+             * @Assert\Length(max = 5)
              */
             protected $zipCode;
         }
@@ -93,11 +93,13 @@ an ``Address`` instance in the ``$address`` property.
         // src/Acme/HelloBundle/Entity/Author.php
         namespace Acme\HelloBundle\Entity;
 
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
              * @Assert\NotBlank
-             * @Assert\Length(min = "4")
+             * @Assert\Length(min = 4)
              */
             protected $firstName;
 
@@ -159,9 +161,7 @@ an ``Address`` instance in the ``$address`` property.
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
-                $metadata->addPropertyConstraint(
-                    'zipCode',
-                    new Assert\Length(array("max" => 5)));
+                $metadata->addPropertyConstraint('zipCode', new Assert\Length(array("max" => 5)));
             }
         }
 
@@ -267,9 +267,11 @@ If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is set
 to ``true``.
 
-message
-~~~~~~~
+deep
+~~~~
 
-**type**: ``string`` **default**: ``This value should be true.``
+**type**: ``boolean`` **default**: ``false``
 
-This is the message that will be shown if the value is false.
+If this constraint is applied to a property that holds an array of objects,
+then each object in that array will be validated recursively if this option is set
+to ``true``.

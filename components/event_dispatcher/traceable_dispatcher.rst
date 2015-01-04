@@ -21,7 +21,10 @@ Pass the event dispatcher to be wrapped and an instance of the
     // the event dispatcher to debug
     $eventDispatcher = ...;
 
-    $traceableEventDispatcher = new TraceableEventDispatcher($eventDispatcher, new Stopwatch());
+    $traceableEventDispatcher = new TraceableEventDispatcher(
+        $eventDispatcher,
+        new Stopwatch()
+    );
 
 Now, the ``TraceableEventDispatcher`` can be used like any other event dispatcher
 to register event listeners and dispatch events::
@@ -31,11 +34,11 @@ to register event listeners and dispatch events::
     // register an event listener
     $eventListener = ...;
     $priority = ...;
-    $traceableEventDispatcher->addListener('the-event-name', $eventListener, $priority);
+    $traceableEventDispatcher->addListener('event.the_name', $eventListener, $priority);
 
     // dispatch an event
     $event = ...;
-    $traceableEventDispatcher->dispatch('the-event-name', $event);
+    $traceableEventDispatcher->dispatch('event.the_name', $event);
 
 After your application has been processed, you can use the
 :method:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface::getCalledListeners`

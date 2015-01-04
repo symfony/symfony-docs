@@ -34,8 +34,8 @@ the following:
                     - Range:
                         min: 120
                         max: 180
-                        minMessage: You must be at least 120cm tall to enter
-                        maxMessage: You cannot be taller than 180cm to enter
+                        minMessage: You must be at least {{ limit }}cm tall to enter
+                        maxMessage: You cannot be taller than {{ limit }}cm to enter
 
     .. code-block:: php-annotations
 
@@ -50,8 +50,8 @@ the following:
              * @Assert\Range(
              *      min = 120,
              *      max = 180,
-             *      minMessage = "You must be at least 120cm tall to enter",
-             *      maxMessage = "You cannot be taller than 180cm to enter"
+             *      minMessage = "You must be at least {{ limit }}cm tall to enter",
+             *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
              * )
              */
              protected $height;
@@ -70,8 +70,8 @@ the following:
                     <constraint name="Range">
                         <option name="min">120</option>
                         <option name="max">180</option>
-                        <option name="minMessage">You must be at least 120cm tall to enter</option>
-                        <option name="maxMessage">You cannot be taller than 180cm to enter</option>
+                        <option name="minMessage">You must be at least {{ limit }}cm tall to enter</option>
+                        <option name="maxMessage">You cannot be taller than {{ limit }}cm to enter</option>
                     </constraint>
                 </property>
             </class>
@@ -92,8 +92,8 @@ the following:
                 $metadata->addPropertyConstraint('height', new Assert\Range(array(
                     'min'        => 120,
                     'max'        => 180,
-                    'minMessage' => 'You must be at least 120cm tall to enter',
-                    'maxMessage' => 'You cannot be taller than 180cm to enter',
+                    'minMessage' => 'You must be at least {{ limit }}cm tall to enter',
+                    'maxMessage' => 'You cannot be taller than {{ limit }}cm to enter',
                 )));
             }
         }

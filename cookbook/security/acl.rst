@@ -25,7 +25,7 @@ posts. Now, you want a user to be able to edit their own comments, but not those
 of other users; besides, you yourself want to be able to edit all comments. In
 this scenario, ``Comment`` would be the domain object that you want to
 restrict access to. You could take several approaches to accomplish this using
-Symfony2, two basic approaches are (non-exhaustive):
+Symfony, two basic approaches are (non-exhaustive):
 
 - *Enforce security in your business methods*: Basically, that means keeping a
   reference inside each ``Comment`` to all users who have access, and then
@@ -129,8 +129,8 @@ Creating an ACL and Adding an ACE
                 $acl = $aclProvider->createAcl($objectIdentity);
 
                 // retrieving the security identity of the currently logged-in user
-                $securityContext = $this->get('security.context');
-                $user = $securityContext->getToken()->getUser();
+                $tokenStorage = $this->get('security.token_storage');
+                $user = $tokenStorage->getToken()->getUser();
                 $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
                 // grant owner access
@@ -177,10 +177,10 @@ Checking Access
 
         public function editCommentAction(Comment $comment)
         {
-            $securityContext = $this->get('security.context');
+            $authorizationChecker = $this->get('security.authorization_checker');
 
             // check for edit access
-            if (false === $securityContext->isGranted('EDIT', $comment)) {
+            if (false === $authorizationChecker->isGranted('EDIT', $comment)) {
                 throw new AccessDeniedException();
             }
 
@@ -189,7 +189,7 @@ Checking Access
     }
 
 In this example, you check whether the user has the ``EDIT`` permission.
-Internally, Symfony2 maps the permission to several integer bitmasks, and
+Internally, Symfony maps the permission to several integer bitmasks, and
 checks whether the user has any of them.
 
 .. note::

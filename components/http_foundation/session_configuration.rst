@@ -32,10 +32,10 @@ the docblock of the ``setOptions()`` method of each class. For instance, the one
 provided by the Memcached extension can be found on `php.net/memcached.setoption`_
 
 While native save handlers can be activated by directly using
-``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
+``ini_set('session.save_handler', $name);``, Symfony provides a convenient way to
 activate these in the same way as it does for custom handlers.
 
-Symfony2 provides drivers for the following native save handler as an example:
+Symfony provides drivers for the following native save handler as an example:
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`
 
@@ -58,7 +58,7 @@ Example usage::
 
     Native save handlers provide a quick solution to session storage, however,
     in complex systems where you need more control, custom save handlers may
-    provide more freedom and flexibility. Symfony2 provides several implementations
+    provide more freedom and flexibility. Symfony provides several implementations
     which you may further customize as required.
 
 Custom Save Handlers
@@ -68,8 +68,8 @@ Custom handlers are those which completely replace PHP's built-in session save
 handlers by providing six callback functions which PHP calls internally at
 various points in the session workflow.
 
-Symfony2 HttpFoundation provides some by default and these can easily serve as
-examples if you wish to write your own.
+The Symfony HttpFoundation component provides some by default and these can
+easily serve as examples if you wish to write your own.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcacheSessionHandler`
@@ -83,7 +83,7 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-    $pdo = new \PDO('mysql:dbname=testdb;host=127.0.0.1');
+    $pdo = new \PDO(...);
     $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
     $session = new Session($storage);
 
@@ -148,7 +148,7 @@ method.
 Session Lifetime
 ~~~~~~~~~~~~~~~~
 
-When a new session is created, meaning Symfony2 issues a new session cookie
+When a new session is created, meaning Symfony issues a new session cookie
 to the client, the cookie will be stamped with an expiry time. This is
 calculated by adding the PHP runtime configuration value in
 ``session.cookie_lifetime`` with the current server time.
@@ -181,12 +181,12 @@ which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
-The other option is to specifically checking if a session has expired after the
+The other option is specifically check if a session has expired after the
 session is started. The session can be destroyed as required. This method of
 processing can allow the expiry of sessions to be integrated into the user
 experience, for example, by displaying a message.
 
-Symfony2 records some basic metadata about each session to give you complete
+Symfony records some basic metadata about each session to give you complete
 freedom in this area.
 
 Session Metadata
@@ -229,7 +229,7 @@ libraries.
 :phpclass:`SessionHandler` is a special PHP internal class which exposes native save
 handlers to PHP user-space.
 
-In order to provide a solution for those using PHP 5.4, Symfony2 has a special
+In order to provide a solution for those using PHP 5.4, Symfony has a special
 class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSessionHandler`
 which under PHP 5.4, extends from ``\SessionHandler`` and under PHP 5.3 is just a
 empty base class. This provides some interesting opportunities to leverage
@@ -239,7 +239,7 @@ Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
 
 A Save Handler Proxy is basically a wrapper around a Save Handler that was
-introduced to support seamlessly the migration from PHP 5.3 to PHP 5.4+. It
+introduced to seamlessly support the migration from PHP 5.3 to PHP 5.4+. It
 further creates an extension point from where custom logic can be added that
 works independently of which handler is being wrapped inside.
 

@@ -57,7 +57,7 @@ in the ``node_modules`` directory:
 Configure the ``uglifyjs2`` Filter
 ----------------------------------
 
-Now we need to configure Symfony2 to use the ``uglifyjs2`` filter when processing
+Now we need to configure Symfony to use the ``uglifyjs2`` filter when processing
 your JavaScripts:
 
 .. configuration-block::
@@ -111,6 +111,46 @@ your JavaScripts:
 
 You now have access to the ``uglifyjs2`` filter in your application.
 
+Configure the ``node`` Binary
+-----------------------------
+
+Assetic tries to find the node binary automatically. If it cannot be found, you
+can configure its location using the ``node`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            # the path to the node executable
+            node: /usr/bin/nodejs
+            filters:
+                uglifyjs2:
+                    # the path to the uglifyjs executable
+                    bin: /usr/local/bin/uglifyjs
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <assetic:config
+            node="/usr/bin/nodejs" >
+            <assetic:filter
+                name="uglifyjs2"
+                bin="/usr/local/bin/uglifyjs" />
+        </assetic:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'node' => '/usr/bin/nodejs',
+            'uglifyjs2' => array(
+                    // the path to the uglifyjs executable
+                    'bin' => '/usr/local/bin/uglifyjs',
+                ),
+        ));
+
 Minify your Assets
 ------------------
 
@@ -132,7 +172,7 @@ your assets are a part of the view layer, this work is done in your templates:
             array('uglifyj2s')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
@@ -168,11 +208,11 @@ apply this filter when debug mode is off (e.g. ``app.php``):
             array('?uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 To try this out, switch to your ``prod`` environment (``app.php``). But before
 you do, don't forget to :ref:`clear your cache <book-page-creation-prod-cache-clear>`
-and :ref:`dump your assetic assets <cookbook-asetic-dump-prod>`.
+and :ref:`dump your assetic assets <cookbook-assetic-dump-prod>`.
 
 .. tip::
 
@@ -244,7 +284,7 @@ helper:
             array('cssrewrite')
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Just like with the ``uglifyjs2`` filter, if you prefix the filter name with
 ``?`` (i.e. ``?uglifycss``), the minification will only happen when you're

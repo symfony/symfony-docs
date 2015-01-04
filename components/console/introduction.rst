@@ -88,6 +88,8 @@ an ``Application`` and adds commands to it::
     <?php
     // application.php
 
+    require __DIR__.'/vendor/autoload.php';
+
     use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
@@ -140,6 +142,9 @@ output. For example::
 It is possible to define your own styles using the class
 :class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`::
 
+    use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+
+    // ...
     $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
     $output->getFormatter()->setStyle('fire', $style);
     $output->writeln('<fire>foo</fire>');
@@ -327,7 +332,7 @@ declare a one-letter shortcut that you can call with a single dash like
 .. tip::
 
     It is also possible to make an option *optionally* accept a value (so that
-    ``--yell`` or ``--yell=loud`` work). Options can also be configured to
+    ``--yell``, ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
     accept an array of values.
 
 For example, add a new option to the command that can be used to specify
@@ -389,11 +394,11 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL``
     $this
         // ...
         ->addOption(
-            'iterations',
+            'colors',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'How many times should the message be printed?',
-            1
+            'Which colors do you like?',
+            array('blue', 'red')
         );
 
 Console Helpers
@@ -408,10 +413,12 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 * :doc:`/components/console/helpers/dialoghelper`: (deprecated) interactively ask the user for information
 
+.. _component-console-testing-commands:
+
 Testing Commands
 ----------------
 
-Symfony2 provides several tools to help you test your commands. The most
+Symfony provides several tools to help you test your commands. The most
 useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
@@ -461,7 +468,7 @@ method::
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
             $commandTester->execute(
-                array('command' => $command->getName(), 'name' => 'Fabien')
+                array('command' => $command->getName(), 'name' => 'Fabien', '--iterations' => 5)
             );
 
             $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
@@ -529,6 +536,7 @@ Learn More!
 * :doc:`/components/console/single_command_tool`
 * :doc:`/components/console/changing_default_command`
 * :doc:`/components/console/events`
+* :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
 .. _ANSICON: https://github.com/adoxa/ansicon/releases

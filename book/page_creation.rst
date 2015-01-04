@@ -1,17 +1,19 @@
 .. index::
    single: Page creation
 
-Creating Pages in Symfony2
-==========================
+.. _creating-pages-in-symfony2:
 
-Creating a new page in Symfony2 is a simple two-step process:
+Creating Pages in Symfony
+=========================
+
+Creating a new page in Symfony is a simple two-step process:
 
 * *Create a route*: A route defines the URL (e.g. ``/about``) to your page
-  and specifies a controller (which is a PHP function) that Symfony2 should
+  and specifies a controller (which is a PHP function) that Symfony should
   execute when the URL of an incoming request matches the route path;
 
 * *Create a controller*: A controller is a PHP function that takes the incoming
-  request and transforms it into the Symfony2 ``Response`` object that's
+  request and transforms it into the Symfony ``Response`` object that's
   returned to the user.
 
 This simple approach is beautiful because it matches the way that the Web works.
@@ -19,7 +21,7 @@ Every interaction on the Web is initiated by an HTTP request. The job of
 your application is simply to interpret the request and return the appropriate
 HTTP response.
 
-Symfony2 follows this philosophy and provides you with tools and conventions
+Symfony follows this philosophy and provides you with tools and conventions
 to keep your application organized as it grows in users and complexity.
 
 .. index::
@@ -33,53 +35,54 @@ Environments & Front Controllers
 Every Symfony application runs within an :term:`environment`. An environment
 is a specific set of configuration and loaded bundles, represented by a string.
 The same application can be run with different configurations by running the
-application in different environments. Symfony2 comes with three environments
+application in different environments. Symfony comes with three environments
 defined — ``dev``, ``test`` and ``prod`` — but you can create your own as well.
 
 Environments are useful by allowing a single application to have a dev environment
 built for debugging and a production environment optimized for speed. You might
 also load specific bundles based on the selected environment. For example,
-Symfony2 comes with the WebProfilerBundle (described below), enabled only
+Symfony comes with the WebProfilerBundle (described below), enabled only
 in the ``dev`` and ``test`` environments.
 
-Symfony2 comes with two web-accessible front controllers: ``app_dev.php``
+Symfony comes with two web-accessible front controllers: ``app_dev.php``
 provides the ``dev`` environment, and ``app.php`` provides the ``prod`` environment.
-All web accesses to Symfony2 normally go through one of these front controllers.
+All web accesses to Symfony normally go through one of these front controllers.
 (The ``test`` environment is normally only used when running unit tests, and so
 doesn't have a dedicated front controller. The console tool also provides a
 front controller that can be used with any environment.)
 
 When the front controller initializes the kernel, it provides two parameters:
 the environment, and also whether the kernel should run in debug mode.
-To make your application respond faster, Symfony2 maintains a cache under the
+To make your application respond faster, Symfony maintains a cache under the
 ``app/cache/`` directory. When debug mode is enabled (such as ``app_dev.php``
 does by default), this cache is flushed automatically whenever you make changes
-to any code or configuration. When running in debug mode, Symfony2 runs
+to any code or configuration. When running in debug mode, Symfony runs
 slower, but your changes are reflected without having to manually clear the
 cache.
 
 .. index::
    single: Page creation; Example
 
-The "Hello Symfony!" Page
--------------------------
+The "Random Number" Page
+------------------------
 
-Start by building a spin-off of the classic "Hello World!" application. When
-you're finished, the user will be able to get a personal greeting (e.g. "Hello Symfony")
-by going to the following URL:
+In this chapter, you'll develop an application that can generate random numbers.
+When you're finished, the user will be able to get a random number between ``1``
+and the upper limit set by the URL:
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/hello/Symfony
+    http://localhost/app_dev.php/random/100
 
-Actually, you'll be able to replace ``Symfony`` with any other name to be
-greeted. To create the page, follow the simple two-step process.
+Actually, you'll be able to replace ``100`` with any other number to generate
+numbers up to that upper limit. To create the page, follow the simple two-step
+process.
 
 .. note::
 
-    The tutorial assumes that you've already downloaded Symfony2 and configured
+    The tutorial assumes that you've already downloaded Symfony and configured
     your webserver. The above URL assumes that ``localhost`` points to the
-    ``web`` directory of your new Symfony2 project. For detailed information
+    ``web`` directory of your new Symfony project. For detailed information
     on this process, see the documentation on the web server you are using.
     Here are some relevant documentation pages for the web server you might be using:
 
@@ -89,23 +92,29 @@ greeted. To create the page, follow the simple two-step process.
 Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you begin, you'll need to create a *bundle*. In Symfony2, a :term:`bundle`
-is like a plugin, except that all of the code in your application will live
+Before you begin, you'll need to create a *bundle*. In Symfony, a :term:`bundle`
+is like a plugin, except that all the code in your application will live
 inside a bundle.
 
 A bundle is nothing more than a directory that houses everything related
 to a specific feature, including PHP classes, configuration, and even stylesheets
 and JavaScript files (see :ref:`page-creation-bundles`).
 
-To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
+Depending on the way you installed Symfony, you may already have a bundle called
+``AcmeDemoBundle``. Browse the ``src/`` directory of your project and check
+if there is a ``DemoBundle/`` directory inside an ``Acme/`` directory. If those
+directories already exist, skip the rest of this section and go directly to
+create the route.
+
+To create a bundle called ``AcmeDemoBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
-instructions (use all of the default options):
+instructions (use all the default options):
 
 .. code-block:: bash
 
-    $ php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
+    $ php app/console generate:bundle --namespace=Acme/DemoBundle --format=yml
 
-Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
+Behind the scenes, a directory is created for the bundle at ``src/Acme/DemoBundle``.
 A line is also automatically added to the ``app/AppKernel.php`` file so that
 the bundle is registered with the kernel::
 
@@ -113,8 +122,8 @@ the bundle is registered with the kernel::
     public function registerBundles()
     {
         $bundles = array(
-            ...,
-            new Acme\HelloBundle\AcmeHelloBundle(),
+            // ...
+            new Acme\DemoBundle\AcmeDemoBundle(),
         );
         // ...
 
@@ -127,20 +136,20 @@ inside the bundle.
 Step 1: Create the Route
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the routing configuration file in a Symfony2 application is
-located at ``app/config/routing.yml``. Like all configuration in Symfony2,
+By default, the routing configuration file in a Symfony application is
+located at ``app/config/routing.yml``. Like all configuration in Symfony,
 you can also choose to use XML or PHP out of the box to configure routes.
 
 If you look at the main routing file, you'll see that Symfony already added
-an entry when you generated the ``AcmeHelloBundle``:
+an entry when you generated the ``AcmeDemoBundle``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/routing.yml
-        acme_hello:
-            resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+        acme_website:
+            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
             prefix:   /
 
     .. code-block:: xml
@@ -152,7 +161,8 @@ an entry when you generated the ``AcmeHelloBundle``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeHelloBundle/Resources/config/routing.xml"
+            <import
+                resource="@AcmeDemoBundle/Resources/config/routing.xml"
                 prefix="/" />
         </routes>
 
@@ -160,20 +170,26 @@ an entry when you generated the ``AcmeHelloBundle``:
 
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+
+        $acmeDemo = $loader->import('@AcmeDemoBundle/Resources/config/routing.php');
+        $acmeDemo->addPrefix('/');
 
         $collection = new RouteCollection();
-        $collection->addCollection(
-            $loader->import('@AcmeHelloBundle/Resources/config/routing.php'),
-            '/'
-        );
+        $collection->addCollection($acmeDemo);
 
         return $collection;
 
 This entry is pretty basic: it tells Symfony to load routing configuration
-from the ``Resources/config/routing.yml`` file that lives inside the ``AcmeHelloBundle``.
+from the ``Resources/config/routing.yml`` (``routing.xml`` or ``routing.php``
+in the XML and PHP code example respectively) file that lives inside the ``AcmeDemoBundle``.
 This means that you place routing configuration directly in ``app/config/routing.yml``
 or organize your routes throughout your application, and import them from here.
+
+.. note::
+
+    You are not limited to load routing configurations that are of the same
+    format. For example, you could also load a YAML file in an XML configuration
+    and vice versa.
 
 Now that the ``routing.yml`` file from the bundle is being imported, add
 the new route that defines the URL of the page that you're about to create:
@@ -182,34 +198,34 @@ the new route that defines the URL of the page that you're about to create:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/routing.yml
-        hello:
-            path:     /hello/{name}
-            defaults: { _controller: AcmeHelloBundle:Hello:index }
+        # src/Acme/DemoBundle/Resources/config/routing.yml
+        random:
+            path:     /random/{limit}
+            defaults: { _controller: AcmeDemoBundle:Random:index }
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" path="/hello/{name}">
-                <default key="_controller">AcmeHelloBundle:Hello:index</default>
+            <route id="random" path="/random/{limit}">
+                <default key="_controller">AcmeDemoBundle:Random:index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/routing.php
+        // src/Acme/DemoBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeHelloBundle:Hello:index',
+        $collection->add('random', new Route('/random/{limit}', array(
+            '_controller' => 'AcmeDemoBundle:Random:index',
         )));
 
         return $collection;
@@ -217,10 +233,10 @@ the new route that defines the URL of the page that you're about to create:
 The routing consists of two basic pieces: the ``path``, which is the URL
 that this route will match, and a ``defaults`` array, which specifies the
 controller that should be executed. The placeholder syntax in the path
-(``{name}``) is a wildcard. It means that ``/hello/Ryan``, ``/hello/Fabien``
-or any other similar URL will match this route. The ``{name}`` placeholder
+(``{limit}``) is a wildcard. It means that ``/random/10``, ``/random/327``
+or any other similar URL will match this route. The ``{limit}`` placeholder
 parameter will also be passed to the controller so that you can use its value
-to personally greet the user.
+to generate the proper random number.
 
 .. note::
 
@@ -231,42 +247,44 @@ to personally greet the user.
 Step 2: Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a URL such as ``/hello/Ryan`` is handled by the application, the ``hello``
-route is matched and the ``AcmeHelloBundle:Hello:index`` controller is executed
+When a URL such as ``/random/10`` is handled by the application, the ``random``
+route is matched and the ``AcmeDemoBundle:Random:index`` controller is executed
 by the framework. The second step of the page-creation process is to create
 that controller.
 
-The controller - ``AcmeHelloBundle:Hello:index`` is the *logical* name of
+The controller - ``AcmeDemoBundle:Random:index`` is the *logical* name of
 the controller, and it maps to the ``indexAction`` method of a PHP class
-called ``Acme\HelloBundle\Controller\HelloController``. Start by creating this file
-inside your ``AcmeHelloBundle``::
+called ``Acme\DemoBundle\Controller\RandomController``. Start by creating this
+file inside your ``AcmeDemoBundle``::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/Acme/DemoBundle/Controller/RandomController.php
+    namespace Acme\DemoBundle\Controller;
 
-    class HelloController
+    class RandomController
     {
     }
 
 In reality, the controller is nothing more than a PHP method that you create
 and Symfony executes. This is where your code uses information from the request
 to build and prepare the resource being requested. Except in some advanced
-cases, the end product of a controller is always the same: a Symfony2 ``Response``
+cases, the end product of a controller is always the same: a Symfony ``Response``
 object.
 
-Create the ``indexAction`` method that Symfony will execute when the ``hello``
+Create the ``indexAction`` method that Symfony will execute when the ``random``
 route is matched::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/Acme/DemoBundle/Controller/RandomController.php
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
 
-    class HelloController
+    class RandomController
     {
-        public function indexAction($name)
+        public function indexAction($limit)
         {
-            return new Response('<html><body>Hello '.$name.'!</body></html>');
+            return new Response(
+                '<html><body>Number: '.rand(1, $limit).'</body></html>'
+            );
         }
     }
 
@@ -276,11 +294,11 @@ page in this example).
 
 Congratulations! After creating only a route and a controller, you already
 have a fully-functional page! If you've setup everything correctly, your
-application should greet you:
+application should generate a random number for you:
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/hello/Ryan
+    http://localhost/app_dev.php/random/10
 
 .. _book-page-creation-prod-cache-clear:
 
@@ -291,7 +309,7 @@ application should greet you:
 
     .. code-block:: text
 
-        http://localhost/app.php/hello/Ryan
+        http://localhost/app.php/random/10
 
     If you get an error, it's likely because you need to clear your cache
     by running:
@@ -311,31 +329,33 @@ An optional, but common, third step in the process is to create a template.
 Optional Step 3: Create the Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Templates allow you to move all of the presentation (e.g. HTML code) into
+Templates allow you to move all the presentation code (e.g. HTML) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, render a template instead:
 
 .. code-block:: php
     :linenos:
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/Acme/DemoBundle/Controller/RandomController.php
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class HelloController extends Controller
+    class RandomController extends Controller
     {
-        public function indexAction($name)
+        public function indexAction($limit)
         {
+            $number = rand(1, $limit);
+
             return $this->render(
-                'AcmeHelloBundle:Hello:index.html.twig',
-                array('name' => $name)
+                'AcmeDemoBundle:Random:index.html.twig',
+                array('number' => $number)
             );
 
             // render a PHP template instead
             // return $this->render(
-            //     'AcmeHelloBundle:Hello:index.html.php',
-            //     array('name' => $name)
+            //     'AcmeDemoBundle:Random:index.html.php',
+            //     array('number' => $number)
             // );
         }
     }
@@ -354,11 +374,11 @@ of the given, rendered template. Like any other controller, you will ultimately
 return that ``Response`` object.
 
 Notice that there are two different examples for rendering the template.
-By default, Symfony2 supports two different templating languages: classic
+By default, Symfony supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be
 alarmed - you're free to choose either or even both in the same project.
 
-The controller renders the ``AcmeHelloBundle:Hello:index.html.twig`` template,
+The controller renders the ``AcmeDemoBundle:Random:index.html.twig`` template,
 which uses the following naming convention:
 
     **BundleName**:**ControllerName**:**TemplateName**
@@ -368,7 +388,7 @@ location using the following convention.
 
     **/path/to/BundleName**/Resources/views/**ControllerName**/**TemplateName**
 
-In this case, ``AcmeHelloBundle`` is the bundle name, ``Hello`` is the
+In this case, ``AcmeDemoBundle`` is the bundle name, ``Random`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -376,19 +396,19 @@ controller, and ``index.html.twig`` the template:
     .. code-block:: jinja
        :linenos:
 
-        {# src/Acme/HelloBundle/Resources/views/Hello/index.html.twig #}
+        {# src/Acme/DemoBundle/Resources/views/Random/index.html.twig #}
         {% extends '::base.html.twig' %}
 
         {% block body %}
-            Hello {{ name }}!
+            Number: {{ number }}
         {% endblock %}
 
     .. code-block:: html+php
 
-        <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
+        <!-- src/Acme/DemoBundle/Resources/views/Random/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
 
-        Hello <?php echo $view->escape($name) ?>!
+        Number: <?php echo $view->escape($number) ?>
 
 Step through the Twig template line-by-line:
 
@@ -402,7 +422,7 @@ Step through the Twig template line-by-line:
 
 The parent template, ``::base.html.twig``, is missing both the **BundleName**
 and **ControllerName** portions of its name (hence the double colon (``::``)
-at the beginning). This means that the template lives outside of the bundles
+at the beginning). This means that the template lives outside of the bundle
 and in the ``app`` directory:
 
 .. configuration-block::
@@ -433,7 +453,8 @@ and in the ``app`` directory:
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <title><?php $view['slots']->output('title', 'Welcome!') ?></title>
                 <?php $view['slots']->output('stylesheets') ?>
-                <link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
+                <link rel="shortcut icon"
+                    href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
             </head>
             <body>
                 <?php $view['slots']->output('_content') ?>
@@ -463,20 +484,30 @@ The Directory Structure
 -----------------------
 
 After just a few short sections, you already understand the philosophy behind
-creating and rendering pages in Symfony2. You've also already begun to see
-how Symfony2 projects are structured and organized. By the end of this section,
+creating and rendering pages in Symfony. You've also already begun to see
+how Symfony projects are structured and organized. By the end of this section,
 you'll know where to find and put different types of files and why.
 
 Though entirely flexible, by default, each Symfony :term:`application` has
 the same basic and recommended directory structure:
 
-* ``app/``: This directory contains the application configuration;
+``app/``
+    This directory contains the application configuration.
 
-* ``src/``: All the project PHP code is stored under this directory;
+``src/``
+    All the project PHP code is stored under this directory.
 
-* ``vendor/``: Any vendor libraries are placed here by convention;
+``vendor/``
+    Any vendor libraries are placed here by convention.
 
-* ``web/``: This is the web root directory and contains any publicly accessible files;
+``web/``
+    This is the web root directory and contains any publicly accessible files.
+
+.. seealso::
+
+    You can easily override the default directory structure. See
+    :doc:`/cookbook/configuration/override_dir_structure` for more
+    information.
 
 .. _the-web-directory:
 
@@ -498,7 +529,7 @@ images, stylesheets, and JavaScript files. It is also where each
     $kernel->handle(Request::createFromGlobals())->send();
 
 The front controller file (``app.php`` in this example) is the actual PHP
-file that's executed when using a Symfony2 application and its job is to
+file that's executed when using a Symfony application and its job is to
 use a Kernel class, ``AppKernel``, to bootstrap the application.
 
 .. tip::
@@ -509,16 +540,16 @@ use a Kernel class, ``AppKernel``, to bootstrap the application.
 
     .. code-block:: text
 
-        http://localhost/app.php/hello/Ryan
+        http://localhost/app.php/random/10
 
     The front controller, ``app.php``, is executed and the "internal:" URL
-    ``/hello/Ryan`` is routed internally using the routing configuration.
+    ``/random/10`` is routed internally using the routing configuration.
     By using Apache ``mod_rewrite`` rules, you can force the ``app.php`` file
     to be executed without needing to specify it in the URL:
 
     .. code-block:: text
 
-        http://localhost/hello/Ryan
+        http://localhost/random/10
 
 Though front controllers are essential in handling every request, you'll
 rarely need to modify or even think about them. They'll be mentioned again
@@ -536,11 +567,13 @@ needs to know about your application. You don't even need to worry about
 these methods when starting - Symfony fills them in for you with sensible
 defaults.
 
-* ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (see :ref:`page-creation-bundles`);
+``registerBundles()``
+    Returns an array of all bundles needed to run the application (see
+    :ref:`page-creation-bundles`).
 
-* ``registerContainerConfiguration()``: Loads the main application configuration
-  resource file (see the `Application Configuration`_ section).
+``registerContainerConfiguration()``
+    Loads the main application configuration resource file (see the
+    `Application Configuration`_ section).
 
 In day-to-day development, you'll mostly use the ``app/`` directory to modify
 configuration and routing files in the ``app/config/`` directory (see
@@ -570,14 +603,14 @@ You'll learn more about each of these directories in later chapters.
     .. code-block:: text
 
         Class Name:
-            Acme\HelloBundle\Controller\HelloController
+            Acme\DemoBundle\Controller\RandomController
         Path:
-            src/Acme/HelloBundle/Controller/HelloController.php
+            src/Acme/DemoBundle/Controller/RandomController.php
 
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Put simply, the ``src/`` directory contains all of the actual code (PHP code,
+Put simply, the ``src/`` directory contains all the actual code (PHP code,
 templates, configuration files, stylesheets, etc) that drives *your* application.
 When developing, the vast majority of your work will be done inside one or
 more bundles that you create in this directory.
@@ -590,9 +623,9 @@ The Bundle System
 -----------------
 
 A bundle is similar to a plugin in other software, but even better. The key
-difference is that *everything* is a bundle in Symfony2, including both the
+difference is that *everything* is a bundle in Symfony, including both the
 core framework functionality and the code written for your application.
-Bundles are first-class citizens in Symfony2. This gives you the flexibility
+Bundles are first-class citizens in Symfony. This gives you the flexibility
 to use pre-built features packaged in `third-party bundles`_ or to distribute
 your own bundles. It makes it easy to pick and choose which features to enable
 in your application and to optimize them the way you want.
@@ -688,8 +721,8 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     public function registerBundles()
     {
         $bundles = array(
-            ...,
-            // register your bundles
+            // ...
+            // register your bundle
             new Acme\TestBundle\AcmeTestBundle(),
         );
         // ...
@@ -708,7 +741,7 @@ generating a basic bundle skeleton:
     $ php app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates with a basic controller, template and routing
-resource that can be customized. You'll learn more about Symfony2's command-line
+resource that can be customized. You'll learn more about Symfony's command-line
 tools later.
 
 .. tip::
@@ -722,26 +755,30 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Take a look at ``AcmeHelloBundle``, as it contains
+between all Symfony bundles. Take a look at ``AcmeDemoBundle``, as it contains
 some of the most common elements of a bundle:
 
-* ``Controller/`` contains the controllers of the bundle (e.g. ``HelloController.php``);
+``Controller/``
+    Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
-* ``DependencyInjection/`` holds certain dependency injection extension classes,
-  which may import service configuration, register compiler passes or more
-  (this directory is not necessary);
+``DependencyInjection/``
+    Holds certain dependency injection extension classes, which may import service
+    configuration, register compiler passes or more (this directory is not
+    necessary).
 
-* ``Resources/config/`` houses configuration, including routing configuration
-  (e.g. ``routing.yml``);
+``Resources/config/``
+    Houses configuration, including routing configuration (e.g. ``routing.yml``).
 
-* ``Resources/views/`` holds templates organized by controller name (e.g.
-  ``Hello/index.html.twig``);
+``Resources/views/``
+    Holds templates organized by controller name (e.g. ``Hello/index.html.twig``).
 
-* ``Resources/public/`` contains web assets (images, stylesheets, etc) and is
-  copied or symbolically linked into the project ``web/`` directory via
-  the ``assets:install`` console command;
+``Resources/public/``
+    Contains web assets (images, stylesheets, etc) and is copied or symbolically
+    linked into the project ``web/`` directory via the ``assets:install`` console
+    command.
 
-* ``Tests/`` holds all tests for the bundle.
+``Tests/``
+    Holds all tests for the bundle.
 
 A bundle can be as small or large as the feature it implements. It contains
 only the files you need and nothing else.
@@ -754,7 +791,7 @@ bundle.
 Application Configuration
 -------------------------
 
-An application consists of a collection of bundles representing all of the
+An application consists of a collection of bundles representing all the
 features and capabilities of your application. Each bundle can be customized
 via configuration files written in YAML, XML or PHP. By default, the main
 configuration file lives in the ``app/config/`` directory and is called
@@ -790,10 +827,13 @@ format you prefer:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
-                                
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
             <imports>
                 <import resource="parameters.yml" />
                 <import resource="security.yml" />
@@ -812,16 +852,16 @@ format you prefer:
 
     .. code-block:: php
 
+        // app/config/config.php
         $this->import('parameters.yml');
         $this->import('security.yml');
 
         $container->loadFromExtension('framework', array(
-            'secret'          => '%secret%',
-            'router'          => array(
+            'secret' => '%secret%',
+            'router' => array(
                 'resource' => '%kernel.root_dir%/config/routing.php',
             ),
             // ...
-            ),
         ));
 
         // Twig Configuration
@@ -844,7 +884,7 @@ routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.
 The configuration file ships with sensible defaults. As you read more and
-explore each part of Symfony2, you'll learn about the specific configuration
+explore each part of Symfony, you'll learn about the specific configuration
 options of each feature.
 
 .. sidebar:: Configuration Formats
@@ -879,9 +919,8 @@ The extension alias (configuration key) can also be used:
 
 .. note::
 
-    See the cookbook article:
-    :doc:`How to expose a Semantic Configuration for a Bundle </cookbook/bundles/extension>`
-    for information on adding configuration for your own bundle.
+    See the cookbook article: :doc:`/cookbook/bundles/extension` for
+    information on adding configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction
@@ -899,7 +938,7 @@ rebuilt on each request in the ``dev`` environment (for the developer's convenie
 but cached in the ``prod`` environment. All environments live together on
 the same machine and execute the same application.
 
-A Symfony2 project generally begins with three environments (``dev``, ``test``
+A Symfony project generally begins with three environments (``dev``, ``test``
 and ``prod``), though creating new environments is easy. You can view your
 application in different environments simply by changing the front controller
 in your browser. To see the application in the ``dev`` environment, access
@@ -907,14 +946,14 @@ the application via the development front controller:
 
 .. code-block:: text
 
-    http://localhost/app_dev.php/hello/Ryan
+    http://localhost/app_dev.php/random/10
 
 If you'd like to see how your application will behave in the production environment,
 call the ``prod`` front controller instead:
 
 .. code-block:: text
 
-    http://localhost/app.php/hello/Ryan
+    http://localhost/app.php/random/10
 
 Since the ``prod`` environment is optimized for speed; the configuration,
 routing and Twig templates are compiled into flat PHP classes and cached.
@@ -984,21 +1023,22 @@ the configuration file for the ``dev`` environment.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="config.xml" />
             </imports>
 
             <framework:config>
-                <framework:router
-                    resource="%kernel.root_dir%/config/routing_dev.xml"
-                />
+                <framework:router resource="%kernel.root_dir%/config/routing_dev.xml" />
                 <framework:profiler only-exceptions="false" />
             </framework:config>
 
             <!-- ... -->
+        </container>
 
     .. code-block:: php
 
@@ -1006,7 +1046,7 @@ the configuration file for the ``dev`` environment.
         $loader->import('config.php');
 
         $container->loadFromExtension('framework', array(
-            'router'   => array(
+            'router' => array(
                 'resource' => '%kernel.root_dir%/config/routing_dev.php',
             ),
             'profiler' => array('only-exceptions' => false),
@@ -1028,7 +1068,7 @@ just pieces of it between environments.
 Summary
 -------
 
-Congratulations! You've now seen every fundamental aspect of Symfony2 and have
+Congratulations! You've now seen every fundamental aspect of Symfony and have
 hopefully discovered how easy and flexible it can be. And while there are
 *a lot* of features still to come, be sure to keep the following basic points
 in mind:
@@ -1041,7 +1081,7 @@ in mind:
   and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
   used to help updated vendor libraries);
 
-* Each feature in Symfony2 (including the Symfony2 framework core) is organized
+* Each feature in Symfony (including the Symfony framework core) is organized
   into a *bundle*, which is a structured set of files for that feature;
 
 * The **configuration** for each bundle lives in the ``Resources/config``
@@ -1054,7 +1094,7 @@ in mind:
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
 
 From here, each chapter will introduce you to more and more powerful tools
-and advanced concepts. The more you know about Symfony2, the more you'll
+and advanced concepts. The more you know about Symfony, the more you'll
 appreciate the flexibility of its architecture and the power it gives you
 to rapidly develop applications.
 

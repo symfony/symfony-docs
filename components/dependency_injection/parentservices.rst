@@ -52,11 +52,6 @@ The service config for these classes would look something like this:
 
     .. code-block:: yaml
 
-        parameters:
-            # ...
-            newsletter_manager.class: NewsletterManager
-            greeting_card_manager.class: GreetingCardManager
-
         services:
             my_mailer:
                 # ...
@@ -65,67 +60,64 @@ The service config for these classes would look something like this:
                 # ...
 
             newsletter_manager:
-                class: "%newsletter_manager.class%"
+                class: NewsletterManager
                 calls:
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             greeting_card_manager:
-                class: "%greeting_card_manager.class%"
+                class: "GreetingCardManager"
                 calls:
                     - [setMailer, ["@my_mailer"]]
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
     .. code-block:: xml
 
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-            <parameter key="greeting_card_manager.class">GreetingCardManager</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="my_mailer">
-              <!-- ... -->
-            </service>
+            <services>
+                <service id="my_mailer">
+                    <!-- ... -->
+                </service>
 
-            <service id="my_email_formatter">
-              <!-- ... -->
-            </service>
+                <service id="my_email_formatter">
+                    <!-- ... -->
+                </service>
 
-            <service id="newsletter_manager" class="%newsletter_manager.class%">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
-                <call method="setEmailFormatter">
-                     <argument type="service" id="my_email_formatter" />
-                </call>
-            </service>
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
+                    <call method="setEmailFormatter">
+                        <argument type="service" id="my_email_formatter" />
+                    </call>
+                </service>
 
-            <service id="greeting_card_manager" class="%greeting_card_manager.class%">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
+                <service id="greeting_card_manager" class="GreetingCardManager">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
 
-                <call method="setEmailFormatter">
-                     <argument type="service" id="my_email_formatter" />
-                </call>
-            </service>
-        </services>
+                    <call method="setEmailFormatter">
+                        <argument type="service" id="my_email_formatter" />
+                    </call>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
-        $container->setParameter('greeting_card_manager.class', 'GreetingCardManager');
-
         $container->register('my_mailer', ...);
         $container->register('my_email_formatter', ...);
 
         $container
-            ->register('newsletter_manager', '%newsletter_manager.class%')
+            ->register('newsletter_manager', 'NewsletterManager')
             ->addMethodCall('setMailer', array(
                 new Reference('my_mailer'),
             ))
@@ -135,7 +127,7 @@ The service config for these classes would look something like this:
         ;
 
         $container
-            ->register('greeting_card_manager', '%greeting_card_manager.class%')
+            ->register('greeting_card_manager', 'GreetingCardManager')
             ->addMethodCall('setMailer', array(
                 new Reference('my_mailer'),
             ))
@@ -184,7 +176,7 @@ and::
         // ...
     }
 
-In a similar fashion, the Symfony2 service container also supports extending
+In a similar fashion, the Symfony service container also supports extending
 services in the configuration so you can also reduce the repetition by specifying
 a parent for a service.
 
@@ -202,38 +194,44 @@ a parent for a service.
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             newsletter_manager:
-                class:  "%newsletter_manager.class%"
+                class:  "NewsletterManager"
                 parent: mail_manager
 
             greeting_card_manager:
-                class:  "%greeting_card_manager.class%"
+                class:  "GreetingCardManager"
                 parent: mail_manager
 
     .. code-block:: xml
 
-        <!-- ... -->
-        <services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <!-- ... -->
-            <service id="mail_manager" abstract="true">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
+            <services>
+                <!-- ... -->
+                <service id="mail_manager" abstract="true">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
 
-                <call method="setEmailFormatter">
-                     <argument type="service" id="my_email_formatter" />
-                </call>
-            </service>
+                    <call method="setEmailFormatter">
+                        <argument type="service" id="my_email_formatter" />
+                    </call>
+                </service>
 
-            <service id="newsletter_manager"
-                class="%newsletter_manager.class%"
-                parent="mail_manager"
-            />
+                <service
+                    id="newsletter_manager"
+                    class="NewsletterManager"
+                    parent="mail_manager" />
 
-            <service id="greeting_card_manager"
-                class="%greeting_card_manager.class%"
-                parent="mail_manager"
-            />
-        </services>
+                <service
+                    id="greeting_card_manager"
+                    class="GreetingCardManager"
+                    parent="mail_manager" />
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -242,7 +240,6 @@ a parent for a service.
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-
         $mailManager = new Definition();
         $mailManager
             ->setAbstract(true);
@@ -256,11 +253,11 @@ a parent for a service.
         $container->setDefinition('mail_manager', $mailManager);
 
         $newsletterManager = new DefinitionDecorator('mail_manager');
-        $newsletterManager->setClass('%newsletter_manager.class%');
+        $newsletterManager->setClass('NewsletterManager');
         $container->setDefinition('newsletter_manager', $newsletterManager);
 
         $greetingCardManager = new DefinitionDecorator('mail_manager');
-        $greetingCardManager->setClass('%greeting_card_manager.class%');
+        $greetingCardManager->setClass('GreetingCardManager');
         $container->setDefinition('greeting_card_manager', $greetingCardManager);
 
 In this context, having a ``parent`` service implies that the arguments and
@@ -325,49 +322,55 @@ to the ``NewsletterManager`` class, the config would look like this:
                     - [setEmailFormatter, ["@my_email_formatter"]]
 
             newsletter_manager:
-                class:  "%newsletter_manager.class%"
+                class:  "NewsletterManager"
                 parent: mail_manager
                 calls:
                     - [setMailer, ["@my_alternative_mailer"]]
 
             greeting_card_manager:
-                class:  "%greeting_card_manager.class%"
+                class:  "GreetingCardManager"
                 parent: mail_manager
 
     .. code-block:: xml
 
-        <!-- ... -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
             <!-- ... -->
-            <service id="my_alternative_mailer">
-              <!-- ... -->
-            </service>
+            <services>
+                <!-- ... -->
+                <service id="my_alternative_mailer">
+                    <!-- ... -->
+                </service>
 
-            <service id="mail_manager" abstract="true">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
+                <service id="mail_manager" abstract="true">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
 
-                <call method="setEmailFormatter">
-                     <argument type="service" id="my_email_formatter" />
-                </call>
-            </service>
+                    <call method="setEmailFormatter">
+                        <argument type="service" id="my_email_formatter" />
+                    </call>
+                </service>
 
-            <service id="newsletter_manager"
-                class="%newsletter_manager.class%"
-                parent="mail_manager"
-            >
-                 <call method="setMailer">
-                     <argument type="service" id="my_alternative_mailer" />
-                </call>
-            </service>
+                <service
+                    id="newsletter_manager"
+                    class="NewsletterManager"
+                    parent="mail_manager">
 
-            <service id="greeting_card_manager"
-                class="%greeting_card_manager.class%"
-                parent="mail_manager"
-            />
-        </services>
+                    <call method="setMailer">
+                        <argument type="service" id="my_alternative_mailer" />
+                    </call>
+                </service>
+
+                <service
+                    id="greeting_card_manager"
+                    class="GreetingCardManager"
+                    parent="mail_manager" />
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -391,7 +394,7 @@ to the ``NewsletterManager`` class, the config would look like this:
         $container->setDefinition('mail_manager', $mailManager);
 
         $newsletterManager = new DefinitionDecorator('mail_manager');
-        $newsletterManager->setClass('%newsletter_manager.class%');
+        $newsletterManager->setClass('NewsletterManager');
             ->addMethodCall('setMailer', array(
                 new Reference('my_alternative_mailer'),
             ))
@@ -399,7 +402,7 @@ to the ``NewsletterManager`` class, the config would look like this:
         $container->setDefinition('newsletter_manager', $newsletterManager);
 
         $greetingCardManager = new DefinitionDecorator('mail_manager');
-        $greetingCardManager->setClass('%greeting_card_manager.class%');
+        $greetingCardManager->setClass('GreetingCardManager');
         $container->setDefinition('greeting_card_manager', $greetingCardManager);
 
 The ``GreetingCardManager`` will receive the same dependencies as before,

@@ -30,7 +30,7 @@ Configuration
     If you are working with the full-stack Symfony framework, the Form component
     is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
 
-In Symfony2, forms are represented by objects and these objects are built
+In Symfony, forms are represented by objects and these objects are built
 by using a *form factory*. Building a form factory is simple::
 
     use Symfony\Component\Form\Forms;
@@ -50,7 +50,7 @@ support for very important features:
 * **Validation:** Integration with a validation library to generate error
   messages for submitted data.
 
-The Symfony2 Form component relies on other libraries to solve these problems.
+The Symfony Form component relies on other libraries to solve these problems.
 Most of the time you will use Twig and the Symfony
 :doc:`HttpFoundation </components/http_foundation/introduction>`,
 Translation and Validator components, but you can replace any of these with
@@ -77,6 +77,12 @@ method::
 Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
 object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 ``$_GET``) based on the HTTP method configured on the form (POST is default).
+
+.. seealso::
+
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
+    for this. Read more about it :ref:`in the cookbook <cookbook-form-call-submit-directly>`.
 
 .. sidebar:: Integration with the HttpFoundation Component
 
@@ -137,7 +143,7 @@ and validated when binding the form.
 
 .. tip::
 
-    If you're not using the HttpFoundation component, load use
+    If you're not using the HttpFoundation component, you can use
     :class:`Symfony\\Component\\Form\\Extension\\Csrf\\CsrfProvider\\DefaultCsrfProvider`
     instead, which relies on PHP's native session handling::
 
@@ -154,7 +160,7 @@ errors, and labels). If you use `Twig`_ as your template engine, the Form
 component offers a rich integration.
 
 To use the integration, you'll need the ``TwigBridge``, which provides integration
-between Twig and several Symfony2 components. If you're using Composer, you
+between Twig and several Symfony components. If you're using Composer, you
 could install the latest 2.3 version by adding the following ``require``
 line to your ``composer.json`` file:
 
@@ -167,7 +173,7 @@ line to your ``composer.json`` file:
     }
 
 The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
-that help you render each the HTML widget, label and error for each field
+that help you render the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
@@ -369,7 +375,7 @@ Creating a simple Form
 
 .. tip::
 
-    If you're using the Symfony2 framework, then the form factory is available
+    If you're using the Symfony framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder``
@@ -488,6 +494,43 @@ rendered, along with a label and error message (if there is one). As easy
 as this is, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
 to do that in the ":ref:`form-rendering-template`" section.
+
+Changing a Form's Method and Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ability to configure the form method and action was introduced in
+    Symfony 2.3.
+
+By default, a form is submitted to the same URI that rendered the form with
+an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
+and :ref:`form-option-method` options (the ``method`` option is also used
+by ``handleRequest()`` to determine whether a form has been submitted):
+
+.. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $formBuilder = $formFactory->createBuilder('form', null, array(
+            'action' => '/search',
+            'method' => 'GET',
+        ));
+
+        // ...
+
+    .. code-block:: php-symfony
+
+        // ...
+
+        public function searchAction()
+        {
+            $formBuilder = $this->createFormBuilder('form', null, array(
+                'action' => '/search',
+                'method' => 'GET',
+            ));
+
+            // ...
+        }
 
 .. _component-form-intro-handling-submission:
 
@@ -616,6 +659,49 @@ and the errors will display next to the fields on error.
 
     For a list of all of the built-in validation constraints, see
     :doc:`/reference/constraints`.
+
+Accessing Form Errors
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.5
+    Before Symfony 2.5, ``getErrors()`` returned an array of ``FormError``
+    objects. The return value was changed to ``FormErrorIterator`` in Symfony
+    2.5.
+
+.. versionadded:: 2.5
+    The ``$deep`` and ``$flatten`` arguments were introduced in Symfony 2.5.
+
+You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
+method to access the list of errors. It returns a
+:class:`Symfony\\Component\\Form\\FormErrorIterator` instance::
+
+    $form = ...;
+
+    // ...
+
+    // a FormErrorIterator instance, but only errors attached to this form level (e.g. "global errors)
+    $errors = $form->getErrors();
+
+    // a FormErrorIterator instance, but only errors attached to the "firstName" field
+    $errors = $form['firstName']->getErrors();
+
+    // a FormErrorIterator instance in a flattened structure
+    // use getOrigin() to determine the form causing the error
+    $errors = $form->getErrors(true);
+
+    // a FormErrorIterator instance representing the form tree structure
+    $errors = $form->getErrors(true, false);
+
+.. tip::
+
+    In older Symfony versions, ``getErrors()`` returned an array. To use the
+    errors the same way in Symfony 2.5 or newer, you have to pass them to
+    PHP's :phpfunction:`iterator_to_array` function::
+
+        $errorsAsArray = iterator_to_array($form->getErrors());
+
+    This is useful, for example, if you want to use PHP's ``array_`` function
+    on the form errors.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org

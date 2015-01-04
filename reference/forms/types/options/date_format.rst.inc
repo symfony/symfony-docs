@@ -1,7 +1,8 @@
 format
 ~~~~~~
 
-**type**: ``integer`` or ``string`` **default**: `IntlDateFormatter::MEDIUM`_ (or ``yyyy-MM-dd`` if `widget`_ is ``single_text``)
+**type**: ``integer`` or ``string`` **default**: `IntlDateFormatter::MEDIUM`_
+(or ``yyyy-MM-dd`` if `widget`_ is ``single_text``)
 
 Option passed to the ``IntlDateFormatter`` class, used to transform user input
 into the proper format. This is critical when the `widget`_ option is

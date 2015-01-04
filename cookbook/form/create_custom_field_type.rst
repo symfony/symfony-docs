@@ -60,20 +60,23 @@ all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
 
-* ``buildForm()`` - Each field type has a ``buildForm`` method, which is where
-  you configure and build any field(s). Notice that this is the same method
-  you use to setup *your* forms, and it works the same here.
+``buildForm()``
+    Each field type has a ``buildForm`` method, which is where
+    you configure and build any field(s). Notice that this is the same method
+    you use to setup *your* forms, and it works the same here.
 
-* ``buildView()`` - This method is used to set any extra variables you'll
-  need when rendering your field in a template. For example, in `ChoiceType`_,
-  a ``multiple`` variable is set and used in the template to set (or not
-  set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
-  for more details.
+``buildView()``
+    This method is used to set any extra variables you'll
+    need when rendering your field in a template. For example, in `ChoiceType`_,
+    a ``multiple`` variable is set and used in the template to set (or not
+    set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
+    for more details.
 
-* ``setDefaultOptions()`` - This defines options for your form type that
-  can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see :doc:`/reference/forms/types/form`),
-  but you can create any others that you need here.
+``setDefaultOptions()``
+    This defines options for your form type that
+    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
+    options common to all fields (see :doc:`/reference/forms/types/form`),
+    but you can create any others that you need here.
 
 .. tip::
 
@@ -129,7 +132,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.twig -->
+        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -151,32 +154,74 @@ link for details), create a ``gender_widget`` block to handle this:
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
+    When using Twig this is:
+
     .. configuration-block::
 
         .. code-block:: yaml
 
             # app/config/config.yml
             twig:
-                form:
-                    resources:
-                        - 'AcmeDemoBundle:Form:fields.html.twig'
+                form_themes:
+                    - 'AcmeDemoBundle:Form:fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
-                <twig:form>
-                    <twig:resource>AcmeDemoBundle:Form:fields.html.twig</twig:resource>
-                </twig:form>
+                <twig:form-theme>AcmeDemoBundle:Form:fields.html.twig</twig:form-theme>
             </twig:config>
 
         .. code-block:: php
 
             // app/config/config.php
             $container->loadFromExtension('twig', array(
-                'form' => array(
-                    'resources' => array(
-                        'AcmeDemoBundle:Form:fields.html.twig',
+                'form_themes' => array(
+                    'AcmeDemoBundle:Form:fields.html.twig',
+                ),
+            ));
+
+    For the PHP templating engine, your configuration should look like this:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                templating:
+                    form:
+                        resources:
+                            - 'AcmeDemoBundle:Form'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:templating>
+                        <framework:form>
+                            <framework:resource>AcmeDemoBundle:Form</twig:resource>
+                        </framework:form>
+                    </framework:templating>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'templating' => array(
+                    'form' => array(
+                        'resources' => array(
+                            'AcmeDemoBundle:Form',
+                        ),
                     ),
                 ),
             ));
@@ -198,7 +243,7 @@ new instance of the type in one of your forms::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', new GenderType(), array(
-                'empty_value' => 'Choose a gender',
+                'placeholder' => 'Choose a gender',
             ));
         }
     }
@@ -206,6 +251,10 @@ new instance of the type in one of your forms::
 But this only works because the ``GenderType()`` is very simple. What if
 the gender codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
+
+.. versionadded:: 2.6
+    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
+    ``empty_value``, which is available prior to 2.6.
 
 .. _form-cookbook-form-field-service:
 
@@ -336,7 +385,7 @@ configuration, using the field is now much easier::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', 'gender', array(
-                'empty_value' => 'Choose a gender',
+                'placeholder' => 'Choose a gender',
             ));
         }
     }

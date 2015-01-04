@@ -19,6 +19,7 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `default_locale`_
 * `trusted_proxies`_
 * `csrf_protection`_
     * enabled
@@ -48,6 +49,19 @@ Configuration
 * `profiler`_
     * `collect`_
     * :ref:`enabled <profiler.enabled>`
+* `translator`_
+    * :ref:`enabled <translator.enabled>`
+    * `fallback`_
+    * `logging`_
+* `property_accessor`_
+    * `magic_call`_
+    * `throw_exception_on_invalid_index`_
+* `validation`_
+    * `cache`_
+    * `enable_annotations`_
+    * `translation_domain`_
+    * `strict_email`_
+    * `api`_
 
 secret
 ~~~~~~
@@ -72,8 +86,8 @@ http_method_override
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-gets called automatically. It becomes the service container parameter named
-``kernel.http_method_override``. For more information, see
+method gets called automatically. It becomes the service container parameter
+named ``kernel.http_method_override``. For more information, see
 :doc:`/cookbook/routing/method_parameters`.
 
 ide
@@ -104,21 +118,26 @@ have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         framework:
             ide: "pstorm://%%f:%%l"
 
     .. code-block:: xml
 
-        <?xml version="1.0" charset="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/service"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config ide="pstorm://%%f:%%l" />
-
         </container>
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('framework', array(
             'ide' => 'pstorm://%%f:%%l',
         ));
@@ -142,13 +161,24 @@ This setting should be present in your ``test`` environment (usually via
 
 .. _reference-framework-trusted-proxies:
 
+default_locale
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``en``
+
+The default locale is used if no ``_locale`` routing parameter has been set. It
+becomes the service container parameter named ``kernel.default_locale`` and it
+is also available with the
+:method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
+method.
+
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
 Configures the IP addresses that should be trusted as proxies. For more details,
-see :doc:`/components/http_foundation/trusting_proxies`.
+see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 
 .. versionadded:: 2.3
     CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
@@ -158,17 +188,26 @@ see :doc:`/components/http_foundation/trusting_proxies`.
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         framework:
             trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
 
     .. code-block:: xml
 
-        <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
-            <!-- ... -->
-        </framework>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
+        </container>
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('framework', array(
             'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
         ));
@@ -285,9 +324,17 @@ the value to ``null``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:session save-path="null" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:session save-path="null" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -324,7 +371,7 @@ assets_base_urls
 
 This option allows you to define base URLs to be used for assets referenced
 from ``http`` and ``ssl`` (``https``) pages. A string value may be provided in
-lieu of a single-element array. If multiple base URLs are provided, Symfony2
+lieu of a single-element array. If multiple base URLs are provided, Symfony
 will select one from the collection each time it generates an asset's path.
 
 For your convenience, ``assets_base_urls`` can be set directly with a string or
@@ -373,15 +420,24 @@ Now, activate the ``assets_version`` option:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating assets-version="v2">
-            <framework:engine id="twig" />
-        </framework:templating>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:templating assets-version="v2">
+                <!-- ... -->
+                <framework:engine>twig</framework:engine>
+            </framework:templating>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
             'templating'      => array(
                 'engines'        => array('twig'),
                 'assets_version' => 'v2',
@@ -430,7 +486,7 @@ would be ``/images/logo.png?version=5``.
 
     URL rewrite rules could then be used to disregard the version prefix before
     serving the asset. Alternatively, you could copy assets to the appropriate
-    version path as part of your deployment process and forgo any URL rewriting.
+    version path as part of your deployment process and forgot any URL rewriting.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
@@ -442,9 +498,19 @@ profiler
 enabled
 .......
 
-**default**: ``true`` in the ``dev`` and ``test`` environments
+.. versionadded:: 2.2
+    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
+    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
+    configuration entirely.
 
-The profiler can be disabled by setting this key to ``false``.
+**type**: ``boolean`` **default**: ``false``
+
+The profiler can be enabled by setting this key to ``true``. When you are
+using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+and ``test`` environments.
+
+collect
+.......
 
 .. versionadded:: 2.3
     The ``collect`` option was introduced in Symfony 2.3. Previously, when
@@ -452,10 +518,7 @@ The profiler can be disabled by setting this key to ``false``.
     but the collectors were disabled. Now, the profiler and the collectors
     can be controlled independently.
 
-collect
-.......
-
-**default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
 to ``true``, the profiler collects data for all requests. If you want to only
@@ -463,6 +526,123 @@ collect information on-demand, you can set the ``collect`` flag to ``false``
 and activate the data collectors by hand::
 
     $profiler->enable();
+
+translator
+~~~~~~~~~~
+
+.. _translator.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable the ``translator`` service in the service container.
+
+fallback
+........
+
+**type**: ``string`` **default**: ``en``
+
+This option is used when the translation key for the current locale wasn't found.
+
+For more details, see :doc:`/book/translation`.
+
+.. _reference-framework-translator-logging:
+
+logging
+.......
+
+.. versionadded:: 2.6
+    The ``logging`` option was introduced in Symfony 2.6.
+
+**default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
+
+When ``true``, a log entry is made whenever the translator cannot find a translation
+for a given key. The logs are made to the ``translation`` channel and at the
+``debug`` for level for keys where there is a translation in the fallback
+locale and the ``warning`` level if there is no translation to use at all.
+
+property_accessor
+~~~~~~~~~~~~~~~~~
+
+magic_call
+..........
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __call() method <components-property-access-magic-call>` when
+its ``getValue()`` method is called.
+
+throw_exception_on_invalid_index
+................................
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service throws an exception when you
+try to access an invalid index of an array.
+
+validation
+~~~~~~~~~~
+
+cache
+.....
+
+**type**: ``string``
+
+The service that is used to persist class metadata in a cache. The service
+has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+
+enable_annotations
+..................
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, validation constraints can be defined using annotations.
+
+translation_domain
+..................
+
+**type**: ``string`` **default**: ``validators``
+
+The translation domain that is used when translating validation constraint
+error messages.
+
+strict_email
+............
+
+.. versionadded:: 2.5
+    The ``strict_email`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, the `egulias/email-validator`_ library will be
+used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
+the validator uses a simple regular expression to validate email addresses.
+
+api
+...
+
+.. versionadded:: 2.5
+    The ``api`` option was introduced in Symfony 2.5.
+
+**type**: ``string``
+
+Starting with Symfony 2.5, the Validator component introduced a new validation
+API. The ``api`` option is used to switch between the different implementations:
+
+``2.4``
+    Use the vaidation API that is compatible with older Symfony versions.
+
+``2.5``
+    Use the validation API introduced in Symfony 2.5.
+
+``2.5-bc`` or ``auto``
+    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
+    Symfony will use an API implementation that is compatible with both the
+    legacy implementation and the ``2.5`` implementation. You have to use
+    PHP 5.3.9 or higher to be able to use this implementation.
 
 Full default Configuration
 --------------------------
@@ -581,6 +761,7 @@ Full default Configuration
             translator:
                 enabled:              false
                 fallback:             en
+                logging:              "%kernel.debug%"
 
             # validation configuration
             validation:
@@ -597,3 +778,4 @@ Full default Configuration
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
+.. _`egulias/email-validator`: https://github.com/egulias/EmailValidator

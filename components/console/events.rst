@@ -51,6 +51,39 @@ dispatched. Listeners receive a
         $application = $command->getApplication();
     });
 
+Disable Commands inside Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    Disabling commands inside listeners was introduced in Symfony 2.6.
+
+Using the
+:method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`
+method, you can disable a command inside a listener. The application
+will then *not* execute the command, but instead will return the code ``113``
+(defined in ``ConsoleCommandEvent::RETURN_CODE_DISABLED``). This code is one
+of the `reserved exit codes`_ for console commands that conform with the
+C/C++ standard.::
+
+    use Symfony\Component\Console\Event\ConsoleCommandEvent;
+    use Symfony\Component\Console\ConsoleEvents;
+
+    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+        // get the command to be executed
+        $command = $event->getCommand();
+
+        // ... check if the command can be executed
+
+        // disable the command, this will result in the command being skipped
+        // and code 113 being returned from the Application
+        $event->disableCommand();
+
+        // it is possible to enable the command in a later listener
+        if (!$event->commandShouldRun()) {
+            $event->enableCommand();
+        }
+    });
+
 The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------
 
@@ -118,3 +151,5 @@ Listeners receive a
         // change the exception to another one
         $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
     });
+
+.. _`reserved exit codes`: http://www.tldp.org/LDP/abs/html/exitcodes.html

@@ -24,7 +24,7 @@ entry in that array:
 
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Entity\User:
             properties:
                 favoriteColors:
@@ -37,15 +37,15 @@ entry in that array:
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
-  
+
         class User
         {
             /**
              * @Assert\All({
              *     @Assert\NotBlank,
-             *     @Assert\Length(min = "5")
+             *     @Assert\Length(min = 5)
              * })
              */
              protected $favoriteColors = array();
@@ -77,7 +77,7 @@ entry in that array:
 
         // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
-       
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

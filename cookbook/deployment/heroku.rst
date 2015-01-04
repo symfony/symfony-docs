@@ -4,7 +4,7 @@
 Deploying to Heroku Cloud
 =========================
 
-This step by step cookbook describes how to deploy a Symfony2 web application to
+This step by step cookbook describes how to deploy a Symfony web application to
 the Heroku cloud platform. Its contents are based on `the original article`_
 published by Heroku.
 
@@ -15,24 +15,24 @@ To setup a new Heroku website, first `signup with Heroku`_ or sign in
 with your credentials. Then download and install the `Heroku Toolbelt`_ on your
 local computer.
 
-You can also check out the `getting Started with PHP on Heroku`_ guide to gain 
+You can also check out the `getting Started with PHP on Heroku`_ guide to gain
 more familiarity with the specifics of working with PHP applications on Heroku.
 
 Preparing your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Deploying a Symfony2 application to Heroku doesn't require any change in its
+Deploying a Symfony application to Heroku doesn't require any change in its
 code, but it requires some minor tweaks to its configuration.
 
-By default, the Symfony2 app will log into your application's ``app/log/``
-directory. This is not ideal as Heroku uses an `ephemeral file system`_. On 
-Heroku, the best way to handle logging is using `Logplex`_. And the best way to 
-send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily, 
-Symfony2 uses the excellent Monolog library for logging. So, a new log 
+By default, the Symfony app will log into your application's ``app/log/``
+directory. This is not ideal as Heroku uses an `ephemeral file system`_. On
+Heroku, the best way to handle logging is using `Logplex`_. And the best way to
+send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily,
+Symfony uses the excellent Monolog library for logging. So, a new log
 destination is just a change to a config file away.
 
 Open the ``app/config/config_prod.yml`` file, locate the
-``monolog/handlers/nested``  section (or create it if it doesn't exist yet) and 
+``monolog/handlers/nested``  section (or create it if it doesn't exist yet) and
 change the value of ``path`` from
 ``"%kernel.logs_dir%/%kernel.environment%.log"`` to ``"php://stderr"``:
 
@@ -47,7 +47,7 @@ change the value of ``path`` from
                 # ...
                 path: "php://stderr"
 
-Once the application is deployed, run ``heroku logs --tail`` to keep the 
+Once the application is deployed, run ``heroku logs --tail`` to keep the
 stream of logs from Heroku open in your terminal.
 
 Creating a new Application on Heroku
@@ -69,37 +69,38 @@ You are now ready to deploy the application as explained in the next section.
 Deploying your Application on Heroku
 ------------------------------------
 
-To deploy your application to Heroku, you must first create a ``Procfile``, 
-which tells Heroku what command to use to launch the web server with the 
-correct settings. After you've done that, you can simply ``git push`` and 
-you're done!
+To deploy your application to Heroku, you must first create a ``Procfile``,
+which tells Heroku what command to use to launch the web server with the
+correct document root. After that, you will ensure that your Symfony application
+runs the ``prod`` environment, and then you'll be ready to ``git push`` to
+Heroku for your first deploy!
 
 Creating a Procfile
 ~~~~~~~~~~~~~~~~~~~
 
-By default, Heroku will launch an Apache web server together with PHP to serve 
+By default, Heroku will launch an Apache web server together with PHP to serve
 applications. However, two special circumstances apply to Symfony applications:
 
-1. The document root is in the ``web/`` directory and not in the root directory
+#. The document root is in the ``web/`` directory and not in the root directory
    of the application;
-2. The Composer ``bin-dir``, where vendor binaries (and thus Heroku's own boot 
+#. The Composer ``bin-dir``, where vendor binaries (and thus Heroku's own boot
    scripts) are placed, is ``bin/`` , and not the default ``vendor/bin``.
 
 .. note::
 
-    Vendor binaries are usually installed to ``vendor/bin`` by Composer, but 
-    sometimes (e.g. when running a Symfony Standard Edition project!), the 
+    Vendor binaries are usually installed to ``vendor/bin`` by Composer, but
+    sometimes (e.g. when running a Symfony Standard Edition project!), the
     location will be different. If in doubt, you can always run
     ``composer config bin-dir`` to figure out the right location.
 
-Create a new file called ``Procfile`` (without any extension) at the root 
+Create a new file called ``Procfile`` (without any extension) at the root
 directory of the application and add just the following content:
 
 .. code-block:: text
 
     web: bin/heroku-php-apache2 web/
 
-If you prefer working on the command console, execute the following commands to 
+If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
 .. code-block:: bash
@@ -109,6 +110,27 @@ create the ``Procfile`` file and to add it to the repository:
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
      1 file changed, 1 insertion(+)
+
+Setting the ``prod`` Environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+During a deploy, Heroku runs ``composer install --no-dev`` to install all of the
+dependencies your application requires. However, typical `post-install-commands`_
+in ``composer.json``, e.g. to install assets or clear (or pre-warm) caches, run
+using Symfony's ``dev`` environment by default.
+
+This is clearly not what you want - the app runs in "production" (even if you
+use it just for an experiment, or as a staging environment), and so any build
+steps should use the same ``prod`` environment as well.
+
+Thankfully, the solution to this problem is very simple: Symfony will pick up an
+environment variable named ``SYMFONY_ENV`` and use that environment if nothing
+else is explicitly set. As Heroku exposes all `config vars`_ as environment
+variables, you can issue a single command to prepare your app for a deployment:
+
+.. code-block:: bash
+
+    $ heroku config:set SYMFONY_ENV=prod
 
 Pushing to Heroku
 ~~~~~~~~~~~~~~~~~
@@ -175,8 +197,8 @@ Then, deploy your application executing this command:
     To git@heroku.com:mighty-hamlet-1981.git
      * [new branch]      master -> master
 
-And that's it! If you now open your browser, either by manually pointing 
-it to the URL ``heroku create`` gave you, or by using the Heroku Toolbelt, the 
+And that's it! If you now open your browser, either by manually pointing
+it to the URL ``heroku create`` gave you, or by using the Heroku Toolbelt, the
 application will respond:
 
 .. code-block:: bash
@@ -184,7 +206,7 @@ application will respond:
     $ heroku open
     Opening mighty-hamlet-1981... done
 
-You should be seeing your Symfony2 application in your browser.
+You should be seeing your Symfony application in your browser.
 
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
@@ -193,3 +215,5 @@ You should be seeing your Symfony2 application in your browser.
 .. _`ephemeral file system`: https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem
 .. _`Logplex`: https://devcenter.heroku.com/articles/logplex
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
+.. _`post-install-commands`: https://getcomposer.org/doc/articles/scripts.md
+.. _`config vars`: https://devcenter.heroku.com/articles/config-vars

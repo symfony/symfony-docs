@@ -69,7 +69,7 @@ It can now be used from a template:
             array('jpegoptim')
         ) as $url): ?>
             <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Removing all EXIF Data
 ~~~~~~~~~~~~~~~~~~~~~~

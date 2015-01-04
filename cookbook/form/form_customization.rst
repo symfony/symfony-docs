@@ -67,11 +67,19 @@ just one line:
 
     .. code-block:: jinja
 
+        {# renders all fields #}
         {{ form_widget(form) }}
+
+        {# renders all fields *and* the form start and end tags #}
+        {{ form(form) }}
 
     .. code-block:: php
 
-        <?php echo $view['form']->widget($form); ?>
+        <!-- renders all fields -->
+        <?php echo $view['form']->widget($form) ?>
+
+        <!-- renders all fields *and* the form start and end tags -->
+        <?php echo $view['form']->form($form) ?>
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
@@ -93,9 +101,18 @@ rendering a form. In other words, if you want to customize one portion of
 how a form is rendered, you'll import a *theme* which contains a customization
 of the appropriate form fragments.
 
-Symfony comes with a default theme (`form_div_layout.html.twig`_ in Twig and
-``FrameworkBundle:Form`` in PHP) that defines each and every fragment needed
-to render every part of a form.
+Symfony comes with four **built-in form themes** that define each and every
+fragment needed to render every part of a form:
+
+* `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element.
+* `form_table_layout.html.twig`_, wraps the entire form inside a ``<table>``
+  element and each form field inside a ``<tr>`` element.
+* `bootstrap_3_layout.html.twig`_, wraps each form field inside a ``<div>`` element
+  with the appropriate CSS classes to apply the default `Bootstrap 3 CSS framework`_
+  styles.
+* `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
+  but the CSS classes applied are the ones used to display the forms horizontally
+  (i.e. the label and the widget in the same row).
 
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
@@ -455,18 +472,15 @@ form is rendered.
 
         # app/config/config.yml
         twig:
-            form:
-                resources:
-                    - 'AcmeDemoBundle:Form:fields.html.twig'
+            form_themes:
+                - 'AcmeDemoBundle:Form:fields.html.twig'
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
-            <twig:form>
-                <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
-            </twig:form>
+            <twig:form-theme>AcmeDemoBundle:Form:fields.html.twig</twig:form-theme>
             <!-- ... -->
         </twig:config>
 
@@ -474,10 +488,8 @@ form is rendered.
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'AcmeDemoBundle:Form:fields.html.twig',
-                ),
+            'form_themes' => array(
+                'AcmeDemoBundle:Form:fields.html.twig',
             ),
 
             // ...
@@ -493,17 +505,15 @@ resource to use such a layout:
 
         # app/config/config.yml
         twig:
-            form:
-                resources: ['form_table_layout.html.twig']
+            form_themes:
+                - 'form_table_layout.html.twig'
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
-            <twig:form>
-                <resource>form_table_layout.html.twig</resource>
-            </twig:form>
+            <twig:form-theme>form_table_layout.html.twig</twig:form-theme>
             <!-- ... -->
         </twig:config>
 
@@ -511,10 +521,8 @@ resource to use such a layout:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array(
-                'resources' => array(
-                    'form_table_layout.html.twig',
-                ),
+            'form_themes' => array(
+                'form_table_layout.html.twig',
             ),
 
             // ...
@@ -795,7 +803,7 @@ and customize the ``form_errors`` fragment.
             <ul>
                 <?php foreach ($errors as $error): ?>
                     <li><?php echo $error->getMessage() ?></li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         <?php endif ?>
 
@@ -860,11 +868,11 @@ fields (e.g. a whole form), and not just an individual field.
                 <ul>
                     <?php foreach ($errors as $error): ?>
                         <li><?php echo $error->getMessage() ?></li>
-                    <?php endforeach; ?>
+                    <?php endforeach ?>
                 </ul>
             <?php else: ?>
                 <!-- ... render the errors for a single field -->
-            <?php endif; ?>
+            <?php endif ?>
         <?php endif ?>
 
 
@@ -1069,3 +1077,7 @@ The array passed as the second argument contains form "variables". For
 more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`form_table_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_table_layout.html.twig
+.. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
+.. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
+.. _`Bootstrap 3 CSS framework`: http://getbootstrap.com/

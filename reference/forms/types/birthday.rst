@@ -20,23 +20,28 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Rendered as          | can be three select boxes or 1 or 3 text boxes, based on the `widget`_ option |
 +----------------------+-------------------------------------------------------------------------------+
-| Overridden Options   | - `years`_                                                                    |
+| Overridden options   | - `years`_                                                                    |
 +----------------------+-------------------------------------------------------------------------------+
-| Inherited Options    | - `widget`_                                                                   |
-|                      | - `input`_                                                                    |
-|                      | - `empty_value`_                                                              |
-|                      | - `months`_                                                                   |
+| Inherited options    | from  the :doc:`date </reference/forms/types/date>` type:                     |
+|                      |                                                                               |
 |                      | - `days`_                                                                     |
+|                      | - `placeholder`_                                                              |
 |                      | - `format`_                                                                   |
+|                      | - `input`_                                                                    |
 |                      | - `model_timezone`_                                                           |
+|                      | - `months`_                                                                   |
 |                      | - `view_timezone`_                                                            |
+|                      | - `widget`_                                                                   |
+|                      |                                                                               |
+|                      | from the :doc:`form </reference/forms/types/form>` type:                      |
+|                      |                                                                               |
 |                      | - `data`_                                                                     |
+|                      | - `disabled`_                                                                 |
+|                      | - `inherit_data`_                                                             |
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
-|                      | - `read_only`_                                                                |
-|                      | - `disabled`_                                                                 |
 |                      | - `mapped`_                                                                   |
-|                      | - `inherit_data`_                                                             |
+|                      | - `read_only`_                                                                |
 +----------------------+-------------------------------------------------------------------------------+
 | Parent type          | :doc:`date </reference/forms/types/date>`                                     |
 +----------------------+-------------------------------------------------------------------------------+
@@ -59,34 +64,34 @@ Inherited Options
 
 These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
-.. include:: /reference/forms/types/options/date_widget.rst.inc
-
-.. include:: /reference/forms/types/options/date_input.rst.inc
-
-.. include:: /reference/forms/types/options/empty_value.rst.inc
-
-.. include:: /reference/forms/types/options/months.rst.inc
-
 .. include:: /reference/forms/types/options/days.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
+.. include:: /reference/forms/types/options/date_input.rst.inc
+
 .. include:: /reference/forms/types/options/model_timezone.rst.inc
 
+.. include:: /reference/forms/types/options/months.rst.inc
+
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/date_widget.rst.inc
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/disabled.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/inherit_data.rst.inc
+.. include:: /reference/forms/types/options/read_only.rst.inc

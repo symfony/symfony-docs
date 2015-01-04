@@ -103,7 +103,7 @@ Validating the Answer
 ---------------------
 
 You can even validate the answer. For instance, in the last example you asked
-for the bundle name. Following the Symfony2 naming conventions, it should
+for the bundle name. Following the Symfony naming conventions, it should
 be suffixed with ``Bundle``. You can validate that by using the
 :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::askAndValidate`
 method::
@@ -247,18 +247,23 @@ Testing a Command which Expects Input
 If you want to write a unit test for a command which expects some kind of input
 from the command line, you need to overwrite the HelperSet used by the command::
 
+    use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Helper\DialogHelper;
     use Symfony\Component\Console\Helper\HelperSet;
+    use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
     public function testExecute()
     {
         // ...
+        $application = new Application();
+        $application->add(new MyCommand());
+        $command = $application->find('my:command:name');
         $commandTester = new CommandTester($command);
 
         $dialog = $command->getHelper('dialog');
         $dialog->setInputStream($this->getInputStream("Test\n"));
-        // Equals to a user inputing "Test" and hitting ENTER
+        // Equals to a user inputting "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
         $commandTester->execute(array('command' => $command->getName()));
@@ -279,3 +284,8 @@ By setting the input stream of the ``DialogHelper``, you imitate what the
 console would do internally with all user input through the cli. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
+
+.. seealso::
+
+    You find more information about testing commands in the console component
+    docs about :ref:`testing console commands <component-console-testing-commands>`.

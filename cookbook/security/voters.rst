@@ -4,10 +4,10 @@
 How to Implement your own Voter to Blacklist IP Addresses
 =========================================================
 
-The Symfony2 Security component provides several layers to authorize users.
+The Symfony Security component provides several layers to authorize users.
 One of the layers is called a "voter". A voter is a dedicated class that checks
 if the user has the rights to connect to the application or access a specific
-resource/URL. For instance, Symfony2 provides a layer that checks if the user
+resource/URL. For instance, Symfony provides a layer that checks if the user
 is fully authorized or if it has some expected roles.
 
 It is sometimes useful to create a custom voter to handle a specific case not
@@ -32,7 +32,7 @@ access, not to grant access.
 Creating a custom Voter
 -----------------------
 
-To blacklist a user based on its IP, you can use the ``request`` service
+To blacklist a user based on its IP, you can use the ``request_stack`` service
 and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php

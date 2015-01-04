@@ -35,7 +35,7 @@ will contain a credit card number.
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        namespace Acme\SubscriptionBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -67,7 +67,7 @@ will contain a credit card number.
     .. code-block:: php
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity\Transaction;
+        namespace Acme\SubscriptionBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

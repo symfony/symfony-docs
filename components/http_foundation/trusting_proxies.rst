@@ -4,13 +4,18 @@
 Trusting Proxies
 ================
 
+.. tip::
+
+    If you're using the Symfony Framework, start by reading
+    :doc:`/cookbook/request/load_balancer_reverse_proxy`.
+
 If you find yourself behind some sort of proxy - like a load balancer - then
 certain header information may be sent to you using special ``X-Forwarded-*``
 headers. For example, the ``Host`` HTTP header is usually used to return
 the requested host. But when you're behind a proxy, the true host may be
 stored in a ``X-Forwarded-Host`` header.
 
-Since HTTP headers can be spoofed, Symfony2 does *not* trust these proxy
+Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
 your proxy.
 
@@ -24,12 +29,6 @@ your proxy.
 
     // only trust proxy headers coming from this IP addresses
     Request::setTrustedProxies(array('192.0.0.1', '10.0.0.0/8'));
-
-.. note::
-
-   When using Symfony's internal reverse proxy (``AppCache.php``) make sure to add
-   ``127.0.0.1`` to the list of trusted proxies.
-
 
 Configuring Header Names
 ------------------------

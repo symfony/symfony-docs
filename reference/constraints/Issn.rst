@@ -25,7 +25,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/JournalBundle/Resources/config/validation.yml
+        # src/Acme/JournalBundle/Resources/config/validation.yml
         Acme\JournalBundle\Entity\Journal:
             properties:
                 issn:
@@ -49,11 +49,17 @@ Basic Usage
     .. code-block:: xml
 
         <!-- src/Acme/JournalBundle/Resources/config/validation.xml -->
-        <class name="Acme\JournalBundle\Entity\Journal">
-            <property name="issn">
-                <constraint name="Issn" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\JournalBundle\Entity\Journal">
+                <property name="issn">
+                    <constraint name="Issn" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

@@ -4,8 +4,8 @@
 How to Use the Apache Router
 ============================
 
-Symfony2, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
-One of these ways is by letting Apache handle routes directly, rather than using Symfony2 for this task.
+Symfony, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
+One of these ways is by letting Apache handle routes directly, rather than using Symfony for this task.
 
 .. caution::
 
@@ -18,7 +18,7 @@ Change Router Configuration Parameters
 --------------------------------------
 
 To dump Apache routes you must first tweak some configuration parameters to tell
-Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
+Symfony to use the ``ApacheUrlMatcher`` instead of the default one:
 
 .. configuration-block::
 

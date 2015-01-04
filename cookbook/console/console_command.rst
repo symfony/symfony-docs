@@ -6,12 +6,12 @@ How to Create a Console Command
 
 The Console page of the Components section (:doc:`/components/console/introduction`) covers
 how to create a console command. This cookbook article covers the differences
-when creating console commands within the Symfony2 framework.
+when creating console commands within the Symfony framework.
 
 Automatically Registering Commands
 ----------------------------------
 
-To make the console commands available automatically with Symfony2, create a
+To make the console commands available automatically with Symfony, create a
 ``Command`` directory inside your bundle and create a PHP file suffixed with
 ``Command.php`` for each command that you want to provide. For example, if you
 want to extend the AcmeDemoBundle to greet you from the command line, create
@@ -59,7 +59,7 @@ This command will now automatically be available to run:
 
 .. code-block:: bash
 
-    $ app/console demo:greet Fabien
+    $ php app/console demo:greet Fabien
 
 .. _cookbook-console-dic:
 
@@ -87,7 +87,7 @@ service container. In other words, you have access to any configured service::
         // ...
     }
 
-However, due to the `container scopes </cookbook/service_container/scopes>`_ this
+However, due to the :doc:`container scopes </cookbook/service_container/scopes>` this
 code doesn't work for some services. For instance, if you try to get the ``request``
 service or any other service related to it, you'll get the following error:
 

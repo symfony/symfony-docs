@@ -16,21 +16,21 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
-|             | - `precision`_                                                      |
 |             | - `grouping`_                                                       |
+|             | - `precision`_                                                      |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `empty_data`_                                                     |
-| options     | - `required`_                                                       |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `data`_                                                           |
-|             | - `read_only`_                                                      |
-|             | - `disabled`_                                                       |
+| Inherited   | - `data`_                                                           |
+| options     | - `disabled`_                                                       |
+|             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
+|             | - `read_only`_                                                      |
+|             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                           |
 +-------------+---------------------------------------------------------------------+
@@ -49,7 +49,7 @@ Specifies the currency that the money is being specified in. This determines
 the currency symbol that should be shown by the text box. Depending on
 the currency - the currency symbol may be shown before or after the input
 text field.
-    
+
 This can be any `3 letter ISO 4217 code`_. You can also set this to false to
 hide the currency symbol.
 
@@ -71,6 +71,8 @@ In this case, if the ``price`` field is set to ``9900``, then the value
 value ``99``, it will be multiplied by ``100`` and ``9900`` will ultimately
 be set back on your object.
 
+.. include:: /reference/forms/types/options/grouping.rst.inc
+
 precision
 ~~~~~~~~~
 
@@ -81,26 +83,22 @@ you can modify this value. You probably won't need to do this unless,
 for example, you want to round to the nearest dollar (set the precision
 to ``0``).
 
-.. include:: /reference/forms/types/options/grouping.rst.inc
-
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -110,15 +108,23 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Form Variables
 --------------
 
-============= ========== ===============================================================
-Variable      Type       Usage                                       
-============= ========== ===============================================================
-money_pattern ``string`` The format to use to display the money, including the currency.
-============= ========== ===============================================================
+=============  ==========  ===============================================================
+Variable       Type        Usage
+=============  ==========  ===============================================================
+money_pattern  ``string``  The format to use to display the money, including the currency.
+=============  ==========  ===============================================================
 
 .. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217

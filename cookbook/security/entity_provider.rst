@@ -367,7 +367,7 @@ fetch the user from the database before checking the password validity.
 .. note::
 
     By default, the entity provider uses the default entity manager to fetch
-    user information from the database. If you,
+    user information from the database. If you
     :doc:`use multiple entity managers </cookbook/doctrine/multiple_entity_managers>`,
     you can specify which manager to use with the ``manager_name`` option:
 
@@ -447,11 +447,11 @@ The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
 interface adds four extra methods to validate the account status:
 
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonExpired`
-  checks whether the user's account has expired,
+  checks whether the user's account has expired;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isAccountNonLocked`
-   checks whether the user is locked,
+  checks whether the user is locked;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isCredentialsNonExpired`
-  checks whether the user's credentials (password) has expired,
+  checks whether the user's credentials (password) has expired;
 * :method:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface::isEnabled`
   checks whether the user is enabled.
 
@@ -650,6 +650,14 @@ about in this section.
     method. By convention, a role called ``ROLE_USER`` is usually returned.
     If you fail to return any roles, it may appear as if your user isn't
     authenticated at all.
+
+.. caution::
+
+    In order to work with the security configuration examples on this page
+    all roles must be prefixed with ``ROLE_`` (see
+    the :ref:`section about roles <book-security-roles>` in the book). For
+    example, your roles will be ``ROLE_ADMIN`` or ``ROLE_USER`` instead of
+    ``ADMIN`` or ``USER``.
 
 In this example, the ``AcmeUserBundle:User`` entity class defines a
 many-to-many relationship with a ``AcmeUserBundle:Role`` entity class.
@@ -869,7 +877,3 @@ then instead of these properties being checked, your ``isEqualTo`` method
 is simply called, and you can check whatever properties you want. Unless
 you understand this, you probably *won't* need to implement this interface
 or worry about it.
-
-.. versionadded:: 2.1
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``
-    and the ``EquatableInterface`` was introduced in its place.
