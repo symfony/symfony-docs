@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-03T08:27:22Z
+
+Thanks for providing a fix @xelaris. I'm actually not sure if the whole paragraph shouldn't just be removed.
+
+@weaverryan You merged that branch. Was this done by intention or can we remove the paragraph at all?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-03T18:21:24Z
+
+Hi guys!
+
+The paragraph was added intentionally, just so that the `isPasswordValid()` functionality was covered *somewhere*. So, I think this change is perfect and I also think that the note should be added to the 2.3 branch as @xelaris mentioned - for some reason that didn't occur to me when I was adding this to 2.6 (I was only thinking about the new `security.password_encoder` service).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-03T21:34:59Z
+
+Just opened a PR #4749 to add the paragraph to the 2.3 branch.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-04T09:59:33Z
+
+Thanks for clarifying, Ryan. This is good to be merged then.
+
+Thank you @xelaris :+1:
