@@ -4,9 +4,6 @@
 How to Choose the Password Encoder Algorithm Dynamically
 ========================================================
 
-.. versionadded:: 2.5
-    Named encoders were introduced in Symfony 2.5.
-
 Usually, the same password encoder is used for all users by configuring it
 to apply to all instances of a specific class:
 

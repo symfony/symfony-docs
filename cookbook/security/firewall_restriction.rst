@@ -135,10 +135,6 @@ request.
 Restricting by HTTP Methods
 ---------------------------
 
-.. versionadded:: 2.5
-    Support for restricting security firewalls to specific HTTP methods was introduced in
-    Symfony 2.5.
-
 The configuration option ``methods`` restricts the initialization of the firewall to
 the provided HTTP methods.
 
