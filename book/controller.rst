@@ -434,6 +434,20 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
     public function indexAction()
     {
         return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is equivalent to using redirect() and generateUrl() together:
+        // return $this->redirect($this->generateUrl('homepage'), 301);
+    }
+
+.. versionadded:: 2.6
+    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example below).
+
+Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
+
+    public function indexAction()
+    {
+        return $this->redirect('http://symfony.com/doc');
     }
 
 By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
@@ -446,7 +460,7 @@ perform a 301 (permanent) redirect, modify the second argument::
 
 .. tip::
 
-    The ``redirectToRoute()`` method is simply a shortcut that creates a ``Response``
+    The ``redirect()`` method is simply a shortcut that creates a ``Response``
     object that specializes in redirecting the user. It's equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -621,6 +635,8 @@ For example, imagine you're processing a form submit::
                 'notice',
                 'Your changes were saved!'
             );
+
+            // $this->addFlash is equivalent to $this->get('session')->getFlashBag()->add
 
             return $this->redirectToRoute(...);
         }
