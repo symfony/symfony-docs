@@ -1,0 +1,121 @@
+---------------------------------------------------------------------------
+
+by ricardclau at 2014-08-17T15:13:29Z
+
+Fixed as per @WouterJ comments
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-08-19T21:57:13Z
+
+@ricardclau I just added some changes that should get us closer. Thanks for your work on this!
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2014-08-19T22:10:30Z
+
+@weaverryan Thanks for your patience with all my rst issues, it´s been a while not contributing :(
+
+I have done all your suggested changes but removing the mention to the new component and the bit about the HttpCache until we can confirm this
+
+Good to see some progress
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2014-08-20T21:51:25Z
+
+So, the only thing missing would be clarifying if Symfony HTTPCache works like Varnish or not and in case it does not, rephrase that part a bit, right? @weaverryan @WouterJ @stof @xabbuh
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-25T01:51:17Z
+
+regarding the built-in cache, there is this in [the book](http://symfony.com/doc/current/book/http_cache.html)
+
+> private_headers: Set of request headers that trigger "private" Cache-Control behavior on responses
+> that don't explicitly state whether the response is public or private via a Cache-Control directive.
+> (default: Authorization and Cookie);
+
+so for our purposes, they work the same i would assume. [private means the content is not to be cached](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1)
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-08-25T01:55:54Z
+
+btw, this also relates to #3881 . we talk a lot about removing cookies in varnish - but this is always very hackish (the application knows when to cache or not, varnish should not know about specific urls). is there a way to have symfony only start a session when its actually needed e.g. for a form, and remove the cookie as soon as its not needed anymore? if so we should talk about that here, rather than propose to hack around in vcl.
+
+for admin areas and the like, the `path` option of the session cookie should be used to only receive a cookie for that area.
+
+i don't want to explode the scope of this PR - we can also open a new issue about that and work on it once this PR has been merged.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-15T18:35:20Z
+
+@dbu I'm very interested in your idea, because this *is* hard, and I don't like that :).
+
+I don't remember if Varnish decides to *not* cache a response because the *request* has cookies attached to it or if the *response* has a `set-cookie` header. It's probably the latter, in which case your idea definitely has some merit! But I'm also not sure about things like google analytics headers - we would want these sent back in the response, but would not want Varnish to ignore caching because of them.
+
+Thanks for the conversation - this stuff makes my head spin a bit... and I'm probably not alone ;).
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-09-16T04:32:16Z
+
+varnish by default does not cache when the request has any cookie, as the cookie could have an effect on the response, and it certainly does not cache the set-cookie header response as that would be stupid most of the time. both can be overwritten in vcl when you really know what you are doing.
+
+the google analytics case is a standard example of using vcl to fix up the request: https://www.varnish-cache.org/docs/4.0/users-guide/increasing-your-hitrate.html#cookies
+
+the question for the doc in this case would be how far we want to duplicate varnish config. i guess the symfony doc must avoid becoming kind of a general varnish doc, but focus on symfony specific topics, and how to tailor symfony to optimally interact with varnish. (eg. not starting sessions when not needed). but we are disgressing from the content of this PR. ryan, do you want to collect all varnish related shortcomings of the doc in a new issue so we can work on that and make sure this PR can get merged without ending up in a major doc refactoring?
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-10T15:47:24Z
+
+any chance to wrap this up?
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2014-12-12T10:20:03Z
+
+It's been a while since this discussion happened, so we should refresh the missing bits
+
+The text explanation looks ok to me, what sort of coding example (if any) would we need to add? I remember @weaverryan wanted to do some further research, not sure if he found some time to do it
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-12T14:13:54Z
+
+i would love to have an example how that ajax call to get the csrf would look: https://github.com/symfony/symfony-docs/pull/4141#discussion_r16640036 : controller that provides the token, js puts it into the field i guess?, how does that then work when submitting the form?
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2014-12-29T12:39:11Z
+
+The idea would be to have the form disabled in the cached page and have the javascript method enable the form once the token is retrieved from the server.
+
+Plus, the user should be aware when using {{ form_rest() }} or similar functions in the page generation and check the output because this can potentially screw the whole procedure.
+
+Anyway, I honestly think that unless you are youporn or have similar traffic you won't get much benefit on caching these pages. And it can be tricky for a newbie to understand all these concepts.
+
+I don't have much time to provide a full working example, but anyone feel free to pick it up.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-29T16:00:02Z
+
+i think it's a good read even without the example. if you need such caching stragegies, it's more important to get ideas how to cache, instead of copy&paste a fully working example.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-31T12:04:42Z
+
+i agree that it does not need to be a complete ready-made thing you can just copy-paste. but seeing the code examples on server side what to do about form_rest, and how to provide the correct csrf token in the ajax call would make this a lot more applicable. the details will vary, but the basic things should be possible to explain here. otherwise everybody doing this has to dig it up himself and might end up with dangerous or hacky solutions.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-03T19:48:21Z
+
+@ricardclau I've just added a few minor notes. For me, with a little re-wording here and there (see my comments), this is ready to go :).
+
+Thanks!
