@@ -1211,7 +1211,7 @@ to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInt
 enable_annotations
 ..................
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If this option is enabled, validation constraints can be defined using annotations.
 
