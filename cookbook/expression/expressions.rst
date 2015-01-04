@@ -33,11 +33,9 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted(new Expression(
+        $this->denyAccessUnlessGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
-        ))) {
-            throw $this->createAccessDeniedException();
-        }
+        ));
 
         // ...
     }

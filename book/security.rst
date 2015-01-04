@@ -802,33 +802,18 @@ the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admi
 
     To learn about all of this, see :doc:`/cookbook/security/access_control`.
 
-Securing other Services
-~~~~~~~~~~~~~~~~~~~~~~~
-
-In fact, anything in Symfony can be protected using a strategy similar to
-the one seen in the previous section. For example, suppose you have a service
-(i.e. a PHP class) whose job is to send emails from one user to another.
-You can restrict use of this class - no matter where it's being used from -
-to users that have a specific role.
-
 .. _`book-security-securing-controller`:
 
 Securing Controllers and other Code
 ...................................
 
-You can easily deny access from inside a controller:
-
-.. versionadded:: 2.6
-    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
-    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
-    in the example below).
-
-.. code-block:: php
+You can easily deny access from inside a controller::
 
     // ...
 
     public function helloAction($name)
     {
+        // The second parameter is used to specify on what object the role is tested.
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         // Old way :
@@ -838,6 +823,11 @@ You can easily deny access from inside a controller:
 
         // ...
     }
+
+.. versionadded:: 2.6
+    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
+    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
+    in the example above).
 
 In both cases, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
@@ -860,10 +850,6 @@ using annotations::
      */
     public function helloAction($name)
     {
-        $this->denyAccessUnlessGranted(new Expression(
-            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
-        ));
-
         // ...
     }
 
