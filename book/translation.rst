@@ -510,7 +510,9 @@ in your application.
     Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
     avoid hardcoding the ``_locale`` requirement in all your routes.
 
-Setting a default Locale
+.. _book-translation-default-locale:
+
+Setting a Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 What if the user's locale hasn't been determined? You can guarantee that a
