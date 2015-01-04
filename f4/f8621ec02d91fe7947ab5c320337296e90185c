@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-04T16:00:00Z
+
+@TeLiXj For `ProxyPassMatch` we have a sentence below the config example talking about a subpath of the document root:
+
+> When you run your Symfony application on a subpath of your document root,
+    the regular expression used in ``ProxyPassMatch`` directive must be changed
+    accordingly
+
+Do we need something similar for `SetHandler`?
+
+---------------------------------------------------------------------------
+
+by TeLiXj at 2015-01-04T16:57:13Z
+
+I couldn't test this tip with ProxyPassMatch, but now with SetHandler I created a php file with phpinfo() on a subfolder of my web folder and I can see "Server API    FPM/FastCGI "... it works without any modification in SetHandler
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-04T21:21:00Z
+
+Thank you @TeLiXj. In this case it makes sense to move the description for the modified `ProxyPassMatch` description to a comment.
