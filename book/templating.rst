@@ -1037,7 +1037,7 @@ argument (or the ``version`` argument) to the desired version:
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>" alt="Symfony!" />
 
-If you dont give a version or pass ``null``, the default package version
+If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
