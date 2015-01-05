@@ -206,8 +206,8 @@ First, build a base layout file:
                 <div id="sidebar">
                     {% block sidebar %}
                         <ul>
-                              <li><a href="/">Home</a></li>
-                              <li><a href="/blog">Blog</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/blog">Blog</a></li>
                         </ul>
                     {% endblock %}
                 </div>
@@ -549,7 +549,9 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {{ include('Article/articleDetails.html.twig', { 'article': article }) }}
+                {{ include('Article/articleDetails.html.twig', {
+                    'article': article
+                }) }}
             {% endfor %}
         {% endblock %}
 
@@ -663,7 +665,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         {# ... #}
         <div id="sidebar">
             {{ render(controller(
-                'AcmeArticleBundle:Article:recentArticles',
+                'AppBundle:Article:recentArticles',
                 { 'max': 3 }
             )) }}
         </div>
@@ -676,7 +678,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <div id="sidebar">
             <?php echo $view['actions']->render(
                 new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'AcmeArticleBundle:Article:recentArticles',
+                    'AppBundle:Article:recentArticles',
                     array('max' => 3)
                 )
             ) ?>
@@ -743,8 +745,10 @@ tags:
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <!-- ... -->
                 <framework:config>
@@ -780,8 +784,10 @@ in your application configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- ... -->
             <framework:config>
@@ -794,7 +800,7 @@ in your application configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'templating'      => array(
+            'templating' => array(
                 'hinclude_default_template' => array(
                     'hinclude.html.twig',
                 ),
@@ -821,7 +827,7 @@ any global default template that is defined):
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'Default/content.html.twig',
+                'default'  => 'Default/content.html.twig',
             )
         ) ?>
 
@@ -839,7 +845,7 @@ Or you can also specify a string to display as the default content:
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'Loading...',
+                'default'  => 'Loading...',
             )
         ) ?>
 
@@ -1012,13 +1018,18 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
-        <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/blog.css') }}"
+            rel="stylesheet"
+            type="text/css" />
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>"
+            alt="Symfony!" />
 
-        <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>"
+            rel="stylesheet"
+            type="text/css" />
 
 The ``asset`` function's main purpose is to make your application more portable.
 If your application lives at the root of your host (e.g. http://example.com),
@@ -1110,7 +1121,8 @@ is by default "web").
 
 .. code-block:: html+jinja
 
-   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/acmedemo/css/contact.css') }}"
+        rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
@@ -1204,8 +1216,10 @@ configuration file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- ... -->
             <framework:config>
@@ -1329,7 +1343,7 @@ One common way to use inheritance is to use a three-level approach. This
 method works perfectly with the three different types of templates that were just
 covered:
 
-* Create a ``app/Resources/views/base.html.twig`` file that contains the main
+* Create an ``app/Resources/views/base.html.twig`` file that contains the main
   layout for your application (like in the previous example). Internally, this
   template is called ``base.html.twig``;
 
@@ -1420,7 +1434,7 @@ tag to the screen:
 
 .. code-block:: html
 
-    Hello &lt;script&gt;alert(&#39;helloe&#39;)&lt;/script&gt;
+    Hello &lt;script&gt;alert(&#39;hello!&#39;)&lt;/script&gt;
 
 The Twig and PHP templating systems approach the problem in different ways.
 If you're using Twig, output escaping is on by default and you're protected.
@@ -1462,7 +1476,7 @@ use output escaping, use the special ``escape()`` view method:
     Hello <?php echo $view->escape($name) ?>
 
 By default, the ``escape()`` method assumes that the variable is being rendered
-within an HTML context (and thus the variable is escaped to be safe for HTML).
+within a HTML context (and thus the variable is escaped to be safe for HTML).
 The second argument lets you change the context. For example, to output something
 in a JavaScript string, use the ``js`` context:
 
@@ -1507,7 +1521,7 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/Article/recentList.html.twig
+    $ php app/console twig:lint app/Resources/views/Blog/index.html.twig
 
     # or by directory:
     $ php app/console twig:lint app/Resources/views
