@@ -135,7 +135,7 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
-    sandboxing, automatic HTML escaping, manual contextual output escaping, 
+    sandboxing, automatic HTML escaping, manual contextual output escaping,
     and the inclusion of custom functions and filters that only affect templates.
     Twig contains little features that make writing templates easier and more concise.
     Take the following example, which combines a loop with a logical ``if``
@@ -206,8 +206,8 @@ First, build a base layout file:
                 <div id="sidebar">
                     {% block sidebar %}
                         <ul>
-                              <li><a href="/">Home</a></li>
-                              <li><a href="/blog">Blog</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/blog">Blog</a></li>
                         </ul>
                     {% endblock %}
                 </div>
@@ -663,7 +663,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         {# ... #}
         <div id="sidebar">
             {{ render(controller(
-                'AcmeArticleBundle:Article:recentArticles',
+                'AppBundle:Article:recentArticles',
                 { 'max': 3 }
             )) }}
         </div>
@@ -676,7 +676,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <div id="sidebar">
             <?php echo $view['actions']->render(
                 new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'AcmeArticleBundle:Article:recentArticles',
+                    'AppBundle:Article:recentArticles',
                     array('max' => 3)
                 )
             ) ?>
@@ -796,7 +796,7 @@ in your application configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'templating'      => array(
+            'templating' => array(
                 'hinclude_default_template' => array(
                     'hinclude.html.twig',
                 ),
@@ -823,7 +823,7 @@ any global default template that is defined):
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'default/content.html.twig',
+                'default'  => 'default/content.html.twig',
             )
         ) ?>
 
@@ -841,7 +841,7 @@ Or you can also specify a string to display as the default content:
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'Loading...',
+                'default'  => 'Loading...',
             )
         ) ?>
 
@@ -1014,13 +1014,13 @@ but Symfony provides a more dynamic option via the ``asset`` Twig function:
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
-        <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/blog.css') }}" rel="stylesheet" />
 
     .. code-block:: html+php
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
 
-        <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" />
 
 The ``asset`` function's main purpose is to make your application more portable.
 If your application lives at the root of your host (e.g. http://example.com),
@@ -1145,7 +1145,7 @@ is by default "web").
 
 .. code-block:: html+jinja
 
-   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
@@ -1364,7 +1364,7 @@ One common way to use inheritance is to use a three-level approach. This
 method works perfectly with the three different types of templates that were just
 covered:
 
-* Create a ``app/Resources/views/base.html.twig`` file that contains the main
+* Create an ``app/Resources/views/base.html.twig`` file that contains the main
   layout for your application (like in the previous example). Internally, this
   template is called ``base.html.twig``;
 
@@ -1455,7 +1455,7 @@ tag to the screen:
 
 .. code-block:: html
 
-    Hello &lt;script&gt;alert(&#39;helloe&#39;)&lt;/script&gt;
+    Hello &lt;script&gt;alert(&#39;hello!&#39;)&lt;/script&gt;
 
 The Twig and PHP templating systems approach the problem in different ways.
 If you're using Twig, output escaping is on by default and you're protected.
