@@ -615,9 +615,6 @@ the work of instantiating the classes.
 Using the Expression Language
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    The Expression Language functionality was introduced in Symfony 2.4.
-
 The service container also supports an "expression" that allows you to inject
 very specific values into a service.
 
@@ -804,9 +801,6 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
 Injecting the Request
 ~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.4
-    The ``request_stack`` service was introduced in Symfony 2.4.
 
 As of Symfony 2.4, instead of injecting the ``request`` service, you should
 inject the ``request_stack`` service and access the ``Request`` by calling

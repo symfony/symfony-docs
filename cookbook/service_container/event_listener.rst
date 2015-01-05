@@ -51,9 +51,6 @@ event is just one of the core kernel events::
         }
     }
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
 .. tip::
 
     Each event receives a slightly different type of ``$event`` object. For
@@ -105,10 +102,6 @@ using a special "tag":
 
 Request Events, Checking Types
 ------------------------------
-
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
 
 A single page can make several requests (one master request, and then multiple
 sub-requests), which is why when working with the ``KernelEvents::REQUEST``

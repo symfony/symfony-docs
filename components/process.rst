@@ -42,9 +42,6 @@ output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getInc
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
-.. versionadded:: 2.4
-    The ``clearOutput()`` and ``clearErrorOutput()`` methods were introduced in Symfony 2.4.
-
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
@@ -235,10 +232,6 @@ check regularly::
 
 Process Idle Timeout
 --------------------
-
-.. versionadded:: 2.4
-   The :method:`Symfony\\Component\\Process\\Process::setIdleTimeout` method
-   was introduced in Symfony 2.4.
 
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::

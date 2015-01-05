@@ -489,10 +489,6 @@ which returns a boolean value::
 EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    Since Symfony 2.4, the current event name and the ``EventDispatcher``
-    itself are passed to the listeners as additional arguments.
-
 The ``EventDispatcher`` always passes the dispatched event, the event's name
 and a reference to itself to the listeners. This can be used in some advanced
 usages of the ``EventDispatcher`` like dispatching other events in listeners,

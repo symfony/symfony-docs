@@ -13,9 +13,6 @@ Before Symfony 2.6, you had to use the password encoder to authenticate the user
 The Password Authenticator
 --------------------------
 
-.. versionadded:: 2.4
-    The ``SimpleFormAuthenticatorInterface`` interface was introduced in Symfony 2.4.
-
 .. versionadded:: 2.6
     The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
 

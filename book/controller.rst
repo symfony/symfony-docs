@@ -683,9 +683,6 @@ content that's sent back to the client::
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
 The ``headers`` property is a :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`
 object and has some nice methods for getting and setting the headers. The
 header names are normalized so that using ``Content-Type`` is equivalent to

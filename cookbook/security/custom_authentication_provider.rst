@@ -168,9 +168,6 @@ set an authenticated token in the token storage if successful.
         }
     }
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
 This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
