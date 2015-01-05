@@ -144,10 +144,6 @@ a second array argument to ``PdoSessionHandler``:
         );
         $container->setDefinition('session.handler.pdo', $storageDefinition);
 
-.. versionadded:: 2.6
-    The ``db_lifetime_col`` was introduced in Symfony 2.6. Prior to 2.6,
-    this column did not exist.
-
 The following things can be configured:
 
 * ``db_table``: (default ``session``) The name of the session table in your

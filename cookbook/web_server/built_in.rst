@@ -4,10 +4,6 @@
 How to Use PHP's built-in Web Server
 ====================================
 
-.. versionadded:: 2.6
-    The ability to run the server as a background process was introduced
-    in Symfony 2.6.
-
 Since PHP 5.4 the CLI SAPI comes with a `built-in web server`_. It can be used
 to run your PHP applications locally during development, for testing or for
 application demonstrations. This way, you don't have to bother configuring

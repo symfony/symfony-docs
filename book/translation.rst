@@ -400,9 +400,6 @@ checks translation resources for several locales:
 #. If the translation still isn't found, Symfony uses the ``fallback`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
 
-.. versionadded:: 2.6
-    The ability to log missing translations was introduced in Symfony 2.6.
-
 .. note::
 
     When Symfony doesn't find a translation in the given locale, it will 
@@ -672,9 +669,6 @@ Debugging Translations
 
 .. versionadded:: 2.5
     The ``debug:translation`` command was introduced in Symfony 2.5.
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``translation:debug``.
 
 When maintaining a bundle, you may use or remove the usage of a translation
 message without updating all message catalogues. The ``debug:translation``

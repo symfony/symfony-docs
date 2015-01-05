@@ -520,9 +520,6 @@ console command:
 
     $ php app/console debug:container
 
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
-
 For more information, see the :doc:`/book/service_container` chapter.
 
 .. index::

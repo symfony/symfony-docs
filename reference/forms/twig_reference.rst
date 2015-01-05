@@ -313,9 +313,6 @@ object:
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
-.. versionadded:: 2.3
-    The ``method`` and ``action`` variables were introduced in Symfony 2.3.
-
 .. versionadded:: 2.4
     The ``submitted`` variable was introduced in Symfony 2.4.
 

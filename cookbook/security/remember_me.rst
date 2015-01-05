@@ -171,10 +171,6 @@ In the following example, the action is only allowed if the user has the
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 You can also choose to install and use the optional JMSSecurityExtraBundle_,
 which can secure your controller using annotations:
 

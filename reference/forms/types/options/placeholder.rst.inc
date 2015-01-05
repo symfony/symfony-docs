@@ -1,14 +1,6 @@
 placeholder
 ~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
-    ``empty_value``, which is available prior to 2.6.
-
-.. versionadded:: 2.3
-    Since Symfony 2.3, empty values are also supported if the ``expanded``
-    option is set to true.
-
 **type**: ``string`` or ``Boolean``
 
 This option determines whether or not a special "empty" option (e.g. "Choose an option")
