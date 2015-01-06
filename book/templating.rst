@@ -1476,7 +1476,7 @@ use output escaping, use the special ``escape()`` view method:
     Hello <?php echo $view->escape($name) ?>
 
 By default, the ``escape()`` method assumes that the variable is being rendered
-within a HTML context (and thus the variable is escaped to be safe for HTML).
+within an HTML context (and thus the variable is escaped to be safe for HTML).
 The second argument lets you change the context. For example, to output something
 in a JavaScript string, use the ``js`` context:
 
@@ -1521,7 +1521,7 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/Blog/index.html.twig
+    $ php app/console twig:lint app/Resources/views/Blog/post.html.twig
 
     # or by directory:
     $ php app/console twig:lint app/Resources/views
