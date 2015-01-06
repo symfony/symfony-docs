@@ -137,6 +137,7 @@ Full Default Configuration
                         class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
                         default_repository_class:  Doctrine\ORM\EntityRepository
                         auto_mapping:         false
+                        naming_strategy:      doctrine.orm.naming_strategy.default
                         hydrators:
 
                             # An array of hydrator names
@@ -222,6 +223,7 @@ Full Default Configuration
                         result-cache-driver="array"
                         connection="conn1"
                         class-metadata-factory-name="Doctrine\ORM\Mapping\ClassMetadataFactory"
+                        naming-strategy="doctrine.orm.naming_strategy.default"
                     >
                         <doctrine:metadata-cache-driver
                             type="memcache"
@@ -487,6 +489,7 @@ can be placed directly under ``doctrine.orm`` config level.
             class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
             default_repository_class:  Doctrine\ORM\EntityRepository
             auto_mapping: false
+            naming_strategy: doctrine.orm.naming_strategy.default
             hydrators:
                 # ...
             mappings:
