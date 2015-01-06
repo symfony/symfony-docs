@@ -270,6 +270,7 @@ But who can you login as? Where do users come from?
     or :doc:`build your own </cookbook/security/custom_authentication_provider>`.
 
 .. _security-user-providers:
+.. _where-do-users-come-from-user-providers:
 
 B) Configuring how Users are Loaded
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -428,6 +429,7 @@ If you'd like to load your users via the Doctrine ORM, that's easy! See
 
 .. _book-security-encoding-user-password:
 .. _c-encoding-the-users-password:
+.. _encoding-the-user-s-password:
 
 C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
