@@ -310,7 +310,7 @@ when such a case is encountered::
     $org->setName('Les-Tilleuls.coop');
     $org->setMembers(array($member));
 
-    $member->setOrganization($kevin);
+    $member->setOrganization($org);
 
     echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
 
