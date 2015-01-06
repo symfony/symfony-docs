@@ -471,12 +471,12 @@ you'll need to specify which validation group(s) your form should use::
     ))->add(...);
 
 If you're creating :ref:`form classes <book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``setDefaultOptions()``
+good practice), then you'll need to add the following to the ``configureOptions()``
 method::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => array('registration'),
@@ -498,9 +498,9 @@ Disabling Validation
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => false,
@@ -524,10 +524,10 @@ If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
 to an array callback::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => array(
@@ -544,10 +544,10 @@ You can also define whole logic inline by using a ``Closure``::
 
     use Acme\AcmeBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
@@ -567,10 +567,10 @@ of the entity as well you have to adjust the option as follows::
 
     use Acme\AcmeBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
@@ -1090,9 +1090,9 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+        use Symfony\Component\OptionsResolver\OptionsResolver;
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Task',
@@ -1321,7 +1321,7 @@ create a form class so that a ``Category`` object can be modified by the user::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class CategoryType extends AbstractType
     {
@@ -1330,7 +1330,7 @@ create a form class so that a ``Category`` object can be modified by the user::
             $builder->add('name');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Category',
@@ -1756,13 +1756,13 @@ that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
     {
         // ...
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class'      => 'AppBundle\Entity\Task',
