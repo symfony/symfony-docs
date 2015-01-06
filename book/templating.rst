@@ -1035,7 +1035,12 @@ argument (or the ``version`` argument) to the desired version:
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            false,
+            '3.0'
+        ) ?>" alt="Symfony!" />
 
 If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
@@ -1055,7 +1060,11 @@ If you need absolute URLs for assets, you can set the third argument (or the
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            true
+        ) ?>" alt="Symfony!" />
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts
