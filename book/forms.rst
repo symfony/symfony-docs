@@ -77,8 +77,8 @@ from inside a controller::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use AppBundle\Entity\Task;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
@@ -197,7 +197,7 @@ it into a format that's suitable for being rendered in an HTML form.
    The form system is smart enough to access the value of the protected
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
-   "setter" method so that the Form component can get and put data onto the
+   "setter" methods so that the Form component can get and put data onto the
    property. For a Boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
@@ -344,17 +344,6 @@ object.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Task:
-            properties:
-                task:
-                    - NotBlank: ~
-                dueDate:
-                    - NotBlank: ~
-                    - Type: \DateTime
-
     .. code-block:: php-annotations
 
         // AppBundle/Entity/Task.php
@@ -373,6 +362,18 @@ object.
              */
             protected $dueDate;
         }
+
+    .. code-block:: yaml
+
+        # AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Task:
+            properties:
+                task:
+                    - NotBlank: ~
+                dueDate:
+                    - NotBlank: ~
+                    - Type: \DateTime
+
 
     .. code-block:: xml
 
@@ -542,7 +543,7 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a ``Closure``::
 
-    use Acme\AcmeBundle\Entity\Client;
+    use AppBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -550,8 +551,9 @@ You can also define whole logic inline by using a ``Closure``::
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
+                
                 if (Client::TYPE_PERSON == $data->getType()) {
                     return array('person');
                 }
@@ -565,7 +567,7 @@ Using the ``validation_groups`` option overrides the default validation
 group which is being used. If you want to validate the default constraints
 of the entity as well you have to adjust the option as follows::
 
-    use Acme\AcmeBundle\Entity\Client;
+    use AppBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -573,8 +575,9 @@ of the entity as well you have to adjust the option as follows::
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
+
                 if (Client::TYPE_PERSON == $data->getType()) {
                     return array('Default', 'person');
                 }
@@ -1048,7 +1051,8 @@ that will house the logic for building the task form::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', 'submit');
+                ->add('save', 'submit')
+            ;
         }
 
         public function getName()
@@ -1116,7 +1120,8 @@ the choice is ultimately up to you.
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('mapped' => false))
-                ->add('save', 'submit');
+                ->add('save', 'submit')
+            ;
         }
 
     Additionally, if there are any fields on the form that aren't included in
@@ -1148,7 +1153,7 @@ easy to use in your application.
 
         # src/AppBundle/Resources/config/services.yml
         services:
-            acme_demo.form.type.task:
+            app.form.type.task:
                 class: AppBundle\Form\Type\TaskType
                 tags:
                     - { name: form.type, alias: task }
@@ -1159,11 +1164,11 @@ easy to use in your application.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service
-                    id="acme_demo.form.type.task"
+                <service id="app.form.type.task"
                     class="AppBundle\Form\Type\TaskType">
 
                     <tag name="form.type" alias="task" />
@@ -1176,7 +1181,7 @@ easy to use in your application.
         // src/AppBundle/Resources/config/services.php
         $container
             ->register(
-                'acme_demo.form.type.task',
+                'app.form.type.task',
                 'AppBundle\Form\Type\TaskType'
             )
             ->addTag('form.type', array(
@@ -1468,7 +1473,7 @@ renders the form:
 
         {# app/Resources/views/Default/new.html.twig #}
         {% form_theme form 'Form/fields.html.twig' %}
-
+        {# or if providing multiple themes #}
         {% form_theme form 'Form/fields.html.twig' 'Form/fields2.html.twig' %}
 
         {# ... render the form #}
@@ -1477,7 +1482,7 @@ renders the form:
 
         <!-- app/Resources/views/Default/new.html.php -->
         <?php $view['form']->setTheme($form, array('Form')) ?>
-
+        <!-- or if providing multiple themes -->
         <?php $view['form']->setTheme($form, array('Form', 'Form2')) ?>
 
         <!-- ... render the form -->
@@ -1519,7 +1524,7 @@ file, you can see every block needed to render a form and every default field
 type.
 
 In PHP, the fragments are individual template files. By default they are located in
-the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
+the ``Resources/views/Form`` directory of the framework bundle (`view on GitHub`_).
 
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
@@ -1616,8 +1621,10 @@ file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
                 <twig:form>
@@ -1702,8 +1709,10 @@ file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:templating>
@@ -1725,7 +1734,7 @@ file:
                         'Form',
                     ),
                 ),
-            )
+            ),
             // ...
         ));
 
