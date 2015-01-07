@@ -43,6 +43,7 @@ which uses a login form to load users from the database:
 
 .. code-block:: yaml
 
+    # app/config/security.yml
     security:
         encoders:
             AppBundle\Entity\User: bcrypt
