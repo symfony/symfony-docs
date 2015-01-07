@@ -35,7 +35,7 @@ application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules can be specified via a number of
-different formats (annotations, YAML, XML, or PHP).
+different formats (annotations, YAML, XML or PHP).
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -341,7 +341,9 @@ constraint, have several configuration options available. Suppose that the
         Acme\BlogBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice: { choices: [male, female], message: Choose a valid gender. }
+                    - Choice:
+                        choices: [male, female]
+                        message: Choose a valid gender.
 
     .. code-block:: php-annotations
 
