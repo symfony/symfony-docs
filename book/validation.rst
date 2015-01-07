@@ -35,7 +35,7 @@ application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules can be specified via a number of
-different formats (YAML, XML, annotations, or PHP).
+different formats (annotations, YAML, XML, or PHP).
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -71,7 +71,8 @@ following:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="name">
@@ -271,8 +272,10 @@ annotations if you're using the annotation method to specify your constraints:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:validation enable-annotations="true" />
@@ -362,7 +365,8 @@ constraint, have several configuration options available. Suppose that the
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="gender">
@@ -391,10 +395,13 @@ constraint, have several configuration options available. Suppose that the
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(array(
-                    'choices' => array('male', 'female'),
-                    'message' => 'Choose a valid gender.',
-                )));
+                $metadata->addPropertyConstraint(
+                    'gender',
+                    new Choice(array(
+                        'choices' => array('male', 'female'),
+                        'message' => 'Choose a valid gender.',
+                    ))
+                );
             }
         }
 
@@ -436,7 +443,8 @@ options can be specified in this way.
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="gender">
@@ -476,7 +484,7 @@ If you're ever unsure of how to specify an option, either check the API document
 for the constraint or play it safe by always passing in an array of options
 (the first method shown above).
 
-Translation Constraint Messages
+Translating Constraint Messages
 -------------------------------
 
 For information on translating the constraint messages, see
@@ -541,7 +549,8 @@ class to have at least 3 characters.
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <property name="firstName">
@@ -568,7 +577,10 @@ class to have at least 3 characters.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('firstName', new NotBlank());
+                $metadata->addPropertyConstraint(
+                    'firstName',
+                    new NotBlank()
+                );
                 $metadata->addPropertyConstraint(
                     'firstName',
                     new Length(array("min" => 3)));
@@ -626,7 +638,8 @@ this method must return ``true``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\Author">
                 <getter property="passwordLegal">
@@ -649,9 +662,12 @@ this method must return ``true``:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('passwordLegal', new True(array(
-                    'message' => 'The password cannot match your first name',
-                )));
+                $metadata->addGetterConstraint(
+                    'passwordLegal',
+                    new True(array(
+                        'message' => 'The password cannot match your first name',
+                    ))
+                );
             }
         }
 
@@ -744,7 +760,8 @@ user registers and when a user updates their contact information later:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+            http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\User">
                 <property name="email">
@@ -769,7 +786,7 @@ user registers and when a user updates their contact information later:
                 </property>
                 <property name="city">
                     <constraint name="Length">
-                        <option name="min">7</option>
+                        <option name="min">2</option>
                     </constraint>
                 </property>
             </class>
@@ -789,21 +806,33 @@ user registers and when a user updates their contact information later:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('email', new Email(array(
-                    'groups' => array('registration'),
-                )));
+                $metadata->addPropertyConstraint(
+                    'email',
+                    new Email(array(
+                        'groups' => array('registration'),
+                    ))
+                );
 
-                $metadata->addPropertyConstraint('password', new NotBlank(array(
-                    'groups' => array('registration'),
-                )));
-                $metadata->addPropertyConstraint('password', new Length(array(
-                    'min'  => 7,
-                    'groups' => array('registration')
-                )));
+                $metadata->addPropertyConstraint(
+                    'password',
+                    new NotBlank(array(
+                        'groups' => array('registration'),
+                    ))
+                );
+                $metadata->addPropertyConstraint(
+                    'password',
+                    new Length(array(
+                        'min'    => 7,
+                        'groups' => array('registration'),
+                    ))
+                );
 
                 $metadata->addPropertyConstraint(
                     'city',
-                    Length(array("min" => 3)));
+                    new Length(array(
+                        'min' => 2,
+                    ))
+                );
             }
         }
 
@@ -919,7 +948,10 @@ username and the password are different only if all other validation passes
             private $password;
 
             /**
-             * @Assert\True(message="The password cannot match your username", groups={"Strict"})
+             * @Assert\True(
+             *     message="The password cannot match your username",
+             *     groups={"Strict"}
+             * )
              */
             public function isPasswordLegal()
             {
@@ -933,7 +965,8 @@ username and the password are different only if all other validation passes
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\BlogBundle\Entity\User">
                 <property name="username">
@@ -962,10 +995,11 @@ username and the password are different only if all other validation passes
         // src/Acme/BlogBundle/Entity/User.php
         namespace Acme\BlogBundle\Entity;
 
+        use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class User
+        class User implements UserInterface
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
@@ -1062,7 +1096,8 @@ entity and a new constraint group called ``Premium``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\DemoBundle\Entity\User">
                 <property name="name">
@@ -1100,10 +1135,13 @@ entity and a new constraint group called ``Premium``:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme(
-                    'schemes' => array('VISA'),
-                    'groups'  => array('Premium'),
-                ));
+                $metadata->addPropertyConstraint(
+                    'creditCard',
+                    new Assert\CardScheme(array(
+                        'schemes' => array('VISA'),
+                        'groups'  => array('Premium'),
+                    ))
+                );
             }
         }
 
@@ -1206,6 +1244,7 @@ email address. This is actually pretty easy to do. From inside a controller,
 it looks like this::
 
     use Symfony\Component\Validator\Constraints\Email;
+    
     // ...
 
     public function addEmailAction($email)
