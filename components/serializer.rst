@@ -224,7 +224,7 @@ When serializing, you can set a callback to format a specific object property::
         return $dateTime instanceof \DateTime
             ? $dateTime->format(\DateTime::ISO8601)
             : '';
-    }
+    };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
 
@@ -310,7 +310,7 @@ when such a case is encountered::
     $org->setName('Les-Tilleuls.coop');
     $org->setMembers(array($member));
 
-    $member->setOrganization($kevin);
+    $member->setOrganization($org);
 
     echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
 

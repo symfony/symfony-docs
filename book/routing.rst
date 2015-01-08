@@ -173,8 +173,10 @@ file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
@@ -649,7 +651,9 @@ be added for each parameter. For example:
         // ...
 
         /**
-         * @Route("/blog/{page}", defaults={"page": 1}, requirements={"page": "\d+"})
+         * @Route("/blog/{page}", defaults={"page": 1}, requirements={
+         *     "page": "\d+"
+         * })
          */
         public function indexAction($page)
         {
@@ -737,7 +741,9 @@ URL:
         class MainController extends Controller
         {
             /**
-             * @Route("/{_locale}", defaults={"_locale": "en"}, requirements={"_locale": "en|fr"})
+             * @Route("/{_locale}", defaults={"_locale": "en"}, requirements={
+             *     "_locale": "en|fr"
+             * })
              */
             public function homepageAction($_locale)
             {
@@ -1018,8 +1024,12 @@ routing system can be:
             /**
              * @Route(
              *     "/articles/{_locale}/{year}/{title}.{_format}",
-             *     defaults: {"_format": "html"}
-             *     requirements: {"_locale": "en|fr", "_format": "html|rss", "year": "\d+"}
+             *     defaults: {"_format": "html"},
+             *     requirements: {
+             *         "_locale": "en|fr",
+             *         "_format": "html|rss",
+             *         "year": "\d+"
+             *     }
              * )
              */
             public function showAction($_locale, $year, $title)
@@ -1096,7 +1106,7 @@ a slash. URLs matching this route might look like:
     This example also highlights the special ``_format`` routing parameter.
     When using this parameter, the matched value becomes the "request format"
     of the ``Request`` object. Ultimately, the request format is used for such
-    things such as setting the ``Content-Type`` of the response (e.g. a ``json``
+    things as setting the ``Content-Type`` of the response (e.g. a ``json``
     request format translates into a ``Content-Type`` of ``application/json``).
     It can also be used in the controller to render a different template for
     each value of ``_format``. The ``_format`` parameter is a very powerful way
@@ -1188,7 +1198,7 @@ each is made available as an argument to the controller method::
 
     public function showAction($slug)
     {
-      // ...
+        // ...
     }
 
 In reality, the entire ``defaults`` collection is merged with the parameter
@@ -1263,8 +1273,8 @@ configuration:
 
         $collection = new RouteCollection();
         $collection->addCollection(
-            // second argument is the type, which is required to enable the annotation reader
-            // for this resource
+            // second argument is the type, which is required to enable
+            // the annotation reader for this resource
             $loader->import("@AppBundle/Controller/", "annotation")
         );
 
@@ -1354,7 +1364,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $app = $loader->import('@AppBundle/Controller/');
+        $app = $loader->import('@AppBundle/Controller/', 'annotation');
         $app->addPrefix('/site');
 
         $collection = new RouteCollection();
@@ -1440,7 +1450,9 @@ system. Take the ``blog_show`` example route from earlier::
     //     '_controller' => 'AppBundle:Blog:show',
     // )
 
-    $uri = $this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'));
+    $uri = $this->get('router')->generate('blog_show', array(
+        'slug' => 'my-blog-post'
+    ));
     // /blog/my-blog-post
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
@@ -1508,7 +1520,10 @@ Generating URLs with Query Strings
 The ``generate`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
-    $this->get('router')->generate('blog', array('page' => 2, 'category' => 'Symfony'));
+    $this->get('router')->generate('blog', array(
+        'page' => 2,
+        'category' => 'Symfony'
+    ));
     // /blog/2?category=Symfony
 
 Generating URLs from a Template
@@ -1549,7 +1564,7 @@ method::
 
 From a template, in Twig, simply use the ``url()`` function (which generates an absolute URL)
 rather than the ``path()`` function (which generates a relative URL). In PHP, pass ``true``
-to ``generateUrl()``:
+to ``generate()``:
 
 .. configuration-block::
 

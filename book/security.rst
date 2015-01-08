@@ -432,9 +432,10 @@ If you'd like to load your users via the Doctrine ORM, that's easy! See
 :doc:`/cookbook/security/entity_provider` for all the details.
 
 .. _book-security-encoding-user-password:
+.. _c-encoding-the-users-password:
 
-C) Encoding the Users Password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C) Encoding the User's Password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whether your users are stored in ``security.yml``, in a database or somewhere
 else, you'll want to encode their passwords. The best algorithm to use is
