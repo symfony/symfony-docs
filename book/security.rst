@@ -209,7 +209,7 @@ user to be logged in to access this URL:
             # ...
             firewalls:
                 # ...
-            
+
             access_control:
                 # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
@@ -432,9 +432,10 @@ If you'd like to load your users via the Doctrine ORM, that's easy! See
 :doc:`/cookbook/security/entity_provider` for all the details.
 
 .. _book-security-encoding-user-password:
+.. _c-encoding-the-users-password:
 
-C) Encoding the Users Password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C) Encoding the User's Password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whether your users are stored in ``security.yml``, in a database or somewhere
 else, you'll want to encode their passwords. The best algorithm to use is
@@ -676,7 +677,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
             # ...
             firewalls:
                 # ...
-            
+
             access_control:
                 # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
@@ -867,9 +868,9 @@ in this chapter).
     Be careful with this in your layout or on your error pages! Because of
     some internal Symfony details, to avoid broken error pages in the ``prod``
     environment, wrap calls in these templates with a check for ``app.user``:
-    
+
     .. code-block:: html+jinja
-    
+
         {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
@@ -1029,7 +1030,7 @@ the User object, and use the ``isGranted`` method (or
 
     // boo :(. Never check for the User object to see if they're logged in
     if ($this->getUser()) {
-        
+
     }
 
 Retrieving the User in a Template
@@ -1048,7 +1049,7 @@ key:
 
     .. code-block:: html+php
 
-        <?php if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')): ?>        
+        <?php if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')): ?>
             <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
         <?php endif; ?>
 

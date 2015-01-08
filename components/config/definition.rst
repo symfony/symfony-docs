@@ -566,8 +566,8 @@ Otherwise the result is a clean array of configuration values::
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(__DIR__.'/src/Matthias/config/config.yml');
-    $config2 = Yaml::parse(__DIR__.'/src/Matthias/config/config_extra.yml');
+    $config1 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config.yml'));
+    $config2 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml'));
 
     $configs = array($config1, $config2);
 
