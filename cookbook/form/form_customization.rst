@@ -734,6 +734,24 @@ You can also override the markup for an entire field row using the same method:
             <?php echo $view['form']->widget($form) ?>
         </div>
 
+How to Customize a collection Field
+-----------------------------------
+
+If you want to customize a collection field it's the same way as a simple field.
+Imagine you have a collection of Image entities for your product. The difference is
+that you don't have direct access a field like ``_product_images_0_widget``.
+In this case you need to replace the index value by the keyword ``entry``:
+
+.. code-block:: html+jinja
+
+    {% form_theme form _self %}
+
+    {% block _product_images_entry_widget %}
+        {{ form_widget(form) }}
+    {% endblock %}
+
+    {{ form_widget(form.product.images) }}
+
 Other common Customizations
 ---------------------------
 
