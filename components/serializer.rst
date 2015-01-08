@@ -198,7 +198,7 @@ When serializing, you can set a callback to format a specific object property::
         return $dateTime instanceof \DateTime
             ? $dateTime->format(\DateTime::ISO8601)
             : '';
-    }
+    };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
 
