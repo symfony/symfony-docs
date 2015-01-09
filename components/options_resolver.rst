@@ -361,10 +361,9 @@ In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\Option
 to add additional allowed types without erasing the ones already set.
 
 .. versionadded:: 2.6
-    Before Symfony 2.6, `setAllowedTypes()` and `addAllowedTypes()` expected
-    the values to be given as an array mapping option names to allowed types::
-
-        $resolver->setAllowedTypes(array('port' => array('null', 'int')));
+    Before Symfony 2.6, ``setAllowedTypes()`` and ``addAllowedTypes()`` expected
+    the values to be given as an array mapping option names to allowed types:: 
+    ``$resolver->setAllowedTypes(array('port' => array('null', 'int')));``
 
 Value Validation
 ~~~~~~~~~~~~~~~~
@@ -413,12 +412,9 @@ In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\Option
 to add additional allowed values without erasing the ones already set.
 
 .. versionadded:: 2.6
-    Before Symfony 2.6, `setAllowedValues()` and `addAllowedValues()` expected
+    Before Symfony 2.6, ``setAllowedValues()`` and ``addAllowedValues()`` expected
     the values to be given as an array mapping option names to allowed values:
-
-    .. code-block:: php
-
-        $resolver->setAllowedValues(array('transport' => array('sendmail', 'mail', 'smtp')));
+    ``$resolver->setAllowedValues(array('transport' => array('sendmail', 'mail', 'smtp')));``
 
 Option Normalization
 ~~~~~~~~~~~~~~~~~~~~
