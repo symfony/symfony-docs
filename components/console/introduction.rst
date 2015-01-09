@@ -20,15 +20,6 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Console).
 
-.. note::
-
-    Windows does not support ANSI colors by default so the Console component detects and
-    disables colors where Windows does not have support. However, if Windows is not
-    configured with an ANSI driver and your console commands invoke other scripts which
-    emit ANSI color sequences, they will be shown as raw escape characters.
-
-    To enable ANSI color support for Windows, please install `ANSICON`_.
-
 Creating a basic Command
 ------------------------
 
@@ -164,6 +155,15 @@ You can also set these colors and options inside the tagname::
 
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
+
+.. note::
+
+    Windows does not support ANSI colors by default so the Console component detects and
+    disables colors where Windows does not have support. However, if Windows is not
+    configured with an ANSI driver and your console commands invoke other scripts which
+    emit ANSI color sequences, they will be shown as raw escape characters.
+
+    To enable ANSI color support for Windows, please install `ANSICON`_.
 
 Verbosity Levels
 ~~~~~~~~~~~~~~~~
