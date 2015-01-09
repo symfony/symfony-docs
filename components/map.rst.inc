@@ -19,6 +19,7 @@
 * :doc:`/components/console/index`
 
   * :doc:`/components/console/introduction`
+  * :doc:`/components/console/commands`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
   * :doc:`/components/console/console_arguments`

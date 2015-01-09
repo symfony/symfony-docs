@@ -5,6 +5,7 @@ Console
     :maxdepth: 2
 
     introduction
+    commands
     usage
     single_command_tool
     console_arguments
