@@ -11,6 +11,11 @@ The underlying data used for this field type can be a ``DateTime`` object,
 a string, a timestamp or an array. As long as the `input`_ option is set
 correctly, the field will take care of all of the details.
 
+.. note::
+
+    In case of ``DateTime`` the timezone is ignored.
+    Only year, month and day are used.
+
 The field can be rendered as a single text box, three text boxes (month,
 day, and year) or three select boxes (see the `widget`_ option).
 
@@ -24,9 +29,7 @@ day, and year) or three select boxes (see the `widget`_ option).
 |                      | - `format`_                                                                 |
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
-|                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
-|                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
@@ -116,11 +119,7 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/date_input.rst.inc
 
-.. include:: /reference/forms/types/options/model_timezone.rst.inc
-
 .. include:: /reference/forms/types/options/months.rst.inc
-
-.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 

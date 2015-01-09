@@ -10,6 +10,11 @@ This can be rendered as a text field, a series of text fields (e.g. hour,
 minute, second) or a series of select fields. The underlying data can be stored
 as a ``DateTime`` object, a string, a timestamp or an array.
 
+.. note::
+
+    In case of ``DateTime`` the timezone is ignored.
+    Only hour, minutes and seconds are used.
+
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +----------------------+-----------------------------------------------------------------------------+
@@ -20,9 +25,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
 |                      | - `minutes`_                                                                |
-|                      | - `model_timezone`_                                                         |
 |                      | - `seconds`_                                                                |
-|                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
 |                      | - `with_minutes`_                                                           |
 |                      | - `with_seconds`_                                                           |
@@ -102,11 +105,7 @@ this format.
 
 .. include:: /reference/forms/types/options/minutes.rst.inc
 
-.. include:: /reference/forms/types/options/model_timezone.rst.inc
-
 .. include:: /reference/forms/types/options/seconds.rst.inc
-
-.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
 widget
 ~~~~~~
