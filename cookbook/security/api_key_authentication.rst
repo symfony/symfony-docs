@@ -52,6 +52,9 @@ value and then a User object is created::
 
             if (!$apiKey) {
                 throw new BadCredentialsException('No API key found');
+
+                // or to just skip api key authentication
+                // return null;
             }
 
             return new PreAuthenticatedToken(
@@ -103,7 +106,9 @@ is to create a token object that contains all of the information from the
 request that you need to authenticate the user (e.g. the ``apikey`` query
 parameter). If that information is missing, throwing a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\BadCredentialsException`
-will cause authentication to fail.
+will cause authentication to fail. You might want to return ``null`` instead
+to just skip the authentication, so Symfony can fallback to another authentication
+method, if any.
 
 2. supportsToken
 ~~~~~~~~~~~~~~~~
