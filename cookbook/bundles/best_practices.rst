@@ -348,6 +348,13 @@ there are 3 modes, which the user can configure in their project:
 * 2.5-BC: the new 2.5 API with a backwards-compatible layer so that the
   2.4 API still works. This is only available in PHP 5.3.9+.
 
+.. note::
+
+    Starting with Symfony 2.7, the support for the 2.4 API has been
+    dropped and the minimal PHP version required for Symfony was
+    increased to 5.3.9. If your bundles requires Symfony >=2.7, you
+    don't need to take care about the 2.4 API anymore.
+
 As a bundle author, you'll want to support *both* API's, since some users
 may still be using the 2.4 API. Specifically, if your bundle adds a violation
 directly to the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContext`

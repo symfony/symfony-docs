@@ -96,7 +96,7 @@ and how to properly configure PHP for a production environment.
 Configuring the latest PHP Runtime
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Even though Symfony only requires PHP 5.3.3 to run, it's always recommended
+Even though Symfony only requires PHP 5.3.9 to run, it's always recommended
 to use the most recent PHP version whenever possible. PHP 5.3 is no longer
 supported by the PHP core team, but you can update it easily in Azure.
 
