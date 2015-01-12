@@ -84,19 +84,22 @@ to meet those requirements.
     distributing them. If you want to verify the integrity of any Symfony
     version, follow the steps `explained in this post`_.
 
-Basing your Project on a Specific Symfony Version
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Basing your Project on a Specific Symfony Branch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your project needs to be based on a specific Symfony version, pass the version
-number as the second argument of the ``new`` command:
+If your project needs to be based on a specific Symfony branch, add the branch
+version number as the second argument of the ``new`` command:
 
 .. code-block:: bash
 
     # Linux, Mac OS X
-    $ symfony new my_project_name 2.3.23
+    $ symfony new my_project_name 2.3
 
     # Windows
-    c:\projects\> php symfony.phar new my_project_name 2.3.23
+    c:\projects\> php symfony.phar new my_project_name 2.3
+
+In case you need it, you can even indicate the exact Symfony version number you
+want your project to be based on (e.g. ``symfony new 2.3.23``).
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
 to better understand why there are several Symfony versions and which one
