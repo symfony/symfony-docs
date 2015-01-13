@@ -77,8 +77,10 @@ information. By convention, this information is usually configured in an
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/doctrine
+                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
                 <doctrine:config>
                     <doctrine:dbal
@@ -165,8 +167,10 @@ for you:
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/doctrine
+                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
                 <doctrine:config>
                     <doctrine:dbal
@@ -426,6 +430,7 @@ mapping information) of a bundle or an entire namespace:
 
     # generates all entities in the AppBundle
     $ php app/console doctrine:generate:entities AppBundle
+    
     # generates all entities of bundles in the Acme namespace
     $ php app/console doctrine:generate:entities Acme
 
@@ -864,7 +869,7 @@ You can use this new method just like the default finder methods of the reposito
 
     $em = $this->getDoctrine()->getManager();
     $products = $em->getRepository('AppBundle:Product')
-                ->findAllOrderedByName();
+        ->findAllOrderedByName();
 
 .. note::
 
@@ -884,7 +889,9 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entity --entity="AppBundle:Category" --fields="name:string(255)"
+    $ php app/console doctrine:generate:entity \
+        --entity="AppBundle:Category" \
+        --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
@@ -929,7 +936,8 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                 products:
                     targetEntity: Product
                     mappedBy: category
-            # don't forget to init the collection in the __construct() method of the entity
+            # don't forget to init the collection in the __construct() method
+            # of the entity
 
     .. code-block:: xml
 
@@ -1038,7 +1046,7 @@ methods for you:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:generate:entities Acme
+    $ php app/console doctrine:generate:entities AppBundle
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Category``
 and ``Product`` with a natural one-to-many relationship. The ``Category``
@@ -1151,7 +1159,7 @@ the category (i.e. it's "lazily loaded").
 
 You can also query in the other direction::
 
-    public function showProductAction($id)
+    public function showProductsAction($id)
     {
         $category = $this->getDoctrine()
             ->getRepository('AppBundle:Category')
@@ -1372,8 +1380,8 @@ list of all available types and more information, see Doctrine's
 Summary
 -------
 
-With Doctrine, you can focus on your objects and how they're useful in your
-application and worry about database persistence second. This is because
+With Doctrine, you can focus on your objects and how they're used in your
+application. Worry about database persistence second. This is because
 Doctrine allows you to use any PHP object to hold your data and relies on
 mapping metadata information to map an object's data to a particular database
 table.
