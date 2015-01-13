@@ -25,6 +25,9 @@ To display a table, use :class:`Symfony\\Component\\Console\\Helper\\Table`,
 set the headers, set the rows and then render the table::
 
     use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Output\ConsoleOutput;
+
+    $output = new ConsoleOutput();
 
     $table = new Table($output);
     $table
