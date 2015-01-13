@@ -229,7 +229,7 @@ following (MySQL):
 
 .. code-block:: sql
 
-    CREATE TABLE `session` (
+    CREATE TABLE `sessions` (
         `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY,
         `sess_data` BLOB NOT NULL,
         `sess_time` INTEGER UNSIGNED NOT NULL,
@@ -243,7 +243,7 @@ For PostgreSQL, the statement should look like this:
 
 .. code-block:: sql
 
-    CREATE TABLE session (
+    CREATE TABLE sessions (
         sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
         sess_data BYTEA NOT NULL,
         sess_time INTEGER NOT NULL,
@@ -257,7 +257,7 @@ For MSSQL, the statement might look like the following:
 
 .. code-block:: sql
 
-    CREATE TABLE [dbo].[session](
+    CREATE TABLE [dbo].[sessions](
         [sess_id] [nvarchar](255) NOT NULL,
         [sess_data] [ntext] NOT NULL,
         [sess_time] [int] NOT NULL,
