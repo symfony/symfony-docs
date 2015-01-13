@@ -89,11 +89,6 @@ something like::
         }
     }
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface` was
-    introduced in Symfony 2.6. Prior, you had to use the ``isGranted`` method of
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 Then, you need to configure the service:
 
 .. configuration-block::
@@ -122,10 +117,6 @@ Then, you need to configure the service:
             'Acme\DemoBundle\Profiler\SuperAdminMatcher',
             array(new Reference('security.authorization_checker'))
         );
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 Now the service is registered, the only thing left to do is configure the
 profiler to use this service as the matcher:

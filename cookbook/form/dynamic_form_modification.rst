@@ -336,11 +336,6 @@ and fill in the listener logic::
         // ...
     }
 
-.. versionadded:: 2.6
-    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface` was
-    introduced in Symfony 2.6. Prior, you had to use the ``getToken()`` method of
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 .. note::
 
     The ``multiple`` and ``expanded`` form options will default to false
@@ -502,10 +497,6 @@ sport like this::
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 in favor of
-    ``empty_value``, which is available prior to 2.6.
-
 When you're building this form to display to the user for the first time,
 then this example works perfectly.
 
@@ -520,10 +511,6 @@ On a form, we can usually listen to the following events:
 * ``PRE_SUBMIT``
 * ``SUBMIT``
 * ``POST_SUBMIT``
-
-.. versionadded:: 2.3
-    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were introduced
-    in Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
 
 The key is to add a ``POST_SUBMIT`` listener to the field that your new field
 depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),

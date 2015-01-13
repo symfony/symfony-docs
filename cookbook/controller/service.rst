@@ -120,10 +120,6 @@ the route ``_controller`` value:
     defined as a service. See the `FrameworkExtraBundle documentation`_ for
     details.
 
-.. versionadded:: 2.6
-    If your controller service implements the ``__invoke`` method, you can simply refer to the service id
-    (``acme.hello.controller``).
-
 Alternatives to base Controller Methods
 ---------------------------------------
 

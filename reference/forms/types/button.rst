@@ -4,9 +4,6 @@
 button Field Type
 =================
 
-.. versionadded:: 2.3
-    The ``button`` type was introduced in Symfony 2.3
-
 A simple, non-responsive button.
 
 +----------------------+----------------------------------------------------------------------+

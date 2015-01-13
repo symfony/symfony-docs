@@ -21,10 +21,6 @@ and checking the current user's role::
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 You can also secure *any* service in a similar way by injecting the ``security.authorization_checker``
 service into it. For a general introduction to injecting dependencies into
 services see the :doc:`/book/service_container` chapter of the book. For

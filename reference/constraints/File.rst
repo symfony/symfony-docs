@@ -155,9 +155,6 @@ Options
 maxSize
 ~~~~~~~
 
-.. versionadded:: 2.6
-    The suffixes ``Ki`` and ``Mi`` were introduced in Symfony 2.6.
-
 **type**: ``mixed``
 
 If set, the size of the underlying file must be below this file size in order
@@ -182,9 +179,6 @@ see `Wikipedia: Binary prefix`_.
 
 binaryFormat
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``binaryFormat`` option was introduced in Symfony 2.6.
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -224,10 +218,6 @@ per the `mimeTypes`_ option.
 
 disallowEmptyMessage
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``disallowEmptyMessage`` option was introduced in Symfony 2.6. Prior to 2.6,
-    if the user uploaded an empty file, no validation error occurred.
 
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 

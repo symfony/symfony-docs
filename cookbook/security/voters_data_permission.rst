@@ -221,8 +221,4 @@ from the authorization checker is called.
         }
     }
 
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 It's that easy!

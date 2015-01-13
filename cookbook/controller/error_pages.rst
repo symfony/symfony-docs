@@ -153,10 +153,6 @@ Testing Error Pages during Development
 The default ``ExceptionController`` also allows you to preview your
 *error* pages during development.
 
-.. versionadded:: 2.6
-    This feature was introduced in Symfony 2.6. Before, the third-party
-    `WebfactoryExceptionsBundle`_ could be used for the same purpose.
-
 To use this feature, you need to have a definition in your
 ``routing_dev.yml`` file like so:
 

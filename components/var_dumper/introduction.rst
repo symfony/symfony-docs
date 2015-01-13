@@ -9,9 +9,6 @@ The VarDumper Component
     arbitrary PHP variable. Built on top, it provides a better ``dump()``
     function that you can use instead of :phpfunction:`var_dump`.
 
-.. versionadded:: 2.6
-    The VarDumper component was introduced in Symfony 2.6.
-
 Installation
 ------------
 

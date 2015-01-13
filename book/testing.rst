@@ -414,11 +414,6 @@ The Client supports many operations that can be done in a real browser::
 Accessing internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\BrowserKit\\Client::getInternalRequest`
-    and :method:`Symfony\\Component\\BrowserKit\\Client::getInternalResponse`
-    methods were introduced in Symfony 2.3.
-
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
@@ -460,9 +455,6 @@ injection container::
 Be warned that this does not work if you insulate the client or if you use an
 HTTP layer. For a list of services available in your application, use the
 ``debug:container`` console task.
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 .. tip::
 

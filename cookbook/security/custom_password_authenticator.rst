@@ -16,9 +16,6 @@ The Password Authenticator
 .. versionadded:: 2.4
     The ``SimpleFormAuthenticatorInterface`` interface was introduced in Symfony 2.4.
 
-.. versionadded:: 2.6
-    The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
-
 First, create a new class that implements
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventually, this will allow you to create custom logic for authenticating

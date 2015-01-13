@@ -17,10 +17,6 @@ functionality offered by Symfony's core serializer.
 Activating the Serializer
 -------------------------
 
-.. versionadded:: 2.3
-    The Serializer has always existed in Symfony, but prior to Symfony 2.3,
-    you needed to build the ``serializer`` service yourself.
-
 The ``serializer`` service is not available by default. To turn it on, activate
 it in your configuration:
 

@@ -4,9 +4,6 @@
 reset Field Type
 ================
 
-.. versionadded:: 2.3
-    The ``reset`` type was introduced in Symfony 2.3
-
 A button that resets all fields to their original values.
 
 +----------------------+---------------------------------------------------------------------+

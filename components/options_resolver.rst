@@ -20,11 +20,6 @@ You can install the component in 2 different ways:
 Notes on Previous Versions
 --------------------------
 
-.. versionadded:: 2.6
-    This documentation was written for Symfony 2.6 and later. If you use an older
-    version, please `read the Symfony 2.5 documentation`_. For a list of changes,
-    see the `CHANGELOG`_.
-
 Usage
 -----
 
@@ -220,10 +215,6 @@ For example, to make the ``host`` option required, you can do::
         }
     }
 
-.. versionadded:: 2.6
-    As of Symfony 2.6, ``setRequired()`` accepts both an array of options or a
-    single option. Prior to 2.6, you could only pass arrays.
-
 If you omit a required option, a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
 will be thrown::
@@ -248,11 +239,6 @@ one required option::
         }
     }
 
-.. versionadded:: 2.6
-    The methods :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired`
-    and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getRequiredOptions`
-    were introduced in Symfony 2.6.
-
 Use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired` to find
 out if an option is required. You can use
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getRequiredOptions` to
@@ -272,11 +258,6 @@ retrieve the names of all required options::
             $requiredOptions = $resolver->getRequiredOptions();
         }
     }
-
-.. versionadded:: 2.6
-    The methods :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isMissing`
-    and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getMissingOptions`
-    were introduced in Symfony 2.6.
 
 If you want to check whether a required option is still missing from the default
 options, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isMissing`.
@@ -360,12 +341,6 @@ is thrown::
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
 
-.. versionadded:: 2.6
-    Before Symfony 2.6, `setAllowedTypes()` and `addAllowedTypes()` expected
-    the values to be given as an array mapping option names to allowed types::
-
-        $resolver->setAllowedTypes(array('port' => array('null', 'int')));
-
 Value Validation
 ~~~~~~~~~~~~~~~~
 
@@ -412,14 +387,6 @@ returns ``true`` for acceptable values and ``false`` for invalid values::
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 to add additional allowed values without erasing the ones already set.
 
-.. versionadded:: 2.6
-    Before Symfony 2.6, `setAllowedValues()` and `addAllowedValues()` expected
-    the values to be given as an array mapping option names to allowed values:
-
-    .. code-block:: php
-
-        $resolver->setAllowedValues(array('transport' => array('sendmail', 'mail', 'smtp')));
-
 Option Normalization
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -447,11 +414,6 @@ option. You can configure a normalizer by calling
             });
         }
     }
-
-.. versionadded:: 2.6
-    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`
-    was introduced in Symfony 2.6. Before, you had to use
-    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizers`.
 
 The normalizer receives the actual ``$value`` and returns the normalized form.
 You see that the closure also takes an ``$options`` parameter. This is useful
@@ -587,11 +549,6 @@ comes from the default::
         }
     }
 
-.. versionadded:: 2.6
-    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefined`
-    was introduced in Symfony 2.6. Before, you had to use
-    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setOptional`.
-
 You can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefined`
 to define an option without setting a default value. Then the option will only
 be included in the resolved options if it was actually passed to
@@ -642,11 +599,6 @@ options in one go::
             $resolver->setDefined(array('port', 'encryption'));
         }
     }
-
-.. versionadded:: 2.6
-    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isDefined`
-    and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getDefinedOptions`
-    were introduced in Symfony 2.6.
 
 The methods :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isDefined`
 and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getDefinedOptions`

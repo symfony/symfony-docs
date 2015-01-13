@@ -4,11 +4,6 @@
 Using a Factory to Create Services
 ==================================
 
-.. versionadded:: 2.6
-    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
-    method was introduced in Symfony 2.6. Refer to older versions for the
-    syntax for factories prior to 2.6.
-
 Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this

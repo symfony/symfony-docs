@@ -119,10 +119,6 @@ in this case :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
 Ignoring Attributes when Serializing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The :method:`GetSetMethodNormalizer::setIgnoredAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes>`
-    method was introduced in Symfony 2.3.
-
 As an option, there's a way to ignore attributes from the origin object when
 serializing. To remove those attributes use the
 :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
@@ -164,10 +160,6 @@ needs three parameters:
 
 Using Camelized Method Names for Underscored Attributes
 -------------------------------------------------------
-
-.. versionadded:: 2.3
-    The :method:`GetSetMethodNormalizer::setCamelizedAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes>`
-    method was introduced in Symfony 2.3.
 
 Sometimes property names from the serialized content are underscored (e.g.
 ``first_name``).  Normally, these attributes will use get/set methods like
@@ -240,10 +232,6 @@ When serializing, you can set a callback to format a specific object property::
 
 Handling Circular References
 ----------------------------
-
-.. versionadded:: 2.6
-    Handling of circular references was introduced in Symfony 2.6. In previous
-    versions of Symfony, circular references led to infinite loops.
 
 Circular references are common when dealing with entity relations::
 

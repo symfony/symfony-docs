@@ -78,9 +78,6 @@ parameter named ``kernel.secret``.
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``http_method_override`` option was introduced in Symfony 2.3.
-
 **type**: ``Boolean`` **default**: ``true``
 
 This determines whether the ``_method`` request parameter is used as the intended
@@ -106,9 +103,6 @@ using the following keys:
 * ``macvim``
 * ``emacs``
 * ``sublime``
-
-.. versionadded:: 2.3.14
-    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
 You can also specify a custom url string. If you do this, all percentage
 signs (``%``) must be doubled to escape that character. For example, if you
@@ -179,10 +173,6 @@ trusted_proxies
 
 Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
-
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
-    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
 
@@ -498,11 +488,6 @@ profiler
 enabled
 .......
 
-.. versionadded:: 2.2
-    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
-    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
-    configuration entirely.
-
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this key to ``true``. When you are
@@ -511,12 +496,6 @@ and ``test`` environments.
 
 collect
 .......
-
-.. versionadded:: 2.3
-    The ``collect`` option was introduced in Symfony 2.3. Previously, when
-    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
-    but the collectors were disabled. Now, the profiler and the collectors
-    can be controlled independently.
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -552,9 +531,6 @@ For more details, see :doc:`/book/translation`.
 
 logging
 .......
-
-.. versionadded:: 2.6
-    The ``logging`` option was introduced in Symfony 2.6.
 
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 

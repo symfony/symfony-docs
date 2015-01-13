@@ -685,10 +685,6 @@ The available attributes are:
 * ``app.debug``
 * ``app.security``
 
-.. versionadded:: 2.6
-     The ``app.security`` global is deprecated as of 2.6. The user is already available
-     as ``app.user`` and ``is_granted()`` is registered as function.
-
 Symfony Standard Edition Extensions
 -----------------------------------
 
