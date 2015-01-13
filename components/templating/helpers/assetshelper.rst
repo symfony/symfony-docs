@@ -104,4 +104,4 @@ Custom Packages
 ---------------
 
 You can create your own package by extending
-:class:`Symfony\\Component\\Templating\\Package\\Package`.
+:class:`Symfony\\Component\\Templating\\Asset\\Package`.
