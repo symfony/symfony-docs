@@ -486,6 +486,8 @@ If you're ever unsure of how to specify an option, either check the API document
 for the constraint or play it safe by always passing in an array of options
 (the first method shown above).
 
+.. _translation-constraint-messages:
+
 Translating Constraint Messages
 -------------------------------
 
