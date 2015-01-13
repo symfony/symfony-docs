@@ -692,7 +692,7 @@ It will also detect the following translator usages in PHP templates:
 
     $view['translator']->trans("Symfony2 is great");
 
-    $view['translator']->trans('Symfony2 is great');
+    $view['translator']->transChoice('Symfony2 is great', 1);
 
 .. caution::
 
@@ -727,17 +727,18 @@ And suppose you've already setup some translations for the ``fr`` locale inside 
             </file>
         </xliff>
 
+
+    .. code-block:: yaml
+
+        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
+
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
         );
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
 
 and for the ``en`` locale:
 
@@ -758,17 +759,17 @@ and for the ``en`` locale:
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
+        Symfony2 is great: Symfony2 is great
+
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
         return array(
             'Symfony2 is great' => 'Symfony2 is great',
         );
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
-        Symfony2 is great: Symfony2 is great
 
 To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
