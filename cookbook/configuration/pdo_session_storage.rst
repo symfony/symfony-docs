@@ -150,7 +150,7 @@ a second array argument to ``PdoSessionHandler``:
 
 The following things can be configured:
 
-* ``db_table``: (default ``session``) The name of the session table in your
+* ``db_table``: (default ``sessions``) The name of the session table in your
   database;
 * ``db_id_col``: (default ``sess_id``) The name of the id column in your
   session table (VARCHAR(128));
