@@ -28,6 +28,7 @@ Date and Time Fields
 ~~~~~~~~~~~~~~~~~~~~
 
 * :doc:`DateType </reference/forms/types/date>`
+* :doc:`DateIntervalType </reference/forms/types/dateinterval>`
 * :doc:`DateTimeType </reference/forms/types/datetime>`
 * :doc:`TimeType </reference/forms/types/time>`
 * :doc:`BirthdayType </reference/forms/types/birthday>`
