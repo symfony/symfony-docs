@@ -295,7 +295,7 @@ provider, but it's better to think of it as an "in configuration" provider:
                     memory:
                         users:
                             ryan:
-                                password: ryanpass,
+                                password: ryanpass
                                 roles: 'ROLE_USER'
                             admin:
                                 password: kitten
