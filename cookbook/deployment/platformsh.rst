@@ -144,7 +144,7 @@ command that you see on the Platform.sh web UI):
 ``PROJECT-ID``
     Unique identifier of your project. Something like ``kjh43kbobssae``
 ``CLUSTER``
-    Server location where your project is deplyed. It can be ``eu`` or ``us``
+    Server location where your project is deployed. It can be ``eu`` or ``us``
 
 Commit the Platform.sh specific files created in the previous section:
 
