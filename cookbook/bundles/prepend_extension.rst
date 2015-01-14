@@ -68,9 +68,10 @@ in case a specific other bundle is not registered::
                 switch ($name) {
                     case 'acme_something':
                     case 'acme_other':
-                        // set use_acme_goodbye to false in the config of acme_something and acme_other
-                        // note that if the user manually configured use_acme_goodbye to true in the
-                        // app/config/config.yml then the setting would in the end be true and not false
+                        // set use_acme_goodbye to false in the config of
+                        // acme_something and acme_other note that if the user manually
+                        // configured use_acme_goodbye to true in the app/config/config.yml
+                        // then the setting would in the end be true and not false
                         $container->prependExtensionConfig($name, $config);
                         break;
                 }
@@ -79,7 +80,8 @@ in case a specific other bundle is not registered::
 
         // process the configuration of AcmeHelloExtension
         $configs = $container->getExtensionConfig($this->getAlias());
-        // use the Configuration class to generate a config array with the settings "acme_hello"
+        // use the Configuration class to generate a config array with
+        // the settings "acme_hello"
         $config = $this->processConfiguration(new Configuration(), $configs);
 
         // check if entity_manager_name is set in the "acme_hello" configuration
@@ -121,11 +123,11 @@ for ``acme_hello`` is set to ``non_default``:
 
         // app/config/config.php
         $container->loadFromExtension('acme_something', array(
-            ...,
+            // ...
             'use_acme_goodbye' => false,
             'entity_manager_name' => 'non_default',
         ));
         $container->loadFromExtension('acme_other', array(
-            ...,
+            // ...
             'use_acme_goodbye' => false,
         ));
