@@ -68,7 +68,7 @@ in the core FrameworkBundle:
         $container->setParameter('translator.class', 'Acme\HelloBundle\Translation\Translator');
 
 Secondly, if the class is not available as a parameter, you want to make sure the
-class is always overridden when your bundle is used, or if you need to modify
+class is always overridden when your bundle is used or if you need to modify
 something beyond just the class name, you should use a compiler pass::
 
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
