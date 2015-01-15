@@ -46,7 +46,7 @@ Quick example::
 
 .. note::
 
-    While it is recommended to explicitly start a session, a sessions will actually
+    While it is recommended to explicitly start a session, a session will actually
     start on demand, that is, if any session request is made to read/write session
     data.
 
