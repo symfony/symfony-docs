@@ -234,7 +234,7 @@ following standardized instructions in your ``README.md`` file.
     -------------------------
 
     Then, enable the bundle by adding the following line in the
-    ``app/AppKernel.php`` file of your project:
+    `app/AppKernel.php` file of your project:
 
     ```php
     <?php
