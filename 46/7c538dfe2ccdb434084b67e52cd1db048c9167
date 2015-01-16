@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-13T18:59:42Z
+
+Thank you for preparing a fix @e-moe. Can you also please also update the default value for the `db_table` option?
+
+By the way, this will then fix #4794.
+
+---------------------------------------------------------------------------
+
+by e-moe at 2015-01-13T19:12:15Z
+
+@xabbuh , updated. thanks for comment about option!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-13T19:14:28Z
+
+:+1: Looks good, thanks again @e-moe.
