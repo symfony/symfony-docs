@@ -74,15 +74,13 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>`, the
-:ref:`@Security annotation <best-practices-security-annotation>` and using
-:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
+configuration in :doc:`security.yml </reference/configuration/security>` and
+using :ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
 service directly.
 
 .. best-practice::
 
     * For protecting broad URL patterns, use ``access_control``;
-    * Whenever possible, use the ``@Security`` annotation;
     * Check security directly on the ``security.context`` service whenever
       you have a more complex situation.
 
@@ -208,14 +206,13 @@ Now you can reuse this method both in the template and in the security expressio
     {% endif %}
 
 .. _best-practices-directly-isGranted:
+.. _checking-permissions-without-security:
 
-Checking Permissions without @Security
---------------------------------------
+Manually Checking Permissions
+-----------------------------
 
-The above example with ``@Security`` only works because we're using the
-:ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
-access to the a ``post`` variable. If you don't use this, or have some other
-more advanced use-case, you can always do the same security check in PHP:
+If you cannot control the access based on URL patterns, you can always do
+the security checks in PHP:
 
 .. code-block:: php
 
@@ -303,21 +300,7 @@ To enable the security voter in the application, define a new service:
             tags:
                - { name: security.voter }
 
-Now, you can use the voter with the ``@Security`` annotation:
-
-.. code-block:: php
-
-    /**
-     * @Route("/{id}/edit", name="admin_post_edit")
-     * @Security("is_granted('edit', post)")
-     */
-    public function editAction(Post $post)
-    {
-        // ...
-    }
-
-You can also use this directly with the ``security.context`` service or via
-the even easier shortcut in a controller:
+Now, you can use the voter with the ``security.context`` service:
 
 .. code-block:: php
 
