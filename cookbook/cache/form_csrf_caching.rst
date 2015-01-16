@@ -16,9 +16,9 @@ Why Caching Pages with a CSRF token are Problematic
 Typically, each user is assigned a unique CSRF token, which is stored in
 the session for validation. This means that if you *do* cache a page with
 a form containing a CSRF token, you'll cache the CSRF token of the *first*
-user only. When a user submits, the token won't match the token stored in
-the session and all users (except for the first) will fail CSRF validation
-when submitting the form.
+user only. When a user submits the form, the token won't match the token
+stored in the session and all users (except for the first) will fail CSRF
+validation when submitting the form.
 
 In fact, many reverse proxies (like Varnish) will refuse to cache a page
 with a CSRF token. This is because a cookie is sent in order to preserve
