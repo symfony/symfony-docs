@@ -116,7 +116,7 @@ Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony takes advantage of PHP's namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 
@@ -556,7 +556,7 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using ``app_dev.php`` - 
+error page is shown to the developer (i.e. when you're using ``app_dev.php`` -
 see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see the
