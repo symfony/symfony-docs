@@ -647,7 +647,7 @@ requirements can easily be added for each parameter. For example:
 
 .. configuration-block::
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
 
