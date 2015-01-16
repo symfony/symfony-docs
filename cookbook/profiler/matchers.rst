@@ -67,8 +67,8 @@ profiler.
 To enable the profiler when a ``ROLE_SUPER_ADMIN`` is logged in, you can use
 something like::
 
-    // src/Acme/DemoBundle/Profiler/SuperAdminMatcher.php
-    namespace Acme\DemoBundle\Profiler;
+    // src/AppBundle/Profiler/SuperAdminMatcher.php
+    namespace AppBundle\Profiler;
 
     use Symfony\Component\Security\Core\SecurityContext;
     use Symfony\Component\HttpFoundation\Request;
@@ -95,26 +95,29 @@ Then, you need to configure the service:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
-            acme_demo.profiler.matcher.super_admin:
-                class: Acme\DemoBundle\Profiler\SuperAdminMatcher
+            app.profiler.matcher.super_admin:
+                class: AppBundle\Profiler\SuperAdminMatcher
                 arguments: ["@security.context"]
 
     .. code-block:: xml
 
+        <!-- app/config/services.xml -->
         <services>
-            <service id="acme_demo.profiler.matcher.super_admin"
-                class="Acme\DemoBundle\Profiler\SuperAdminMatcher">
+            <service id="app.profiler.matcher.super_admin"
+                class="AppBundle\Profiler\SuperAdminMatcher">
                 <argument type="service" id="security.context" />
         </services>
 
     .. code-block:: php
 
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('acme_demo.profiler.matcher.super_admin', new Definition(
-            'Acme\DemoBundle\Profiler\SuperAdminMatcher',
+        $container->setDefinition('app.profiler.matcher.super_admin', new Definition(
+            'AppBundle\Profiler\SuperAdminMatcher',
             array(new Reference('security.context'))
         );
 
@@ -130,7 +133,7 @@ profiler to use this service as the matcher:
             # ...
             profiler:
                 matcher:
-                    service: acme_demo.profiler.matcher.super_admin
+                    service: app.profiler.matcher.super_admin
 
     .. code-block:: xml
 
@@ -138,7 +141,7 @@ profiler to use this service as the matcher:
         <framework:config>
             <!-- ... -->
             <framework:profiler
-                service="acme_demo.profiler.matcher.super_admin"
+                service="app.profiler.matcher.super_admin"
             />
         </framework:config>
 
@@ -148,6 +151,6 @@ profiler to use this service as the matcher:
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'service' => 'acme_demo.profiler.matcher.super_admin',
+                'service' => 'app.profiler.matcher.super_admin',
             ),
         ));
