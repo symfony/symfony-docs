@@ -288,6 +288,18 @@ them all at once:
 Depending on the complexity of your project, this update process can take up to
 several minutes to complete.
 
+.. tip::
+
+    Symfony provides a command to check whether your project's dependencies
+    contain any know security vulnerability:
+
+    .. code-block:: bash
+
+        $ php app/console security:check
+
+    A good security practice is to execute this command regularly to be able to
+    update or replace compromised dependencies as soon as possible.
+
 .. _installing-a-symfony2-distribution:
 
 Installing a Symfony Distribution
