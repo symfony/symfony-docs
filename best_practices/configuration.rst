@@ -74,8 +74,8 @@ add an extra layer of configuration that's not needed because you don't need
 or want these configuration values to change on each server.
 
 The configuration options defined in the ``config.yml`` file usually vary from
-one :doc:`/cookbook/configuration/environments` to another. That's why Symfony
-already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
+one :doc:`environment </cookbook/configuration/environments>` to another. That's
+why Symfony already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
 files so that you can override specific values for each environment.
 
 Constants vs Configuration Options

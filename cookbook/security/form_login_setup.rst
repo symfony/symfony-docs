@@ -25,7 +25,7 @@ First, enable form login under your firewall:
         # app/config/security.yml
         security:
             # ...
-        
+
             firewalls:
                 default:
                     anonymous: ~
@@ -98,7 +98,7 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
 .. configuration-block::
 
     .. code-block:: php-annotations
-    
+
         // src/AppBundle/Controller/SecurityController.php
         // ...
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -165,7 +165,7 @@ form::
 
     // src/AppBundle/Controller/SecurityController.php
     // ...
-    
+
     // ADD THIS use STATEMENT above your class
     use Symfony\Component\Security\Core\Security;
 
@@ -182,7 +182,7 @@ form::
             $error = $session->get(Security::AUTHENTICATION_ERROR);
             $session->remove(Security::AUTHENTICATION_ERROR);
         } else {
-            $error = '';
+            $error = null;
         }
 
         // last username entered by the user
@@ -218,7 +218,7 @@ Finally, create the template:
         {# ... you will probably extends your base template, like base.html.twig #}
 
         {% if error %}
-            <div>{{ error.message }}</div>
+            <div>{{ error.messageKey|trans(error.messageData) }}</div>
         {% endif %}
 
         <form action="{{ path('login_check') }}" method="post">
