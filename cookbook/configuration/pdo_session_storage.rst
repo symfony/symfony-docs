@@ -213,7 +213,7 @@ Example SQL Statements
     * A new session lifetime (``sess_lifetime`` by default) integer column
       needs to be added;
     * The data column (``sess_data`` by default) needs to be changed to a
-      BLOG type.
+      BLOB type.
 
     Check the SQL statements below for more details.
 
