@@ -154,3 +154,38 @@ the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
     
         $ php app/console cache:clear --env=prod
         $ php app/console assetic:dump --env=prod --no-debug
+
+Override the ``vendor`` Directory
+---------------------------------
+
+To override the ``vendor`` directory you have to introduce changes in the
+following files:
+
+* ``app/autoload.php``
+* ``composer.json``
+
+The change in the ``composer.json`` takes the form:
+
+.. code-block:: json
+
+    {
+        ...
+        "config": {
+            "bin-dir": "bin",
+            "vendor-dir": "/some/dir/vendor"
+        },
+        ...
+    }
+
+In ``app/autoload.php`` you need to modify the path leading to ``vendor/autoload.php``
+file::
+
+    // app/autoload.php
+    // ...
+    $loader = require '/some/dir/vendor/autoload.php';
+
+.. tip::
+
+    This modification can be of interest if you work using virtual environment
+    and cannot use NFS. For example, when running Symfony app using Vagrant/VirtualBox
+    guest operating system.
