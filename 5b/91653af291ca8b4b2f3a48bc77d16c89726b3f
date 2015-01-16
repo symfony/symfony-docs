@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-15T19:15:16Z
+
+@beni0888 nice catch! Thank you.
+
+Just a comment for the next Pull Requests: when fixing a documentation error, we should always submit it to "the oldest Symfony branch which is still maintained". Currently, that means using "Symfony 2.3" instead of the "Symfony 2.6" version which you have used.
+
+For this pull request it doesn't matter because documentation managers will take care of merging it on 2.3, so you don't have to modify this Pull Request and you don't have to send a new Pull Request. Just keep it in mind for the next Pull Request.
+
+Again, thank you for helping us improving Symfony documentation.
+
+---------------------------------------------------------------------------
+
+by beni0888 at 2015-01-16T07:27:46Z
+
+Thanks for your feedback @javiereguiluz , I'll keep it in mind for the next time :)
