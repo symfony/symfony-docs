@@ -211,8 +211,10 @@ Now you can reuse this method both in the template and in the security expressio
 Manually Checking Permissions
 -----------------------------
 
-If you cannot control the access based on URL patterns, you can always do
-the security checks in PHP:
+The above example with ``@Security`` only works because we're using the
+:ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
+access to the a ``post`` variable. If you don't use this, or have some other
+more advanced use-case, you can always do the same security check in PHP:
 
 .. code-block:: php
 
@@ -300,7 +302,21 @@ To enable the security voter in the application, define a new service:
             tags:
                - { name: security.voter }
 
-Now, you can use the voter with the ``security.context`` service:
+Now, you can use the voter with the ``@Security`` annotation:
+
+.. code-block:: php
+
+    /**
+     * @Route("/{id}/edit", name="admin_post_edit")
+     * @Security("is_granted('edit', post)")
+     */
+    public function editAction(Post $post)
+    {
+        // ...
+    }
+
+You can also use this directly with the ``security.context`` service or via
+the even easier shortcut in a controller:
 
 .. code-block:: php
 
