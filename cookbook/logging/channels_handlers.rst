@@ -23,15 +23,15 @@ the channel).
 Switching a Channel to a different Handler
 ------------------------------------------
 
-Now, suppose you want to log the ``security`` channel to a different file
-in the ``prod`` environment. To do this, just create a new handler and configure
-it to log only messages from the ``security`` channel:
+Now, suppose you want to log the ``security`` channel to a different file.
+To do this, just create a new handler and configure it to log only messages
+from the ``security`` channel:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # app/config/config.yml
         monolog:
             handlers:
                 security:
@@ -41,7 +41,7 @@ it to log only messages from the ``security`` channel:
                     path:     "%kernel.logs_dir%/security.log"
                     channels: [security]
 
-                # an example of *not* logging security channel messages
+                # an example of *not* logging security channel messages for this handler
                 main:
                     # ...
                     # channels: ["!security"]
@@ -64,12 +64,11 @@ it to log only messages from the ``security`` channel:
                     </monolog:channels>
                 </monolog:handler>
 
-                <monolog:handler name="main" type="stream" path="%kernel.logs_dir%/security.log">
-                    <!--
+                <monolog:handler name="main" type="stream" path="%kernel.logs_dir%/main.log">
+                    <!-- ... -->
                     <monolog:channels>
                         <monolog:channel>!security</monolog:channel>
                     </monolog:channels>
-                    -->
                 </monolog:handler>
             </monolog:config>
         </container>
@@ -87,13 +86,10 @@ it to log only messages from the ``security`` channel:
                     ),
                 ),
                 'main'     => array(
-                    'type'     => 'stream',
-                    'path'     => '%kernel.logs_dir%/security.log',
-                    /*
+                    // ...
                     'channels' => array(
                         '!security',
                     ),
-                    */
                 ),
             ),
         ));
