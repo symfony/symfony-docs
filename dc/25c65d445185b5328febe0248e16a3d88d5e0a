@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-04T18:22:12Z
+
+If I don't misunderstand our workflow, this will only happen when 2.7 is actually released.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-05T10:01:22Z
+
+@xabbuh see https://github.com/symfony/symfony-docs/issues/4774 :
+
+ > Remove all versionadded directives - and any other notes related to features changing or being new - for the version (e.g. 2.1) from the master branch. The result is that the next release (which is the first that comes entirely after the end of maintenance of this branch), will have no mentions of the old version (e.g. 2.1).
+
+As 2.5 reaches end of maintance this month and 2.7 is released in May, it should not contain any versionadded directives for 2.5. Stricly spoken, we should merge this PR in january, but I think we can think ahead and merge it already.
