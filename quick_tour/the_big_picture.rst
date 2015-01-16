@@ -85,6 +85,17 @@ This command downloads the latest Symfony stable version and creates an empty
 project in the ``myproject/`` directory so you can start developing your
 application right away.
 
+.. note::
+
+   When creating the project, the Symfony Installer will check if your system
+   meets the requirements that have to be fulfilled to run your new Symfony
+   application. You can later on perform the requirements check again at will
+   using the Symfony console application:
+
+   .. code-block:: bash
+
+        $ php myproject/app/check.php
+
 .. _running-symfony2:
 
 Running Symfony
