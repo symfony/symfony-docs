@@ -629,7 +629,7 @@ kernel.terminate
 +-------------------------------------------------------------------------------------------+----------+
 | Listener Class Name                                                                       | Priority |
 +===========================================================================================+==========+
-| :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`           | 0        |
+| `EmailSenderListener`_                                                                    | 0        |
 +-------------------------------------------------------------------------------------------+----------+
 
 .. _dic-tags-kernel-event-subscriber:
@@ -1402,3 +1402,4 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 .. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
 .. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders
+.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php

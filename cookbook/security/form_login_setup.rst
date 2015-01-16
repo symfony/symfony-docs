@@ -318,7 +318,7 @@ see :doc:`/cookbook/security/form_login`.
 .. _book-security-common-pitfalls:
 
 Avoid common Pitfalls
-=====================
+---------------------
 
 When setting up your login form, watch out for a few common pitfalls.
 
