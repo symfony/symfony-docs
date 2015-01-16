@@ -139,7 +139,7 @@ For example:
 
     use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    
+
     /**
      * @Route("/{id}", name="admin_post_show")
      */
@@ -212,6 +212,7 @@ Pre and Post Hooks
 ------------------
 
 If you need to execute some code before or after the execution of your controllers,
-you can use the EventDispatcher component to :doc:`/cookbook/event_dispatcher/before_after_filters`.
+you can use the EventDispatcher component to
+:doc:`set up before and after filters </cookbook/event_dispatcher/before_after_filters>`.
 
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
