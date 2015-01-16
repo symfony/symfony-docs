@@ -679,10 +679,6 @@ argument as follows::
     $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST);
     // do something with this response
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
 listeners (e.g. security) may only act upon the master request. Each listener

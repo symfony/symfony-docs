@@ -203,13 +203,6 @@ level. For example::
         $output->writeln(...);
     }
 
-.. versionadded:: 2.4
-   The :method:`Symfony\\Component\\Console\\Output\\Output::isQuiet`,
-   :method:`Symfony\\Component\\Console\\Output\\Output::isVerbose`,
-   :method:`Symfony\\Component\\Console\\Output\\Output::isVeryVerbose` and
-   :method:`Symfony\\Component\\Console\\Output\\Output::isDebug`
-   methods were introduced in Symfony 2.4
-
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
 

@@ -72,10 +72,6 @@ firewalls will have the opportunity to be matched for this request.
 Restricting by Host
 -------------------
 
-.. versionadded:: 2.4
-    Support for restricting security firewalls to a specific host was introduced in
-    Symfony 2.4.
-
 If matching against the ``pattern`` only is not enough, the request can also be matched against 
 ``host``. When the configuration option ``host`` is set, the firewall will be restricted to 
 only initialize if the host from the request matches against the configuration.

@@ -18,9 +18,6 @@ chat for instance), create several clients::
     $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
     $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
 This works except when your code maintains a global state or if it depends on
 a third-party library that has some kind of global state. In such a case, you
 can insulate your clients::

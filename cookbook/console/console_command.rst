@@ -181,11 +181,6 @@ instead of
         }
     }
 
-.. versionadded:: 2.4
-    Since Symfony 2.4, the ``CommandTester`` automatically detects the name of
-    the command to execute. Prior to Symfony 2.4, you need to pass it via the
-    ``command`` key.
-
 .. note::
 
     In the specific case above, the ``name`` parameter and the ``--yell`` option

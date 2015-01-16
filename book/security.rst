@@ -927,9 +927,6 @@ special attributes like this:
 
 .. _book-security-template-expression:
 
-.. versionadded:: 2.4
-    The ``expression`` functionality was introduced in Symfony 2.4.
-
 You can also use expressions inside your templates:
 
 .. configuration-block::

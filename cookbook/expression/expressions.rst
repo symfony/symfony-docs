@@ -4,9 +4,6 @@
 How to use Expressions in Security, Routing, Services, and Validation
 =====================================================================
 
-.. versionadded:: 2.4
-    The expression functionality was introduced in Symfony 2.4.
-
 In Symfony 2.4, a powerful :doc:`ExpressionLanguage </components/expression_language/introduction>`
 component was added to Symfony. This allows us to add highly customized
 logic inside configuration.
@@ -27,9 +24,6 @@ For more information about how to create and work with expressions, see
 
 Security: Complex Access Controls with Expressions
 --------------------------------------------------
-
-.. versionadded:: 2.4
-    The expression functionality was introduced in Symfony 2.4.
 
 In addition to a role like ``ROLE_ADMIN``, the ``isGranted`` method also
 accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
