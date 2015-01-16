@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by gajdaw at 2014-12-13T10:57:11Z
+
+@WouterJ I have created a new PR and closed the previous one #4642.
+
+---------------------------------------------------------------------------
+
+by gajdaw at 2014-12-14T08:14:42Z
+
+@xabbuh I have reformatted the commit.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-14T09:42:07Z
+
+@gajdaw Looks good to me. I just left a last comment.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-14T22:15:06Z
+
+shoulnd this contributed to composers documentation and just linked?
+
+---------------------------------------------------------------------------
+
+by gajdaw at 2014-12-15T06:46:39Z
+
+@timglabisch Because of the change in `app/autoload.php` I think Symfony docs is the right place for it.
+
+Composer's doc contains info about `vendor-dir` in https://getcomposer.org/doc/04-schema.md
+
+---------------------------------------------------------------------------
+
+by gajdaw at 2014-12-15T06:53:32Z
+
+@WouterJ @xabbuh : done.
+
+---------------------------------------------------------------------------
+
+by gajdaw at 2014-12-19T15:39:52Z
+
+@WouterJ I think its finished.
