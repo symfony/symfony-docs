@@ -362,7 +362,7 @@ to add additional allowed types without erasing the ones already set.
 
 .. versionadded:: 2.6
     Before Symfony 2.6, ``setAllowedTypes()`` and ``addAllowedTypes()`` expected
-    the values to be given as an array mapping option names to allowed types:: 
+    the values to be given as an array mapping option names to allowed types:
     ``$resolver->setAllowedTypes(array('port' => array('null', 'int')));``
 
 Value Validation
