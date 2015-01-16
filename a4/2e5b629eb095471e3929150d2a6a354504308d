@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-05T20:12:57Z
+
+Hmm, this makes me wonder at which resolution you're reading the docs. I didn't have any scrollbar with symfony.com on its max-width, which means a code-block can have 96 characters.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-06T08:03:34Z
+
+When reading I'm mostly using MBP13" Retina and as I don't like having a long way from one side to another I center the window.
+
+This is the screenshot of the same docs place with one window being in full width (CSS is using one width) and another window is centered (CSS media kicks in to use mobile layout)
+
+![screen shot 2015-01-06 at 9 46 14 am](https://cloud.githubusercontent.com/assets/966877/5625844/3f3de67c-958b-11e4-8f42-cddda90ea524.png)
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-06T08:31:32Z
+
+Started reading so checked that is the width of the content, so the center width for the content (e.g., <p> tag) is 595.
+
+If using the full window (the window behind) the content width is 678.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-06T13:41:27Z
+
+Then I would rise a question: Can we support having no scrollbar for responsive design? Imo, we can't, as it doesn't have a min-width.
+
+What should we then support? Symfony.com is fixing on 970px. I think we should support having no scrollbar for the width of the code block in that situation, as it's quite small for the big screens people currently use.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-06T15:08:52Z
+
+Could you expand on what you mean by not supporting scrollbar for responsive design?
+
+I think I'm starting to get what you mean, but just to make sure we're on the same page of thinking.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-06T15:42:51Z
+
+Well, you've added some line breaks in this PR. We do that to prevent horizontal scrollbars. However, it also makes reading the code examples a bit harder in some cases (but less harder than with a horizontal scrollbar).
+
+The question now is, what should we take as a maximum line length used in code examples. Since the examples don't trigger a horizontal scrollbar when symfony is used in its maximum width, which is only just 970px. As the width of Symfony is response, it can get 1px width (in theory). Whatever we do, it'll always trigger a horizontal scrollbar in that case :)
+
+Now, which width should we consider when considering the maximum line length of code examples? I think we should use the fixed 970px width. That would mean none of the wrapping changes in this PR should be applied.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-06T16:40:57Z
+
+I know what you mean, it's a thin line. I agree that at some point the horizontal scrollbar should not be supported anymore, but I'm not sure it should be as high as 970px.
+
+When in doubt, get more data. A few screenshots in portrait and landscape modes using Nexus 5 and Nexus 7
+
+![screenshot_2015-01-06-18-29-40](https://cloud.githubusercontent.com/assets/966877/5631948/6abe62de-95d3-11e4-9ccf-2c5268c8b112.png)
+![screenshot_2015-01-06-18-30-07](https://cloud.githubusercontent.com/assets/966877/5631950/6ac108d6-95d3-11e4-84b6-8c3a72f213f3.png)
+![screenshot_2015-01-06-18-31-26](https://cloud.githubusercontent.com/assets/966877/5631949/6abec288-95d3-11e4-89af-f68d4aab470d.png)
+![screenshot_2015-01-06-18-32-49](https://cloud.githubusercontent.com/assets/966877/5631962/7e59b1a4-95d3-11e4-9688-bf2349af796f.png)
+![screenshot_2015-01-06-18-33-37](https://cloud.githubusercontent.com/assets/966877/5631961/7e58e58a-95d3-11e4-80bb-d5fc8714033d.png)
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-06T16:41:58Z
+
+PS: @WouterJ I think you commented on the wrong PR as this one just adds some missing inline code tags...
