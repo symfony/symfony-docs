@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-01-02T16:32:11Z
+
+> SensioFrameworkExtraBundle 3.0 which requires Symfony 2.4 or higher.
+
+To be exact, SensioFrameworkExtraBundle 3.0 is still compatible with Symfony 2.3. But all features in it relying on the ExpressionLanguage (and this is the case of the Security annotation) are not available in this case (other features like ParamConverter still are)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-02T16:38:11Z
+
+> To be exact, SensioFrameworkExtraBundle 3.0 is still compatible with Symfony 2.3. But all features in it relying on the ExpressionLanguage (and this is the case of the Security annotation) are not available in this case (other features like ParamConverter still are)
+
+I don't think we should confuse people with such a detailed explanation. This would be even more confusing given that even the bundle's readme states "The minimum version of Symfony2 for this workflow is 2.4.0.".
