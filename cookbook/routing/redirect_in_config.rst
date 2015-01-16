@@ -28,7 +28,7 @@ action to redirect to this new url:
 
         # load some routes - one should ultimately have the path "/app"
         AppBundle:
-            resource: "@AcmeAppBundle/Controller/"
+            resource: "@AppBundle/Controller/"
             type:     annotation
             prefix:   /app
 
@@ -50,7 +50,7 @@ action to redirect to this new url:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- load some routes - one should ultimately have the path "/app" -->
-            <import resource="@AcmeAppBundle/Controller/"
+            <import resource="@AppBundle/Controller/"
                 type="annotation"
                 prefix="/app"
             />
@@ -72,13 +72,10 @@ action to redirect to this new url:
         $collection = new RouteCollection();
 
         // load some routes - one should ultimately have the path "/app"
-        $acmeApp = $loader->import(
-            "@AcmeAppBundle/Controller/",
-            "annotation"
-        );
-        $acmeApp->setPrefix('/app');
+        $appRoutes = $loader->import("@AppBundle/Controller/", "annotation");
+        $appRoutes->setPrefix('/app');
 
-        $collection->addCollection($acmeApp);
+        $collection->addCollection($appRoutes);
 
         // redirecting the root
         $collection->add('root', new Route('/', array(

@@ -37,8 +37,8 @@ and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
-    namespace Acme\DemoBundle\Security\Authorization\Voter;
+    // src/AppBundle/Security/Authorization/Voter/ClientIpVoter.php
+    namespace AppBundle\Security\Authorization\Voter;
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -106,7 +106,7 @@ and tag it as a ``security.voter``:
         # src/Acme/AcmeBundle/Resources/config/services.yml
         services:
             security.access.blacklist_voter:
-                class:     Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
+                class:     AppBundle\Security\Authorization\Voter\ClientIpVoter
                 arguments: ["@service_container", [123.123.123.123, 171.171.171.171]]
                 public:    false
                 tags:
@@ -116,7 +116,7 @@ and tag it as a ``security.voter``:
 
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
+                 class="AppBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="service_container" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
@@ -132,7 +132,7 @@ and tag it as a ``security.voter``:
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
+            'AppBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
                 new Reference('service_container'),
                 array('123.123.123.123', '171.171.171.171'),

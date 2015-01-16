@@ -23,8 +23,9 @@ following conventions:
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
 
 * The name is equal to the bundle name with the ``Bundle`` suffix replaced by
-  ``Extension`` (e.g. the Extension class of ``AcmeHelloBundle`` would be
-  called ``AcmeHelloExtension``).
+  ``Extension`` (e.g. the Extension class of ``AppBundle`` would be called
+  ``AppExtension`` and the one for ``AcmeHelloBundle`` would be called
+  ``AcmeHelloExtension``).
 
 The Extension class should implement the
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`,
