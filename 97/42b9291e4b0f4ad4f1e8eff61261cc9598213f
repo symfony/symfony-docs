@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-04T15:36:29Z
+
+@stof I assumed you meant the `getMessageData()` method [here](https://github.com/symfony/symfony-docs/pull/4723/files#r22430870). `getMessageParameters()` does not exist.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-11T11:04:41Z
+
+ping @weaverryan @WouterJ I think this is something we should merge as soon as possible to avoid giving insecure advices.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-12T11:32:28Z
+
+Thanks @xabbuh. I'm actually not familiar with this - I knew this approach could leak info, but had the approach you suggested always worked, or is it new? Where did the idea come from? Forgive my lack of knowledge here :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-12T11:49:37Z
+
+@stof made the suggestion in https://github.com/symfony/symfony-docs/pull/4723#discussion_r22430870. These methods are present in Symfony 2.3 too: http://api.symfony.com/2.3/Symfony/Component/Security/Core/Exception/AuthenticationException.html
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-12T14:58:08Z
+
+@weaverryan this is a feature added in Symfony 2.2
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-12T14:59:00Z
+
+@xabbuh indeed, I made a mistake when giving the method name (I haven't checked the code or the api doc when commenting)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-12T15:00:10Z
+
+@stof No problem, was not hard to guess the right method name. ;)
