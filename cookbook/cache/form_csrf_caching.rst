@@ -10,8 +10,8 @@ need to be cautious if you try to cache pages with forms including them.
 For more information about how CSRF protection works in Symfony, please
 check :ref:`CSRF Protection <forms-csrf>`.
 
-Why Caching Pages with a CSRF token are Problematic
----------------------------------------------------
+Why Caching Pages with a CSRF token is Problematic
+--------------------------------------------------
 
 Typically, each user is assigned a unique CSRF token, which is stored in
 the session for validation. This means that if you *do* cache a page with
