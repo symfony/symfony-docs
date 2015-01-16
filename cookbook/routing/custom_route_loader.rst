@@ -85,14 +85,14 @@ type you want. The resource name itself is not actually used in the example::
             $routes = new RouteCollection();
 
             // prepare a new route
-            $pattern = '/extra/{parameter}';
+            $path = '/extra/{parameter}';
             $defaults = array(
                 '_controller' => 'AcmeDemoBundle:Demo:extra',
             );
             $requirements = array(
                 'parameter' => '\d+',
             );
-            $route = new Route($pattern, $defaults, $requirements);
+            $route = new Route($path, $defaults, $requirements);
 
             // add the new route to the route collection:
             $routeName = 'extraRoute';
