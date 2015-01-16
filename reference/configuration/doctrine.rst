@@ -336,7 +336,7 @@ A common namespace prefix that all entities of this mapping share. This prefix
 should never conflict with prefixes of other defined mappings otherwise some
 of your entities cannot be found by Doctrine. This option defaults to the
 bundle namespace + ``Entity``, for example for an application bundle called
-``AcmeHelloBundle`` prefix would be ``Acme\HelloBundle\Entity``.
+AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
 
 alias
 .....

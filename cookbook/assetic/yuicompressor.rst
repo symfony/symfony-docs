@@ -106,9 +106,9 @@ the view layer, this work is done in your templates:
 
 .. note::
 
-    The above example assumes that you have a bundle called ``AppBundle``
-    and your JavaScript files are in the ``Resources/public/js`` directory under
-    your bundle. This isn't important however - you can include your JavaScript
+    The above example assumes that you have a bundle called AppBundle and your
+    JavaScript files are in the ``Resources/public/js`` directory under your
+    bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
 
 With the addition of the ``yui_js`` filter to the asset tags above, you should

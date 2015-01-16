@@ -90,8 +90,8 @@ own bundles. It makes it easy to pick and choose which features to enable in
 your application and optimize them the way you want. And at the end of the day,
 your application code is just as *important* as the core framework itself.
 
-Symfony already includes an ``AppBundle`` that you may use to start developing
-your application. Then, if you need to split the application into reusable
+Symfony already includes an AppBundle that you may use to start developing your
+application. Then, if you need to split the application into reusable
 components, you can create your own bundles.
 
 Registering a Bundle
@@ -99,7 +99,7 @@ Registering a Bundle
 
 An application is made up of bundles as defined in the ``registerBundles()``
 method of the ``AppKernel`` class. Each bundle is a directory that contains
-a single ``Bundle`` class that describes it::
+a single Bundle class that describes it::
 
     // app/AppKernel.php
     public function registerBundles()
