@@ -8,9 +8,9 @@ Sometimes you may find it useful to make some parts of your routes
 globally configurable. For instance, if you build an internationalized
 site, you'll probably start with one or two locales. Surely you'll
 add a requirement to your routes to prevent a user from matching a locale
-other than the locales your support.
+other than the locales you support.
 
-You *could* hardcode your ``_locale`` requirement in all your routes. But
+You *could* hardcode your ``_locale`` requirement in all your routes, but
 a better solution is to use a configurable service container parameter right
 inside your routing configuration:
 
