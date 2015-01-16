@@ -24,9 +24,8 @@ calling :method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
 
     $debugFormatter = $this->getHelper('debug_formatter');
 
-The formatter accepts strings and returns a formatted string, which you can
-use to output to the console (or you could even log the information or do
-something else).
+The formatter accepts strings and returns a formatted string, which you then
+output to the console (or even log the information or do anything else).
 
 All methods of this helper have an identifier as the first argument. This is a
 unique value for each program. This way, the helper can debug information for
