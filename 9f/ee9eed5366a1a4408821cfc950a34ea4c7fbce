@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-04T22:04:39Z
+
+:+1: They should then be added back again after this has been merged up into the `2.5` branch.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-04T22:49:54Z
+
+Before adding the `Checking for Known Security Vulnerabilities in Dependencies` paragraph back to `book/security.rst`, maybe a decision should be made if this is the best place for it (see #4745).
