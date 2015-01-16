@@ -198,11 +198,6 @@ it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods
 Serializing Boolean Attributes
 ------------------------------
 
-.. versionadded:: 2.5
-    Support for ``is*`` accessors in
-    :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-    was introduced in Symfony 2.5.
-
 If you are using isser methods (methods prefixed by ``is``, like
 ``Acme\Person::isSportsman()``), the Serializer component will automatically
 detect and use it to serialize related attributes.
