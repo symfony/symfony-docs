@@ -471,14 +471,14 @@ If you're serving HTML, you'll want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
-    // renders app/Resources/views/Hello/index.html.twig
-    return $this->render('Hello/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/index.html.twig
+    return $this->render('hello/index.html.twig', array('name' => $name));
 
 You can also put templates in deeper sub-directories. Just try to avoid creating
 unnecessarily deep structures::
 
-    // renders app/Resources/views/Hello/Greetings/index.html.twig
-    return $this->render('Hello/Greetings/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/greetings/index.html.twig
+    return $this->render('hello/greetings/index.html.twig', array('name' => $name));
 
 The Symfony templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.

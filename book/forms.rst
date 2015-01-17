@@ -96,7 +96,7 @@ from inside a controller::
                 ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
-            return $this->render('Default/new.html.twig', array(
+            return $this->render('default/new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -144,14 +144,14 @@ helper functions:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ form_end(form) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/new.html.php -->
+        <!-- app/Resources/views/default/new.html.php -->
         <?php echo $view['form']->start($form) ?>
         <?php echo $view['form']->widget($form) ?>
         <?php echo $view['form']->end($form) ?>
@@ -442,12 +442,12 @@ corresponding errors printed out with the form.
 
        .. code-block:: html+jinja
 
-           {# app/Resources/views/Default/new.html.twig #}
+           {# app/Resources/views/default/new.html.twig #}
            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
        .. code-block:: html+php
 
-           <!-- app/Resources/views/Default/new.html.php -->
+           <!-- app/Resources/views/default/new.html.php -->
            <?php echo $view['form']->form($form, array(
                'attr' => array('novalidate' => 'novalidate'),
            )) ?>
@@ -784,7 +784,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
@@ -794,7 +794,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/newAction.html.php -->
+        <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
@@ -1002,12 +1002,12 @@ to the ``form()`` or the ``form_start()`` helper:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
+        {# app/Resources/views/default/new.html.twig #}
         {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/newAction.html.php -->
+        <!-- app/Resources/views/default/newAction.html.php -->
         <?php echo $view['form']->start($form, array(
             'action' => $view['router']->generate('target_route'),
             'method' => 'GET',
@@ -1437,7 +1437,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Form/fields.html.twig #}
+        {# app/Resources/views/form/fields.html.twig #}
         {% block form_row %}
         {% spaceless %}
             <div class="form_row">
@@ -1450,7 +1450,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Form/form_row.html.php -->
+        <!-- app/Resources/views/form/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -1466,19 +1466,19 @@ renders the form:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Default/new.html.twig #}
-        {% form_theme form 'Form/fields.html.twig' %}
+        {# app/Resources/views/default/new.html.twig #}
+        {% form_theme form 'form/fields.html.twig' %}
 
-        {% form_theme form 'Form/fields.html.twig' 'Form/fields2.html.twig' %}
+        {% form_theme form 'form/fields.html.twig' 'Form/fields2.html.twig' %}
 
         {# ... render the form #}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Default/new.html.php -->
-        <?php $view['form']->setTheme($form, array('Form')) ?>
+        <!-- app/Resources/views/default/new.html.php -->
+        <?php $view['form']->setTheme($form, array('form')) ?>
 
-        <?php $view['form']->setTheme($form, array('Form', 'Form2')) ?>
+        <?php $view['form']->setTheme($form, array('form', 'form2')) ?>
 
         <!-- ... render the form -->
 
@@ -1606,7 +1606,7 @@ file:
         twig:
             form:
                 resources:
-                    - 'Form/fields.html.twig'
+                    - 'form/fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -1621,7 +1621,7 @@ file:
 
             <twig:config>
                 <twig:form>
-                    <twig:resource>Form/fields.html.twig</twig:resource>
+                    <twig:resource>form/fields.html.twig</twig:resource>
                 </twig:form>
                 <!-- ... -->
             </twig:config>
@@ -1633,7 +1633,7 @@ file:
         $container->loadFromExtension('twig', array(
             'form' => array(
                 'resources' => array(
-                    'Form/fields.html.twig',
+                    'form/fields.html.twig',
                 ),
             ),
             // ...
