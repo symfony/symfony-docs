@@ -1473,7 +1473,7 @@ renders the form:
 
         {# app/Resources/views/Default/new.html.twig #}
         {% form_theme form 'Form/fields.html.twig' %}
-        {# or if providing multiple themes #}
+        {# or if you want to use multiple themes #}
         {% form_theme form 'Form/fields.html.twig' 'Form/fields2.html.twig' %}
 
         {# ... render the form #}
