@@ -539,7 +539,7 @@ class to have at least 3 characters.
         {
             /**
              * @Assert\NotBlank()
-             * @Assert\Length(min="3")
+             * @Assert\Length(min=3)
              */
             private $firstName;
         }
@@ -823,7 +823,7 @@ user registers and when a user updates their contact information later:
                     'groups' => array('registration'),
                 )));
 
-                $metadata->addPropertyConstraint('city', Assert\Length(array(
+                $metadata->addPropertyConstraint('city', new Assert\Length(array(
                     "min" => 3,
                 )));
             }

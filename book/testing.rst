@@ -54,7 +54,7 @@ unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Util/`` directory of the app bundle::
 
     // src/AppBundle/Util/Calculator.php
-    namespace AppBundle\Utility;
+    namespace AppBundle\Util;
 
     class Calculator
     {

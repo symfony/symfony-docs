@@ -588,7 +588,7 @@ To see a simple implementation, generate the ETag as the md5 of the content::
     {
         public function homepageAction(Request $request)
         {
-            $response = $this->render('homepage.html.twig');
+            $response = $this->render('static/homepage.html.twig');
             $response->setETag(md5($response->getContent()));
             $response->setPublic(); // make sure the response is public/cacheable
             $response->isNotModified($request);
@@ -1019,7 +1019,6 @@ First, to use ESI, be sure to enable it in your application configuration:
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            ">
 
             <framework:config>
                 <!-- ... -->
@@ -1048,7 +1047,7 @@ independent of the rest of the page.
     {
         public function aboutAction()
         {
-            $response = $this->render('about.html.twig');
+            $response = $this->render('static/about.html.twig');
             // set the shared max age - which also marks the response as public
             $response->setSharedMaxAge(600);
 
@@ -1068,7 +1067,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
-        {# app/Resources/views/about.html.twig #}
+        {# app/Resources/views/static/about.html.twig #}
 
         {# you can use a controller reference #}
         {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
@@ -1078,7 +1077,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/about.html.php -->
+        <!-- app/Resources/views/static/about.html.php -->
 
         // you can use a controller reference
         use Symfony\Component\HttpKernel\Controller\ControllerReference;
