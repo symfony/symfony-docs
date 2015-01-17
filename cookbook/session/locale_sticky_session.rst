@@ -107,21 +107,23 @@ method::
         $locale = $request->getLocale();
     }
 
-Setting the locale based on the user entity
+Setting the Locale based on the User Entity
 -------------------------------------------
 
-You might want to improve even further and want to define the locale based on
-the user entity of the logged in user. However since the `LocaleListener` is called
-before the `FirewallListener`, which is responsible for handling authentication and
-is setting the user token into the `TokenStorage`, you have no access to the user
+You might want to improve this technique even further and define the locale based on
+the user entity of the logged in user. However since the ``LocaleListener`` is called
+before the ``FirewallListener``, which is responsible for handling authentication and
+is setting the user token into the ``TokenStorage``, you have no access to the user
 which is logged in.
 
-First lets pretend you have defined a property locale in your User Entity which you
+First lets pretend you have defined a property locale in your user entity which you
 want to be used as the locale for the given user. In order to achieve the wanted locale
 configuration you can set the locale which is defined for the user to the session right
 after the login. Fortunately you can hook into the login process and update your session
 variable before the redirect to the first page. For this you need an event listener for the
-`security.interactive_login` event.
+``security.interactive_login`` event.
+
+.. code-block:: php
 
     // src/AppBundle/EventListener/UserLocaleListener.php
     namespace AppBundle\EventListener;
@@ -139,17 +141,22 @@ variable before the redirect to the first page. For this you need an event liste
          * @var Session
          */
         private $session;
+
         public function __construct(Session $session)
         {
             $this->session = $session;
         }
+
         /**
          * @param InteractiveLoginEvent $event
          */
         public function onInteractiveLogin(InteractiveLoginEvent $event)
         {
             $user = $event->getAuthenticationToken()->getUser();
-            $this->session->set('_locale', $user->getLocale());
+
+            if (null !== $user->getLocale()) {
+                $this->session->set('_locale', $user->getLocale());
+            }
         }
     }
 
@@ -183,9 +190,9 @@ Then register the listener:
 
 .. caution::
 
-With this configuration you are all set for having the locale based on the user's
-locale. If however the locale changes during the session it would not be updated
-since with the current implementation the user locale will only be stored to the
-session on login. In order to update the language immediately after a user has
-changed his language you need to update the session variable after an update to
-the user entity.
+    With this configuration you are all set for having the locale based on the user's
+    locale. If however the locale changes during the session it would not be updated
+    since with the current implementation the user locale will only be stored to the
+    session on login. In order to update the language immediately after a user has
+    changed their language you need to update the session variable after an update to
+    the user entity.
