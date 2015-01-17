@@ -106,3 +106,86 @@ method::
     {
         $locale = $request->getLocale();
     }
+
+Setting the locale based on the user entity
+-------------------------------------------
+
+You might want to improve even further and want to define the locale based on
+the user entity of the logged in user. However since the `LocaleListener` is called
+before the `FirewallListener`, which is responsible for handling authentication and
+is setting the user token into the `TokenStorage`, you have no access to the user
+which is logged in.
+
+First lets pretend you have defined a property locale in your User Entity which you
+want to be used as the locale for the given user. In order to achieve the wanted locale
+configuration you can set the locale which is defined for the user to the session right
+after the login. Fortunately you can hook into the login process and update your session
+variable before the redirect to the first page. For this you need an event listener for the
+`security.interactive_login` event.
+
+    // src/AppBundle/EventListener/UserLocaleListener.php
+    namespace AppBundle\EventListener;
+
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+
+    /**
+     * Stores the locale of the user in the session after the
+     * login. This can be used by the LocaleListener afterwards.
+     */
+    class UserLocaleListener
+    {
+        /**
+         * @var Session
+         */
+        private $session;
+        public function __construct(Session $session)
+        {
+            $this->session = $session;
+        }
+        /**
+         * @param InteractiveLoginEvent $event
+         */
+        public function onInteractiveLogin(InteractiveLoginEvent $event)
+        {
+            $user = $event->getAuthenticationToken()->getUser();
+            $this->session->set('_locale', $user->getLocale());
+        }
+    }
+
+Then register the listener:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.user_locale_listener:
+                class: AppBundle\EventListener\UserLocaleListener
+                tags:
+                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <service id="kernel.listener.your_listener_name" class="AppBundle\EventListener\UserLocaleListener">
+            <tag name="kernel.event_listener" event="security.interactive_login" method="onInteractiveLogin" />
+        </service>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('kernel.listener.your_listener_name', 'AppBundle\EventListener\UserLocaleListener')
+            ->addTag('kernel.event_listener', array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin'))
+        ;
+
+.. caution::
+
+With this configuration you are all set for having the locale based on the user's
+locale. If however the locale changes during the session it would not be updated
+since with the current implementation the user locale will only be stored to the
+session on login. In order to update the language immediately after a user has
+changed his language you need to update the session variable after an update to
+the user entity.
