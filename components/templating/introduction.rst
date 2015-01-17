@@ -135,7 +135,7 @@ escaper using the
 Helpers
 -------
 
-The Templating component can be easily extended via helpers. Helpers are PHP objects that 
+The Templating component can be easily extended via helpers. Helpers are PHP objects that
 provide features useful in a template context. The component has
 2 built-in helpers:
 

@@ -4,8 +4,8 @@
 Deploying to Platform.sh
 ========================
 
-This step-by-step cookbook describes how to deploy a Symfony web application to 
-`Platform.sh`_. You can read more about using Symfony with Platform.sh on the 
+This step-by-step cookbook describes how to deploy a Symfony web application to
+`Platform.sh`_. You can read more about using Symfony with Platform.sh on the
 official `Platform.sh documentation`_.
 
 Deploy an Existing Site
@@ -15,23 +15,23 @@ In this guide, it is assumed your codebase is already versioned with Git.
 
 Get a Project on Platform.sh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
+
 You need to subscribe to a `Platform.sh project`_. Choose the development plan
-and go through the checkout process. Once your project is ready, give it a name 
+and go through the checkout process. Once your project is ready, give it a name
 and choose: **Import an existing site**.
 
 Prepare Your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To deploy your Symfony application on Platform.sh, you simply need to add a 
+To deploy your Symfony application on Platform.sh, you simply need to add a
 ``.platform.app.yaml`` at the root of your Git repository which will tell
-Platform.sh how to deploy your application (read more about 
+Platform.sh how to deploy your application (read more about
 `Platform.sh configuration files`_).
 
 .. code-block:: yaml
 
     # .platform.app.yaml
-    
+
     # This file describes an application. You can have multiple applications
     # in the same project.
 
@@ -96,7 +96,7 @@ Configure Database Access
 
 Platform.sh overrides your database specific configuration via importing the
 following file::
-    
+
     // app/config/parameters_platform.php
     <?php
     $relationships = getenv("PLATFORM_RELATIONSHIPS");
@@ -134,7 +134,7 @@ Make sure this file is listed in your *imports*:
 Deploy your Application
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Now you need to add a remote to Platform.sh in your Git repository (copy the 
+Now you need to add a remote to Platform.sh in your Git repository (copy the
 command that you see on the Platform.sh web UI):
 
 .. code-block:: bash
@@ -150,7 +150,7 @@ Commit the Platform.sh specific files created in the previous section:
 
 .. code-block:: bash
 
-    $ git add .platform.app.yaml .platform/* 
+    $ git add .platform.app.yaml .platform/*
     $ git add app/config/config.yml app/config/parameters_platform.php
     $ git commit -m "Adding Platform.sh configuration files."
 
@@ -163,22 +163,22 @@ Push your code base to the newly added remote:
 That's it! Your application is being deployed on Platform.sh and you'll soon be
 able to access it in your browser.
 
-Every code change that you do from now on will be pushed to Git in order to 
+Every code change that you do from now on will be pushed to Git in order to
 redeploy your environment on Platform.sh.
 
-More information about `migrating your database and files <migrate-existing-site>`_ can be found on the 
+More information about `migrating your database and files <migrate-existing-site>`_ can be found on the
 Platform.sh documentation.
 
 Deploy a new Site
 -----------------
- 
-You can start a new `Platform.sh project`_. Choose the development plan and go 
+
+You can start a new `Platform.sh project`_. Choose the development plan and go
 through the checkout process.
 
 Once your project is ready, give it a name and choose: **Create a new site**.
 Choose the *Symfony* stack and a starting point such as *Standard*.
 
-That's it! Your Symfony application will be bootstrapped and deployed. You'll 
+That's it! Your Symfony application will be bootstrapped and deployed. You'll
 soon be able to see it in your browser.
 
 .. _`Platform.sh`: https://platform.sh

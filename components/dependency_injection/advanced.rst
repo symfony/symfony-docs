@@ -17,7 +17,7 @@ using the ``get()`` method::
 
 In some cases, a service *only* exists to be injected into another service
 and is *not* intended to be fetched directly from the container as shown
-above. 
+above.
 
 .. _inlined-private-services:
 
