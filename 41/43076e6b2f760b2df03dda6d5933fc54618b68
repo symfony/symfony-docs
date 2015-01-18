@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-17T10:16:33Z
+
+We need to be careful that using the `security.authorization_checker` service isn't replaced with the `security.context` service when this is merged up into the `2.6` branch.
