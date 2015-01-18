@@ -14,7 +14,7 @@ the URI scheme via schemes:
 
         secure:
             path:     /secure
-            defaults: { _controller: AcmeDemoBundle:Main:secure }
+            defaults: { _controller: AppBundle:Main:secure }
             schemes:  [https]
 
     .. code-block:: xml
@@ -26,7 +26,7 @@ the URI scheme via schemes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="secure" path="/secure" schemes="https">
-                <default key="_controller">AcmeDemoBundle:Main:secure</default>
+                <default key="_controller">AppBundle:Main:secure</default>
             </route>
         </routes>
 
@@ -37,7 +37,7 @@ the URI scheme via schemes:
 
         $collection = new RouteCollection();
         $collection->add('secure', new Route('/secure', array(
-            '_controller' => 'AcmeDemoBundle:Main:secure',
+            '_controller' => 'AppBundle:Main:secure',
         ), array(), array(), '', array('https')));
 
         return $collection;

@@ -1,11 +1,6 @@
 Callback
 ========
 
-.. versionadded:: 2.4
-    The ``Callback`` constraint was simplified in Symfony 2.4. For usage
-    examples with older Symfony versions, see the corresponding versions of this
-    documentation page.
-
 The purpose of the Callback constraint is to create completely custom
 validation rules and to assign any validation errors to specific fields on
 your object. If you're using validation with forms, this means that you can
@@ -133,11 +128,6 @@ those errors should be attributed::
             }
         }
     }
-
-.. versionadded:: 2.5
-    The ``buildViolation`` method was added in Symfony 2.5. For usage examples
-    with older Symfony versions, see the corresponding versions of this documentation
-    page.
 
 Static Callbacks
 ----------------

@@ -165,8 +165,9 @@ fields:
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See :doc:`/cookbook/form/form_customization` for more information on this and how
-you can control *how* the form renders at a global level using form theming.
+See the :doc:`/cookbook/form/form_customization` article for more information
+on this and how you can control *how* the form renders at a global level
+using form theming.
 
 Handling Form Submits
 ---------------------

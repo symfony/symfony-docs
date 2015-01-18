@@ -234,7 +234,7 @@ to point to it.
 
         # app/config/config.yml
         twig:
-            exception_controller:  AcmeFooBundle:Exception:showException
+            exception_controller:  AppBundle:Exception:showException
 
     .. code-block:: xml
 
@@ -247,7 +247,7 @@ to point to it.
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
+                <twig:exception-controller>AppBundle:Exception:showException</twig:exception-controller>
             </twig:config>
         </container>
 
@@ -255,7 +255,7 @@ to point to it.
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'exception_controller' => 'AcmeFooBundle:Exception:showException',
+            'exception_controller' => 'AppBundle:Exception:showException',
             // ...
         ));
 

@@ -5,7 +5,7 @@ Security
 ========
 
 Symfony's security system is incredibly powerful, but it can also be confusing
-to setup. In this chapter, you'll learn how to setup your application's security
+to set up. In this chapter, you'll learn how to set up your application's security
 step-by-step, from configuring your firewall and how you load users to denying
 access and fetching the User object. Depending on what you need, sometimes
 the initial setup can be tough. But once it's done, Symfony's security system
@@ -300,7 +300,7 @@ provider, but it's better to think of it as an "in configuration" provider:
                     memory:
                         users:
                             ryan:
-                                password: ryanpass,
+                                password: ryanpass
                                 roles: 'ROLE_USER'
                             admin:
                                 password: kitten
@@ -808,9 +808,6 @@ You can easily deny access from inside a controller::
      The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
      to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
-.. versionadded:: 2.5
-    The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
-
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException`
 method creates a special :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 object, which ultimately triggers a 403 HTTP response inside Symfony.
@@ -924,9 +921,6 @@ special attributes like this:
   details are in :doc:`/cookbook/security/access_control`.
 
 .. _book-security-template-expression:
-
-.. versionadded:: 2.4
-    The ``expression`` functionality was introduced in Symfony 2.4.
 
 You can also use expressions inside your templates:
 
@@ -1303,11 +1297,6 @@ cookie will be ever created by Symfony):
 
 Checking for Known Security Vulnerabilities in Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.5
-    The ``security:check`` command was introduced in Symfony 2.5. This command is
-    included in ``SensioDistributionBundle``, which has to be registered in your
-    application in order to use this command.
 
 When using lots of dependencies in your Symfony projects, some of them may
 contain security vulnerabilities. That's why Symfony includes a command called

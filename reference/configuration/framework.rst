@@ -643,6 +643,10 @@ API. The ``api`` option is used to switch between the different implementations:
     Symfony will use an API implementation that is compatible with both the
     legacy implementation and the ``2.5`` implementation.
 
+To capture these logs in the ``prod`` environment, configure a
+:doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for
+the ``translation`` channel and set its ``level`` to ``debug``.
+
 Full default Configuration
 --------------------------
 

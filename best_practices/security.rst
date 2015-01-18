@@ -208,6 +208,8 @@ Now you can reuse this method both in the template and in the security expressio
     {% endif %}
 
 .. _best-practices-directly-isGranted:
+.. _checking-permissions-without-security:
+.. _manually-checking-permissions:
 
 Checking Permissions without @Security
 --------------------------------------

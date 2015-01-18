@@ -4,10 +4,6 @@
 Table
 =====
 
-.. versionadded:: 2.5
-    The ``Table`` class was introduced in Symfony 2.5 as a replacement for the
-    :doc:`Table Helper </components/console/helpers/tablehelper>`.
-
 When building a console application it may be useful to display tabular data:
 
 .. code-block:: text

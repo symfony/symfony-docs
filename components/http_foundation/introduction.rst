@@ -284,10 +284,6 @@ for more information about them.
 Overriding the Request
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    The :method:`Symfony\\Component\\HttpFoundation\\Request::setFactory`
-    method was introduced in Symfony 2.4.
-
 The ``Request`` class should not be overridden as it is a data object that
 represents an HTTP message. But when moving from a legacy system, adding
 methods or changing some default behavior might help. In that case, register a
@@ -334,9 +330,6 @@ code, and an array of HTTP headers::
         Response::HTTP_OK,
         array('content-type' => 'text/html')
     );
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 These information can also be manipulated after the Response object creation::
 

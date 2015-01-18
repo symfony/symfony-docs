@@ -1,10 +1,11 @@
-.. caution::
-
-    The ``max_length`` option has been deprecated and will be removed in 3.0.
-    Instead, use the ``attr`` option by setting it to an array with a ``maxlength`` key.
-
 max_length
 ~~~~~~~~~~
+
+.. caution::
+
+    The ``max_length`` option was deprecated in Symfony 2.5 and will be removed
+    in Symfony 3.0. Use the ``attr`` option instead by setting it to an array
+    with a ``maxlength`` key.
 
 **type**: ``integer`` **default**: ``null``
 
