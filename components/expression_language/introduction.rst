@@ -9,9 +9,6 @@ The ExpressionLanguage Component
     evaluate expressions. An expression is a one-liner that returns a value
     (mostly, but not limited to, Booleans).
 
-.. versionadded:: 2.4
-    The ExpressionLanguage component was introduced in Symfony 2.4.
-
 Installation
 ------------
 

@@ -203,13 +203,6 @@ level. For example::
         $output->writeln(...);
     }
 
-.. versionadded:: 2.4
-   The :method:`Symfony\\Component\\Console\\Output\\Output::isQuiet`,
-   :method:`Symfony\\Component\\Console\\Output\\Output::isVerbose`,
-   :method:`Symfony\\Component\\Console\\Output\\Output::isVeryVerbose` and
-   :method:`Symfony\\Component\\Console\\Output\\Output::isDebug`
-   methods were introduced in Symfony 2.4
-
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
 
@@ -409,9 +402,9 @@ tools capable of helping you with different tasks:
 
 * :doc:`/components/console/helpers/questionhelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
-* :doc:`/components/console/helpers/progresshelper`: shows a progress bar
-* :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
-* :doc:`/components/console/helpers/dialoghelper`: (deprecated) interactively ask the user for information
+* :doc:`/components/console/helpers/progressbar`: shows a progress bar
+* :doc:`/components/console/helpers/table`: displays tabular data as a table
+* :doc:`/components/console/helpers/questionhelper`: interactively ask the user for information
 
 .. _component-console-testing-commands:
 

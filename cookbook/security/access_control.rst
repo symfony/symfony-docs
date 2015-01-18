@@ -247,9 +247,6 @@ address):
 Securing by an Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    The ``allow_if`` functionality was introduced in Symfony 2.4.
-
 Once an ``access_control`` entry is matched, you can deny access via the
 ``roles`` key or use more complex logic with an expression in the ``allow_if``
 key:

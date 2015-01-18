@@ -34,8 +34,8 @@ Defining the Controller as a Service
 A controller can be defined as a service in the same way as any other class.
 For example, if you have the following simple controller::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/AppBundle/Controller/HelloController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -53,25 +53,25 @@ Then you can define it as a service as follows:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
-            acme.hello.controller:
-                class: Acme\HelloBundle\Controller\HelloController
+            app.hello_controller:
+                class: AppBundle\Controller\HelloController
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
-            <service id="acme.hello.controller" class="Acme\HelloBundle\Controller\HelloController" />
+            <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
         </services>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('acme.hello.controller', new Definition(
-            'Acme\HelloBundle\Controller\HelloController'
+        $container->setDefinition('app.hello_controller', new Definition(
+            'AppBundle\Controller\HelloController'
         ));
 
 Referring to the Service
@@ -79,9 +79,9 @@ Referring to the Service
 
 To refer to a controller that's defined as a service, use the single colon (:)
 notation. For example, to forward to the ``indexAction()`` method of the service
-defined above with the id ``acme.hello.controller``::
+defined above with the id ``app.hello_controller``::
 
-    $this->forward('acme.hello.controller:indexAction', array('name' => $name));
+    $this->forward('app.hello_controller:indexAction', array('name' => $name));
 
 .. note::
 
@@ -98,20 +98,20 @@ the route ``_controller`` value:
         # app/config/routing.yml
         hello:
             path:     /hello
-            defaults: { _controller: acme.hello.controller:indexAction }
+            defaults: { _controller: app.hello_controller:indexAction }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <route id="hello" path="/hello">
-            <default key="_controller">acme.hello.controller:indexAction</default>
+            <default key="_controller">app.hello_controller:indexAction</default>
         </route>
 
     .. code-block:: php
 
         // app/config/routing.php
         $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'acme.hello.controller:indexAction',
+            '_controller' => 'app.hello_controller:indexAction',
         )));
 
 .. tip::
@@ -137,8 +137,8 @@ For example, if you want to render a template instead of creating the ``Response
 object directly, then your code would look like this if you were extending
 Symfony's base controller::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/AppBundle/Controller/HelloController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -147,7 +147,7 @@ Symfony's base controller::
         public function indexAction($name)
         {
             return $this->render(
-                'AcmeHelloBundle:Hello:index.html.twig',
+                'AppBundle:Hello:index.html.twig',
                 array('name' => $name)
             );
         }
@@ -165,8 +165,8 @@ If you look at the source code for the ``render`` function in Symfony's
 In a controller that's defined as a service, you can instead inject the ``templating``
 service and use it directly::
 
-    // src/Acme/HelloBundle/Controller/HelloController.php
-    namespace Acme\HelloBundle\Controller;
+    // src/AppBundle/Controller/HelloController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
     use Symfony\Component\HttpFoundation\Response;
@@ -183,7 +183,7 @@ service and use it directly::
         public function indexAction($name)
         {
             return $this->templating->renderResponse(
-                'AcmeHelloBundle:Hello:index.html.twig',
+                'AppBundle:Hello:index.html.twig',
                 array('name' => $name)
             );
         }
@@ -196,29 +196,29 @@ argument:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
-            acme.hello.controller:
-                class:     Acme\HelloBundle\Controller\HelloController
+            app.hello_controller:
+                class:     AppBundle\Controller\HelloController
                 arguments: ["@templating"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
-            <service id="acme.hello.controller" class="Acme\HelloBundle\Controller\HelloController">
+            <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
                 <argument type="service" id="templating"/>
             </service>
         </services>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('acme.hello.controller', new Definition(
-            'Acme\HelloBundle\Controller\HelloController',
+        $container->setDefinition('app.hello_controller', new Definition(
+            'AppBundle\Controller\HelloController',
             array(new Reference('templating'))
         ));
 

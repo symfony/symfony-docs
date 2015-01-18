@@ -1,10 +1,11 @@
-.. caution::
-
-    The ``pattern`` option has been deprecated and will be removed in 3.0.
-    Instead, use the ``attr`` option by setting it to an array with a ``pattern`` key.
-
 pattern
 ~~~~~~~
+
+.. caution::
+
+    The ``pattern`` option was deprecated in Symfony 2.5 and will be removed
+    in Symfony 3.0. Use the ``attr`` option instead by setting it to an array
+    with a ``pattern`` key.
 
 **type**: ``string`` **default**: ``null``
 

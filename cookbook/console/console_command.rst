@@ -14,11 +14,11 @@ Automatically Registering Commands
 To make the console commands available automatically with Symfony, create a
 ``Command`` directory inside your bundle and create a PHP file suffixed with
 ``Command.php`` for each command that you want to provide. For example, if you
-want to extend the AcmeDemoBundle to greet you from the command line, create
+want to extend the AppBundle to greet you from the command line, create
 ``GreetCommand.php`` and add the following to it::
 
-    // src/Acme/DemoBundle/Command/GreetCommand.php
-    namespace Acme\DemoBundle\Command;
+    // src/AppBundle/Command/GreetCommand.php
+    namespace AppBundle\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputArgument;
@@ -156,7 +156,7 @@ instead of
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Acme\DemoBundle\Command\GreetCommand;
+    use AppBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
@@ -181,11 +181,6 @@ instead of
         }
     }
 
-.. versionadded:: 2.4
-    Since Symfony 2.4, the ``CommandTester`` automatically detects the name of
-    the command to execute. Prior to Symfony 2.4, you need to pass it via the
-    ``command`` key.
-
 .. note::
 
     In the specific case above, the ``name`` parameter and the ``--yell`` option
@@ -199,7 +194,7 @@ you can extend your test from
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-    use Acme\DemoBundle\Command\GreetCommand;
+    use AppBundle\Command\GreetCommand;
 
     class ListCommandTest extends KernelTestCase
     {

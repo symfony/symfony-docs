@@ -644,7 +644,7 @@ be added for each parameter. For example:
 
 .. configuration-block::
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // src/AppBundle/Controller/BlogController.php
 
@@ -914,9 +914,6 @@ component documentation.
 
 Completely Customized Route Matching with Conditions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.4
-    Route conditions were introduced in Symfony 2.4.
 
 As you've seen, a route can be made to match only certain routing wildcards
 (via regular expressions), HTTP methods, or host names. But the routing system

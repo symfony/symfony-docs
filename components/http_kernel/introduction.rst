@@ -495,10 +495,9 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the SwiftmailerBundle with Symfony and use ``memory``
-    spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
-    is activated, which actually delivers any emails that you scheduled to
-    send during the request.
+    If you use the SwiftmailerBundle with Symfony and use ``memory`` spooling,
+    then the `EmailSenderListener`_ is activated, which actually delivers
+    any emails that you scheduled to send during the request.
 
 .. _component-http-kernel-kernel-exception:
 
@@ -680,10 +679,6 @@ argument as follows::
     $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST);
     // do something with this response
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
 listeners (e.g. security) may only act upon the master request. Each listener
@@ -714,3 +709,4 @@ look like this::
 .. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`@ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
+.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php

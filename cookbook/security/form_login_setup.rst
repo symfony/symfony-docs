@@ -25,7 +25,7 @@ First, enable form login under your firewall:
         # app/config/security.yml
         security:
             # ...
-        
+
             firewalls:
                 default:
                     anonymous: ~
@@ -98,7 +98,7 @@ under your ``form_login`` configuration (``/login`` and ``/login_check``):
 .. configuration-block::
 
     .. code-block:: php-annotations
-    
+
         // src/AppBundle/Controller/SecurityController.php
         // ...
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -165,28 +165,16 @@ form::
 
     // src/AppBundle/Controller/SecurityController.php
     // ...
-    
-    // ADD THIS use STATEMENT above your class
-    use Symfony\Component\Security\Core\Security;
 
     public function loginAction(Request $request)
     {
-        $session = $request->getSession();
+        $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
-        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                Security::AUTHENTICATION_ERROR
-            );
-        } elseif (null !== $session && $session->has(Security::AUTHENTICATION_ERROR)) {
-            $error = $session->get(Security::AUTHENTICATION_ERROR);
-            $session->remove(Security::AUTHENTICATION_ERROR);
-        } else {
-            $error = '';
-        }
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
             'security/login.html.twig',
@@ -197,6 +185,11 @@ form::
             )
         );
     }
+
+.. versionadded:: 2.6
+    The ``security.authentication_utils`` service and the
+    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils`
+    class were introduced in Symfony 2.6.
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
@@ -218,7 +211,7 @@ Finally, create the template:
         {# ... you will probably extends your base template, like base.html.twig #}
 
         {% if error %}
-            <div>{{ error.message }}</div>
+            <div>{{ error.messageKey|trans(error.messageData) }}</div>
         {% endif %}
 
         <form action="{{ path('login_check') }}" method="post">

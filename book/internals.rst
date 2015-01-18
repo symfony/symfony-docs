@@ -208,10 +208,6 @@ processing must only occur on the master request).
 Events
 ~~~~~~
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:

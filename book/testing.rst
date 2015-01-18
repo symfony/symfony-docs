@@ -17,8 +17,8 @@ it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony works with PHPUnit 3.5.11 or later, though version 3.6.4 is
-    needed to test the Symfony core code itself.
+    It's recommended to use the latest stable PHPUnit version (you will have
+    to use version 4.2 or higher to test the Symfony core code itself).
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``Tests/`` subdirectory of your bundles. If you follow

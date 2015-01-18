@@ -60,8 +60,8 @@ provider.
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Authentication/Token/WsseUserToken.php
-    namespace Acme\DemoBundle\Security\Authentication\Token;
+    // src/AppBundle/Security/Authentication/Token/WsseUserToken.php
+    namespace AppBundle\Security\Authentication\Token;
 
     use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
@@ -106,8 +106,8 @@ set an authenticated token in the token storage if successful.
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Firewall/WsseListener.php
-    namespace Acme\DemoBundle\Security\Firewall;
+    // src/AppBundle/Security/Firewall/WsseListener.php
+    namespace AppBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -115,7 +115,7 @@ set an authenticated token in the token storage if successful.
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
+    use AppBundle\Security\Authentication\Token\WsseUserToken;
 
     class WsseListener implements ListenerInterface
     {
@@ -168,9 +168,6 @@ set an authenticated token in the token storage if successful.
         }
     }
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
 This listener checks the request for the expected ``X-WSSE`` header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
@@ -205,15 +202,15 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Authentication/Provider/WsseProvider.php
-    namespace Acme\DemoBundle\Security\Authentication\Provider;
+    // src/AppBundle/Security/Authentication/Provider/WsseProvider.php
+    namespace AppBundle\Security\Authentication\Provider;
 
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-    use Acme\DemoBundle\Security\Authentication\Token\WsseUserToken;
+    use AppBundle\Security\Authentication\Token\WsseUserToken;
 
     class WsseProvider implements AuthenticationProviderInterface
     {
@@ -302,8 +299,8 @@ create a class which implements
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/DependencyInjection/Security/Factory/WsseFactory.php
-    namespace Acme\DemoBundle\DependencyInjection\Security\Factory;
+    // src/AppBundle/DependencyInjection/Security/Factory/WsseFactory.php
+    namespace AppBundle\DependencyInjection\Security\Factory;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
@@ -395,32 +392,32 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         services:
             wsse.security.authentication.provider:
-                class: Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
+                class: AppBundle\Security\Authentication\Provider\WsseProvider
                 arguments: ["", "%kernel.cache_dir%/security/nonces"]
 
             wsse.security.authentication.listener:
-                class: Acme\DemoBundle\Security\Firewall\WsseListener
+                class: AppBundle\Security\Firewall\WsseListener
                 arguments: ["@security.token_storage", "@security.authentication.manager"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
+        <!-- src/AppBundle/Resources/config/services.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="wsse.security.authentication.provider"
-                    class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
+                    class="AppBundle\Security\Authentication\Provider\WsseProvider" public="false">
                     <argument /> <!-- User Provider -->
                     <argument>%kernel.cache_dir%/security/nonces</argument>
                 </service>
 
                 <service id="wsse.security.authentication.listener"
-                    class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
+                    class="AppBundle\Security\Firewall\WsseListener" public="false">
                     <argument type="service" id="security.token_storage"/>
                     <argument type="service" id="security.authentication.manager" />
                 </service>
@@ -429,13 +426,13 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('wsse.security.authentication.provider',
             new Definition(
-                'Acme\DemoBundle\Security\Authentication\Provider\WsseProvider', array(
+                'AppBundle\Security\Authentication\Provider\WsseProvider', array(
                     '',
                     '%kernel.cache_dir%/security/nonces',
                 )
@@ -444,7 +441,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
         $container->setDefinition('wsse.security.authentication.listener',
             new Definition(
-                'Acme\DemoBundle\Security\Firewall\WsseListener', array(
+                'AppBundle\Security\Firewall\WsseListener', array(
                     new Reference('security.token_storage'),
                     new Reference('security.authentication.manager'),
                 )
@@ -456,14 +453,14 @@ factory in your bundle class:
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/AcmeDemoBundle.php
-    namespace Acme\DemoBundle;
+    // src/AppBundle/AppBundle.php
+    namespace AppBundle;
 
-    use Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory;
+    use AppBundle\DependencyInjection\Security\Factory\WsseFactory;
     use Symfony\Component\HttpKernel\Bundle\Bundle;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    class AcmeDemoBundle extends Bundle
+    class AppBundle extends Bundle
     {
         public function build(ContainerBuilder $container)
         {

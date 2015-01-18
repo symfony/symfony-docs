@@ -369,8 +369,8 @@ API is being used. The following code, would work for *all* users::
                 // the 2.5 API
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('%string%', $value)
-                    ->addViolation();
-                );
+                    ->addViolation()
+                ;
             } else {
                 // the 2.4 API
                 $this->context->addViolation(

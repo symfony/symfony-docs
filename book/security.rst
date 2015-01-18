@@ -5,7 +5,7 @@ Security
 ========
 
 Symfony's security system is incredibly powerful, but it can also be confusing
-to setup. In this chapter, you'll learn how to setup your application's security
+to set up. In this chapter, you'll learn how to set up your application's security
 step-by-step, from configuring your firewall and how you load users to denying
 access and fetching the User object. Depending on what you need, sometimes
 the initial setup can be tough. But once it's done, Symfony's security system
@@ -300,7 +300,7 @@ provider, but it's better to think of it as an "in configuration" provider:
                     memory:
                         users:
                             ryan:
-                                password: ryanpass,
+                                password: ryanpass
                                 roles: 'ROLE_USER'
                             admin:
                                 password: kitten
@@ -923,9 +923,6 @@ special attributes like this:
   details are in :doc:`/cookbook/security/access_control`.
 
 .. _book-security-template-expression:
-
-.. versionadded:: 2.4
-    The ``expression`` functionality was introduced in Symfony 2.4.
 
 You can also use expressions inside your templates:
 

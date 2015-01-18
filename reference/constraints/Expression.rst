@@ -1,9 +1,6 @@
 Expression
 ==========
 
-.. versionadded:: 2.4
-    The Expression constraint was introduced in Symfony 2.4.
-
 This constraint allows you to use an :ref:`expression <component-expression-language-examples>`
 for more complex, dynamic validation. See `Basic Usage`_ for an example.
 See :doc:`/reference/constraints/Callback` for a different constraint that

@@ -99,8 +99,8 @@ Creating an ACL and Adding an ACE
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Controller/BlogController.php
-    namespace Acme\DemoBundle\Controller;
+    // src/AppBundle/Controller/BlogController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -167,7 +167,7 @@ Checking Access
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Controller/BlogController.php
+    // src/AppBundle/Controller/BlogController.php
 
     // ...
 

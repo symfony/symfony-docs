@@ -358,9 +358,6 @@ information in :ref:`book-templating-pages`.
 expression
 ~~~~~~~~~~
 
-.. versionadded:: 2.4
-    The ``expression`` function was introduced in Symfony 2.4.
-
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
 Twig. See ":ref:`Template Expressions <book-security-template-expression>`".
 
@@ -633,9 +630,6 @@ This will set the default domain in the current template.
 
 stopwatch
 ~~~~~~~~~
-
-.. versionadded:: 2.4
-    The stopwatch tag was introduced in Symfony 2.4.
 
 .. code-block:: jinja
 
