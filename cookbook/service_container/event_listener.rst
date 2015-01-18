@@ -14,8 +14,8 @@ you will create a service that will act as an Exception Listener, allowing
 you to modify how exceptions are shown by your application. The ``KernelEvents::EXCEPTION``
 event is just one of the core kernel events::
 
-    // src/Acme/DemoBundle/EventListener/AcmeExceptionListener.php
-    namespace Acme\DemoBundle\EventListener;
+    // src/AppBundle/EventListener/AcmeExceptionListener.php
+    namespace AppBundle\EventListener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -71,25 +71,25 @@ using a special "tag":
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             kernel.listener.your_listener_name:
-                class: Acme\DemoBundle\EventListener\AcmeExceptionListener
+                class: AppBundle\EventListener\AcmeExceptionListener
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
-        <service id="kernel.listener.your_listener_name" class="Acme\DemoBundle\EventListener\AcmeExceptionListener">
+        <!-- app/config/services.xml -->
+        <service id="kernel.listener.your_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
         </service>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         $container
-            ->register('kernel.listener.your_listener_name', 'Acme\DemoBundle\EventListener\AcmeExceptionListener')
+            ->register('kernel.listener.your_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
         ;
 
@@ -108,8 +108,8 @@ sub-requests), which is why when working with the ``KernelEvents::REQUEST``
 event, you might need to check the type of the request. This can be easily
 done as follow::
 
-    // src/Acme/DemoBundle/EventListener/AcmeRequestListener.php
-    namespace Acme\DemoBundle\EventListener;
+    // src/AppBundle/EventListener/AcmeRequestListener.php
+    namespace AppBundle\EventListener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\HttpKernel;

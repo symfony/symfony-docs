@@ -37,8 +37,8 @@ and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
-    namespace Acme\DemoBundle\Security\Authorization\Voter;
+    // src/AppBundle/Security/Authorization/Voter/ClientIpVoter.php
+    namespace AppBundle\Security\Authorization\Voter;
 
     use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -105,9 +105,9 @@ and tag it as a ``security.voter``:
         # src/Acme/AcmeBundle/Resources/config/services.yml
         services:
             security.access.blacklist_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments:  ["@request_stack", [123.123.123.123, 171.171.171.171]]
-                public:     false
+                class:     AppBundle\Security\Authorization\Voter\ClientIpVoter
+                arguments: ["@request_stack", [123.123.123.123, 171.171.171.171]]
+                public:    false
                 tags:
                     - { name: security.voter }
 
@@ -115,7 +115,7 @@ and tag it as a ``security.voter``:
 
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
+                 class="AppBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="request_stack" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
@@ -131,7 +131,7 @@ and tag it as a ``security.voter``:
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
+            'AppBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
                 new Reference('request_stack'),
                 array('123.123.123.123', '171.171.171.171'),

@@ -59,14 +59,14 @@ templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee' filter='coffee' %}
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
             <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/example.coffee'),
+            array('@AppBundle/Resources/public/js/example.coffee'),
             array('coffee')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
@@ -84,8 +84,8 @@ You can also combine multiple CoffeeScript files into a single output file:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-                       '@AcmeFooBundle/Resources/public/js/another.coffee'
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                       '@AppBundle/Resources/public/js/another.coffee'
             filter='coffee' %}
             <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
@@ -94,8 +94,8 @@ You can also combine multiple CoffeeScript files into a single output file:
 
         <?php foreach ($view['assetic']->javascripts(
             array(
-                '@AcmeFooBundle/Resources/public/js/example.coffee',
-                '@AcmeFooBundle/Resources/public/js/another.coffee',
+                '@AppBundle/Resources/public/js/example.coffee',
+                '@AppBundle/Resources/public/js/another.coffee',
             ),
             array('coffee')
         ) as $url): ?>
@@ -170,9 +170,9 @@ being run through the CoffeeScript filter):
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-                       '@AcmeFooBundle/Resources/public/js/another.coffee'
-                       '@AcmeFooBundle/Resources/public/js/regular.js' %}
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                       '@AppBundle/Resources/public/js/another.coffee'
+                       '@AppBundle/Resources/public/js/regular.js' %}
             <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
@@ -180,9 +180,9 @@ being run through the CoffeeScript filter):
 
         <?php foreach ($view['assetic']->javascripts(
             array(
-                '@AcmeFooBundle/Resources/public/js/example.coffee',
-                '@AcmeFooBundle/Resources/public/js/another.coffee',
-                '@AcmeFooBundle/Resources/public/js/regular.js',
+                '@AppBundle/Resources/public/js/example.coffee',
+                '@AppBundle/Resources/public/js/another.coffee',
+                '@AppBundle/Resources/public/js/regular.js',
             )
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
