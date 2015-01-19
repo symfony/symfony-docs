@@ -91,7 +91,8 @@ Now, suppose you're sending an email to ``recipient@example.com``.
 
     public function indexAction($name)
     {
-        $message = \Swift_Message::newInstance()
+        $mailer = $this->get('mailer');
+        $message = $mailer->createMessage()
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
@@ -102,7 +103,7 @@ Now, suppose you're sending an email to ``recipient@example.com``.
                 )
             )
         ;
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }
