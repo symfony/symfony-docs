@@ -13,10 +13,12 @@ your form. For example::
     {
         $blog = ...;
 
-        // $blog is passed in as the data, so the empty_data option is not needed
+        // $blog is passed in as the data, so the empty_data
+        // option is not needed
         $form = $this->createForm(new BlogType(), $blog);
 
-        // no data is passed in, so empty_data is used to get the "starting data"
+        // no data is passed in, so empty_data is
+        // used to get the "starting data"
         $form = $this->createForm(new BlogType());
     }
 
