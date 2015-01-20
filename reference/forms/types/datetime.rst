@@ -64,7 +64,9 @@ date_widget
 
 **type**: ``string`` **default**: ``choice``
 
-Defines the ``widget`` option for the :doc:`date </reference/forms/types/date>` type
+Defines the ``widget`` option for the :doc:`date </reference/forms/types/date>` type.
+Possible values: ``single_text`` (display as text field), ``choice`` (provide select
+boxes for day, month and year)
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
