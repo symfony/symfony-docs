@@ -389,7 +389,7 @@ it with :ref:`dic-tags-form-type`.
 
         # app/config/config.yml
         services:
-            form.friend_message:
+            app.form.friend_message:
                 class: AppBundle\Form\Type\FriendMessageFormType
                 arguments: ["@security.context"]
                 tags:
@@ -399,7 +399,7 @@ it with :ref:`dic-tags-form-type`.
 
         <!-- app/config/config.xml -->
         <services>
-            <service id="form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
+            <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
                 <argument type="service" id="security.context" />
                 <tag name="form.type" alias="friend_message" />
             </service>
@@ -411,7 +411,7 @@ it with :ref:`dic-tags-form-type`.
         $definition = new Definition('AppBundle\Form\Type\FriendMessageFormType');
         $definition->addTag('form.type', array('alias' => 'friend_message'));
         $container->setDefinition(
-            'form.friend_message',
+            'app.form.friend_message',
             $definition,
             array('security.context')
         );
