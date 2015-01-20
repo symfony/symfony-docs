@@ -141,7 +141,7 @@ the class namespace as a parameter:
 
     # service definition with class namespace as parameter
     parameters:
-    slugger.class: AppBundle\Utils\Slugger
+        slugger.class: AppBundle\Utils\Slugger
 
     services:
         app.slugger:
