@@ -72,6 +72,10 @@ important:
     set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
     for more details.
 
+.. versionadded:: 2.7
+    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
+    the method was called ``setDefaultOptions()``.
+
 ``configureOptions()``
     This defines options for your form type that
     can be used in ``buildForm()`` and ``buildView()``. There are a lot of
