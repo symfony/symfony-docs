@@ -323,6 +323,10 @@ using the ``simple_preauth`` key:
                     simple_preauth:
                         authenticator: apikey_authenticator
 
+            providers:
+                simple_preauth:
+                    id: your_api_key_user_provider
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -341,6 +345,8 @@ using the ``simple_preauth`` key:
                 >
                     <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
+
+                <provider name="simple_preauth" id="your_api_key_user_provider" />
             </config>
         </srv:container>
 
@@ -358,6 +364,11 @@ using the ``simple_preauth`` key:
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
                     ),
+                ),
+            ),
+            'providers' => array(
+                'simple_preauth'       => array(
+                    'id'        => 'your_api_key_user_provider',
                 ),
             ),
         ));
@@ -399,6 +410,10 @@ configuration or set it to ``false``:
                     simple_preauth:
                         authenticator: apikey_authenticator
 
+            providers:
+                simple_preauth:
+                    id: your_api_key_user_provider
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -417,6 +432,8 @@ configuration or set it to ``false``:
                 >
                     <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
+
+                <provider name="simple_preauth" id="your_api_key_user_provider" />
             </config>
         </srv:container>
 
@@ -433,6 +450,11 @@ configuration or set it to ``false``:
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
                     ),
+                ),
+            ),
+            'providers' => array(
+                'simple_preauth'       => array(
+                    'id'        => 'your_api_key_user_provider',
                 ),
             ),
         ));
