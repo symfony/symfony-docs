@@ -19,7 +19,6 @@ The Cookbook
     form/index
     logging/index
     profiler/index
-    propel/index
     request/index
     routing/index
     security/index
