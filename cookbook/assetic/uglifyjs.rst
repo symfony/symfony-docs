@@ -161,14 +161,14 @@ your assets are a part of the view layer, this work is done in your templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='uglifyjs2' %}
+        {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*'),
+            array('@AppBundle/Resources/public/js/*'),
             array('uglifyj2s')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
@@ -176,7 +176,7 @@ your assets are a part of the view layer, this work is done in your templates:
 
 .. note::
 
-    The above example assumes that you have a bundle called ``AcmeFooBundle``
+    The above example assumes that you have a bundle called ``AppBundle``
     and your JavaScript files are in the ``Resources/public/js`` directory under
     your bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
@@ -197,14 +197,14 @@ apply this filter when debug mode is off (e.g. ``app.php``):
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='?uglifyjs2' %}
+        {% javascripts '@AppBundle/Resources/public/js/*' filter='?uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*'),
+            array('@AppBundle/Resources/public/js/*'),
             array('?uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
@@ -272,14 +272,14 @@ helper:
 
     .. code-block:: html+jinja
 
-        {% stylesheets 'bundles/AcmeFoo/css/*' filter='uglifycss' filter='cssrewrite' %}
+        {% stylesheets 'bundles/App/css/*' filter='uglifycss' filter='cssrewrite' %}
              <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->stylesheets(
-            array('bundles/AcmeFoo/css/*'),
+            array('bundles/App/css/*'),
             array('uglifycss'),
             array('cssrewrite')
         ) as $url): ?>

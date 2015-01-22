@@ -28,7 +28,7 @@ a more permissive regex path.
 
         _hello:
             path:     /hello/{username}
-            defaults: { _controller: AcmeDemoBundle:Demo:hello }
+            defaults: { _controller: AppBundle:Demo:hello }
             requirements:
                 username: .+
 
@@ -41,7 +41,7 @@ a more permissive regex path.
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="_hello" path="/hello/{username}">
-                <default key="_controller">AcmeDemoBundle:Demo:hello</default>
+                <default key="_controller">AppBundle:Demo:hello</default>
                 <requirement key="username">.+</requirement>
             </route>
         </routes>
@@ -53,7 +53,7 @@ a more permissive regex path.
 
         $collection = new RouteCollection();
         $collection->add('_hello', new Route('/hello/{username}', array(
-            '_controller' => 'AcmeDemoBundle:Demo:hello',
+            '_controller' => 'AppBundle:Demo:hello',
         ), array(
             'username' => '.+',
         )));

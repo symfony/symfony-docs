@@ -26,9 +26,6 @@ Full Default Configuration
                 #schema_filter:        ^sf2_
 
                 connections:
-                    default:
-                        dbname:               database
-
                     # A collection of different named connections (e.g. default, conn2, etc)
                     default:
                         dbname:               ~
@@ -317,31 +314,45 @@ Explicit definition of all the mapped entities is the only necessary
 configuration for the ORM and there are several configuration options that
 you can control. The following configuration options exist for a mapping:
 
-* ``type`` One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``.
-  This specifies which type of metadata type your mapping uses.
+type
+....
 
-* ``dir`` Path to the mapping or entity files (depending on the driver).
-  If this path is relative it is assumed to be relative to the bundle root.
-  This only works if the name of your mapping is a bundle name. If you want
-  to use this option to specify absolute paths you should prefix the path
-  with the kernel parameters that exist in the DIC (for example ``%kernel.root_dir%``).
+One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This specifies
+which type of metadata type your mapping uses.
 
-* ``prefix`` A common namespace prefix that all entities of this mapping
-  share. This prefix should never conflict with prefixes of other defined
-  mappings otherwise some of your entities cannot be found by Doctrine.
-  This option defaults to the bundle namespace + ``Entity``, for example
-  for an application bundle called ``AcmeHelloBundle`` prefix would be
-  ``Acme\HelloBundle\Entity``.
+dir
+...
 
-* ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
-  shorter names to be used in DQL queries or for Repository access. When
-  using a bundle the alias defaults to the bundle name.
+Path to the mapping or entity files (depending on the driver). If this path
+is relative it is assumed to be relative to the bundle root. This only works
+if the name of your mapping is a bundle name. If you want to use this option
+to specify absolute paths you should prefix the path with the kernel parameters
+that exist in the DIC (for example ``%kernel.root_dir%``).
 
-* ``is_bundle`` This option is a derived value from ``dir`` and by default
-  is set to true if dir is relative proved by a ``file_exists()`` check
-  that returns false. It is false if the existence check returns true. In
-  this case an absolute path was specified and the metadata files are most
-  likely in a directory outside of a bundle.
+prefix
+......
+
+A common namespace prefix that all entities of this mapping share. This prefix
+should never conflict with prefixes of other defined mappings otherwise some
+of your entities cannot be found by Doctrine. This option defaults to the
+bundle namespace + ``Entity``, for example for an application bundle called
+``AcmeHelloBundle`` prefix would be ``Acme\HelloBundle\Entity``.
+
+alias
+.....
+
+Doctrine offers a way to alias entity namespaces to simpler, shorter names
+to be used in DQL queries or for Repository access. When using a bundle the
+alias defaults to the bundle name.
+
+is_bundle
+.........
+
+This option is a derived value from ``dir`` and by default is set to ``true``
+if dir is relative proved by a ``file_exists()`` check that returns ``false``.
+It is ``false`` if the existence check returns ``true``. In this case an
+absolute path was specified and the metadata files are most likely in a directory
+outside of a bundle.
 
 .. index::
     single: Configuration; Doctrine DBAL

@@ -8,9 +8,9 @@ by showing you a simple project in action.
 If you've used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications.
 
-The only technical requisite to follow this tutorial is to have **PHP 5.4 or higher
+The only technical requisite to follow this tutorial is to have **PHP 5.5.9 or higher
 installed on your computer**. If you use a packaged PHP solution such as WAMP,
-XAMP or MAMP, check out that they are using PHP 5.4 or a more recent version.
+XAMP or MAMP, check out that they are using PHP 5.5.9 or a more recent version.
 You can also execute the following command in your terminal or command console
 to display the installed PHP version:
 
@@ -237,7 +237,7 @@ of the ``Default`` controller when the user browses the ``/`` path of the applic
 .. tip::
 
     In addition to PHP annotations, routes can be configured in YAML, XML or
-    PHP files, as explained in `the Routing chapter of the Symfony book`_ .
+    PHP files, as explained in :doc:`the Routing chapter of the Symfony book </book/routing>`.
     This flexibility is one of the main features of Symfony, a framework that
     never imposes a particular configuration format on you.
 
@@ -359,4 +359,3 @@ are eager to learn more about Symfony, dive into the next section:
 .. _Composer: https://getcomposer.org/
 .. _executable installer: http://getcomposer.org/download
 .. _Twig: http://twig.sensiolabs.org/
-.. _the Routing chapter of the Symfony book: http://symfony.com/doc/current/book/routing.html

@@ -167,16 +167,19 @@ helper functions:
 
 That's it! Just three lines are needed to render the complete form:
 
-* ``form_start(form)`` - Renders the start tag of the form, including the
-  correct enctype attribute when using file uploads;
+``form_start(form)``
+    Renders the start tag of the form, including the correct enctype attribute
+    when using file uploads.
 
-* ``form_widget(form)`` - Renders all of the fields, which includes the field
-  element itself, a label and any validation error messages for the field;
+``form_widget(form)``
+    Renders all the fields, which includes the field element itself, a label
+    and any validation error messages for the field.
 
-* ``form_end()`` - Renders the end tag of the form and any fields that have not
-  yet been rendered, in case you rendered each field yourself. This is useful
-  for rendering hidden fields and taking advantage of the automatic
-  :ref:`CSRF Protection <forms-csrf>`.
+``form_end()``
+    Renders the end tag of the form and any fields that have not
+    yet been rendered, in case you rendered each field yourself. This is useful
+    for rendering hidden fields and taking advantage of the automatic
+    :ref:`CSRF Protection <forms-csrf>`.
 
 .. seealso::
 
@@ -523,6 +526,7 @@ to an array callback::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+    // ...
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -538,22 +542,50 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a ``Closure``::
 
+    use Acme\AcmeBundle\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+    // ...
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
-                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                if (Client::TYPE_PERSON == $data->getType()) {
                     return array('person');
-                } else {
-                    return array('company');
                 }
+
+                return array('company');
             },
         ));
     }
+
+Using the ``validation_groups`` option overrides the default validation
+group which is being used. If you want to validate the default constraints
+of the entity as well you have to adjust the option as follows::
+
+    use Acme\AcmeBundle\Entity\Client;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    // ...
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Client::TYPE_PERSON == $data->getType()) {
+                    return array('Default', 'person');
+                }
+
+                return array('Default', 'company');
+            },
+        ));
+    }
+
+You can find more information about how the validation groups and the default constraints
+work in the book section about :ref:`validation groups <book-validation-validation-groups>`.
 
 .. index::
    single: Forms; Validation groups based on clicked button
@@ -716,14 +748,16 @@ the correct values of a number of field options.
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
-* ``required``: The ``required`` option can be guessed based on the validation
-  rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata
-  (i.e. is the field ``nullable``). This is very useful, as your client-side
-  validation will automatically match your validation rules.
+``required``
+    The ``required`` option can be guessed based on the validation rules (i.e. is
+    the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
+    field ``nullable``). This is very useful, as your client-side validation will
+    automatically match your validation rules.
 
-* ``maxlength``: If the field is some sort of text field, then the ``maxlength``
-  option attribute can be guessed from the validation constraints (if ``Length`` or
-  ``Range`` is used) or from the Doctrine metadata (via the field's length).
+``max_length``
+    If the field is some sort of text field, then the ``max_length`` option can be
+    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
+    from the Doctrine metadata (via the field's length).
 
 .. note::
 
@@ -771,12 +805,13 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 You already know the ``form_start()`` and ``form_end()`` functions, but what do
 the other functions do?
 
-* ``form_errors(form)`` - Renders any errors global to the whole form
-  (field-specific errors are displayed next to each field);
+``form_errors(form)``
+    Renders any errors global to the whole form (field-specific errors are displayed
+    next to each field).
 
-* ``form_row(form.dueDate)`` - Renders the label, any errors, and the HTML
-  form widget for the given field (e.g. ``dueDate``) inside, by default, a
-  ``div`` element.
+``form_row(form.dueDate)``
+    Renders the label, any errors, and the HTML form widget for the given field
+    (e.g. ``dueDate``) inside, by default, a ``div`` element.
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag by
@@ -1751,6 +1786,13 @@ section.
     The ``intention`` option is optional but greatly enhances the security of
     the generated token by making it different for each form.
 
+.. caution::
+
+    CSRF tokens are meant to be different for every user. This is why you
+    need to be cautious if you try to cache pages with forms including this
+    kind of protection. For more information, see
+    :doc:`/cookbook/cache/form_csrf_caching`.
+
 .. index::
    single: Forms; With no class
 
@@ -1807,7 +1849,7 @@ an array.
     You can also access POST values (in this case "name") directly through
     the request object, like so::
 
-        $this->get('request')->request->get('name');
+        $request->request->get('name');
 
     Be advised, however, that in most cases using the ``getData()`` method is
     a better choice, since it returns the data (usually an object) after
@@ -1886,6 +1928,8 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
+* :doc:`/cookbook/security/csrf_in_login_form`
+* :doc:`/cookbook/cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php

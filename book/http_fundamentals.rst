@@ -38,7 +38,7 @@ how you develop on the web, the goal of your server is *always* to understand
 simple text requests, and return simple text responses.
 
 Symfony is built from the ground up around that reality. Whether you realize
-it or not, HTTP is something you use everyday. With Symfony, you'll learn
+it or not, HTTP is something you use every day. With Symfony, you'll learn
 how to master it.
 
 .. index::
@@ -242,8 +242,8 @@ have all the request information at your fingertips::
     $request->headers->get('host');
     $request->headers->get('content_type');
 
-    $request->getMethod();          // GET, POST, PUT, DELETE, HEAD
-    $request->getLanguages();       // an array of languages the client accepts
+    $request->getMethod();    // GET, POST, PUT, DELETE, HEAD
+    $request->getLanguages(); // an array of languages the client accepts
 
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
@@ -286,9 +286,6 @@ interface to construct the response that needs to be returned to the client::
 
     // prints the HTTP headers followed by the content
     $response->send();
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
@@ -518,32 +515,34 @@ libraries that can be used inside *any* PHP project. These libraries, called
 the *Symfony Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
-* :doc:`HttpFoundation </components/http_foundation/introduction>` - Contains
-  the ``Request`` and ``Response`` classes, as well as other classes for handling
-  sessions and file uploads;
+:doc:`HttpFoundation </components/http_foundation/introduction>`
+    Contains the ``Request`` and ``Response`` classes, as well as other classes for
+    handling sessions and file uploads.
 
-* :doc:`Routing </components/routing/introduction>` - Powerful and fast routing system that
-  allows you to map a specific URI (e.g. ``/contact``) to some information
-  about how that request should be handled (e.g. execute the ``contactAction()``
-  method);
+:doc:`Routing </components/routing/introduction>`
+    Powerful and fast routing system that allows you to map a specific URI
+    (e.g. ``/contact``) to some information about how that request should be handled
+    (e.g. execute the ``contactAction()`` method).
 
-* :doc:`Form </components/form/introduction>` - A full-featured and flexible
-  framework for creating forms and handling form submissions;
+:doc:`Form </components/form/introduction>`
+    A full-featured and flexible framework for creating forms and handling form
+    submissions.
 
-* `Validator`_ - A system for creating rules about data and then validating
-  whether or not user-submitted data follows those rules;
+`Validator`_
+    A system for creating rules about data and then validating whether or not
+    user-submitted data follows those rules.
 
-* :doc:`Templating </components/templating/introduction>` - A toolkit for rendering
-  templates, handling template inheritance (i.e. a template is decorated with
-  a layout) and performing other common template tasks;
+:doc:`Templating </components/templating/introduction>`
+    A toolkit for rendering templates, handling template inheritance (i.e. a
+    template is decorated with a layout) and performing other common template tasks.
 
-* :doc:`Security </components/security/introduction>` - A powerful library for
-  handling all types of security inside an application;
+:doc:`Security </components/security/introduction>`
+    A powerful library for handling all types of security inside an application.
 
-* :doc:`Translation </components/translation/introduction>` - A framework for
-  translating strings in your application.
+:doc:`Translation </components/translation/introduction>`
+    A framework for translating strings in your application.
 
-Each and every one of these components is decoupled and can be used in *any*
+Each one of these components is decoupled and can be used in *any*
 PHP project, regardless of whether or not you use the Symfony framework.
 Every part is made to be used if needed and replaced when necessary.
 

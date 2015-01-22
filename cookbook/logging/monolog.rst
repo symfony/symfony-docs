@@ -4,8 +4,8 @@
 How to Use Monolog to Write Logs
 ================================
 
-Monolog_ is a logging library for PHP 5.3 used by Symfony. It is
-inspired by the Python LogBook library.
+Monolog_ is a logging library for PHP used by Symfony. It is inspired by the
+Python LogBook library.
 
 Usage
 -----
@@ -220,7 +220,7 @@ easily. Your formatter must implement
 Adding some extra Data in the Log Messages
 ------------------------------------------
 
-Monolog allows to process the record before logging it to add some
+Monolog allows you to process the record before logging it to add some
 extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 

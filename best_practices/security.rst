@@ -43,6 +43,7 @@ which uses a login form to load users from the database:
 
 .. code-block:: yaml
 
+    # app/config/security.yml
     security:
         encoders:
             AppBundle\Entity\User: bcrypt
@@ -73,16 +74,16 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>` the
+configuration in :doc:`security.yml </reference/configuration/security>`, the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
-:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.context``
+:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.authorization_checker``
 service directly.
 
 .. best-practice::
 
     * For protecting broad URL patterns, use ``access_control``;
     * Whenever possible, use the ``@Security`` annotation;
-    * Check security directly on the ``security.context`` service whenever
+    * Check security directly on the ``security.authorization_checker`` service whenever
       you have a more complex situation.
 
 There are also different ways to centralize your authorization logic, like
@@ -207,6 +208,8 @@ Now you can reuse this method both in the template and in the security expressio
     {% endif %}
 
 .. _best-practices-directly-isGranted:
+.. _checking-permissions-without-security:
+.. _manually-checking-permissions:
 
 Checking Permissions without @Security
 --------------------------------------
@@ -315,7 +318,7 @@ Now, you can use the voter with the ``@Security`` annotation:
         // ...
     }
 
-You can also use this directly with the ``security.context`` service, or
+You can also use this directly with the ``security.authorization_checker`` service or
 via the even easier shortcut in a controller:
 
 .. code-block:: php
@@ -327,16 +330,20 @@ via the even easier shortcut in a controller:
     {
         $post = // query for the post ...
 
-        if (!$this->get('security.context')->isGranted('edit', $post)) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        // or without the shortcut:
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
     }
 
 Learn More
 ----------
 
 The `FOSUserBundle`_, developed by the Symfony community, adds support for a
-database-backed user system in Symfony2. It also handles common tasks like
+database-backed user system in Symfony. It also handles common tasks like
 user registration and forgotten password functionality.
 
 Enable the :doc:`Remember Me feature </cookbook/security/remember_me>` to
@@ -350,11 +357,7 @@ If your company uses a user login method not supported by Symfony, you can
 develop :doc:`your own user provider </cookbook/security/custom_provider>` and
 :doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
 
-.. _`Security Cookbook Section`: http://symfony.com/doc/current/cookbook/security/index.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
-.. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
-.. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

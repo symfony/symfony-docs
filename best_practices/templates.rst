@@ -9,7 +9,7 @@ languages - like `Twig`_ - were created to make templating even better.
 
     Use Twig templating format for your templates.
 
-Generally speaking, PHP templates are much more verbose than in Twig because
+Generally speaking, PHP templates are much more verbose than Twig templates because
 they lack native support for lots of modern features needed by templates,
 like inheritance, automatic escaping and named arguments for filters and
 functions.
@@ -153,6 +153,7 @@ name is irrelevant because you never use it in your own code):
         app.twig.app_extension:
             class:     AppBundle\Twig\AppExtension
             arguments: ["@markdown"]
+            public:    false
             tags:
                 - { name: twig.extension }
 

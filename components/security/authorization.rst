@@ -45,13 +45,13 @@ itself depends on multiple voters, and makes a final verdict based on all
 the votes (either positive, negative or neutral) it has received. It
 recognizes several strategies:
 
-* ``affirmative`` (default)
+``affirmative`` (default)
     grant access as soon as any voter returns an affirmative response;
 
-* ``consensus``
+``consensus``
     grant access if there are more voters granting access than there are denying;
 
-* ``unanimous``
+``unanimous``
     only grant access if none of the voters has denied access;
 
 .. code-block:: php
@@ -90,14 +90,14 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-* ``supportsAttribute($attribute)``
+``supportsAttribute($attribute)``
     will be used to check if the voter knows how to handle the given attribute;
 
-* ``supportsClass($class)``
+``supportsClass($class)``
     will be used to check if the voter is able to grant or deny access for
     an object of the given class;
 
-* ``vote(TokenInterface $token, $object, array $attributes)``
+``vote(TokenInterface $token, $object, array $attributes)``
     this method will do the actual voting and return a value equal to one
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``

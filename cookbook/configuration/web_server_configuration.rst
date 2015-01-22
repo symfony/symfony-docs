@@ -118,7 +118,7 @@ Using mod_proxy_fcgi with Apache 2.4
 If you are running Apache 2.4, you can easily use ``mod_proxy_fcgi`` to pass
 incoming requests to PHP-FPM. Configure PHP-FPM to listen on a TCP socket
 (``mod_proxy`` currently `does not support unix sockets`_), enable ``mod_proxy``
-and ``mod_proxy_fcgi`` in your Apache configuration and use the ``ProxyPassMatch``
+and ``mod_proxy_fcgi`` in your Apache configuration and use the ``SetHandler``
 directive to pass requests for PHP files to PHP FPM:
 
 .. code-block:: apache
@@ -132,7 +132,17 @@ directive to pass requests for PHP files to PHP FPM:
         #
         # SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
 
-        ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        # For Apache 2.4.9 or higher
+        # Using SetHandler avoids issues with using ProxyPassMatch in combination
+        # with mod_rewrite or mod_autoindex
+        <FilesMatch \.php$>
+            SetHandler proxy:fcgi://127.0.0.1:9000
+        </FilesMatch>
+        # If you use Apache version below 2.4.9 you must consider update or use this instead
+        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        # If you run your Symfony application on a subpath of your document root, the
+        # regular expression must be changed accordingly:
+        # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
 
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
@@ -144,16 +154,6 @@ directive to pass requests for PHP files to PHP FPM:
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
-
-.. caution::
-
-    When you run your Symfony application on a subpath of your document root,
-    the regular expression used in ``ProxyPassMatch`` directive must be changed
-    accordingly:
-
-    .. code-block:: apache
-
-        ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
 
 PHP-FPM with Apache 2.2
 ~~~~~~~~~~~~~~~~~~~~~~~

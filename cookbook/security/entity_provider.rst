@@ -355,8 +355,6 @@ the database to be encoded using this encoder. For details on how to create
 a new User object with a properly encoded password, see the
 :ref:`book-security-encoding-user-password` section of the security chapter.
 
-.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
-
 The ``providers`` section defines an ``administrators`` user provider. A
 user provider is a "source" of where users are loaded during authentication.
 In this case, the ``entity`` keyword means that Symfony will use the Doctrine

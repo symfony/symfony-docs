@@ -77,15 +77,18 @@ to web designers and, in several ways, more powerful than PHP templates:
 
 Twig defines three types of special syntax:
 
-* ``{{ ... }}``: "Says something": prints a variable or the result of an
-  expression to the template;
+``{{ ... }}``
+    "Says something": prints a variable or the result of an expression to the
+    template.
 
-* ``{% ... %}``: "Does something": a **tag** that controls the logic of the
-  template; it is used to execute statements such as for-loops for example.
+``{% ... %}``
+    "Does something": a **tag** that controls the logic of the template; it is
+    used to execute statements such as for-loops for example.
 
-* ``{# ... #}``: "Comment something": it's the equivalent of the PHP
-  ``/* comment */`` syntax. It's used to add single or multi-line comments.
-  The content of the comments isn't included in the rendered pages.
+``{# ... #}``
+    "Comment something": it's the equivalent of the PHP ``/* comment */`` syntax.
+    It's used to add single or multi-line comments. The content of the comments
+    isn't included in the rendered pages.
 
 Twig also contains **filters**, which modify content before being rendered.
 The following makes the ``title`` variable all uppercase before rendering
@@ -376,15 +379,16 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-* ``app/Resources/views/``: The applications ``views`` directory can contain
-  application-wide base templates (i.e. your application's layouts and
-  templates of the application bundle) as well as templates that override
-  third party bundle templates (see :ref:`overriding-bundle-templates`);
+``app/Resources/views/``
+    The applications ``views`` directory can contain application-wide base templates
+    (i.e. your application's layouts and templates of the application bundle) as
+    well as templates that override third party bundle templates
+    (see :ref:`overriding-bundle-templates`).
 
-* ``path/to/bundle/Resources/views/``: Each third party bundle houses its
-  templates in its ``Resources/views/`` directory (and subdirectories). When you
-  plan to share your bundle, you should put the templates in the bundle instead
-  of the ``app/`` directory.
+``path/to/bundle/Resources/views/``
+    Each third party bundle houses its templates in its ``Resources/views/``
+    directory (and subdirectories). When you plan to share your bundle, you should
+    put the templates in the bundle instead of the ``app/`` directory.
 
 Most of the templates you'll use live in the ``app/Resources/views/``
 directory. The path you'll use will be relative to this directory. For example,
@@ -399,7 +403,7 @@ Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony uses a **bundle**:**directory**:**filename** string syntax for
-templates that live inside a bundle. This allows for several different types of
+templates that live inside a bundle. This allows for several types of
 templates, each which lives in a specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
@@ -495,7 +499,7 @@ Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You'll often want to include the same template or code fragment on several
-different pages. For example, in an application with "news articles", the
+pages. For example, in an application with "news articles", the
 template code displaying an article might be used on the article detail page,
 on a page displaying the most popular articles, or in a list of the latest
 articles.
@@ -1017,9 +1021,6 @@ configuration option.
 
 .. _`book-templating-version-by-asset`:
 
-.. versionadded:: 2.5
-    Setting versioned URLs on an asset-by-asset basis was introduced in Symfony 2.5.
-
 If you need to set a version for a specific asset, you can set the fourth
 argument (or the ``version`` argument) to the desired version:
 
@@ -1031,14 +1032,16 @@ argument (or the ``version`` argument) to the desired version:
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            false,
+            '3.0'
+        ) ?>" alt="Symfony!" />
 
-If you dont give a version or pass ``null``, the default package version
+If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
-
-.. versionadded:: 2.5
-    Absolute URLs for assets were introduced in Symfony 2.5.
 
 If you need absolute URLs for assets, you can set the third argument (or the
 ``absolute`` argument) to ``true``:
@@ -1051,7 +1054,11 @@ If you need absolute URLs for assets, you can set the third argument (or the
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            true
+        ) ?>" alt="Symfony!" />
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts
@@ -1143,12 +1150,18 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-* ``app.security`` - The security context.
-* ``app.user`` - The current user object.
-* ``app.request`` - The request object.
-* ``app.session`` - The session object.
-* ``app.environment`` - The current environment (dev, prod, etc).
-* ``app.debug`` - True if in debug mode. False otherwise.
+``app.security``
+    The security context.
+``app.user``
+    The current user object.
+``app.request``
+    The request object.
+``app.session``
+    The session object.
+``app.environment``
+    The current environment (dev, prod, etc).
+``app.debug``
+    True if in debug mode. False otherwise.
 
 .. configuration-block::
 
@@ -1170,8 +1183,8 @@ automatically:
 
 .. versionadded:: 2.6
     The global ``app.security`` variable (or the ``$app->getSecurity()``
-    method in PHP templates) is deprecated as of Symfony 2.6. Use `app.user` 
-    (`$app->getUser()`) and `is_granted()` (`$view['security']->isGranted()`)
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user`` 
+    (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
     instead.
 
 .. tip::
@@ -1561,7 +1574,7 @@ Templates are a generic way to render content in *any* format. And while in
 most cases you'll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.
 
-For example, the same "resource" is often rendered in several different formats.
+For example, the same "resource" is often rendered in several formats.
 To render an article index page in XML, simply include the format in the
 template name:
 

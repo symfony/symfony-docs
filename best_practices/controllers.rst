@@ -110,8 +110,9 @@ for the homepage of our app:
          */
         public function indexAction()
         {
-            $em = $this->getDoctrine()->getManager();
-            $posts = $em->getRepository('App:Post')->findLatest();
+            $posts = $this->getDoctrine()
+                ->getRepository('AppBundle:Post')
+                ->findLatest();
 
             return $this->render('default/index.html.twig', array(
                 'posts' => $posts
@@ -136,6 +137,9 @@ For example:
 
 .. code-block:: php
 
+    use AppBundle\Entity\Post;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
     /**
      * @Route("/{id}", name="admin_post_show")
      */
@@ -144,7 +148,7 @@ For example:
         $deleteForm = $this->createDeleteForm($post);
 
         return $this->render('admin/post/show.html.twig', array(
-            'post'      => $post,
+            'post'        => $post,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -186,8 +190,10 @@ flexible:
 
 .. code-block:: php
 
+    use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+    use Symfony\Component\HttpFoundation\Request;
 
     /**
      * @Route("/comment/{postSlug}/new", name = "comment_new")
@@ -206,6 +212,7 @@ Pre and Post Hooks
 ------------------
 
 If you need to execute some code before or after the execution of your controllers,
-you can use the EventDispatcher component to :doc:`/cookbook/event_dispatcher/before_after_filters`.
+you can use the EventDispatcher component to
+:doc:`set up before and after filters </cookbook/event_dispatcher/before_after_filters>`.
 
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

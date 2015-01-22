@@ -10,26 +10,19 @@ Marking Services as public / private
 When defining services, you'll usually want to be able to access these definitions
 within your application code. These services are called ``public``. For example,
 the ``doctrine`` service registered with the container when using the DoctrineBundle
-is a public service as you can access it via::
+is a public service. This means that you can fetch it from the container
+using the ``get()`` method::
 
    $doctrine = $container->get('doctrine');
 
-However, there are use-cases when you don't want a service to be public. This
-is common when a service is only defined because it could be used as an
-argument for another service.
+In some cases, a service *only* exists to be injected into another service
+and is *not* intended to be fetched directly from the container as shown
+above. 
 
 .. _inlined-private-services:
 
-.. note::
-
-    If you use a private service as an argument to only one other service,
-    this will result in an inlined instantiation (e.g. ``new PrivateFooBar()``)
-    inside this other service, making it publicly unavailable at runtime.
-
-Simply said: A service will be private when you do not want to access it
-directly from your code.
-
-Here is an example:
+In these cases, to get a minor performance boost, you can set the service
+to be *not* public (i.e. private):
 
 .. configuration-block::
 
@@ -60,9 +53,18 @@ Here is an example:
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-Now that the service is private, you *cannot* call::
+What makes private services special is that, if they are only injected once,
+they are converted from services to inlined instantiations (e.g. ``new PrivateThing()``).
+This increases the container's performance.
+
+Now that the service is private, you *should not* fetch the service directly
+from the container::
 
     $container->get('foo');
+
+This *may or may not work*, depending on if the service could be inlined.
+Simply said: A service can be marked as private if you do not want to access
+it directly from your code.
 
 However, if a service has been marked as private, you can still alias it (see
 below) to access this service (via the alias).
@@ -224,9 +226,6 @@ which means that your file will be included only once per request.
 
 Decorating Services
 -------------------
-
-.. versionadded:: 2.5
-    Decorated services were introduced in Symfony 2.5.
 
 When overriding an existing definition, the old service is lost:
 

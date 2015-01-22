@@ -18,14 +18,16 @@ A Twig template is a text file that can generate any type of content (HTML, CSS,
 JavaScript, XML, CSV, LaTeX, etc.) Twig elements are separated from the rest of
 the template contents using any of these delimiters:
 
-* ``{{ ... }}``: prints the content of a variable or the result of evaluating an
-  expression;
+``{{ ... }}``
+    Prints the content of a variable or the result of evaluating an expression;
 
-* ``{% ... %}``: controls the logic of the template; it is used for example to
-  execute ``for`` loops and ``if`` statements;
+``{% ... %}``
+    Controls the logic of the template; it is used for example to execute ``for``
+    loops and ``if`` statements.
 
-* ``{# ... #}``: allows including comments inside templates. Contrary to HTML
-  comments, they aren't included in the rendered template.
+``{# ... #}``
+    Allows including comments inside templates. Contrary to HTML comments, they
+    aren't included in the rendered template.
 
 Below is a minimal template that illustrates a few basics, using two variables
 ``page_title`` and ``navigation``, which would be passed into the template:

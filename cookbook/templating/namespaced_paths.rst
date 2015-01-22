@@ -14,15 +14,15 @@ Take the following paths as an example:
 
 .. code-block:: jinja
 
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
-    {% include "AcmeDemoBundle:Foo:bar.html.twig" %}
+    {% extends "AppBundle::layout.html.twig" %}
+    {% include "AppBundle:Foo:bar.html.twig" %}
 
 With namespaced paths, the following works as well:
 
 .. code-block:: jinja
 
-    {% extends "@AcmeDemo/layout.html.twig" %}
-    {% include "@AcmeDemo/Foo/bar.html.twig" %}
+    {% extends "@App/layout.html.twig" %}
+    {% include "@App/Foo/bar.html.twig" %}
 
 Both paths are valid and functional by default in Symfony.
 

@@ -4,9 +4,6 @@
 How to Configure Monolog to Display Console Messages
 ====================================================
 
-.. versionadded:: 2.4
-    This feature was introduced to the MonologBridge in Symfony 2.4.
-
 It is possible to use the console to print messages for certain
 :ref:`verbosity levels <verbosity-levels>` using the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance that

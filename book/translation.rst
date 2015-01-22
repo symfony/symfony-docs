@@ -389,15 +389,15 @@ Fallback Translation Locales
 
 Imagine that the user's locale is ``fr_FR`` and that you're translating the
 key ``Symfony is great``. To find the French translation, Symfony actually
-checks translation resources for several different locales:
+checks translation resources for several locales:
 
-1. First, Symfony looks for the translation in a ``fr_FR`` translation resource
+#. First, Symfony looks for the translation in a ``fr_FR`` translation resource
    (e.g. ``messages.fr_FR.xliff``);
 
-2. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
+#. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
    resource (e.g. ``messages.fr.xliff``);
 
-3. If the translation still isn't found, Symfony uses the ``fallback`` configuration
+#. If the translation still isn't found, Symfony uses the ``fallback`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
 
 .. versionadded:: 2.6
@@ -405,8 +405,8 @@ checks translation resources for several different locales:
 
 .. note::
 
-    When Symfony doesn't find a translation in the given locale, it will 
-    add the missing translation to the log file. For details, 
+    When Symfony doesn't find a translation in the given locale, it will
+    add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
 .. _book-translation-user-locale:
@@ -443,7 +443,7 @@ The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Since you can store the locale of the user in the session, it may be tempting
-to use the same URL to display a resource in many different languages based
+to use the same URL to display a resource in different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
 this violates a fundamental rule of the Web: that a particular URL returns
@@ -664,14 +664,11 @@ Translating Database Content
 ----------------------------
 
 The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_ or the `Translatable Behavior`_ (PHP 5.4+).
-For more information, see the documentation for these libraries.
+the `Translatable Extension`_ or the `Translatable Behavior`_. For more information,
+see the documentation for these libraries.
 
 Debugging Translations
 ----------------------
-
-.. versionadded:: 2.5
-    The ``debug:translation`` command was introduced in Symfony 2.5.
 
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``translation:debug``.
@@ -704,7 +701,7 @@ It will also detect the following translator usages in PHP templates:
 
     $view['translator']->trans("Symfony2 is great");
 
-    $view['translator']->trans('Symfony2 is great');
+    $view['translator']->transChoice('Symfony2 is great', 1);
 
 .. caution::
 
@@ -739,17 +736,18 @@ And suppose you've already setup some translations for the ``fr`` locale inside 
             </file>
         </xliff>
 
+
+    .. code-block:: yaml
+
+        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
+
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
         );
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
 
 and for the ``en`` locale:
 
@@ -770,17 +768,17 @@ and for the ``en`` locale:
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
+        Symfony2 is great: Symfony2 is great
+
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
         return array(
             'Symfony2 is great' => 'Symfony2 is great',
         );
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
-        Symfony2 is great: Symfony2 is great
 
 To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 

@@ -158,9 +158,9 @@ of the ``Person`` class would be encoded in XML format::
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
 
-1. The information to be decoded
-2. The name of the class this information will be decoded to
-3. The encoder used to convert that information into an array
+#. The information to be decoded
+#. The name of the class this information will be decoded to
+#. The encoder used to convert that information into an array
 
 Using Camelized Method Names for Underscored Attributes
 -------------------------------------------------------
@@ -198,11 +198,6 @@ it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods
 Serializing Boolean Attributes
 ------------------------------
 
-.. versionadded:: 2.5
-    Support for ``is*`` accessors in
-    :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-    was introduced in Symfony 2.5.
-
 If you are using isser methods (methods prefixed by ``is``, like
 ``Acme\Person::isSportsman()``), the Serializer component will automatically
 detect and use it to serialize related attributes.
@@ -224,7 +219,7 @@ When serializing, you can set a callback to format a specific object property::
         return $dateTime instanceof \DateTime
             ? $dateTime->format(\DateTime::ISO8601)
             : '';
-    }
+    };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
 
@@ -310,7 +305,7 @@ when such a case is encountered::
     $org->setName('Les-Tilleuls.coop');
     $org->setMembers(array($member));
 
-    $member->setOrganization($kevin);
+    $member->setOrganization($org);
 
     echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
 

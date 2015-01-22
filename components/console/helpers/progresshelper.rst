@@ -7,9 +7,6 @@ Progress Helper
 .. versionadded:: 2.3
     The ``setCurrent`` method was introduced in Symfony 2.3.
 
-.. versionadded:: 2.4
-    The ``clear`` method was introduced in Symfony 2.4.
-
 .. caution::
 
     The Progress Helper was deprecated in Symfony 2.5 and will be removed in

@@ -4,10 +4,6 @@
 The PSR-4 Class Loader
 ======================
 
-.. versionadded:: 2.5
-    The :class:`Symfony\\Component\\ClassLoader\\Psr4ClassLoader` was
-    introduced in Symfony 2.5.
-
 Libraries that follow the `PSR-4`_ standard can be loaded with the ``Psr4ClassLoader``.
 
 .. note::
@@ -55,7 +51,7 @@ first need to configure the ``Psr4ClassLoader``:
     $loader->addPrefix('Symfony\\Component\\Yaml\\', __DIR__.'/lib/Yaml');
     $loader->register();
 
-    $data = Yaml::parse(__DIR__.'/config.yml');
+    $data = Yaml::parse(file_get_contents(__DIR__.'/config.yml'));
 
 First of all, the class loader is loaded manually using a ``require``
 statement, since there is no autoload mechanism yet. With the

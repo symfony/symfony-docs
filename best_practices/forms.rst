@@ -13,8 +13,8 @@ Building Forms
     Define your forms as PHP classes.
 
 The Form component allows you to build forms right inside your controller
-code. Honestly, unless you need to reuse the form somewhere else, that's
-totally fine. But for organize and reuse, we recommend that you define each
+code. This is perfectly fine if you don't need to reuse the form somewhere else.
+But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
     namespace AppBundle\Form;
@@ -165,8 +165,9 @@ fields:
 
 If you need more control over how your fields are rendered, then you should
 remove the ``form_widget(form)`` function and render your fields individually.
-See :doc:`/cookbook/form/form_customization` for more information on this and how
-you can control *how* the form renders at a global level using form theming.
+See the :doc:`/cookbook/form/form_customization` article for more information
+on this and how you can control *how* the form renders at a global level
+using form theming.
 
 Handling Form Submits
 ---------------------

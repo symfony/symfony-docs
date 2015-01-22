@@ -4,7 +4,7 @@
 Controller
 ==========
 
-A controller is a PHP function you create that takes information from the
+A controller is a PHP callable you create that takes information from the
 HTTP request and constructs and returns an HTTP response (as a Symfony
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
@@ -116,7 +116,7 @@ Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony takes advantage of PHP's namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 
@@ -559,7 +559,7 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using ``app_dev.php`` - 
+error page is shown to the developer (i.e. when you're using ``app_dev.php`` -
 see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see the
@@ -682,9 +682,6 @@ content that's sent back to the client::
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 The ``headers`` property is a :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`
 object and has some nice methods for getting and setting the headers. The

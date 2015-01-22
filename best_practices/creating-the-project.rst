@@ -4,50 +4,39 @@ Creating the Project
 Installing Symfony
 ------------------
 
-There is only one recommended way to install Symfony:
+In the past, Symfony projects were created with `Composer`_, the dependency manager
+for PHP applications. However, the current recommendation is to use the **Symfony
+Installer**, which has to be installed before creating your first project.
 
-.. best-practice::
+Linux and Mac OS X Systems
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Always use `Composer`_ to install Symfony.
-
-Composer is the dependency manager used by modern PHP applications. Adding or
-removing requirements for your project and updating the third-party libraries
-used by your code is a breeze thanks to Composer.
-
-Dependency Management with Composer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Before installing Symfony, you need to make sure that you have Composer installed
-globally. Open your terminal (also called *command console*) and run the following
-command:
+Open your command console and execute the following:
 
 .. code-block:: bash
 
-    $ composer --version
-    Composer version 1e27ff5e22df81e3cd0cd36e5fdd4a3c5a031f4a 2014-08-11 15:46:48
+    $ curl -LsS http://symfony.com/installer > symfony.phar
+    $ sudo mv symfony.phar /usr/local/bin/symfony
+    $ chmod a+x /usr/local/bin/symfony
 
-You'll probably see a different version identifier. Never mind because Composer
-is updated on a continuous basis and its specific version doesn't matter.
+Now you can execute the Symfony Installer as a global system command called
+``symfony``.
 
-Installing Composer Globally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Windows Systems
+~~~~~~~~~~~~~~~
 
-In case you don't have Composer installed globally, execute the following two
-commands if you use Linux or Mac OS X (the second command will ask for your
-user password):
+Open your command console and execute the following:
 
 .. code-block:: bash
 
-    $ curl -sS https://getcomposer.org/installer | php
-    $ sudo mv composer.phar /usr/local/bin/composer
+    c:\> php -r "readfile('http://symfony.com/installer');" > symfony.phar
 
-.. note::
+Then, move the downloaded ``symfony.phar`` file to your projects directory and
+execute it as follows:
 
-    Depending on your Linux distribution, you may need to execute ``su`` command
-    instead of ``sudo``.
+.. code-block:: bash
 
-If you use a Windows system, download the executable installer from the
-`Composer download page`_ and follow the steps to install it.
+    c:\> php symfony.phar
 
 Creating the Blog Application
 -----------------------------
@@ -58,64 +47,19 @@ to create files and execute the following commands:
 
 .. code-block:: bash
 
+    # Linux, Mac OS X
     $ cd projects/
-    $ composer create-project symfony/framework-standard-edition blog/
+    $ symfony new blog
 
-This command will create a new directory called ``blog`` that will contain
-a fresh new project based on the most recent stable Symfony version available.
+    # Windows
+    c:\> cd projects/
+    c:\projects\> php symfony.phar new blog
 
-Checking the Symfony Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Once the installation is finished, enter the ``blog/`` directory and check that
-Symfony is correctly installed by executing the following command:
-
-.. code-block:: bash
-
-    $ cd blog/
-    $ php app/console --version
-
-    Symfony version 2.6.* - app/dev/debug
-
-If you see the installed Symfony version, everything worked as expected. If not,
-you can execute the following *script* to check what does prevent your system
-from correctly executing Symfony applications:
-
-.. code-block:: bash
-
-    $ php app/check.php
-
-Depending on your system, you can see up to two different lists when executing the
-`check.php` script. The first one shows the mandatory requirements which your
-system must meet to execute Symfony applications. The second list shows the
-optional requirements suggested for an optimal execution of Symfony applications:
-
-.. code-block:: bash
-
-    Symfony2 Requirements Checker
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    > PHP is using the following php.ini file:
-      /usr/local/zend/etc/php.ini
-
-    > Checking Symfony requirements:
-      .....E.........................W.....
-
-    [ERROR]
-    Your system is not ready to run Symfony2 projects
-
-    Fix the following mandatory requirements
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-     * date.timezone setting must be set
-       > Set the "date.timezone" setting in php.ini* (like Europe/Paris).
-
-    Optional recommendations to improve your setup
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-     * short_open_tag should be disabled in php.ini
-       > Set short_open_tag to off in php.ini*.
-
+This command creates a new directory called ``blog`` that contains a fresh new
+project based on the most recent stable Symfony version available. In addition,
+the installer checks if your system meets the technical requirements to execute
+Symfony applications. If not, you'll see the list of changes needed to meet those
+requirements.
 
 .. tip::
 
@@ -208,8 +152,7 @@ that follows these best practices:
 
 .. tip::
 
-    If you are using Symfony 2.6 or a newer version, the ``AppBundle`` bundle
-    is already generated for you. If you are using an older Symfony version,
+    If your Symfony installation doesn't come with a pre-generated ``AppBundle``,
     you can generate it by hand executing this command:
 
     .. code-block:: bash
@@ -243,7 +186,7 @@ it's released:
     └─ web/
 
 The changes are pretty superficial, but for now, we recommend that you use
-the Symfony2 directory structure.
+the Symfony directory structure.
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Get Started`: https://getcomposer.org/doc/00-intro.md
