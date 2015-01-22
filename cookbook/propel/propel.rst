@@ -4,10 +4,14 @@
 Databases and Propel
 ====================
 
-One of the most common and challenging tasks for any application
-involves persisting and reading information to and from a database. Symfony
-does not come integrated with any ORMs but the Propel integration is easy.
-To install Propel, read `Working With Symfony2`_ on the Propel documentation.
+`Propel`_ is an open-source Object-Relational Mapping (ORM) for SQL-Databases in
+PHP 5.4. It allows you to access your database using a set of objects, providing
+a simple API for storing and retrieving data.
+
+Propel is also an alternative to `Doctrine`_, which is the ORM that comes
+already integrated into Symfony. This article explains how to use Propel with
+a Symfony application, but first, install Propel following the instructions
+available at the `Working With Symfony2`_ section on the Propel documentation.
 
 A Simple Example: A Product
 ---------------------------
@@ -525,6 +529,8 @@ Commands
 
 You should read the dedicated section for `Propel commands in Symfony2`_.
 
+.. _`Propel`: http://propelorm.org/
+.. _`Doctrine`: http://www.doctrine-project.org/
 .. _`Working With Symfony2`: http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2.html#installation
 .. _`PropelBundle configuration section`: http://propelorm.org/Propel/cookbook/symfony2/working-with-symfony2.html#configuration
 .. _`Relationships`: http://propelorm.org/Propel/documentation/04-relationships.html

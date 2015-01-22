@@ -120,6 +120,10 @@
   * :doc:`/cookbook/profiler/matchers`
   * :doc:`/cookbook/profiler/storage`
 
+* :doc:`/cookbook/propel/index`
+
+  * :doc:`/cookbook/propel/propel`
+
 * :doc:`/cookbook/request/index`
 
   * :doc:`/cookbook/request/load_balancer_reverse_proxy`
