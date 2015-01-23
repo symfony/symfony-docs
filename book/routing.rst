@@ -945,8 +945,8 @@ routing system can be:
             /**
              * @Route(
              *     "/articles/{_locale}/{year}/{title}.{_format}",
-             *     defaults: {"_format": "html"},
-             *     requirements: {
+             *     defaults={"_format": "html"},
+             *     requirements={
              *         "_locale": "en|fr",
              *         "_format": "html|rss",
              *         "year": "\d+"
