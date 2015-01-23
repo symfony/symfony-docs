@@ -128,7 +128,7 @@ Security Voters
 
 If your security logic is complex and can't be centralized into a method
 like ``isAuthor()``, you should leverage custom voters. These are an order
-of magnitude easier than :doc:`ACL's </cookbook/security/acl>` and will give
+of magnitude easier than :doc:`ACLs </cookbook/security/acl>` and will give
 you the flexibility you need in almost all cases.
 
 First, create a voter class. The following example shows a voter that implements
