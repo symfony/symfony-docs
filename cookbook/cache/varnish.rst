@@ -65,8 +65,9 @@ Ensure Consistent Caching Behaviour
 
 Varnish uses the cache headers sent by your application to determine how
 to cache content. However, versions prior to Varnish 4 did not respect
-``Cache-Control: no-cache``. To ensure consistent behaviour, use the following
-configuration if you are still using Varnish 3:
+``Cache-Control: no-cache``, ``no-store`` and ``private``. To ensure
+consistent behavior, use the following configuration if you are still
+using Varnish 3:
 
 .. configuration-block::
 
@@ -76,12 +77,18 @@ configuration if you are still using Varnish 3:
             /* By default, Varnish3 ignores Cache-Control: no-cache and private
                https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control
              */
-            if (beresp.http.Cache-Control ~ "no-cache" ||
-                beresp.http.Cache-Control ~ "private"
+            if (beresp.http.Cache-Control ~ "private" ||
+                beresp.http.Cache-Control ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "no-store"
             ) {
                 return (hit_for_pass);
             }
         }
+
+.. tip::
+
+    You can see the default behavior of Varnish in the form of a VCL file:
+    `default.vcl`_ for Varnish 3, `builtin.vcl`_ for Varnish 4.
 
 Enable Edge Side Includes (ESI)
 -------------------------------
@@ -143,7 +150,7 @@ Symfony adds automatically:
 .. tip::
 
     If you followed the advice about ensuring a consistent caching
-    behaviour, those vcl functions already exist. Just append the code
+    behavior, those vcl functions already exist. Just append the code
     to the end of the function, they won't interfere with each other.
 
 .. index::
@@ -172,3 +179,5 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`default.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/default.vcl?rev=3.0
+.. _`builtin.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/builtin.vcl?rev=4.0
