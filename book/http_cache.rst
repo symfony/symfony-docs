@@ -538,8 +538,8 @@ won't be asked to return the updated response until the cache finally becomes
 stale.
 
 The validation model addresses this issue. Under this model, the cache continues
-to store responses. The difference is that, for each request, the cache asks the 
-application if the cached response is still valid or if it needs to be regenerated. 
+to store responses. The difference is that, for each request, the cache asks the
+application if the cached response is still valid or if it needs to be regenerated.
 If the cache *is* still valid, your application should return a 304 status code
 and no content. This tells the cache that it's ok to return the cached response.
 
