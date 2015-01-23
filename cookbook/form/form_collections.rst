@@ -681,7 +681,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
 
             if (!$task) {
-                throw $this->createNotFoundException('No task found for is '.$id);
+                throw $this->createNotFoundException('No task found for id '.$id);
             }
 
             $originalTags = new ArrayCollection();
