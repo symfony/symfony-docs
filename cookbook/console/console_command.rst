@@ -33,8 +33,17 @@ want to extend the AppBundle to greet you from the command line, create
             $this
                 ->setName('demo:greet')
                 ->setDescription('Greet someone')
-                ->addArgument('name', InputArgument::OPTIONAL, 'Who do you want to greet?')
-                ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
+                ->addArgument(
+                    'name',
+                    InputArgument::OPTIONAL,
+                    'Who do you want to greet?'
+                )
+                ->addOption(
+                    'yell',
+                    null,
+                    InputOption::VALUE_NONE,
+                    'If set, the task will yell in uppercase letters'
+                )
             ;
         }
 
@@ -94,7 +103,9 @@ translate some contents using a console command::
         $name = $input->getArgument('name');
         $translator = $this->getContainer()->get('translator');
         if ($name) {
-            $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
+            $output->writeln(
+                $translator->trans('Hello %name%!', array('%name%' => $name))
+            );
         } else {
             $output->writeln($translator->trans('Hello!'));
         }
@@ -128,7 +139,9 @@ before translating contents::
         $translator->setLocale($locale);
 
         if ($name) {
-            $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
+            $output->writeln(
+                $translator->trans('Hello %name%!', array('%name%' => $name))
+            );
         } else {
             $output->writeln($translator->trans('Hello!'));
         }
