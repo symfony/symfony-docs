@@ -216,6 +216,13 @@ following (MySQL):
         `sess_lifetime` MEDIUMINT NOT NULL
     ) COLLATE utf8_bin, ENGINE = InnoDB;
 
+.. note::
+
+    A ``BLOB`` column type can only store up to 64 kb. If the data stored in
+    a user's session exceeds this, an exception may be thrown or their session
+    will be silently reset. Consider using a ``MEDIUMBLOB`` if you need more
+    space.
+
 PostgreSQL
 ~~~~~~~~~~
 
