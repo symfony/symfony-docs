@@ -1059,7 +1059,7 @@ one called ``stylesheets`` inside the ``head`` tag and another called ``javascri
 just above the closing ``body`` tag. These blocks will contain all of the
 stylesheets and JavaScripts that you'll need throughout your site:
 
-.. code-configuration::
+.. configuration-block::
 
     .. code-block:: html+jinja
 
@@ -1106,7 +1106,7 @@ JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
-.. code-configuration::
+.. configuration-block::
 
     .. code-block:: html+jinja
 
