@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-17T10:16:16Z
+
+@ifdattic one thing you could do is adding new commits to the same branch each time. So editing files in your `patch-30` branch now. That'll put all changes in one PR, which is a lot easier for us.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-18T08:03:15Z
+
+Yes, just this way I need to do that from my existing repository.
+Now I just can click 'edit page', change url from `2.6` to `2.3` and make the change.
+I will try next time to batch then in one branch and see how it works out.
