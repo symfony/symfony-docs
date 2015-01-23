@@ -17,6 +17,6 @@ with a ``DebugClassLoader`` wrapper.
 Using the ``DebugClassLoader`` is as easy as calling its static
 :method:`Symfony\\Component\\Debug\\DebugClassLoader::enable` method::
 
-    use Symfony\Component\ClassLoader\DebugClassLoader;
+    use Symfony\Component\Debug\DebugClassLoader;
 
     DebugClassLoader::enable();
