@@ -74,6 +74,7 @@ Now you must let the Service Container know about your newly created Twig Extens
         services:
             app.twig_extension:
                 class: AppBundle\Twig\AcmeExtension
+                public: false
                 tags:
                     - { name: twig.extension }
 
@@ -81,7 +82,10 @@ Now you must let the Service Container know about your newly created Twig Extens
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.twig_extension" class="AppBundle\Twig\AcmeExtension">
+            <service id="app.twig_extension"
+                class="AppBundle\Twig\AcmeExtension"
+                public="false">
+
                 <tag name="twig.extension" />
             </service>
         </services>
@@ -93,6 +97,7 @@ Now you must let the Service Container know about your newly created Twig Extens
 
         $container
             ->register('app.twig_extension', '\AppBundle\Twig\AcmeExtension')
+            ->setPublic(false)
             ->addTag('twig.extension');
 
 .. note::
