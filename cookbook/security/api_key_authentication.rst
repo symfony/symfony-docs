@@ -187,7 +187,7 @@ The ``$userProvider`` might look something like this::
         }
     }
 
-No register your user provider as service.
+Now register your user provider as service:
 
 .. configuration-block::
 
@@ -196,7 +196,7 @@ No register your user provider as service.
         # app/config/services.yml
         services:
             api_key_user_provider:
-                class:     AppBundle\Security\ApiKeyUserProvider
+                class: AppBundle\Security\ApiKeyUserProvider
 
     .. code-block:: xml
 
@@ -217,13 +217,10 @@ No register your user provider as service.
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-
-        $container->setDefinition('api_key_user_provider', new Definition(
-            'AppBundle\Security\ApiKeyUserProvider',
-        ));
+        $container
+            ->register('api_key_user_provider', 'AppBundle\Security\ApiKeyUserProvider');
 
 .. note::
 
@@ -400,7 +397,7 @@ using the ``simple_preauth`` key:
                 ),
             ),
             'providers' => array(
-                'simple_preauth'       => array(
+                'api_key_user_provider'       => array(
                     'id'        => 'api_key_user_provider',
                 ),
             ),
@@ -671,7 +668,7 @@ service:
         // ...
 
         $container->setDefinition('apikey_authenticator', new Definition(
-            'Acme\HelloBundle\Security\ApiKeyAuthenticator',
+            'AppBundle\Security\ApiKeyAuthenticator',
             array(
                 new Reference('api_key_user_provider'),
                 new Reference('security.http_utils')
