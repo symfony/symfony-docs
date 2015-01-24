@@ -121,7 +121,7 @@ want to be used as the locale for the given user. In order to achieve the wanted
 configuration, you can set the locale which is defined for the user to the session right
 after the login. Fortunately, you can hook into the login process and update the user's
 session before the redirect to the first page. For this you need an event listener for the
-``security.interactive_login`` event.
+``security.interactive_login`` event:
 
 .. code-block:: php
 
@@ -170,12 +170,13 @@ Then register the listener:
         services:
             app.user_locale_listener:
                 class: AppBundle\EventListener\UserLocaleListener
+                arguments: [@session]
                 tags:
                     - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -185,6 +186,8 @@ Then register the listener:
             <services>
                 <service id="app.user_locale_listener"
                     class="AppBundle\EventListener\UserLocaleListener">
+
+                    <argument type="service" id="session"/>
 
                     <tag name="kernel.event_listener"
                         event="security.interactive_login"
@@ -198,8 +201,11 @@ Then register the listener:
         // app/config/services.php
         $container
             ->register('app.user_locale_listener', 'AppBundle\EventListener\UserLocaleListener')
-            ->addTag('kernel.event_listener', array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin'))
-        ;
+            ->addArgument('session')
+            ->addTag(
+                'kernel.event_listener',
+                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin'
+            );
 
 .. caution::
 
