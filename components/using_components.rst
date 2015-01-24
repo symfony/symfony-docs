@@ -40,7 +40,7 @@ If you know you need a specific version of the library, add that to the command:
 
 .. code-block:: bash
 
-    $ composer require symfony/finder
+    $ composer require symfony/finder:2.6.2
 
 **3.** Write your code!
 
@@ -51,7 +51,8 @@ immediately::
 
     // File example: src/script.php
 
-    // update this to the path to the "vendor/" directory, relative to this file
+    // update this to the path to the "vendor/"
+    // directory, relative to this file
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\Finder\Finder;
