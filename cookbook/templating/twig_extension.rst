@@ -73,7 +73,7 @@ Now you must let the Service Container know about your newly created Twig Extens
         # app/config/services.yml
         services:
             app.twig_extension:
-                class: AppBundle\Twig\AcmeExtension
+                class: AppBundle\Twig\AppExtension
                 tags:
                     - { name: twig.extension }
 
@@ -81,7 +81,7 @@ Now you must let the Service Container know about your newly created Twig Extens
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.twig_extension" class="AppBundle\Twig\AcmeExtension">
+            <service id="app.twig_extension" class="AppBundle\Twig\AppExtension">
                 <tag name="twig.extension" />
             </service>
         </services>
@@ -92,7 +92,7 @@ Now you must let the Service Container know about your newly created Twig Extens
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
-            ->register('app.twig_extension', '\AppBundle\Twig\AcmeExtension')
+            ->register('app.twig_extension', '\AppBundle\Twig\AppExtension')
             ->addTag('twig.extension');
 
 .. note::
