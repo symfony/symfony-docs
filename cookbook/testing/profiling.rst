@@ -21,7 +21,8 @@ the ``test`` environment)::
         {
             $client = static::createClient();
 
-            // Enable the profiler for the next request (it does nothing if the profiler is not available)
+            // Enable the profiler for the next request
+            // (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
             $crawler = $client->request('GET', '/hello/Fabien');
