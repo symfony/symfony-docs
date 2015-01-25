@@ -463,8 +463,8 @@ we talk about next!).
 
 .. caution::
 
-    You have to create **both** ``addTag`` and ``removeTag`` methods, 
-    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``. 
+    You have to create **both** ``addTag`` and ``removeTag`` methods,
+    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``.
     You'll learn more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
@@ -681,7 +681,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
 
             if (!$task) {
-                throw $this->createNotFoundException('No task found for is '.$id);
+                throw $this->createNotFoundException('No task found for id '.$id);
             }
 
             $originalTags = new ArrayCollection();

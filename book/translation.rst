@@ -428,7 +428,7 @@ via the ``request`` object::
 
 .. tip::
 
-    Read :doc:`/cookbook/session/locale_sticky_session` to learn, how to store
+    Read :doc:`/cookbook/session/locale_sticky_session` to learn how to store
     the user's locale in the session.
 
 .. index::
@@ -507,6 +507,11 @@ as the locale for the current request.
 
 You can now use the locale to create routes to other translated pages
 in your application.
+
+.. tip::
+
+    Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
+    avoid hardcoding the ``_locale`` requirement in all your routes.
 
 Setting a default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~

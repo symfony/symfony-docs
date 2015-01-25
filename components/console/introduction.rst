@@ -404,7 +404,6 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progressbar`: shows a progress bar
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
-* :doc:`/components/console/helpers/questionhelper`: interactively ask the user for information
 
 .. _component-console-testing-commands:
 
