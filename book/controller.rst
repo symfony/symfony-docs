@@ -228,9 +228,9 @@ Simple, right?
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You already know that the route points to the ``HelloController::indexAction()`` method
-that lives inside ``AppBundle``. What's more interesting is the argument
-that is passed to that method::
+You already know that the route points to the
+``HelloController::indexAction()`` method that lives inside AppBundle. What's
+more interesting is the argument that is passed to that method::
 
     // src/AppBundle/Controller/HelloController.php
     // ...
@@ -771,8 +771,8 @@ object that's returned from *that* controller::
 Notice that the ``forward()`` method uses a special string representation
 of the controller (see :ref:`controller-string-syntax`). In this case, the
 target controller function will be ``SomethingController::fancyAction()``
-inside the ``AppBundle``. The array passed to the method becomes the arguments
-on the resulting controller. This same idea is used when embedding controllers
+inside the AppBundle. The array passed to the method becomes the arguments on
+the resulting controller. This same idea is used when embedding controllers
 into templates (see :ref:`templating-embedding-controller`). The target
 controller method would look something like this::
 

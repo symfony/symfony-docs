@@ -101,12 +101,12 @@ to a specific feature, including PHP classes, configuration, and even stylesheet
 and JavaScript files (see :ref:`page-creation-bundles`).
 
 Depending on the way you installed Symfony, you may already have a bundle called
-``AcmeDemoBundle``. Browse the ``src/`` directory of your project and check
+AcmeDemoBundle. Browse the ``src/`` directory of your project and check
 if there is a ``DemoBundle/`` directory inside an ``Acme/`` directory. If those
 directories already exist, skip the rest of this section and go directly to
 create the route.
 
-To create a bundle called ``AcmeDemoBundle`` (a play bundle that you'll
+To create a bundle called AcmeDemoBundle (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
 instructions (use all the default options):
 
@@ -140,8 +140,8 @@ By default, the routing configuration file in a Symfony application is
 located at ``app/config/routing.yml``. Like all configuration in Symfony,
 you can also choose to use XML or PHP out of the box to configure routes.
 
-If you look at the main routing file, you'll see that Symfony already added
-an entry when you generated the ``AcmeDemoBundle``:
+If you look at the main routing file, you'll see that Symfony already added an
+entry when you generated the AcmeDemoBundle:
 
 .. configuration-block::
 
@@ -181,9 +181,10 @@ an entry when you generated the ``AcmeDemoBundle``:
 
 This entry is pretty basic: it tells Symfony to load routing configuration
 from the ``Resources/config/routing.yml`` (``routing.xml`` or ``routing.php``
-in the XML and PHP code example respectively) file that lives inside the ``AcmeDemoBundle``.
-This means that you place routing configuration directly in ``app/config/routing.yml``
-or organize your routes throughout your application, and import them from here.
+in the XML and PHP code example respectively) file that lives inside the
+AcmeDemoBundle. This means that you place routing configuration directly in
+``app/config/routing.yml`` or organize your routes throughout your application,
+and import them from here.
 
 .. note::
 
@@ -255,7 +256,7 @@ that controller.
 The controller - ``AcmeDemoBundle:Random:index`` is the *logical* name of
 the controller, and it maps to the ``indexAction`` method of a PHP class
 called ``Acme\DemoBundle\Controller\RandomController``. Start by creating this
-file inside your ``AcmeDemoBundle``::
+file inside your AcmeDemoBundle::
 
     // src/Acme/DemoBundle/Controller/RandomController.php
     namespace Acme\DemoBundle\Controller;
@@ -388,7 +389,7 @@ location using the following convention.
 
     **/path/to/BundleName**/Resources/views/**ControllerName**/**TemplateName**
 
-In this case, ``AcmeDemoBundle`` is the bundle name, ``Random`` is the
+In this case, AcmeDemoBundle is the bundle name, ``Random`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -636,7 +637,7 @@ in your application and to optimize them the way you want.
    to the organization and best practices of :doc:`bundles </cookbook/bundles/best_practices>`.
 
 A bundle is simply a structured set of files within a directory that implement
-a single feature. You might create a ``BlogBundle``, a ``ForumBundle`` or
+a single feature. You might create a BlogBundle, a ForumBundle or
 a bundle for user management (many of these exist already as open source
 bundles). Each directory contains everything related to that feature, including
 PHP files, templates, stylesheets, JavaScripts, tests and anything else.
@@ -685,13 +686,13 @@ The Symfony Standard Edition comes with a handy task that creates a fully-functi
 bundle for you. Of course, creating a bundle by hand is pretty easy as well.
 
 To show you how simple the bundle system is, create a new bundle called
-``AcmeTestBundle`` and enable it.
+AcmeTestBundle and enable it.
 
 .. tip::
 
     The ``Acme`` portion is just a dummy name that should be replaced by
-    some "vendor" name that represents you or your organization (e.g. ``ABCTestBundle``
-    for some company named ``ABC``).
+    some "vendor" name that represents you or your organization (e.g.
+    ABCTestBundle for some company named ``ABC``).
 
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
@@ -707,9 +708,10 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions <bundles-naming-conventions>`.
-   You could also choose to shorten the name of the bundle to simply ``TestBundle``
-   by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
+   The name AcmeTestBundle follows the standard
+   :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
+   also choose to shorten the name of the bundle to simply TestBundle by naming
+   this class TestBundle (and naming the file ``TestBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
@@ -730,8 +732,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
         return $bundles;
     }
 
-And while it doesn't do anything yet, ``AcmeTestBundle`` is now ready to
-be used.
+And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
 
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton:
@@ -755,8 +756,8 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony bundles. Take a look at ``AcmeDemoBundle``, as it contains
-some of the most common elements of a bundle:
+between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
+of the most common elements of a bundle:
 
 ``Controller/``
     Contains the controllers of the bundle (e.g. ``RandomController.php``).

@@ -150,9 +150,9 @@ The following configuration code shows how you can configure two entity managers
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
-``AppBundle`` and ``AcmeStoreBundle``, while the ``customer`` entity
-manager manages entities in the ``AcmeCustomerBundle``. You've also defined
-two connections, one for each entity manager.
+AppBundle and AcmeStoreBundle, while the ``customer`` entity manager manages
+entities in the AcmeCustomerBundle. You've also defined two connections, one
+for each entity manager.
 
 .. note::
 

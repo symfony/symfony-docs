@@ -68,8 +68,10 @@ enable the ``translator`` in your configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:translator fallback="en" />
@@ -363,7 +365,8 @@ provides many loaders, including:
 * ``yml``: YAML file.
 
 The choice of which loader to use is entirely up to you and is a matter of
-taste. For more options, see :ref:`component-translator-message-catalogs`.
+taste. The recommended option is to use ``xliff`` for translations.
+For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
 
@@ -451,7 +454,7 @@ by the routing system using the special ``_locale`` parameter:
         # app/config/routing.yml
         contact:
             path:     /{_locale}/contact
-            defaults: { _controller: AcmeDemoBundle:Contact:index }
+            defaults: { _controller: AppBundle:Contact:index }
             requirements:
                 _locale: en|fr|de
 
@@ -465,7 +468,7 @@ by the routing system using the special ``_locale`` parameter:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">AcmeDemoBundle:Contact:index</default>
+                <default key="_controller">AppBundle:Contact:index</default>
                 <requirement key="_locale">en|fr|de</requirement>
             </route>
         </routes>
@@ -480,7 +483,7 @@ by the routing system using the special ``_locale`` parameter:
         $collection->add('contact', new Route(
             '/{_locale}/contact',
             array(
-                '_controller' => 'AcmeDemoBundle:Contact:index',
+                '_controller' => 'AppBundle:Contact:index',
             ),
             array(
                 '_locale'     => 'en|fr|de',
@@ -526,8 +529,10 @@ the framework:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config default-locale="en" />
         </container>
@@ -551,8 +556,8 @@ the error messages is easy: simply create a translation resource for the
 To start, suppose you've created a plain-old-PHP object that you need to
 use somewhere in your application::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
 
     class Author
     {
@@ -565,17 +570,9 @@ not empty, add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                name:
-                    - NotBlank: { message: "author.name.not_blank" }
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -586,15 +583,24 @@ not empty, add the following:
             public $name;
         }
 
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
+            properties:
+                name:
+                    - NotBlank: { message: "author.name.not_blank" }
+
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="name">
                     <constraint name="NotBlank">
                         <option name="message">author.name.not_blank</option>
@@ -605,7 +611,7 @@ not empty, add the following:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;

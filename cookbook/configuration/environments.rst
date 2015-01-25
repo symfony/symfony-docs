@@ -107,9 +107,7 @@ activated by modifying the default value in the ``dev`` configuration file:
             <import resource="config.xml" />
         </imports>
 
-        <webprofiler:config
-            toolbar="true"
-            ... />
+        <webprofiler:config toolbar="true" />
 
     .. code-block:: php
 
@@ -309,7 +307,7 @@ should also create a front controller for it. Copy the ``web/app.php`` file
 to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``::
 
     // web/app_benchmark.php
-
+    // ...
 
     // change just this line
     $kernel = new AppKernel('benchmark', false);
