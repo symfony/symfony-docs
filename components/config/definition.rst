@@ -506,7 +506,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function($v) { return array('name'=> $v); })
+                    ->then(function ($v) { return array('name' => $v); })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()
