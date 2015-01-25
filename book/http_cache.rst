@@ -856,7 +856,7 @@ If one content corresponds to one URL, the ``PURGE`` model works well.
 You send a request to the cache proxy with the HTTP method ``PURGE`` (using
 the word "PURGE" is a convention, technically this can be any string) instead
 of ``GET`` and make the cache proxy detect this and remove the data from the
-cache instead of going to Symfony to get a response.
+cache instead of going to the application to get a response.
 
 Here is how you can configure the Symfony reverse proxy to support the
 ``PURGE`` HTTP method::
@@ -877,7 +877,10 @@ Here is how you can configure the Symfony reverse proxy to support the
             }
 
             if ('127.0.0.1' !== $request->getClientIp()) {
-                return new Response('Invalid HTTP method', Response::HTTP_BAD_REQUEST);
+                return new Response(
+                    'Invalid HTTP method',
+                    Response::HTTP_BAD_REQUEST
+                );
             }
 
             $response = new Response();
@@ -987,8 +990,10 @@ First, to use ESI, be sure to enable it in your application configuration:
         <container xmlns="http://symfony.com/schema/dic/symfony"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
@@ -1115,8 +1120,10 @@ that must be enabled in your configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/framework"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- ... -->
             <framework:config>

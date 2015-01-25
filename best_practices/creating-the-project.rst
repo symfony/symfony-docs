@@ -109,26 +109,26 @@ Application Bundles
 
 When Symfony 2.0 was released, most developers naturally adopted the symfony
 1.x way of dividing applications into logical modules. That's why many Symfony
-apps use bundles to divide their code into logical features: ``UserBundle``,
-``ProductBundle``, ``InvoiceBundle``, etc.
+apps use bundles to divide their code into logical features: UserBundle,
+ProductBundle, InvoiceBundle, etc.
 
 But a bundle is *meant* to be something that can be reused as a stand-alone
-piece of software. If ``UserBundle`` cannot be used *"as is"* in other Symfony
-apps, then it shouldn't be its own bundle. Moreover ``InvoiceBundle`` depends
-on ``ProductBundle``, then there's no advantage to having two separate bundles.
+piece of software. If UserBundle cannot be used *"as is"* in other Symfony
+apps, then it shouldn't be its own bundle. Moreover InvoiceBundle depends on
+ProductBundle, then there's no advantage to having two separate bundles.
 
 .. best-practice::
 
-    Create only one bundle called ``AppBundle`` for your application logic
+    Create only one bundle called AppBundle for your application logic
 
-Implementing a single ``AppBundle`` bundle in your projects will make your code
+Implementing a single AppBundle bundle in your projects will make your code
 more concise and easier to understand. Starting in Symfony 2.6, the official
-Symfony documentation uses the ``AppBundle`` name.
+Symfony documentation uses the AppBundle name.
 
 .. note::
 
-    There is no need to prefix the ``AppBundle`` with your own vendor (e.g.
-    ``AcmeAppBundle``), because this application bundle is never going to be
+    There is no need to prefix the AppBundle with your own vendor (e.g.
+    AcmeAppBundle), because this application bundle is never going to be
     shared.
 
 All in all, this is the typical directory structure of a Symfony application
@@ -152,7 +152,7 @@ that follows these best practices:
 
 .. tip::
 
-    If your Symfony installation doesn't come with a pre-generated ``AppBundle``,
+    If your Symfony installation doesn't come with a pre-generated AppBundle,
     you can generate it by hand executing this command:
 
     .. code-block:: bash
