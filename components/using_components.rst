@@ -40,7 +40,7 @@ If you know you need a specific version of the library, add that to the command:
 
 .. code-block:: bash
 
-    $ composer require symfony/finder:2.6.2
+    $ composer require symfony/finder 2.6.2
 
 **3.** Write your code!
 
