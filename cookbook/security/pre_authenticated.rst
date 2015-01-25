@@ -71,8 +71,8 @@ in the x509 firewall configuration respectively.
     An authentication provider will only inform the user provider of the username
     that made the request. You will need to create (or use) a "user provider" that
     is referenced by the ``provider`` configuration parameter (``your_user_provider``
-    in the configuration example). This provider will turn the username into a User 
-    object of your choice. For more information on creating or configuring a user 
+    in the configuration example). This provider will turn the username into a User
+    object of your choice. For more information on creating or configuring a user
     provider, see:
 
     * :doc:`/cookbook/security/custom_provider`

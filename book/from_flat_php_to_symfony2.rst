@@ -244,7 +244,7 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You now have a setup that will allow you to reuse the layout. 
+You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
 uses a Templating component that allows this to be accomplished cleanly

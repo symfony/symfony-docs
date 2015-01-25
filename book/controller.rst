@@ -556,7 +556,7 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using ``app_dev.php`` - 
+error page is shown to the developer (i.e. when you're using ``app_dev.php`` -
 see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see the

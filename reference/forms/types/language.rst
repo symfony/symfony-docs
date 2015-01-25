@@ -8,7 +8,7 @@ The ``language`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of languages. As an added bonus, the language names
 are displayed in the language of the user.
 
-The "value" for each language is the *Unicode language identifier* used in 
+The "value" for each language is the *Unicode language identifier* used in
 the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
 
 .. note::

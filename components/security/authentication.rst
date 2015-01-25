@@ -257,7 +257,7 @@ in) is correct, you can use::
 
     // fetch the Acme\Entity\LegacyUser
     $user = ...;
-    
+
     // the submitted password, e.g. from the login form
     $plainPassword = ...;
 

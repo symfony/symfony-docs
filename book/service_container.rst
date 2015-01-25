@@ -569,7 +569,7 @@ the service container gives you a much more appealing option:
         services:
             my_mailer:
                 # ...
-            
+
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@my_mailer"]
@@ -765,7 +765,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         services:
             my_mailer:
                 # ...
-            
+
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 calls:
@@ -800,7 +800,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('my_mailer', ...);
-        
+
         $container->setDefinition('newsletter_manager', new Definition(
             'Acme\HelloBundle\Newsletter\NewsletterManager'
         ))->addMethodCall('setMailer', array(
@@ -944,7 +944,7 @@ it exists and do nothing if it doesn't:
                 <service id="my_mailer">
                 <!-- ... -->
                 </service>
-                
+
                 <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                     <argument type="service" id="my_mailer" on-invalid="ignore" />
                 </service>
@@ -959,7 +959,7 @@ it exists and do nothing if it doesn't:
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
         $container->setDefinition('my_mailer', ...);
-        
+
         $container->setDefinition('newsletter_manager', new Definition(
             'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(
