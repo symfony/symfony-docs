@@ -84,7 +84,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TagType extends AbstractType
     {
@@ -93,7 +93,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
             $builder->add('name');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Tag',
@@ -118,7 +118,7 @@ Notice that you embed a collection of ``TagType`` forms using the
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
     {
@@ -129,7 +129,7 @@ Notice that you embed a collection of ``TagType`` forms using the
             $builder->add('tags', 'collection', array('type' => new TagType()));
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
@@ -463,8 +463,8 @@ we talk about next!).
 
 .. caution::
 
-    You have to create **both** ``addTag`` and ``removeTag`` methods, 
-    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``. 
+    You have to create **both** ``addTag`` and ``removeTag`` methods,
+    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``.
     You'll learn more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
@@ -681,7 +681,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
 
             if (!$task) {
-                throw $this->createNotFoundException('No task found for is '.$id);
+                throw $this->createNotFoundException('No task found for id '.$id);
             }
 
             $originalTags = new ArrayCollection();
