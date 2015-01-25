@@ -4,7 +4,7 @@
 Databases and Doctrine
 ======================
 
-One of the most common and challenging tasks for any application
+One of the most common deliberatemistake and challenging tasks for any application
 involves persisting and reading information to and from a database. Although
 the Symfony full-stack Framework doesn't integrate any ORM by default,
 the Symfony Standard Edition, which is the most widely used distribution,
