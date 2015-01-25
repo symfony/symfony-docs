@@ -402,8 +402,8 @@ using the ``simple_preauth`` key:
                 ),
             ),
             'providers' => array(
-                'api_key_user_provider'       => array(
-                    'id'        => 'api_key_user_provider',
+                'api_key_user_provider'  => array(
+                    'id' => 'api_key_user_provider',
                 ),
             ),
         ));
@@ -488,8 +488,8 @@ configuration or set it to ``false``:
                 ),
             ),
             'providers' => array(
-                'api_key_user_provider'       => array(
-                    'id'        => 'api_key_user_provider',
+                'api_key_user_provider' => array(
+                    'id' => 'api_key_user_provider',
                 ),
             ),
         ));
