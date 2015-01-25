@@ -423,9 +423,9 @@ configuration.
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHello`` syntax resolves the directory path of the
-AcmeHelloBundle bundle. This helps you specify the path to the resource without
-worrying later if you move the AcmeHelloBundle to a different directory.
+file. The special ``@AcmeHelloBundle`` syntax resolves the directory path
+of the AcmeHelloBundle bundle. This helps you specify the path to the resource
+without worrying later if you move the AcmeHelloBundle to a different directory.
 
 .. index::
    single: Service Container; Extension configuration
