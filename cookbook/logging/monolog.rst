@@ -84,8 +84,10 @@ allows you to log the messages in several ways easily.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
                 <monolog:handler
@@ -140,7 +142,7 @@ allows you to log the messages in several ways easily.
         ));
 
 The above configuration defines a stack of handlers which will be called
-in the order where they are defined.
+in the order they are defined.
 
 .. tip::
 
@@ -185,8 +187,10 @@ easily. Your formatter must implement
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
                 <service id="my_formatter" class="Monolog\Formatter\JsonFormatter" />
@@ -301,15 +305,21 @@ using a processor.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="monolog.formatter.session_request" class="Monolog\Formatter\LineFormatter">
+                <service id="monolog.formatter.session_request"
+                    class="Monolog\Formatter\LineFormatter">
+
                     <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%&#xA;</argument>
                 </service>
 
-                <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
+                <service id="monolog.processor.session_request"
+                    class="Acme\MyBundle\SessionRequestProcessor">
+
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" />
                 </service>
@@ -330,11 +340,17 @@ using a processor.
 
         // app/config/config.php
         $container
-            ->register('monolog.formatter.session_request', 'Monolog\Formatter\LineFormatter')
+            ->register(
+                'monolog.formatter.session_request',
+                'Monolog\Formatter\LineFormatter'
+            )
             ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n');
 
         $container
-            ->register('monolog.processor.session_request', 'Acme\MyBundle\SessionRequestProcessor')
+            ->register(
+                'monolog.processor.session_request',
+                'Acme\MyBundle\SessionRequestProcessor'
+            )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord'));
 
@@ -383,10 +399,12 @@ the ``monolog.processor`` tag:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/monolog
-                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
             <services>
-                <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
+                <service id="monolog.processor.session_request"
+                    class="Acme\MyBundle\SessionRequestProcessor">
+
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" handler="main" />
                 </service>
@@ -397,7 +415,10 @@ the ``monolog.processor`` tag:
 
         // app/config/config.php
         $container
-            ->register('monolog.processor.session_request', 'Acme\MyBundle\SessionRequestProcessor')
+            ->register(
+                'monolog.processor.session_request',
+                'Acme\MyBundle\SessionRequestProcessor'
+            )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'handler' => 'main'));
 
@@ -429,10 +450,12 @@ the ``monolog.processor`` tag:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/monolog
-                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
             <services>
-                <service id="monolog.processor.session_request" class="Acme\MyBundle\SessionRequestProcessor">
+                <service id="monolog.processor.session_request"
+                    class="Acme\MyBundle\SessionRequestProcessor">
+
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" channel="main" />
                 </service>
@@ -443,7 +466,10 @@ the ``monolog.processor`` tag:
 
         // app/config/config.php
         $container
-            ->register('monolog.processor.session_request', 'Acme\MyBundle\SessionRequestProcessor')
+            ->register(
+                'monolog.processor.session_request',
+                'Acme\MyBundle\SessionRequestProcessor'
+            )
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));
 
