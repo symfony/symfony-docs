@@ -431,9 +431,11 @@ method::
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(
-                array('command' => $command->getName(), 'name' => 'Fabien', '--iterations' => 5)
-            );
+            $commandTester->execute(array(
+                'command'      => $command->getName(),
+                'name'         => 'Fabien',
+                '--iterations' => 5,
+            ));
 
             $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
         }
