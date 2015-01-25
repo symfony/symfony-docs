@@ -37,10 +37,10 @@ retrieve users from a database with custom conditions.
 The Data Model
 --------------
 
-For the purpose of this cookbook, the ``AcmeUserBundle`` bundle contains a
-``User`` entity class with the following fields: ``id``, ``username``,
-``password``, ``email`` and ``isActive``. The ``isActive`` field tells whether
-or not the user account is active.
+For the purpose of this cookbook, the AcmeUserBundle bundle contains a ``User``
+entity class with the following fields: ``id``, ``username``, ``password``,
+``email`` and ``isActive``. The ``isActive`` field tells whether or not the
+user account is active.
 
 To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the

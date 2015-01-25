@@ -79,8 +79,7 @@ examples).
 Directory Structure
 -------------------
 
-The basic directory structure of a ``HelloBundle`` bundle must read as
-follows:
+The basic directory structure of a HelloBundle must read as follows:
 
 .. code-block:: text
 

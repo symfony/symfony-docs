@@ -622,22 +622,21 @@ and so on...
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the ``EventDispatcher`` already knows the name of the event when dispatching
-it, the event name is also injected into the
-:class:`Symfony\\Component\\EventDispatcher\\Event` objects, making it available
-to event listeners via the :method:`Symfony\\Component\\EventDispatcher\\Event::getName`
-method.
+.. versionadded:: 2.4
+    Before Symfony 2.4, the event name and the event dispatcher had to be
+    requested from the ``Event`` instance. These methods are now deprecated.
 
-The event name, (as with any other data in a custom event object) can be used as
-part of the listener's processing logic::
+The ``EventDispatcher`` instance, as well as the name of the event that is
+dispatched, are passed as arguments to the listener::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
     class Foo
     {
-        public function myEventListener(Event $event)
+        public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            echo $event->getName();
+            echo $eventName;
         }
     }
 

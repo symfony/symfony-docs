@@ -568,7 +568,8 @@ narrow down your node selection by chaining the method calls::
                 return false;
             }
         })
-        ->first();
+        ->first()
+    ;
 
 .. tip::
 
@@ -735,8 +736,10 @@ configuration option:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <!-- ... -->
             <swiftmailer:config disable-delivery="true" />
@@ -799,8 +802,9 @@ machine only.
     the ``app/phpunit.xml`` file.
 
 By default, only the tests from your own custom bundles stored in the standard
-directories ``src/*/*Bundle/Tests`` or ``src/*/Bundle/*Bundle/Tests`` are run
-by the ``phpunit`` command, as configured in the ``app/phpunit.xml.dist`` file:
+directories ``src/*/*Bundle/Tests``, ``src/*/Bundle/*Bundle/Tests``,
+``src/*Bundle/Tests`` are run by the ``phpunit`` command, as configured
+in the ``app/phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
@@ -811,6 +815,7 @@ by the ``phpunit`` command, as configured in the ``app/phpunit.xml.dist`` file:
             <testsuite name="Project Test Suite">
                 <directory>../src/*/*Bundle/Tests</directory>
                 <directory>../src/*/Bundle/*Bundle/Tests</directory>
+                <directory>../src/*Bundle/Tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... -->

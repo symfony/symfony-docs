@@ -13,8 +13,8 @@ into a service.
 
 .. best-practice::
 
-    Make your controller extend the ``FrameworkBundle`` base Controller and
-    use annotations to configure routing, caching and security whenever possible.
+    Make your controller extend the FrameworkBundle base controller and use
+    annotations to configure routing, caching and security whenever possible.
 
 Coupling the controllers to the underlying framework allows you to leverage
 all of its features and increases your productivity.
