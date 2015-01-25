@@ -92,7 +92,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
     You can also include CSS Stylesheets: see :ref:`cookbook-assetic-including-css`.
 
 In this example, all of the files in the ``Resources/public/js/`` directory
-of the ``AppBundle`` will be loaded and served from a different location.
+of the AppBundle will be loaded and served from a different location.
 The actual rendered tag might simply look like:
 
 .. code-block:: html

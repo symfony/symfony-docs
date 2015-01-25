@@ -415,8 +415,8 @@ templates, each which lives in a specific location:
   template for a specific page. The three parts of the string, each separated
   by a colon (``:``), mean the following:
 
-  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
-    ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
+  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the AcmeBlogBundle
+    (e.g. ``src/Acme/BlogBundle``);
 
   * ``Blog``: (*directory*) indicates that the template lives inside the
     ``Blog`` subdirectory of ``Resources/views``;
@@ -424,18 +424,18 @@ templates, each which lives in a specific location:
   * ``index.html.twig``: (*filename*) the actual name of the file is
     ``index.html.twig``.
 
-  Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
+  Assuming that the AcmeBlogBundle lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
 * ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
-  that's specific to the ``AcmeBlogBundle``. Since the middle, "directory",
-  portion is missing (e.g. ``Blog``), the template lives at
-  ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
-  Yes, there are 2 colons in the middle of the string when the "controller"
-  subdirectory part is missing.
+  that's specific to the AcmeBlogBundle. Since the middle, "directory", portion
+  is missing (e.g. ``Blog``), the template lives at
+  ``Resources/views/layout.html.twig`` inside AcmeBlogBundle. Yes, there are 2
+  colons in the middle of the string when the "controller" subdirectory part is
+  missing.
 
 In the :ref:`overriding-bundle-templates` section, you'll find out how each
-template living inside the ``AcmeBlogBundle``, for example, can be overridden
+template living inside the AcmeBlogBundle, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
@@ -1247,10 +1247,10 @@ bundles (see `KnpBundles.com`_) for a large number of different features.
 Once you use a third-party bundle, you'll likely need to override and customize
 one or more of its templates.
 
-Suppose you've installed the imaginary open-source ``AcmeBlogBundle`` in your
+Suppose you've installed the imaginary open-source AcmeBlogBundle in your
 project. And while you're really happy with everything, you want to override
 the blog "list" page to customize the markup specifically for your application.
-By digging into the ``Blog`` controller of the ``AcmeBlogBundle``, you find the
+By digging into the ``Blog`` controller of the AcmeBlogBundle, you find the
 following::
 
     public function indexAction()
@@ -1281,7 +1281,7 @@ to create it). You're now free to customize the template.
     cache (``php app/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
-template in ``AcmeBlogBundle`` inherits from a base template called
+template in AcmeBlogBundle inherits from a base template called
 ``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony will look in
 the following two places for the template:
 

@@ -92,9 +92,9 @@ in case a specific other bundle is not registered::
         }
     }
 
-The above would be the equivalent of writing the following into the ``app/config/config.yml``
-in case ``AcmeGoodbyeBundle`` is not registered and the ``entity_manager_name`` setting
-for ``acme_hello`` is set to ``non_default``:
+The above would be the equivalent of writing the following into the
+``app/config/config.yml`` in case AcmeGoodbyeBundle is not registered and the
+``entity_manager_name`` setting for ``acme_hello`` is set to ``non_default``:
 
 .. configuration-block::
 
