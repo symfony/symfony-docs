@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-01-16T23:36:42Z
+
+I tend to agree with you
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-17T09:41:55Z
+
+:+1: (besides the two minor things I commented on)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-23T18:16:07Z
+
+@weaverryan before merging, I first want your opinion on this :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-25T21:07:24Z
+
+@WouterJ Hmm, I like your point - the literals make things stand out, which can be bad for reading. So I definitely support this! In some cases, the bundle is referring to a directory, and in that case it should still have the literals. But I noticed that you did exactly this in your PR, so nice work :).
