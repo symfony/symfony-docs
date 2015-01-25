@@ -89,11 +89,11 @@ If your valid choice list is simple, you can pass them in directly via the
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
@@ -176,11 +176,11 @@ constraint.
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
@@ -244,11 +244,11 @@ you can pass the class name and the method as an array.
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(

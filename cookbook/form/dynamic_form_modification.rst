@@ -241,7 +241,7 @@ Using an event listener, your form might look like this::
 
         public function getName()
         {
-            return 'acme_friend_message';
+            return 'friend_message';
         }
 
         public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -393,15 +393,15 @@ it with :ref:`dic-tags-form-type`.
                 class: AppBundle\Form\Type\FriendMessageFormType
                 arguments: ["@security.token_storage"]
                 tags:
-                    - { name: form.type, alias: acme_friend_message }
+                    - { name: form.type, alias: friend_message }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <services>
             <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                <argument type="service" id="security.token_storage" />
-                <tag name="form.type" alias="acme_friend_message" />
+                <argument type="service" id="security.context" />
+                <tag name="form.type" alias="friend_message" />
             </service>
         </services>
 
@@ -409,7 +409,7 @@ it with :ref:`dic-tags-form-type`.
 
         // app/config/config.php
         $definition = new Definition('AppBundle\Form\Type\FriendMessageFormType');
-        $definition->addTag('form.type', array('alias' => 'acme_friend_message'));
+        $definition->addTag('form.type', array('alias' => 'friend_message'));
         $container->setDefinition(
             'app.form.friend_message',
             $definition,
@@ -425,7 +425,7 @@ access to the form factory, you then use::
     {
         public function newAction(Request $request)
         {
-            $form = $this->get('form.factory')->create('acme_friend_message');
+            $form = $this->get('form.factory')->create('friend_message');
 
             // ...
         }
@@ -433,14 +433,14 @@ access to the form factory, you then use::
 
 If you extend the ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class, you can simply call::
 
-    $form = $this->createForm('acme_friend_message');
+    $form = $this->createForm('friend_message');
 
 You can also easily embed the form type into another form::
 
     // inside some other "form type" class
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('message', 'acme_friend_message');
+        $builder->add('message', 'friend_message');
     }
 
 .. _cookbook-form-events-submitted-data:
