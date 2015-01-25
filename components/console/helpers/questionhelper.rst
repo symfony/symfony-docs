@@ -56,8 +56,8 @@ input will ask the same question again.
     The regex defaults to ``/^y/i``.
 
     .. versionadded:: 2.7
-        The regex argument was introduced in Symfony 2.7, before only answers
-        starting with ``y`` were considered as yes.
+        The regex argument was introduced in Symfony 2.7. Before, only answers
+        starting with ``y`` were considered as "yes".
 
 Asking the User for Information
 -------------------------------
