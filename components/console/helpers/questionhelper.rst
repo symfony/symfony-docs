@@ -90,7 +90,7 @@ option is the default one.
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, until they enter a valid string
 or reach the maximum number of attempts. The default value for the maximum number
-of attempts is ``null``, which means infinite number attempts. You can define
+of attempts is ``null``, which means infinite number of attempts. You can define
 your own error message using
 :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setErrorMessage`.
 

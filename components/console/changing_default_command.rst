@@ -51,7 +51,7 @@ This will print the following to the command line:
 
 .. code-block:: text
 
-    Hello Fabien
+    Hello World
 
 .. tip::
 
