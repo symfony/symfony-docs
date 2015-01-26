@@ -11,7 +11,7 @@ can easily achieve this through configuration settings without having to
 make any changes to your application's code at all. There are two main
 choices when it comes to handling email during development: (a) disabling the
 sending of email altogether or (b) sending all email to a specific
-address.
+address (with optional exceptions).
 
 Disabling Sending
 -----------------
@@ -118,6 +118,51 @@ the replaced address, so you can still see who it would have been sent to.
     additional headers to the email with the overridden addresses in them.
     These are ``X-Swift-Cc`` and ``X-Swift-Bcc`` for the ``CC`` and ``BCC``
     addresses respectively.
+
+Sending to a Specified Address, but with exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you want to have all email sent to a specific address, instead
+of the address actually specified when sending the message (like in the above scenario),
+but you want certain email addresses not to be redirected in this way.
+This can be done by adding the ``delivery_whitelist`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        swiftmailer:
+            delivery_address: dev@example.com
+            delivery_whitelist:
+               - "/@mydomain.com$/"
+               - "/^admin@specialdomain.com$/"
+
+    .. code-block:: xml
+
+        <!-- app/config/config_dev.xml -->
+
+        <!--
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+        -->
+
+        <swiftmailer:config delivery-address="dev@example.com" />
+        <swiftmailer:delivery-whitelist>/@mydomain.com$/</swiftmailer:delivery-whitelist>
+        <swiftmailer:delivery-whitelist>/^admin@specialdomain.com$/</swiftmailer:delivery-whitelist>
+    .. code-block:: php
+
+        // app/config/config_dev.php
+        $container->loadFromExtension('swiftmailer', array(
+            'delivery_address'  => "dev@example.com",
+            'delivery_whitelist' => array(
+                '/@mydomain.com$/',
+                '/^admin@specialdomain.com$/'
+            ),
+        ));
+
+In the above example all mail will be redirected to ``dev@example.com``, exept that mail to the single
+address ``admin@specialdomain.com`` and all mail to the domain ``mydomain.com`` will be delivered as normal.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------
