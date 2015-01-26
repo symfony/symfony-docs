@@ -161,7 +161,7 @@ This can be done by adding the ``delivery_whitelist`` option:
             ),
         ));
 
-In the above example all mail will be redirected to ``dev@example.com``, exept that mail to the single
+In the above example all mail will be redirected to ``dev@example.com``, except that mail to the single
 address ``admin@specialdomain.com`` and all mail to the domain ``mydomain.com`` will be delivered as normal.
 
 Viewing from the Web Debug Toolbar
