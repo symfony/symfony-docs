@@ -379,7 +379,7 @@ The FrameworkBundle registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-The purpose of this event is to to handle tasks that should be performed after
+The purpose of this event is to handle tasks that should be performed after
 the request has been handled but that do not need to modify the response.
 Event listeners for the ``kernel.finish_request`` event are called in both
 successful and exception cases.
