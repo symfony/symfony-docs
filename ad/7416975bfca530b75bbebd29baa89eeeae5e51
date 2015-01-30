@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-28T08:22:33Z
+
+@timglabisch copied your comment from a line that was now changed:
+
+> you could also store the username in a cookie / localstorage or something else to print it. from my point of view storing user specific content in the reverse proxy can be a good idea but most time you should try to avoid it. people could think it's a good idea to mess up the cache with a Vary on the  Cookie. This issue is hard to find for newbies because most times, if they test they use the same cookie. Why not creating a advanced cookbook where we explain how to cache based on Cookies (Javascript), Cookies + Vary (Varnish), Localstorage, ....
+
+the problem is that saying to cache even when there are cookies is pretty dangerous. but stripping all cookies including the session is a really good trick to break your knees...
+
+this somewhat touches #4661 - somebody could either expand that one or add a separate receipie to the cookbook. i do not plan to do that right now (its been a while that i even worked with a html frontend and varnish, currently i am caching APIs :-) ). so what do we do? should i just drop the bit about ESI and vary on cookie? or mention it in 5 words and let people wonder how it actually can be done?
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-29T16:22:02Z
+
+my problem is that this PR suggests that using vary on the cookie header is the way to go. i would do a lot to avoid caching based on a user specific cookie, for me this is more like an antipattern that can work in some situations. Don't get me wrong, the PR provides a useable way, but i would like the reader to know that there are alternative ways to solve such problems. if the page could be cached based on a user specific cookie, most time it's not worth to be cached at all. if you're running a huge varnish cluster without stickiness you even can hurt the performance. I am :+1:  with this PR but would love to see a hint that there are a lot of caching strategies with different advantages and disadvantages.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-31T12:14:51Z
+
+i removed the part about vary on cookie as it is indeed very specific. this is now rather short and just giving some pointers and basic considerations. the rest of the question is not varnish specific and should go into #4141, #4661 and possibly some features / doc in FOSHttpCacheBundle
