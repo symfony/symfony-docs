@@ -6,6 +6,8 @@ and security credentials) and different environments (development, production).
 That's why Symfony recommends that you split the application configuration into
 three parts.
 
+.. _config-parameters.yml:
+
 Infrastructure-Related Configuration
 ------------------------------------
 
