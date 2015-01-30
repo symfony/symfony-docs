@@ -62,6 +62,17 @@ current PHP SAPI:
     You'll also learn how to change the format or redirect the output to
     wherever you want.
 
+.. tip::
+
+    In order to have the ``dump()`` function always available when running
+    any PHP code, you can install it globally on your computer:
+
+    #. Run ``composer global require symfony/var-dumper``;
+    #. Add ``auto_prepend_file = ${HOME}/.composer/vendor/autoload.php``
+       to your ``php.ini`` file;
+    #. From time to time, run ``composer global update`` to have the latest
+       bug fixes.
+
 DebugBundle and Twig Integration
 --------------------------------
 

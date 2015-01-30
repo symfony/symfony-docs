@@ -51,8 +51,8 @@ display information that the program is started::
 
     $output->writeln($debugFormatter->start(
         spl_object_hash($process),
-        'Some process description')
-    );
+        'Some process description'
+    ));
 
     $process->run();
 
@@ -68,7 +68,7 @@ You can tweak the prefix using the third argument::
         spl_object_hash($process),
         'Some process description',
         'STARTED'
-    );
+    ));
     // will output:
     //  STARTED Some process description
 

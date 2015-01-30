@@ -61,7 +61,7 @@ remember me functionality, as it will not always be appropriate. The usual
 way of doing this is to add a checkbox to the login form. By giving the checkbox
 the name ``_remember_me``, the cookie will automatically be set when the checkbox
 is checked and the user successfully logs in. So, your specific login form
-might ultimately looks like this:
+might ultimately look like this:
 
 .. configuration-block::
 

@@ -57,7 +57,10 @@ Active Core Members
   * **Christophe Coevoet** (:merger:`stof`) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
     HttpFoundation_, HttpKernel_, Serializer_, Stopwatch_, DoctrineBridge_,
-    MonologBridge_, and TwigBridge_ components.
+    MonologBridge_, and TwigBridge_ components;
+
+  * **Kévin Dunglas** (:merger:`dunglas`) can merge into the Serializer_
+    component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
