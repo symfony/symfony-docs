@@ -60,6 +60,57 @@ If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
 the port where the PHP application is running when generating absolute URLs,
 e.g. ``http://example.com:8080/my/path``.
 
+Cookies and Caching
+-------------------
+
+By default, a sane caching proxy does not cache anything when a request is sent
+with :ref:`cookies or a basic authentication header<http-cache-introduction>`.
+This is because the content of the page is supposed to depend on the cookie
+value or authentication header.
+
+If you know for sure that the backend never uses sessions or basic
+authentication, have varnish remove the corresponding header from requests to
+prevent clients from bypassing the cache. In practice, you will need sessions
+at least for some parts of the site, e.g. when using forms with
+:ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to only
+start a session when actually needed, and clear the session when it is no
+longer needed. Alternatively, you can look into :doc:`../cache/form_csrf_caching`.
+
+.. todo link "only start a session when actually needed" to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
+
+Cookies created in Javascript and used only in the frontend, e.g. when using
+Google analytics are nonetheless sent to the server. These cookies are not
+relevant for the backend and should not affect the caching decision. Configure
+your Varnish cache to `clean the cookies header`_. You want to keep the
+session cookie, if there is one, and get rid of all other cookies so that pages
+are cached if there is no active session. Unless you changed the default
+configuration of PHP, your session cookie has the name PHPSESSID:
+
+.. code-block:: varnish4
+
+    sub vcl_recv {
+        // Remove all cookies except the session ID.
+        if (req.http.Cookie) {
+            set req.http.Cookie = ";" + req.http.Cookie;
+            set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+            set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+            if (req.http.Cookie == "") {
+                // If there are no more cookies, remove the header to get page cached.
+                remove req.http.Cookie;
+            }
+        }
+    }
+
+.. tip::
+
+    If content is not different for every user, but depends on the roles of a
+    user, a solution is to separate the cache per group. This pattern is
+    implemented and explained by the FOSHttpCacheBundle_ under the name
+    `User Context`_.
+
 Ensure Consistent Caching Behaviour
 -----------------------------------
 
@@ -176,8 +227,10 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Varnish`: https://www.varnish-cache.org
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
+.. _`Clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
 .. _`default.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/default.vcl?rev=3.0
 .. _`builtin.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/builtin.vcl?rev=4.0
+.. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html
