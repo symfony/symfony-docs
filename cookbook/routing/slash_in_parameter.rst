@@ -24,6 +24,21 @@ a more permissive regex path.
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class DemoController
+        {
+            /**
+             * @Route("/hello/{name}", name="_hello", requirements={"name"=".+"})
+             */
+            public function helloAction($name)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         _hello:
@@ -59,20 +74,5 @@ a more permissive regex path.
         )));
 
         return $collection;
-
-    .. code-block:: php-annotations
-
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-        class DemoController
-        {
-            /**
-             * @Route("/hello/{name}", name="_hello", requirements={"name" = ".+"})
-             */
-            public function helloAction($name)
-            {
-                // ...
-            }
-        }
 
 That's it! Now, the ``{username}`` parameter can contain the ``/`` character.

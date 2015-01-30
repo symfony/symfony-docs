@@ -18,17 +18,17 @@ delete it by matching on GET, PUT and DELETE.
         blog_show:
             path:     /blog/{slug}
             defaults: { _controller: AppBundle:Blog:show }
-            methods:   [GET]
+            methods:  [GET]
 
         blog_update:
             path:     /blog/{slug}
             defaults: { _controller: AppBundle:Blog:update }
-            methods:   [PUT]
+            methods:  [PUT]
 
         blog_delete:
             path:     /blog/{slug}
             defaults: { _controller: AppBundle:Blog:delete }
-            methods:   [DELETE]
+            methods:  [DELETE]
 
     .. code-block:: xml
 

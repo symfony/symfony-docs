@@ -41,6 +41,24 @@ The second argument to
 is the default value to return if the user doesn't enter any input. Any other
 input will ask the same question again.
 
+.. tip::
+
+    You can customize the regex used to check if the answer means "yes" in the
+    third argument of the constructor. For instance, to allow anything that
+    starts with either ``y`` or ``j``, you would set it to::
+
+        $question = new ConfirmationQuestion(
+            'Continue with this action?',
+            false,
+            '/^(y|j)/i'
+        );
+
+    The regex defaults to ``/^y/i``.
+
+    .. versionadded:: 2.7
+        The regex argument was introduced in Symfony 2.7. Before, only answers
+        starting with ``y`` were considered as "yes".
+
 Asking the User for Information
 -------------------------------
 
@@ -90,7 +108,7 @@ option is the default one.
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, until they enter a valid string
 or reach the maximum number of attempts. The default value for the maximum number
-of attempts is ``null``, which means infinite number attempts. You can define
+of attempts is ``null``, which means infinite number of attempts. You can define
 your own error message using
 :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setErrorMessage`.
 
