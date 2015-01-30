@@ -250,8 +250,8 @@ by using the following methods:
 :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`
     Returns the list of accepted charsets ordered by descending quality.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`:
-  returns the list of accepted charsets ordered by descending quality;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getEncodings`
+    Returns the list of accepted encodings ordered by descending quality.
 
   .. versionadded:: 2.4
       The ``getEncodings()`` method was introduced in Symfony 2.4.
