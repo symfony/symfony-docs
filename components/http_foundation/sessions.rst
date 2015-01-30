@@ -194,7 +194,7 @@ store it again::
         'tokens' => array(
             'a' => 'a6c1e0b6',
             'b' => 'f4a7b1f3',
-        )
+        ),
     );
 
 So any processing of this might quickly get ugly, even simply adding a token to
