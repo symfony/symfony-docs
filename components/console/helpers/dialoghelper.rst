@@ -236,7 +236,7 @@ this set the seventh argument to ``true``::
         true // enable multiselect
     );
 
-    $selectedColors = array_map(function($c) use ($colors) {
+    $selectedColors = array_map(function ($c) use ($colors) {
         return $colors[$c];
     }, $selected);
 
