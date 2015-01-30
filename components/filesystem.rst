@@ -30,7 +30,7 @@ endpoint for filesystem operations::
     $fs = new Filesystem();
 
     try {
-        $fs->mkdir('/tmp/random/dir/' . mt_rand());
+        $fs->mkdir('/tmp/random/dir/'.mt_rand());
     } catch (IOException $e) {
         echo "An error occurred while creating your directory";
     }
@@ -51,7 +51,7 @@ mkdir
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
-On posix filesystems, directories are created with a default mode value
+On POSIX filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
     $fs->mkdir('/tmp/photos', 0700);
