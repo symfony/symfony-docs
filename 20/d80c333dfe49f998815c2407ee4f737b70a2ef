@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-25T08:25:06Z
+
+On components/console/introduction.rst line 471 isn't it bad that original `$input` variable is replaced?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-25T09:52:23Z
+
+> On components/console/introduction.rst line 471 isn't it bad that original $input variable is replaced?
+
+I'm +1 for using another variable. (`$innerInput`?)
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-26T11:03:30Z
+
+In one of my projects I'm using `$commandInput`
