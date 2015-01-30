@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-01-20T09:23:43Z
+
+The best practive says ``Don't define parameters for the classes of your services.``, so it seems weird to show an example doing the opposite
+
+---------------------------------------------------------------------------
+
+by u-voelkel at 2015-01-20T09:29:14Z
+
+Right, but the "Service: No Class Parameter" section shows an example of how it should NOT be done. At least that is what i get from the context.
+The comment in the example says: # service definition with class namespace as parameter
+Also the note: "This practice is cumbersome and completely unnecessary for your own services" suggests that the example shows how NOT to do it.
+
+The right way to do it is described in the previous section as the note: "You may have noticed that the previous service definition doesn't configure the class namespace as a parameter" indicates.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-20T09:32:52Z
+
+@u-voelkel I agree with you. I actually blindly removed this parameter in #4519 without looking at the context here.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-20T09:33:59Z
+
+the whole paragraph should be reworded actually, because this practice is not only discouraged for your own services but also for shared bundles (Symfony 2.6+ does not expose class parameters anymore for its new services, and they will all be removed in 3.0)
+
+---------------------------------------------------------------------------
+
+by u-voelkel at 2015-01-20T18:29:23Z
+
+maybe it should. to me it actually was clear. the only thing that got me tripping was the example. I understood it as a how not to do it example but could not find a difference to the correct one.
