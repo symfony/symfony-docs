@@ -656,7 +656,7 @@ Global Variables
 app
 ~~~
 
-The ``app`` variable is available everywhere and gives access tomany commonly
+The ``app`` variable is available everywhere and gives access to many commonly
 needed objects and values. It is an instance of
 :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`.
 
