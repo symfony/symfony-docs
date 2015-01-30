@@ -1,0 +1,58 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-19T09:38:59Z
+
+Looks like a very nice tip to add to the documentation! :)
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2015-01-19T09:55:18Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-01-19T10:20:34Z
+
+Thanks for the comments guys, PR updated. Ok for you?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-19T10:37:42Z
+
+I see an issue with this proposal: the composer global project can contain lots of other stuff as well, which might create issues in your project. To do it in a safe way, you should do a composer installation where you only have the var-dumper component
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-19T10:40:58Z
+
+@stof that's exactly what I was thinking. Or maybe we have to recommend to add `$HOME/.composer/vendor/symfony/var-dumper/Resources/functions/dump.php` as auto prepend file.
+
+(or create a custom auto prepend file in the PHP dir which requires this one)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-01-19T11:13:46Z
+
+@stof lets document an easy way for new comers. Advanced users that know what they do with composer will find their way. New comers won't have many "composer global" things (it's not a very common thing, or you're an advanced user).
+This just works (c)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-01-19T11:22:48Z
+
+For the reader wondering about autoloading precedence, global classes are always looked up *after* project classes. So, the project always takes precedence.
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2015-01-19T20:29:59Z
+
+Absolutely awesome, I've just installed it and it works like a charm, this is REALLY great ! :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-30T02:06:13Z
+
+@nicolas-grekas how did you know that I was wondering about autoloading precedence? :) Because of that, I like this.
+
+Thanks!
