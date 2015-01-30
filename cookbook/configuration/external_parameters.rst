@@ -98,14 +98,6 @@ You can now reference these parameters wherever you need them.
             )
         ));
 
-.. note::
-
-    Even in debug mode, setting or changing an environment variable
-    requires your cache to be cleared to make the parameter available.
-    In debug mode, this is required since only a change to a configuration
-    file that is loaded by Symfony triggers your configuration to be
-    re-evaluated.
-
 Constants
 ---------
 
