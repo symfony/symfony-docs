@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-29T08:01:13Z
+
+components/form/introduction.rst
+
+Lines:
+    167
+    247
+    298
+
+I would like to suggest to avoid changing composer.json file and rather change the examples with a composer cli commands
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-31T11:13:52Z
+
+> I would like to suggest to avoid changing composer.json file and rather change the examples with a composer cli commands
+
+:+1:
