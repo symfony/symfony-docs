@@ -37,12 +37,19 @@ For more information take a look at
 The Voter Interface
 -------------------
 
-A custom voter must implement
+A custom voter needs to implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
-and an :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`
-class is provided with following structure:
+or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`,
+which makes creating a voter even easier.
 
-.. include:: /cookbook/security/abstract_voter.rst.inc
+.. code-block:: php
+
+    abstract class AbstractVoter implements VoterInterface
+    {
+        abstract protected function getSupportedClasses();
+        abstract protected function getSupportedAttributes();
+        abstract protected function isGranted($attribute, $object, $user = null);
+    }
 
 In this example, the voter will check if the user has access to a specific
 object according to your custom conditions (e.g. they must be the owner of
@@ -105,6 +112,22 @@ edit a particular object. Here's an example implementation:
 
 That's it! The voter is done. The next step is to inject the voter into
 the security layer.
+
+To recap, here's what's expected from the three abstract methods:
+
+The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
+method tells Symfony that your voter should be called whenever an object of one of the given classes
+is passed to `isGranted`  For example, if you return ['\Acme\DemoBundle\Model\Product'],
+Symfony will call your voter when a `Product` object is passed to `isGranted`.
+
+The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedAttributes`
+method tells Symfony that your voter should be called whenever one of these strings is passes as the
+first argument to `isGranted`. For example, if you return `array('CREATE', 'READ')`, then
+Symfony will call your voter when one of these is passed to `isGranted`.
+
+The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::isGranted`
+method must implement the business logic that verifies whether or not a given
+user is allowed access to a given attribute on a given object. This method must return a boolean.
 
 Declaring the Voter as a Service
 --------------------------------
