@@ -21,10 +21,14 @@ The basic functionality covering common use cases is provided
 and developer is expected to implement the abstract methods.
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
-method is used to provide an array of supported classes, i.e. ['\Acme\DemoBundle\Model\Product']
+method tells Symfony that your voter should be called whenever an object of one of the given classes
+is passed to `isGranted`  For example, if you return ['\Acme\DemoBundle\Model\Product'],
+Symfony will call your voter when a `Product` object is passed to `isGranted`.
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedAttributes`
-method is used to provide an array of supported attributes, i.e. ['CREATE', 'READ']
+method tells Symfony that your voter should be called whenever one of these strings is passes as the
+first argument to `isGranted`. For example, if you return `array('CREATE', 'READ')`, then
+Symfony will call your voter when one of these is passed to `isGranted`.
 
 The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::isGranted`
 method must implement the business logic that verifies whether or not a given
