@@ -122,9 +122,10 @@ the replaced address, so you can still see who it would have been sent to.
 Sending to a Specified Address, but with exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you want to have all email sent to a specific address, instead
-of the address actually specified when sending the message (like in the above scenario),
-but you want certain email addresses not to be redirected in this way.
+Suppose you normally in your dev environment want to have all email redirected to a specific address,
+(like in the above scenario to ``dev@example,com``).
+But then you may want email sent to some specific email addresses to go through after all,
+and not be redirected (even if it is in the dev environment).
 This can be done by adding the ``delivery_whitelist`` option:
 
 .. configuration-block::
@@ -135,7 +136,12 @@ This can be done by adding the ``delivery_whitelist`` option:
         swiftmailer:
             delivery_address: dev@example.com
             delivery_whitelist:
+               # all email addresses matching this regex will *not* be
+               # redirected to dev@example.com
                - "/@mydomain.com$/"
+
+               # all emails sent to admin@specialdomain.com won't
+               # be redirected to dev@example.com too
                - "/^admin@specialdomain.com$/"
 
     .. code-block:: xml
