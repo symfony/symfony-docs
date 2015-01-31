@@ -297,7 +297,7 @@ code, and an array of HTTP headers::
         array('content-type' => 'text/html')
     );
 
-These information can also be manipulated after the Response object creation::
+This information can also be manipulated after the Response object creation::
 
     $response->setContent('Hello World');
 
