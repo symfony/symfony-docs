@@ -61,7 +61,7 @@ if you want to know a bundle name, you can add this to your command::
 The user will be asked "Please enter the name of the bundle". They can type
 some name which will be returned by the
 :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::ask` method.
-If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
+If they leave it empty, the default value (AcmeDemoBundle here) is returned.
 
 Autocompletion
 ~~~~~~~~~~~~~~
@@ -230,7 +230,7 @@ this set the seventh argument to ``true``::
         true // enable multiselect
     );
 
-    $selectedColors = array_map(function($c) use ($colors) {
+    $selectedColors = array_map(function ($c) use ($colors) {
         return $colors[$c];
     }, $selected);
 
@@ -247,18 +247,23 @@ Testing a Command which Expects Input
 If you want to write a unit test for a command which expects some kind of input
 from the command line, you need to overwrite the HelperSet used by the command::
 
+    use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Helper\DialogHelper;
     use Symfony\Component\Console\Helper\HelperSet;
+    use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
     public function testExecute()
     {
         // ...
+        $application = new Application();
+        $application->add(new MyCommand());
+        $command = $application->find('my:command:name');
         $commandTester = new CommandTester($command);
 
         $dialog = $command->getHelper('dialog');
         $dialog->setInputStream($this->getInputStream("Test\n"));
-        // Equals to a user inputing "Test" and hitting ENTER
+        // Equals to a user inputting "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
         $commandTester->execute(array('command' => $command->getName()));
@@ -279,3 +284,8 @@ By setting the input stream of the ``DialogHelper``, you imitate what the
 console would do internally with all user input through the cli. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
+
+.. seealso::
+
+    You find more information about testing commands in the console component
+    docs about :ref:`testing console commands <component-console-testing-commands>`.

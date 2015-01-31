@@ -14,8 +14,8 @@ you will create a service that will act as an Exception Listener, allowing
 you to modify how exceptions are shown by your application. The ``KernelEvents::EXCEPTION``
 event is just one of the core kernel events::
 
-    // src/Acme/DemoBundle/EventListener/AcmeExceptionListener.php
-    namespace Acme\DemoBundle\EventListener;
+    // src/AppBundle/EventListener/AcmeExceptionListener.php
+    namespace AppBundle\EventListener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -51,14 +51,17 @@ event is just one of the core kernel events::
         }
     }
 
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
-
 .. tip::
 
     Each event receives a slightly different type of ``$event`` object. For
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
     To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
+
+.. note::
+
+    When setting a response for the ``kernel.request``, ``kernel.view`` or
+    ``kernel.exception`` events, the propagation is stopped, so the lower
+    priority listeners on that event don't get called.
 
 Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
@@ -68,25 +71,25 @@ using a special "tag":
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             kernel.listener.your_listener_name:
-                class: Acme\DemoBundle\EventListener\AcmeExceptionListener
+                class: AppBundle\EventListener\AcmeExceptionListener
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
-        <service id="kernel.listener.your_listener_name" class="Acme\DemoBundle\EventListener\AcmeExceptionListener">
+        <!-- app/config/services.xml -->
+        <service id="kernel.listener.your_listener_name" class="AppBundle\EventListener\AcmeExceptionListener">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
         </service>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         $container
-            ->register('kernel.listener.your_listener_name', 'Acme\DemoBundle\EventListener\AcmeExceptionListener')
+            ->register('kernel.listener.your_listener_name', 'AppBundle\EventListener\AcmeExceptionListener')
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
         ;
 
@@ -100,17 +103,13 @@ using a special "tag":
 Request Events, Checking Types
 ------------------------------
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 A single page can make several requests (one master request, and then multiple
 sub-requests), which is why when working with the ``KernelEvents::REQUEST``
 event, you might need to check the type of the request. This can be easily
 done as follow::
 
-    // src/Acme/DemoBundle/EventListener/AcmeRequestListener.php
-    namespace Acme\DemoBundle\EventListener;
+    // src/AppBundle/EventListener/AcmeRequestListener.php
+    namespace AppBundle\EventListener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\HttpKernel;
@@ -133,3 +132,23 @@ done as follow::
     Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
     interface: ``HttpKernelInterface::MASTER_REQUEST`` and
     ``HttpKernelInterface::SUB_REQUEST``.
+
+Debugging Event Listeners
+-------------------------
+
+.. versionadded:: 2.6
+    The ``debug:event-dispatcher`` command was introduced in Symfony 2.6.
+
+You can find out what listeners are registered in the event dispatcher
+using the console. To show all events and their listeners, run:
+
+.. code-block:: bash
+
+    $ php app/console debug:event-dispatcher
+
+You can get registered listeners for a particular event by specifying
+its name:
+
+.. code-block:: bash
+
+    $ php app/console debug:event-dispatcher kernel.exception

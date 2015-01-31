@@ -226,7 +226,7 @@ Pluralization
 -------------
 
 Message pluralization is a tough topic as the rules can be quite complex. For
-instance, here is the mathematic representation of the Russian pluralization
+instance, here is the mathematical representation of the Russian pluralization
 rules::
 
     (($number % 10 == 1) && ($number % 100 != 11))
@@ -371,3 +371,24 @@ use for translation::
 
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
+
+Retrieving the Message Catalogue
+--------------------------------
+
+In case you want to use the same translation catalogue outside your application
+(e.g. use translation on the client side), it's possible to fetch raw translation
+messages. Just specify the required locale::
+
+    $messages = $translator->getMessages('fr_FR');
+
+The ``$messages`` variable will have the following structure::
+
+    array(
+        'messages' => array(
+            'Hello world' => 'Bonjour tout le monde',
+        ),
+        'validators' => array(
+            'Value should not be empty' => 'Valeur ne doit pas être vide',
+            'Value is too long' => 'Valeur est trop long',
+        ),
+    );

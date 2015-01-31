@@ -22,6 +22,7 @@
 /cookbook/console/generating_urls /cookbook/console/sending_emails
 /components/yaml /components/yaml/introduction
 /components/templating /components/templating/introduction
+/components/filesystem /components/filesystem/introduction
 /cmf/reference/configuration/block /cmf/bundles/block/configuration
 /cmf/reference/configuration/content /cmf/bundles/content/configuration
 /cmf/reference/configuration/core /cmf/bundles/core/configuration

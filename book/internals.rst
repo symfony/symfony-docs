@@ -208,26 +208,22 @@ processing must only occur on the master request).
 Events
 ~~~~~~
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
-  or ``HttpKernelInterface::SUB_REQUEST``);
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
+    Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` or
+    ``HttpKernelInterface::SUB_REQUEST``).
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-  - checks if it is a master request;
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+    Checks if it is a master request.
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
-  - returns the Kernel handling the request;
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
+    Returns the Kernel handling the request.
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
-  - returns the current ``Request`` being handled.
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
+    Returns the current ``Request`` being handled.
 
 ``isMasterRequest()``
 .....................
@@ -354,18 +350,18 @@ The purpose of this event is to allow other systems to modify or replace the
 
 The FrameworkBundle registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`:
-  collects data for the current request;
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`
+    Collects data for the current request.
 
-* :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`:
-  injects the Web Debug Toolbar;
+:class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`
+    Injects the Web Debug Toolbar.
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`: fixes the
-  Response ``Content-Type`` based on the request format;
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`
+    Fixes the Response ``Content-Type`` based on the request format.
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`: adds a
-  ``Surrogate-Control`` HTTP header when the Response needs to be parsed for
-  ESI tags.
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`
+    Adds a ``Surrogate-Control`` HTTP header when the Response needs to be parsed
+    for ESI tags.
 
 .. seealso::
 
@@ -379,7 +375,7 @@ The FrameworkBundle registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-The purpose of this event is to to handle tasks that should be performed after
+The purpose of this event is to handle tasks that should be performed after
 the request has been handled but that do not need to modify the response.
 Event listeners for the ``kernel.finish_request`` event are called in both
 successful and exception cases.
@@ -555,7 +551,8 @@ method to access tokens based on some criteria::
     $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, '', '');
 
     // get the latest 10 tokens for requests that happened between 2 and 4 days ago
-    $tokens = $container->get('profiler')->find('', '', 10, '4 days ago', '2 days ago');
+    $tokens = $container->get('profiler')
+        ->find('', '', 10, '4 days ago', '2 days ago');
 
 If you want to manipulate profiling data on a different machine than the one
 where the information were generated, use the
@@ -599,9 +596,12 @@ the configuration for the development environment:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/webprofiler
+                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- load the profiler -->
             <framework:config>
@@ -661,7 +661,9 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
         use Symfony\Component\Routing\RouteCollection;
 
-        $profiler = $loader->import('@WebProfilerBundle/Resources/config/routing/profiler.xml');
+        $profiler = $loader->import(
+            '@WebProfilerBundle/Resources/config/routing/profiler.xml'
+        );
         $profiler->addPrefix('/_profiler');
 
         $collection = new RouteCollection();

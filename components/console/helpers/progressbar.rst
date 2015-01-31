@@ -4,10 +4,6 @@
 Progress Bar
 ============
 
-.. versionadded:: 2.5
-    The Progress Bar feature was introduced in Symfony 2.5 as a replacement for
-    the :doc:`Progress Helper </components/console/helpers/progresshelper>`.
-
 When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
@@ -42,12 +38,23 @@ number of units, and advance the progress as the command executes::
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
-:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setCurrent` method.
+:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
+
+.. versionadded:: 2.6
+    The ``setProgress()`` method was called ``setCurrent()`` prior to Symfony 2.6.
 
 .. caution::
 
-    The progress bar only works if your platform supports ANSI codes; on other
-    platforms, no output is generated.
+    Prior to version 2.6, the progress bar only works if your platform
+    supports ANSI codes; on other platforms, no output is generated.
+
+.. versionadded:: 2.6
+    If your platform doesn't support ANSI codes, updates to the progress
+    bar are added as new lines. To prevent the output from being flooded,
+    adjust the
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
+    accordingly. By default, when using a ``max``, the redraw frequency
+    is set to *10%* of your ``max``.
 
 If you don't know the number of steps in advance, just omit the steps argument
 when creating the :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
@@ -292,9 +299,12 @@ that displays the number of remaining steps::
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
         function (ProgressBar $bar, OutputInterface $output) {
-            return $bar->getMaxSteps() - $bar->getStep();
+            return $bar->getMaxSteps() - $bar->getProgress();
         }
     );
+
+.. versionadded:: 2.6
+    The ``getProgress()`` method was called ``getStep()`` prior to Symfony 2.6.
 
 Custom Messages
 ~~~~~~~~~~~~~~~

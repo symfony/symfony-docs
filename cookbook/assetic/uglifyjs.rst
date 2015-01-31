@@ -133,7 +133,7 @@ can configure its location using the ``node`` key:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <assetic:config 
+        <assetic:config
             node="/usr/bin/nodejs" >
             <assetic:filter
                 name="uglifyjs2"
@@ -161,24 +161,24 @@ your assets are a part of the view layer, this work is done in your templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='uglifyjs2' %}
+        {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*'),
+            array('@AppBundle/Resources/public/js/*'),
             array('uglifyj2s')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
-    The above example assumes that you have a bundle called ``AcmeFooBundle``
-    and your JavaScript files are in the ``Resources/public/js`` directory under
-    your bundle. This isn't important however - you can include your JavaScript
+    The above example assumes that you have a bundle called AppBundle and your
+    JavaScript files are in the ``Resources/public/js`` directory under your
+    bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
 
 With the addition of the ``uglifyjs2`` filter to the asset tags above, you
@@ -197,18 +197,18 @@ apply this filter when debug mode is off (e.g. ``app.php``):
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='?uglifyjs2' %}
+        {% javascripts '@AppBundle/Resources/public/js/*' filter='?uglifyjs2' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*'),
+            array('@AppBundle/Resources/public/js/*'),
             array('?uglifyjs2')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 To try this out, switch to your ``prod`` environment (``app.php``). But before
 you do, don't forget to :ref:`clear your cache <book-page-creation-prod-cache-clear>`
@@ -272,19 +272,19 @@ helper:
 
     .. code-block:: html+jinja
 
-        {% stylesheets 'bundles/AcmeFoo/css/*' filter='uglifycss' filter='cssrewrite' %}
+        {% stylesheets 'bundles/App/css/*' filter='uglifycss' filter='cssrewrite' %}
              <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->stylesheets(
-            array('bundles/AcmeFoo/css/*'),
+            array('bundles/App/css/*'),
             array('uglifycss'),
             array('cssrewrite')
         ) as $url): ?>
             <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Just like with the ``uglifyjs2`` filter, if you prefix the filter name with
 ``?`` (i.e. ``?uglifycss``), the minification will only happen when you're

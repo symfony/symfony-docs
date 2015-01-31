@@ -113,8 +113,9 @@ You can also use transformers without creating a new custom form type
 by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
 `Model and View Transformers`_) on any field builder::
 
-    use Symfony\Component\Form\FormBuilderInterface;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
     {
@@ -133,7 +134,7 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
             );
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver
                 ->setDefaults(array(
@@ -254,7 +255,7 @@ First, create the custom field type class::
     use Symfony\Component\Form\FormBuilderInterface;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class IssueSelectorType extends AbstractType
     {
@@ -277,7 +278,7 @@ First, create the custom field type class::
             $builder->addModelTransformer($transformer);
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',

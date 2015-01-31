@@ -68,8 +68,10 @@ enable the ``translator`` in your configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:translator fallback="en" />
@@ -363,7 +365,8 @@ provides many loaders, including:
 * ``yml``: YAML file.
 
 The choice of which loader to use is entirely up to you and is a matter of
-taste. For more options, see :ref:`component-translator-message-catalogs`.
+taste. The recommended option is to use ``xliff`` for translations.
+For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
 
@@ -389,16 +392,25 @@ Fallback Translation Locales
 
 Imagine that the user's locale is ``fr_FR`` and that you're translating the
 key ``Symfony is great``. To find the French translation, Symfony actually
-checks translation resources for several different locales:
+checks translation resources for several locales:
 
-1. First, Symfony looks for the translation in a ``fr_FR`` translation resource
+#. First, Symfony looks for the translation in a ``fr_FR`` translation resource
    (e.g. ``messages.fr_FR.xliff``);
 
-2. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
+#. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
    resource (e.g. ``messages.fr.xliff``);
 
-3. If the translation still isn't found, Symfony uses the ``fallback`` configuration
+#. If the translation still isn't found, Symfony uses the ``fallback`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
+
+.. versionadded:: 2.6
+    The ability to log missing translations was introduced in Symfony 2.6.
+
+.. note::
+
+    When Symfony doesn't find a translation in the given locale, it will
+    add the missing translation to the log file. For details,
+    see :ref:`reference-framework-translator-logging`.
 
 .. _book-translation-user-locale:
 
@@ -419,7 +431,7 @@ via the ``request`` object::
 
 .. tip::
 
-    Read :doc:`/cookbook/session/locale_sticky_session` to learn, how to store
+    Read :doc:`/cookbook/session/locale_sticky_session` to learn how to store
     the user's locale in the session.
 
 .. index::
@@ -434,7 +446,7 @@ The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Since you can store the locale of the user in the session, it may be tempting
-to use the same URL to display a resource in many different languages based
+to use the same URL to display a resource in different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
 this violates a fundamental rule of the Web: that a particular URL returns
@@ -451,7 +463,7 @@ by the routing system using the special ``_locale`` parameter:
         # app/config/routing.yml
         contact:
             path:     /{_locale}/contact
-            defaults: { _controller: AcmeDemoBundle:Contact:index }
+            defaults: { _controller: AppBundle:Contact:index }
             requirements:
                 _locale: en|fr|de
 
@@ -465,7 +477,7 @@ by the routing system using the special ``_locale`` parameter:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">AcmeDemoBundle:Contact:index</default>
+                <default key="_controller">AppBundle:Contact:index</default>
                 <requirement key="_locale">en|fr|de</requirement>
             </route>
         </routes>
@@ -480,7 +492,7 @@ by the routing system using the special ``_locale`` parameter:
         $collection->add('contact', new Route(
             '/{_locale}/contact',
             array(
-                '_controller' => 'AcmeDemoBundle:Contact:index',
+                '_controller' => 'AppBundle:Contact:index',
             ),
             array(
                 '_locale'     => 'en|fr|de',
@@ -498,6 +510,11 @@ as the locale for the current request.
 
 You can now use the locale to create routes to other translated pages
 in your application.
+
+.. tip::
+
+    Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
+    avoid hardcoding the ``_locale`` requirement in all your routes.
 
 Setting a default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -521,8 +538,10 @@ the framework:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config default-locale="en" />
         </container>
@@ -546,8 +565,8 @@ the error messages is easy: simply create a translation resource for the
 To start, suppose you've created a plain-old-PHP object that you need to
 use somewhere in your application::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
 
     class Author
     {
@@ -560,17 +579,9 @@ not empty, add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                name:
-                    - NotBlank: { message: "author.name.not_blank" }
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -581,15 +592,24 @@ not empty, add the following:
             public $name;
         }
 
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Author:
+            properties:
+                name:
+                    - NotBlank: { message: "author.name.not_blank" }
+
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="AppBundle\Entity\Author">
                 <property name="name">
                     <constraint name="NotBlank">
                         <option name="message">author.name.not_blank</option>
@@ -600,7 +620,7 @@ not empty, add the following:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
+        // src/AppBundle/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -655,14 +675,11 @@ Translating Database Content
 ----------------------------
 
 The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_ or the `Translatable Behavior`_ (PHP 5.4+).
-For more information, see the documentation for these libraries.
+the `Translatable Extension`_ or the `Translatable Behavior`_. For more information,
+see the documentation for these libraries.
 
 Debugging Translations
 ----------------------
-
-.. versionadded:: 2.5
-    The ``debug:translation`` command was introduced in Symfony 2.5.
 
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``translation:debug``.
@@ -695,7 +712,7 @@ It will also detect the following translator usages in PHP templates:
 
     $view['translator']->trans("Symfony2 is great");
 
-    $view['translator']->trans('Symfony2 is great');
+    $view['translator']->transChoice('Symfony2 is great', 1);
 
 .. caution::
 
@@ -730,17 +747,18 @@ And suppose you've already setup some translations for the ``fr`` locale inside 
             </file>
         </xliff>
 
+
+    .. code-block:: yaml
+
+        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
+        Symfony2 is great: J'aime Symfony2
+
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
         );
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
-        Symfony2 is great: J'aime Symfony2
 
 and for the ``en`` locale:
 
@@ -761,17 +779,17 @@ and for the ``en`` locale:
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
+        Symfony2 is great: Symfony2 is great
+
     .. code-block:: php
 
         // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
         return array(
             'Symfony2 is great' => 'Symfony2 is great',
         );
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
-        Symfony2 is great: Symfony2 is great
 
 To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 

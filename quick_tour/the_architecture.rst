@@ -13,17 +13,21 @@ Understanding the Directory Structure
 The directory structure of a Symfony :term:`application` is rather flexible,
 but the recommended structure is as follows:
 
-* ``app/``:    the application configuration;
-* ``src/``:    the project's PHP code;
-* ``vendor/``: the third-party dependencies;
-* ``web/``:    the web root directory.
+``app/``
+    The application configuration, templates and translations.
+``src/``
+    The project's PHP code.
+``vendor/``
+    The third-party dependencies.
+``web/``
+    The web root directory.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where each :term:`front controller`
-lives::
+lives, such as the production controller shown here::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
@@ -33,7 +37,9 @@ lives::
 
     $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
-    $kernel->handle(Request::createFromGlobals())->send();
+    $request = Request::createFromGlobals();
+    $response = $kernel->handle($request);
+    $response->send();
 
 The controller first bootstraps the application using a kernel class (``AppKernel``
 in this case). Then, it creates the ``Request`` object using the PHP's global
@@ -50,11 +56,11 @@ configuration and as such, it is stored in the ``app/`` directory.
 
 This class must implement two methods:
 
-* ``registerBundles()`` must return an array of all bundles needed to run the
-  application;
-
-* ``registerContainerConfiguration()`` loads the application configuration
-  (more on this later).
+``registerBundles()``
+    Must return an array of all bundles needed to run the application, as explained
+    in the next section.
+``registerContainerConfiguration()``
+    Loads the application configuration (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
 can use any PHP class without doing anything at all! All dependencies
@@ -73,18 +79,27 @@ A bundle is kind of like a plugin in other software. So why is it called a
 Symfony, from the core framework features to the code you write for your
 application.
 
+All the code you write for your application is organized in bundles. In Symfony
+speak, a bundle is a structured set of files (PHP files, stylesheets, JavaScripts,
+images, ...) that implements a single feature (a blog, a forum, ...) and which
+can be easily shared with other developers.
+
 Bundles are first-class citizens in Symfony. This gives you the flexibility
 to use pre-built features packaged in third-party bundles or to distribute your
 own bundles. It makes it easy to pick and choose which features to enable in
 your application and optimize them the way you want. And at the end of the day,
 your application code is just as *important* as the core framework itself.
 
+Symfony already includes an AppBundle that you may use to start developing your
+application. Then, if you need to split the application into reusable
+components, you can create your own bundles.
+
 Registering a Bundle
 ~~~~~~~~~~~~~~~~~~~~
 
 An application is made up of bundles as defined in the ``registerBundles()``
 method of the ``AppKernel`` class. Each bundle is a directory that contains
-a single ``Bundle`` class that describes it::
+a single Bundle class that describes it::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -98,10 +113,10 @@ a single ``Bundle`` class that describes it::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new AppBundle\AppBundle();
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
@@ -110,16 +125,15 @@ a single ``Bundle`` class that describes it::
         return $bundles;
     }
 
-In addition to the AcmeDemoBundle that was already talked about, notice
-that the kernel also enables other bundles such as the FrameworkBundle,
-DoctrineBundle, SwiftmailerBundle and AsseticBundle bundle. They are all part
-of the core framework.
+In addition to the AppBundle that was already talked about, notice that the
+kernel also enables other bundles that are part of Symfony, such as FrameworkBundle,
+DoctrineBundle, SwiftmailerBundle and AsseticBundle.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
 
 Each bundle can be customized via configuration files written in YAML, XML, or
-PHP. Have a look at the default Symfony configuration:
+PHP. Have a look at this sample of the default Symfony configuration:
 
 .. code-block:: yaml
 
@@ -127,6 +141,7 @@ PHP. Have a look at the default Symfony configuration:
     imports:
         - { resource: parameters.yml }
         - { resource: security.yml }
+        - { resource: services.yml }
 
     framework:
         #esi:             ~
@@ -138,7 +153,7 @@ PHP. Have a look at the default Symfony configuration:
         form:            true
         csrf_protection: true
         validation:      { enable_annotations: true }
-        templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+        templating:      { engines: ['twig'] }
         default_locale:  "%locale%"
         trusted_proxies: ~
         session:         ~
@@ -148,34 +163,6 @@ PHP. Have a look at the default Symfony configuration:
         debug:            "%kernel.debug%"
         strict_variables: "%kernel.debug%"
 
-    # Assetic Configuration
-    assetic:
-        debug:          "%kernel.debug%"
-        use_controller: false
-        bundles:        [ ]
-        #java: /usr/bin/java
-        filters:
-            cssrewrite: ~
-            #closure:
-            #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
-            #yui_css:
-            #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
-
-    # Doctrine Configuration
-    doctrine:
-        dbal:
-            driver:   "%database_driver%"
-            host:     "%database_host%"
-            port:     "%database_port%"
-            dbname:   "%database_name%"
-            user:     "%database_user%"
-            password: "%database_password%"
-            charset:  UTF8
-
-        orm:
-            auto_generate_proxy_classes: "%kernel.debug%"
-            auto_mapping: true
-
     # Swift Mailer Configuration
     swiftmailer:
         transport: "%mailer_transport%"
@@ -184,9 +171,11 @@ PHP. Have a look at the default Symfony configuration:
         password:  "%mailer_password%"
         spool:     { type: memory }
 
-Each first level entry like ``framework``, ``twig`` or ``doctrine`` defines the
-configuration for a specific bundle. For example, ``framework`` configures the
-FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
+    # ...
+
+Each first level entry like ``framework``, ``twig`` and ``swiftmailer`` defines
+the configuration for a specific bundle. For example, ``framework`` configures
+the FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file. For example, the ``dev`` environment loads the
@@ -207,18 +196,7 @@ and then modifies it to add some debugging tools:
         toolbar: true
         intercept_redirects: false
 
-    monolog:
-        handlers:
-            main:
-                type:  stream
-                path:  "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
-            firephp:
-                type:  firephp
-                level: info
-
-    assetic:
-        use_controller: true
+    # ...
 
 Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
@@ -226,8 +204,6 @@ Extending a Bundle
 In addition to being a nice way to organize and configure your code, a bundle
 can extend another bundle. Bundle inheritance allows you to override any existing
 bundle in order to customize its controllers, templates, or any of its files.
-This is where the logical names (e.g. ``@AcmeDemoBundle/Controller/SecuredController.php``)
-come in handy: they abstract where the resource is actually stored.
 
 Logical File Names
 ..................
@@ -235,36 +211,27 @@ Logical File Names
 When you want to reference a file from a bundle, use this notation:
 ``@BUNDLE_NAME/path/to/file``; Symfony will resolve ``@BUNDLE_NAME``
 to the real path to the bundle. For instance, the logical path
-``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
-``src/Acme/DemoBundle/Controller/DemoController.php``, because Symfony knows
-the location of the AcmeDemoBundle.
+``@AppBundle/Controller/DefaultController.php`` would be converted to
+``src/AppBundle/Controller/DefaultController.php``, because Symfony knows
+the location of the AppBundle.
 
 Logical Controller Names
 ........................
 
-For controllers, you need to reference method names using the format
+For controllers, you need to reference actions using the format
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AcmeDemoBundle:Welcome:index`` maps to the ``indexAction`` method from the
-``Acme\DemoBundle\Controller\WelcomeController`` class.
-
-Logical Template Names
-......................
-
-For templates, the logical name ``AcmeDemoBundle:Welcome:index.html.twig`` is
-converted to the file path ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
-Templates become even more interesting when you realize they don't need to be
-stored on the filesystem. You can easily store them in a database table for
-instance.
+``AppBundle:Default:index`` maps to the ``indexAction`` method from the
+``AppBundle\Controller\DefaultController`` class.
 
 Extending Bundles
 .................
 
-If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
-to "override" files, controllers or templates. For example, you can create
-a bundle - AcmeNewBundle - and specify that it overrides AcmeDemoBundle.
-When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
-first look for the ``WelcomeController`` class in AcmeNewBundle and, if
-it doesn't exist, then look inside AcmeDemoBundle. This means that one bundle
+If you follow these conventions, then you can use :doc:`bundle inheritance </cookbook/bundles/inheritance>`
+to override files, controllers or templates. For example, you can create
+a bundle - NewBundle - and specify that it overrides AppBundle.
+When Symfony loads the ``AppBundle:Default:index`` controller, it will
+first look for the ``DefaultController`` class in NewBundle and, if
+it doesn't exist, then look inside AppBundle. This means that one bundle
 can override almost any part of another bundle!
 
 Do you understand now why Symfony is so flexible? Share your bundles between
@@ -276,22 +243,28 @@ Using Vendors
 -------------
 
 Odds are that your application will depend on third-party libraries. Those
-should be stored in the ``vendor/`` directory. This directory already contains
-the Symfony libraries, the SwiftMailer library, the Doctrine ORM, the Twig
-templating system, and some other third party libraries and bundles.
+should be stored in the ``vendor/`` directory. You should never touch anything
+in this directory, because it is exclusively managed by Composer. This directory
+already contains the Symfony libraries, the SwiftMailer library, the Doctrine ORM,
+the Twig templating system and some other third party libraries and bundles.
 
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony is probably one of the fastest full-stack frameworks around. But how
-can it be so fast if it parses and interprets tens of YAML and XML files for
-each request? The speed is partly due to its cache system. The application
+Symfony applications can contain several configuration files defined in several
+formats (YAML, XML, PHP, etc.) Instead of parsing and combining all those files
+for each request, Symfony uses its own cache system. In fact, the application
 configuration is only parsed for the very first request and then compiled down
-to plain PHP code stored in the ``app/cache/`` directory. In the development
-environment, Symfony is smart enough to flush the cache when you change a
-file. But in the production environment, to speed things up, it is your
-responsibility to clear the cache when you update your code or change its
-configuration.
+to plain PHP code stored in the ``app/cache/`` directory.
+
+In the development environment, Symfony is smart enough to update the cache when
+you change a file. But in the production environment, to speed things up, it is
+your responsibility to clear the cache when you update your code or change its
+configuration. Execute this command to clear the cache in the ``prod`` environment:
+
+.. code-block:: bash
+
+    $ php app/console cache:clear --env=prod
 
 When developing a web application, things can go wrong in many ways. The log
 files in the ``app/logs/`` directory tell you everything about the requests
@@ -314,7 +287,7 @@ The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: bash
 
-    $ php app/console router:debug --help
+    $ php app/console debug:router --help
 
 Final Thoughts
 --------------

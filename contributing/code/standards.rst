@@ -79,6 +79,15 @@ example containing most features described below:
 
             throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
         }
+
+        private function reverseBoolean($value = null, $theSwitch = false)
+        {
+            if (!$theSwitch) {
+                return;
+            }
+
+            return !$value;
+        }
     }
 
 Structure
@@ -86,7 +95,10 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (``==``, ``&&``, ...);
+* Add a single space around binary operators (``==``, ``&&``, ...), with
+  the exception of the concatenation (``.``) operator;
+
+* Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;

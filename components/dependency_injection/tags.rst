@@ -39,12 +39,9 @@ Then, define the chain as a service:
 
     .. code-block:: yaml
 
-        parameters:
-            acme_mailer.transport_chain.class: TransportChain
-
         services:
             acme_mailer.transport_chain:
-                class: "%acme_mailer.transport_chain.class%"
+                class: TransportChain
 
     .. code-block:: xml
 
@@ -53,12 +50,8 @@ Then, define the chain as a service:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <parameter key="acme_mailer.transport_chain.class">TransportChain</parameter>
-            </parameters>
-
             <services>
-                <service id="acme_mailer.transport_chain" class="%acme_mailer.transport_chain.class%" />
+                <service id="acme_mailer.transport_chain" class="TransportChain" />
             </services>
         </container>
 
@@ -66,9 +59,7 @@ Then, define the chain as a service:
 
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('acme_mailer.transport_chain.class', 'TransportChain');
-
-        $container->setDefinition('acme_mailer.transport_chain', new Definition('%acme_mailer.transport_chain.class%'));
+        $container->setDefinition('acme_mailer.transport_chain', new Definition('TransportChain'));
 
 Define Services with a custom Tag
 ---------------------------------
@@ -153,7 +144,7 @@ custom tag::
             $taggedServices = $container->findTaggedServiceIds(
                 'acme_mailer.transport'
             );
-            foreach ($taggedServices as $id => $attributes) {
+            foreach ($taggedServices as $id => $tags) {
                 $definition->addMethodCall(
                     'addTransport',
                     array(new Reference($id))
@@ -178,7 +169,7 @@ run when the container is compiled::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
-    $container->addCompilerPass(new TransportCompilerPass);
+    $container->addCompilerPass(new TransportCompilerPass());
 
 .. note::
 
@@ -211,7 +202,7 @@ To begin with, change the ``TransportChain`` class::
         public function getTransport($alias)
         {
             if (array_key_exists($alias, $this->transports)) {
-               return $this->transports[$alias];
+                return $this->transports[$alias];
             }
         }
     }
@@ -291,8 +282,8 @@ use this, update the compiler::
             $taggedServices = $container->findTaggedServiceIds(
                 'acme_mailer.transport'
             );
-            foreach ($taggedServices as $id => $tagAttributes) {
-                foreach ($tagAttributes as $attributes) {
+            foreach ($taggedServices as $id => $tags) {
+                foreach ($tags as $attributes) {
                     $definition->addMethodCall(
                         'addTransport',
                         array(new Reference($id), $attributes["alias"])
@@ -302,7 +293,7 @@ use this, update the compiler::
         }
     }
 
-The trickiest part is the ``$attributes`` variable. Because you can use the
-same tag many times on the same service (e.g. you could theoretically tag
-the same service 5 times with the ``acme_mailer.transport`` tag), ``$attributes``
-is an array of the tag information for each tag on that service.
+The double loop may be confusing. This is because a service can have more than one
+tag. You tag a service twice or more with the ``acme_mailer.transport`` tag. The
+second foreach loop iterates over the ``acme_mailer.transport`` tags set for the
+current service and gives you the attributes.

@@ -149,11 +149,10 @@ making the class of a service a parameter:
 
         parameters:
             mailer.transport: sendmail
-            mailer.class: Mailer
 
         services:
             mailer:
-                class:     "%mailer.class%"
+                class:     Mailer
                 arguments: ["%mailer.transport%"]
 
     .. code-block:: xml
@@ -165,11 +164,10 @@ making the class of a service a parameter:
 
             <parameters>
                 <parameter key="mailer.transport">sendmail</parameter>
-                <parameter key="mailer.class">Mailer</parameter>
             </parameters>
 
             <services>
-                <service id="mailer" class="%mailer.class%">
+                <service id="mailer" class="Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -180,10 +178,9 @@ making the class of a service a parameter:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter('mailer.transport', 'sendmail');
-        $container->setParameter('mailer.class', 'Mailer');
 
         $container
-            ->register('mailer', '%mailer.class%')
+            ->register('mailer', 'Mailer')
             ->addArgument('%mailer.transport%');
 
 .. note::

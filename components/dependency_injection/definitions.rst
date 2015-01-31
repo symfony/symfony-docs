@@ -40,7 +40,7 @@ Creating a new Definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create a new definition rather than manipulate one retrieved
-from then container then the definition class is :class:`Symfony\\Component\\DependencyInjection\\Definition`.
+from the container then the definition class is :class:`Symfony\\Component\\DependencyInjection\\Definition`.
 
 Class
 ~~~~~

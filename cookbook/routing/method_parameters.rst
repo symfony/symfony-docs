@@ -17,18 +17,18 @@ delete it by matching on GET, PUT and DELETE.
 
         blog_show:
             path:     /blog/{slug}
-            defaults: { _controller: AcmeDemoBundle:Blog:show }
-            methods:   [GET]
+            defaults: { _controller: AppBundle:Blog:show }
+            methods:  [GET]
 
         blog_update:
             path:     /blog/{slug}
-            defaults: { _controller: AcmeDemoBundle:Blog:update }
-            methods:   [PUT]
+            defaults: { _controller: AppBundle:Blog:update }
+            methods:  [PUT]
 
         blog_delete:
             path:     /blog/{slug}
-            defaults: { _controller: AcmeDemoBundle:Blog:delete }
-            methods:   [DELETE]
+            defaults: { _controller: AppBundle:Blog:delete }
+            methods:  [DELETE]
 
     .. code-block:: xml
 
@@ -39,15 +39,15 @@ delete it by matching on GET, PUT and DELETE.
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" path="/blog/{slug}" methods="GET">
-                <default key="_controller">AcmeDemoBundle:Blog:show</default>
+                <default key="_controller">AppBundle:Blog:show</default>
             </route>
 
             <route id="blog_update" path="/blog/{slug}" methods="PUT">
-                <default key="_controller">AcmeDemoBundle:Blog:update</default>
+                <default key="_controller">AppBundle:Blog:update</default>
             </route>
 
             <route id="blog_delete" path="/blog/{slug}" methods="DELETE">
-                <default key="_controller">AcmeDemoBundle:Blog:delete</default>
+                <default key="_controller">AppBundle:Blog:delete</default>
             </route>
         </routes>
 
@@ -58,15 +58,15 @@ delete it by matching on GET, PUT and DELETE.
 
         $collection = new RouteCollection();
         $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeDemoBundle:Blog:show',
+            '_controller' => 'AppBundle:Blog:show',
         ), array(), array(), '', array(), array('GET')));
 
         $collection->add('blog_update', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeDemoBundle:Blog:update',
+            '_controller' => 'AppBundle:Blog:update',
         ), array(), array(), '', array(), array('PUT')));
 
         $collection->add('blog_delete', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeDemoBundle:Blog:delete',
+            '_controller' => 'AppBundle:Blog:delete',
         ), array(), array(), '', array('DELETE')));
 
         return $collection;

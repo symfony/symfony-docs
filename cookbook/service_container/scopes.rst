@@ -131,7 +131,7 @@ marked as ``synchronized``:
         # app/config/config.yml
         services:
             client_configuration:
-                class:        Acme\HelloBundle\Client\ClientConfiguration
+                class:        AppBundle\Client\ClientConfiguration
                 scope:        client
                 synchronized: true
                 synthetic:    true
@@ -153,7 +153,7 @@ marked as ``synchronized``:
                     scope="client"
                     synchronized="true"
                     synthetic="true"
-                    class="Acme\HelloBundle\Client\ClientConfiguration"
+                    class="AppBundle\Client\ClientConfiguration"
                 />
             </services>
         </container>
@@ -164,7 +164,7 @@ marked as ``synchronized``:
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition(
-            'Acme\HelloBundle\Client\ClientConfiguration',
+            'AppBundle\Client\ClientConfiguration',
             array()
         );
         $definition->setScope('client');
@@ -175,10 +175,10 @@ marked as ``synchronized``:
 Now, if you inject this service using setter injection, there are no drawbacks
 and everything works without any special code in your service or in your definition::
 
-    // src/Acme/HelloBundle/Mail/Mailer.php
-    namespace Acme\HelloBundle\Mail;
+    // src/AppBundle/Mail/Mailer.php
+    namespace AppBundle\Mail;
 
-    use Acme\HelloBundle\Client\ClientConfiguration;
+    use AppBundle\Client\ClientConfiguration;
 
     class Mailer
     {
@@ -213,19 +213,19 @@ your code. This should also be taken into account when declaring your service:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             my_mailer:
-                class: Acme\HelloBundle\Mail\Mailer
+                class: AppBundle\Mail\Mailer
                 calls:
                     - [setClientConfiguration, ["@?client_configuration="]]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="my_mailer"
-                class="Acme\HelloBundle\Mail\Mailer"
+                class="AppBundle\Mail\Mailer"
             >
                 <call method="setClientConfiguration">
                     <argument
@@ -240,13 +240,13 @@ your code. This should also be taken into account when declaring your service:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
         $definition = $container->setDefinition(
             'my_mailer',
-            new Definition('Acme\HelloBundle\Mail\Mailer')
+            new Definition('AppBundle\Mail\Mailer')
         )
         ->addMethodCall('setClientConfiguration', array(
             new Reference(
@@ -269,19 +269,19 @@ argument is the ``ClientConfiguration`` object:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             my_mailer:
-                class: Acme\HelloBundle\Mail\Mailer
+                class: AppBundle\Mail\Mailer
                 scope: client
                 arguments: ["@client_configuration"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="my_mailer"
-                    class="Acme\HelloBundle\Mail\Mailer"
+                    class="AppBundle\Mail\Mailer"
                     scope="client">
                     <argument type="service" id="client_configuration" />
             </service>
@@ -289,13 +289,13 @@ argument is the ``ClientConfiguration`` object:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = $container->setDefinition(
             'my_mailer',
             new Definition(
-                'Acme\HelloBundle\Mail\Mailer',
+                'AppBundle\Mail\Mailer',
                 array(new Reference('client_configuration'),
             ))
         )->setScope('client');
@@ -310,8 +310,8 @@ twig extension must be in the ``container`` scope as the Twig environment
 needs it as a dependency). In these cases, you can pass the entire container
 into your service::
 
-    // src/Acme/HelloBundle/Mail/Mailer.php
-    namespace Acme\HelloBundle\Mail;
+    // src/AppBundle/Mail/Mailer.php
+    namespace AppBundle\Mail;
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -344,42 +344,30 @@ The service config for this class would look something like this:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            my_mailer.class: Acme\HelloBundle\Mail\Mailer
-
+        # app/config/services.yml
         services:
             my_mailer:
-                class:     "%my_mailer.class%"
+                class:     AppBundle\Mail\Mailer
                 arguments: ["@service_container"]
                 # scope: container can be omitted as it is the default
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="my_mailer.class">Acme\HelloBundle\Mail\Mailer</parameter>
-        </parameters>
-
+        <!-- app/config/services.xml -->
         <services>
-            <service id="my_mailer" class="%my_mailer.class%">
+            <service id="my_mailer" class="AppBundle\Mail\Mailer">
                  <argument type="service" id="service_container" />
             </service>
         </services>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mail\Mailer');
-
         $container->setDefinition('my_mailer', new Definition(
-            '%my_mailer.class%',
+            'AppBundle\Mail\Mailer',
             array(new Reference('service_container'))
         ));
 

@@ -52,18 +52,22 @@ Active Core Members
     Process_ component;
 
   * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_
-    component;
+    component, the VarDumper_ component and the DebugBundle_;
 
   * **Christophe Coevoet** (:merger:`stof`) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
     HttpFoundation_, HttpKernel_, Serializer_, Stopwatch_, DoctrineBridge_,
-    MonologBridge_, and TwigBridge_ components.
+    MonologBridge_, and TwigBridge_ components;
+
+  * **Kévin Dunglas** (:merger:`dunglas`) can merge into the Serializer_
+    component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jakub Zalas** (:decider:`jakzal`);
   * **Jordi Boggiano** (:decider:`seldaek`);
-  * **Lukas Kahwe Smith** (:decider:`lsmith77`).
+  * **Lukas Kahwe Smith** (:decider:`lsmith77`);
+  * **Ryan Weaver** (:decider:`weaverryan`).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,3 +168,5 @@ discretion of the **Project Leader**.
 .. _Stopwatch: https://github.com/symfony/Stopwatch
 .. _TwigBridge: https://github.com/symfony/TwigBridge
 .. _Validator: https://github.com/symfony/Validator
+.. _VarDumper: https://github.com/symfony/var-dumper
+.. _DebugBundle: https://github.com/symfony/debug-bundle

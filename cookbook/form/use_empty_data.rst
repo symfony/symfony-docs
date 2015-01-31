@@ -34,12 +34,12 @@ One reason you might use this option is if you want to use a constructor
 that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
-    // src/Acme/DemoBundle/Form/Type/BlogType.php
+    // src/AppBundle/Form/Type/BlogType.php
 
     // ...
     use Symfony\Component\Form\AbstractType;
-    use Acme\DemoBundle\Entity\Blog;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use AppBundle\Entity\Blog;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class BlogType extends AbstractType
     {
@@ -51,7 +51,7 @@ that constructor with no arguments::
         }
         // ...
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'empty_data' => new Blog($this->someDependency),
@@ -72,11 +72,11 @@ if it is needed.
 
 The closure must accept a ``FormInterface`` instance as the first argument::
 
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\FormInterface;
     // ...
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'empty_data' => function (FormInterface $form) {

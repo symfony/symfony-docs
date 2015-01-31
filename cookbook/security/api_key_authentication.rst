@@ -11,9 +11,6 @@ passed as a query string parameter or via an HTTP header.
 The API Key Authenticator
 -------------------------
 
-.. versionadded:: 2.4
-    The ``SimplePreAuthenticatorInterface`` interface was introduced in Symfony 2.4.
-
 Authenticating a user based on the Request information should be done via a
 pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimplePreAuthenticatorInterface`
 allows you to implement such a scheme really easily.
@@ -22,8 +19,8 @@ Your exact situation may differ, but in this example, a token is read
 from an ``apikey`` query parameter, the proper username is loaded from that
 value and then a User object is created::
 
-    // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
-    namespace Acme\HelloBundle\Security;
+    // src/AppBundle/Security/ApiKeyAuthenticator.php
+    namespace AppBundle\Security;
 
     use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -31,7 +28,6 @@ value and then a User object is created::
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
-    use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
@@ -53,6 +49,9 @@ value and then a User object is created::
 
             if (!$apiKey) {
                 throw new BadCredentialsException('No API key found');
+
+                // or to just skip api key authentication
+                // return null;
             }
 
             return new PreAuthenticatedToken(
@@ -104,7 +103,9 @@ is to create a token object that contains all of the information from the
 request that you need to authenticate the user (e.g. the ``apikey`` query
 parameter). If that information is missing, throwing a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\BadCredentialsException`
-will cause authentication to fail.
+will cause authentication to fail. You might want to return ``null`` instead
+to just skip the authentication, so Symfony can fallback to another authentication
+method, if any.
 
 2. supportsToken
 ~~~~~~~~~~~~~~~~
@@ -143,8 +144,8 @@ used by Symfony's core user provider system).
 
 The ``$userProvider`` might look something like this::
 
-    // src/Acme/HelloBundle/Security/ApiKeyUserProvider.php
-    namespace Acme\HelloBundle\Security;
+    // src/AppBundle/Security/ApiKeyUserProvider.php
+    namespace AppBundle\Security;
 
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\User;
@@ -188,6 +189,41 @@ The ``$userProvider`` might look something like this::
         }
     }
 
+Now register your user provider as service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            api_key_user_provider:
+                class: AppBundle\Security\ApiKeyUserProvider
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <services>
+                <!-- ... -->
+
+                <service id="api_key_user_provider"
+                    class="AppBundle\Security\ApiKeyUserProvider" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+
+        // ...
+        $container
+            ->register('api_key_user_provider', 'AppBundle\Security\ApiKeyUserProvider');
+
 .. note::
 
     Read the dedicated article to learn
@@ -227,8 +263,8 @@ you can use to create an error ``Response``.
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
-    namespace Acme\HelloBundle\Security;
+    // src/AppBundle/Security/ApiKeyAuthenticator.php
+    namespace AppBundle\Security;
 
     use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -266,8 +302,8 @@ your custom user provider as a service called ``your_api_key_user_provider``
             # ...
 
             apikey_authenticator:
-                class:     Acme\HelloBundle\Security\ApiKeyAuthenticator
-                arguments: ["@your_api_key_user_provider"]
+                class:     AppBundle\Security\ApiKeyAuthenticator
+                arguments: ["@api_key_user_provider"]
 
     .. code-block:: xml
 
@@ -281,9 +317,9 @@ your custom user provider as a service called ``your_api_key_user_provider``
                 <!-- ... -->
 
                 <service id="apikey_authenticator"
-                    class="Acme\HelloBundle\Security\ApiKeyAuthenticator"
+                    class="AppBundle\Security\ApiKeyAuthenticator"
                 >
-                    <argument type="service" id="your_api_key_user_provider" />
+                    <argument type="service" id="api_key_user_provider" />
                 </service>
             </services>
         </container>
@@ -297,8 +333,8 @@ your custom user provider as a service called ``your_api_key_user_provider``
         // ...
 
         $container->setDefinition('apikey_authenticator', new Definition(
-            'Acme\HelloBundle\Security\ApiKeyAuthenticator',
-            array(new Reference('your_api_key_user_provider'))
+            'AppBundle\Security\ApiKeyAuthenticator',
+            array(new Reference('api_key_user_provider'))
         ));
 
 Now, activate it in the ``firewalls`` section of your security configuration
@@ -319,6 +355,10 @@ using the ``simple_preauth`` key:
                     simple_preauth:
                         authenticator: apikey_authenticator
 
+            providers:
+                api_key_user_provider:
+                    id: api_key_user_provider
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -337,6 +377,8 @@ using the ``simple_preauth`` key:
                 >
                     <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
+
+                <provider name="api_key_user_provider" id="api_key_user_provider" />
             </config>
         </srv:container>
 
@@ -354,6 +396,11 @@ using the ``simple_preauth`` key:
                     'simple_preauth' => array(
                         'authenticator'  => 'apikey_authenticator',
                     ),
+                ),
+            ),
+            'providers' => array(
+                'api_key_user_provider'  => array(
+                    'id' => 'api_key_user_provider',
                 ),
             ),
         ));
@@ -395,6 +442,10 @@ configuration or set it to ``false``:
                     simple_preauth:
                         authenticator: apikey_authenticator
 
+            providers:
+                api_key_user_provider:
+                    id: api_key_user_provider
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -413,6 +464,8 @@ configuration or set it to ``false``:
                 >
                     <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
+
+                <provider name="api_key_user_provider" id="api_key_user_provider" />
             </config>
         </srv:container>
 
@@ -431,6 +484,11 @@ configuration or set it to ``false``:
                     ),
                 ),
             ),
+            'providers' => array(
+                'api_key_user_provider' => array(
+                    'id' => 'api_key_user_provider',
+                ),
+            ),
         ));
 
 Even though the token is being stored in the session, the credentials - in this
@@ -438,7 +496,7 @@ case the API key (i.e. ``$token->getCredentials()``) - are not stored in the ses
 for security reasons. To take advantage of the session, update ``ApiKeyAuthenticator``
 to see if the stored token has a valid User object that can be used::
 
-    // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
+    // src/AppBundle/Security/ApiKeyAuthenticator.php
     // ...
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
@@ -492,7 +550,7 @@ stored in the database, then you may want to re-query for a fresh version
 of the user to make sure it's not out-of-date. But regardless of your requirements,
 ``refreshUser()`` should now return the User object::
 
-    // src/Acme/HelloBundle/Security/ApiKeyUserProvider.php
+    // src/AppBundle/Security/ApiKeyUserProvider.php
 
     // ...
     class ApiKeyUserProvider implements UserProviderInterface
@@ -532,7 +590,7 @@ a certain URL (e.g. the redirect URL in OAuth).
 Fortunately, handling this situation is easy: just check to see what the
 current URL is before creating the token in ``createToken()``::
 
-    // src/Acme/HelloBundle/Security/ApiKeyAuthenticator.php
+    // src/AppBundle/Security/ApiKeyAuthenticator.php
 
     // ...
     use Symfony\Component\Security\Http\HttpUtils;
@@ -544,7 +602,7 @@ current URL is before creating the token in ``createToken()``::
 
         protected $httpUtils;
 
-        public function __construct(ApiKeyUserProviderInterface $userProvider, HttpUtils $httpUtils)
+        public function __construct(UserProviderInterface $userProvider, HttpUtils $httpUtils)
         {
             $this->userProvider = $userProvider;
             $this->httpUtils = $httpUtils;
@@ -580,8 +638,8 @@ service:
             # ...
 
             apikey_authenticator:
-                class:     Acme\HelloBundle\Security\ApiKeyAuthenticator
-                arguments: ["@your_api_key_user_provider", "@security.http_utils"]
+                class:     AppBundle\Security\ApiKeyAuthenticator
+                arguments: ["@api_key_user_provider", "@security.http_utils"]
 
     .. code-block:: xml
 
@@ -595,9 +653,9 @@ service:
                 <!-- ... -->
 
                 <service id="apikey_authenticator"
-                    class="Acme\HelloBundle\Security\ApiKeyAuthenticator"
+                    class="AppBundle\Security\ApiKeyAuthenticator"
                 >
-                    <argument type="service" id="your_api_key_user_provider" />
+                    <argument type="service" id="api_key_user_provider" />
                     <argument type="service" id="security.http_utils" />
                 </service>
             </services>
@@ -612,9 +670,9 @@ service:
         // ...
 
         $container->setDefinition('apikey_authenticator', new Definition(
-            'Acme\HelloBundle\Security\ApiKeyAuthenticator',
+            'AppBundle\Security\ApiKeyAuthenticator',
             array(
-                new Reference('your_api_key_user_provider'),
+                new Reference('api_key_user_provider'),
                 new Reference('security.http_utils')
             )
         ));

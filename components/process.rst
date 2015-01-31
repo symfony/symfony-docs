@@ -31,7 +31,7 @@ a command in a sub-process::
         throw new \RuntimeException($process->getErrorOutput());
     }
 
-    print $process->getOutput();
+    echo $process->getOutput();
 
 The component takes care of the subtle differences between the different platforms
 when executing the command.
@@ -42,13 +42,28 @@ output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getInc
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
 
-.. versionadded:: 2.4
-    The ``clearOutput()`` and ``clearErrorOutput()`` methods were introduced in Symfony 2.4.
-
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
+
+The ``mustRun()`` method is identical to ``run()``, except that it will throw
+a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
+if the process couldn't be executed successfully (i.e. the process exited
+with a non-zero code)::
+
+    use Symfony\Component\Process\Exception\ProcessFailedException;
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('ls -lsa');
+
+    try {
+        $process->mustRun();
+
+        echo $process->getOutput();
+    } catch (ProcessFailedException $e) {
+        echo $e->getMessage();
+    }
 
 Getting real-time Process Output
 --------------------------------
@@ -215,20 +230,16 @@ check regularly::
 Process Idle Timeout
 --------------------
 
-.. versionadded:: 2.4
-   The :method:`Symfony\\Component\\Process\\Process::setIdleTimeout` method
-   was introduced in Symfony 2.4.
-   
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
 
    use Symfony\Component\Process\Process;
-   
+
    $process = new Process('something-with-variable-runtime');
    $process->setTimeout(3600);
    $process->setIdleTimeout(60);
    $process->run();
-   
+
 In the case above, a process is considered timed out, when either the total runtime
 exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 
@@ -284,11 +295,6 @@ You can access the `pid`_ of a running process with the
 
 Disabling Output
 ----------------
-
-.. versionadded:: 2.5
-    The :method:`Symfony\\Component\\Process\\Process::disableOutput` and
-    :method:`Symfony\\Component\\Process\\Process::enableOutput` methods were
-    introduced in Symfony 2.5.
 
 As standard output and error output are always fetched from the underlying process,
 it might be convenient to disable output in some cases to save memory.

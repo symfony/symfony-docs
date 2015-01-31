@@ -281,6 +281,19 @@ has a certain value:
         ->end()
     ;
 
+Documenting the Option
+----------------------
+
+All options can be documented using the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
+method.
+
+The info will be printed as a comment when dumping the configuration tree.
+
+.. versionadded:: 2.6
+    Since Symfony 2.6, the info will also be added to the exception message
+    when an invalid type is given.
+
 Optional Sections
 -----------------
 
@@ -487,7 +500,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function($v) { return array('name'=> $v); })
+                    ->then(function ($v) { return array('name' => $v); })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()
@@ -557,8 +570,8 @@ Otherwise the result is a clean array of configuration values::
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(__DIR__.'/src/Matthias/config/config.yml');
-    $config2 = Yaml::parse(__DIR__.'/src/Matthias/config/config_extra.yml');
+    $config1 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config.yml'));
+    $config2 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml'));
 
     $configs = array($config1, $config2);
 

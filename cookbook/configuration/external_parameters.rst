@@ -14,9 +14,13 @@ Environment Variables
 ---------------------
 
 Symfony will grab any environment variable prefixed with ``SYMFONY__`` and
-set it as a parameter in the service container. Double underscores are replaced
-with a period, as a period is not a valid character in an environment variable
-name.
+set it as a parameter in the service container. Some transformations are
+applied to the resulting parameter name:
+
+* ``SYMFONY__`` prefix is removed;
+* Parameter name is lowercased;
+* Double underscores are replaced with a period, as a period is not
+  a valid character in an environment variable name.
 
 For example, if you're using Apache, environment variables can be set using
 the following ``VirtualHost`` configuration:

@@ -86,9 +86,6 @@ Field Options
 multiple
 ~~~~~~~~
 
-.. versionadded:: 2.5
-    The ``multiple`` option was introduced in Symfony 2.5.
-
 **type**: ``Boolean`` **default**: ``false``
 
 When set to true, the user will be able to upload multiple files at the same time.
@@ -125,8 +122,8 @@ The default value is ``null``.
 Form Variables
 --------------
 
-======== ========== ===============================================================================
-Variable Type       Usage
-======== ========== ===============================================================================
-type     ``string`` The type variable is set to ``file``, in order to render as a file input field.
-======== ========== ===============================================================================
+========  ==========  ===============================================================================
+Variable  Type        Usage
+========  ==========  ===============================================================================
+type      ``string``  The type variable is set to ``file``, in order to render as a file input field.
+========  ==========  ===============================================================================

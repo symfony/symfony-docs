@@ -91,7 +91,7 @@ The same goes for routing files and some other resources.
 .. note::
 
     The overriding of resources only works when you refer to resources with
-    the ``@FosUserBundle/Resources/config/routing/security.xml`` method.
+    the ``@FOSUserBundle/Resources/config/routing/security.xml`` method.
     If you refer to resources without using the @BundleName shortcut, they
     can't be overridden in this way.
 

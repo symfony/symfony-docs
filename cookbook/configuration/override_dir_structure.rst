@@ -151,6 +151,41 @@ file:
     work:
 
     .. code-block:: bash
-    
+
         $ php app/console cache:clear --env=prod
         $ php app/console assetic:dump --env=prod --no-debug
+
+Override the ``vendor`` Directory
+---------------------------------
+
+To override the ``vendor`` directory, you need to introduce changes in the
+following files:
+
+* ``app/autoload.php``
+* ``composer.json``
+
+The change in the ``composer.json`` will look like this:
+
+.. code-block:: json
+
+    {
+        ...
+        "config": {
+            "bin-dir": "bin",
+            "vendor-dir": "/some/dir/vendor"
+        },
+        ...
+    }
+
+In ``app/autoload.php``, you need to modify the path leading to the ``vendor/autoload.php``
+file::
+
+    // app/autoload.php
+    // ...
+    $loader = require '/some/dir/vendor/autoload.php';
+
+.. tip::
+
+    This modification can be of interest if you are working in a virtual environment
+    and cannot use NFS - for example, if you're running a Symfony app using
+    Vagrant/VirtualBox in a guest operating system.
