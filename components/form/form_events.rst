@@ -131,7 +131,7 @@ The ``FormEvents::PRE_SUBMIT`` event is dispatched at the beginning of the
 
 It can be used to:
 
-* Change data from the request, before submitting the data to the form.
+* Change data from the request, before submitting the data to the form;
 * Add or remove form fields, before submitting the data to the form.
 
 :ref:`Form Events Information Table<component-form-event-table>`
@@ -303,7 +303,10 @@ callback for better readability::
         {
             $builder->add('username', 'text');
             $builder->add('show_email', 'checkbox');
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+            $builder->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                array($this, 'onPreSetData')
+            );
         }
 
         public function onPreSetData(FormEvent $event)

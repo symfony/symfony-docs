@@ -117,7 +117,7 @@ Stopping a Process
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
-two arguments : a timeout and a signal. Once the timeout is reached, the signal
+two arguments: a timeout and a signal. Once the timeout is reached, the signal
 is sent to the running process. The default signal sent to a process is ``SIGKILL``.
 Please read the :ref:`signal documentation below<reference-process-signal>`
 to find out more about signal handling in the Process component::
@@ -217,7 +217,7 @@ Process Signals
 .. versionadded:: 2.3
     The ``signal`` method was introduced in Symfony 2.3.
 
-When running a program asynchronously, you can send it posix signals with the
+When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
     use Symfony\Component\Process\Process;

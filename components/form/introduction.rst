@@ -186,17 +186,17 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // this file comes with TwigBridge
     $defaultFormTheme = 'form_div_layout.html.twig';
 
-    $vendorDir = realpath(__DIR__ . '/../vendor');
+    $vendorDir = realpath(__DIR__.'/../vendor');
     // the path to TwigBridge so Twig can locate the
     // form_div_layout.html.twig file
     $vendorTwigBridgeDir =
-        $vendorDir . '/symfony/twig-bridge/Symfony/Bridge/Twig';
+        $vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig';
     // the path to your other templates
-    $viewsDir = realpath(__DIR__ . '/../views');
+    $viewsDir = realpath(__DIR__.'/../views');
 
     $twig = new Twig_Environment(new Twig_Loader_Filesystem(array(
         $viewsDir,
-        $vendorTwigBridgeDir . '/Resources/views/Form',
+        $vendorTwigBridgeDir.'/Resources/views/Form',
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
@@ -315,10 +315,10 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\Validation;
 
-    $vendorDir = realpath(__DIR__ . '/../vendor');
-    $vendorFormDir = $vendorDir . '/symfony/form/Symfony/Component/Form';
+    $vendorDir = realpath(__DIR__.'/../vendor');
+    $vendorFormDir = $vendorDir.'/symfony/form/Symfony/Component/Form';
     $vendorValidatorDir =
-        $vendorDir . '/symfony/validator/Symfony/Component/Validator';
+        $vendorDir.'/symfony/validator/Symfony/Component/Validator';
 
     // create the validator - details will vary
     $validator = Validation::createValidator();
@@ -326,13 +326,13 @@ Your integration with the Validation component will look something like this::
     // there are built-in translations for the core error messages
     $translator->addResource(
         'xlf',
-        $vendorFormDir . '/Resources/translations/validators.en.xlf',
+        $vendorFormDir.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
     $translator->addResource(
         'xlf',
-        $vendorValidatorDir . '/Resources/translations/validators.en.xlf',
+        $vendorValidatorDir.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
@@ -671,10 +671,12 @@ object::
 
     // ...
 
-    // an array of FormError objects, but only errors attached to this form level (e.g. "global errors)
+    // an array of FormError objects, but only errors attached to this
+    // form level (e.g. "global errors)
     $errors = $form->getErrors();
 
-    // an array of FormError objects, but only errors attached to the "firstName" field
+    // an array of FormError objects, but only errors attached to the
+    // "firstName" field
     $errors = $form['firstName']->getErrors();
 
     // a string representation of all errors of the whole form tree
