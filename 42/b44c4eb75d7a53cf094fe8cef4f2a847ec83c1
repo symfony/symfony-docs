@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-27T09:48:30Z
+
+Why doesn't it make sense? It still makes very much sense, as it's showing you how to pass parameters as arguments.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-27T12:08:10Z
+
+OK haven't thought about that, it's a valid use case. But I still think the description for example should be reworded as right now after reading it the first thing that comes to mind is it showing how to set a class for service using a parameter (which is discontinued as the best practice is just to enter the class).
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-27T12:12:21Z
+
+Hmm, indeed. The example was updated, but the description isn't.
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-01-28T07:32:32Z
+
+This was exactly my thought that the example was updated to follow best practices, but the description was missed. Also why I think it's not needed is because just a few paragraphs above this example there is the same code example making this a duplicate.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-28T20:31:15Z
+
+I think you are right. It doesn't make much sense to show the example twice.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-31T11:21:22Z
+
+Hmm, I indeed think we should remove it. We'll miss information about using parameters in service definitions, rather than just in arguments. But now class parameters are deprecated, does it make sense to tell people about it?
