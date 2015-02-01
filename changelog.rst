@@ -59,8 +59,8 @@ Fixed Documentation
 - `5940d52 <https://github.com/symfony/symfony-docs/commit/5940d5252b82db7bc247c8723e7761c5cfc9c84b>`_ #4735 [BestPractices] remove @Security annotation for Symfony 2.3 (xabbuh)
 - `ce37b96 <https://github.com/symfony/symfony-docs/commit/ce37b96ba0565d0624a16c44c1447c248447158b>`_ #4771 [QuickTour] use the debug:router command name (xabbuh)
 - `ffe3425 <https://github.com/symfony/symfony-docs/commit/ffe3425f6a0ef97be45f29608c6be02db24e98f9>`_ #4765 [Book][Forms] avoid the request service where possible (xabbuh)
-- `36f2e1f <https://github.com/symfony/symfony-docs/commit/36f2e1f74b2d166b333cb07029b1fe6e929c2370>`_ #4757 [Components][ClassLoader] don't show deprecated usage of Yaml``::``parse() (xabbuh)
-- `d8e8d75 <https://github.com/symfony/symfony-docs/commit/d8e8d75961ea0a77c74634a56b6d3237d00ca8a4>`_ #4756 [Components][Config] don't show deprecated usage of Yaml``::``parse() (xabbuh)
+- `36f2e1f <https://github.com/symfony/symfony-docs/commit/36f2e1f74b2d166b333cb07029b1fe6e929c2370>`_ #4757 [Components][ClassLoader] don't show deprecated usage of ``Yaml::parse()`` (xabbuh)
+- `d8e8d75 <https://github.com/symfony/symfony-docs/commit/d8e8d75961ea0a77c74634a56b6d3237d00ca8a4>`_ #4756 [Components][Config] don't show deprecated usage of ``Yaml::parse()`` (xabbuh)
 - `b143754 <https://github.com/symfony/symfony-docs/commit/b143754b22d1086ad58712147075bf1909836a55>`_ #4744 [Book][Security] Update code example to fit description (xelaris)
 - `310f4ae <https://github.com/symfony/symfony-docs/commit/310f4ae6dda955fa5b0dbc1ab7744ef32bda54d5>`_ #4639 Update by_reference.rst.inc (docteurklein)
 
