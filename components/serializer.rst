@@ -153,7 +153,7 @@ of the ``Person`` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data,'Acme\Person','xml');
+    $person = $serializer->deserialize($data, 'Acme\Person', 'xml');
 
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
