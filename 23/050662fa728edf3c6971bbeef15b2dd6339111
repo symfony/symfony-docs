@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-23T09:17:02Z
+
+The chapter does however not list the components which have a stable API. We should add that list imo
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-23T09:19:19Z
+
+@WouterJ the list is totally outdated though
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-23T09:23:34Z
+
+@WouterJ I don't understand your comment. If you say that the removed chapter contains wrong information ... well it doesn't matter because we're removing the chapter.
+
+If you mean that the BC Promise article doesn't list the components with stable API, I guess we can tackle that in another issue.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-23T09:28:42Z
+
+This list is not necessary anymore IMO. It was useful at the time where we were providing BC only for some components. But as of Symfony 2.3, the BC promise covers all components
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-23T09:35:55Z
+
+@stof yeah, but the BC promise is quite a lot stricter for stable API components than for non stable API components.
+
+@javiereguiluz I indeed meant to move the list to the bc article. Why doing that in another PR, isn't it a very simple change?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-23T09:38:26Z
+
+@WouterJ but giving a list of components with a tagged stable API does not help much. Most components have it, and this does not mean that everything is tagged as such in the component. It is not a component-level flagging but a class-level one.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-31T17:40:29Z
+
+Okay :+1:
