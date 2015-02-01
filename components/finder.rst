@@ -302,7 +302,8 @@ The contents of returned files can be read with
 
     foreach ($finder as $file) {
         $contents = $file->getContents();
-        ...
+        
+        // ...
     }
 
 .. _strtotime:    http://www.php.net/manual/en/datetime.formats.php
