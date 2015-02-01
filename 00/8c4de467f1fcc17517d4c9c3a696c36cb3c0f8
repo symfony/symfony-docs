@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-31T11:41:06Z
+
+Could you please redo this PR against the 2.3 branch? Since you based on a not maintained branch, I can't rebase it due to submodule mismatches...
+
+---------------------------------------------------------------------------
+
+by ifdattic at 2015-02-01T16:13:27Z
+
+I don't think it would be possible to PR against 2.3 branch as this page doesn't contain a 2.3 branch entry...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-01T16:20:53Z
+
+@ifdattic it did exist, but in another location: http://symfony.com/doc/2.3/components/debug.html
+
+There seems to be an issue with these documentation moves and the version switcher.
