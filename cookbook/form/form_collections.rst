@@ -459,7 +459,7 @@ is added to the ``Task`` class by calling the ``addTag`` method. Before this
 change, they were added internally by the form by calling ``$task->getTags()->add($tag)``.
 That was just fine, but forcing the use of the "adder" method makes handling
 these new ``Tag`` objects easier (especially if you're using Doctrine, which
-we will talk about next!).
+you will learn about next!).
 
 .. caution::
 
