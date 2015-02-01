@@ -64,7 +64,6 @@ Fixed Documentation
 - `92b10b1 <https://github.com/symfony/symfony-docs/commit/92b10b166cb7b0fb687f77804150d6c47aa9576f>`_ #4758 [Components][Yaml] don't describe removed usage of ``Yaml::parse()`` (xabbuh)
 - `36f2e1f <https://github.com/symfony/symfony-docs/commit/36f2e1f74b2d166b333cb07029b1fe6e929c2370>`_ #4757 [Components][ClassLoader] don't show deprecated usage of ``Yaml::parse()`` (xabbuh)
 - `d8e8d75 <https://github.com/symfony/symfony-docs/commit/d8e8d75961ea0a77c74634a56b6d3237d00ca8a4>`_ #4756 [Components][Config] don't show deprecated usage of ``Yaml::parse()`` (xabbuh)
->>>>>>> 2.7
 - `b143754 <https://github.com/symfony/symfony-docs/commit/b143754b22d1086ad58712147075bf1909836a55>`_ #4744 [Book][Security] Update code example to fit description (xelaris)
 - `310f4ae <https://github.com/symfony/symfony-docs/commit/310f4ae6dda955fa5b0dbc1ab7744ef32bda54d5>`_ #4639 Update by_reference.rst.inc (docteurklein)
 
