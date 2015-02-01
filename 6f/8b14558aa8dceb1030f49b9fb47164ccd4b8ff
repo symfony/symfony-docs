@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-23T11:06:50Z
+
+The only missing thing in this PR is that I don't know how to replicate the Twig's ``parent()` function in a PHP template.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-23T11:15:03Z
+
+@javiereguiluz it doesn't exists. Other docs say that you need to copy the contents of the parent block.
