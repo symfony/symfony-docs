@@ -284,7 +284,7 @@ calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\Ro
 
     use Symfony\Component\Routing\Loader\ClosureLoader;
 
-    $closure = function() {
+    $closure = function () {
         return new RouteCollection();
     };
 
@@ -303,7 +303,7 @@ out here.
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Routing\\Router` class is a all-in-one package
+The :class:`Symfony\\Component\\Routing\\Router` class is an all-in-one package
 to quickly use the Routing component. The constructor expects a loader instance,
 a path to the main route definition and some other settings::
 
