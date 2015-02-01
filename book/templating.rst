@@ -1085,43 +1085,76 @@ one called ``stylesheets`` inside the ``head`` tag and another called ``javascri
 just above the closing ``body`` tag. These blocks will contain all of the
 stylesheets and JavaScripts that you'll need throughout your site:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/base.html.twig #}
-    <html>
-        <head>
-            {# ... #}
+    .. code-block:: html+jinja
 
-            {% block stylesheets %}
-                <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
-            {% endblock %}
-        </head>
-        <body>
-            {# ... #}
+        {# app/Resources/views/base.html.twig #}
+        <html>
+            <head>
+                {# ... #}
 
-            {% block javascripts %}
-                <script src="{{ asset('js/main.js') }}"></script>
-            {% endblock %}
-        </body>
-    </html>
+                {% block stylesheets %}
+                    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+                {% endblock %}
+            </head>
+            <body>
+                {# ... #}
+
+                {% block javascripts %}
+                    <script src="{{ asset('js/main.js') }}"></script>
+                {% endblock %}
+            </body>
+        </html>
+
+    .. code-block:: php
+
+        // app/Resources/views/base.html.php
+        <html>
+            <head>
+                <?php ... ?>
+
+                <?php $view['slots']->start('stylesheets') ?>
+                    <link href="<?php echo $view['assets']->getUrl('css/main.css') ?>" rel="stylesheet" />
+                <?php $view['slots']->stop() ?>
+            </head>
+            <body>
+                <?php ... ?>
+
+                <?php $view['slots']->start('javascripts') ?>
+                    <script src="<?php echo $view['assets']->getUrl('js/main.js') ?>"></script>
+                <?php $view['slots']->stop() ?>
+            </body>
+        </html>
 
 That's easy enough! But what if you need to include an extra stylesheet or
 JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/Contact/contact.html.twig #}
-    {% extends 'base.html.twig' %}
+    .. code-block:: html+jinja
 
-    {% block stylesheets %}
-        {{ parent() }}
+        {# app/Resources/views/Contact/contact.html.twig #}
+        {% extends 'base.html.twig' %}
 
-        <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
-    {% endblock %}
+        {% block stylesheets %}
+            {{ parent() }}
 
-    {# ... #}
+            <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
+        {% endblock %}
+
+        {# ... #}
+
+    .. code-block:: php
+
+        // app/Resources/views/Contact/contact.html.twig
+        <?php $view->extend('base.html.php') ?>
+
+        <?php $view['slots']->start('stylesheets') ?>
+            <link href="<?php echo $view['assets']->getUrl('css/contact.css') ?>" rel="stylesheet" />
+        <?php $view['slots']->stop() ?>
 
 In the child template, you simply override the ``stylesheets`` block and
 put your new stylesheet tag inside of that block. Of course, since you want
