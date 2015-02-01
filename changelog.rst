@@ -47,7 +47,7 @@ Fixed Documentation
 - `9fee9ee <https://github.com/symfony/symfony-docs/commit/9fee9eed5366a1a4408821cfc950a34ea4c7fbce>`_ #4746 Revert #4651 for 2.3 branch (xelaris)
 - `5940d52 <https://github.com/symfony/symfony-docs/commit/5940d5252b82db7bc247c8723e7761c5cfc9c84b>`_ #4735 [BestPractices] remove @Security annotation for Symfony 2.3 (xabbuh)
 - `ffe3425 <https://github.com/symfony/symfony-docs/commit/ffe3425f6a0ef97be45f29608c6be02db24e98f9>`_ #4765 [Book][Forms] avoid the request service where possible (xabbuh)
-- `d8e8d75 <https://github.com/symfony/symfony-docs/commit/d8e8d75961ea0a77c74634a56b6d3237d00ca8a4>`_ #4756 [Components][Config] don't show deprecated usage of Yaml``::``parse() (xabbuh)
+- `d8e8d75 <https://github.com/symfony/symfony-docs/commit/d8e8d75961ea0a77c74634a56b6d3237d00ca8a4>`_ #4756 [Components][Config] don't show deprecated usage of ``Yaml::parse()`` (xabbuh)
 - `310f4ae <https://github.com/symfony/symfony-docs/commit/310f4ae6dda955fa5b0dbc1ab7744ef32bda54d5>`_ #4639 Update by_reference.rst.inc (docteurklein)
 
 Minor Documentation Changes
