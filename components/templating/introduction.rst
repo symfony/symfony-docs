@@ -196,7 +196,7 @@ method is used.
 
     $templating = new DelegatingEngine(array(
         new PhpEngine(...),
-        new CustomEngine(...)
+        new CustomEngine(...),
     ));
 
 .. _Packagist: https://packagist.org/packages/symfony/templating
