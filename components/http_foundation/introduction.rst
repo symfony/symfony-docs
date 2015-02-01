@@ -338,7 +338,7 @@ code, and an array of HTTP headers::
 .. versionadded:: 2.4
     Support for HTTP status code constants was introduced in Symfony 2.4.
 
-These information can also be manipulated after the Response object creation::
+This information can also be manipulated after the Response object creation::
 
     $response->setContent('Hello World');
 
