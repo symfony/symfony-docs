@@ -10,8 +10,8 @@ Twig is the default template engine for Symfony. By itself, it already contains
 a lot of built-in functions, filters, tags and tests (learn more about them
 from the `Twig Reference`_).
 
-Symfony adds more custom extensions on top of Twig to integrate some components
-into the Twig templates. You can find more information about the custom
+Symfony adds some custom extensions on top of Twig to integrate some components
+into the Twig templates. Below is information about all the custom
 :ref:`functions <reference-twig-functions>`, :ref:`filters <reference-twig-filters>`,
 :ref:`tags <reference-twig-tags>` and :ref:`tests <reference-twig-tests>`
 that are added when using the Symfony Core Framework.
@@ -62,7 +62,7 @@ render_esi
 ``options``
     **type**: ``array`` **default**: ``[]``
 
-Generates an ESI tag when possible or falls back to the behaviour of
+Generates an ESI tag when possible or falls back to the behavior of
 `render`_ function instead. For more information, see
 :ref:`templating-embedding-controller`.
 
@@ -95,7 +95,7 @@ controller
     **type**: ``array`` **default**: ``[]``
 
 Returns an instance of ``ControllerReference`` to be used with functions like
-:ref:`render() <reference-twig-function-render>` and `render_esi() <render_esi>`.
+:ref:`render() <reference-twig-function-render>` and :ref:`render_esi() <render_esi>`.
 
 asset
 ~~~~~
@@ -107,7 +107,7 @@ asset
 ``path``
     **type**: ``string``
 ``packageName``
-    **type**: ``string``|``null`` **default**: ``null``
+    **type**: ``string`` | ``null`` **default**: ``null``
 
 Returns a public path to ``path``, which takes into account the base path set
 for the package and the URL path. More information in
@@ -121,7 +121,7 @@ asset_version
     {{ asset_version(packageName) }}
 
 ``packageName``
-    **type**: ``string``|``null`` **default**: ``null``
+    **type**: ``string`` | ``null`` **default**: ``null``
 
 Returns the current version of the package, more information in
 :ref:`book-templating-assets`.
@@ -227,7 +227,7 @@ form_label
 ``variables``
     **type**: ``array`` **default**: ``[]``
 
-Renders the label for the given field, mre information in
+Renders the label for the given field, more information in
 :ref:`the Twig Form reference <reference-forms-twig-label>`.
 
 form_row
@@ -463,7 +463,7 @@ abbr_class
     **type**: ``string``
 
 Generates an ``<abbr>`` element with the short name of a PHP class (the FQCN
-will be shown in a tooltip when a user hovers over de element).
+will be shown in a tooltip when a user hovers over the element).
 
 abbr_method
 ~~~~~~~~~~~
@@ -501,7 +501,7 @@ format_args_as_text
 ``args``
     **type**: ``array``
 
-Equal to the `format_args`_ filter, but without using tags.
+Equal to the `format_args`_ filter, but without using HTML tags.
 
 file_excerpt
 ~~~~~~~~~~~~
@@ -515,7 +515,7 @@ file_excerpt
 ``line``
     **type**: ``integer``
 
-Generates an excerpt of 7 lines around the given ``line``.
+Generates an excerpt of seven lines around the given ``line``.
 
 format_file
 ~~~~~~~~~~~
@@ -545,7 +545,7 @@ format_file_from_text
 ``text``
     **type**: ``string``
 
-Uses `|format_file <format_file>` to improve the output of default PHP errors.
+Uses `format_file`_ to improve the output of default PHP errors.
 
 file_link
 ~~~~~~~~~
@@ -575,7 +575,7 @@ form_theme
 ``form``
     **type**: ``FormView``
 ``resources``
-    **type**: ``array``|``string``
+    **type**: ``array`` | ``string``
 
 Sets the resources to override the form theme for the given form view instance.
 You can use ``_self`` as resources to set it to the current resource. More
