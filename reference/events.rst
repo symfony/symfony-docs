@@ -41,6 +41,19 @@ object to match the ``Request`` and determine the Controller name (stored in the
 
     Read more on the :ref:`kernel.request event <component-http-kernel-kernel-request>`.
 
+These are the built-in Symfony listeners related to this event:
+
+=============================================================================  ========
+Listener Class Name                                                            Priority
+=============================================================================  ========
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`       1024
+:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`  192
+:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`      128
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`         32
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`         16
+:class:`Symfony\\Component\\Security\\Http\\Firewall`                          8
+=============================================================================  ========
+
 ``kernel.controller``
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -63,6 +76,14 @@ to modify the controller that should be executed::
 .. seealso::
 
     Read more on the :ref:`kernel.controller event <component-http-kernel-kernel-controller>`.
+
+This is the built-in Symfony listener related to this event:
+
+==============================================================================  ========
+Listener Class Name                                                             Priority
+==============================================================================  ========
+:class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`  0
+==============================================================================  ========
 
 ``kernel.view``
 ~~~~~~~~~~~~~~~
@@ -128,6 +149,20 @@ The FrameworkBundle registers several listeners:
 
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
+These are the built-in Symfony listeners related to this event:
+
+===================================================================================  ========
+Listener Class Name                                                                  Priority
+===================================================================================  ========
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`                  0
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`             0
+:class:`Symfony\\Bundle\\SecurityBundle\\EventListener\\ResponseListener`            0
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`             -100
+:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`        -128
+:class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`  -128
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`     -1024
+===================================================================================  ========
+
 ``kernel.terminate``
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -139,6 +174,15 @@ was already served to the client.
 .. seealso::
 
     Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
+
+This is the built-in Symfony listener related to this event:
+
+=========================================================================  ========
+Listener Class Name                                                        Priority
+=========================================================================  ========
+`EmailSenderListener`_                                                     0
+=========================================================================  ========
+
 
 .. _kernel-kernel.exception:
 
@@ -187,3 +231,14 @@ and set a new ``Exception`` object, or do nothing::
 .. seealso::
 
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
+
+These are the built-in Symfony listeners related to this event:
+
+=========================================================================  ========
+Listener Class Name                                                        Priority
+=========================================================================  ========
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`   0
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`  -128
+=========================================================================  ========
+
+.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php
