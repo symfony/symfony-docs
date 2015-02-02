@@ -21,6 +21,5 @@ The Book
     translation
     service_container
     performance
-    stable_api
 
 .. include:: /book/map.rst.inc
