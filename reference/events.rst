@@ -4,7 +4,7 @@ Symfony Framework Events
 Kernel Events
 -------------
 
-Each event thrown by the Kernel is a subclass of
+Each event dispatched by the kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the following information:
 
@@ -20,10 +20,10 @@ each event has access to the following information:
 
 .. _kernel-core-request:
 
-``kernel.request`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~
+``kernel.request``
+~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
 The goal of this event is to either return a ``Response`` object immediately
 or setup variables so that a Controller can be called after the event. Any
@@ -41,10 +41,10 @@ object to match the ``Request`` and determine the Controller name (stored in the
 
     Read more on the :ref:`kernel.request event <component-http-kernel-kernel-request>`.
 
-``kernel.controller`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``kernel.controller``
+~~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
 This event is not used by the FrameworkBundle, but can be an entry point used
 to modify the controller that should be executed::
@@ -64,10 +64,10 @@ to modify the controller that should be executed::
 
     Read more on the :ref:`kernel.controller event <component-http-kernel-kernel-controller>`.
 
-``kernel.view`` Event
-~~~~~~~~~~~~~~~~~~~~~
+``kernel.view``
+~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
 This event is not used by the FrameworkBundle, but it can be used to implement
 a view sub-system. This event is called *only* if the Controller does *not*
@@ -85,7 +85,7 @@ method::
         $val = $event->getControllerResult();
         $response = new Response();
 
-        // ... some how customize the Response from the return value
+        // ... somehow customize the Response from the return value
 
         $event->setResponse($response);
     }
@@ -94,10 +94,10 @@ method::
 
     Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
 
-``kernel.response`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``kernel.response``
+~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
 The purpose of this event is to allow other systems to modify or replace the
 ``Response`` object after its creation::
@@ -128,10 +128,10 @@ The FrameworkBundle registers several listeners:
 
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
-``kernel.terminate`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``kernel.terminate``
+~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
 
 The purpose of this event is to perform "heavier" tasks after the response
 was already served to the client.
@@ -142,10 +142,10 @@ was already served to the client.
 
 .. _kernel-kernel.exception:
 
-``kernel.exception`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``kernel.exception``
+~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
 The FrameworkBundle registers an
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that

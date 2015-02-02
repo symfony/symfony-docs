@@ -12,20 +12,21 @@ When the response object is available, use the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::loadProfileFromResponse`
 method to access to its associated profile::
 
-    $profile = $container->get('profiler')->loadProfileFromResponse($response);
+    // ... $profiler is the 'profiler' service
+    $profile = $profiler->loadProfileFromResponse($response);
 
 When the profiler stores data about a request, it also associates a token with it;
 this token is available in the ``X-Debug-Token`` HTTP header of the response.
 Using this token, you can access the profile of any past response thanks to the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::loadProfile` method::
 
-    $token = $request->headers->get(X-Debug-Token);
+    $token = $request->headers->get('X-Debug-Token');
     $profile = $container->get('profiler')->loadProfile($token);
 
 .. tip::
 
-    When the profiler is enabled but not the web debug toolbar, use a tool like
-    Firebug to get the value of the ``X-Debug-Token`` HTTP header.
+    When the profiler is enabled but not the web debug toolbar, use your browser
+    inspection tools to get the value of the ``X-Debug-Token`` HTTP header.
 
 The ``profiler`` service also provides the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find` method to
