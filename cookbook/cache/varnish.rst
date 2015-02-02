@@ -60,13 +60,65 @@ If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
 the port where the PHP application is running when generating absolute URLs,
 e.g. ``http://example.com:8080/my/path``.
 
+Cookies and Caching
+-------------------
+
+By default, a sane caching proxy does not cache anything when a request is sent
+with :ref:`cookies or a basic authentication header<http-cache-introduction>`.
+This is because the content of the page is supposed to depend on the cookie
+value or authentication header.
+
+If you know for sure that the backend never uses sessions or basic
+authentication, have varnish remove the corresponding header from requests to
+prevent clients from bypassing the cache. In practice, you will need sessions
+at least for some parts of the site, e.g. when using forms with
+:ref:`CSRF Protection <forms-csrf>`. In this situation, make sure to only
+start a session when actually needed, and clear the session when it is no
+longer needed. Alternatively, you can look into :doc:`../cache/form_csrf_caching`.
+
+.. todo link "only start a session when actually needed" to cookbook/session/avoid_session_start once https://github.com/symfony/symfony-docs/pull/4661 is merged
+
+Cookies created in Javascript and used only in the frontend, e.g. when using
+Google analytics are nonetheless sent to the server. These cookies are not
+relevant for the backend and should not affect the caching decision. Configure
+your Varnish cache to `clean the cookies header`_. You want to keep the
+session cookie, if there is one, and get rid of all other cookies so that pages
+are cached if there is no active session. Unless you changed the default
+configuration of PHP, your session cookie has the name PHPSESSID:
+
+.. code-block:: varnish4
+
+    sub vcl_recv {
+        // Remove all cookies except the session ID.
+        if (req.http.Cookie) {
+            set req.http.Cookie = ";" + req.http.Cookie;
+            set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+            set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+            set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+            if (req.http.Cookie == "") {
+                // If there are no more cookies, remove the header to get page cached.
+                remove req.http.Cookie;
+            }
+        }
+    }
+
+.. tip::
+
+    If content is not different for every user, but depends on the roles of a
+    user, a solution is to separate the cache per group. This pattern is
+    implemented and explained by the FOSHttpCacheBundle_ under the name
+    `User Context`_.
+
 Ensure Consistent Caching Behaviour
 -----------------------------------
 
 Varnish uses the cache headers sent by your application to determine how
 to cache content. However, versions prior to Varnish 4 did not respect
-``Cache-Control: no-cache``. To ensure consistent behaviour, use the following
-configuration if you are still using Varnish 3:
+``Cache-Control: no-cache``, ``no-store`` and ``private``. To ensure
+consistent behavior, use the following configuration if you are still
+using Varnish 3:
 
 .. configuration-block::
 
@@ -76,12 +128,18 @@ configuration if you are still using Varnish 3:
             /* By default, Varnish3 ignores Cache-Control: no-cache and private
                https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control
              */
-            if (beresp.http.Cache-Control ~ "no-cache" ||
-                beresp.http.Cache-Control ~ "private"
+            if (beresp.http.Cache-Control ~ "private" ||
+                beresp.http.Cache-Control ~ "no-cache" ||
+                beresp.http.Cache-Control ~ "no-store"
             ) {
                 return (hit_for_pass);
             }
         }
+
+.. tip::
+
+    You can see the default behavior of Varnish in the form of a VCL file:
+    `default.vcl`_ for Varnish 3, `builtin.vcl`_ for Varnish 4.
 
 Enable Edge Side Includes (ESI)
 -------------------------------
@@ -143,7 +201,7 @@ Symfony adds automatically:
 .. tip::
 
     If you followed the advice about ensuring a consistent caching
-    behaviour, those vcl functions already exist. Just append the code
+    behavior, those vcl functions already exist. Just append the code
     to the end of the function, they won't interfere with each other.
 
 .. index::
@@ -169,6 +227,10 @@ proxy before it has expired, it adds complexity to your caching setup.
 .. _`Varnish`: https://www.varnish-cache.org
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
 .. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
+.. _`Clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`default.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/default.vcl?rev=3.0
+.. _`builtin.vcl`: https://www.varnish-cache.org/trac/browser/bin/varnishd/builtin.vcl?rev=4.0
+.. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html

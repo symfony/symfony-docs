@@ -38,7 +38,8 @@ swiftmailer with the memory option, use the following configuration:
 
         <!--
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+            http://symfony.com/schema/dic/swiftmailer
+            http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config>
@@ -49,7 +50,7 @@ swiftmailer with the memory option, use the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-             ...,
+             // ...
             'spool' => array('type' => 'memory')
         ));
 
@@ -75,7 +76,8 @@ In order to use the spool with a file, use the following configuration:
 
         <!--
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+            http://symfony.com/schema/dic/swiftmailer
+            http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config>
@@ -99,7 +101,7 @@ In order to use the spool with a file, use the following configuration:
 .. tip::
 
     If you want to store the spool somewhere with your project directory,
-    remember that you can use the `%kernel.root_dir%` parameter to reference
+    remember that you can use the ``%kernel.root_dir%`` parameter to reference
     the project's root:
 
     .. code-block:: yaml

@@ -10,7 +10,7 @@ your app that's not specific to the framework (e.g. routing and controllers).
 Domain classes, Doctrine entities and regular PHP classes that are used as
 services are good examples of business logic.
 
-For most projects, you should store everything inside the ``AppBundle``.
+For most projects, you should store everything inside the AppBundle.
 Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
@@ -45,7 +45,7 @@ and put things there:
 
 .. tip::
 
-    The recommended approach of using the ``AppBundle`` directory is for
+    The recommended approach of using the ``AppBundle/`` directory is for
     simplicity. If you're advanced enough to know what needs to live in
     a bundle and what can live outside of one, then feel free to do that.
 
@@ -140,9 +140,12 @@ the class namespace as a parameter:
     # app/config/services.yml
 
     # service definition with class namespace as parameter
+    parameters:
+        slugger.class: AppBundle\Utils\Slugger
+
     services:
         app.slugger:
-            class: AppBundle\Utils\Slugger
+            class: "%slugger.class%"
 
 This practice is cumbersome and completely unnecessary for your own services:
 
@@ -166,8 +169,8 @@ library or strategy you want for this.
 
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
-Just like with business logic, we recommend storing Doctrine entities in
-the ``AppBundle``
+Just like with business logic, we recommend storing Doctrine entities in the
+AppBundle.
 
 The three entities defined by our sample blog application are a good example:
 

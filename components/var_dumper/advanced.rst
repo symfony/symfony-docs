@@ -20,7 +20,7 @@ like this::
     use Symfony\Component\VarDumper\Dumper\CliDumper;
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
-    VarDumper::setHandler(function($var) {
+    VarDumper::setHandler(function ($var) {
         $cloner = new VarCloner();
         $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
 

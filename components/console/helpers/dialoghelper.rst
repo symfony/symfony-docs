@@ -61,7 +61,7 @@ if you want to know a bundle name, you can add this to your command::
 The user will be asked "Please enter the name of the bundle". They can type
 some name which will be returned by the
 :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::ask` method.
-If they leave it empty, the default value (``AcmeDemoBundle`` here) is returned.
+If they leave it empty, the default value (AcmeDemoBundle here) is returned.
 
 Autocompletion
 ~~~~~~~~~~~~~~
@@ -230,7 +230,7 @@ this set the seventh argument to ``true``::
         true // enable multiselect
     );
 
-    $selectedColors = array_map(function($c) use ($colors) {
+    $selectedColors = array_map(function ($c) use ($colors) {
         return $colors[$c];
     }, $selected);
 

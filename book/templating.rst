@@ -410,8 +410,8 @@ templates, each which lives in a specific location:
   template for a specific page. The three parts of the string, each separated
   by a colon (``:``), mean the following:
 
-  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
-    ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
+  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the AcmeBlogBundle
+    (e.g. ``src/Acme/BlogBundle``);
 
   * ``Blog``: (*directory*) indicates that the template lives inside the
     ``Blog`` subdirectory of ``Resources/views``;
@@ -419,18 +419,18 @@ templates, each which lives in a specific location:
   * ``index.html.twig``: (*filename*) the actual name of the file is
     ``index.html.twig``.
 
-  Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
+  Assuming that the AcmeBlogBundle lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
 * ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
-  that's specific to the ``AcmeBlogBundle``. Since the middle, "directory",
-  portion is missing (e.g. ``Blog``), the template lives at
-  ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
-  Yes, there are 2 colons in the middle of the string when the "controller"
-  subdirectory part is missing.
+  that's specific to the AcmeBlogBundle. Since the middle, "directory", portion
+  is missing (e.g. ``Blog``), the template lives at
+  ``Resources/views/layout.html.twig`` inside AcmeBlogBundle. Yes, there are 2
+  colons in the middle of the string when the "controller" subdirectory part is
+  missing.
 
 In the :ref:`overriding-bundle-templates` section, you'll find out how each
-template living inside the ``AcmeBlogBundle``, for example, can be overridden
+template living inside the AcmeBlogBundle, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
@@ -1085,43 +1085,76 @@ one called ``stylesheets`` inside the ``head`` tag and another called ``javascri
 just above the closing ``body`` tag. These blocks will contain all of the
 stylesheets and JavaScripts that you'll need throughout your site:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/base.html.twig #}
-    <html>
-        <head>
-            {# ... #}
+    .. code-block:: html+jinja
 
-            {% block stylesheets %}
-                <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
-            {% endblock %}
-        </head>
-        <body>
-            {# ... #}
+        {# app/Resources/views/base.html.twig #}
+        <html>
+            <head>
+                {# ... #}
 
-            {% block javascripts %}
-                <script src="{{ asset('js/main.js') }}"></script>
-            {% endblock %}
-        </body>
-    </html>
+                {% block stylesheets %}
+                    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+                {% endblock %}
+            </head>
+            <body>
+                {# ... #}
+
+                {% block javascripts %}
+                    <script src="{{ asset('js/main.js') }}"></script>
+                {% endblock %}
+            </body>
+        </html>
+
+    .. code-block:: php
+
+        // app/Resources/views/base.html.php
+        <html>
+            <head>
+                <?php ... ?>
+
+                <?php $view['slots']->start('stylesheets') ?>
+                    <link href="<?php echo $view['assets']->getUrl('css/main.css') ?>" rel="stylesheet" />
+                <?php $view['slots']->stop() ?>
+            </head>
+            <body>
+                <?php ... ?>
+
+                <?php $view['slots']->start('javascripts') ?>
+                    <script src="<?php echo $view['assets']->getUrl('js/main.js') ?>"></script>
+                <?php $view['slots']->stop() ?>
+            </body>
+        </html>
 
 That's easy enough! But what if you need to include an extra stylesheet or
 JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/Contact/contact.html.twig #}
-    {% extends 'base.html.twig' %}
+    .. code-block:: html+jinja
 
-    {% block stylesheets %}
-        {{ parent() }}
+        {# app/Resources/views/Contact/contact.html.twig #}
+        {% extends 'base.html.twig' %}
 
-        <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
-    {% endblock %}
+        {% block stylesheets %}
+            {{ parent() }}
 
-    {# ... #}
+            <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
+        {% endblock %}
+
+        {# ... #}
+
+    .. code-block:: php
+
+        // app/Resources/views/Contact/contact.html.twig
+        <?php $view->extend('base.html.php') ?>
+
+        <?php $view['slots']->start('stylesheets') ?>
+            <link href="<?php echo $view['assets']->getUrl('css/contact.css') ?>" rel="stylesheet" />
+        <?php $view['slots']->stop() ?>
 
 In the child template, you simply override the ``stylesheets`` block and
 put your new stylesheet tag inside of that block. Of course, since you want
@@ -1279,10 +1312,10 @@ bundles (see `KnpBundles.com`_) for a large number of different features.
 Once you use a third-party bundle, you'll likely need to override and customize
 one or more of its templates.
 
-Suppose you've installed the imaginary open-source ``AcmeBlogBundle`` in your
+Suppose you've installed the imaginary open-source AcmeBlogBundle in your
 project. And while you're really happy with everything, you want to override
 the blog "list" page to customize the markup specifically for your application.
-By digging into the ``Blog`` controller of the ``AcmeBlogBundle``, you find the
+By digging into the ``Blog`` controller of the AcmeBlogBundle, you find the
 following::
 
     public function indexAction()
@@ -1313,7 +1346,7 @@ to create it). You're now free to customize the template.
     cache (``php app/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
-template in ``AcmeBlogBundle`` inherits from a base template called
+template in AcmeBlogBundle inherits from a base template called
 ``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony will look in
 the following two places for the template:
 

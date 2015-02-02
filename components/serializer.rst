@@ -153,7 +153,7 @@ of the ``Person`` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data,'Acme\Person','xml');
+    $person = $serializer->deserialize($data, 'Acme\Person', 'xml');
 
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
@@ -326,7 +326,7 @@ having unique identifiers::
 
     $serializer = new Serializer(array($normalizer), array($encoder));
     echo $serializer->serialize($org, 'json');
-    // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"]}
+    // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
 JMSSerializer
 -------------

@@ -18,11 +18,11 @@ directly:
 
     .. code-block:: html+jinja
 
-        <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/script.js') }}"></script>
 
     .. code-block:: php
 
-        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>"></script>
 
 But *with* Assetic, you can manipulate these assets however you want (or
 load them from anywhere) before serving them. This means you can:
@@ -60,7 +60,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
     .. code-block:: html+jinja
 
         {% javascripts '@AppBundle/Resources/public/js/*' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -68,7 +68,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
         <?php foreach ($view['assetic']->javascripts(
             array('@AppBundle/Resources/public/js/*')
         ) as $url): ?>
-            <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
 .. note::
@@ -82,7 +82,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
         {# ... #}
         {% block javascripts %}
             {% javascripts '@AppBundle/Resources/public/js/*' %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
+                <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
         {# ... #}
@@ -92,7 +92,7 @@ To include JavaScript files, use the ``javascripts`` tag in any template:
     You can also include CSS Stylesheets: see :ref:`cookbook-assetic-including-css`.
 
 In this example, all of the files in the ``Resources/public/js/`` directory
-of the ``AppBundle`` will be loaded and served from a different location.
+of the AppBundle will be loaded and served from a different location.
 The actual rendered tag might simply look like:
 
 .. code-block:: html
@@ -548,7 +548,7 @@ command will automatically regenerate assets *as they change*:
     $ php app/console assetic:dump --watch
 
 Since running this command in the ``dev`` environment may generate a bunch
-of files, it's usually a good idea to point your generated assets files to
+of files, it's usually a good idea to point your generated asset files to
 some isolated directory (e.g. ``/js/compiled``), to keep things organized:
 
 .. configuration-block::

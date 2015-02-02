@@ -291,12 +291,12 @@ Importing Configuration with ``imports``
 
 So far, you've placed your ``my_mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the ``AcmeHelloBundle``,
-it makes more sense to put the ``my_mailer`` container definition inside the
+course, since the ``Mailer`` class itself lives inside the AcmeHelloBundle, it
+makes more sense to put the ``my_mailer`` container definition inside the
 bundle as well.
 
 First, move the ``my_mailer`` container definition into a new container resource
-file inside ``AcmeHelloBundle``. If the ``Resources`` or ``Resources/config``
+file inside AcmeHelloBundle. If the ``Resources`` or ``Resources/config``
 directories don't exist, create them.
 
 .. configuration-block::
@@ -381,10 +381,9 @@ configuration.
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHello`` syntax resolves the directory path of
-the ``AcmeHelloBundle`` bundle. This helps you specify the path to the resource
-without worrying later if you move the ``AcmeHelloBundle`` to a different
-directory.
+file. The special ``@AcmeHelloBundle`` syntax resolves the directory path
+of the AcmeHelloBundle bundle. This helps you specify the path to the resource
+without worrying later if you move the AcmeHelloBundle to a different directory.
 
 .. index::
    single: Service Container; Extension configuration
@@ -569,7 +568,7 @@ the service container gives you a much more appealing option:
         services:
             my_mailer:
                 # ...
-            
+
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@my_mailer"]
@@ -762,7 +761,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         services:
             my_mailer:
                 # ...
-            
+
             newsletter_manager:
                 class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 calls:
@@ -797,7 +796,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('my_mailer', ...);
-        
+
         $container->setDefinition('newsletter_manager', new Definition(
             'Acme\HelloBundle\Newsletter\NewsletterManager'
         ))->addMethodCall('setMailer', array(
@@ -938,7 +937,7 @@ it exists and do nothing if it doesn't:
                 <service id="my_mailer">
                 <!-- ... -->
                 </service>
-                
+
                 <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                     <argument type="service" id="my_mailer" on-invalid="ignore" />
                 </service>
@@ -953,7 +952,7 @@ it exists and do nothing if it doesn't:
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
         $container->setDefinition('my_mailer', ...);
-        
+
         $container->setDefinition('newsletter_manager', new Definition(
             'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(

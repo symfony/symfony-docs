@@ -14,12 +14,12 @@ Environment Variables
 ---------------------
 
 Symfony will grab any environment variable prefixed with ``SYMFONY__`` and
-set it as a parameter in the service container. Some transformations are 
+set it as a parameter in the service container. Some transformations are
 applied to the resulting parameter name:
 
 * ``SYMFONY__`` prefix is removed;
 * Parameter name is lowercased;
-* Double underscores are replaced with a period, as a period is not 
+* Double underscores are replaced with a period, as a period is not
   a valid character in an environment variable name.
 
 For example, if you're using Apache, environment variables can be set using
@@ -97,14 +97,6 @@ You can now reference these parameters wherever you need them.
                 'password' => '%database.password%',
             )
         ));
-
-.. note::
-
-    Even in debug mode, setting or changing an environment variable
-    requires your cache to be cleared to make the parameter available.
-    In debug mode, this is required since only a change to a configuration
-    file that is loaded by Symfony triggers your configuration to be
-    re-evaluated.
 
 Constants
 ---------
