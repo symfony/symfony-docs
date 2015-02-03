@@ -175,20 +175,24 @@ In the following example, the action is only allowed if the user has the
     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
-You can also choose to install and use the optional JMSSecurityExtraBundle_,
-which can secure your controller using annotations:
+If your application is based on the Symfony Standard Edition, you can also secure
+your controller using annotations:
 
 .. code-block:: php
 
-    use JMS\SecurityExtraBundle\Annotation\Secure;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Secure(roles="IS_AUTHENTICATED_FULLY")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function editAction($name)
     {
         // ...
     }
+
+.. versionadded:: 2.4
+    The ``@Security`` annotation was introduced in SensioFrameworkExtraBundle 3.0,
+    which can only be used with Symfony 2.4 or later.
 
 .. tip::
 
@@ -212,5 +216,3 @@ which can secure your controller using annotations:
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.
-
-.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle
