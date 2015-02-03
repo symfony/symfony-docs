@@ -1,7 +1,7 @@
 cascade_validation
 ~~~~~~~~~~~~~~~~~~
 
-**type**: Boolean **default**: false
+**type**: ``Boolean`` **default**: ``false``
 
 Set this option to ``true`` to force validation on embedded form types.
 For example, if you have a ``ProductType`` with an embedded ``CategoryType``,
