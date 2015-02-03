@@ -13,7 +13,7 @@ to the top, with a visual separator between it and the rest of the options::
     ));
 
 Note that preferred choices are only meaningful when rendering as a ``select``
-element (i.e. ``expanded`` is false). The preferred choices and normal choices
+element (i.e. ``expanded`` is ``false``). The preferred choices and normal choices
 are separated visually by a set of dotted lines (i.e. ``-------------------``).
 This can be customized when rendering the field:
 
