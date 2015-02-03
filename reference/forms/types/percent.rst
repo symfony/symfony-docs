@@ -53,7 +53,7 @@ type
 **type**: ``string`` **default**: ``fractional``
 
 This controls how your data is stored on your object. For example, a percentage
-corresponding to "55%", might be stored as ``.55`` or ``55`` on your
+corresponding to "``55%``", might be stored as ``.55`` or ``55`` on your
 object. The two "types" handle these two cases:
 
 *   ``fractional``
@@ -63,7 +63,7 @@ object. The two "types" handle these two cases:
     on form submit so that the decimal value is stored (``.55``);
 
 *   ``integer``
-    If your data is stored as an integer (e.g. 55), then use this option.
+    If your data is stored as an integer (e.g. ``55``), then use this option.
     The raw value (``55``) is shown to the user and stored on your object.
     Note that this only works for integer values.
 
