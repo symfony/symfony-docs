@@ -3,7 +3,7 @@ required
 
 **type**: ``Boolean`` **default**: ``true``
 
-If true, an `HTML5 required attribute`_ will be rendered. The corresponding
+If ``true``, an `HTML5 required attribute`_ will be rendered. The corresponding
 ``label`` will also render with a ``required`` class.
 
 This is superficial and independent from validation. At best, if you let Symfony
