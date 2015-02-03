@@ -51,8 +51,8 @@ user sees on the form (e.g. ``Male``).
 .. code-block:: php
 
     $builder->add('gender', 'choice', array(
-        'choices'   => array('m' => 'Male', 'f' => 'Female'),
-        'required'  => false,
+        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        'required' => false,
     ));
 
 By setting ``multiple`` to true, you can allow the user to choose multiple
@@ -62,12 +62,12 @@ of checkboxes depending on the ``expanded`` option:
 .. code-block:: php
 
     $builder->add('availability', 'choice', array(
-        'choices'   => array(
+        'choices' => array(
             'morning'   => 'Morning',
             'afternoon' => 'Afternoon',
             'evening'   => 'Evening',
         ),
-        'multiple'  => true,
+        'multiple' => true,
     ));
 
 You can also use the ``choice_list`` option, which takes an object that can
@@ -86,11 +86,11 @@ choices
 **type**: ``array`` **default**: ``array()``
 
 This is the most basic way to specify the choices that should be used
-by this field. The ``choices`` option is an array, where the array key
+by this field. The ``choices`` option is an ``array``, where the array key
 is the item value and the array value is the item's label::
 
     $builder->add('gender', 'choice', array(
-        'choices' => array('m' => 'Male', 'f' => 'Female')
+        'choices' => array('m' => 'Male', 'f' => 'Female'),
     ));
 
 .. tip::
@@ -111,7 +111,7 @@ The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
-With this option you can also allow float values to be selected as data.
+With this option you can also allow ``float`` values to be selected as data.
 
 .. code-block:: php
 
