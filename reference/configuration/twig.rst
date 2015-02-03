@@ -10,13 +10,19 @@ TwigBundle Configuration ("twig")
 
         twig:
             exception_controller:  twig.controller.exception:showAction
+
             form_themes:
 
                 # Default:
                 - form_div_layout.html.twig
 
+                # Bootstrap:
+                - bootstrap_3_layout.html.twig
+                - bootstrap_3_horizontal_layout.html.twig
+
                 # Example:
                 - MyBundle::form.html.twig
+
             globals:
 
                 # Examples:
