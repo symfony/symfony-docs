@@ -76,7 +76,7 @@ option. The easiest way to use the option is as follows::
 
     $builder->add('users', 'entity', array(
         'class' => 'AcmeHelloBundle:User',
-        'query_builder' => function(EntityRepository $er) {
+        'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
@@ -131,7 +131,7 @@ This is a property path (e.g. ``author.name``) used to organize the
 available choices in groups. It only works when rendered as a select tag
 and does so by adding ``optgroup`` elements around options. Choices that do not
 return a value for this property path are rendered directly under the
-select tag, without a surrounding optgroup.
+``select`` tag, without a surrounding ``optgroup``.
 
 property
 ~~~~~~~~
@@ -140,7 +140,7 @@ property
 
 This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
-cast into a string and so must have a ``__toString()`` method.
+cast into a ``string`` and so must have a ``__toString()`` method.
 
 .. note::
 
@@ -159,11 +159,11 @@ cast into a string and so must have a ``__toString()`` method.
 query_builder
 ~~~~~~~~~~~~~
 
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
+**type**: ``Doctrine\ORM\QueryBuilder`` or a ``Closure``
 
 If specified, this is used to query the subset of options (and their
 order) that should be used for the field. The value of this option can
-either be a ``QueryBuilder`` object or a Closure. If using a Closure,
+either be a ``QueryBuilder`` object or a ``Closure``. If using a ``Closure``,
 it should take a single argument, which is the ``EntityRepository`` of
 the entity.
 
