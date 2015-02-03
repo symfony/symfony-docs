@@ -10,11 +10,11 @@ Twig is the default template engine for Symfony. By itself, it already contains
 a lot of built-in functions, filters, tags and tests (learn more about them
 from the `Twig Reference`_).
 
-Symfony adds some custom extensions on top of Twig to integrate some components
-into the Twig templates. Below is information about all the custom
+Symfony adds custom extensions on top of Twig to integrate some components
+into the Twig templates. The following sections describe the custom
 :ref:`functions <reference-twig-functions>`, :ref:`filters <reference-twig-filters>`,
 :ref:`tags <reference-twig-tags>` and :ref:`tests <reference-twig-tests>`
-that are added when using the Symfony Core Framework.
+that are available when using the Symfony Core Framework.
 
 There may also be tags in bundles you use that aren't listed here.
 
