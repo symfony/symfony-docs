@@ -21,7 +21,7 @@ that a session is *always* started:
         </div>
     {% endfor %}
 
-Even if the user is not logged in and even if you haven't created any flash message,
+Even if the user is not logged in and even if you haven't created any flash messages,
 just calling the ``get()`` (or even ``has()``) method of the ``flashbag`` will
 start a session. This may hurt your application performance because all users will
 receive a session cookie. To avoid this behavior, add a check before trying to
