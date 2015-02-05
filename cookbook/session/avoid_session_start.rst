@@ -4,14 +4,14 @@
 Avoid Starting Sessions for Anonymous Users
 ===========================================
 
-Sessions in Symfony applications are automatically started whenever they are necessary.
-This includes writing in the user's session, creating a flash message and logging
-in users. In order to start the session, Symfony creates a cookie which will be
-added to every user request.
+Sessions are automatically started whenever you read, write or even check for the
+existence of data in the session. This means that if you need to avoid creating
+a session cookie for some users, it can be difficult: you must *completely* avoid
+accessing the session.
 
-However, there are other scenarios when a session is started automatically and a
-cookie will be created even for anonymous users. First, consider the following
-template code commonly used to display flash messages:
+For example, one common problem in this situation involves checking for flash
+messages, which are stored in the session. The following code would guarantee
+that a session is *always* started:
 
 .. code-block:: html+jinja
 
@@ -22,33 +22,17 @@ template code commonly used to display flash messages:
     {% endfor %}
 
 Even if the user is not logged in and even if you haven't created any flash message,
-just calling the ``get()`` method of the ``flashbag`` will start a session. This
-may hurt your application performance because all users will receive a session
-cookie. To avoid this behavior, add a check before trying to access the flash messages:
+just calling the ``get()`` (or even ``has()``) method of the ``flashbag`` will
+start a session. This may hurt your application performance because all users will
+receive a session cookie. To avoid this behavior, add a check before trying to
+access the flash messages:
 
 .. code-block:: html+jinja
 
-    {% if app.session.started %}
+    {% if app.request.hasPreviousSession %}
         {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
                 {{ flashMessage }}
             </div>
         {% endfor %}
     {% endif %}
-
-Another scenario where session cookies will be automatically sent is when the
-requested URL is covered by a firewall, even when anonymous users can access
-to that URL:
-
-.. code-block:: yaml
-
-    # app/config/security.yml
-    security:
-        firewalls:
-            main:
-                pattern:    ^/
-                form_login: ~
-                anonymous:  ~
-
-This behavior is caused because in Symfony applications, anonymous users are
-technically authenticated.
