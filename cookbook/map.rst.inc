@@ -175,6 +175,7 @@
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
   * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
+  * :doc:`/cookbook/session/avoid_session_start`
 
 * **symfony1**
 
