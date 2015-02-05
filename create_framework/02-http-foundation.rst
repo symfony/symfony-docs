@@ -310,18 +310,18 @@ component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony2`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 5`_, `Laravel`_, `Silex`_, and `more`_).
 
-.. _`Twig`:                     http://twig.sensiolabs.com/
+.. _`Twig`: http://twig.sensiolabs.com/
 .. _`Symfony2 versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
-.. _`HTTP specification`:       http://tools.ietf.org/wg/httpbis/
-.. _`audited`:                  http://symfony.com/blog/symfony2-security-audit
-.. _`Symfony2`:                 http://symfony.com/
-.. _`Drupal 8`:                 http://drupal.org/
-.. _`phpBB 4`:                  http://www.phpbb.com/
-.. _`ezPublish 5`:              http://ez.no/
-.. _`Laravel`:                  http://laravel.com/
-.. _`Silex`:                    http://silex.sensiolabs.org/
-.. _`Midgard CMS`:              http://www.midgard-project.org/
-.. _`Zikula`:                   http://zikula.org/
-.. _`autoloaded`:               http://php.net/autoload
-.. _`PSR-0`:                    https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
-.. _`more`:                     http://symfony.com/components/HttpFoundation
+.. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
+.. _`audited`: http://symfony.com/blog/symfony2-security-audit
+.. _`Symfony2`: http://symfony.com/
+.. _`Drupal 8`: http://drupal.org/
+.. _`phpBB 4`: http://www.phpbb.com/
+.. _`ezPublish 5`: http://ez.no/
+.. _`Laravel`: http://laravel.com/
+.. _`Silex`: http://silex.sensiolabs.org/
+.. _`Midgard CMS`: http://www.midgard-project.org/
+.. _`Zikula`: http://zikula.org/
+.. _`autoloaded`: http://php.net/autoload
+.. _`PSR-0`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _`more`: http://symfony.com/components/HttpFoundation

@@ -188,5 +188,5 @@ the many features built into the HttpKernel component; HTTP caching being just
 one of them but an important one as it can make your applications fly!
 
 .. _`HTTP caching`: http://symfony.com/doc/current/book/http_cache.html
-.. _`ESI`:          http://en.wikipedia.org/wiki/Edge_Side_Includes
-.. _`Varnish`:      https://www.varnish-cache.org/
+.. _`ESI`: http://en.wikipedia.org/wiki/Edge_Side_Includes
+.. _`Varnish`: https://www.varnish-cache.org/

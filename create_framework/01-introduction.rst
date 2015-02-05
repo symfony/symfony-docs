@@ -132,8 +132,8 @@ Use the PHP built-in server to test this great application in a browser
 In the next chapter, we are going to introduce the HttpFoundation Component
 and see what it brings us.
 
-.. _`Symfony2`:             http://symfony.com/
-.. _`documentation`:        http://symfony.com/doc
-.. _`Silex`:                http://silex.sensiolabs.org/
-.. _`Composer`:             http://packagist.org/about-composer
+.. _`Symfony2`: http://symfony.com/
+.. _`documentation`: http://symfony.com/doc
+.. _`Silex`: http://silex.sensiolabs.org/
+.. _`Composer`: http://packagist.org/about-composer
 .. _`download and install`: https://getcomposer.org/doc/01-basic-usage.md
