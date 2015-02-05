@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-16T19:19:19Z
+
+good one :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T11:23:42Z
+
+You also have to add a reference to `/cookbook/map.rst.inc`.
+
+---------------------------------------------------------------------------
+
+by dbu at 2014-12-25T17:29:08Z
+
+great initiative, we really need this sorted out for proper caching. hacking around on varnish to remove session cookies most of the time has the tendency to break things in unexpected ways...
+
+could you add a section how to *end* the session again when there are no more flash messages / csrf tokens etc? that way, a user could get a session when he is on the form, but get rid of the session after success...
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-05T13:43:29Z
+
+Thank you all for your reviews and comments. I've just updated this pull request.
