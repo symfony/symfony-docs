@@ -181,7 +181,7 @@ rules::
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.yml -->
+        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
         <class name="Acme\DemoBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">
