@@ -159,7 +159,7 @@ on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 disable_delivery
 ~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, the ``transport`` will automatically be set to ``null``, and no
 emails will actually be delivered.
@@ -167,7 +167,7 @@ emails will actually be delivered.
 logging
 ~~~~~~~
 
-**type**: ``Boolean`` **default**: ``%kernel.debug%``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If true, Symfony's data collector will be activated for Swift Mailer and the
 information will be available in the profiler.

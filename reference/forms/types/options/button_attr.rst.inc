@@ -1,7 +1,7 @@
 attr
 ~~~~
 
-**type**: array **default**: Empty array
+**type**: ``array`` **default**: ``array()``
 
 If you want to add extra attributes to the HTML representation of the button,
 you can use ``attr`` option. It's an associative array with HTML attribute

@@ -34,7 +34,7 @@ Field Options
 always_empty
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If set to true, the field will *always* render blank, even if the corresponding
 field has a value. When set to false, the password field will be rendered

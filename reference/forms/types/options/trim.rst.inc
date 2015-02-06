@@ -1,7 +1,7 @@
 trim
 ~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If true, the whitespace of the submitted string value will be stripped
 via the ``trim()`` function when the data is bound. This guarantees that

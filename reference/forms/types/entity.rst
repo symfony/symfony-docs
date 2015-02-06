@@ -183,7 +183,7 @@ directly.
 choices
 ~~~~~~~
 
-**type**:  array | ``\Traversable`` **default**: ``null``
+**type**:  ``array`` | ``\Traversable`` **default**: ``null``
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.

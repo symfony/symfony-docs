@@ -276,7 +276,7 @@ a separate firewall just for ``check_path`` URL).
 use_forward
 ...........
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If you'd like the user to be forwarded to the login form instead of being
 redirected, set this option to ``true``.
@@ -302,7 +302,7 @@ will look for a POST parameter with this name.
 post_only
 .........
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 By default, you must submit your login form to the ``check_path`` URL as
 a POST request. By setting this option to ``false``, you can send a GET request
@@ -311,10 +311,10 @@ to the ``check_path`` URL.
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* ``always_use_default_target_path`` (type: ``Boolean``, default: ``false``)
+* ``always_use_default_target_path`` (type: ``boolean``, default: ``false``)
 * ``default_target_path`` (type: ``string``, default: ``/``)
 * ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
-* ``use_referer`` (type: ``Boolean``, default: ``false``)
+* ``use_referer`` (type: ``boolean``, default: ``false``)
 
 .. _reference-security-pbkdf2:
 

@@ -264,7 +264,7 @@ Setting ``htmlPattern`` to false will disable client side validation.
 match
 ~~~~~
 
-**type**: ``Boolean`` default: ``true``
+**type**: ``boolean`` default: ``true``
 
 If ``true`` (or not set), this validator will pass if the given string matches
 the given `pattern`_ regular expression. However, when this option is set
