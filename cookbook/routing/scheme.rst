@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Scheme requirement
 
-How to force routes to always use HTTPS or HTTP
+How to Force Routes to always Use HTTPS or HTTP
 ===============================================
 
 Sometimes, you want to secure some routes and be sure that they are always
@@ -14,7 +14,7 @@ the URI scheme via schemes:
 
         secure:
             path:     /secure
-            defaults: { _controller: AcmeDemoBundle:Main:secure }
+            defaults: { _controller: AppBundle:Main:secure }
             schemes:  [https]
 
     .. code-block:: xml
@@ -26,7 +26,7 @@ the URI scheme via schemes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="secure" path="/secure" schemes="https">
-                <default key="_controller">AcmeDemoBundle:Main:secure</default>
+                <default key="_controller">AppBundle:Main:secure</default>
             </route>
         </routes>
 
@@ -37,7 +37,7 @@ the URI scheme via schemes:
 
         $collection = new RouteCollection();
         $collection->add('secure', new Route('/secure', array(
-            '_controller' => 'AcmeDemoBundle:Main:secure',
+            '_controller' => 'AppBundle:Main:secure',
         ), array(), array(), '', array('https')));
 
         return $collection;
@@ -69,4 +69,5 @@ to always use ``http``.
     The Security component provides another way to enforce HTTP or HTTPS via
     the ``requires_channel`` setting. This alternative method is better suited
     to secure an "area" of your website (all URLs under ``/admin``) or when
-    you want to secure URLs defined in a third party bundle.
+    you want to secure URLs defined in a third party bundle (see
+    :doc:`/cookbook/security/force_https` for more details).

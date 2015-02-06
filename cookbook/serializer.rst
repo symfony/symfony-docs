@@ -1,7 +1,7 @@
 .. index::
    single: Serializer
 
-How to use the Serializer
+How to Use the Serializer
 =========================
 
 Serializing and deserializing to and from objects and different formats (e.g.
@@ -37,7 +37,7 @@ it in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <!-- ... -->
             <framework:serializer enabled="true" />
         </framework:config>
@@ -67,10 +67,10 @@ You can load normalizers and/or encoders by tagging them as
 :ref:`serializer.encoder<reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
-Here is an example on how to load the 
+Here is an example on how to load the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`:
 
-.. configuration-block:: 
+.. configuration-block::
 
     .. code-block:: yaml
 

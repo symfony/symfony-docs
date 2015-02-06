@@ -2,7 +2,7 @@ Submitting a Patch
 ==================
 
 Patches are the best way to provide a bug fix or to propose enhancements to
-Symfony2.
+Symfony.
 
 Step 1: Setup your Environment
 ------------------------------
@@ -10,12 +10,12 @@ Step 1: Setup your Environment
 Install the Software Stack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before working on Symfony2, setup a friendly environment with the following
+Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
 * PHP version 5.3.3 or above;
-* PHPUnit 3.6.4 or above.
+* `PHPUnit`_ 4.2 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -37,7 +37,7 @@ Set up your user information with your real name and a working email address:
     If your IDE creates configuration files inside the project's directory,
     you can use global ``.gitignore`` file (for all projects) or
     ``.git/info/exclude`` file (per project) to ignore them. See
-    `Github's documentation`_.
+    `GitHub's documentation`_.
 
 .. tip::
 
@@ -65,11 +65,11 @@ Set up your user information with your real name and a working email address:
 Get the Symfony Source Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Get the Symfony2 source code:
+Get the Symfony source code:
 
 * Create a `GitHub`_ account and sign in;
 
-* Fork the `Symfony2 repository`_ (click on the "Fork" button);
+* Fork the `Symfony repository`_ (click on the "Fork" button);
 
 * After the "forking action" has completed, clone your fork locally
   (this will create a ``symfony`` directory):
@@ -85,10 +85,10 @@ Get the Symfony2 source code:
       $ cd symfony
       $ git remote add upstream git://github.com/symfony/symfony.git
 
-Check that the current Tests pass
+Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that Symfony2 is installed, check that all unit tests pass for your
+Now that Symfony is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
 
 Step 2: Work on your Patch
@@ -105,9 +105,13 @@ Choose the right Branch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Before working on a patch, you must determine on which branch you need to
-work. The branch should be based on the ``master`` branch if you want to add a
-new feature. But if you want to fix a bug, use the oldest but still maintained
-version of Symfony where the bug happens (like ``2.3``).
+work:
+
+* ``2.3``, if you are fixing a bug for an existing feature (you may have
+  to choose a higher branch if the feature you are fixing was introduced
+  in a later version);
+* ``2.7``, if you are adding a new feature which is backward compatible;
+* ``master``, if you are adding a new and backward incompatible feature.
 
 .. note::
 
@@ -200,7 +204,7 @@ When your patch is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
 * An explanation of the changes in the relevant ``CHANGELOG`` file(s) (the
- ``[BC BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
+  ``[BC BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
 
 * An explanation on how to upgrade an existing application in the relevant
   ``UPGRADE`` file(s) if the changes break backward compatibility or if you
@@ -244,12 +248,12 @@ Check that all tests still pass and push your branch remotely:
 
 .. code-block:: bash
 
-    $ git push -f origin BRANCH_NAME
+    $ git push --force origin BRANCH_NAME
 
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
 
-You can now make a pull request on the ``symfony/symfony`` Github repository.
+You can now make a pull request on the ``symfony/symfony`` GitHub repository.
 
 .. tip::
 
@@ -266,7 +270,7 @@ pull request message, like in:
 
 The pull request description must include the following checklist at the top
 to ensure that contributions may be reviewed without needless feedback
-loops and that your contributions can be included into Symfony2 as quickly as
+loops and that your contributions can be included into Symfony as quickly as
 possible:
 
 .. code-block:: text
@@ -310,23 +314,23 @@ translation files, use the shorter version of the check-list:
 
 Some answers to the questions trigger some more requirements:
 
- * If you answer yes to "Bug fix?", check if the bug is already listed in the
-   Symfony issues and reference it/them in "Fixed tickets";
+* If you answer yes to "Bug fix?", check if the bug is already listed in the
+  Symfony issues and reference it/them in "Fixed tickets";
 
- * If you answer yes to "New feature?", you must submit a pull request to the
-   documentation and reference it under the "Doc PR" section;
+* If you answer yes to "New feature?", you must submit a pull request to the
+  documentation and reference it under the "Doc PR" section;
 
- * If you answer yes to "BC breaks?", the patch must contain updates to the
-   relevant ``CHANGELOG`` and ``UPGRADE`` files;
+* If you answer yes to "BC breaks?", the patch must contain updates to the
+  relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
- * If you answer yes to "Deprecations?", the patch must contain updates to the
-   relevant ``CHANGELOG`` and ``UPGRADE`` files;
+* If you answer yes to "Deprecations?", the patch must contain updates to the
+  relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
- * If you answer no to "Tests pass", you must add an item to a todo-list with
-   the actions that must be done to fix the tests;
+* If you answer no to "Tests pass", you must add an item to a todo-list with
+  the actions that must be done to fix the tests;
 
- * If the "license" is not MIT, just don't submit the pull request as it won't
-   be accepted anyway.
+* If the "license" is not MIT, just don't submit the pull request as it won't
+  be accepted anyway.
 
 If some of the previous requirements are not met, create a todo-list and add
 relevant items:
@@ -364,16 +368,16 @@ Rework your Patch
 
 Based on the feedback on the pull request, you might need to rework your
 patch. Before re-submitting the patch, rebase with ``upstream/master`` or
-``upstream/2.1``, don't merge; and force the push to the origin:
+``upstream/2.3``, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 
     $ git rebase -f upstream/master
-    $ git push -f origin BRANCH_NAME
+    $ git push --force origin BRANCH_NAME
 
 .. note::
 
-    when doing a ``push --force``, always specify the branch name explicitly
+    When doing a ``push --force``, always specify the branch name explicitly
     to avoid messing other branches in the repo (``--force`` tells Git that
     you really want to mess with things so do it carefully).
 
@@ -383,10 +387,9 @@ convert many commits to one commit. To do this, use the rebase command:
 .. code-block:: bash
 
     $ git rebase -i upstream/master
-    $ git push -f origin BRANCH_NAME
+    $ git push --force origin BRANCH_NAME
 
-The number 3 here must equal the amount of commits in your branch. After you
-type this command, an editor will popup showing a list of commits:
+After you type this command, an editor will popup showing a list of commits:
 
 .. code-block:: text
 
@@ -396,14 +399,14 @@ type this command, an editor will popup showing a list of commits:
 
 To squash all commits into the first one, remove the word ``pick`` before the
 second and the last commits, and replace it by the word ``squash`` or just
- ``s``. When you save, Git will start rebasing, and if successful, will ask
- you to edit the commit message, which by default is a listing of the commit
- messages of all the commits. When you are finished, execute the push command.
+``s``. When you save, Git will start rebasing, and if successful, will ask
+you to edit the commit message, which by default is a listing of the commit
+messages of all the commits. When you are finished, execute the push command.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
-.. _`Github's Documentation`:              https://help.github.com/articles/ignoring-files
-.. _Symfony2 repository:                   https://github.com/symfony/symfony
+.. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
+.. _Symfony repository:                    https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         https://travis-ci.org/
 .. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
@@ -412,3 +415,4 @@ second and the last commits, and replace it by the word ``squash`` or just
 .. _`fabbot`:                              http://fabbot.io
 .. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
+.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html

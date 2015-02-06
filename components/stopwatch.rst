@@ -5,11 +5,12 @@
 The Stopwatch Component
 =======================
 
-    Stopwatch component provides a way to profile code.
+    The Stopwatch component provides a way to profile code.
 
 .. versionadded:: 2.2
-    The Stopwatch component is new to Symfony 2.2. Previously, the ``Stopwatch``
-    class was located in the HttpKernel component (and was new in 2.1).
+    The Stopwatch component was introduced in Symfony 2.2. Previously, the
+    ``Stopwatch`` class was located in the HttpKernel component (and was introduced
+    in Symfony 2.1).
 
 Installation
 ------------
@@ -34,6 +35,11 @@ microtime by yourself. Instead, use the simple
     $stopwatch->start('eventName');
     // ... some code goes here
     $event = $stopwatch->stop('eventName');
+
+The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
+from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop` and
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` methods.
 
 You can also provide a category name to an event::
 
@@ -68,13 +74,13 @@ call::
 In addition to periods, you can get other useful information from the event object.
 For example::
 
-    $event->getCategory();      // Returns the category the event was started in
-    $event->getOrigin();        // Returns the event start time in milliseconds
-    $event->ensureStopped();    // Stops all periods not already stopped
-    $event->getStartTime();     // Returns the start time of the very first period
-    $event->getEndTime();       // Returns the end time of the very last period
-    $event->getDuration();      // Returns the event duration, including all periods
-    $event->getMemory();        // Returns the max memory usage of all periods
+    $event->getCategory();   // Returns the category the event was started in
+    $event->getOrigin();     // Returns the event start time in milliseconds
+    $event->ensureStopped(); // Stops all periods not already stopped
+    $event->getStartTime();  // Returns the start time of the very first period
+    $event->getEndTime();    // Returns the end time of the very last period
+    $event->getDuration();   // Returns the event duration, including all periods
+    $event->getMemory();     // Returns the max memory usage of all periods
 
 Sections
 --------

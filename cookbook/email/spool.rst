@@ -4,7 +4,7 @@
 How to Spool Emails
 ===================
 
-When you are using the SwiftmailerBundle to send an email from a Symfony2
+When you are using the SwiftmailerBundle to send an email from a Symfony
 application, it will default to sending the email immediately. You may, however,
 want to avoid the performance hit of the communication between Swift Mailer
 and the email transport, which could cause the user to wait for the next
@@ -15,7 +15,7 @@ such as a file. Another process can then read from the spool and take care
 of sending the emails in the spool. Currently only spooling to file or memory is supported
 by Swift Mailer.
 
-Spool using memory
+Spool Using Memory
 ------------------
 
 When you use spooling to store the emails to memory, they will get sent right
@@ -38,7 +38,8 @@ swiftmailer with the memory option, use the following configuration:
 
         <!--
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+            http://symfony.com/schema/dic/swiftmailer
+            http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config>
@@ -49,11 +50,11 @@ swiftmailer with the memory option, use the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-             ...,
+             // ...
             'spool' => array('type' => 'memory')
         ));
 
-Spool using a file
+Spool Using a File
 ------------------
 
 In order to use the spool with a file, use the following configuration:
@@ -75,7 +76,8 @@ In order to use the spool with a file, use the following configuration:
 
         <!--
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+            http://symfony.com/schema/dic/swiftmailer
+            http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config>
@@ -99,7 +101,7 @@ In order to use the spool with a file, use the following configuration:
 .. tip::
 
     If you want to store the spool somewhere with your project directory,
-    remember that you can use the `%kernel.root_dir%` parameter to reference
+    remember that you can use the ``%kernel.root_dir%`` parameter to reference
     the project's root:
 
     .. code-block:: yaml

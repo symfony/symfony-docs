@@ -98,17 +98,17 @@ those errors should be attributed::
 
     // ...
     use Symfony\Component\Validator\ExecutionContextInterface;
-    
+
     class Author
     {
         // ...
         private $firstName;
-    
+
         public function isAuthorValid(ExecutionContextInterface $context)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array();
-        
+
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
                 $context->addViolationAt('firstname', 'This name sounds totally fake!', array(), null);
@@ -155,7 +155,7 @@ process. Each method can be one of the following formats:
 
             /**
              * @Assert\Callback(methods={
-             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid"}
+             *     { "Acme\BlogBundle\MyStaticValidatorClass", "isAuthorValid" }
              * })
              */
             class Author
@@ -208,10 +208,10 @@ process. Each method can be one of the following formats:
     object being validated (e.g. ``Author``) as well as the ``ExecutionContextInterface``::
 
         namespace Acme\BlogBundle;
-    
+
         use Symfony\Component\Validator\ExecutionContextInterface;
         use Acme\BlogBundle\Entity\Author;
-    
+
         class MyStaticValidatorClass
         {
             public static function isAuthorValid(Author $author, ExecutionContextInterface $context)

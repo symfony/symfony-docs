@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration reference; Framework
+    single: Configuration reference; Framework
 
 FrameworkBundle Configuration ("framework")
 ===========================================
@@ -19,6 +19,7 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `default_locale`_
 * `trusted_proxies`_
 * `form`_
     * enabled
@@ -45,6 +46,13 @@ Configuration
 * `profiler`_
     * `collect`_
     * :ref:`enabled <profiler.enabled>`
+* `translator`_
+    * :ref:`enabled <translator.enabled>`
+    * `fallback`_
+* `validation`_
+    * `cache`_
+    * `enable_annotations`_
+    * `translation_domain`_
 
 secret
 ~~~~~~
@@ -62,15 +70,15 @@ http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ``http_method_override`` option is new in Symfony 2.3.
+    The ``http_method_override`` option was introduced in Symfony 2.3.
 
 **type**: ``Boolean`` **default**: ``true``
 
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-gets called automatically. It becomes the service container parameter named
-``kernel.http_method_override``. For more information, see
+method gets called automatically. It becomes the service container parameter
+named ``kernel.http_method_override``. For more information, see
 :doc:`/cookbook/routing/method_parameters`.
 
 ide
@@ -82,25 +90,53 @@ If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.
 
-If you use TextMate or Mac Vim, you can simply use one of the following built-in
-values:
+Symfony contains preconfigured urls for some popular IDEs, you can set them
+using the following keys:
 
 * ``textmate``
 * ``macvim``
+* ``emacs``
+* ``sublime``
 
-You can also specify a custom file link string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, the
-full TextMate string would look like this:
+.. versionadded:: 2.3.14
+    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
-.. code-block:: yaml
+You can also specify a custom url string. If you do this, all percentage
+signs (``%``) must be doubled to escape that character. For example, if you
+have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
-    framework:
-        ide:  "txmt://open?url=file://%%f&line=%%l"
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            ide: "pstorm://%%f:%%l"
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config ide="pstorm://%%f:%%l" />
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'ide' => 'pstorm://%%f:%%l',
+        ));
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-``php.ini`` value to the file link string. If this configuration value is set, then
-the ``ide`` option does not need to be specified.
+in the ``php.ini`` configuration to the url string. If this configuration value
+is set, then the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -116,33 +152,53 @@ This setting should be present in your ``test`` environment (usually via
 
 .. _reference-framework-trusted-proxies:
 
+default_locale
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``en``
+
+The default locale is used if no ``_locale`` routing parameter has been set. It
+becomes the service container parameter named ``kernel.default_locale`` and it
+is also available with the
+:method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
+method.
+
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
 Configures the IP addresses that should be trusted as proxies. For more details,
-see :doc:`/components/http_foundation/trusting_proxies`.
+see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 
 .. versionadded:: 2.3
-    CIDR notation support was introduced, so you can whitelist whole
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
     subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         framework:
             trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
 
     .. code-block:: xml
 
-        <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
-            <!-- ... -->
-        </framework>
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
+        </container>
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('framework', array(
             'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
         ));
@@ -169,10 +225,12 @@ name which is defined in the ``php.ini`` with the ``session.name`` directive.
 cookie_lifetime
 ...............
 
-**type**: ``integer`` **default**: ``0``
+**type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. By default it will use
-``0``, which means the cookie is valid for the length of the browser session.
+This determines the lifetime of the session - in seconds. It will use ``null`` by
+default, which means ``session.cookie_lifetime`` value from ``php.ini`` will be used.
+Setting this value to ``0`` means the cookie is valid for the length of the browser
+session.
 
 cookie_path
 ...........
@@ -202,7 +260,7 @@ cookie_httponly
 
 **type**: ``Boolean`` **default**: ``false``
 
-This determines whether cookies should only accessible through the HTTP protocol.
+This determines whether cookies should only be accessible through the HTTP protocol.
 This means that the cookie won't be accessible by scripting languages, such
 as JavaScript. This setting can effectively help to reduce identity theft
 through XSS attacks.
@@ -257,9 +315,17 @@ the value to ``null``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:session save-path="null" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:session save-path="null" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -296,7 +362,7 @@ assets_base_urls
 
 This option allows you to define base URLs to be used for assets referenced
 from ``http`` and ``ssl`` (``https``) pages. A string value may be provided in
-lieu of a single-element array. If multiple base URLs are provided, Symfony2
+lieu of a single-element array. If multiple base URLs are provided, Symfony
 will select one from the collection each time it generates an asset's path.
 
 For your convenience, ``assets_base_urls`` can be set directly with a string or
@@ -345,15 +411,24 @@ Now, activate the ``assets_version`` option:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating assets-version="v2">
-            <framework:engine id="twig" />
-        </framework:templating>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:templating assets-version="v2">
+                <!-- ... -->
+                <framework:engine>twig</framework:engine>
+            </framework:templating>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
             'templating'      => array(
                 'engines'        => array('twig'),
                 'assets_version' => 'v2',
@@ -398,37 +473,39 @@ would be ``/images/logo.png?version=5``.
 
     URL rewrite rules could then be used to disregard the version prefix before
     serving the asset. Alternatively, you could copy assets to the appropriate
-    version path as part of your deployment process and forgo any URL rewriting.
+    version path as part of your deployment process and forgot any URL rewriting.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
 profiler
 ~~~~~~~~
 
-.. versionadded:: 2.2
-    The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
-    could only be disabled by omitting the ``framework.profiler`` configuration
-    entirely.
-
 .. _profiler.enabled:
 
 enabled
 .......
 
-**default**: ``true`` in the ``dev`` and ``test`` environments
+.. versionadded:: 2.2
+    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
+    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
+    configuration entirely.
 
-The profiler can be disabled by setting this key to ``false``.
+**type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 2.3
-
-    The ``collect`` option is new in Symfony 2.3. Previously, when ``profiler.enabled``
-    was false, the profiler *was* actually enabled, but the collectors were
-    disabled. Now the profiler and collectors can be controller independently.
+The profiler can be enabled by setting this key to ``true``. When you are
+using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+and ``test`` environments.
 
 collect
 .......
 
-**default**: ``true``
+.. versionadded:: 2.3
+    The ``collect`` option was introduced in Symfony 2.3. Previously, when
+    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
+    but the collectors were disabled. Now, the profiler and the collectors
+    can be controlled independently.
+
+**type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
 to ``true``, the profiler collects data for all requests. If you want to only
@@ -437,7 +514,57 @@ and activate the data collectors by hand::
 
     $profiler->enable();
 
-Full Default Configuration
+translator
+~~~~~~~~~~
+
+.. _translator.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable the ``translator`` service in the service container.
+
+fallback
+........
+
+**type**: ``string`` **default**: ``en``
+
+This option is used when the translation key for the current locale wasn't found.
+
+For more details, see :doc:`/book/translation`.
+
+validation
+~~~~~~~~~~
+
+cache
+.....
+
+**type**: ``string``
+
+This value is used to determine the service that is used to persist class
+metadata in a cache. The actual service name is built by prefixing the configured
+value with ``validator.mapping.cache.`` (e.g. if the value is ``apc``, the
+``validator.mapping.cache.apc`` service will be injected). The service has
+to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+
+enable_annotations
+..................
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, validation constraints can be defined using annotations.
+
+translation_domain
+..................
+
+**type**: ``string`` **default**: ``validators``
+
+The translation domain that is used when translating validation constraint
+error messages.
+
+Full default Configuration
 --------------------------
 
 .. configuration-block::
@@ -511,7 +638,7 @@ Full Default Configuration
                 gc_divisor:           ~
                 gc_probability:       ~
                 gc_maxlifetime:       ~
-                save_path:            %kernel.cache_dir%/sessions
+                save_path:            "%kernel.cache_dir%/sessions"
 
             # serializer configuration
             serializer:
@@ -520,7 +647,7 @@ Full Default Configuration
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  %%s?%%s
+                assets_version_format:  "%%s?%%s"
                 hinclude_default_template:  ~
                 form:
                     resources:
@@ -541,7 +668,7 @@ Full Default Configuration
                     # Prototype
                     name:
                         version:              ~
-                        version_format:       %%s?%%s
+                        version_format:       "%%s?%%s"
                         base_urls:
                             http:                 []
                             ssl:                  []
@@ -561,7 +688,9 @@ Full Default Configuration
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       %kernel.cache_dir%/annotations
-                debug:                %kernel.debug%
+                file_cache_dir:       "%kernel.cache_dir%/annotations"
+                debug:                "%kernel.debug%"
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
+.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
+.. _`egulias/email-validator`: https://github.com/egulias/EmailValidator

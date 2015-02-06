@@ -55,11 +55,11 @@ interacting with html links and forms as you traverse through the HTML tree.
 .. note::
 
     The DomCrawler will attempt to automatically fix your HTML to match the
-    official specification. For example, if you nest a `` <p>`` tag inside
-    another `` <p>`` tag, it will be moved to be a sibling of the parent tag.
+    official specification. For example, if you nest a ``<p>`` tag inside
+    another ``<p>`` tag, it will be moved to be a sibling of the parent tag.
     This is expected and is part of the HTML5 spec. But if you're getting
     unexpected behavior, this could be a cause. And while the DomCrawler
-    isn't meant to dump content, you can see the "fixed" version if your HTML
+    isn't meant to dump content, you can see the "fixed" version of your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
 Node Filtering
@@ -83,10 +83,12 @@ Anonymous function can be used to filter with more complex criteria::
     use Symfony\Component\DomCrawler\Crawler;
     // ...
 
-    $crawler = $crawler->filter('body > p')->reduce(function (Crawler $node, $i) {
-        // filter even nodes
-        return ($i % 2) == 0;
-    });
+    $crawler = $crawler
+        ->filter('body > p')
+        ->reduce(function (Crawler $node, $i) {
+            // filter even nodes
+            return ($i % 2) == 0;
+        });
 
 To remove a node the anonymous function must return false.
 

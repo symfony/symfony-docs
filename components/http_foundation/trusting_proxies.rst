@@ -4,18 +4,23 @@
 Trusting Proxies
 ================
 
+.. tip::
+
+    If you're using the Symfony Framework, start by reading
+    :doc:`/cookbook/request/load_balancer_reverse_proxy`.
+
 If you find yourself behind some sort of proxy - like a load balancer - then
 certain header information may be sent to you using special ``X-Forwarded-*``
 headers. For example, the ``Host`` HTTP header is usually used to return
 the requested host. But when you're behind a proxy, the true host may be
 stored in a ``X-Forwarded-Host`` header.
 
-Since HTTP headers can be spoofed, Symfony2 does *not* trust these proxy
+Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
 your proxy.
 
 .. versionadded:: 2.3
-    CIDR notation support was introduced, so you can whitelist whole
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
     subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. code-block:: php
@@ -43,7 +48,7 @@ can configure that header name via :method:`Symfony\\Component\\HttpFoundation\\
     Request::setTrustedHeaderName(Request::HEADER_CLIENT_PORT, 'X-Proxy-Port');
     Request::setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, 'X-Proxy-Proto');
 
-Not trusting certain Headers
+Not Trusting certain Headers
 ----------------------------
 
 By default, if you whitelist your proxy's IP address, then all four headers

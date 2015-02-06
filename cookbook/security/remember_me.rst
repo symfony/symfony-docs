@@ -1,7 +1,7 @@
 .. index::
    single: Security; "Remember me"
 
-How to add "Remember Me" Login Functionality
+How to Add "Remember Me" Login Functionality
 ============================================
 
 Once a user is authenticated, their credentials are typically stored in the
@@ -61,7 +61,7 @@ remember me functionality, as it will not always be appropriate. The usual
 way of doing this is to add a checkbox to the login form. By giving the checkbox
 the name ``_remember_me``, the cookie will automatically be set when the checkbox
 is checked and the user successfully logs in. So, your specific login form
-might ultimately looks like this:
+might ultimately look like this:
 
 .. configuration-block::
 
@@ -90,7 +90,7 @@ might ultimately looks like this:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
@@ -109,7 +109,7 @@ might ultimately looks like this:
 The user will then automatically be logged in on subsequent visits while
 the cookie remains valid.
 
-Forcing the User to Re-authenticate before accessing certain Resources
+Forcing the User to Re-authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
 
 When the user returns to your site, they are authenticated automatically based

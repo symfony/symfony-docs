@@ -1,10 +1,10 @@
 .. index::
    single: Config; Loading resources
 
-Loading resources
+Loading Resources
 =================
 
-Locating resources
+Locating Resources
 ------------------
 
 Loading the configuration normally starts with a search for resources – in
@@ -24,7 +24,7 @@ look in this directory first. The third argument indicates whether or not the
 locator should return the first file it has found, or an array containing
 all matches.
 
-Resource loaders
+Resource Loaders
 ----------------
 
 For each type of resource (YAML, XML, annotation, etc.) a loader must be defined.
@@ -39,7 +39,7 @@ class, which allows for recursively importing other resources::
     {
         public function load($resource, $type = null)
         {
-            $configValues = Yaml::parse($resource);
+            $configValues = Yaml::parse(file_get_contents($resource));
 
             // ... handle the config values
 
@@ -57,7 +57,7 @@ class, which allows for recursively importing other resources::
         }
     }
 
-Finding the right loader
+Finding the right Loader
 ------------------------
 
 The :class:`Symfony\\Component\\Config\\Loader\\LoaderResolver` receives as

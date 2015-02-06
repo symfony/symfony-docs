@@ -1,7 +1,7 @@
 .. index::
    single: Doctrine; Generating entities from existing database
 
-How to generate Entities from an Existing Database
+How to Generate Entities from an Existing Database
 ==================================================
 
 When starting work on a brand new project that uses a database, two different
@@ -49,9 +49,8 @@ to a post record thanks to a foreign key constraint.
 Before diving into the recipe, be sure your database connection parameters are
 correctly setup in the ``app/config/parameters.yml`` file (or wherever your
 database configuration is kept) and that you have initialized a bundle that
-will host your future entity class. In this tutorial it's assumed that
-an ``AcmeBlogBundle`` exists and is located under the ``src/Acme/BlogBundle``
-folder.
+will host your future entity class. In this tutorial it's assumed that an
+AcmeBlogBundle exists and is located under the ``src/Acme/BlogBundle`` folder.
 
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding

@@ -7,9 +7,9 @@ Contributing
 ------------
 
 >**Note**
->Unless you're documenting a feature that's new to a specific version of Symfony
->(e.g. Symfony 2.3), all pull requests must be based off of the **2.2** branch,
->**not** the master or 2.3 branch.
+>Unless you're documenting a feature that was introduced *after* Symfony 2.3 
+>(e.g. in Symfony 2.4), all pull requests must be based off of the **2.3** branch,
+>**not** the master or older branches.
 
 We love contributors! For more information on how you can contribute to the
 Symfony documentation, please read

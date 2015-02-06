@@ -2,7 +2,7 @@ LessThanOrEqual
 ===============
 
 .. versionadded:: 2.3
-    This constraint is new in version 2.3.
+    The ``LessThanOrEqual`` constraint was introduced in Symfony 2.3.
 
 Validates that a value is less than or equal to another value, defined in the
 options. To force that a value is less than another value, see
@@ -29,7 +29,7 @@ equal to ``80``, you could do the following:
 
     .. code-block:: yaml
 
-        # src/SocialBundle/Resources/config/validation.yml
+        # src/Acme/SocialBundle/Resources/config/validation.yml
         Acme\SocialBundle\Entity\Person:
             properties:
                 age:
@@ -56,13 +56,19 @@ equal to ``80``, you could do the following:
     .. code-block:: xml
 
         <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
-        <class name="Acme\SocialBundle\Entity\Person">
-            <property name="age">
-                <constraint name="LessThanOrEqual">
-                    <option name="value">80</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SocialBundle\Entity\Person">
+                <property name="age">
+                    <constraint name="LessThanOrEqual">
+                        <option name="value">80</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

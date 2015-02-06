@@ -2,7 +2,7 @@
    single: Console; Sending emails
    single: Console; Generating URLs
 
-How to generate URLs and send Emails from the Console
+How to Generate URLs and Send Emails from the Console
 =====================================================
 
 Unfortunately, the command line context does not know about your VirtualHost
@@ -20,8 +20,8 @@ and per Command.
 Configuring the Request Context globally
 ----------------------------------------
 
-.. versionadded: 2.2
-    The ``base_url`` parameter is available since Symfony 2.2
+.. versionadded:: 2.2
+    The ``base_url`` parameter was introduced in Symfony 2.2.
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
@@ -69,7 +69,7 @@ Configuring the Request Context per Command
 To change it only in one command you can simply fetch the Request Context
 from the ``router`` service and override its settings::
 
-   // src/Acme/DemoBundle/Command/DemoCommand.php
+   // src/AppBundle/Command/DemoCommand.php
 
    // ...
    class DemoCommand extends ContainerAwareCommand
@@ -88,6 +88,10 @@ from the ``router`` service and override its settings::
 Using Memory Spooling
 ---------------------
 
+.. versionadded:: 2.3
+    When using Symfony 2.3+ and SwiftmailerBundle 2.3.5+, the memory spool is now
+    handled automatically in the CLI and the code below is not necessary anymore.
+
 Sending emails in a console command works the same way as described in the
 :doc:`/cookbook/email/email` cookbook except if memory spooling is used.
 
@@ -98,14 +102,14 @@ the queue yourself. Use the following code to send emails inside your
 console command::
 
     $message = new \Swift_Message();
-    
+
     // ... prepare the message
-    
+
     $container = $this->getContainer();
     $mailer = $container->get('mailer');
-    
+
     $mailer->send($message);
-    
+
     // now manually flush the queue
     $spool = $mailer->getTransport()->getSpool();
     $transport = $container->get('swiftmailer.transport.real');

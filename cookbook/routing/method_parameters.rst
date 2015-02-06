@@ -1,7 +1,7 @@
 .. index::
    single: Routing; methods
 
-How to use HTTP Methods beyond GET and POST in Routes
+How to Use HTTP Methods beyond GET and POST in Routes
 =====================================================
 
 The HTTP method of a request is one of the requirements that can be checked
@@ -17,18 +17,18 @@ delete it by matching on GET, PUT and DELETE.
 
         blog_show:
             path:     /blog/{slug}
-            defaults: { _controller: AcmeDemoBundle:Blog:show }
-            methods:   [GET]
+            defaults: { _controller: AppBundle:Blog:show }
+            methods:  [GET]
 
         blog_update:
             path:     /blog/{slug}
-            defaults: { _controller: AcmeDemoBundle:Blog:update }
-            methods:   [PUT]
+            defaults: { _controller: AppBundle:Blog:update }
+            methods:  [PUT]
 
         blog_delete:
             path:     /blog/{slug}
-            defaults: { _controller: AcmeDemoBundle:Blog:delete }
-            methods:   [DELETE]
+            defaults: { _controller: AppBundle:Blog:delete }
+            methods:  [DELETE]
 
     .. code-block:: xml
 
@@ -39,15 +39,15 @@ delete it by matching on GET, PUT and DELETE.
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" path="/blog/{slug}" methods="GET">
-                <default key="_controller">AcmeDemoBundle:Blog:show</default>
+                <default key="_controller">AppBundle:Blog:show</default>
             </route>
 
             <route id="blog_update" path="/blog/{slug}" methods="PUT">
-                <default key="_controller">AcmeDemoBundle:Blog:update</default>
+                <default key="_controller">AppBundle:Blog:update</default>
             </route>
 
             <route id="blog_delete" path="/blog/{slug}" methods="DELETE">
-                <default key="_controller">AcmeDemoBundle:Blog:delete</default>
+                <default key="_controller">AppBundle:Blog:delete</default>
             </route>
         </routes>
 
@@ -58,34 +58,34 @@ delete it by matching on GET, PUT and DELETE.
 
         $collection = new RouteCollection();
         $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeDemoBundle:Blog:show',
+            '_controller' => 'AppBundle:Blog:show',
         ), array(), array(), '', array(), array('GET')));
 
         $collection->add('blog_update', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeDemoBundle:Blog:update',
+            '_controller' => 'AppBundle:Blog:update',
         ), array(), array(), '', array(), array('PUT')));
 
         $collection->add('blog_delete', new Route('/blog/{slug}', array(
-            '_controller' => 'AcmeDemoBundle:Blog:delete',
+            '_controller' => 'AppBundle:Blog:delete',
         ), array(), array(), '', array('DELETE')));
 
         return $collection;
 
-Faking the Method with _method
-------------------------------
+Faking the Method with ``_method``
+----------------------------------
 
 .. note::
 
     The ``_method`` functionality shown here is disabled by default in Symfony 2.2
     and enabled by default in Symfony 2.3. To control it in Symfony 2.2, you
-    must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>` 
+    must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
     before you handle the request (e.g. in your front controller). In Symfony
     2.3, use the :ref:`configuration-framework-http_method_override` option.
 
 Unfortunately, life isn't quite this simple, since most browsers do not
-support sending PUT and DELETE requests. Fortunately Symfony2 provides you
+support sending PUT and DELETE requests. Fortunately, Symfony provides you
 with a simple way of working around this limitation. By including a ``_method``
-parameter in the query string or parameters of an HTTP request, Symfony2 will
+parameter in the query string or parameters of an HTTP request, Symfony will
 use this as the method when matching routes. Forms automatically include a
 hidden field for this parameter if their submission method is not GET or POST.
 See :ref:`the related chapter in the forms documentation<book-forms-changing-action-and-method>`

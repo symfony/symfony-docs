@@ -2,7 +2,7 @@ Isbn
 ====
 
 .. versionadded:: 2.3
-    The Isbn constraint was added in Symfony 2.3.
+    The Isbn constraint was introduced in Symfony 2.3.
 
 This constraint validates that an `International Standard Book Number (ISBN)`_
 is either a valid ISBN-10, a valid ISBN-13 or both.
@@ -43,6 +43,8 @@ on an  object that will contain a ISBN number.
     .. code-block:: php-annotations
 
         // src/Acme/BookcaseBundle/Entity/Book.php
+        namespace Acme\BookcaseBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Book
@@ -60,15 +62,21 @@ on an  object that will contain a ISBN number.
     .. code-block:: xml
 
         <!-- src/Acme/BookcaseBundle/Resources/config/validation.xml -->
-        <class name="Acme\BookcaseBundle\Entity\Book">
-            <property name="isbn">
-                <constraint name="Isbn">
-                    <option name="isbn10">true</option>
-                    <option name="isbn13">true</option>
-                    <option name="bothIsbnMessage">This value is neither a valid ISBN-10 nor a valid ISBN-13.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BookcaseBundle\Entity\Book">
+                <property name="isbn">
+                    <constraint name="Isbn">
+                        <option name="isbn10">true</option>
+                        <option name="isbn13">true</option>
+                        <option name="bothIsbnMessage">This value is neither a valid ISBN-10 nor a valid ISBN-13.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 

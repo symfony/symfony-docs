@@ -74,6 +74,8 @@ Asset path generation is handled internally by packages. The component provides
 
 You can also use multiple packages::
 
+    use Symfony\Component\Templating\Asset\PathPackage;
+
     // ...
     $templateEngine->set(new AssetsHelper());
 
@@ -102,4 +104,4 @@ Custom Packages
 ---------------
 
 You can create your own package by extending
-:class:`Symfony\\Component\\Templating\\Package\\Package`.
+:class:`Symfony\\Component\\Templating\\Asset\\Package`.

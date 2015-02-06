@@ -9,14 +9,14 @@ functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
 :method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
 
 All the methods inside the Dialog Helper have an
-:class:`Symfony\\Component\\Console\\Output\\OutputInterface` as first the
-argument, the question as the second argument and the default value as last
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface` as the first
+argument, the question as the second argument and the default value as the last
 argument.
 
-Asking the User for confirmation
+Asking the User for Confirmation
 --------------------------------
 
 Suppose you want to confirm an action before actually executing it. Add
@@ -52,19 +52,20 @@ if you want to know a bundle name, you can add this to your command::
     );
 
 The user will be asked "Please enter the name of the bundle". They can type
-some name which will be returned by the ``ask`` method. If they leave it empty,
-the default value (``AcmeDemoBundle`` here) is returned.
+some name which will be returned by the
+:method:`Symfony\\Component\\Console\\Helper\\DialogHelper::ask` method.
+If they leave it empty, the default value (AcmeDemoBundle here) is returned.
 
 Autocompletion
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    Autocompletion for questions was added in Symfony 2.2.
+    Autocompletion for questions was introduced in Symfony 2.2.
 
 You can also specify an array of potential answers for a given question. These
 will be autocompleted as the user types::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
     $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
     $name = $dialog->ask(
         $output,
@@ -77,12 +78,12 @@ Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The ``askHiddenResponse`` method was added in Symfony 2.2.
+    The ``askHiddenResponse`` method was introduced in Symfony 2.2.
 
 You can also ask a question and hide the response. This is particularly
 convenient for passwords::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
     $password = $dialog->askHiddenResponse(
         $output,
         'What is the database password?',
@@ -101,7 +102,7 @@ Validating the Answer
 ---------------------
 
 You can even validate the answer. For instance, in the last example you asked
-for the bundle name. Following the Symfony2 naming conventions, it should
+for the bundle name. Following the Symfony naming conventions, it should
 be suffixed with ``Bundle``. You can validate that by using the
 :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::askAndValidate`
 method::
@@ -112,10 +113,11 @@ method::
         'Please enter the name of the bundle',
         function ($answer) {
             if ('Bundle' !== substr($answer, -6)) {
-                throw new \RunTimeException(
+                throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
+
             return $answer;
         },
         false,
@@ -129,7 +131,8 @@ This methods has 2 new arguments, the full signature is::
         string|array $question,
         callback $validator,
         integer $attempts = false,
-        string $default = null
+        string $default = null,
+        array $autocomplete = null
     )
 
 The ``$validator`` is a callback which handles the validation. It should
@@ -138,8 +141,8 @@ in the console, so it is a good practice to put some useful information in it. T
 function should also return the value of the user's input if the validation was successful.
 
 You can set the max number of times to ask in the ``$attempts`` argument.
-If you reach this max number it will use the default value, which is given
-in the last argument. Using ``false`` means the amount of attempts is infinite.
+If you reach this max number it will use the default value.
+Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as they provide an invalid answer and will only
 be able to proceed if their input is valid.
 
@@ -147,16 +150,18 @@ Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
+    The ``askHiddenResponseAndValidate`` method was introduced in Symfony 2.2.
 
 You can also ask and validate a hidden response::
 
-    $dialog = $this->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
 
     $validator = function ($value) {
-        if (trim($value) == '') {
+        if ('' === trim($value)) {
             throw new \Exception('The password can not be empty');
         }
+
+        return $value;
     };
 
     $password = $dialog->askHiddenResponseAndValidate(
@@ -170,12 +175,12 @@ You can also ask and validate a hidden response::
 If you want to allow the response to be visible if it cannot be hidden for
 some reason, pass true as the fifth argument.
 
-Let the user choose from a list of Answers
+Let the User Choose from a List of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
     The :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select` method
-    was added in Symfony 2.2.
+    was introduced in Symfony 2.2.
 
 If you have a predefined set of answers the user can choose from, you
 could use the ``ask`` method described above or, to make sure the user
@@ -187,7 +192,7 @@ Instead, you can use the
 method, which makes sure that the user can only enter a valid string
 from a predefined list::
 
-    $dialog = $app->getHelperSet()->get('dialog');
+    $dialog = $this->getHelper('dialog');
     $colors = array('red', 'blue', 'yellow');
 
     $color = $dialog->select(
@@ -210,7 +215,7 @@ argument). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth argument.
 
 .. versionadded:: 2.3
-    Multiselect support was added in Symfony 2.3.
+    Multiselect support was introduced in Symfony 2.3.
 
 Multiple Choices
 ................
@@ -231,32 +236,40 @@ this set the seventh argument to ``true``::
         true // enable multiselect
     );
 
-    $selectedColors = array_map(function($c) use ($colors) {
+    $selectedColors = array_map(function ($c) use ($colors) {
         return $colors[$c];
     }, $selected);
 
-    $output->writeln('You have just selected: ' . implode(', ', $selectedColors));
+    $output->writeln(
+        'You have just selected: ' . implode(', ', $selectedColors)
+    );
 
-Now, when the user enters ``1,2``, the result will be: ``You have just selected: blue, yellow``.
+Now, when the user enters ``1,2``, the result will be:
+``You have just selected: blue, yellow``.
 
-Testing a Command which expects input
+Testing a Command which Expects Input
 -------------------------------------
 
 If you want to write a unit test for a command which expects some kind of input
 from the command line, you need to overwrite the HelperSet used by the command::
 
+    use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Helper\DialogHelper;
     use Symfony\Component\Console\Helper\HelperSet;
+    use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
     public function testExecute()
     {
         // ...
+        $application = new Application();
+        $application->add(new MyCommand());
+        $command = $application->find('my:command:name');
         $commandTester = new CommandTester($command);
 
         $dialog = $command->getHelper('dialog');
-        $dialog->setInputStream($this->getInputStream('Test\n'));
-        // Equals to a user inputing "Test" and hitting ENTER
+        $dialog->setInputStream($this->getInputStream("Test\n"));
+        // Equals to a user inputting "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
         $commandTester->execute(array('command' => $command->getName()));
@@ -273,7 +286,12 @@ from the command line, you need to overwrite the HelperSet used by the command::
         return $stream;
     }
 
-By setting the inputStream of the ``DialogHelper``, you imitate what the
+By setting the input stream of the ``DialogHelper``, you imitate what the
 console would do internally with all user input through the cli. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
+
+.. seealso::
+
+    You find more information about testing commands in the console component
+    docs about :ref:`testing console commands <component-console-testing-commands>`.

@@ -2,7 +2,7 @@ CardScheme
 ==========
 
 .. versionadded:: 2.2
-    The CardScheme validation is new in Symfony 2.2.
+    The ``CardScheme`` constraint was introduced in Symfony 2.2.
 
 This constraint ensures that a credit card number is valid for a given credit card
 company. It can be used to validate the number before trying to initiate a payment
@@ -61,7 +61,7 @@ on an object that will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -76,7 +76,7 @@ on an object that will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -99,7 +99,7 @@ Available Options
 -----------------
 
 schemes
--------
+~~~~~~~
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 

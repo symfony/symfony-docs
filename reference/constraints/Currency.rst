@@ -2,7 +2,7 @@ Currency
 ========
 
 .. versionadded:: 2.3
-    This constraint is new in version 2.3.
+    The ``Currency`` constraint was introduced in Symfony 2.3.
 
 Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
@@ -26,7 +26,7 @@ currency, you could do the following:
 
     .. code-block:: yaml
 
-        # src/EcommerceBundle/Resources/config/validation.yml
+        # src/Acme/EcommerceBundle/Resources/config/validation.yml
         Acme\EcommerceBundle\Entity\Order:
             properties:
                 currency:
@@ -50,11 +50,17 @@ currency, you could do the following:
     .. code-block:: xml
 
         <!-- src/Acme/EcommerceBundle/Resources/config/validation.xml -->
-        <class name="Acme\EcommerceBundle\Entity\Order">
-            <property name="currency">
-                <constraint name="Currency" />
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\EcommerceBundle\Entity\Order">
+                <property name="currency">
+                    <constraint name="Currency" />
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
@@ -82,4 +88,4 @@ message
 
 This is the message that will be shown if the value is not a valid currency.
 
-.. _`3-letter ISO 4217`: http://en.wikipedia.org/wiki/ISO_4217 
+.. _`3-letter ISO 4217`: http://en.wikipedia.org/wiki/ISO_4217

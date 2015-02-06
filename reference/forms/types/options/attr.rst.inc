@@ -10,6 +10,3 @@ as keys. This can be useful when you need to set a custom class for some widget:
     $builder->add('body', 'textarea', array(
         'attr' => array('class' => 'tinymce'),
     ));
-
-
-

@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration reference; Swift Mailer
+    single: Configuration reference; Swift Mailer
 
 SwiftmailerBundle Configuration ("swiftmailer")
 ===============================================
@@ -10,6 +10,9 @@ options, see `Full Default Configuration`_
 
 The ``swiftmailer`` key configures Symfony's integration with Swift Mailer,
 which is responsible for creating and delivering email messages.
+
+The following section lists all options that are available to configure a
+mailer. It is also possible to configure several mailers (see `Using Multiple Mailers`_).
 
 Configuration
 -------------
@@ -127,7 +130,7 @@ antiflood
 threshold
 .........
 
-**type**: ``string`` **default**: ``99``
+**type**: ``integer`` **default**: ``99``
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of emails
 to send before restarting the transport.
@@ -135,7 +138,7 @@ to send before restarting the transport.
 sleep
 .....
 
-**type**: ``string`` **default**: ``0``
+**type**: ``integer`` **default**: ``0``
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of seconds
 to sleep for during a transport restart.
@@ -169,7 +172,7 @@ logging
 If true, Symfony's data collector will be activated for Swift Mailer and the
 information will be available in the profiler.
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 .. configuration-block::
@@ -197,26 +200,94 @@ Full Default Configuration
 
     .. code-block:: xml
 
-        <swiftmailer:config
-            transport="smtp"
-            username=""
-            password=""
-            host="localhost"
-            port="false"
-            encryption=""
-            auth_mode=""
-            sender_address=""
-            delivery_address=""
-            disable_delivery=""
-            logging="%kernel.debug%"
-        >
-            <swiftmailer:spool
-                path="%kernel.cache_dir%/swiftmailer/spool"
-                type="file"
-            />
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:antiflood
-                sleep="0"
-                threshold="99"
-            />
-        </swiftmailer:config>
+            <swiftmailer:config
+                transport="smtp"
+                username=""
+                password=""
+                host="localhost"
+                port="false"
+                encryption=""
+                auth_mode=""
+                sender_address=""
+                delivery_address=""
+                disable_delivery=""
+                logging="%kernel.debug%"
+                >
+                <swiftmailer:spool
+                    path="%kernel.cache_dir%/swiftmailer/spool"
+                    type="file" />
+
+                <swiftmailer:antiflood
+                    sleep="0"
+                    threshold="99" />
+            </swiftmailer:config>
+        </container>
+
+Using multiple Mailers
+----------------------
+
+You can configure multiple mailers by grouping them under the ``mailers``
+key (the default mailer is identified by the ``default_mailer`` option):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        swiftmailer:
+            default_mailer: second_mailer
+            mailers:
+                first_mailer:
+                    # ...
+                second_mailer:
+                    # ...
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd"
+        >
+            <swiftmailer:config default-mailer="second_mailer">
+                <swiftmailer:mailer name="first_mailer"/>
+                <swiftmailer:mailer name="second_mailer"/>
+            </swiftmailer:config>
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('swiftmailer', array(
+            'default_mailer' => 'second_mailer',
+            'mailers' => array(
+                'first_mailer' => array(
+                    // ...
+                ),
+                'second_mailer' => array(
+                    // ...
+                ),
+            ),
+        ));
+
+Each mailer is registered as a service::
+
+    // ...
+
+    // returns the first mailer
+    $container->get('swiftmailer.mailer.first_mailer');
+
+    // also returns the second mailer since it is the default mailer
+    $container->get('swiftmailer.mailer');
+
+    // returns the second mailer
+    $container->get('swiftmailer.mailer.second_mailer');

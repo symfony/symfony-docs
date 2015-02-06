@@ -18,12 +18,12 @@ For information on overriding templates, see
 Routing
 -------
 
-Routing is never automatically imported in Symfony2. If you want to include
+Routing is never automatically imported in Symfony. If you want to include
 the routes from any bundle, then they must be manually imported from somewhere
 in your application (e.g. ``app/config/routing.yml``).
 
 The easiest way to "override" a bundle's routing is to never import it at
-all. Instead of importing a third-party bundle's routing, simply copying
+all. Instead of importing a third-party bundle's routing, simply copy
 that routing file into your application, modify it, and import it instead.
 
 Controllers
@@ -53,7 +53,7 @@ in the core FrameworkBundle:
 
         # app/config/config.yml
         parameters:
-            translator.class:      Acme\HelloBundle\Translation\Translator
+            translator.class: Acme\HelloBundle\Translation\Translator
 
     .. code-block:: xml
 
@@ -68,7 +68,7 @@ in the core FrameworkBundle:
         $container->setParameter('translator.class', 'Acme\HelloBundle\Translation\Translator');
 
 Secondly, if the class is not available as a parameter, you want to make sure the
-class is always overridden when your bundle is used, or you need to modify
+class is always overridden when your bundle is used or if you need to modify
 something beyond just the class name, you should use a compiler pass::
 
     // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
@@ -93,7 +93,7 @@ See :doc:`/cookbook/service_container/compiler_passes` for information on how to
 compiler passes. If you want to do something beyond just overriding the class -
 like adding a method call - you can only use the compiler pass method.
 
-Entities & Entity mapping
+Entities & Entity Mapping
 -------------------------
 
 Due to the way Doctrine works, it is not possible to override entity mapping
@@ -106,7 +106,7 @@ Forms
 -----
 
 In order to override a form type, it has to be registered as a service (meaning
-it is tagged as "form.type"). You can then override it as you would override any
+it is tagged as ``form.type``). You can then override it as you would override any
 service as explained in `Services & Configuration`_. This, of course, will only
 work if the type is referred to by its alias rather than being instantiated,
 e.g.::
@@ -119,7 +119,7 @@ rather than::
 
 .. _override-validation:
 
-Validation metadata
+Validation Metadata
 -------------------
 
 Symfony loads all validation configuration files from every bundle and
@@ -136,7 +136,7 @@ the constraints to a new validation group:
     .. code-block:: yaml
 
         # src/Acme/UserBundle/Resources/config/validation.yml
-        Fos\UserBundle\Model\User:
+        FOS\UserBundle\Model\User:
             properties:
                 plainPassword:
                     - NotBlank:
@@ -152,10 +152,17 @@ the constraints to a new validation group:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Fos\UserBundle\Model\User">
-                <property name="password">
+            <class name="FOS\UserBundle\Model\User">
+                <property name="plainPassword">
+                    <constraint name="NotBlank">
+                        <option name="groups">
+                            <value>AcmeValidation</value>
+                        </option>
+                    </constraint>
+
                     <constraint name="Length">
                         <option name="min">6</option>
                         <option name="minMessage">fos_user.password.short</option>
@@ -181,7 +188,7 @@ can override the translations from any translation file, as long as it is in
 
 .. caution::
 
-    The last translation file always wins. That mean that you need to make
+    The last translation file always wins. That means that you need to make
     sure that the bundle containing *your* translations is loaded after any
     bundle whose translations you're overriding. This is done in ``AppKernel``.
 

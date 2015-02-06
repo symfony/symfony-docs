@@ -1,7 +1,7 @@
 .. index::
    single: Doctrine; File uploads
 
-How to handle File Uploads with Doctrine
+How to Handle File Uploads with Doctrine
 ========================================
 
 Handling file uploads with Doctrine entities is no different than handling
@@ -23,8 +23,8 @@ Basic Setup
 
 First, create a simple Doctrine entity class to work with::
 
-    // src/Acme/DemoBundle/Entity/Document.php
-    namespace Acme\DemoBundle\Entity;
+    // src/AppBundle/Entity/Document.php
+    namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -154,8 +154,8 @@ rules::
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\Document:
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Document:
             properties:
                 file:
                     - File:
@@ -163,8 +163,8 @@ rules::
 
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Entity/Document.php
-        namespace Acme\DemoBundle\Entity;
+        // src/AppBundle/Entity/Document.php
+        namespace AppBundle\Entity;
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -181,8 +181,8 @@ rules::
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
-        <class name="Acme\DemoBundle\Entity\Document">
+        <!-- src/AppBundle/Resources/config/validation.yml -->
+        <class name="AppBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">
                     <option name="maxSize">6000000</option>
@@ -192,7 +192,7 @@ rules::
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Entity/Document.php
+        // src/AppBundle/Entity/Document.php
         namespace Acme\DemoBundle\Entity;
 
         // ...
@@ -213,14 +213,14 @@ rules::
 
 .. note::
 
-    As you are using the ``File`` constraint, Symfony2 will automatically guess
+    As you are using the ``File`` constraint, Symfony will automatically guess
     that the form field is a file upload input. That's why you did not have
     to set it explicitly when creating the form above (``->add('file')``).
 
 The following controller shows you how to handle the entire process::
 
     // ...
-    use Acme\DemoBundle\Entity\Document;
+    use AppBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Symfony\Component\HttpFoundation\Request;
     // ...
@@ -299,6 +299,15 @@ object, which is what's returned after a ``file`` field is submitted::
 
 Using Lifecycle Callbacks
 -------------------------
+
+.. caution::
+
+    Using lifecycle callbacks is a limited technique that has some drawbacks.
+    If you want to remove the hardcoded ``__DIR__`` reference inside
+    the ``Document::getUploadRootDir()`` method, the best way is to start
+    using explicit :doc:`doctrine listeners </cookbook/doctrine/event_listeners_subscribers>`.
+    There you will be able to inject kernel parameters such as ``kernel.root_dir``
+    to be able to build absolute paths.
 
 Even if this implementation works, it suffers from a major flaw: What if there
 is a problem when the entity is persisted? The file would have already moved
@@ -395,11 +404,20 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
+            $file = $this->getAbsolutePath();
+            if ($file) {
                 unlink($file);
             }
         }
     }
+
+.. caution::
+
+   If changes to your entity are handled by a Doctrine event listener or event
+   subscriber, the ``preUpdate()`` callback must notify Doctrine about the changes
+   being done.
+   For full reference on preUpdate event restrictions, see `preUpdate`_ in the
+   Doctrine Events documentation.
 
 The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
@@ -433,7 +451,7 @@ call to ``$document->upload()`` should be removed from the controller::
     via Doctrine. One solution would be to use an ``updated`` field that's
     persisted to Doctrine, and to modify it manually when changing the file.
 
-Using the ``id`` as the filename
+Using the ``id`` as the Filename
 --------------------------------
 
 If you want to use the ``id`` as the name of the file, the implementation is
@@ -537,3 +555,5 @@ You'll notice in this case that you need to do a little bit more work in
 order to remove the file. Before it's removed, you must store the file path
 (since it depends on the id). Then, once the object has been fully removed
 from the database, you can safely delete the file (in ``PostRemove``).
+
+.. _`preUpdate`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate

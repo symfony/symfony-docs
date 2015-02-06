@@ -37,7 +37,8 @@ The component takes care of the subtle differences between the different platfor
 when executing the command.
 
 .. versionadded:: 2.2
-    The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods were added in Symfony 2.2.
+    The ``getIncrementalOutput()`` and ``getIncrementalErrorOutput()`` methods
+    were introduced in Symfony 2.2.
 
 The ``getOutput()`` method always return the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
@@ -65,7 +66,7 @@ anonymous function to the
     });
 
 .. versionadded:: 2.1
-    The non-blocking feature was added in 2.1.
+    The non-blocking feature was introduced in 2.1.
 
 Running Processes Asynchronously
 --------------------------------
@@ -112,11 +113,11 @@ Stopping a Process
 ------------------
 
 .. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was added in Symfony 2.3.
+    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
-two arguments : a timeout and a signal. Once the timeout is reached, the signal
+two arguments: a timeout and a signal. Once the timeout is reached, the signal
 is sent to the running process. The default signal sent to a process is ``SIGKILL``.
 Please read the :ref:`signal documentation below<reference-process-signal>`
 to find out more about signal handling in the Process component::
@@ -152,7 +153,7 @@ To make your code work better on all platforms, you might want to use the
 
 .. versionadded:: 2.3
     The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
@@ -214,9 +215,9 @@ Process Signals
 ---------------
 
 .. versionadded:: 2.3
-    The ``signal`` method was added in Symfony 2.3.
+    The ``signal`` method was introduced in Symfony 2.3.
 
-When running a program asynchronously, you can send it posix signals with the
+When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
     use Symfony\Component\Process\Process;
@@ -240,7 +241,7 @@ Process Pid
 -----------
 
 .. versionadded:: 2.3
-    The ``getPid`` method was added in Symfony 2.3.
+    The ``getPid`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method.

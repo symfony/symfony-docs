@@ -1,12 +1,12 @@
 .. index::
    single: Form; Form::submit()
 
-How to use the submit() Function to handle Form Submissions
+How to Use the submit() Function to Handle Form Submissions
 ===========================================================
 
 .. versionadded:: 2.3
     The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 With the ``handleRequest()`` method, it is really easy to handle form
 submissions::
@@ -36,6 +36,8 @@ submissions::
 .. tip::
 
     To see more about this method, read :ref:`book-form-handling-form-submissions`.
+
+.. _cookbook-form-call-submit-directly:
 
 Calling Form::submit() manually
 -------------------------------
@@ -84,7 +86,7 @@ method, pass the submitted data directly to
 
 .. _cookbook-form-submit-request:
 
-Passing a Request to Form::submit() (deprecated)
+Passing a Request to Form::submit() (Deprecated)
 ------------------------------------------------
 
 .. versionadded:: 2.3

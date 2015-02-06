@@ -5,7 +5,7 @@ reset Field Type
 ================
 
 .. versionadded:: 2.3
-    The ``reset`` type was added in Symfony 2.3
+    The ``reset`` type was introduced in Symfony 2.3
 
 A button that resets all fields to their original values.
 
@@ -23,7 +23,7 @@ A button that resets all fields to their original values.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ResetType` |
 +----------------------+---------------------------------------------------------------------+
 
-Inherited options
+Inherited Options
 -----------------
 
 .. include:: /reference/forms/types/options/button_attr.rst.inc

@@ -2,7 +2,7 @@
    single: Doctrine; Simple Registration Form
    single: Form; Simple Registration Form
 
-How to implement a simple Registration Form
+How to Implement a simple Registration Form
 ===========================================
 
 Some forms have extra fields whose values don't need to be stored in the
@@ -10,7 +10,7 @@ database. For example, you may want to create a registration form with some
 extra fields (like a "terms accepted" checkbox field) and embed the form
 that actually stores the account information.
 
-The simple User model
+The simple User Model
 ---------------------
 
 You have a simple ``User`` entity mapped to the database::
@@ -146,7 +146,7 @@ underlying data class (i.e. your ``User`` entity).
 
     To explore more things about the Form component, read :doc:`/book/forms`.
 
-Embedding the User form into a Registration Form
+Embedding the User Form into a Registration Form
 ------------------------------------------------
 
 The form that you'll use for the registration page is not the same as the
@@ -216,6 +216,7 @@ Next, create the form for this ``Registration`` model::
                 'checkbox',
                 array('property_path' => 'termsAccepted')
             );
+            $builder->add('Register', 'submit');
         }
 
         public function getName()
@@ -239,7 +240,6 @@ controller for displaying the registration form::
     namespace Acme\AccountBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Response;
 
     use Acme\AccountBundle\Form\Type\RegistrationType;
     use Acme\AccountBundle\Form\Model\Registration;
@@ -270,9 +270,12 @@ And its template:
 Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database::
 
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
+
     public function createAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
@@ -293,7 +296,7 @@ the validation and saves the data into the database::
         );
     }
 
-Add New Routes
+Add new Routes
 --------------
 
 Next, update your routes. If you're placing your routes inside your bundle
@@ -308,7 +311,7 @@ Next, update your routes. If you're placing your routes inside your bundle
         account_register:
             path:     /register
             defaults: { _controller: AcmeAccountBundle:Account:register }
-   
+
         account_create:
             path:     /register/create
             defaults: { _controller: AcmeAccountBundle:Account:create }

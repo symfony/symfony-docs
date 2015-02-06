@@ -1,7 +1,7 @@
 .. index::
    single: DependencyInjection; Scopes
 
-How to work with Scopes
+How to Work with Scopes
 =======================
 
 This entry is all about scopes, a somewhat advanced topic related to the
@@ -42,12 +42,12 @@ when compiling the container. Read the sidebar below for more details.
 
     Imagine, however, that you need the ``request`` service in your ``my_mailer``
     service, maybe because you're reading the URL of the current request.
-    So, you add it as a constructor argument. Let's look at why this presents
-    a problem:
+    So, you add it as a constructor argument. There are several reasons why
+    this presents a problem:
 
-    * When requesting ``my_mailer``, an instance of ``my_mailer`` (let's call
-      it *MailerA*) is created and the ``request`` service (let's call it
-      *RequestA*) is passed to it. Life is good!
+    * When requesting ``my_mailer``, an instance of ``my_mailer`` (called
+      *MailerA*) is created and the ``request`` service (called *RequestA*)
+      is passed to it. Life is good!
 
     * You've now made a subrequest in Symfony, which is a fancy way of saying
       that you've called, for example, the ``{{ render(...) }}`` Twig function,
@@ -95,19 +95,19 @@ Each scenario is detailed in the following sections.
 
 .. _using-synchronized-service:
 
-Using a synchronized Service
+Using a Synchronized Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    Synchronized services are new in Symfony 2.3.
+    Synchronized services were introduced in Symfony 2.3.
 
 Injecting the container or setting your service to a narrower scope have
 drawbacks. For synchronized services (like the ``request``), using setter
 injection is the best option as it has no drawbacks and everything works
 without any special code in your service or in your definition::
 
-    // src/Acme/HelloBundle/Mail/Mailer.php
-    namespace Acme\HelloBundle\Mail;
+    // src/AppBundle/Mail/Mailer.php
+    namespace AppBundle\Mail;
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -144,19 +144,19 @@ your code. This should also be taken into account when declaring your service:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             greeting_card_manager:
-                class: Acme\HelloBundle\Mail\GreetingCardManager
+                class: AppBundle\Mail\GreetingCardManager
                 calls:
-                    - [setRequest, ['@?request=']]
+                    - [setRequest, ["@?request="]]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="greeting_card_manager"
-                class="Acme\HelloBundle\Mail\GreetingCardManager"
+                class="AppBundle\Mail\GreetingCardManager"
             >
                 <call method="setRequest">
                     <argument type="service" id="request" on-invalid="null" strict="false" />
@@ -166,13 +166,13 @@ your code. This should also be taken into account when declaring your service:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
         $definition = $container->setDefinition(
             'greeting_card_manager',
-            new Definition('Acme\HelloBundle\Mail\GreetingCardManager')
+            new Definition('AppBundle\Mail\GreetingCardManager')
         )
         ->addMethodCall('setRequest', array(
             new Reference('request', ContainerInterface::NULL_ON_INVALID_REFERENCE, false)
@@ -225,33 +225,33 @@ Changing the scope of a service should be done in its definition:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # app/config/services.yml
         services:
             greeting_card_manager:
-                class: Acme\HelloBundle\Mail\GreetingCardManager
+                class: AppBundle\Mail\GreetingCardManager
                 scope: request
                 arguments: ["@request"]
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- app/config/services.xml -->
         <services>
             <service id="greeting_card_manager"
-                class="Acme\HelloBundle\Mail\GreetingCardManager"
-                scope="request"
-            />
-            <argument type="service" id="request" />
+                    class="AppBundle\Mail\GreetingCardManager"
+                    scope="request">
+                <argument type="service" id="request" />
+            </service>
         </services>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = $container->setDefinition(
             'greeting_card_manager',
             new Definition(
-                'Acme\HelloBundle\Mail\GreetingCardManager',
+                'AppBundle\Mail\GreetingCardManager',
                 array(new Reference('request'),
             ))
         )->setScope('request');
@@ -266,8 +266,8 @@ twig extension must be in the ``container`` scope as the Twig environment
 needs it as a dependency). In these cases, you can pass the entire container
 into your service::
 
-    // src/Acme/HelloBundle/Mail/Mailer.php
-    namespace Acme\HelloBundle\Mail;
+    // src/AppBundle/Mail/Mailer.php
+    namespace AppBundle\Mail;
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -300,41 +300,30 @@ The service config for this class would look something like this:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            my_mailer.class: Acme\HelloBundle\Mail\Mailer
+        # app/config/services.yml
         services:
             my_mailer:
-                class:     "%my_mailer.class%"
+                class:     AppBundle\Mail\Mailer
                 arguments: ["@service_container"]
                 # scope: container can be omitted as it is the default
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="my_mailer.class">Acme\HelloBundle\Mail\Mailer</parameter>
-        </parameters>
-
+        <!-- app/config/services.xml -->
         <services>
-            <service id="my_mailer" class="%my_mailer.class%">
+            <service id="my_mailer" class="AppBundle\Mail\Mailer">
                  <argument type="service" id="service_container" />
             </service>
         </services>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mail\Mailer');
-
         $container->setDefinition('my_mailer', new Definition(
-            '%my_mailer.class%',
+            'AppBundle\Mail\Mailer',
             array(new Reference('service_container'))
         ));
 

@@ -1,13 +1,13 @@
 .. index::
    single: Security; Voters
 
-How to implement your own Voter to blacklist IP Addresses
+How to Implement your own Voter to Blacklist IP Addresses
 =========================================================
 
-The Symfony2 Security component provides several layers to authorize users.
+The Symfony Security component provides several layers to authorize users.
 One of the layers is called a "voter". A voter is a dedicated class that checks
 if the user has the rights to connect to the application or access a specific
-resource/URL. For instance, Symfony2 provides a layer that checks if the user
+resource/URL. For instance, Symfony provides a layer that checks if the user
 is fully authorized or if it has some expected roles.
 
 It is sometimes useful to create a custom voter to handle a specific case not
@@ -21,28 +21,7 @@ A custom voter must implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
 which requires the following three methods:
 
-.. code-block:: php
-
-    interface VoterInterface
-    {
-        public function supportsAttribute($attribute);
-        public function supportsClass($class);
-        public function vote(TokenInterface $token, $object, array $attributes);
-    }
-
-The ``supportsAttribute()`` method is used to check if the voter supports
-the given user attribute (i.e: a role, an ACL, etc.).
-
-The ``supportsClass()`` method is used to check if the voter supports the
-class of the object whose access is being checked (doesn't apply to this entry).
-
-The ``vote()`` method must implement the business logic that verifies whether
-or not the user is granted access. This method must return one of the following
-values:
-
-* ``VoterInterface::ACCESS_GRANTED``: The authorization will be granted by this voter;
-* ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if authorization should be granted;
-* ``VoterInterface::ACCESS_DENIED``: The authorization will be denied by this voter.
+.. include:: /cookbook/security/voter_interface.rst.inc
 
 In this example, you'll check if the user's IP address matches against a list of
 blacklisted addresses and "something" will be the application. If the user's IP is blacklisted, you'll return
@@ -50,7 +29,7 @@ blacklisted addresses and "something" will be the application. If the user's IP 
 ``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
 access, not to grant access.
 
-Creating a Custom Voter
+Creating a custom Voter
 -----------------------
 
 To blacklist a user based on its IP, you can use the ``request`` service
@@ -58,8 +37,8 @@ and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
-    namespace Acme\DemoBundle\Security\Authorization\Voter;
+    // src/AppBundle/Security/Authorization/Voter/ClientIpVoter.php
+    namespace AppBundle\Security\Authorization\Voter;
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -70,7 +49,7 @@ and compare the IP address against a set of blacklisted IP addresses:
         private $container;
 
         private $blacklistedIp;
-            
+
         public function __construct(ContainerInterface $container, array $blacklistedIp = array())
         {
             $this->container     = $container;
@@ -127,9 +106,9 @@ and tag it as a ``security.voter``:
         # src/Acme/AcmeBundle/Resources/config/services.yml
         services:
             security.access.blacklist_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments:  ["@service_container", [123.123.123.123, 171.171.171.171]]
-                public:     false
+                class:     AppBundle\Security\Authorization\Voter\ClientIpVoter
+                arguments: ["@service_container", [123.123.123.123, 171.171.171.171]]
+                public:    false
                 tags:
                     - { name: security.voter }
 
@@ -137,7 +116,7 @@ and tag it as a ``security.voter``:
 
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
+                 class="AppBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="service_container" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
@@ -153,7 +132,7 @@ and tag it as a ``security.voter``:
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
+            'AppBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
                 new Reference('service_container'),
                 array('123.123.123.123', '171.171.171.171'),

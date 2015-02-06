@@ -1,7 +1,7 @@
 .. index::
    single: Tests; HTTP authentication
 
-How to simulate HTTP Authentication in a Functional Test
+How to Simulate HTTP Authentication in a Functional Test
 ========================================================
 
 If your application needs HTTP authentication, pass the username and password

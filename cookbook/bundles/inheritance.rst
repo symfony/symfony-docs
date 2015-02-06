@@ -1,7 +1,7 @@
 .. index::
    single: Bundle; Inheritance
 
-How to use Bundle Inheritance to Override parts of a Bundle
+How to Use Bundle Inheritance to Override Parts of a Bundle
 ===========================================================
 
 When working with third-party bundles, you'll probably come across a situation
@@ -12,7 +12,7 @@ things like controllers, templates, and other files in a bundle's
 
 For example, suppose that you're installing the `FOSUserBundle`_, but you
 want to override its base ``layout.html.twig`` template, as well as one of
-its controllers. Suppose also that you have your own ``AcmeUserBundle``
+its controllers. Suppose also that you have your own AcmeUserBundle
 where you want the overridden files to live. Start by registering the FOSUserBundle
 as the "parent" of your bundle::
 
@@ -91,7 +91,7 @@ The same goes for routing files and some other resources.
 .. note::
 
     The overriding of resources only works when you refer to resources with
-    the ``@FosUserBundle/Resources/config/routing/security.xml`` method.
+    the ``@FOSUserBundle/Resources/config/routing/security.xml`` method.
     If you refer to resources without using the @BundleName shortcut, they
     can't be overridden in this way.
 

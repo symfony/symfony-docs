@@ -50,17 +50,17 @@ The advantages of doing this will become more obvious as you continue::
         $this->options = $resolver->resolve($options);
     }
 
-The options property now is a well defined array with all resolved options readily available::
+The options property now is a well defined array with all resolved options
+readily available::
 
     // ...
-    public function getHost()
+    public function sendMail($from, $to)
     {
-        return $this->options['host'];
-    }
-
-    public function getPassword()
-    {
-        return $this->options['password'];
+        $mail = ...;
+        $mail->setHost($this->options['host']);
+        $mail->setUsername($this->options['username']);
+        $mail->setPassword($this->options['password']);
+        // ...
     }
 
 Configuring the OptionsResolver
@@ -70,6 +70,7 @@ Now, try to actually use the class::
 
     $mailer = new Mailer(array(
         'host'     => 'smtp.example.org',
+        'username' => 'user',
         'password' => 'pa$$word',
     ));
 
@@ -86,7 +87,7 @@ knows which options should be resolved.
     function.
 
 A best practice is to put the configuration in a method (e.g.
-``setDefaultOptions``). You call this method in the constructor to configure
+``configureOptions``). You call this method in the constructor to configure
 the ``OptionsResolver`` class::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -99,16 +100,38 @@ the ``OptionsResolver`` class::
         public function __construct(array $options = array())
         {
             $resolver = new OptionsResolver();
-            $this->setDefaultOptions($resolver);
+            $this->configureOptions($resolver);
 
             $this->options = $resolver->resolve($options);
         }
 
-        protected function setDefaultOptions(OptionsResolverInterface $resolver)
+        protected function configureOptions(OptionsResolverInterface $resolver)
         {
-            // ... configure the resolver, you will learn this in the sections below
+            // ... configure the resolver, you will learn this
+            // in the sections below
         }
     }
+
+Set default Values
+~~~~~~~~~~~~~~~~~~
+
+Most of the options have a default value. You can configure these options by
+calling :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefaults`::
+
+    // ...
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        // ...
+
+        $resolver->setDefaults(array(
+            'username' => 'root',
+        ));
+    }
+
+This would add an option - ``username`` - and give it a default value of
+``root``. If the user passes in a ``username`` option, that value will
+override this default. You don't need to configure ``username`` as an optional
+option.
 
 Required Options
 ~~~~~~~~~~~~~~~~
@@ -135,15 +158,18 @@ If you don't pass a required option, a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
 will be thrown.
 
-To determine if an option is required, you can use the
-:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired`
-method.
+.. tip::
+
+    To determine if an option is required, you can use the
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isRequired`
+    method.
 
 Optional Options
 ~~~~~~~~~~~~~~~~
 
 Sometimes, an option can be optional (e.g. the ``password`` option in the
-``Mailer`` class). You can configure these options by calling
+``Mailer`` class), but it doesn't have a default value. You can configure
+these options by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setOptional`::
 
     // ...
@@ -154,34 +180,23 @@ Sometimes, an option can be optional (e.g. the ``password`` option in the
         $resolver->setOptional(array('password'));
     }
 
-Set Default Values
-~~~~~~~~~~~~~~~~~~
+Options with defaults are already marked as optional.
 
-Most of the optional options have a default value. You can configure these
-options by calling
-:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefaults`::
+.. tip::
 
-    // ...
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        // ...
+    When setting an option as optional, you can't be sure if it's in the array
+    or not. You have to check if the option exists before using it.
 
-        $resolver->setDefaults(array(
-            'username' => 'root',
-        ));
-    }
+    To avoid checking if it exists everytime, you can also set a default of
+    ``null`` to an option using the ``setDefaults()`` method (see `Set Default Values`_),
+    this means the element always exists in the array, but with a default of
+    ``null``.
 
-This would add a third option - ``username`` - and give it a default value
-of ``root``. If the user passes in a ``username`` option, that value will
-override this default. You don't need to configure ``username`` as an optional
-option. The ``OptionsResolver`` already knows that options with a default
-value are optional.
-
-Default Values that depend on another Option
+Default Values that Depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you add a ``port`` option to the ``Mailer`` class, whose default
-value you guess based on the host. You can do that easily by using a
+value you guess based on the encryption. You can do that easily by using a
 closure as the default value::
 
     use Symfony\Component\OptionsResolver\Options;
@@ -193,9 +208,10 @@ closure as the default value::
         // ...
 
         $resolver->setDefaults(array(
+            'encryption' => null,
             'port' => function (Options $options) {
-                if (in_array($options['host'], array('127.0.0.1', 'localhost'))) {
-                    return 80;
+                if ('ssl' === $options['encryption']) {
+                    return 465;
                 }
 
                 return 25;
@@ -203,12 +219,16 @@ closure as the default value::
         ));
     }
 
+The :class:`Symfony\\Component\\OptionsResolver\\Options` class implements
+:phpclass:`ArrayAccess`, :phpclass:`Iterator` and :phpclass:`Countable`. That
+means you can handle it just like a normal array containing the options.
+
 .. caution::
 
     The first argument of the closure must be typehinted as ``Options``,
     otherwise it is considered as the value.
 
-Overwriting Default Values
+Overwriting default Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A previously set default value can be overwritten by invoking
@@ -237,7 +257,9 @@ again. When using a closure as the new value it is passed 2 arguments:
         $resolver->setDefaults(array(
             'encryption' => 'tls', // simple overwrite
             'host' => function (Options $options, $previousValue) {
-                return 'localhost' == $previousValue ? '127.0.0.1' : $previousValue;
+                return 'localhost' == $previousValue
+                    ? '127.0.0.1'
+                    : $previousValue;
             },
         ));
     }
@@ -282,7 +304,7 @@ again. When using a closure as the new value it is passed 2 arguments:
 
     Existing option keys that you do not mention when overwriting are preserved.
 
-Configure allowed Values
+Configure Allowed Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Not all values are valid values for options. Suppose the ``Mailer`` class has
@@ -296,16 +318,16 @@ a ``transport`` option, it can only be one of ``sendmail``, ``mail`` or
         // ...
 
         $resolver->setAllowedValues(array(
-            'transport' => array('sendmail', 'mail', 'smtp'),
+            'encryption' => array(null, 'ssl', 'tls'),
         ));
     }
 
 There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 method, which you can use if you want to add an allowed value to the previously
-set allowed values.
+configured allowed values.
 
-Configure allowed Types
+Configure Allowed Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also specify allowed types. For instance, the ``port`` option can
@@ -338,7 +360,7 @@ pretend that the ``host`` should always start with ``http://``. To do that,
 you can write normalizers. These closures will be executed after all options
 are passed and should return the normalized value. You can configure these
 normalizers by calling
-:method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizers`::
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizers`::
 
     // ...
     protected function setDefaultOptions(OptionsResolverInterface $resolver)

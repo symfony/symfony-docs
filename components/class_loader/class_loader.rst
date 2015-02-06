@@ -5,7 +5,7 @@ The PSR-0 Class Loader
 ======================
 
 .. versionadded:: 2.1
-    The ``ClassLoader`` class was added in Symfony 2.1.
+    The ``ClassLoader`` class was introduced in Symfony 2.1.
 
 If your classes and third-party libraries follow the `PSR-0`_ standard, you
 can use the :class:`Symfony\\Component\\ClassLoader\\ClassLoader` class to
@@ -39,7 +39,7 @@ is straightforward::
 
 .. note::
 
-    The autoloader is automatically registered in a Symfony2 application (see
+    The autoloader is automatically registered in a Symfony application (see
     ``app/autoload.php``).
 
 Use the :method:`Symfony\\Component\\ClassLoader\\ClassLoader::addPrefix` or

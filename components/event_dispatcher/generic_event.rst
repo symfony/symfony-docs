@@ -93,7 +93,7 @@ Filtering data::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
-    $event = new GenericEvent($subject, array('data' => 'foo'));
+    $event = new GenericEvent($subject, array('data' => 'Foo'));
     $dispatcher->dispatch('foo', $event);
 
     echo $event['data'];
@@ -102,6 +102,6 @@ Filtering data::
     {
         public function filter(GenericEvent $event)
         {
-            strtolower($event['data']);
+            $event['data'] = strtolower($event['data']);
         }
     }

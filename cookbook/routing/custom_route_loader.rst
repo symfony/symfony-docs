@@ -1,7 +1,7 @@
 .. index::
    single: Routing; Custom route loader
 
-How to create a custom Route Loader
+How to Create a custom Route Loader
 ===================================
 
 A custom route loader allows you to add routes to an application without
@@ -20,7 +20,7 @@ off the names of the action methods in a controller.
 
     There are many bundles out there that use their own route loaders to
     accomplish cases like those described above, for instance
-    `FOSRestBundle`_, `KnpRadBundle`_ and `SonataAdminBundle`_.
+    `FOSRestBundle`_, `JMSI18nRoutingBundle`_, `KnpRadBundle`_ and `SonataAdminBundle`_.
 
 Loading Routes
 --------------
@@ -54,7 +54,7 @@ its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
 will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
 containing :class:`Symfony\\Component\\Routing\\Route` objects.
 
-Creating a Custom Loader
+Creating a custom Loader
 ------------------------
 
 To load routes from some custom source (i.e. from something other than annotations,
@@ -85,19 +85,19 @@ type you want. The resource name itself is not actually used in the example::
             $routes = new RouteCollection();
 
             // prepare a new route
-            $pattern = '/extra/{parameter}';
+            $path = '/extra/{parameter}';
             $defaults = array(
                 '_controller' => 'AcmeDemoBundle:Demo:extra',
             );
             $requirements = array(
                 'parameter' => '\d+',
             );
-            $route = new Route($pattern, $defaults, $requirements);
+            $route = new Route($path, $defaults, $requirements);
 
             // add the new route to the route collection:
             $routeName = 'extraRoute';
             $routes->add($routeName, $route);
-            
+
             $this->loaded = true;
 
             return $routes;
@@ -166,7 +166,7 @@ Notice the tag ``routing.loader``. All services with this tag will be marked
 as potential route loaders and added as specialized routers to the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 
-Using the Custom Loader
+Using the custom Loader
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 If you did nothing else, your custom routing loader would *not* be called.
@@ -202,9 +202,9 @@ Instead, you only need to add a few extra lines to the routing configuration:
         return $collection;
 
 The important part here is the ``type`` key. Its value should be "extra".
-This is the type which our ``ExtraLoader`` supports and this will make sure
+This is the type which the ``ExtraLoader`` supports and this will make sure
 its ``load()`` method gets called. The ``resource`` key is insignificant
-for the ``ExtraLoader``, so we set it to ".".
+for the ``ExtraLoader``, so it is set to ".".
 
 .. note::
 
@@ -212,7 +212,7 @@ for the ``ExtraLoader``, so we set it to ".".
     cached by the framework. So whenever you change something in the loader
     class itself, don't forget to clear the cache.
 
-More Advanced Loaders
+More advanced Loaders
 ---------------------
 
 In most cases it's better not to implement
@@ -262,5 +262,6 @@ configuration file - you can call the
     loader (YAML, XML, PHP, annotation, etc.).
 
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
+.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
 .. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle
 .. _`SonataAdminBundle`: https://github.com/sonata-project/SonataAdminBundle

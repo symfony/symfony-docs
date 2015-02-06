@@ -5,14 +5,15 @@ How to Reduce Code Duplication with "inherit_data"
 ==================================================
 
 .. versionadded:: 2.3
-    This ``inherit_data`` option was known as ``virtual`` before Symfony 2.3.
+    This ``inherit_data`` option was introduced in Symfony 2.3. Before, it
+    was known as ``virtual``.
 
 The ``inherit_data`` form field option can be very useful when you have some
 duplicated fields in different entities. For example, imagine you have two
 entities, a ``Company`` and a ``Customer``::
 
-    // src/Acme/HelloBundle/Entity/Company.php
-    namespace Acme\HelloBundle\Entity;
+    // src/AppBundle/Entity/Company.php
+    namespace AppBundle\Entity;
 
     class Company
     {
@@ -27,8 +28,8 @@ entities, a ``Company`` and a ``Customer``::
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Entity/Customer.php
-    namespace Acme\HelloBundle\Entity;
+    // src/AppBundle/Entity/Customer.php
+    namespace AppBundle\Entity;
 
     class Customer
     {
@@ -44,10 +45,10 @@ entities, a ``Company`` and a ``Customer``::
 As you can see, each entity shares a few of the same fields: ``address``,
 ``zipcode``, ``city``, ``country``.
 
-Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
+Start with building two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
-    // src/Acme/HelloBundle/Form/Type/CompanyType.php
-    namespace Acme\HelloBundle\Form\Type;
+    // src/AppBundle/Form/Type/CompanyType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -64,8 +65,8 @@ Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Form/Type/CustomerType.php
-    namespace Acme\HelloBundle\Form\Type;
+    // src/AppBundle/Form/Type/CustomerType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\AbstractType;
@@ -81,11 +82,11 @@ Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
     }
 
 Instead of including the duplicated fields ``address``, ``zipcode``, ``city``
-and ``country`` in both of these forms, we will create a third form for that.
-We will call this form simply ``LocationType``::
+and ``country`` in both of these forms, create a third form called ``LocationType``
+for that::
 
-    // src/Acme/HelloBundle/Form/Type/LocationType.php
-    namespace Acme\HelloBundle\Form\Type;
+    // src/AppBundle/Form/Type/LocationType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -127,29 +128,33 @@ access the properties of the ``Customer`` instance instead. Easy, eh?
     can also (just like with any option) pass it in the third argument of
     ``$builder->add()``.
 
-Let's make this work by adding the location form to our two original forms::
+Finally, make this work by adding the location form to your two original forms::
 
-    // src/Acme/HelloBundle/Form/Type/CompanyType.php
+    // src/AppBundle/Form/Type/CompanyType.php
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
         $builder->add('foo', new LocationType(), array(
-            'data_class' => 'Acme\HelloBundle\Entity\Company'
+            'data_class' => 'AppBundle\Entity\Company'
         ));
     }
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Form/Type/CustomerType.php
+    // src/AppBundle/Form/Type/CustomerType.php
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
         $builder->add('bar', new LocationType(), array(
-            'data_class' => 'Acme\HelloBundle\Entity\Customer'
+            'data_class' => 'AppBundle\Entity\Customer'
         ));
     }
 
 That's it! You have extracted duplicated field definitions to a separate
 location form that you can reuse wherever you need it.
+
+.. caution::
+
+    Forms with the ``inherit_data`` option set cannot have ``*_SET_DATA`` event listeners.

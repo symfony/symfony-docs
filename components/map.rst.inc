@@ -7,6 +7,7 @@
   * :doc:`/components/class_loader/map_class_loader`
   * :doc:`/components/class_loader/cache_class_loader`
   * :doc:`/components/class_loader/debug_class_loader`
+  * :doc:`/components/class_loader/class_map_generator`
 
 * :doc:`/components/config/index`
 
@@ -20,6 +21,7 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/console_arguments`
   * :doc:`/components/console/events`
   * :doc:`/components/console/helpers/index`
 
@@ -56,6 +58,7 @@
   * :doc:`/components/event_dispatcher/container_aware_dispatcher`
   * :doc:`/components/event_dispatcher/generic_event`
   * :doc:`/components/event_dispatcher/immutable_dispatcher`
+  * :doc:`/components/event_dispatcher/traceable_dispatcher`
 
 * **Filesystem**
 
@@ -68,6 +71,8 @@
 * :doc:`/components/form/index`
 
   * :doc:`/components/form/introduction`
+  * :doc:`/components/form/form_events`
+  * :doc:`/components/form/type_guesser`
 
 * :doc:`/components/http_foundation/index`
 
@@ -109,6 +114,7 @@
   * :doc:`/components/security/firewall`
   * :doc:`/components/security/authentication`
   * :doc:`/components/security/authorization`
+  * :doc:`/components/security/secure_tools`
 
 * **Serializer**
 
@@ -126,6 +132,7 @@
 
   * :doc:`/components/translation/introduction`
   * :doc:`/components/translation/usage`
+  * :doc:`/components/translation/custom_formats`
 
 * :doc:`/components/yaml/index`
 

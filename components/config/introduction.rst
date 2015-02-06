@@ -5,12 +5,16 @@
 The Config Component
 ====================
 
-Introduction
-------------
+    The Config component provides several classes to help you find, load,
+    combine, autofill and validate configuration values of any kind, whatever
+    their source may be (YAML, XML, INI files, or for instance a database).
 
-The Config component provides several classes to help you find, load, combine,
-autofill and validate configuration values of any kind, whatever their source
-may be (YAML, XML, INI files, or for instance a database).
+.. caution::
+
+    The ``IniFileLoader`` parses the file contents using the
+    :phpfunction:`parse_ini_file` function, therefore, you can only set
+    parameters to string values. To set parameters to other data types
+    (e.g. boolean, integer, etc), the other loaders are recommended.
 
 Installation
 ------------

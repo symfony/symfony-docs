@@ -16,4 +16,4 @@ you can set the ``property_path`` option to ``false``, but using
 ``mapped`` option.
 
 .. versionadded:: 2.1
-    Since 2.1, the ``mapped`` option has been added for this use-case.
+    The ``mapped`` option was introduced in Symfony 2.1 for this use-case.

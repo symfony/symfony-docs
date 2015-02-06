@@ -12,8 +12,8 @@ Create a controller that will match any URL with a trailing slash, remove
 the trailing slash (keeping query parameters if any) and redirect to the
 new URL with a 301 response status code::
 
-    // src/Acme/DemoBundle/Controller/RedirectingController.php
-    namespace Acme\DemoBundle\Controller;
+    // src/AppBundle/Controller/RedirectingController.php
+    namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
@@ -41,20 +41,18 @@ system, as explained below:
 
         remove_trailing_slash:
             path: /{url}
-            defaults: { _controller: AcmeDemoBundle:Redirecting:removeTrailingSlash }
+            defaults: { _controller: AppBundle:Redirecting:removeTrailingSlash }
             requirements:
                 url: .*/$
-                _method: GET
-
+            methods: [GET]
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing">
-            <route id="remove_trailing_slash" path="/{url}">
-                <default key="_controller">AcmeDemoBundle:Redirecting:removeTrailingSlash</default>
+            <route id="remove_trailing_slash" path="/{url}" methods="GET">
+                <default key="_controller">AppBundle:Redirecting:removeTrailingSlash</default>
                 <requirement key="url">.*/$</requirement>
-                <requirement key="_method">GET</requirement>
             </route>
         </routes>
 
@@ -69,12 +67,15 @@ system, as explained below:
             new Route(
                 '/{url}',
                 array(
-                    '_controller' => 'AcmeDemoBundle:Redirecting:removeTrailingSlash',
+                    '_controller' => 'AppBundle:Redirecting:removeTrailingSlash',
                 ),
                 array(
                     'url' => '.*/$',
-                    '_method' => 'GET',
-                )
+                ),
+                array(),
+                '',
+                array(),
+                array('GET')
             )
         );
 
@@ -88,5 +89,5 @@ system, as explained below:
 
     Make sure to include this route in your routing configuration at the
     very end of your route listing. Otherwise, you risk redirecting real
-    routes (including Symfony2 core routes) that actually *do* have a trailing
+    routes (including Symfony core routes) that actually *do* have a trailing
     slash in their path.

@@ -25,7 +25,7 @@ In order to set up a basic routing system you need three parts:
 * A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information about the request
 * A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the request to a single route
 
-Let's see a quick example. Notice that this assumes that you've already configured
+Here is a quick example. Notice that this assumes that you've already configured
 your autoloader to load the Routing component::
 
     use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -67,34 +67,34 @@ If no matching route can be found a
 In addition to your array of custom variables, a ``_route`` key is added,
 which holds the name of the matched route.
 
-Defining routes
+Defining Routes
 ~~~~~~~~~~~~~~~
 
 A full route definition can contain up to seven parts:
 
-1. The URL path route. This is matched against the URL passed to the `RequestContext`,
-and can contain named wildcard placeholders (e.g. ``{placeholders}``)
-to match dynamic parts in the URL.
+#. The URL path route. This is matched against the URL passed to the `RequestContext`,
+   and can contain named wildcard placeholders (e.g. ``{placeholders}``)
+   to match dynamic parts in the URL.
 
-2. An array of default values. This contains an array of arbitrary values
-that will be returned when the request matches the route.
+#. An array of default values. This contains an array of arbitrary values
+   that will be returned when the request matches the route.
 
-3. An array of requirements. These define constraints for the values of the
-placeholders as regular expressions.
+#. An array of requirements. These define constraints for the values of the
+   placeholders as regular expressions.
 
-4. An array of options. These contain internal settings for the route and
-are the least commonly needed.
+#. An array of options. These contain internal settings for the route and
+   are the least commonly needed.
 
-5. A host. This is matched against the host of the request. See
+#. A host. This is matched against the host of the request. See
    :doc:`/components/routing/hostname_pattern` for more details.
 
-6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
+#. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
 
-7. An array of methods. These enforce a certain HTTP request method (``HEAD``,
+#. An array of methods. These enforce a certain HTTP request method (``HEAD``,
    ``GET``, ``POST``, ...).
 
 .. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
+    Host matching support was introduced in Symfony 2.2
 
 Take the following route, which combines several of these ideas::
 
@@ -141,28 +141,26 @@ Using Prefixes
 
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
-This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements, default options and host to all routes of a subtree with
-the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
+This way you can build a tree of routes. Additionally you can define a prefix
+and default values for the parameters, requirements, options, schemes and the
+host to all routes of a subtree using methods provided by the
+``RouteCollection`` class::
 
     $rootCollection = new RouteCollection();
 
     $subCollection = new RouteCollection();
     $subCollection->add(...);
     $subCollection->add(...);
-    $subCollection->addPrefix(
-        '/prefix', // prefix
-        array(), // requirements
-        array(), // options
-        'admin.example.com', // host
-        array('https') // schemes
-    );
+    $subCollection->addPrefix('/prefix');
+    $subCollection->addDefaults(array(...));
+    $subCollection->addRequirements(array(...));
+    $subCollection->addOptions(array(...));
+    $subCollection->setHost('admin.example.com');
+    $subCollection->setMethods(array('POST'));
+    $subCollection->setSchemes(array('https'));
 
     $rootCollection->addCollection($subCollection);
 
-.. versionadded:: 2.2
-    The ``addPrefix`` method is added in Symfony2.2. This was part of the
-    ``addCollection`` method in older versions.
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,7 +175,9 @@ with this class via its constructor::
         $host = 'localhost',
         $scheme = 'http',
         $httpPort = 80,
-        $httpsPort = 443
+        $httpsPort = 443,
+        $path = '/',
+        $queryString = ''
     )
 
 .. _components-routing-http-foundation:
@@ -288,7 +288,7 @@ calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\Ro
 
     use Symfony\Component\Routing\Loader\ClosureLoader;
 
-    $closure = function() {
+    $closure = function () {
         return new RouteCollection();
     };
 
@@ -307,7 +307,7 @@ out here.
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Routing\\Router` class is a all-in-one package
+The :class:`Symfony\\Component\\Routing\\Router` class is an all-in-one package
 to quickly use the Routing component. The constructor expects a loader instance,
 a path to the main route definition and some other settings::
 

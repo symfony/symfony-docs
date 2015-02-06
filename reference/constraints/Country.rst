@@ -20,7 +20,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Entity\User:
             properties:
                 country:
@@ -36,7 +36,7 @@ Basic Usage
         class User
         {
             /**
-             * @Assert\Country
+             * @Assert\Country()
              */
              protected $country;
         }

@@ -1,7 +1,7 @@
 .. index::
     single: Console; Usage
 
-How to use the Console
+How to Use the Console
 ======================
 
 The :doc:`/components/console/usage` page of the components documentation looks

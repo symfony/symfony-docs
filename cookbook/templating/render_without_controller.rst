@@ -1,7 +1,7 @@
 .. index::
    single: Templating; Render template without custom controller
 
-How to render a Template without a custom Controller
+How to Render a Template without a custom Controller
 ====================================================
 
 Usually, when you need to create a page, you need to create a controller
@@ -10,7 +10,7 @@ a simple template that doesn't need any data passed into it, you can avoid
 creating the controller entirely, by using the built-in ``FrameworkBundle:Template:template``
 controller.
 
-For example, suppose you want to render a ``AcmeBundle:Static:privacy.html.twig``
+For example, suppose you want to render a ``AppBundle:Static:privacy.html.twig``
 template, which doesn't require that any variables are passed to it. You
 can do this without creating a controller:
 
@@ -22,7 +22,7 @@ can do this without creating a controller:
             path: /privacy
             defaults:
                 _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:privacy.html.twig'
+                template:    'AppBundle:Static:privacy.html.twig'
 
     .. code-block:: xml
 
@@ -34,7 +34,7 @@ can do this without creating a controller:
 
             <route id="acme_privacy" path="/privacy">
                 <default key="_controller">FrameworkBundle:Template:template</default>
-                <default key="template">AcmeBundle:Static:privacy.html.twig</default>
+                <default key="template">AppBundle:Static:privacy.html.twig</default>
             </route>
         </routes>
 
@@ -46,7 +46,7 @@ can do this without creating a controller:
         $collection = new RouteCollection();
         $collection->add('acme_privacy', new Route('/privacy', array(
             '_controller'  => 'FrameworkBundle:Template:template',
-            'template'     => 'AcmeBundle:Static:privacy.html.twig',
+            'template'     => 'AppBundle:Static:privacy.html.twig',
         )));
 
         return $collection;
@@ -79,7 +79,7 @@ Caching the static Template
 
 .. versionadded:: 2.2
     The ability to cache templates rendered via ``FrameworkBundle:Template:template``
-    is new in Symfony 2.2.
+    was introduced in Symfony 2.2.
 
 Since templates that are rendered in this way are typically static, it might
 make sense to cache them. Fortunately, this is easy! By configuring a few
@@ -92,10 +92,10 @@ other variables in your route, you can control exactly how your page is cached:
         acme_privacy:
             path: /privacy
             defaults:
-                _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:privacy.html.twig'
-                maxAge: 86400
-                sharedMaxAge: 86400
+                _controller:  FrameworkBundle:Template:template
+                template:     'AppBundle:Static:privacy.html.twig'
+                maxAge:       86400
+                sharedAge:    86400
 
     .. code-block:: xml
 
@@ -107,9 +107,9 @@ other variables in your route, you can control exactly how your page is cached:
 
             <route id="acme_privacy" path="/privacy">
                 <default key="_controller">FrameworkBundle:Template:template</default>
-                <default key="template">AcmeBundle:Static:privacy.html.twig</default>
+                <default key="template">AppBundle:Static:privacy.html.twig</default>
                 <default key="maxAge">86400</default>
-                <default key="sharedMaxAge">86400</default>
+                <default key="sharedAge">86400</default>
             </route>
         </routes>
 
@@ -121,17 +121,17 @@ other variables in your route, you can control exactly how your page is cached:
         $collection = new RouteCollection();
         $collection->add('acme_privacy', new Route('/privacy', array(
             '_controller'  => 'FrameworkBundle:Template:template',
-            'template'     => 'AcmeBundle:Static:privacy.html.twig',
+            'template'     => 'AppBundle:Static:privacy.html.twig',
             'maxAge'       => 86400,
-            'sharedMaxAge' => 86400,
+            'sharedAge' => 86400,
         )));
 
         return $collection;
 
-The ``maxAge`` and ``sharedMaxAge`` values are used to modify the Response
+The ``maxAge`` and ``sharedAge`` values are used to modify the Response
 object created in the controller. For more information on caching, see
 :doc:`/book/http_cache`.
 
 There is also a ``private`` variable (not shown here). By default, the Response
-will be made public, as long as ``maxAge`` or ``sharedMaxAge`` are passed.
+will be made public, as long as ``maxAge`` or ``sharedAge`` are passed.
 If set to ``true``, the Response will be marked as private.

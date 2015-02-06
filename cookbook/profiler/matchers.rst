@@ -1,7 +1,7 @@
 .. index::
     single: Profiling; Matchers
 
-How to use Matchers to enable the Profiler Conditionally
+How to Use Matchers to Enable the Profiler Conditionally
 ========================================================
 
 By default, the profiler is only activated in the development environment. But
@@ -13,7 +13,7 @@ by using matchers.
 Using the built-in Matcher
 --------------------------
 
-Symfony2 provides a
+Symfony provides a
 :class:`built-in matcher <Symfony\\Component\\HttpFoundation\\RequestMatcher>`
 which can match paths and IPs. For example, if you want to only show the
 profiler when accessing the page with the ``168.0.0.1`` IP, then you can
@@ -52,7 +52,7 @@ You can also set a ``path`` option to define the path on which the profiler
 should be enabled. For instance, setting it to ``^/admin/`` will enable the
 profiler only for the ``/admin/`` URLs.
 
-Creating a Custom Matcher
+Creating a custom Matcher
 -------------------------
 
 You can also create a custom matcher. This is a service that checks whether
@@ -67,8 +67,8 @@ profiler.
 To enable the profiler when a ``ROLE_SUPER_ADMIN`` is logged in, you can use
 something like::
 
-    // src/Acme/DemoBundle/Profiler/SuperAdminMatcher.php
-    namespace Acme\DemoBundle\Profiler;
+    // src/AppBundle/Profiler/SuperAdminMatcher.php
+    namespace AppBundle\Profiler;
 
     use Symfony\Component\Security\Core\SecurityContext;
     use Symfony\Component\HttpFoundation\Request;
@@ -95,40 +95,29 @@ Then, you need to configure the service:
 
     .. code-block:: yaml
 
-        parameters:
-            acme_demo.profiler.matcher.super_admin.class: Acme\DemoBundle\Profiler\SuperAdminMatcher
-
+        # app/config/services.yml
         services:
-            acme_demo.profiler.matcher.super_admin:
-                class: "%acme_demo.profiler.matcher.super_admin.class%"
+            app.profiler.matcher.super_admin:
+                class: AppBundle\Profiler\SuperAdminMatcher
                 arguments: ["@security.context"]
 
     .. code-block:: xml
 
-        <parameters>
-            <parameter
-                key="acme_demo.profiler.matcher.super_admin.class"
-            >Acme\DemoBundle\Profiler\SuperAdminMatcher</parameter>
-        </parameters>
-
+        <!-- app/config/services.xml -->
         <services>
-            <service id="acme_demo.profiler.matcher.super_admin"
-                class="%acme_demo.profiler.matcher.super_admin.class%">
+            <service id="app.profiler.matcher.super_admin"
+                class="AppBundle\Profiler\SuperAdminMatcher">
                 <argument type="service" id="security.context" />
         </services>
 
     .. code-block:: php
 
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setParameter(
-            'acme_demo.profiler.matcher.super_admin.class',
-            'Acme\DemoBundle\Profiler\SuperAdminMatcher'
-        );
-
-        $container->setDefinition('acme_demo.profiler.matcher.super_admin', new Definition(
-            '%acme_demo.profiler.matcher.super_admin.class%',
+        $container->setDefinition('app.profiler.matcher.super_admin', new Definition(
+            'AppBundle\Profiler\SuperAdminMatcher',
             array(new Reference('security.context'))
         );
 
@@ -144,14 +133,15 @@ profiler to use this service as the matcher:
             # ...
             profiler:
                 matcher:
-                    service: acme_demo.profiler.matcher.super_admin
+                    service: app.profiler.matcher.super_admin
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
+            <!-- ... -->
             <framework:profiler
-                service="acme_demo.profiler.matcher.super_admin"
+                service="app.profiler.matcher.super_admin"
             />
         </framework:config>
 
@@ -159,7 +149,8 @@ profiler to use this service as the matcher:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
+            // ...
             'profiler' => array(
-                'service' => 'acme_demo.profiler.matcher.super_admin',
+                'service' => 'app.profiler.matcher.super_admin',
             ),
         ));

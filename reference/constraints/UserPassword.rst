@@ -4,10 +4,11 @@ UserPassword
 .. note::
 
     Since Symfony 2.2, the ``UserPassword*`` classes in the
-    ``Symfony\\Component\\Security\\Core\\Validator\\Constraint`` namespace are
-    deprecated and will be removed in Symfony 2.3. Please use the
-    ``UserPassword*`` classes in the
-    ``Symfony\\Component\\Security\\Core\\Validator\\Constraints`` namespace instead.
+    :namespace:`Symfony\\Component\\Security\\Core\\Validator\\Constraint <Symfony\\Component\\Security\\Core\\Validator\\Constraint>`
+    namespace are deprecated and will be removed in Symfony 2.3. Please use
+    the ``UserPassword*`` classes in the
+    :namespace:`Symfony\\Component\\Security\\Core\\Validator\\Constraints <Symfony\\Component\\Security\\Core\\Validator\\Constraints>`
+    namespace instead.
 
 This validates that an input value is equal to the current authenticated
 user's password. This is useful in a form where a user can change their password,
@@ -40,7 +41,7 @@ password:
 
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Form\Model\ChangePassword:
             properties:
                 oldPassword:
@@ -66,15 +67,17 @@ password:
 
     .. code-block:: xml
 
-        <!-- src/UserBundle/Resources/config/validation.xml -->
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="Acme\UserBundle\Form\Model\ChangePassword">
-                <property name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword">
-                    <option name="message">Wrong value for your current password</option>
+                <property name="oldPassword">
+                    <constraint name="Symfony\Component\Security\Core\Validator\Constraints\UserPassword">
+                        <option name="message">Wrong value for your current password</option>
+                    </constraint>
                 </property>
             </class>
         </constraint-mapping>

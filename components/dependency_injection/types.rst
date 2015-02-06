@@ -47,21 +47,27 @@ service container configuration:
 
     .. code-block:: xml
 
-        <services>
-            <service id="my_mailer" ... >
-              <!-- ... -->
-            </service>
-            <service id="newsletter_manager" class="NewsletterManager">
-                <argument type="service" id="my_mailer"/>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="my_mailer">
+                    <!-- ... -->
+                </service>
+
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <argument type="service" id="my_mailer"/>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             'NewsletterManager',
@@ -123,23 +129,29 @@ accepts the dependency::
 
     .. code-block:: xml
 
-        <services>
-            <service id="my_mailer" ... >
-              <!-- ... -->
-            </service>
-            <service id="newsletter_manager" class="NewsletterManager">
-                <call method="setMailer">
-                     <argument type="service" id="my_mailer" />
-                </call>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="my_mailer">
+                    <!-- ... -->
+                </service>
+
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <call method="setMailer">
+                        <argument type="service" id="my_mailer" />
+                    </call>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             'NewsletterManager'
@@ -158,8 +170,8 @@ The disadvantages of setter injection are:
 
 * The setter can be called more than just at the time of construction so
   you cannot be sure the dependency is not replaced during the lifetime of the
-  object (except by explicitly writing the setter method to check if has already been
-  called).
+  object (except by explicitly writing the setter method to check if it has already
+  been called).
 
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.
@@ -184,31 +196,37 @@ Another possibility is just setting public fields of the class directly::
             my_mailer:
                 # ...
             newsletter_manager:
-                class:     NewsletterManager
+                class: NewsletterManager
                 properties:
                     mailer: "@my_mailer"
 
     .. code-block:: xml
 
-        <services>
-            <service id="my_mailer" ... >
-              <!-- ... -->
-            </service>
-            <service id="newsletter_manager" class="NewsletterManager">
-                <property name="mailer" type="service" id="my_mailer" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="my_mailer">
+                    <!-- ... -->
+                </service>
+
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <property name="mailer" type="service" id="my_mailer" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             'NewsletterManager'
-        ))->setProperty('mailer', new Reference('my_mailer')));
+        ))->setProperty('mailer', new Reference('my_mailer'));
 
 There are mainly only disadvantages to using property injection, it is similar
 to setter injection but with these additional important problems:

@@ -11,22 +11,22 @@ you want to use for your number.
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
-| Options     | - `rounding_mode`_                                                   |
+| Options     | - `grouping`_                                                        |
 |             | - `precision`_                                                       |
-|             | - `grouping`_                                                        |
+|             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
-| Inherited   | - `empty_data`_                                                      |
-| options     | - `required`_                                                        |
-|             | - `label`_                                                           |
-|             | - `label_attr`_                                                      |
-|             | - `data`_                                                            |
-|             | - `read_only`_                                                       |
-|             | - `disabled`_                                                        |
+| Inherited   | - `data`_                                                            |
+| options     | - `disabled`_                                                        |
+|             | - `empty_data`_                                                      |
 |             | - `error_bubbling`_                                                  |
 |             | - `error_mapping`_                                                   |
 |             | - `invalid_message`_                                                 |
 |             | - `invalid_message_parameters`_                                      |
+|             | - `label`_                                                           |
+|             | - `label_attr`_                                                      |
 |             | - `mapped`_                                                          |
+|             | - `read_only`_                                                       |
+|             | - `required`_                                                        |
 +-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                            |
 +-------------+----------------------------------------------------------------------+
@@ -35,6 +35,8 @@ you want to use for your number.
 
 Field Options
 -------------
+
+.. include:: /reference/forms/types/options/grouping.rst.inc
 
 .. include:: /reference/forms/types/options/precision.rst.inc
 
@@ -46,7 +48,7 @@ rounding_mode
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
-    
+
 *   ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Rounding mode to
     round towards zero.
 
@@ -71,26 +73,22 @@ option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\D
     round towards "nearest neighbor" unless both neighbors are equidistant,
     in which case round up.
 
-.. include:: /reference/forms/types/options/grouping.rst.inc
-
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -100,4 +98,12 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc

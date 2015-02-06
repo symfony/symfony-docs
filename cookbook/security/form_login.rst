@@ -1,12 +1,12 @@
 .. index::
    single: Security; Customizing form login
 
-How to customize your Form Login
+How to Customize your Form Login
 ================================
 
-Using a :ref:`form login <book-security-form-login>` for authentication is
-a common, and flexible, method for handling authentication in Symfony2. Pretty
-much every aspect of the form login can be customized. The full, default
+Using a :doc:`form login </cookbook/security/form_login_setup>` for authentication
+is a common, and flexible, method for handling authentication in Symfony.
+Pretty much every aspect of the form login can be customized. The full, default
 configuration is shown in the next section.
 
 Form Login Configuration Reference
@@ -39,7 +39,7 @@ in several ways.
     redirected there. For information on controlling this behavior, see
     :doc:`/cookbook/security/target_path`.
 
-Changing the Default Page
+Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, the default page can be set (i.e. the page the user is redirected to
@@ -88,7 +88,7 @@ if no previous page was stored in the session). To set it to the
 Now, when no URL is set in the session, users will be sent to the
 ``default_security_target`` route.
 
-Always Redirect to the Default Page
+Always Redirect to the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can make it so that users are always redirected to the default page regardless
@@ -213,7 +213,7 @@ redirect to the URL defined by some ``account`` route, use the following:
         <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
-        <?php endif; ?>
+        <?php endif ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>

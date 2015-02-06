@@ -83,7 +83,7 @@ Search in several locations by chaining calls to
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
 .. versionadded:: 2.2
-   Wildcard support was added in version 2.2.
+   Wildcard support was introduced in version 2.2.
 
 Use wildcard characters to search in the directories matching a pattern::
 
@@ -98,7 +98,7 @@ Exclude directories from matching with the
 
 .. versionadded:: 2.3
    The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
-   method was added in Symfony 2.3.
+   method was introduced in Symfony 2.3.
 
 It's also possible to ignore directories that you don't have permission to read::
 
@@ -207,7 +207,7 @@ Path
 ~~~~
 
 .. versionadded:: 2.2
-   The ``path()`` and ``notPath()`` methods were added in version 2.2.
+   The ``path()`` and ``notPath()`` methods were introduced in Symfony 2.2.
 
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
@@ -295,7 +295,7 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
-Reading contents of returned files
+Reading Contents of Returned Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The contents of returned files can be read with
@@ -308,7 +308,8 @@ The contents of returned files can be read with
 
     foreach ($finder as $file) {
         $contents = $file->getContents();
-        ...
+        
+        // ...
     }
 
 .. _strtotime:    http://www.php.net/manual/en/datetime.formats.php

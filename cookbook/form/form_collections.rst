@@ -20,8 +20,8 @@ that Task, right inside the same form.
     including the ``ManyToMany`` association mapping definition on the Task's
     ``tags`` property.
 
-Let's start there: suppose that each ``Task`` belongs to multiple ``Tag``
-objects. Start by creating a simple ``Task`` class::
+First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
+by creating a simple ``Task`` class::
 
     // src/Acme/TaskBundle/Entity/Task.php
     namespace Acme\TaskBundle\Entity;
@@ -77,8 +77,7 @@ objects::
     The ``name`` property is public here, but it can just as easily be protected
     or private (but then it would need ``getName`` and ``setName`` methods).
 
-Now let's get to the forms. Create a form class so that a ``Tag`` object
-can be modified by the user::
+Then, create a form class so that a ``Tag`` object can be modified by the user::
 
     // src/Acme/TaskBundle/Form/Type/TagType.php
     namespace Acme\TaskBundle\Form\Type;
@@ -227,7 +226,7 @@ zero tags when first created).
             <ul class="tags">
                 <?php foreach($form['tags'] as $tag): ?>
                     <li><?php echo $view['form']->row($tag['name']) ?></li>
-                <?php endforeach; ?>
+                <?php endforeach ?>
             </ul>
         <?php echo $view['form']->end($form) ?>
 
@@ -262,7 +261,7 @@ great, your user can't actually add any new tags yet.
 
 .. _cookbook-form-collections-new-prototype:
 
-Allowing "new" tags with the "prototype"
+Allowing "new" Tags with the "Prototype"
 -----------------------------------------
 
 Allowing the user to dynamically add new tags means that you'll need to
@@ -414,6 +413,10 @@ Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
 into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
 
+.. seealso::
+
+    You can find a working example in this `JSFiddle`_.
+
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
@@ -460,9 +463,9 @@ we talk about next!).
 
 .. caution::
 
-    If no ``addTag`` **and** ``removeTag`` method is found, the form will
-    still use ``setTag`` even if ``by_reference`` is ``false``. You'll learn
-    more about the ``removeTag`` method later in this article.
+    You have to create **both** ``addTag`` and ``removeTag`` methods,
+    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``.
+    You'll learn more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
@@ -511,7 +514,7 @@ we talk about next!).
                 xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-                <entity name="Acme\TaskBundle\Entity\Task" ...>
+                <entity name="Acme\TaskBundle\Entity\Task">
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
@@ -560,7 +563,7 @@ we talk about next!).
 
 .. _cookbook-form-collections-remove:
 
-Allowing tags to be removed
+Allowing Tags to be Removed
 ----------------------------
 
 The next step is to allow the deletion of a particular item in the collection.
@@ -596,8 +599,8 @@ Now, you need to put some code into the ``removeTag`` method of ``Task``::
         }
     }
 
-Templates Modifications
-~~~~~~~~~~~~~~~~~~~~~~~
+Template Modifications
+~~~~~~~~~~~~~~~~~~~~~~
 
 The ``allow_delete`` option has one consequence: if an item of a collection
 isn't sent on submission, the related data is removed from the collection
@@ -610,7 +613,7 @@ First, add a "delete this tag" link to each tag form:
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
         $collectionHolder = $('ul.tags');
-        
+
         // add a delete link to all of the existing tag form li elements
         $collectionHolder.find('li').each(function() {
             addTagFormDeleteLink($(this));
@@ -654,12 +657,12 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     work to ensure that the relationship between the ``Task`` and the removed
     ``Tag`` is properly removed.
 
-    In Doctrine, you have two side of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a many-to-many relation
+    In Doctrine, you have two sides of the relationship: the owning side and the
+    inverse side. Normally in this case you'll have a many-to-many relationship
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
 
-    But if you have an one-to-many relation or a many-to-many with a
+    But if you have a one-to-many relationship or a many-to-many relationship with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
     you'll need to do more work for the removed tags to persist correctly.
 
@@ -668,9 +671,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
-        
+
         use Doctrine\Common\Collections\ArrayCollection;
-        
+
         // ...
         public function editAction($id, Request $request)
         {
@@ -727,3 +730,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     each Tag object itself.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/

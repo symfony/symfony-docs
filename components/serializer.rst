@@ -108,7 +108,7 @@ Ignoring Attributes when Serializing
 
 .. versionadded:: 2.3
     The :method:`GetSetMethodNormalizer::setIgnoredAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes>`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 As an option, there's a way to ignore attributes from the origin object when
 serializing. To remove those attributes use the
@@ -129,7 +129,7 @@ method on the normalizer definition::
 Deserializing an Object
 -----------------------
 
-Let's see now how to do the exactly the opposite. This time, the information
+You'll now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
     $data = <<<EOF
@@ -139,21 +139,21 @@ of the ``Person`` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data,'Acme\Person','xml');
+    $person = $serializer->deserialize($data, 'Acme\Person', 'xml');
 
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
 
-1. The information to be decoded
-2. The name of the class this information will be decoded to
-3. The encoder used to convert that information into an array
+#. The information to be decoded
+#. The name of the class this information will be decoded to
+#. The encoder used to convert that information into an array
 
 Using Camelized Method Names for Underscored Attributes
 -------------------------------------------------------
 
 .. versionadded:: 2.3
     The :method:`GetSetMethodNormalizer::setCamelizedAttributes<Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes>`
-    method was added in Symfony 2.3.
+    method was introduced in Symfony 2.3.
 
 Sometimes property names from the serialized content are underscored (e.g.
 ``first_name``).  Normally, these attributes will use get/set methods like
@@ -181,12 +181,43 @@ method on the normalizer definition::
 As a final result, the deserializer uses the ``first_name`` attribute as if
 it were ``firstName`` and uses the ``getFirstName`` and ``setFirstName`` methods.
 
+Using Callbacks to Serialize Properties with Object Instances
+-------------------------------------------------------------
+
+When serializing, you can set a callback to format a specific object property::
+
+    use Acme\Person;
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $encoder = new JsonEncoder();
+    $normalizer = new GetSetMethodNormalizer();
+
+    $callback = function ($dateTime) {
+        return $dateTime instanceof \DateTime
+            ? $dateTime->format(\DateTime::ISO8601)
+            : '';
+    };
+
+    $normalizer->setCallbacks(array('createdAt' => $callback));
+
+    $serializer = new Serializer(array($normalizer), array($encoder));
+
+    $person = new Person();
+    $person->setName('cordoval');
+    $person->setAge(34);
+    $person->setCreatedAt(new \DateTime('now'));
+
+    $serializer->serialize($person, 'json');
+    // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
 JMSSerializer
 -------------
 
 A popular third-party library, `JMS serializer`_, provides a more
 sophisticated albeit more complex solution. This library includes the
-ability to configure how your objects should be serialize/deserialized via
+ability to configure how your objects should be serialized/deserialized via
 annotations (as well as YAML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 

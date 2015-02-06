@@ -5,16 +5,16 @@ Table Helper
 ============
 
 .. versionadded:: 2.3
-    The ``table`` helper was added in Symfony 2.3.
+    The ``table`` helper was introduced in Symfony 2.3.
 
 When building a console application it may be useful to display tabular data:
 
 .. image:: /images/components/console/table.png
 
-To display table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
+To display a table, use the :class:`Symfony\\Component\\Console\\Helper\\TableHelper`,
 set headers, rows and render::
 
-    $table = $app->getHelperSet()->get('table');
+    $table = $this->getHelper('table');
     $table
         ->setHeaders(array('ISBN', 'Title', 'Author'))
         ->setRows(array(

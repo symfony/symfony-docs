@@ -1,13 +1,13 @@
 .. index::
-   single: Security; Configuration reference
+    single: Security; Configuration reference
 
 SecurityBundle Configuration ("security")
 =========================================
 
-The security system is one of the most powerful parts of Symfony2, and can
+The security system is one of the most powerful parts of Symfony, and can
 largely be controlled via its configuration.
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 The following is the full default configuration for the security system.
@@ -62,10 +62,23 @@ Each part will be explained in the next section.
                     hash_algorithm:       sha512
                     encode_as_base64:     true
                     iterations:           1000
+                    key_length:           40
 
                 # Example options/values for what a custom encoder might look like
                 Acme\DemoBundle\Entity\User3:
                     id:                   my.encoder.id
+
+                # BCrypt encoder
+                # see the note about bcrypt below for details on specific dependencies
+                Acme\DemoBundle\Entity\User4:
+                    algorithm:            bcrypt
+                    cost:                 13
+
+                # Plaintext encoder
+                # it does not do any encoding
+                Acme\DemoBundle\Entity\User5:
+                    algorithm:            plaintext
+                    ignore_case:          false
 
             providers:            # Required
                 # Examples:
@@ -215,7 +228,7 @@ Each part will be explained in the next section.
                 # use the urldecoded format
                 path:                 ~ # Example: ^/path to resource/
                 host:                 ~
-                ip:                   ~
+                ips:                  []
                 methods:              []
                 roles:                []
             role_hierarchy:
@@ -235,41 +248,65 @@ For even more details, see :doc:`/cookbook/security/form_login`.
 The Login Form and Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*   ``login_path`` (type: ``string``, default: ``/login``)
-    This is the route or path that the user will be redirected to (unless
-    ``use_forward`` is set to ``true``) when they try to access a
-    protected resource but isn't fully authenticated.
+login_path
+..........
 
-    This path **must** be accessible by a normal, un-authenticated user, else
-    you may create a redirect loop. For details, see
-    ":ref:`Avoid Common Pitfalls <book-security-common-pitfalls>`".
+**type**: ``string`` **default**: ``/login``
 
-*   ``check_path`` (type: ``string``, default: ``/login_check``)
-    This is the route or path that your login form must submit to. The
-    firewall will intercept any requests (``POST`` requests only, by default)
-    to this URL and process the submitted login credentials.
+This is the route or path that the user will be redirected to (unless ``use_forward``
+is set to ``true``) when they try to access a protected resource but isn't
+fully authenticated.
 
-    Be sure that this URL is covered by your main firewall (i.e. don't create
-    a separate firewall just for ``check_path`` URL).
+This path **must** be accessible by a normal, un-authenticated user, else
+you may create a redirect loop. For details, see
+":ref:`Avoid Common Pitfalls <book-security-common-pitfalls>`".
 
-*   ``use_forward`` (type: ``Boolean``, default: ``false``)
-    If you'd like the user to be forwarded to the login form instead of being
-    redirected, set this option to ``true``.
+check_path
+..........
 
-*   ``username_parameter`` (type: ``string``, default: ``_username``)
-    This is the field name that you should give to the username field of
-    your login form. When you submit the form to ``check_path``, the security
-    system will look for a POST parameter with this name.
+**type**: ``string`` **default**: ``/login_check``
 
-*   ``password_parameter`` (type: ``string``, default: ``_password``)
-    This is the field name that you should give to the password field of
-    your login form. When you submit the form to ``check_path``, the security
-    system will look for a POST parameter with this name.
+This is the route or path that your login form must submit to. The firewall
+will intercept any requests (``POST`` requests only, by default) to this
+URL and process the submitted login credentials.
 
-*   ``post_only`` (type: ``Boolean``, default: ``true``)
-    By default, you must submit your login form to the ``check_path`` URL
-    as a POST request. By setting this option to ``false``, you can send a
-    GET request to the ``check_path`` URL.
+Be sure that this URL is covered by your main firewall (i.e. don't create
+a separate firewall just for ``check_path`` URL).
+
+use_forward
+...........
+
+**type**: ``Boolean`` **default**: ``false``
+
+If you'd like the user to be forwarded to the login form instead of being
+redirected, set this option to ``true``.
+
+username_parameter
+..................
+
+**type**: ``string`` **default**: ``_username``
+
+This is the field name that you should give to the username field of your
+login form. When you submit the form to ``check_path``, the security system
+will look for a POST parameter with this name.
+
+password_parameter
+..................
+
+**type**: ``string`` **default**: ``_password``
+
+This is the field name that you should give to the password field of your
+login form. When you submit the form to ``check_path``, the security system
+will look for a POST parameter with this name.
+
+post_only
+.........
+
+**type**: ``Boolean`` **default**: ``true``
+
+By default, you must submit your login form to the ``check_path`` URL as
+a POST request. By setting this option to ``false``, you can send a GET request
+to the ``check_path`` URL.
 
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -281,11 +318,11 @@ Redirecting after Login
 
 .. _reference-security-pbkdf2:
 
-Using the PBKDF2 encoder: Security and Speed
+Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
 
 .. versionadded:: 2.2
-    The PBKDF2 password encoder was added in Symfony 2.2.
+    The PBKDF2 password encoder was introduced in Symfony 2.2.
 
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
@@ -310,7 +347,7 @@ Using the BCrypt Password Encoder
     the `ircmaxell/password-compat`_ library via Composer.
 
 .. versionadded:: 2.2
-    The BCrypt password encoder was added in Symfony 2.2.
+    The BCrypt password encoder was introduced in Symfony 2.2.
 
 .. configuration-block::
 
@@ -406,20 +443,20 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: xml
 
-       <!-- app/config/security.xml -->
-       <security:config>
-          <firewall name="somename" context="my_context">
-            <! ... ->
-          </firewall>
-          <firewall name="othername" context="my_context">
-            <! ... ->
-          </firewall>
-       </security:config>
+        <!-- app/config/security.xml -->
+        <security:config>
+            <firewall name="somename" context="my_context">
+                <! ... ->
+            </firewall>
+            <firewall name="othername" context="my_context">
+                <! ... ->
+            </firewall>
+        </security:config>
 
     .. code-block:: php
 
-       // app/config/security.php
-       $container->loadFromExtension('security', array(
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'somename' => array(
                     // ...
@@ -430,7 +467,7 @@ multiple firewalls, the "context" could actually be shared:
                     'context' => 'my_context'
                 ),
             ),
-       ));
+        ));
 
 HTTP-Digest Authentication
 --------------------------
@@ -439,38 +476,38 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 
 .. configuration-block::
 
-   .. code-block:: yaml
+    .. code-block:: yaml
 
-      # app/config/security.yml
-      security:
-         firewalls:
-            somename:
-              http_digest:
-               key: "a_random_string"
-               realm: "secure-api"
+        # app/config/security.yml
+        security:
+            firewalls:
+                somename:
+                    http_digest:
+                        key: "a_random_string"
+                        realm: "secure-api"
 
-   .. code-block:: xml
+    .. code-block:: xml
 
-      <!-- app/config/security.xml -->
-      <security:config>
-         <firewall name="somename">
-            <http-digest key="a_random_string" realm="secure-api" />
-         </firewall>
-      </security:config>
+        <!-- app/config/security.xml -->
+        <security:config>
+            <firewall name="somename">
+                <http-digest key="a_random_string" realm="secure-api" />
+            </firewall>
+        </security:config>
 
-   .. code-block:: php
+    .. code-block:: php
 
-      // app/config/security.php
-      $container->loadFromExtension('security', array(
-           'firewalls' => array(
-               'somename' => array(
-                   'http_digest' => array(
-                       'key'   => 'a_random_string',
-                       'realm' => 'secure-api',
-                   ),
-               ),
-           ),
-      ));
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'somename' => array(
+                    'http_digest' => array(
+                        'key'   => 'a_random_string',
+                        'realm' => 'secure-api',
+                    ),
+                ),
+            ),
+        ));
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

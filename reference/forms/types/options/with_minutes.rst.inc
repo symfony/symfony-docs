@@ -1,8 +1,8 @@
-.. versionadded:: 2.2
-    The ``with_minutes`` option was introduced in Symfony 2.2.
-
 with_minutes
 ~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The ``with_minutes`` option was introduced in Symfony 2.2.
 
 **type**: ``Boolean`` **default**: ``true``
 

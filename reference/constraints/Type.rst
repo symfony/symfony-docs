@@ -23,7 +23,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 age:
@@ -65,7 +65,7 @@ Basic Usage
         </constraint-mapping>
 
     .. code-block:: php
-        
+
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
 
@@ -96,21 +96,38 @@ type
 This required option is the fully qualified class name or one of the PHP datatypes
 as determined by PHP's ``is_`` functions.
 
-* `array <http://php.net/is_array>`_
-* `bool <http://php.net/is_bool>`_
-* `callable <http://php.net/is_callable>`_
-* `float <http://php.net/is_float>`_
-* `double <http://php.net/is_double>`_
-* `int <http://php.net/is_int>`_
-* `integer <http://php.net/is_integer>`_
-* `long <http://php.net/is_long>`_
-* `null <http://php.net/is_null>`_
-* `numeric <http://php.net/is_numeric>`_
-* `object <http://php.net/is_object>`_
-* `real <http://php.net/is_real>`_
-* `resource <http://php.net/is_resource>`_
-* `scalar <http://php.net/is_scalar>`_
-* `string <http://php.net/is_string>`_
+* :phpfunction:`array <is_array>`
+* :phpfunction:`bool <is_bool>`
+* :phpfunction:`callable <is_callable>`
+* :phpfunction:`float <is_float>`
+* :phpfunction:`double <is_double>`
+* :phpfunction:`int <is_int>`
+* :phpfunction:`integer <is_integer>`
+* :phpfunction:`long <is_long>`
+* :phpfunction:`null <is_null>`
+* :phpfunction:`numeric <is_numeric>`
+* :phpfunction:`object <is_object>`
+* :phpfunction:`real <is_real>`
+* :phpfunction:`resource <is_resource>`
+* :phpfunction:`scalar <is_scalar>`
+* :phpfunction:`string <is_string>`
+
+Also, you can use ``ctype_`` functions from corresponding `built-in PHP extension <http://php.net/book.ctype.php>`_.
+Consider `a list of ctype functions <http://php.net/ref.ctype.php>`_:
+
+* :phpfunction:`alnum <ctype_alnum>`
+* :phpfunction:`alpha <ctype_alpha>`
+* :phpfunction:`cntrl <ctype_cntrl>`
+* :phpfunction:`digit <ctype_digit>`
+* :phpfunction:`graph <ctype_graph>`
+* :phpfunction:`lower <ctype_lower>`
+* :phpfunction:`print <ctype_print>`
+* :phpfunction:`punct <ctype_punct>`
+* :phpfunction:`space <ctype_space>`
+* :phpfunction:`upper <ctype_upper>`
+* :phpfunction:`xdigit <ctype_xdigit>`
+
+Make sure that the proper :phpfunction:`locale <setlocale>` is set before using one of these.
 
 message
 ~~~~~~~

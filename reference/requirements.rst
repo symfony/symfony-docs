@@ -1,10 +1,12 @@
 .. index::
    single: Requirements
-   
-Requirements for running Symfony2
-=================================
 
-To run Symfony2, your system needs to adhere to a list of requirements. You can
+.. _requirements-for-running-symfony2:
+
+Requirements for Running Symfony
+================================
+
+To run Symfony, your system needs to adhere to a list of requirements. You can
 easily see if your system passes all requirements by running the ``web/config.php``
 in your Symfony distribution. Since the CLI often uses a different ``php.ini``
 configuration file, it's also a good idea to check your requirements from
@@ -26,7 +28,7 @@ Required
 
 .. caution::
 
-    Be aware that Symfony2 has some known limitations when using a PHP version
+    Be aware that Symfony has some known limitations when using a PHP version
     less than 5.3.8 or equal to 5.3.16. For more information see the
     `Requirements section of the README`_.
 

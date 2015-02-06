@@ -1,12 +1,12 @@
 .. index::
    single: Emails; In development
 
-How to Work with Emails During Development
+How to Work with Emails during Development
 ==========================================
 
 When developing an application which sends email, you will often
 not want to actually send the email to the specified recipient during
-development. If you are using the SwiftmailerBundle with Symfony2, you
+development. If you are using the SwiftmailerBundle with Symfony, you
 can easily achieve this through configuration settings without having to
 make any changes to your application's code at all. There are two main
 choices when it comes to handling email during development: (a) disabling the
@@ -65,7 +65,7 @@ via the ``delivery_address`` option:
 
         # app/config/config_dev.yml
         swiftmailer:
-            delivery_address:  dev@example.com
+            delivery_address: dev@example.com
 
     .. code-block:: xml
 
@@ -76,8 +76,7 @@ via the ``delivery_address`` option:
             http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
-        <swiftmailer:config
-            delivery-address="dev@example.com" />
+        <swiftmailer:config delivery-address="dev@example.com" />
 
     .. code-block:: php
 

@@ -9,8 +9,7 @@ The Intl Component
     access to the localization data of the `ICU library`_.
 
 .. versionadded:: 2.3
-
-    The Intl component was added in Symfony 2.3. In earlier versions of Symfony,
+    The Intl component was introduced in Symfony 2.3. In earlier versions of Symfony,
     you should use the Locale component instead.
 
 .. caution::
@@ -23,8 +22,8 @@ Installation
 
 You can install the component in two different ways:
 
-* Using the official Git repository (https://github.com/symfony/Intl);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
+* Using the official Git repository (https://github.com/symfony/Intl).
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
@@ -65,7 +64,7 @@ code::
 
     The intl extension internally uses the `ICU library`_ to obtain localization
     data such as number formats in different languages, country names and more.
-    To make this data accessible to userland PHP libraries, Symfony2 ships a copy
+    To make this data accessible to userland PHP libraries, Symfony ships a copy
     in the `Icu component`_.
 
     Depending on the ICU version compiled with your intl extension, a matching
@@ -78,7 +77,7 @@ code::
 
     These versions are important when you deploy your application to a **server with
     a lower ICU version** than your development machines, because deployment will
-    fail if
+    fail if:
 
     * the development machines are compiled with ICU 4.4 or higher, but the
       server is compiled with a lower ICU version than 4.4;
@@ -86,13 +85,13 @@ code::
       the server.
 
     For example, consider that your development machines ship ICU 4.8 and the server
-    ICU 4.2. When you run ``php composer.phar update`` on the development machine, version
+    ICU 4.2. When you run ``composer update`` on the development machine, version
     1.2.* of the Icu component will be installed. But after deploying the
-    application, ``php composer.phar install`` will fail with the following error:
+    application, ``composer install`` will fail with the following error:
 
     .. code-block:: bash
 
-        $ php composer.phar install
+        $ composer install
         Loading composer repositories with package information
         Installing dependencies from lock file
         Your requirements could not be resolved to an installable set of packages.
@@ -105,8 +104,8 @@ code::
     The error tells you that the requested version of the Icu component, version
     1.2, is not compatible with PHP's ICU version 4.2.
 
-    One solution to this problem is to run ``php composer.phar update`` instead of
-    ``php composer.phar install``. It is highly recommended **not** to do this. The
+    One solution to this problem is to run ``composer update`` instead of
+    ``composer install``. It is highly recommended **not** to do this. The
     ``update`` command will install the latest versions of each Composer dependency
     to your production server and potentially break the application.
 
@@ -131,7 +130,7 @@ code::
     * "1.0.*" if the server does not have the intl extension installed;
     * "1.1.*" if the server is compiled with ICU 4.2 or lower.
 
-    Finally, run ``php composer.phar update symfony/icu`` on your development machine, test
+    Finally, run ``composer update symfony/icu`` on your development machine, test
     extensively and deploy again. The installation of the dependencies will now
     succeed.
 
@@ -282,7 +281,12 @@ multi-valued entries (arrays), the values of the more specific and the fallback
 locale will be merged. In order to suppress this behavior, the last parameter
 ``$fallback`` can be set to ``false``::
 
-    echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'), false);
+    echo $reader->readEntry(
+        '/path/to/bundle',
+        'en',
+        array('Data', 'entry1'),
+        false
+    );
 
 Accessing ICU Data
 ------------------

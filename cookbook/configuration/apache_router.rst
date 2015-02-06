@@ -1,17 +1,17 @@
 .. index::
-   single: Apache Router
+    single: Apache Router
 
-How to use the Apache Router
+How to Use the Apache Router
 ============================
 
-Symfony2, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
-One of these ways is by letting Apache handle routes directly, rather than using Symfony2 for this task.
+Symfony, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
+One of these ways is by letting Apache handle routes directly, rather than using Symfony for this task.
 
 Change Router Configuration Parameters
 --------------------------------------
 
 To dump Apache routes you must first tweak some configuration parameters to tell
-Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
+Symfony to use the ``ApacheUrlMatcher`` instead of the default one:
 
 .. configuration-block::
 
@@ -49,10 +49,10 @@ Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
     at the end of ``ApacheUrlMatcher::match()`` a call to ``parent::match()``
     is done).
 
-Generating mod_rewrite rules
+Generating mod_rewrite Rules
 ----------------------------
 
-To test that it's working, let's create a very basic route for the AcmeDemoBundle:
+To test that it's working, create a very basic route for the AppBundle:
 
 .. configuration-block::
 
@@ -60,21 +60,21 @@ To test that it's working, let's create a very basic route for the AcmeDemoBundl
 
         # app/config/routing.yml
         hello:
-            path:  /hello/{name}
-            defaults: { _controller: AcmeDemoBundle:Demo:hello }
+            path: /hello/{name}
+            defaults: { _controller: AppBundle:Demo:hello }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <route id="hello" path="/hello/{name}">
-            <default key="_controller">AcmeDemoBundle:Demo:hello</default>
+            <default key="_controller">AppBundle:Demo:hello</default>
         </route>
 
     .. code-block:: php
 
         // app/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeDemoBundle:Demo:hello',
+            '_controller' => 'AppBundle:Demo:hello',
         )));
 
 Now generate the mod_rewrite rules:
@@ -93,7 +93,7 @@ Which should roughly output the following:
 
     # hello
     RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
-    RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AcmeDemoBundle\:Demo\:hello]
+    RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Demo\:hello]
 
 You can now rewrite ``web/.htaccess`` to use the new rules, so with this example
 it should look like this:
@@ -109,7 +109,7 @@ it should look like this:
 
         # hello
         RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
-        RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AcmeDemoBundle\:Demo\:hello]
+        RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Demo\:hello]
     </IfModule>
 
 .. note::
@@ -119,7 +119,7 @@ it should look like this:
 That's it!
 You're now all set to use Apache routes.
 
-Additional tweaks
+Additional Tweaks
 -----------------
 
 To save a little bit of processing time, change occurrences of ``Request``

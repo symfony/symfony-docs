@@ -11,17 +11,17 @@ using both functional and unit tests.
 The PHPUnit Testing Framework
 -----------------------------
 
-Symfony2 integrates with an independent library - called PHPUnit - to give
+Symfony integrates with an independent library - called PHPUnit - to give
 you a rich testing framework. This chapter won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
-    needed to test the Symfony core code itself.
+    It's recommended to use the latest stable PHPUnit version (you will have
+    to use version 4.2 or higher to test the Symfony core code itself).
 
 Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the `Tests/` subdirectory of your bundles. If you follow
+that should live in the ``Tests/`` subdirectory of your bundles. If you follow
 this rule, then you can run all of your application's tests with the following
 command:
 
@@ -47,7 +47,7 @@ Unit Tests
 A unit test is usually a test against a specific PHP class. If you want to
 test the overall behavior of your application, see the section about `Functional Tests`_.
 
-Writing Symfony2 unit tests is no different than writing standard PHPUnit
+Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
@@ -89,8 +89,8 @@ of your bundle::
     directory, put the test in the ``Tests/Utility/`` directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``bootstrap.php.cache`` file (as configured by default in the ``phpunit.xml.dist``
-file).
+via the ``bootstrap.php.cache`` file (as configured by default in the
+``app/phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
 
@@ -129,7 +129,7 @@ directory of your bundle. If you want to test the pages handled by your
 ``DemoController`` class, start by creating a new ``DemoControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
-For example, the Symfony2 Standard Edition provides a simple functional test
+For example, the Symfony Standard Edition provides a simple functional test
 for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
@@ -229,7 +229,7 @@ document::
 
 .. _book-testing-request-method-sidebar:
 
-.. sidebar:: More about the ``request()`` method:
+.. sidebar:: More about the ``request()`` Method:
 
     The full signature of the ``request()`` method is::
 
@@ -313,12 +313,18 @@ Working with the Test Client
 -----------------------------
 
 The Test Client simulates an HTTP client like a browser and makes requests
-into your Symfony2 application::
+into your Symfony application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
 
 The ``request()`` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
+
+.. tip::
+
+    Hardcoding the request URLs is a best practice for functional tests. If the
+    test generates URLs using the Symfony router, it won't detect any change
+    made to the application URLs which may impact the end users.
 
 Use the Crawler to find DOM elements in the Response. These elements can then
 be used to click on links and submit forms::
@@ -398,12 +404,13 @@ The Client supports many operations that can be done in a real browser::
     // Clears all cookies and the history
     $client->restart();
 
-Accessing Internal Objects
+Accessing internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ``getInternalRequest()`` and ``getInternalResponse()`` method were
-    added in Symfony 2.3.
+    The :method:`Symfony\\Component\\BrowserKit\\Client::getInternalRequest`
+    and :method:`Symfony\\Component\\BrowserKit\\Client::getInternalResponse`
+    methods were introduced in Symfony 2.3.
 
 If you use the client to test your application, you might want to access the
 client's internal objects::
@@ -487,6 +494,11 @@ force him with the ``followRedirects()`` method::
 
     $client->followRedirects();
 
+If you pass ``false`` to the ``followRedirects()`` method, the redirects
+will no longer be followed::
+
+    $client->followRedirects(false);
+
 .. index::
    single: Tests; Crawler
 
@@ -513,31 +525,28 @@ selects the last one on the page, and then selects its immediate parent element:
 
 Many other methods are also available:
 
-+------------------------+----------------------------------------------------+
-| Method                 | Description                                        |
-+========================+====================================================+
-| ``filter('h1.title')`` | Nodes that match the CSS selector                  |
-+------------------------+----------------------------------------------------+
-| ``filterXpath('h1')``  | Nodes that match the XPath expression              |
-+------------------------+----------------------------------------------------+
-| ``eq(1)``              | Node for the specified index                       |
-+------------------------+----------------------------------------------------+
-| ``first()``            | First node                                         |
-+------------------------+----------------------------------------------------+
-| ``last()``             | Last node                                          |
-+------------------------+----------------------------------------------------+
-| ``siblings()``         | Siblings                                           |
-+------------------------+----------------------------------------------------+
-| ``nextAll()``          | All following siblings                             |
-+------------------------+----------------------------------------------------+
-| ``previousAll()``      | All preceding siblings                             |
-+------------------------+----------------------------------------------------+
-| ``parents()``          | Returns the parent nodes                           |
-+------------------------+----------------------------------------------------+
-| ``children()``         | Returns children nodes                             |
-+------------------------+----------------------------------------------------+
-| ``reduce($lambda)``    | Nodes for which the callable does not return false |
-+------------------------+----------------------------------------------------+
+``filter('h1.title')``
+    Nodes that match the CSS selector.
+``filterXpath('h1')``
+    Nodes that match the XPath expression.
+``eq(1)``
+    Node for the specified index.
+``first()``
+    First node.
+``last()``
+    Last node.
+``siblings()``
+    Siblings.
+``nextAll()``
+    All following siblings.
+``previousAll()``
+    All preceding siblings.
+``parents()``
+    Returns the parent nodes.
+``children()``
+    Returns children nodes.
+``reduce($lambda)``
+    Nodes for which the callable does not return false.
 
 Since each of these methods returns a new ``Crawler`` instance, you can
 narrow down your node selection by chaining the method calls::
@@ -549,7 +558,8 @@ narrow down your node selection by chaining the method calls::
                 return false;
             }
         })
-        ->first();
+        ->first()
+    ;
 
 .. tip::
 
@@ -613,7 +623,7 @@ Just like links, you select forms with the ``selectButton()`` method::
     button.
 
 The ``selectButton()`` method can select ``button`` tags and submit ``input``
-tags. It uses several different parts of the buttons to find them:
+tags. It uses several parts of the buttons to find them:
 
 * The ``value`` attribute value;
 
@@ -711,8 +721,10 @@ configuration option:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/swiftmailer
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <!-- ... -->
             <swiftmailer:config disable-delivery="true" />
@@ -765,47 +777,72 @@ PHPUnit Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each application has its own PHPUnit configuration, stored in the
-``phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create a ``phpunit.xml`` file to tweak the configuration for your local machine.
+``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
+create an ``app/phpunit.xml`` file to set up a configuration for your local
+machine only.
 
 .. tip::
 
-    Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
-    ``phpunit.xml`` file.
+    Store the ``app/phpunit.xml.dist`` file in your code repository and ignore
+    the ``app/phpunit.xml`` file.
 
-By default, only the tests stored in "standard" bundles are run by the
-``phpunit`` command (standard being tests in the ``src/*/Bundle/Tests`` or
-``src/*/Bundle/*Bundle/Tests`` directories) But you can easily add more
-directories. For instance, the following configuration adds the tests from
-the installed third-party bundles:
+By default, only the tests from your own custom bundles stored in the standard
+directories ``src/*/*Bundle/Tests``, ``src/*/Bundle/*Bundle/Tests``,
+``src/*Bundle/Tests`` are run by the ``phpunit`` command, as configured
+in the ``app/phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
-    <!-- hello/phpunit.xml.dist -->
-    <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>../src/*/*Bundle/Tests</directory>
-            <directory>../src/Acme/Bundle/*Bundle/Tests</directory>
-        </testsuite>
-    </testsuites>
+    <!-- app/phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <testsuites>
+            <testsuite name="Project Test Suite">
+                <directory>../src/*/*Bundle/Tests</directory>
+                <directory>../src/*/Bundle/*Bundle/Tests</directory>
+                <directory>../src/*Bundle/Tests</directory>
+            </testsuite>
+        </testsuites>
+        <!-- ... -->
+    </phpunit>
+
+But you can easily add more directories. For instance, the following
+configuration adds tests from a custom ``lib/tests`` directory:
+
+.. code-block:: xml
+
+    <!-- app/phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <testsuites>
+            <testsuite name="Project Test Suite">
+                <!-- ... --->
+                <directory>../lib/tests</directory>
+            </testsuite>
+        </testsuites>
+        <!-- ... --->
+    </phpunit>
 
 To include other directories in the code coverage, also edit the ``<filter>``
 section:
 
 .. code-block:: xml
 
-    <!-- ... -->
-    <filter>
-        <whitelist>
-            <directory>../src</directory>
-            <exclude>
-                <directory>../src/*/*Bundle/Resources</directory>
-                <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/Acme/Bundle/*Bundle/Resources</directory>
-                <directory>../src/Acme/Bundle/*Bundle/Tests</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+    <!-- app/phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <filter>
+            <whitelist>
+                <!-- ... -->
+                <directory>../lib</directory>
+                <exclude>
+                    <!-- ... -->
+                    <directory>../lib/tests</directory>
+                </exclude>
+            </whitelist>
+        </filter>
+        <!-- ... --->
+    </phpunit>
 
 Learn more
 ----------
@@ -817,6 +854,6 @@ Learn more
 * :doc:`/cookbook/testing/profiling`
 * :doc:`/cookbook/testing/bootstrap`
 
-.. _`DemoControllerTest`: https://github.com/symfony/symfony-standard/blob/master/src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
+.. _`DemoControllerTest`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Resources/skeleton/acme-demo-bundle/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
 .. _`documentation`: http://phpunit.de/manual/current/en/

@@ -1,10 +1,10 @@
 .. index::
    single: Config; Defining and processing configuration values
 
-Defining and processing configuration values
+Defining and Processing Configuration Values
 ============================================
 
-Validating configuration values
+Validating Configuration Values
 -------------------------------
 
 After loading configuration values from all kinds of resources, the values
@@ -21,14 +21,14 @@ applied to it (like: "the value for ``auto_connect`` must be a boolean value"):
     default_connection: mysql
     connections:
         mysql:
-            host: localhost
-            driver: mysql
+            host:     localhost
+            driver:   mysql
             username: user
             password: pass
         sqlite:
-            host: localhost
-            driver: sqlite
-            memory: true
+            host:     localhost
+            driver:   sqlite
+            memory:   true
             username: user
             password: pass
 
@@ -38,7 +38,7 @@ they are when first encountered. Also, some keys are only available when
 another key has a specific value (in the sample configuration above: the
 ``memory`` key only makes sense when the ``driver`` is ``sqlite``).
 
-Defining a hierarchy of configuration values using the TreeBuilder
+Defining a Hierarchy of Configuration Values Using the TreeBuilder
 ------------------------------------------------------------------
 
 All the rules concerning configuration values can be defined using the
@@ -66,10 +66,10 @@ should be returned from a custom ``Configuration`` class which implements the
         }
     }
 
-Adding node definitions to the tree
+Adding Node Definitions to the Tree
 -----------------------------------
 
-Variable nodes
+Variable Nodes
 ~~~~~~~~~~~~~~
 
 A tree contains node definitions which can be laid out in a semantic way.
@@ -91,7 +91,7 @@ The root node itself is an array node, and has children, like the boolean
 node ``auto_connect`` and the scalar node ``default_connection``. In general:
 after defining a node, a call to ``end()`` takes you one step up in the hierarchy.
 
-Node type
+Node Type
 ~~~~~~~~~
 
 It is possible to validate the type of a provided value by using the appropriate
@@ -108,11 +108,11 @@ node definition. Node type are available for:
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
 
-Numeric node constraints
+Numeric Node Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The numeric (float and integer) nodes are new in 2.2
+    The numeric (float and integer) nodes were introduced in Symfony 2.2.
 
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
@@ -133,11 +133,11 @@ allowing to validate the value::
         ->end()
     ;
 
-Enum nodes
+Enum Nodes
 ~~~~~~~~~~
 
 .. versionadded:: 2.1
-    The enum node is new in Symfony 2.1
+    The enum node was introduced in Symfony 2.1.
 
 Enum nodes provide a constraint to match the given input against a set of
 values::
@@ -152,7 +152,7 @@ values::
 
 This will restrict the ``gender`` option to be either ``male`` or ``female``.
 
-Array nodes
+Array Nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
@@ -193,7 +193,7 @@ inside the current node. According to the prototype definition in the example
 above, it is possible to have multiple connection arrays (containing a ``driver``,
 ``host``, etc.).
 
-Array node options
+Array Node Options
 ~~~~~~~~~~~~~~~~~~
 
 Before defining the children of an array node, you can provide options like:
@@ -236,7 +236,7 @@ In XML, each ``parameters`` node would have a ``name`` attribute (along with
 the final array. The ``useAttributeAsKey`` is useful for normalizing how
 arrays are specified between different formats like XML and YAML.
 
-Default and required values
+Default and required Values
 ---------------------------
 
 For all node types, it is possible to define default values and replacement
@@ -287,11 +287,21 @@ has a certain value:
         ->end()
     ;
 
+Documenting the Option
+----------------------
+
+All options can be documented using the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
+method.
+
+The info will be printed as a comment when dumping the configuration tree.
+
 Optional Sections
 -----------------
 
 .. versionadded:: 2.2
-    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
+    The ``canBeEnabled`` and ``canBeDisabled`` methods were introduced in
+    Symfony 2.2.
 
 If you have entire sections which are optional and can be enabled/disabled,
 you can take advantage of the shortcut
@@ -316,7 +326,7 @@ you can take advantage of the shortcut
 The ``canBeDisabled`` method looks about the same except that the section
 would be enabled by default.
 
-Merging options
+Merging Options
 ---------------
 
 Extra options concerning the merge process may be provided. For arrays:
@@ -330,7 +340,7 @@ For all nodes:
 ``cannotBeOverwritten()``
     don’t let other configuration arrays overwrite an existing value for this node
 
-Appending sections
+Appending Sections
 ------------------
 
 If you have a complex configuration to validate then the tree can grow to
@@ -390,6 +400,8 @@ with ``append()``::
 This is also useful to help you avoid repeating yourself if you have sections
 of the config that are repeated in different places.
 
+.. _component-config-normalization:
+
 Normalization
 -------------
 
@@ -399,8 +411,8 @@ process is used to remove some of the differences that result from different
 configuration formats, mainly the differences between YAML and XML.
 
 The separator used in keys is typically ``_`` in YAML and ``-`` in XML. For
-example, ``auto_connect`` in YAML and ``auto-connect``. The normalization would
-make both of these ``auto_connect``.
+example, ``auto_connect`` in YAML and ``auto-connect`` in XML.
+The normalization would make both of these ``auto_connect``.
 
 .. caution::
 
@@ -444,6 +456,8 @@ a second argument::
         ->fixXmlConfig('child', 'children')
         ->children()
             ->arrayNode('children')
+                // ...
+            ->end()
         ->end()
     ;
 
@@ -473,9 +487,9 @@ in this config:
 .. code-block:: yaml
 
     connection:
-        name: my_mysql_connection
-        host: localhost
-        driver: mysql
+        name:     my_mysql_connection
+        host:     localhost
+        driver:   mysql
         username: user
         password: pass
 
@@ -492,7 +506,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function($v) { return array('name'=> $v); })
+                    ->then(function ($v) { return array('name' => $v); })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()
@@ -502,7 +516,7 @@ By changing a string value into an associative array with ``name`` as the key::
         ->end()
     ;
 
-Validation rules
+Validation Rules
 ----------------
 
 More advanced validation rules can be provided using the
@@ -548,7 +562,7 @@ Usually, "then" is a closure. Its return value will be used as a new value
 for the node, instead
 of the node's original value.
 
-Processing configuration values
+Processing Configuration Values
 -------------------------------
 
 The :class:`Symfony\\Component\\Config\\Definition\\Processor` uses the tree
@@ -562,8 +576,8 @@ Otherwise the result is a clean array of configuration values::
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(__DIR__.'/src/Matthias/config/config.yml');
-    $config2 = Yaml::parse(__DIR__.'/src/Matthias/config/config_extra.yml');
+    $config1 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config.yml'));
+    $config2 = Yaml::parse(file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml'));
 
     $configs = array($config1, $config2);
 

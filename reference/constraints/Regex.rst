@@ -32,13 +32,13 @@ characters at the beginning of your string:
         Acme\BlogBundle\Entity\Author:
             properties:
                 description:
-                    - Regex: "/^\w+/"
+                    - Regex: '/^\w+/'
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -70,7 +70,7 @@ characters at the beginning of your string:
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -98,7 +98,7 @@ message:
             properties:
                 firstName:
                     - Regex:
-                        pattern: "/\d/"
+                        pattern: '/\d/'
                         match:   false
                         message: Your name cannot contain a number
 
@@ -106,7 +106,7 @@ message:
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -178,7 +178,7 @@ htmlPattern
 ~~~~~~~~~~~
 
 .. versionadded:: 2.1
-    The ``htmlPattern`` option was added in Symfony 2.1
+    The ``htmlPattern`` option was introduced in Symfony 2.1
 
 **type**: ``string|Boolean`` **default**: null
 
@@ -189,8 +189,8 @@ pattern. This means that the delimiters are removed (e.g. ``/[a-z]+/`` becomes `
 
 However, there are some other incompatibilities between both patterns which
 cannot be fixed by the constraint. For instance, the HTML5 ``pattern`` attribute
-does not support flags. If you have a pattern like ``/[a-z]+/i`` you need to
-specify the HTML5 compatible pattern in the ``htmlPattern`` option:
+does not support flags. If you have a pattern like ``/[a-z]+/i``, you need
+to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
 
@@ -208,7 +208,7 @@ specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -244,7 +244,7 @@ specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

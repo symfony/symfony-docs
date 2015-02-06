@@ -52,7 +52,13 @@ the ``views/hello.php`` file and returns the output text. The second argument
 of ``render`` is an array of variables to use in the template. In this
 example, the result will be ``Hello, Fabien!``.
 
-The ``$view`` variable
+.. note::
+
+    Templates will be cached in the memory of the engine. This means that if
+    you render the same template multiple times in the same request, the
+    template will only be loaded once from the file system.
+
+The ``$view`` Variable
 ----------------------
 
 In all templates parsed by the ``PhpEngine``, you get access to a mysterious
@@ -72,6 +78,33 @@ to render the template originally) inside the template to render another templat
     <?php foreach ($names as $name) : ?>
         <?php echo $view->render('hello.php', array('firstname' => $name)) ?>
     <?php endforeach ?>
+
+Global Variables
+----------------
+
+Sometimes, you need to set a variable which is available in all templates
+rendered by an engine (like the ``$app`` variable when using the Symfony
+framework). These variables can be set by using the
+:method:`Symfony\\Component\\Templating\\PhpEngine::addGlobal` method and they
+can be accessed in the template as normal variables::
+
+    $templating->addGlobal('ga_tracking', 'UA-xxxxx-x');
+
+In a template:
+
+.. code-block:: html+php
+
+    <p>The google tracking code is: <?php echo $ga_tracking ?></p>
+
+.. caution::
+
+    The global variables cannot be called ``this`` or ``view``, since they are
+    already used by the PHP engine.
+
+.. note::
+
+    The global variables can be overridden by a local variable in the template
+    with the same name.
 
 Output Escaping
 ---------------
@@ -102,7 +135,8 @@ escaper using the
 Helpers
 -------
 
-The Templating component can be easily extended via helpers. The component has
+The Templating component can be easily extended via helpers. Helpers are PHP objects that
+provide features useful in a template context. The component has
 2 built-in helpers:
 
 * :doc:`/components/templating/helpers/assetshelper`
@@ -127,5 +161,42 @@ most of the time you'll extend
 The ``Helper`` has one required method:
 :method:`Symfony\\Component\\Templating\\Helper\\HelperInterface::getName`.
 This is the name that is used to get the helper from the ``$view`` object.
+
+Creating a Custom Engine
+------------------------
+
+Besides providing a PHP templating engine, you can also create your own engine
+using the Templating component. To do that, create a new class which
+implements the :class:`Symfony\\Component\\Templating\\EngineInterface`. This
+requires 3 method:
+
+* :method:`render($name, array $parameters = array()) <Symfony\\Component\\Templating\\EngineInterface::render>`
+  - Renders a template
+* :method:`exists($name) <Symfony\\Component\\Templating\\EngineInterface::exists>`
+  - Checks if the template exists
+* :method:`supports($name) <Symfony\\Component\\Templating\\EngineInterface::supports>`
+  - Checks if the given template can be handled by this engine.
+
+Using Multiple Engines
+----------------------
+
+It is possible to use multiple engines at the same time using the
+:class:`Symfony\\Component\\Templating\\DelegatingEngine` class. This class
+takes a list of engines and acts just like a normal templating engine. The
+only difference is that it delegates the calls to one of the other engines. To
+choose which one to use for the template, the
+:method:`EngineInterface::supports() <Symfony\\Component\\Templating\\EngineInterface::supports>`
+method is used.
+
+.. code-block:: php
+
+    use Acme\Templating\CustomEngine;
+    use Symfony\Component\Templating\PhpEngine;
+    use Symfony\Component\Templating\DelegatingEngine;
+
+    $templating = new DelegatingEngine(array(
+        new PhpEngine(...),
+        new CustomEngine(...),
+    ));
 
 .. _Packagist: https://packagist.org/packages/symfony/templating

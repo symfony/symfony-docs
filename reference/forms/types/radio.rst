@@ -15,60 +15,59 @@ If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |
 +-------------+---------------------------------------------------------------------+
-| Options     | - `value`_                                                          |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `data`_                                                           |
-| options     | - `empty_data`_                                                     |
-|             | - `required`_                                                       |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `read_only`_                                                      |
+| Inherited   | from  the :doc:`checkbox </reference/forms/types/checkbox>` type:   |
+| options     |                                                                     |
+|             | - `value`_                                                          |
+|             |                                                                     |
+|             | from the :doc:`form </reference/forms/types/form>` type:            |
+|             |                                                                     |
+|             | - `data`_                                                           |
 |             | - `disabled`_                                                       |
+|             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
+|             | - `read_only`_                                                      |
+|             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`checkbox </reference/forms/types/checkbox>`                   |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
 
-Field Options
--------------
-
-value
-~~~~~
-
-**type**: ``mixed`` **default**: ``1``
-
-The value that's actually used as the value for the radio button. This does
-not affect the value that's set on your object.
-
-.. caution::
-
-    To make a radio button checked by default, use the `data`_ option.
-
 Inherited Options
 -----------------
+
+These options inherit from the :doc:`checkbox </reference/forms/types/checkbox>`
+type:
+
+.. include:: /reference/forms/types/options/value.rst.inc
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
+
+Form Variables
+--------------
+
+.. include:: /reference/forms/types/variables/check_or_radio_table.rst.inc

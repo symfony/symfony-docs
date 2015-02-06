@@ -39,9 +39,9 @@ template. But field type extensions allow you to do this in a nice DRY fashion.
 Defining the Form Type Extension
 --------------------------------
 
-Your first task will be to create the form type extension class. Let's
-call it ``ImageTypeExtension``. By standard, form extensions usually live
-in the ``Form\Extension`` directory of one of your bundles.
+Your first task will be to create the form type extension class (called ``ImageTypeExtension``
+in this article). By standard, form extensions usually live in the ``Form\Extension``
+directory of one of your bundles.
 
 When creating a form type extension, you can either implement the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface
@@ -133,8 +133,8 @@ Adding the extension Business Logic
 -----------------------------------
 
 The goal of your extension is to display nice images next to file inputs
-(when the underlying model contains images). For that purpose, let's assume
-that you use an approach similar to the one described in
+(when the underlying model contains images). For that purpose, suppose that
+you use an approach similar to the one described in
 :doc:`How to handle File Uploads with Doctrine </cookbook/doctrine/file_uploads>`:
 you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the

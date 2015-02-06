@@ -1,7 +1,7 @@
 .. index::
    single: Security; Target redirect path
 
-How to change the Default Target Path Behavior
+How to Change the default Target Path Behavior
 ==============================================
 
 By default, the Security component retains the information of the last request
@@ -10,9 +10,9 @@ the name of the firewall, defined in ``security.yml``). Upon a successful
 login, the user is redirected to this path, as to help them continue from the
 last known page they visited.
 
-On some occasions, this is unexpected. For example when the last request
-URI was an HTTP POST against a route which is configured to allow only a POST
-method, the user is redirected to this route only to get a 404 error.
+In some situations, this is not ideal. For example, when the last request
+URI was an XMLHttpRequest which returned a non-HTML or partial HTML response,
+the user is redirected back to a page which the browser cannot render.
 
 To get around this behavior, you would simply need to extend the ``ExceptionListener``
 class and override the default method named ``setTargetPath()``.
@@ -25,29 +25,29 @@ configuration file. This can be done from your main configuration file (in
 
         .. code-block:: yaml
 
-            # src/Acme/HelloBundle/Resources/config/services.yml
+            # app/config/services.yml
             parameters:
                 # ...
-                security.exception_listener.class: Acme\HelloBundle\Security\Firewall\ExceptionListener
+                security.exception_listener.class: AppBundle\Security\Firewall\ExceptionListener
 
         .. code-block:: xml
 
-            <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+            <!-- app/config/services.xml -->
             <parameters>
                 <!-- ... -->
-                <parameter key="security.exception_listener.class">Acme\HelloBundle\Security\Firewall\ExceptionListener</parameter>
+                <parameter key="security.exception_listener.class">AppBundle\Security\Firewall\ExceptionListener</parameter>
             </parameters>
 
         .. code-block:: php
 
-            // src/Acme/HelloBundle/Resources/config/services.php
+            // app/config/services.php
             // ...
-            $container->setParameter('security.exception_listener.class', 'Acme\HelloBundle\Security\Firewall\ExceptionListener');
+            $container->setParameter('security.exception_listener.class', 'AppBundle\Security\Firewall\ExceptionListener');
 
 Next, create your own ``ExceptionListener``::
 
-    // src/Acme/HelloBundle/Security/Firewall/ExceptionListener.php
-    namespace Acme\HelloBundle\Security\Firewall;
+    // src/AppBundle/Security/Firewall/ExceptionListener.php
+    namespace AppBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Http\Firewall\ExceptionListener as BaseExceptionListener;
@@ -56,9 +56,10 @@ Next, create your own ``ExceptionListener``::
     {
         protected function setTargetPath(Request $request)
         {
-            // Do not save target path for XHR and non-GET requests
+            // Do not save target path for XHR requests
             // You can add any more logic here you want
-            if ($request->isXmlHttpRequest() || 'GET' !== $request->getMethod()) {
+            // Note that non-GET requests are already ignored
+            if ($request->isXmlHttpRequest()) {
                 return;
             }
 
@@ -66,4 +67,4 @@ Next, create your own ``ExceptionListener``::
         }
     }
 
-Add as much or few logic here as required for your scenario!
+Add as much or as little logic here as required for your scenario!

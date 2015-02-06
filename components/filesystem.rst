@@ -7,8 +7,8 @@ The Filesystem Component
     The Filesystem component provides basic utilities for the filesystem.
 
 .. versionadded:: 2.1
-    The Filesystem component is new to Symfony 2.1. Previously, the ``Filesystem``
-    class was located in the HttpKernel component.
+    The Filesystem component was introduced in Symfony 2.1. Previously, the
+    ``Filesystem`` class was located in the HttpKernel component.
 
 Installation
 ------------
@@ -30,7 +30,7 @@ endpoint for filesystem operations::
     $fs = new Filesystem();
 
     try {
-        $fs->mkdir('/tmp/random/dir/' . mt_rand());
+        $fs->mkdir('/tmp/random/dir/'.mt_rand());
     } catch (IOException $e) {
         echo "An error occurred while creating your directory";
     }
@@ -47,11 +47,11 @@ endpoint for filesystem operations::
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
-Mkdir
+mkdir
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
-On posix filesystems, directories are created with a default mode value
+On POSIX filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
     $fs->mkdir('/tmp/photos', 0700);
@@ -61,7 +61,7 @@ On posix filesystems, directories are created with a default mode value
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Exists
+exists
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
@@ -78,7 +78,7 @@ presence of all files or directories and returns ``false`` if a file is missing:
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Copy
+copy
 ~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::copy` is used to copy
@@ -92,7 +92,7 @@ the third boolean argument::
     // image.jpg will be overridden
     $fs->copy('image-ICC.jpg', 'image.jpg', true);
 
-Touch
+touch
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` sets access and
@@ -111,7 +111,7 @@ your own with the second argument. The third argument is the access time::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chown
+chown
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` is used to change
@@ -127,7 +127,7 @@ the owner of a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chgrp
+chgrp
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` is used to change
@@ -143,7 +143,7 @@ the group of a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chmod
+chmod
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` is used to change
@@ -159,11 +159,11 @@ the mode of a file. The fourth argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Remove
+remove
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` let's you remove
-files, symlink, directories easily::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` is used to remove
+files, symlinks, directories easily::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
@@ -172,7 +172,7 @@ files, symlink, directories easily::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Rename
+rename
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::rename` is used to rename
@@ -207,7 +207,7 @@ the relative path of a directory given another one::
         '/var/lib/symfony/src/Symfony/',
         '/var/lib/symfony/src/Symfony/Component'
     );
-    // returns 'videos'
+    // returns 'videos/'
     $fs->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
@@ -237,7 +237,7 @@ dumpFile
 ~~~~~~~~
 
 .. versionadded:: 2.3
-    ``dumpFile`` is new in Symfony 2.3.
+    The ``dumpFile()`` was introduced in Symfony 2.3.
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
 dump contents to a file. It does this in an atomic manner: it writes a temporary

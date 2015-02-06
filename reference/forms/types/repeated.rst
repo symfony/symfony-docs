@@ -12,21 +12,21 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | input ``text`` field by default, but see `type`_ option                |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `type`_                                                              |
-|             | - `options`_                                                           |
+| Options     | - `first_name`_                                                        |
 |             | - `first_options`_                                                     |
-|             | - `second_options`_                                                    |
-|             | - `first_name`_                                                        |
+|             | - `options`_                                                           |
 |             | - `second_name`_                                                       |
+|             | - `second_options`_                                                    |
+|             | - `type`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `error_bubbling`_                                                    |
 | Options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `data`_                                                              |
-| options     | - `invalid_message`_                                                   |
+| options     | - `error_mapping`_                                                     |
+|             | - `invalid_message`_                                                   |
 |             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
-|             | - `error_mapping`_                                                     |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
@@ -110,24 +110,16 @@ be displayed when the two fields do not match each other.
 Field Options
 -------------
 
-type
-~~~~
+first_name
+~~~~~~~~~~
 
-**type**: ``string`` **default**: ``text``
+**type**: ``string`` **default**: ``first``
 
-The two underlying fields will be of this field type. For example, passing
-a type of ``password`` will render two password fields.
-
-options
-~~~~~~~
-
-**type**: ``array`` **default**: ``array()``
-
-This options array will be passed to each of the two underlying fields. In
-other words, these are the options that customize the individual field types.
-For example, if the ``type`` option is set to ``password``, this array might
-contain the options ``always_empty`` or ``required`` - both options that are
-supported by the ``password`` field type.
+This is the actual field name to be used for the first field. This is mostly
+meaningless, however, as the actual data entered into both of the fields will
+be available under the key assigned to the ``repeated`` field itself (e.g.
+``password``). However, if you don't specify a label, this field name is used
+to "guess" the label for you.
 
 first_options
 ~~~~~~~~~~~~~
@@ -143,6 +135,24 @@ label::
         'second_options' => array('label' => 'Repeat Password'),
     ));
 
+options
+~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+This options array will be passed to each of the two underlying fields. In
+other words, these are the options that customize the individual field types.
+For example, if the ``type`` option is set to ``password``, this array might
+contain the options ``always_empty`` or ``required`` - both options that are
+supported by the ``password`` field type.
+
+second_name
+~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``second``
+
+The same as ``first_name``, but for the second field.
+
 second_options
 ~~~~~~~~~~~~~~
 
@@ -152,23 +162,13 @@ Additional options (will be merged into `options` above) that should be passed
 *only* to the second field. This is especially useful for customizing the
 label (see `first_options`_).
 
-first_name
-~~~~~~~~~~
+type
+~~~~
 
-**type**: ``string`` **default**: ``first``
+**type**: ``string`` **default**: ``text``
 
-This is the actual field name to be used for the first field. This is mostly
-meaningless, however, as the actual data entered into both of the fields will
-be available under the key assigned to the ``repeated`` field itself (e.g.
-``password``). However, if you don't specify a label, this field name is used
-to "guess" the label for you.
-
-second_name
-~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``second``
-
-The same as ``first_name``, but for the second field.
+The two underlying fields will be of this field type. For example, passing
+a type of ``password`` will render two password fields.
 
 Overridden Options
 ------------------
@@ -178,17 +178,17 @@ error_bubbling
 
 **default**: ``false``
 
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc

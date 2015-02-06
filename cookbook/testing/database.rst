@@ -1,7 +1,7 @@
 .. index::
    single: Tests; Database
 
-How to test code that interacts with the Database
+How to Test Code that Interacts with the Database
 =================================================
 
 If your code interacts with the database, e.g. reads data from or stores data
@@ -33,7 +33,7 @@ class.
 
 Suppose the class you want to test looks like this::
 
-    namespace Acme\DemoBundle\Salary;
+    namespace AppBundle\Salary;
 
     use Doctrine\Common\Persistence\ObjectManager;
 
@@ -48,8 +48,8 @@ Suppose the class you want to test looks like this::
 
         public function calculateTotalSalary($id)
         {
-            $employeeRepository = $this->entityManager->getRepository('AcmeDemoBundle::Employee');
-            $employee = $userRepository->find($id);
+            $employeeRepository = $this->entityManager->getRepository('AppBundle::Employee');
+            $employee = $employeeRepository->find($id);
 
             return $employee->getSalary() + $employee->getBonus();
         }
@@ -58,15 +58,14 @@ Suppose the class you want to test looks like this::
 Since the ``ObjectManager`` gets injected into the class through the constructor,
 it's easy to pass a mock object within a test::
 
-    use Acme\DemoBundle\Salary\SalaryCalculator;
+    use AppBundle\Salary\SalaryCalculator;
 
     class SalaryCalculatorTest extends \PHPUnit_Framework_TestCase
     {
-
         public function testCalculateTotalSalary()
         {
             // First, mock the object to be used in the test
-            $employee = $this->getMock('\Acme\DemoBundle\Entity\Employee');
+            $employee = $this->getMock('\AppBundle\Entity\Employee');
             $employee->expects($this->once())
                 ->method('getSalary')
                 ->will($this->returnValue(1000));
@@ -100,7 +99,7 @@ the employee which gets returned by the ``Repository``, which itself gets
 returned by the ``EntityManager``. This way, no real class is involved in
 testing.
 
-Changing database Settings for functional Tests
+Changing Database Settings for Functional Tests
 -----------------------------------------------
 
 If you have functional tests, you want them to interact with a real database.
@@ -119,9 +118,9 @@ configuration:
         doctrine:
             # ...
             dbal:
-                host: localhost
-                dbname: testdb
-                user: testdb
+                host:     localhost
+                dbname:   testdb
+                user:     testdb
                 password: testdb
 
     .. code-block:: xml

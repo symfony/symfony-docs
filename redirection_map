@@ -1,3 +1,5 @@
+/book/stable_api /contributing/code/bc
+/cookbook/deployment-tools /cookbook/deployment/tools
 /cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
 /cookbook/doctrine/doctrine_fixtures /bundles/DoctrineFixturesBundle/index
 /cookbook/doctrine/mongodb /bundles/DoctrineMongoDBBundle/index

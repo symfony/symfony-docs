@@ -13,16 +13,18 @@ if the box is unchecked, the value will be set to false.
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `data`_                                                              |
+| Overridden  | - `compound`_                                                          |
 | options     | - `empty_data`_                                                        |
-|             | - `required`_                                                          |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `read_only`_                                                         |
-|             | - `disabled`_                                                          |
++-------------+------------------------------------------------------------------------+
+| Inherited   | - `data`_                                                              |
+| options     | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `label`_                                                             |
+|             | - `label_attr`_                                                        |
 |             | - `mapped`_                                                            |
+|             | - `read_only`_                                                         |
+|             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`form </reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+
@@ -42,34 +44,21 @@ Example Usage
 Field Options
 -------------
 
-value
-~~~~~
+.. include:: /reference/forms/types/options/value.rst.inc
 
-**type**: ``mixed`` **default**: ``1``
+Overridden Options
+------------------
 
-The value that's actually used as the value for the checkbox. This does
-not affect the value that's set on your object.
+.. include:: /reference/forms/types/options/checkbox_compound.rst.inc
 
-.. caution::
+.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 
-    To make a checkbox checked by default, set the `data`_ option to ``true``.
-
-Inherited options
+Inherited Options
 -----------------
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -77,4 +66,17 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
+
+Form Variables
+--------------
+
+.. include:: /reference/forms/types/variables/check_or_radio_table.rst.inc

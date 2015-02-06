@@ -10,8 +10,13 @@ you can take advantage of this tool very easily.
 
 .. caution::
 
-    The YUI Compressor is going through a `deprecation process`_. But don't
-    worry! See :doc:`/cookbook/assetic/uglifyjs` for an alternative.
+    The YUI Compressor is `no longer maintained by Yahoo`_ but by an independent
+    volunteer. Moreover, Yahoo has decided to `stop all new development on YUI`_
+    and to move to other modern alternatives such as Node.js.
+
+    That's why you are **strongly advised** to avoid using YUI utilities unless
+    strictly necessary. Read :doc:`/cookbook/assetic/uglifyjs` for a modern and
+    up-to-date alternative.
 
 Download the YUI Compressor JAR
 -------------------------------
@@ -86,24 +91,24 @@ the view layer, this work is done in your templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
+        {% javascripts '@AppBundle/Resources/public/js/*' filter='yui_js' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*'),
+            array('@AppBundle/Resources/public/js/*'),
             array('yui_js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. note::
 
-    The above example assumes that you have a bundle called ``AcmeFooBundle``
-    and your JavaScript files are in the ``Resources/public/js`` directory under
-    your bundle. This isn't important however - you can include your JavaScript
+    The above example assumes that you have a bundle called AppBundle and your
+    JavaScript files are in the ``Resources/public/js`` directory under your
+    bundle. This isn't important however - you can include your JavaScript
     files no matter where they are.
 
 With the addition of the ``yui_js`` filter to the asset tags above, you should
@@ -114,18 +119,18 @@ can be repeated to minify your stylesheets.
 
     .. code-block:: html+jinja
 
-        {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='yui_css' %}
+        {% stylesheets '@AppBundle/Resources/public/css/*' filter='yui_css' %}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->stylesheets(
-            array('@AcmeFooBundle/Resources/public/css/*'),
+            array('@AppBundle/Resources/public/css/*'),
             array('yui_css')
         ) as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 Disable Minification in Debug Mode
 ----------------------------------
@@ -140,18 +145,18 @@ apply this filter when debug mode is off.
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='?yui_js' %}
+        {% javascripts '@AppBundle/Resources/public/js/*' filter='?yui_js' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*'),
+            array('@AppBundle/Resources/public/js/*'),
             array('?yui_js')
         ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach; ?>
+        <?php endforeach ?>
 
 .. tip::
 
@@ -164,4 +169,5 @@ apply this filter when debug mode is off.
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
 .. _`Download the JAR`: https://github.com/yui/yuicompressor/releases
-.. _`deprecation process`: http://www.yuiblog.com/blog/2012/10/16/state-of-yui-compressor/
+.. _`no longer maintained by Yahoo`: http://www.yuiblog.com/blog/2013/01/24/yui-compressor-has-a-new-owner/
+.. _`stop all new development on YUI`: http://yahooeng.tumblr.com/post/96098168666/important-announcement-regarding-yui

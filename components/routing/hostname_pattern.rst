@@ -1,11 +1,11 @@
 .. index::
    single: Routing; Matching on Hostname
 
-How to match a route based on the Host
+How to Match a Route Based on the Host
 ======================================
 
 .. versionadded:: 2.2
-    Host matching support was added in Symfony 2.2
+    Host matching support was introduced in Symfony 2.2
 
 You can also match on the HTTP *host* of the incoming request.
 
@@ -25,12 +25,10 @@ You can also match on the HTTP *host* of the incoming request.
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd"
-        >
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="mobile_homepage" path="/" host="m.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
@@ -82,12 +80,10 @@ you can use placeholders in your hostname:
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd"
-        >
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="projects_homepage" path="/" host="{project_name}.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
@@ -138,17 +134,14 @@ instance, if you want to match both ``m.example.com`` and
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd"
-        >
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="mobile_homepage" path="/" host="{subdomain}.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
                 <default key="subdomain">m</default>
-
                 <requirement key="subdomain">m|mobile</requirement>
             </route>
 
@@ -178,12 +171,6 @@ instance, if you want to match both ``m.example.com`` and
 
 .. tip::
 
-    Make sure you also include a default option for the ``subdomain``
-    placeholder, otherwise you need to include the subdomains value each time
-    you generate the route.
-
-.. sidebar:: Using Service Parameters
-
     You can also use service parameters if you do not want to hardcode the
     hostname:
 
@@ -194,7 +181,9 @@ instance, if you want to match both ``m.example.com`` and
             mobile_homepage:
                 path:     /
                 host:     "m.{domain}"
-                defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
+                defaults:
+                    _controller: AcmeDemoBundle:Main:mobileHomepage
+                    domain: "%domain%"
                 requirements:
                     domain: "%domain%"
 
@@ -205,13 +194,13 @@ instance, if you want to match both ``m.example.com`` and
         .. code-block:: xml
 
             <?xml version="1.0" encoding="UTF-8" ?>
-
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-                <route id="mobile_homepage" path="/" host="m.example.com">
+                <route id="mobile_homepage" path="/" host="m.{domain}">
                     <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
+                    <default key="domain">%domain%</default>
                     <requirement key="domain">%domain%</requirement>
                 </route>
 
@@ -228,6 +217,7 @@ instance, if you want to match both ``m.example.com`` and
             $collection = new RouteCollection();
             $collection->add('mobile_homepage', new Route('/', array(
                 '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
+                'domain' => '%domain%',
             ), array(
                 'domain' => '%domain%',
             ), array(), 'm.{domain}'));
@@ -237,6 +227,12 @@ instance, if you want to match both ``m.example.com`` and
             )));
 
             return $collection;
+
+.. tip::
+
+    Make sure you also include a default option for the ``domain`` placeholder,
+    otherwise you need to include a domain value each time you generate
+    a URL using the route.
 
 .. _component-routing-host-imported:
 
@@ -249,16 +245,13 @@ You can also set the host option on imported routes:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
         acme_hello:
             resource: "@AcmeHelloBundle/Resources/config/routing.yml"
             host:     "hello.example.com"
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
@@ -268,7 +261,6 @@ You can also set the host option on imported routes:
 
     .. code-block:: php
 
-        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
@@ -278,3 +270,19 @@ You can also set the host option on imported routes:
 
 The host ``hello.example.com`` will be set on each route loaded from the new
 routing resource.
+
+Testing your Controllers
+------------------------
+
+You need to set the Host HTTP header on your request objects if you want to get
+past url matching in your functional tests.
+
+.. code-block:: php
+
+    $crawler = $client->request(
+        'GET',
+        '/homepage',
+        array(),
+        array(),
+        array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
+    );

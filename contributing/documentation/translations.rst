@@ -1,14 +1,20 @@
 Translations
 ============
 
-The Symfony2 documentation is written in English and many people are involved
+The Symfony documentation is written in English and many people are involved
 in the translation process.
+
+.. note::
+
+    Symfony Project officially discourages starting new translations for the
+    documentation. As a matter of fact, there is `an ongoing discussion`_ in
+    the community about the benefits and drawbacks of community driven translations.
 
 Contributing
 ------------
 
-First, become familiar with the :doc:`markup language <format>` used by the
-documentation.
+First, become familiar with the :doc:`markup language </contributing/documentation/format>`
+used by the documentation.
 
 Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
 there.
@@ -20,9 +26,7 @@ for. Here is the list of the official *master* repositories:
 * *French*:   https://github.com/symfony-fr/symfony-docs-fr
 * *Italian*:  https://github.com/garak/symfony-docs-it
 * *Japanese*: https://github.com/symfony-japan/symfony-docs-ja
-* *Polish*:   https://github.com/symfony-docs-pl/symfony-docs-pl
 * *Portuguese (Brazilian)*:  https://github.com/andreia/symfony-docs-pt-BR
-* *Spanish*:  https://github.com/gitnacho/symfony-docs-es
 
 .. note::
 
@@ -53,7 +57,7 @@ Adding a new Language
 ---------------------
 
 This section gives some guidelines for starting the translation of the
-Symfony2 documentation for a new language.
+Symfony documentation for a new language.
 
 As starting a translation is a lot of work, talk about your plan on the
 `Symfony docs mailing-list`_ and try to find motivated people willing to help.
@@ -84,4 +88,5 @@ repository and apply changes to the translated documents as soon as possible.
     Non maintained languages are removed from the official list of
     repositories as obsolete documentation is dangerous.
 
+.. _`an ongoing discussion`: https://github.com/symfony/symfony-docs/issues/4078
 .. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs

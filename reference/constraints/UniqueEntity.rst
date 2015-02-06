@@ -23,7 +23,7 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an ``AcmeUserBundle`` bundle with a ``User`` entity that has an
+Suppose you have an AcmeUserBundle bundle with a ``User`` entity that has an
 ``email`` field. You can use the ``UniqueEntity`` constraint to guarantee that
 the ``email`` field remains unique between all of the constraints in your user
 table:
@@ -42,7 +42,7 @@ table:
 
     .. code-block:: php-annotations
 
-        // Acme/UserBundle/Entity/User.php
+        // Acme/UserBundle/Entity/Author.php
         namespace Acme\UserBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -64,7 +64,7 @@ table:
              * @Assert\Email()
              */
             protected $email;
-            
+
             // ...
         }
 
@@ -79,7 +79,6 @@ table:
             <class name="Acme\UserBundle\Entity\Author">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">email</option>
-                    <option name="message">This email already exists.</option>
                 </constraint>
                 <property name="email">
                     <constraint name="Email" />
@@ -97,14 +96,13 @@ table:
 
         // DON'T forget this use statement!!!
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-        
+
         class Author
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addConstraint(new UniqueEntity(array(
                     'fields'  => 'email',
-                    'message' => 'This email already exists.',
                 )));
 
                 $metadata->addPropertyConstraint('email', new Assert\Email());
@@ -142,8 +140,8 @@ em
 **type**: ``string``
 
 The name of the entity manager to use for making the query to determine the
-uniqueness. If it's left blank, the correct entity manager will determined for
-this class. For that reason, this option should probably not need to be
+uniqueness. If it's left blank, the correct entity manager will be determined
+for this class. For that reason, this option should probably not need to be
 used.
 
 repositoryMethod
@@ -161,7 +159,7 @@ errorPath
 **type**: ``string`` **default**: The name of the first field in `fields`_
 
 .. versionadded:: 2.1
-    The ``errorPath`` option was added in Symfony 2.1.
+    The ``errorPath`` option was introduced in Symfony 2.1.
 
 If the entity violates the constraint the error message is bound to the first
 field in `fields`_. If there is more than one field, you may want to map
@@ -262,7 +260,7 @@ ignoreNull
 **type**: ``Boolean`` **default**: ``true``
 
 .. versionadded:: 2.1
-    The ``ignoreNull`` option was added in Symfony 2.1.
+    The ``ignoreNull`` option was introduced in Symfony 2.1.
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.

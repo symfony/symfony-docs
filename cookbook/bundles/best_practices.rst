@@ -1,12 +1,24 @@
 .. index::
    single: Bundle; Best practices
 
-How to use Best Practices for Structuring Bundles
-=================================================
+Best Practices for Reusable Bundles
+===================================
 
-A bundle is a directory that has a well-defined structure and can host anything
-from classes to controllers and web resources. Even if bundles are very
-flexible, you should follow some best practices if you want to distribute them.
+There are 2 types of bundles:
+
+* Application-specific bundles: only used to build your application;
+* Reusable bundles: meant to be shared across many projects.
+
+This article is all about how to structure your **reusable bundles** so that
+they're easy to configure and extend. Many of these recommendations do not
+apply to application bundles because you'll want to keep those as simple
+as possible. For application bundles, just follow the practices shown throughout
+the book and cookbook.
+
+.. seealso::
+
+    The best practices for application-specific bundles are discussed in
+    :doc:`/best_practices/introduction`.
 
 .. index::
    pair: Bundle; Naming conventions
@@ -55,7 +67,7 @@ class name.
 
 .. note::
 
-    Symfony2 core Bundles do not prefix the Bundle class with ``Symfony``
+    Symfony core Bundles do not prefix the Bundle class with ``Symfony``
     and always add a ``Bundle`` sub-namespace; for example:
     :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
@@ -68,8 +80,7 @@ examples).
 Directory Structure
 -------------------
 
-The basic directory structure of a ``HelloBundle`` bundle must read as
-follows:
+The basic directory structure of a HelloBundle must read as follows:
 
 .. code-block:: text
 
@@ -148,8 +159,7 @@ instance, a ``HelloController`` controller is stored in
 ``Bundle/HelloBundle/Controller/HelloController.php`` and the fully qualified
 class name is ``Bundle\HelloBundle\Controller\HelloController``.
 
-All classes and files must follow the Symfony2 coding
-:doc:`standards </contributing/code/standards>`.
+All classes and files must follow the Symfony coding :doc:`standards </contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible, like
 Commands, Helpers, Listeners, and Controllers.
@@ -163,7 +173,7 @@ Vendors
 -------
 
 A bundle must not embed third-party PHP libraries. It should rely on the
-standard Symfony2 autoloading instead.
+standard Symfony autoloading instead.
 
 A bundle should not embed third-party libraries written in JavaScript, CSS, or
 any other language.
@@ -194,22 +204,65 @@ Extensive documentation should also be provided in the
 the ``Resources/doc/`` directory; the ``Resources/doc/index.rst`` file is
 the only mandatory file and must be the entry point for the documentation.
 
-Controllers
------------
+Installation Instructions
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As a best practice, controllers in a bundle that's meant to be distributed
-to others must not extend the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` base class.
-They can implement
-:class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface` or
-extend :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`
-instead.
+In order to ease the installation of third-party bundles, consider using the
+following standardized instructions in your ``README.md`` file.
 
-.. note::
+.. code-block:: text
 
-    If you have a look at
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` methods,
-    you will see that they are only nice shortcuts to ease the learning curve.
+    Installation
+    ============
+
+    Step 1: Download the Bundle
+    ---------------------------
+
+    Open a command console, enter your project directory and execute the
+    following command to download the latest stable version of this bundle:
+
+    ```bash
+    $ composer require <package-name> "~1"
+    ```
+
+    This command requires you to have Composer installed globally, as explained
+    in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
+    of the Composer documentation.
+
+    Step 2: Enable the Bundle
+    -------------------------
+
+    Then, enable the bundle by adding the following line in the `app/AppKernel.php`
+    file of your project:
+
+    ```php
+    <?php
+    // app/AppKernel.php
+
+    // ...
+    class AppKernel extends Kernel
+    {
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+
+                new <vendor>\<bundle-name>\<bundle-long-name>(),
+            );
+
+            // ...
+        }
+
+        // ...
+    }
+    ```
+
+This template assumes that your bundle is in its ``1.x`` version. If not, change
+the ``"~1"`` installation version accordingly (``"~2"``, ``"~3"``, etc.)
+
+Optionally, you can add more installation steps (*Step 3*, *Step 4*, etc.) to
+explain other required installation tasks, such as registering routes or
+dumping assets.
 
 Routing
 -------
@@ -236,10 +289,10 @@ Configuration
 -------------
 
 To provide more flexibility, a bundle can provide configurable settings by
-using the Symfony2 built-in mechanisms.
+using the Symfony built-in mechanisms.
 
 For simple configuration settings, rely on the default ``parameters`` entry of
-the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
+the Symfony configuration. Symfony parameters are simple key/value pairs; a
 value being any valid PHP value. Each parameter name should start with the
 bundle alias, though this is just a best-practice suggestion. The rest of the
 parameter name will use a period (``.``) to separate different parts (e.g.

@@ -9,7 +9,7 @@ The DependencyInjection Component
     the way objects are constructed in your application.
 
 For an introduction to Dependency Injection and service containers see
-:doc:`/book/service_container`
+:doc:`/book/service_container`.
 
 Installation
 ------------
@@ -160,7 +160,7 @@ like this::
 
     $newsletterManager = $container->get('newsletter_manager');
 
-Avoiding Your Code Becoming Dependent on the Container
+Avoiding your Code Becoming Dependent on the Container
 ------------------------------------------------------
 
 Whilst you can retrieve services from the container directly it is best
@@ -175,13 +175,13 @@ should be as few times as possible at the entry point to your application.
 
 .. _components-dependency-injection-loading-config:
 
-Setting Up the Container with Configuration Files
+Setting up the Container with Configuration Files
 -------------------------------------------------
 
 As well as setting up the services using PHP as above you can also use
 configuration files. This allows you to use XML or YAML to write the definitions
 for the services rather than using PHP to define the services as in the above
-examples. In anything but the smallest applications it make sense to organize
+examples. In anything but the smallest applications it makes sense to organize
 the service definitions by moving them into one or more configuration files.
 To do this you also need to install
 :doc:`the Config component </components/config/introduction>`.
@@ -209,7 +209,7 @@ Loading a YAML config file::
 .. note::
 
     If you want to load YAML config files then you will also need to install
-    :doc:`The YAML component </components/yaml/introduction>`.
+    :doc:`the Yaml component </components/yaml/introduction>`.
 
 If you *do* want to use PHP to create the services then you can move this
 into a separate config file and load it in a similar way::
@@ -244,22 +244,28 @@ config files:
 
     .. code-block:: xml
 
-        <parameters>
-            <!-- ... -->
-            <parameter key="mailer.transport">sendmail</parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <services>
-            <service id="mailer" class="Mailer">
-                <argument>%mailer.transport%</argument>
-            </service>
+            <parameters>
+                <!-- ... -->
+                <parameter key="mailer.transport">sendmail</parameter>
+            </parameters>
 
-            <service id="newsletter_manager" class="NewsletterManager">
-                <call method="setMailer">
-                     <argument type="service" id="mailer" />
-                </call>
-            </service>
-        </services>
+            <services>
+                <service id="mailer" class="Mailer">
+                    <argument>%mailer.transport%</argument>
+                </service>
+
+                <service id="newsletter_manager" class="NewsletterManager">
+                    <call method="setMailer">
+                        <argument type="service" id="mailer" />
+                    </call>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

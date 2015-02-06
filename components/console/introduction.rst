@@ -27,7 +27,7 @@ You can install the component in 2 different ways:
     configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.
 
-    To enable ANSI colour support for Windows, please install `ANSICON`_.
+    To enable ANSI color support for Windows, please install `ANSICON`_.
 
 Creating a basic Command
 ------------------------
@@ -35,7 +35,7 @@ Creating a basic Command
 To make a console command that greets you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
-    namespace Acme\Command;
+    namespace Acme\Console\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
@@ -88,7 +88,9 @@ an ``Application`` and adds commands to it::
     <?php
     // application.php
 
-    use Acme\Command\GreetCommand;
+    require __DIR__.'/vendor/autoload.php';
+
+    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $application = new Application();
@@ -140,6 +142,9 @@ output. For example::
 It is possible to define your own styles using the class
 :class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`::
 
+    use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+
+    // ...
     $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
     $output->getFormatter()->setStyle('fire', $style);
     $output->writeln('<fire>foo</fire>');
@@ -197,8 +202,8 @@ level. For example::
     }
 
 When the quiet level is used, all output is suppressed as the default
-:method:`Symfony\Component\Console\Output::write <Symfony\\Component\\Console\\Output\\Output::write>`
-method returns without actually printing.
+:method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
+without actually printing.
 
 Using Command Arguments
 -----------------------
@@ -286,13 +291,13 @@ Unlike arguments, options are not ordered (meaning you can specify them in any
 order) and are specified with two dashes (e.g. ``--yell`` - you can also
 declare a one-letter shortcut that you can call with a single dash like
 ``-y``). Options are *always* optional, and can be setup to accept a value
-(e.g. ``dir=src``) or simply as a boolean flag without a value (e.g.
-``yell``).
+(e.g. ``--dir=src``) or simply as a boolean flag without a value (e.g.
+``--yell``).
 
 .. tip::
 
     It is also possible to make an option *optionally* accept a value (so that
-    ``--yell`` or ``yell=loud`` work). Options can also be configured to
+    ``--yell``, ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
     accept an array of values.
 
 For example, add a new option to the command that can be used to specify
@@ -344,7 +349,7 @@ Option                       Value
 InputOption::VALUE_IS_ARRAY  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
 InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
 InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), the option itself is still optional
-InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
+InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``--yell`` or ``--yell=loud``)
 ===========================  =====================================================================================
 
 You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:
@@ -354,11 +359,11 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL``
     $this
         // ...
         ->addOption(
-            'iterations',
+            'colors',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'How many times should the message be printed?',
-            1
+            'Which colors do you like?',
+            array('blue', 'red')
         );
 
 Console Helpers
@@ -372,15 +377,17 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/progresshelper`: shows a progress bar
 * :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
 
+.. _component-console-testing-commands:
+
 Testing Commands
 ----------------
 
-Symfony2 provides several tools to help you test your commands. The most
+Symfony provides several tools to help you test your commands. The most
 useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    use Acme\Command\GreetCommand;
+    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
@@ -409,7 +416,7 @@ You can test sending arguments and options to the command by passing them
 as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
-    use Acme\Command\GreetCommand;
+    use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
@@ -424,9 +431,11 @@ method::
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(
-                array('command' => $command->getName(), 'name' => 'Fabien')
-            );
+            $commandTester->execute(array(
+                'command'      => $command->getName(),
+                'name'         => 'Fabien',
+                '--iterations' => 5,
+            ));
 
             $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
         }
@@ -437,7 +446,7 @@ method::
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
 
-Calling an existing Command
+Calling an Existing Command
 ---------------------------
 
 If a command depends on another one being run before it, instead of asking the
@@ -492,6 +501,7 @@ Learn More!
 * :doc:`/components/console/usage`
 * :doc:`/components/console/single_command_tool`
 * :doc:`/components/console/events`
+* :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
-.. _ANSICON: https://github.com/adoxa/ansicon/downloads
+.. _ANSICON: https://github.com/adoxa/ansicon/releases

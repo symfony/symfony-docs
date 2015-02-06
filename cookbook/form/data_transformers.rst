@@ -1,7 +1,7 @@
 .. index::
    single: Form; Data transformers
 
-How to use Data Transformers
+How to Use Data Transformers
 ============================
 
 You'll often find the need to transform the data the user entered in a form into
@@ -109,48 +109,48 @@ Using the Transformer
 Now that you have the transformer built, you just need to add it to your
 issue field in some form.
 
-    You can also use transformers without creating a new custom form type
-    by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
-    `Model and View Transformers`_) on any field builder::
+You can also use transformers without creating a new custom form type
+by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
+`Model and View Transformers`_) on any field builder::
 
-        use Symfony\Component\Form\FormBuilderInterface;
-        use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
-        class TaskType extends AbstractType
+    class TaskType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            public function buildForm(FormBuilderInterface $builder, array $options)
-            {
-                // ...
+            // ...
 
-                // this assumes that the entity manager was passed in as an option
-                $entityManager = $options['em'];
-                $transformer = new IssueToNumberTransformer($entityManager);
+            // this assumes that the entity manager was passed in as an option
+            $entityManager = $options['em'];
+            $transformer = new IssueToNumberTransformer($entityManager);
 
-                // add a normal text field, but add your transformer to it
-                $builder->add(
-                    $builder->create('issue', 'text')
-                        ->addModelTransformer($transformer)
-                );
-            }
+            // add a normal text field, but add your transformer to it
+            $builder->add(
+                $builder->create('issue', 'text')
+                    ->addModelTransformer($transformer)
+            );
+        }
 
-            public function setDefaultOptions(OptionsResolverInterface $resolver)
-            {
-                $resolver
-                    ->setDefaults(array(
-                        'data_class' => 'Acme\TaskBundle\Entity\Task',
-                    ))
-                    ->setRequired(array(
-                        'em',
-                    ))
-                    ->setAllowedTypes(array(
-                        'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                    ));
-
-                // ...
-            }
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        {
+            $resolver
+                ->setDefaults(array(
+                    'data_class' => 'Acme\TaskBundle\Entity\Task',
+                ))
+                ->setRequired(array(
+                    'em',
+                ))
+                ->setAllowedTypes(array(
+                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
+                ));
 
             // ...
         }
+
+        // ...
+    }
 
 This example requires that you pass in the entity manager as an option
 when creating your form. Later, you'll learn how you could create a custom
@@ -189,21 +189,21 @@ types of underlying data.
 .. image:: /images/cookbook/form/DataTransformersTypes.png
    :align: center
 
-In any form, the 3 different types of data are:
+In any form, the three different types of data are:
 
 1) **Model data** - This is the data in the format used in your application
-(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
-you're dealing with the "model" data.
+   (e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
+   you're dealing with the "model" data.
 
 2) **Norm Data** - This is a normalized version of your data, and is commonly
-the same as your "model" data (though not in our example). It's not commonly
-used directly.
+   the same as your "model" data (though not in our example). It's not commonly
+   used directly.
 
 3) **View Data** - This is the format that's used to fill in the form fields
-themselves. It's also the format in which the user will submit the data. When
-you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
+   themselves. It's also the format in which the user will submit the data. When
+   you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
 
-The 2 different types of transformers help convert to and from each of these
+The two different types of transformers help convert to and from each of these
 types of data:
 
 **Model transformers**:
@@ -218,7 +218,7 @@ Which transformer you need depends on your situation.
 
 To use the view transformer, call ``addViewTransformer``.
 
-So why use the model transformer?
+So why Use the Model Transformer?
 ---------------------------------
 
 In this example, the field is a ``text`` field, and a text field is always
@@ -232,7 +232,7 @@ about what the "norm" data for a field should really be. For example, the
 "norm" data for a ``text`` field is a string, but is a ``DateTime`` object
 for a ``date`` field.
 
-Using Transformers in a custom field type
+Using Transformers in a custom Field Type
 -----------------------------------------
 
 In the above example, you applied the transformer to a normal ``text`` field.

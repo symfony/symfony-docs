@@ -7,7 +7,9 @@ Compiling the Container
 The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
 making the container more efficient by resolving parameters and removing
-unused services.
+unused services. Also, certain features - like using
+:doc:`parent services </components/dependency_injection/parentservices>` -
+require the container to be compiled.
 
 It is compiled by running::
 
@@ -201,12 +203,11 @@ The XML version of the config would then look like this:
             <acme_demo:foo>fooValue</acme_hello:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
-
     </container>
 
 .. note::
 
-    In the Symfony2 full stack framework there is a base Extension class which
+    In the Symfony full stack framework there is a base Extension class which
     implements these methods as well as a shortcut method for processing the
     configuration. See :doc:`/cookbook/bundles/extension` for more details.
 
@@ -273,11 +274,12 @@ but also load a secondary one only if a certain parameter is set::
 
 .. _components-dependency-injection-compiler-passes:
 
-Prepending Configuration passed to the Extension
+Prepending Configuration Passed to the Extension
 ------------------------------------------------
 
 .. versionadded:: 2.2
-    The ability to prepend the configuration of a bundle is new in Symfony 2.2.
+    The ability to prepend the configuration of a bundle was introduced in
+    Symfony 2.2.
 
 An Extension can prepend the configuration of any Bundle before the ``load()``
 method is called by implementing :class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
@@ -300,7 +302,7 @@ method is called by implementing :class:`Symfony\\Component\\DependencyInjection
     }
 
 For more details, see :doc:`/cookbook/bundles/prepend_extension`, which is
-specific to the Symfony2 Framework, but contains more details about this feature.
+specific to the Symfony Framework, but contains more details about this feature.
 
 Creating a Compiler Pass
 ------------------------

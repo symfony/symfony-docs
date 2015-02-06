@@ -20,8 +20,8 @@ will be called ``GenderType`` and the file will be stored in the default locatio
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    // src/Acme/DemoBundle/Form/Type/GenderType.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/AppBundle/Form/Type/GenderType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -60,20 +60,23 @@ all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
 
-* ``buildForm()`` - Each field type has a ``buildForm`` method, which is where
-  you configure and build any field(s). Notice that this is the same method
-  you use to setup *your* forms, and it works the same here.
+``buildForm()``
+    Each field type has a ``buildForm`` method, which is where
+    you configure and build any field(s). Notice that this is the same method
+    you use to setup *your* forms, and it works the same here.
 
-* ``buildView()`` - This method is used to set any extra variables you'll
-  need when rendering your field in a template. For example, in `ChoiceType`_,
-  a ``multiple`` variable is set and used in the template to set (or not
-  set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
-  for more details.
+``buildView()``
+    This method is used to set any extra variables you'll
+    need when rendering your field in a template. For example, in `ChoiceType`_,
+    a ``multiple`` variable is set and used in the template to set (or not
+    set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
+    for more details.
 
-* ``setDefaultOptions()`` - This defines options for your form type that
-  can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see :doc:`/reference/forms/types/form`),
-  but you can create any others that you need here.
+``setDefaultOptions()``
+    This defines options for your form type that
+    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
+    options common to all fields (see :doc:`/reference/forms/types/form`),
+    but you can create any others that you need here.
 
 .. tip::
 
@@ -99,16 +102,16 @@ part by the value of your ``getName()`` method. For more information, see
 
 In this case, since the parent field is ``choice``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``choice``
-type. But for the sake of this example, let's suppose that when your field
-is "expanded" (i.e. radio buttons or checkboxes, instead of a select field),
-you want to always render it in a ``ul`` element. In your form theme template
-(see above link for details), create a ``gender_widget`` block to handle this:
+type. But for the sake of this example, suppose that when your field is "expanded"
+(i.e. radio buttons or checkboxes, instead of a select field), you want to
+always render it in a ``ul`` element. In your form theme template (see above
+link for details), create a ``gender_widget`` block to handle this:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
+        {# src/AppBundle/Resources/views/Form/fields.html.twig #}
         {% block gender_widget %}
             {% spaceless %}
                 {% if expanded %}
@@ -129,7 +132,7 @@ you want to always render it in a ``ul`` element. In your form theme template
 
     .. code-block:: html+php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.twig -->
+        <!-- src/AppBundle/Resources/views/Form/gender_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -151,6 +154,8 @@ you want to always render it in a ``ul`` element. In your form theme template
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
+    When using Twig this is:
+
     .. configuration-block::
 
         .. code-block:: yaml
@@ -159,14 +164,14 @@ you want to always render it in a ``ul`` element. In your form theme template
             twig:
                 form:
                     resources:
-                        - 'AcmeDemoBundle:Form:fields.html.twig'
+                        - 'AppBundle:Form:fields.html.twig'
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <twig:config>
                 <twig:form>
-                    <twig:resource>AcmeDemoBundle:Form:fields.html.twig</twig:resource>
+                    <twig:resource>AppBundle:Form:fields.html.twig</twig:resource>
                 </twig:form>
             </twig:config>
 
@@ -176,7 +181,52 @@ you want to always render it in a ``ul`` element. In your form theme template
             $container->loadFromExtension('twig', array(
                 'form' => array(
                     'resources' => array(
-                        'AcmeDemoBundle:Form:fields.html.twig',
+                        'AppBundle:Form:fields.html.twig',
+                    ),
+                ),
+            ));
+
+    For the PHP templating engine, your configuration should look like this:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            framework:
+                templating:
+                    form:
+                        resources:
+                            - 'AppBundle:Form'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:templating>
+                        <framework:form>
+                            <framework:resource>AppBundle:Form</twig:resource>
+                        </framework:form>
+                    </framework:templating>
+                </framework:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('framework', array(
+                'templating' => array(
+                    'form' => array(
+                        'resources' => array(
+                            'AppBundle:Form',
+                        ),
                     ),
                 ),
             ));
@@ -187,8 +237,8 @@ Using the Field Type
 You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
-    // src/Acme/DemoBundle/Form/Type/AuthorType.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/AppBundle/Form/Type/AuthorType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -251,10 +301,10 @@ the ``genders`` parameter value as the first argument to its to-be-created
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/services.yml
+        # src/AppBundle/Resources/config/services.yml
         services:
             acme_demo.form.type.gender:
-                class: Acme\DemoBundle\Form\Type\GenderType
+                class: AppBundle\Form\Type\GenderType
                 arguments:
                     - "%genders%"
                 tags:
@@ -262,20 +312,20 @@ the ``genders`` parameter value as the first argument to its to-be-created
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
-        <service id="acme_demo.form.type.gender" class="Acme\DemoBundle\Form\Type\GenderType">
+        <!-- src/AppBundle/Resources/config/services.xml -->
+        <service id="acme_demo.form.type.gender" class="AppBundle\Form\Type\GenderType">
             <argument>%genders%</argument>
             <tag name="form.type" alias="gender" />
         </service>
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/services.php
+        // src/AppBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $container
             ->setDefinition('acme_demo.form.type.gender', new Definition(
-                'Acme\DemoBundle\Form\Type\GenderType',
+                'AppBundle\Form\Type\GenderType',
                 array('%genders%')
             ))
             ->addTag('form.type', array(
@@ -293,8 +343,8 @@ returned by the ``getName`` method defined earlier. You'll see the importance
 of this in a moment when you use the custom field type. But first, add a ``__construct``
 method to ``GenderType``, which receives the gender configuration::
 
-    // src/Acme/DemoBundle/Form/Type/GenderType.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/AppBundle/Form/Type/GenderType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -324,8 +374,8 @@ Great! The ``GenderType`` is now fueled by the configuration parameters and
 registered as a service. Additionally, because you used the ``form.type`` alias in its
 configuration, using the field is now much easier::
 
-    // src/Acme/DemoBundle/Form/Type/AuthorType.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/AppBundle/Form/Type/AuthorType.php
+    namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
 

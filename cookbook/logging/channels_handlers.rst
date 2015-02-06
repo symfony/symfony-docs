@@ -1,7 +1,7 @@
 .. index::
    single: Logging
 
-How to log Messages to different Files
+How to Log Messages to different Files
 ======================================
 
 The Symfony Standard Edition contains a bunch of channels for logging: ``doctrine``,
@@ -10,7 +10,7 @@ service (``monolog.logger.XXX``) in the container and is injected to the
 concerned service. The purpose of channels is to be able to organize different
 types of log messages.
 
-By default, Symfony2 logs every messages into a single file (regardless of
+By default, Symfony logs every message into a single file (regardless of
 the channel).
 
 Switching a Channel to a different Handler
@@ -30,7 +30,7 @@ To do so, just create a new handler and configure it like this:
                 main:
                     type:     stream
                     path:     /var/log/symfony.log
-                    channels: [!doctrine]
+                    channels: ["!doctrine"]
                 doctrine:
                     type:     stream
                     path:     /var/log/doctrine.log
@@ -84,7 +84,7 @@ To do so, just create a new handler and configure it like this:
             ),
         ));
 
-YAML specification
+YAML Specification
 ------------------
 
 You can specify the configuration by many forms:
@@ -94,10 +94,10 @@ You can specify the configuration by many forms:
     channels: ~    # Include all the channels
 
     channels: foo  # Include only channel "foo"
-    channels: !foo # Include all channels, except "foo"
+    channels: "!foo" # Include all channels, except "foo"
 
     channels: [foo, bar]   # Include only channels "foo" and "bar"
-    channels: [!foo, !bar] # Include all channels, except "foo" and "bar"
+    channels: ["!foo", "!bar"] # Include all channels, except "foo" and "bar"
 
 Creating your own Channel
 -------------------------

@@ -1,8 +1,8 @@
 .. index::
-    single: Security; CSRF in the Login Form
+    single: Security; CSRF Protection in the Login Form
 
-Using CSRF in the Login Form
-============================
+Using CSRF Protection in the Login Form
+=======================================
 
 When using a login form, you should make sure that you are protected against CSRF
 (`Cross-site request forgery`_). The Security component already has built-in support
@@ -13,11 +13,11 @@ for CSRF. In this article you'll learn how you can use it in your login form.
     Login CSRF attacks are a bit less well-known. See `Forging Login Requests`_
     if you're curious about more details.
 
-Configuring CSRF
-----------------
+Configuring CSRF Protection
+---------------------------
 
 First, configure the Security component so it can use CSRF protection.
-The Security component needs a CSRF provider. You can set this to use the default
+The Security component needs a CSRF token provider. You can set this to use the default
 provider available in the Form component:
 
 .. configuration-block::

@@ -8,16 +8,16 @@ The Debug Component
     The Debug component provides tools to ease debugging PHP code.
 
 .. versionadded:: 2.3
-    The Debug component is new to Symfony 2.3. Previously, the classes were
-    located in the HttpKernel component.
+    The Debug component was introduced in Symfony 2.3. Previously, the classes
+    were located in the HttpKernel component.
 
 Installation
 ------------
 
 You can install the component in many different ways:
 
-* Use the official Git repository (https://github.com/symfony/Debug);
 * :doc:`Install it via Composer </components/using_components>` (``symfony/debug`` on `Packagist`_).
+* Use the official Git repository (https://github.com/symfony/Debug);
 
 Usage
 -----

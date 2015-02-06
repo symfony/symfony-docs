@@ -1,11 +1,11 @@
 .. index::
     single: ClassLoader; DebugClassLoader
-    
+
 Debugging a Class Loader
 ========================
 
 .. versionadded:: 2.1
-    The ``DebugClassLoader`` class was added in Symfony 2.1.
+    The ``DebugClassLoader`` class was introduced in Symfony 2.1.
 
 The :class:`Symfony\\Component\\ClassLoader\\DebugClassLoader` attempts to
 throw more helpful exceptions when a class isn't found by the registered
@@ -16,5 +16,5 @@ Using the ``DebugClassLoader`` is as easy as calling its static
 :method:`Symfony\\Component\\ClassLoader\\DebugClassLoader::enable` method::
 
     use Symfony\Component\ClassLoader\DebugClassLoader;
-    
+
     DebugClassLoader::enable();

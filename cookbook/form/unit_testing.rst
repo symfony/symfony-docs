@@ -36,7 +36,7 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTest.php
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
@@ -73,7 +73,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
         }
     }
 
-So, what does it test? Let's explain it line by line.
+So, what does it test? Here comes a detailed explanation.
 
 First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm`` function and options resolution. This should
@@ -110,7 +110,7 @@ widgets you want to display are available in the children property::
         $this->assertArrayHasKey($key, $children);
     }
 
-Adding a Type your Form depends on
+Adding a Type your Form Depends on
 ----------------------------------
 
 Your form may depend on other types that are defined as services. It
@@ -177,6 +177,7 @@ on other extensions. You need add those extensions to the factory object::
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
+    use Symfony\Component\Validator\ConstraintViolationList;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -184,11 +185,14 @@ on other extensions. You need add those extensions to the factory object::
         {
             parent::setUp();
 
+            $validator = $this->getMock('\Symfony\Component\Validator\ValidatorInterface');
+            $validator->method('validate')->will($this->returnValue(new ConstraintViolationList()));
+
             $this->factory = Forms::createFormFactoryBuilder()
                 ->addExtensions($this->getExtensions())
                 ->addTypeExtension(
                     new FormTypeValidatorExtension(
-                        $this->getMock('Symfony\Component\Validator\ValidatorInterface')
+                        $validator
                     )
                 )
                 ->addTypeGuesser(

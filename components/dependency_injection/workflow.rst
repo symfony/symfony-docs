@@ -8,7 +8,7 @@ In the preceding pages of this section, there has been little to say about
 where the various files and classes should be located. This is because this
 depends on the application, library or framework in which you want to use
 the container. Looking at how the container is configured and built in the
-Symfony2 full stack framework will help you see how this all fits together,
+Symfony full stack framework will help you see how this all fits together,
 whether you are using the full stack framework or looking to use the service
 container in another application.
 
@@ -18,8 +18,8 @@ also handles the compilation and caching. Even if you are not using HttpKernel,
 it should give you an idea of one way of organizing configuration in a modular
 application.
 
-Working with cached Container
------------------------------
+Working with a Cached Container
+-------------------------------
 
 Before building it, the kernel checks to see if a cached version of the container
 exists. The HttpKernel has a debug setting and if this is false, the
@@ -58,7 +58,7 @@ passed to the Extension which also usually loads its own config file(s), typical
 with a :doc:`Configuration object </components/config/definition>` also stored
 in the bundle's ``DependencyInjection`` directory.
 
-Compiler passes to allow Interaction between Bundles
+Compiler Passes to Allow Interaction between Bundles
 ----------------------------------------------------
 
 :ref:`Compiler passes <components-dependency-injection-compiler-passes>` are

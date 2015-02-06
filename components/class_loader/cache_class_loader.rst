@@ -4,7 +4,7 @@
     single: ClassLoader; Cache
     single: ClassLoader; XcacheClassLoader
     single: XCache; XcacheClassLoader
-    
+
 Cache a Class Loader
 ====================
 
@@ -27,22 +27,22 @@ ApcClassLoader
 --------------
 
 .. versionadded:: 2.1
-    The ``ApcClassLoader`` class was added in Symfony 2.1.
+    The ``ApcClassLoader`` class was introduced in Symfony 2.1.
 
 ``ApcClassLoader`` wraps an existing class loader and caches calls to its
 ``findFile()`` method using `APC`_::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/ApcClassLoader.php';
-    
+
     // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
-    
-    // my_prefix is the APC namespace prefix to use
-    $cachedLoader = new ApcClassLoader('my_prefix', $loader);
-    
+
+    // sha1(__FILE__) generates an APC namespace prefix
+    $cachedLoader = new ApcClassLoader(sha1(__FILE__), $loader);
+
     // register the cached class loader
     $cachedLoader->register();
-    
+
     // deactivate the original, non-cached loader if it was registered previously
     $loader->unregister();
 
@@ -50,22 +50,22 @@ XcacheClassLoader
 -----------------
 
 .. versionadded:: 2.1
-    The ``XcacheClassLoader`` class was added in Symfony 2.1.
+    The ``XcacheClassLoader`` class was introduced in Symfony 2.1.
 
 ``XcacheClassLoader`` uses `XCache`_ to cache a class loader. Registering
 it is straightforward::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/XcacheClassLoader.php';
-    
+
     // instance of a class that implements a findFile() method, like the ClassLoader
     $loader = ...;
-    
-    // my_prefix is the XCache namespace
-    $cachedLoader = new XcacheClassLoader('my_prefix', $loader);
-    
+
+    // sha1(__FILE__) generates an XCache namespace prefix
+    $cachedLoader = new XcacheClassLoader(sha1(__FILE__), $loader);
+
     // register the cached class loader
     $cachedLoader->register();
-    
+
     // deactivate the original, non-cached loader if it was registered previously
     $loader->unregister();
 
