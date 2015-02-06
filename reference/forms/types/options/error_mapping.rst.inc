@@ -4,7 +4,7 @@ error_mapping
 .. versionadded:: 2.1
     The ``error_mapping`` option was introduced in Symfony 2.1.
 
-**type**: ``array`` **default**: ``empty``
+**type**: ``array`` **default**: ``array()``
 
 This option allows you to modify the target of a validation error.
 
