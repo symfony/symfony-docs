@@ -147,7 +147,7 @@ classes are supported:
 * `BinaryBundleReader`_
 * `PhpBundleReader`_
 * `BufferedBundleReader`_
-* `StructuredBundleReader`_
+* `BundleEntryReader`_
 
 Continue reading if you are interested in how to use these classes. Otherwise
 skip this section and jump to `Accessing ICU Data`_.
@@ -249,20 +249,26 @@ buffer size passed to the constructor::
     // actually reads the file
     $data = $reader->read('/path/to/bundle', 'fr');
 
-StructuredBundleReader
-~~~~~~~~~~~~~~~~~~~~~~
+BundleEntryReader
+~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReader`
+.. versionadded:: 2.4
+
+    This class was available under the name
+    :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReader`
+    in Symfony 2.3.
+
+The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\BundleEntryReader`
 wraps another reader and offers a
-:method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReaderInterface::readEntry`
+:method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\BundleEntryReaderInterface::readEntry`
 method for reading an entry of the resource bundle without having to worry
 whether array keys are set or not. If a path cannot be resolved, ``null`` is
 returned::
 
     use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
-    use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReader;
+    use Symfony\Component\Intl\ResourceBundle\Reader\BundleEntryReader;
 
-    $reader = new StructuredBundleReader(new BinaryBundleReader());
+    $reader = new BundleEntryReader(new BinaryBundleReader());
 
     $data = $reader->read('/path/to/bundle', 'en');
 
@@ -273,7 +279,7 @@ returned::
     echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'));
 
 Additionally, the
-:method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReaderInterface::readEntry`
+:method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\BundleEntryReaderInterface::readEntry`
 method resolves fallback locales. For example, the fallback locale of "en_GB" is
 "en". For single-valued entries (strings, numbers etc.), the entry will be read
 from the fallback locale if it cannot be found in the more specific locale. For
@@ -353,8 +359,8 @@ which defaults to the current default locale::
     $countries = Intl::getRegionBundle()->getCountryNames('de');
     // => array('AF' => 'Afghanistan', ...)
 
-Locales
-~~~~~~~
+Locales and Locale Aliases
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The translations of locale names can be found in the locale bundle::
 
@@ -373,6 +379,23 @@ which defaults to the current default locale::
 
     $locales = Intl::getLocaleBundle()->getLocaleNames('de');
     // => array('af' => 'Afrikaans', ...)
+
+When a locale gets renamed in the ICU project, the old locale remains
+available as an *alias* to the new locale. For example, the locale "mo"
+("Moldavian") used to exist, but was later renamed to "ro_MD"
+("Romanian (Moldova)"). To maintain backwards compatibility, the locale "mo"
+still exists as an alias for "ro_MD".
+
+You can get a list with all locale aliases from the locale bundle::
+
+    $aliases = Intl::getLocaleBundle()->getLocaleAliases();
+
+The resulting array contains the aliases as keys and the target locales as values.
+
+.. versionadded:: 2.4
+
+    The method :method:`Symfony\\Component\\Intl\\ResourceBundle\\LocaleBundleInterface::getLocaleAliases`
+    was added in Symfony 2.4.
 
 Currencies
 ~~~~~~~~~~
