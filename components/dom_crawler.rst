@@ -48,9 +48,11 @@ traverse easily::
         print $domElement->nodeName;
     }
 
-Specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
+Specialized :class:`Symfony\\Component\\DomCrawler\\Link`,
+:class:`Symfony\\Component\\DomCrawler\\Image` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
-interacting with html links and forms as you traverse through the HTML tree.
+interacting with html links, images and forms as you traverse through the HTML
+tree.
 
 .. note::
 
@@ -303,7 +305,7 @@ Links
 ~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
-the ``selectLink`` method on an existing crawler. This returns a Crawler
+the ``selectLink`` method on an existing crawler. This returns a ``Crawler``
 instance with just the selected link(s). Calling ``link()`` gives you a special
 :class:`Symfony\\Component\\DomCrawler\\Link` object::
 
@@ -326,6 +328,23 @@ methods to get more information about the selected link itself::
     link with ``href="#foo"``, this would return the full URI of the current
     page suffixed with ``#foo``. The return from ``getUri()`` is always a full
     URI that you can act on.
+
+Images
+~~~~~~
+
+To find an image by its ``alt`` attribute, use the ``selectImage`` method on an
+existing crawler. This returns a ``Crawler`` instance with just the selected
+image(s). Calling ``image()`` gives you a special
+:class:`Symfony\\Component\\DomCrawler\\Image` object::
+
+    $imagesCrawler = $crawler->selectImage('Kitten');
+    $image = $imagesCrawler->image();
+
+    // or do this all at once
+    $image = $crawler->selectImage('Kitten')->image();
+
+The :class:`Symfony\\Component\\DomCrawler\\Image` object has the same
+``getUri()`` method as :class:`Symfony\\Component\\DomCrawler\\Link`.
 
 Forms
 ~~~~~
