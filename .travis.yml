@@ -7,7 +7,6 @@ sudo: false
 addons:
     apt_packages:
         - enchant
-        - time
 
 cache:
     directories:
