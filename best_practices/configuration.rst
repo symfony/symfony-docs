@@ -101,7 +101,7 @@ to control the number of posts to display on the blog homepage:
     parameters:
         homepage.num_items: 10
 
-If you ask yourself when the last time was that you changed the value of
+If you ask yourself when was the last time you changed the value of
 *any* option like this, odds are that you *never* have. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
