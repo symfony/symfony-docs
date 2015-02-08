@@ -190,10 +190,6 @@ your controller using annotations:
         // ...
     }
 
-.. versionadded:: 2.4
-    The ``@Security`` annotation was introduced in SensioFrameworkExtraBundle 3.0,
-    which can only be used with Symfony 2.4 or later.
-
 .. tip::
 
     If you also had an access control in your security configuration that
