@@ -56,7 +56,7 @@ The blog application needs a utility that can transform a post title (e.g.
 "Hello World") into a slug (e.g. "hello-world"). The slug will be used as
 part of the post URL.
 
-Let's, create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
+Let's create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
 add the following ``slugify()`` method:
 
 .. code-block:: php
