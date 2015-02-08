@@ -2,10 +2,11 @@ language: python
 
 python: "2.7"
 
-sudo: true
+sudo: false
 
-before_script:
-    - sudo apt-get install enchant
+addons:
+    apt_packages:
+        - enchant
 
 cache:
     directories:
