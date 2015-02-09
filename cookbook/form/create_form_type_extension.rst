@@ -92,7 +92,7 @@ For more information on what those methods do, you can refer to the
 cookbook article.
 
 Registering your Form Type Extension as a Service
---------------------------------------------------
+-------------------------------------------------
 
 The next step is to make Symfony aware of your extension. All you
 need to do is to declare it as a service by using the ``form.type_extension``
@@ -290,7 +290,7 @@ Specifically, you need to override the ``file_widget`` block:
     information.
 
 Using the Form Type Extension
-------------------------------
+-----------------------------
 
 From now on, when adding a field of type ``file`` in your form, you can
 specify an ``image_path`` option that will be used to display an image
