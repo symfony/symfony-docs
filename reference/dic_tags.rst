@@ -1337,7 +1337,7 @@ the new loader and tag it with ``twig.loader``:
             acme.demo_bundle.loader.some_twig_loader:
                 class: Acme\DemoBundle\Loader\SomeTwigLoader
                 tags:
-                    - { name: twig.loader }
+                    - { name: twig.loader, priority: 0 }
 
     .. code-block:: xml
 
@@ -1351,7 +1351,7 @@ the new loader and tag it with ``twig.loader``:
                     id="acme.demo_bundle.loader.some_twig_loader"
                     class="Acme\DemoBundle\Loader\SomeTwigLoader">
 
-                    <tag name="twig.loader" />
+                    <tag name="twig.loader" priority="0" />
                 </service>
             </services>
         </container>
@@ -1360,8 +1360,13 @@ the new loader and tag it with ``twig.loader``:
 
         $container
             ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
-            ->addTag('twig.loader')
+            ->addTag('twig.loader', array('priority' => 0))
         ;
+
+.. note::
+
+    The ``priority`` value is optional and defaults to ``0``.
+    The higher priority loaders are tried first.
 
 validator.constraint_validator
 ------------------------------
