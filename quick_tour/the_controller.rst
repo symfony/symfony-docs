@@ -202,7 +202,7 @@ different controller using the ``forward()`` method::
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction()
+        public function indexAction($name)
         {
             return $this->forward('AppBundle:Blog:index', array(
                 'name'  => $name
