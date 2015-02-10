@@ -8,7 +8,7 @@ The Filesystem Component
 
 .. tip::
 
-    A lock handler feature was introduce in symfony 2.6.
+    A lock handler feature was introduced in symfony 2.6.
     :doc:`See the documentation for more information </components/filesystem/lock_handler>`.
 
 Installation
