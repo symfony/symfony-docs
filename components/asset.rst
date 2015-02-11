@@ -1,0 +1,249 @@
+.. index::
+   single: Asset
+   single: Components; Asset
+
+The Asset Component
+===================
+
+   The Asset manages URL generation and versioning for web assets such as CSS
+   stylsheets, JavaScript files and image files.
+
+Installation
+------------
+
+You can install the component in two different ways:
+
+* :doc:`Install it via Composer </components/using_components>` (``symfony/asset`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Asset).
+
+Usage
+-----
+
+Asset Packages
+~~~~~~~~~~~~~~
+
+The Asset component manages its assets through packages. A package groups all
+the assets which use the same versioning strategy. In the following basic
+example, a package is created to manage assets without any versioning:
+
+.. code-block:: php
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+
+    $package = new Package(new EmptyVersionStrategy());
+
+    echo $package->getUrl('/image.png');
+    // result: /image.png
+
+Packages implement the ``PackageInterface``, which defines the following two
+methods::
+
+    namespace Symfony\Component\Asset;
+
+    interface PackageInterface
+    {
+        /**
+         * Returns the asset version for an asset.
+         */
+        public function getVersion($path);
+
+        /**
+         * Returns an absolute or root-relative public path.
+         */
+        public function getUrl($path);
+    }
+
+Versioned Assets
+~~~~~~~~~~~~~~~~
+
+One of the main features of the Asset component is to manage the versioning of
+the application's assets. Asset versions are commonly used to control how these
+assets are cached.
+
+Instead of relying on a simple version mechanism, the Asset component allows to
+define advanced version strategies via PHP classes. The two built-in strategies
+provided by the component are ``EmptyVersionStrategy``, which doesn't add any
+version to the asset, and ``StaticVersionStrategy``, which allows to set the
+version with a format string.
+
+In this example, the ``StaticVersionStrategy`` is used to append the ``v1``
+suffix to any asset path::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
+
+    $package = new Package(new StaticVersionStrategy('v1'));
+
+    echo $package->getUrl('/image.png');
+    // result: /image.png?v1
+
+In case you want to modify the version format, pass a sprintf-compatible format
+string as the second argument of the ``StaticVersionStrategy`` constructor::
+
+    // put the 'version' word before the version value
+    $package = new Package(new StaticVersionStrategy('v1', '%s?version=%s'));
+
+    echo $package->getUrl('/image.png');
+    // result: /image.png?version=v1
+
+    // put the asset version before its path
+    $package = new Package(new StaticVersionStrategy('v1', '%2$s/%1$s'));
+
+    echo $package->getUrl('/image.png');
+    // result: /v1/image.png
+
+Custom Version Strategies
+.........................
+
+Use the ``VersionStrategyInterface`` to define your own version strategy. For
+example, you could define a versioning where the current date is appended to
+bust the cache every day::
+
+    use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
+
+    class DateVersionStrategy implements VersionStrategyInterface
+    {
+        private $version;
+
+        public function __construct()
+        {
+            $this->version = date('Ymd');
+        }
+
+        public function getVersion($path)
+        {
+            return $this->version;
+        }
+
+        public function applyVersion($path)
+        {
+            return sprintf('%s?v=%s', $path, $this->getVersion($path));
+        }
+    }
+
+Grouped Assets
+~~~~~~~~~~~~~~
+
+It's common for applications to store their assets in a common path. If that's
+your case, replace the default ``Package`` class by ``PathPackage`` to avoid
+repeating the same path time and again::
+
+    use Symfony\Component\Asset\PathPackage;
+
+    $package = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
+
+    echo $package->getUrl('/logo.png');
+    // result: /static/images/logo.png?v1
+
+Request Context Aware Assets
+............................
+
+If you are also using the HttpFoundation component in your project, for example
+in a Symfony application, the ``PathPackage`` class can take into account the
+context of the current request::
+
+    use Symfony\Component\Asset\PathPackage;
+    use Symfony\Component\Asset\Context\RequestStackContext;
+
+    $package = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
+    $package->setContext(new RequestStackContext($requestStack));
+
+    echo $package->getUrl('/logo.png');
+    // result: /somewhere/static/images/logo.png?v1
+
+When the request context is set, in addition to the configured base path,
+``PathPackage`` also prepends the current request base URL (``/somewhere/`` in
+this example) to assets. This allows your website to be hosted anywhere under
+the web server root directory.
+
+Absolute Assets and CDNs
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Applications that host their assets on different domains and CDNs (*Content
+Delivery Networks*) should use instead the ``UrlPackage`` class to generate
+absolute URLs for their assets::
+
+    use Symfony\Component\Asset\UrlPackage;
+
+    $package = new UrlPackage('http://static.example.com/images/', new StaticVersionStrategy('v1'));
+
+    echo $package->getUrl('/logo.png');
+    // result: http://static.example.com/images/logo.png?v1
+
+In case you serve assets from more than one domain to improve application
+performance, pass an array of URLs as the first argument of ``UrlPackage``
+constructor::
+
+    use Symfony\Component\Asset\UrlPackage;
+
+    $urls = array(
+        'http://static1.example.com/images/',
+        'http://static2.example.com/images/',
+    );
+    $package = new UrlPackage($urls, new StaticVersionStrategy('v1'));
+
+    echo $package->getUrl('/logo.png');
+    // result: http://static1.example.com/images/logo.png?v1
+
+The selection of the domain which will serve the asset is deterministic, meaning
+that each asset will be always served by the same domain. This behavior simplifies
+the management of HTTP cache.
+
+Request Context Aware Assets
+............................
+
+Similarly to application-relative assets, absolute assets can also take into
+account the context of the current request. In this case, only the request
+scheme is considered, in order to select the appropriate base URL (HTTPs or
+protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
+
+    use Symfony\Component\Asset\UrlPackage;
+    use Symfony\Component\Asset\Context\RequestStackContext;
+
+    $package = new UrlPackage(array('http://example.com/', 'https://example.com/'), new StaticVersionStrategy('v1'));
+    $package->setContext(new RequestStackContext($requestStack));
+
+    echo $package->getUrl('/logo.png');
+    // result: https://example.com/logo.png?v1
+
+Named Packages
+~~~~~~~~~~~~~~
+
+Applications that manage lots of different assets may need to group them in
+packages with the same versioning strategy and base path. The Asset component
+includes a ``Packages`` class to simplify the management of several packages.
+
+In the following example, all packages use the same versioning strategy, but
+they all have different base paths::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\PathPackage;
+    use Symfony\Component\Asset\UrlPackage;
+    use Symfony\Component\Asset\Packages;
+
+    $versionStrategy = new StaticVersionStrategy('v1');
+
+    $defaultPackage = new Package($versionStrategy);
+
+    $namedPackages = array(
+        'img' => new UrlPackage('http://img.example.com/', $versionStrategy),
+        'doc' => new PathPackage('/somewhere/deep/for/documents', $versionStrategy),
+    );
+
+    $packages = new Packages($defaultPackage, $namedPackages)
+
+The ``Packages`` class requires to define a default package which will be applied
+to all assets except those which indicate the name of the package to use. In
+addition, this application defines a package named ``img`` to serve images from
+an external domain and a ``doc`` package to avoid repeating long paths when
+linking to a document inside a template::
+
+    echo $packages->getUrl('/main.css');
+    // result: /main.css?v1
+
+    echo $packages->getUrl('/logo.png', 'img');
+    // result: http://img.example.com/logo.png?v1
+
+    echo $packages->getUrl('/resume.pdf', 'doc');
+    // result: /somewhere/deep/for/documents/resume.pdf?v1
