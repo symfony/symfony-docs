@@ -5,8 +5,8 @@
 The Asset Component
 ===================
 
-   The Asset manages URL generation and versioning for web assets such as CSS
-   stylsheets, JavaScript files and image files.
+   The Asset component manages URL generation and versioning of web assets such
+   as CSS stylsheets, JavaScript files and image files.
 
 Installation
 ------------
@@ -62,7 +62,7 @@ the application's assets. Asset versions are commonly used to control how these
 assets are cached.
 
 Instead of relying on a simple version mechanism, the Asset component allows to
-define advanced version strategies via PHP classes. The two built-in strategies
+define advanced versioning strategies via PHP classes. The two built-in strategies
 provided by the component are ``EmptyVersionStrategy``, which doesn't add any
 version to the asset, and ``StaticVersionStrategy``, which allows to set the
 version with a format string.
