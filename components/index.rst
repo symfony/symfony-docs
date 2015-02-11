@@ -5,6 +5,7 @@ The Components
     :hidden:
 
     using_components
+    asset
     class_loader/index
     config/index
     console/index
