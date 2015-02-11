@@ -50,6 +50,12 @@ which Encoders and Normalizer are going to be available::
 
     $serializer = new Serializer($normalizers, $encoders);
 
+There are several normalizers available, e.g. the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` or the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`.
+To read more about them, refer to the "Normalizers" section in this page.
+All the examples shown below use the GetSetMethodNormalizer.
+
 Serializing an Object
 ---------------------
 
@@ -232,6 +238,30 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
+Normalizers
+-----------
+
+There are several types of normalizers available::
+
+* The :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
+
+   This normalizer reads the content of the class by calling the "getters" (public
+   methods starting with "get"). It will denormalize data by calling the constructor
+   and the "setters" (public methods starting with "set").
+
+   Objects are serialized to a map of property names (method name stripped of the "get"
+   prefix and converted to lower case) to property values.
+
+* The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
+
+   .. versionadded:: 2.6
+       The :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
+       class was introduced in Symfony 2.6.
+
+   This normalizer directly reads and writes public properties as well as
+   **private and protected** properties. Objects are serialized to a map of
+   property names to property values.
 
 Handling Circular References
 ----------------------------
