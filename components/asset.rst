@@ -247,3 +247,5 @@ linking to a document inside a template::
 
     echo $packages->getUrl('/resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
+
+.. _Packagist: https://packagist.org/packages/symfony/asset
