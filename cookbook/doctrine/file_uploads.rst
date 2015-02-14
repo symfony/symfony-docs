@@ -181,7 +181,7 @@ rules::
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.yml -->
+        <!-- src/AppBundle/Resources/config/validation.xml -->
         <class name="AppBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">
