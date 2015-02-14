@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-02-13T10:31:59Z
+
+I suggest using a semver constraint instead. This way, we won't need to update it all the time
+
+---------------------------------------------------------------------------
+
+by TSchuermans at 2015-02-13T10:55:51Z
+
+@stof something like ^2.0?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-13T18:57:28Z
+
+I'm against using a version constraint. We have decided to have versioned documentation. That implies that 2.3 documentation will really tell you about 2.3 and not about 2.6. When using `2.*` as a constraint, you'll install 2.6 with the 2.3 installation constructions. I think that'll introduce lots of confusion over time.
+
+And yeah, there are more places where we need to update it each time. It isn't very nice, but we have to life with it. Clear and correct documentation is the most important part imo
+
+---------------------------------------------------------------------------
+
+by TSchuermans at 2015-02-13T19:03:58Z
+
+True, when using ^2.0 you would get the latest version even when you're looking at the documentation for 2.3.
+This will be confusing to a lot of people using the documentation.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-13T19:05:02Z
+
+Btw, :+1: for the current changes in this PR.
+
+---------------------------------------------------------------------------
+
+by TSchuermans at 2015-02-13T20:57:15Z
+
+@WouterJ Thx, this is my first contribution to SF.
+Hoping to contribute a lot more in the future.
