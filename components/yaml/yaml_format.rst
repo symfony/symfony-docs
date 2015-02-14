@@ -228,14 +228,14 @@ The following YAML is equivalent to the following PHP code:
 .. code-block:: php
 
     array(
-      'symfony 1.0' => array(
-        'PHP'    => 5.0,
-        'Propel' => 1.2,
-      ),
-      'symfony 1.2' => array(
-        'PHP'    => 5.2,
-        'Propel' => 1.3,
-      ),
+        'symfony 1.0' => array(
+            'PHP'    => 5.0,
+            'Propel' => 1.2,
+        ),
+        'symfony 1.2' => array(
+            'PHP'    => 5.2,
+            'Propel' => 1.3,
+        ),
     );
 
 There is one important thing you need to remember when using indentation in a
