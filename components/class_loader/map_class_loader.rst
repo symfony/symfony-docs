@@ -25,7 +25,7 @@ Usage
 Using it is as easy as passing your mapping to its constructor when creating
 an instance of the ``MapClassLoader`` class::
 
-    require_once '/path/to/src/Symfony/Component/ClassLoader/MapClassLoader';
+    require_once '/path/to/src/Symfony/Component/ClassLoader/MapClassLoader.php';
 
     $mapping = array(
         'Foo' => '/path/to/Foo',
