@@ -1236,7 +1236,7 @@ By calling ``validateValue`` on the validator, you can pass in a raw value and
 the constraint object that you want to validate that value against. A full
 list of the available constraints - as well as the full class name for each
 constraint - is available in the :doc:`constraints reference </reference/constraints>`
-section .
+section.
 
 The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
