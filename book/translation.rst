@@ -425,13 +425,13 @@ via the ``request`` object::
         $request->setLocale('en_US');
     }
     
-    
 .. note::
 
-    Setting the locale using ``$request->setLocale()`` won't affect rendering
-    in the same action as the translator reads the request locale during the
-    kernel.request event, so changing it here would be too late. To manually
-    change translation locale in the controller use ``$this->get('translator')->setLocale()``.
+    Setting the locale using the ``$request->setLocale()`` method won't affect 
+    rendering in the same action. The translator locale is set during the
+    kernel.request event. Either set the locale before the listener is called
+    (e.g. in a custom listener) or use the ``setLocale()`` method of the 
+    ``translator`` service.
 
 .. tip::
 
