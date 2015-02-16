@@ -6,7 +6,37 @@ The Asset Component
 ===================
 
    The Asset component manages URL generation and versioning of web assets such
-   as CSS stylsheets, JavaScript files and image files.
+   as CSS stylesheets, JavaScript files and image files.
+
+In the past, it was common for web applications to hardcode the URLs of the web
+assets. For example:
+
+.. code-block:: html
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+    <!-- ... -->
+
+    <a href="/"><img src="/images/logo.png"></a>
+
+This practice is no longer recommended unless the web application is extremely
+simple. The main problems of hardcoding asset URLs are the following:
+
+* **Templates get verbose** because you have to write the full path for each
+  asset. When using the Asset component, you can group assets in packages to
+  avoid repeating the common part of their path.
+* **Versioning is difficult** because it has to be custom managed for each
+  application. Adding a version to the asset URLs is essential for some applications
+  because it allows to control how the assets are cached. The Asset component
+  allows to define different versioning strategies for each package.
+* **Moving assets location** is cumbersome and error-prone, because it requires
+  you to carefully update the URLs of all assets included in all templates.
+  The Asset component allows to move assets effortlessly just by changing the
+  base path value associated with the package of assets.
+* **Impossible to use multiple CDNs** because it requires to change the URL of
+  the asset randomly for each request. The Asset component provides out-of-the-box
+  support for any number of multiple CDNs, both regular (``http://``) and
+  secure (``https://``).
 
 Installation
 ------------
@@ -22,9 +52,10 @@ Usage
 Asset Packages
 ~~~~~~~~~~~~~~
 
-The Asset component manages its assets through packages. A package groups all
-the assets which use the same versioning strategy. In the following basic
-example, a package is created to manage assets without any versioning::
+The Asset component manages assets through packages. A package groups all the
+assets which share the same properties: versioning strategy, base path, CDN hosts,
+etc. In the following basic example, a package is created to manage assets without
+any versioning::
 
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
@@ -139,16 +170,19 @@ can take into account the context of the current request::
     use Symfony\Component\Asset\Context\RequestStackContext;
     // ...
 
-    $package = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
-    $package->setContext(new RequestStackContext($requestStack));
+    $package = new PathPackage(
+        '/static/images',
+        new StaticVersionStrategy('v1'),
+        new RequestStackContext($requestStack)
+    );
 
     echo $package->getUrl('/logo.png');
     // result: /somewhere/static/images/logo.png?v1
 
-When the request context is set, in addition to the configured base path,
-:class:`Symfony\Component\Asset\PathPackage` also prepends the current request
-base URL (``/somewhere/`` in this example) to assets. This allows your website
-to be hosted anywhere under the web server root directory.
+When the request context is set (via the third optional argument), in addition
+to the configured base path, :class:`Symfony\Component\Asset\PathPackage` also
+prepends the current request base URL (``/somewhere/`` in this example) to assets.
+This allows your website to be hosted anywhere under the web server root directory.
 
 Absolute Assets and CDNs
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,9 +236,9 @@ protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
 
     $package = new UrlPackage(
         array('http://example.com/', 'https://example.com/'),
-        new StaticVersionStrategy('v1')
+        new StaticVersionStrategy('v1'),
+        new RequestStackContext($requestStack)
     );
-    $package->setContext(new RequestStackContext($requestStack));
 
     echo $package->getUrl('/logo.png');
     // result: https://example.com/logo.png?v1
@@ -237,11 +271,11 @@ they all have different base paths::
 
     $packages = new Packages($defaultPackage, $namedPackages)
 
-The :class:`Symfony\Component\Asset\Packages` class requires to define a default
-package which will be applied to all assets except those which indicate the name
-of the package to use. In addition, this application defines a package named
-``img`` to serve images from an external domain and a ``doc`` package to avoid
-repeating long paths when linking to a document inside a template::
+The :class:`Symfony\Component\Asset\Packages` class allows to define a default
+package, which will be applied to assets that don't define the name of package
+to use. In addition, this application defines a package named ``img`` to serve
+images from an external domain and a ``doc`` package to avoid repeating long
+paths when linking to a document inside a template::
 
     echo $packages->getUrl('/main.css');
     // result: /main.css?v1
