@@ -122,8 +122,8 @@ the replaced address, so you can still see who it would have been sent to.
 Sending to a Specified Address but with Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you normally in your dev environment want to have all email redirected
-to a specific address, (like in the above scenario to ``dev@example.com``).
+Suppose you want to have all email redirected to a specific address,
+(like in the above scenario to ``dev@example.com``).
 But then you may want email sent to some specific email addresses to go through
 after all, and not be redirected (even if it is in the dev environment).
 This can be done by adding the ``delivery_whitelist`` option:
