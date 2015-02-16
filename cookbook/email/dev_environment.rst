@@ -119,11 +119,11 @@ the replaced address, so you can still see who it would have been sent to.
     These are ``X-Swift-Cc`` and ``X-Swift-Bcc`` for the ``CC`` and ``BCC``
     addresses respectively.
 
-Sending to a Specified Address, but with exceptions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sending to a Specified Address but with Exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you normally in your dev environment want to have all email redirected
-to a specific address, (like in the above scenario to ``dev@example,com``).
+to a specific address, (like in the above scenario to ``dev@example.com``).
 But then you may want email sent to some specific email addresses to go through
 after all, and not be redirected (even if it is in the dev environment).
 This can be done by adding the ``delivery_whitelist`` option:
@@ -154,22 +154,30 @@ This can be done by adding the ``delivery_whitelist`` option:
         -->
 
         <swiftmailer:config delivery-address="dev@example.com" />
+        <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
         <swiftmailer:delivery-whitelist>/@mydomain.com$/</swiftmailer:delivery-whitelist>
+        <!-- all emails sent to admin@specialdomain.com won't be redirected to dev@example.com too -->
         <swiftmailer:delivery-whitelist>/^admin@specialdomain.com$/</swiftmailer:delivery-whitelist>
+
     .. code-block:: php
 
         // app/config/config_dev.php
         $container->loadFromExtension('swiftmailer', array(
             'delivery_address'  => "dev@example.com",
             'delivery_whitelist' => array(
+                // all email addresses matching this regex will *not* be
+                // redirected to dev@example.com
                 '/@mydomain.com$/',
+
+                // all emails sent to admin@specialdomain.com won't be
+                // redirected to dev@example.com too
                 '/^admin@specialdomain.com$/'
             ),
         ));
 
-In the above example all mail will be redirected to ``dev@example.com``,
-except that mail to the single address ``admin@specialdomain.com`` and all
-mail to the domain ``mydomain.com`` will be delivered as normal.
+In the above example all email messages will be redirected to ``dev@example.com``,
+except messages sent to the ``admin@specialdomain.com`` address or to any email
+address belonging to the domain ``mydomain.com``, which will be delivered as normal.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------
