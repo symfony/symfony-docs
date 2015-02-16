@@ -133,11 +133,11 @@ custom tag::
     {
         public function process(ContainerBuilder $container)
         {
-            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
+            if (!$container->has('acme_mailer.transport_chain')) {
                 return;
             }
 
-            $definition = $container->getDefinition(
+            $definition = $container->findDefinition(
                 'acme_mailer.transport_chain'
             );
 
