@@ -138,11 +138,11 @@ This can be done by adding the ``delivery_whitelist`` option:
             delivery_whitelist:
                # all email addresses matching this regex will *not* be
                # redirected to dev@example.com
-               - "/@mydomain.com$/"
+               - "/@specialdomain.com$/"
 
-               # all emails sent to admin@specialdomain.com won't
+               # all emails sent to admin@mydomain.com won't
                # be redirected to dev@example.com too
-               - "/^admin@specialdomain.com$/"
+               - "/^admin@mydomain.com$/"
 
     .. code-block:: xml
 
@@ -155,9 +155,9 @@ This can be done by adding the ``delivery_whitelist`` option:
 
         <swiftmailer:config delivery-address="dev@example.com" />
         <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
-        <swiftmailer:delivery-whitelist>/@mydomain.com$/</swiftmailer:delivery-whitelist>
-        <!-- all emails sent to admin@specialdomain.com won't be redirected to dev@example.com too -->
-        <swiftmailer:delivery-whitelist>/^admin@specialdomain.com$/</swiftmailer:delivery-whitelist>
+        <swiftmailer:delivery-whitelist>/@specialdomain.com$/</swiftmailer:delivery-whitelist>
+        <!-- all emails sent to admin@mydomain.com won't be redirected to dev@example.com too -->
+        <swiftmailer:delivery-whitelist>/^admin@mydomain.com$/</swiftmailer:delivery-whitelist>
 
     .. code-block:: php
 
@@ -167,17 +167,17 @@ This can be done by adding the ``delivery_whitelist`` option:
             'delivery_whitelist' => array(
                 // all email addresses matching this regex will *not* be
                 // redirected to dev@example.com
-                '/@mydomain.com$/',
+                '/@specialdomain.com$/',
 
-                // all emails sent to admin@specialdomain.com won't be
+                // all emails sent to admin@mydomain.com won't be
                 // redirected to dev@example.com too
-                '/^admin@specialdomain.com$/'
+                '/^admin@mydomain.com$/',
             ),
         ));
 
 In the above example all email messages will be redirected to ``dev@example.com``,
-except messages sent to the ``admin@specialdomain.com`` address or to any email
-address belonging to the domain ``mydomain.com``, which will be delivered as normal.
+except messages sent to the ``admin@mydomain.com`` address or to any email
+address belonging to the domain ``specialdomain.com``, which will be delivered as normal.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------
