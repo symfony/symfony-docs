@@ -1,8 +1,8 @@
 * :doc:`/components/using_components`
 
-* **Asset**
+* :doc:`/components/asset/index`
 
-  * :doc:`/components/asset`
+  * :doc:`/components/asset/introduction`
 
 * :doc:`/components/class_loader/index`
 
