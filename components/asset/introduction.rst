@@ -66,7 +66,7 @@ any versioning::
     // result: /image.png
 
 Packages implement the :class:`Symfony\\Component\\Asset\\PackageInterface`,
-which defines the following two methods::
+which defines the following two methods:
 
 :method:`Symfony\\Component\\Asset\\PackageInterface::getVersion`
     Returns the asset version for an asset.
