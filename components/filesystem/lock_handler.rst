@@ -64,11 +64,10 @@ PHP code will wait indefinitely until the lock is released by another process.
 
 .. caution::
 
-    Beware that the resource lock is automatically released as soon as PHP applies
-    the garbage-collection process to the ``LockHandler`` object. This means that
-    if you refactor the first example showed in this article as follows:
-
-    .. code-block:: php
+    Be aware of the fact that the resource lock is automatically released as soon
+    as PHP applies the garbage-collection process to the ``LockHandler`` object.
+    This means that if you refactor the first example showed in this article as
+    follows::
 
         use Symfony\Component\Filesystem\LockHandler;
 
