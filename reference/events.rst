@@ -41,7 +41,7 @@ object to match the ``Request`` and determine the Controller name (stored in the
 
     Read more on the :ref:`kernel.request event <component-http-kernel-kernel-request>`.
 
-These are the built-in Symfony listeners related to this event:
+These are the built-in Symfony listeners registered to this event:
 
 =============================================================================  ========
 Listener Class Name                                                            Priority
@@ -59,8 +59,7 @@ Listener Class Name                                                            P
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
-This event is not used by the FrameworkBundle, but can be an entry point used
-to modify the controller that should be executed::
+This event can be an entry point used to modify the controller that should be executed::
 
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -149,7 +148,7 @@ The FrameworkBundle registers several listeners:
 
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
-These are the built-in Symfony listeners related to this event:
+These are the built-in Symfony listeners registered to this event:
 
 ===================================================================================  ========
 Listener Class Name                                                                  Priority
@@ -168,8 +167,8 @@ Listener Class Name                                                             
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
 
-The purpose of this event is to perform "heavier" tasks after the response
-was already served to the client.
+The purpose of this event is to perform tasks after the response was already
+served to the client.
 
 .. seealso::
 
@@ -191,11 +190,9 @@ Listener Class Name                                                        Prior
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-The FrameworkBundle registers an
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
-forwards the ``Request`` to a given Controller (the value of the
-``exception_listener.controller`` parameter -- must be in the
-``class::method`` notation).
+The TwigBundle registers an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
+that forwards the ``Request`` to a given controller defined by the
+``exception_listener.controller`` parameter.
 
 A listener on this event can create and set a ``Response`` object, create
 and set a new ``Exception`` object, or do nothing::
@@ -232,7 +229,7 @@ and set a new ``Exception`` object, or do nothing::
 
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
-These are the built-in Symfony listeners related to this event:
+These are the built-in Symfony listeners registered to this event:
 
 =========================================================================  ========
 Listener Class Name                                                        Priority

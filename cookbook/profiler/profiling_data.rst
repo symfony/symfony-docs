@@ -25,8 +25,9 @@ Using this token, you can access the profile of any past response thanks to the
 
 .. tip::
 
-    When the profiler is enabled but not the web debug toolbar, use your browser
-    inspection tools to get the value of the ``X-Debug-Token`` HTTP header.
+    When the profiler is enabled but not the web debug toolbar, inspect the page
+    with your browser's developer tools to get the value of the ``X-Debug-Token``
+    HTTP header.
 
 The ``profiler`` service also provides the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find` method to
@@ -46,7 +47,7 @@ look for tokens based on some criteria::
         ->find('', '', 10, '4 days ago', '2 days ago');
 
 Lastly, if you want to manipulate profiling data on a different machine than the
-one where the information were generated, use the ``profiler:export`` and
+one where the information was generated, use the ``profiler:export`` and
 ``profiler:import`` commands:
 
 .. code-block:: bash
