@@ -89,9 +89,9 @@ Platform as a Service Providers
     The Symfony Cookbook includes detailed articles for some of the most well-known
     Platform as a Service (PaaS) providers:
 
-    * :doc:`</cookbook/deployment/azure-website>`
-    * :doc:`</cookbook/deployment/heroku>`
-    * :doc:`</cookbook/deployment/platformsh>`
+    * :doc:`Microsoft Azure </cookbook/deployment/azure-website>`
+    * :doc:`Heroku </cookbook/deployment/heroku>`
+    * :doc:`Platform.sh </cookbook/deployment/platformsh>`
 
 Common Post-Deployment Tasks
 ----------------------------
