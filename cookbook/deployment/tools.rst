@@ -8,9 +8,9 @@ How to Deploy a Symfony Application
 
 .. note::
 
-    Deploying can be a complex and varied task depending on the setup and
+    Deploying can be a complex and varied task depending on the setup and the
     requirements of your application. This article is not a step-by-step guide,
-    but a general list of the most common requirements and ideas for deployment.
+    but is a general list of the most common requirements and ideas for deployment.
 
 .. _symfony2-deployment-basics:
 
@@ -31,8 +31,8 @@ A deployment may also include other tasks, such as:
   repository;
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available to ensure code and/or server stability;
-* Removal of any unnecessary files from ``web/`` directory to keep your production
-  environment clean;
+* Removal of any unnecessary files from the ``web/`` directory to keep your
+  production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
 How to Deploy a Symfony Application
