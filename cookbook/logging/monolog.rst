@@ -4,8 +4,8 @@
 How to Use Monolog to Write Logs
 ================================
 
-Monolog_ is a logging library for PHP used by Symfony. It is inspired by the
-Python LogBook library.
+Monolog_ is a logging library for PHP 5.3 used by Symfony. It is
+inspired by the Python LogBook library.
 
 Usage
 -----
