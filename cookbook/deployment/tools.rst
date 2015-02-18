@@ -20,8 +20,8 @@ Symfony Deployment Basics
 The typical steps taken while deploying a Symfony application include:
 
 #. Upload your code to the production server;
-#. Install/update your vendor dependencies (typically done via Composer, and may
-   be done before uploading);
+#. Install your vendor dependencies (typically done via Composer and may be done
+   before uploading);
 #. Running database migrations or similar tasks to update any changed data structures;
 #. Clearing (and optionally, warming up) your cache.
 
@@ -67,8 +67,8 @@ There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
 `Capifony`_
-    Provides a specialized set of tools on top of `Capistrano`_, tailored
-    specifically to Symfony projects.
+    This Ruby-based tool provides a specialized set of tools on top of
+    `Capistrano`_, tailored specifically to Symfony projects.
 
 `sf2debpkg`_
     Helps you build a native Debian package for your Symfony project.
@@ -77,12 +77,16 @@ specifically tailored to the requirements of Symfony.
     This Capistrano-like deployment tool is built in PHP, and may be easier
     for PHP developers to extend for their needs.
 
+`Fabric`_
+    This Python-based library provides a basic suite of operations for executing
+    local or remote shell commands and uploading/downloading files.
+
 Bundles
     There are some `bundles that add deployment features`_ directly into your
     Symfony console.
 
 Basic scripting
-    You can of course use shell, `Ant`_, or any other build tool to script
+    You can of course use shell, `Ant`_ or any other build tool to script
     the deploying of your project.
 
 Platform as a Service Providers
@@ -185,17 +189,12 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-.. tip::
-
-    Looking for more? Talk to the community on the `Symfony IRC channel`_ for
-    more information.
-
 .. _`Capifony`: http://capifony.org/
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
-.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
+.. _`Fabric`: http://www.fabfile.org/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
+.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
-.. _`Symfony IRC channel`: http://symfony.com/irc
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
