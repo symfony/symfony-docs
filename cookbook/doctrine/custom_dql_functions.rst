@@ -16,6 +16,8 @@ In Symfony, you can register your custom DQL functions as follows:
         # app/config/config.yml
         doctrine:
             orm:
+                # don't forget to add this 'auto_mapping' option
+                auto_mapping: true
                 # ...
                 dql:
                     string_functions:
@@ -37,6 +39,8 @@ In Symfony, you can register your custom DQL functions as follows:
 
             <doctrine:config>
                 <doctrine:orm>
+                    <!-- don't forget to add this 'auto_mapping' option -->
+                    <doctrine:auto_mapping value="true" />
                     <!-- ... -->
                     <doctrine:dql>
                         <doctrine:string-function name="test_string">AppBundle\DQL\StringFunction</doctrine:string-function>
@@ -53,6 +57,8 @@ In Symfony, you can register your custom DQL functions as follows:
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
+                // don't forget to add this 'auto_mapping' option
+                'auto_mapping' => true,
                 // ...
                 'dql' => array(
                     'string_functions' => array(
