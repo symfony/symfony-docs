@@ -229,14 +229,8 @@ Monolog allows you to process the record before logging it to add some
 extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 
-.. tip::
-
-    Beware that log file sizes can grow very rapidly, leading to disk space exhaustion.
-    This is specially true in the ``dev`` environment, where a simple request can
-    generate hundreds of log lines. Consider using tools like the ``logrotate``
-    Linux command to contain log files before they become a problem.
-
 A processor is simply a callable receiving the record as its first argument.
+
 Processors are configured using the ``monolog.processor`` DIC tag. See the
 :ref:`reference about it <dic_tags-monolog-processor>`.
 
