@@ -64,7 +64,7 @@ code::
 
     .. note::
 
-        These deployment problems only affect to the following Symfony versions:
+        These deployment problems only affect the following Symfony versions:
         2.3.0 to 2.3.20 versions, any 2.4.x version and 2.5.0 to 2.5.5 versions.
 
     The intl extension internally uses the `ICU library`_ to obtain localization
