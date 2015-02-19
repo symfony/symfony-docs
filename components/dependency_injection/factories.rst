@@ -68,6 +68,13 @@ class:
 
         $container->setDefinition('newsletter_manager', $definition);
 
+.. note::
+
+    When creating a service through a factory, the value chosen for the ``class``
+    option has no actual effect since the final class only depends on the object
+    returned by the factory. However, the configured class may be used by compiler
+    passes and therefore should be set to a sensible value.
+
 When you specify the class to use for the factory (via ``factory_class``)
 the method will be called statically. If the factory itself should be instantiated
 and the resulting object's method called, configure the factory itself as a service.
