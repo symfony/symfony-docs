@@ -19,8 +19,8 @@ This is where Data Transformers come into play.
 
 .. caution::
 
-    When a field has the :doc:`inherit_data </reference/forms/types/options/inherit_data>`
-    option set, Data Transformers won't be applied to that field.
+    When a form field has the ``inherit_data`` option set, Data Transformers
+    won't be applied to that field.
 
 Creating the Transformer
 ------------------------
