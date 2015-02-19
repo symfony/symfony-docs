@@ -268,12 +268,13 @@ Great! Now, if you go to ``/admin``, you'll see the HTTP Basic popup:
 
     The ``http_basic`` firewall is only recommended while prototyping applications
     or when the application is exclusively accesed through secure transports, such
-    as https. The reason is that browsers include user credentials in each request
+    as HTTPS. The reason is that browsers include user credentials in each request
     without applying any hashing mechanism, just a plain base64 encoding.
 
     Instead, consider using the ``http_digest`` firewall, which is almost identical
     to ``http_basic`` but where user credentials are encoded and hashed before
-    including them in the request. Read :ref:`HTTP-Digest Authentication reference <reference-security-http-digest>`.
+    including them in the request. Read
+    :ref:`HTTP-Digest Authentication reference <reference-security-http-digest>`.
 
 But who can you login as? Where do users come from?
 
