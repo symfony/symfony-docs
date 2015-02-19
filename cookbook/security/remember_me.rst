@@ -8,10 +8,7 @@ Once a user is authenticated, their credentials are typically stored in the
 session. This means that when the session ends they will be logged out and
 have to provide their login details again next time they wish to access the
 application. You can allow users to choose to stay logged in for longer than
-the session lasts using a cookie with the ``remember_me`` firewall option.
-The firewall needs to have a secret key configured, which is used to encrypt
-the cookie's content. It also has several options with default values which
-are shown here:
+the session lasts using a cookie with the ``remember_me`` firewall option:
 
 .. configuration-block::
 
@@ -22,9 +19,8 @@ are shown here:
             main:
                 remember_me:
                     key:      "%secret%"
-                    lifetime: 31536000 # 365 days in seconds
+                    lifetime: 604800 # 1 week in seconds
                     path:     /
-                    domain:   ~ # Defaults to the current domain from $_SERVER
 
     .. code-block:: xml
 
@@ -33,9 +29,8 @@ are shown here:
             <firewall>
                 <remember-me
                     key      = "%secret%"
-                    lifetime = "31536000" <!-- 365 days in seconds -->
+                    lifetime = "604800" <!-- 1 week in seconds -->
                     path     = "/"
-                    domain   = "" <!-- Defaults to the current domain from $_SERVER -->
                 />
             </firewall>
         </config>
@@ -48,13 +43,55 @@ are shown here:
                 'main' => array(
                     'remember_me' => array(
                         'key'      => '%secret%',
-                        'lifetime' => 31536000, // 365 days in seconds
+                        'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
-                        'domain'   => '', // Defaults to the current domain from $_SERVER
                     ),
                 ),
             ),
         ));
+
+The ``remember_me`` firewall defines the following configuration options:
+
+``name``
+    (default value: ``REMEMBERME``) The name of the cookie used to maintain the
+    user logged in. If you enable the "Remember Me" feature in several firewalls
+    of the same application, make sure to choose a different name for the cookie
+    of each firewall. Otherwise, you'll face lots of security related problems.
+
+``lifetime``
+    (default value: ``31536000``) The number of seconds during which the user
+    will remain logged in. By default users are logged in for one year.
+
+``path``
+    (default value: ``/``) The path where the cookie associated with this
+    feature is used. By default the cookie will be applied to the entire website
+    but you can restrict to a specific section (e.g. ``/forum``, ``/admin``).
+
+``domain``
+    (default value: ``null``) The domain where the cookie associated with this
+    feature is used. By default cookies use the current domain obtained from
+    ``$_SERVER``.
+
+``secure``
+    (default value: ``false``) If ``true``, the cookie associated with this
+    feature is sent to the user through an HTTPS secure connection.
+
+``httponly``
+    (default value: ``true``) If ``true``, the cookie associated with this
+    feature is sent to the user exclusively through an HTTP non-secure connection.
+
+``remember_me_parameter``
+    (default value: ``_remember_me``) The name of the form field checked to
+    decide if the "Remember Me" feature should be enabled or not. Keep reading
+    this article to know how to enable this feature conditionally.
+
+``always_remember_me``
+    (default value: ``false``) If ``true``, the value of the ``remember_me_parameter``
+    is ignored and the "Remember Me" feature is always enabled, regardless of the
+    desire of the end user.
+
+Forcing the User to Opt-Out of the Remember Me Feature
+------------------------------------------------------
 
 It's a good idea to provide the user with the option to use or not use the
 remember me functionality, as it will not always be appropriate. The usual
