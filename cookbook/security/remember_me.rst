@@ -52,6 +52,11 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
+``key``
+    (default value: ``null``) The value used to encrypt the cookie's content.
+    It's common to use the ``secret`` value defined in the ``app/config/parameters.yml``
+    file.
+
 ``name``
     (default value: ``REMEMBERME``) The name of the cookie used to maintain the
     user logged in. If you enable the "Remember Me" feature in several firewalls
