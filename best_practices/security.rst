@@ -140,12 +140,21 @@ the same ``getAuthorEmail`` logic you used above:
 
     use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
     // AbstractVoter class requires Symfony 2.6 or higher version
     class PostVoter extends AbstractVoter
     {
         const CREATE = 'create';
         const EDIT   = 'edit';
+
+        protected $roleHierarchy;
+
+        public function __construct(RoleHierarchyInterface $roleHierarchy)
+        {
+            $this->roleHierarchy = $roleHirarchy;
+        }
 
         protected function getSupportedAttributes()
         {
@@ -163,12 +172,27 @@ the same ``getAuthorEmail`` logic you used above:
                 return false;
             }
 
-            if ($attribute === self::CREATE && in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            if ($attribute === self::CREATE && $this->hasRole('ROLE_ADMIN', $user)) {
                 return true;
             }
 
             if ($attribute === self::EDIT && $user->getEmail() === $post->getAuthorEmail()) {
                 return true;
+            }
+
+            return false;
+        }
+
+        /**
+         * Checks if the user token has the given role taking into account the
+         * entire role hierarchy defined by the application.
+         */
+        protected function hasRole($roleName, TokenInterface $userToken)
+        {
+            foreach ($this->roleHierarchy->getReachableRoles($userToken->getRoles()) as $role) {
+                if ($roleName === $role->getRole()) {
+                    return true;
+                }
             }
 
             return false;
@@ -184,6 +208,7 @@ To enable the security voter in the application, define a new service:
         # ...
         post_voter:
             class:      AppBundle\Security\PostVoter
+            arguments:  ["@security.role_hierarchy"]
             public:     false
             tags:
                - { name: security.voter }
