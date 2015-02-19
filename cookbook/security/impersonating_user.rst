@@ -99,6 +99,7 @@ impersonating user::
         foreach ($securityContext->getToken()->getRoles() as $role) {
             if ($role instanceof SwitchUserRole) {
                 $impersonatingUser = $role->getSource()->getUser();
+                break;
             }
         }
     }
