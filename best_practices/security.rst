@@ -149,11 +149,11 @@ the same ``getAuthorEmail`` logic you used above:
         const CREATE = 'create';
         const EDIT   = 'edit';
 
-        protected $roleHierarchy;
+        private $roleHierarchy;
 
         public function __construct(RoleHierarchyInterface $roleHierarchy)
         {
-            $this->roleHierarchy = $roleHirarchy;
+            $this->roleHierarchy = $roleHierarchy;
         }
 
         protected function getSupportedAttributes()
@@ -172,7 +172,7 @@ the same ``getAuthorEmail`` logic you used above:
                 return false;
             }
 
-            if ($attribute === self::CREATE && $this->hasRole('ROLE_ADMIN', $user)) {
+            if ($attribute === self::CREATE && $this->userHasRole($user, 'ROLE_ADMIN')) {
                 return true;
             }
 
@@ -187,7 +187,7 @@ the same ``getAuthorEmail`` logic you used above:
          * Checks if the user token has the given role taking into account the
          * entire role hierarchy defined by the application.
          */
-        protected function hasRole($roleName, TokenInterface $userToken)
+        private function userHasRole(TokenInterface $userToken, $roleName)
         {
             foreach ($this->roleHierarchy->getReachableRoles($userToken->getRoles()) as $role) {
                 if ($roleName === $role->getRole()) {
