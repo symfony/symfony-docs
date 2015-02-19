@@ -14,6 +14,7 @@ Form
     unit_testing
     use_empty_data
     direct_submit
+    array_to_delimited_string_transformer
 
 .. toctree::
     :hidden:

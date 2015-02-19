@@ -109,6 +109,7 @@
   * :doc:`/cookbook/form/unit_testing`
   * :doc:`/cookbook/form/use_empty_data`
   * :doc:`/cookbook/form/direct_submit`
+  * :doc:`/cookbook/form/array_to_delimited_string_transformer`
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
