@@ -217,3 +217,79 @@ For MSSQL, the statement might look like the following:
             ALLOW_PAGE_LOCKS  = ON
         ) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+Doctrine DBAL Session Storage
+-----------------------------
+
+Symfony applications can also use a Doctrine DBAL based session storage. This
+alternative implementation is very similar to the ``PdoSessionHandler`` explained
+above, but uses a Doctrine connection and thus also works with non-PDO-based
+drivers like mysqli and OCI8.
+
+The only significant disadvantage of the Doctrine DBAL session storage comparing
+it with ``PdoSessionHandler`` is that you can only configure the name of the
+table used to store sessions, but not its column names.
+
+DBAL Session Storage configuration example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            session:
+                # ...
+                handler_id: session.handler.dbal
+
+        parameters:
+            dbal_session_table: session
+
+        services:
+            # ...
+            session.handler.dbal:
+                class:     Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler
+                arguments: ["@doctrine.dbal.default_connection", "%dbal_session_table%"]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <!-- ... -->
+            <framework:session handler-id="session.handler.dbal" cookie-lifetime="3600" auto-start="true"/>
+        </framework:config>
+
+        <parameters>
+            <!-- ... -->
+            <parameter key="dbal_session_table">session</parameter>
+        </parameters>
+
+        <services>
+            <!-- ... -->
+            <service id="session.handler.dbal" class="Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler">
+                <argument type="service" id="doctrine.dbal.default_connection" />
+                <argument>%dbal_session_table%</argument>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->loadFromExtension('framework', array(
+            ...,
+            'session' => array(
+                // ...,
+                'handler_id' => 'session.handler.dbal',
+            ),
+        ));
+
+        $container->setParameter('pdo.dbal_session_table', 'sess');
+
+        $storageDefinition = new Definition('Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler', array(
+            new Reference('doctrine.dbal.default_connection'),
+            '%dbal_session_table%',
+        ));
+        $container->setDefinition('session.handler.dbal', $storageDefinition);
