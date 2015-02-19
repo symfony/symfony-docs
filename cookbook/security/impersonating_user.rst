@@ -86,6 +86,23 @@ to show a link to exit impersonation:
             </a>
         <?php endif ?>
 
+In some cases you may need to get the object that represents the impersonating
+user rather than the impersonated user. Use the following snippet to iterate
+over user's roles until you get the ``SwitchUserRole`` related to the
+impersonating user::
+
+    use Symfony\Component\Security\Core\Role\SwitchUserRole;
+
+    $securityContext = $this->get('security.context');
+
+    if ($securityContext->isGranted('ROLE_PREVIOUS_ADMIN')) {
+        foreach ($securityContext->getToken()->getRoles() as $role) {
+            if ($role instanceof SwitchUserRole) {
+                $impersonatingUser = $role->getSource()->getUser();
+            }
+        }
+    }
+
 Of course, this feature needs to be made available to a small group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
 role. The name of this role can be modified via the ``role`` setting. For
