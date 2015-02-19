@@ -70,7 +70,7 @@ class:
 
 .. note::
 
-    When creating a service through a factory, the value chosen for the ``class``
+    When using a factory to create services, the value chosen for the ``class``
     option has no effect on the resulting service, since the actual class name
     only depends on the object returned by the factory. However, the configured
     class may be used by compiler passes and therefore should be set to a
