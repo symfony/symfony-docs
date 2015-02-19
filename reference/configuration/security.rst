@@ -469,10 +469,15 @@ multiple firewalls, the "context" could actually be shared:
             ),
         ));
 
+.. _reference-security-http-digest:
+
 HTTP-Digest Authentication
 --------------------------
 
-To use HTTP-Digest authentication you need to provide a realm and a key:
+To use HTTP-Digest authentication you need to provide a realm and a key, which
+is the random string that will be used to hash user's credentials. It's common
+to use the ``%secret%`` parameter defined in the ``app/config/parameters.yml``
+file:
 
 .. configuration-block::
 
@@ -483,7 +488,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             firewalls:
                 somename:
                     http_digest:
-                        key: "a_random_string"
+                        key: "%secret%"
                         realm: "secure-api"
 
     .. code-block:: xml
@@ -491,7 +496,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
         <!-- app/config/security.xml -->
         <security:config>
             <firewall name="somename">
-                <http-digest key="a_random_string" realm="secure-api" />
+                <http-digest key="%secret%" realm="secure-api" />
             </firewall>
         </security:config>
 
@@ -502,7 +507,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
             'firewalls' => array(
                 'somename' => array(
                     'http_digest' => array(
-                        'key'   => 'a_random_string',
+                        'key'   => '%secret%',
                         'realm' => 'secure-api',
                     ),
                 ),
