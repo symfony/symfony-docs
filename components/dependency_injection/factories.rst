@@ -71,9 +71,9 @@ class:
 .. note::
 
     When using a factory to create services, the value chosen for the ``class``
-    option has no effect on the resulting service, since the actual class name
-    only depends on the object returned by the factory. However, the configured
-    class may be used by compiler passes and therefore should be set to a
+    option has no effect on the resulting service. The actual class name only
+    depends on the object that is returned by the factory. However, the configured
+    class name may be used by compiler passes and therefore should be set to a
     sensible value.
 
 When you specify the class to use for the factory (via ``factory_class``)
