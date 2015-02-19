@@ -228,7 +228,7 @@ drivers like mysqli and OCI8.
 
 The only significant disadvantage of the Doctrine DBAL session storage comparing
 it with ``PdoSessionHandler`` is that you can only configure the name of the
-table used to store sessions, but not its column names.
+table used to store sessions but not its column names.
 
 DBAL Session Storage configuration example:
 
@@ -243,8 +243,10 @@ DBAL Session Storage configuration example:
                 handler_id: session.handler.dbal
 
         parameters:
+            # ...
             dbal_session_table: session
 
+        # app/config/services.yml
         services:
             # ...
             session.handler.dbal:
@@ -264,6 +266,7 @@ DBAL Session Storage configuration example:
             <parameter key="dbal_session_table">session</parameter>
         </parameters>
 
+        <!-- app/config/services.xml -->
         <services>
             <!-- ... -->
             <service id="session.handler.dbal" class="Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler">
@@ -279,15 +282,18 @@ DBAL Session Storage configuration example:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
             'session' => array(
-                // ...,
+                // ...
                 'handler_id' => 'session.handler.dbal',
             ),
         ));
 
+        // ...
         $container->setParameter('pdo.dbal_session_table', 'sess');
 
+        // app/config/services.php
+        // ...
         $storageDefinition = new Definition('Symfony\Bridge\Doctrine\HttpFoundation\DbalSessionHandler', array(
             new Reference('doctrine.dbal.default_connection'),
             '%dbal_session_table%',
