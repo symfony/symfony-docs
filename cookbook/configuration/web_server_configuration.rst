@@ -48,6 +48,12 @@ are:
             Allow from All
         </Directory>
 
+        # uncomment the following lines if you install assets as symlinks
+        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # <Directory /var/www/project>
+        #     Option FollowSymlinks
+        # </Directory>
+
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
@@ -151,6 +157,12 @@ directive to pass requests for PHP files to PHP FPM:
             Require all granted
         </Directory>
 
+        # uncomment the following lines if you install assets as symlinks
+        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # <Directory /var/www/project>
+        #     Option FollowSymlinks
+        # </Directory>
+
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
@@ -180,6 +192,12 @@ should look something like this:
             Order allow,deny
             Allow from all
         </Directory>
+
+        # uncomment the following lines if you install assets as symlinks
+        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # <Directory /var/www/project>
+        #     Option FollowSymlinks
+        # </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
