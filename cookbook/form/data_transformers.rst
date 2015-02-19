@@ -17,6 +17,11 @@ You could try to do this in your controller, but it's not the best solution.
 It would be better if this issue were automatically converted to an Issue object.
 This is where Data Transformers come into play.
 
+.. caution::
+
+    When a field has the :doc:`inherit_data </reference/forms/types/options/inherit_data.rst.inc>`
+    option set, Data Transformers won't be applied to that field.
+
 Creating the Transformer
 ------------------------
 
