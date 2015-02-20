@@ -165,7 +165,7 @@ from your application and returning them to the client.
 
 .. caution::
 
-    By default, the caching kernel ignores the ``framework.http_method_override``
+    By default, a kernel based on the cache ignores the ``framework.http_method_override``
     option, which could lead to errors when using ``PUT``, ``DELETE`` and ``PURGE``
     methods in HTTP requests.
 
