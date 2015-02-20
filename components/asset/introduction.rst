@@ -8,8 +8,8 @@ The Asset Component
    The Asset component manages URL generation and versioning of web assets such
    as CSS stylesheets, JavaScript files and image files.
 
-In the past, it was common for web applications to hardcode the URLs of the web
-assets. For example:
+In the past, it was common for web applications to hardcode URLs of web assets.
+For example:
 
 .. code-block:: html
 
@@ -20,23 +20,23 @@ assets. For example:
     <a href="/"><img src="/images/logo.png"></a>
 
 This practice is no longer recommended unless the web application is extremely
-simple. The main problems of hardcoding asset URLs are the following:
+simple. Hardcoding URLs can be a disadvantage because:
 
-* **Templates get verbose** because you have to write the full path for each
+* **Templates get verbose**: you have to write the full path for each
   asset. When using the Asset component, you can group assets in packages to
-  avoid repeating the common part of their path.
-* **Versioning is difficult** because it has to be custom managed for each
+  avoid repeating the common part of their path;
+* **Versioning is difficult**: it has to be custom managed for each
   application. Adding a version to the asset URLs is essential for some applications
   because it allows to control how the assets are cached. The Asset component
-  allows to define different versioning strategies for each package.
-* **Moving assets location** is cumbersome and error-prone, because it requires
-  you to carefully update the URLs of all assets included in all templates.
-  The Asset component allows to move assets effortlessly just by changing the
-  base path value associated with the package of assets.
-* **Impossible to use multiple CDNs** because it requires to change the URL of
-  the asset randomly for each request. The Asset component provides out-of-the-box
-  support for any number of multiple CDNs, both regular (``http://``) and
-  secure (``https://``).
+  allows to define different versioning strategies for each package;
+* **Moving assets location** is cumbersome and error-prone: it requires you to
+  carefully update the URLs of all assets included in all templates. The Asset
+  component allows to move assets effortlessly just by changing the base path
+  value associated with the package of assets;
+* **It's nearly impossible to use multiple CDNs**: this technique requires to
+  change the URL of the asset randomly for each request. The Asset component
+  provides out-of-the-box support for any number of multiple CDNs, both regular
+  (``http://``) and secure (``https://``).
 
 Installation
 ------------
@@ -117,8 +117,9 @@ Custom Version Strategies
 .........................
 
 Use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\VersionStrategyInterface`
-to define your own version strategy. For example, you could define a versioning
-where the current date is appended to bust the cache every day::
+to define your own versioning strategy. For example, your application may need
+to append the current date to all its web assets in order to bust the cache
+every day::
 
     use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
@@ -178,10 +179,10 @@ context of the current request::
     echo $package->getUrl('/logo.png');
     // result: /somewhere/static/images/logo.png?v1
 
-When the request context is set (via the third optional argument), in addition
-to the configured base path, ``PathPackage`` also prepends the current request
-base URL (``/somewhere/`` in this example) to assets. This allows your website
-to be hosted anywhere under the web server root directory.
+When the request context is set (via an optional third argument), in addition to
+the configured base path, ``PathPackage`` also prepends the current request base
+URL (``/somewhere/`` in this example) to assets. This allows your website to be
+hosted anywhere under the web server root directory.
 
 Absolute Assets and CDNs
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -247,7 +248,7 @@ Named Packages
 
 Applications that manage lots of different assets may need to group them in
 packages with the same versioning strategy and base path. The Asset component
-includes a :class:`Symfony\\Component\\Asset\\Packages` class to simplify the
+includes a :class:`Symfony\\Component\\Asset\\Packages` class to simplify
 management of several packages.
 
 In the following example, all packages use the same versioning strategy, but
