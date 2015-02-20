@@ -45,7 +45,7 @@ The route is simple:
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{slug}")
+             * @Route("/blog/{slug}" name="blog_show ")
              */
             public function showAction($slug)
             {
