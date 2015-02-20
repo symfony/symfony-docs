@@ -475,7 +475,7 @@ HTTP-Digest Authentication
 --------------------------
 
 To use HTTP-Digest authentication you need to provide a realm and a key, which
-is the random string that will be used to hash user's credentials. It's common
+is the random string that will be used to hash the user's credentials. It's common
 to use the ``%secret%`` parameter defined in the ``app/config/parameters.yml``
 file:
 
