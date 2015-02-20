@@ -163,7 +163,7 @@ kernel::
 The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.
 
-..caution::
+.. caution::
 
     By default, the caching kernel ignores the ``framework.http_method_override``
     option, which could lead to errors when using ``PUT``, ``DELETE`` and ``PURGE``
@@ -173,6 +173,7 @@ from your application and returning them to the client.
     ``Request`` object in order to take this option into account::
 
         // web/app.php
+
         // ...
         $kernel = new AppCache($kernel);
 

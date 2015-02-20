@@ -77,12 +77,9 @@ http_method_override
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-method gets called automatically, unless the application uses a caching kernel,
-where you need to invoke that method manually (see :ref:`symfony2-reverse-proxy`
-for details).
-
-It becomes the service container parameter named ``kernel.http_method_override``.
-For more information, see :doc:`/cookbook/routing/method_parameters`.
+method gets called automatically. It becomes the service container parameter
+named ``kernel.http_method_override``. For more information, see
+:doc:`/cookbook/routing/method_parameters`.
 
 ide
 ~~~
