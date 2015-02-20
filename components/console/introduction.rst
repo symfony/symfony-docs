@@ -296,12 +296,11 @@ declare a one-letter shortcut that you can call with a single dash like
 
 .. tip::
 
-    It may look that it's possible to make an option *optionally* accept a value
-    (so that ``--yell`` or ``--yell=loud`` work). However, if you call a command
-    with an option without a value, you'll retrieve ``null`` as the option's value
-    which is the same when you omit the option. In practice, this means that a
-    command cannot distinguish between passing an option without a value and not
-    passing that very same option.
+    There is nothing forbidding you to create a command with an *optional option*,
+    which is an input option set to ``InputOption::OPTIONAL`` mode. You will just
+    not be able to distinguish when the flag for that option was used without a
+    value (``command --yell``) or when it was not used at all (``command``).
+    In both cases the value retrieved for the option will be the same ``null``.
 
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::
