@@ -117,7 +117,7 @@ Coloring the Output
 
 .. note::
 
-    By default, Windows command console doesn't support output coloring. The
+    By default, the Windows command console doesn't support output coloring. The
     Console component disables output coloring for Windows systems, but if your
     commands invoke other scripts which emit color sequences, they will be
     wrongly displayed as raw escape characters. Install the free `ANSICON`_
