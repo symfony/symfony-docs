@@ -120,8 +120,8 @@ Coloring the Output
     By default, the Windows command console doesn't support output coloring. The
     Console component disables output coloring for Windows systems, but if your
     commands invoke other scripts which emit color sequences, they will be
-    wrongly displayed as raw escape characters. Install the free `ANSICON`_
-    application to add coloring support to your Windows command console.
+    wrongly displayed as raw escape characters. Install the `ConEmu`_ or `ANSICON`_
+    free applications to add coloring support to your Windows command console.
 
 Whenever you output text, you can surround the text with tags to color its
 output. For example::
@@ -503,4 +503,5 @@ Learn More!
 * :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
+.. _ConEmu: https://code.google.com/p/conemu-maximus5/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
