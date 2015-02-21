@@ -172,8 +172,10 @@ The ``hello`` action will now match URLs like ``/hello/fabien.xml`` or
 like ``/hello/fabien.js``, because the value of the ``_format`` variable doesn't
 meet its requirements.
 
-Redirecting and Forwarding
---------------------------
+.. _redirecting-and-forwarding:
+
+Redirecting
+-----------
 
 If you want to redirect the user to another page, use the ``redirectToRoute()``
 method::
@@ -192,23 +194,6 @@ method::
 
 The ``redirectToRoute()`` method takes as arguments the route name and an optional
 array of parameters and redirects the user to the URL generated with those arguments.
-
-You can also internally forward the action to another action of the same or
-different controller using the ``forward()`` method::
-
-    // src/AppBundle/Controller/DefaultController.php
-    class DefaultController extends Controller
-    {
-        /**
-         * @Route("/", name="homepage")
-         */
-        public function indexAction()
-        {
-            return $this->forward('AppBundle:Blog:index', array(
-                'name'  => 'Fabien',
-            ));
-        }
-    }
 
 Displaying Error Pages
 ----------------------
