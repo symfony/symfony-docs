@@ -234,47 +234,83 @@ inject *only* the exact service(s) that you need directly into the controller.
    are valid, exactly how you want to organize your reusable code is up to
    you.
 
-Base Controller Methods and their Service Replacements
+Base Controller Methods and Their Service Replacements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This table explains how to replace the convenience methods of the base
-controller.
+This list explains how to replace the convenience methods of the base
+controller:
 
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| Method                      | Service              |  PHP Code                                                       |
-+=============================+======================+=================================================================+
-| ``createForm``              | ``form.factory``     | ``$formFactory->create($type, $data, $options)``                |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``createFormBuilder``       | ``form.factory``     | ``$formFactory->createBuilder('form', $data, $options)``        |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``createNotFoundException`` | \-                   | ``throw new NotFoundHttpException($message, $previous);``       |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``forward``                 | ``http_kernel``      | ``$httpKernel->forward($controller, $path, $query)``            |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``generateUrl``             | ``router``           | ``$router->generate($route, $params, $absolute)``               |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``getDoctrine``             | ``doctrine``         | *Simply inject doctrine instead of fetching from the container* |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``getUser``                 | ``security.context`` | $user = null;                                                   |
-|                             |                      | $token = $securityContext->getToken();                          |
-|                             |                      | if (null !== $token && is_object($token->getUser())) {          |
-|                             |                      | $user = $token->getUser();                                      |
-|                             |                      | }                                                               |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``isGranted``               | ``security.context`` | ``$authorizationChecker->isGranted($attributes, $object);``     |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``redirect``                | \-                   | ``return new RedirectResponse($url, $status);``                 |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``render``                  | ``templating``       | ``$templating->renderResponse($view, $parameters, $response)``  |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``renderViev``              | ``templating``       | ``$templating->render($view, $parameters)``                     |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
-| ``stream``                  | ``templating``       | $templating = $this->templating;                                |
-|                             |                      | $callback = function () use ($templating, $view, $parameters) { |
-|                             |                      | $templating->stream($view, $parameters);                        |
-|                             |                      | }                                                               |
-|                             |                      | return new StreamedResponse($callback);                         |
-+-----------------------------+----------------------+-----------------------------------------------------------------+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createForm` (service: ``form.factory``)
+    .. code-block:: php
+
+        $formFactory->create($type, $data, $options);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createFormBuilder` (service: ``form.factory``)
+    .. code-block:: php
+
+        $formFactory->createBuilder('form', $data, $options);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createNotFoundException`
+    .. code-block:: php
+
+        new NotFoundHttpException($message, $previous);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward` (service: ``http_kernel``)
+    .. code-block:: php
+
+        $httpKernel->forward($controller, $path, $query);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl` (service: ``router``)
+    .. code-block:: php
+
+       $router->generate($route, $params, $absolute);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine` (service: ``doctrine``)
+
+    *Simply inject doctrine instead of fetching it from the container*
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.context``)
+    .. code-block:: php
+
+        $user = null;
+        $token = $securityContext->getToken();
+        if (null !== $token && is_object($token->getUser())) {
+             $user = $token->getUser();
+        }
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.context``)
+    .. code-block:: php
+
+        $authorizationChecker->isGranted($attributes, $object);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
+    .. code-block:: php
+
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+
+        return new RedirectResponse($url, $status);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render` (service: ``templating``)
+    .. code-block:: php
+
+        $templating->renderResponse($view, $parameters, $response);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::renderView` (service: ``templating``)
+    .. code-block:: php
+
+       $templating->render($view, $parameters);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::stream` (service: ``templating``)
+    .. code-block:: php
+
+        use Symfony\Component\HttpFoundation\StreamedResponse;
+
+        $templating = $this->templating;
+        $callback = function () use ($templating, $view, $parameters) {
+            $templating->stream($view, $parameters);
+        }
+
+        return new StreamedResponse($callback);
 
 .. tip::
 
