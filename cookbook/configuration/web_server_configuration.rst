@@ -21,7 +21,7 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
     static files, including images, stylesheets and JavaScript files. It is
     also where the front controllers live. For more details, see the :ref:`the-web-directory`.
 
-    The web directory services as the document root when configuring your
+    The web directory serves as the document root when configuring your
     web server. In the examples below, the ``web/`` directory will be the
     document root. This directory is ``/var/www/project/web/``.
 
