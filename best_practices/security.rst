@@ -151,7 +151,7 @@ the same ``getAuthorEmail`` logic you used above:
 
         private $roleHierarchy;
 
-        public function __construct(RoleHierarchyInterface $roleHierarchy)
+        public function __construct(RoleHierarchyInterface $roleHierarchy = null)
         {
             $this->roleHierarchy = $roleHierarchy;
         }
@@ -189,6 +189,10 @@ the same ``getAuthorEmail`` logic you used above:
          */
         private function userHasRole(TokenInterface $userToken, $roleName)
         {
+            if (null === $this->roleHierarchy) {
+                return false;
+            }
+
             foreach ($this->roleHierarchy->getReachableRoles($userToken->getRoles()) as $role) {
                 if ($roleName === $role->getRole()) {
                     return true;
@@ -208,7 +212,9 @@ To enable the security voter in the application, define a new service:
         # ...
         post_voter:
             class:      AppBundle\Security\PostVoter
-            arguments:  ["@security.role_hierarchy"]
+            # beware that 'security.role_hierarchy' service is only defined
+            # when the application's security config uses role hierarchy
+            arguments:  ["@?security.role_hierarchy"]
             public:     false
             tags:
                - { name: security.voter }
