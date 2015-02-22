@@ -83,7 +83,8 @@ The ``remember_me`` firewall defines the following configuration options:
 
 ``httponly``
     (default value: ``true``) If ``true``, the cookie associated with this
-    feature is sent to the user exclusively through an HTTP non-secure connection.
+    feature is accessible only through the HTTP protocol. This means that the
+    cookie won't be accessible by scripting languages, such as JavaScript.
 
 ``remember_me_parameter``
     (default value: ``_remember_me``) The name of the form field checked to
