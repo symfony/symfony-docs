@@ -190,7 +190,7 @@ the same ``getAuthorEmail`` logic you used above:
         private function userHasRole(TokenInterface $userToken, $roleName)
         {
             if (null === $this->roleHierarchy) {
-                return false;
+                return in_array($roleName, $userToken->getRoles(), true);
             }
 
             foreach ($this->roleHierarchy->getReachableRoles($userToken->getRoles()) as $role) {
