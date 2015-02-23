@@ -156,7 +156,7 @@ your listener to be called just before any controller is executed.
         # app/config/services.yml
         services:
             app.tokens.action_listener:
-                class: AappBundle\EventListener\TokenListener
+                class: AppBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
