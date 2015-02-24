@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-02T17:37:44Z
+
+@jzawadzki First, thanks for your pull request and I wish you a happy new year!
+
+@weaverryan @WouterJ Actually, I'm not sure if we should really updated the fully configuration example given that it will probably be removed soon with #4736. What do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-03T18:53:49Z
+
+:+1: from me, because even if we do re-write, this would, at worst, help guide us to not forget certain things. So, I like it!
