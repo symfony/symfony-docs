@@ -41,8 +41,8 @@ In this case, the user will be asked "Continue with this action?". If the user
 answers with ``y`` it returns ``true`` or ``false`` if they answer with ``n``.
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
-is the default value to return if the user doesn't enter any input. Any other
-input will ask the same question again.
+is the default value to return if the user doesn't enter any valid input.  If 
+second argument is not provided, ``true`` is assumed.
 
 Asking the User for Information
 -------------------------------
