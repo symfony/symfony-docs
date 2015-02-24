@@ -217,7 +217,7 @@ recommended format. These files are parsed by one of the loader classes.
                 'symfony.is.great'    => 'Symfony is great',
                 'symfony.is.amazing'  => 'Symfony is amazing',
                 'symfony.has.bundles' => 'Symfony has bundles',
-                'user.login'           => 'Login',
+                'user.login'          => 'Login',
             );
 
 .. _component-translation-pluralization:
