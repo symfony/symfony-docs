@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-15T16:56:10Z
+
+You are selecting forms by its submit button, that's what this section tries to explain. So -1 for this change.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-10-15T17:07:09Z
+
+I can understand the proposal made by @greg0ire but I think @WouterJ is right. Even if you do it indirectly, you are in fact selecting forms.
+
+By the way, should we add a note/comment about how to deal with forms that don't have submit buttons? I know this is very uncommon, but there is just one use case that it's not that uncommon: a search form which only has the `<input type="text" />` for the search query and no button at all.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2014-10-15T17:48:11Z
+
+@WouterJ : I get what you mean, but I still there still is a problem with this § (so do you if, I interpret the "In progress" tag correctly). If you're not going to merge this change, then I think the first sentence should read :
+
+```diff
+- Notice that you select
++ Notice that you actually select
+```
+
+But then, if you consider notes as things that should not be read on a first,
+quick read, the user might get confused when they read this sentence :
+
+> Once you have a Crawler representing a button, call the form() method to get a Form instance for the form wrapping the button node
+
+They will think :
+
+> So in fact, I did not select the form when I called selectButton() did I ?
+
+I think the documentation should be readable without the notes, and the notes should be here
+to help understand the rest of / detail some specific points.
+
+@javiereguiluz : In your case, the submission will be done with javascript, I guess ?
+The browser used for testing is not able to deal with that, so I don't think there is a
+solution to simulate the click. In this case, I think you're supposed to build the request
+in your test.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T10:43:57Z
+
+@greg0ire I've tagged with in "In progress", since I'm not the only guy who decides what's going in the docs and what's not.
+
+I've read the section now and I think we should make a very minor change:
+
+````diff
+- Just like links, you select forms with the ``selectButton()`` method::
++ Just like links, you select forms using the ``selectButton()`` method::
+````
+
+What do you think? If you agree, can you please update this PR?
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2014-10-31T10:57:59Z
+
+I think this shows the problem even more : this can me elaborated into
+
+> Just like links, you select forms indirectly, using their buttons (so, not like links at all) which you can select just like links (really), with the ``selectButton()`` method.
+
+Maybe we would be better off with something like this :
+
+> Forms can be selected using their buttons, which can be selected with the ``selectButton()`` method, just like links.
+
+A bit more lengthy, but also less confusing, I think.
+
+The main problem I'm trying to avoid here is having the reader think wrong, then read the note (we hope), unlearn what he just learnt, then think right. He should think right but wonder how he can select forms, then read the note, then think right. To avoid wrong thinking, the documentation must be clear from the start.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-19T23:12:12Z
+
+I like it, can you please update your PR with your latest proposal?
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2015-02-20T09:07:35Z
+
+@WouterJ : glad you like it, I just updated the PR
