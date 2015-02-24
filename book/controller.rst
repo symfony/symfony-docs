@@ -116,7 +116,7 @@ Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony takes advantage of PHP's namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 

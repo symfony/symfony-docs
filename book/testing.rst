@@ -619,7 +619,8 @@ and pass it a ``Link`` object::
 Forms
 ~~~~~
 
-Just like links, you select forms with the ``selectButton()`` method::
+Forms can be selected using their buttons, which can be selected with the
+``selectButton()`` method, just like links::
 
     $buttonCrawlerNode = $crawler->selectButton('submit');
 

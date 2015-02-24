@@ -23,7 +23,7 @@ it is broken down.
                     action_level: critical
                     # to also log 400 level errors (but not 404's):
                     # action_level: error
-                    # excluded_404:
+                    # excluded_404s:
                     #     - ^/
                     handler:      buffered
                 buffered:
