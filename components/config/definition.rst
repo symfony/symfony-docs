@@ -294,7 +294,8 @@ All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
 method.
 
-The info will be printed as a comment when dumping the configuration tree.
+The info will be printed as a comment when dumping the configuration tree with
+the ``config:dump`` command.
 
 Optional Sections
 -----------------
