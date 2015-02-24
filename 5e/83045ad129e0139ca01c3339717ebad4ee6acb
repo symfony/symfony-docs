@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-16T08:43:36Z
+
+@xtreamwayz thanks for updating this command!
+
+When Symfony changes a well-known feature, option or command, we usually add a message in the newer version of the docs to help experienced Symfony developers realize that things have changed. In this case, we could add something like the following:
+
+```
+.. versionadded:: 2.6
+    Prior to Symfony 2.6 the ``assetic:watch`` command was executed via the
+    ``--watch`` option of the ``assecit:dump`` command.
+```
+
+In any case, let's see what do our code reviewers (@WouterJ and @xabbuh) think about this idea.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T09:11:44Z
+
+@xtreamwayz Good catch and very valuable change.
+
+As @javiereguiluz said, you simply have to add the `versionadded` directive. According to the doc standards, it should be worded like:
+
+```rst
+.. versionadded:: 2.6
+    The ``assetic:watch`` command was introduced in Symfony 2.6. In prior
+    versions, you had to use the ``--watch`` option of the ``assetic:dump``
+    command for the same behavior.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T09:57:47Z
+
+This is not related to Symfony 2.6. It is related to AsseticBundle 2.4, which is compatible with Symfony 2.1+
+
+---------------------------------------------------------------------------
+
+by xtreamwayz at 2014-12-16T12:09:01Z
+
+Updated the text. Not sure if this is better. If not, feel free to adjust.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-21T10:04:35Z
+
+I like it (and sorry for missing this PR). I've tagged it with finished, so the merger will see that this PR is mergable.
+
+Note for @weaverryan, this should be merged into the 2.3 branch.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-21T11:12:13Z
+
+@xtreamwayz Sorry for not coming back to you after you applied the changes. I like the way you worded the sentence. :+1:
