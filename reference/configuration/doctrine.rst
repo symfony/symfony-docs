@@ -555,7 +555,7 @@ in the ``@AppBundle/SomeResources/config/doctrine`` directory instead:
             ),
         ));
 
-Mapping Entities outside of a Bundle
+Mapping Entities Outside of a Bundle
 ------------------------------------
 
 You can also create new mappings, for example outside of the Symfony folder.
