@@ -1,0 +1,100 @@
+---------------------------------------------------------------------------
+
+by harikt at 2014-11-21T03:11:13Z
+
+oh it seems I need to send to 2.3 branch ?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-21T03:11:27Z
+
+@harikt It's ok, I can patch it in - so no worries!
+
+---------------------------------------------------------------------------
+
+by harikt at 2014-11-21T03:12:59Z
+
+@weaverryan thanks. Is this the way to contribute http://symfony.com/doc/current/contributing/documentation/overview.html ? Just learning.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-21T03:13:55Z
+
+@harikt That's it! But we don't expect everyone to read all of that. If we spot something wrong, we (nicely) let you know :).
+
+---------------------------------------------------------------------------
+
+by harikt at 2014-11-21T03:15:35Z
+
+Thanks! .
+
+*Hari K T*
+
+You can ring me : +91 9388 75 8821
+
+http://harikt.com , https://github.com/harikt ,
+http://www.linkedin.com/in/harikt , http://www.xing.com/profile/Hari_KT
+
+Skype  : kthari85
+Twitter : harikt
+
+On Fri, Nov 21, 2014 at 8:43 AM, Ryan Weaver <notifications@github.com>
+wrote:
+
+> @harikt <https://github.com/harikt> That's it! But we don't expect
+> everyone to read all of that. If we spot something wrong, we (nicely) let
+> you know :).
+>
+> —
+> Reply to this email directly or view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/4500#issuecomment-63918866>.
+>
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-11-22T11:02:06Z
+
+I'm not sure if I like this change though...
+
+The section is only showing some basic features of Symfony2 and compares them to the current project set-up, to show that Symfony really makes your app more simple.
+
+---------------------------------------------------------------------------
+
+by harikt at 2014-11-22T13:55:03Z
+
+@WouterJ if you go through the code it will be nice for people who are not familiar with distribution bundle to get linked to the file `web/app.php` . ie it.
+
+If you don't like you can ignore and close the PR.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-22T14:36:46Z
+
+Hmm, I see Wouter's point - @harikt I think you are probably not the average reader of this page - I would expect more beginners (but who knows!). Would it make sense to link to a page in the docs that shows you how to actually get your project started using the Symfony Standard Edition? Or would that *not* be helpful for what you were looking for @harikt?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by harikt at 2014-11-22T14:56:15Z
+
+@weaverryan
+
+> I would expect more beginners (but who knows!)
+
+who knows who reads :-) . Just a suggestion if they don't know from where the
+
+```php
+require_once __DIR__.'/../app/bootstrap.php';
+require_once __DIR__.'/../app/AppKernel.php';
+```
+
+code comes.
+
+May be after the heading `The Sample Application in Symfony` a link to install / configure symfony for the rest of the section? http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html#the-sample-application-in-symfony
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-20T11:00:55Z
+
+Hmm, I'm now liking it more than I did before. (I've read a bit more context this time). I'll label it as Finished and see if @weaverryan changed its mind too :)
