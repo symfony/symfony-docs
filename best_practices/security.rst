@@ -185,7 +185,7 @@ the same ``getAuthorEmail`` logic you used above:
 
         /**
          * Checks if the user token has the given role taking into account the
-         * entire role hierarchy defined by the application.
+         * entire role hierarchy if defined by the application.
          */
         private function userHasRole(TokenInterface $userToken, $roleName)
         {
@@ -212,8 +212,8 @@ To enable the security voter in the application, define a new service:
         # ...
         post_voter:
             class:      AppBundle\Security\PostVoter
-            # beware that 'security.role_hierarchy' service is only defined
-            # when the application's security config uses role hierarchy
+            # beware that the 'security.role_hierarchy' service is only defined
+            # when the application's security config uses the role hierarchy
             arguments:  ["@?security.role_hierarchy"]
             public:     false
             tags:
