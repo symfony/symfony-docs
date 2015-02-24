@@ -64,6 +64,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
     // ...
 
     $expression = new SerializedParsedExpression(
+        '1 + 4',
         serialize($language->parse('1 + 4', array()))
     );
 

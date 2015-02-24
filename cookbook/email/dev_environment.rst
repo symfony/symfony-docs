@@ -11,7 +11,7 @@ can easily achieve this through configuration settings without having to
 make any changes to your application's code at all. There are two main
 choices when it comes to handling email during development: (a) disabling the
 sending of email altogether or (b) sending all email to a specific
-address.
+address (with optional exceptions).
 
 Disabling Sending
 -----------------
@@ -118,6 +118,67 @@ the replaced address, so you can still see who it would have been sent to.
     additional headers to the email with the overridden addresses in them.
     These are ``X-Swift-Cc`` and ``X-Swift-Bcc`` for the ``CC`` and ``BCC``
     addresses respectively.
+
+Sending to a Specified Address but with Exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you want to have all email redirected to a specific address,
+(like in the above scenario to ``dev@example.com``). But then you may want
+email sent to some specific email addresses to go through after all, and
+not be redirected (even if it is in the dev environment). This can be done
+by adding the ``delivery_whitelist`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        swiftmailer:
+            delivery_address: dev@example.com
+            delivery_whitelist:
+               # all email addresses matching this regex will *not* be
+               # redirected to dev@example.com
+               - "/@specialdomain.com$/"
+
+               # all emails sent to admin@mydomain.com won't
+               # be redirected to dev@example.com too
+               - "/^admin@mydomain.com$/"
+
+    .. code-block:: xml
+
+        <!-- app/config/config_dev.xml -->
+
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer">
+
+        <swiftmailer:config delivery-address="dev@example.com">
+            <!-- all email addresses matching this regex will *not* be redirected to dev@example.com -->
+            <swiftmailer:delivery-whitelist-pattern>/@specialdomain.com$/</swiftmailer:delivery-whitelist-pattern>
+
+            <!-- all emails sent to admin@mydomain.com won't be redirected to dev@example.com too -->
+            <swiftmailer:delivery-whitelist-pattern>/^admin@mydomain.com$/</swiftmailer:delivery-whitelist-pattern>
+        </swiftmailer:config>
+
+    .. code-block:: php
+
+        // app/config/config_dev.php
+        $container->loadFromExtension('swiftmailer', array(
+            'delivery_address'  => "dev@example.com",
+            'delivery_whitelist' => array(
+                // all email addresses matching this regex will *not* be
+                // redirected to dev@example.com
+                '/@specialdomain.com$/',
+
+                // all emails sent to admin@mydomain.com won't be
+                // redirected to dev@example.com too
+                '/^admin@mydomain.com$/',
+            ),
+        ));
+
+In the above example all email messages will be redirected to ``dev@example.com``,
+except messages sent to the ``admin@mydomain.com`` address or to any email
+address belonging to the domain ``specialdomain.com``, which will be delivered as normal.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------

@@ -14,11 +14,11 @@ is both flexible and (hopefully) fun to work with.
 Since there's a lot to talk about, this chapter is organized into a few big
 sections:
 
-1) Initial ``security.yml`` setup (*authentication*);
+#. Initial ``security.yml`` setup (*authentication*);
 
-2) Denying access to your app (*authorization*);
+#. Denying access to your app (*authorization*);
 
-3) Fetching the current User object
+#. Fetching the current User object.
 
 These are followed by a number of small (but still captivating) sections,
 like :ref:`logging out <book-security-logging-out>` and :ref:`encoding user passwords <security-encoding-password>`.
@@ -492,7 +492,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
 
             'encoders' => array(
                 'Symfony\Component\Security\Core\User\User' => array(
-                    'algorithm' => 'plaintext',
+                    'algorithm' => 'bcrypt',
                     'cost' => 12,
                 )
             ),
