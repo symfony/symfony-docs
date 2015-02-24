@@ -95,13 +95,13 @@ Node Type
 ~~~~~~~~~
 
 It is possible to validate the type of a provided value by using the appropriate
-node definition. Node type are available for:
+node definition. Node types are available for:
 
-* scalar
+* scalar (generic type that includes booleans, strings, integers, floats and ``null``)
 * boolean
 * integer (new in 2.2)
 * float (new in 2.2)
-* enum (new in 2.1)
+* enum (new in 2.1) (similar to array, but it only allows a finite set of values)
 * array
 * variable (no validation)
 
