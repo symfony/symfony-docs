@@ -717,7 +717,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 $em->flush();
 
                 // redirect back to some edit page
-                return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
+                return $this->redirectToRoute('task_edit', array('id' => $id));
             }
 
             // render some form template

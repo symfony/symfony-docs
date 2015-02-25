@@ -14,9 +14,7 @@ and checking the current user's role::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // ...
     }

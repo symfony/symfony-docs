@@ -162,11 +162,7 @@ In the following example, the action is only allowed if the user has the
 
     public function editAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted(
-            'IS_AUTHENTICATED_FULLY'
-           )) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }

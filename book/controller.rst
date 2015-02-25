@@ -430,24 +430,34 @@ Redirecting
 ~~~~~~~~~~~
 
 If you want to redirect the user to another page, use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirectToRoute`
 method::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is equivalent to using redirect() and generateUrl() together:
+        // return $this->redirect($this->generateUrl('homepage'), 301);
     }
 
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
+.. versionadded:: 2.6
+    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example below).
 
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
+Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
+
+    public function indexAction()
+    {
+        return $this->redirect('http://symfony.com/doc');
+    }
+
+By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the second argument::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'), 301);
+        return $this->redirectToRoute('homepage', 301);
     }
 
 .. tip::
@@ -623,12 +633,14 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl(...));
+            // $this->addFlash is equivalent to $this->get('session')->getFlashBag()->add
+
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(...);

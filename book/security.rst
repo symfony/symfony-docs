@@ -244,6 +244,77 @@ user to be logged in to access this URL:
 
     .. code-block:: php
 
+            'access_control' => array(
+                array(
+                    'path' => '^/cart/checkout',
+                    'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'requires_channel' => 'https',
+                ),
+            ),
+
+.. _book-security-securing-controller:
+
+Securing a Controller
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.6
+    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
+    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
+    in the example below).
+
+Protecting your application based on URL patterns is easy, but may not be
+fine-grained enough in certain cases. When necessary, you can easily force
+authorization from inside a controller::
+
+    // ...
+
+    public function helloAction($name)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        // The second parameter is used to specify on what object the role is tested.
+        //
+        // Old way :
+        // if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        //     throw $this->createAccessDeniedException('Unable to access this page!');
+        // }
+
+        // ...
+    }
+
+.. _book-security-securing-controller-annotations:
+
+.. versionadded:: 2.5
+    The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
+
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException`
+method creates a special :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+object, which ultimately triggers a 403 HTTP response inside Symfony.
+
+Thanks to the SensioFrameworkExtraBundle, you can also secure your controller using annotations::
+
+    // ...
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function helloAction($name)
+    {
+        // ...
+    }
+
+For more information, see the
+:doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
+
+Securing other Services
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In fact, anything in Symfony can be protected using a strategy similar to
+the one seen in the previous section. For example, suppose you have a service
+(i.e. a PHP class) whose job is to send emails from one user to another.
+You can restrict use of this class - no matter where it's being used from -
+to users that have a specific role.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
@@ -813,9 +884,7 @@ You can easily deny access from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // ...
     }
@@ -845,6 +914,10 @@ using annotations::
      */
     public function helloAction($name)
     {
+        $this->denyAccessUnlessGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+        ));
+
         // ...
     }
 
