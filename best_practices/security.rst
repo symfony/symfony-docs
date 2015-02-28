@@ -141,7 +141,7 @@ the same ``getAuthorEmail`` logic you used above:
     use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     // AbstractVoter class requires Symfony 2.6 or higher version
     class PostVoter extends AbstractVoter
@@ -187,13 +187,13 @@ the same ``getAuthorEmail`` logic you used above:
          * Checks if the user token has the given role taking into account the
          * entire role hierarchy if defined by the application.
          */
-        private function userHasRole(TokenInterface $userToken, $roleName)
+        private function userHasRole(UserInterface $user, $roleName)
         {
             if (null === $this->roleHierarchy) {
-                return in_array($roleName, $userToken->getRoles(), true);
+                return in_array($roleName, $user->getRoles(), true);
             }
 
-            foreach ($this->roleHierarchy->getReachableRoles($userToken->getRoles()) as $role) {
+            foreach ($this->roleHierarchy->getReachableRoles($user->getRoles()) as $role) {
                 if ($roleName === $role->getRole()) {
                     return true;
                 }
