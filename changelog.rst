@@ -20,7 +20,9 @@ New Documentation
 ~~~~~~~~~~~~~~~~~
 
 - `a25da10 <https://github.com/symfony/symfony-docs/commit/a25da10d010fbd547239099b0fe1accd0fc9f6ca>`_ #4966 [#4231] Clarify that only the main command triggers events (riperez)
+- `c6bea37 <https://github.com/symfony/symfony-docs/commit/c6bea3797288aa4ecb0f21b235d852bbde18d6b9>`_ #4957 Added a mention to the @Security annotation (javiereguiluz)
 - `9cce63c <https://github.com/symfony/symfony-docs/commit/9cce63cbe3d2899bab00da14ce29a998e87cd14d>`_ #4924 [swiftmailer] Document whitelist option to email redirect (TerjeBr)
+- `14a080f <https://github.com/symfony/symfony-docs/commit/14a080fe68cfffc86111894ce1e9b71fb03744ed>`_ #4907 Adjustments to PDO Session storage page (kbond)
 - `f5ff45e <https://github.com/symfony/symfony-docs/commit/f5ff45eba45bb4d87f5b49959eb6b9f7051157c0>`_ #4712 Provide full test example (ifdattic)
 - `5e83045 <https://github.com/symfony/symfony-docs/commit/5e83045ad129e0139ca01c3339717ebad4ee6acb>`_ #4657 Update assetic watch command (xtreamwayz)
 - `d447b12 <https://github.com/symfony/symfony-docs/commit/d447b12d6eeb44db0befa8d30ebd2ba67a1880e9>`_ #4556 Updated twig reference with optimizations and paths (jzawadzki)
@@ -30,18 +32,24 @@ New Documentation
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
+- `215cacf <https://github.com/symfony/symfony-docs/commit/215cacfc51e344c0862dc8ce3b15cf8bd7a694b4>`_ #4423 Fix description of ConfirmationQuestion (cxj)
+- `583ec92 <https://github.com/symfony/symfony-docs/commit/583ec927862be3b160b4616a55f8401a5760adbf>`_ #4984 Fix the example using SerializedParsedExpression (stof)
 - `b0d9c5c <https://github.com/symfony/symfony-docs/commit/b0d9c5c639ef520076491aa9e688e9b4184a263e>`_ #4978 fix wrong header-line syntax (sstok)
 - `6d65564 <https://github.com/symfony/symfony-docs/commit/6d655649d78b810cf3e459035a04671d40659791>`_ #4954 Fixed some syntax issues in Twig Reference (javiereguiluz)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- `9caab86 <https://github.com/symfony/symfony-docs/commit/9caab86219766929c7cb9eecd26096d49297fda1>`_ Merge branch '2.5' into 2.6
+- `ff44111 <https://github.com/symfony/symfony-docs/commit/ff44111a6aa741fb3b03e0b3296bf438eb561d62>`_ Merge branch '2.3' into 2.5
+- `2a29225 <https://github.com/symfony/symfony-docs/commit/2a29225acb875a7aa524cf5508a66b8c60021fc8>`_ #4985 Fixed a typo (javiereguiluz)
 - `f75bc2b <https://github.com/symfony/symfony-docs/commit/f75bc2bf6d52a5480ba056af06c59844ec8934ba>`_ #4972 Fix typos (ifdattic)
 - `9fab10b <https://github.com/symfony/symfony-docs/commit/9fab10bde02daae0af6f2848eb5888fa95026e76>`_ #4854 Removed no longer needed information about PHP 5.3 (WouterJ)
 - `1726054 <https://github.com/symfony/symfony-docs/commit/1726054212bda98d4d63edb7f1364472fe91c7fe>`_ #4500 Link to standard edition  (harikt)
 - `91ff6f8 <https://github.com/symfony/symfony-docs/commit/91ff6f8198d17eda5f837c5f1c1725b8030862a1>`_ #4329 ensure consistency with the note (greg0ire)
 - `e5dbd49 <https://github.com/symfony/symfony-docs/commit/e5dbd49deb1cc6d25d4b89c4967a6511192a22ec>`_ #4977 Unnecessary comma (edsonmedina)
 - `5d44987 <https://github.com/symfony/symfony-docs/commit/5d4498707f7fc72653fc135a3e3caee675901ee9>`_ #4991 Fixed typo and tweaked syntax. (cdvrooman)
+- `b1aadbf <https://github.com/symfony/symfony-docs/commit/b1aadbf0ef75398b4d46618625153f87f4f1022e>`_ #4993 Bumped symfony version number to 2.6 in flat php composer.json example (TSchuermans)
 - `3845c9c <https://github.com/symfony/symfony-docs/commit/3845c9c7ad4c23f76f2f1ba26bc650df72baf84d>`_ #4979 require_once path fixed (mvanmeerbeck)
 - `96770aa <https://github.com/symfony/symfony-docs/commit/96770aa48406f139986f987ccc0bd277501bc4e2>`_ #4969 Add typehint (piotrantosik)
 - `f97d01f <https://github.com/symfony/symfony-docs/commit/f97d01f26dabbbb11e4a6e8a0adc865e791dea0a>`_ #4995 [#4965] file extension fix (hansstevens)
@@ -53,7 +61,9 @@ Minor Documentation Changes
 - `0a85053 <https://github.com/symfony/symfony-docs/commit/0a85053cb7344e4b0c1950a46c51e7f9a9683ac0>`_ #4950 Fixes for 2.3 branch (ifdattic)
 - `d3d96e1 <https://github.com/symfony/symfony-docs/commit/d3d96e104dea4b670e873543f189b18f3c93d4c6>`_ #4951 fix characters in backported patch (xabbuh)
 - `208904a <https://github.com/symfony/symfony-docs/commit/208904acc6d82b7e602360dbea66ea35d81d15c5>`_ #4949 Fixes for 2.3 branch (ifdattic)
+- `6be214c <https://github.com/symfony/symfony-docs/commit/6be214c94aab16f477e29e2d3767e88195fa2c39>`_ #4948 Fixes for 2.6 branch (ifdattic)
 - `42b44c4 <https://github.com/symfony/symfony-docs/commit/42b44c4eb75d7a53cf094fe8cef4f2a847ec83c1>`_ #4929 Remove block which doesn't make sense after best practices (ifdattic)
+- `008c4de <https://github.com/symfony/symfony-docs/commit/008c4de467f1fcc17517d4c9c3a696c36cb3c0f8>`_ #4928 Change installation method order (ifdattic)
 - `6f8b145 <https://github.com/symfony/symfony-docs/commit/6f8b14558aa8dceb1030f49b9fb47164ccd4b8ff>`_ #4904 Added a reference about including JS and CSS files in PHP templates (javiereguiluz)
 
 January, 2015
