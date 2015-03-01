@@ -19,6 +19,7 @@ February, 2015
 New Documentation
 ~~~~~~~~~~~~~~~~~
 
+- `16dcf53 <https://github.com/symfony/symfony-docs/commit/16dcf5359b066f93ba7225cdb21632ca44db8e34>`_ #4980 [#4974] Added Twig loader priority Documentation (wizhippo)
 - `a25da10 <https://github.com/symfony/symfony-docs/commit/a25da10d010fbd547239099b0fe1accd0fc9f6ca>`_ #4966 [#4231] Clarify that only the main command triggers events (riperez)
 - `c6bea37 <https://github.com/symfony/symfony-docs/commit/c6bea3797288aa4ecb0f21b235d852bbde18d6b9>`_ #4957 Added a mention to the @Security annotation (javiereguiluz)
 - `9cce63c <https://github.com/symfony/symfony-docs/commit/9cce63cbe3d2899bab00da14ce29a998e87cd14d>`_ #4924 [swiftmailer] Document whitelist option to email redirect (TerjeBr)
@@ -26,6 +27,7 @@ New Documentation
 - `f5ff45e <https://github.com/symfony/symfony-docs/commit/f5ff45eba45bb4d87f5b49959eb6b9f7051157c0>`_ #4712 Provide full test example (ifdattic)
 - `5e83045 <https://github.com/symfony/symfony-docs/commit/5e83045ad129e0139ca01c3339717ebad4ee6acb>`_ #4657 Update assetic watch command (xtreamwayz)
 - `d447b12 <https://github.com/symfony/symfony-docs/commit/d447b12d6eeb44db0befa8d30ebd2ba67a1880e9>`_ #4556 Updated twig reference with optimizations and paths (jzawadzki)
+- `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ minor #4977 Unnecessary comma (edsonmedina)
 - `018cf3f <https://github.com/symfony/symfony-docs/commit/018cf3fc6558f6b85993be8eacff9ba008eb9bb4>`_ #4661 Added a short cookbook about avoiding the automatic start of the sessions (javiereguiluz)
 - `2305066 <https://github.com/symfony/symfony-docs/commit/23050662fa728edf3c6971bbeef15b2dd6339111>`_ #4902 Removed the Stable API chapter from the Symfony book (javiereguiluz)
 
@@ -33,6 +35,7 @@ Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 - `215cacf <https://github.com/symfony/symfony-docs/commit/215cacfc51e344c0862dc8ce3b15cf8bd7a694b4>`_ #4423 Fix description of ConfirmationQuestion (cxj)
+- `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ minor #4977 Unnecessary comma (edsonmedina)
 - `583ec92 <https://github.com/symfony/symfony-docs/commit/583ec927862be3b160b4616a55f8401a5760adbf>`_ #4984 Fix the example using SerializedParsedExpression (stof)
 - `b0d9c5c <https://github.com/symfony/symfony-docs/commit/b0d9c5c639ef520076491aa9e688e9b4184a263e>`_ #4978 fix wrong header-line syntax (sstok)
 - `6d65564 <https://github.com/symfony/symfony-docs/commit/6d655649d78b810cf3e459035a04671d40659791>`_ #4954 Fixed some syntax issues in Twig Reference (javiereguiluz)
@@ -44,10 +47,14 @@ Minor Documentation Changes
 - `ff44111 <https://github.com/symfony/symfony-docs/commit/ff44111a6aa741fb3b03e0b3296bf438eb561d62>`_ Merge branch '2.3' into 2.5
 - `2a29225 <https://github.com/symfony/symfony-docs/commit/2a29225acb875a7aa524cf5508a66b8c60021fc8>`_ #4985 Fixed a typo (javiereguiluz)
 - `f75bc2b <https://github.com/symfony/symfony-docs/commit/f75bc2bf6d52a5480ba056af06c59844ec8934ba>`_ #4972 Fix typos (ifdattic)
+- `89e626f <https://github.com/symfony/symfony-docs/commit/89e626fb902d33b181cf531c638fba05bb5e577e>`_ #4952 symfony 2.7 requires at least php 5.3.9 (scaytrase)
 - `9fab10b <https://github.com/symfony/symfony-docs/commit/9fab10bde02daae0af6f2848eb5888fa95026e76>`_ #4854 Removed no longer needed information about PHP 5.3 (WouterJ)
 - `1726054 <https://github.com/symfony/symfony-docs/commit/1726054212bda98d4d63edb7f1364472fe91c7fe>`_ #4500 Link to standard edition  (harikt)
 - `91ff6f8 <https://github.com/symfony/symfony-docs/commit/91ff6f8198d17eda5f837c5f1c1725b8030862a1>`_ #4329 ensure consistency with the note (greg0ire)
+- `f4ab4b6 <https://github.com/symfony/symfony-docs/commit/f4ab4b65092c21642f36e9aec733c9348b4b9691>`_ #5002 Revert very bad merge (WouterJ)
+- `e747392 <https://github.com/symfony/symfony-docs/commit/e7473924e1e4233bec66eba6cf09b9dd9c1c079b>`_ Revert "#4977 Unnecessary comma (edsonmedina)"
 - `e5dbd49 <https://github.com/symfony/symfony-docs/commit/e5dbd49deb1cc6d25d4b89c4967a6511192a22ec>`_ #4977 Unnecessary comma (edsonmedina)
+- `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ #4977 Unnecessary comma (edsonmedina)
 - `5d44987 <https://github.com/symfony/symfony-docs/commit/5d4498707f7fc72653fc135a3e3caee675901ee9>`_ #4991 Fixed typo and tweaked syntax. (cdvrooman)
 - `b1aadbf <https://github.com/symfony/symfony-docs/commit/b1aadbf0ef75398b4d46618625153f87f4f1022e>`_ #4993 Bumped symfony version number to 2.6 in flat php composer.json example (TSchuermans)
 - `3845c9c <https://github.com/symfony/symfony-docs/commit/3845c9c7ad4c23f76f2f1ba26bc650df72baf84d>`_ #4979 require_once path fixed (mvanmeerbeck)
