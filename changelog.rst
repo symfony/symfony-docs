@@ -12,6 +12,7 @@ documentation.
 
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
+
 February, 2015
 --------------
 
