@@ -70,7 +70,7 @@ should also override
 :method:`Extension::getAlias() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getAlias>`
 to return the correct DI alias. The DI alias is the name used to refer to the
 bundle in the container (e.g. in the ``app/config/config.yml`` file). By
-default, this is done by removing the ``Extension`` prefix and converting the
+default, this is done by removing the ``Extension`` suffix and converting the
 class name to underscores (e.g. ``AcmeHelloExtension``'s DI alias is
 ``acme_hello``).
 
