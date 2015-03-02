@@ -26,6 +26,7 @@ New Documentation
 - `f5ff45e <https://github.com/symfony/symfony-docs/commit/f5ff45eba45bb4d87f5b49959eb6b9f7051157c0>`_ #4712 Provide full test example (ifdattic)
 - `5e83045 <https://github.com/symfony/symfony-docs/commit/5e83045ad129e0139ca01c3339717ebad4ee6acb>`_ #4657 Update assetic watch command (xtreamwayz)
 - `d447b12 <https://github.com/symfony/symfony-docs/commit/d447b12d6eeb44db0befa8d30ebd2ba67a1880e9>`_ #4556 Updated twig reference with optimizations and paths (jzawadzki)
+- `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ minor #4977 Unnecessary comma (edsonmedina)
 - `018cf3f <https://github.com/symfony/symfony-docs/commit/018cf3fc6558f6b85993be8eacff9ba008eb9bb4>`_ #4661 Added a short cookbook about avoiding the automatic start of the sessions (javiereguiluz)
 - `2305066 <https://github.com/symfony/symfony-docs/commit/23050662fa728edf3c6971bbeef15b2dd6339111>`_ #4902 Removed the Stable API chapter from the Symfony book (javiereguiluz)
 
@@ -33,6 +34,7 @@ Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
 
 - `215cacf <https://github.com/symfony/symfony-docs/commit/215cacfc51e344c0862dc8ce3b15cf8bd7a694b4>`_ #4423 Fix description of ConfirmationQuestion (cxj)
+- `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ minor #4977 Unnecessary comma (edsonmedina)
 - `583ec92 <https://github.com/symfony/symfony-docs/commit/583ec927862be3b160b4616a55f8401a5760adbf>`_ #4984 Fix the example using SerializedParsedExpression (stof)
 - `b0d9c5c <https://github.com/symfony/symfony-docs/commit/b0d9c5c639ef520076491aa9e688e9b4184a263e>`_ #4978 fix wrong header-line syntax (sstok)
 - `6d65564 <https://github.com/symfony/symfony-docs/commit/6d655649d78b810cf3e459035a04671d40659791>`_ #4954 Fixed some syntax issues in Twig Reference (javiereguiluz)
