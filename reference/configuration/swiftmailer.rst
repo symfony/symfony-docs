@@ -164,9 +164,7 @@ delivery_whitelist
 
 Used in combination with ``delivery_address``. If set, emails matching any of these
 patterns will be delivered like normal, instead of being sent to `delivery_address`.
-For details, see `the Cookbook entry.`_
-
-..  _`the Cookbook entry.`: http://symfony.com/doc/current/cookbook/email/dev_environment.html#sending-to-a-specified-address-but-with-exceptions
+For details, see :ref:`the cookbook entry <sending-to-a-specified-address-but-with-exceptions>`
 
 disable_delivery
 ~~~~~~~~~~~~~~~~
