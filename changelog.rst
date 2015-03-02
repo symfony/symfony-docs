@@ -13,6 +13,7 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 August, 2015
 ------------
@@ -505,6 +506,9 @@ Minor Documentation Changes
 
 =======
 >>>>>>> Added February changelog
+=======
+
+>>>>>>> fix changelog syntax
 February, 2015
 --------------
 
