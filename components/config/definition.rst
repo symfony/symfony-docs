@@ -101,7 +101,7 @@ node definition. Node types are available for:
 * boolean
 * integer (new in 2.2)
 * float (new in 2.2)
-* enum (new in 2.1) (similar to array, but it only allows a finite set of values)
+* enum (new in 2.1) (similar to scalar, but it only allows a finite set of values)
 * array
 * variable (no validation)
 
