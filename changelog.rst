@@ -13,6 +13,49 @@ documentation.
     Do you also want to participate in the Symfony Documentation? Take a look
     at the ":doc:`/contributing/documentation/overview`" article.
 
+February, 2015
+--------------
+
+New Documentation
+~~~~~~~~~~~~~~~~~
+
+- `a25da10 <https://github.com/symfony/symfony-docs/commit/a25da10d010fbd547239099b0fe1accd0fc9f6ca>`_ #4966 [#4231] Clarify that only the main command triggers events (riperez)
+- `9cce63c <https://github.com/symfony/symfony-docs/commit/9cce63cbe3d2899bab00da14ce29a998e87cd14d>`_ #4924 [swiftmailer] Document whitelist option to email redirect (TerjeBr)
+- `f5ff45e <https://github.com/symfony/symfony-docs/commit/f5ff45eba45bb4d87f5b49959eb6b9f7051157c0>`_ #4712 Provide full test example (ifdattic)
+- `5e83045 <https://github.com/symfony/symfony-docs/commit/5e83045ad129e0139ca01c3339717ebad4ee6acb>`_ #4657 Update assetic watch command (xtreamwayz)
+- `d447b12 <https://github.com/symfony/symfony-docs/commit/d447b12d6eeb44db0befa8d30ebd2ba67a1880e9>`_ #4556 Updated twig reference with optimizations and paths (jzawadzki)
+- `018cf3f <https://github.com/symfony/symfony-docs/commit/018cf3fc6558f6b85993be8eacff9ba008eb9bb4>`_ #4661 Added a short cookbook about avoiding the automatic start of the sessions (javiereguiluz)
+- `2305066 <https://github.com/symfony/symfony-docs/commit/23050662fa728edf3c6971bbeef15b2dd6339111>`_ #4902 Removed the Stable API chapter from the Symfony book (javiereguiluz)
+
+Fixed Documentation
+~~~~~~~~~~~~~~~~~~~
+
+- `b0d9c5c <https://github.com/symfony/symfony-docs/commit/b0d9c5c639ef520076491aa9e688e9b4184a263e>`_ #4978 fix wrong header-line syntax (sstok)
+- `6d65564 <https://github.com/symfony/symfony-docs/commit/6d655649d78b810cf3e459035a04671d40659791>`_ #4954 Fixed some syntax issues in Twig Reference (javiereguiluz)
+
+Minor Documentation Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- `f75bc2b <https://github.com/symfony/symfony-docs/commit/f75bc2bf6d52a5480ba056af06c59844ec8934ba>`_ #4972 Fix typos (ifdattic)
+- `9fab10b <https://github.com/symfony/symfony-docs/commit/9fab10bde02daae0af6f2848eb5888fa95026e76>`_ #4854 Removed no longer needed information about PHP 5.3 (WouterJ)
+- `1726054 <https://github.com/symfony/symfony-docs/commit/1726054212bda98d4d63edb7f1364472fe91c7fe>`_ #4500 Link to standard edition  (harikt)
+- `91ff6f8 <https://github.com/symfony/symfony-docs/commit/91ff6f8198d17eda5f837c5f1c1725b8030862a1>`_ #4329 ensure consistency with the note (greg0ire)
+- `e5dbd49 <https://github.com/symfony/symfony-docs/commit/e5dbd49deb1cc6d25d4b89c4967a6511192a22ec>`_ #4977 Unnecessary comma (edsonmedina)
+- `5d44987 <https://github.com/symfony/symfony-docs/commit/5d4498707f7fc72653fc135a3e3caee675901ee9>`_ #4991 Fixed typo and tweaked syntax. (cdvrooman)
+- `3845c9c <https://github.com/symfony/symfony-docs/commit/3845c9c7ad4c23f76f2f1ba26bc650df72baf84d>`_ #4979 require_once path fixed (mvanmeerbeck)
+- `96770aa <https://github.com/symfony/symfony-docs/commit/96770aa48406f139986f987ccc0bd277501bc4e2>`_ #4969 Add typehint (piotrantosik)
+- `f97d01f <https://github.com/symfony/symfony-docs/commit/f97d01f26dabbbb11e4a6e8a0adc865e791dea0a>`_ #4995 [#4965] file extension fix (hansstevens)
+- `c5647dd <https://github.com/symfony/symfony-docs/commit/c5647ddad3a13d32e1591e5fc08d9c9b70ed4239>`_ #4968 Fix typo (ifdattic)
+- `c3218fc <https://github.com/symfony/symfony-docs/commit/c3218fced746bfd40c27aa75c5332eacb977fb4e>`_ #4962 cookbok/security/acl.rst (DaliusK)
+- `72489a4 <https://github.com/symfony/symfony-docs/commit/72489a414f40fefca9553d0ffd8fabebbccf8d9e>`_ #4963 Normalize excluded_404s in monolog cookbook (jbafford)
+- `0adb6f6 <https://github.com/symfony/symfony-docs/commit/0adb6f6a62625c9875be57d102c814721c5b83c8>`_ #4964 link to the cookbook article on avoiding to start a session (dbu)
+- `5d8456f <https://github.com/symfony/symfony-docs/commit/5d8456fe3ca6f6bd30cf13d6317e0776c629ed0c>`_ #4955 Fixed wrong API link (dosten)
+- `0a85053 <https://github.com/symfony/symfony-docs/commit/0a85053cb7344e4b0c1950a46c51e7f9a9683ac0>`_ #4950 Fixes for 2.3 branch (ifdattic)
+- `d3d96e1 <https://github.com/symfony/symfony-docs/commit/d3d96e104dea4b670e873543f189b18f3c93d4c6>`_ #4951 fix characters in backported patch (xabbuh)
+- `208904a <https://github.com/symfony/symfony-docs/commit/208904acc6d82b7e602360dbea66ea35d81d15c5>`_ #4949 Fixes for 2.3 branch (ifdattic)
+- `42b44c4 <https://github.com/symfony/symfony-docs/commit/42b44c4eb75d7a53cf094fe8cef4f2a847ec83c1>`_ #4929 Remove block which doesn't make sense after best practices (ifdattic)
+- `6f8b145 <https://github.com/symfony/symfony-docs/commit/6f8b14558aa8dceb1030f49b9fb47164ccd4b8ff>`_ #4904 Added a reference about including JS and CSS files in PHP templates (javiereguiluz)
+
 January, 2015
 -------------
 
