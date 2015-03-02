@@ -32,6 +32,7 @@ Configuration
     * `threshold`_
     * `sleep`_
 * `delivery_address`_
+* `delivery_whitelist`_
 * `disable_delivery`_
 * `logging`_
 
@@ -156,6 +157,16 @@ emails sent during development go to a single account.
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 
+delivery_whitelist
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``array``
+
+Used in combination with ``delivery_address``. If set, send email as normal to 
+addresses that match with the values in the list. All addresses not matching will 
+be sent to ``delivery_address`` as is the normal behavior when setting a 
+``delivery_address``.
+
 disable_delivery
 ~~~~~~~~~~~~~~~~
 
@@ -195,6 +206,7 @@ Full default Configuration
                 threshold:            99
                 sleep:                0
             delivery_address:     ~
+            delivery_whitelist:   ~
             disable_delivery:     ~
             logging:              "%kernel.debug%"
 
