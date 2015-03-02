@@ -111,7 +111,7 @@ The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
-With this option you can also allow float values to be selected as data.
+With this option you can also allow float values to be selected as data. For example:
 
 .. code-block:: php
 
@@ -119,8 +119,18 @@ With this option you can also allow float values to be selected as data.
 
     // ...
     $builder->add('status', 'choice', array(
-      'choice_list' => new ChoiceList(array(1, 0.5), array('Full', 'Half'))
+      'choice_list' => new ChoiceList(array(1, 0.5, 0.1), array('Full', 'Half', 'Almost empty'))
     ));
+
+The ``status`` field created by the code above will be rendered as:
+
+.. code-block:: html
+
+    <select name="status">
+        <option value="0">Full</option>
+        <option value="1">Half</option>
+        <option value="2">Almost empty</option>
+    </select>
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
