@@ -361,6 +361,8 @@ Like with ``firewalls``, you can have multiple ``providers``, but you'll
 probably only need one. If you *do* have multiple, you can configure which
 *one* provider to use for your firewall under its ``provider`` key (e.g.
 ``provider: in_memory``).
+See :doc:`/cookbook/security/multiple_user_providers` for all the details
+about multiple providers setup.
 
 Try to login using username ``admin`` and password ``kitten``. You should
 see an error!
