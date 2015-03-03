@@ -89,6 +89,170 @@ If you want to ensure that the ``age`` of a ``Person`` class is greater than
             }
         }
 
+Comparing Dates
+---------------
+
+This constraint can be used to compare ``DateTime`` objects against any date
+string `accepted by the DateTime constructor`_. For example, you could check
+that a date must at least be the next day:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThan: today
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\GreaterThan("today")
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <class name="Acme\OrderBundle\Entity\Order">
+            <property name="deliveryDate">
+                <constraint name="GreaterThan">today</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/OrderBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('today'));
+            }
+        }
+
+Be aware that PHP will use the server's configured timezone to interpret these
+dates. If you want to fix the timezone, append it to the date string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThan: today UTC
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\GreaterThan("today UTC")
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <class name="Acme\OrderBundle\Entity\Order">
+            <property name="deliveryDate">
+                <constraint name="GreaterThan">today UTC</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/OrderBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('today UTC'));
+            }
+        }
+
+The ``DateTime`` class also accepts relative dates or times. For example, you
+can check that the above delivery date starts at least five hours after the
+current time:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/OrderBundle/Resources/config/validation.yml
+        Acme\OrderBundle\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThan: +5 hours
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\GreaterThan("+5 hours")
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/OrderBundle/Resources/config/validation.xml -->
+        <class name="Acme\OrderBundle\Entity\Order">
+            <property name="deliveryDate">
+                <constraint name="GreaterThan">+5 hours</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/OrderBundle/Entity/Order.php
+        namespace Acme\OrderBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('+5 hours'));
+            }
+        }
+
 Options
 -------
 
@@ -101,3 +265,5 @@ message
 
 This is the message that will be shown if the value is not greater than the
 comparison value.
+
+.. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php

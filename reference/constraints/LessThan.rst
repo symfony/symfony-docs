@@ -89,6 +89,169 @@ If you want to ensure that the ``age`` of a ``Person`` class is less than
             }
         }
 
+Comparing Dates
+---------------
+
+This constraint can be used to compare ``DateTime`` objects against any date
+string `accepted by the DateTime constructor`_. For example, you could check
+that a date must be in the past like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThan: today
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Person.php
+        namespace Acme\SocialBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            /**
+             * @Assert\LessThan("today")
+             */
+            protected $age;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
+        <class name="Acme\SocialBundle\Entity\Person">
+            <property name="age">
+                <constraint name="LessThan">today</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/SocialBundle/Entity/Person.php
+        namespace Acme\SocialBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\LessThan('today'));
+            }
+        }
+
+Be aware that PHP will use the server's configured timezone to interpret these
+dates. If you want to fix the timezone, append it to the date string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThan: today UTC
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Person.php
+        namespace Acme\SocialBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            /**
+             * @Assert\LessThan("today UTC")
+             */
+            protected $age;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
+        <class name="Acme\SocialBundle\Entity\Person">
+            <property name="age">
+                <constraint name="GreaterThan">today UTC</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/SocialBundle/Entity/Person.php
+        namespace Acme\SocialBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\LessThan('today UTC'));
+            }
+        }
+
+The ``DateTime`` class also accepts relative dates or times. For example, you
+can check that a person must be at least 18 years old like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThan: -18 years
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SocialBundle/Entity/Person.php
+        namespace Acme\SocialBundle\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            /**
+             * @Assert\LessThan("-18 years")
+             */
+            protected $age;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
+        <class name="Acme\SocialBundle\Entity\Person">
+            <property name="age">
+                <constraint name="LessThan">-18 years</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/SocialBundle/Entity/Person.php
+        namespace Acme\SocialBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\LessThan('-18 years'));
+            }
+        }
+
 Options
 -------
 
@@ -101,3 +264,5 @@ message
 
 This is the message that will be shown if the value is not less than the
 comparison value.
+
+.. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
