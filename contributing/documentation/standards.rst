@@ -8,7 +8,8 @@ Sphinx
 ------
 
 * The following characters are chosen for different heading levels: level 1
-  is ``=``, level 2 ``-``, level 3 ``~``, level 4 ``.`` and level 5 ``"``;
+  is ``=`` (equal sign), level 2 ``-`` (dash), level 3 ``~`` (tilde), level 4
+  ``.`` (dot) and level 5 ``"`` (double quote);
 * Each line should break approximately after the first word that crosses the
   72nd character (so most lines end up being 72-78 characters);
 * The ``::`` shorthand is *preferred* over ``.. code-block:: php`` to begin a PHP
@@ -48,6 +49,12 @@ Example
 Code Examples
 -------------
 
+* The code examples should look real for a web application context. Avoid abstract
+  and puerile examples (``foo``, ``bar``, ``demo``, etc.);
+* Use ``Acme`` when the code requires to explicit a vendor name;
+* The code should follow the :doc:`Symfony Best Practices </best_practices>`.
+  Unless the example requires to use a custom bundle, make sure to always use the
+  ``AppBundle`` bundle to store your code;
 * The code follows the :doc:`Symfony Coding Standards </contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
@@ -137,8 +144,17 @@ Files and Directories
 English Language Standards
 --------------------------
 
-* **English Dialect**: use the United States English dialect, commonly called
-  `American English`_.
+Symfony documentation uses the United States English dialect, commonly called
+`American English`_.
+
+Unlike most popular languages, the English language doesn't have a central
+language authority and there is no official grammar or dictionary. Symfony
+documentation uses the `American English Oxford Dictionary`_ to resolve disputes
+over common words. In case a technical word isn't included in the dictionary yet,
+Symfony Documentation maintainers will decide over the disputes.
+
+In addition, documentation contents should follow these rules:
+
 * **Section titles**: use a variant of the title case, where the first
   word is always capitalized and all other words are capitalized, except for
   the closed-class words (read Wikipedia article about `headings and titles`_).
@@ -160,6 +176,7 @@ English Language Standards
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
 .. _`American English`: http://en.wikipedia.org/wiki/American_English
+.. _`American English Oxford Dictionary`: http://www.oxforddictionaries.com/
 .. _`headings and titles`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma
 .. _`nosism`: http://en.wikipedia.org/wiki/Nosism
