@@ -47,9 +47,6 @@ the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
 
-.. versionadded:: 2.5
-    The ``mustRun()`` method was introduced in Symfony 2.5.
-
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
 if the process couldn't be executed successfully (i.e. the process exited
@@ -298,11 +295,6 @@ You can access the `pid`_ of a running process with the
 
 Disabling Output
 ----------------
-
-.. versionadded:: 2.5
-    The :method:`Symfony\\Component\\Process\\Process::disableOutput` and
-    :method:`Symfony\\Component\\Process\\Process::enableOutput` methods were
-    introduced in Symfony 2.5.
 
 As standard output and error output are always fetched from the underlying process,
 it might be convenient to disable output in some cases to save memory.

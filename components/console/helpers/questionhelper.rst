@@ -4,9 +4,6 @@
 Question Helper
 ===============
 
-.. versionadded:: 2.5
-    The Question Helper was introduced in Symfony 2.5.
-
 The :class:`Symfony\\Component\\Console\\Helper\\QuestionHelper` provides
 functions to ask the user for more information. It is included in the default
 helper set, which you can get by calling
@@ -43,6 +40,24 @@ The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
 is the default value to return if the user doesn't enter any input. Any other
 input will ask the same question again.
+
+.. tip::
+
+    You can customize the regex used to check if the answer means "yes" in the
+    third argument of the constructor. For instance, to allow anything that
+    starts with either ``y`` or ``j``, you would set it to::
+
+        $question = new ConfirmationQuestion(
+            'Continue with this action?',
+            false,
+            '/^(y|j)/i'
+        );
+
+    The regex defaults to ``/^y/i``.
+
+    .. versionadded:: 2.7
+        The regex argument was introduced in Symfony 2.7. Before, only answers
+        starting with ``y`` were considered as "yes".
 
 Asking the User for Information
 -------------------------------

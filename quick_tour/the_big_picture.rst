@@ -8,9 +8,9 @@ by showing you a simple project in action.
 If you've used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications.
 
-The only technical requisite to follow this tutorial is to have **PHP 5.4 or higher
+The only technical requisite to follow this tutorial is to have **PHP 5.5.9 or higher
 installed on your computer**. If you use a packaged PHP solution such as WAMP,
-XAMP or MAMP, check out that they are using PHP 5.4 or a more recent version.
+XAMP or MAMP, check out that they are using PHP 5.5.9 or a more recent version.
 You can also execute the following command in your terminal or command console
 to display the installed PHP version:
 

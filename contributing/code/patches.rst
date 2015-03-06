@@ -14,7 +14,7 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.3.3 or above;
+* PHP version 5.5.9 or above;
 * `PHPUnit`_ 4.2 or above.
 
 Configure Git

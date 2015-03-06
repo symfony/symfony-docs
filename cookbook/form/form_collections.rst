@@ -84,7 +84,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TagType extends AbstractType
     {
@@ -93,7 +93,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
             $builder->add('name');
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Tag',
@@ -118,7 +118,7 @@ Notice that you embed a collection of ``TagType`` forms using the
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
     {
@@ -129,7 +129,7 @@ Notice that you embed a collection of ``TagType`` forms using the
             $builder->add('tags', 'collection', array('type' => new TagType()));
         }
 
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',

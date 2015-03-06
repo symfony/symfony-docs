@@ -1021,9 +1021,6 @@ configuration option.
 
 .. _`book-templating-version-by-asset`:
 
-.. versionadded:: 2.5
-    Setting versioned URLs on an asset-by-asset basis was introduced in Symfony 2.5.
-
 If you need to set a version for a specific asset, you can set the fourth
 argument (or the ``version`` argument) to the desired version:
 
@@ -1045,9 +1042,6 @@ argument (or the ``version`` argument) to the desired version:
 If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
-
-.. versionadded:: 2.5
-    Absolute URLs for assets were introduced in Symfony 2.5.
 
 If you need absolute URLs for assets, you can set the third argument (or the
 ``absolute`` argument) to ``true``:
