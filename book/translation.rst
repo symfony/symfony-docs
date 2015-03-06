@@ -421,22 +421,35 @@ via the ``request`` object::
     public function indexAction(Request $request)
     {
         $locale = $request->getLocale();
-
-        $request->setLocale('en_US');
     }
     
+To store the user's locale in the session you may want to create a custom event listener and set the locale there::
+
+        public function onKernelRequest(GetResponseEvent $event)
+        {
+            $request = $event->getRequest();
+            if (!$request->hasPreviousSession()) {
+                return;
+            }
+
+            // try to see if the locale has been set as a _locale routing parameter
+            if ($locale = $request->attributes->get('_locale')) {
+                $request->getSession()->set('_locale', $locale);
+            } else {
+                // if no explicit locale has been set on this request, use one from the session
+                $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
+            }
+        }
+
+Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
+
 .. note::
 
     Setting the locale using the ``$request->setLocale()`` method won't affect 
     rendering in the same action. The translator locale is set during the
     ``kernel.request`` event. Either set the locale before the listener is called
-    (e.g. in a custom listener) or use the ``setLocale()`` method of the 
-    ``translator`` service.
-
-.. tip::
-
-    Read :doc:`/cookbook/session/locale_sticky_session` to learn how to store
-    the user's locale in the session.
+    (e.g. in a custom listener described above) or use the ``setLocale()`` method
+    of the ``translator`` service.
 
 .. index::
    single: Translations; Fallback and default locale
