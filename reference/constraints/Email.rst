@@ -90,6 +90,9 @@ Basic Usage
 Options
 -------
 
+.. versionadded:: 2.5
+    The ``strict`` option was introduced in Symfony 2.5.
+
 strict
 ~~~~~~
 

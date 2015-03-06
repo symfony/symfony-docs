@@ -641,7 +641,8 @@ API. The ``api`` option is used to switch between the different implementations:
 ``2.5-bc`` or ``auto``
     If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
     Symfony will use an API implementation that is compatible with both the
-    legacy implementation and the ``2.5`` implementation.
+    legacy implementation and the ``2.5`` implementation. You have to use
+    PHP 5.3.9 or higher to be able to use this implementation.
 
 To capture these logs in the ``prod`` environment, configure a
 :doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for

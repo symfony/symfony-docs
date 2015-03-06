@@ -83,7 +83,7 @@ to override one of the following methods:
 
 * ``buildView()``
 
-* ``configureOptions()``
+* ``setDefaultOptions()``
 
 * ``finishView()``
 
@@ -178,7 +178,7 @@ database)::
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
 
-#. Override the ``configureOptions`` method in order to add an ``image_path``
+#. Override the ``setDefaultOptions`` method in order to add an ``image_path``
    option;
 #. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
    URL to the view.
@@ -212,9 +212,9 @@ it in the view::
         /**
          * Add the image_path option
          *
-         * @param OptionsResolver $resolver
+         * @param OptionsResolverInterface $resolver
          */
-        public function configureOptions(OptionsResolver $resolver)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setOptional(array('image_path'));
         }

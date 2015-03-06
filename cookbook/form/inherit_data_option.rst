@@ -90,7 +90,7 @@ for that::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class LocationType extends AbstractType
     {
@@ -103,7 +103,7 @@ for that::
                 ->add('country', 'text');
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
                 'inherit_data' => true

@@ -41,7 +41,7 @@ a bare form class looks like::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class ProductType extends AbstractType
     {
@@ -51,7 +51,7 @@ a bare form class looks like::
             $builder->add('price');
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
                 'data_class' => 'AppBundle\Entity\Product'
@@ -224,6 +224,7 @@ Using an event listener, your form might look like this::
     use Symfony\Component\Form\FormEvents;
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class FriendMessageFormType extends AbstractType
     {
@@ -241,6 +242,10 @@ Using an event listener, your form might look like this::
         public function getName()
         {
             return 'friend_message';
+        }
+
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        {
         }
     }
 

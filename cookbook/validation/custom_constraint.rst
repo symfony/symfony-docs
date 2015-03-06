@@ -88,6 +88,11 @@ message as its argument and returns an instance of
 :class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
 The ``addViolation`` method call finally adds the violation to the context.
 
+.. versionadded:: 2.5
+    The ``buildViolation`` method was added in Symfony 2.5. For usage examples
+    with older Symfony versions, see the corresponding versions of this documentation
+    page.
+
 Using the new Validator
 -----------------------
 

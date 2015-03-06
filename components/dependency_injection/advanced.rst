@@ -227,6 +227,9 @@ which means that your file will be included only once per request.
 Decorating Services
 -------------------
 
+.. versionadded:: 2.5
+    Decorated services were introduced in Symfony 2.5.
+
 When overriding an existing definition, the old service is lost:
 
 .. code-block:: php

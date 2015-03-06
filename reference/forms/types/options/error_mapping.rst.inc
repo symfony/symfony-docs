@@ -13,7 +13,7 @@ of the form.
 With customized error mapping, you can do better: map the error to the city
 field so that it displays above it::
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'error_mapping' => array(

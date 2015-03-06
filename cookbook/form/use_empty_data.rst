@@ -41,7 +41,7 @@ that constructor with no arguments::
     // ...
     use Symfony\Component\Form\AbstractType;
     use AppBundle\Entity\Blog;
-    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class BlogType extends AbstractType
     {
@@ -53,7 +53,7 @@ that constructor with no arguments::
         }
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
                 'empty_data' => new Blog($this->someDependency),
@@ -74,11 +74,11 @@ if it is needed.
 
 The closure must accept a ``FormInterface`` instance as the first argument::
 
-    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Form\FormInterface;
     // ...
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'empty_data' => function (FormInterface $form) {

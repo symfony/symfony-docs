@@ -15,6 +15,9 @@ object. Internally, Symfony contains a map of the most common formats (e.g.
 easily be added. This document will show how you can add the ``jsonp`` format
 and corresponding MIME type.
 
+.. versionadded:: 2.5
+    The possibility to configure request formats was introduced in Symfony 2.5.
+
 Configure your New Format
 -------------------------
 

@@ -408,8 +408,8 @@ checks translation resources for several locales:
 
 .. note::
 
-    When Symfony doesn't find a translation in the given locale, it will
-    add the missing translation to the log file. For details,
+    When Symfony doesn't find a translation in the given locale, it will 
+    add the missing translation to the log file. For details, 
     see :ref:`reference-framework-translator-logging`.
 
 .. _book-translation-user-locale:
@@ -696,11 +696,14 @@ Translating Database Content
 ----------------------------
 
 The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_ or the `Translatable Behavior`_. For more information,
-see the documentation for these libraries.
+the `Translatable Extension`_ or the `Translatable Behavior`_ (PHP 5.4+).
+For more information, see the documentation for these libraries.
 
 Debugging Translations
 ----------------------
+
+.. versionadded:: 2.5
+    The ``debug:translation`` command was introduced in Symfony 2.5.
 
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``translation:debug``.

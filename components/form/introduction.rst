@@ -663,6 +663,14 @@ and the errors will display next to the fields on error.
 Accessing Form Errors
 ~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.5
+    Before Symfony 2.5, ``getErrors()`` returned an array of ``FormError``
+    objects. The return value was changed to ``FormErrorIterator`` in Symfony
+    2.5.
+
+.. versionadded:: 2.5
+    The ``$deep`` and ``$flatten`` arguments were introduced in Symfony 2.5.
+
 You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
 method to access the list of errors. It returns a
 :class:`Symfony\\Component\\Form\\FormErrorIterator` instance::

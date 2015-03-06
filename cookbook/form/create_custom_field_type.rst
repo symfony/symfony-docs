@@ -24,11 +24,11 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class GenderType extends AbstractType
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => array(
@@ -72,11 +72,7 @@ important:
     set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
     for more details.
 
-.. versionadded:: 2.7
-    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
-    the method was called ``setDefaultOptions()``.
-
-``configureOptions()``
+``setDefaultOptions()``
     This defines options for your form type that
     can be used in ``buildForm()`` and ``buildView()``. There are a lot of
     options common to all fields (see :doc:`/reference/forms/types/form`),
@@ -349,7 +345,7 @@ method to ``GenderType``, which receives the gender configuration::
     // src/AppBundle/Form/Type/GenderType.php
     namespace AppBundle\Form\Type;
 
-    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     // ...
 
@@ -363,7 +359,7 @@ method to ``GenderType``, which receives the gender configuration::
             $this->genderChoices = $genderChoices;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => $this->genderChoices,

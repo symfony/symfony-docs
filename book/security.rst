@@ -499,6 +499,8 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
+.. include:: /cookbook/security/_ircmaxwell_password-compat.rst.inc
+
 Of course, your user's passwords now need to be encoded with this exact algorithm.
 For hardcoded users, you can use an `online tool`_, which will give you something
 like this:
@@ -821,6 +823,9 @@ You can easily deny access from inside a controller::
 .. versionadded:: 2.6
      The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
      to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+
+.. versionadded:: 2.5
+    The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException`
 method creates a special :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
@@ -1311,6 +1316,11 @@ cookie will be ever created by Symfony):
 
 Checking for Known Security Vulnerabilities in Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.5
+    The ``security:check`` command was introduced in Symfony 2.5. This command is
+    included in ``SensioDistributionBundle``, which has to be registered in your
+    application in order to use this command.
 
 When using lots of dependencies in your Symfony projects, some of them may
 contain security vulnerabilities. That's why Symfony includes a command called
