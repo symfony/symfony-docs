@@ -49,14 +49,14 @@ Example
 Code Examples
 -------------
 
-* The code examples should look real for a web application context. Avoid abstract
-  and puerile examples (``foo``, ``bar``, ``demo``, etc.);
-* Use ``Acme`` when the code requires to explicit a vendor name;
-* The code should follow the :doc:`Symfony Best Practices </best_practices>`.
-  Unless the example requires to use a custom bundle, make sure to always use the
-  ``AppBundle`` bundle to store your code;
 * The code follows the :doc:`Symfony Coding Standards </contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
+* The code examples should look real for a web application context. Avoid abstract
+  or puerile examples (``foo``, ``bar``, ``demo``, etc.);
+* The code should follow the :doc:`Symfony Best Practices </best_practices/introduction>`.
+  Unless the example requires to use a custom bundle, make sure to always use the
+  ``AppBundle`` bundle to store your code;
+* Use ``Acme`` when the code requires a vendor name;
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
   correctly if it crosses the 85th character;
 * When you fold one or more lines of code, place ``...`` in a comment at the point
@@ -145,13 +145,9 @@ English Language Standards
 --------------------------
 
 Symfony documentation uses the United States English dialect, commonly called
-`American English`_.
-
-Unlike most popular languages, the English language doesn't have a central
-language authority and there is no official grammar or dictionary. Symfony
-documentation uses the `American English Oxford Dictionary`_ to resolve disputes
-over common words. In case a technical word isn't included in the dictionary yet,
-Symfony Documentation maintainers will decide over the disputes.
+`American English`_. Disputes over vocabulary will always be resolved using the
+`American English Oxford Dictionary`_ reference. Disputes over neologisms not
+included yet in the dictionary will be resolved by Symfony Documentation maintainers.
 
 In addition, documentation contents should follow these rules:
 
