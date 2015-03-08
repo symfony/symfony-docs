@@ -278,6 +278,14 @@ the ``PasswordDigest`` header value matches with the user's password.
     provider for the given token. In the case of multiple providers, the
     authentication manager will then move to the next provider in the list.
 
+.. note::
+
+    The comparsion of the expected and the provided digests uses a constant
+    time comparison provided by the
+    :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
+    method of the ``StringUtils`` class. It is used to mitigate possible
+    `timing attacks`_.
+
 The Factory
 -----------
 
@@ -605,3 +613,4 @@ in the factory and consumed or passed to the other classes in the container.
 
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: http://en.wikipedia.org/wiki/Cryptographic_nonce
+.. _`timing attacks`: http://en.wikipedia.org/wiki/Timing_attack
