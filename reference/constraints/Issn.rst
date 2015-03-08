@@ -23,14 +23,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/JournalBundle/Resources/config/validation.yml
-        Acme\JournalBundle\Entity\Journal:
-            properties:
-                issn:
-                    - Issn: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/JournalBundle/Entity/Journal.php
@@ -45,6 +37,14 @@ Basic Usage
              */
              protected $issn;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/JournalBundle/Resources/config/validation.yml
+        Acme\JournalBundle\Entity\Journal:
+            properties:
+                issn:
+                    - Issn: ~
 
     .. code-block:: xml
 

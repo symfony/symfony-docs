@@ -52,22 +52,6 @@ blank but is no longer than 100 characters in length, you would do the following
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                profileData:
-                    - Collection:
-                        fields:
-                            personal_email: Email
-                            short_bio:
-                                - NotBlank
-                                - Length:
-                                    max:   100
-                                    maxMessage: Your short bio is too long!
-                        allowMissingFields: true
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -97,6 +81,22 @@ blank but is no longer than 100 characters in length, you would do the following
                  'short_bio',
              );
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                profileData:
+                    - Collection:
+                        fields:
+                            personal_email: Email
+                            short_bio:
+                                - NotBlank
+                                - Length:
+                                    max:   100
+                                    maxMessage: Your short bio is too long!
+                        allowMissingFields: true
 
     .. code-block:: xml
 
@@ -189,22 +189,6 @@ field is optional but must be a valid email if supplied, you can do the followin
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                profile_data:
-                    - Collection:
-                        fields:
-                            personal_email:
-                                - Required
-                                    - NotBlank: ~
-                                    - Email: ~
-                            alternate_email:
-                                - Optional:
-                                    - Email: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -224,6 +208,22 @@ field is optional but must be a valid email if supplied, you can do the followin
              */
              protected $profileData = array('personal_email');
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                profile_data:
+                    - Collection:
+                        fields:
+                            personal_email:
+                                - Required
+                                    - NotBlank: ~
+                                    - Email: ~
+                            alternate_email:
+                                - Optional:
+                                    - Email: ~
 
     .. code-block:: xml
 

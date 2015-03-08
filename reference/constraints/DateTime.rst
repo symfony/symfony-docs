@@ -20,14 +20,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                createdAt:
-                    - DateTime: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -42,6 +34,14 @@ Basic Usage
              */
              protected $createdAt;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                createdAt:
+                    - DateTime: ~
 
     .. code-block:: xml
 

@@ -21,16 +21,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                age:
-                    - Type:
-                        type: integer
-                        message: The value {{ value }} is not a valid {{ type }}.
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -45,6 +35,16 @@ Basic Usage
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                age:
+                    - Type:
+                        type: integer
+                        message: The value {{ value }} is not a valid {{ type }}.
 
     .. code-block:: xml
 

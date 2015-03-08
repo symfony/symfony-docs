@@ -66,18 +66,6 @@ it is between a certain size, add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
-            properties:
-                headshot:
-                    - Image:
-                        minWidth: 200
-                        maxWidth: 400
-                        minHeight: 200
-                        maxHeight: 400
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -97,6 +85,18 @@ it is between a certain size, add the following:
              */
             protected $headshot;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author
+            properties:
+                headshot:
+                    - Image:
+                        minWidth: 200
+                        maxWidth: 400
+                        minHeight: 200
+                        maxHeight: 400
 
     .. code-block:: xml
 

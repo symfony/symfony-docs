@@ -22,17 +22,6 @@ entry in that array:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                favoriteColors:
-                    - All:
-                        - NotBlank:  ~
-                        - Length:
-                            min: 5
-
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
@@ -50,6 +39,17 @@ entry in that array:
              */
              protected $favoriteColors = array();
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                favoriteColors:
+                    - All:
+                        - NotBlank:  ~
+                        - Length:
+                            min: 5
 
     .. code-block:: xml
 

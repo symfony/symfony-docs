@@ -26,18 +26,6 @@ To verify that the ``firstName`` field length of a class is between "2" and
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Participant:
-            properties:
-                firstName:
-                    - Length:
-                        min: 2
-                        max: 50
-                        minMessage: "Your first name must be at least {{ limit }} characters long"
-                        maxMessage: "Your first name cannot be longer than {{ limit }} characters"
-
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
@@ -57,6 +45,18 @@ To verify that the ``firstName`` field length of a class is between "2" and
              */
              protected $firstName;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Participant:
+            properties:
+                firstName:
+                    - Length:
+                        min: 2
+                        max: 50
+                        minMessage: "Your first name must be at least {{ limit }} characters long"
+                        maxMessage: "Your first name cannot be longer than {{ limit }} characters"
 
     .. code-block:: xml
 
