@@ -36,12 +36,6 @@ whatever component you want.
     file in your directory. In that case, no worries! Just run
     ``php composer.phar require symfony/finder``.
 
-If you know you need a specific version of the library, add that to the command:
-
-.. code-block:: bash
-
-    $ composer require symfony/finder 2.6.2
-
 **3.** Write your code!
 
 Once Composer has downloaded the component(s), all you need to do is include
