@@ -14,3 +14,4 @@ Configuration
     apache_router
     web_server_configuration
     configuration_organization
+    cookbook/configuration/pdo_session_storage cookbook/configuration/database_session_storage

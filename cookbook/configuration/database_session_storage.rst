@@ -16,9 +16,10 @@ and the other uses PDO :class:`Symfony\\Component\\HttpFoundation\\Session\\Stor
 Using Doctrine to Store the Session in the Database
 ---------------------------------------------------
 
-To use it, you just need to inject this class as a service in the configuration:
+To use The DBAL session storage, you need to register a new service and configure
+ Symfony's session handling to use it:
 
-    
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -81,8 +82,11 @@ set for the default doctrine connection. This is OK if you're storing everything
 in the same database. If you want to store the sessions in another database you just have
 to configure a new doctrine connection.
 
+.. note::
 
-Table structure and example SQL Statements
+    How to configure multiple entity managers is covered in the :doc:`/cookbook/doctrine/multiple_entity_managers` page of the book.
+
+Table Structure and Example SQL Statements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Because of the way this is implemented in the php class you can only configure the table name (The default is sessions)
 Here are a couple of SQL statements to help you create a table that will work with this
