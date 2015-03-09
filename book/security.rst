@@ -267,7 +267,7 @@ Great! Now, if you go to ``/admin``, you'll see the HTTP Basic popup:
 .. caution::
 
     The ``http_basic`` firewall is only recommended while prototyping applications
-    or when the application is exclusively accesed through secure transports, such
+    or when the application is exclusively accessed through secure transports, such
     as HTTPS. The reason is that browsers include user credentials in each request
     without applying any hashing mechanism, just a plain base64 encoding.
 
