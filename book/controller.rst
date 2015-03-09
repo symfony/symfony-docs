@@ -5,7 +5,7 @@ Controller
 ==========
 
 A controller is a PHP function you create that takes information from the
-HTTP request to construct and return an HTTP response (as a Symfony
+HTTP request and creates and returns an HTTP response (as a Symfony
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
