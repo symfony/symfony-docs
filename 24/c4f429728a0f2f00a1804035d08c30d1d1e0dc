@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-02T13:29:33Z
+
+After this has been merged, the `csrf_protection` node should be nested into the `form` node.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T11:00:51Z
+
+I updated the descriptions. Let me know if you agree with the changes.
