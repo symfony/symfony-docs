@@ -25,10 +25,10 @@ Configuration
     * enabled
     * field_name (deprecated)
 * `form`_
-    * enabled
+    * :ref:`enabled <form-enabled>`
     * csrf_protection
-        * enabled
-        * field_name
+        * :ref:`enabled <csrf-protection-enabled>`
+        * `field_name`_
 * `session`_
     * `name`_
     * `cookie_lifetime`_
@@ -57,6 +57,7 @@ Configuration
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
 * `validation`_
+    * :ref:`enabled <validation-enabled>`
     * `cache`_
     * `enable_annotations`_
     * `translation_domain`_
@@ -217,8 +218,39 @@ see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 form
 ~~~~
 
+.. _form-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable support for the Form component.
+
+You will also have to disable form support if you want to
+:ref:`disable the validation support <validation-enabled>`.
+
 csrf_protection
 ~~~~~~~~~~~~~~~
+
+.. _csrf-protection-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true`` if form support is enabled, ``false``
+otherwise
+
+This option can be used to disable CSRF protection of forms. You need to
+disable CSRF protection to be able to disable session. For example, this
+is useful when you only use forms in an API-only website.
+
+field_name
+..........
+
+**type**: ``string`` **default**: ``"_token"``
+
+The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
 
 session
 ~~~~~~~
@@ -585,6 +617,16 @@ try to access an invalid index of an array.
 
 validation
 ~~~~~~~~~~
+
+.. _validation-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true`` if :ref:`form support is enabled <form-enabled>`,
+``false`` otherwise
+
+Whether or not to enable validation support.
 
 cache
 .....
