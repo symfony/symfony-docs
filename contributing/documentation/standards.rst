@@ -171,7 +171,7 @@ In addition, documentation follows these rules:
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
 .. _`American English`: http://en.wikipedia.org/wiki/American_English
-.. _`American English Oxford Dictionary`: http://www.oxforddictionaries.com/
+.. _`American English Oxford Dictionary`: http://www.oxforddictionaries.com/definition/american_english/
 .. _`headings and titles`: http://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: http://en.wikipedia.org/wiki/Serial_comma
 .. _`nosism`: http://en.wikipedia.org/wiki/Nosism
