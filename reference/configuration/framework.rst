@@ -218,8 +218,11 @@ enabled
 
 Whether or not to enable support for the Form component.
 
-You will also have to disable form support if you want to
-:ref:`disable the validation support <validation-enabled>`.
+If you don't use forms, setting this to ``false`` may increase your application's
+performance because less services will be loaded into the container.
+
+If this is activated, the :ref:`validation system <validation-enabled>`
+is also enabled automatically.
 
 csrf_protection
 ~~~~~~~~~~~~~~~
@@ -232,9 +235,12 @@ enabled
 **type**: ``boolean`` **default**: ``true`` if form support is enabled, ``false``
 otherwise
 
-This option can be used to disable CSRF protection of forms. You need to
-disable CSRF protection to be able to disable session. For example, this
-is useful when you only use forms in an API-only website.
+This option can be used to disable CSRF protection on *all* forms. But you
+can also :ref:`disable CSRF protection on individual forms <form-disable-csrf>`.
+
+If you're using forms, but want to avoid starting your session (e.g. using
+forms in an API-only website), ``csrf_protection`` will need to be set to
+``false``.
 
 field_name
 ..........

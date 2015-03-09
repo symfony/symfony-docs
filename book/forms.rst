@@ -1781,6 +1781,8 @@ The CSRF token can be customized on a form-by-form basis. For example::
         // ...
     }
 
+.. _form-disable-csrf:
+
 To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
 see the :ref:`form configuration reference <reference-framework-form>`
