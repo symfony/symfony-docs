@@ -145,11 +145,10 @@ English Language Standards
 --------------------------
 
 Symfony documentation uses the United States English dialect, commonly called
-`American English`_. Disputes over vocabulary will always be resolved using the
-`American English Oxford Dictionary`_ reference. Disputes over neologisms not
-included yet in the dictionary will be resolved by Symfony Documentation maintainers.
+`American English`_. The `American English Oxford Dictionary`_ is used as the
+vocabulary reference.
 
-In addition, documentation contents should follow these rules:
+In addition, documentation follows these rules:
 
 * **Section titles**: use a variant of the title case, where the first
   word is always capitalized and all other words are capitalized, except for
