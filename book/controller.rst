@@ -441,7 +441,7 @@ If you want to redirect the user to another page, use the ``redirectToRoute()`` 
 
 .. versionadded:: 2.6
     The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
-    could use ``redirect()`` and ``generateUrl()`` together for this (see the example below).
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
 
 Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
 
@@ -455,17 +455,21 @@ perform a 301 (permanent) redirect, modify the second argument::
 
     public function indexAction()
     {
-        return $this->redirectToRoute('homepage', 301);
+        return $this->redirectToRoute('homepage', array(), 301);
     }
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to::
+    The ``redirectToRoute()`` method is simply a shortcut that creates a
+    ``Response`` object that specializes in redirecting the user. It's
+    equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
-        return new RedirectResponse($this->generateUrl('homepage'));
+        public function indexAction()
+        {
+            return new RedirectResponse($this->generateUrl('homepage'));
+        }
 
 .. index::
    single: Controller; Rendering templates

@@ -817,7 +817,7 @@ You can easily deny access from inside a controller::
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         // Old way :
-        // if (false === $this->isGranted('ROLE_ADMIN')) {
+        // if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
         //     throw $this->createAccessDeniedException('Unable to access this page!');
         // }
 
