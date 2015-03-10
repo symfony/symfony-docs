@@ -79,19 +79,19 @@ even remove any content, but make sure that you comply with the
 
 **Step 7.** Everything is now ready to initiate a **pull request**. Go to your
 forked repository at ``https//github.com/<YOUR GITHUB USERNAME>/symfony-docs``
-and click on the ``Pull Requests`` link located in the sidebar.
+and click on the **Pull Requests** link located in the sidebar.
 
-Then, click on the big ``New pull request`` button. As GitHub cannot guess the
+Then, click on the big **New pull request** button. As GitHub cannot guess the
 exact changes that you want to propose, select the appropriate branches where
-changes should be applied:º
+changes should be applied:
 
 .. image:: /images/contributing/docs-pull-request-change-base.png
    :align: center
 
-In this example, the **base repository** should be ``symfony/symfony-docs`` and
-the **base branch** should be the ``2.3``, which is the branch that you selected
-to base your changes on. The **compare repository** should be your forked copy
-of ``symfony-docs`` and the **compare branch** should be ``improve_install_chapter``,
+In this example, the **base fork** should be ``symfony/symfony-docs`` and
+the **base** branch should be the ``2.3``, which is the branch that you selected
+to base your changes on. The **head fork** should be your forked copy
+of ``symfony-docs`` and the **compare** branch should be ``improve_install_chapter``,
 which is the name of the branch you created and where you made your changes.
 
 .. _pull-request-format:
@@ -188,7 +188,7 @@ section:
     # submit the changes to your forked repository
     $ git add xxx.rst     # (optional) only if this is a new content
     $ git commit xxx.rst
-    $ git push
+    $ git push origin my_changes
 
     # go to GitHub and create the Pull Request
     #
@@ -230,7 +230,7 @@ steps to contribute to the Symfony documentation, which you can use as a
     # add and commit your changes
     $ git add xxx.rst     # (optional) only if this is a new content
     $ git commit xxx.rst
-    $ git push
+    $ git push origin my_changes
 
     # go to GitHub and create the Pull Request
     #
@@ -247,6 +247,21 @@ steps to contribute to the Symfony documentation, which you can use as a
     $ git push
 
 You guessed right: after all this hard work, it's **time to celebrate again!**
+
+Minor Changes (e.g. Typos)
+--------------------------
+
+You may find just a typo and want to fix it. Due to GitHub's functional
+frontend, it is quite simple to create Pull Requests right in your
+browser while reading the docs on symfony.com. To do this, just click
+the **edit this page** button on the upper right corner. Beforehand,
+please switch to the right branch as mentioned before. Now you are able
+to edit the content and describe your changes within the GitHub
+frontend. When your work is done, click **Propose file change** to
+create a commit and, in case it is your first contribution, also your
+fork. A new branch is created automatically in order to provide a base
+for your Pull Request. Then fill out the form to create the Pull Request
+as described above.
 
 Frequently Asked Questions
 --------------------------
