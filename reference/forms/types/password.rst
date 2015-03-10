@@ -79,7 +79,7 @@ The default value is ``''`` (the empty string).
 trim
 ~~~~
 
-**type**: ``bool`` **default**: ``false``
+**type**: ``Boolean`` **default**: ``false``
 
 If true, the whitespace of the submitted string value will be stripped
 via the ``trim()`` function when the data is bound. This guarantees that
