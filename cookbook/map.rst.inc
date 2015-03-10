@@ -201,10 +201,11 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
-* :doc:`/cookbook/upgrading/index`
+* :doc:`/cookbook/upgrade/index`
 
-  * :doc:`/cookbook/upgrading/patch_version`
-  * :doc:`/cookbook/upgrading/minor_version`
+  * :doc:`/cookbook/upgrade/patch_version`
+  * :doc:`/cookbook/upgrade/minor_version`
+  * :doc:`/cookbook/upgrade/major_version`
 
 * :doc:`/cookbook/validation/index`
 
