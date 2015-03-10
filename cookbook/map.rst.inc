@@ -201,9 +201,10 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
-* **Upgrading**
+* :doc:`/cookbook/upgrading/index`
 
-  * :doc:`/cookbook/upgrading`
+  * :doc:`/cookbook/upgrading/patch_version`
+  * :doc:`/cookbook/upgrading/minor_version`
 
 * :doc:`/cookbook/validation/index`
 
