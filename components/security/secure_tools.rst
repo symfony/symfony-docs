@@ -5,8 +5,8 @@ The Symfony Security component comes with a collection of nice utilities
 related to security. These utilities are used by Symfony, but you should
 also use them if you want to solve the problem they address.
 
-Comparing Strings of the same length
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Comparing Strings
+~~~~~~~~~~~~~~~~~
 
 The time it takes to compare two strings depends on their differences. This
 can be used by an attacker when the two strings represent a hash of a password
@@ -23,8 +23,10 @@ algorithm; you can use the same strategy in your own code thanks to the
 
 .. caution::
 
-    To avoid timing attacks, both strings must be of the same length, the
-    known string must be the first argument and the string based on the user-entered
+    Both arguments must be of the same length to be compared successfully. When
+    arguments of differing length are supplied, `false` can be returned immediately and
+    the length of the known string may be leaked in case of a timing attack.
+    The known string must be the first argument and the string based on the user-entered
     content the second.
     This method is more reliable with PHP 5.6 and superior because it internally uses
     the native `hash_equals`_ PHP function.
