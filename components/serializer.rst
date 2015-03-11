@@ -170,7 +170,7 @@ Converting Property Names when Serializing and Deserializing
     interface was introduced in Symfony 2.7.
 
 Sometimes serialized attributes must be named differently than properties
-or getter / setter methods of PHP classes.
+or getter/setter methods of PHP classes.
 
 The Serializer Component provides a handy way to translate or map PHP field
 names to serialized names: The Name Converter System.
@@ -183,13 +183,12 @@ Given you have the following object::
         public address;
     }
 
-
 And in the serialized form, all attributes must be prefixed by ``org_`` like
 the following::
 
     {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
 
-A custom Name Converter can handle such cases::
+A custom name converter can handle such cases::
 
     use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
