@@ -208,6 +208,14 @@ application will respond:
 
 You should be seeing your Symfony application in your browser.
 
+.. caution::
+
+    If you take your first steps on Heroku using a fresh installation of
+    the Symfony Standard Edition, you may run into a 404 page not found error.
+    This is because the route for ``/`` is defined by the AcmeDemoBundle, but the
+    AcmeDemoBundle is only loaded in the dev environment (check out your
+    ``AppKernel`` class). Try opening ``/app/example`` from the AppBundle.
+
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
 .. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
