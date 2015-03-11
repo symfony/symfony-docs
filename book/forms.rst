@@ -1057,9 +1057,15 @@ that will house the logic for building the task form::
         }
     }
 
-This new class contains all the directions needed to create the task form
-(note that the ``getName()`` method should return a unique identifier for this
-form "type"). It can be used to quickly build a form object in the controller::
+.. caution::
+
+    The ``getName()`` method returns the identifier of this form "type". These
+    identifiers must be unique in the application and, unless you want to override
+    a built-in type, they should be different from the default Symfony types.
+    Consider prefixing your types with ``app_`` to avoid identifier collisions.
+
+This new class contains all the directions needed to create the task form. It can
+be used to quickly build a form object in the controller:
 
     // src/AppBundle/Controller/DefaultController.php
 
