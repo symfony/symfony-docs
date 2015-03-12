@@ -18,7 +18,8 @@ algorithm; you can use the same strategy in your own code thanks to the
 
     use Symfony\Component\Security\Core\Util\StringUtils;
 
-    // is some known string (e.g. password hash) equal to another string (e.g. hash of some user input)?
+    // is some known string (e.g. password hash) equal to another string
+    // (e.g. hash ofsome user input)?
     $bool = StringUtils::equals($knownString, $anotherString);
 
 .. caution::
@@ -29,7 +30,7 @@ algorithm; you can use the same strategy in your own code thanks to the
     The known string must be the first argument and the string based on the user-entered
     content the second.
     This method is more reliable with PHP 5.6 and superior because it internally uses
-    the native `hash_equals`_ PHP function.
+    the native :phpfunction:`hash_equals <hash_equals>` PHP function.
 
 Generating a Secure random Number
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,4 +64,3 @@ to work correctly. Just pass a file name to enable it::
     instance directly from the container: its name is ``security.secure_random``.
 
 .. _`Timing attack`: http://en.wikipedia.org/wiki/Timing_attack
-   _`hash_equals`: http://php.net/manual/en/function.hash-equals.php
