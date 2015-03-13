@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-17T18:03:19Z
+
+@peterrehm thanks for adding this nice addition to the cookbook. I've made lots of comments, but they are minor things about the syntax. Your contents are right and that's the important thing. Thanks!
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-01-17T22:59:27Z
+
+Thank you for the feedback on the chapter, I have made the adjustments based on our discussion. Let's see when @xabbuh wakes up I expect the next e-mail flood :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-20T20:50:37Z
+
+Thanks for this great work @peterrehm! I left you a few comments. :)
+
+However, I have one thought I would like to discuss with you: I am not convinced that we should actually talk about entities at all. In fact, it doesn't really matter if the user is stored in a relation database or if you load them from a custom file format or anything else. So I'd suggest to talk about "Choosing the Locale Based on the User's Preferences" or something like that. What do you think?
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-01-21T07:38:14Z
+
+Thank you for your feedback, I was awaiting that :)
+
+I changed it in the title to preferences, but we mainly talk about entities. I think it makes it more clear that you also have to watch out for changes to the entity as in the end in the caution block.
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-01-23T19:36:05Z
+
+I think this one is finished now?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-07T22:12:30Z
+
+Sorry, @peterrehm, I missed the update of this PR. Labelled it as finished now
