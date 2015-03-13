@@ -14,6 +14,7 @@ using an email address that already exists in the system.
 |                | - `repositoryMethod`_                                                               |
 |                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
+|                | - `payload`_                                                                        |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
@@ -260,3 +261,5 @@ If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

@@ -58,8 +58,10 @@ Code Examples
 * When you fold a part of a line, e.g. a variable value, put ``...`` (without comment)
   at the place of the fold;
 * Description of the folded code: (optional)
-  If you fold several lines: the description of the fold can be placed after the ``...``
-  If you fold only part of a line: the description can be placed before the line;
+
+  * If you fold several lines: the description of the fold can be placed after the ``...``;
+  * If you fold only part of a line: the description can be placed before the line;
+
 * If useful to the reader, a PHP code example should start with the namespace
   declaration;
 * When referencing classes, be sure to show the ``use`` statements at the
@@ -77,8 +79,9 @@ Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
 (and their orders) are:
 
-* **Configuration** (including services and routing): YAML, XML, PHP
-* **Validation**: YAML, Annotations, XML, PHP
+* **Configuration** (including services): YAML, XML, PHP
+* **Routing**: Annotations, YAML, XML, PHP
+* **Validation**: Annotations, YAML, XML, PHP
 * **Doctrine Mapping**: Annotations, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
 
@@ -151,6 +154,7 @@ English Language Standards
 * **Gender-neutral language**: when referencing a hypothetical person, such as
   *"a user with a session cookie"*, use gender-neutral pronouns (they/their/them).
   For example, instead of:
+
   * he or she, use they
   * him or her, use them
   * his or her, use their

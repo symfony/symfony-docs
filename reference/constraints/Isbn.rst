@@ -22,6 +22,7 @@ is either a valid ISBN-10 or a valid ISBN-13.
 |                | - `isbn10Message`_                                                   |
 |                | - `isbn13Message`_                                                   |
 |                | - `bothIsbnMessage`_                                                 |
+|                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`            |
 +----------------+----------------------------------------------------------------------+
@@ -145,5 +146,7 @@ bothIsbnMessage
 
 The message that will be shown if the `type`_ option is ``null`` and the given
 value does not pass any of the ISBN checks.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Standard Book Number (ISBN)`: http://en.wikipedia.org/wiki/Isbn

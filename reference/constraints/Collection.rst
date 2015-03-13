@@ -18,6 +18,7 @@ and that extra keys are not present.
 |                | - `extraFieldsMessage`_                                                  |
 |                | - `allowMissingFields`_                                                  |
 |                | - `missingFieldsMessage`_                                                |
+|                | - `payload`_                                                             |
 +----------------+--------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Collection`          |
 +----------------+--------------------------------------------------------------------------+
@@ -328,3 +329,5 @@ missingFieldsMessage
 
 The message shown if `allowMissingFields`_ is false and one or more fields
 are missing from the underlying collection.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

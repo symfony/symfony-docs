@@ -59,7 +59,7 @@ enable the ``translator`` in your configuration:
 
         # app/config/config.yml
         framework:
-            translator: { fallback: en }
+            translator: { fallbacks: [en] }
 
     .. code-block:: xml
 
@@ -74,7 +74,9 @@ enable the ``translator`` in your configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:translator fallback="en" />
+                <framework:translator>
+                    <framework:fallback>en</framework:fallback>
+                </framework:translator>
             </framework:config>
         </container>
 
@@ -82,10 +84,10 @@ enable the ``translator`` in your configuration:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'translator' => array('fallback' => 'en'),
+            'translator' => array('fallbacks' => array('en')),
         ));
 
-See :ref:`book-translation-fallback` for details on the ``fallback`` key
+See :ref:`book-translation-fallback` for details on the ``fallbacks`` key
 and what Symfony does when it doesn't find a translation.
 
 The locale used in translations is the one stored on the request. This is
@@ -400,7 +402,7 @@ checks translation resources for several locales:
 #. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
    resource (e.g. ``messages.fr.xliff``);
 
-#. If the translation still isn't found, Symfony uses the ``fallback`` configuration
+#. If the translation still isn't found, Symfony uses the ``fallbacks`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
 
 .. versionadded:: 2.6

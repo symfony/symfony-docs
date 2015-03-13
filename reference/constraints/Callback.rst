@@ -21,6 +21,7 @@ can do anything, including creating and assigning validation errors.
 | Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - :ref:`callback <callback-option>`                                    |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
 +----------------+------------------------------------------------------------------------+
@@ -292,3 +293,5 @@ instance as only argument.
 Static or closure callbacks receive the validated object as the first argument
 and the :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
 instance as the second argument.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

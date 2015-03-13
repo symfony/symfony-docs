@@ -710,7 +710,7 @@ for example, the list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# app/Resources/views/Blog/list.html.twig #}
+    {# app/Resources/views/blog/list.html.twig #}
     {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}

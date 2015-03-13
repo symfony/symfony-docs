@@ -246,7 +246,7 @@ great, your user can't actually add any new tags yet.
 .. caution::
 
     In this entry, you embed only one collection, but you are not limited
-    to this. You can also embed nested collection as many level down as you
+    to this. You can also embed nested collection as many levels down as you
     like. But if you use Xdebug in your development setup, you may receive
     a ``Maximum function nesting level of '100' reached, aborting!`` error.
     This is due to the ``xdebug.max_nesting_level`` PHP setting, which defaults
@@ -459,7 +459,7 @@ is added to the ``Task`` class by calling the ``addTag`` method. Before this
 change, they were added internally by the form by calling ``$task->getTags()->add($tag)``.
 That was just fine, but forcing the use of the "adder" method makes handling
 these new ``Tag`` objects easier (especially if you're using Doctrine, which
-we talk about next!).
+you will learn about next!).
 
 .. caution::
 
