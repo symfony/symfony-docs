@@ -229,8 +229,14 @@ Monolog allows you to process the record before logging it to add some
 extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 
-A processor is simply a callable receiving the record as its first argument.
+.. tip::
 
+    Beware that log file sizes can grow very rapidly, leading to disk space exhaustion.
+    This is specially true in the ``dev`` environment, where a simple request can
+    generate hundreds of log lines. Consider using tools like the `logrotate`_
+    Linux command to rotate log files before they become a problem.
+
+A processor is simply a callable receiving the record as its first argument.
 Processors are configured using the ``monolog.processor`` DIC tag. See the
 :ref:`reference about it <dic_tags-monolog-processor>`.
 
@@ -473,4 +479,5 @@ the ``monolog.processor`` tag:
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));
 
-.. _Monolog: https://github.com/Seldaek/monolog
+.. _`Monolog`: https://github.com/Seldaek/monolog
+.. _`logrotate`: https://fedorahosted.org/logrotate/
