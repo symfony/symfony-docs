@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-06T00:45:03Z
+
+While changing the Testing and HttpCache articles, I got a bit distracted fixing other things :) I'll do a follow up PR of a Testing article rewrite, as it isn't really nicely written (and it's the oldest not actively maintained document).
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-06T01:59:45Z
+
+This will conflict with #4740
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-06T07:02:27Z
+
+I don't think so, as Javier updated the cookbook and I the book
+
+---------------------------------------------------------------------------
+
+by stof at 2015-01-06T09:09:57Z
+
+ah, I forgot the fact that his PR does not do the search and replace on the whole doc.
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-10T10:08:02Z
+
+Updated. Thansk for the reviews!
