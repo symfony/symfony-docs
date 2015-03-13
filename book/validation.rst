@@ -166,7 +166,7 @@ will appear.
 You could also pass the collection of errors into a template::
 
     if (count($errors) > 0) {
-        return $this->render('Author/validation.html.twig', array(
+        return $this->render('author/validation.html.twig', array(
             'errors' => $errors,
         ));
     }
@@ -177,7 +177,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Author/validation.html.twig #}
+        {# app/Resources/views/author/validation.html.twig #}
         <h3>The author has the following errors</h3>
         <ul>
         {% for error in errors %}
@@ -187,7 +187,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Author/validation.html.php -->
+        <!-- app/Resources/views/author/validation.html.php -->
         <h3>The author has the following errors</h3>
         <ul>
         <?php foreach ($errors as $error): ?>
@@ -235,7 +235,7 @@ workflow looks like the following from inside a controller::
             return $this->redirect($this->generateUrl(...));
         }
 
-        return $this->render('Author/form.html.twig', array(
+        return $this->render('author/form.html.twig', array(
             'form' => $form->createView(),
         ));
     }

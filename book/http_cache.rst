@@ -734,7 +734,7 @@ exposing a simple and efficient pattern::
             $comments = ...;
 
             // or render a template with the $response you've already started
-            return $this->render('Article/show.html.twig', array(
+            return $this->render('article/show.html.twig', array(
                 'article' => $article,
                 'comments' => $comments
             ), $response);

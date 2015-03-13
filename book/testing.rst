@@ -356,7 +356,7 @@ giving you a nice API for uploading files.
     :ref:`Crawler <book-testing-crawler>` section below.
 
 The ``request`` method can also be used to simulate form submissions directly
-or perform more complex requests. Some usefull examples::
+or perform more complex requests. Some useful examples::
 
     // Directly submit a form (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
