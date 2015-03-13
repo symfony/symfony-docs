@@ -11,6 +11,7 @@ Validates that a given number is *between* some minimum and maximum number.
 |                | - `minMessage`_                                                     |
 |                | - `maxMessage`_                                                     |
 |                | - `invalidMessage`_                                                 |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Range`          |
 +----------------+---------------------------------------------------------------------+
@@ -140,5 +141,7 @@ invalidMessage
 
 The message that will be shown if the underlying value is not a number (per
 the `is_numeric`_ PHP function).
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php

@@ -12,6 +12,7 @@ Validates that a given string length is *between* some minimum and maximum value
 |                | - `minMessage`_                                                      |
 |                | - `maxMessage`_                                                      |
 |                | - `exactMessage`_                                                    |
+|                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
 +----------------+----------------------------------------------------------------------+
@@ -149,3 +150,5 @@ exactMessage
 
 The message that will be shown if min and max values are equal and the underlying
 value's length is not exactly this value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

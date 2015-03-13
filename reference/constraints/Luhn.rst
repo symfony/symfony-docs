@@ -9,6 +9,7 @@ payment gateway.
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`             |
 +----------------+-----------------------------------------------------------------------+
@@ -93,5 +94,7 @@ message
 **type**: ``string`` **default**: ``Invalid card number.``
 
 The default message supplied when the value does not pass the Luhn check.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Luhn algorithm`: http://en.wikipedia.org/wiki/Luhn_algorithm

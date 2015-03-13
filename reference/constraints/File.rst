@@ -30,6 +30,7 @@ form type.
 |                | - `uploadIniSizeErrorMessage`_                                      |
 |                | - `uploadFormSizeErrorMessage`_                                     |
 |                | - `uploadErrorMessage`_                                             |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`           |
 +----------------+---------------------------------------------------------------------+
@@ -276,6 +277,7 @@ The message that is displayed if the uploaded file could not be uploaded
 for some unknown reason, such as the file upload failed or it couldn't be written
 to disk.
 
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
 .. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix

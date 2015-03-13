@@ -10,6 +10,7 @@ Validates that a value matches a regular expression.
 |                | - `htmlPattern`_                                                      |
 |                | - `match`_                                                            |
 |                | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Regex`            |
 +----------------+-----------------------------------------------------------------------+
@@ -274,3 +275,5 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 This is the message that will be shown if this validator fails.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
