@@ -10,8 +10,8 @@ based on some rules. For example, you have a registration form for new users
 where they enter some personal information and choose their authentication
 credentials. They would have to choose a username and a secure password,
 but providing bank account information would be optional. Nonetheless, you
-want to make sure that these optional data, if entered, are still valid,
-but display them differently.
+want to make sure that these optional fields, if entered, are still valid,
+but display their errors differently.
 
 The process to achieve this behavior consists of two steps:
 
@@ -135,7 +135,7 @@ Use the ``payload`` option to configure the error level for each constraint:
     The ``getConstraint()`` method in the ``ConstraintViolation`` class was
     introduced in Symfony 2.6.
 
-When validating the ``User`` object failed, you can retrieve the constraint
+When validation of the ``User`` object fails, you can retrieve the constraint
 that caused a particular failure using the
 :method:`Symfony\\Component\\Validator\\ConstraintViolation::getConstraint`
 method. Each constraint exposes the attached payload as a public property::
@@ -147,7 +147,7 @@ method. Each constraint exposes the attached payload as a public property::
     $severity = isset($constraint->payload['severity']) ? $constraint->payload['severity'] : null;
 
 For example, you can leverage this to customize the ``form_errors`` block
-such that the severity is added as an additional HTML class:
+so that the severity is added as an additional HTML class:
 
 .. code-block:: html+jinja
 
@@ -163,3 +163,7 @@ such that the severity is added as an additional HTML class:
         </ul>
         {%- endif -%}
     {%- endblock form_errors -%}
+
+.. seealso::
+
+    For more information on customizing form rendering, see :doc:`/cookbook/form/form_customization`.
