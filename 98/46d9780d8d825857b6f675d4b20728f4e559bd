@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-16T22:01:28Z
+
+My vote goes for the changes that you made on this PR:
+
+```
+// I don't like this syntax
+app/Resources/views/Article/articleDetails.html.twig
+
+// this looks nice to me
+app/Resources/views/article/article_details.html.twig
+```
+
+My reasons:
+
+  * `Article/articleDetails` is a bit harder to write than `article/article_details` because of the mixing of capital letters.
+  * `Article` looks like a class name, but `article` looks like a directory name.
+  * `articleDetails` looks like a method name, but `article_details` looks like a template name.
+
+---------------------------------------------------------------------------
+
+by Koc at 2015-02-17T10:22:17Z
+
+-1. It much easier to correspond controller class -> directory, action method -> template with old naming.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-17T10:30:41Z
+
+@Koc you are right of course. But keep in mind that it's not uncommon for controllers to render templates that don't match 1:1 their class+method name. For example:
+
+```
+class FooController extends Controller
+{
+    public function barAction()
+    {
+        // ...
+
+        return $this->render('common/security/login_form.html.twig');
+
+        // ...
+
+        return $this->render('foo/bar.html.twig');
+    }
+}
+```
+
+In my opinion, the `common/...` template path looks better than `Common/Security/loginForm.html.twig`.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-03-02T16:56:37Z
+
+:+1: for me (though barely). And this kills `@Template`, as you'd need to break the best practice or update `@Template` to work with lower-casing (which will be error prone, e.g. ABCDefaultController -> `a_b_c_default`). @koc is also right that it's less obvious which controller class the templates belong to.
+
+But I like it because it highlights more clearly that you can name the directory/template whatever you want. I think sometimes that detail is lost to beginners - they're just always saying `Default` because I tell them to.
+
+What do @symfony/deciders think?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-03-02T17:09:14Z
+
+@weaverryan the best practice of putting templates in app rather than in the bundle folder is already killing ``@Template()`` (it is still possible to use ``@Template('foo.twig')``
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-03-02T17:38:17Z
+
+@stof Good point. I personally don't really care for `@Template`.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-02T18:22:14Z
+
+@weaverryan please note that there is a best practice recommending against using `@Template`:
+
+ > Don't use the `@Template()` annotation to configure the template used by the controller.
+ > -- http://symfony.com/doc/current/best_practices/controllers.html
