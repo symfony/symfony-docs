@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-23T11:19:18Z
+
+What about using a `caution` directive for this?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-01-23T11:24:14Z
+
+I'm usually against admonitions because in my opinion they break the reading flow and they're very annoying. But if other people agree with @xabbuh's suggestion, I'll do it.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-01-31T17:42:54Z
+
+I like a caution too
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-02T15:47:54Z
+
+@xabbuh @WouterJ as requested, I've added the new documentation inside a `caution` admonition.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-16T11:02:55Z
+
+In my opinion this PR can be considered *finished* and ready to be merged.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-16T11:31:58Z
+
+@WouterJ I've fixed the errors that you spotted. Thanks.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-07T22:11:08Z
+
+Labelled it as finished
