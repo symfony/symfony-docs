@@ -132,7 +132,7 @@ template might look something like this:
     <h3>You did it! You registered!</h3>
 
     {# example, assuming you have a route named "login" $}
-    To login, go to: {{ url('login') }}.
+    To login, go to: <a href="{{ url('login') }}">...</a>.
 
     Thanks!
 
