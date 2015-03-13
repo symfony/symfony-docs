@@ -45,8 +45,8 @@ Active Core Members
     Validator_, Icu_, Intl_, Locale_, OptionsResolver_ and PropertyAccess_
     components;
 
-  * **Tobias Schultze** (:merger:`Tobion`) can merge into the Routing_
-    component;
+  * **Tobias Schultze** (:merger:`Tobion`) can merge into the Routing_,
+    OptionsResolver_ and PropertyAccess_ components;
 
   * **Romain Neutron** (:merger:`romainneutron`) can merge into the
     Process_ component;
