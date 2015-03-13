@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2015-02-18T15:03:31Z
+
+is it customary to link ```logrotate``` to some linux official link?
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-02-18T21:11:30Z
+
+i think this topic is very important. shouldn't we provide an example logrotate configuration?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-02-21T09:56:01Z
+
+@timglabisch I don't think documenting logrotate is in the scope of the symfony doc. Linking to the logrotate doc seems a better idea.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-21T10:01:13Z
+
+Anybody knows which is the official web site of `logrotate`?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-21T11:15:35Z
+
+Looking at what is provided in the `logrotate` manpage, there seems to be nothing else than https://fedorahosted.org/logrotate/.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-21T21:37:24Z
+
+@xabbuh thanks for the reference. I've just linked the `logrotate` command to that URL.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-23T20:32:37Z
+
+:+1: Looks good to me. By the way, how is this handled on Windows?
