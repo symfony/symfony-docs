@@ -145,7 +145,7 @@ PHP. Have a look at this sample of the default Symfony configuration:
 
     framework:
         #esi:             ~
-        #translator:      { fallback: "%locale%" }
+        #translator:      { fallbacks: ["%locale%"] }
         secret:          "%secret%"
         router:
             resource: "%kernel.root_dir%/config/routing.yml"
