@@ -42,6 +42,8 @@ they have nothing to do with the application's behavior. In other words, your
 application doesn't care about the location of your database or the credentials
 to access to it, as long as the database is correctly configured.
 
+.. _best-practices-canonical-parameters:
+
 Canonical Parameters
 ~~~~~~~~~~~~~~~~~~~~
 
