@@ -1,0 +1,95 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-28T14:49:39Z
+
+Thank you! It's great to see a doc PR when a new code PR is opened.
+
+I've decorated it with many comments. Not real big things, though. The more doc PRs you'll create, the less comments you'll get :wink:
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-28T21:23:04Z
+
+@WouterJ thank you very much for your review! I've changed most of the things you pointed out. I've replied to your comments when changes seem not needed to me.
+
+I'll try to provide a book entry for the serialization component soon!
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-28T21:24:57Z
+
+I've also switched the term "underscore separated" by "snake_case".
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-28T21:32:23Z
+
+> I'll try to provide a book entry for the serialization component soon!
+
+I like your enthousiasm, but I'm not sure if I like creating a book chapter. I don't think the Serializer component is a component that should have a book chapter. Book chapters should only list the basic things of Symfony imo. I think it's better if you create an issue first, so other doc maintainers can give their opinions as well.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-28T21:35:24Z
+
+I'll create an issue. When https://github.com/symfony/symfony/pull/13107 will be merged, it can be cool to have a chapter in the book explaining the basics of serialization (add annotations to the entity, or XML or YAML mappings, then use `$this->get('serializer')` in the controller).
+Something similar (but shorter) to the validation chapter.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-28T22:24:40Z
+
+Should the documentation for the previous feature really be removed from the 2.7 doc ?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-28T22:32:43Z
+
+@stof I'm not aware of the policy about the doc for deprecated features.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-29T10:57:48Z
+
+I think it's okay if we don't document deprecated features if there is a better alternative. Though I wonder if it is really a good idea to deprecate the `setCamelizedAttributes()` method. Don't you now have to write more code to have the same behaviour as before?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-29T13:52:23Z
+
+@xabbuh we are speaking about ~2 more lines of code (and with a broader functionality set: you can convert all attributes).
+I think it's confusing for users to have different manners to do the same thing (using the `setCamelizedAttributes()` or using the new system). Also, it makes harder to get a full knowledge of the tool.
+
+Another drawback with keeping `setCamelizedAttributes()` is more code to maintain and issues to reply (ex: symfony/symfony#12212 - possible with the new system, not with `setCamelizedAttributes()`).
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-29T20:04:51Z
+
+I've fixed reported problems. I've used a fake french company name instead of Acme Inc. (same spirit but located in Lille France for the nod).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-29T20:10:38Z
+
+@dunglas I'm really sorry to insist, but I don't think it's OK to keep using `Euratechnologies` as part of the address and I also don't think that using `Lille` or `France` is OK. In my opinion, we should use a completely fake and international-looking address.
+
+PS: don't get me wrong: I work for a french company, I know a lot of french guys and I love french culture ... but Symfony docs are international and I think they should stay that way. But let's see what other doc reviewers think.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-29T20:14:21Z
+
+@javiereguiluz Euratechnologies is a big tech center where hundred of companies including Microsoft, IBM and Cap Gemini have offices. But if you think its really a problem I push a commit with the Acme things you proposed...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-22T21:51:43Z
+
+I think this one can be merged now
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-03-11T21:06:03Z
+
+Issues found by @xabbuh fixed.
