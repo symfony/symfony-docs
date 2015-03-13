@@ -51,6 +51,10 @@ Another advantage is that centralizing your templates simplifies the work
 of your designers. They don't need to look for templates in lots of directories
 scattered through lots of bundles.
 
+.. best-practice::
+
+    Use lowercased snake_case for directory and template names.
+
 Twig Extensions
 ---------------
 

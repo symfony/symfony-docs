@@ -12,6 +12,7 @@ UUID versions can also be restricted using a whitelist.
 | Options        | - `message`_                                                        |
 |                | - `strict`_                                                         |
 |                | - `versions`_                                                       |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`           |
 +----------------+---------------------------------------------------------------------+
@@ -116,6 +117,8 @@ The following PHP constants can also be used:
 * ``Uuid::V5_SHA1``
 
 All five versions are allowed by default.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Universally unique identifier (UUID)`: http://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: http://tools.ietf.org/html/rfc4122

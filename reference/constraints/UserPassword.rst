@@ -14,6 +14,7 @@ but needs to enter their old password for security.
 | Applies to     | :ref:`property or method <validation-property-target>`                                     |
 +----------------+--------------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                               |
+|                | - `payload`_                                                                               |
 +----------------+--------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`          |
 +----------------+--------------------------------------------------------------------------------------------+
@@ -101,3 +102,5 @@ message
 
 This is the message that's displayed when the underlying string does *not*
 match the current user's password.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

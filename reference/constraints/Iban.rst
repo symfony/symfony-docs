@@ -13,6 +13,7 @@ transcription errors.
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Iban`             |
 +----------------+-----------------------------------------------------------------------+
@@ -97,5 +98,7 @@ message
 **type**: ``string`` **default**: ``This is not a valid International Bank Account Number (IBAN).``
 
 The default message supplied when the value does not pass the Iban check.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Bank Account Number (IBAN)`: http://en.wikipedia.org/wiki/International_Bank_Account_Number

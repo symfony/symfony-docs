@@ -9,6 +9,7 @@ and also not equal to ``null``. To force that a value is simply not equal to
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotBlank`          |
 +----------------+------------------------------------------------------------------------+
@@ -86,3 +87,5 @@ message
 **type**: ``string`` **default**: ``This value should not be blank.``
 
 This is the message that will be shown if the value is blank.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
