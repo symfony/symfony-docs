@@ -51,7 +51,7 @@ Configuration
     * :ref:`enabled <profiler.enabled>`
 * `translator`_
     * :ref:`enabled <translator.enabled>`
-    * `fallback`_
+    * `fallbacks`_
     * `logging`_
 * `property_accessor`_
     * `magic_call`_
@@ -577,10 +577,19 @@ enabled
 
 Whether or not to enable the ``translator`` service in the service container.
 
-fallback
-........
+.. _fallback:
 
-**type**: ``string`` **default**: ``en``
+fallbacks
+.........
+
+**type**: ``string|array`` **default**: ``array('en')``
+
+.. versionadded:: 2.3.25
+    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
+    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
+    language defined as a string.
+    Please note that you can still use the old ``fallback`` option if you want
+    define only one fallback.
 
 This option is used when the translation key for the current locale wasn't found.
 
@@ -812,7 +821,7 @@ Full default Configuration
             # translator configuration
             translator:
                 enabled:              false
-                fallback:             en
+                fallbacks:            [en]
                 logging:              "%kernel.debug%"
 
             # validation configuration

@@ -6,7 +6,7 @@ in the translation process.
 
 .. note::
 
-    Symfony Project officially discourages starting new translations for the
+    Symfony Project officially discourages from starting new translations for the
     documentation. As a matter of fact, there is `an ongoing discussion`_ in
     the community about the benefits and drawbacks of community driven translations.
 
