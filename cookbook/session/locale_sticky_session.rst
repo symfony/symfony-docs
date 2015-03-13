@@ -106,3 +106,112 @@ method::
     {
         $locale = $request->getLocale();
     }
+
+Setting the Locale Based on the User's Preferences
+--------------------------------------------------
+
+You might want to improve this technique even further and define the locale based on
+the user entity of the logged in user. However, since the ``LocaleListener`` is called
+before the ``FirewallListener``, which is responsible for handling authentication and
+is setting the user token into the ``TokenStorage``, you have no access to the user
+which is logged in.
+
+Let's pretend you have defined a property "locale" in your user entity which you
+want to be used as the locale for the given user. In order to achieve the wanted locale
+configuration, you can set the locale which is defined for the user to the session right
+after the login. Fortunately, you can hook into the login process and update the user's
+session before the redirect to the first page. For this you need an event listener for the
+``security.interactive_login`` event:
+
+.. code-block:: php
+
+    // src/AppBundle/EventListener/UserLocaleListener.php
+    namespace AppBundle\EventListener;
+
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+
+    /**
+     * Stores the locale of the user in the session after the
+     * login. This can be used by the LocaleListener afterwards.
+     */
+    class UserLocaleListener
+    {
+        /**
+         * @var Session
+         */
+        private $session;
+
+        public function __construct(Session $session)
+        {
+            $this->session = $session;
+        }
+
+        /**
+         * @param InteractiveLoginEvent $event
+         */
+        public function onInteractiveLogin(InteractiveLoginEvent $event)
+        {
+            $user = $event->getAuthenticationToken()->getUser();
+
+            if (null !== $user->getLocale()) {
+                $this->session->set('_locale', $user->getLocale());
+            }
+        }
+    }
+
+Then register the listener:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.user_locale_listener:
+                class: AppBundle\EventListener\UserLocaleListener
+                arguments: [@session]
+                tags:
+                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.user_locale_listener"
+                    class="AppBundle\EventListener\UserLocaleListener">
+
+                    <argument type="service" id="session"/>
+
+                    <tag name="kernel.event_listener"
+                        event="security.interactive_login"
+                        method="onInteractiveLogin" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container
+            ->register('app.user_locale_listener', 'AppBundle\EventListener\UserLocaleListener')
+            ->addArgument('session')
+            ->addTag(
+                'kernel.event_listener',
+                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin'
+            );
+
+.. caution::
+
+    With this configuration you are all set for having the locale based on the user's
+    locale. If however the locale changes during the session, it would not be updated
+    since with the current implementation the user locale will only be stored to the
+    session on login. In order to update the language immediately after a user has
+    changed their language, you need to update the session after an update to
+    the user entity.
