@@ -62,8 +62,24 @@ You can pass an optional blocking argument as the first argument to the
 ``lock()`` method, which defaults to ``false``. If this is set to ``true``, your
 PHP code will wait indefinitely until the lock is released by another process.
 
-The resource is automatically released by PHP at the end of the script. In
-addition, you can invoke the
-:method:`Symfony\\Component\\Filesystem\\LockHandler::release` method to release
-the lock explicitly. Once it's released, any other process can lock the
-resource.
+.. caution::
+
+    Be aware of the fact that the resource lock is automatically released as soon
+    as PHP applies the garbage-collection process to the ``LockHandler`` object.
+    This means that if you refactor the first example shown in this article as
+    follows::
+
+        use Symfony\Component\Filesystem\LockHandler;
+
+         if (!(new LockHandler('hello.lock'))->lock()) {
+            // the resource "hello" is already locked by another process
+
+            return 0;
+        }
+
+    Now the code won't work as expected because PHP's garbage collection mechanism
+    removes the reference to the ``LockHandler`` object and thus, the lock is released
+    just after it's been created.
+
+    Another alternative way to release the lock explicitly when needed is to use the
+    :method:`Symfony\\Component\\Filesystem\\LockHandler::release` method.
