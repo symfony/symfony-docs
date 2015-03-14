@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-12T19:10:17Z
+
+In the past, the special RST scopes were used because the tool used to merge PRs may use them to extract the information about deciders/mergers and decide if a PR could be merged. However, that tool hardcodes this information in its source code, so this information is no longer needed in this page and I think it's OK to remove it. So :+1: and thanks you for this improvement.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-12T19:28:41Z
+
+> In the past, the special RST scopes were used because the tool used to merge PRs may use them to extract the information about deciders/mergers and decide if a PR could be merged.
+
+Ah, I didn't know that. Thanks for clarifying the initial reasons for this.
+
+> However, that tool hardcodes this information in its source code, so this information is no longer needed in this page and I think it's OK to remove it.
+
+This sounds good. :)
