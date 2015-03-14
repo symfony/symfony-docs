@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-19T17:05:29Z
+
+I need help to fix this cross link: https://github.com/symfony/symfony-docs/pull/5023/files#diff-10d22571d2214eea79758829d3bbf069R22
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-03T07:56:46Z
+
+This PR seems to be finished, so we can tag it with the *finished* label. Thanks.
