@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-02-21T10:59:27Z
+
+note that ``server_version`` is not only a fix (configuring it explicitly avoids doing the version guessing for each request to your app).
+And DoctrineBundle cannot fix the issue, because it does not come from DoctrineBundle (it comes from the fact that the ORM gets the database platform eagerly in many places, and so triggers the guessing even in cases it should not be needed)
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-02-25T22:17:17Z
+
+:+1:
