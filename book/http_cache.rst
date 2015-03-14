@@ -168,21 +168,9 @@ from your application and returning them to the client.
 
 .. caution::
 
-    By default, a kernel based on the cache ignores the ``framework.http_method_override``
-    option, which could lead to errors when using ``PUT``, ``DELETE`` and ``PURGE``
-    methods in HTTP requests.
-
-    Invoke the ``enableHttpMethodParameterOverride()`` method before creating the
-    ``Request`` object in order to take this option into account::
-
-        // web/app.php
-
-        // ...
-        $kernel = new AppCache($kernel);
-
-        Request::enableHttpMethodParameterOverride(); // <-- add this line
-        $request = Request::createFromGlobals();
-        // ...
+    If you're using the :ref:`framework.http_method_override <configuration-framework-http_method_override>`
+    option to read the HTTP method from a ``_method`` parameter, see the
+    above link for a tweak you need to make.
 
 .. tip::
 
