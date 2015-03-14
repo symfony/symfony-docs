@@ -778,6 +778,8 @@ entities (the topic of :ref:`relations <book-doctrine-relations>` will be
 covered later), group, etc. For more information, see the official
 `Doctrine Query Language`_ documentation.
 
+.. _book-doctrine-custom-repository-classes:
+
 Custom Repository Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
