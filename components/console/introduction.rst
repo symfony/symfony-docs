@@ -20,15 +20,6 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Console).
 
-.. note::
-
-    Windows does not support ANSI colors by default so the Console component detects and
-    disables colors where Windows does not have support. However, if Windows is not
-    configured with an ANSI driver and your console commands invoke other scripts which
-    emit ANSI color sequences, they will be shown as raw escape characters.
-
-    To enable ANSI color support for Windows, please install `ANSICON`_.
-
 Creating a basic Command
 ------------------------
 
@@ -123,6 +114,14 @@ This prints::
 
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    By default, the Windows command console doesn't support output coloring. The
+    Console component disables output coloring for Windows systems, but if your
+    commands invoke other scripts which emit color sequences, they will be
+    wrongly displayed as raw escape characters. Install the `ConEmu`_ or `ANSICON`_
+    free applications to add coloring support to your Windows command console.
 
 Whenever you output text, you can surround the text with tags to color its
 output. For example::
@@ -506,4 +505,5 @@ Learn More!
 * :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
+.. _ConEmu: https://code.google.com/p/conemu-maximus5/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
