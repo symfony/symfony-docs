@@ -212,14 +212,14 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
     and the
     :doc:`DependencyInjection component </components/dependency_injection/introduction>`,
     you can use the
-    :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterListenersPass`
-    from the HttpKernel component to tag services as event listeners::
+    :class:`Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass`
+    to tag services as event listeners::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
+        use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
