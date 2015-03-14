@@ -62,6 +62,11 @@ code::
 
 .. sidebar:: ICU and Deployment Problems
 
+    .. note::
+
+        These deployment problems only affect the following Symfony versions:
+        2.3.0 to 2.3.20 versions, any 2.4.x version and 2.5.0 to 2.5.5 versions.
+
     The intl extension internally uses the `ICU library`_ to obtain localization
     data such as number formats in different languages, country names and more.
     To make this data accessible to userland PHP libraries, Symfony ships a copy
