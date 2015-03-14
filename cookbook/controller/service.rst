@@ -281,7 +281,7 @@ controller:
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.context``)
     .. code-block:: php
 
-        $authorizationChecker->isGranted($attributes, $object);
+        $securityContext->isGranted($attributes, $object);
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
     .. code-block:: php
