@@ -166,6 +166,24 @@ kernel::
 The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.
 
+.. caution::
+
+    By default, a kernel based on the cache ignores the ``framework.http_method_override``
+    option, which could lead to errors when using ``PUT``, ``DELETE`` and ``PURGE``
+    methods in HTTP requests.
+
+    Invoke the ``enableHttpMethodParameterOverride()`` method before creating the
+    ``Request`` object in order to take this option into account::
+
+        // web/app.php
+
+        // ...
+        $kernel = new AppCache($kernel);
+
+        Request::enableHttpMethodParameterOverride(); // <-- add this line
+        $request = Request::createFromGlobals();
+        // ...
+
 .. tip::
 
     The cache kernel has a special ``getLog()`` method that returns a string
