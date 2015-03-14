@@ -586,7 +586,7 @@ The code below shows the implementation of the
 .. tip::
 
     Don't forget to add the repository class to the 
-    :ref: `mapping definition of your entity <book-doctrine-custom-repository-classes>`.
+    :ref:`mapping definition of your entity <book-doctrine-custom-repository-classes>`.
 
 To finish the implementation, the configuration of the security layer must be
 changed to tell Symfony to use the new custom entity provider instead of the
