@@ -296,9 +296,11 @@ declare a one-letter shortcut that you can call with a single dash like
 
 .. tip::
 
-    It is also possible to make an option *optionally* accept a value (so that
-    ``--yell``, ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
-    accept an array of values.
+    There is nothing forbidding you to create a command with an option that
+    optionally accepts a value. However, there is no way you can distinguish
+    when the option was used without a value (``command --yell``) or when it
+    wasn't used at all (``command``). In both cases, the value retrieved for
+    the option will be ``null``.
 
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::
