@@ -813,23 +813,25 @@ You can easily deny access from inside a controller::
 
     public function helloAction($name)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
-        }
+        // The second parameter is used to specify on what object the role is tested.
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        // Old way :
+        // if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        //     throw $this->createAccessDeniedException('Unable to access this page!');
+        // }
 
         // ...
     }
 
 .. versionadded:: 2.6
-     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
+    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
+    in the example above).
 
-.. versionadded:: 2.5
-    The ``createAccessDeniedException`` method was introduced in Symfony 2.5.
-
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createAccessDeniedException`
-method creates a special :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-object, which ultimately triggers a 403 HTTP response inside Symfony.
+In both cases, a special
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
 
 That's it! If the user isn't logged in yet, they will be asked to login (e.g.
 redirected to the login page). If they *are* logged in, they'll be shown

@@ -241,11 +241,15 @@ have a route that maps a product id to an update action in a controller::
                 );
             }
 
+<<<<<<< HEAD
             $product->setName('New product name!');
             $product->save();
 
             return $this->redirect($this->generateUrl('homepage'));
         }
+=======
+        return $this->redirectToRoute('homepage');
+>>>>>>> pull/5046
     }
 
 Updating an object involves just three steps:

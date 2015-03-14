@@ -162,18 +162,10 @@ In the following example, the action is only allowed if the user has the
 
     public function editAction()
     {
-        if (false === $this->get('security.authorization_checker')->isGranted(
-            'IS_AUTHENTICATED_FULLY'
-           )) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
 
 If your application is based on the Symfony Standard Edition, you can also secure
 your controller using annotations:

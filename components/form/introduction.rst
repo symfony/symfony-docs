@@ -587,7 +587,7 @@ method:
 
                 // ... perform some action, such as saving the data to the database
 
-                return $this->redirect($this->generateUrl('task_success'));
+                return $this->redirectToRoute('task_success');
             }
 
             // ...

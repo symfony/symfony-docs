@@ -232,7 +232,7 @@ workflow looks like the following from inside a controller::
         if ($form->isValid()) {
             // the validation passed, do something with the $author object
 
-            return $this->redirect($this->generateUrl(...));
+            return $this->redirectToRoute(...);
         }
 
         return $this->render('author/form.html.twig', array(
