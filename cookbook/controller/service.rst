@@ -273,19 +273,19 @@ controller:
 
     *Simply inject doctrine instead of fetching it from the container*
 
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.context``)
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.token_storage``)
     .. code-block:: php
 
         $user = null;
-        $token = $securityContext->getToken();
+        $token = $tokenStorage->getToken();
         if (null !== $token && is_object($token->getUser())) {
              $user = $token->getUser();
         }
 
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.context``)
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.authorization_checker``)
     .. code-block:: php
 
-        $securityContext->isGranted($attributes, $object);
+        $authChecker->isGranted($attributes, $object);
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
     .. code-block:: php
