@@ -87,7 +87,7 @@ bundle::
     {
     }
 
-Next, create two routes: one for each of the paths your configured earlier
+Next, create two routes: one for each of the paths you configured earlier
 under your ``form_login`` configuration (``/login`` and ``/login_check``):
 
 .. configuration-block::
