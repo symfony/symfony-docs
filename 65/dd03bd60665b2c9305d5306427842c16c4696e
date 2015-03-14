@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by TerjeBr at 2015-03-02T20:25:46Z
+
+Added this PR since @e-weimann just closed his PR #4925 without it being merged.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-02T21:16:56Z
+
+@TerjeBr Can you please also add the label in `/cookbook/email/dev_environment.rst`?
+
+It should look like this (around line 122):
+
+```rst
+.. _sending-to-a-specified-address-but-with-exceptions:
+
+Sending to a Specified Address but with Exceptions
+..................................................
+```
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-03T09:46:56Z
+
+Looking good, thanks! :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-03T10:15:26Z
+
+:+1: I like it.
+
+And a huge thank you to @e-weimann for the initial work on this.
+
+---------------------------------------------------------------------------
+
+by TerjeBr at 2015-03-03T10:44:01Z
+
+@e-weimann opened #4925 just after I had filed #4924 . I did the initial work of documenting this feature, and I also provided @e-weimann with the text for the reference update.
+
+But I guess we can thank @e-weimann for taking the initiative to help us not letting the reference section be forgotten on this issue.
+
+---------------------------------------------------------------------------
+
+by e-weimann at 2015-03-03T20:49:42Z
+
+@TerjeBr It is her PR, not his and it was coincidence that I opened the pull request after #4924. I found the option in the source, but couldn't find information about it in the documentation. Thanks for finishing the this.
