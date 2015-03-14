@@ -88,8 +88,7 @@ to show a link to exit impersonation:
 
 In some cases you may need to get the object that represents the impersonating
 user rather than the impersonated user. Use the following snippet to iterate
-over user's roles until you get the ``SwitchUserRole`` related to the
-impersonating user::
+over the user's roles until you find one that a ``SwitchUserRole`` object::
 
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
