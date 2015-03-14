@@ -26,15 +26,16 @@ simple. Hardcoding URLs can be a disadvantage because:
   asset. When using the Asset component, you can group assets in packages to
   avoid repeating the common part of their path;
 * **Versioning is difficult**: it has to be custom managed for each
-  application. Adding a version to the asset URLs is essential for some applications
-  because it allows to control how the assets are cached. The Asset component
-  allows to define different versioning strategies for each package;
+  application. Adding a version (e.g. ``main.css?v=5``) to the asset URLs
+  is essential for some applications because it allows you to control how
+  the assets are cached. The Asset component allows you to define different
+  versioning strategies for each package;
 * **Moving assets location** is cumbersome and error-prone: it requires you to
   carefully update the URLs of all assets included in all templates. The Asset
   component allows to move assets effortlessly just by changing the base path
   value associated with the package of assets;
-* **It's nearly impossible to use multiple CDNs**: this technique requires to
-  change the URL of the asset randomly for each request. The Asset component
+* **It's nearly impossible to use multiple CDNs**: this technique requires
+  you to change the URL of the asset randomly for each request. The Asset component
   provides out-of-the-box support for any number of multiple CDNs, both regular
   (``http://``) and secure (``https://``).
 
@@ -65,7 +66,7 @@ any versioning::
     echo $package->getUrl('/image.png');
     // result: /image.png
 
-Packages implement the :class:`Symfony\\Component\\Asset\\PackageInterface`,
+Packages implement :class:`Symfony\\Component\\Asset\\PackageInterface`,
 which defines the following two methods:
 
 :method:`Symfony\\Component\\Asset\\PackageInterface::getVersion`
@@ -74,18 +75,27 @@ which defines the following two methods:
 :method:`Symfony\\Component\\Asset\\PackageInterface::getUrl`
     Returns an absolute or root-relative public path.
 
+With a package, you can:
+
+A) :ref:`version the assets <component-assets-versioning>`;
+B) set a :ref:`common base path (e.g. /css) <component-assets-path-package>`
+   for the assets;
+C) :ref:`configure a CDN <component-assets-cdn>` for the assets
+
+.. _component-assets-versioning:
+
 Versioned Assets
 ~~~~~~~~~~~~~~~~
 
-One of the main features of the Asset component is to manage the versioning of
-the application's assets. Asset versions are commonly used to control how these
-assets are cached.
+One of the main features of the Asset component is the ability to manage
+the versioning of the application's assets. Asset versions are commonly used
+to control how these assets are cached.
 
-Instead of relying on a simple version mechanism, the Asset component allows to
-define advanced versioning strategies via PHP classes. The two built-in strategies
-provided by the component are :class:`Symfony\\Component\\Asset\\VersionStrategy\\EmptyVersionStrategy`,
+Instead of relying on a simple version mechanism, the Asset component allows
+you to define advanced versioning strategies via PHP classes. The two built-in
+strategies are the :class:`Symfony\\Component\\Asset\\VersionStrategy\\EmptyVersionStrategy`,
 which doesn't add any version to the asset and :class:`Symfony\\Component\\Asset\\VersionStrategy\\StaticVersionStrategy`,
-which allows to set the version with a format string.
+which allows you to set the version with a format string.
 
 In this example, the ``StaticVersionStrategy`` is used to append the ``v1``
 suffix to any asset path::
@@ -143,13 +153,15 @@ every day::
         }
     }
 
+.. _component-assets-path-package:
+
 Grouped Assets
 ~~~~~~~~~~~~~~
 
-It's common for applications to store their assets in a common path. If that's
-your case, replace the default :class:`Symfony\\Component\\Asset\\Package` class
-by :class:`Symfony\\Component\\Asset\\PathPackage` to avoid repeating the same
-path time and again::
+Often, many assets live under a common path (e.g. ``/static/images``). If
+that's your case, replace the default :class:`Symfony\\Component\\Asset\\Package`
+class with :class:`Symfony\\Component\\Asset\\PathPackage` to avoid repeating
+that path time and again::
 
     use Symfony\Component\Asset\PathPackage;
     // ...
@@ -162,9 +174,9 @@ path time and again::
 Request Context Aware Assets
 ............................
 
-If you are also using the HttpFoundation component in your project, for example
-in a Symfony application, the ``PathPackage`` class can take into account the
-context of the current request::
+If you are also using the :doc:`HttpFoundation</components/http_foundation/introduction>`
+component in your project (for example in a Symfony application), the ``PathPackage``
+class can take into account the context of the current request::
 
     use Symfony\Component\Asset\PathPackage;
     use Symfony\Component\Asset\Context\RequestStackContext;
@@ -180,9 +192,12 @@ context of the current request::
     // result: /somewhere/static/images/logo.png?v1
 
 When the request context is set (via an optional third argument), in addition to
-the configured base path, ``PathPackage`` also prepends the current request base
-URL (``/somewhere/`` in this example) to assets. This allows your website to be
-hosted anywhere under the web server root directory.
+the configured base path (i.e. ``/static/images``), ``PathPackage`` also
+prepends the current request base URL. So, for example, if your entire site
+is hosted under the ``/somewhere`` directory in your web server root directory,
+then ``/somewhere/`` will be prefixed to all paths.
+
+.. _component-assets-cdn:
 
 Absolute Assets and CDNs
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,25 +217,44 @@ class to generate absolute URLs for their assets::
     echo $package->getUrl('/logo.png');
     // result: http://static.example.com/images/logo.png?v1
 
+You can also pass a schema-agnostic URL::
+
+    use Symfony\Component\Asset\UrlPackage;
+    // ...
+
+    $package = new UrlPackage(
+        '//static.example.com/images/',
+        new StaticVersionStrategy('v1')
+    );
+
+    echo $package->getUrl('/logo.png');
+    // result: //static.example.com/images/logo.png?v1
+
+This is useful because assets will automatically be requested via https if
+a visitor is viewing your site in https. Just make sure that your CDN host
+supports https.
+
 In case you serve assets from more than one domain to improve application
-performance, pass an array of URLs as the first argument of ``UrlPackage``
+performance, pass an array of URLs as the first argument to the ``UrlPackage``
 constructor::
 
     use Symfony\Component\Asset\UrlPackage;
     // ...
 
     $urls = array(
-        'http://static1.example.com/images/',
-        'http://static2.example.com/images/',
+        '//static1.example.com/images/',
+        '//static2.example.com/images/',
     );
     $package = new UrlPackage($urls, new StaticVersionStrategy('v1'));
 
     echo $package->getUrl('/logo.png');
     // result: http://static1.example.com/images/logo.png?v1
+    echo $package->getUrl('/icon.png');
+    // result: http://static2.example.com/images/icon.png?v1
 
-The selection of the domain which will serve the asset is deterministic, meaning
-that each asset will be always served by the same domain. This behavior simplifies
-the management of HTTP cache.
+For each asset, one of the URLs will be randomly used. But, the selection
+is deterministic, meaning that each asset will be always served by the same
+domain. This behavior simplifies the management of HTTP cache.
 
 Request Context Aware Assets
 ............................
@@ -240,6 +274,7 @@ protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
         new RequestStackContext($requestStack)
     );
 
+    // assuming the RequestStackContext says that we are on a secure host
     echo $package->getUrl('/logo.png');
     // result: https://example.com/logo.png?v1
 
