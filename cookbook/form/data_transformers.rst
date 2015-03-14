@@ -146,12 +146,8 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
                 ->setDefaults(array(
                     'data_class' => 'Acme\TaskBundle\Entity\Task',
                 ))
-                ->setRequired(array(
-                    'em',
-                ))
-                ->setAllowedTypes(array(
-                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                ));
+                ->setRequired(array('em'))
+                ->setAllowedTypes('em', 'Doctrine\Common\Persistence\ObjectManager')
 
             // ...
         }
