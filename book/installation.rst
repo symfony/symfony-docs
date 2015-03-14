@@ -98,8 +98,8 @@ number as the second argument of the ``new`` command:
     # Windows
     c:\projects\> php symfony.phar new my_project_name 2.3.23
 
-If you want your project to be based on the latest Symfony LTS version, pass
-``lts`` as the second argument of the ``new`` command:
+If you want your project to be based on the latest :ref:`Symfony LTS version <releases-lts>`,
+pass ``lts`` as the second argument of the ``new`` command:
 
 .. code-block:: bash
 
