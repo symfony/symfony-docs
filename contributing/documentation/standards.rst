@@ -52,9 +52,9 @@ Code Examples
 * The code follows the :doc:`Symfony Coding Standards </contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
 * The code examples should look real for a web application context. Avoid abstract
-  or puerile examples (``foo``, ``bar``, ``demo``, etc.);
+  or trivial examples (``foo``, ``bar``, ``demo``, etc.);
 * The code should follow the :doc:`Symfony Best Practices </best_practices/introduction>`.
-  Unless the example requires to use a custom bundle, make sure to always use the
+  Unless the example requires a custom bundle, make sure to always use the
   ``AppBundle`` bundle to store your code;
 * Use ``Acme`` when the code requires a vendor name;
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
