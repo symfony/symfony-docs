@@ -17,6 +17,11 @@ You could try to do this in your controller, but it's not the best solution.
 It would be better if this issue were automatically converted to an Issue object.
 This is where Data Transformers come into play.
 
+.. caution::
+
+    When a form field has the ``inherit_data`` option set, Data Transformers
+    won't be applied to that field.
+
 Creating the Transformer
 ------------------------
 
@@ -123,7 +128,9 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
         {
             // ...
 
-            // this assumes that the entity manager was passed in as an option
+            // the "em" is an option that you pass when creating your form. Check out
+            // the 3rd argument to createForm in the next code block to see how this
+            // is passed to the form (also see setDefaultOptions).
             $entityManager = $options['em'];
             $transformer = new IssueToNumberTransformer($entityManager);
 
@@ -140,12 +147,8 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
                 ->setDefaults(array(
                     'data_class' => 'Acme\TaskBundle\Entity\Task',
                 ))
-                ->setRequired(array(
-                    'em',
-                ))
-                ->setAllowedTypes(array(
-                    'em' => 'Doctrine\Common\Persistence\ObjectManager',
-                ));
+                ->setRequired(array('em'))
+                ->setAllowedTypes('em', 'Doctrine\Common\Persistence\ObjectManager')
 
             // ...
         }

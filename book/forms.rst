@@ -234,7 +234,7 @@ controller::
         if ($form->isValid()) {
             // perform some action, such as saving the task to the database
 
-            return $this->redirect($this->generateUrl('task_success'));
+            return $this->redirectToRoute('task_success');
         }
 
         // ...
@@ -319,7 +319,7 @@ querying if the "Save and add" button was clicked::
             ? 'task_new'
             : 'task_success';
 
-        return $this->redirect($this->generateUrl($nextAction));
+        return $this->redirectToRoute($nextAction);
     }
 
 .. index::
@@ -1237,7 +1237,7 @@ it after a form submission can be done when the form is valid::
         $em->persist($task);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('task_success'));
+        return $this->redirectToRoute('task_success');
     }
 
 If, for some reason, you don't have access to your original ``$task`` object,

@@ -429,35 +429,47 @@ A great way to see the core functionality in action is to look in the
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-method::
+If you want to redirect the user to another page, use the ``redirectToRoute()`` method::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is equivalent to using redirect() and generateUrl() together:
+        // return $this->redirect($this->generateUrl('homepage'), 301);
     }
 
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
+.. versionadded:: 2.6
+    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
 
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
+Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
+
+    public function indexAction()
+    {
+        return $this->redirect('http://symfony.com/doc');
+    }
+
+By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
 perform a 301 (permanent) redirect, modify the second argument::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'), 301);
+        return $this->redirectToRoute('homepage', array(), 301);
     }
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to::
+    The ``redirectToRoute()`` method is simply a shortcut that creates a
+    ``Response`` object that specializes in redirecting the user. It's
+    equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
-        return new RedirectResponse($this->generateUrl('homepage'));
+        public function indexAction()
+        {
+            return new RedirectResponse($this->generateUrl('homepage'));
+        }
 
 .. index::
    single: Controller; Rendering templates
@@ -623,12 +635,14 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl(...));
+            // $this->addFlash is equivalent to $this->get('session')->getFlashBag()->add
+
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(...);
@@ -638,8 +652,8 @@ After processing the request, the controller sets a ``notice`` flash message
 in the session and then redirects. The name (``notice``) isn't significant -
 it's just something you invent and reference next.
 
-In the template of the next page (or even better, in your base layout template),
-the following code will render the ``notice`` message:
+In the template of the next action, the following code could be used to render
+the ``notice`` message:
 
 .. configuration-block::
 
