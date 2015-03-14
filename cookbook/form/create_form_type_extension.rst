@@ -216,7 +216,7 @@ it in the view::
          */
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setOptional(array('image_path'));
+            $resolver->setDefined(array('image_path'));
         }
 
         /**

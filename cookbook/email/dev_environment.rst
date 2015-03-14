@@ -119,6 +119,8 @@ the replaced address, so you can still see who it would have been sent to.
     These are ``X-Swift-Cc`` and ``X-Swift-Bcc`` for the ``CC`` and ``BCC``
     addresses respectively.
 
+.. _sending-to-a-specified-address-but-with-exceptions:
+
 Sending to a Specified Address but with Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -89,7 +89,7 @@ you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $data)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('emails', new Assert\Count(array(
                     'min'        => 1,

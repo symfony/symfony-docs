@@ -667,7 +667,7 @@ you have a route that maps a product id to an update action in a controller::
         $product->setName('New product name!');
         $em->flush();
 
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
     }
 
 Updating an object involves just three steps:
@@ -777,6 +777,8 @@ The DQL syntax is incredibly powerful, allowing you to easily join between
 entities (the topic of :ref:`relations <book-doctrine-relations>` will be
 covered later), group, etc. For more information, see the official
 `Doctrine Query Language`_ documentation.
+
+.. _book-doctrine-custom-repository-classes:
 
 Custom Repository Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~

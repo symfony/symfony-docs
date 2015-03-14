@@ -166,6 +166,12 @@ kernel::
 The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.
 
+.. caution::
+
+    If you're using the :ref:`framework.http_method_override <configuration-framework-http_method_override>`
+    option to read the HTTP method from a ``_method`` parameter, see the
+    above link for a tweak you need to make.
+
 .. tip::
 
     The cache kernel has a special ``getLog()`` method that returns a string

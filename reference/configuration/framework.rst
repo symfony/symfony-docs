@@ -91,6 +91,24 @@ method gets called automatically. It becomes the service container parameter
 named ``kernel.http_method_override``. For more information, see
 :doc:`/cookbook/routing/method_parameters`.
 
+.. caution::
+
+    If you're using the :ref:`AppCache Reverse Proxy <symfony2-reverse-proxy>`
+    with this option, the kernel will ignore the ``_method`` parameter,
+    which could lead to errors.
+
+    To fix this, invoke the ``enableHttpMethodParameterOverride()`` method
+    before creating the ``Request`` object::
+
+        // web/app.php
+
+        // ...
+        $kernel = new AppCache($kernel);
+
+        Request::enableHttpMethodParameterOverride(); // <-- add this line
+        $request = Request::createFromGlobals();
+        // ...
+
 ide
 ~~~
 

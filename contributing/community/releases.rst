@@ -60,6 +60,8 @@ Standard Versions
 A standard minor version is maintained for an *eight month* period for bug
 fixes, and for a *fourteen month* period for security issue fixes.
 
+.. _releases-lts:
+
 Long Term Support Versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
