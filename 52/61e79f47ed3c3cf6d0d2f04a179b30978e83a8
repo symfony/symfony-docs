@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-20T15:38:45Z
+
+I like this one :)
+
+---------------------------------------------------------------------------
+
+by dbu at 2015-02-20T15:50:39Z
+
+should we mention the table in the introduction of the cookbook article?
+
+---------------------------------------------------------------------------
+
+by dbu at 2015-02-21T15:28:08Z
+
+thanks @xabbuh , switched to definition list. the rendering looks ok to me.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-02-21T16:59:02Z
+
+awesome PR :+1:
+
+---------------------------------------------------------------------------
+
+by dbu at 2015-02-23T12:37:28Z
+
+fixed the comments. and thanks @timglabisch! credit goes to @sixty-nine, he started this ages ago and i said i would do a PR with it, but never got around to do it until now.
+
+---------------------------------------------------------------------------
+
+by dbu at 2015-03-09T07:14:54Z
+
+thanks @Pierstoval , updated the things you noted.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-09T19:10:50Z
+
+Thanks @dbu! This looks really good to me.
