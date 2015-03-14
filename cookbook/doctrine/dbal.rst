@@ -35,6 +35,7 @@ To get started, configure the database connection parameters:
                 user:     root
                 password: null
                 charset:  UTF8
+                server_version: 5.6
 
     .. code-block:: xml
 
@@ -45,6 +46,8 @@ To get started, configure the database connection parameters:
                 dbname="Symfony"
                 user="root"
                 password="null"
+                charset="UTF8"
+                server-version="5.6"
                 driver="pdo_mysql"
             />
         </doctrine:config>
@@ -58,6 +61,8 @@ To get started, configure the database connection parameters:
                 'dbname'    => 'Symfony',
                 'user'      => 'root',
                 'password'  => null,
+                'charset'   => 'UTF8',
+                'server_version' => '5.6',
             ),
         ));
 

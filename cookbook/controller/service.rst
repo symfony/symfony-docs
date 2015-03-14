@@ -21,8 +21,10 @@ this works fine, controllers can also be specified as services.
     looking at the constructor arguments, it's easy to see what types of things
     this controller may or may not do. And because each dependency needs
     to be injected manually, it's more obvious (i.e. if you have many constructor
-    arguments) when your controller has become too big, and may need to be
-    split into multiple controllers.
+    arguments) when your controller is becoming too big. The recommendation from
+    the :doc:`best practices </best_practices/controllers>` is also valid for
+    controllers defined as services: Avoid putting your business logic into the
+    controllers. Instead, inject services that do the bulk of the work.
 
     So, even if you don't specify your controllers as services, you'll likely
     see this done in some open-source Symfony bundles. It's also important
@@ -235,6 +237,91 @@ inject *only* the exact service(s) that you need directly into the controller.
    place that code into a base controller that you extend. Both approaches
    are valid, exactly how you want to organize your reusable code is up to
    you.
+
+Base Controller Methods and Their Service Replacements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This list explains how to replace the convenience methods of the base
+controller:
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createForm` (service: ``form.factory``)
+    .. code-block:: php
+
+        $formFactory->create($type, $data, $options);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createFormBuilder` (service: ``form.factory``)
+    .. code-block:: php
+
+        $formFactory->createBuilder('form', $data, $options);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createNotFoundException`
+    .. code-block:: php
+
+        new NotFoundHttpException($message, $previous);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward` (service: ``http_kernel``)
+    .. code-block:: php
+
+        $httpKernel->forward($controller, $path, $query);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl` (service: ``router``)
+    .. code-block:: php
+
+       $router->generate($route, $params, $absolute);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine` (service: ``doctrine``)
+
+    *Simply inject doctrine instead of fetching it from the container*
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getUser` (service: ``security.context``)
+    .. code-block:: php
+
+        $user = null;
+        $token = $securityContext->getToken();
+        if (null !== $token && is_object($token->getUser())) {
+             $user = $token->getUser();
+        }
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isGranted` (service: ``security.context``)
+    .. code-block:: php
+
+        $securityContext->isGranted($attributes, $object);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
+    .. code-block:: php
+
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+
+        return new RedirectResponse($url, $status);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render` (service: ``templating``)
+    .. code-block:: php
+
+        $templating->renderResponse($view, $parameters, $response);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::renderView` (service: ``templating``)
+    .. code-block:: php
+
+       $templating->render($view, $parameters);
+
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::stream` (service: ``templating``)
+    .. code-block:: php
+
+        use Symfony\Component\HttpFoundation\StreamedResponse;
+
+        $templating = $this->templating;
+        $callback = function () use ($templating, $view, $parameters) {
+            $templating->stream($view, $parameters);
+        }
+
+        return new StreamedResponse($callback);
+
+.. tip::
+
+    ``getRequest`` has been deprecated. Instead, have an argument to your
+    controller action method called ``Request $request``. The order of the
+    parameters is not important, but the typehint must be provided.
+
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php
