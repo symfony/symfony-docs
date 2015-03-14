@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-15T11:23:17Z
+
+I prefer to move this to `components/asset/introduction.html` (I would like to do this for all components in the future).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-16T10:29:33Z
+
+@WouterJ I completely agree with you. In 9c456e3 I've moved the documentation of the Asset component to `components/asset/*`
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-18T16:31:19Z
+
+@javiereguiluz is there any reason you closed all your open PRs and removed all your branches?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-18T16:36:28Z
+
+@WouterJ yes of course, there is a very simple explanation: I'm completely stupid :(  I was doing other things and I indadvertedly deleted everything. Please tell me that we can fix this mess somehow.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-18T16:37:09Z
+
+You can click the "restore branch" button for each PR
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-03T08:04:22Z
+
+It seems that we can tag this PR as *finished*. Thanks.
