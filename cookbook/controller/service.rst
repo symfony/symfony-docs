@@ -124,7 +124,7 @@ the route ``_controller`` value:
 
 .. versionadded:: 2.6
     If your controller service implements the ``__invoke`` method, you can simply refer to the service id
-    (``acme.hello.controller``).
+    (``app.hello_controller``).
 
 Alternatives to base Controller Methods
 ---------------------------------------
