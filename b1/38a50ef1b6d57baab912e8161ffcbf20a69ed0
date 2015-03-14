@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-02-20T14:45:29Z
+
+note for maintainers, this should be merged in the 2.3 branch (and it should be flagged as WCM for now)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-20T14:50:33Z
+
+@94noni Thank your for creating this pull request. FYI, I prefixed the PR title with "[WCM]" to indicate that we are waiting for your PR to be merged into the Symfony Installer code.
+
+---------------------------------------------------------------------------
+
+by 94noni at 2015-02-20T15:18:34Z
+
+@xabbuh ok for the PR
+i've changed but not use if a really understand what you meant :s
+
+---------------------------------------------------------------------------
+
+by 94noni at 2015-03-02T12:22:47Z
+
+ping @xabbuh cc @stof @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-02T12:33:49Z
+
+:+1: Looks great @94noni!
