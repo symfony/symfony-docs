@@ -449,11 +449,11 @@ The following block shows all possible configuration keys:
 .. note::
 
     The ``server_version`` option was added in Doctrine DBAL 2.5, which is used
-    by DoctrineBundle 1.3 version. The value of this option should match your
-    database server version (use ``postgres -V`` or ``psql -V`` command to find
+    by DoctrineBundle 1.3. The value of this option should match your database
+    server version (use ``postgres -V`` or ``psql -V`` command to find
     your PostgreSQL version and ``mysql -V`` to get your MySQL version).
 
-    If you don't define this option and you don't have created your database yet,
+    If you don't define this option and you haven't created your database yet,
     you may get ``PDOException`` errors because Doctrine will try to guess the
     database server version automatically and none is available.
 
