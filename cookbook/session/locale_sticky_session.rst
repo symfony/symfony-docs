@@ -116,7 +116,7 @@ before the ``FirewallListener``, which is responsible for handling authenticatio
 setting the user token on the ``TokenStorage``, you have no access to the user
 which is logged in.
 
-Assumed you have defined a ``locale`` property on your ``User`` entity and
+Suppose you have defined a ``locale`` property on your ``User`` entity and
 you want to use this as the locale for the given user. To accomplish this,
 you can hook into the login process and update the user's session with this
 locale value before they are redirected to their first page.
