@@ -387,7 +387,7 @@ or perform more complex requests. Some useful examples::
         array('photo' => $photo)
     );
 
-    // Perform a DELETE requests and pass HTTP headers
+    // Perform a DELETE request and pass HTTP headers
     $client->request(
         'DELETE',
         '/post/12',
