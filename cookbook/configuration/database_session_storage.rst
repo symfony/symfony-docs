@@ -18,8 +18,6 @@ Using Doctrine to Store the Session in the Database
 
 To use The DBAL session storage, you need to register a new service and configure
  Symfony's session handling to use it:
-
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -69,10 +67,15 @@ To use The DBAL session storage, you need to register a new service and configur
         $container->setDefinition('session.handler.dbal_handler', $storageDefinition);
 
 You can pass a second parameter to the constructor to set the table name. 
-* ``db_table``: The name of the session table in your database
-* ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
-* ``db_data_col``: The name of the value column in your session table (TEXT or CLOB)
-* ``db_time_col``: The name of the time column in your session table (INTEGER)
+
+``db_table``
+    The name of the session table in your database
+``db_id_col``
+    The name of the id column in your session table (VARCHAR(255) or larger)
+``db_data_col``
+    The name of the value column in your session table (TEXT or CLOB)
+``db_time_col``
+    The name of the time column in your session table (INTEGER)
 
 Configuring your Database Connection Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,6 +91,7 @@ to configure a new doctrine connection.
 
 Table Structure and Example SQL Statements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Because of the way this is implemented in the php class you can only configure the table name (The default is sessions)
 Here are a couple of SQL statements to help you create a table that will work with this
 MySQL
