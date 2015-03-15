@@ -72,13 +72,11 @@ Deploying your Application on Heroku
 Before your first deploy, you need to do just 2 more things, which are explained
 below:
 
-1. :ref:`Create a Procfile <heroku-procfile>`
+#. :ref:`Create a Procfile <heroku-procfile>`
 
-2. :ref:`Set the Environment to prod <heroku-setting-env-to-prod>`
+#. :ref:`Set the Environment to prod <heroku-setting-env-to-prod>`
 
-Then you'll be ready for the last step:
-
-3. :ref:`Push your Code to Heroku <heroku-push-code>`
+#. :ref:`Push your Code to Heroku <heroku-push-code>`
 
 .. _heroku-procfile:
 
