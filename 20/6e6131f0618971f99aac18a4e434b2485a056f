@@ -1,0 +1,142 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-10-08T10:45:41Z
+
+I don't understand what you mean
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-08T14:21:00Z
+
+Voters are used when using ->isGranted. When that's called depends on your code if I'm correct.
+
+The security system in general only works when the page is under a firewall, it doesn't depend on the access rules.
+
+---------------------------------------------------------------------------
+
+by DavidBadura at 2014-10-09T15:34:16Z
+
+If you have only following security configuration without `access_control` and you don't execute `isGranted` somewhere (controller / twig) then the voters will not execute. To define a firewall is not enough.
+
+```
+security:
+    providers:
+        in_memory:
+            memory: ~
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        default:
+            pattern: ^/
+            anonymous: true
+
+    access_decision_manager:
+        strategy: unanimous
+```
+
+---------------------------------------------------------------------------
+
+by stof at 2014-10-09T16:51:02Z
+
+Of course they won't execute. Defining a firewall allows you to authenticate the user. Voters are not involved in this process at all. They are the authorization system. they are what ``isGranted`` calls to make a decision. If you don't ask any decision, there is no reason to call them (and there is no way to call them, as you would not know which argument to pass them)
+
+---------------------------------------------------------------------------
+
+by larsborn at 2014-10-10T05:20:11Z
+
+If you implement the IP Blacklist example in a freshly created Symfony app, it doesn't work, since you don't ask for any permissions (as stof pointed out). This is exactly the reason, I suggested this minimal authorization check for IS_AUTHENTICATED_ANONYMOUSLY. If you think, that it bloats this recipe, I could also suggest a small hint instead. Either way I think, that at least a hint is necessary.
+
+---------------------------------------------------------------------------
+
+by larsborn at 2014-10-30T09:01:46Z
+
+*push*
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T11:10:16Z
+
+I believe the complete article is wrong. The voter is part of the authorization process, while the article suggests it's part of the authentication process. I think a backlist needs to be implemented by an `AuthenticationListener`. Security experts, please correct me if I'm wrong ;)
+
+---------------------------------------------------------------------------
+
+by larsborn at 2014-11-28T11:06:02Z
+
+does renaming even help, if I want to get noticed by dx.symfony.com? :)
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-06T01:22:54Z
+
+Currently, dx.symfony.com only checks labelled issues. It does not yet check issue titles.
+
+---------------------------------------------------------------------------
+
+by larsborn at 2014-12-06T11:34:01Z
+
+then Ryan might have talked about a future version of dx.symfony.com on the SymfonyCon Madrid.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-12-16T13:41:17Z
+
+Well, it is planned. There is a TODO in the code saying it is not implemented yet
+
+---------------------------------------------------------------------------
+
+by larsborn at 2014-12-16T21:42:19Z
+
+but am I right, when I say, that I cannot add labels? :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T22:05:52Z
+
+@larsborn Yes, only repository collaborators can add or remove labels.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-16T22:07:56Z
+
+However, we should first finish the discussion if the change does make sense at all.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-19T22:47:45Z
+
+@weaverryan @stof @iltar can you please share your opinions on my comment:
+
+  > I believe the complete article is wrong. The voter is part of the authorization process, while the article suggests it's part of the authentication process. I think a backlist needs to be implemented by an AuthenticationListener. Security experts, please correct me if I'm wrong ;)
+
+---------------------------------------------------------------------------
+
+by iltar at 2015-02-20T08:01:34Z
+
+@WouterJ [cookbook/security/access_control.html](http://symfony.com/doc/current/cookbook/security/access_control.html) IP Blacklisting is mentioned here, seems to me like this is part of the authorization and not authentication.
+
+ - If you want to give permissions _(authorize)_ based on IP, it should be in access_control or a voter, though the latter I don't really see a proper use-case for.
+ - If you want to restrict logins *(authentication)* from certain IPs, it should be handled in your authentication process, usually done by `SimpleAuthenticatorInterface`.
+
+Right now I can't check if this is still a valid case; I remember that if you login _(authenticate)_ without setting up proper `access_control` and not using any `isGranted` _(authorization)_ checks, the toolbar will actually show your "logged in as", but never show you as Authenticated.
+
+As far as I know, the `access_control` internally calls the voters _after_ authentication using the `AccessListener` and `AccessMap`: [Symfony/Component/Security/Http/Firewall/AccessListener.php#L64-L67](https://github.com/symfony/symfony/blob/25700429371c8af14d46548039832d28e539c572/src/Symfony/Component/Security/Http/Firewall/AccessListener.php#L64-L67)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-03-15T17:28:33Z
+
+Hey @larsborn!
+
+So sorry, I got a little busy :). Some points:
+
+1) I agree with Wouter that this entire article (it's quite old) isn't the best approach. I would implement this in a listener - simply do some logic and throw an AccessDeniedException. And since we have a different article that properly talks about voters, this one should be updated.
+
+2) Also, technically speaking though, I think @larsborn is right that you'd need your voters to be called at least once for this article to be correct. That highlights that voters is awkward for blacklisting.
+
+3) @iltar mentioned that without `access_control` you may show up as "logged in" but not authenticated on the toolbar. I can confirm that - but it's a separate issue - check out my comment here (click the comments tab to see... because I haven't fixed linking yet :)) https://knpuniversity.com/screencast/symfony2-ep2/user-serialization#comment-1899008818
+
+So, I'm going to merge this, but open an issue about this whole article.
+
+Thanks!
