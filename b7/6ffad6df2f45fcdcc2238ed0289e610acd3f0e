@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-11-14T07:41:19Z
+
+One of the (few) great things about `@Template()` is that it takes into account the format of the request to determine the template to render. Should we add a note about this or is not that important?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-11-18T20:57:40Z
+
+@javiereguiluz I've never understood the point of the guessing of the template suffix, but it sounds like you may have a use-case. For me, I would never use a template to print JSON or XML, so I've never found this useful. Is there some good case for this?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-19T23:37:42Z
+
+ping
