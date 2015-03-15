@@ -198,6 +198,36 @@ application configuration file with the following code.
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
 
+Note that the voters are only called, if any access is actually checked. So 
+you need at least something like 
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            access_control:
+                - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <access-control>
+               <rule path="^/" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+            </access-control>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.xml
+        $container->loadFromExtension('security', array(
+            'access_control' => array(
+               array('path' => '^/', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
+            ),
+         ));
+
 .. seealso::
 
     For a more advanced usage see
