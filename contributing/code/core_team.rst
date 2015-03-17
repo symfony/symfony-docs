@@ -62,6 +62,9 @@ Active Core Members
   * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
     component.
 
+  * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
+    component.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jakub Zalas** (`jakzal`_);
@@ -165,6 +168,7 @@ discretion of the **Project Leader**.
 .. _PropertyAccess: https://github.com/symfony/PropertyAccess
 .. _Routing: https://github.com/symfony/Routing
 .. _Serializer: https://github.com/symfony/Serializer
+.. _Translation: https://github.com/symfony/Translation
 .. _Stopwatch: https://github.com/symfony/Stopwatch
 .. _TwigBridge: https://github.com/symfony/TwigBridge
 .. _Validator: https://github.com/symfony/Validator
@@ -179,3 +183,4 @@ discretion of the **Project Leader**.
 .. _`Seldaek`: https://github.com/Seldaek/
 .. _`lsmith77`: https://github.com/lsmith77/
 .. _`weaverryan`: https://github.com/weaverryan/
+.. _`aitboudad`: https://github.com/aitboudad/
