@@ -460,7 +460,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
-the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
+the ``AppBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/AppBundle/Controller/MainController.php
