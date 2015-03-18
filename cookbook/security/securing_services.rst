@@ -26,16 +26,13 @@ service into it. For a general introduction to injecting dependencies into
 services see the :doc:`/book/service_container` chapter of the book. For
 example, suppose you have a ``NewsletterManager`` class that sends out emails
 and you want to restrict its use to only users who have some ``ROLE_NEWSLETTER_ADMIN``
-role. Before you add security, the class looks something like this:
-
-.. code-block:: php
+role. Before you add security, the class looks something like this::
 
     // src/AppBundle/Newsletter/NewsletterManager.php
     namespace AppBundle\Newsletter;
 
     class NewsletterManager
     {
-
         public function sendNewsletter()
         {
             // ... where you actually do the work
@@ -51,8 +48,7 @@ check, this is an ideal candidate for constructor injection, which guarantees
 that the security context object will be available inside the ``NewsletterManager``
 class::
 
-    namespace AppBundle\Newsletter;
-
+    // ...
     use Symfony\Component\Security\Core\SecurityContextInterface;
 
     class NewsletterManager
@@ -102,11 +98,8 @@ Then in your service configuration, you can inject the service:
 The injected service can then be used to perform the security check when the
 ``sendNewsletter()`` method is called::
 
-    namespace AppBundle\Newsletter;
-
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-    use Symfony\Component\Security\Core\SecurityContextInterface;
     // ...
+    use Symfony\Component\Security\Core\SecurityContextInterface;
 
     class NewsletterManager
     {
