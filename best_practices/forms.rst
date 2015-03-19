@@ -213,15 +213,15 @@ Custom Form Field Types
 
 .. best-practice::
 
-    Add the ``app.`` prefix to your custom form field types to avoid collisions.
+    Add the ``app_`` prefix to your custom form field types to avoid collisions.
 
-Custom form field types extend from the ``AbstractType`` class, which defines the
+Custom form field types inherit from the ``AbstractType`` class, which defines the
 ``getName()`` method to configure the name of that form type. These names must
 be unique in the application.
 
 If a custom form type uses the same name as any of the Symfony's built-in form
 types, it will override it. The same happens when the custom form type matches
-any of the types defined by the third-party bundles installed in you application.
+any of the types defined by the third-party bundles installed in your application.
 
-Add the ``app.`` prefix to your custom form field types to avoid name collisions
+Add the ``app_`` prefix to your custom form field types to avoid name collisions
 that can lead to hard to debug errors.
