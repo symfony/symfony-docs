@@ -33,14 +33,13 @@ If the ``X-Forwarded-Port`` header is not set correctly, Symfony will append
 the port where the PHP application is running when generating absolute URLs,
 e.g. ``http://example.com:8080/my/path``. To ensure that the Symfony router
 generates URLs correctly with Varnish, add the correct port number in the
-``X-Forwarded-Port`` header.
+``X-Forwarded-Port`` header. This port depends on your setup.
 
-This port depends on your setup. Let's say that external connections come in
-on the default HTTP port 80. For HTTPS connections, there is another proxy
-(as Varnish does not do HTTPS itself) on the default HTTPS port 443 that
-handles the SSL termination and forwards the requests as HTTP requests to
-Varnish with a ``X-Forwarded-Proto`` header. In this case, add the following to
-your Varnish configuration:
+Suppose that external connections come in on the default HTTP port 80. For HTTPS
+connections, there is another proxy (as Varnish does not do HTTPS itself) on the
+default HTTPS port 443 that handles the SSL termination and forwards the requests
+as HTTP requests to Varnish with a ``X-Forwarded-Proto`` header. In this case,
+add the following to your Varnish configuration:
 
 .. code-block:: varnish4
 
