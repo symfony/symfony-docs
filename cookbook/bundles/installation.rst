@@ -72,7 +72,7 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
     }
 
 By default, Symfony bundles are registered in all the application
-:doc:`execution environments <cookbook/configuration/environments>`. If the bundle
+:doc:`execution environments </cookbook/configuration/environments>`. If the bundle
 is meant to be used only in the development or test environments, register it in
 the section below::
 
