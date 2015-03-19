@@ -58,7 +58,7 @@ directory:
 
 .. code-block:: bash
 
-    $ ./app/Resources/node_modules/.bin/uglifyjs --help
+    $ "./app/Resources/node_modules/.bin/uglifyjs" --help
 
 Configure the ``uglifyjs2`` Filter
 ----------------------------------
