@@ -25,14 +25,16 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
     web server. In the examples below, the ``web/`` directory will be the
     document root. This directory is ``/var/www/project/web/``.
 
+    If your hosting provider requires you to change the ``web/`` directory to
+    another location (e.g. ``public_html/``) make sure you
+    :ref:`override the location of the web/ directory <override-web-directory>`.
+
 .. _web-server-apache-mod-php:
 
 Apache2 with mod_php/PHP-CGI
 ----------------------------
 
-For advanced Apache configuration options, see the official `Apache`_
-documentation. The minimum basics to get your application running under Apache2
-are:
+The **minimum configuration** to get your application running under Apache2 is:
 
 .. code-block:: apache
 
@@ -42,9 +44,8 @@ are:
 
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
-            # enable the .htaccess rewrites
             AllowOverride All
-            Order allow,deny
+            Order allow, deny
             Allow from All
         </Directory>
 
@@ -58,37 +59,68 @@ are:
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
 
-.. note::
+.. tip::
 
     If your system supports the ``APACHE_LOG_DIR`` variable, you may want
-    to use ``${APACHE_LOG_DIR}/`` instead of ``/var/log/apache2/``.
+    to use ``${APACHE_LOG_DIR}/`` instead of hardcoding ``/var/log/apache2/``.
 
-.. note::
-
-    For performance reasons, you will probably want to set
-    ``AllowOverride None`` and implement the rewrite rules in the ``web/.htaccess``
-    into the ``VirtualHost`` config.
-
-If you are using **php-cgi**, Apache does not pass HTTP basic username and
-password to PHP by default. To work around this limitation, you should use the
-following configuration snippet:
+Use the following **optimized configuration** to disable ``.htaccess`` support
+and increase web server performance:
 
 .. code-block:: apache
 
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    <VirtualHost *:80>
+        ServerName domain.tld
+        ServerAlias www.domain.tld
 
-.. caution::
+        DocumentRoot /var/www/project/web
+        <Directory /var/www/project/web>
+            AllowOverride None
+            Order allow, deny
+            Allow from All
 
-    In Apache 2.4, ``Order allow,deny`` has been replaced by ``Require all granted``,
-    and hence you need to modify your ``Directory`` permission settings as follows:
+            <IfModule mod_rewrite.c>
+                Options -MultiViews
+                RewriteEngine On
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^(.*)$ app.php [QSA,L]
+            </IfModule>
+        </Directory>
+
+        # uncomment the following lines if you install assets as symlinks
+        # or run into problems when compiling LESS/Sass/CoffeScript assets
+        # <Directory /var/www/project>
+        #     Option FollowSymlinks
+        # </Directory>
+
+        ErrorLog /var/log/apache2/project_error.log
+        CustomLog /var/log/apache2/project_access.log combined
+    </VirtualHost>
+
+.. tip::
+
+    If you are using **php-cgi**, Apache does not pass HTTP basic username and
+    password to PHP by default. To work around this limitation, you should use
+    the following configuration snippet:
 
     .. code-block:: apache
 
-        <Directory /var/www/project/web>
-            # enable the .htaccess rewrites
-            AllowOverride All
-            Require all granted
-        </Directory>
+        RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+Using mod_php/PHP-CGI with Apache 2.4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In Apache 2.4, ``Order allow,deny`` has been replaced by ``Require all granted``,
+and hence you need to modify your ``Directory`` permission settings as follows:
+
+.. code-block:: apache
+
+    <Directory /var/www/project/web>
+        Require all granted
+        # ...
+    </Directory>
+
+For advanced Apache configuration options, read the official `Apache documentation`_.
 
 .. _web-server-apache-fpm:
 
@@ -102,7 +134,7 @@ installed (for example, on a Debian based system you have to install the
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
-you configure either a TCP socket (IP and port) or a unix domain socket to
+you configure either a TCP socket (IP and port) or a Unix domain socket to
 listen on. Each pool can also be run under a different UID and GID:
 
 .. code-block:: ini
@@ -123,7 +155,7 @@ Using mod_proxy_fcgi with Apache 2.4
 
 If you are running Apache 2.4, you can easily use ``mod_proxy_fcgi`` to pass
 incoming requests to PHP-FPM. Configure PHP-FPM to listen on a TCP socket
-(``mod_proxy`` currently `does not support unix sockets`_), enable ``mod_proxy``
+(``mod_proxy`` currently `does not support Unix sockets`_), enable ``mod_proxy``
 and ``mod_proxy_fcgi`` in your Apache configuration and use the ``SetHandler``
 directive to pass requests for PHP files to PHP FPM:
 
@@ -144,8 +176,10 @@ directive to pass requests for PHP files to PHP FPM:
         <FilesMatch \.php$>
             SetHandler proxy:fcgi://127.0.0.1:9000
         </FilesMatch>
+
         # If you use Apache version below 2.4.9 you must consider update or use this instead
         # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+
         # If you run your Symfony application on a subpath of your document root, the
         # regular expression must be changed accordingly:
         # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
@@ -189,7 +223,7 @@ should look something like this:
         <Directory /var/www/project/web>
             # enable the .htaccess rewrites
             AllowOverride All
-            Order allow,deny
+            Order allow, deny
             Allow from all
         </Directory>
 
@@ -203,7 +237,7 @@ should look something like this:
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
 
-If you prefer to use a unix socket, you have to use the ``-socket`` option
+If you prefer to use a Unix socket, you have to use the ``-socket`` option
 instead:
 
 .. code-block:: apache
@@ -215,9 +249,7 @@ instead:
 Nginx
 -----
 
-For advanced Nginx configuration options, see the official `Nginx`_
-documentation. The minimum basics to get your application running under Nginx
-are:
+The **minimum configuration** to get your application running under Nginx is:
 
 .. code-block:: nginx
 
@@ -267,12 +299,14 @@ are:
     the web directory. All other files will be served as text. You **must**
     also make sure that if you *do* deploy ``app_dev.php`` or ``config.php``
     that these files are secured and not available to any outside user (the
-    IP checking code at the top of each file does this by default).
+    IP address checking code at the top of each file does this by default).
 
     If you have other PHP files in your web directory that need to be executed,
     be sure to include them in the ``location`` block above.
 
-.. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
-.. _`does not support unix sockets`: https://issues.apache.org/bugzilla/show_bug.cgi?id=54101
+For advanced Nginx configuration options, read the official `Nginx documentation`_.
+
+.. _`Apache documentation`: http://httpd.apache.org/docs/
+.. _`does not support Unix sockets`: https://issues.apache.org/bugzilla/show_bug.cgi?id=54101
 .. _`FastCgiExternalServer`: http://www.fastcgi.com/mod_fastcgi/docs/mod_fastcgi.html#FastCgiExternalServer
-.. _`Nginx`: http://wiki.nginx.org/Symfony
+.. _`Nginx documentation`: http://wiki.nginx.org/Symfony

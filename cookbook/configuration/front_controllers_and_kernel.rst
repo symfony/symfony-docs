@@ -94,12 +94,10 @@ There are two methods declared in the
 left unimplemented in :class:`Symfony\\Component\\HttpKernel\\Kernel`
 and thus serve as `template methods`_:
 
-* :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerBundles`,
-  which must return an array of all bundles needed to run the
-  application;
-
-* :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`,
-  which loads the application configuration.
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerBundles`
+    It must return an array of all bundles needed to run the application.
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
+    It loads the application configuration.
 
 To fill these (small) blanks, your application needs to subclass the
 Kernel and implement these methods. The resulting class is conventionally
@@ -124,8 +122,7 @@ controller to make use of the new kernel.
     it might therefore make sense to add additional sub-directories,
     for example ``app/admin/AdminKernel.php`` and
     ``app/api/ApiKernel.php``. All that matters is that your front
-    controller is able to create an instance of the appropriate
-    kernel.
+    controller is able to create an instance of the appropriate kernel.
 
 Having different ``AppKernels`` might be useful to enable different front
 controllers (on potentially different servers) to run parts of your application

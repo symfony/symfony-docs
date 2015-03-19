@@ -4,8 +4,9 @@
 How to Use the Apache Router
 ============================
 
-Symfony, while fast out of the box, also provides various ways to increase that speed with a little bit of tweaking.
-One of these ways is by letting Apache handle routes directly, rather than using Symfony for this task.
+Symfony, while fast out of the box, also provides various ways to increase that
+speed with a little bit of tweaking. One of these ways is by letting Apache
+handle routes directly, rather than using Symfony for this task.
 
 Change Router Configuration Parameters
 --------------------------------------
@@ -61,20 +62,20 @@ To test that it's working, create a very basic route for the AppBundle:
         # app/config/routing.yml
         hello:
             path: /hello/{name}
-            defaults: { _controller: AppBundle:Demo:hello }
+            defaults: { _controller: AppBundle:Default:hello }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <route id="hello" path="/hello/{name}">
-            <default key="_controller">AppBundle:Demo:hello</default>
+            <default key="_controller">AppBundle:Default:hello</default>
         </route>
 
     .. code-block:: php
 
         // app/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AppBundle:Demo:hello',
+            '_controller' => 'AppBundle:Default:hello',
         )));
 
 Now generate the mod_rewrite rules:
@@ -93,7 +94,7 @@ Which should roughly output the following:
 
     # hello
     RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
-    RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Demo\:hello]
+    RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Default\:hello]
 
 You can now rewrite ``web/.htaccess`` to use the new rules, so with this example
 it should look like this:
@@ -109,12 +110,13 @@ it should look like this:
 
         # hello
         RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
-        RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Demo\:hello]
+        RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Default\:hello]
     </IfModule>
 
 .. note::
 
-   The procedure above should be done each time you add/change a route if you want to take full advantage of this setup.
+   The procedure above should be done each time you add/change a route if you
+   want to take full advantage of this setup.
 
 That's it!
 You're now all set to use Apache routes.

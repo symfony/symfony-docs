@@ -29,7 +29,7 @@ directory structure is:
 Override the ``cache`` Directory
 --------------------------------
 
-You can override the cache directory by overriding the ``getCacheDir`` method
+You can change the default cache directory by overriding the ``getCacheDir`` method
 in the ``AppKernel`` class of you application::
 
     // app/AppKernel.php
@@ -53,8 +53,8 @@ the location of the cache directory to ``app/{environment}/cache``.
 
     You should keep the ``cache`` directory different for each environment,
     otherwise some unexpected behavior may happen. Each environment generates
-    its own cached config files, and so each needs its own directory to store
-    those cache files.
+    its own cached configuration files, and so each needs its own directory to
+    store those cache files.
 
 .. _override-logs-dir:
 
@@ -62,7 +62,7 @@ Override the ``logs`` Directory
 -------------------------------
 
 Overriding the ``logs`` directory is the same as overriding the ``cache``
-directory, the only difference is that you need to override the ``getLogDir``
+directory. The only difference is that you need to override the ``getLogDir``
 method::
 
     // app/AppKernel.php
@@ -80,6 +80,8 @@ method::
 
 Here you have changed the location of the directory to ``app/{environment}/logs``.
 
+.. _override-web-directory:
+
 Override the ``web`` Directory
 ------------------------------
 
@@ -87,7 +89,7 @@ If you need to rename or move your ``web`` directory, the only thing you
 need to guarantee is that the path to the ``app`` directory is still correct
 in your ``app.php`` and ``app_dev.php`` front controllers. If you simply
 renamed the directory, you're fine. But if you moved it in some way, you
-may need to modify the paths inside these files::
+may need to modify these paths inside those files::
 
     require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
     require_once __DIR__.'/../Symfony/app/AppKernel.php';
@@ -116,8 +118,8 @@ the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
 
 .. note::
 
-    If you use the AsseticBundle you need to configure this, so it can use
-    the correct ``web`` directory:
+    If you use the AsseticBundle you need to configure the ``read_from`` option
+    to point to the correct ``web`` directory:
 
     .. configuration-block::
 
@@ -147,8 +149,8 @@ the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
                 'read_from' => '%kernel.root_dir%/../../public_html',
             ));
 
-    Now you just need to clear the cache and dump the assets again and your application should
-    work:
+    Now you just need to clear the cache and dump the assets again and your
+    application should work:
 
     .. code-block:: bash
 
@@ -159,10 +161,7 @@ Override the ``vendor`` Directory
 ---------------------------------
 
 To override the ``vendor`` directory, you need to introduce changes in the
-following files:
-
-* ``app/autoload.php``
-* ``composer.json``
+``app/autoload.php`` and ``composer.json`` files.
 
 The change in the ``composer.json`` will look like this:
 
@@ -177,8 +176,8 @@ The change in the ``composer.json`` will look like this:
         ...
     }
 
-In ``app/autoload.php``, you need to modify the path leading to the ``vendor/autoload.php``
-file::
+In ``app/autoload.php``, you need to modify the path leading to the
+``vendor/autoload.php`` file::
 
     // app/autoload.php
     // ...
@@ -187,5 +186,5 @@ file::
 .. tip::
 
     This modification can be of interest if you are working in a virtual environment
-    and cannot use NFS - for example, if you're running a Symfony app using
+    and cannot use NFS - for example, if you're running a Symfony application using
     Vagrant/VirtualBox in a guest operating system.

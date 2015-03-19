@@ -20,7 +20,7 @@ Different Environments, different Configuration Files
 -----------------------------------------------------
 
 A typical Symfony application begins with three environments: ``dev``,
-``prod``, and ``test``. As discussed, each "environment" simply represents
+``prod``, and ``test``. As mentioned, each environment simply represents
 a way to execute the same codebase with different configuration. It should
 be no surprise then that each environment loads its own individual configuration
 file. If you're using the YAML configuration format, the following files
@@ -55,8 +55,8 @@ multiple environments in an elegant, powerful and transparent way.
 
 Of course, in reality, each environment differs only somewhat from others.
 Generally, all environments will share a large base of common configuration.
-Opening the "dev" configuration file, you can see how this is accomplished
-easily and transparently:
+Opening the ``config_dev.yml`` configuration file, you can see how this is
+accomplished easily and transparently:
 
 .. configuration-block::
 
@@ -86,7 +86,8 @@ simply first imports from a central configuration file (``config.yml``).
 The remainder of the file can then deviate from the default configuration
 by overriding individual parameters. For example, by default, the ``web_profiler``
 toolbar is disabled. However, in the ``dev`` environment, the toolbar is
-activated by modifying the default value in the ``dev`` configuration file:
+activated by modifying the value of the ``toolbar`` option in the ``config_dev.yml``
+configuration file:
 
 .. configuration-block::
 
@@ -151,9 +152,9 @@ used by each is explicitly set::
 
     // ...
 
-As you can see, the ``prod`` key specifies that this application will run
-in the ``prod`` environment. A Symfony application can be executed in any
-environment by using this code and changing the environment string.
+The ``prod`` key specifies that this application will run in the ``prod``
+environment. A Symfony application can be executed in any environment by using
+this code and changing the environment string.
 
 .. note::
 
@@ -325,9 +326,7 @@ The new environment is now accessible via::
     certain environments, for debugging purposes, may give too much information
     about the application or underlying infrastructure. To be sure these environments
     aren't accessible, the front controller is usually protected from external
-    IP addresses via the following code at the top of the controller:
-
-    .. code-block:: php
+    IP addresses via the following code at the top of the controller::
 
         if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
             die('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
@@ -361,17 +360,17 @@ the directory of the environment you're using (most commonly ``dev`` while
 developing and debugging). While it can vary, the ``app/cache/dev`` directory
 includes the following:
 
-* ``appDevDebugProjectContainer.php`` - the cached "service container" that
-  represents the cached application configuration;
-
-* ``appDevUrlGenerator.php`` - the PHP class generated from the routing
-  configuration and used when generating URLs;
-
-* ``appDevUrlMatcher.php`` - the PHP class used for route matching - look
-  here to see the compiled regular expression logic used to match incoming
-  URLs to different routes;
-
-* ``twig/`` - this directory contains all the cached Twig templates.
+``appDevDebugProjectContainer.php``
+    The cached "service container" that represents the cached application
+    configuration.
+``appDevUrlGenerator.php``
+    The PHP class generated from the routing configuration and used when
+    generating URLs.
+``appDevUrlMatcher.php``
+    The PHP class used for route matching - look here to see the compiled regular
+    expression logic used to match incoming URLs to different routes.
+``twig/``
+    This directory contains all the cached Twig templates.
 
 .. note::
 
