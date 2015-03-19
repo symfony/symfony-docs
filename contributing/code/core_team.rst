@@ -70,7 +70,8 @@ Active Core Members
   * **Jakub Zalas** (`jakzal`_);
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_).
+  * **Ryan Weaver** (`weaverryan`_);
+  * **Christian Flothmann** (`xabbuh`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,3 +185,4 @@ discretion of the **Project Leader**.
 .. _`lsmith77`: https://github.com/lsmith77/
 .. _`weaverryan`: https://github.com/weaverryan/
 .. _`aitboudad`: https://github.com/aitboudad/
+.. _`xabbuh`: https://github.com/xabbuh/
