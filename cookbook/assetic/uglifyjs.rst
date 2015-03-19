@@ -16,41 +16,47 @@ talked about briefly.
 Install UglifyJS
 ----------------
 
-UglifyJS is available as an `Node.js`_ npm module and can be installed using
-npm. First, you need to `install Node.js`_. Afterwards you can install UglifyJS
-using npm:
+UglifyJS is available as a `Node.js`_ module. First, you need to `install Node.js`_
+and then, decide the installation method: global or local.
+
+Global Installation
+~~~~~~~~~~~~~~~~~~~
+
+The global installation method makes all your projects use the very same UglifyJS
+version, which simplifies its maintenance. Open your command console and execute
+the following command (you may need to run it as a root user):
 
 .. code-block:: bash
 
     $ npm install -g uglify-js
 
-This command will install UglifyJS globally and you may need to run it as
-a root user.
-
-.. note::
-
-    It's also possible to install UglifyJS inside your project only. To do
-    this, install it without the ``-g`` option and specify the path where
-    to put the module:
-
-    .. code-block:: bash
-
-        $ cd /path/to/symfony
-        $ mkdir app/Resources/node_modules
-        $ npm install uglify-js --prefix app/Resources
-
-    It is recommended that you install UglifyJS in your ``app/Resources`` folder
-    and add the ``node_modules`` folder to version control. Alternatively,
-    you can create an npm `package.json`_ file and specify your dependencies
-    there.
-
-Depending on your installation method, you should either be able to execute
-the ``uglifyjs`` executable globally, or execute the physical file that lives
-in the ``node_modules`` directory:
+Now you can execute the global ``uglifyjs`` command anywhere on your system:
 
 .. code-block:: bash
 
     $ uglifyjs --help
+
+Local Installation
+~~~~~~~~~~~~~~~~~~
+
+It's also possible to install UglifyJS inside your project only, which is useful
+when your project requires an specific UglifyJS version. To do this, install it
+without the ``-g`` option and specify the path where to put the module:
+
+.. code-block:: bash
+
+    $ cd /path/to/your/symfony/project
+    $ mkdir app/Resources/node_modules
+    $ npm install uglify-js --prefix app/Resources
+
+It is recommended that you install UglifyJS in your ``app/Resources`` folder and
+add the ``node_modules`` folder to version control. Alternatively, you can create
+an npm `package.json`_ file and specify your dependencies there.
+
+Now you can execute the ``uglifyjs`` command that lives in the ``node_modules``
+directory:
+
+.. code-block:: bash
 
     $ ./app/Resources/node_modules/.bin/uglifyjs --help
 
@@ -96,8 +102,7 @@ your JavaScripts:
 .. note::
 
     The path where UglifyJS is installed may vary depending on your system.
-    To find out where npm stores the ``bin`` folder, you can use the following
-    command:
+    To find out where npm stores the ``bin`` folder, execute the following command:
 
     .. code-block:: bash
 
@@ -154,8 +159,8 @@ can configure its location using the ``node`` key:
 Minify your Assets
 ------------------
 
-In order to use UglifyJS on your assets, you need to apply it to them. Since
-your assets are a part of the view layer, this work is done in your templates:
+In order to apply UglifyJS on your assets, add the ``filter`` option in the
+asset tags of your templates to tell Assetic to use the ``uglifyjs2`` filter:
 
 .. configuration-block::
 
@@ -178,8 +183,7 @@ your assets are a part of the view layer, this work is done in your templates:
 
     The above example assumes that you have a bundle called AppBundle and your
     JavaScript files are in the ``Resources/public/js`` directory under your
-    bundle. This isn't important however - you can include your JavaScript
-    files no matter where they are.
+    bundle. However you can include your JavaScript files no matter where they are.
 
 With the addition of the ``uglifyjs2`` filter to the asset tags above, you
 should now see minified JavaScripts coming over the wire much faster.
@@ -216,12 +220,9 @@ and :ref:`dump your assetic assets <cookbook-assetic-dump-prod>`.
 
 .. tip::
 
-    Instead of adding the filter to the asset tags, you can also globally
-    enable it by adding the ``apply_to`` attribute to the filter configuration, for
-    example in the ``uglifyjs2`` filter ``apply_to: "\.js$"``. To only have
-    the filter applied in production, add this to the ``config_prod`` file
-    rather than the common config file. For details on applying filters by
-    file extension, see :ref:`cookbook-assetic-apply-to`.
+    Instead of adding the filters to the asset tags, you can also configure which
+    filters to apply for each file in your application configuration file.
+    See :ref:`cookbook-assetic-apply-to` for more details.
 
 Install, Configure and Use UglifyCSS
 ------------------------------------
@@ -231,7 +232,13 @@ the node package is installed:
 
 .. code-block:: bash
 
+    # global installation
     $ npm install -g uglifycss
+
+    # local installation
+    $ cd /path/to/your/symfony/project
+    $ mkdir app/Resources/node_modules
+    $ npm install uglifycss --prefix app/Resources
 
 Next, add the configuration for this filter:
 
