@@ -1062,7 +1062,7 @@ that will house the logic for building the task form::
     The ``getName()`` method returns the identifier of this form "type". These
     identifiers must be unique in the application. Unless you want to override
     a built-in type, they should be different from the default Symfony types
-    and from any type defined by a third-party bundle installed in you application.
+    and from any type defined by a third-party bundle installed in your application.
     Consider prefixing your types with ``app_`` to avoid identifier collisions.
 
 This new class contains all the directions needed to create the task form. It can
