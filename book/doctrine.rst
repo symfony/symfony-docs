@@ -134,6 +134,12 @@ for you:
     There's no way to configure these defaults inside Doctrine, as it tries to be
     as agnostic as possible in terms of environment configuration. One way to solve
     this problem is to configure server-level defaults.
+    
+.. caution::
+
+    If you are using MySQL, its `utf8` character set has some shortcomings 
+    which may cause problems. Prefer the `utf8mb4` character set instead, if 
+    your version supports it.
 
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to
     your configuration file  (typically ``my.cnf``):
@@ -141,8 +147,8 @@ for you:
     .. code-block:: ini
 
         [mysqld]
-        collation-server = utf8_general_ci
-        character-set-server = utf8
+        collation-server = utf8mb4_general_ci
+        character-set-server = utf8mb4
 
 .. note::
 
