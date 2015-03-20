@@ -49,7 +49,7 @@ Suppose the class you want to test looks like this::
         public function calculateTotalSalary($id)
         {
             $employeeRepository = $this->entityManager
-                ->getRepository('AppBundle::Employee');
+                ->getRepository('AppBundle:Employee');
             $employee = $employeeRepository->find($id);
 
             return $employee->getSalary() + $employee->getBonus();
