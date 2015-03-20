@@ -450,9 +450,6 @@ Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
     (like above), the URL (see next) or call ``setLocale()`` directly on
     the ``translator`` service.
 
-.. index::
-   single: Translations; Fallback and default locale
-
 See the :ref:`book-translation-locale-url` section below about setting the
 locale via routing.
 
@@ -531,6 +528,9 @@ in your application.
 
     Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
     avoid hardcoding the ``_locale`` requirement in all your routes.
+
+.. index::
+   single: Translations; Fallback and default locale
 
 Setting a default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~
