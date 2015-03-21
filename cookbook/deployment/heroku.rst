@@ -69,7 +69,7 @@ You are now ready to deploy the application as explained in the next section.
 Deploying your Application on Heroku
 ------------------------------------
 
-Before your first deploy, you need to do just 2 more things, which are explained
+Before your first deploy, you need to do just three more things, which are explained
 below:
 
 #. :ref:`Create a Procfile <heroku-procfile>`
@@ -79,6 +79,7 @@ below:
 #. :ref:`Push your Code to Heroku <heroku-push-code>`
 
 .. _heroku-procfile:
+.. _creating-a-procfile:
 
 1) Create a Procfile
 ~~~~~~~~~~~~~~~~~~~~
@@ -117,6 +118,7 @@ create the ``Procfile`` file and to add it to the repository:
      1 file changed, 1 insertion(+)
 
 .. _heroku-setting-env-to-prod:
+.. _setting-the-prod-environment:
 
 2) Set the Environment to prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,6 +142,7 @@ variables, you can issue a single command to prepare your app for a deployment:
     $ heroku config:set SYMFONY_ENV=prod
 
 .. _heroku-push-code:
+.. _pushing-to-heroku:
 
 3) Push your Code to Heroku
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
