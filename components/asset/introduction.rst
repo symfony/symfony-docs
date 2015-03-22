@@ -78,7 +78,7 @@ which defines the following two methods:
 With a package, you can:
 
 A) :ref:`version the assets <component-assets-versioning>`;
-B) set a :ref:`common base path (e.g. /css) <component-assets-path-package>`
+B) set a :ref:`common base path <component-assets-path-package>` (e.g. ``/css``)
    for the assets;
 C) :ref:`configure a CDN <component-assets-cdn>` for the assets
 
@@ -161,7 +161,7 @@ Grouped Assets
 Often, many assets live under a common path (e.g. ``/static/images``). If
 that's your case, replace the default :class:`Symfony\\Component\\Asset\\Package`
 class with :class:`Symfony\\Component\\Asset\\PathPackage` to avoid repeating
-that path time and again::
+that path over and over again::
 
     use Symfony\Component\Asset\PathPackage;
     // ...
@@ -174,8 +174,8 @@ that path time and again::
 Request Context Aware Assets
 ............................
 
-If you are also using the :doc:`HttpFoundation</components/http_foundation/introduction>`
-component in your project (for example in a Symfony application), the ``PathPackage``
+If you are also using the :doc:`HttpFoundation </components/http_foundation/introduction>`
+component in your project (for instance, in a Symfony application), the ``PathPackage``
 class can take into account the context of the current request::
 
     use Symfony\Component\Asset\PathPackage;
@@ -191,11 +191,11 @@ class can take into account the context of the current request::
     echo $package->getUrl('/logo.png');
     // result: /somewhere/static/images/logo.png?v1
 
-When the request context is set (via an optional third argument), in addition to
-the configured base path (i.e. ``/static/images``), ``PathPackage`` also
-prepends the current request base URL. So, for example, if your entire site
-is hosted under the ``/somewhere`` directory in your web server root directory,
-then ``/somewhere/`` will be prefixed to all paths.
+Now that the request context is set, the ``PathPackage`` will prepend the
+current request base URL. So, for example, if your entire site is hosted under
+the ``/somewhere`` directory of your web server root directory and the configured
+base path is ``/static/images``, all paths will be prefixed with
+``/somewhere/static/images``.
 
 .. _component-assets-cdn:
 
@@ -230,7 +230,7 @@ You can also pass a schema-agnostic URL::
     echo $package->getUrl('/logo.png');
     // result: //static.example.com/images/logo.png?v1
 
-This is useful because assets will automatically be requested via https if
+This is useful because assets will automatically be requested via HTTPS if
 a visitor is viewing your site in https. Just make sure that your CDN host
 supports https.
 
@@ -274,8 +274,8 @@ protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
         new RequestStackContext($requestStack)
     );
 
-    // assuming the RequestStackContext says that we are on a secure host
     echo $package->getUrl('/logo.png');
+    // assuming the RequestStackContext says that we are on a secure host
     // result: https://example.com/logo.png?v1
 
 Named Packages
