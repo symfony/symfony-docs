@@ -46,7 +46,6 @@ without the ``-g`` option and specify the path where to put the module:
 .. code-block:: bash
 
     $ cd /path/to/your/symfony/project
-    $ mkdir app/Resources/node_modules
     $ npm install uglify-js --prefix app/Resources
 
 It is recommended that you install UglifyJS in your ``app/Resources`` folder and
@@ -237,7 +236,6 @@ the node package is installed:
 
     # local installation
     $ cd /path/to/your/symfony/project
-    $ mkdir app/Resources/node_modules
     $ npm install uglifycss --prefix app/Resources
 
 Next, add the configuration for this filter:
