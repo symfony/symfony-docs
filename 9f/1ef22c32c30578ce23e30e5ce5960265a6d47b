@@ -1,0 +1,158 @@
+---------------------------------------------------------------------------
+
+by stof at 2014-08-28T22:13:09Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by stof at 2014-08-28T22:13:52Z
+
+btw, it could be useful to add a note explaining what this method does compared to ``===`` so that readers can understand why we should use it
+
+---------------------------------------------------------------------------
+
+by merk at 2014-08-28T22:44:52Z
+
+It seems like it might not be worth doing: http://security.stackexchange.com/questions/9192/timing-attacks-on-password-hashes
+
+If we were comparing a real password rather than a hash it makes more sense (at least according to the answer at SO)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-16T01:21:57Z
+
+Unless we're absolutely sure, I think we should use this change. But @merk, can you add a quick comment above this line like @stof suggested to explain this it is basically `===` but avoids timing attacks?
+
+---------------------------------------------------------------------------
+
+by merk at 2014-09-16T02:53:12Z
+
+I'm more inclined to take this approach instead:
+
+https://www.isecpartners.com/blog/2011/february/double-hmac-verification.aspx
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-09-16T06:31:02Z
+
+@merk Do you think it's a good idea to show a PHP implementation of it in the docs? I think that would be rather confusing. Or do you plan to create a pull request on the Symfony repository to improve the ``StringUtils::equals()`` method?
+
+---------------------------------------------------------------------------
+
+by merk at 2014-09-16T06:38:28Z
+
+The StringUtils::equals function works fine for a 'mostly guaranteed' constant time comparison (it seems), but its simpler in the case of a HMAC just to HMAC each result again.
+
+What I mean when i post that link is that `sha1(base64_decode($nonce).$created.$secret, true)` becomes a private function and it gets called to hash each digest a total of 2 times:
+
+```php
+    protected function validateDigest($digest, $nonce, $created, $secret)
+    {
+        // ...
+
+        $expected = sha1(sha1(base64_decode($nonce).$created.$secret, true).$secret);
+        $digest = sha1(base64_decode($digest).$secret);
+
+        return $expected === $digest;
+    }
+```
+
+But I'm totally not an expert on this.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-09-16T13:05:24Z
+
+@merk So what is your final proposal? Are you saying that `StringUtils` is actually security overkill and that your above code is good enough? If so, I'd still want to use `StringUtils` - it looks much simpler to me.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2014-10-20T13:32:29Z
+
+ping @merk!
+
+---------------------------------------------------------------------------
+
+by merk at 2014-10-20T21:42:16Z
+
+I'm probably not the right person to be making a decision about this one - I have limited security experience.
+
+It seems like we should be doing something to reduce leaking of timing attacks in this example and using StringUtils seems like a worthy approach to me.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-11-18T07:30:43Z
+
+I think having this change with a small note explaining why to use `StringUtils::equals()` would be a good start.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T09:28:04Z
+
+@merk Can you add such a note?
+
+---------------------------------------------------------------------------
+
+by merk at 2015-03-08T10:33:01Z
+
+Where would the note go - in the code?
+
+`This method compares the hashes using StringUtils::equals() because not using a constant time comparison for this check could lead to a timing based attack`?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T10:33:53Z
+
+I would add a `note` directive for this right after the code block.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T10:37:17Z
+
+And it's probably a good idea to link to, for example, http://en.wikipedia.org/wiki/Timing_attack to provide a bit more context.
+
+---------------------------------------------------------------------------
+
+by merk at 2015-03-08T10:40:28Z
+
+So I'm not sure on the whole rst formatting but something like this?
+
+```
+.. note::
+
+    The comparsion of the expected and provided digests use a constant time
+    comparison provided by the ``equals`` method of the
+    :class:`Symfony\\Component\\Security\\Core\\Util\\StringUtils``. It is
+    used to stop possible `timing attacks`_.
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T10:43:04Z
+
+Looks fine, I would just add the API link for the method instead of the class:
+
+```rst
+.. note::
+
+    The comparsion of the expected and the provided digests uses a constant
+    time comparison provided by the
+    :method:`Symfony\\Component\\Security\\Core\\Util\\StringUtils::equals`
+    method of the ``StringUtils`` class. It is used to mitigate possible
+    `timing attacks`_.
+```
+
+What do you think?
+
+---------------------------------------------------------------------------
+
+by merk at 2015-03-08T10:47:53Z
+
+Just added that note, unfortunately not near a machine with git so its another commit but I assume you guys have the same magical tool that Fabien uses that can squash things without too much effort?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T10:52:01Z
+
+Indeed, @weaverryan and @WouterJ use that too. However, it would be nice if you could rebase your commits when your are back. At least I am not sure if the tool could handle that.
