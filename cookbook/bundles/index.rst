@@ -7,6 +7,7 @@ Bundles
     installation
     best_practices
     inheritance
+    dependencies
     override
     remove
     extension
