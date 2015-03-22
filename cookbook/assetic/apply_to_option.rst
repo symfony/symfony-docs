@@ -9,7 +9,7 @@ as you'll see here, files that have a specific extension. To show you how
 to handle each option, suppose that you want to use Assetic's CoffeeScript
 filter, which compiles CoffeeScript files into JavaScript.
 
-The main configuration is just the paths to coffee, node and node_modules.
+The main configuration is just the paths to ``coffee``, ``node`` and ``node_modules``.
 An example configuration might look like this:
 
 .. configuration-block::
@@ -102,8 +102,7 @@ You can also combine multiple CoffeeScript files into a single output file:
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
-Both the files will now be served up as a single file compiled into regular
-JavaScript.
+Both files will now be served up as a single file compiled into regular JavaScript.
 
 .. _cookbook-assetic-apply-to:
 
@@ -117,10 +116,10 @@ since they will ultimately all be served as JavaScript. Unfortunately just
 adding the JavaScript files to the files to be combined as above will not
 work as the regular JavaScript files will not survive the CoffeeScript compilation.
 
-This problem can be avoided by using the ``apply_to`` option in the config,
-which allows you to specify which filter should always be applied to particular
-file extensions. In this case you can specify that the ``coffee`` filter is
-applied to all ``.coffee`` files:
+This problem can be avoided by using the ``apply_to`` option, which allows you
+to specify which filter should always be applied to particular file extensions.
+In this case you can specify that the ``coffee`` filter is applied to all
+``.coffee`` files:
 
 .. configuration-block::
 
@@ -161,10 +160,10 @@ applied to all ``.coffee`` files:
             ),
         ));
 
-With this, you no longer need to specify the ``coffee`` filter in the template.
-You can also list regular JavaScript files, all of which will be combined
-and rendered as a single JavaScript file (with only the ``.coffee`` files
-being run through the CoffeeScript filter):
+With this option, you no longer need to specify the ``coffee`` filter in the
+template. You can also list regular JavaScript files, all of which will be
+combined and rendered as a single JavaScript file (with only the ``.coffee``
+files being run through the CoffeeScript filter):
 
 .. configuration-block::
 
