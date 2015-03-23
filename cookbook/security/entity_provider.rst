@@ -12,16 +12,19 @@ you how to load your users from the database via a Doctrine entity.
 Introduction
 ------------
 
-Before you start, you should check out the `FOSUserBundle`_. This external
-bundle allows you to load users from the database (like you'll learn here)
-*and* gives you built-in routes and controllers for common things like login,
-registration and forgot password. Whether you use that bundle or go through
-the steps here is up to you.
+.. tip::
+
+    Before you start, you should check out `FOSUserBundle`_. This external
+    bundle allows you to load users from the database (like you'll learn here)
+    *and* gives you built-in routes & controllers for things like login,
+    registration and forgot password. But, if you need to heavily customize
+    your user system *or* if you want to learn how things work, this tutorial
+    is even better.
 
 Loading users via a Doctrine entity has 2 basic steps:
 
-1. :ref:`Create your User entity <security-crete-user-entity>`
-2. :ref:`Configure security.yml to load from your entity <security-config-entity-provider>`
+#. :ref:`Create your User entity <security-crete-user-entity>`
+#. :ref:`Configure security.yml to load from your entity <security-config-entity-provider>`
 
 Afterwards, you can learn more about :ref:`forbidding inactive users <security-advanced-user-interface>`,
 :ref:`using a custom query <authenticating-someone-with-a-custom-entity-provider>`
@@ -111,7 +114,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
         {
         }
 
-        /** * @see \Serializable::serialize() */
+        /** @see \Serializable::serialize() */
         public function serialize()
         {
             return serialize(array(
@@ -123,7 +126,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
             ));
         }
 
-        /** * @see \Serializable::unserialize() */
+        /** @see \Serializable::unserialize() */
         public function unserialize($serialized)
         {
             list (
@@ -174,7 +177,7 @@ On the next request, it's unserialized. To help PHP do this correctly, you
 need to implement ``Serializable``. But you don't need to serialize everything:
 you only need a few fields (the ones shown above plus a few extra if you
 decide to implement :ref:`AdvancedUserInterface <security-advanced-user-interface>`).
-On each request, the ``username`` is used to query for a fresh ``User`` object
+On each request, the ``id`` is used to query for a fresh ``User`` object
 from the database.
 
 Want to know more? See :ref:`cookbook-security-serialize-equatable`.
@@ -771,3 +774,4 @@ or worry about it.
     and the ``EquatableInterface`` was introduced in its place.
 
 .. _fixtures: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
+.. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle
