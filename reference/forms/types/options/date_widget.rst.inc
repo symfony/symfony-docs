@@ -1,6 +1,3 @@
-widget
-~~~~~~
-
 **type**: ``string`` **default**: ``choice``
 
 The basic way in which this field should be rendered. Can be one of the following:
