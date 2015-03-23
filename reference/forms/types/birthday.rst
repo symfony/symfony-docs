@@ -78,9 +78,6 @@ These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-widget
-~~~~~~
-
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:

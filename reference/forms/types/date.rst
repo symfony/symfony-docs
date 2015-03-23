@@ -115,9 +115,6 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-widget
-~~~~~~
-
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
 .. include:: /reference/forms/types/options/years.rst.inc
