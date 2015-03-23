@@ -140,7 +140,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
     }
 
 To make things shorter, some of the getter and setter methods aren't shown.
-But you can :ref:`generate <book-doctrine-generating-getters-and>` these
+But you can :ref:`generate <book-doctrine-generating-getters-and-setters>` these
 by running:
 
 .. code-block:: bash
