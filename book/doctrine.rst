@@ -647,10 +647,8 @@ to easily fetch objects based on multiple conditions::
     If you click the icon, the profiler will open, showing you the exact
     queries that were made.
     
-    If you make more than 50 queries on a page, the icon will turn yellow to
-    let you know that you are making a lot of requests to the database. This
-    is only a warning and does not have any effect on the execution of further
-    queries.
+    The icon will turn yellow if there were more than 50 queries on the
+    page, this could indicate that something is not correct.
 
 Updating an Object
 ~~~~~~~~~~~~~~~~~~
