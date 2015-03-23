@@ -62,7 +62,7 @@ for more details.
 date_widget
 ~~~~~~~~~~~
 
-.. include:: /reference/forms/types/options/date_widget.rst.inc
+.. include:: /reference/forms/types/options/date_widget_description.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
