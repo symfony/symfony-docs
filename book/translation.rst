@@ -427,17 +427,28 @@ via the ``request`` object::
     public function indexAction(Request $request)
     {
         $locale = $request->getLocale();
-
-        $request->setLocale('en_US');
     }
 
-.. tip::
+To set the user's locale, you may want to create a custom event listener
+so that it's set before any other parts of the system (i.e. the translator)
+need it::
 
-    Read :doc:`/cookbook/session/locale_sticky_session` to learn how to store
-    the user's locale in the session.
+        public function onKernelRequest(GetResponseEvent $event)
+        {
+            $request = $event->getRequest();
 
-.. index::
-   single: Translations; Fallback and default locale
+            // some logic to determine the $locale
+            $request->getSession()->set('_locale', $locale);
+        }
+
+Read :doc:`/cookbook/session/locale_sticky_session` for more on the topic.
+
+.. note::
+
+    Setting the locale using ``$request->setLocale()`` in the controller
+    is too late to affect the translator. Either set the locale via a listener
+    (like above), the URL (see next) or call ``setLocale()`` directly on
+    the ``translator`` service.
 
 See the :ref:`book-translation-locale-url` section below about setting the
 locale via routing.
@@ -517,6 +528,9 @@ in your application.
 
     Read :doc:`/cookbook/routing/service_container_parameters` to learn how to
     avoid hardcoding the ``_locale`` requirement in all your routes.
+
+.. index::
+   single: Translations; Fallback and default locale
 
 Setting a default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~

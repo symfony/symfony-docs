@@ -451,7 +451,7 @@ Or, if you want to redirect externally, just use ``redirect()`` and pass it the 
     }
 
 By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
-perform a 301 (permanent) redirect, modify the second argument::
+perform a 301 (permanent) redirect, modify the third argument::
 
     public function indexAction()
     {
