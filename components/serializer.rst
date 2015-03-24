@@ -241,7 +241,7 @@ CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.7
-    The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToUnderscoreNameConverter`
+    The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
     interface was introduced in Symfony 2.7.
 
 In many formats, it's common to use underscores to separate words (also known
