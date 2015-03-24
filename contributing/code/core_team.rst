@@ -60,14 +60,19 @@ Active Core Members
     MonologBridge_, and TwigBridge_ components;
 
   * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
-    component.
+    component;
+
+  * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
+    component;
+
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
-  * **Jakub Zalas** (`jakzal`_);
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_).
+  * **Ryan Weaver** (`weaverryan`_);
+  * **Christian Flothmann** (`xabbuh`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,6 +170,7 @@ discretion of the **Project Leader**.
 .. _PropertyAccess: https://github.com/symfony/PropertyAccess
 .. _Routing: https://github.com/symfony/Routing
 .. _Serializer: https://github.com/symfony/Serializer
+.. _Translation: https://github.com/symfony/Translation
 .. _Stopwatch: https://github.com/symfony/Stopwatch
 .. _TwigBridge: https://github.com/symfony/TwigBridge
 .. _Validator: https://github.com/symfony/Validator
@@ -181,3 +187,5 @@ discretion of the **Project Leader**.
 .. _`Seldaek`: https://github.com/Seldaek/
 .. _`lsmith77`: https://github.com/lsmith77/
 .. _`weaverryan`: https://github.com/weaverryan/
+.. _`aitboudad`: https://github.com/aitboudad/
+.. _`xabbuh`: https://github.com/xabbuh/

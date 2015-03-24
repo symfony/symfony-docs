@@ -37,7 +37,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
                         min: 2
                         max: 50
                         minMessage: "Your first name must be at least {{ limit }} characters long"
-                        maxMessage: "Your first name cannot be longer than {{ limit }} characters long"
+                        maxMessage: "Your first name cannot be longer than {{ limit }} characters"
 
     .. code-block:: php-annotations
 
@@ -53,7 +53,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
              *      min = 2,
              *      max = 50,
              *      minMessage = "Your first name must be at least {{ limit }} characters long",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters long"
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
              * )
              */
              protected $firstName;
@@ -73,7 +73,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
                         <option name="min">2</option>
                         <option name="max">50</option>
                         <option name="minMessage">Your first name must be at least {{ limit }} characters long</option>
-                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters long</option>
+                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters</option>
                     </constraint>
                 </property>
             </class>
@@ -95,7 +95,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     'min'        => 2,
                     'max'        => 50,
                     'minMessage' => 'Your first name must be at least {{ limit }} characters long',
-                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters long',
+                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
                 )));
             }
         }
