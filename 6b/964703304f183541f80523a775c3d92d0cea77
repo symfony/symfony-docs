@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-12T08:04:59Z
+
+Thanks for your review. Everything has been fixed/updated and I've created a separate issue (https://github.com/symfony/symfony-docs/issues/5077) to discuss about introducing a new best practice for Symfony forms.
