@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-19T17:18:23Z
+
+I see a little problem here: We already have quite a few best practices just recommending an `app` prefix (some with a dot, some with an underscore, some with a namespace, etc.). Going like that, don't we end up writing a best practice about such a prefix for all customizable things in Symfony? (e.g. use the `app:` prefix for commands, ...).
+
+I think it is better if we just replace all these best practice with one best practice: Always prefix with `app`. We add this to the AppBundle article. If we think the suffix of this might be confusing (dot, underscore, dash, colon, ...) we can add a list of examples.
+
+What's your opinion about this?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-03-24T00:48:02Z
+
+@WouterJ I hear what you're saying, it might not be a bad idea. But what *are* the places we prefix? I can think of:
+
+1) form type names
+2) service ids
+
+I'm probably missing a few, but I'm not sure.
