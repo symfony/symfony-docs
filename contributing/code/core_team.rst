@@ -60,14 +60,15 @@ Active Core Members
     MonologBridge_, and TwigBridge_ components;
 
   * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
-    component.
+    component;
 
   * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
-    component.
+    component;
+
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
-  * **Jakub Zalas** (`jakzal`_);
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_);
   * **Ryan Weaver** (`weaverryan`_);
