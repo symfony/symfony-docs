@@ -67,7 +67,7 @@ populate the ``$this->data`` property (it takes care of serializing the
 
         public function getName()
         {
-            return 'memory';
+            return 'example_memory';
         }
     }
 
