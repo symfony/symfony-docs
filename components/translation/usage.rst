@@ -311,7 +311,7 @@ use explicit math intervals:
 
 .. code-block:: text
 
-    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
+    '{0} There are no apples|{1} There is one apple|[1,19] There are %count% apples|[20,Inf] There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
@@ -340,8 +340,8 @@ Or numbers between two other numbers:
 
 .. code-block:: text
 
-    [1, +Inf[
-    ]-1,2[
+    [1, +Inf]
+    [-1,2]
 
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
 delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
@@ -362,7 +362,7 @@ use for translation::
     );
 
     $translator->transChoice(
-        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+        '{0} There are no apples|{1} There is one apple|[1,Inf] There are %count% apples',
         10,
         array('%count%' => 10),
         'messages',
