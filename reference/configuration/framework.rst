@@ -62,7 +62,7 @@ secret
 
 This is a string that should be unique to your application and it's commonly used
 to add more entropy to security related operations. Its value should be a series of
-characters, numbers and symbols chosen randomly. It's recommended length is
+characters, numbers and symbols chosen randomly and the recommended length is
 around 32 characters.
 
 In practice, Symfony uses this value for generating the :ref:`CSRF tokens <forms-csrf>`,
