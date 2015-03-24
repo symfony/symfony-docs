@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-03-17T08:46:30Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-17T08:47:50Z
+
+Nice catch @snamor. :+1:
+
+---------------------------------------------------------------------------
+
+by snamor at 2015-03-17T10:20:44Z
+
+Thanks! Read the book 3 times and this is the first time I see this... I'll notify if I find more typos :)
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-18T08:43:41Z
+
+Will the plan be to get rid of all Acme occurences? Found a lot more of them ;)
+
+https://github.com/symfony/symfony-docs/search?utf8=%E2%9C%93&q=Acme
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-18T08:49:19Z
+
+@Rvanlaak some uses of the `Acme` vendor may be legitimate. We must evaluate them on a case by case basis. In any case, one thing we don't want is a massive PR which makes thousands of small changes across documentation. That kind of PR really complicates the work of our dear doc maintainers.
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-03-18T09:01:11Z
+
+You're right :+1: maybe this is something for the 3.0 branch?
+
+---------------------------------------------------------------------------
+
+by stof at 2015-03-18T09:22:37Z
+
+@Rvanlaak doing it only for the 3.0 branch is even worse for maintenance because it will make it impossible to merge branches together.
+
+The right way to handle this is to send a PR updating 1 chapter (and making sure there is no pending PR doing it already). And it is easier to start with chapters which don't have a pending PR (no conflict for them). However, for such task, it is better to ask the doc maintainers first to know their plan (they might want to update some parts first for instance)
