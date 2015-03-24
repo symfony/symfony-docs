@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-20T20:04:19Z
+
+What do you think about reusing the description that we already have for the [widget option](http://symfony.com/doc/current/reference/forms/types/date.html#widget) of the `date` type (as it is basically the same)?
+
+---------------------------------------------------------------------------
+
+by XitasoChris at 2015-01-21T07:34:44Z
+
+Sure, that sounds even better.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-08T09:51:50Z
+
+@XitasoChris Will you be able to do the change? I think this would be ready to be merged then.
+
+---------------------------------------------------------------------------
+
+by XitasoChris at 2015-03-23T07:53:57Z
+
+@xabbuh Should I just copy it or move it to a new file and then include it on both pages?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-23T14:55:20Z
+
+@XitasoChris There already is the file `/reference/forms/types/options/date_widget.rst.inc`. Can it be reused or are there slight differences between both form types?
+
+---------------------------------------------------------------------------
+
+by XitasoChris at 2015-03-23T14:59:16Z
+
+@xabbuh The form types should be identical, but the block you pointed out has a different headline ("widget") whereas we need "date_widget" here.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-23T15:30:30Z
+
+@XitasoChris Indeed, I would then move the description itself to its own file.
+
+---------------------------------------------------------------------------
+
+by XitasoChris at 2015-03-23T15:51:05Z
+
+@xabbuh Done.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-23T19:25:37Z
+
+@XitasoChris Thanks, this looks really nice! :+1:
