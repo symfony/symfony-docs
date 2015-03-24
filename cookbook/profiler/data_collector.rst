@@ -70,12 +70,6 @@ populate the ``$this->data`` property (it takes care of serializing the
             return 'example_memory';
         }
     }
-    
-.. caution::
-
-    The string you use with `getName()` should not collide with standard data-
-    collectors, such as those within the 
-    `Symfony\Component\HttpKernel\DataCollector\` package.
 
 .. _data_collector_tag:
 
