@@ -61,9 +61,7 @@ for more details.
 date_widget
 ~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``choice``
-
-Defines the ``widget`` option for the :doc:`date </reference/forms/types/date>` type
+.. include:: /reference/forms/types/options/date_widget_description.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
