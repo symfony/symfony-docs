@@ -89,16 +89,16 @@ optional second argument of the ``new`` command:
 
 .. code-block:: bash
 
-    // use the most recent version in any Symfony branch
+    # use the most recent version in any Symfony branch
     $ symfony new my_project_name 2.3
     $ symfony new my_project_name 2.5
     $ symfony new my_project_name 2.6
 
-    // use a specific Symfony version
+    # use a specific Symfony version
     $ symfony new my_project_name 2.3.26
     $ symfony new my_project_name 2.6.5
 
-    // use the most recent LTS (Long Term Support) version
+    # use the most recent LTS (Long Term Support) version
     $ symfony new my_project_name lts
 
 Read the :doc:`Symfony Release process </contributing/community/releases>`
