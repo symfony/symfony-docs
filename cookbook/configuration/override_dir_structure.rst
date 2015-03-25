@@ -80,7 +80,7 @@ method::
 
 Here you have changed the location of the directory to ``app/{environment}/logs``.
 
-.. _override-web-directory:
+.. _override-web-dir:
 
 Override the ``web`` Directory
 ------------------------------
@@ -118,7 +118,7 @@ the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
 
 .. note::
 
-    If you use the AsseticBundle you need to configure the ``read_from`` option
+    If you use the AsseticBundle, you need to configure the ``read_from`` option
     to point to the correct ``web`` directory:
 
     .. configuration-block::

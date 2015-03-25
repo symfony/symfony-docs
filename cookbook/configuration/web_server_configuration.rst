@@ -8,9 +8,9 @@ The preferred way to develop your Symfony application is to use
 :doc:`PHP's internal web server </cookbook/web_server/built_in>`. However,
 when using an older PHP version or when running the application in the production
 environment, you'll need to use a fully-featured web server. This article
-describes several ways to use Symfony with Apache2 or Nginx.
+describes several ways to use Symfony with Apache or Nginx.
 
-When using Apache2, you can configure PHP as an
+When using Apache, you can configure PHP as an
 :ref:`Apache module <web-server-apache-mod-php>` or with FastCGI using
 :ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
 to use PHP :ref:`with Nginx <web-server-nginx>`.
@@ -27,14 +27,14 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 
     If your hosting provider requires you to change the ``web/`` directory to
     another location (e.g. ``public_html/``) make sure you
-    :ref:`override the location of the web/ directory <override-web-directory>`.
+    :ref:`override the location of the web/ directory <override-web-dir>`.
 
 .. _web-server-apache-mod-php:
 
-Apache2 with mod_php/PHP-CGI
-----------------------------
+Apache with mod_php/PHP-CGI
+---------------------------
 
-The **minimum configuration** to get your application running under Apache2 is:
+The **minimum configuration** to get your application running under Apache is:
 
 .. code-block:: apache
 
@@ -110,8 +110,8 @@ and increase web server performance:
 Using mod_php/PHP-CGI with Apache 2.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In Apache 2.4, ``Order allow,deny`` has been replaced by ``Require all granted``,
-and hence you need to modify your ``Directory`` permission settings as follows:
+In Apache 2.4, ``Order allow,deny`` has been replaced by ``Require all granted``.
+Hence, you need to modify your ``Directory`` permission settings as follows:
 
 .. code-block:: apache
 
@@ -124,8 +124,8 @@ For advanced Apache configuration options, read the official `Apache documentati
 
 .. _web-server-apache-fpm:
 
-Apache2 with PHP-FPM
---------------------
+Apache with PHP-FPM
+-------------------
 
 To make use of PHP5-FPM with Apache, you first have to ensure that you have
 the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module

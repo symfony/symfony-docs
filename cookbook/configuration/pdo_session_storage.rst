@@ -123,10 +123,13 @@ These are parameters that you must configure:
 
 ``db_table``
     The name of the session table in your database.
+
 ``db_id_col``
     The name of the id column in your session table (``VARCHAR(255)`` or larger).
+
 ``db_data_col``
     The name of the value column in your session table (``TEXT`` or ``CLOB``).
+
 ``db_time_col``:
     The name of the time column in your session table (``INTEGER``).
 

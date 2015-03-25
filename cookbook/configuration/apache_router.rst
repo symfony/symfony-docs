@@ -62,20 +62,20 @@ To test that it's working, create a very basic route for the AppBundle:
         # app/config/routing.yml
         hello:
             path: /hello/{name}
-            defaults: { _controller: AppBundle:Default:hello }
+            defaults: { _controller: AppBundle:Greet:hello }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <route id="hello" path="/hello/{name}">
-            <default key="_controller">AppBundle:Default:hello</default>
+            <default key="_controller">AppBundle:Greet:hello</default>
         </route>
 
     .. code-block:: php
 
         // app/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AppBundle:Default:hello',
+            '_controller' => 'AppBundle:Greet:hello',
         )));
 
 Now generate the mod_rewrite rules:
