@@ -106,27 +106,51 @@ Adding Web Profiler Templates
 -----------------------------
 
 When you want to display the data collected by your data collector in the web
-debug toolbar or the web profiler, create a Twig template following this
-skeleton:
+debug toolbar or the web profiler, you will need to create a Twig template. The
+following example can help you get started:
 
 .. code-block:: jinja
 
     {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
-
+    
     {% block toolbar %}
-        {# the web debug toolbar content #}
+        {# Used for the menu items along the bottom of the screen. #}
+        {% set icon %}
+        <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAQAAADVGmdYAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQffAxkBCDStonIVAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAHpJREFUOMtj3PWfgXRAuqZd/5nIsIdhVBPFmgqIjCuYOrJsYtz1fxuUOYER2TQID8afwIiQ8YIkI4TzCv5D2AgaWSuExJKMIDbA7EEVhQEWXJ6FKUY4D48m7HYU/EcWZ8JlE6qfMELPDcUJuEMPxvYazYTDWRMjOcUyAEswO+VjeQQaAAAAAElFTkSuQmCC" alt=""/></span>
+        <span class="sf-toolbar-status">Example</span>
+        {% endset %}
+    
+        {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Quick roll-over</b>
+            <b>info here</b>
+        </div>
+        {% endset %}
+    
+        {# Omit this next line if you do not have a "panel" section #}
+        {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': true } %}
+    
     {% endblock %}
-
+    
     {% block head %}
-        {# if the web profiler panel needs some specific JS or CSS files #}
+        {# Optional, if you need your own JS or CSS files. #} 
+        {{ parent() }} {# Use parent() to keep the default styles #}        
     {% endblock %}
-
+    
     {% block menu %}
-        {# the menu content #}
+        {# The left-hand menu content when looking at profiler data. #}
+        <span class="label">
+            <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAQAAADVGmdYAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQffAxkBCDStonIVAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAHpJREFUOMtj3PWfgXRAuqZd/5nIsIdhVBPFmgqIjCuYOrJsYtz1fxuUOYER2TQID8afwIiQ8YIkI4TzCv5D2AgaWSuExJKMIDbA7EEVhQEWXJ6FKUY4D48m7HYU/EcWZ8JlE6qfMELPDcUJuEMPxvYazYTDWRMjOcUyAEswO+VjeQQaAAAAAElFTkSuQmCC" alt=""/></span>
+            <strong>Example Collector</strong>
+        </span>
     {% endblock %}
-
+    
     {% block panel %}
-        {# the panel content #}
+        {# Optional, for showing the most details. #} 
+        <h2>Example</h2>
+        <p>
+            <em>Major information goes here</em>
+        </p>
     {% endblock %}
 
 Each block is optional. The ``toolbar`` block is used for the web debug
