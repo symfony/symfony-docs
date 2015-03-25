@@ -86,7 +86,7 @@ choices
 **type**: ``array`` **default**: ``array()``
 
 This is the most basic way to specify the choices that should be used
-by this field. The ``choices`` option is an array, where the array key
+by this field. The ``choices`` option is an ``array``, where the array key
 is the item value and the array value is the item's label::
 
     $builder->add('gender', 'choice', array(
@@ -111,7 +111,7 @@ The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
 For more advanced cases, a custom class that implements the interface
 can be created to supply the choices.
 
-With this option you can also allow float values to be selected as data.
+With this option you can also allow ``float`` values to be selected as data.
 
 .. code-block:: php
 
