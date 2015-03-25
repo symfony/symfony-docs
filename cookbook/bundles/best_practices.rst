@@ -193,7 +193,7 @@ the ``Tests/`` directory. Tests should follow these principles:
 Documentation
 -------------
 
-All classes and functions must be fully documented using `phpDocumentor`_ tags.
+All classes and functions must be fully documented using `PHPDoc`_ tags.
 
 Extensive documentation should also be provided in the
 :doc:`reStructuredText </contributing/documentation/format>` format, under
@@ -383,4 +383,4 @@ Even if this mechanism is simple enough, you are highly encouraged to use the
     alias.
 
 .. _`standards`: http://www.php-fig.org/psr/psr-0/
-.. _`phpDocumentor`: http://www.phpdoc.org/
+.. _`PHPDoc`: https://en.wikipedia.org/wiki/PHPDoc
