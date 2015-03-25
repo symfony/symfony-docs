@@ -59,8 +59,8 @@ templates is based on the HTTP status code and request format:
    or ``error500.xml.twig``);
 
 #. If the previous template doesn't exist, discard the status code and look for
-  a generic template for the given format (like ``error.json.twig`` or
-  ``error.xml.twig``);
+   a generic template for the given format (like ``error.json.twig`` or
+   ``error.xml.twig``);
 
 #. If none of the previous template exist, fall back to the generic HTML template
   (``error.html.twig``).
