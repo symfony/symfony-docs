@@ -79,5 +79,9 @@ You're done!
 .. note::
 
     Depending on your Gmail account settings, you may get authentication errors within your app.
-    You should ensure two-factor authentication and [also allow less secure apps to access your
-    account](https://support.google.com/accounts/answer/6010255)
+    If your Gmail account uses 2-Step-Verification, you should `generate an App password`_ to use for your
+    ``mailer_password`` parameter.
+    You should also ensure that you `allow less secure apps to access your Gmail account`_.
+    
+.. _`generate an App password`: https://support.google.com/accounts/answer/185833
+.. _`also allow less secure apps to access your account`: https://support.google.com/accounts/answer/6010255
