@@ -135,11 +135,11 @@ for you:
     as agnostic as possible in terms of environment configuration. One way to solve
     this problem is to configure server-level defaults.
     
-.. caution::
+    .. caution::
 
-    If you are using MySQL, its `utf8` character set has some shortcomings 
-    which may cause problems. Prefer the `utf8mb4` character set instead, if 
-    your version supports it.
+        If you are using MySQL, its `utf8` character set actually only supports 
+        a portion of valid UTF-8 data that you may encounter. Instead, try to 
+        use the newer `utf8mb4` if your system supports it.
 
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to
     your configuration file  (typically ``my.cnf``):
