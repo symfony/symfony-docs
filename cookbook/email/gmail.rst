@@ -84,4 +84,4 @@ You're done!
     You should also ensure that you `allow less secure apps to access your Gmail account`_.
     
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
-.. _`also allow less secure apps to access your account`: https://support.google.com/accounts/answer/6010255
+.. _`allow less secure apps to access your Gmail account`: https://support.google.com/accounts/answer/6010255
