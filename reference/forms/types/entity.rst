@@ -76,7 +76,7 @@ option. The easiest way to use the option is as follows::
 
     $builder->add('users', 'entity', array(
         'class' => 'AcmeHelloBundle:User',
-        'query_builder' => function(EntityRepository $er) {
+        'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
