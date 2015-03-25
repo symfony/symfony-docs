@@ -12,7 +12,7 @@ Installer**, which has to be installed before creating your first project.
 
     Use the Symfony Installer to create new Symfony-based projects.
 
-Read the :doc:`installation chapter </book/installation>`_ of the Symfony Book to
+Read the :doc:`installation chapter </book/installation>` of the Symfony Book to
 learn how to install and use the Symfony Installer.
 
 Creating the Blog Application
