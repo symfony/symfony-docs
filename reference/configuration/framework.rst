@@ -6,7 +6,7 @@ FrameworkBundle Configuration ("framework")
 
 The FrameworkBundle contains most of the "base" framework functionality
 and can be configured under the ``framework`` key in your application
-configuration. When using XML, you can use the
+configuration. When using XML, you must use the
 ``http://symfony.com/schema/dic/symfony`` namespace.
 
 This includes settings related to sessions, translation, forms, validation,
@@ -142,40 +142,6 @@ service container parameter called ``kernel.trusted_proxies``.
 
     For more details, see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 
-.. versionadded:: 2.3
-    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
-    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
-                <!-- ... -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
-        ));
-
 ide
 ~~~
 
@@ -275,11 +241,11 @@ trusted_hosts
 
 **type**: ``array`` | ``string`` **default**: ``array()``
 
-A lot of different attacks have been discovered relying on inconsistencies
-between the handling of the ``Host`` header by various software (web servers,
-reverse proxies, web frameworks, etc.). Basically, everytime the framework is
-generating an absolute URL (when sending an email to reset a password for
-instance), the host might have been manipulated by an attacker.
+A lot of different attacks have been discovered relying on inconsistencies in
+handling the ``Host`` header by various software (web servers, reverse proxies,
+web frameworks, etc.). Basically, everytime the framework is generating an
+absolute URL (when sending an email to reset a password for instance), the host
+might have been manipulated by an attacker.
 
 .. seealso::
 
@@ -327,40 +293,8 @@ response.
             'trusted_hosts' => array('acme.com', 'acme.org'),
         ));
 
-Hosts can also be configured using regular expressions, which make it easier to
-respond to any subdomain:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            trusted_hosts:  ['.*\.?acme.com$', '.*\.?acme.org$']
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:trusted-host>.*\.?acme.com$</framework:trusted-host>
-                <framework:trusted-host>.*\.?acme.org$</framework:trusted-host>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'trusted_hosts' => array('.*\.?acme.com$', '.*\.?acme.org$'),
-        ));
+Hosts can also be configured using regular expressions (e.g.
+``.*\.?acme.com$``), which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller using
 the ``Request::setTrustedHosts()`` method::
@@ -605,7 +539,7 @@ password
 
 **type**: ``string`` **default**: ``''``
 
-When needed, the password for hte profiling storage. It becomes the service
+When needed, the password for the profiling storage. It becomes the service
 container parameter called ``profiler.storage.password``.
 
 lifetime
@@ -620,6 +554,9 @@ the lifetime is expired. It becomes the service container parameter called
 
 matcher
 .......
+
+Matcher options are configured to dynamically enable the profiler. For
+instance, based on `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
 
 .. seealso::
 
@@ -657,7 +594,8 @@ resource
 
 **type**: ``string`` **required**
 
-Specifies the path to the routes used by the default router.
+The path the main routing resource (e.g. a YAML file) that contains the routes
+and imports the router should load.
 
 It becomes the service container parameter called ``router.resource``.
 
@@ -691,8 +629,11 @@ strict_requirements
 
 **type**: ``mixed`` **default**: ``true``
 
-Determines the behaviour when a route matches, but the parameters do not match
-the specified requirements for that route. Can be one of:
+Determines the routing generator behaviour. When generating a route that has
+specific :ref:`requirements <book-routing-requirements>`, the generator can
+behave differently in case the used parameters do not meet these requirements.
+
+The value can be one of:
 
 ``true``
     Throw an exception when the requirements are not met;
@@ -703,7 +644,7 @@ the specified requirements for that route. Can be one of:
     Disable checking the requirements (thus, match the route even when the
     requirements don't match).
 
-``false`` is recommended in the development environment, while ``false`` or
+``true`` is recommended in the development environment, while ``false`` or
 ``null`` might be preferred in production.
 
 session
@@ -986,8 +927,12 @@ resources
 
 **type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
 
-A list of all resources for form theming in PHP. If you have custom global form
-themes in ``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
+A list of all resources for form theming in PHP. This setting is not required
+if you're using the Twig format for your templates, in that case refer to
+:ref:`the form book chapter <book-forms-theming-twig>`.
+
+Assume you have custom global form themes in
+``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
 
 .. configuration-block::
 
@@ -1043,6 +988,10 @@ themes in ``src/WebsiteBundle/Resources/views/Form``, you can configure this lik
     The default form templates from ``FrameworkBundle:Form`` will always be
     included in the form resources.
 
+.. seealso::
+
+    See :ref:`book-forms-theming-global` for more information.
+
 .. _reference-templating-base-urls:
 
 assets_base_urls
@@ -1090,7 +1039,9 @@ loaders
 **type**: ``string[]``
 
 An array (or a string when configuring just one loader) of service ids for
-templating loaders.
+templating loaders. Templating loaders are used to find and load templates from
+a resource (e.g. a filesystem or database). Templating loaders must implement
+:class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
 packages
 ........
@@ -1264,7 +1215,8 @@ debug
 Whether to enable debug mode for caching. If enabled, the cache will
 automatically update when the original file is changed (both with code and
 annotation changes). For performance reasons, it is recommended to disable
-debug mode in production.
+debug mode in production, which will happen automatically if you use the
+default value.
 
 .. _configuration-framework-serializer:
 
