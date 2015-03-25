@@ -73,7 +73,7 @@ This option becomes the service container parameter named ``kernel.secret``,
 which you can use whenever the application needs an immutable random string
 to add more entropy.
 
-As with any other security-related parameter, is a good practice to change this
+As with any other security-related parameter, it is a good practice to change this
 value from time to time. However, keep in mind that changing this value will
 invalidate all signed URIs and Remember Me cookies. That's why, after changing
 this value, you should regenerate the application cache, delete the HTTP Cache
