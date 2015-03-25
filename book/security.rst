@@ -21,7 +21,8 @@ sections:
 #. Fetching the current User object.
 
 These are followed by a number of small (but still captivating) sections,
-like :ref:`logging out <book-security-logging-out>` and :ref:`encoding user passwords <security-encoding-password>`.
+like :ref:`logging out <book-security-logging-out>` and
+:ref:`encoding user passwords <security-encoding-password>`.
 
 .. _book-security-firewalls:
 
@@ -658,11 +659,11 @@ Add Code to Deny Access
 
 There are **two** ways to deny access to something:
 
-1) :ref:`access_control in security.yml <security-authorization-access-control>`
+#. :ref:`access_control in security.yml <security-authorization-access-control>`
    allows you to protect URL patterns (e.g. ``/admin/*``). This is easy,
    but less flexible;
 
-2) :ref:`in your code via the security.context service <book-security-securing-controller>`.
+#. :ref:`in your code via the security.context service <book-security-securing-controller>`.
 
 .. _security-authorization-access-control:
 
@@ -814,8 +815,10 @@ You can easily deny access from inside a controller::
     }
 
 That's it! If the user isn't logged in yet, they will be asked to login (e.g.
-redirected to the login page). If they *are* logged in, they'll be shown
-the 403 access denied page (which you can :ref:`customize <cookbook-error-pages-by-status-code>`).
+redirected to the login page). If they *are* logged in, but do *not* have the
+``ROLE_ADMIN`` role, they'll be shown the 403 access denied page (which you can
+:ref:`customize <cookbook-error-pages-by-status-code>`). If they are logged in
+and have the correct roles, the code will be executed.
 
 .. _book-security-template:
 
@@ -839,14 +842,13 @@ the built-in helper function:
             <a href="...">Delete</a>
         <?php endif ?>
 
-If you use this function and are *not* behind a firewall, an exception
-will be thrown. Again, it's almost always a good
-idea to have a main firewall that covers all URLs (as has been shown
-in this chapter).
+If you use this function and you are *not* behind a firewall, an exception will
+be thrown. Again, it's almost always a good idea to have a main firewall that
+covers all URLs (as shown before in this chapter).
 
 .. caution::
 
-    Be careful with this in your layout or on your error pages! Because of
+    Be careful with this in your base layout or on your error pages! Because of
     some internal Symfony details, to avoid broken error pages in the ``prod``
     environment, wrap calls in these templates with a check for ``app.user``:
 
@@ -857,10 +859,10 @@ in this chapter).
 Securing other Services
 .......................
 
-In fact, anything in Symfony can be protected by doing something similar
-to this. For example, suppose you have a service (i.e. a PHP class) whose
-job is to send emails. You can restrict use of this class - no matter where
-it's being used from - to only certain users.
+Anything in Symfony can be protected by doing something similar to the code
+used to secure a controller. For example, suppose you have a service (i.e. a
+PHP class) whose job is to send emails. You can restrict use of this class - no
+matter where it's being used from - to only certain users.
 
 For more information see :doc:`/cookbook/security/securing_services`.
 
@@ -869,7 +871,8 @@ Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 
 So far, you've checked access based on roles - those strings that start with
 ``ROLE_`` and are assigned to users. But if you *only* want to check if a
-user is logged in (you don't care about roles), then you can see ``IS_AUTHENTICATED_FULLY``::
+user is logged in (you don't care about roles), then you can use
+``IS_AUTHENTICATED_FULLY``::
 
     // ...
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -957,6 +960,7 @@ Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
 
     use Symfony\Component\HttpFoundation\Response;
+    // ...
 
     public function indexAction()
     {
@@ -1262,7 +1266,7 @@ configuration tree may be useful.
 
 Good luck!
 
-Learn more from the Cookbook
+Learn More from the Cookbook
 ----------------------------
 
 * :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
