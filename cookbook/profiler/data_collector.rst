@@ -112,14 +112,14 @@ following example can help you get started:
 .. code-block:: jinja
 
     {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
-    
+
     {% block toolbar %}
         {# This toolbar item may appear along the top or bottom of the screen.#}
         {% set icon %}
         <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAQAAADVGmdYAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQffAxkBCDStonIVAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAAHpJREFUOMtj3PWfgXRAuqZd/5nIsIdhVBPFmgqIjCuYOrJsYtz1fxuUOYER2TQID8afwIiQ8YIkI4TzCv5D2AgaWSuExJKMIDbA7EEVhQEWXJ6FKUY4D48m7HYU/EcWZ8JlE6qfMELPDcUJuEMPxvYazYTDWRMjOcUyAEswO+VjeQQaAAAAAElFTkSuQmCC" alt=""/></span>
         <span class="sf-toolbar-status">Example</span>
         {% endset %}
-    
+
         {% set text %}
         <div class="sf-toolbar-info-piece">
             <b>Quick piece of data</b>
@@ -130,18 +130,18 @@ following example can help you get started:
             <span>300 units</div>
         </div>
         {% endset %}
-    
+
         {# Set the "link" value to false if you do not have a big "panel" 
            section that you want to direct the user to. #}
         {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': true } %}
-    
+
     {% endblock %}
-    
+
     {% block head %}
         {# Optional, if you need your own JS or CSS files. #} 
         {{ parent() }} {# Use parent() to keep the default styles #}        
     {% endblock %}
-    
+
     {% block menu %}
         {# This left-hand menu appears when using the full-screen profiler. #}
         <span class="label">
@@ -149,7 +149,7 @@ following example can help you get started:
             <strong>Example Collector</strong>
         </span>
     {% endblock %}
-    
+
     {% block panel %}
         {# Optional, for showing the most details. #} 
         <h2>Example</h2>
