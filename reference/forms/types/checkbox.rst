@@ -37,8 +37,8 @@ Example Usage
 .. code-block:: php
 
     $builder->add('public', 'checkbox', array(
-        'label'     => 'Show this entry publicly?',
-        'required'  => false,
+        'label'    => 'Show this entry publicly?',
+        'required' => false,
     ));
 
 Field Options
