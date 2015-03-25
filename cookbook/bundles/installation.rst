@@ -63,7 +63,7 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
         public function registerBundles()
         {
             $bundles = array(
-                // ...,
+                // ...
                 new FOS\UserBundle\FOSUserBundle(),
             );
 
@@ -73,8 +73,9 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
 
 By default, Symfony bundles are registered in all the application
 :doc:`execution environments </cookbook/configuration/environments>`. If the bundle
-is meant to be used only in the development or test environments, register it in
-the section below::
+is meant to be used only in some environment, register it within an ``if`` statement,
+like the following example, where the FOSUserBundle is only enabled for the
+``dev`` and ``test`` environments::
 
     // app/AppKernel.php
 
@@ -86,7 +87,7 @@ the section below::
         public function registerBundles()
         {
             $bundles = array(
-                // ...,
+                // ...
             );
 
             if (in_array($this->getEnvironment(), array('dev', 'test'))) {
