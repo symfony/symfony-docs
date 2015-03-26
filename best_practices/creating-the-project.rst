@@ -15,15 +15,15 @@ Installer**, which has to be installed before creating your first project.
 Read the :doc:`installation chapter </book/installation>` of the Symfony Book to
 learn how to install and use the Symfony Installer.
 
+.. _linux-and-mac-os-x-systems:
+.. _windows-systems:
+
 Creating the Blog Application
 -----------------------------
 
 Now that everything is correctly set up, you can create a new project based on
 Symfony. In your command console, browse to a directory where you have permission
 to create files and execute the following commands:
-
-.. _linux-and-mac-os-x-systems:
-.. _windows-systems:
 
 .. code-block:: bash
 
