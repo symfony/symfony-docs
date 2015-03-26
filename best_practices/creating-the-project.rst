@@ -22,6 +22,9 @@ Now that everything is correctly set up, you can create a new project based on
 Symfony. In your command console, browse to a directory where you have permission
 to create files and execute the following commands:
 
+.. _linux-and-mac-os-x-systems:
+.. _windows-systems:
+
 .. code-block:: bash
 
     # Linux, Mac OS X
