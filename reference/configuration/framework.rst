@@ -135,8 +135,7 @@ trusted_proxies
 
 **type**: ``array``
 
-Configures the IP addresses that should be trusted as proxies. It becomes the
-service container parameter called ``kernel.trusted_proxies``.
+Configures the IP addresses that should be trusted as proxies.
 
 .. seealso::
 
@@ -211,14 +210,14 @@ test
 
 **type**: ``boolean``
 
-If this configuration parameter is present (and not ``false``), then the
-services related to testing your application (e.g. ``test.client``) are loaded.
-This setting should be present in your ``test`` environment (usually via
+If this configuration setting is present (and not ``false``), then the services
+related to testing your application (e.g. ``test.client``) are loaded. This
+setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``).
 
 .. seealso::
 
-   For more information, see :doc:`/book/testing`.
+    For more information, see :doc:`/book/testing`.
 
 default_locale
 ~~~~~~~~~~~~~~
@@ -226,8 +225,7 @@ default_locale
 **type**: ``string`` **default**: ``'en'``
 
 The default locale is used if no ``_locale`` routing parameter has been set. It
-becomes the service container parameter named ``kernel.default_locale`` and it
-is also available with the
+is available with the
 :method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
 method.
 
@@ -252,14 +250,13 @@ might have been manipulated by an attacker.
     You can read "`HTTP Host header attacks`_" for more information about these
     kinds of attacks.
 
-The Symfony :method:`Request::getHost()
-<Symfony\\Component\\HttpFoundation\\Request:getHost>` method might be
-vulnerable to some of these attacks because it depends on the configuration of
-your web server. One simple solution to avoid these attacks is to whitelist the
-hosts that your Symfony application can respond to. That's the purpose of this
-``trusted_hosts`` option. If the incoming request's hostname doesn't match one
-in this list, the application won't respond and the user will receive a 500
-response.
+The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request:getHost>`
+method might be vulnerable to some of these attacks because it depends on the
+configuration of your web server. One simple solution to avoid these attacks is
+to whitelist the hosts that your Symfony application can respond to. That's the
+purpose of this ``trusted_hosts`` option. If the incoming request's hostname
+doesn't match one in this list, the application won't respond and the user will
+receive a 500 response.
 
 .. configuration-block::
 
@@ -293,8 +290,8 @@ response.
             'trusted_hosts' => array('acme.com', 'acme.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.
-``.*\.?acme.com$``), which make it easier to respond to any subdomain.
+Hosts can also be configured using regular expressions (e.g.  ``.*\.?acme.com$``),
+which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller using
 the ``Request::setTrustedHosts()`` method::
@@ -349,8 +346,7 @@ enabled
 **type**: ``boolean`` **default**: ``true``
 
 Whether to enable the CSRF support in forms or not. Setting this option to
-``true`` requires the `secret`_ to be set and `session`_ to be enabled. It
-becomes the service container parameter named ``form.type_extension.csrf.enabled``.
+``true`` requires the `secret`_ to be set and `session`_ to be enabled.
 
 This option will automatically be set to ``true`` when one of the child
 settings is configured.
@@ -364,8 +360,7 @@ field_name
 
 **type**: ``string`` **default**: ``'_token'``
 
-The name of the hidden field containing the CSRF token in the form. It becomes
-the service container parameter named ``form.type_extension.csrf.field_name``.
+The name of the hidden field containing the CSRF token in the form.
 
 esi
 ~~~
@@ -444,8 +439,7 @@ path
 **type**: ``string`` **default**: ``'/_fragment'``
 
 The path prefix for fragments. The fragment listener will only be executed
-when the request starts with this path. It becomes the service container
-parameter called ``fragment.path``.
+when the request starts with this path.
 
 profiler
 ~~~~~~~~
@@ -469,8 +463,8 @@ and ``test`` environments.
 .. note::
 
     The profiler works independently from the Web Developer Toolbar, see the
-    :doc:`WebProfilerBundle configuration
-    </reference/configuration/web_profiler>` on how to disable/enable it.
+    :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
+    on how to disable/enable the toolbar.
 
 collect
 .......
@@ -484,9 +478,10 @@ collect
 **type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
-to ``true``, the profiler collects data for all requests. If you want to only
-collect information on-demand, you can set the ``collect`` flag to ``false``
-and activate the data collectors manually::
+to ``true``, the profiler collects data for all requests (unless you configure
+otherwise, like a custom `matcher`_). If you want to only collect information
+on-demand, you can set the ``collect`` flag to ``false`` and activate the data
+collectors manually::
 
     $profiler->enable();
 
@@ -496,8 +491,7 @@ only_exceptions
 **type**: ``boolean`` **default**: ``false``
 
 When this is set to ``true``, the profiler will only be enabled when an
-exception is thrown during the handling of the request. It becomes the service
-container parameter called ``profiler_listener.only_exceptions``.
+exception is thrown during the handling of the request.
 
 only_master_requests
 ....................
@@ -505,42 +499,33 @@ only_master_requests
 **type**: ``boolean`` **default**: ``false``
 
 When this is set to ``true``, the profiler will only be enabled on the master
-requests (and not on the subrequests). It becomes the service container
-parameter called ``profiler_listener.only_master_requests``.
+requests (and not on the subrequests).
 
 dsn
 ...
 
 **type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
 
-The DSN where to save the profiling information. The supported drivers (part
-before the colon) are:
+The DSN where to store the profiling information.
 
-* file
-* sqlite
-* mysql
-* mongodb
-* memcache
-* memcached
-* redis
+.. seealso::
 
-It becomes the service container parameter called ``profiler.storage.dsn``.
+    See :doc:`/cookbook/profiler/storage` for more information about the
+    profiler storage.
 
 username
 ........
 
 **type**: ``string`` **default**: ``''``
 
-When needed, the username for the profiling storage. It becomes the service
-container parameter called ``profiler.storage.username``.
+When needed, the username for the profiling storage.
 
 password
 ........
 
 **type**: ``string`` **default**: ``''``
 
-When needed, the password for the profiling storage. It becomes the service
-container parameter called ``profiler.storage.password``.
+When needed, the password for the profiling storage.
 
 lifetime
 ........
@@ -548,15 +533,13 @@ lifetime
 **type**: ``integer`` **default**: ``86400``
 
 The lifetime of the profiling storage in seconds. The data will be deleted when
-the lifetime is expired. It becomes the service container parameter called
-``profiler.storage.lifetime``.
-
+the lifetime is expired.
 
 matcher
 .......
 
 Matcher options are configured to dynamically enable the profiler. For
-instance, based on `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
+instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
 
 .. seealso::
 
@@ -597,8 +580,6 @@ resource
 The path the main routing resource (e.g. a YAML file) that contains the routes
 and imports the router should load.
 
-It becomes the service container parameter called ``router.resource``.
-
 type
 ....
 
@@ -614,8 +595,6 @@ http_port
 **type**: ``integer`` **default**: ``80``
 
 The port for normal http requests (this is used when matching the scheme).
-
-It becomes the service container parameter called ``router.resource``.
 
 https_port
 ..........
@@ -650,14 +629,6 @@ The value can be one of:
 session
 ~~~~~~~
 
-storage_id
-..........
-
-**type**: ``string`` **default**: ``'session.storage.native'``
-
-The service id used for session storage. The ``session.storage`` service alias
-will be set to this service id.
-
 handler_id
 ..........
 
@@ -669,23 +640,38 @@ will be set to this service id.
 You can also set it to ``null``, to default to the handler of your PHP
 installation.
 
+.. seealso::
+
+    You can see an example of the usage of this in
+    :doc:`/cookbook/configuration/pdo_session_storage`.
+
+storage_id
+..........
+
+**type**: ``string`` **default**: ``'session.storage.native'``
+
+The service id used for session storage. The ``session.storage`` service alias
+will be set to this service id. This class has to implement
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
+
 name
 ....
 
 **type**: ``string`` **default**: ``null``
 
-This specifies the name of the session cookie. By default it will use the cookie
-name which is defined in the ``php.ini`` with the ``session.name`` directive.
+This specifies the name of the session cookie. By default it will use the
+cookie name which is defined in the ``php.ini`` with the ``session.name``
+directive.
 
 cookie_lifetime
 ...............
 
 **type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. It will use ``null`` by
-default, which means ``session.cookie_lifetime`` value from ``php.ini`` will be used.
-Setting this value to ``0`` means the cookie is valid for the length of the browser
-session.
+This determines the lifetime of the session - in seconds. It will use ``null``
+by default, which means ``session.cookie_lifetime`` value from ``php.ini`` will
+be used. Setting this value to ``0`` means the cookie is valid for the length
+of the browser session.
 
 cookie_path
 ...........
@@ -910,8 +896,7 @@ hinclude_default_template
 **type**: ``string`` **default**: ``null``
 
 Sets the content shown during the loading of the fragment or when JavaScript is
-disabled. This can be either a template name or the content itself. It becomes
-the service container parameter named ``fragment.renderer.hinclude.global_template``.
+disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
@@ -1019,8 +1004,7 @@ cache
 **type**: ``string``
 
 The path to the cache directory for templates. When this is not set, caching is
-disabled. It becomes the service container parameter named
-``templating.loader.cache.path``.
+disabled.
 
 engines
 .......
@@ -1028,8 +1012,7 @@ engines
 **type**: ``string[]`` / ``string`` **required**
 
 The Templating Engine to use. This can either be a string (when only one engine
-is configured) or an array of engines. It becomes the service container
-parameter named ``templating.engines``.
+is configured) or an array of engines.
 
 At least one engine is required.
 
