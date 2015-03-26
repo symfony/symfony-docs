@@ -137,9 +137,9 @@ for you:
     
     .. caution::
 
-        If you are using MySQL, its `utf8` character set actually only supports 
+        If you are using MySQL, its ``utf8`` character set actually only supports 
         a portion of valid UTF-8 data that you may encounter. Instead, try to 
-        use the newer `utf8mb4` if your system supports it.
+        use the newer ``utf8mb4`` if your system supports it.
 
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to
     your configuration file  (typically ``my.cnf``):
