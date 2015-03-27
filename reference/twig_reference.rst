@@ -114,7 +114,7 @@ for the package and the URL path. More information in
 :ref:`book-templating-assets`. For asset versioning, see :ref:`ref-framework-assets-version`.
 
 assets_version
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 .. code-block:: jinja
 
