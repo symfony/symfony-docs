@@ -63,7 +63,7 @@ templates is based on the HTTP status code and request format:
    ``error.xml.twig``);
 
 #. If none of the previous template exist, fall back to the generic HTML template
-  (``error.html.twig``).
+   (``error.html.twig``).
 
 To override these templates, simply rely on the standard Symfony method for
 :ref:`overriding templates that live inside a bundle <overriding-bundle-templates>`.
