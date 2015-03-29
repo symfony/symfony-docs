@@ -116,12 +116,12 @@ Returns a public path to ``path``, which takes into account the base path set
 for the package and the URL path. More information in
 :ref:`book-templating-assets`.
 
-asset_version
-~~~~~~~~~~~~~
+assets_version
+~~~~~~~~~~~~~~
 
 .. code-block:: jinja
 
-    {{ asset_version(packageName) }}
+    {{ assets_version(packageName) }}
 
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
