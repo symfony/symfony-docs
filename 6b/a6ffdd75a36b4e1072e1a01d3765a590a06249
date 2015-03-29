@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-04T15:07:49Z
+
+@sebastianblum the reason for this issue is that the assets management has change a lot with the introduction of the new Asset component. We have the documentation for the component ready but it has to be merged: https://github.com/symfony/symfony-docs/pull/4987
+
+Once it's merged, we'll review all the doc to update the all the configuration options and code samples.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-03-04T15:14:01Z
+
+@javiereguiluz this change is actually right. ``asset_version`` does not exist in Symfony 2.6 (it is the new function introduced for the Asset component). In Symfony 2.6 and older, the function is ``assets_version`` (it still exist in 2.7 but it is deprecated)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T14:41:10Z
+
+@sebastianblum can you please add the missing tilde (`~`)? After that, this PR can be merged.
+
+---------------------------------------------------------------------------
+
+by sebastianblum at 2015-03-27T08:26:10Z
+
+@WouterJ sorry for the missing ~, now it should be fine.
+Should I rebase the commit?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-27T11:38:25Z
+
+No, everything is perfect now. (I'm just waiting for GitHub to solve its ddos attack so I can merge...)
