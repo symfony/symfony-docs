@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-27T10:05:16Z
+
+Well, it is automatic in a way that it always escapes your variables unless you use the `|raw` filter.
+
+---------------------------------------------------------------------------
+
+by stof at 2015-03-27T10:08:11Z
+
+We should keep the mention of ``automatic output escaping`` though (contextual escaping is indeed not supported by the auto-escaper)
+
+---------------------------------------------------------------------------
+
+by Ocramius at 2015-03-27T10:30:15Z
+
+Then I got mislead by the wording. I'll reword it to fix my misconception.
