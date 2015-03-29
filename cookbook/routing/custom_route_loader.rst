@@ -4,17 +4,21 @@
 How to Create a custom Route Loader
 ===================================
 
-A custom route loader allows you to add routes to an application without
-including them, for example, in a YAML file. This comes in handy when
-you have a bundle but don't want to manually add the routes for the bundle
-to ``app/config/routing.yml``. This may be especially important when you want
-to make the bundle reusable, or when you have open-sourced it as this would
-slow down the installation process and make it error-prone.
+What is a Custom Route Loader
+-----------------------------
 
-Alternatively, you could also use a custom route loader when you want your
-routes to be automatically generated or located based on some convention or
-pattern. One example is the `FOSRestBundle`_ where routing is generated based
-on the names of the action methods in a controller.
+A custom route loader enables you to generate routes based on some
+conventions or patterns. A great example for this use-case is the
+`FOSRestBundle`_ where routes are generated based on the names of the
+action methods in a controller.
+
+A custom route loader does not enable your bundle to inject routes
+without the need to modify the routing configuration
+(e.g. ``app/config/routing.yml``) manually.
+If your bundle provides routes, whether via a configuration file, like
+the `WebProfilerBundle` does, or via a custom route loader, like the 
+`FOSRestBundle`_ does, an entry in the routing configuration is always
+necessary.
 
 .. note::
 
