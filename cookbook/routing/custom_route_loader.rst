@@ -64,18 +64,21 @@ To load routes from some custom source (i.e. from something other than annotatio
 YAML or XML files), you need to create a custom route loader. This loader
 has to implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
+In most cases it's better not to implement
+:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
+yourself, but extend from :class:`Symfony\\Component\\Config\\Loader\\Loader`.
+
 The sample loader below supports loading routing resources with a type of
 ``extra``. The type ``extra`` isn't important - you can just invent any resource
 type you want. The resource name itself is not actually used in the example::
 
     namespace AppBundle\Routing;
 
-    use Symfony\Component\Config\Loader\LoaderInterface;
-    use Symfony\Component\Config\Loader\LoaderResolverInterface;
+    use Symfony\Component\Config\Loader\Loader;
     use Symfony\Component\Routing\Route;
     use Symfony\Component\Routing\RouteCollection;
 
-    class ExtraLoader implements LoaderInterface
+    class ExtraLoader extends Loader
     {
         private $loaded = false;
 
@@ -110,17 +113,6 @@ type you want. The resource name itself is not actually used in the example::
         {
             return 'extra' === $type;
         }
-
-        public function getResolver()
-        {
-            // needed, but can be blank, unless you want to load other resources
-            // and if you do, using the Loader base class is easier (see below)
-        }
-
-        public function setResolver(LoaderResolverInterface $resolver)
-        {
-            // same as above
-        }
     }
 
 Make sure the controller you specify really exists. In this case you
@@ -130,6 +122,7 @@ of the ``AppBundle``::
     namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class ExtraController extends Controller
     {
@@ -232,11 +225,10 @@ for the ``ExtraLoader``, so it is set to ".".
 More advanced Loaders
 ---------------------
 
-In most cases it's better not to implement
-:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
-yourself, but extend from :class:`Symfony\\Component\\Config\\Loader\\Loader`.
-This class knows how to use a
-:class:`Symfony\\Component\\Config\\Loader\\LoaderResolver` to load secondary
+If your custom route loader extends from
+:class:`Symfony\\Component\\Config\\Loader\\Loader` as shown above, you
+can also make use of the provided resolver, an instance of
+:class:`Symfony\\Component\\Config\\Loader\\LoaderResolver`, to load secondary
 routing resources.
 
 Of course you still need to implement
