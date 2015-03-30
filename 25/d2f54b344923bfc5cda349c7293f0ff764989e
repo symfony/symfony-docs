@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-02-10T16:00:50Z
+
+-1 for showing the deprecated way of configuring form themes
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T10:23:13Z
+
+I agree with @stof. As of Symfony 2.6, the option `twig.form.resources` was renamed to `twig.form_themes`. This option is shown in the lines above the added lines.
+
+However, I'm +1 for adding the bootstrap to this `twig.form_themes` option. Can you please update your PR?
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2015-03-30T09:57:16Z
+
+Thanks @WouterJ ! I have updated my PR
