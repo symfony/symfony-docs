@@ -50,7 +50,7 @@ Overridden Options
 ------------------
 
 choices
-~~~~~~~~~~~
+~~~~~~~
 
 **default**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\TimezoneChoiceList`
 
