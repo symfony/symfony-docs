@@ -145,8 +145,7 @@ Another option for doing the same could be::
     $output = fopen('php://memory', 'r+b');
 
     $dumper->dump($cloner->cloneVar($variable), $output);
-    rewind($output);
-    $output = stream_get_contents($output);
+    $output = stream_get_contents($output, -1, 0);
 
     // $output is now populated with the dump representation of $variable
 
