@@ -321,7 +321,7 @@ If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
 is 0 in the database), the user will still be able to login to the site
 normally. This is easily fixable.
 
-To exclude inactive users, change your ``User`` clas to implement
+To exclude inactive users, change your ``User`` class to implement
 :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`.
 This extends :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`,
 so you only need the new interface::
