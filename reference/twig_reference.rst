@@ -103,7 +103,7 @@ asset
 ``path``
     **type**: ``string``
 ``packageName``
-    **type**: ``string``|``null`` **default**: ``null``
+    **type**: ``string`` | ``null`` **default**: ``null``
 ``absolute``
     **type**: ``boolean`` **default**: ``false``
 ``version``
