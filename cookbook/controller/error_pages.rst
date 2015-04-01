@@ -9,15 +9,15 @@ In Symfony applications, all errors are treated as exceptions, no matter if they
 are just a 404 Not Found error or a fatal error triggered by throwing some
 exception in your code.
 
-In the `development environment`_ Symfony catches all the exceptions and displays
+In the `development environment`_, Symfony catches all the exceptions and displays
 a special **exception page** with lots of debug information to help you quickly
-discover the root problem.
+discover the root problem:
 
 .. image:: /images/cookbook/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in development environment
 
-Since these pages contain a lot of sensitive internal information about your
-application, in production environment Symfony displays instead a simple and
+Since these pages contain a lot of sensitive internal information, Symfony won't
+display them in the production environment. Instead, it'll show a simple and
 generic **error page**:
 
 .. image:: /images/cookbook/controller/error_pages/errors-in-prod-environment.png
