@@ -14,16 +14,16 @@ a special **exception page** with lots of debug information to help you quickly
 discover the root problem:
 
 .. image:: /images/cookbook/controller/error_pages/exceptions-in-dev-environment.png
-   :alt: A typical exception page in development environment
+   :alt: A typical exception page in the development environment
 
 Since these pages contain a lot of sensitive internal information, Symfony won't
 display them in the production environment. Instead, it'll show a simple and
 generic **error page**:
 
 .. image:: /images/cookbook/controller/error_pages/errors-in-prod-environment.png
-   :alt: A typical error page in production environment
+   :alt: A typical error page in the production environment
 
-Error pages for production environment can be customized in different ways,
+Error pages for the production environment can be customized in different ways
 depending on your needs:
 
 #. If you just want to change the contents and styles of the error pages to match
@@ -53,7 +53,7 @@ templates defined for different types of errors and content formats.
 .. _cookbook-error-pages-by-status-code:
 
 The logic followed by the ``ExceptionController`` to pick one of the available
-templates is based on the HTTP status code and request format:
+templates is based on the HTTP status code and the request format:
 
 #. Look for a template for the given format and status code (like ``error404.json.twig``
    or ``error500.xml.twig``);
@@ -64,6 +64,8 @@ templates is based on the HTTP status code and request format:
 
 #. If none of the previous template exist, fall back to the generic HTML template
    (``error.html.twig``).
+
+.. _overriding-or-adding-templates:
 
 To override these templates, simply rely on the standard Symfony method for
 :ref:`overriding templates that live inside a bundle <overriding-bundle-templates>`.
@@ -129,7 +131,7 @@ Testing Error Pages during Development
 
 One of the biggest hurdles of testing how do custom error pages look in your
 application is the fact that Symfony ignores them in the development environment
-and displays instead the default exception pages.
+and displays the default exception pages instead.
 
 You may be tempted to set the ``kernel.debug`` parameter to ``false`` to disable
 the debug mode in the development environment. However, this practice is not
@@ -142,6 +144,7 @@ custom error pages for arbitrary HTTP status codes even when ``kernel.debug`` is
 set to ``true``.
 
 .. _custom-exception-controller:
+.. _replacing-the-default-exceptioncontroller:
 
 Overriding the Default ExceptionController
 ------------------------------------------
@@ -188,8 +191,8 @@ configuration option to point to it:
         ));
 
 The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
-class used by TwigBundle as a listener of the ``kernel.exception`` event creates
-the Request that will be dispatched to your controller. In addition, your controller
+class used by the TwigBundle as a listener of the ``kernel.exception`` event creates
+the request that will be dispatched to your controller. In addition, your controller
 will be passed two parameters:
 
 ``exception``
@@ -215,13 +218,11 @@ class catches it and dispatches a ``kernel.exception`` event. This gives you the
 power to convert the exception into a ``Response`` in a few different ways.
 
 Working with this event is actually much more powerful than what has been explained
-before but also requires a thorough understanding of Symfony internals. Suppose
+before, but also requires a thorough understanding of Symfony internals. Suppose
 that your code throws specialized exceptions with a particular meaning to your
 application domain.
 
-If you extend the default ``ExceptionListener``, all you can get is the HTTP
-status code and message and display a nice-looking error page. However,
-:doc:`writing your own event listener </cookbook/service_container/event_listener>`
+:doc:`Writing your own event listener </cookbook/service_container/event_listener>`
 for the ``kernel.exception`` event allows you to have a closer look at the exception
 and take different actions depending on it. Those actions might include logging
 the exception, redirecting the user to another page or rendering specialized
