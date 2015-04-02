@@ -149,7 +149,7 @@ Attributes Groups
 -----------------
 
 .. versionadded:: 2.7
-The support of serialization and deserialization groups was introduced
+    The support of serialization and deserialization groups was introduced
     in Symfony 2.7.
 
 Sometimes, you want to serialize different sets of attributes from your
@@ -284,11 +284,11 @@ Ignoring Attributes
 -------------------
 
 .. versionadded:: 2.3
-The :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
     method was introduced in Symfony 2.3.
 
 .. versionadded:: 2.7
-Prior to Symfony 2.7, attributes were only ignored while serializing. Since Symfony
+    Prior to Symfony 2.7, attributes were only ignored while serializing. Since Symfony
     2.7, they are ignored when deserializing too.
 
 As an option, there's a way to ignore attributes from the origin object. To remove
