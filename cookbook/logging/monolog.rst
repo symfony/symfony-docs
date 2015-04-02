@@ -236,6 +236,21 @@ only for a specific handler.
     generate hundreds of log lines. Consider using tools like the `logrotate`_
     Linux command to rotate log files before they become a problem.
 
+    In case you cannot use a dedicated tool for rotating log files, consider using
+    the special ``rotating_file`` handler defined by Monolog. This handler creates
+    a new log file every day and can also remove old files automatically. To use
+    it, just set the ``type`` option of your handler to ``rotating_file``:
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        monolog:
+            handlers:
+                main:
+                    type:  rotating_file  # <-- this value is usually 'stream'
+                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
+
 A processor is simply a callable receiving the record as its first argument.
 Processors are configured using the ``monolog.processor`` DIC tag. See the
 :ref:`reference about it <dic_tags-monolog-processor>`.
