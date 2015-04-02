@@ -103,7 +103,7 @@ asset
 ``path``
     **type**: ``string``
 ``packageName``
-    **type**: ``string``|``null`` **default**: ``null``
+    **type**: ``string`` | ``null`` **default**: ``null``
 ``absolute``
     **type**: ``boolean`` **default**: ``false``
 ``version``
@@ -113,12 +113,12 @@ Returns a public path to ``path``, which takes into account the base path set
 for the package and the URL path. More information in
 :ref:`book-templating-assets`. For asset versioning, see :ref:`ref-framework-assets-version`.
 
-asset_version
-~~~~~~~~~~~~~
+assets_version
+~~~~~~~~~~~~~~
 
 .. code-block:: jinja
 
-    {{ asset_version(packageName) }}
+    {{ assets_version(packageName) }}
 
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``

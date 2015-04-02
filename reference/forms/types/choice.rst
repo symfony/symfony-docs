@@ -51,8 +51,8 @@ user sees on the form (e.g. ``Male``).
 .. code-block:: php
 
     $builder->add('gender', 'choice', array(
-        'choices'   => array('m' => 'Male', 'f' => 'Female'),
-        'required'  => false,
+        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        'required' => false,
     ));
 
 By setting ``multiple`` to true, you can allow the user to choose multiple
@@ -62,12 +62,12 @@ of checkboxes depending on the ``expanded`` option:
 .. code-block:: php
 
     $builder->add('availability', 'choice', array(
-        'choices'   => array(
+        'choices' => array(
             'morning'   => 'Morning',
             'afternoon' => 'Afternoon',
             'evening'   => 'Evening',
         ),
-        'multiple'  => true,
+        'multiple' => true,
     ));
 
 You can also use the ``choice_list`` option, which takes an object that can
@@ -90,7 +90,7 @@ by this field. The ``choices`` option is an array, where the array key
 is the item value and the array value is the item's label::
 
     $builder->add('gender', 'choice', array(
-        'choices' => array('m' => 'Male', 'f' => 'Female')
+        'choices' => array('m' => 'Male', 'f' => 'Female'),
     ));
 
 .. tip::
