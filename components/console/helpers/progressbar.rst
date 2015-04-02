@@ -334,4 +334,4 @@ your own::
 For the ``filename`` to be part of the progress bar, just add the
 ``%filename%`` placeholder in your format::
 
-    $bar->setFormat(" %message%\n %step%/%max%\n Working on %filename%");
+    $bar->setFormat(" %message%\n %current%/%max%\n Working on %filename%");
