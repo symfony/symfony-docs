@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-03-31T14:04:09Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-31T14:10:01Z
+
+:+1:
+
+(I know that you like contractions a lot, but maybe the title of this PR should be longer than "Optim" to help doc maintainers)
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2015-03-31T14:19:44Z
+
+@javiereguiluz oups, I forgot to updated the title; Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-31T15:17:39Z
+
+We can merge this into the branch for Symfony 2.6, can't we?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2015-03-31T15:22:59Z
+
+yes we can
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-31T15:25:03Z
+
+:+1: Nice!
