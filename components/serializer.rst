@@ -162,7 +162,18 @@ Assume you have the following plain-old-PHP object::
     class MyObj
     {
         public $foo;
-        public $bar;
+
+        private $bar;
+
+        public function getBar()
+        {
+            return $this->bar;
+        }
+
+        public function setBar($bar)
+        {
+            return $this->bar = $bar;
+        }
     }
 
 The definition of serialization can be specified using annotations, XML
@@ -207,7 +218,12 @@ Then, create your groups definition:
             /**
              * @Groups({"group3"})
              */
-            public $bar;
+            public function getBar() // is* methods are also supported
+            {
+                return $this->bar;
+            }
+
+            // ...
         }
 
     .. code-block:: yaml
@@ -246,7 +262,7 @@ You are now able to serialize only attributes in the groups you want::
 
     $obj = new MyObj();
     $obj->foo = 'foo';
-    $obj->bar = 'bar';
+    $obj->setBar('bar');
 
     $normalizer = new ObjectNormalizer($classMetadataFactory);
     $serializer = new Serializer(array($normalizer));
