@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-07T16:09:31Z
+
+Thank you for the pull request, @raziel057. This is a really good catch! I just left you two little comments. After fixing them, the pull request is ready to be merged.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T10:16:34Z
+
+Sorry @raziel057, I forgot to review this PR some weeks ago. I've now added one little comment, after it, I'll flag it as finished and someone can merge it :)
+
+---------------------------------------------------------------------------
+
+by raziel057 at 2015-03-25T10:48:40Z
+
+@WouterJ I changed the ``trim()`` to the ``:phpfunction:`trim``` role as suggested in the defualt option too. Is it ok for you?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T14:35:28Z
+
+Perfect! :+1:
