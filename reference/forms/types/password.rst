@@ -76,4 +76,12 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
-.. include:: /reference/forms/types/options/trim.rst.inc
+trim
+~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If true, the whitespace of the submitted string value will be stripped
+via the :phpfunction:`trim` function when the data is bound. This guarantees that
+if a value is submitted with extra whitespace, it will be removed before
+the value is merged back onto the underlying object.
