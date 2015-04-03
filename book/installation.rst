@@ -46,7 +46,7 @@ Open your command console and execute the following command:
 
     c:\> php -r "readfile('http://symfony.com/installer');" > symfony
 
-Then, move the downloaded ``symfony`` file to your projects directory and
+Then, move the downloaded ``symfony`` file to your project's directory and
 execute it as follows:
 
 .. code-block:: bash
