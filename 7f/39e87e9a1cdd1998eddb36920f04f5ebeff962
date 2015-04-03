@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-11T14:15:03Z
+
+:+1: @bicpi thanks for this improvement.
+
+---------------------------------------------------------------------------
+
+by bicpi at 2015-03-11T14:17:46Z
+
+@javiereguiluz Fixed the backticks, thanks for the hint.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T10:18:05Z
+
+I like this one. However, this is all going to change (acmedemobundle will be removed in favor of a symfony demo application and the appbundle will default to /). But I think we should merge this PR soon, to avoid further confusion, and see what's going to happen in the future.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-25T10:25:43Z
+
+@WouterJ I totally agree with you: merge it ASAP to avoid confusion and let's see what happens in the future.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-25T17:41:07Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by bicpi at 2015-03-26T04:43:15Z
+
+Is the AcmeDemoBundle going to be removed from the 2.3 branch, too
+Sorry, I missed the discussion about this step.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-26T15:30:05Z
+
+@bicpi Yes (see sensiolabs/SensioDistributionBundle@96d645f311eb062b52c26ffbd90bedd007e0f565)
+
+---------------------------------------------------------------------------
+
+by bicpi at 2015-03-26T16:11:29Z
+
+@xabbuh Thanks!
