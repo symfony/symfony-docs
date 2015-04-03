@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-14T21:58:34Z
+
+@javiereguiluz Do you know when the phar will be updated? It would also be nice to make the phars available for each release on the Symfony Installer's GitHub release page.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-02-18T20:41:19Z
+
+     In addition, Symfony3 will use a slightly different directory structure when it's released: ...
+     The changes are pretty superficial, but for now, we recommend that you use the Symfony directory           structure.
+
+this is confusing me. So we recommended the Symfony directory structure. `Symfony3` or the `Symfony 2` x)
+
+---------------------------------------------------------------------------
+
+by stof at 2015-02-21T09:58:05Z
+
+@timglabisch please open a dedicated issue for this message, because it is not related to changes done in this PR. It is a different topic
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T10:26:58Z
+
+Can you please fix the sphinx issues? Besides that, I believe this one is ready?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-25T11:16:05Z
+
+Sorry for the delay! In a4451ce I've pushed a lot of new changes. Please review them.
+
+And regarding the merge of this PR, please wait a few days so we can release the new version of the installer (hopefully with support for the new `demo` command ... but that's another story!).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-03-26T16:20:01Z
+
+Now that the installer has been introduced officially, this PR is now ready to be merged. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-26T16:57:22Z
+
+Very nice! Should be ready to be merged now.
