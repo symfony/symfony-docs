@@ -57,8 +57,8 @@ The ``remember_me`` firewall defines the following configuration options:
     ``secret`` value defined in the ``app/config/parameters.yml`` file.
 
 ``name`` (default value: ``REMEMBERME``)
-    The name of the cookie used to maintain the user logged in. If you enable the
-    "Remember Me" feature in several firewalls of the same application, make sure
+    The name of the cookie used to keep the user logged in. If you enable the
+    ``remember_me`` feature in several firewalls of the same application, make sure
     to choose a different name for the cookie of each firewall. Otherwise, you'll
     face lots of security related problems.
 
