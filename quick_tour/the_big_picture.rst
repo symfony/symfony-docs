@@ -35,17 +35,6 @@ On **Linux** and **Mac OS X** systems, execute the following console commands:
     $ sudo mv symfony.phar /usr/local/bin/symfony
     $ chmod a+x /usr/local/bin/symfony
 
-.. note::
-
-    If your system doesn't have cURL installed, execute the following
-    commands instead:
-
-    .. code-block:: bash
-
-        $ php -r "readfile('http://symfony.com/installer');" > symfony.phar
-        $ sudo mv symfony.phar /usr/local/bin/symfony
-        $ chmod a+x /usr/local/bin/symfony
-
 After installing the Symfony installer, you'll have to open a new console window
 to be able to execute the new ``symfony`` command:
 
