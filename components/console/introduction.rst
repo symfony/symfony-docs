@@ -85,7 +85,7 @@ an ``Application`` and adds commands to it::
     use Symfony\Component\Console\Application;
 
     $application = new Application();
-    $application->add(new GreetCommand);
+    $application->add(new GreetCommand());
     $application->run();
 
 Test the new console command by running the following
