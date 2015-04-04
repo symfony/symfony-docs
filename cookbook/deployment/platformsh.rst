@@ -89,7 +89,7 @@ your Git repository which contains the following files:
         disk: 2048
 
 An example of these configurations can be found on `GitHub`_. The list of
-`available services <configure-services>`_ can be found on the Platform.sh documentation.
+`available services`_ can be found on the Platform.sh documentation.
 
 Configure Database Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,8 +166,8 @@ able to access it in your browser.
 Every code change that you do from now on will be pushed to Git in order to
 redeploy your environment on Platform.sh.
 
-More information about `migrating your database and files <migrate-existing-site>`_ can be found on the
-Platform.sh documentation.
+More information about `migrating your database and files`_ can be found
+on the Platform.sh documentation.
 
 Deploy a new Site
 -----------------
@@ -186,5 +186,5 @@ soon be able to see it in your browser.
 .. _`Platform.sh project`: https://marketplace.commerceguys.com/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/reference/configuration-files
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
-.. _`configure-services`: https://docs.platform.sh/reference/configuration-files/#configure-services
-.. _`migrate-existing-site`: https://docs.platform.sh/toolstacks/symfony/migrate-existing-site/
+.. _`available services`: https://docs.platform.sh/reference/configuration-files/#configure-services
+.. _`migrating your database and files`: https://docs.platform.sh/toolstacks/php/symfony/migrate-existing-site/
