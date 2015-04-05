@@ -37,13 +37,16 @@ New Documentation
 - `86abdde <https://github.com/symfony/symfony-docs/commit/86abddea8a0e320666d184b50f9b082027c8fa1d>`_ #5015 Added an example about how to get the impersonating user object (javiereguiluz)
 - `c6db525 <https://github.com/symfony/symfony-docs/commit/c6db525b0a28cf79bef7175b609388250787a7be>`_ #5010 Added a note about the Symfony versions affected by ICU problems (javiereguiluz)
 - `3c76623 <https://github.com/symfony/symfony-docs/commit/3c76623bd1053503f70d14c68a24daf1455af2c8>`_ #5008 Added a note about how to enable http_method_override for caching kernels (javiereguiluz)
+- `22eee86 <https://github.com/symfony/symfony-docs/commit/22eee86b18ca2c38080cc117b2a78e5ed0e7cc6c>`_ #4987 Added the documentation for the new Asset component (javiereguiluz)
 - `3fb19ce <https://github.com/symfony/symfony-docs/commit/3fb19cee8792e1d98a32b107e473aa9f971f61df>`_ #4959 Add excluded_ajax_paths new parameter in v2.6 (bocharsky-bw)
+- `78733c3 <https://github.com/symfony/symfony-docs/commit/78733c365f8f4ce364baad1b89c455e74f326304>`_ #4941 Adding a section to emailing showing off absolute_url (weaverryan)
 - `325354e <https://github.com/symfony/symfony-docs/commit/325354ef82bc62bea241a41e8560c0992e79f598>`_ #4903 Reworded the explanation about when a lock is released (javiereguiluz)
 - `d76f046 <https://github.com/symfony/symfony-docs/commit/d76f04610db35e97fd7820a2eae11884da158b82>`_ #4875 Added chapter about the locale based on the user entity (peterrehm)
 - `0d1e97e <https://github.com/symfony/symfony-docs/commit/0d1e97e502ff3de6467dbce387928589f0f010dd>`_ #4834 [translator] use the new fallbacks option. (aitboudad)
 - `9846d97 <https://github.com/symfony/symfony-docs/commit/9846d9780d8d825857b6f675d4b20728f4e559bd>`_ #5001 Best practices template names (WouterJ)
 - `8e93786 <https://github.com/symfony/symfony-docs/commit/8e93786b1a1c2f9d6e49773afd0a1e15d9dcba12>`_ #4779 Update book to comply with best practices, round 3 (WouterJ)
 - `dbdb408 <https://github.com/symfony/symfony-docs/commit/dbdb40841fee1b0a60037e3f8aa64b1c04c71e97>`_ #4724 [Reference][Constraints] document the validation payload option (xabbuh)
+- `f8e2e19 <https://github.com/symfony/symfony-docs/commit/f8e2e194757b704082b91dc30391079bf08e04ab>`_ #4692 [Serializer] Name Converter (dunglas)
 - `24c4f42 <https://github.com/symfony/symfony-docs/commit/24c4f429728a0f2f00a1804035d08c30d1d1e0dc>`_ #4732 [Reference] add missing reference options and descriptions (xabbuh)
 
 Fixed Documentation
@@ -51,6 +54,7 @@ Fixed Documentation
 
 - `6ba6ffd <https://github.com/symfony/symfony-docs/commit/6ba6ffdd75a36b4e1072e1a01d3765a590a06249>`_ #5058 Fix: assets_version instead of asset_version (sebastianblum)
 - `edf9b78 <https://github.com/symfony/symfony-docs/commit/edf9b78f03e8f184e7cc0a8f6e7c3c5586db814f>`_ #5118 Update logger.rst (jdecoster)
+- `adf5b90 <https://github.com/symfony/symfony-docs/commit/adf5b907a3cf171846ff4cc397fbf118ba8a2663>`_ #5110 [Serializer] Fix class name (iamluc)
 - `d65880f <https://github.com/symfony/symfony-docs/commit/d65880f734daf9a982ec9754b903a213c89489e9>`_ #5092 Fixed a minor error introduced by the new redirectToRoute() method (javiereguiluz)
 - `206e613 <https://github.com/symfony/symfony-docs/commit/206e6131f0618971f99aac18a4e434b2485a056f>`_ #4304 [DX] Suggest a hint to any auth-check (larsborn)
 - `df9c3f4 <https://github.com/symfony/symfony-docs/commit/df9c3f47aa208154dcdef295ddd0ab134ebf52ca>`_ #5053 Correct RegisterListenersPass namespace (hacfi)
@@ -73,6 +77,7 @@ Minor Documentation Changes
 - `6b96470 <https://github.com/symfony/symfony-docs/commit/6b964703304f183541f80523a775c3d92d0cea77>`_ #5076 Better explain that form types should be unique in the application (javiereguiluz)
 - `cdb9350 <https://github.com/symfony/symfony-docs/commit/cdb93506f59c173f1735eddb448cf940a073e085>`_ #5086 Use AppBundle instead of AcmeDemoBundle for consistency (snamor)
 - `6719802 <https://github.com/symfony/symfony-docs/commit/67198022232f864cc7b23e3322105d9b4abe5d4b>`_ #5108 [Components][HttpKernel] fix typo in event flow diagrams (xabbuh)
+- `d6a838a <https://github.com/symfony/symfony-docs/commit/d6a838a0611ba800ce25428c59106590fd194639>`_ #5082 Proofreading tweaks to asset component (weaverryan)
 - `17a6863 <https://github.com/symfony/symfony-docs/commit/17a6863091250184bb0dd9ea1bdf254d359216d6>`_ #5094 Reviewed the Assetic cookbook articles (javiereguiluz)
 - `ac9ba97 <https://github.com/symfony/symfony-docs/commit/ac9ba977659ba9a3ff5007cb38bc7e7f1aacaff4>`_ #4909 Remove horizontal scrollbar and other fixes (ifdattic)
 - `51af15d <https://github.com/symfony/symfony-docs/commit/51af15de75b1104353abb285266fc534632bf002>`_ #5087 added Abdellatif as a core team member (fabpot)
