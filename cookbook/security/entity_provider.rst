@@ -435,9 +435,9 @@ interface requires three methods: ``loadUserByUsername($username)``,
                 ->setParameter('username', $username)
                 ->setParameter('email', $username)
                 ->getQuery()
-                ->getOneOrNullResult()
+                ->getOneOrNullResult();
 
-            if ($user) {
+            if (null === $user) {
                 $message = sprintf(
                     'Unable to find an active admin AppBundle:User object identified by "%s".',
                     $username
