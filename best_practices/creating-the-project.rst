@@ -94,7 +94,7 @@ ProductBundle, InvoiceBundle, etc.
 
 But a bundle is *meant* to be something that can be reused as a stand-alone
 piece of software. If UserBundle cannot be used *"as is"* in other Symfony
-apps, then it shouldn't be its own bundle. Moreover InvoiceBundle depends on
+apps, then it shouldn't be its own bundle. Moreover, if InvoiceBundle depends on
 ProductBundle, then there's no advantage to having two separate bundles.
 
 .. best-practice::
