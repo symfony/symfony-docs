@@ -241,15 +241,46 @@ only for a specific handler.
     a new log file every day and can also remove old files automatically. To use
     it, just set the ``type`` option of your handler to ``rotating_file``:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # app/config/config_dev.yml
-        monolog:
-            handlers:
-                main:
-                    type:  rotating_file  # <-- this value is usually 'stream'
-                    path:  %kernel.logs_dir%/%kernel.environment%.log
-                    level: debug
+        .. code-block:: yaml
+
+            # app/config/config_dev.yml
+            monolog:
+                handlers:
+                    main:
+                        type:  rotating_file
+                        path:  %kernel.logs_dir%/%kernel.environment%.log
+                        level: debug
+
+        .. code-block:: xml
+
+            <!-- app/config/config_dev.xml -->
+            <?xml version="1.0" charset="UTF-8" ?>
+            <container xmlns=''http://symfony.com/schema/dic/services"
+                xmlns:monolog="http://symfony.com/schema/dic/monolog">
+
+                <monolog:config>
+                    <monolog:handler name="main"
+                        type="rotating_file"
+                        path="%kernel.logs_dir%/%kernel.environment%.log"
+                        level="debug"
+                    />
+                </monolog:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config_dev.php
+            $container->loadFromExtension('monolog', array(
+                'handlers' => array(
+                    'main' => array(
+                        'type'  => 'rotating_file',
+                        'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                        'level' => 'debug',
+                    ),
+                ),
+            ));
 
 A processor is simply a callable receiving the record as its first argument.
 Processors are configured using the ``monolog.processor`` DIC tag. See the
