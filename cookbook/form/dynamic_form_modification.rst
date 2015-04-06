@@ -731,3 +731,26 @@ all of this, use a listener::
 
     By doing this, you may accidentally disable something more than just form
     validation, since the ``POST_SUBMIT`` event may have other listeners.
+
+Clearing Form Errors
+~~~~~~~~~~~~~~~~~~~~
+
+Alternatively, if you want to perform validation but not show errors to the user
+during the AJAX reload, you could instead clear them before rendering the form::
+
+    public function createAction(Request $request)
+    {
+        $meetup = new SportMeetup();
+        $form = $this->createForm(new SportMeetupType(), $meetup);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // ... save the meetup, redirect etc.
+        }
+
+        $form->clearErrors(true);
+
+        return $this->render(
+            'AppBundle:Meetup:create.html.twig',
+            array('form' => $form->createView())
+        );
+    }
