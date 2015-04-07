@@ -130,7 +130,7 @@ by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
 
             // the "em" is an option that you pass when creating your form. Check out
             // the 3rd argument to createForm in the next code block to see how this
-            // is passed to the form (also see setDefaultOptions).
+            // is passed to the form (see also configureOptions).
             $entityManager = $options['em'];
             $transformer = new IssueToNumberTransformer($entityManager);
 
