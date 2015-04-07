@@ -201,7 +201,7 @@ to the controller:
 
         return $collection;
 
-Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/app_dev.php/hello/ryan``
+Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
 if you're using the :doc:`built-in web server </cookbook/web_server/built_in>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
