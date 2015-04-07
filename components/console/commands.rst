@@ -4,92 +4,270 @@
 Creating a Basic Command
 ========================
 
-To make a console command that greets you from the command line, create ``GreetCommand.php``
-and add the following to it::
-
-    namespace Acme\Console\Command;
+To make a command that can be used in a Symfony Console application, create a
+class that extends :class:`Symfony\\Component\\Console\\Command\\Command`::
 
     use Symfony\Component\Console\Command\Command;
-    use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputInterface;
-    use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class CalculateCommand extends Command
     {
         protected function configure()
         {
             $this
-                ->setName('demo:greet')
-                ->setDescription('Greet someone')
-                ->addArgument(
-                    'name',
-                    InputArgument::OPTIONAL,
-                    'Who do you want to greet?'
-                )
-                ->addOption(
-                   'yell',
-                   null,
-                   InputOption::VALUE_NONE,
-                   'If set, the task will yell in uppercase letters'
-                )
+                ->setName('calculate')
+                ->setDescription('Doing simple math actions')
             ;
         }
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            $name = $input->getArgument('name');
-            if ($name) {
-                $text = 'Hello '.$name;
-            } else {
-                $text = 'Hello';
-            }
-
-            if ($input->getOption('yell')) {
-                $text = strtoupper($text);
-            }
-
-            $output->writeln($text);
         }
     }
 
-You also need to create the file to run at the command line which creates
-an ``Application`` and adds commands to it::
+The most simple command contains 2 methods:
 
-    #!/usr/bin/env php
-    <?php
+:method:`Symfony\\Component\\Console\\Command\\Command::configure`
+    This method configures the command. It's used by the application to display
+    help information and to match it to the incomming arguments.
+
+:method:`Symfony\\Component\\Console\\Command\\Command::execute`
+    This method contains the actual code to run when commands are executed.
+
+Registering a Command
+---------------------
+
+To make a command work, register it in the application::
+
     // application.php
 
-    require __DIR__.'/vendor/autoload.php';
+    // ...
+    $application->add(new CalculateCommand());
+    // ...
+    
+.. tip::
 
-    use Acme\Console\Command\GreetCommand;
-    use Symfony\Component\Console\Application;
+    When using the full stack framework, commands are automatically registered
+    when placed in the ``Command`` namespace of a bundle.
 
-    $application = new Application();
-    $application->add(new GreetCommand);
-    $application->run();
+Specifying the Input Definition
+-------------------------------
 
-Test the new console command by running the following
+Commands can get input. For instance, the calculator command needs 2 numbers
+and the operation (e.g. "sum"). This input is defined in the so-called
+*input definition* of a command. This specifies the arguments and options for a
+command.
+
+The input definition can be set using
+:method:`Symfony\\Component\\Console\\Command\\Command::setDefinition`. However,
+it's often much easier to use
+:method:`Symfony\\Component\\Console\\Command\\Command::addArgument` and
+:method:`Symfony\\Component\\Console\\Command\\Command::addOption`::
+
+    use Symfony\Component\Console\Input\InputArgument;
+    use Symfony\Component\Console\Input\InputOption;
+
+    // ...
+    class CalculatorCommand extends command
+    {
+        public function configure()
+        {
+            $this
+                // ...
+                ->addArgument('number1', InputArgument::REQUIRED, 'The first number')
+                ->addArgument('number2', InputArgument::REQUIRED, 'The second number')
+                ->addOption('operation', 'o', InputOption::VALUE_REQUIRED, 'The operation', 'sum')
+        }
+
+        // ...
+    }
+
+This code registers 2 arguments (the numbers) and an option (the operation).
+
+Using Command Arguments
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Arguments are the strings - separated by spaces - that come after the command
+name itself. They are ordered and can be optional or required. Arguments are
+added using
+:method:`Symfony\\Component\\Console\\Command\\Command::addArgument`, which has
+the following arguments:
+
+``$name``
+    The name of the argument.
+``$mode`` (optional)
+    The argument mode: ``InputArgument::REQUIRED``, ``InputArgument::OPTIONAL``
+    and ``InputArgument::IS_ARRAY``.
+``$description`` (optional)
+    A short description of the command, which is used in the help message.
+``$default`` (optional)
+    The default value of the command, this defaults to ``null``.
+
+There are 3 modes available:
+
++-------------------------+--------------------------------------------------------+
+| Mode                    | Value                                                  |
++=========================+========================================================+
+| InputArgument::REQUIRED | The argument is required.                              |
++-------------------------+--------------------------------------------------------+
+| InputArgument::OPTIONAL | The argument is optional and therefore can be omitted. |
++-------------------------+--------------------------------------------------------+
+| InputArgument::IS_ARRAY | The argument can contain an indefinite number of       |
+|                         | arguments and must be used at the end of the argument  |
+|                         | list.                                                  |
++-------------------------+--------------------------------------------------------+
+
+You can combine ``IS_ARRAY`` with ``REQUIRED`` or ``OPTIONAL`` like this::
+
+    $this
+        // ...
+        ->addArgument(
+            'numbers',
+            InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+            'The numbers used (separate multiple numbers with a space)'
+        );
+
+You can get commands in the ``execute()`` method by using
+:method:`InputInterface::getArgument() <Symfony\\Component\\Console\\Input\\InputInterface::getArgument>`::
+
+    // ...
+    class CalculatorCommand extends Command
+    {
+        public function configure()
+        {
+            $this
+                ->setName('calculate')
+                ->setDescription('Doing simple math actions')
+                ->addArgument('numbers', InputArgumment::IS_ARRAY | InputArgument::REQUIRED)
+        }
+
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            $numbers = $input->getArgument('numbers');
+
+            $result = 0;
+            foreach ($numbers as $number) {
+                $result += intval($number);
+            }
+
+            $output->writeln('The result is: '.$result);
+        }
+    }
+
+Now, you can use this command to get the sum of some numbers:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien
+    $ php application.php calculate 5 4
+    The result is: 9
 
-This will print the following to the command line:
+    $ php application.php calculate 5 4 3 2 1
+    The result is: 15
 
-.. code-block:: text
+Using Command Options
+---------------------
 
-    Hello Fabien
+Unlike arguments, options are not ordered (meaning you can specify them in any
+order) and are specified with two dashes (e.g. ``--in-words``) you can also
+declare a one-letter shortcut that you can call with a single dash like
+``-w``). Options are *always* optional and can be setup to accept a value
+(e.g. ``--operation=sum`` / ``--operation sum``) or simply as a boolean flag
+without a value (e.g. ``--in-words``).
 
-You can also use the ``--yell`` option to make everything uppercase:
+.. tip::
+
+    It is also possible to make an option *optionally* accept a value (so that
+    ``--in-words``, ``--in-words=fr`` or ``--in-words fr`` work). Options can
+    also be configured to accept an array of values, meaning it can be used
+    multiple times.
+
+The math operation is an example of a command option::
+
+    $this
+        // ...
+        ->addOption('operation', 'o', InputOption::VALUE_REQUIRED, 'The operation', 'sum')
+
+Next, use this in the command to use the operation on the numbers::
+
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $numbers = $input->getArgument('numbers');
+
+        switch ($input->getOption('operation')) {
+            case 'sum':
+                $result = 0;
+                foreach ($numbers as $number) {
+                    $result += intval($number);
+                }
+                break;
+
+            case 'divide':
+                $result = array_shift($numbers);
+                foreach ($numbers as $number) {
+                    $result /= intval($number);
+                }
+                break;
+
+            default:
+                throw new \InvalidArgumentException(
+                    'Unknown operation specified. Known operations are: sum, divide'
+                );
+        }
+
+        $output->writeln('The result is: '.$result);
+    }
+
+Now, when you run the task, you can optionally specify an ``--operation``
+option:
 
 .. code-block:: bash
 
-    $ php application.php demo:greet Fabien --yell
+    $ php application.php calculate 4 2
+    The result is: 6
 
-This prints::
+    $ php application.php calculate 4 2 --operation=divide
+    The result is: 2
 
-    HELLO FABIEN
+As the default for ``--operation`` is sum, the first call will return ``4 +
+2``. In the second call, the operation is specified and ``4 / 2`` is returned.
+
+Recall that options don't care about their order. So, either of the following
+will work (assuming the command has an ``--in-words`` option):
+
+.. code-block:: bash
+
+    $ php application.php calculate 4 2 --operation=divide --in-words
+    $ php application.php calculate 4 2 --in-words --operation=divide
+
+There are 4 option variants you can use:
+
++-----------------------------+---------------------------------------------------------+
+| Option                      | Value                                                   |
++=============================+=========================================================+
+| InputOption::VALUE_IS_ARRAY | This option accepts multiple values (e.g.               |
+|                             | ``--dir=/foo --dir=/bar``).                             |
++-----------------------------+---------------------------------------------------------+
+| InputOption::VALUE_NONE     | Do not accept input for this option (e.g. ``--print``). |
++-----------------------------+---------------------------------------------------------+
+| InputOption::VALUE_REQUIRED | This value is required (e.g. ``--operation=sum``),      |
+|                             | the option itself is still optional.                    |
++-----------------------------+---------------------------------------------------------+
+| InputOption::VALUE_OPTIONAL | This option may or may not have a value (e.g.           |
+|                             | ``--in-words`` or ``--in-words=fr``).                   |
++-----------------------------+---------------------------------------------------------+
+
+You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this::
+
+    $this
+        // ...
+        ->addOption(
+            'colors',
+            null,
+            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+            'Which colors do you like?',
+            array('blue', 'red')
+        );
 
 .. _components-console-coloring:
 
@@ -119,12 +297,14 @@ It is possible to define your own styles using the class
     // ...
     $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
     $output->getFormatter()->setStyle('fire', $style);
+
     $output->writeln('<fire>foo</fire>');
 
 Available foreground and background colors are: ``black``, ``red``, ``green``,
 ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
 
-And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and ``conceal``.
+And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and
+``conceal``.
 
 You can also set these colors and options inside the tagname::
 
@@ -137,6 +317,12 @@ You can also set these colors and options inside the tagname::
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
 
+.. tip::
+
+    As these tags can create a little mess, you can use just ``</>`` as close
+    tag instead of repeating all text again. This will make things a bit easier
+    to read in the source code.
+
 .. note::
 
     Windows does not support ANSI colors by default so the Console component detects and
@@ -144,7 +330,8 @@ You can also set these colors and options inside the tagname::
     configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.
 
-    To enable ANSI color support for Windows, please install `ANSICON`_.
+    To enable ANSI color support for Windows, you can install tools like
+    ANSICON_ or ConEmu_.
 
 Verbosity Levels
 ----------------
@@ -167,13 +354,13 @@ OutputInterface::VERBOSITY_DEBUG         Debug messages
 =======================================  ==================================
 
 You can specify the quiet verbosity level with the ``--quiet`` or ``-q``
-option. The ``--verbose`` or ``-v`` option is used when you want an increased
-level of verbosity.
+option. The ``--verbose``, ``--verbose=1``, etc. or ``-v``, ``-vv``, etc.
+options are used when you want an increased level of verbosity.
 
 .. tip::
 
-    The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
-    level or above is used.
+    The full exception stacktrace is printed if the ``VERBOSITY_DEBUG`` level
+    or above is used.
 
 It is possible to print a message in a command for only a specific verbosity
 level. For example::
@@ -185,167 +372,6 @@ level. For example::
 When the quiet level is used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
 without actually printing.
-
-Using Command Arguments
------------------------
-
-The most interesting part of the commands are the arguments and options that
-you can make available. Arguments are the strings - separated by spaces - that
-come after the command name itself. They are ordered, and can be optional
-or required. For example, add an optional ``last_name`` argument to the command
-and make the ``name`` argument required::
-
-    $this
-        // ...
-        ->addArgument(
-            'name',
-            InputArgument::REQUIRED,
-            'Who do you want to greet?'
-        )
-        ->addArgument(
-            'last_name',
-            InputArgument::OPTIONAL,
-            'Your last name?'
-        );
-
-You now have access to a ``last_name`` argument in your command::
-
-    if ($lastName = $input->getArgument('last_name')) {
-        $text .= ' '.$lastName;
-    }
-
-The command can now be used in either of the following ways:
-
-.. code-block:: bash
-
-    $ php application.php demo:greet Fabien
-    $ php application.php demo:greet Fabien Potencier
-
-It is also possible to let an argument take a list of values (imagine you want
-to greet all your friends). For this it must be specified at the end of the
-argument list::
-
-    $this
-        // ...
-        ->addArgument(
-            'names',
-            InputArgument::IS_ARRAY,
-            'Who do you want to greet (separate multiple names with a space)?'
-        );
-
-To use this, just specify as many names as you want:
-
-.. code-block:: bash
-
-    $ php application.php demo:greet Fabien Ryan Bernhard
-
-You can access the ``names`` argument as an array::
-
-    if ($names = $input->getArgument('names')) {
-        $text .= ' '.implode(', ', $names);
-    }
-
-There are 3 argument variants you can use:
-
-===========================  ===============================================================================================================
-Mode                         Value
-===========================  ===============================================================================================================
-InputArgument::REQUIRED      The argument is required
-InputArgument::OPTIONAL      The argument is optional and therefore can be omitted
-InputArgument::IS_ARRAY      The argument can contain an indefinite number of arguments and must be used at the end of the argument list
-===========================  ===============================================================================================================
-
-You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
-
-    $this
-        // ...
-        ->addArgument(
-            'names',
-            InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-            'Who do you want to greet (separate multiple names with a space)?'
-        );
-
-Using Command Options
----------------------
-
-Unlike arguments, options are not ordered (meaning you can specify them in any
-order) and are specified with two dashes (e.g. ``--yell`` - you can also
-declare a one-letter shortcut that you can call with a single dash like
-``-y``). Options are *always* optional, and can be setup to accept a value
-(e.g. ``--dir=src``) or simply as a boolean flag without a value (e.g.
-``--yell``).
-
-.. tip::
-
-    It is also possible to make an option *optionally* accept a value (so that
-    ``--yell``, ``--yell=loud`` or ``--yell loud`` work). Options can also be configured to
-    accept an array of values.
-
-For example, add a new option to the command that can be used to specify
-how many times in a row the message should be printed::
-
-    $this
-        // ...
-        ->addOption(
-            'iterations',
-            null,
-            InputOption::VALUE_REQUIRED,
-            'How many times should the message be printed?',
-            1
-        );
-
-Next, use this in the command to print the message multiple times:
-
-.. code-block:: php
-
-    for ($i = 0; $i < $input->getOption('iterations'); $i++) {
-        $output->writeln($text);
-    }
-
-Now, when you run the task, you can optionally specify a ``--iterations``
-flag:
-
-.. code-block:: bash
-
-    $ php application.php demo:greet Fabien
-    $ php application.php demo:greet Fabien --iterations=5
-
-The first example will only print once, since ``iterations`` is empty and
-defaults to ``1`` (the last argument of ``addOption``). The second example
-will print five times.
-
-Recall that options don't care about their order. So, either of the following
-will work:
-
-.. code-block:: bash
-
-    $ php application.php demo:greet Fabien --iterations=5 --yell
-    $ php application.php demo:greet Fabien --yell --iterations=5
-
-There are 4 option variants you can use:
-
-===========================  =====================================================================================
-Option                       Value
-===========================  =====================================================================================
-InputOption::VALUE_IS_ARRAY  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
-InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
-InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), the option itself is still optional
-InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``--yell`` or ``--yell=loud``)
-===========================  =====================================================================================
-
-You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or ``VALUE_OPTIONAL`` like this:
-
-.. code-block:: php
-
-    $this
-        // ...
-        ->addOption(
-            'colors',
-            null,
-            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'Which colors do you like?',
-            array('blue', 'red')
-        );
 
 Console Helpers
 ---------------
@@ -368,22 +394,30 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    use Acme\Console\Command\GreetCommand;
+    use Acme\Console\Command\CalculateCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
-    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    class CalculateCommandTest extends \PHPUnit_Framework_TestCase
     {
-        public function testExecute()
+        private $application;
+        private $command;
+        private $commandTester;
+
+        public function setUp()
         {
-            $application = new Application();
-            $application->add(new GreetCommand());
+            $this->application = new Application();
+            $this->application->add(new CalculateCommand());
 
-            $command = $application->find('demo:greet');
-            $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getName()));
+            $this->command = $application->find('calculate');
+            $this->commandTester = new CommandTester($command);
+        }
 
-            $this->assertRegExp('/.../', $commandTester->getDisplay());
+        public function testOutputsHelpMessageWhenCalledWithoutArguments()
+        {
+            $this->commandTester->execute(array('command' => $command->getName()));
+
+            $this->assertRegExp('/.../', $this->commandTester->getDisplay());
 
             // ...
         }
@@ -393,30 +427,24 @@ The :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
 method returns what would have been displayed during a normal call from the
 console.
 
-You can test sending arguments and options to the command by passing them
-as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
-method::
+You can test sending arguments and options to the command by passing them as an
+array to the
+:method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute` method::
 
-    use Acme\Console\Command\GreetCommand;
-    use Symfony\Component\Console\Application;
-    use Symfony\Component\Console\Tester\CommandTester;
-
-    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    // ...
+    class CalculateCommandTest extends \PHPUnit_Framework_TestCase
     {
         // ...
 
-        public function testNameIsOutput()
+        public function testOutputsResultOfDivideOperation()
         {
-            $application = new Application();
-            $application->add(new GreetCommand());
+            $this->commandTester->execute(array(
+                'command'     => $command->getName(),
+                'numbers'     => array(4, 2),
+                '--operation' => 'divide',
+            ));
 
-            $command = $application->find('demo:greet');
-            $commandTester = new CommandTester($command);
-            $commandTester->execute(
-                array('command' => $command->getName(), 'name' => 'Fabien', '--iterations' => 5)
-            );
-
-            $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
+            $this->assertRegExp('/The result is: 6/', $commandTester->getDisplay());
         }
     }
 
@@ -424,6 +452,8 @@ method::
 
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
+
+.. you left the action here
 
 Calling an Existing Command
 ---------------------------
@@ -475,3 +505,4 @@ returns the returned code from the command (return value from command's
     class.
 
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _ConEmu: http://conemu.github.io/
