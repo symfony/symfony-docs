@@ -203,7 +203,7 @@ from the authorization checker is called.
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
     class PostController extends Controller
     {
@@ -214,7 +214,7 @@ from the authorization checker is called.
 
             // keep in mind, this will call all registered security voters
             if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorised access!');
+                throw new AccessDeniedHttpException('Unauthorised access!');
             }
 
             return new Response('<h1>'.$post->getName().'</h1>');
