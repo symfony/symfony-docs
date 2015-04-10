@@ -93,7 +93,7 @@ original files are regular CSS files or SCSS files.
 Then, update the code of your Twig template to add the ``{% stylesheets %}`` tag
 defined by Assetic:
 
-.. code-block:: jinja+html
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html>
@@ -132,7 +132,7 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
 Then, update the code of your Twig template to add the ``{% javascripts %}`` tag
 defined by Assetic:
 
-.. code-block:: jinja+html
+.. code-block:: html+jinja
 
     <!-- ... -->
 
