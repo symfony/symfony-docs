@@ -107,6 +107,11 @@
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
+
+* :doc:`/cookbook/frontend/index`
+
+  * :doc:`/cookbook/frontend/assetic_php`
+
 * :doc:`/cookbook/logging/index`
 
   * :doc:`/cookbook/logging/monolog`
