@@ -5,7 +5,7 @@ Combining, Compiling and Minimizing Web Assets with Pure PHP Libraries
 ======================================================================
 
 The official Symfony Best Practices recommend to use Assetic to
-:doc:`manage web assets </best_practices/web-assets.rst>`, unless you are
+:doc:`manage web assets </best_practices/web-assets>`, unless you are
 comfortable with JavaScript-based frontend tools.
 
 Even if those JavaScript-based solutions are the most suitable ones from a
