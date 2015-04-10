@@ -100,7 +100,7 @@ defined by Assetic:
         <head>
             <!-- ... -->
 
-            {% stylesheets filter="?scssphp" output="css/app.css"
+            {% stylesheets filter="scssphp" output="css/app.css"
                 "assets/scss/bootstrap.scss"
                 "assets/scss/font-awesome.scss"
                 "assets/css/*.css"
@@ -111,10 +111,6 @@ defined by Assetic:
 This simple configuration compiles the SCSS files into regular CSS files, combines
 all of them, minimizes the contents and saves the output in the ``web/css/app.css``
 file, which is the one that is served to your visitors.
-
-The leading ``?`` character in the ``scssphp`` filter name indicates that it must
-be applied only when the ``debug`` mode is disabled in the application, which
-usually occurs in the production environment.
 
 Combining and Minimizing JavaScript Files
 -----------------------------------------
@@ -151,6 +147,6 @@ This simple configuration combines all the JavaScript files, minimizes the conte
 and saves the output in the ``web/js/app.js`` file, which is the one that is
 served to your visitors.
 
-Similarly to the ``scssphp`` filter, the leading ``?`` character in the ``jsqueeze``
-filter name indicates that it must be applied only when the ``debug`` mode is
-disabled in the application, which usually occurs in the production environment.
+The leading ``?`` character in the ``jsqueeze`` filter name indicates that it must
+be applied only when the ``debug`` mode is disabled in the application, which
+usually occurs in the production environment.
