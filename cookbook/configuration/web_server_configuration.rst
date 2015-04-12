@@ -88,6 +88,7 @@ following configuration snippet:
             # enable the .htaccess rewrites
             AllowOverride All
             Require all granted
+            Allow from All
         </Directory>
 
 .. _web-server-apache-fpm:
