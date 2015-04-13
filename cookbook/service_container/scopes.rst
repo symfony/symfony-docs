@@ -112,9 +112,9 @@ Each scenario is detailed in the following sections.
 
 .. note::
 
-    In Symfony 2.6 and previous versions, there was another alternative based
-    on ``synchronized`` services. However, these kind of services have been
-    removed starting from Symfony 2.7.
+    Prior to Symfony 2.7, there was another alternative based on ``synchronized``
+    services. However, these kind of services have been deprecated starting from
+    Symfony 2.7.
 
 .. _changing-service-scope:
 
