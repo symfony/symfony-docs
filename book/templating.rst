@@ -1067,46 +1067,12 @@ assets won't be loaded from cache after being deployed. For example, ``/images/l
 look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
 configuration option.
 
-.. _`book-templating-version-by-asset`:
+If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
+as follows:
 
-If you need to set a version for a specific asset, you can set the ``version`` argument
-if you are using Twig (or the fourth argument if you are using PHP) to the desired version:
+.. code-block:: html+jinja
 
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ asset('images/logo.png', version='3.0') }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            false,
-            '3.0'
-        ) ?>" alt="Symfony!" />
-
-If you don't give a version or pass ``null``, the default package version
-(from :ref:`reference-framework-assets-version`) will be used. If you pass ``false``,
-versioned URL will be deactivated for this asset.
-
-If you need absolute URLs for assets, you can use the ``absolute_url`` function
-if you are using Twig (or the third argument if you are using PHP) to ``true``:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl(
-            'images/logo.png',
-            null,
-            true
-        ) ?>" alt="Symfony!" />
+    <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts

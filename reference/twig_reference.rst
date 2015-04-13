@@ -126,6 +126,29 @@ assets_version
 Returns the current version of the package, more information in
 :ref:`book-templating-assets`.
 
+absolute_url
+~~~~~~~~~~~~
+
+.. code-block:: jinja
+
+    {{ absolute_url(asset(path, packageName)) }}
+
+``path``
+    **type**: ``string``
+``packageName``
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns the absolute URL that corresponds to the given asset path and package.
+More information in :ref:`book-templating-assets`. For configuring the base URLs,
+:ref:`ref-framework-assets-base-urls`.
+
+The absolute URLs generated with this function ignore the asset versioning.
+Combine it with the ``assets_version()`` function to append the version number:
+
+.. code-block:: jinja
+
+    {{ absolute_url(asset('logo.png')) ~ '?' ~ assets_version('images') }}
+
 form
 ~~~~
 
