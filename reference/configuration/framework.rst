@@ -685,6 +685,7 @@ templating
 ~~~~~~~~~~
 
 .. _reference-templating-base-urls:
+.. _ref-framework-assets-base-urls:
 
 assets_base_urls
 ................
@@ -970,10 +971,6 @@ Now, activate the ``assets_version`` option:
 Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``assets_version`` value
 before each deployment so that the query parameters change.
-
-It's also possible to set the version value on an asset-by-asset basis (instead
-of using the global version - e.g. ``v2`` - set here). See
-:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
 
 You can also control how the query string works via the `assets_version_format`_
 option.
