@@ -1,8 +1,8 @@
 .. index::
     single: Front-end; Assetic, Bootstrap
 
-Combining, Compiling and Minimizing Web Assets with Pure PHP Libraries
-======================================================================
+Combining, Compiling and Minimizing Web Assets with PHP Libraries
+=================================================================
 
 The official Symfony Best Practices recommend to use Assetic to
 :doc:`manage web assets </best_practices/web-assets>`, unless you are
@@ -18,7 +18,7 @@ some scenarios:
 * If you want to simplify application deployment.
 
 In this article you'll learn how to combine and minimize CSS and JavaScript files
-and how to compile Sass SCSS files using pure PHP libraries with Assetic.
+and how to compile Sass SCSS files using PHP only libraries with Assetic.
 
 Installing the Third-Party Compression Libraries
 ------------------------------------------------
@@ -40,7 +40,7 @@ Organizing Your Web Asset Files
 -------------------------------
 
 This example shows the very common scenario of using the Bootstrap framework, the
-jQuery library, the FontAwesome icon font and some regular CSS and JavaScript
+jQuery library, the FontAwesome icon fonts and some regular CSS and JavaScript
 application files (called ``main.css`` and ``main.js``). The recommended directory
 structure for this set-up is the following:
 
