@@ -17,7 +17,6 @@ The Cookbook
     email/index
     event_dispatcher/index
     form/index
-    frontend/index
     logging/index
     profiler/index
     request/index

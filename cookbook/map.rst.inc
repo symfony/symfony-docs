@@ -1,6 +1,7 @@
 * :doc:`/cookbook/assetic/index`
 
   * :doc:`/cookbook/assetic/asset_management`
+  * :doc:`/cookbook/assetic/php`
   * :doc:`/cookbook/assetic/uglifyjs`
   * :doc:`/cookbook/assetic/yuicompressor`
   * :doc:`/cookbook/assetic/jpeg_optimize`
@@ -106,11 +107,6 @@
   * :doc:`/cookbook/form/direct_submit`
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
-
-
-* :doc:`/cookbook/frontend/index`
-
-  * :doc:`/cookbook/frontend/assetic_php`
 
 * :doc:`/cookbook/logging/index`
 
