@@ -13,4 +13,4 @@ this safely by running:
     non-Symfony libraries to new versions that contain backwards-compatibility
     breaking changes.
 
-.. _`versino constraints`: https://getcomposer.org/doc/01-basic-usage.md#package-versions
+.. _`version constraints`: https://getcomposer.org/doc/01-basic-usage.md#package-versions
