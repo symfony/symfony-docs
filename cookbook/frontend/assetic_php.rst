@@ -36,10 +36,10 @@ directory and execute the following commands:
 It's very important to maintain the ``~1.0`` version constraint for the ``jsqueeze``
 dependency because the most recent stable version is not compatible with Assetic.
 
-Organizing Your Web Asset Files
+Organizing your Web Asset Files
 -------------------------------
 
-This example shows the very common scenario of using the Bootstrap framework, the
+This example shows the common scenario of using the Bootstrap framework, the
 jQuery library, the FontAwesome icon fonts and some regular CSS and JavaScript
 application files (called ``main.css`` and ``main.js``). The recommended directory
 structure for this set-up is the following:
@@ -95,6 +95,7 @@ defined by Assetic:
 
 .. code-block:: html+jinja
 
+    {# app/Resources/views/base.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>
@@ -108,22 +109,47 @@ defined by Assetic:
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
 
-This simple configuration compiles the SCSS files into regular CSS files, combines
-all of them, minimizes the contents and saves the output in the ``web/css/app.css``
-file, which is the one that is served to your visitors.
+This simple configuration compiles, combines and minifies the SCSS files into a
+regular CSS file that's put in ``web/css/app.css``. This is the only CSS file
+which will be served to your visitors.
 
 Combining and Minimizing JavaScript Files
 -----------------------------------------
 
 First, configure a new ``jsqueeze`` Assetic filter as follows:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    assetic:
-        filters:
-            jsqueeze: ~
-            # ...
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            filters:
+                jsqueeze: ~
+                # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:assetic="http://symfony.com/schema/dic/assetic">
+
+            <assetic:config>
+                <filter name="jsqueeze" />
+                <!-- ... -->
+            </assetic:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'filters' => array(
+                 'jsqueeze' => null,
+                 // ...
+            ),
+        ));
 
 Then, update the code of your Twig template to add the ``{% javascripts %}`` tag
 defined by Assetic:
