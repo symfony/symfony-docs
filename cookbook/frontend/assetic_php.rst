@@ -76,14 +76,41 @@ Combining and Minimizing CSS Files and Compiling SCSS Files
 
 First, configure a new ``scssphp`` Assetic filter as follows:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    assetic:
-        filters:
-            scssphp:
-                formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
-            # ...
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            filters:
+                scssphp:
+                    formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
+                # ...
+
+    .. code-block:: xml
+
+    <!-- app/config/config.xml -->
+    <?xml version="1.0" charset="UTF-8" ?>
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:assetic="http://symfony.com/schema/dic/assetic">
+
+        <assetic:config>
+            <filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed" />
+            <!-- ... -->
+        </assetic:config>
+    </container>
+
+    .. code-block:: php
+
+    // app/config/config.php
+    $container->loadFromExtension('assetic', array(
+        'filters' => array(
+             'scssphp' => array(
+                 'formatter' => 'Leafo\ScssPhp\Formatter\Compressed',
+             ),
+             // ...
+        ),
+    ));
 
 The value of the ``formatter`` option is the fully qualified class name of the
 formatter used by the filter to produce the compiled CSS file. Using the
