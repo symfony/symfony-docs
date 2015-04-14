@@ -6,7 +6,7 @@ Combining, Compiling and Minimizing Web Assets with PHP Libraries
 
 The official Symfony Best Practices recommend to use Assetic to
 :doc:`manage web assets </best_practices/web-assets>`, unless you are
-comfortable with JavaScript-based frontend tools.
+comfortable with JavaScript-based front-end tools.
 
 Even if those JavaScript-based solutions are the most suitable ones from a
 technical point of view, using pure PHP alternative libraries can be useful in
@@ -17,14 +17,14 @@ some scenarios:
   applications;
 * If you want to simplify application deployment.
 
-In this article you'll learn how to combine and minimize CSS and JavaScript files
-and how to compile Sass SCSS files using PHP only libraries with Assetic.
+In this article, you'll learn how to combine and minimize CSS and JavaScript files
+and how to compile Sass files using PHP only libraries with Assetic.
 
 Installing the Third-Party Compression Libraries
 ------------------------------------------------
 
-Assetic includes a lot of ready-to-use filters but it doesn't include their
-associated libraries. Therefore, before enabling the filters used in this article
+Assetic includes a lot of ready-to-use filters, but it doesn't include their
+associated libraries. Therefore, before enabling the filters used in this article,
 you must install two libraries. Open a command console, browse to your project
 directory and execute the following commands:
 
