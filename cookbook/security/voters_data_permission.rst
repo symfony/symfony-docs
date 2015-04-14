@@ -203,7 +203,6 @@ from the authorization checker is called.
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     class PostController extends Controller
     {
@@ -213,9 +212,7 @@ from the authorization checker is called.
             $post = ...;
 
             // keep in mind, this will call all registered security voters
-            if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
-                throw new AccessDeniedException('Unauthorised access!');
-            }
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorised access!');
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
@@ -224,5 +221,8 @@ from the authorization checker is called.
 .. versionadded:: 2.6
     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
+    
+    ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6 as a shortcut.
+    This uses ``security.authorization_checker`` and throws ``AccessDeniedException`` if needed.
 
 It's that easy!
