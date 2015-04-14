@@ -84,7 +84,7 @@ First, configure a new ``scssphp`` Assetic filter as follows:
         assetic:
             filters:
                 scssphp:
-                    formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
+                    formatter: 'Leafo\ScssPhp\Formatter\Compressed'
                 # ...
 
     .. code-block:: xml
