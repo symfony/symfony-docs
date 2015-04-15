@@ -212,7 +212,14 @@ from the authorization checker is called.
             $post = ...;
 
             // keep in mind, this will call all registered security voters
-            $this->denyAccessUnlessGranted('view', $post, 'Unauthorised access!');
+            $this->denyAccessUnlessGranted('view', $post, 'Unauthorized access!');
+            
+            // the equivalent code without using the denyAccessUnlessGranted() shortcut
+            // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+            //
+            // if (false === $this->get('security.authorization_checker')->isGranted('view', $post)) {
+            //     throw new AccessDeniedException('Unauthorized access!');
+            // }
 
             return new Response('<h1>'.$post->getName().'</h1>');
         }
