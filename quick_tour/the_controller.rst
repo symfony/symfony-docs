@@ -331,7 +331,7 @@ And you can display the flash message in the template like this:
 .. code-block:: html+jinja
 
     <div>
-        {{ app.session.flashbag.get('notice') }}
+        {{ app.session.flashbag.get('notice')[0] }}
     </div>
 
 Final Thoughts
