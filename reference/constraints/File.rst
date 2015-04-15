@@ -71,17 +71,6 @@ below a certain file size and a valid PDF, add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioFile:
-                    - File:
-                        maxSize: 1024k
-                        mimeTypes: [application/pdf, application/x-pdf]
-                        mimeTypesMessage: Please upload a valid PDF
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -100,6 +89,17 @@ below a certain file size and a valid PDF, add the following:
              */
             protected $bioFile;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                bioFile:
+                    - File:
+                        maxSize: 1024k
+                        mimeTypes: [application/pdf, application/x-pdf]
+                        mimeTypesMessage: Please upload a valid PDF
 
     .. code-block:: xml
 

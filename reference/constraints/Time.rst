@@ -24,14 +24,6 @@ of the day when the event starts:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Event:
-            properties:
-                startsAt:
-                    - Time: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Event.php
@@ -46,6 +38,14 @@ of the day when the event starts:
              */
              protected $startsAt;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Event:
+            properties:
+                startsAt:
+                    - Time: ~
 
     .. code-block:: xml
 
