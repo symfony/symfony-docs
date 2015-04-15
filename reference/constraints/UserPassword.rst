@@ -31,15 +31,6 @@ password:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Form\Model\ChangePassword:
-            properties:
-                oldPassword:
-                    - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
-                        message: "Wrong value for your current password"
-
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Form/Model/ChangePassword.php
@@ -56,6 +47,15 @@ password:
              */
              protected $oldPassword;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Form\Model\ChangePassword:
+            properties:
+                oldPassword:
+                    - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
+                        message: "Wrong value for your current password"
 
     .. code-block:: xml
 

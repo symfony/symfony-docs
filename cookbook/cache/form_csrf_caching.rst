@@ -22,7 +22,7 @@ validation when submitting the form.
 
 In fact, many reverse proxies (like Varnish) will refuse to cache a page
 with a CSRF token. This is because a cookie is sent in order to preserve
-the PHP session open and Varnish's default behaviour is to not cache HTTP
+the PHP session open and Varnish's default behavior is to not cache HTTP
 requests with cookies.
 
 How to Cache Most of the Page and still be able to Use CSRF Protection

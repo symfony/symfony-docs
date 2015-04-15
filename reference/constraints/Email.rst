@@ -23,16 +23,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                email:
-                    - Email:
-                        message: The email "{{ value }}" is not a valid email.
-                        checkMX: true
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -50,6 +40,16 @@ Basic Usage
              */
              protected $email;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                email:
+                    - Email:
+                        message: The email "{{ value }}" is not a valid email.
+                        checkMX: true
 
     .. code-block:: xml
 
