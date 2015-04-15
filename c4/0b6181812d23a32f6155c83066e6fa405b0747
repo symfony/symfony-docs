@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-03-14T18:40:38Z
+
+@xabbuh I think the standard is (or should be) annotation before yaml (the validation chapter is like that... but I think I may have just merged a PR that caused this recently). What do do you think?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-14T19:34:32Z
+
+You're right, Ryan. We switched the order some time this week and I didn't update here. Will do this when I'm back at my desk. Thanks for noticing.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T14:41:50Z
+
+ping @xabbuh  (no rush, just going through the long PR list)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-13T18:36:39Z
+
+I changed the order of all validation related configuration blocks to respect the new order.
