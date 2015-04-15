@@ -103,7 +103,7 @@ Which should roughly output the following:
 
     # hello
     RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
-    RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Default\:hello]
+    RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Greet\:hello]
 
 You can now rewrite ``web/.htaccess`` to use the new rules, so with this example
 it should look like this:
@@ -119,7 +119,7 @@ it should look like this:
 
         # hello
         RewriteCond %{REQUEST_URI} ^/hello/([^/]+?)$
-        RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Default\:hello]
+        RewriteRule .* app.php [QSA,L,E=_ROUTING__route:hello,E=_ROUTING_name:%1,E=_ROUTING__controller:AppBundle\:Greet\:hello]
     </IfModule>
 
 .. note::
