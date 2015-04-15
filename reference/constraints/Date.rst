@@ -21,14 +21,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                birthday:
-                    - Date: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -43,6 +35,14 @@ Basic Usage
              */
              protected $birthday;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                birthday:
+                    - Date: ~
 
     .. code-block:: xml
 

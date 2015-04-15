@@ -37,16 +37,6 @@ on an  object that will contain an ISBN.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BookcaseBundle/Resources/config/validation.yml
-        Acme\BookcaseBundle\Entity\Book:
-            properties:
-                isbn:
-                    - Isbn:
-                        type: isbn10
-                        message: This value is not  valid.
-
     .. code-block:: php-annotations
 
         // src/Acme/BookcaseBundle/Entity/Book.php
@@ -64,6 +54,17 @@ on an  object that will contain an ISBN.
              */
             protected $isbn;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BookcaseBundle/Resources/config/validation.yml
+        Acme\BookcaseBundle\Entity\Book:
+            properties:
+                isbn:
+                    - Isbn:
+                        type: isbn10
+                        message: This value is not  valid.
+
 
     .. code-block:: xml
 

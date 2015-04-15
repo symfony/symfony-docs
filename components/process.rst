@@ -36,7 +36,7 @@ a command in a sub-process::
 The component takes care of the subtle differences between the different platforms
 when executing the command.
 
-The ``getOutput()`` method always return the whole content of the standard
+The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`

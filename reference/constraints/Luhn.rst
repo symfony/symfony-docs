@@ -24,15 +24,6 @@ will contain a credit card number.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
-        Acme\SubscriptionBundle\Entity\Transaction:
-            properties:
-                cardNumber:
-                    - Luhn:
-                        message: Please check your credit card number.
-
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
@@ -47,6 +38,15 @@ will contain a credit card number.
              */
             protected $cardNumber;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
+        Acme\SubscriptionBundle\Entity\Transaction:
+            properties:
+                cardNumber:
+                    - Luhn:
+                        message: Please check your credit card number.
 
     .. code-block:: xml
 

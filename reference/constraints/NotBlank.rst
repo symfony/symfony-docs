@@ -24,14 +24,6 @@ were not blank, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                firstName:
-                    - NotBlank: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -46,6 +38,14 @@ were not blank, you could do the following:
              */
             protected $firstName;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - NotBlank: ~
 
     .. code-block:: xml
 

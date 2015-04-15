@@ -26,18 +26,6 @@ the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Participant:
-            properties:
-                height:
-                    - Range:
-                        min: 120
-                        max: 180
-                        minMessage: You must be at least {{ limit }}cm tall to enter
-                        maxMessage: You cannot be taller than {{ limit }}cm to enter
-
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
@@ -57,6 +45,18 @@ the following:
              */
              protected $height;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Participant:
+            properties:
+                height:
+                    - Range:
+                        min: 120
+                        max: 180
+                        minMessage: You must be at least {{ limit }}cm tall to enter
+                        maxMessage: You cannot be taller than {{ limit }}cm to enter
 
     .. code-block:: xml
 

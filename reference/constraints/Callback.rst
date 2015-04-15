@@ -33,13 +33,6 @@ Configuration
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [validate]
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -60,6 +53,13 @@ Configuration
                 // ...
             }
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            constraints:
+                - Callback: [validate]
 
     .. code-block:: xml
 
@@ -188,13 +188,6 @@ You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [Vendor\Package\Validator, validate]
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -208,6 +201,15 @@ You can then use the following configuration to invoke this validator:
         class Author
         {
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            constraints:
+                - Callback: [Vendor\Package\Validator, validate]
+
+        .. code-block:: xml
 
     .. code-block:: xml
 

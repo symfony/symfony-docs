@@ -27,18 +27,6 @@ you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Participant:
-            properties:
-                emails:
-                    - Count:
-                        min: 1
-                        max: 5
-                        minMessage: "You must specify at least one email"
-                        maxMessage: "You cannot specify more than {{ limit }} emails"
-
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
@@ -58,6 +46,18 @@ you might add the following:
              */
              protected $emails = array();
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Participant:
+            properties:
+                emails:
+                    - Count:
+                        min: 1
+                        max: 5
+                        minMessage: "You must specify at least one email"
+                        maxMessage: "You cannot specify more than {{ limit }} emails"
 
     .. code-block:: xml
 
