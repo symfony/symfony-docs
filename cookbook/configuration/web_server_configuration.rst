@@ -51,7 +51,7 @@ are:
         # uncomment the following lines if you install assets as symlinks
         # or run into problems when compiling LESS/Sass/CoffeScript assets
         # <Directory /var/www/project>
-        #     Option FollowSymlinks
+        #     Options FollowSymlinks
         # </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
