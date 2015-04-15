@@ -26,14 +26,6 @@ characters at the beginning of your string:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                description:
-                    - Regex: '/^\w+/'
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -48,6 +40,14 @@ characters at the beginning of your string:
              */
             protected $description;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                description:
+                    - Regex: '/^\w+/'
 
     .. code-block:: xml
 
@@ -91,17 +91,6 @@ message:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                firstName:
-                    - Regex:
-                        pattern: '/\d/'
-                        match:   false
-                        message: Your name cannot contain a number
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -120,6 +109,17 @@ message:
              */
             protected $firstName;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - Regex:
+                        pattern: '/\d/'
+                        match:   false
+                        message: Your name cannot contain a number
 
     .. code-block:: xml
 
@@ -194,16 +194,6 @@ to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                name:
-                    - Regex:
-                        pattern: "/^[a-z]+$/i"
-                        htmlPattern: "^[a-zA-Z]+$"
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -221,6 +211,16 @@ to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
              */
             protected $name;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                name:
+                    - Regex:
+                        pattern: "/^[a-z]+$/i"
+                        htmlPattern: "^[a-zA-Z]+$"
 
     .. code-block:: xml
 

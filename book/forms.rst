@@ -344,17 +344,6 @@ object.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Task:
-            properties:
-                task:
-                    - NotBlank: ~
-                dueDate:
-                    - NotBlank: ~
-                    - Type: \DateTime
-
     .. code-block:: php-annotations
 
         // AppBundle/Entity/Task.php
@@ -373,6 +362,17 @@ object.
              */
             protected $dueDate;
         }
+
+    .. code-block:: yaml
+
+        # AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Task:
+            properties:
+                task:
+                    - NotBlank: ~
+                dueDate:
+                    - NotBlank: ~
+                    - Type: \DateTime
 
     .. code-block:: xml
 

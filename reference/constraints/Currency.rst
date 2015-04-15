@@ -24,14 +24,6 @@ currency, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EcommerceBundle/Resources/config/validation.yml
-        Acme\EcommerceBundle\Entity\Order:
-            properties:
-                currency:
-                    - Currency: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/EcommerceBundle/Entity/Order.php
@@ -46,6 +38,14 @@ currency, you could do the following:
              */
             protected $currency;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/EcommerceBundle/Resources/config/validation.yml
+        Acme\EcommerceBundle\Entity\Order:
+            properties:
+                currency:
+                    - Currency: ~
 
     .. code-block:: xml
 

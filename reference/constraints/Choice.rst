@@ -36,16 +36,6 @@ If your valid choice list is simple, you can pass them in directly via the
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                gender:
-                    - Choice:
-                        choices:  [male, female]
-                        message:  Choose a valid gender.
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -60,6 +50,16 @@ If your valid choice list is simple, you can pass them in directly via the
              */
             protected $gender;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                gender:
+                    - Choice:
+                        choices:  [male, female]
+                        message:  Choose a valid gender.
 
     .. code-block:: xml
 
@@ -129,14 +129,6 @@ constraint.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                gender:
-                    - Choice: { callback: getGenders }
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -151,6 +143,14 @@ constraint.
              */
             protected $gender;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                gender:
+                    - Choice: { callback: getGenders }
 
     .. code-block:: xml
 
@@ -194,14 +194,6 @@ you can pass the class name and the method as an array.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                gender:
-                    - Choice: { callback: [Util, getGenders] }
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -216,6 +208,14 @@ you can pass the class name and the method as an array.
              */
             protected $gender;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                gender:
+                    - Choice: { callback: [Util, getGenders] }
 
     .. code-block:: xml
 

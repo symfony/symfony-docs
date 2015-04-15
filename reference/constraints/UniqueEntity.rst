@@ -30,16 +30,6 @@ table:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\Author:
-            constraints:
-                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
-            properties:
-                email:
-                    - Email: ~
-
     .. code-block:: php-annotations
 
         // Acme/UserBundle/Entity/Author.php
@@ -67,6 +57,16 @@ table:
 
             // ...
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\Author:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+            properties:
+                email:
+                    - Email: ~
 
     .. code-block:: xml
 
@@ -169,16 +169,6 @@ Consider this example:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/AdministrationBundle/Resources/config/validation.yml
-        Acme\AdministrationBundle\Entity\Service:
-            constraints:
-                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-                    fields: [host, port]
-                    errorPath: port
-                    message: 'This port is already in use on that host.'
-
     .. code-block:: php-annotations
 
         // src/Acme/AdministrationBundle/Entity/Service.php
@@ -207,6 +197,16 @@ Consider this example:
              */
             public $port;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/AdministrationBundle/Resources/config/validation.yml
+        Acme\AdministrationBundle\Entity\Service:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: [host, port]
+                    errorPath: port
+                    message: 'This port is already in use on that host.'
 
     .. code-block:: xml
 

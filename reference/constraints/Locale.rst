@@ -22,14 +22,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                locale:
-                    - Locale: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
@@ -44,6 +36,14 @@ Basic Usage
              */
              protected $locale;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                locale:
+                    - Locale: ~
 
     .. code-block:: xml
 

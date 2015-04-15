@@ -32,14 +32,6 @@ Setup
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback:
-                    methods:   [isAuthorValid]
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -53,6 +45,14 @@ Setup
         class Author
         {
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            constraints:
+                - Callback:
+                    methods:   [isAuthorValid]
 
     .. code-block:: xml
 
@@ -139,15 +139,6 @@ process. Each method can be one of the following formats:
 
     .. configuration-block::
 
-        .. code-block:: yaml
-
-            # src/Acme/BlogBundle/Resources/config/validation.yml
-            Acme\BlogBundle\Entity\Author:
-                constraints:
-                    - Callback:
-                        methods:
-                            -    [Acme\BlogBundle\MyStaticValidatorClass, isAuthorValid]
-
         .. code-block:: php-annotations
 
             // src/Acme/BlogBundle/Entity/Author.php
@@ -161,6 +152,15 @@ process. Each method can be one of the following formats:
             class Author
             {
             }
+
+        .. code-block:: yaml
+
+            # src/Acme/BlogBundle/Resources/config/validation.yml
+            Acme\BlogBundle\Entity\Author:
+                constraints:
+                    - Callback:
+                        methods:
+                            -    [Acme\BlogBundle\MyStaticValidatorClass, isAuthorValid]
 
         .. code-block:: xml
 

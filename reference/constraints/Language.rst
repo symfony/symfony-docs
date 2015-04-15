@@ -19,14 +19,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                preferredLanguage:
-                    - Language: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
@@ -41,6 +33,14 @@ Basic Usage
              */
              protected $preferredLanguage;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                preferredLanguage:
+                    - Language: ~
 
     .. code-block:: xml
 

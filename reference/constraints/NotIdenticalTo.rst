@@ -33,15 +33,6 @@ If you want to ensure that the ``age`` of a ``Person`` class is *not* equal to
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - NotIdenticalTo:
-                        value: 15
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -58,6 +49,15 @@ If you want to ensure that the ``age`` of a ``Person`` class is *not* equal to
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - NotIdenticalTo:
+                        value: 15
 
     .. code-block:: xml
 

@@ -27,15 +27,6 @@ equal to ``80``, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - LessThanOrEqual:
-                        value: 80
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -52,6 +43,15 @@ equal to ``80``, you could do the following:
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - LessThanOrEqual:
+                        value: 80
 
     .. code-block:: xml
 

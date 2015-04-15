@@ -28,15 +28,6 @@ If you want to ensure that the ``age`` of a ``Person`` class is greater than
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - GreaterThan:
-                        value: 18
-
     .. code-block:: php-annotations
 
         // src/Acme/SocialBundle/Entity/Person.php
@@ -53,6 +44,15 @@ If you want to ensure that the ``age`` of a ``Person`` class is greater than
              */
             protected $age;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SocialBundle/Resources/config/validation.yml
+        Acme\SocialBundle\Entity\Person:
+            properties:
+                age:
+                    - GreaterThan:
+                        value: 18
 
     .. code-block:: xml
 

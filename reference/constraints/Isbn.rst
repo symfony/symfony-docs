@@ -29,17 +29,6 @@ on an  object that will contain a ISBN number.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BookcaseBundle/Resources/config/validation.yml
-        Acme\BookcaseBundle\Entity\Book:
-            properties:
-                isbn:
-                    - Isbn:
-                        isbn10: true
-                        isbn13: true
-                        bothIsbnMessage: This value is neither a valid ISBN-10 nor a valid ISBN-13.
-
     .. code-block:: php-annotations
 
         // src/Acme/BookcaseBundle/Entity/Book.php
@@ -58,6 +47,17 @@ on an  object that will contain a ISBN number.
              */
             protected $isbn;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BookcaseBundle/Resources/config/validation.yml
+        Acme\BookcaseBundle\Entity\Book:
+            properties:
+                isbn:
+                    - Isbn:
+                        isbn10: true
+                        isbn13: true
+                        bothIsbnMessage: This value is neither a valid ISBN-10 nor a valid ISBN-13.
 
     .. code-block:: xml
 

@@ -27,15 +27,6 @@ will contain an International Bank Account Number.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
-        Acme\SubscriptionBundle\Entity\Transaction:
-            properties:
-                bankAccountNumber:
-                    - Iban:
-                        message: This is not a valid International Bank Account Number (IBAN).
-
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
@@ -50,6 +41,15 @@ will contain an International Bank Account Number.
              */
             protected $bankAccountNumber;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
+        Acme\SubscriptionBundle\Entity\Transaction:
+            properties:
+                bankAccountNumber:
+                    - Iban:
+                        message: This is not a valid International Bank Account Number (IBAN).
 
     .. code-block:: xml
 

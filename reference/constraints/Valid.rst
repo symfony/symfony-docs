@@ -48,27 +48,6 @@ an ``Address`` instance in the ``$address`` property.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Entity\Address:
-            properties:
-                street:
-                    - NotBlank: ~
-                zipCode:
-                    - NotBlank: ~
-                    - Length:
-                        max: 5
-
-        Acme\HelloBundle\Entity\Author:
-            properties:
-                firstName:
-                    - NotBlank: ~
-                    - Length:
-                        min: 4
-                lastName:
-                    - NotBlank: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Entity/Address.php
@@ -110,6 +89,27 @@ an ``Address`` instance in the ``$address`` property.
 
             protected $address;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Entity\Address:
+            properties:
+                street:
+                    - NotBlank: ~
+                zipCode:
+                    - NotBlank: ~
+                    - Length:
+                        max: 5
+
+        Acme\HelloBundle\Entity\Author:
+            properties:
+                firstName:
+                    - NotBlank: ~
+                    - Length:
+                        min: 4
+                lastName:
+                    - NotBlank: ~
 
     .. code-block:: xml
 
@@ -191,14 +191,6 @@ property.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Entity\Author:
-            properties:
-                address:
-                    - Valid: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Entity/Author.php
@@ -213,6 +205,14 @@ property.
              */
             protected $address;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Entity\Author:
+            properties:
+                address:
+                    - Valid: ~
 
     .. code-block:: xml
 

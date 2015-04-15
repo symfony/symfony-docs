@@ -44,15 +44,6 @@ Then you can constrain this method with ``True``.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            getters:
-                tokenValid:
-                    - 'True':
-                        message: The token is invalid.
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -72,6 +63,15 @@ Then you can constrain this method with ``True``.
                 return $this->token == $this->generateToken();
             }
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            getters:
+                tokenValid:
+                    - 'True':
+                        message: The token is invalid.
 
     .. code-block:: xml
 
