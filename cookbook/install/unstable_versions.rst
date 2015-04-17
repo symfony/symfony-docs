@@ -2,7 +2,7 @@ How to Install and Use an Unstable Symfony Version
 ==================================================
 
 Symfony releases two new minor versions (2.5, 2.6, 2.7, etc.) per year, one in
-May and one in November (:doc:`see releases detail <contributing/community/releases>`).
+May and one in November (:doc:`see releases detail </contributing/community/releases>`).
 Testing the new Symfony versions in your projects as soon as possible is important
 to ensure that they will keep working after upgrading to the new version.
 
