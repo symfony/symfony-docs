@@ -76,8 +76,8 @@ to add more entropy.
 As with any other security-related parameter, it is a good practice to change this
 value from time to time. However, keep in mind that changing this value will
 invalidate all signed URIs and Remember Me cookies. That's why, after changing
-this value, you should regenerate the application cache, delete the HTTP Cache
-related cache and log out all the application users.
+this value, you should regenerate the application cache and log out all the
+application users.
 
 .. _configuration-framework-http_method_override:
 
