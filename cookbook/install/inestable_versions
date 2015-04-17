@@ -1,5 +1,5 @@
-How to Install and Use an Inestable Symfony Version
-===================================================
+How to Install and Use an Unstable Symfony Version
+==================================================
 
 Symfony releases two new minor versions (2.5, 2.6, 2.7, etc.) per year, one in
 May and one in November (:doc:`see releases detail <contributing/community/releases>`).
@@ -9,8 +9,8 @@ to ensure that they will keep working as expected.
 In this article you'll learn how to install and use new Symfony versions before
 they are released as stable versions.
 
-Creating a New Project Based on an Inestable Symfony Version
-------------------------------------------------------------
+Creating a New Project Based on an Unstable Symfony Version
+-----------------------------------------------------------
 
 Suppose that Symfony 2.7 version hasn't been released yet and you want to create
 a new project to test its features. First, :doc:`install Composer </cookbook/composer>`
@@ -32,11 +32,11 @@ option:
 
     $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=beta
 
-Upgrading your Project to an Inestable Symfony Version
-------------------------------------------------------
+Upgrading your Project to an Unstable Symfony Version
+-----------------------------------------------------
 
 Instead of creating a new empty project, in this section you'll update an existing
-Symfony application to an inestable framework version. Suppose again that Symfony
+Symfony application to an unstable framework version. Suppose again that Symfony
 2.7 version hasn't been released yet and you want to test it in your project.
 
 First, open the ``composer.json`` file located in the root directory of your
@@ -53,7 +53,7 @@ dependency:
     }
 
 Then, before updating your dependencies, make sure that the project configuration
-allows to install inestable versions. If the ``composer.json`` file contains a
+allows to install unstable versions. If the ``composer.json`` file contains a
 ``minimum-stability`` option, change its value to ``dev``. If that option doesn't
 exist, add it as follows:
 
