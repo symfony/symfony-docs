@@ -19,14 +19,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
-            properties:
-                country:
-                    - Country: ~
-
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
@@ -41,6 +33,14 @@ Basic Usage
              */
              protected $country;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/UserBundle/Resources/config/validation.yml
+        Acme\UserBundle\Entity\User:
+            properties:
+                country:
+                    - Country: ~
 
     .. code-block:: xml
 

@@ -141,6 +141,13 @@ variables, you can issue a single command to prepare your app for a deployment:
 
     $ heroku config:set SYMFONY_ENV=prod
 
+.. caution::
+
+    Be aware that dependencies from ``composer.json`` listed in the ``require-dev``
+    section are never installed during a deploy on Heroku. This may cause problems
+    if your Symfony environment relies on such packages. The solution is to move these
+    packages from ``require-dev`` to the ``require`` section.
+
 .. _heroku-push-code:
 .. _pushing-to-heroku:
 

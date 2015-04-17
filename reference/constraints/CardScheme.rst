@@ -25,6 +25,21 @@ on an object that will contain a credit card number.
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            /**
+             * @Assert\CardScheme(schemes = {"VISA"}, message = "Your credit card number is invalid.")
+             */
+            protected $cardNumber;
+        }
+
     .. code-block:: yaml
 
         # src/Acme/SubscriptionBundle/Resources/config/validation.yml
@@ -54,21 +69,6 @@ on an object that will contain a credit card number.
                 </property>
             </class>
         </constraint-mapping>
-
-    .. code-block:: php-annotations
-
-        // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity\Transaction;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\CardScheme(schemes = {"VISA"}, message = "Your credit card number is invalid.")
-             */
-            protected $cardNumber;
-        }
 
     .. code-block:: php
 

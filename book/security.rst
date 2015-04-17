@@ -1069,7 +1069,7 @@ the User object, and use the ``isGranted`` method (or
 Retrieving the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In a Twig Template this object can be accessed via the `app.user <reference-twig-global-app>`_
+In a Twig Template this object can be accessed via the :ref:`app.user <reference-twig-global-app>`
 key:
 
 .. configuration-block::

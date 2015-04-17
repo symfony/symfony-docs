@@ -10,15 +10,14 @@ How to Use PdoSessionHandler to Store Sessions in the Database
     schema changed slightly. See :ref:`Symfony 2.6 Changes <pdo-session-handle-26-changes>`
     for details.
 
-The default Symfony session storage writes the session information to
-file(s). Most medium to large websites use a database to store the session
-values instead of files, because databases are easier to use and scale in a
+The default Symfony session storage writes the session information to files.
+Most medium to large websites use a database to store the session values
+instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
 Symfony has a built-in solution for database session storage called
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
-To use it, you just need to change some parameters in ``config.yml`` (or the
-configuration format of your choice):
+To use it, you just need to change some parameters in the main configuration file:
 
 .. configuration-block::
 
@@ -127,18 +126,23 @@ a second array argument to ``PdoSessionHandler``:
     The ``db_lifetime_col`` was introduced in Symfony 2.6. Prior to 2.6,
     this column did not exist.
 
-The following things can be configured:
+These are parameters that you must configure:
 
-* ``db_table``: (default ``sessions``) The name of the session table in your
-  database;
-* ``db_id_col``: (default ``sess_id``) The name of the id column in your
-  session table (VARCHAR(128));
-* ``db_data_col``: (default ``sess_data``) The name of the value column in
-  your session table (BLOB);
-* ``db_time_col``: (default ``sess_time``) The name of the time column in
-  your session table (INTEGER);
-* ``db_lifetime_col``: (default ``sess_lifetime``) The name of the lifetime
-  column in your session table (INTEGER).
+``db_table`` (default ``sessions``):
+    The name of the session table in your database;
+
+``db_id_col`` (default ``sess_id``):
+    The name of the id column in your session table (VARCHAR(128));
+
+``db_data_col`` (default ``sess_data``):
+    The name of the value column in your session table (BLOB);
+
+``db_time_col`` (default ``sess_time``):
+    The name of the time column in your session table (INTEGER);
+
+``db_lifetime_col`` (default ``sess_lifetime``):
+    The name of the lifetime column in your session table (INTEGER).
+
 
 Sharing your Database Connection Information
 --------------------------------------------

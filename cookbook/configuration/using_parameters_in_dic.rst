@@ -11,9 +11,9 @@ There are special cases such as when you want, for instance, to use the
 debug mode. For this case there is more work to do in order
 to make the system understand the parameter value. By default
 your parameter ``%kernel.debug%`` will be treated as a
-simple string. Consider this example with the AcmeDemoBundle::
+simple string. Consider the following example::
 
-    // Inside Configuration class
+    // inside Configuration class
     $rootNode
         ->children()
             ->booleanNode('logging')->defaultValue('%kernel.debug%')->end()
@@ -21,7 +21,7 @@ simple string. Consider this example with the AcmeDemoBundle::
         ->end()
     ;
 
-    // Inside the Extension class
+    // inside the Extension class
     $config = $this->processConfiguration($configuration, $configs);
     var_dump($config['logging']);
 
@@ -111,7 +111,7 @@ be injected with this parameter via the extension as follows::
         public function getConfigTreeBuilder()
         {
             $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('acme_demo');
+            $rootNode = $treeBuilder->root('my_bundle');
 
             $rootNode
                 ->children()
@@ -127,14 +127,14 @@ be injected with this parameter via the extension as follows::
 
 And set it in the constructor of ``Configuration`` via the ``Extension`` class::
 
-    namespace Acme\DemoBundle\DependencyInjection;
+    namespace AppBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
     use Symfony\Component\Config\FileLocator;
 
-    class AcmeDemoExtension extends Extension
+    class AppExtension extends Extension
     {
         // ...
 
@@ -147,7 +147,7 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
 .. sidebar:: Setting the Default in the Extension
 
     There are some instances of ``%kernel.debug%`` usage within a ``Configurator``
-    class in TwigBundle and AsseticBundle, however this is because the default
+    class in TwigBundle and AsseticBundle. However this is because the default
     parameter value is set by the Extension class. For example in AsseticBundle,
     you can find::
 
