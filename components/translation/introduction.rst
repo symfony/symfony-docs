@@ -186,7 +186,7 @@ organization, translations were split into three different domains:
 loaded like this::
 
     // ...
-    $translator->addLoader('xliff', new XliffLoader());
+    $translator->addLoader('xliff', new XliffFileLoader());
 
     $translator->addResource('xliff', 'messages.fr.xliff', 'fr_FR');
     $translator->addResource('xliff', 'admin.fr.xliff', 'fr_FR', 'admin');
