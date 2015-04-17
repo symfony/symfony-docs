@@ -41,40 +41,26 @@ Symfony application to an unstable framework version. Suppose again that Symfony
 
 First, open the ``composer.json`` file located in the root directory of your
 project. Then, edit the value of the version defined for the ``symfony/symfony``
-dependency:
+dependency as follows:
 
 .. code-block:: json
 
     {
         "require": {
             // ...
-            "symfony/symfony" : "2.7.*"
+            "symfony/symfony" : "2.7.*@dev"
         }
     }
 
-Then, before updating your dependencies, make sure that the project configuration
-allows to install unstable versions. If the ``composer.json`` file contains a
-``minimum-stability`` option, change its value to ``dev``. If that option doesn't
-exist, add it as follows:
-
-.. code-block:: json
-
-    {
-        "require": {
-            // ...
-            "symfony/symfony" : "2.7.*"
-        },
-        "minimum-stability": "dev"
-    }
-
-If you prefer to test a Symfony beta version, replace the ``dev`` value of the
-``minimum-stability`` option by ``beta``.
-
-Then, open a command console, enter your project directory and execute the following command to update your project dependencies:
+Then, open a command console, enter your project directory and execute the following
+command to update your project dependencies:
 
 .. code-block:: bash
 
     $ composer update
+
+If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constraint
+by ``"2.7.*@beta1"`` (or any other beta number).
 
 .. tip::
 
@@ -87,7 +73,7 @@ Then, open a command console, enter your project directory and execute the follo
 
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony
-        // update composer.json configuration
+        // ... update composer.json configuration
         $ composer update
 
         // ... after testing the new Symfony version
