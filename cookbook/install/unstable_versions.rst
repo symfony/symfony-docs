@@ -60,7 +60,8 @@ command to update your project dependencies:
     $ composer update
 
 If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constraint
-by ``"2.7.*@beta1"`` (or any other beta number).
+by ``"2.7.0-beta1"`` to install a specific beta number or ``2.7.*@beta`` to get
+the most recent beta version.
 
 .. tip::
 
