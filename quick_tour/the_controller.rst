@@ -1,21 +1,22 @@
 The Controller
 ==============
 
-Still here after the first two parts? You are already becoming a Symfony fan!
-Without further ado, discover what controllers can do for you.
+Still here after the first two parts? You are already becoming a Symfony
+fan! Without further ado, discover what controllers can do for you.
 
 Returning Raw Responses
 -----------------------
 
-Symfony defines itself as a Request-Response framework. When the user makes a
-request to your application, Symfony creates a ``Request`` object to encapsulate
-all the information related to that request. Similarly, the result of executing
-any action of any controller is the creation of a ``Response`` object which
-Symfony uses to generate the HTML content returned to the user.
+Symfony defines itself as a Request-Response framework. When the user makes
+a request to your application, Symfony creates a ``Request`` object to
+encapsulate all the information related to that request. Similarly, the
+result of executing any action of any controller is the creation of a
+``Response`` object which Symfony uses to generate the HTML content returned
+to the user.
 
 So far, all the actions shown in this tutorial used the ``$this->render()``
-shortcut to return a rendered response as result. In case you need it, you can
-also create a raw ``Response`` object to return any text content::
+shortcut to return a rendered response as result. In case you need it, you
+can also create a raw ``Response`` object to return any text content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -38,18 +39,19 @@ also create a raw ``Response`` object to return any text content::
 Route Parameters
 ----------------
 
-Most of the time, the URLs of applications include variable parts on them. If you
-are creating for example a blog application, the URL to display the articles should
-include their title or some other unique identifier to let the application know
-the exact article to display.
+Most of the time, the URLs of applications include variable parts on them.
+If you are creating for example a blog application, the URL to display the
+articles should include their title or some other unique identifier to let
+the application know the exact article to display.
 
-In Symfony applications, the variable parts of the routes are enclosed in curly
-braces (e.g. ``/blog/read/{article_title}/``). Each variable part is assigned a
-unique name that can be used later in the controller to retrieve each value.
+In Symfony applications, the variable parts of the routes are enclosed in
+curly braces (e.g. ``/blog/read/{article_title}/``). Each variable part
+is assigned a unique name that can be used later in the controller to retrieve
+each value.
 
 Let's create a new action with route variables to show this feature in action.
-Open the ``src/AppBundle/Controller/DefaultController.php`` file and add a new
-method called ``helloAction`` with the following content::
+Open the ``src/AppBundle/Controller/DefaultController.php`` file and add
+a new method called ``helloAction`` with the following content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -72,13 +74,14 @@ method called ``helloAction`` with the following content::
         }
     }
 
-Open your browser and access the ``http://localhost:8000/hello/fabien`` URL to
-see the result of executing this new action. Instead of the action result, you'll
-see an error page. As you probably guessed, the cause of this error is that we're
-trying to render a template (``default/hello.html.twig``) that doesn't exist yet.
+Open your browser and access the ``http://localhost:8000/hello/fabien``
+URL to see the result of executing this new action. Instead of the action
+result, you'll see an error page. As you probably guessed, the cause of
+this error is that we're trying to render a template
+(``default/hello.html.twig``) that doesn't exist yet.
 
-Create the new ``app/Resources/views/default/hello.html.twig`` template with the
-following content:
+Create the new ``app/Resources/views/default/hello.html.twig`` template
+with the following content:
 
 .. code-block:: html+jinja
 
@@ -89,12 +92,13 @@ following content:
         <h1>Hi {{ name }}! Welcome to Symfony!</h1>
     {% endblock %}
 
-Browse again the ``http://localhost:8000/hello/fabien`` URL and you'll see this
-new template rendered with the information passed by the controller. If you
-change the last part of the URL (e.g. ``http://localhost:8000/hello/thomas``)
-and reload your browser, the page will display a different message. And if you
-remove the last part of the URL (e.g. ``http://localhost:8000/hello``), Symfony
-will display an error because the route expects a name and you haven't provided it.
+Browse again the ``http://localhost:8000/hello/fabien`` URL and you'll see
+this new template rendered with the information passed by the controller.
+If you change the last part of the URL (e.g.
+``http://localhost:8000/hello/thomas``) and reload your browser, the page
+will display a different message. And if you remove the last part of the
+URL (e.g.  ``http://localhost:8000/hello``), Symfony will display an error
+because the route expects a name and you haven't provided it.
 
 Using Formats
 -------------
@@ -105,8 +109,8 @@ there are plenty of different formats to choose from. Supporting those formats
 in Symfony is straightforward thanks to a special variable called ``_format``
 which stores the format requested by the user.
 
-Tweak the ``hello`` route by adding a new ``_format`` variable with ``html`` as
-its default value::
+Tweak the ``hello`` route by adding a new ``_format`` variable with ``html``
+as its default value::
 
     // src/AppBundle/Controller/DefaultController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -124,9 +128,9 @@ its default value::
         ));
     }
 
-Obviously, when you support several request formats, you have to provide a
-template for each of the supported formats. In this case, you should create a
-new ``hello.xml.twig`` template:
+Obviously, when you support several request formats, you have to provide
+a template for each of the supported formats. In this case, you should create
+a new ``hello.xml.twig`` template:
 
 .. code-block:: xml+php
 
@@ -135,16 +139,16 @@ new ``hello.xml.twig`` template:
         <name>{{ name }}</name>
     </hello>
 
-Now, when you browse to ``http://localhost:8000/hello/fabien``, you'll see the
-regular HTML page because ``html`` is the default format. When visiting
-``http://localhost:8000/hello/fabien.html`` you'll get again the HTML page, this
-time because you explicitly asked for the ``html`` format. Lastly, if you visit
-``http://localhost:8000/hello/fabien.xml`` you'll see the new XML template rendered
-in your browser.
+Now, when you browse to ``http://localhost:8000/hello/fabien``, you'll see
+the regular HTML page because ``html`` is the default format. When visiting
+``http://localhost:8000/hello/fabien.html`` you'll get again the HTML page,
+this time because you explicitly asked for the ``html`` format. Lastly,
+if you visit ``http://localhost:8000/hello/fabien.xml`` you'll see the new
+XML template rendered in your browser.
 
 That's all there is to it. For standard formats, Symfony will also
-automatically choose the best ``Content-Type`` header for the response. To
-restrict the formats supported by a given action, use the ``requirements``
+automatically choose the best ``Content-Type`` header for the response.
+To restrict the formats supported by a given action, use the ``requirements``
 option of the ``@Route()`` annotation::
 
     // src/AppBundle/Controller/DefaultController.php
@@ -169,8 +173,8 @@ option of the ``@Route()`` annotation::
 
 The ``hello`` action will now match URLs like ``/hello/fabien.xml`` or
 ``/hello/fabien.json``, but it will show a 404 error if you try to get URLs
-like ``/hello/fabien.js``, because the value of the ``_format`` variable doesn't
-meet its requirements.
+like ``/hello/fabien.js``, because the value of the ``_format`` variable
+doesn't meet its requirements.
 
 .. _redirecting-and-forwarding:
 
@@ -192,15 +196,16 @@ method::
         }
     }
 
-The ``redirectToRoute()`` method takes as arguments the route name and an optional
-array of parameters and redirects the user to the URL generated with those arguments.
+The ``redirectToRoute()`` method takes as arguments the route name and an
+optional array of parameters and redirects the user to the URL generated
+with those arguments.
 
 Displaying Error Pages
 ----------------------
 
 Errors will inevitably happen during the execution of every web application.
-In the case of ``404`` errors, Symfony includes a handy shortcut that you can
-use in your controllers::
+In the case of ``404`` errors, Symfony includes a handy shortcut that you
+can use in your controllers::
 
     // src/AppBundle/Controller/DefaultController.php
     // ...
@@ -217,8 +222,8 @@ use in your controllers::
         }
     }
 
-For ``500`` errors, just throw a regular PHP exception inside the controller and
-Symfony will transform it into a proper ``500`` error page::
+For ``500`` errors, just throw a regular PHP exception inside the controller
+and Symfony will transform it into a proper ``500`` error page::
 
     // src/AppBundle/Controller/DefaultController.php
     // ...
@@ -238,12 +243,12 @@ Symfony will transform it into a proper ``500`` error page::
 Getting Information from the Request
 ------------------------------------
 
-Sometimes your controllers need to access the information related to the user
-request, such as their preferred language, IP address or the URL query parameters.
-To get access to this information, add a new argument of type ``Request`` to the
-action. The name of this new argument doesn't matter, but it must be preceded
-by the ``Request`` type in order to work (don't forget to add the new ``use``
-statement that imports this ``Request`` class)::
+Sometimes your controllers need to access the information related to the
+user request, such as their preferred language, IP address or the URL query
+parameters. To get access to this information, add a new argument of type
+``Request`` to the action. The name of this new argument doesn't matter,
+but it must be preceded by the ``Request`` type in order to work (don't
+forget to add the new ``use`` statement that imports this ``Request`` class)::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -285,10 +290,10 @@ In a template, you can also access the ``Request`` object via the special
 Persisting Data in the Session
 ------------------------------
 
-Even if the HTTP protocol is stateless, Symfony provides a nice session object
-that represents the client (be it a real person using a browser, a bot, or a
-web service). Between two requests, Symfony stores the attributes in a cookie
-by using native PHP sessions.
+Even if the HTTP protocol is stateless, Symfony provides a nice session
+object that represents the client (be it a real person using a browser,
+a bot, or a web service). Between two requests, Symfony stores the attributes
+in a cookie by using native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved
 from any controller::
@@ -309,9 +314,9 @@ from any controller::
         $foo = $session->get('foo', 'default_value');
     }
 
-You can also store "flash messages" that will auto-delete after the next request.
-They are useful when you need to set a success message before redirecting the
-user to another page (which will then show the message)::
+You can also store "flash messages" that will auto-delete after the next
+request. They are useful when you need to set a success message before
+redirecting the user to another page (which will then show the message)::
 
     public function indexAction(Request $request)
     {
@@ -332,8 +337,8 @@ And you can display the flash message in the template like this:
 Final Thoughts
 --------------
 
-That's all there is to it, and I'm not even sure you'll have spent the full
-10 minutes. You were briefly introduced to bundles in the first part, and all the
-features you've learned about so far are part of the core framework bundle.
-But thanks to bundles, everything in Symfony can be extended or replaced.
-That's the topic of the :doc:`next part of this tutorial <the_architecture>`.
+That's all there is to it and I'm not even sure you'll have spent the full
+10 minutes. You were briefly introduced to bundles in the first part and
+all the features you've learned about so far are part of the core framework
+bundle. But thanks to bundles, everything in Symfony can be extended or
+replaced. That's the topic of the :doc:`next part of this tutorial <the_architecture>`.
