@@ -112,10 +112,10 @@
 
   * :doc:`/cookbook/frontend/bower`
 
-* **Installing and Upgrading**
+* :doc:`/cookbook/install/index`
 
-  * :doc:`/cookbook/upgrading`
-  * :doc:`/cookbook/inestable_version`
+  * :doc:`/cookbook/install/upgrading`
+  * :doc:`/cookbook/install/unstable_version`
 
 * :doc:`/cookbook/logging/index`
 
@@ -212,15 +212,12 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
-<<<<<<< HEAD
 * :doc:`/cookbook/upgrade/index`
 
   * :doc:`/cookbook/upgrade/patch_version`
   * :doc:`/cookbook/upgrade/minor_version`
   * :doc:`/cookbook/upgrade/major_version`
 
-=======
->>>>>>> Added a new articule about using/installing inestable Symfony versions
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`

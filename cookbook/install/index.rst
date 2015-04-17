@@ -5,3 +5,4 @@ Install and Upgrade
     :maxdepth: 2
 
     upgrading
+    unstable_versions
