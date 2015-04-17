@@ -115,7 +115,7 @@
 * :doc:`/cookbook/install/index`
 
   * :doc:`/cookbook/install/upgrading`
-  * :doc:`/cookbook/install/unstable_version`
+  * :doc:`/cookbook/install/unstable_versions`
 
 * :doc:`/cookbook/logging/index`
 
