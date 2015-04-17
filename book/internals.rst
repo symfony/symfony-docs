@@ -40,8 +40,8 @@ variables:
 * The :class:`Symfony\\Component\\HttpFoundation\\Response` class abstracts
   some PHP functions like ``header()``, ``setcookie()``, and ``echo``;
 
-* The :class:`Symfony\\Component\\HttpFoundation\\Session` class and
-  :class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface`
+* The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class and
+  :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`
   interface abstract session management ``session_*()`` functions.
 
 .. note::
