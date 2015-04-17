@@ -76,7 +76,9 @@ session cookie, if there is one, and get rid of all other cookies so that pages
 are cached if there is no active session. Unless you changed the default
 configuration of PHP, your session cookie has the name ``PHPSESSID``:
 
-.. code-block:: varnish4
+.. configuration-block::
+
+    .. code-block:: varnish4
 
     sub vcl_recv {
         // Remove all cookies except the session ID.
@@ -89,10 +91,29 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
 
             if (req.http.Cookie == "") {
                 // If there are no more cookies, remove the header to get page cached.
-                remove req.http.Cookie;
+                unset req.http.Cookie;
             }
         }
     }
+
+    .. code-block:: varnish3
+
+        sub vcl_recv {
+            // Remove all cookies except the session ID.
+            if (req.http.Cookie) {
+                set req.http.Cookie = ";" + req.http.Cookie;
+                set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+                set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+    
+                if (req.http.Cookie == "") {
+                    // If there are no more cookies, remove the header to get page cached.
+                    remove req.http.Cookie;
+                }
+            }
+        }
+    
 
 .. tip::
 
