@@ -6,14 +6,14 @@ May and one in November (:doc:`see releases detail </contributing/community/rele
 Testing the new Symfony versions in your projects as soon as possible is important
 to ensure that they will keep working after upgrading to the new version.
 
-In this article you'll learn how to install and use new Symfony versions before
+In this article, you'll learn how to install and use new Symfony versions before
 they are released as stable versions.
 
 Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
 Suppose that Symfony 2.7 version hasn't been released yet and you want to create
-a new project to test its features. First, :doc:`install Composer </cookbook/composer>`
+a new project to test its features. First, :doc:`install the Composer </cookbook/composer>`
 package manager. Then, open a command console, enter your projects directory and
 execute the following command:
 
@@ -57,7 +57,7 @@ command to update your project dependencies:
 
 .. code-block:: bash
 
-    $ composer update
+    $ composer update symfony/symfony
 
 If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constraint
 by ``"2.7.0-beta1"`` to install a specific beta number or ``2.7.*@beta`` to get
@@ -74,9 +74,9 @@ the most recent beta version.
 
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony
-        // ... update composer.json configuration
+        # ... update composer.json configuration
         $ composer update
 
-        // ... after testing the new Symfony version
+        # ... after testing the new Symfony version
         $ git checkout master
         $ git branch -D testing_new_symfony
