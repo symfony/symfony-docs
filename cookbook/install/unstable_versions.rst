@@ -75,7 +75,7 @@ the most recent beta version.
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony
         # ... update composer.json configuration
-        $ composer update
+        $ composer update symfony/symfony
 
         # ... after testing the new Symfony version
         $ git checkout master
