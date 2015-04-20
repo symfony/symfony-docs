@@ -80,21 +80,21 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
 
     .. code-block:: varnish4
 
-    sub vcl_recv {
-        // Remove all cookies except the session ID.
-        if (req.http.Cookie) {
-            set req.http.Cookie = ";" + req.http.Cookie;
-            set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-            set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
-            set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-            set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-
-            if (req.http.Cookie == "") {
-                // If there are no more cookies, remove the header to get page cached.
-                unset req.http.Cookie;
+        sub vcl_recv {
+            // Remove all cookies except the session ID.
+            if (req.http.Cookie) {
+                set req.http.Cookie = ";" + req.http.Cookie;
+                set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+                set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+                set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+    
+                if (req.http.Cookie == "") {
+                    // If there are no more cookies, remove the header to get page cached.
+                    unset req.http.Cookie;
+                }
             }
         }
-    }
 
     .. code-block:: varnish3
 
