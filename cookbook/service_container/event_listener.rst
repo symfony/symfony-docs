@@ -96,7 +96,7 @@ using a special "tag":
 .. note::
 
     There is an additional tag option ``priority`` that is optional and defaults
-    to 0. This value can be from -255 to 255, and the listeners will be executed
+    to 0. This value can be from -1024 to 1024, and the listeners will be executed
     in the order of their priority (highest to lowest). This is useful when
     you need to guarantee that one listener is executed before another.
 
