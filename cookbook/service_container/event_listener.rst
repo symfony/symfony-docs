@@ -56,7 +56,7 @@ event is just one of the core kernel events::
     Each event receives a slightly different type of ``$event`` object. For
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
     To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
-10
+
 .. note::
 
     When setting a response for the ``kernel.request``, ``kernel.view`` or
