@@ -120,7 +120,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
             $this->tokens = $tokens;
         }
 
-        public function onKernelController(FilterControllerEvent $event)
+        public function verifyToken(FilterControllerEvent $event)
         {
             $controller = $event->getController();
 
@@ -159,14 +159,14 @@ your listener to be called just before any controller is executed.
                 class: AppBundle\EventListener\TokenListener
                 arguments: ["%tokens%"]
                 tags:
-                    - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+                    - { name: kernel.event_listener, event: kernel.controller, method: verifyToken }
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
         <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
             <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="verifyToken" />
         </service>
 
     .. code-block:: php
@@ -177,7 +177,7 @@ your listener to be called just before any controller is executed.
         $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
         $listener->addTag('kernel.event_listener', array(
             'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
+            'method' => 'verifyToken'
         ));
         $container->setDefinition('app.tokens.action_listener', $listener);
 
