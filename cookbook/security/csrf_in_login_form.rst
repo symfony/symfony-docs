@@ -18,7 +18,7 @@ Configuring CSRF Protection
 
 First, configure the Security component so it can use CSRF protection.
 The Security component needs a CSRF token provider. You can set this to use the default
-provider available in the Form component:
+provider available in the Security component:
 
 .. configuration-block::
 
@@ -31,7 +31,7 @@ provider available in the Form component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: form.csrf_provider
+                        csrf_provider: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -46,7 +46,7 @@ provider available in the Form component:
                 <firewall name="secured_area">
                     <!-- ... -->
 
-                    <form-login csrf-provider="form.csrf_provider" />
+                    <form-login csrf-provider="security.csrf.token_manager" />
                 </firewall>
             </config>
         </srv:container>
@@ -60,11 +60,16 @@ provider available in the Form component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'form.csrf_provider',
+                        'csrf_provider' => 'security.csrf.token_manager',
                     )
                 )
             )
         ));
+
+.. versionadded:: 2.4
+    The ``security.csrf.token_manager`` service was introduced in Symfony 2.4.
+    Prior to Symfony 2.4, you can use the ``form.csrf_provider`` service
+    available in the Form component.
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
