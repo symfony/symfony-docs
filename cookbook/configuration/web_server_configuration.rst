@@ -52,7 +52,7 @@ The **minimum configuration** to get your application running under Apache is:
         # uncomment the following lines if you install assets as symlinks
         # or run into problems when compiling LESS/Sass/CoffeScript assets
         # <Directory /var/www/project>
-        #     Option FollowSymlinks
+        #     Options FollowSymlinks
         # </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
@@ -90,7 +90,7 @@ and increase web server performance:
         # uncomment the following lines if you install assets as symlinks
         # or run into problems when compiling LESS/Sass/CoffeScript assets
         # <Directory /var/www/project>
-        #     Option FollowSymlinks
+        #     Options FollowSymlinks
         # </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
@@ -194,7 +194,7 @@ directive to pass requests for PHP files to PHP FPM:
         # uncomment the following lines if you install assets as symlinks
         # or run into problems when compiling LESS/Sass/CoffeScript assets
         # <Directory /var/www/project>
-        #     Option FollowSymlinks
+        #     Options FollowSymlinks
         # </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
@@ -230,7 +230,7 @@ should look something like this:
         # uncomment the following lines if you install assets as symlinks
         # or run into problems when compiling LESS/Sass/CoffeScript assets
         # <Directory /var/www/project>
-        #     Option FollowSymlinks
+        #     Options FollowSymlinks
         # </Directory>
 
         ErrorLog /var/log/apache2/project_error.log
