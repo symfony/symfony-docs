@@ -31,9 +31,9 @@ a more permissive regex path.
         class DemoController
         {
             /**
-             * @Route("/hello/{name}", name="_hello", requirements={"name"=".+"})
+             * @Route("/hello/{username}", name="_hello", requirements={"username"=".+"})
              */
-            public function helloAction($name)
+            public function helloAction($username)
             {
                 // ...
             }

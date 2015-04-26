@@ -25,5 +25,6 @@ Sections
 * :doc:`/components/security/firewall`
 * :doc:`/components/security/authentication`
 * :doc:`/components/security/authorization`
+* :doc:`/components/security/secure_tools`
 
 .. _Packagist: https://packagist.org/packages/symfony/security

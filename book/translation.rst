@@ -127,7 +127,7 @@ different formats, XLIFF being the recommended format:
 
     .. code-block:: xml
 
-        <!-- messages.fr.xliff -->
+        <!-- messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -356,18 +356,18 @@ must be named according to the following path: ``domain.locale.loader``:
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
-* **loader**: How Symfony should load and parse the file (e.g. ``xliff``,
+* **loader**: How Symfony should load and parse the file (e.g. ``xlf``,
   ``php``, ``yml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
 provides many loaders, including:
 
-* ``xliff``: XLIFF file;
+* ``xlf``: XLIFF file;
 * ``php``: PHP file;
 * ``yml``: YAML file.
 
 The choice of which loader to use is entirely up to you and is a matter of
-taste. The recommended option is to use ``xliff`` for translations.
+taste. The recommended option is to use ``xlf`` for translations.
 For more options, see :ref:`component-translator-message-catalogs`.
 
 .. note::
@@ -397,10 +397,10 @@ key ``Symfony is great``. To find the French translation, Symfony actually
 checks translation resources for several locales:
 
 #. First, Symfony looks for the translation in a ``fr_FR`` translation resource
-   (e.g. ``messages.fr_FR.xliff``);
+   (e.g. ``messages.fr_FR.xlf``);
 
 #. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
-   resource (e.g. ``messages.fr.xliff``);
+   resource (e.g. ``messages.fr.xlf``);
 
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` configuration
    parameter, which defaults to ``en`` (see `Configuration`_).
@@ -662,7 +662,7 @@ bundle.
 
     .. code-block:: xml
 
-        <!-- validators.en.xliff -->
+        <!-- validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
