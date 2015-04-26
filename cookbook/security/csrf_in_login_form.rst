@@ -66,11 +66,6 @@ provider available in the Security component:
             )
         ));
 
-.. versionadded:: 2.4
-    The ``security.csrf.token_manager`` service was introduced in Symfony 2.4.
-    Prior to Symfony 2.4, you can use the ``form.csrf_provider`` service
-    available in the Form component.
-
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
 
