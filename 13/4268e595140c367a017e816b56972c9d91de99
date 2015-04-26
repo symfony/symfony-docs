@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xelaris at 2015-04-26T00:56:49Z
+
+I just noticed there was a comma missing too. The comma is also missing in 2.5 branch, but 2.5 documentation isn't maintained since the beginning of last month, is it? So I add the commit to this PR.
