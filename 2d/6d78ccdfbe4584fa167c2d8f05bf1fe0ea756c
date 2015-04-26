@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-21T07:09:57Z
+
+I think we should remove the range in this section, as you can use whatever number you want. It doesn't limit you to a specific range. The core listeners are within the [-1024 ... 1024] range, but that doesn't have to say anything about your own listeners.
