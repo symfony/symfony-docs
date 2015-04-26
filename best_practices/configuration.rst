@@ -126,7 +126,7 @@ everywhere in your application. When using parameters, they are only available
 from places with access to the Symfony container.
 
 Constants can be used for example in your Twig templates thanks to the
-``constant()`` function:
+`constant() function`_:
 
 .. code-block:: html+jinja
 
