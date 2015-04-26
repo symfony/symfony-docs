@@ -77,7 +77,7 @@ Here is an example on how to load the
         # app/config/services.yml
         services:
             get_set_method_normalizer:
-            class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
                 tags:
                     - { name: serializer.normalizer }
 

@@ -80,7 +80,7 @@ English in the application would be:
 
 .. code-block:: xml
 
-    <!-- app/Resources/translations/messages.en.xliff -->
+    <!-- app/Resources/translations/messages.en.xlf -->
     <?xml version="1.0"?>
     <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
         <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
