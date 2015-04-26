@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-21T19:32:14Z
+
+Thank for your trying to improve the docs, @sfdumi. However, if I am not mistaken this has already been added in 614da1552ebef929dbad0fe404c66a06e2f692dc. Could it be that you had a look at an outdated fork of the repository? So I'm going to close here for the moment, but please feel free to reopen if I misunderstood anything.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-21T20:49:10Z
+
+@xabbuh that commit is about the map and index files. This PR is about adding the link under the "Sections" title in the introduction article. It was indeed forgotten to add this link there.
+
+So I'm going to reopen this and will merge it later this week. Thanks already @sfdumi!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-21T21:10:49Z
+
+Oh indeed, thanks for clarifying @WouterJ.
