@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-13T15:59:31Z
+
+Imho this change makes sense.
+
+---------------------------------------------------------------------------
+
+by manelselles at 2015-04-13T18:27:16Z
+
+I realized the same problem is happening at http://symfony.com/doc/2.3/cookbook/configuration/configuration_organization.html 3 times.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-13T18:38:15Z
+
+@manelselles Can you please update them as well?
+
+---------------------------------------------------------------------------
+
+by manelselles at 2015-04-13T19:14:41Z
+
+Done at https://github.com/symfony/symfony-docs/pull/5174
