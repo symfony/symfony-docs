@@ -170,7 +170,7 @@ following code:
         {
             /**
              * @Assert\Image(
-             *     allowLandscape = false
+             *     allowLandscape = false,
              *     allowPortrait = false
              * )
              */
