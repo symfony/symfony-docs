@@ -95,11 +95,14 @@ First configure a listener for console exception events in the service container
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="kernel.listener.command_dispatch" class="AppBundle\EventListener\ConsoleExceptionListener">
+                <service id="kernel.listener.command_dispatch"
+                    class="AppBundle\EventListener\ConsoleExceptionListener">
+
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.exception" />
                 </service>
@@ -193,11 +196,14 @@ First configure a listener for console terminate events in the service container
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="kernel.listener.command_dispatch" class="AppBundle\EventListener\ErrorLoggerListener">
+                <service id="kernel.listener.command_dispatch"
+                    class="AppBundle\EventListener\ErrorLoggerListener">
+                    
                     <argument type="service" id="logger"/>
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
