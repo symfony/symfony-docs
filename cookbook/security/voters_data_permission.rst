@@ -228,7 +228,7 @@ from the authorization checker is called.
 .. versionadded:: 2.6
     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
     to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-    
+.. versionadded:: 2.6
     ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6 as a shortcut.
     This uses ``security.authorization_checker`` and throws ``AccessDeniedException`` if needed.
 
