@@ -305,7 +305,7 @@ several minutes to complete.
 .. tip::
 
     Symfony provides a command to check whether your project's dependencies
-    contain any know security vulnerability:
+    contain any known security vulnerability:
 
     .. code-block:: bash
 
