@@ -38,11 +38,13 @@ with ``console.command``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="acme_hello.command.my_command"
                     class="Acme\HelloBundle\Command\MyCommand">
+
                     <tag name="console.command" />
                 </service>
             </services>
@@ -52,7 +54,10 @@ with ``console.command``:
 
         // app/config/config.php
         $container
-            ->register('acme_hello.command.my_command', 'Acme\HelloBundle\Command\MyCommand')
+            ->register(
+                'acme_hello.command.my_command',
+                'Acme\HelloBundle\Command\MyCommand'
+            )
             ->addTag('console.command')
         ;
 
@@ -63,7 +68,7 @@ Imagine you want to provide a default value for the ``name`` option. You could
 pass one of the following as the 5th argument of ``addOption()``:
 
 * a hardcoded string;
-* a container parameter (e.g. something from parameters.yml);
+* a container parameter (e.g. something from ``parameters.yml``);
 * a value computed by a service (e.g. a repository).
 
 By extending ``ContainerAwareCommand``, only the first is possible, because you
@@ -98,7 +103,13 @@ have some ``NameRepository`` service that you'll use to get your default value::
             $this
                 ->setName('demo:greet')
                 ->setDescription('Greet someone')
-                ->addOption('name', '-n', InputOption::VALUE_REQUIRED, 'Who do you want to greet?', $defaultName)
+                ->addOption(
+                    'name',
+                    '-n',
+                    InputOption::VALUE_REQUIRED,
+                    'Who do you want to greet?',
+                    $defaultName
+                )
             ;
         }
 
