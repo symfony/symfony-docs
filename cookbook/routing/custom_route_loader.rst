@@ -72,6 +72,7 @@ The sample loader below supports loading routing resources with a type of
 ``extra``. The type ``extra`` isn't important - you can just invent any resource
 type you want. The resource name itself is not actually used in the example::
 
+    // src/AppBundle/Routing/ExtraLoader.php
     namespace AppBundle\Routing;
 
     use Symfony\Component\Config\Loader\Loader;
@@ -119,6 +120,7 @@ Make sure the controller you specify really exists. In this case you
 have to create an ``extraAction`` method in the ``ExtraController``
 of the ``AppBundle``::
 
+    // src/AppBundle/Controller/ExtraController.php
     namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -238,6 +240,7 @@ Whenever you want to load another resource - for instance a YAML routing
 configuration file - you can call the
 :method:`Symfony\\Component\\Config\\Loader\\Loader::import` method::
 
+    // src/AppBundle/Routing/AdvancedLoader.php
     namespace AppBundle\Routing;
 
     use Symfony\Component\Config\Loader\Loader;
