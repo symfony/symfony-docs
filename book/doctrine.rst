@@ -134,12 +134,6 @@ for you:
     There's no way to configure these defaults inside Doctrine, as it tries to be
     as agnostic as possible in terms of environment configuration. One way to solve
     this problem is to configure server-level defaults.
-    
-    .. caution::
-
-        If you are using MySQL, its ``utf8`` character set actually only supports 
-        a portion of valid UTF-8 data that you may encounter. Instead, try to 
-        use the newer ``utf8mb4`` if your system supports it.
 
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to
     your configuration file  (typically ``my.cnf``):
@@ -147,8 +141,13 @@ for you:
     .. code-block:: ini
 
         [mysqld]
-        collation-server = utf8mb4_general_ci
-        character-set-server = utf8mb4
+        # Version 5.5.3 introduced "utf8mb4", which is recommended
+        collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+        character-set-server = utf8mb4            # Replaces utf8
+
+    We recommend against MySQL's ``utf8`` character set, since it does not
+    support 4-byte unicode characters, and strings containing them will be
+    truncated. This is fixed by the `newer utf8mb4 character set`_.
 
 .. note::
 
@@ -1425,3 +1424,4 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`migrations`: http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
 .. _`DoctrineFixturesBundle`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`FrameworkExtraBundle documentation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html
