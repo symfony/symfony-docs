@@ -40,7 +40,7 @@ Local Installation
 ~~~~~~~~~~~~~~~~~~
 
 It's also possible to install UglifyJS inside your project only, which is useful
-when your project requires an specific UglifyJS version. To do this, install it
+when your project requires a specific UglifyJS version. To do this, install it
 without the ``-g`` option and specify the path where to put the module:
 
 .. code-block:: bash
