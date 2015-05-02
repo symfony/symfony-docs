@@ -26,6 +26,7 @@ New Documentation
 - `b90c7cb <https://github.com/symfony/symfony-docs/commit/b90c7cbffda822f54b33d91e1da4c6b844bfe872>`_ #5078 [Cookbook] Add warning about Composer dev deps on Heroku (bicpi)
 - `55730c4 <https://github.com/symfony/symfony-docs/commit/55730c4c0e619c3918d131c6cb910bd17ccc9a0b>`_ #5021 Explained the "Remember Me" firewall options (javiereguiluz)
 - `45ba71b <https://github.com/symfony/symfony-docs/commit/45ba71b2b3eef0ab544b33888d47e19787552fa6>`_ #4811 Simplified some Symfony installation instructions (javiereguiluz)
+- `c4a5661 <https://github.com/symfony/symfony-docs/commit/c4a56618bbf7f3d60c6e10e6029c60e185f31756>`_ #5060 Adds note on new validation files scanned in 2.7 (GromNaN)
 
 Fixed Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -33,6 +34,7 @@ Fixed Documentation
 - `6641b4b <https://github.com/symfony/symfony-docs/commit/6641b4bea913d2e9ea24acb720bb3e52e3793341>`_ #5202 added missing tab (martinbertinat)
 - `49f6b2a <https://github.com/symfony/symfony-docs/commit/49f6b2ac35be86ac5cbc215570362c0b7be9db2b>`_ #5211 Rebase #5182 (Balamung)
 - `318bb8a <https://github.com/symfony/symfony-docs/commit/318bb8af38f5f1824295af1e2c2bafa01b35f438>`_ #5187 Fixing a bad bcrypt string using http://www.bcrypt-generator.com/ (weaverryan)
+- `93ecd0a <https://github.com/symfony/symfony-docs/commit/93ecd0a3b5a2bfb9a8123691114d40a7bc397d81>`_ Merge branch '2.6' into 2.7
 - `6fb2eea <https://github.com/symfony/symfony-docs/commit/6fb2eeae5abdf4f401c58755681f63232c104419>`_ #5162 Fix misplelled XliffFileLoader class in the Using Domains (Nicola Pietroluongo)
 - `402b586 <https://github.com/symfony/symfony-docs/commit/402b586c49227b998447ad6b3fa82dcbeb9ca47b>`_ #5162 Fix misplelled XliffFileLoader class in the Using Message Domains (Nicola Pietroluongo)
 - `8fc3d6c <https://github.com/symfony/symfony-docs/commit/8fc3d6c9bc33563fabe17230e600281d47b547e6>`_ #5149 Fixed loadUserByUsername method coding errors (Linas Merkevicius)
@@ -64,6 +66,7 @@ Minor Documentation Changes
 - `d9e1690 <https://github.com/symfony/symfony-docs/commit/d9e169015d1a102165ced03efc36ea72c5abf011>`_ #5096 Reviewed Cache cookbook articles (javiereguiluz)
 - `c40b618 <https://github.com/symfony/symfony-docs/commit/c40b6181812d23a32f6155c83066e6fa405b0747>`_ #5065 [Reference] fix code block order (xabbuh)
 - `73ccc8b <https://github.com/symfony/symfony-docs/commit/73ccc8b4044b9b892ff70e8782a68eaeeab09573>`_ #5160 Update process.rst (sfdumi)
+- `ab01d08 <https://github.com/symfony/symfony-docs/commit/ab01d0815bfa62eb678d75d43e8658d73d546b06>`_ #5141 Removed remaining setDefaultOptions usage (WouterJ)
 - `0dc6204 <https://github.com/symfony/symfony-docs/commit/0dc620420293c8d969ca5f0a1e83ca02a80e7b25>`_ #5143 Rebased #4747 (ifdattic)
 - `b467e23 <https://github.com/symfony/symfony-docs/commit/b467e23847b6340a14d5e3589431984f9d78a211>`_ #5147 Add missing word in bundles best practice description (jbafford)
 - `bf1e44b <https://github.com/symfony/symfony-docs/commit/bf1e44bec5178dfbdea2a87d7af3fd50369f08a1>`_ #5150 [Cookbook] Update serializer.rst (xelaris)
