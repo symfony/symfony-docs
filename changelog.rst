@@ -194,8 +194,6 @@ Fixed Documentation
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- `9caab86 <https://github.com/symfony/symfony-docs/commit/9caab86219766929c7cb9eecd26096d49297fda1>`_ Merge branch '2.5' into 2.6
-- `ff44111 <https://github.com/symfony/symfony-docs/commit/ff44111a6aa741fb3b03e0b3296bf438eb561d62>`_ Merge branch '2.3' into 2.5
 - `2a29225 <https://github.com/symfony/symfony-docs/commit/2a29225acb875a7aa524cf5508a66b8c60021fc8>`_ #4985 Fixed a typo (javiereguiluz)
 - `f75bc2b <https://github.com/symfony/symfony-docs/commit/f75bc2bf6d52a5480ba056af06c59844ec8934ba>`_ #4972 Fix typos (ifdattic)
 - `9fab10b <https://github.com/symfony/symfony-docs/commit/9fab10bde02daae0af6f2848eb5888fa95026e76>`_ #4854 Removed no longer needed information about PHP 5.3 (WouterJ)
@@ -623,10 +621,8 @@ Minor Documentation Changes
 - `6ceb8cb <https://github.com/symfony/symfony-docs/commit/6ceb8cbf0d3e448f66d5ab822c4e68c33aef1ec3>`_ #4345 Correct capitalization for the Content-Type header (GeertDD)
 - `3e4c92a <https://github.com/symfony/symfony-docs/commit/3e4c92a12cf794dc09ccb640c2b1928213e06d80>`_ #4104 Use ${APACHE_LOG_DIR} instead of /var/log/apache2 (xamgreen)
 - `3da0776 <https://github.com/symfony/symfony-docs/commit/3da0776b502dd23b399c3e005a27e965dc70e46f>`_ #4338 ESI Variable Details Continuation (Farkie, weaverryan)
-- `9e0e12d <https://github.com/symfony/symfony-docs/commit/9e0e12d01f424cf1fd068f525516cadeafb45ccf>`_ Merge branch '2.5'
 - `7f461d2 <https://github.com/symfony/symfony-docs/commit/7f461d23ebc2cabf52380ca85582a581b7b0482b>`_ #4325 [Components][Form] Correct a typo (fabschurt)
 - `d162329 <https://github.com/symfony/symfony-docs/commit/d1623295fb561849de82815eebba7f9db4e82651>`_ #4276 [Components][HttpFoundation] Make a small grammatical adjustment (fabschurt)
-- `459052d <https://github.com/symfony/symfony-docs/commit/459052d431dcda538cc6430fc0692994c894896f>`_ Merge remote-tracking branch 'origin/2.4' into 2.5
 - `69bfac1 <https://github.com/symfony/symfony-docs/commit/69bfac17420c3a690ae170df530990859256d850>`_ #4322 [Components][DependencyInjection] Correct a typo: replace "then" by "the" (fabschurt)
 - `8073239 <https://github.com/symfony/symfony-docs/commit/80732390c57c0a65a37e62230a1d76f617831bdf>`_ #4318 [Cookbook][Bundles] Correct a typo: remove unnecessary "the" word (fabschurt)
 - `228111b <https://github.com/symfony/symfony-docs/commit/228111be589210136bac35dd70f1920f68996f54>`_ #4316 Remove horizontal scrollbar (ifdattic)
