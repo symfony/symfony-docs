@@ -21,6 +21,7 @@ New Documentation
 
 - `387ebc0 <https://github.com/symfony/symfony-docs/commit/387ebc0b84cb813f45f76161f3cfb81c38f9a6fa>`_ #5109 Improved the explanation about the "secret" configuration parameter (javiereguiluz)
 - `cac0a9c <https://github.com/symfony/symfony-docs/commit/cac0a9cbf50e4d77822e792a5276a16b40f0ca3b>`_ #5207 Updated the cookbook about Composer installation (javiereguiluz)
+- `b5dd5a1 <https://github.com/symfony/symfony-docs/commit/b5dd5a1f11a52c4bce3292e8bc7fabbfb4e5c148>`_ #5206 [Cookbook][Security] Replace deprecated csrf_provider service (xelaris)
 - `99e2034 <https://github.com/symfony/symfony-docs/commit/99e2034d4272fe4921c3627c0d494b9b1df85e7f>`_ #5195 Add missing caching drivers (mhor)
 - `b90c7cb <https://github.com/symfony/symfony-docs/commit/b90c7cbffda822f54b33d91e1da4c6b844bfe872>`_ #5078 [Cookbook] Add warning about Composer dev deps on Heroku (bicpi)
 - `55730c4 <https://github.com/symfony/symfony-docs/commit/55730c4c0e619c3918d131c6cb910bd17ccc9a0b>`_ #5021 Explained the "Remember Me" firewall options (javiereguiluz)
@@ -33,14 +34,19 @@ Fixed Documentation
 - `49f6b2a <https://github.com/symfony/symfony-docs/commit/49f6b2ac35be86ac5cbc215570362c0b7be9db2b>`_ #5211 Rebase #5182 (Balamung)
 - `318bb8a <https://github.com/symfony/symfony-docs/commit/318bb8af38f5f1824295af1e2c2bafa01b35f438>`_ #5187 Fixing a bad bcrypt string using http://www.bcrypt-generator.com/ (weaverryan)
 - `6fb2eea <https://github.com/symfony/symfony-docs/commit/6fb2eeae5abdf4f401c58755681f63232c104419>`_ #5162 Fix misplelled XliffFileLoader class in the Using Domains (Nicola Pietroluongo)
+- `402b586 <https://github.com/symfony/symfony-docs/commit/402b586c49227b998447ad6b3fa82dcbeb9ca47b>`_ #5162 Fix misplelled XliffFileLoader class in the Using Message Domains (Nicola Pietroluongo)
 - `8fc3d6c <https://github.com/symfony/symfony-docs/commit/8fc3d6c9bc33563fabe17230e600281d47b547e6>`_ #5149 Fixed loadUserByUsername method coding errors (Linas Merkevicius)
 - `2a1d2bb <https://github.com/symfony/symfony-docs/commit/2a1d2bb3b3a97e5add310509ab38dd638caf177d>`_ #5153 [Book] app_dev with php built-in web server (manelselles)
 - `c6e6d28 <https://github.com/symfony/symfony-docs/commit/c6e6d28659e7ae3f7b1ef5c50653b7f0cb8b7bf1>`_ #5061 Trim default is false in password field (raziel057)
+- `5880f38 <https://github.com/symfony/symfony-docs/commit/5880f38e66683f67cecfa736105c03bccec707db>`_ #5126 Fix a typo in ProgressBar usage example (kamazee)
 - `65c1669 <https://github.com/symfony/symfony-docs/commit/65c166967a148cdd45a6f305c8cb68f2dd452eae>`_ #5124 #3412 correct overridden option name of timezone (alexandr-kalenyuk)
 
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+- `0b7f89b <https://github.com/symfony/symfony-docs/commit/0b7f89be099ffced22e20de8edef04d3faff8df1>`_ #4868 Remove horizontal scrollbar (ifdattic)
+- `c166fdf <https://github.com/symfony/symfony-docs/commit/c166fdf9d77caedef16235ab8b6ed23ce8b59840>`_ #5212 Fixed typo. (pcky)
+- `134268e <https://github.com/symfony/symfony-docs/commit/134268e595140c367a017e816b56972c9d91de99>`_ #5209 [Reference] Fix order of config blocks (xelaris)
 - `c6dc4ea <https://github.com/symfony/symfony-docs/commit/c6dc4eac507c4aa89f9df2ec119e5b8e75d38ff2>`_ #5200 Added missing link in "Sections" (sfdumi)
 - `8b25e6e <https://github.com/symfony/symfony-docs/commit/8b25e6e03d580447ece793572744be7e7243c355>`_ #5198 Link twig constant function (davidfuhr)
 - `2d6d78c <https://github.com/symfony/symfony-docs/commit/2d6d78ccdfbe4584fa167c2d8f05bf1fe0ea756c>`_ #5194 Fix priority range values for event listeners. (chtipepere)
@@ -65,7 +71,10 @@ Minor Documentation Changes
 - `b73346a <https://github.com/symfony/symfony-docs/commit/b73346a3c5b1f04781641f65c896950cf37f0967>`_ #5145 Update introduction.rst (cafferata)
 - `7f39e87 <https://github.com/symfony/symfony-docs/commit/7f39e87e9a1cdd1998eddb36920f04f5ebeff962>`_ #5073 [Cookbook] Add note about possible 404 error on Heroku (bicpi)
 - `fbdc177 <https://github.com/symfony/symfony-docs/commit/fbdc17780920ce0862171359547485be7feddd70>`_ #5057 Add a link to Multiple User Providers (thePanz)
+- `526c880 <https://github.com/symfony/symfony-docs/commit/526c880f121f85b4bedddb7dfbcfe6d293ac1fca>`_ #5132 [Components][DependencyInjection] fix wrong disable of factories (sstok)
 - `b19ded6 <https://github.com/symfony/symfony-docs/commit/b19ded62ce04d8a00b3c8619545bf7cde8476392>`_ #5130 [Cookbook][Security] Fiyed typo in entity_provider.rst (althaus)
+- `87c39b7 <https://github.com/symfony/symfony-docs/commit/87c39b723df086b520792d72b6b68339920087ce>`_ #5129 Fix to Twig asset function packageName argument (ockcyp)
+- `1d443c0 <https://github.com/symfony/symfony-docs/commit/1d443c018bf6a3988d667f068da996a76ed5b7f0>`_ #5128 [VarDumper] little optim (lyrixx)
 
 March, 2015
 -----------
