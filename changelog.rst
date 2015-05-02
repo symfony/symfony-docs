@@ -34,7 +34,6 @@ Fixed Documentation
 - `6641b4b <https://github.com/symfony/symfony-docs/commit/6641b4bea913d2e9ea24acb720bb3e52e3793341>`_ #5202 added missing tab (martinbertinat)
 - `49f6b2a <https://github.com/symfony/symfony-docs/commit/49f6b2ac35be86ac5cbc215570362c0b7be9db2b>`_ #5211 Rebase #5182 (Balamung)
 - `318bb8a <https://github.com/symfony/symfony-docs/commit/318bb8af38f5f1824295af1e2c2bafa01b35f438>`_ #5187 Fixing a bad bcrypt string using http://www.bcrypt-generator.com/ (weaverryan)
-- `93ecd0a <https://github.com/symfony/symfony-docs/commit/93ecd0a3b5a2bfb9a8123691114d40a7bc397d81>`_ Merge branch '2.6' into 2.7
 - `6fb2eea <https://github.com/symfony/symfony-docs/commit/6fb2eeae5abdf4f401c58755681f63232c104419>`_ #5162 Fix misplelled XliffFileLoader class in the Using Domains (Nicola Pietroluongo)
 - `402b586 <https://github.com/symfony/symfony-docs/commit/402b586c49227b998447ad6b3fa82dcbeb9ca47b>`_ #5162 Fix misplelled XliffFileLoader class in the Using Message Domains (Nicola Pietroluongo)
 - `8fc3d6c <https://github.com/symfony/symfony-docs/commit/8fc3d6c9bc33563fabe17230e600281d47b547e6>`_ #5149 Fixed loadUserByUsername method coding errors (Linas Merkevicius)
@@ -206,8 +205,6 @@ Fixed Documentation
 Minor Documentation Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- `9caab86 <https://github.com/symfony/symfony-docs/commit/9caab86219766929c7cb9eecd26096d49297fda1>`_ Merge branch '2.5' into 2.6
-- `ff44111 <https://github.com/symfony/symfony-docs/commit/ff44111a6aa741fb3b03e0b3296bf438eb561d62>`_ Merge branch '2.3' into 2.5
 - `2a29225 <https://github.com/symfony/symfony-docs/commit/2a29225acb875a7aa524cf5508a66b8c60021fc8>`_ #4985 Fixed a typo (javiereguiluz)
 - `f75bc2b <https://github.com/symfony/symfony-docs/commit/f75bc2bf6d52a5480ba056af06c59844ec8934ba>`_ #4972 Fix typos (ifdattic)
 - `89e626f <https://github.com/symfony/symfony-docs/commit/89e626fb902d33b181cf531c638fba05bb5e577e>`_ #4952 symfony 2.7 requires at least php 5.3.9 (scaytrase)
@@ -641,10 +638,8 @@ Minor Documentation Changes
 - `6ceb8cb <https://github.com/symfony/symfony-docs/commit/6ceb8cbf0d3e448f66d5ab822c4e68c33aef1ec3>`_ #4345 Correct capitalization for the Content-Type header (GeertDD)
 - `3e4c92a <https://github.com/symfony/symfony-docs/commit/3e4c92a12cf794dc09ccb640c2b1928213e06d80>`_ #4104 Use ${APACHE_LOG_DIR} instead of /var/log/apache2 (xamgreen)
 - `3da0776 <https://github.com/symfony/symfony-docs/commit/3da0776b502dd23b399c3e005a27e965dc70e46f>`_ #4338 ESI Variable Details Continuation (Farkie, weaverryan)
-- `9e0e12d <https://github.com/symfony/symfony-docs/commit/9e0e12d01f424cf1fd068f525516cadeafb45ccf>`_ Merge branch '2.5'
 - `7f461d2 <https://github.com/symfony/symfony-docs/commit/7f461d23ebc2cabf52380ca85582a581b7b0482b>`_ #4325 [Components][Form] Correct a typo (fabschurt)
 - `d162329 <https://github.com/symfony/symfony-docs/commit/d1623295fb561849de82815eebba7f9db4e82651>`_ #4276 [Components][HttpFoundation] Make a small grammatical adjustment (fabschurt)
-- `459052d <https://github.com/symfony/symfony-docs/commit/459052d431dcda538cc6430fc0692994c894896f>`_ Merge remote-tracking branch 'origin/2.4' into 2.5
 - `69bfac1 <https://github.com/symfony/symfony-docs/commit/69bfac17420c3a690ae170df530990859256d850>`_ #4322 [Components][DependencyInjection] Correct a typo: replace "then" by "the" (fabschurt)
 - `8073239 <https://github.com/symfony/symfony-docs/commit/80732390c57c0a65a37e62230a1d76f617831bdf>`_ #4318 [Cookbook][Bundles] Correct a typo: remove unnecessary "the" word (fabschurt)
 - `228111b <https://github.com/symfony/symfony-docs/commit/228111be589210136bac35dd70f1920f68996f54>`_ #4316 Remove horizontal scrollbar (ifdattic)
