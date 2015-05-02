@@ -90,4 +90,4 @@ protocols
 
 The protocols that will be considered to be valid. For example, if you also
 needed ``ftp://`` type URLs to be valid, you'd redefine the ``protocols``
-array, listing ``http``, ``https``, and also ``ftp``.
+array, listing ``http``, ``https`` and also ``ftp``.
