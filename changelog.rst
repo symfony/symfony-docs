@@ -34,7 +34,6 @@ Fixed Documentation
 - `6641b4b <https://github.com/symfony/symfony-docs/commit/6641b4bea913d2e9ea24acb720bb3e52e3793341>`_ #5202 added missing tab (martinbertinat)
 - `49f6b2a <https://github.com/symfony/symfony-docs/commit/49f6b2ac35be86ac5cbc215570362c0b7be9db2b>`_ #5211 Rebase #5182 (Balamung)
 - `318bb8a <https://github.com/symfony/symfony-docs/commit/318bb8af38f5f1824295af1e2c2bafa01b35f438>`_ #5187 Fixing a bad bcrypt string using http://www.bcrypt-generator.com/ (weaverryan)
-- `93ecd0a <https://github.com/symfony/symfony-docs/commit/93ecd0a3b5a2bfb9a8123691114d40a7bc397d81>`_ Merge branch '2.6' into 2.7
 - `6fb2eea <https://github.com/symfony/symfony-docs/commit/6fb2eeae5abdf4f401c58755681f63232c104419>`_ #5162 Fix misplelled XliffFileLoader class in the Using Domains (Nicola Pietroluongo)
 - `402b586 <https://github.com/symfony/symfony-docs/commit/402b586c49227b998447ad6b3fa82dcbeb9ca47b>`_ #5162 Fix misplelled XliffFileLoader class in the Using Message Domains (Nicola Pietroluongo)
 - `8fc3d6c <https://github.com/symfony/symfony-docs/commit/8fc3d6c9bc33563fabe17230e600281d47b547e6>`_ #5149 Fixed loadUserByUsername method coding errors (Linas Merkevicius)
