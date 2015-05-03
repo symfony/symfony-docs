@@ -69,15 +69,23 @@ what you already know.
 The Application
 ---------------
 
-In addition to this guide, you'll find a sample application developed with
-all these best practices in mind. **The application is a simple blog engine**,
-because that will allow us to focus on the Symfony concepts and features without
-getting buried in difficult details.
+In addition to this guide, a sample application has been developed with all these
+best practices in mind. This project, called the Symfony Demo application, can
+be obtained through the Symfony Installer. First, `download and install`_ the
+installer and then execute this command to download the demo application:
 
-Instead of developing the application step by step in this guide, you'll find
-selected snippets of code through the chapters. Please refer to the last chapter
-of this guide to find more details about this application and the instructions
-to install it.
+.. code-block:: bash
+
+    # Linux and Mac OS X
+    $ symfony demo
+
+    # Windows
+    c:\> php symfony demo
+
+**The demo application is a simple blog engine**, because that will allow us to
+focus on the Symfony concepts and features without getting buried in difficult
+implementation details. Instead of developing the application step by step in
+this guide, you'll find selected snippets of code through the chapters.
 
 Don't Update Your Existing Applications
 ---------------------------------------
@@ -95,3 +103,4 @@ practices**. The reasons for not doing it are various:
   your tests or adding features that provide real value to the end users.
 
 .. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
+.. _`download and install`: http://symfony.com/download
