@@ -1,0 +1,97 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-21T09:34:38Z
+
+@DHager Thanks for your suggestion. Do you have some resources to which we can refer here?
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-03-24T03:05:30Z
+
+@xabbuh  Sure. First, MySQL 5.5 docs on on the [10.1.10.6 The utf8mb4 Character Set](https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html):
+
+> The character set named utf8 uses a maximum of three bytes per character and contains only BMP characters. As of MySQL 5.5.3, the utf8mb4 character set uses a maximum of four bytes per character supports supplemental characters [...]
+
+> For a supplementary character, utf8 cannot store the character at all
+
+In addition, [other people have reported](https://mathiasbynens.be/notes/mysql-utf8mb4) that the failure mode is complete string truncation, losing everything past the first problem-symbol:
+
+> The content got truncated at the first astral Unicode symbol [...] MySQL returned a warning message
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-03-24T03:07:09Z
+
+Crap, an unrelated doc-fix seems to have become part of the pull-commit, I forgot Github automatically drew them in. I'll see if I can fix it.
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-03-26T20:04:08Z
+
+OK, my local `make html` still doesn't have the same styles as the main site, but they should look like code/keywords now.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-04-27T14:48:28Z
+
+Hi @DHager!
+
+Thanks for bringing this up - I think it's a good note, especially since it causes silent issues (truncations).
+
+Since this character set is new to 5.5.3, I think we should:
+
+A) Add 2 new (commented out) lines in the `[mysqld]` codeblock with the old character set, and a comment above it that says you need to use this before 5.5.3
+B) Add a quick comment right below the `[mysqld]` line (so above where you set the character set to your new type) that explains (shortly) that this character set is better, with maybe a link to the MySQL docs about this
+C) Remove the `caution` block you added - because this will basically be covered by the above comment.
+
+What do you think? If you agree, can you make these changes?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2015-04-29T16:03:05Z
+
+I would personally not add the commented lines but reword a bit the caution section adding a link to the official MySQL docs.
+
+MySQL 5.5.3 was launched 5 years ago and I think it is good that this setting becomes more popular as many people (myself included until I read this PR) still believe utf8 is the way to go
+
+Plus, I think we should take the opportunity to review all the Symfony and Silex docs regarding this. A good opportunity to get easy doc badges as well :)
+
+Just my 2 cents @weaverryan and @DHager :)
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-04-29T18:34:37Z
+
+@weaverryan, @ricardclau : I'm inclined to put `utf8mb4` as the default because:
+
+1. If it *isn't* supported by their DB, the user will find out immediately.
+2. The string is very distinctive, so they can easily find the configuration-file and search online for more information.
+
+The reverse-case, using `utf8`, is trickier:
+
+1. Everything will *seem* to work until weeks, months, or years later.
+2. They won't necessarily know/remember to consult this documentation or their `my.cnf` comments. Instead they will probably waste time searching for "mysql text truncated" and (if they saw the MySQL warnings) "mysql incorrect string value".
+
+I've "promoted" the caution block to  another sentence, and added comments to the configuration sample.
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2015-04-29T19:34:16Z
+
+I am 100% with @DHager on this one, but of course up to you @weaverryan :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-04-30T02:20:27Z
+
+I think it's great now - you're right that the new one should be the default, and I like that you show the old one and have some (short) words explaining. I'll merge this shortly :).
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by ricardclau at 2015-04-30T08:12:59Z
+
+@DHager do you want to add this to the Silex / Doctrine docs as well? I can have a look at them but since you opened this PR I think it is fair that you go for them if you have time
