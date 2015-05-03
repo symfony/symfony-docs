@@ -235,6 +235,85 @@ You should be seeing your Symfony application in your browser.
     AcmeDemoBundle is only loaded in the dev environment (check out your
     ``AppKernel`` class). Try opening ``/app/example`` from the AppBundle.
 
+Custom Compile Steps
+~~~~~~~~~~~~~~~~~~~~
+
+If you wish to execute additional custom commands during a build, you can leverage
+Heroku's `custom compile steps`_. Imagine you want to remove the ``dev`` front controller
+from your production environment on Heroku in order to avoid a potential vulnerability.
+Adding a command to remove ``web/app_dev.php`` to Composer's `post-install-commands`_ would
+work, but it also removes the controller in your local development environment on each
+``composer install`` or ``composer update`` respectively. Instead, you can add a
+`custom Composer command`_ named ``compile`` (this key name is a Heroku convention) to the
+``scripts`` section of your ``composer.json``. The listed commands hook into Heroku's deploy
+process:
+
+.. code-block:: json
+
+    {
+        "scripts": {
+            "compile": [
+                "rm web/app_dev.php"
+            ]
+        }
+    }
+
+This is also very useful to build assets on the production system, e.g. with Assetic:
+
+.. code-block:: json
+
+    {
+        "scripts": {
+            "compile": [
+                "app/console assetic:dump"
+            ]
+        }
+    }
+
+.. sidebar:: Node.js Dependencies
+
+    Building assets may depend on node packages, e.g. ``uglifyjs`` or ``uglifycss``
+    for asset minification. Installing node packages during the deploy requires a node
+    installation. But currently, Heroku compiles your app using the PHP buildpack, which
+    is auto-detected by the presence of a ``composer.json`` file, and does not include a
+    node installation. Because the Node.js buildpack has a higher precedence than the PHP
+    buildpack (see `Heroku buildpacks`_), adding a ``package.json`` listing your node
+    dependencies makes Heroku opt for the Node.js buildpack instead:
+
+    .. code-block:: json
+
+        {
+            "name": "myApp",
+            "engines": {
+                "node": "0.12.x"
+            },
+            "dependencies": {
+                "uglifycss": "*",
+                "uglify-js": "*"
+            }
+        }
+
+    With the next deploy, Heroku compiles your app using the Node.js buildpack and
+    your npm packages become installed. On the other hand, your ``composer.json`` is
+    now ignored. To compile your app with both buildpacks, Node.js *and* PHP, you can
+    use a special `multiple buildpack`_. To override buildpack auto-detection, you
+    need to explicitly set the buildpack URL:
+
+    .. code-block:: bash
+
+        $ heroku buildpack:set https://github.com/ddollar/heroku-buildpack-multi.git
+
+    Next, add a ``.buildpacks`` file to your project, listing the buildpacks you need:
+
+    .. code-block:: text
+
+        https://github.com/heroku/heroku-buildpack-nodejs.git
+        https://github.com/heroku/heroku-buildpack-php.git
+
+    With the next deploy, you can benefit from both buildpacks. This setup also enables
+    your Heroku environment to make use of node based automatic build tools like
+    `Grunt`_ or `gulp`_.
+
 .. _`the original article`: https://devcenter.heroku.com/articles/getting-started-with-symfony2
 .. _`signup with Heroku`: https://signup.heroku.com/signup/dc
 .. _`Heroku Toolbelt`: https://devcenter.heroku.com/articles/getting-started-with-php#local-workstation-setup
@@ -244,3 +323,9 @@ You should be seeing your Symfony application in your browser.
 .. _`verified that the RSA key fingerprint is correct`: https://devcenter.heroku.com/articles/git-repository-ssh-fingerprints
 .. _`post-install-commands`: https://getcomposer.org/doc/articles/scripts.md
 .. _`config vars`: https://devcenter.heroku.com/articles/config-vars
+.. _`custom compile steps`: https://devcenter.heroku.com/articles/php-support#custom-compile-step
+.. _`custom Composer command`: https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands
+.. _`Heroku buildpacks`: https://devcenter.heroku.com/articles/buildpacks
+.. _`multiple buildpack`: https://github.com/ddollar/heroku-buildpack-multi.git
+.. _`Grunt`: http://gruntjs.com
+.. _`gulp`: http://gulpjs.com
