@@ -165,7 +165,7 @@ If specified, this is used to query the subset of options (and their
 order) that should be used for the field. The value of this option can
 either be a ``QueryBuilder`` object or a Closure. If using a Closure,
 it should take a single argument, which is the ``EntityRepository`` of
-the entity.
+the entity and return an instance of ``QueryBuilder``.
 
 Overridden Options
 ------------------
