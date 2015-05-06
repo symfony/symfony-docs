@@ -329,7 +329,7 @@ Some constraints, like :doc:`NotBlank </reference/constraints/NotBlank>`,
 are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>`
 constraint, have several configuration options available. Suppose that the
 ``Author`` class has another property called ``gender`` that can be set to either
-"male" or "female":
+"male", "female", or "other":
 
 .. configuration-block::
 
@@ -344,7 +344,7 @@ constraint, have several configuration options available. Suppose that the
         {
             /**
              * @Assert\Choice(
-             *     choices = { "male", "female" },
+             *     choices = { "male", "female", "other" },
              *     message = "Choose a valid gender."
              * )
              */
@@ -359,7 +359,7 @@ constraint, have several configuration options available. Suppose that the
         AppBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice: { choices: [male, female], message: Choose a valid gender. }
+                    - Choice: { choices: [male, female, other], message: Choose a valid gender. }
                 # ...
 
     .. code-block:: xml
@@ -376,6 +376,7 @@ constraint, have several configuration options available. Suppose that the
                         <option name="choices">
                             <value>male</value>
                             <value>female</value>
+                            <value>other</value>
                         </option>
                         <option name="message">Choose a valid gender.</option>
                     </constraint>
@@ -404,7 +405,7 @@ constraint, have several configuration options available. Suppose that the
                 // ...
 
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'choices' => array('male', 'female'),
+                    'choices' => array('male', 'female', 'other'),
                     'message' => 'Choose a valid gender.',
                 )));
             }
@@ -429,7 +430,7 @@ options can be specified in this way.
         class Author
         {
             /**
-             * @Assert\Choice({"male", "female"})
+             * @Assert\Choice({"male", "female", "other"})
              */
             protected $gender;
 
@@ -442,7 +443,7 @@ options can be specified in this way.
         AppBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice: [male, female]
+                    - Choice: [male, female,other]
                 # ...
 
     .. code-block:: xml
@@ -458,6 +459,7 @@ options can be specified in this way.
                     <constraint name="Choice">
                         <value>male</value>
                         <value>female</value>
+                        <value>other</value>
                     </constraint>
                 </property>
 
@@ -483,7 +485,7 @@ options can be specified in this way.
 
                 $metadata->addPropertyConstraint(
                     'gender',
-                    new Assert\Choice(array('male', 'female'))
+                    new Assert\Choice(array('male', 'female', 'other'))
                 );
             }
         }
