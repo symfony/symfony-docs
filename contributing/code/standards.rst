@@ -165,7 +165,7 @@ Service Naming Conventions
 
 * Use lowercase letters for service and parameter names;
 
-* A group name uses the underscore notation;
+* A group name uses the underscore notation.
 
 Documentation
 -------------
