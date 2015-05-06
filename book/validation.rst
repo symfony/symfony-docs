@@ -443,7 +443,7 @@ options can be specified in this way.
         AppBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice: [male, female,other]
+                    - Choice: [male, female, other]
                 # ...
 
     .. code-block:: xml
