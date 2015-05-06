@@ -125,6 +125,8 @@ Structure
 
 * Exception message strings should be concatenated using :phpfunction:`sprintf`.
 
+* Line lengths *should* be less than 85 characters.
+
 Naming Conventions
 ------------------
 
