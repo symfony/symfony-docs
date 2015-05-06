@@ -214,6 +214,7 @@ own, it just needs to follow these rules:
    method for this check::
 
        use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+       use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
 
        class FoobarEncoder extends BasePasswordEncoder
        {
