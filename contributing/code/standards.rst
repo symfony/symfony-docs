@@ -153,6 +153,8 @@ Naming Conventions
 
 * Don't forget to look at the more verbose :doc:`conventions` document for
   more subjective naming considerations.
+  
+* Caught exceptions should assigned to a variable named `$e`.
 
 .. _service-naming-conventions:
 
