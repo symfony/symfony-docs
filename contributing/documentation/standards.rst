@@ -10,8 +10,7 @@ Sphinx
 * The following characters are chosen for different heading levels: level 1
   is ``=`` (equal sign), level 2 ``-`` (dash), level 3 ``~`` (tilde), level 4
   ``.`` (dot) and level 5 ``"`` (double quote);
-* Each line should break approximately after the first word that crosses the
-  72nd character (so most lines end up being 72-78 characters);
+* Line lengths *should* be less than 85 characters.
 * The ``::`` shorthand is *preferred* over ``.. code-block:: php`` to begin a PHP
   code block (read `the Sphinx documentation`_ to see when you should use the
   shorthand);
