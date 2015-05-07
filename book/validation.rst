@@ -329,7 +329,7 @@ Some constraints, like :doc:`NotBlank </reference/constraints/NotBlank>`,
 are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>`
 constraint, have several configuration options available. Suppose that the
 ``Author`` class has another property called ``gender`` that can be set to either
-"male", "female", or "other":
+"male", "female" or "other":
 
 .. configuration-block::
 
