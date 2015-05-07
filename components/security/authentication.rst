@@ -213,8 +213,8 @@ own, it just needs to follow these rules:
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`
    method for this check::
 
-       use Symfony\Component\Security\Core\Exception\BadCredentialsException;
        use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
+       use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
        class FoobarEncoder extends BasePasswordEncoder
        {
