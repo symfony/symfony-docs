@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-22T13:56:30Z
+
+:+1: :blush:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-22T14:13:45Z
+
+@carlosbuenosvinos thanks for fixing this issue and for providing the reference documentation.
+
+I have a minor question: given how strict Apache is with white spaces, should we also use `Allow,Deny` instead of `allow,deny` or is it case insensitive? Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-22T15:38:52Z
+
+Thank you for noticing and for providing a patch @carlosbuenosvinos. However, someone was already faster. So I'm going to close this in favor of #5197.
+
+---------------------------------------------------------------------------
+
+by carlosbuenosvinos at 2015-04-22T15:38:53Z
+
+"Directives in the configuration files are case-insensitive, but arguments to directives are often case sensitive", however, in case of order, for me it works on every server. I'll fix it thought.
+
+---------------------------------------------------------------------------
+
+by carlosbuenosvinos at 2015-04-22T15:40:17Z
+
+You were too fast, I fixed Allow,Deny case too. But, up to you :)
