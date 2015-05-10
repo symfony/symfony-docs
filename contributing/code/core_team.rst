@@ -117,11 +117,10 @@ Pull Request Merging Policy
 
 A pull request **can be merged** if:
 
-* Enough time was given for peer reviews (a few minutes for typos or minor
-  changes, at least 2 days for "regular" pull requests, and 4 days for pull
-  requests with "a significant impact");
+* It is a minor change [1]_;
 
-* It is a minor change [1]_, regardless of the number of votes;
+* Enough time was given for peer reviews (at least 2 days for "regular"
+  pull requests, and 4 days for pull requests with "a significant impact");
 
 * At least the component's **Merger** or two other Core members voted ``+1``
   and no Core member voted ``-1``.
