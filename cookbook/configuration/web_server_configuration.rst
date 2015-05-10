@@ -45,7 +45,7 @@ The **minimum configuration** to get your application running under Apache is:
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
             AllowOverride All
-            Order allow, deny
+            Order allow,deny
             Allow from All
         </Directory>
 
@@ -76,7 +76,7 @@ and increase web server performance:
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
             AllowOverride None
-            Order allow, deny
+            Order allow,deny
             Allow from All
 
             <IfModule mod_rewrite.c>
@@ -223,7 +223,7 @@ should look something like this:
         <Directory /var/www/project/web>
             # enable the .htaccess rewrites
             AllowOverride All
-            Order allow, deny
+            Order allow,deny
             Allow from all
         </Directory>
 
