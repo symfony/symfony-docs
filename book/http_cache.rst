@@ -384,7 +384,7 @@ This has two very reasonable consequences:
 
 * You should *never* change the state of your application when responding
   to a GET or HEAD request. Even if you don't use a gateway cache, the presence
-  of proxy caches mean that any GET or HEAD request may or may not actually
+  of proxy caches means that any GET or HEAD request may or may not actually
   hit your server;
 
 * Don't expect PUT, POST or DELETE methods to cache. These methods are meant

@@ -93,9 +93,8 @@ Now, examine the results to see this closely:
 In order to support this use case, the ``Configuration`` class has to
 be injected with this parameter via the extension as follows::
 
-    namespace Acme\DemoBundle\DependencyInjection;
+    namespace AppBundle\DependencyInjection;
 
-    use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
     use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -130,9 +129,7 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
     namespace AppBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-    use Symfony\Component\Config\FileLocator;
 
     class AppExtension extends Extension
     {

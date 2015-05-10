@@ -77,7 +77,7 @@ The default authentication manager is an instance of
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
-    // instances of Symfony\Component\Security\Core\Authentication\AuthenticationProviderInterface
+    // instances of Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface
     $providers = array(...);
 
     $authenticationManager = new AuthenticationProviderManager($providers);
