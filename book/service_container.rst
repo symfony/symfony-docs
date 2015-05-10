@@ -817,7 +817,7 @@ Core Symfony and Third-Party Bundle Services
 Since Symfony and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
 services. To keep things simple, Symfony by default does not require that
-controllers be defined as services. Furthermore, Symfony injects the entire
+controllers must be defined as services. Furthermore, Symfony injects the entire
 service container into your controller. For example, to handle the storage of
 information on a user's session, Symfony provides a ``session`` service,
 which you can access inside a standard controller as follows::
