@@ -93,9 +93,8 @@ an email is pretty straightforward::
 
     public function indexAction($name)
     {
-        $mailer = $this->get('mailer');
-        $message = $mailer->createMessage()
-            ->setSubject('You have Completed Registration!')
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(
@@ -117,7 +116,7 @@ an email is pretty straightforward::
             )
             */
         ;
-        $mailer->send($message);
+        $this->get('mailer')->send($message);
 
         return $this->render(...);
     }
