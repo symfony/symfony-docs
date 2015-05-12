@@ -1043,6 +1043,15 @@ if your User object has a ``getFirstName()`` method, you could use that::
         return new Response('Well hi there '.$user->getFirstName());
     }
 
+You can use the ``security.current_user_provider`` service to
+get the current user::
+
+    $user = $this->get('security.current_user_provider')->getUser();
+
+.. versionadded:: 2.8
+    The ``security.current_user_provider`` service was introduced in Symfony 2.8.
+
+
 Always Check if the User is Logged In
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
