@@ -221,7 +221,7 @@ Finally, create the template:
         {# ... you will probably extends your base template, like base.html.twig #}
 
         {% if error %}
-            <div>{{ error.messageKey|trans(error.messageData) }}</div>
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
         <form action="{{ path('login_check') }}" method="post">
