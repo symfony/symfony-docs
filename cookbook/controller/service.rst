@@ -258,7 +258,13 @@ controller:
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::forward` (service: ``http_kernel``)
     .. code-block:: php
 
-        $httpKernel->forward($controller, $path, $query);
+        use Symfony\Component\HttpKernel\HttpKernelInterface;
+        // ...
+
+        $request = ...;
+        $attributes = array_merge($path, array('_controller' => $controller));
+        $subRequest = $request->duplicate($query, null, $attributes);
+        $httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl` (service: ``router``)
     .. code-block:: php
