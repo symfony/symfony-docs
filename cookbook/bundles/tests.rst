@@ -1,14 +1,12 @@
 .. index::
    single: Bundle; Testing third party bundles
 
-Writing tests for third party bundles
+Writing Tests for Third Party Bundles
 =====================================
 
-Let's have a look at a minimized version of the Standard Edition's front controller:
+The Standard Edition's front controller looks like this::
 
-    <?php
-    // File: web/app.php
-
+    // web/app.php
     use Symfony\Component\HttpFoundation\Request;
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -30,7 +28,7 @@ which means that it is possible to write transversal tests (System Tests) by bui
 
 This article provides examples on how to write such tests with third party bundles.
 
-Creating a minimal AppKernel
+Creating a Minimal AppKernel
 ----------------------------
 
 Third party bundles cannot be run on their own, they need an application. Instead
@@ -38,11 +36,9 @@ of creating a separate application, install the bundle in it and then check how 
 it is possible to create a minimalistic ``AppKernel`` inside the bundle, for testing
 and showcase purposes.
 
-If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could look like this:
+If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could look like this::
 
-    <?php
-    // File: Tests/app/AppKernel.php
-
+    // Tests/app/AppKernel.php
     namespace Acme\MyBundle\Tests;
 
     use Symfony\Component\HttpKernel\Kernel;
@@ -69,14 +65,18 @@ If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could loo
     ``AppKernel`` adds a direct dependency on Symfony's FrameworkBundle, which can be
     installed by running the following command: ``composer require --dev symfony/framework-bundle``.
 
-In its minimum state ``AppKernel`` requires only one configuration parameter, ``secret``:
+In its minimum state ``AppKernel`` requires only one configuration parameter, ``secret``::
 
-    # File: Tests/app/config.yml
+.. config-block:: yaml
+
+    # Tests/app/config.yml
     framework:
         secret: Th1s1sS3cr3t!
 
 Symfony applications generate cache and logs directories, which can be ignored by
-adding those lines to ``.gitignore``:
+adding those lines to ``.gitignore``::
+
+.. code-block::
 
     # File: .gitignore
     /Tests/app/cache
@@ -84,38 +84,13 @@ adding those lines to ``.gitignore``:
     /vendor
     /composer.lock
 
-Running commands
-----------------
-
-If the third party bundle provides a command, it can be helpful to create a ``console``
-similar to the one that can be found in Symfony's Standard Edition:
-
-    <?php
-    // File: Tests/app/console.php
-
-    set_time_limit(0);
-
-    require_once __DIR__.'/autoload.php';
-
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
-
-    $kernel = new AppKernel('dev', true);
-    $application = new Application($kernel);
-    $application->run();
-
-With this it becomes possible to run manually the command:
-
-    php Tests/app/console.php
-
-Browsing pages
+Browsing Pages
 --------------
 
 If the third party bundle provides a controller, it can be helpful to create a
-front controller similar to the one that can be found in Symfony's Standard Edition:
+front controller similar to the one that can be found in Symfony's Standard Edition::
 
-    <?php
-    // File: Tests/app/web.php
-
+    // Tests/app/web.php
     use Symfony\Component\HttpFoundation\Request;
 
     require_once __DIR__.'/autoload.php';
@@ -126,9 +101,11 @@ front controller similar to the one that can be found in Symfony's Standard Edit
     $response->send();
 
 With this it becomes possible to browse the page. A way to do it without having to configure
-a web server is to run the following command:
+a web server is to run the following command::
 
-    php Tests/app/console.php server:run -d Tests/app
+.. code-block:: bash
+
+    $ php Tests/app/console.php server:run -d Tests/app
 
 .. note::
 
@@ -136,21 +113,48 @@ a web server is to run the following command:
     or if it uses the Form Component or anything else, then more dependencies and
     configuration parameters should be added.
 
-Automated tests
+Running Commands
+----------------
+
+If the third party bundle provides a command, it can be helpful to create a ``console``
+similar to the one that can be found in Symfony's Standard Edition::
+
+    // Tests/app/console.php
+    set_time_limit(0);
+
+    require_once __DIR__.'/autoload.php';
+
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+
+    $kernel = new AppKernel('dev', true);
+    $application = new Application($kernel);
+    $application->run();
+
+With this it becomes possible to run manually the command::
+
+.. code-block:: bash
+
+    $ php Tests/app/console.php
+
+Automated Tests
 ---------------
 
 Manual tests are great to get a quick idea of what the bundle does. But writing
 automated tests is even better!
 
-The first step is to install a test framework like PHPUnit:
+The first step is to install a test framework like PHPUnit::
 
-    composer require --dev phpunit/phpunit
+.. code-block:: bash
+
+    $ composer require --dev phpunit/phpunit
 
 .. note::
 
     The steps should be similar with other tests frameworks.
 
-Then the second one is to configure it to use composer's autoloading:
+Then the second one is to configure it to use composer's autoloading::
+
+.. config-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
 
@@ -168,19 +172,53 @@ Then the second one is to configure it to use composer's autoloading:
         </testsuites>
     </phpunit>
 
-With these two simple steps it becomes possible to run the test suite with the following command:
+With these two simple steps it becomes possible to run the test suite with the following command::
 
-    vendor/bin/phpunit
+.. code-block:: bash
 
-Functional CLI tests
+    $ vendor/bin/phpunit
+
+Functional Web Tests
 ~~~~~~~~~~~~~~~~~~~~
 
 As advised in the official best practices (smoke testing), writing tests for
-commands can be done by simply checking the exit code:
+controllers can be done by simply checking the status code::
 
-    <?php
-    // File: Tests/Command/DemoCommandTest.php
+    // Tests/Controller/DemoControllerTest.php
+    namespace Acme\MyBundle\Tests\Controller;
 
+    use Acme\MyBundle\Tests\AppKernel;
+    use Symfony\Component\HttpFoundation\Request;
+
+    class DemoControllerTest extends \PHPUnit_Framework_TestCase
+    {
+        private $app;
+
+        protected function setUp()
+        {
+            $this->app = new AppKernel('test', false);
+            $this->app->boot();
+        }
+
+        public function testItRunsSuccessfully()
+        {
+            $headers = array('CONTENT_TYPE' => 'application/json');
+            $content = array('parameter' => 'value');
+            $request = Request::create('/demo', 'POST', array(), array(), array(), $headers, $content);
+
+            $response = $this->app->handle($request);
+
+            $this->assertSame(200, $response->getStatusCode(), $response->getContent());
+        }
+    }
+
+Functional CLI Tests
+~~~~~~~~~~~~~~~~~~~~
+
+As advised in the official best practices (smoke testing), writing tests for
+commands can be done by simply checking the exit code::
+
+    // Tests/Command/DemoCommandTest.php
     namespace Acme\MyBundle\Tests\Command;
 
     use Acme\MyBundle\Tests\AppKernel;
@@ -211,45 +249,9 @@ commands can be done by simply checking the exit code:
         }
     }
 
-Functional web tests
-~~~~~~~~~~~~~~~~~~~~
-
-As advised in the official best practices (smoke testing), writing tests for
-controllers can be done by simply checking the status code:
-
-    <?php
-    // File: Tests/Controller/DemoControllerTest.php
-
-    namespace Acme\MyBundle\Tests\Controller;
-
-    use Acme\MyBundle\Tests\AppKernel;
-    use Symfony\Component\HttpFoundation\Request;
-
-    class DemoControllerTest extends \PHPUnit_Framework_TestCase
-    {
-        private $app;
-
-        protected function setUp()
-        {
-            $this->app = new AppKernel('test', false);
-            $this->app->boot();
-        }
-
-        public function testItRunsSuccessfully()
-        {
-            $headers = array('CONTENT_TYPE' => 'application/json');
-            $content = array('parameter' => 'value');
-            $request = Request::create('/demo', 'POST', array(), array(), array(), $headers, $content);
-
-            $response = $this->app->handle($request);
-
-            $this->assertSame(200, $response->getStatusCode(), $response->getContent());
-        }
-    }
-
 Conclusion
 ----------
 
 By creating a minimal ``AppKernel`` in a third party bundle it becomes possible
-to run it on its own which can be useful for showcases, but most importantly it
+to run it on its own which can be useful for showcases, but most importantly: It
 makes it possible to write automated tests.
