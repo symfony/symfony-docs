@@ -22,7 +22,7 @@ The Standard Edition's front controller looks like this::
     // Dump the Response's headers and print the Response's content
     $response->send();
 
-In this example Symfony is used as an application that mimicks the HTTP protocol,
+In this example, Symfony is used as an application that mimicks the HTTP protocol,
 which means that it is possible to write transversal tests (System Tests) by building
 "manually" a ``Request``, giving it to our application and then check the returned ``Response``.
 
@@ -31,10 +31,13 @@ This article provides examples on how to write such tests with third party bundl
 Creating a Minimal AppKernel
 ----------------------------
 
-Third party bundles cannot be run on their own, they need an application. Instead
-of creating a separate application, install the bundle in it and then check how things turn out,
-it is possible to create a minimalistic ``AppKernel`` inside the bundle, for testing
-and showcase purposes.
+Third party bundles cannot be ran standalone, they need an application.
+It is possible to create a minimalistic ``AppKernel`` inside the bundle for testing
+and showcase purposes, instead of:
+
+1. creating a separate application
+2. install the bundle in it
+3. then check how things turn out
 
 If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could look like this::
 
@@ -65,7 +68,7 @@ If the third party bundle is named ``AcmeMyBundle``, the ``AppKernel`` could loo
     ``AppKernel`` adds a direct dependency on Symfony's FrameworkBundle, which can be
     installed by running the following command: ``composer require --dev symfony/framework-bundle``.
 
-In its minimum state ``AppKernel`` requires only one configuration parameter, ``secret``::
+In its minimum state ``AppKernel`` requires only one configuration parameter, ``secret``:
 
 .. config-block:: yaml
 
@@ -74,7 +77,7 @@ In its minimum state ``AppKernel`` requires only one configuration parameter, ``
         secret: Th1s1sS3cr3t!
 
 Symfony applications generate cache and logs directories, which can be ignored by
-adding those lines to ``.gitignore``::
+adding those lines to ``.gitignore``:
 
 .. code-block::
 
@@ -101,7 +104,7 @@ front controller similar to the one that can be found in Symfony's Standard Edit
     $response->send();
 
 With this it becomes possible to browse the page. A way to do it without having to configure
-a web server is to run the following command::
+a web server is to run the following command:
 
 .. code-block:: bash
 
@@ -130,7 +133,7 @@ similar to the one that can be found in Symfony's Standard Edition::
     $application = new Application($kernel);
     $application->run();
 
-With this it becomes possible to run manually the command::
+With this it becomes possible to run manually the command:
 
 .. code-block:: bash
 
@@ -142,7 +145,7 @@ Automated Tests
 Manual tests are great to get a quick idea of what the bundle does. But writing
 automated tests is even better!
 
-The first step is to install a test framework like PHPUnit::
+The first step is to install a test framework like PHPUnit:
 
 .. code-block:: bash
 
@@ -152,7 +155,7 @@ The first step is to install a test framework like PHPUnit::
 
     The steps should be similar with other tests frameworks.
 
-Then the second one is to configure it to use composer's autoloading::
+Then the second one is to configure it to use composer's autoloading:
 
 .. config-block:: xml
 
@@ -172,7 +175,7 @@ Then the second one is to configure it to use composer's autoloading::
         </testsuites>
     </phpunit>
 
-With these two simple steps it becomes possible to run the test suite with the following command::
+With these two simple steps it becomes possible to run the test suite with the following command:
 
 .. code-block:: bash
 
