@@ -28,8 +28,8 @@ field so that it displays above it::
 Here are the rules for the left and the right side of the mapping:
 
 * The left side contains property paths;
-* If the violation is generated on a property or method of a class, its path
-  is simply ``propertyName``;
+* If the violation is generated on a property or method of a class, its
+  path is simply ``propertyName``;
 * If the violation is generated on an entry of an ``array`` or ``ArrayAccess``
   object, the property path is ``[indexName]``;
 * You can construct nested property paths by concatenating them, separating
