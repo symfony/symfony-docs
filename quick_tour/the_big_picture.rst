@@ -219,10 +219,10 @@ the application homepage. The second value of ``@Route()`` (e.g.
 ``name="homepage"``) is optional and sets the name of this route. For now
 this name is not needed, but later it'll be useful for linking pages.
 
-Considering all this, the ``@Route("/app/example", name="homepage")`` annotation creates
-a new route called ``homepage`` which makes Symfony execute the ``index``
-action of the ``Default`` controller when the user browses the ``/`` path
-of the application.
+Considering all this, the ``@Route("/app/example", name="homepage")`` annotation
+creates a new route called ``homepage`` which makes Symfony execute the
+``index`` action of the ``Default`` controller when the user browses the 
+``/app/example`` path of the application.
 
 .. tip::
 
