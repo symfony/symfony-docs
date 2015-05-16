@@ -53,9 +53,9 @@ two fields are actually rendered, the end data from the form is just the
 single value (usually a string) that you need.
 
 The most important option is ``type``, which can be any field type and determines
-the actual type of the two underlying fields. The ``options`` option is passed
-to each of those individual fields, meaning - in this example - any option
-supported by the ``password`` type can be passed in this array.
+the actual type of the two underlying fields. The ``options`` option is
+passed to each of those individual fields, meaning - in this example - any
+option supported by the ``password`` type can be passed in this array.
 
 Rendering
 ~~~~~~~~~
@@ -116,19 +116,19 @@ first_name
 **type**: ``string`` **default**: ``first``
 
 This is the actual field name to be used for the first field. This is mostly
-meaningless, however, as the actual data entered into both of the fields will
-be available under the key assigned to the ``repeated`` field itself (e.g.
-``password``). However, if you don't specify a label, this field name is used
-to "guess" the label for you.
+meaningless, however, as the actual data entered into both of the fields
+will be available under the key assigned to the ``repeated`` field itself
+(e.g.  ``password``). However, if you don't specify a label, this field
+name is used to "guess" the label for you.
 
 first_options
 ~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``array()``
 
-Additional options (will be merged into `options` above) that should be passed
-*only* to the first field. This is especially useful for customizing the
-label::
+Additional options (will be merged into `options`_ below) that should be
+passed *only* to the first field. This is especially useful for customizing
+the label::
 
     $builder->add('password', 'repeated', array(
         'first_options'  => array('label' => 'Password'),
@@ -140,11 +140,11 @@ options
 
 **type**: ``array`` **default**: ``array()``
 
-This options array will be passed to each of the two underlying fields. In
-other words, these are the options that customize the individual field types.
-For example, if the ``type`` option is set to ``password``, this array might
-contain the options ``always_empty`` or ``required`` - both options that are
-supported by the ``password`` field type.
+This options array will be passed to each of the two underlying fields.
+In other words, these are the options that customize the individual field
+types. For example, if the ``type`` option is set to ``password``, this
+array might contain the options ``always_empty`` or ``required`` - both
+options that are supported by the ``password`` field type.
 
 second_name
 ~~~~~~~~~~~
@@ -158,9 +158,9 @@ second_options
 
 **type**: ``array`` **default**: ``array()``
 
-Additional options (will be merged into `options` above) that should be passed
-*only* to the second field. This is especially useful for customizing the
-label (see `first_options`_).
+Additional options (will be merged into `options`_ above) that should be
+passed *only* to the second field. This is especially useful for customizing
+the label (see `first_options`_).
 
 type
 ~~~~
@@ -181,7 +181,8 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

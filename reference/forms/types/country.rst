@@ -5,8 +5,8 @@ country Field Type
 ==================
 
 The ``country`` type is a subset of the ``ChoiceType`` that displays countries
-of the world. As an added bonus, the country names are displayed in the language
-of the user.
+of the world. As an added bonus, the country names are displayed in the
+language of the user.
 
 The "value" for each country is the two-letter country code.
 
@@ -64,7 +64,8 @@ The locale is used to translate the countries names.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
+These options inherit from the :doc:`choice </reference/forms/types/choice>`
+type:
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
@@ -78,7 +79,8 @@ These options inherit from the :doc:`choice </reference/forms/types/choice>` typ
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

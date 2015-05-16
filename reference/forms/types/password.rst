@@ -48,7 +48,8 @@ and submit the form.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -82,6 +83,6 @@ trim
 **type**: ``boolean`` **default**: ``false``
 
 If true, the whitespace of the submitted string value will be stripped
-via the :phpfunction:`trim` function when the data is bound. This guarantees that
-if a value is submitted with extra whitespace, it will be removed before
+via the :phpfunction:`trim` function when the data is bound. This guarantees
+that if a value is submitted with extra whitespace, it will be removed before
 the value is merged back onto the underlying object.

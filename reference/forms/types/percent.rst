@@ -70,11 +70,13 @@ object. The two "types" handle these two cases:
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
 

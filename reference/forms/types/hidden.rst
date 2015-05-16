@@ -42,7 +42,8 @@ Hidden fields cannot have a required attribute.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
