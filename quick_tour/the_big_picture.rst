@@ -156,7 +156,7 @@ because that will be explained in the next section)::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/", name="homepage")
+         * @Route("/app/example", name="homepage")
          */
         public function indexAction()
         {
@@ -198,7 +198,7 @@ at the three lines of code above the ``indexAction`` method::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/", name="homepage")
+         * @Route("/app/example", name="homepage")
          */
         public function indexAction()
         {
