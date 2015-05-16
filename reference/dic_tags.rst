@@ -2,9 +2,9 @@ The Dependency Injection Tags
 =============================
 
 Dependency Injection Tags are little strings that can be applied to a service
-to "flag" it to be used in some special way. For example, if you have a service
-that you would like to register as a listener to one of Symfony's core events,
-you can flag it with the ``kernel.event_listener`` tag.
+to "flag" it to be used in some special way. For example, if you have a
+service that you would like to register as a listener to one of Symfony's
+core events, you can flag it with the ``kernel.event_listener`` tag.
 
 You can learn a little bit more about "tags" by reading the ":ref:`book-service-container-tags`"
 section of the Service Container chapter.
@@ -296,12 +296,13 @@ form.type_extension
 
 **Purpose**: Create a custom "form extension"
 
-Form type extensions are a way for you took "hook into" the creation of any
-field in your form. For example, the addition of the CSRF token is done via
-a form type extension (:class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\FormTypeCsrfExtension`).
+Form type extensions are a way for you took "hook into" the creation of
+any field in your form. For example, the addition of the CSRF token is done
+via a form type extension
+(:class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\FormTypeCsrfExtension`).
 
-A form type extension can modify any part of any field in your form. To create
-a form type extension, first create a class that implements the
+A form type extension can modify any part of any field in your form. To
+create a form type extension, first create a class that implements the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface.
 For simplicity, you'll often extend an
 :class:`Symfony\\Component\\Form\\AbstractTypeExtension` class instead of
@@ -318,8 +319,8 @@ the interface directly::
         // like buildForm(), buildView(), finishView(), setDefaultOptions()
     }
 
-In order for Symfony to know about your form extension and use it, give it
-the ``form.type_extension`` tag:
+In order for Symfony to know about your form extension and use it, give
+it the ``form.type_extension`` tag:
 
 .. configuration-block::
 
@@ -351,13 +352,16 @@ the ``form.type_extension`` tag:
     .. code-block:: php
 
         $container
-            ->register('main.form.type.my_form_type_extension', 'Acme\MainBundle\Form\Type\MyFormTypeExtension')
+            ->register(
+                'main.form.type.my_form_type_extension',
+                'Acme\MainBundle\Form\Type\MyFormTypeExtension'
+            )
             ->addTag('form.type_extension', array('alias' => 'field'))
         ;
 
 The ``alias`` key of the tag is the type of field that this extension should
-be applied to. For example, to apply the extension to any form/field, use the
-"form" value.
+be applied to. For example, to apply the extension to any form/field, use
+the "form" value.
 
 .. _reference-dic-type_guesser:
 
@@ -379,7 +383,8 @@ metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
 kernel.cache_clearer
 --------------------
 
-**Purpose**: Register your service to be called during the cache clearing process
+**Purpose**: Register your service to be called during the cache clearing
+process
 
 Cache clearing occurs whenever you call ``cache:clear`` command. If your
 bundle caches files, you should add custom cache clearer for clearing those
@@ -438,14 +443,15 @@ Then register this class and tag it with ``kernel.cache_clearer``:
 kernel.cache_warmer
 -------------------
 
-**Purpose**: Register your service to be called during the cache warming process
+**Purpose**: Register your service to be called during the cache warming
+process
 
 Cache warming occurs whenever you run the ``cache:warmup`` or ``cache:clear``
-task (unless you pass ``--no-warmup`` to ``cache:clear``). It is also run when
-handling the request, if it wasn't done by one of the commands yet. The purpose is
-to initialize any cache that will be needed by the application and prevent
-the first user from any significant "cache hit" where the cache is generated
-dynamically.
+task (unless you pass ``--no-warmup`` to ``cache:clear``). It is also run
+when handling the request, if it wasn't done by one of the commands yet.
+The purpose is to initialize any cache that will be needed by the application
+and prevent the first user from any significant "cache hit" where the cache
+is generated dynamically.
 
 To register your own cache warmer, first create a service that implements
 the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` interface::
@@ -473,7 +479,8 @@ application without calling this cache warmer. In Symfony, optional warmers
 are always executed by default (you can change this by using the
 ``--no-optional-warmers`` option when executing the command).
 
-To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
+To register your warmer with Symfony, give it the ``kernel.cache_warmer``
+tag:
 
 .. configuration-block::
 
@@ -493,7 +500,9 @@ To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="main.warmer.my_custom_warmer" class="Acme\MainBundle\Cache\MyCustomWarmer">
+                <service id="main.warmer.my_custom_warmer"
+                    class="Acme\MainBundle\Cache\MyCustomWarmer"
+                >
                     <tag name="kernel.cache_warmer" priority="0" />
                 </service>
             </services>
@@ -508,8 +517,8 @@ To register your warmer with Symfony, give it the ``kernel.cache_warmer`` tag:
 
 .. note::
 
-    The ``priority`` value is optional, and defaults to 0.
-    The higher the priority, the sooner it gets executed.
+    The ``priority`` value is optional and defaults to 0. The higher the
+    priority, the sooner it gets executed.
 
 Core Cache Warmers
 ~~~~~~~~~~~~~~~~~~
@@ -629,7 +638,7 @@ kernel.event_subscriber
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
 To enable a custom subscriber, add it as a regular service in one of your
-configuration, and tag it with ``kernel.event_subscriber``:
+configuration and tag it with ``kernel.event_subscriber``:
 
 .. configuration-block::
 
@@ -661,7 +670,10 @@ configuration, and tag it with ``kernel.event_subscriber``:
     .. code-block:: php
 
         $container
-            ->register('kernel.subscriber.your_subscriber_name', 'Fully\Qualified\Subscriber\Class\Name')
+            ->register(
+                'kernel.subscriber.your_subscriber_name',
+                'Fully\Qualified\Subscriber\Class\Name'
+            )
             ->addTag('kernel.event_subscriber')
         ;
 
@@ -672,8 +684,8 @@ configuration, and tag it with ``kernel.event_subscriber``:
 
 .. note::
 
-    If your service is created by a factory, you **MUST** correctly set the ``class``
-    parameter for this tag to work correctly.
+    If your service is created by a factory, you **MUST** correctly set
+    the ``class`` parameter for this tag to work correctly.
 
 kernel.fragment_renderer
 ------------------------
@@ -724,7 +736,9 @@ channel when injecting the logger in a service.
 
     .. code-block:: php
 
-        $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(new Reference('logger'));
+        $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(
+            new Reference('logger'),
+        ));
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
         $container->setDefinition('my_service', $definition);
 
@@ -741,13 +755,13 @@ monolog.processor
 
 **Purpose**: Add a custom processor for logging
 
-Monolog allows you to add processors in the logger or in the handlers to add
-extra data in the records. A processor receives the record as an argument and
-must return it after adding some extra data in the ``extra`` attribute of
-the record.
+Monolog allows you to add processors in the logger or in the handlers to
+add extra data in the records. A processor receives the record as an argument
+and must return it after adding some extra data in the ``extra`` attribute
+of the record.
 
-The built-in ``IntrospectionProcessor`` can be used to add the file, the line,
-the class and the method where the logger was triggered.
+The built-in ``IntrospectionProcessor`` can be used to add the file, the
+line, the class and the method where the logger was triggered.
 
 You can add a processor globally:
 
@@ -821,9 +835,9 @@ attribute:
             ->addTag('monolog.processor', array('handler' => 'firephp'))
         ;
 
-You can also add a processor for a specific logging channel by using the ``channel``
-attribute. This will register the processor only for the ``security`` logging
-channel used in the Security component:
+You can also add a processor for a specific logging channel by using the
+``channel`` attribute. This will register the processor only for the
+``security`` logging channel used in the Security component:
 
 .. configuration-block::
 
@@ -867,7 +881,7 @@ routing.loader
 **Purpose**: Register a custom service that loads routes
 
 To enable a custom routing loader, add it as a regular service in one
-of your configuration, and tag it with ``routing.loader``:
+of your configuration and tag it with ``routing.loader``:
 
 .. configuration-block::
 
@@ -910,9 +924,9 @@ security.remember_me_aware
 
 **Purpose**: To allow remember me authentication
 
-This tag is used internally to allow remember-me authentication to work. If
-you have a custom authentication method where a user can be remember-me authenticated,
-then you may need to use this tag.
+This tag is used internally to allow remember-me authentication to work.
+If you have a custom authentication method where a user can be remember-me
+authenticated, then you may need to use this tag.
 
 If your custom authentication factory extends
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\AbstractFactory`
@@ -961,15 +975,16 @@ swiftmailer.default.plugin
 
 **Purpose**: Register a custom SwiftMailer Plugin
 
-If you're using a custom SwiftMailer plugin (or want to create one), you can
-register it with SwiftMailer by creating a service for your plugin and tagging
-it with ``swiftmailer.default.plugin`` (it has no options).
+If you're using a custom SwiftMailer plugin (or want to create one), you
+can register it with SwiftMailer by creating a service for your plugin and
+tagging it with ``swiftmailer.default.plugin`` (it has no options).
 
 .. note::
 
     ``default`` in this tag is the name of the mailer. If you have multiple
-    mailers configured or have changed the default mailer name for some reason,
-    you should change it to the name of your mailer in order to use this tag.
+    mailers configured or have changed the default mailer name for some
+    reason, you should change it to the name of your mailer in order to
+    use this tag.
 
 A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
 For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
@@ -1028,8 +1043,8 @@ translation.loader
 
 **Purpose**: To register a custom service that loads translations
 
-By default, translations are loaded from the filesystem in a variety of different
-formats (YAML, XLIFF, PHP, etc).
+By default, translations are loaded from the filesystem in a variety of
+different formats (YAML, XLIFF, PHP, etc).
 
 .. seealso::
 
@@ -1068,19 +1083,23 @@ Now, register your loader as a service and tag it with ``translation.loader``:
     .. code-block:: php
 
         $container
-            ->register('main.translation.my_custom_loader', 'Acme\MainBundle\Translation\MyCustomLoader')
+            ->register(
+                'main.translation.my_custom_loader',
+                'Acme\MainBundle\Translation\MyCustomLoader'
+            )
             ->addTag('translation.loader', array('alias' => 'bin'))
         ;
 
 The ``alias`` option is required and very important: it defines the file
-"suffix" that will be used for the resource files that use this loader. For
-example, suppose you have some custom ``bin`` format that you need to load.
-If you have a ``bin`` file that contains French translations for the ``messages``
-domain, then you might have a file ``app/Resources/translations/messages.fr.bin``.
+"suffix" that will be used for the resource files that use this loader.
+For example, suppose you have some custom ``bin`` format that you need to
+load. If you have a ``bin`` file that contains French translations for
+the ``messages`` domain, then you might have a file
+``app/Resources/translations/messages.fr.bin``.
 
-When Symfony tries to load the ``bin`` file, it passes the path to your custom
-loader as the ``$resource`` argument. You can then perform any logic you need
-on that file in order to load your translations.
+When Symfony tries to load the ``bin`` file, it passes the path to your
+custom loader as the ``$resource`` argument. You can then perform any logic
+you need on that file in order to load your translations.
 
 If you're loading translations from a database, you'll still need a resource
 file, but it might either be blank or contain a little bit of information
@@ -1090,7 +1109,8 @@ the ``load`` method on your custom loader.
 translation.extractor
 ---------------------
 
-**Purpose**: To register a custom service that extracts messages from a file
+**Purpose**: To register a custom service that extracts messages from a
+file
 
 .. versionadded:: 2.1
    The ability to add message extractors was introduced in Symfony 2.1.
@@ -1102,9 +1122,9 @@ has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
 help to find and extract translation keys from Twig templates and PHP files.
 
 You can create your own extractor by creating a class that implements
-:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` and
-tagging the service with ``translation.extractor``. The tag has one required
-option: ``alias``, which defines the name of the extractor::
+:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`
+and tagging the service with ``translation.extractor``. The tag has one
+required option: ``alias``, which defines the name of the extractor::
 
     // src/Acme/DemoBundle/Translation/FooExtractor.php
     namespace Acme\DemoBundle\Translation;
@@ -1176,9 +1196,9 @@ translation.dumper
 .. versionadded:: 2.1
    The ability to add message dumpers was introduced in Symfony 2.1.
 
-After an `Extractor <translation.extractor>`_ has extracted all messages from
-the templates, the dumpers are executed to dump the messages to a translation
-file in a specific format.
+After an `Extractor <translation.extractor>`_ has extracted all messages
+from the templates, the dumpers are executed to dump the messages to a
+translation file in a specific format.
 
 Symfony already comes with many dumpers:
 
@@ -1245,7 +1265,7 @@ twig.extension
 **Purpose**: To register a custom Twig Extension
 
 To enable a Twig extension, add it as a regular service in one of your
-configuration, and tag it with ``twig.extension``:
+configuration and tag it with ``twig.extension``:
 
 .. configuration-block::
 
@@ -1277,7 +1297,10 @@ configuration, and tag it with ``twig.extension``:
     .. code-block:: php
 
         $container
-            ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
+            ->register(
+                'twig.extension.your_extension_name',
+                'Fully\Qualified\Extension\Class\Name'
+            )
             ->addTag('twig.extension')
         ;
 
@@ -1362,7 +1385,10 @@ the new loader and tag it with ``twig.loader``:
     .. code-block:: php
 
         $container
-            ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
+            ->register(
+                'acme.demo_bundle.loader.some_twig_loader',
+                'Acme\DemoBundle\Loader\SomeTwigLoader'
+            )
             ->addTag('twig.loader')
         ;
 
@@ -1383,14 +1409,15 @@ This tag provides a very uncommon piece of functionality that allows you
 to perform some sort of action on an object right before it's validated.
 For example, it's used by Doctrine to query for all of the lazily-loaded
 data on an object before it's validated. Without this, some data on a Doctrine
-entity would appear to be "missing" when validated, even though this is not
-really the case.
+entity would appear to be "missing" when validated, even though this is
+not really the case.
 
 If you do need to use this tag, just make a new class that implements the
 :class:`Symfony\\Component\\Validator\\ObjectInitializerInterface` interface.
 Then, tag it with the ``validator.initializer`` tag (it has no options).
 
-For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
+For an example, see the ``EntityInitializer`` class inside the Doctrine
+Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions

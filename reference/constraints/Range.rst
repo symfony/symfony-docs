@@ -20,8 +20,8 @@ Validates that a given number is *between* some minimum and maximum number.
 Basic Usage
 -----------
 
-To verify that the "height" field of a class is between "120" and "180", you might add
-the following:
+To verify that the "height" field of a class is between "120" and "180",
+you might add the following:
 
 .. configuration-block::
 
@@ -122,16 +122,16 @@ minMessage
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
-The message that will be shown if the underlying value is less than the `min`_
-option.
+The message that will be shown if the underlying value is less than the
+`min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
-The message that will be shown if the underlying value is more than the `max`_
-option.
+The message that will be shown if the underlying value is more than the
+`max`_ option.
 
 invalidMessage
 ~~~~~~~~~~~~~~

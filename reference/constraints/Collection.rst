@@ -5,7 +5,8 @@ This constraint is used when the underlying data is a collection (i.e. an
 array or an object that implements ``Traversable`` and ``ArrayAccess``),
 but you'd like to validate different keys of that collection in different
 ways. For example, you might validate the ``email`` key using the ``Email``
-constraint and the ``inventory`` key of the collection with the ``Range`` constraint.
+constraint and the ``inventory`` key of the collection with the ``Range``
+constraint.
 
 This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
@@ -27,8 +28,8 @@ and that extra keys are not present.
 Basic Usage
 -----------
 
-The ``Collection`` constraint allows you to validate the different keys of
-a collection individually. Take the following example::
+The ``Collection`` constraint allows you to validate the different keys
+of a collection individually. Take the following example::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
@@ -47,8 +48,9 @@ a collection individually. Take the following example::
     }
 
 To validate that the ``personal_email`` element of the ``profileData`` array
-property is a valid email address and that the ``short_bio`` element is not
-blank but is no longer than 100 characters in length, you would do the following:
+property is a valid email address and that the ``short_bio`` element is
+not blank but is no longer than 100 characters in length, you would do the
+following:
 
 .. configuration-block::
 
@@ -161,31 +163,33 @@ Presence and Absence of Fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, this constraint validates more than simply whether or not the
-individual fields in the collection pass their assigned constraints. In fact,
-if any keys of a collection are missing or if there are any unrecognized
+individual fields in the collection pass their assigned constraints. In
+fact, if any keys of a collection are missing or if there are any unrecognized
 keys in the collection, validation errors will be thrown.
 
-If you would like to allow for keys to be absent from the collection or if
-you would like "extra" keys to be allowed in the collection, you can modify
-the `allowMissingFields`_ and `allowExtraFields`_ options respectively. In
-the above example, the ``allowMissingFields`` option was set to true, meaning
-that if either of the ``personal_email`` or ``short_bio`` elements were missing
-from the ``$personalData`` property, no validation error would occur.
+If you would like to allow for keys to be absent from the collection or
+if you would like "extra" keys to be allowed in the collection, you can
+modify the `allowMissingFields`_ and `allowExtraFields`_ options respectively.
+In the above example, the ``allowMissingFields`` option was set to true,
+meaning that if either of the ``personal_email`` or ``short_bio`` elements
+were missing from the ``$personalData`` property, no validation error would
+occur.
 
-Required and optional Field Constraints
+Required and Optional Field Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
     The ``Required`` and ``Optional`` constraints were moved to the namespace
     ``Symfony\Component\Validator\Constraints\`` in Symfony 2.3.
 
-Constraints for fields within a collection can be wrapped in the ``Required`` or
-``Optional`` constraint to control whether they should always be applied (``Required``)
-or only applied when the field is present (``Optional``).
+Constraints for fields within a collection can be wrapped in the ``Required``
+or ``Optional`` constraint to control whether they should always be applied
+(``Required``) or only applied when the field is present (``Optional``).
 
-For instance, if you want to require that the ``personal_email`` field of the
-``profileData`` array is not blank and is a valid email but the ``alternate_email``
-field is optional but must be a valid email if supplied, you can do the following:
+For instance, if you want to require that the ``personal_email`` field of
+the ``profileData`` array is not blank and is a valid email but the
+``alternate_email`` field is optional but must be a valid email if supplied,
+you can do the following:
 
 .. configuration-block::
 
@@ -270,7 +274,9 @@ field is optional but must be a valid email if supplied, you can do the followin
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
-                        'personal_email'  => new Assert\Required(array(new Assert\NotBlank(), new Assert\Email())),
+                        'personal_email'  => new Assert\Required(
+                            array(new Assert\NotBlank(), new Assert\Email())
+                        ),
                         'alternate_email' => new Assert\Optional(new Assert\Email()),
                     ),
                 )));
@@ -291,7 +297,7 @@ fields
 
 **type**: ``array`` [:ref:`default option <validation-default-option>`]
 
-This option is required, and is an associative array defining all of the
+This option is required and is an associative array defining all of the
 keys in the collection and, for each key, exactly which validator(s) should
 be executed against that element of the collection.
 
@@ -309,7 +315,8 @@ extraFieldsMessage
 
 **type**: ``Boolean`` **default**: ``The fields {{ fields }} were not expected.``
 
-The message shown if `allowExtraFields`_ is false and an extra field is detected.
+The message shown if `allowExtraFields`_ is false and an extra field is
+detected.
 
 allowMissingFields
 ~~~~~~~~~~~~~~~~~~
@@ -317,8 +324,8 @@ allowMissingFields
 **type**: ``Boolean`` **default**: false
 
 If this option is set to ``false`` and one or more fields from the `fields`_
-option are not present in the underlying collection, a validation error will
-be returned. If set to ``true``, it's ok if some fields in the `fields`_
+option are not present in the underlying collection, a validation error
+will be returned. If set to ``true``, it's ok if some fields in the `fields`_
 option are not present in the underlying collection.
 
 missingFieldsMessage

@@ -2,10 +2,10 @@ Callback
 ========
 
 The purpose of the Callback assertion is to let you create completely custom
-validation rules and to assign any validation errors to specific fields on
-your object. If you're using validation with forms, this means that you can
-make these custom errors display next to a specific field, instead of simply
-at the top of your form.
+validation rules and to assign any validation errors to specific fields
+on your object. If you're using validation with forms, this means that you
+can make these custom errors display next to a specific field, instead of
+simply at the top of your form.
 
 This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
@@ -92,9 +92,9 @@ Setup
 The Callback Method
 -------------------
 
-The callback method is passed a special ``ExecutionContextInterface`` object. You
-can set "violations" directly on this object and determine to which field
-those errors should be attributed::
+The callback method is passed a special ``ExecutionContextInterface`` object.
+You can set "violations" directly on this object and determine to which
+field those errors should be attributed::
 
     // ...
     use Symfony\Component\Validator\ExecutionContextInterface;
@@ -111,7 +111,12 @@ those errors should be attributed::
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $context->addViolationAt('firstname', 'This name sounds totally fake!', array(), null);
+                $context->addViolationAt(
+                    'firstname',
+                    'This name sounds totally fake!',
+                    array(),
+                    null
+                );
             }
         }
     }
@@ -129,9 +134,10 @@ process. Each method can be one of the following formats:
 
 1) **String method name**
 
-    If the name of a method is a simple string (e.g. ``isAuthorValid``), that
-    method will be called on the same object that's being validated and the
-    ``ExecutionContextInterface`` will be the only argument (see the above example).
+    If the name of a method is a simple string (e.g. ``isAuthorValid``),
+    that method will be called on the same object that's being validated
+    and the ``ExecutionContextInterface`` will be the only argument (see
+    the above example).
 
 2) **Static array callback**
 
@@ -197,15 +203,19 @@ process. Each method can be one of the following formats:
                 {
                     $metadata->addConstraint(new Callback(array(
                         'methods' => array(
-                            array('Acme\BlogBundle\MyStaticValidatorClass', 'isAuthorValid'),
+                            array(
+                                'Acme\BlogBundle\MyStaticValidatorClass',
+                                'isAuthorValid',
+                            ),
                         ),
                     )));
                 }
             }
 
-    In this case, the static method ``isAuthorValid`` will be called on the
-    ``Acme\BlogBundle\MyStaticValidatorClass`` class. It's passed both the original
-    object being validated (e.g. ``Author``) as well as the ``ExecutionContextInterface``::
+    In this case, the static method ``isAuthorValid`` will be called on
+    the ``Acme\BlogBundle\MyStaticValidatorClass`` class. It's passed both
+    the original object being validated (e.g. ``Author``) as well as the
+    ``ExecutionContextInterface``::
 
         namespace Acme\BlogBundle;
 
@@ -214,17 +224,20 @@ process. Each method can be one of the following formats:
 
         class MyStaticValidatorClass
         {
-            public static function isAuthorValid(Author $author, ExecutionContextInterface $context)
-            {
+            public static function isAuthorValid(
+                Author $author,
+                ExecutionContextInterface $context
+            ) {
                 // ...
             }
         }
 
     .. tip::
 
-        If you specify your ``Callback`` constraint via PHP, then you also have
-        the option to make your callback either a PHP closure or a non-static
-        callback. It is *not* currently possible, however, to specify a :term:`service`
-        as a constraint. To validate using a service, you should
-        :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
-        and add that new constraint to your class.
+        If you specify your ``Callback`` constraint via PHP, then you also
+        have the option to make your callback either a PHP closure or a
+        non-static callback. It is *not* currently possible, however, to
+        specify a :term:`service` as a constraint. To validate using a service,
+        you should :doc:`create a custom validation constraint
+        </cookbook/validation/custom_constraint>` and add that new constraint
+        to your class.

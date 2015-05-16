@@ -88,27 +88,39 @@ of a variety of different values:
 
 **All ranges**
 
-* ``4`` - Validates for IPv4 addresses
-* ``6`` - Validates for IPv6 addresses
-* ``all`` - Validates all IP formats
+``4``
+    Validates for IPv4 addresses
+``6``
+    Validates for IPv6 addresses
+``all``
+    Validates all IP formats
 
 **No private ranges**
 
-* ``4_no_priv`` - Validates for IPv4 but without private IP ranges
-* ``6_no_priv`` - Validates for IPv6 but without private IP ranges
-* ``all_no_priv`` - Validates for all IP formats but without private IP ranges
+``4_no_priv``
+    Validates for IPv4 but without private IP ranges
+``6_no_priv``
+    Validates for IPv6 but without private IP ranges
+``all_no_priv``
+    Validates for all IP formats but without private IP ranges
 
 **No reserved ranges**
 
-* ``4_no_res`` - Validates for IPv4 but without reserved IP ranges
-* ``6_no_res`` - Validates for IPv6 but without reserved IP ranges
-* ``all_no_res`` - Validates for all IP formats but without reserved IP ranges
+``4_no_res``
+    Validates for IPv4 but without reserved IP ranges
+``6_no_res``
+    Validates for IPv6 but without reserved IP ranges
+``all_no_res``
+    Validates for all IP formats but without reserved IP ranges
 
 **Only public ranges**
 
-* ``4_public`` - Validates for IPv4 but without private and reserved ranges
-* ``6_public`` - Validates for IPv6 but without private and reserved ranges
-* ``all_public`` - Validates for all IP formats but without private and reserved ranges
+``4_public``
+    Validates for IPv4 but without private and reserved ranges
+``6_public``
+    Validates for IPv6 but without private and reserved ranges
+``all_public``
+    Validates for all IP formats but without private and reserved ranges
 
 message
 ~~~~~~~

@@ -19,8 +19,8 @@ Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 Basic Usage
 -----------
 
-If you want to ensure that the ``currency`` property of an ``Order`` is a valid
-currency, you could do the following:
+If you want to ensure that the ``currency`` property of an ``Order`` is
+a valid currency, you could do the following:
 
 .. configuration-block::
 

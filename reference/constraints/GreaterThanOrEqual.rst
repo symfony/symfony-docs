@@ -4,8 +4,8 @@ GreaterThanOrEqual
 .. versionadded:: 2.3
     The ``GreaterThanOrEqual`` constraint was introduced in Symfony 2.3.
 
-Validates that a value is greater than or equal to another value, defined in
-the options. To force that a value is greater than another value, see
+Validates that a value is greater than or equal to another value, defined
+in the options. To force that a value is greater than another value, see
 :doc:`/reference/constraints/GreaterThan`.
 
 +----------------+----------------------------------------------------------------------------------+
@@ -22,8 +22,8 @@ the options. To force that a value is greater than another value, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is greater than
-or equal to ``18``, you could do the following:
+If you want to ensure that the ``age`` of a ``Person`` class is greater
+than or equal to ``18``, you could do the following:
 
 .. configuration-block::
 
@@ -98,5 +98,5 @@ message
 
 **type**: ``string`` **default**: ``This value should be greater than or equal to {{ compared_value }}.``
 
-This is the message that will be shown if the value is not greater than or equal
-to the comparison value.
+This is the message that will be shown if the value is not greater than
+or equal to the comparison value.

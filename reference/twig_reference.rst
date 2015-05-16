@@ -96,8 +96,8 @@ controller
 ``query``
     **type**: ``array`` **default**: ``[]``
 
-Returns an instance of ``ControllerReference`` to be used with functions like
-:ref:`render() <reference-twig-function-render>` and
+Returns an instance of ``ControllerReference`` to be used with functions
+like :ref:`render() <reference-twig-function-render>` and
 :ref:`render_esi() <reference-twig-function-render-esi>`.
 
 asset
@@ -112,8 +112,8 @@ asset
 ``packageName``
     **type**: ``string`` | ``null`` **default**: ``null``
 
-Returns a public path to ``path``, which takes into account the base path set
-for the package and the URL path. More information in
+Returns a public path to ``path``, which takes into account the base path
+set for the package and the URL path. More information in
 :ref:`book-templating-assets`.
 
 assets_version
@@ -171,8 +171,9 @@ form_end
 ``variables``
     **type**: ``array`` **default**: ``[]``
 
-Renders the HTML end tag of a form together with all fields that have not been
-rendered yet, more information in :ref:`the Twig Form reference <reference-forms-twig-end>`.
+Renders the HTML end tag of a form together with all fields that have not
+been rendered yet, more information in
+:ref:`the Twig Form reference <reference-forms-twig-end>`.
 
 form_enctype
 ~~~~~~~~~~~~
@@ -184,8 +185,8 @@ form_enctype
 ``view``
     **type**: ``FormView``
 
-Renders the required ``enctype="multipart/form-data"`` attribute if the form
-contains at least one file upload field, more information in
+Renders the required ``enctype="multipart/form-data"`` attribute if the
+form contains at least one file upload field, more information in
 :ref:`the Twig Form reference <reference-forms-twig-enctype>`.
 
 form_widget
@@ -245,8 +246,8 @@ form_row
 ``variables``
     **type**: ``array`` **default**: ``[]``
 
-Renders the row (the field's label, errors and widget) of the given field, more
-information in :ref:`the Twig Form reference <reference-forms-twig-row>`.
+Renders the row (the field's label, errors and widget) of the given field,
+more information in :ref:`the Twig Form reference <reference-forms-twig-row>`.
 
 form_rest
 ~~~~~~~~~
@@ -290,15 +291,14 @@ is_granted
 ``field``
     **type**: ``string``
 
-Returns ``true`` if the current user has the required role. Optionally, an
-object can be pasted to be used by the voter. More information can be found in
-:ref:`book-security-template`.
+Returns ``true`` if the current user has the required role. Optionally,
+an object can be pasted to be used by the voter. More information can be
+found in :ref:`book-security-template`.
 
 .. note::
 
-    You can also pass in the field to use ACE for a specific field. Read more
-    about this in :ref:`cookbook-security-acl-field_scope`.
-
+    You can also pass in the field to use ACE for a specific field. Read
+    more about this in :ref:`cookbook-security-acl-field_scope`.
 
 logout_path
 ~~~~~~~~~~~
@@ -339,9 +339,9 @@ path
 ``relative``
     **type**: ``boolean`` **default**: ``false``
 
-Returns the relative URL (without the scheme and host) for the given route. If
-``relative`` is enabled, it'll create a path relative to the current path. More
-information in :ref:`book-templating-pages`.
+Returns the relative URL (without the scheme and host) for the given route.
+If ``relative`` is enabled, it'll create a path relative to the current
+path. More information in :ref:`book-templating-pages`.
 
 url
 ~~~
@@ -379,8 +379,8 @@ humanize
 ``text``
     **type**: ``string``
 
-Makes a technical name human readable (i.e. replaces underscores by spaces and
-capitalizes the string).
+Makes a technical name human readable (i.e. replaces underscores by spaces
+and capitalizes the string).
 
 trans
 ~~~~~
@@ -436,8 +436,8 @@ yaml_encode
 ``dumpObjects``
     **type**: ``boolean`` **default**: ``false``
 
-Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for more
-information.
+Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for
+more information.
 
 yaml_dump
 ~~~~~~~~~
@@ -453,7 +453,8 @@ yaml_dump
 ``dumpObjects``
     **type**: ``boolean`` **default**: ``false``
 
-Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in the output.
+Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
+the output.
 
 abbr_class
 ~~~~~~~~~~
@@ -465,8 +466,8 @@ abbr_class
 ``class``
     **type**: ``string``
 
-Generates an ``<abbr>`` element with the short name of a PHP class (the FQCN
-will be shown in a tooltip when a user hovers over the element).
+Generates an ``<abbr>`` element with the short name of a PHP class (the
+FQCN will be shown in a tooltip when a user hovers over the element).
 
 abbr_method
 ~~~~~~~~~~~
@@ -478,9 +479,9 @@ abbr_method
 ``method``
     **type**: ``string``
 
-Generates an ``<abbr>`` element using the ``FQCN::method()`` syntax. If ``method``
-is ``Closure``, ``Closure`` will be used instead and if ``method`` doesn't have a
-class name, it's shown as a function (``method()``).
+Generates an ``<abbr>`` element using the ``FQCN::method()`` syntax. If
+``method`` is ``Closure``, ``Closure`` will be used instead and if ``method``
+doesn't have a class name, it's shown as a function (``method()``).
 
 format_args
 ~~~~~~~~~~~
@@ -534,8 +535,8 @@ format_file
 ``text``
     **type**: ``string`` **default**: ``null``
 
-Generates the file path inside an ``<a>`` element. If the path is inside the
-kernel root directory, the kernel root directory path is replaced by
+Generates the file path inside an ``<a>`` element. If the path is inside
+the kernel root directory, the kernel root directory path is replaced by
 ``kernel.root_dir`` (showing the full path in a tooltip on hover).
 
 format_file_from_text
@@ -560,8 +561,8 @@ file_link
 ``line``
     **type**: ``integer``
 
-Generates a link to the provided file (and optionally line number) using a
-preconfigured scheme.
+Generates a link to the provided file (and optionally line number) using
+a preconfigured scheme.
 
 .. _reference-twig-tags:
 
@@ -678,8 +679,9 @@ Symfony Standard Edition Extensions
 The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
 Those bundles can have other Twig extensions:
 
-* **Twig Extensions** includes some interesting extensions that do not belong to the
-  Twig core. You can read more in `the official Twig Extensions documentation`_;
+* **Twig Extensions** includes some interesting extensions that do not belong
+  to the Twig core. You can read more in `the official Twig Extensions
+  documentation`_;
 * **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
   ``{% image %}`` tags. You can read more about them in
   :doc:`the Assetic Documentation </cookbook/assetic/asset_management>`.
