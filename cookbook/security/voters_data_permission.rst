@@ -37,11 +37,19 @@ For more information take a look at
 The Voter Interface
 -------------------
 
-A custom voter must implement
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
-which has this structure:
+A custom voter needs to implement
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
+or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`,
+which makes creating a voter even easier.
 
-.. include:: /cookbook/security/voter_interface.rst.inc
+.. code-block:: php
+
+    abstract class AbstractVoter implements VoterInterface
+    {
+        abstract protected function getSupportedClasses();
+        abstract protected function getSupportedAttributes();
+        abstract protected function isGranted($attribute, $object, $user = null);
+    }
 
 In this example, the voter will check if the user has access to a specific
 object according to your custom conditions (e.g. they must be the owner of
@@ -61,89 +69,65 @@ edit a particular object. Here's an example implementation:
     // src/AppBundle/Security/Authorization/Voter/PostVoter.php
     namespace AppBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    class PostVoter implements VoterInterface
+    class PostVoter extends AbstractVoter
     {
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        public function supportsAttribute($attribute)
+        protected function getSupportedAttributes()
         {
-            return in_array($attribute, array(
-                self::VIEW,
-                self::EDIT,
-            ));
+            return array(self::VIEW, self::EDIT);
         }
 
-        public function supportsClass($class)
+        protected function getSupportedClasses()
         {
-            $supportedClass = 'AppBundle\Entity\Post';
-
-            return $supportedClass === $class || is_subclass_of($class, $supportedClass);
+            return array('AppBundle\Entity\Post');
         }
 
-        /**
-         * @var \AppBundle\Entity\Post $post
-         */
-        public function vote(TokenInterface $token, $post, array $attributes)
+        protected function isGranted($attribute, $post, $user = null)
         {
-            // check if class of this object is supported by this voter
-            if (!$this->supportsClass(get_class($post))) {
-                return VoterInterface::ACCESS_ABSTAIN;
-            }
-
-            // check if the voter is used correct, only allow one attribute
-            // this isn't a requirement, it's just one easy way for you to
-            // design your voter
-            if (1 !== count($attributes)) {
-                throw new \InvalidArgumentException(
-                    'Only one attribute is allowed for VIEW or EDIT'
-                );
-            }
-
-            // set the attribute to check against
-            $attribute = $attributes[0];
-
-            // check if the given attribute is covered by this voter
-            if (!$this->supportsAttribute($attribute)) {
-                return VoterInterface::ACCESS_ABSTAIN;
-            }
-
-            // get current logged in user
-            $user = $token->getUser();
-
             // make sure there is a user object (i.e. that the user is logged in)
             if (!$user instanceof UserInterface) {
-                return VoterInterface::ACCESS_DENIED;
+                return false;
             }
 
-            switch($attribute) {
-                case self::VIEW:
-                    // the data object could have for example a method isPrivate()
-                    // which checks the Boolean attribute $private
-                    if (!$post->isPrivate()) {
-                        return VoterInterface::ACCESS_GRANTED;
-                    }
-                    break;
-
-                case self::EDIT:
-                    // we assume that our data object has a method getOwner() to
-                    // get the current owner user entity for this data object
-                    if ($user->getId() === $post->getOwner()->getId()) {
-                        return VoterInterface::ACCESS_GRANTED;
-                    }
-                    break;
+            // the data object could have for example a method isPrivate()
+            // which checks the Boolean attribute $private
+            if ($attribute == self::VIEW && !$post->isPrivate()) {
+                return true;
             }
 
-            return VoterInterface::ACCESS_DENIED;
+            // we assume that our data object has a method getOwner() to
+            // get the current owner user entity for this data object
+            if ($attribute == self::EDIT && $user->getId() === $post->getOwner()->getId()) {
+                return true;
+            }
+
+            return false;
         }
     }
 
 That's it! The voter is done. The next step is to inject the voter into
 the security layer.
+
+To recap, here's what's expected from the three abstract methods:
+
+The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedClasses`
+method tells Symfony that your voter should be called whenever an object of one of the given classes
+is passed to `isGranted`  For example, if you return ['\Acme\DemoBundle\Model\Product'],
+Symfony will call your voter when a `Product` object is passed to `isGranted`.
+
+The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::getSupportedAttributes`
+method tells Symfony that your voter should be called whenever one of these strings is passes as the
+first argument to `isGranted`. For example, if you return `array('CREATE', 'READ')`, then
+Symfony will call your voter when one of these is passed to `isGranted`.
+
+The :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter::isGranted`
+method must implement the business logic that verifies whether or not a given
+user is allowed access to a given attribute on a given object. This method must return a boolean.
 
 Declaring the Voter as a Service
 --------------------------------
