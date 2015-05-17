@@ -1,7 +1,8 @@
 Length
 ======
 
-Validates that a given string length is *between* some minimum and maximum value.
+Validates that a given string length is *between* some minimum and maximum
+value.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`               |
@@ -22,8 +23,8 @@ Validates that a given string length is *between* some minimum and maximum value
 Basic Usage
 -----------
 
-To verify that the ``firstName`` field length of a class is between "2" and
-"50", you might add the following:
+To verify that the ``firstName`` field length of a class is between "2"
+and "50", you might add the following:
 
 .. configuration-block::
 
@@ -72,8 +73,12 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     <constraint name="Length">
                         <option name="min">2</option>
                         <option name="max">50</option>
-                        <option name="minMessage">Your first name must be at least {{ limit }} characters long</option>
-                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters</option>
+                        <option name="minMessage">
+                            Your first name must be at least {{ limit }} characters long
+                        </option>
+                        <option name="maxMessage">
+                            Your first name cannot be longer than {{ limit }} characters
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -108,40 +113,42 @@ min
 
 **type**: ``integer``
 
-This required option is the "min" length value. Validation will fail if the given
-value's length is **less** than this min value.
+This required option is the "min" length value. Validation will fail if
+the given value's length is **less** than this min value.
 
 max
 ~~~
 
 **type**: ``integer``
 
-This required option is the "max" length value. Validation will fail if the given
-value's length is **greater** than this max value.
+This required option is the "max" length value. Validation will fail if
+the given value's length is **greater** than this max value.
 
 charset
 ~~~~~~~
 
 **type**: ``string``  **default**: ``UTF-8``
 
-The charset to be used when computing value's length. The :phpfunction:`grapheme_strlen` PHP
-function is used if available. If not, the :phpfunction:`mb_strlen` PHP function
-is used if available. If neither are available, the :phpfunction:`strlen` PHP function
-is used.
+The charset to be used when computing value's length. The
+:phpfunction:`grapheme_strlen` PHP function is used if available. If not,
+the :phpfunction:`mb_strlen` PHP function is used if available. If neither
+are available, the :phpfunction:`strlen` PHP function is used.
 
 minMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
-The message that will be shown if the underlying value's length is less than the `min`_ option.
+The message that will be shown if the underlying value's length is less
+than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
-The message that will be shown if the underlying value's length is more than the `max`_ option.
+The message that will be shown if the underlying value's length is more
+than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~

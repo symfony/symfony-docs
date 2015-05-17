@@ -6,11 +6,11 @@
 Requirements for Running Symfony
 ================================
 
-To run Symfony, your system needs to adhere to a list of requirements. You can
-easily see if your system passes all requirements by running the ``web/config.php``
-in your Symfony distribution. Since the CLI often uses a different ``php.ini``
-configuration file, it's also a good idea to check your requirements from
-the command line via:
+To run Symfony, your system needs to adhere to a list of requirements. You
+can easily see if your system passes all requirements by running the
+``web/config.php`` in your Symfony distribution. Since the CLI often uses
+a different ``php.ini`` configuration file, it's also a good idea to check
+your requirements from the command line via:
 
 .. code-block:: bash
 

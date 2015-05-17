@@ -7,7 +7,7 @@ How to Configure Monolog to Email Errors
 Monolog_ can be configured to send an email when an error occurs with an
 application. The configuration for this requires a few nested handlers
 in order to avoid receiving too many emails. This configuration looks
-complicated at first but each handler is fairly straight forward when
+complicated at first but each handler is fairly straightforward when
 it is broken down.
 
 .. configuration-block::
