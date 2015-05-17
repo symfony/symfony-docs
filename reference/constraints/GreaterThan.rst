@@ -4,8 +4,8 @@ GreaterThan
 .. versionadded:: 2.3
     The ``GreaterThan`` constraint was introduced in Symfony 2.3.
 
-Validates that a value is greater than another value, defined in the options. To
-force that a value is greater than or equal to another value, see
+Validates that a value is greater than another value, defined in the options.
+To force that a value is greater than or equal to another value, see
 :doc:`/reference/constraints/GreaterThanOrEqual`. To force a value is less
 than another value, see :doc:`/reference/constraints/LessThan`.
 
@@ -24,8 +24,8 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is greater than
-``18``, you could do the following:
+If you want to ensure that the ``age`` of a ``Person`` class is greater
+than ``18``, you could do the following:
 
 .. configuration-block::
 
@@ -100,7 +100,7 @@ message
 
 **type**: ``string`` **default**: ``This value should be greater than {{ compared_value }}.``
 
-This is the message that will be shown if the value is not greater than the
-comparison value.
+This is the message that will be shown if the value is not greater than
+the comparison value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

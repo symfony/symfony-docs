@@ -224,7 +224,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $nameConverter = new OrgPrefixNameConverter();
     $normalizer = new PropertyNormalizer(null, $nameConverter);
 
-    $serializer = new Serializer(array(new JsonEncoder()), array($normalizer));
+    $serializer = new Serializer(array($normalizer), array(new JsonEncoder()));
 
     $obj = new Company();
     $obj->name = 'Acme Inc.';

@@ -19,8 +19,8 @@ constraint.
 Basic Usage
 -----------
 
-If you wanted to ensure that the ``firstName`` property of an ``Author`` class
-were not strictly equal to ``null``, you would:
+If you wanted to ensure that the ``firstName`` property of an ``Author``
+class were not strictly equal to ``null``, you would:
 
 .. configuration-block::
 

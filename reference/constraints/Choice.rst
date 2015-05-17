@@ -5,25 +5,25 @@ This constraint is used to ensure that the given value is one of a given
 set of *valid* choices. It can also be used to validate that each item in
 an array of items is one of those valid choices.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `choices`_                                                          |
-|                | - `callback`_                                                         |
-|                | - `multiple`_                                                         |
-|                | - `min`_                                                              |
-|                | - `max`_                                                              |
-|                | - `message`_                                                          |
-|                | - `multipleMessage`_                                                  |
-|                | - `minMessage`_                                                       |
-|                | - `maxMessage`_                                                       |
-|                | - `strict`_                                                           |
-|                | - `payload`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`           |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator`  |
-+----------------+-----------------------------------------------------------------------+
++----------------+----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`               |
++----------------+----------------------------------------------------------------------+
+| Options        | - `choices`_                                                         |
+|                | - `callback`_                                                        |
+|                | - `multiple`_                                                        |
+|                | - `min`_                                                             |
+|                | - `max`_                                                             |
+|                | - `message`_                                                         |
+|                | - `multipleMessage`_                                                 |
+|                | - `minMessage`_                                                      |
+|                | - `maxMessage`_                                                      |
+|                | - `strict`_                                                          |
+|                | - `payload`_                                                         |
++----------------+----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`          |
++----------------+----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator` |
++----------------+----------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -276,8 +276,8 @@ callback
 **type**: ``string|array|Closure``
 
 This is a callback method that can be used instead of the `choices`_ option
-to return the choices array. See `Supplying the Choices with a Callback Function`_
-for details on its usage.
+to return the choices array. See
+`Supplying the Choices with a Callback Function`_ for details on its usage.
 
 multiple
 ~~~~~~~~
@@ -314,16 +314,17 @@ message
 
 **type**: ``string`` **default**: ``The value you selected is not a valid choice.``
 
-This is the message that you will receive if the ``multiple`` option is set
-to ``false``, and the underlying value is not in the valid array of choices.
+This is the message that you will receive if the ``multiple`` option is
+set to ``false`` and the underlying value is not in the valid array of
+choices.
 
 multipleMessage
 ~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``One or more of the given values is invalid.``
 
-This is the message that you will receive if the ``multiple`` option is set
-to ``true``, and one of the values on the underlying array being checked
+This is the message that you will receive if the ``multiple`` option is
+set to ``true`` and one of the values on the underlying array being checked
 is not in the array of valid choices.
 
 minMessage
@@ -348,7 +349,7 @@ strict
 **type**: ``Boolean`` **default**: ``false``
 
 If true, the validator will also check the type of the input value. Specifically,
-this value is passed to as the third argument to the PHP :phpfunction:`in_array` method
-when checking to see if a value is in the valid choices array.
+this value is passed to as the third argument to the PHP :phpfunction:`in_array`
+method when checking to see if a value is in the valid choices array.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
