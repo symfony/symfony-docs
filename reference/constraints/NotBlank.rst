@@ -2,8 +2,8 @@ NotBlank
 ========
 
 Validates that a value is not blank, defined as not equal to a blank string
-and also not equal to ``null``. To force that a value is simply not equal to
-``null``, see the :doc:`/reference/constraints/NotNull` constraint.
+and also not equal to ``null``. To force that a value is simply not equal
+to ``null``, see the :doc:`/reference/constraints/NotNull` constraint.
 
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
@@ -19,8 +19,8 @@ and also not equal to ``null``. To force that a value is simply not equal to
 Basic Usage
 -----------
 
-If you wanted to ensure that the ``firstName`` property of an ``Author`` class
-were not blank, you could do the following:
+If you wanted to ensure that the ``firstName`` property of an ``Author``
+class were not blank, you could do the following:
 
 .. configuration-block::
 

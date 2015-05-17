@@ -22,11 +22,9 @@ Basic Usage
 -----------
 
 This constraint can be applied to properties (e.g. a ``termsAccepted`` property
-on a registration model) or to a "getter" method. It's most powerful in the
-latter case, where you can assert that a method returns a true value. For
-example, suppose you have the following method:
-
-.. code-block:: php
+on a registration model) or to a "getter" method. It's most powerful in
+the latter case, where you can assert that a method returns a true value.
+For example, suppose you have the following method::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;

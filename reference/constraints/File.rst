@@ -3,8 +3,8 @@ File
 
 Validates that a value is a valid "file", which can be one of the following:
 
-* A string (or object with a ``__toString()`` method) path to an existing file;
-
+* A string (or object with a ``__toString()`` method) path to an existing
+  file;
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
   (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
 
@@ -41,10 +41,10 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For example,
-suppose you're creating an author form where you can upload a "bio" PDF for
-the author. In your form, the ``bioFile`` property would be a ``file`` type.
-The ``Author`` class might look as follows::
+in a form as a :doc:`file </reference/forms/types/file>` form type. For
+example, suppose you're creating an author form where you can upload a "bio"
+PDF for the author. In your form, the ``bioFile`` property would be a ``file``
+type. The ``Author`` class might look as follows::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
@@ -66,7 +66,7 @@ The ``Author`` class might look as follows::
         }
     }
 
-To guarantee that the ``bioFile`` ``File`` object is valid, and that it is
+To guarantee that the ``bioFile`` ``File`` object is valid and that it is
 below a certain file size and a valid PDF, add the following:
 
 .. configuration-block::
@@ -161,8 +161,9 @@ maxSize
 
 **type**: ``mixed``
 
-If set, the size of the underlying file must be below this file size in order
-to be valid. The size of the file can be given in one of the following formats:
+If set, the size of the underlying file must be below this file size in
+order to be valid. The size of the file can be given in one of the following
+formats:
 
 +--------+-----------+-----------------+------+
 | Suffix | Unit Name |      value      | e.g. |
@@ -274,8 +275,8 @@ uploadErrorMessage
 **type**: ``string`` **default**: ``The file could not be uploaded.``
 
 The message that is displayed if the uploaded file could not be uploaded
-for some unknown reason, such as the file upload failed or it couldn't be written
-to disk.
+for some unknown reason, such as the file upload failed or it couldn't be
+written to disk.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

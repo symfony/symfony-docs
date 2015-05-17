@@ -33,7 +33,7 @@ Basic Usage
 -----------
 
 To use the ``Isbn`` validator, simply apply it to a property or method
-on an  object that will contain an ISBN.
+on an object that will contain an ISBN.
 
 .. configuration-block::
 
@@ -113,16 +113,16 @@ type
 
 **type**: ``string`` **default**: ``null``
 
-The type of ISBN to validate against.
-Valid values are ``isbn10``, ``isbn13`` and ``null`` to accept any kind of ISBN.
+The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
+and ``null`` to accept any kind of ISBN.
 
 message
 ~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
-The message that will be shown if the value is not valid.
-If not ``null``, this message has priority over all the other messages.
+The message that will be shown if the value is not valid. If not ``null``,
+this message has priority over all the other messages.
 
 isbn10Message
 ~~~~~~~~~~~~~

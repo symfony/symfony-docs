@@ -2,14 +2,14 @@ Image
 =====
 
 The Image constraint works exactly like the :doc:`File </reference/constraints/File>`
-constraint, except that its `mimeTypes`_ and `mimeTypesMessage` options are
-automatically setup to work for image files specifically.
+constraint, except that its `mimeTypes`_ and `mimeTypesMessage`_ options
+are automatically setup to work for image files specifically.
 
 Additionally it has options so you can validate against the width and height
 of the image.
 
-See the :doc:`File </reference/constraints/File>` constraint for the bulk of
-the documentation on this constraint.
+See the :doc:`File </reference/constraints/File>` constraint for the bulk
+of the documentation on this constraint.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
@@ -46,10 +46,10 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For example,
-suppose you're creating an author form where you can upload a "headshot"
-image for the author. In your form, the ``headshot`` property would be a
-``file`` type. The ``Author`` class might look as follows::
+in a form as a :doc:`file </reference/forms/types/file>` form type. For
+example, suppose you're creating an author form where you can upload a
+"headshot" image for the author. In your form, the ``headshot`` property
+would be a ``file`` type. The ``Author`` class might look as follows::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
@@ -71,8 +71,8 @@ image for the author. In your form, the ``headshot`` property would be a
         }
     }
 
-To guarantee that the ``headshot`` ``File`` object is a valid image and that
-it is between a certain size, add the following:
+To guarantee that the ``headshot`` ``File`` object is a valid image and
+that it is between a certain size, add the following:
 
 .. configuration-block::
 
