@@ -235,7 +235,7 @@ help with message translation of *static blocks of text*:
     {% trans %}Hello %name%{% endtrans %}
 
     {% transchoice count %}
-        {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples
     {% endtranschoice %}
 
 The ``transchoice`` tag automatically gets the ``%count%`` variable from
@@ -261,7 +261,7 @@ You can also specify the message domain and pass some additional variables:
     {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
 
     {% transchoice count with {'%name%': 'Fabien'} from "app" %}
-        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf] %name%, there are %count% apples
+        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
 
 .. _book-translation-filters:
