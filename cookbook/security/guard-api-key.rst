@@ -46,9 +46,9 @@ that to authenticate the user. To do this, create a class that extends
                 return;
             }
 
-            return [
+            return array(
                 'token' => $token,
-            ];
+            );
         }
 
         public function authenticate($credentials, UserProviderInterface $userProvider)
@@ -241,7 +241,7 @@ and your new ``app.token_authenticator`` authenticator:
                     'pattern'        => '^/',
                     'stateless'      => true,
                     'anonymous'      => true,
-                    'simple_preauth' => array(
+                    'guard'          => array(
                         'authenticators'  => array(
                             'app.token_authenticator'
                         ),
