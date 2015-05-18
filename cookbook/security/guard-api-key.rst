@@ -20,8 +20,9 @@ A) Create the Guard Authenticator
 ---------------------------------
 
 Suppose you want to read an ``X-API-TOKEN`` header on each request and use
-that to authenticate the user. To do this, create a class that implements
-:class:`Symfony\\Component\\Security\\Guard\\\GuardAuthenticatorInterface`::
+that to authenticate the user. To do this, create a class that extends
+:class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
+(or which implements :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`)::
 
     // src/AppBundle/Security/TokenAuthenticator.php
     namespace AppBundle\Security;
@@ -199,6 +200,7 @@ and your new ``app.token_authenticator`` authenticator:
                     pattern: ^/
                     # set to false if you *do* want to store users in the session
                     stateless: true
+                    anonymous: true
                     guard:
                         authenticators:
                             - app.token_authenticator
@@ -218,6 +220,7 @@ and your new ``app.token_authenticator`` authenticator:
                 <firewall name="secured_area"
                     pattern="^/"
                     stateless="true"
+                    anonymous="true"
                 >
                     <guard>
                         <authenticator>apikey_authenticator</authenticator>
@@ -237,6 +240,7 @@ and your new ``app.token_authenticator`` authenticator:
                 'secured_area'       => array(
                     'pattern'        => '^/',
                     'stateless'      => true,
+                    'anonymous'      => true,
                     'simple_preauth' => array(
                         'authenticators'  => array(
                             'app.token_authenticator'
