@@ -104,6 +104,10 @@ the security checks in PHP:
 
 .. code-block:: php
 
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    // ...
+
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
@@ -117,7 +121,7 @@ the security checks in PHP:
         }
 
         if (!$post->isAuthor($this->getUser())) {
-            throw $this->createAccessDeniedException();
+            throw new AccessDeniedException();
         }
 
         // ...
@@ -192,6 +196,10 @@ Now, you can use the voter with the ``security.context`` service:
 
 .. code-block:: php
 
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    // ...
+
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
@@ -200,7 +208,7 @@ Now, you can use the voter with the ``security.context`` service:
         $post = // query for the post ...
 
         if (!$this->get('security.context')->isGranted('edit', $post)) {
-            throw $this->createAccessDeniedException();
+            throw new AccessDeniedException();
         }
     }
 
