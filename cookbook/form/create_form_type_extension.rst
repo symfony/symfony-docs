@@ -216,7 +216,7 @@ it in the view::
          */
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            $resolver->setDefined(array('image_path'));
+            $resolver->setDefaults(array('image_path'));
         }
 
         /**
