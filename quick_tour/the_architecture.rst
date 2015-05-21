@@ -309,4 +309,4 @@ need to learn a lot to become a Symfony master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and
 pick any topic you want.
 
-.. _Composer:   http://getcomposer.org
+.. _Composer:   https://getcomposer.org

@@ -56,5 +56,5 @@ script to ensure that all of the needed vendor libraries are downloaded.
     to replace only the original parts (i.e. be sure not to also delete any of
     your custom entries).
 
-.. _Composer: http://getcomposer.org/
-.. _GetComposer.org: http://getcomposer.org/
+.. _Composer: https://getcomposer.org/
+.. _GetComposer.org: https://getcomposer.org/

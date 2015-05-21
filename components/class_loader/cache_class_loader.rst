@@ -70,5 +70,5 @@ it is straightforward::
     $loader->unregister();
 
 .. _APC:        http://php.net/manual/en/book.apc.php
-.. _autoloader: http://getcomposer.org/doc/01-basic-usage.md#autoloading
+.. _autoloader: https://getcomposer.org/doc/01-basic-usage.md#autoloading
 .. _XCache:     http://xcache.lighttpd.net
