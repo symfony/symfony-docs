@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-22T08:23:16Z
+
+@WouterJ done.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T10:27:58Z
+
+Does it make sense to remove the reference to the JMS serializer?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-22T11:26:31Z
+
+@xabbuh if the reference is not removed, it should be reworded. Circular references and groups was the main gap between JMS and Symfony Serializer. Since it's filled, I'm not sure there is a reason to recommend another solution than the built-in one (JMS = more dependancies to the project, a different release and BC policy, licenses issues etc).
+
+Or maybe something like "A popular alternative to the Symfony Serializer is JMSSerializer"?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T11:29:26Z
+
+@dunglas Rewording and short it sounds like a good idea to me. We can then also set it in a `seealso` block.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T11:29:34Z
+
+Sorry, wrong button.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-23T11:22:50Z
+
+@xabbuh done.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-23T11:34:22Z
+
+Just some minor things left, thanks for your quick action!
+
+---------------------------------------------------------------------------
+
+by dunglas at 2014-12-23T12:19:50Z
+
+@WouterJ done
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-02-22T18:14:22Z
+
+Fixed @WouterJ comments and added a mention about the JMS Serializer license.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-03-11T21:02:55Z
+
+Comments fixed.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-03-12T21:28:05Z
+
+@xabbuh's comments fixed. Thanks for the review!
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2015-03-13T08:49:59Z
+
+can you add an example when group is defined on a method
+
+---------------------------------------------------------------------------
+
+by dunglas at 2015-04-02T20:18:22Z
+
+Rebased and added an example with a getter as suggested by @aitboudad
