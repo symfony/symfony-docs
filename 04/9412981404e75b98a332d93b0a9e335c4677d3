@@ -1,0 +1,139 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-22T13:14:17Z
+
+Do we really want Boolean? I really don't like it as it's inconsistent.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T13:30:30Z
+
+@WouterJ I think it make sense in terms that it is derived from George Boole's name. We also used `Boolean` in quite a lot of places in the reference for option types. Though I don't have any strong feelings about this. If you all think that `boolean` feels more natural, I'll revert the changes and convert uppercased occurences with lowercased ones.
+
+By the way, why do we use `Boolean` in the reference at all and don't use `bool` like the Symfoy code base does? Is it just for historical reasons?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2014-12-22T13:51:20Z
+
+@xabbuh I agree with @WouterJ: even if `Boolean` is the correct term, most developers use it as `boolean` and treat it as a common word.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T14:33:29Z
+
+Seems we have a majority for `boolean` instead of `Boolean` then. :) Have replaced them accordingly.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-22T15:38:52Z
+
+@xabbuh the code changed this year to `bool` instead of `Boolean` (that's where the capitialized boolean in the docs come from), to make their types compatible with Hack (http://docs.hhvm.com/manual/en/hack.annotations.types.php).
+
+I don't think bool is as clear as boolean, that's why I propose to keep using boolean instead of bool
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-22T15:45:37Z
+
+@WouterJ Thanks for the explanation. So, should we now keep lowercased `boolean` everywhere or switch it back to `Boolean` in the reference and use `boolean` in texts only?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-22T15:52:41Z
+
+I think we should use `boolean` (lowercased) everywhere.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-29T20:42:31Z
+
+This is ready to be reviewed now. I've kept different commits for each item of the task list so that you can review each step on its own.
+
+However, there are two changes I'm not completely happy with:
+
+* Unifying occurrences of Symfony framework and Symfony Framework to always use the latter on is probably a good idea. But we also have a lot of occurrences of "Symfony full-stack Framework" now which looks a bit weird. Should we keep it anyway? Or replace it with something like "full-stack Symfony Framework" or "Symfony Full-Stack Framework"?
+
+* I don't like using uppercase letters for "Dependency Injection". Why don't we write "dependency injection container", "dependency injection tags" and "dependency injection extension class" while keeping uppercase letters only for the "DependencyInjection component"?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-02-19T13:52:27Z
+
+@xabbuh regarding your questions:
+
+1. I prefer using this variant: `full-stack Symfony Framework`
+2. I agree with you about lowercasing `dependency injection` except when referring to the component.
+
+Do you think this PR could be merged anytime soon? It looks like we're very close thanks to your great work and it's sad to see these nice improvements pending to be merged. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-19T14:19:15Z
+
+@javiereguiluz This can be merged once we agree on all the changes. :) Though I'm fine with splitting it in several PRs if there are some things that should be discussed while others may be settled.
+
+@WouterJ @weaverryan What do you think?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-02-21T10:10:08Z
+
++1 for Symfony Full-Stack Framework
++1 for lowercase dependency injection and only capitialized when talking about the component
+
+Btw, thsi also needs a rebase.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-02-23T21:49:34Z
+
+I rebased and applied your feedback, @WouterJ.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-03-25T10:21:14Z
+
+Can you please rebase this PR, Christian?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-03-25T18:17:40Z
+
+done
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-27T08:54:09Z
+
+@xabbuh apart from a rebase, is this PR finished?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-27T09:02:52Z
+
+yes (at least from my sight)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-04-28T20:41:46Z
+
+@WouterJ @weaverryan I can extract some of the commits if there is anything to argue about.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-30T15:31:44Z
+
+This PR still contains the boolean mix up.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-01T08:38:19Z
+
+I rebased and finally fixed the boolean/Boolean mix up.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-21T14:16:58Z
+
+Let's merge this one to avoid more conflicts :)
