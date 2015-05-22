@@ -117,7 +117,7 @@ bundle configuration would look like:
 
 .. seealso::
 
-    For parameter handling within a Dependency Injection class see
+    For parameter handling within a dependency injection container see
     :doc:`/cookbook/configuration/using_parameters_in_dic`.
 
 

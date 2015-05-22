@@ -27,7 +27,7 @@ Configuration
 
 .. tip::
 
-    If you are working with the full-stack Symfony framework, the Form component
+    If you are working with the full-stack Symfony Framework, the Form component
     is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
 
 In Symfony, forms are represented by objects and these objects are built
@@ -375,7 +375,7 @@ Creating a simple Form
 
 .. tip::
 
-    If you're using the Symfony framework, then the form factory is available
+    If you're using the Symfony Framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder``

@@ -104,7 +104,7 @@ be injected with this parameter via the extension as follows::
 
         public function  __construct($debug)
         {
-            $this->debug = (Boolean) $debug;
+            $this->debug = (bool) $debug;
         }
 
         public function getConfigTreeBuilder()

@@ -339,6 +339,6 @@ Final Thoughts
 
 That's all there is to it and I'm not even sure you'll have spent the full
 10 minutes. You were briefly introduced to bundles in the first part and
-all the features you've learned about so far are part of the core framework
-bundle. But thanks to bundles, everything in Symfony can be extended or
-replaced. That's the topic of the :doc:`next part of this tutorial <the_architecture>`.
+all the features you've learned about so far are part of the core FrameworkBundle.
+But thanks to bundles, everything in Symfony can be extended or replaced.
+That's the topic of the :doc:`next part of this tutorial <the_architecture>`.

@@ -204,8 +204,6 @@ You can then use the following configuration to invoke this validator:
             constraints:
                 - Callback: [Vendor\Package\Validator, validate]
 
-        .. code-block:: xml
-
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->

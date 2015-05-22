@@ -215,7 +215,7 @@ Field Options
 allow_add
 ~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, then if unrecognized items are submitted to the collection,
 they will be added as new items. The ending array will contain the existing
@@ -236,7 +236,7 @@ client side. For more information, see the above example and :ref:`cookbook-form
 allow_delete
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, then if an existing item is not contained in the submitted
 data, it will be correctly absent from the final array of items. This means
@@ -291,7 +291,7 @@ you'd need to at least pass the ``choices`` option to the underlying type::
 prototype
 ~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This option is useful when using the `allow_add`_ option. If ``true`` (and
 if `allow_add`_ is also ``true``), a special "prototype" attribute will be
@@ -370,7 +370,7 @@ The default value is ``array()`` (empty array).
 error_bubbling
 ~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
@@ -390,6 +390,6 @@ Field Variables
 ============  ===========  ========================================
 Variable      Type         Usage
 ============  ===========  ========================================
-allow_add     ``Boolean``  The value of the `allow_add`_ option.
-allow_delete  ``Boolean``  The value of the `allow_delete`_ option.
+allow_add     ``boolean``  The value of the `allow_add`_ option.
+allow_delete  ``boolean``  The value of the `allow_delete`_ option.
 ============  ===========  ========================================
