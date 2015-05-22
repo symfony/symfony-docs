@@ -1,0 +1,125 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-12-29T11:15:07Z
+
+The config references surely needs some love, thanks for starting this!
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-29T13:01:40Z
+
+@WouterJ thanks for reviewing this, hopefully i fixed everything :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2014-12-30T12:01:39Z
+
+@timglabisch You should nest the different code blocks into a `configuration-block` directive.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2014-12-30T22:18:05Z
+
+please rereview.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-11T20:48:45Z
+
+@WouterJ @xabbuh can you take a look at this PR, whats missing?
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-12T22:56:40Z
+
+@xabbuh i changed the namespace, please review
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-12T23:09:35Z
+
+@timglabisch However, maybe we should consider to add this in the bundle and not here given the discussion in https://github.com/symfony/symfony-docs/pull/4719#issuecomment-68607811.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-12T23:28:46Z
+
+@xabbuh i think it depends on how fast this PR is mergeable. i love the idea to move the doctrine bundle configuration to the DoctrineBundle, but merging this PR wouldn't prevent us from moving the documentation later on.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-13T22:39:19Z
+
+@xabbuh i rebased this branch against the master.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-15T21:07:06Z
+
+@xabbuh please review
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-15T22:04:10Z
+
+Thank you @timglabisch. Looks good to me. :+1:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-16T22:01:00Z
+
+Hi Tim!
+
+Thanks for this! I just left a lot of comments, but it's more because this configuration is confusing, with all the `is_bundle` stuff and how behaviors change (which I'm guessing, is why you decided to document it). Anyways, for me, it wasn't quite clear yet - so I added some suggestions. Please make any changes that make sense and ask any questions.
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-17T20:53:45Z
+
+@weaverryan the doctrine configuration here is a bit weird, can you please rereview this? i did some additional changes to make this more clear.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-01-18T23:14:15Z
+
+Hey Tim!
+
+Thanks for the awesome-fast turn-around. I just added some more notes. Ultimately, we may need to re-make this PR against `DoctrineBundle`, as we've decided to keep this configuration file in *their* repository. Let's perfect this first, then re-make it over there.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-01-24T13:13:15Z
+
+thanks @weaverryan please rereview this PR.
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-02-18T21:13:09Z
+
+ping @WouterJ @xabbuh
+
+---------------------------------------------------------------------------
+
+by timglabisch at 2015-02-24T23:02:01Z
+
+@WouterJ fixed
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-02-26T13:19:58Z
+
+This looks great to me. Now, we really need this to go into the DoctrineBundle itself: https://github.com/doctrine/DoctrineBundle/blob/master/Resources/doc/configuration.rst. @timglabisch can you duplicate this PR over there?
+
+We also need finish "moving" the configuration section to that repository. It looks like our reference section may still have some stuff that their's doesn't. We need to make sure everything we have is in their configuration section, then replace our reference section with a link to their docs.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-21T19:01:56Z
+
+@weaverryan shouldn't we just merge this one?
