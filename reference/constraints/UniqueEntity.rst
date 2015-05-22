@@ -255,7 +255,7 @@ Now, the message would be bound to the ``port`` field with this configuration.
 ignoreNull
 ~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.

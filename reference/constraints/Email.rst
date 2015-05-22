@@ -110,7 +110,7 @@ This message is shown if the underlying data is not a valid email address.
 checkMX
 ~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX record of the host of the given email.
@@ -118,7 +118,7 @@ check the validity of the MX record of the host of the given email.
 checkHost
 ~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX *or* the A *or* the AAAA record of the host

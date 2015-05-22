@@ -81,13 +81,13 @@ the example below:
 
 .. note::
 
-    If the legacy application requires its own session save-handler, do not
+    If the legacy application requires its own session save handler, do not
     override this. Instead set ``handler_id: ~``. Note that a save handler
     cannot be changed once the session has been started. If the application
-    starts the session before Symfony is initialized, the save-handler will
+    starts the session before Symfony is initialized, the save handler will
     have already been  set. In this case, you will need ``handler_id: ~``.
-    Only override the save-handler if you are sure the legacy application
-    can use the Symfony save-handler without side effects and that the session
+    Only override the save handler if you are sure the legacy application
+    can use the Symfony save handler without side effects and that the session
     has not been started before Symfony is initialized.
 
 For more details, see :doc:`/components/http_foundation/session_php_bridge`.

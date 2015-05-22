@@ -123,7 +123,7 @@ edit a particular object. Here's an example implementation:
             switch($attribute) {
                 case self::VIEW:
                     // the data object could have for example a method isPrivate()
-                    // which checks the Boolean attribute $private
+                    // which checks the boolean attribute $private
                     if (!$post->isPrivate()) {
                         return VoterInterface::ACCESS_GRANTED;
                     }

@@ -79,5 +79,5 @@ Form Variables
 ========  ===========  ==============================================================
 Variable  Type         Usage
 ========  ===========  ==============================================================
-clicked   ``Boolean``  Whether the button is clicked or not.
+clicked   ``boolean``  Whether the button is clicked or not.
 ========  ===========  ==============================================================

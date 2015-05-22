@@ -186,7 +186,7 @@ Viewing from the Web Debug Toolbar
 ----------------------------------
 
 You can view any email sent during a single response when you are in the
-``dev`` environment using the Web Debug Toolbar. The email icon in the toolbar
+``dev`` environment using the web debug toolbar. The email icon in the toolbar
 will show how many emails were sent. If you click it, a report will open
 showing the details of the sent emails.
 

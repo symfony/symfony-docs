@@ -178,7 +178,7 @@ fail if the input string *does* match this pattern.
 htmlPattern
 ~~~~~~~~~~~
 
-**type**: ``string|Boolean`` **default**: null
+**type**: ``string|boolean`` **default**: null
 
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
 You usually don't need to specify this option because by default, the constraint
@@ -263,7 +263,7 @@ Setting ``htmlPattern`` to false will disable client side validation.
 match
 ~~~~~
 
-**type**: ``Boolean`` default: ``true``
+**type**: ``boolean`` default: ``true``
 
 If ``true`` (or not set), this validator will pass if the given string matches
 the given `pattern`_ regular expression. However, when this option is set

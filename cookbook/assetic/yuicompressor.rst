@@ -131,7 +131,7 @@ can be repeated to minify your stylesheets.
 Disable Minification in Debug Mode
 ----------------------------------
 
-Minified JavaScripts and Stylesheets are very difficult to read, let alone
+Minified JavaScripts and stylesheets are very difficult to read, let alone
 debug. Because of this, Assetic lets you disable a certain filter when your
 application is in debug mode. You can do this by prefixing the filter name
 in your template with a question mark: ``?``. This tells Assetic to only
