@@ -55,7 +55,7 @@ On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
 component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
 on top of the Request and Response classes to standardize the way requests are
 handled. It also provides extension points and tools that makes it the ideal
-starting point to create a Web framework without too much overhead.
+starting point to create a web framework without too much overhead.
 
 It also optionally adds configurability and extensibility, thanks to the
 DependencyInjection component and a powerful plugin system (bundles).
@@ -177,12 +177,12 @@ Event):
 #. Listeners of the ``kernel.terminate`` event can perform tasks after the
    Response has been served.
 
-If an Exception is thrown during processing, the ``kernel.exception`` is
-notified and listeners are given a chance to convert the Exception to a
+If an exception is thrown during processing, the ``kernel.exception`` is
+notified and listeners are given a chance to convert the exception into a
 Response. If that works, the ``kernel.response`` event is notified; if not, the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for
+If you don't want exceptions to be caught (for embedded requests for
 instance), disable the ``kernel.exception`` event by passing ``false`` as the
 third argument to the ``handle()`` method.
 
@@ -238,8 +238,8 @@ add the following code at the beginning of your listener method::
 
 .. tip::
 
-    If you are not yet familiar with the Symfony EventDispatcher, read the
-    :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`
+    If you are not yet familiar with the Symfony EventDispatcher component,
+    read :doc:`its documentation </components/event_dispatcher/introduction>`
     section first.
 
 .. index::
@@ -351,7 +351,7 @@ The FrameworkBundle registers several listeners:
     Collects data for the current request.
 
 :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`
-    Injects the Web Debug Toolbar.
+    Injects the web debug toolbar.
 
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`
     Fixes the Response ``Content-Type`` based on the request format.
@@ -396,7 +396,7 @@ forwards the ``Request`` to a given Controller (the value of the
 ``class::method`` notation).
 
 A listener on this event can create and set a ``Response`` object, create
-and set a new ``Exception`` object, or do nothing::
+and set a new ``Exception`` object or do nothing::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -433,8 +433,10 @@ and set a new ``Exception`` object, or do nothing::
 .. index::
    single: EventDispatcher
 
-The EventDispatcher
--------------------
+.. _the-eventdispatcher:
+
+The EventDispatcher Component
+-----------------------------
 
 The EventDispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
@@ -455,7 +457,7 @@ enhance performance; use it in the production environment to explore problems
 after the fact.
 
 You rarely have to deal with the profiler directly as Symfony provides
-visualizer tools like the Web Debug Toolbar and the Web Profiler. If you use
+visualizer tools like the web debug toolbar and the web profiler. If you use
 the Symfony Standard Edition, the profiler, the web debug toolbar, and the
 web profiler are all already configured with sensible settings.
 
@@ -481,7 +483,7 @@ bottom of all pages. It displays a good summary of the profiling data that
 gives you instant access to a lot of useful information when something does
 not work as expected.
 
-If the summary provided by the Web Debug Toolbar is not enough, click on the
+If the summary provided by the web debug toolbar is not enough, click on the
 token link (a string made of 13 random characters) to access the Web Profiler.
 
 .. note::

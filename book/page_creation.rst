@@ -763,7 +763,7 @@ of the most common elements of a bundle:
     Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
 ``DependencyInjection/``
-    Holds certain dependency injection extension classes, which may import service
+    Holds certain Dependency Injection Extension classes, which may import service
     configuration, register compiler passes or more (this directory is not
     necessary).
 
@@ -1082,7 +1082,7 @@ in mind:
   and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
   used to help updated vendor libraries);
 
-* Each feature in Symfony (including the Symfony framework core) is organized
+* Each feature in Symfony (including the Symfony Framework core) is organized
   into a *bundle*, which is a structured set of files for that feature;
 
 * The **configuration** for each bundle lives in the ``Resources/config``

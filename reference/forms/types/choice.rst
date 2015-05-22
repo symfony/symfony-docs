@@ -192,9 +192,9 @@ Field Variables
 +------------------------+--------------+-------------------------------------------------------------------+
 | Variable               | Type         | Usage                                                             |
 +========================+==============+===================================================================+
-| multiple               | ``Boolean``  | The value of the `multiple`_ option.                              |
+| multiple               | ``boolean``  | The value of the `multiple`_ option.                              |
 +------------------------+--------------+-------------------------------------------------------------------+
-| expanded               | ``Boolean``  | The value of the `expanded`_ option.                              |
+| expanded               | ``boolean``  | The value of the `expanded`_ option.                              |
 +------------------------+--------------+-------------------------------------------------------------------+
 | preferred_choices      | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
 |                        |              | choices which should be presented to the user with priority.      |
@@ -210,7 +210,7 @@ Field Variables
 | is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
 |                        |              | and returns whether the choice is in the selected value(s).       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| empty_value_in_choices | ``Boolean``  | Whether the empty value is in the choice list.                    |
+| empty_value_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
 +------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::

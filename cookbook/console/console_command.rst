@@ -6,7 +6,7 @@ How to Create a Console Command
 
 The Console page of the Components section (:doc:`/components/console/introduction`) covers
 how to create a console command. This cookbook article covers the differences
-when creating console commands within the Symfony framework.
+when creating console commands within the Symfony Framework.
 
 Automatically Registering Commands
 ----------------------------------
@@ -153,9 +153,9 @@ see :doc:`/cookbook/service_container/scopes`.
 Testing Commands
 ----------------
 
-When testing commands used as part of the full framework
-:class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>` should be used
-instead of
+When testing commands used as part of the full-stack framework,
+:class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application <Symfony\\Bundle\\FrameworkBundle\\Console\\Application>`
+should be used instead of
 :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`::
 
     use Symfony\Component\Console\Tester\CommandTester;

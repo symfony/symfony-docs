@@ -455,8 +455,8 @@ Accessing the Container
 
 It's highly recommended that a functional test only tests the Response. But
 under certain very rare circumstances, you might want to access some internal
-objects to write assertions. In such cases, you can access the dependency
-injection container::
+objects to write assertions. In such cases, you can access the Dependency
+Injection Container::
 
     $container = $client->getContainer();
 

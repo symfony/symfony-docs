@@ -7,9 +7,9 @@ The HttpKernel Component
 ========================
 
     The HttpKernel component provides a structured process for converting
-    a ``Request`` into a ``Response`` by making use of the EventDispatcher.
-    It's flexible enough to create a full-stack framework (Symfony), a micro-framework
-    (Silex) or an advanced CMS system (Drupal).
+    a ``Request`` into a ``Response`` by making use of the EventDispatcher
+    component. It's flexible enough to create a full-stack framework (Symfony),
+    a micro-framework (Silex) or an advanced CMS system (Drupal).
 
 Installation
 ------------
@@ -79,10 +79,11 @@ and talks about how one specific implementation of the HttpKernel - the Symfony
 Framework - works.
 
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
-is really simple, and involves creating an :doc:`EventDispatcher </components/event_dispatcher/introduction>`
-and a :ref:`controller resolver <component-http-kernel-resolve-controller>`
-(explained below). To complete your working kernel, you'll add more event
-listeners to the events discussed below::
+is really simple and involves creating an
+:doc:`event dispatcher </components/event_dispatcher/introduction>` and a
+:ref:`controller resolver <component-http-kernel-resolve-controller>` (explained
+below). To complete your working kernel, you'll add more event listeners
+to the events discussed below::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\HttpKernel;

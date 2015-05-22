@@ -4,7 +4,7 @@
 How Symfony2 Differs from Symfony1
 ==================================
 
-The Symfony2 framework embodies a significant evolution when compared with
+The Symfony2 Framework embodies a significant evolution when compared with
 the first version of the framework. Fortunately, with the MVC architecture
 at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
@@ -20,7 +20,7 @@ So, sit back and relax as you travel from "then" to "now".
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Standard Edition`_ -
+When looking at a Symfony2 project - for example, the `Symfony Standard Edition`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -162,7 +162,7 @@ settings defined and Composer takes care of everything for you.
 For this to work, all third-party libraries used by your project must be
 defined in the ``composer.json`` file.
 
-If you look at the ``HelloController`` from the Symfony2 Standard Edition you
+If you look at the ``HelloController`` from the Symfony Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
 AcmeDemoBundle is not defined in your ``composer.json`` file. Nonetheless are
 the files autoloaded. This is because you can tell Composer to autoload files
@@ -200,14 +200,14 @@ Applications
 ------------
 
 In a symfony1 project, it is common to have several applications: one for the
-frontend and one for the backend for instance.
+front-end and one for the back-end for instance.
 
 In a Symfony2 project, you only need to create one application (a blog
 application, an intranet application, ...). Most of the time, if you want to
 create a second application, you might instead create another project and
 share some bundles between them.
 
-And if you need to separate the frontend and the backend features of some
+And if you need to separate the front-end and the back-end features of some
 bundles, you can create sub-namespaces for controllers, sub-directories for
 templates, different semantic configurations, separate routing configurations,
 and so on.
@@ -227,7 +227,7 @@ Bundles and Plugins
 In a symfony1 project, a plugin could contain configuration, modules, PHP
 libraries, assets and anything else related to your project. In Symfony2,
 the idea of a plugin is replaced by the "bundle". A bundle is even more powerful
-than a plugin because the core Symfony2 framework is brought in via a series
+than a plugin because the core Symfony2 Framework is brought in via a series
 of bundles. In Symfony2, bundles are first-class citizens that are so flexible
 that even core code itself is a bundle.
 
@@ -365,5 +365,5 @@ primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
 .. _`Composer`: http://getcomposer.org
-.. _`Symfony2 Standard Edition`: https://github.com/symfony/symfony-standard
+.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`the Composer documentation`: http://getcomposer.org/doc/04-schema.md#autoload

@@ -1345,7 +1345,7 @@ subdirectory.
 Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the Symfony framework itself is just a bundle, core templates can be
+Since the Symfony Framework itself is just a bundle, core templates can be
 overridden in the same way. For example, the core TwigBundle contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the

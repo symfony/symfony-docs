@@ -12,7 +12,7 @@ The EventDispatcher Component
 Introduction
 ------------
 
-Object Oriented code has gone a long way to ensuring code extensibility. By
+Object-oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
 behaviors. But if they want to share the changes with other developers who have
@@ -591,8 +591,8 @@ specifically pass one::
 
     $dispatcher->dispatch('foo.event');
 
-Moreover, the EventDispatcher always returns whichever event object that was
-dispatched, i.e. either the event that was passed or the event that was
+Moreover, the event dispatcher always returns whichever event object that
+was dispatched, i.e. either the event that was passed or the event that was
 created internally by the dispatcher. This allows for nice shortcuts::
 
     if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {

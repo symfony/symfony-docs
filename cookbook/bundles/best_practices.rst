@@ -166,7 +166,7 @@ Commands, Helpers, Listeners, and Controllers.
 Classes that connect to the event dispatcher should be suffixed with
 ``Listener``.
 
-Exceptions classes should be stored in an ``Exception`` sub-namespace.
+Exception classes should be stored in an ``Exception`` sub-namespace.
 
 Vendors
 -------

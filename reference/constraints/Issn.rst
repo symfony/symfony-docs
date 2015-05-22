@@ -91,7 +91,7 @@ The message shown if the given value is not a valid ISSN.
 caseSensitive
 ~~~~~~~~~~~~~
 
-**type**: ``Boolean`` default: ``false``
+**type**: ``boolean`` default: ``false``
 
 The validator will allow ISSN values to end with a lower case 'x' by default.
 When switching this to ``true``, the validator requires an upper case 'X'.
@@ -99,7 +99,7 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 requireHyphen
 ~~~~~~~~~~~~~
 
-**type**: ``Boolean`` default: ``false``
+**type**: ``boolean`` default: ``false``
 
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.

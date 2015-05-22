@@ -27,7 +27,7 @@ into the language of the user::
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
 In this chapter, you'll learn how to use the Translation component in the
-Symfony framework. You can read the
+Symfony Framework. You can read the
 :doc:`Translation component documentation </components/translation/usage>`
 to learn even more. Overall, the process has several steps:
 
@@ -573,7 +573,7 @@ the framework:
 Translating Constraint Messages
 -------------------------------
 
-If you're using validation constraints with the form framework, then translating
+If you're using validation constraints with the Form component, then translating
 the error messages is easy: simply create a translation resource for the
 ``validators`` :ref:`domain <using-message-domains>`.
 

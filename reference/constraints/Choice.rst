@@ -281,7 +281,7 @@ to return the choices array. See
 multiple
 ~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If this option is true, the input value is expected to be an array instead
 of a single, scalar value. The constraint will check that each value of
@@ -345,7 +345,7 @@ too many options per the `max`_ option.
 strict
 ~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, the validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array`

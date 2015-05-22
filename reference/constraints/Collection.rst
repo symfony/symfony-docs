@@ -304,7 +304,7 @@ be executed against that element of the collection.
 allowExtraFields
 ~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: false
+**type**: ``boolean`` **default**: false
 
 If this option is set to ``false`` and the underlying collection contains
 one or more elements that are not included in the `fields`_ option, a validation
@@ -313,7 +313,7 @@ error will be returned. If set to ``true``, extra fields are ok.
 extraFieldsMessage
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``The fields {{ fields }} were not expected.``
+**type**: ``boolean`` **default**: ``The fields {{ fields }} were not expected.``
 
 The message shown if `allowExtraFields`_ is false and an extra field is
 detected.
@@ -321,7 +321,7 @@ detected.
 allowMissingFields
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: false
+**type**: ``boolean`` **default**: false
 
 If this option is set to ``false`` and one or more fields from the `fields`_
 option are not present in the underlying collection, a validation error
@@ -331,7 +331,7 @@ option are not present in the underlying collection.
 missingFieldsMessage
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``The fields {{ fields }} are missing.``
+**type**: ``boolean`` **default**: ``The fields {{ fields }} are missing.``
 
 The message shown if `allowMissingFields`_ is false and one or more fields
 are missing from the underlying collection.
