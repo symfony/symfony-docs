@@ -198,7 +198,7 @@ it into a format that's suitable for being rendered in an HTML form.
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
    "setter" method so that the Form component can get and put data onto the
-   property. For a Boolean property, you can use an "isser" or "hasser" method
+   property. For a boolean property, you can use an "isser" or "hasser" method
    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
    ``getPublished()`` or ``getReminder()``).
 
@@ -1526,7 +1526,7 @@ file, you can see every block needed to render a form and every default field
 type.
 
 In PHP, the fragments are individual template files. By default they are located in
-the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_).
+the ``Resources/views/Form`` directory of the FrameworkBundle (`view on GitHub`_).
 
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
@@ -1862,7 +1862,7 @@ an array.
 
     Be advised, however, that in most cases using the ``getData()`` method is
     a better choice, since it returns the data (usually an object) after
-    it's been transformed by the form framework.
+    it's been transformed by the Form component.
 
 Adding Validation
 ~~~~~~~~~~~~~~~~~

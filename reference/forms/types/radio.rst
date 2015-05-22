@@ -10,7 +10,7 @@ changes when another radio button with the same name gets checked.
 
 The ``radio`` type isn't usually used directly. More commonly it's used
 internally by other types such as :doc:`choice </reference/forms/types/choice>`.
-If you want to have a Boolean field, use :doc:`checkbox </reference/forms/types/checkbox>`.
+If you want to have a boolean field, use :doc:`checkbox </reference/forms/types/checkbox>`.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``radio`` field                                           |

@@ -46,7 +46,7 @@ your ``php.ini`` configuration.
 Use Composer's Class Map Functionality
 --------------------------------------
 
-By default, the Symfony standard edition uses Composer's autoloader
+By default, the Symfony Standard Edition uses Composer's autoloader
 in the `autoload.php`_ file. This autoloader is easy to use, as it will
 automatically find any new classes that you've placed in the registered
 directories.

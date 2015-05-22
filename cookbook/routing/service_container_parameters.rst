@@ -127,5 +127,5 @@ path):
 
 .. seealso::
 
-    For parameter handling within a Dependency Injection class see
+    For parameter handling within a Dependency Injection Class see
     :doc:`/cookbook/configuration/using_parameters_in_dic`.

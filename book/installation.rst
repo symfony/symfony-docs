@@ -126,7 +126,7 @@ you can create Symfony applications using the alternative installation method
 based on `Composer`_.
 
 Composer is the dependency manager used by modern PHP applications and it can
-also be used to create new applications based on the Symfony framework. If you
+also be used to create new applications based on the Symfony Framework. If you
 don't have installed it globally, start by reading the next section.
 
 Installing Composer Globally
@@ -333,7 +333,7 @@ applications:
 * The `Symfony CMF Standard Edition`_ is the best distribution to get started
   with the `Symfony CMF`_ project, which is a project that makes it easier for
   developers to add CMS functionality to applications built with the Symfony
-  framework.
+  Framework.
 * The `Symfony REST Edition`_ shows how to build an application that provides a
   RESTful API using the FOSRestBundle and several other related bundles.
 

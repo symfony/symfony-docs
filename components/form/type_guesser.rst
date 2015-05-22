@@ -186,6 +186,6 @@ The last thing you need to do is registering your custom type guesser by using
 
 .. note::
 
-    When you use the Symfony framework, you need to register your type guesser
+    When you use the Symfony Framework, you need to register your type guesser
     and tag it with ``form.type_guesser``. For more information see
     :ref:`the tag reference <reference-dic-type_guesser>`.

@@ -1,7 +1,7 @@
 required
 ~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If true, an `HTML5 required attribute`_ will be rendered. The corresponding
 ``label`` will also render with a ``required`` class.

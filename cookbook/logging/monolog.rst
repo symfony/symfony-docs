@@ -45,7 +45,7 @@ The basic handler is the ``StreamHandler`` which writes logs in a stream
 Monolog comes also with a powerful built-in handler for the logging in
 prod environment: ``FingersCrossedHandler``. It allows you to store the
 messages in a buffer and to log them only if a message reaches the
-action level (``error`` in the configuration provided in the Standard
+action level (``error`` in the configuration provided in the Symfony Standard
 Edition) by forwarding the messages to another handler.
 
 Using several Handlers
