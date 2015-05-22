@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-09-22T17:24:14Z
+
+-1, Symfony currently doesn't use PSR-4 afaik /cc @fabpot
+
+---------------------------------------------------------------------------
+
+by phansys at 2014-09-22T17:57:07Z
+
+Hi @WouterJ.
+I based this change in this [doc entry](http://symfony.com/doc/current/components/class_loader/psr4_class_loader.html):
+> All Symfony components follow PSR-4.
+
+---------------------------------------------------------------------------
+
+by stof at 2014-09-25T09:17:11Z
+
+@WouterJ technically, our codebase respects both PSR-0 and PSR-4, given that it is not impacted by the difference between them (we don't use underscores in class names).
+the fact that we register the composer autoloader with PSR-0 rather than PSR-4 does not mean we are not compatible with PSR-4
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2014-10-31T11:15:14Z
+
+@fabpot what's your opinion on this?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-15T12:53:38Z
+
+I think we should merge this PR. I've flagged it as Finished and @weaverryan will merge it sometime :)
+
+Thanks @phansys and sorry for the delay!
