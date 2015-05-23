@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by DHager at 2015-03-25T02:51:48Z
+
+Side question: Is there specific maximum/ideal pixel-size for profiler icons? The largest ones seem to be around 42x30.
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-04-07T01:55:51Z
+
+Is there more than needs to happen to this for it to be ready for 2.6?
+
+For the SVG-icon issue, I'd like to do that as as a separate pull-request against the 2.7 branch.
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-04-29T18:41:04Z
+
+@WouterJ , @Stof : Is this OK for 2.6? I can make a separate PR against 2.7 using SVG icons.
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-05-08T00:23:48Z
+
+Ping.
+
+---------------------------------------------------------------------------
+
+by DHager at 2015-05-21T03:01:30Z
+
+Is there anything I can do to help move this forward?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:32:37Z
+
+I think this is good to be merged. Thank you for working on it @DHager.
