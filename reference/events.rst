@@ -25,8 +25,8 @@ each event has access to the following information:
 
 .. _kernel-core-request:
 
-kernel.request
-~~~~~~~~~~~~~~
+``kernel.request``
+~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
@@ -50,7 +50,7 @@ Listener Class Name                                                            P
 :class:`Symfony\\Component\\Security\\Http\\Firewall`                          8
 =============================================================================  ========
 
-kernel.controller
+``kernel.controller``
 ~~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
@@ -80,8 +80,8 @@ Listener Class Name                                                             
 :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`  0
 ==============================================================================  ========
 
-kernel.view
-~~~~~~~~~~~
+``kernel.view``
+~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
@@ -110,8 +110,8 @@ method::
 
     Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
 
-kernel.response
-~~~~~~~~~~~~~~~
+``kernel.response``
+~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
@@ -158,8 +158,8 @@ Listener Class Name                                                             
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`     -1024
 ===================================================================================  ========
 
-kernel.terminate
-~~~~~~~~~~~~~~~~
+``kernel.terminate``
+~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
 
@@ -181,8 +181,8 @@ Listener Class Name                                                        Prior
 
 .. _kernel-kernel.exception:
 
-kernel.exception
-~~~~~~~~~~~~~~~~
+``kernel.exception``
+~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
