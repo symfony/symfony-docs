@@ -19,7 +19,7 @@ then run:
 
     $ npm install -g bower
 
-After this command finishes, run ``bower`` in your terminal to find out if
+After this command has finished, run ``bower`` in your terminal to find out if
 it's installed correctly.
 
 .. tip::
@@ -45,7 +45,7 @@ create a ``.bowerrc`` file with a new destination (like ``web/assets/vendor``):
 
 .. tip::
 
-    If you're using a frontend build system like `Gulp`_ or `Grunt`_, then
+    If you're using a front-end build system like `Gulp`_ or `Grunt`_, then
     you can set the directory to whatever you want. Typically, you'll use
     these tools to ultimately move all assets into the ``web/`` directory.
 
@@ -125,15 +125,15 @@ file:
 
 .. code-block:: bash
 
-    git add web/assets/vendor
+    $ git add web/assets/vendor
 
 Why? Unlike Composer, Bower currently does not have a "lock" feature, which
 means that there's no guarantee that running ``bower install`` on a different
 server will give you the *exact* assets that you have on other machines.
-For more details, read the article `Checking in fronte-end dependencies`_.
+For more details, read the article `Checking in front-end dependencies`_.
 
 But, it's very possible that Bower will add a lock feature in the future
-(e.g. `bower/bower#1748`_)
+(e.g. `bower/bower#1748`_).
 
 .. _Bower: http://bower.io
 .. _`Node.js`: https://nodejs.org
@@ -142,5 +142,5 @@ But, it's very possible that Bower will add a lock feature in the future
 .. _Bootstrap: http://getbootstrap.com/
 .. _Gulp: http://gulpjs.com/
 .. _Grunt: http://gruntjs.com/
-.. _`Checking in fronte-end dependencies`: http://addyosmani.com/blog/checking-in-front-end-dependencies/
+.. _`Checking in front-end dependencies`: http://addyosmani.com/blog/checking-in-front-end-dependencies/
 .. _`bower/bower#1748`: https://github.com/bower/bower/pull/1748
