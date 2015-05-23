@@ -27,7 +27,7 @@ Error pages for the production environment can be customized in different ways
 depending on your needs:
 
 #. If you just want to change the contents and styles of the error pages to match
-   the rest of your application, :ref:`override default error templates <use-default-exception-controller>`;
+   the rest of your application, :ref:`override the default error templates <use-default-exception-controller>`;
 
 #. If you also want to tweak the logic used by Symfony to generate error pages,
    :ref:`override the default exception controller <custom-exception-controller>`;
@@ -41,25 +41,16 @@ depending on your needs:
 Overriding the Default Error Templates
 --------------------------------------
 
-By default, the ``showAction()`` method of the
-:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` is called
-whenever an exception occurs, thanks to an event listener configured by the TwigBundle.
-
-Then, the controller selects one of the templates defined in the
-``Resources/views/Exception`` directory of the TwigBundle to render the error
-page. If you browse that directory (usually located in
-``vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle``) you'll find a lot of
-templates defined for different types of errors and content formats
-(``error.*.twig`` templates are used in the production environment whereas
-``exception.*.twig`` templates are used in the development environment).
+When the error page loads, an internal :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`
+is used to render a Twig template to show the user.
 
 .. _cookbook-error-pages-by-status-code:
 
-The logic followed by the ``ExceptionController`` to pick one of the available
-templates is based on the HTTP status code and the request format:
+This controller uses the HTTP status code, request format and the following
+logic to determine the template filename:
 
 #. Look for a template for the given format and status code (like ``error404.json.twig``
-   or ``error500.xml.twig``);
+   or ``error500.html.twig``);
 
 #. If the previous template doesn't exist, discard the status code and look for
    a generic template for the given format (like ``error.json.twig`` or
@@ -71,8 +62,29 @@ templates is based on the HTTP status code and the request format:
 .. _overriding-or-adding-templates:
 
 To override these templates, simply rely on the standard Symfony method for
-:ref:`overriding templates that live inside a bundle <overriding-bundle-templates>`.
-For example, to override the 404 error template for HTML pages, create a new
+:ref:`overriding templates that live inside a bundle <overriding-bundle-templates>`:
+put them in the ``app/Resources/TwigBundle/views/Exception/`` directory.
+
+A typical project that returns HTML and JSON pages, might look like this:
+
+.. code-block:: text
+
+    app/
+    ├─ Resources/
+    │  └─ TwigBundle/
+    │     └─ views/
+    │        └─ Exception/
+    │           ├─ error404.html.twig
+    │           ├─ error403.html.twig
+    │           ├─ error.html.twig      # All other HTML errors (including 500)
+    │           ├─ error404.json.twig
+    │           ├─ error403.json.twig
+    │           ├─ error.json.twig      # All other JSON errors (including 500)
+
+Example 404 Error Template
+--------------------------
+
+To override the 404 error template for HTML pages, create a new
 ``error404.html.twig`` template located at ``app/Resources/TwigBundle/views/Exception/``:
 
 .. code-block:: html+jinja
@@ -83,15 +95,16 @@ For example, to override the 404 error template for HTML pages, create a new
     {% block body %}
         <h1>Page not found</h1>
 
+        {# example security usage, see below #}
+        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+            {# ... #}
+        {% endif %}
+
         <p>
             The requested page couldn't be located. Checkout for any URL
             misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
         </p>
     {% endblock %}
-
-Commonly, Symfony applications redefine the ``error404.html.twig`` template, the
-``error500.html.twig`` template for internal server errors and the generic
-``error.html.twig`` template to catch any other error different from 404 and 500.
 
 In case you need them, the ``ExceptionController`` passes some information to
 the error template via the ``status_code`` and ``status_text`` variables that
@@ -132,14 +145,12 @@ is undefined. The solution is to add the following check before using this funct
 Testing Error Pages during Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the biggest hurdles of testing how do custom error pages look in your
-application is the fact that Symfony ignores them in the development environment
-and displays the default exception pages instead.
+Symfony shows the big *exception* page instead of your customized error page
+when you're in the development environem
 
-You may be tempted to set the ``kernel.debug`` parameter to ``false`` to disable
-the debug mode in the development environment. However, this practice is not
-recommended because it will also stop Symfony from recompiling your Twig templates,
-among many other things.
+While you're in the development environment, Symfony shows the big *exception*
+page instead of your shiny new customized error page. So, how can you see
+what it looks like and debug it?
 
 The recommended solution is to use a third-party bundle called `WebfactoryExceptionsBundle`_.
 This bundle provides a special test controller that allows you to easily display
