@@ -56,6 +56,12 @@ value and then a User object is created::
 
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
+            if (!$userProvider instanceof ApiKeyUserProvider) {
+                throw new \InvalidArgumentException(
+                    '$userProvider must be an instance of "ApiKeyUserProvider".'
+                );
+            }
+
             $apiKey = $token->getCredentials();
             $username = $userProvider->getUsernameForApiKey($apiKey);
 
@@ -293,7 +299,8 @@ First, register it as a service.
             # ...
 
             apikey_authenticator:
-                class: AppBundle\Security\ApiKeyAuthenticator
+                class:  AppBundle\Security\ApiKeyAuthenticator
+                public: false
 
     .. code-block:: xml
 
@@ -306,7 +313,9 @@ First, register it as a service.
             <services>
                 <!-- ... -->
 
-                <service id="apikey_authenticator" class="AppBundle\Security\ApiKeyAuthenticator" />
+                <service id="apikey_authenticator"
+                    class="AppBundle\Security\ApiKeyAuthenticator"
+                    public="false" />
             </services>
         </container>
 
@@ -318,9 +327,9 @@ First, register it as a service.
 
         // ...
 
-        $container->setDefinition('apikey_authenticator', new Definition(
-            'AppBundle\Security\ApiKeyAuthenticator'
-        ));
+        $definition = new Definition('AppBundle\Security\ApiKeyAuthenticator');
+        $definition->setPublic(false);
+        $container->setDefinition('apikey_authenticator', $definition);
 
 Now, activate it and your custom user provider (see :doc:`/cookbook/security/custom_provider`)
 in the ``firewalls`` section of your security configuration
@@ -496,6 +505,12 @@ to see if the stored token has a valid User object that can be used::
         // ...
         public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
         {
+            if (!$userProvider instanceof ApiKeyUserProvider) {
+                throw new \InvalidArgumentException(
+                    '$userProvider must be an instance of "ApiKeyUserProvider".'
+                );
+            }
+
             $apiKey = $token->getCredentials();
             $username = $userProvider->getUsernameForApiKey($apiKey);
 
@@ -629,6 +644,7 @@ service:
             apikey_authenticator:
                 class:     AppBundle\Security\ApiKeyAuthenticator
                 arguments: ["@security.http_utils"]
+                public:    false
 
     .. code-block:: xml
 
@@ -643,6 +659,7 @@ service:
 
                 <service id="apikey_authenticator"
                     class="AppBundle\Security\ApiKeyAuthenticator"
+                    public="false"
                 >
                     <argument type="service" id="security.http_utils" />
                 </service>
@@ -657,11 +674,13 @@ service:
 
         // ...
 
-        $container->setDefinition('apikey_authenticator', new Definition(
+        $definition = new Definition(
             'AppBundle\Security\ApiKeyAuthenticator',
             array(
                 new Reference('security.http_utils')
             )
-        ));
+        );
+        $definition->setPublic(false);
+        $container->setDefinition('apikey_authenticator', $definition);
 
 That's it! Have fun!
