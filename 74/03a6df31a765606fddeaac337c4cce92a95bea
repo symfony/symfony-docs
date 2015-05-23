@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-17T21:54:55Z
+
+I think this will also fix #4864
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T06:43:28Z
+
+@mvar Do you have some time to add the provider check and to mark the service as private as suggested by @aitboudad?
+
+---------------------------------------------------------------------------
+
+by mvar at 2015-05-23T07:07:32Z
+
+@xabbuh I've added user provider check and marked authenticator as private.
+
+---------------------------------------------------------------------------
+
+by mvar at 2015-05-23T07:28:21Z
+
+@xabbuh @WouterJ thanks for feedback.
+
+Added more detailed exception message and left service declaration as is.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T07:32:30Z
+
+Thanks @mvar! It'll be merged soon by @weaverryan
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T07:33:14Z
+
+Thank you for your fast reaction @mvar. I think it's perfect now! :+1:
