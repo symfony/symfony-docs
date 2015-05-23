@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-04-13T13:58:53Z
+
+@javiereguiluz the next question is whether we should actually document the usage of custom scopes (IIRC, we discussed removing the request scope in 3.0 as the RequestContext is the proper way to handle this, and then the question is whether we actually need scopes)
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-04T12:32:19Z
+
+@stof I propose to wait until a decision has been made about the future of scopes.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T08:19:12Z
+
+:+1:
