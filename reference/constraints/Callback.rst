@@ -1,16 +1,11 @@
 Callback
 ========
 
-.. versionadded:: 2.4
-    The ``Callback`` constraint was simplified in Symfony 2.4. For usage
-    examples with older Symfony versions, see the corresponding versions of this
-    documentation page.
-
 The purpose of the Callback constraint is to create completely custom
-validation rules and to assign any validation errors to specific fields on
-your object. If you're using validation with forms, this means that you can
-make these custom errors display next to a specific field, instead of simply
-at the top of your form.
+validation rules and to assign any validation errors to specific fields
+on your object. If you're using validation with forms, this means that you
+can make these custom errors display next to a specific field, instead of
+simply at the top of your form.
 
 This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
@@ -26,6 +21,7 @@ can do anything, including creating and assigning validation errors.
 | Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - :ref:`callback <callback-option>`                                    |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
 +----------------+------------------------------------------------------------------------+
@@ -36,13 +32,6 @@ Configuration
 -------------
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [validate]
 
     .. code-block:: php-annotations
 
@@ -64,6 +53,13 @@ Configuration
                 // ...
             }
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            constraints:
+                - Callback: [validate]
 
     .. code-block:: xml
 
@@ -97,9 +93,9 @@ Configuration
 The Callback Method
 -------------------
 
-The callback method is passed a special ``ExecutionContextInterface`` object. You
-can set "violations" directly on this object and determine to which field
-those errors should be attributed::
+The callback method is passed a special ``ExecutionContextInterface`` object.
+You can set "violations" directly on this object and determine to which
+field those errors should be attributed::
 
     // ...
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -136,8 +132,8 @@ those errors should be attributed::
 
 .. versionadded:: 2.5
     The ``buildViolation`` method was added in Symfony 2.5. For usage examples
-    with older Symfony versions, see the corresponding versions of this documentation
-    page.
+    with older Symfony versions, see the corresponding versions of this
+    documentation page.
 
 Static Callbacks
 ----------------
@@ -169,10 +165,10 @@ have access to the object instance, they receive the object as the first argumen
 External Callbacks and Closures
 -------------------------------
 
-If you want to execute a static callback method that is not located in the class
-of the validated object, you can configure the constraint to invoke an array
-callable as supported by PHP's :phpfunction:`call_user_func` function. Suppose
-your validation function is ``Vendor\Package\Validator::validate()``::
+If you want to execute a static callback method that is not located in the
+class of the validated object, you can configure the constraint to invoke
+an array callable as supported by PHP's :phpfunction:`call_user_func` function.
+Suppose your validation function is ``Vendor\Package\Validator::validate()``::
 
     namespace Vendor\Package;
 
@@ -192,13 +188,6 @@ You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [Vendor\Package\Validator, validate]
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -212,6 +201,13 @@ You can then use the following configuration to invoke this validator:
         class Author
         {
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            constraints:
+                - Callback: [Vendor\Package\Validator, validate]
 
     .. code-block:: xml
 
@@ -250,8 +246,8 @@ You can then use the following configuration to invoke this validator:
 
 .. note::
 
-    The Callback constraint does *not* support global callback functions nor
-    is it possible to specify a global function or a :term:`service` method
+    The Callback constraint does *not* support global callback functions
+    nor is it possible to specify a global function or a :term:`service` method
     as callback. To validate using a service, you should
     :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
     and add that new constraint to your class.
@@ -302,3 +298,5 @@ instance as only argument.
 Static or closure callbacks receive the validated object as the first argument
 and the :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
 instance as the second argument.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

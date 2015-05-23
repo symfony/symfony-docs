@@ -4,7 +4,8 @@ Issn
 .. versionadded:: 2.3
     The Issn constraint was introduced in Symfony 2.3.
 
-Validates that a value is a valid `International Standard Serial Number (ISSN)`_.
+Validates that a value is a valid
+`International Standard Serial Number (ISSN)`_.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
@@ -12,6 +13,7 @@ Validates that a value is a valid `International Standard Serial Number (ISSN)`_
 | Options        | - `message`_                                                          |
 |                | - `caseSensitive`_                                                    |
 |                | - `requireHyphen`_                                                    |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Issn`             |
 +----------------+-----------------------------------------------------------------------+
@@ -22,14 +24,6 @@ Basic Usage
 -----------
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/JournalBundle/Resources/config/validation.yml
-        Acme\JournalBundle\Entity\Journal:
-            properties:
-                issn:
-                    - Issn: ~
 
     .. code-block:: php-annotations
 
@@ -45,6 +39,14 @@ Basic Usage
              */
              protected $issn;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/JournalBundle/Resources/config/validation.yml
+        Acme\JournalBundle\Entity\Journal:
+            properties:
+                issn:
+                    - Issn: ~
 
     .. code-block:: xml
 
@@ -90,7 +92,7 @@ The message shown if the given value is not a valid ISSN.
 caseSensitive
 ~~~~~~~~~~~~~
 
-**type**: ``Boolean`` default: ``false``
+**type**: ``boolean`` default: ``false``
 
 The validator will allow ISSN values to end with a lower case 'x' by default.
 When switching this to ``true``, the validator requires an upper case 'X'.
@@ -98,10 +100,12 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 requireHyphen
 ~~~~~~~~~~~~~
 
-**type**: ``Boolean`` default: ``false``
+**type**: ``boolean`` default: ``false``
 
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Standard Serial Number (ISSN)`: http://en.wikipedia.org/wiki/Issn
 

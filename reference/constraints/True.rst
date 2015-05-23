@@ -11,6 +11,7 @@ Also see :doc:`False <False>`.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\True`           |
 +----------------+---------------------------------------------------------------------+
@@ -21,11 +22,9 @@ Basic Usage
 -----------
 
 This constraint can be applied to properties (e.g. a ``termsAccepted`` property
-on a registration model) or to a "getter" method. It's most powerful in the
-latter case, where you can assert that a method returns a true value. For
-example, suppose you have the following method:
-
-.. code-block:: php
+on a registration model) or to a "getter" method. It's most powerful in
+the latter case, where you can assert that a method returns a true value.
+For example, suppose you have the following method::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
@@ -43,15 +42,6 @@ example, suppose you have the following method:
 Then you can constrain this method with ``True``.
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            getters:
-                tokenValid:
-                    - 'True':
-                        message: The token is invalid.
 
     .. code-block:: php-annotations
 
@@ -72,6 +62,15 @@ Then you can constrain this method with ``True``.
                 return $this->token == $this->generateToken();
             }
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            getters:
+                tokenValid:
+                    - 'True':
+                        message: The token is invalid.
 
     .. code-block:: xml
 
@@ -120,7 +119,7 @@ If the ``isTokenValid()`` returns false, the validation will fail.
 .. caution::
 
     When using YAML, be sure to surround ``True`` with quotes (``'True'``)
-    or else YAML will convert this into a ``true`` Boolean value.
+    or else YAML will convert this into a ``true`` boolean value.
 
 Options
 -------
@@ -131,3 +130,5 @@ message
 **type**: ``string`` **default**: ``This value should be true.``
 
 This message is shown if the underlying data is not true.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

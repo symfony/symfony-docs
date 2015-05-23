@@ -9,7 +9,7 @@ follow the same guidelines, and you should too.
 Remember that the main advantage of standards is that every piece of code
 looks and feels familiar, it's not about this or that being more readable.
 
-Symfony follows the standards defined in the `PSR-0`_, `PSR-1`_ and `PSR-2`_
+Symfony follows the standards defined in the `PSR-0`_, `PSR-1`_, `PSR-2`_ and `PSR-4`_
 documents.
 
 Since a picture - or some code - is worth a thousand words, here's a short
@@ -79,6 +79,15 @@ example containing most features described below:
 
             throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
         }
+
+        private function reverseBoolean($value = null, $theSwitch = false)
+        {
+            if (!$theSwitch) {
+                return;
+            }
+
+            return !$value;
+        }
     }
 
 Structure
@@ -86,7 +95,10 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (``==``, ``&&``, ...);
+* Add a single space around binary operators (``==``, ``&&``, ...), with
+  the exception of the concatenation (``.``) operator;
+
+* Place unary operators (``!``, ``--``, ...) adjacent to the affected variable;
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
@@ -99,7 +111,7 @@ Structure
 
 * Define one class per file - this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not
-  concerned by the `PSR-0`_ standard;
+  concerned by the `PSR-0`_ and `PSR-4`_ autoload standards;
 
 * Declare class properties before methods;
 
@@ -153,10 +165,7 @@ Service Naming Conventions
 
 * Use lowercase letters for service and parameter names;
 
-* A group name uses the underscore notation;
-
-* Each service has a corresponding parameter containing the class name,
-  following the ``SERVICE NAME.class`` convention.
+* A group name uses the underscore notation.
 
 Documentation
 -------------
@@ -176,3 +185,4 @@ License
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
+.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/

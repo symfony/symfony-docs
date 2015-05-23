@@ -5,10 +5,11 @@ Form Events
 ===========
 
 The Form component provides a structured process to let you customize your
-forms, by making use of the :doc:`EventDispatcher </components/event_dispatcher/introduction>`
-component. Using form events, you may modify information or fields at
-different steps of the workflow: from the population of the form to the
-submission of the data from the request.
+forms, by making use of the
+:doc:`EventDispatcher component </components/event_dispatcher/introduction>`.
+Using form events, you may modify information or fields at different steps
+of the workflow: from the population of the form to the submission of the
+data from the request.
 
 Registering an event listener is very easy using the Form component.
 
@@ -134,7 +135,7 @@ The ``FormEvents::PRE_SUBMIT`` event is dispatched at the beginning of the
 
 It can be used to:
 
-* Change data from the request, before submitting the data to the form.
+* Change data from the request, before submitting the data to the form;
 * Add or remove form fields, before submitting the data to the form.
 
 :ref:`Form Events Information Table<component-form-event-table>`
@@ -309,7 +310,10 @@ callback for better readability::
         {
             $builder->add('username', 'text');
             $builder->add('show_email', 'checkbox');
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+            $builder->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                array($this, 'onPreSetData')
+            );
         }
 
         public function onPreSetData(FormEvent $event)

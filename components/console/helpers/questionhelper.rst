@@ -41,8 +41,8 @@ In this case, the user will be asked "Continue with this action?". If the user
 answers with ``y`` it returns ``true`` or ``false`` if they answer with ``n``.
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
-is the default value to return if the user doesn't enter any input. Any other
-input will ask the same question again.
+is the default value to return if the user doesn't enter any valid input. If
+the second argument is not provided, ``true`` is assumed.
 
 Asking the User for Information
 -------------------------------
@@ -93,7 +93,7 @@ option is the default one.
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, until they enter a valid string
 or reach the maximum number of attempts. The default value for the maximum number
-of attempts is ``null``, which means infinite number attempts. You can define
+of attempts is ``null``, which means infinite number of attempts. You can define
 your own error message using
 :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setErrorMessage`.
 

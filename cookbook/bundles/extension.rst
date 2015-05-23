@@ -23,8 +23,9 @@ following conventions:
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
 
 * The name is equal to the bundle name with the ``Bundle`` suffix replaced by
-  ``Extension`` (e.g. the Extension class of ``AcmeHelloBundle`` would be
-  called ``AcmeHelloExtension``).
+  ``Extension`` (e.g. the Extension class of the AppBundle would be called
+  ``AppExtension`` and the one for AcmeHelloBundle would be called
+  ``AcmeHelloExtension``).
 
 The Extension class should implement the
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`,
@@ -69,7 +70,7 @@ should also override
 :method:`Extension::getAlias() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getAlias>`
 to return the correct DI alias. The DI alias is the name used to refer to the
 bundle in the container (e.g. in the ``app/config/config.yml`` file). By
-default, this is done by removing the ``Extension`` prefix and converting the
+default, this is done by removing the ``Extension`` suffix and converting the
 class name to underscores (e.g. ``AcmeHelloExtension``'s DI alias is
 ``acme_hello``).
 

@@ -20,6 +20,11 @@
 * :doc:`/cookbook/cache/index`
 
   * :doc:`/cookbook/cache/varnish`
+  * :doc:`/cookbook/cache/form_csrf_caching`
+
+* **Composer**
+
+  * :doc:`/cookbook/composer`
 
 * :doc:`/cookbook/configuration/index`
 
@@ -55,6 +60,7 @@
   * :doc:`/cookbook/deployment/tools`
   * :doc:`/cookbook/deployment/azure-website`
   * :doc:`/cookbook/deployment/heroku`
+  * :doc:`/cookbook/deployment/platformsh`
 
 * :doc:`/cookbook/doctrine/index`
 
@@ -69,6 +75,7 @@
   * :doc:`/cookbook/doctrine/mapping_model_classes`
   * :doc:`/cookbook/doctrine/registration_form`
   * :doc:`/cookbook/doctrine/console`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
 
 * :doc:`/cookbook/email/index`
 
@@ -138,6 +145,7 @@
 
 * :doc:`/cookbook/security/index`
 
+  * :doc:`/cookbook/security/form_login_setup`
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/impersonating_user`
@@ -147,6 +155,7 @@
   * :doc:`/cookbook/security/acl_advanced`
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/firewall_restriction`
+  * :doc:`/cookbook/security/host_restriction`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
@@ -157,6 +166,8 @@
   * :doc:`/cookbook/security/target_path`
   * :doc:`/cookbook/security/csrf_in_login_form`
   * :doc:`/cookbook/security/named_encoders`
+  * :doc:`/cookbook/security/access_control`
+  * :doc:`/cookbook/security/multiple_user_providers`
 
 * **Serializer**
 
@@ -175,6 +186,8 @@
   * :doc:`/cookbook/session/sessions_directory`
   * :doc:`/cookbook/session/php_bridge`
   * :doc:`/cookbook/session/limit_metadata_writes`
+  * (configuration) :doc:`/cookbook/configuration/pdo_session_storage`
+  * :doc:`/cookbook/session/avoid_session_start`
 
 * **symfony1**
 
@@ -200,9 +213,14 @@
   * (email) :doc:`/cookbook/email/testing`
   * (form) :doc:`/cookbook/form/unit_testing`
 
+* **Upgrading**
+
+  * :doc:`/cookbook/upgrading`
+
 * :doc:`/cookbook/validation/index`
 
   * :doc:`/cookbook/validation/custom_constraint`
+  * :doc:`/cookbook/validation/severity`
 
 * :doc:`/cookbook/web_server/index`
 

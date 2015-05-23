@@ -9,6 +9,7 @@ valid YYYY-MM-DD format.
 | Applies to     | :ref:`property or method <validation-property-target>`             |
 +----------------+--------------------------------------------------------------------+
 | Options        | - `message`_                                                       |
+|                | - `payload`_                                                       |
 +----------------+--------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Date`          |
 +----------------+--------------------------------------------------------------------+
@@ -19,14 +20,6 @@ Basic Usage
 -----------
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                birthday:
-                    - Date: ~
 
     .. code-block:: php-annotations
 
@@ -42,6 +35,14 @@ Basic Usage
              */
              protected $birthday;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                birthday:
+                    - Date: ~
 
     .. code-block:: xml
 
@@ -83,3 +84,5 @@ message
 **type**: ``string`` **default**: ``This value is not a valid date.``
 
 This message is shown if the underlying data is not a valid date.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

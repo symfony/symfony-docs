@@ -36,14 +36,11 @@ a command in a sub-process::
 The component takes care of the subtle differences between the different platforms
 when executing the command.
 
-The ``getOutput()`` method always return the whole content of the standard
+The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods returns the new outputs since the last call.
-
-.. versionadded:: 2.4
-    The ``clearOutput()`` and ``clearErrorOutput()`` methods were introduced in Symfony 2.4.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
@@ -139,7 +136,7 @@ Stopping a Process
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
-two arguments : a timeout and a signal. Once the timeout is reached, the signal
+two arguments: a timeout and a signal. Once the timeout is reached, the signal
 is sent to the running process. The default signal sent to a process is ``SIGKILL``.
 Please read the :ref:`signal documentation below<reference-process-signal>`
 to find out more about signal handling in the Process component::
@@ -236,10 +233,6 @@ check regularly::
 Process Idle Timeout
 --------------------
 
-.. versionadded:: 2.4
-   The :method:`Symfony\\Component\\Process\\Process::setIdleTimeout` method
-   was introduced in Symfony 2.4.
-
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
 
@@ -259,7 +252,7 @@ Process Signals
 .. versionadded:: 2.3
     The ``signal`` method was introduced in Symfony 2.3.
 
-When running a program asynchronously, you can send it posix signals with the
+When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
     use Symfony\Component\Process\Process;

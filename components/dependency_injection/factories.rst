@@ -4,11 +4,6 @@
 Using a Factory to Create Services
 ==================================
 
-.. versionadded:: 2.6
-    The new `Symfony\\Component\\DependencyInjection\\Definition::setFactory`
-    method was introduced in Symfony 2.6. Refer to older versions for the
-    syntax for factories prior to 2.6.
-
 Symfony's Service Container provides a powerful way of controlling the
 creation of objects, allowing you to specify arguments passed to the constructor
 as well as calling methods and setting parameters. Sometimes, however, this
@@ -16,6 +11,11 @@ will not provide you with everything you need to construct your objects.
 For this situation, you can use a factory to create the object and tell the
 service container to call a method on the factory rather than directly instantiating
 the class.
+
+.. versionadded:: 2.6
+    The new :method:`Symfony\\Component\\DependencyInjection\\Definition::setFactory`
+    method was introduced in Symfony 2.6. Refer to older versions for the
+    syntax for factories prior to 2.6.
 
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object::
@@ -69,6 +69,14 @@ configure the service container to use the
 
         $container->setDefinition('newsletter_manager', $definition);
 
+.. note::
+
+    When using a factory to create services, the value chosen for the ``class``
+    option has no effect on the resulting service. The actual class name only
+    depends on the object that is returned by the factory. However, the configured
+    class name may be used by compiler passes and therefore should be set to a
+    sensible value.
+
 Now, the method will be called statically. If the factory class itself should
 be instantiated and the resulting object's method called, configure the factory
 itself as a service. In this case, the method (e.g. get) should be changed to
@@ -96,7 +104,7 @@ be non-static.
                 <service id="newsletter_manager.factory" class="NewsletterManagerFactory" />
 
                 <service id="newsletter_manager" class="NewsletterManager">
-                    <factory service="newsletter_manager.factry" method="createNewsletterManager" />
+                    <factory service="newsletter_manager.factory" method="createNewsletterManager" />
                 </service>
             </services>
         </container>
@@ -120,8 +128,8 @@ Passing Arguments to the Factory Method
 ---------------------------------------
 
 If you need to pass arguments to the factory method, you can use the ``arguments``
-options inside the service container. For example, suppose the ``get`` method
-in the previous example takes the ``templating`` service as an argument:
+options inside the service container. For example, suppose the ``createNewsletterManager``
+method in the previous example takes the ``templating`` service as an argument:
 
 .. configuration-block::
 

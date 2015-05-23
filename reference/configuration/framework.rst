@@ -19,15 +19,16 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * `test`_
+* `default_locale`_
 * `trusted_proxies`_
 * `csrf_protection`_
     * enabled
     * field_name (deprecated)
 * `form`_
-    * enabled
+    * :ref:`enabled <form-enabled>`
     * csrf_protection
-        * enabled
-        * field_name
+        * :ref:`enabled <csrf-protection-enabled>`
+        * `field_name`_
 * `session`_
     * `name`_
     * `cookie_lifetime`_
@@ -48,16 +49,44 @@ Configuration
 * `profiler`_
     * `collect`_
     * :ref:`enabled <profiler.enabled>`
+* `translator`_
+    * :ref:`enabled <translator.enabled>`
+    * `fallbacks`_
+    * `logging`_
+* `property_accessor`_
+    * `magic_call`_
+    * `throw_exception_on_invalid_index`_
+* `validation`_
+    * :ref:`enabled <validation-enabled>`
+    * `cache`_
+    * `enable_annotations`_
+    * `translation_domain`_
+    * `strict_email`_
+    * `api`_
 
 secret
 ~~~~~~
 
 **type**: ``string`` **required**
 
-This is a string that should be unique to your application. In practice,
-it's used for generating the CSRF tokens, but it could be used in any other
-context where having a unique string is useful. It becomes the service container
-parameter named ``kernel.secret``.
+This is a string that should be unique to your application and it's commonly used
+to add more entropy to security related operations. Its value should be a series of
+characters, numbers and symbols chosen randomly and the recommended length is
+around 32 characters.
+
+In practice, Symfony uses this value for generating the :ref:`CSRF tokens <forms-csrf>`,
+for encrypting the cookies used in the :doc:`remember me functionality </cookbook/security/remember_me>`
+and for creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>` .
+
+This option becomes the service container parameter named ``kernel.secret``,
+which you can use whenever the application needs an immutable random string
+to add more entropy.
+
+As with any other security-related parameter, it is a good practice to change this
+value from time to time. However, keep in mind that changing this value will
+invalidate all signed URIs and Remember Me cookies. That's why, after changing
+this value, you should regenerate the application cache and log out all the
+application users.
 
 .. _configuration-framework-http_method_override:
 
@@ -67,14 +96,32 @@ http_method_override
 .. versionadded:: 2.3
     The ``http_method_override`` option was introduced in Symfony 2.3.
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This determines whether the ``_method`` request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
-gets called automatically. It becomes the service container parameter named
-``kernel.http_method_override``. For more information, see
+method gets called automatically. It becomes the service container parameter
+named ``kernel.http_method_override``. For more information, see
 :doc:`/cookbook/routing/method_parameters`.
+
+.. caution::
+
+    If you're using the :ref:`AppCache Reverse Proxy <symfony2-reverse-proxy>`
+    with this option, the kernel will ignore the ``_method`` parameter,
+    which could lead to errors.
+
+    To fix this, invoke the ``enableHttpMethodParameterOverride()`` method
+    before creating the ``Request`` object::
+
+        // web/app.php
+
+        // ...
+        $kernel = new AppCache($kernel);
+
+        Request::enableHttpMethodParameterOverride(); // <-- add this line
+        $request = Request::createFromGlobals();
+        // ...
 
 ide
 ~~~
@@ -138,7 +185,7 @@ is set, then the ``ide`` option will be ignored.
 test
 ~~~~
 
-**type**: ``Boolean``
+**type**: ``boolean``
 
 If this configuration parameter is present (and not ``false``), then the
 services related to testing your application (e.g. ``test.client``) are loaded.
@@ -146,6 +193,17 @@ This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
 .. _reference-framework-trusted-proxies:
+
+default_locale
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``en``
+
+The default locale is used if no ``_locale`` routing parameter has been set. It
+becomes the service container parameter named ``kernel.default_locale`` and it
+is also available with the
+:method:`Request::getDefaultLocale <Symfony\\Component\\HttpFoundation\\Request::getDefaultLocale>`
+method.
 
 trusted_proxies
 ~~~~~~~~~~~~~~~
@@ -192,8 +250,45 @@ see :doc:`/cookbook/request/load_balancer_reverse_proxy`.
 form
 ~~~~
 
+.. _form-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable support for the Form component.
+
+If you don't use forms, setting this to ``false`` may increase your application's
+performance because less services will be loaded into the container.
+
+If this is activated, the :ref:`validation system <validation-enabled>`
+is also enabled automatically.
+
 csrf_protection
 ~~~~~~~~~~~~~~~
+
+.. _csrf-protection-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true`` if form support is enabled, ``false``
+otherwise
+
+This option can be used to disable CSRF protection on *all* forms. But you
+can also :ref:`disable CSRF protection on individual forms <form-disable-csrf>`.
+
+If you're using forms, but want to avoid starting your session (e.g. using
+forms in an API-only website), ``csrf_protection`` will need to be set to
+``false``.
+
+field_name
+..........
+
+**type**: ``string`` **default**: ``"_token"``
+
+The name of the hidden field used to render the :ref:`CSRF token <forms-csrf>`.
 
 session
 ~~~~~~~
@@ -235,14 +330,14 @@ to the cookie specification.
 cookie_secure
 .............
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether cookies should only be sent over secure connections.
 
 cookie_httponly
 ...............
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether cookies should only be accessible through the HTTP protocol.
 This means that the cookie won't be accessible by scripting languages, such
@@ -473,9 +568,19 @@ profiler
 enabled
 .......
 
-**default**: ``true`` in the ``dev`` and ``test`` environments
+.. versionadded:: 2.2
+    The ``enabled`` option was introduced in Symfony 2.2. Prior to Symfony
+    2.2, the profiler could only be disabled by omitting the ``framework.profiler``
+    configuration entirely.
 
-The profiler can be disabled by setting this key to ``false``.
+**type**: ``boolean`` **default**: ``false``
+
+The profiler can be enabled by setting this key to ``true``. When you are
+using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+and ``test`` environments.
+
+collect
+.......
 
 .. versionadded:: 2.3
     The ``collect`` option was introduced in Symfony 2.3. Previously, when
@@ -483,10 +588,7 @@ The profiler can be disabled by setting this key to ``false``.
     but the collectors were disabled. Now, the profiler and the collectors
     can be controlled independently.
 
-collect
-.......
-
-**default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 This option configures the way the profiler behaves when it is enabled. If set
 to ``true``, the profiler collects data for all requests. If you want to only
@@ -494,6 +596,146 @@ collect information on-demand, you can set the ``collect`` flag to ``false``
 and activate the data collectors by hand::
 
     $profiler->enable();
+
+translator
+~~~~~~~~~~
+
+.. _translator.enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether or not to enable the ``translator`` service in the service container.
+
+.. _fallback:
+
+fallbacks
+.........
+
+**type**: ``string|array`` **default**: ``array('en')``
+
+.. versionadded:: 2.3.25
+    The ``fallbacks`` option was introduced in Symfony 2.3.25. Prior
+    to Symfony 2.3.25, it was called ``fallback`` and only allowed one fallback
+    language defined as a string.
+    Please note that you can still use the old ``fallback`` option if you want
+    define only one fallback.
+
+This option is used when the translation key for the current locale wasn't found.
+
+For more details, see :doc:`/book/translation`.
+
+.. _reference-framework-translator-logging:
+
+logging
+.......
+
+.. versionadded:: 2.6
+    The ``logging`` option was introduced in Symfony 2.6.
+
+**default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
+
+When ``true``, a log entry is made whenever the translator cannot find a translation
+for a given key. The logs are made to the ``translation`` channel and at the
+``debug`` for level for keys where there is a translation in the fallback
+locale and the ``warning`` level if there is no translation to use at all.
+
+property_accessor
+~~~~~~~~~~~~~~~~~
+
+magic_call
+..........
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __call() method <components-property-access-magic-call>` when
+its ``getValue()`` method is called.
+
+throw_exception_on_invalid_index
+................................
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service throws an exception when you
+try to access an invalid index of an array.
+
+validation
+~~~~~~~~~~
+
+.. _validation-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true`` if :ref:`form support is enabled <form-enabled>`,
+``false`` otherwise
+
+Whether or not to enable validation support.
+
+cache
+.....
+
+**type**: ``string``
+
+The service that is used to persist class metadata in a cache. The service
+has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+
+enable_annotations
+..................
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is enabled, validation constraints can be defined using annotations.
+
+translation_domain
+..................
+
+**type**: ``string`` **default**: ``validators``
+
+The translation domain that is used when translating validation constraint
+error messages.
+
+strict_email
+............
+
+.. versionadded:: 2.5
+    The ``strict_email`` option was introduced in Symfony 2.5.
+
+**type**: ``Boolean`` **default**: ``false``
+
+If this option is enabled, the `egulias/email-validator`_ library will be
+used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
+the validator uses a simple regular expression to validate email addresses.
+
+api
+...
+
+.. versionadded:: 2.5
+    The ``api`` option was introduced in Symfony 2.5.
+
+**type**: ``string``
+
+Starting with Symfony 2.5, the Validator component introduced a new validation
+API. The ``api`` option is used to switch between the different implementations:
+
+``2.4``
+    Use the vaidation API that is compatible with older Symfony versions.
+
+``2.5``
+    Use the validation API introduced in Symfony 2.5.
+
+``2.5-bc`` or ``auto``
+    If you omit a value or set the ``api`` option to ``2.5-bc`` or ``auto``,
+    Symfony will use an API implementation that is compatible with both the
+    legacy implementation and the ``2.5`` implementation. You have to use
+    PHP 5.3.9 or higher to be able to use this implementation.
+
+To capture these logs in the ``prod`` environment, configure a
+:doc:`channel handler </cookbook/logging/channels_handlers>` in ``config_prod.yml`` for
+the ``translation`` channel and set its ``level`` to ``debug``.
 
 Full default Configuration
 --------------------------
@@ -611,7 +853,8 @@ Full default Configuration
             # translator configuration
             translator:
                 enabled:              false
-                fallback:             en
+                fallbacks:            [en]
+                logging:              "%kernel.debug%"
 
             # validation configuration
             validation:
@@ -628,3 +871,4 @@ Full default Configuration
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener
+.. _`egulias/email-validator`: https://github.com/egulias/EmailValidator

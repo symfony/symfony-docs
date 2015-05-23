@@ -10,7 +10,7 @@ your app that's not specific to the framework (e.g. routing and controllers).
 Domain classes, Doctrine entities and regular PHP classes that are used as
 services are good examples of business logic.
 
-For most projects, you should store everything inside the ``AppBundle``.
+For most projects, you should store everything inside the AppBundle.
 Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
@@ -45,7 +45,7 @@ and put things there:
 
 .. tip::
 
-    The recommended approach of using the ``AppBundle`` directory is for
+    The recommended approach of using the ``AppBundle/`` directory is for
     simplicity. If you're advanced enough to know what needs to live in
     a bundle and what can live outside of one, then feel free to do that.
 
@@ -56,7 +56,7 @@ The blog application needs a utility that can transform a post title (e.g.
 "Hello World") into a slug (e.g. "hello-world"). The slug will be used as
 part of the post URL.
 
-Let's, create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
+Let's create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
 add the following ``slugify()`` method:
 
 .. code-block:: php
@@ -169,8 +169,8 @@ library or strategy you want for this.
 
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
-Just like with business logic, we recommend storing Doctrine entities in
-the ``AppBundle``
+Just like with business logic, we recommend storing Doctrine entities in the
+AppBundle.
 
 The three entities defined by our sample blog application are a good example:
 
@@ -329,14 +329,13 @@ Coding Standards
 
 The Symfony source code follows the `PSR-1`_ and `PSR-2`_ coding standards that
 were defined by the PHP community. You can learn more about
-`the Symfony Code Standards`_ and even use the `PHP-CS-Fixer`_, which is
-a command-line utility that can fix the coding standards of an entire codebase
-in a matter of seconds.
+:doc:`the Symfony Coding standards </contributing/code/standards>` and even
+use the `PHP-CS-Fixer`_, which is a command-line utility that can fix the
+coding standards of an entire codebase in a matter of seconds.
 
 .. _`full definition`: http://en.wikipedia.org/wiki/Business_logic
 .. _`Doctrine project`: http://www.doctrine-project.org/
-.. _`fixture class`: http://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
+.. _`fixture class`: http://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
-.. _`the Symfony Code Standards`: http://symfony.com/doc/current/contributing/code/standards.html
-.. _`PHP-CS-Fixer`: https://github.com/fabpot/PHP-CS-Fixer
+.. _`PHP-CS-Fixer`: https://github.com/FriendsOfPHP/PHP-CS-Fixer

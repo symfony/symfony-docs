@@ -11,6 +11,7 @@ cast to a string before being validated.
 |                | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
 |                | - `checkHost`_                                                      |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Email`          |
 +----------------+---------------------------------------------------------------------+
@@ -21,16 +22,6 @@ Basic Usage
 -----------
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                email:
-                    - Email:
-                        message: The email "{{ value }}" is not a valid email.
-                        checkMX: true
 
     .. code-block:: php-annotations
 
@@ -49,6 +40,16 @@ Basic Usage
              */
              protected $email;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                email:
+                    - Email:
+                        message: The email "{{ value }}" is not a valid email.
+                        checkMX: true
 
     .. code-block:: xml
 
@@ -99,7 +100,7 @@ strict
 **type**: ``boolean`` **default**: ``false``
 
 When false, the email will be validated against a simple regular expression.
-If true, then the `egulias/email-validator`_ library is required to perform 
+If true, then the `egulias/email-validator`_ library is required to perform
 an RFC compliant validation.
 
 message
@@ -112,7 +113,7 @@ This message is shown if the underlying data is not a valid email address.
 checkMX
 ~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX record of the host of the given email.
@@ -120,10 +121,12 @@ check the validity of the MX record of the host of the given email.
 checkHost
 ~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX *or* the A *or* the AAAA record of the host
 of the given email.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator

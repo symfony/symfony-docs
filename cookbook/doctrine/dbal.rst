@@ -35,6 +35,7 @@ To get started, configure the database connection parameters:
                 user:     root
                 password: null
                 charset:  UTF8
+                server_version: 5.6
 
     .. code-block:: xml
 
@@ -45,6 +46,8 @@ To get started, configure the database connection parameters:
                 dbname="Symfony"
                 user="root"
                 password="null"
+                charset="UTF8"
+                server-version="5.6"
                 driver="pdo_mysql"
             />
         </doctrine:config>
@@ -58,6 +61,8 @@ To get started, configure the database connection parameters:
                 'dbname'    => 'Symfony',
                 'user'      => 'root',
                 'password'  => null,
+                'charset'   => 'UTF8',
+                'server_version' => '5.6',
             ),
         ));
 
@@ -93,8 +98,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         doctrine:
             dbal:
                 types:
-                    custom_first:  Acme\HelloBundle\Type\CustomFirst
-                    custom_second: Acme\HelloBundle\Type\CustomSecond
+                    custom_first:  AppBundle\Type\CustomFirst
+                    custom_second: AppBundle\Type\CustomSecond
 
     .. code-block:: xml
 
@@ -107,8 +112,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom_first" class="Acme\HelloBundle\Type\CustomFirst" />
-                    <doctrine:type name="custom_second" class="Acme\HelloBundle\Type\CustomSecond" />
+                    <doctrine:type name="custom_first" class="AppBundle\Type\CustomFirst" />
+                    <doctrine:type name="custom_second" class="AppBundle\Type\CustomSecond" />
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -119,8 +124,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'types' => array(
-                    'custom_first'  => 'Acme\HelloBundle\Type\CustomFirst',
-                    'custom_second' => 'Acme\HelloBundle\Type\CustomSecond',
+                    'custom_first'  => 'AppBundle\Type\CustomFirst',
+                    'custom_second' => 'AppBundle\Type\CustomSecond',
                 ),
             ),
         ));

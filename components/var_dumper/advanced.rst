@@ -20,7 +20,7 @@ like this::
     use Symfony\Component\VarDumper\Dumper\CliDumper;
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
-    VarDumper::setHandler(function($var) {
+    VarDumper::setHandler(function ($var) {
         $cloner = new VarCloner();
         $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
 
@@ -145,8 +145,7 @@ Another option for doing the same could be::
     $output = fopen('php://memory', 'r+b');
 
     $dumper->dump($cloner->cloneVar($variable), $output);
-    rewind($output);
-    $output = stream_get_contents($output);
+    $output = stream_get_contents($output, -1, 0);
 
     // $output is now populated with the dump representation of $variable
 
@@ -235,4 +234,4 @@ properties not in the class declaration).
 
 .. tip::
 
-    Before writting your own casters, you should check the existing ones.
+    Before writing your own casters, you should check the existing ones.

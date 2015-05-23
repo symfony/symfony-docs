@@ -18,8 +18,9 @@ Use a Byte Code Cache (e.g. APC)
 One of the best (and easiest) things that you should do to improve your performance
 is to use a "byte code cache". The idea of a byte code cache is to remove
 the need to constantly recompile the PHP source code. There are a number of
-`byte code caches`_ available, some of which are open source. The most widely
-used byte code cache is probably `APC`_
+`byte code caches`_ available, some of which are open source. As of PHP 5.5,
+PHP comes with `OPcache`_ built-in. For older versions, the most widely used
+byte code cache is probably `APC`_
 
 Using a byte code cache really has no downside, and Symfony has been architected
 to perform really well in this type of environment.
@@ -45,7 +46,7 @@ your ``php.ini`` configuration.
 Use Composer's Class Map Functionality
 --------------------------------------
 
-By default, the Symfony standard edition uses Composer's autoloader
+By default, the Symfony Standard Edition uses Composer's autoloader
 in the `autoload.php`_ file. This autoloader is easy to use, as it will
 automatically find any new classes that you've placed in the registered
 directories.
@@ -60,7 +61,7 @@ command line, and might become part of your deploy process:
 
 .. code-block:: bash
 
-    $ php composer.phar dump-autoload --optimize
+    $ composer dump-autoload --optimize
 
 Internally, this builds the big class map array in ``vendor/composer/autoload_classmap.php``.
 
@@ -128,8 +129,7 @@ Note that there are two disadvantages when using a bootstrap file:
 * when debugging, one will need to place break points inside the bootstrap file.
 
 If you're using the Symfony Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the ``php composer.phar install``
-command.
+rebuilt after updating the vendor libraries via the ``composer install`` command.
 
 Bootstrap Files and Byte Code Caches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,6 +140,7 @@ feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
 is no longer a reason to use a bootstrap file.
 
 .. _`byte code caches`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
+.. _`OPcache`: http://php.net/manual/en/book.opcache.php
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`autoload.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
 .. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php

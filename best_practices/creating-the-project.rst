@@ -4,50 +4,19 @@ Creating the Project
 Installing Symfony
 ------------------
 
-There is only one recommended way to install Symfony:
+In the past, Symfony projects were created with `Composer`_, the dependency manager
+for PHP applications. However, the current recommendation is to use the **Symfony
+Installer**, which has to be installed before creating your first project.
 
 .. best-practice::
 
-    Always use `Composer`_ to install Symfony.
+    Use the Symfony Installer to create new Symfony-based projects.
 
-Composer is the dependency manager used by modern PHP applications. Adding or
-removing requirements for your project and updating the third-party libraries
-used by your code is a breeze thanks to Composer.
+Read the :doc:`installation chapter </book/installation>` of the Symfony Book to
+learn how to install and use the Symfony Installer.
 
-Dependency Management with Composer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Before installing Symfony, you need to make sure that you have Composer installed
-globally. Open your terminal (also called *command console*) and run the following
-command:
-
-.. code-block:: bash
-
-    $ composer --version
-    Composer version 1e27ff5e22df81e3cd0cd36e5fdd4a3c5a031f4a 2014-08-11 15:46:48
-
-You'll probably see a different version identifier. Never mind because Composer
-is updated on a continuous basis and its specific version doesn't matter.
-
-Installing Composer Globally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In case you don't have Composer installed globally, execute the following two
-commands if you use Linux or Mac OS X (the second command will ask for your
-user password):
-
-.. code-block:: bash
-
-    $ curl -sS https://getcomposer.org/installer | php
-    $ sudo mv composer.phar /usr/local/bin/composer
-
-.. note::
-
-    Depending on your Linux distribution, you may need to execute ``su`` command
-    instead of ``sudo``.
-
-If you use a Windows system, download the executable installer from the
-`Composer download page`_ and follow the steps to install it.
+.. _linux-and-mac-os-x-systems:
+.. _windows-systems:
 
 Creating the Blog Application
 -----------------------------
@@ -58,64 +27,19 @@ to create files and execute the following commands:
 
 .. code-block:: bash
 
+    # Linux, Mac OS X
     $ cd projects/
-    $ composer create-project symfony/framework-standard-edition blog/
+    $ symfony new blog
 
-This command will create a new directory called ``blog`` that will contain
-a fresh new project based on the most recent stable Symfony version available.
+    # Windows
+    c:\> cd projects/
+    c:\projects\> php symfony.phar new blog
 
-Checking the Symfony Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Once the installation is finished, enter the ``blog/`` directory and check that
-Symfony is correctly installed by executing the following command:
-
-.. code-block:: bash
-
-    $ cd blog/
-    $ php app/console --version
-
-    Symfony version 2.6.* - app/dev/debug
-
-If you see the installed Symfony version, everything worked as expected. If not,
-you can execute the following *script* to check what does prevent your system
-from correctly executing Symfony applications:
-
-.. code-block:: bash
-
-    $ php app/check.php
-
-Depending on your system, you can see up to two different lists when executing the
-`check.php` script. The first one shows the mandatory requirements which your
-system must meet to execute Symfony applications. The second list shows the
-optional requirements suggested for an optimal execution of Symfony applications:
-
-.. code-block:: bash
-
-    Symfony2 Requirements Checker
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    > PHP is using the following php.ini file:
-      /usr/local/zend/etc/php.ini
-
-    > Checking Symfony requirements:
-      .....E.........................W.....
-
-    [ERROR]
-    Your system is not ready to run Symfony2 projects
-
-    Fix the following mandatory requirements
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-     * date.timezone setting must be set
-       > Set the "date.timezone" setting in php.ini* (like Europe/Paris).
-
-    Optional recommendations to improve your setup
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-     * short_open_tag should be disabled in php.ini
-       > Set short_open_tag to off in php.ini*.
-
+This command creates a new directory called ``blog`` that contains a fresh new
+project based on the most recent stable Symfony version available. In addition,
+the installer checks if your system meets the technical requirements to execute
+Symfony applications. If not, you'll see the list of changes needed to meet those
+requirements.
 
 .. tip::
 
@@ -165,26 +89,26 @@ Application Bundles
 
 When Symfony 2.0 was released, most developers naturally adopted the symfony
 1.x way of dividing applications into logical modules. That's why many Symfony
-apps use bundles to divide their code into logical features: ``UserBundle``,
-``ProductBundle``, ``InvoiceBundle``, etc.
+apps use bundles to divide their code into logical features: UserBundle,
+ProductBundle, InvoiceBundle, etc.
 
 But a bundle is *meant* to be something that can be reused as a stand-alone
-piece of software. If ``UserBundle`` cannot be used *"as is"* in other Symfony
-apps, then it shouldn't be its own bundle. Moreover ``InvoiceBundle`` depends
-on ``ProductBundle``, then there's no advantage to having two separate bundles.
+piece of software. If UserBundle cannot be used *"as is"* in other Symfony
+apps, then it shouldn't be its own bundle. Moreover, if InvoiceBundle depends on
+ProductBundle, then there's no advantage to having two separate bundles.
 
 .. best-practice::
 
-    Create only one bundle called ``AppBundle`` for your application logic
+    Create only one bundle called AppBundle for your application logic
 
-Implementing a single ``AppBundle`` bundle in your projects will make your code
+Implementing a single AppBundle bundle in your projects will make your code
 more concise and easier to understand. Starting in Symfony 2.6, the official
-Symfony documentation uses the ``AppBundle`` name.
+Symfony documentation uses the AppBundle name.
 
 .. note::
 
-    There is no need to prefix the ``AppBundle`` with your own vendor (e.g.
-    ``AcmeAppBundle``), because this application bundle is never going to be
+    There is no need to prefix the AppBundle with your own vendor (e.g.
+    AcmeAppBundle), because this application bundle is never going to be
     shared.
 
 All in all, this is the typical directory structure of a Symfony application
@@ -208,8 +132,7 @@ that follows these best practices:
 
 .. tip::
 
-    If you are using Symfony 2.6 or a newer version, the ``AppBundle`` bundle
-    is already generated for you. If you are using an older Symfony version,
+    If your Symfony installation doesn't come with a pre-generated AppBundle,
     you can generate it by hand executing this command:
 
     .. code-block:: bash
@@ -220,7 +143,8 @@ Extending the Directory Structure
 ---------------------------------
 
 If your project or infrastructure requires some changes to the default directory
-structure of Symfony, you can `override the location of the main directories`_:
+structure of Symfony, you can
+:doc:`override the location of the main directories </cookbook/configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
 
 In addition, Symfony3 will use a slightly different directory structure when
@@ -242,11 +166,10 @@ it's released:
     └─ web/
 
 The changes are pretty superficial, but for now, we recommend that you use
-the Symfony2 directory structure.
+the Symfony directory structure.
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Get Started`: https://getcomposer.org/doc/00-intro.md
 .. _`Composer download page`: https://getcomposer.org/download/
-.. _`override the location of the main directories`: http://symfony.com/doc/current/cookbook/configuration/override_dir_structure.html
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/article/73/signing-project-releases

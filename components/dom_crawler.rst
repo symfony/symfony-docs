@@ -102,10 +102,6 @@ Both the :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
 XML namespaces, which can be either automatically discovered or registered
 explicitly.
 
-.. versionadded:: 2.4
-    Auto discovery and explicit registration of namespaces was introduced
-    in Symfony 2.4.
-
 Consider the XML below:
 
 .. code-block:: xml
@@ -455,10 +451,6 @@ directly::
 
 Selecting Invalid Choice Values
 ...............................
-
-.. versionadded:: 2.4
-    The :method:`Symfony\\Component\\DomCrawler\\Form::disableValidation`
-    method was introduced in Symfony 2.4.
 
 By default, choice fields (select, radio) have internal validation activated
 to prevent you from setting invalid values. If you want to be able to set

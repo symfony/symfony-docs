@@ -31,16 +31,10 @@ whatever component you want.
 
 .. tip::
 
-    If you get a command not found for ``composer``, you'll need to
-    `Install composer`_. Depending on how you install, you may end up with
-    a ``composer.phar`` file in your directory. In that case, no worries!
-    Just run ``php composer.phar require symfony/finder``.
-
-If you know you need a specific version of the library, add that to the command:
-
-.. code-block:: bash
-
-    $ composer require symfony/finder:~2.3
+    `Install composer`_ if you don't have it already present on your system.
+    Depending on how you install, you may end up with a ``composer.phar``
+    file in your directory. In that case, no worries! Just run
+    ``php composer.phar require symfony/finder``.
 
 **3.** Write your code!
 
@@ -51,7 +45,8 @@ immediately::
 
     // File example: src/script.php
 
-    // update this to the path to the "vendor/" directory, relative to this file
+    // update this to the path to the "vendor/"
+    // directory, relative to this file
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\Finder\Finder;
@@ -82,5 +77,5 @@ documentation to find out more about how to use it.
 
 And have fun!
 
-.. _Composer: http://getcomposer.org
-.. _Install composer: http://getcomposer.org/download/
+.. _Composer: https://getcomposer.org
+.. _Install composer: https://getcomposer.org/download/

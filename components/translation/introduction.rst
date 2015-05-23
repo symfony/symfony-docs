@@ -62,9 +62,6 @@ The Translation component uses Loader classes to load catalogs. You can load
 multiple resources for the same locale, which will then be combined into one
 catalog.
 
-.. versionadded:: 2.4
-    The ``JsonFileLoader`` was introduced in Symfony 2.4.    
-
 The component comes with some default Loaders and you can create your own
 Loader too. The default loaders are:
 
@@ -160,12 +157,12 @@ If the message is not located in the catalog of the specific locale, the
 translator will look into the catalog of one or more fallback locales. For
 example, assume you're trying to translate into the ``fr_FR`` locale:
 
-1. First, the translator looks for the translation in the ``fr_FR`` locale;
+#. First, the translator looks for the translation in the ``fr_FR`` locale;
 
-2. If it wasn't found, the translator looks for the translation in the ``fr``
+#. If it wasn't found, the translator looks for the translation in the ``fr``
    locale;
 
-3. If the translation still isn't found, the translator uses the one or more
+#. If the translation still isn't found, the translator uses the one or more
    fallback locales set explicitly on the translator.
 
 For (3), the fallback locales can be set by calling
@@ -189,13 +186,13 @@ organization, translations were split into three different domains:
 loaded like this::
 
     // ...
-    $translator->addLoader('xliff', new XliffLoader());
+    $translator->addLoader('xlf', new XliffFileLoader());
 
-    $translator->addResource('xliff', 'messages.fr.xliff', 'fr_FR');
-    $translator->addResource('xliff', 'admin.fr.xliff', 'fr_FR', 'admin');
+    $translator->addResource('xlf', 'messages.fr.xlf', 'fr_FR');
+    $translator->addResource('xlf', 'admin.fr.xlf', 'fr_FR', 'admin');
     $translator->addResource(
-        'xliff',
-        'navigation.fr.xliff',
+        'xlf',
+        'navigation.fr.xlf',
         'fr_FR',
         'navigation'
     );

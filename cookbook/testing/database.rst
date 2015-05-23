@@ -33,7 +33,7 @@ class.
 
 Suppose the class you want to test looks like this::
 
-    namespace Acme\DemoBundle\Salary;
+    namespace AppBundle\Salary;
 
     use Doctrine\Common\Persistence\ObjectManager;
 
@@ -48,7 +48,8 @@ Suppose the class you want to test looks like this::
 
         public function calculateTotalSalary($id)
         {
-            $employeeRepository = $this->entityManager->getRepository('AcmeDemoBundle::Employee');
+            $employeeRepository = $this->entityManager
+                ->getRepository('AppBundle:Employee');
             $employee = $employeeRepository->find($id);
 
             return $employee->getSalary() + $employee->getBonus();
@@ -58,14 +59,14 @@ Suppose the class you want to test looks like this::
 Since the ``ObjectManager`` gets injected into the class through the constructor,
 it's easy to pass a mock object within a test::
 
-    use Acme\DemoBundle\Salary\SalaryCalculator;
+    use AppBundle\Salary\SalaryCalculator;
 
     class SalaryCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         public function testCalculateTotalSalary()
         {
             // First, mock the object to be used in the test
-            $employee = $this->getMock('\Acme\DemoBundle\Entity\Employee');
+            $employee = $this->getMock('\AppBundle\Entity\Employee');
             $employee->expects($this->once())
                 ->method('getSalary')
                 ->will($this->returnValue(1000));
@@ -74,7 +75,8 @@ it's easy to pass a mock object within a test::
                 ->will($this->returnValue(1100));
 
             // Now, mock the repository so it returns the mock of the employee
-            $employeeRepository = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
+            $employeeRepository = $this
+                ->getMockBuilder('\Doctrine\ORM\EntityRepository')
                 ->disableOriginalConstructor()
                 ->getMock();
             $employeeRepository->expects($this->once())
@@ -82,7 +84,8 @@ it's easy to pass a mock object within a test::
                 ->will($this->returnValue($employee));
 
             // Last, mock the EntityManager to return the mock of the repository
-            $entityManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
+            $entityManager = $this
+                ->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                 ->disableOriginalConstructor()
                 ->getMock();
             $entityManager->expects($this->once())

@@ -84,7 +84,7 @@ Global Variables
 
 Sometimes, you need to set a variable which is available in all templates
 rendered by an engine (like the ``$app`` variable when using the Symfony
-framework). These variables can be set by using the
+Framework). These variables can be set by using the
 :method:`Symfony\\Component\\Templating\\PhpEngine::addGlobal` method and they
 can be accessed in the template as normal variables::
 
@@ -135,7 +135,7 @@ escaper using the
 Helpers
 -------
 
-The Templating component can be easily extended via helpers. Helpers are PHP objects that 
+The Templating component can be easily extended via helpers. Helpers are PHP objects that
 provide features useful in a template context. The component has
 2 built-in helpers:
 
@@ -196,7 +196,7 @@ method is used.
 
     $templating = new DelegatingEngine(array(
         new PhpEngine(...),
-        new CustomEngine(...)
+        new CustomEngine(...),
     ));
 
 .. _Packagist: https://packagist.org/packages/symfony/templating

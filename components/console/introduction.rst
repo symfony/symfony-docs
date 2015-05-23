@@ -20,15 +20,6 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/Console).
 
-.. note::
-
-    Windows does not support ANSI colors by default so the Console component detects and
-    disables colors where Windows does not have support. However, if Windows is not
-    configured with an ANSI driver and your console commands invoke other scripts which
-    emit ANSI color sequences, they will be shown as raw escape characters.
-
-    To enable ANSI color support for Windows, please install `ANSICON`_.
-
 Creating a basic Command
 ------------------------
 
@@ -88,11 +79,13 @@ an ``Application`` and adds commands to it::
     <?php
     // application.php
 
+    require __DIR__.'/vendor/autoload.php';
+
     use Acme\Console\Command\GreetCommand;
     use Symfony\Component\Console\Application;
 
     $application = new Application();
-    $application->add(new GreetCommand);
+    $application->add(new GreetCommand());
     $application->run();
 
 Test the new console command by running the following
@@ -121,6 +114,14 @@ This prints::
 
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    By default, the Windows command console doesn't support output coloring. The
+    Console component disables output coloring for Windows systems, but if your
+    commands invoke other scripts which emit color sequences, they will be
+    wrongly displayed as raw escape characters. Install the `ConEmu`_ or `ANSICON`_
+    free applications to add coloring support to your Windows command console.
 
 Whenever you output text, you can surround the text with tags to color its
 output. For example::
@@ -200,13 +201,6 @@ level. For example::
     if (OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
         $output->writeln(...);
     }
-
-.. versionadded:: 2.4
-   The :method:`Symfony\\Component\\Console\\Output\\Output::isQuiet`,
-   :method:`Symfony\\Component\\Console\\Output\\Output::isVerbose`,
-   :method:`Symfony\\Component\\Console\\Output\\Output::isVeryVerbose` and
-   :method:`Symfony\\Component\\Console\\Output\\Output::isDebug`
-   methods were introduced in Symfony 2.4
 
 There are also more semantic methods you can use to test for each of the
 verbosity levels::
@@ -329,9 +323,11 @@ declare a one-letter shortcut that you can call with a single dash like
 
 .. tip::
 
-    It is also possible to make an option *optionally* accept a value (so that
-    ``--yell`` or ``--yell=loud`` work). Options can also be configured to
-    accept an array of values.
+    There is nothing forbidding you to create a command with an option that
+    optionally accepts a value. However, there is no way you can distinguish
+    when the option was used without a value (``command --yell``) or when it
+    wasn't used at all (``command``). In both cases, the value retrieved for
+    the option will be ``null``.
 
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::
@@ -407,9 +403,10 @@ tools capable of helping you with different tasks:
 
 * :doc:`/components/console/helpers/questionhelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
-* :doc:`/components/console/helpers/progresshelper`: shows a progress bar
-* :doc:`/components/console/helpers/tablehelper`: displays tabular data as a table
-* :doc:`/components/console/helpers/dialoghelper`: (deprecated) interactively ask the user for information
+* :doc:`/components/console/helpers/progressbar`: shows a progress bar
+* :doc:`/components/console/helpers/table`: displays tabular data as a table
+
+.. _component-console-testing-commands:
 
 Testing Commands
 ----------------
@@ -463,9 +460,11 @@ method::
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(
-                array('command' => $command->getName(), 'name' => 'Fabien', '--iterations' => 5)
-            );
+            $commandTester->execute(array(
+                'command'      => $command->getName(),
+                'name'         => 'Fabien',
+                '--iterations' => 5,
+            ));
 
             $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
         }
@@ -532,6 +531,8 @@ Learn More!
 * :doc:`/components/console/single_command_tool`
 * :doc:`/components/console/changing_default_command`
 * :doc:`/components/console/events`
+* :doc:`/components/console/console_arguments`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
+.. _ConEmu: https://code.google.com/p/conemu-maximus5/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases

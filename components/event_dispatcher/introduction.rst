@@ -12,7 +12,7 @@ The EventDispatcher Component
 Introduction
 ------------
 
-Object Oriented code has gone a long way to ensuring code extensibility. By
+Object-oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
 behaviors. But if they want to share the changes with other developers who have
@@ -212,14 +212,14 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
     and the
     :doc:`DependencyInjection component </components/dependency_injection/introduction>`,
     you can use the
-    :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterListenersPass`
-    from the HttpKernel component to tag services as event listeners::
+    :class:`Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass`
+    to tag services as event listeners::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
+        use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
@@ -489,10 +489,6 @@ which returns a boolean value::
 EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.4
-    Since Symfony 2.4, the current event name and the ``EventDispatcher``
-    itself are passed to the listeners as additional arguments.
-
 The ``EventDispatcher`` always passes the dispatched event, the event's name
 and a reference to itself to the listeners. This can be used in some advanced
 usages of the ``EventDispatcher`` like dispatching other events in listeners,
@@ -599,8 +595,8 @@ specifically pass one::
 
     $dispatcher->dispatch('foo.event');
 
-Moreover, the EventDispatcher always returns whichever event object that was
-dispatched, i.e. either the event that was passed or the event that was
+Moreover, the event dispatcher always returns whichever event object that
+was dispatched, i.e. either the event that was passed or the event that was
 created internally by the dispatcher. This allows for nice shortcuts::
 
     if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {
@@ -626,22 +622,21 @@ and so on...
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the ``EventDispatcher`` already knows the name of the event when dispatching
-it, the event name is also injected into the
-:class:`Symfony\\Component\\EventDispatcher\\Event` objects, making it available
-to event listeners via the :method:`Symfony\\Component\\EventDispatcher\\Event::getName`
-method.
+.. versionadded:: 2.4
+    Before Symfony 2.4, the event name and the event dispatcher had to be
+    requested from the ``Event`` instance. These methods are now deprecated.
 
-The event name, (as with any other data in a custom event object) can be used as
-part of the listener's processing logic::
+The ``EventDispatcher`` instance, as well as the name of the event that is
+dispatched, are passed as arguments to the listener::
 
     use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
     class Foo
     {
-        public function myEventListener(Event $event)
+        public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
         {
-            // ... do something with the event name
+            echo $eventName;
         }
     }
 

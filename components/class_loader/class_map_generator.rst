@@ -45,7 +45,7 @@ Generating a Class Map
 ----------------------
 
 To generate the class map, simply pass the root directory of your class files
-to the :method:`Symfony\\Component\\ClassLoader\\ClassMapGenerator::createMap``
+to the :method:`Symfony\\Component\\ClassLoader\\ClassMapGenerator::createMap`
 method::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
@@ -115,8 +115,11 @@ the same as in the example above)::
 
     use Symfony\Component\ClassLoader\ClassMapGenerator;
 
-    ClassMapGenerator::dump(array(__DIR__.'/library/bar', __DIR__.'/library/foo'), __DIR__.'/class_map.php');
+    ClassMapGenerator::dump(
+        array(__DIR__.'/library/bar', __DIR__.'/library/foo'),
+        __DIR__.'/class_map.php'
+    );
 
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4
-.. _`Composer`: http://getcomposer.org
+.. _`Composer`: https://getcomposer.org

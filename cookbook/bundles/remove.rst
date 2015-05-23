@@ -4,7 +4,7 @@
 How to Remove the AcmeDemoBundle
 ================================
 
-The Symfony2 Standard Edition comes with a complete demo that lives inside a
+The Symfony Standard Edition comes with a complete demo that lives inside a
 bundle called AcmeDemoBundle. It is a great boilerplate to refer to while
 starting a project, but you'll probably want to eventually remove it.
 

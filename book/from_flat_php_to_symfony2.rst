@@ -126,7 +126,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
         </body>
     </html>
 
-By convention, the file that contains all of the application logic - ``index.php`` -
+By convention, the file that contains all the application logic - ``index.php`` -
 is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
@@ -244,8 +244,8 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that allows for the reuse of the
-layout. Unfortunately, to accomplish this, you're forced to use a few ugly
+You now have a setup that will allow you to reuse the layout.
+Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
 uses a Templating component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
@@ -435,7 +435,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.5.*"
+            "symfony/symfony": "2.6.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -447,7 +447,7 @@ into a vendor/ directory:
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    $ composer install
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as
@@ -483,9 +483,6 @@ the HTTP response being returned. Use them to improve the blog:
 
     // echo the headers and send the response
     $response->send();
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,
@@ -649,7 +646,7 @@ A routing configuration map provides this information in a readable format:
 
 Now that Symfony is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
-it once it's created (and if you use a Symfony distribution, you won't
+it once it's created (and if you use a `Symfony distribution`_, you won't
 even need to create it!)::
 
     // web/app.php
@@ -713,7 +710,7 @@ for example, the list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# app/Resources/views/Blog/list.html.twig #}
+    {# app/Resources/views/blog/list.html.twig #}
     {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}
@@ -757,10 +754,11 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download Composer`: http://getcomposer.org/download/
+.. _`download Composer`: https://getcomposer.org/download/
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: https://www.varnish-cache.org/
 .. _`PHPUnit`: http://www.phpunit.de
+.. _`Symfony distribution`: https://github.com/symfony/symfony-standard

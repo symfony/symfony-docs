@@ -141,7 +141,7 @@ is never created. This saves memory and increases the speed of your application.
 This also means that there's very little or no performance hit for defining
 lots of services. Services that are never used are never constructed.
 
-As an added bonus, the ``Mailer`` service is only created once and the same
+As a bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
@@ -170,12 +170,11 @@ straightforward. Parameters make defining services more organized and flexible:
 
         # app/config/config.yml
         parameters:
-            my_mailer.class:      Acme\HelloBundle\Mailer
             my_mailer.transport:  sendmail
 
         services:
             my_mailer:
-                class:        "%my_mailer.class%"
+                class:        Acme\HelloBundle\Mailer
                 arguments:    ["%my_mailer.transport%"]
 
     .. code-block:: xml
@@ -184,15 +183,15 @@ straightforward. Parameters make defining services more organized and flexible:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
-                <parameter key="my_mailer.class">Acme\HelloBundle\Mailer</parameter>
                 <parameter key="my_mailer.transport">sendmail</parameter>
             </parameters>
 
             <services>
-                <service id="my_mailer" class="%my_mailer.class%">
+                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
                     <argument>%my_mailer.transport%</argument>
                 </service>
             </services>
@@ -203,19 +202,18 @@ straightforward. Parameters make defining services more organized and flexible:
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mailer');
         $container->setParameter('my_mailer.transport', 'sendmail');
 
         $container->setDefinition('my_mailer', new Definition(
-            '%my_mailer.class%',
+            'Acme\HelloBundle\Mailer',
             array('%my_mailer.transport%')
         ));
 
 The end result is exactly the same as before - the difference is only in
-*how* you defined the service. By surrounding the ``my_mailer.class`` and
-``my_mailer.transport`` strings in percent (``%``) signs, the container knows
-to look for parameters with those names. When the container is built, it
-looks up the value of each parameter and uses it in the service definition.
+*how* you defined the service. By surrounding the ``my_mailer.transport``
+string in percent (``%``) signs, the container knows to look for a parameter
+with that name. When the container is built, it looks up the value of each
+parameter and uses it in the service definition.
 
 .. note::
 
@@ -293,12 +291,12 @@ Importing Configuration with ``imports``
 
 So far, you've placed your ``my_mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside the ``AcmeHelloBundle``,
-it makes more sense to put the ``my_mailer`` container definition inside the
+course, since the ``Mailer`` class itself lives inside the AcmeHelloBundle, it
+makes more sense to put the ``my_mailer`` container definition inside the
 bundle as well.
 
 First, move the ``my_mailer`` container definition into a new container resource
-file inside ``AcmeHelloBundle``. If the ``Resources`` or ``Resources/config``
+file inside AcmeHelloBundle. If the ``Resources`` or ``Resources/config``
 directories don't exist, create them.
 
 .. configuration-block::
@@ -307,12 +305,11 @@ directories don't exist, create them.
 
         # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
-            my_mailer.class:      Acme\HelloBundle\Mailer
             my_mailer.transport:  sendmail
 
         services:
             my_mailer:
-                class:        "%my_mailer.class%"
+                class:        Acme\HelloBundle\Mailer
                 arguments:    ["%my_mailer.transport%"]
 
     .. code-block:: xml
@@ -321,15 +318,15 @@ directories don't exist, create them.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
-                <parameter key="my_mailer.class">Acme\HelloBundle\Mailer</parameter>
                 <parameter key="my_mailer.transport">sendmail</parameter>
             </parameters>
 
             <services>
-                <service id="my_mailer" class="%my_mailer.class%">
+                <service id="my_mailer" class="Acme\HelloBundle\Mailer">
                     <argument>%my_mailer.transport%</argument>
                 </service>
             </services>
@@ -340,11 +337,10 @@ directories don't exist, create them.
         // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mailer');
         $container->setParameter('my_mailer.transport', 'sendmail');
 
         $container->setDefinition('my_mailer', new Definition(
-            '%my_mailer.class%',
+            'Acme\HelloBundle\Mailer',
             array('%my_mailer.transport%')
         ));
 
@@ -367,7 +363,8 @@ configuration.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
                 <import resource="@AcmeHelloBundle/Resources/config/services.xml"/>
@@ -384,10 +381,9 @@ configuration.
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@AcmeHello`` syntax resolves the directory path of
-the ``AcmeHelloBundle`` bundle. This helps you specify the path to the resource
-without worrying later if you move the ``AcmeHelloBundle`` to a different
-directory.
+file. The special ``@AcmeHelloBundle`` syntax resolves the directory path
+of the AcmeHelloBundle bundle. This helps you specify the path to the resource
+without worrying later if you move the AcmeHelloBundle to a different directory.
 
 .. index::
    single: Service Container; Extension configuration
@@ -423,7 +419,7 @@ In other words, a service container extension configures the services for
 a bundle on your behalf. And as you'll see in a moment, the extension provides
 a sensible, high-level interface for configuring the bundle.
 
-Take the FrameworkBundle - the core Symfony framework bundle - as an
+Take the FrameworkBundle - the core Symfony Framework bundle - as an
 example. The presence of the following code in your application configuration
 invokes the service container extension inside the FrameworkBundle:
 
@@ -446,8 +442,10 @@ invokes the service container extension inside the FrameworkBundle:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config secret="xxxxxxxxxx">
                 <framework:form />
@@ -476,7 +474,7 @@ can handle the ``framework`` configuration directive. The extension in question,
 which lives in the FrameworkBundle, is invoked and the service configuration
 for the FrameworkBundle is loaded. If you remove the ``framework`` key
 from your application configuration file entirely, the core Symfony services
-won't be loaded. The point is that you're in control: the Symfony framework
+won't be loaded. The point is that you're in control: the Symfony Framework
 doesn't contain any magic or perform any actions that you don't have control
 over.
 
@@ -490,7 +488,7 @@ In this case, the extension allows you to customize the ``error_handler``,
 the FrameworkBundle uses the options specified here to define and configure
 the services specific to it. The bundle takes care of creating all the necessary
 ``parameters`` and ``services`` for the service container, while still allowing
-much of the configuration to be easily customized. As an added bonus, most
+much of the configuration to be easily customized. As a bonus, most
 service container extensions are also smart enough to perform validation -
 notifying you of options that are missing or the wrong data type.
 
@@ -567,15 +565,12 @@ the service container gives you a much more appealing option:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-
         services:
             my_mailer:
                 # ...
+
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@my_mailer"]
 
     .. code-block:: xml
@@ -584,18 +579,15 @@ the service container gives you a much more appealing option:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <!-- ... -->
-                <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-            </parameters>
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer">
                 <!-- ... -->
                 </service>
-                <service id="newsletter_manager" class="%newsletter_manager.class%">
+
+                <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                     <argument type="service" id="my_mailer"/>
                 </service>
             </services>
@@ -607,15 +599,10 @@ the service container gives you a much more appealing option:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter(
-            'newsletter_manager.class',
-            'Acme\HelloBundle\Newsletter\NewsletterManager'
-        );
-
         $container->setDefinition('my_mailer', ...);
+
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%',
+            'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(new Reference('my_mailer'))
         ));
 
@@ -635,9 +622,6 @@ the work of instantiating the classes.
 
 Using the Expression Language
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.4
-    The Expression Language functionality was introduced in Symfony 2.4.
 
 The service container also supports an "expression" that allows you to inject
 very specific values into a service.
@@ -694,8 +678,10 @@ To learn more about the expression language syntax, see :doc:`/components/expres
 
 In this context, you have access to 2 functions:
 
-* ``service`` - returns a given service (see the example above);
-* ``parameter`` - returns a specific parameter value (syntax is just like ``service``)
+``service``
+    Returns a given service (see the example above).
+``parameter``
+    Returns a specific parameter value (syntax is just like ``service``).
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
 via a ``container`` variable. Here's another example:
@@ -720,7 +706,7 @@ via a ``container`` variable. Here's another example:
 
             <services>
                 <service id="my_mailer" class="Acme\HelloBundle\Mailer">
-                    <argument type="expression">@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
+                    <argument type="expression">container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
                 </service>
             </services>
         </container>
@@ -733,7 +719,7 @@ via a ``container`` variable. Here's another example:
         $container->setDefinition('my_mailer', new Definition(
             'Acme\HelloBundle\Mailer',
             array(new Expression(
-                "@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
+                "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
             ))
         ));
 
@@ -772,15 +758,12 @@ Injecting the dependency by the setter method just needs a change of syntax:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-
         services:
             my_mailer:
                 # ...
+
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 calls:
                     - [setMailer, ["@my_mailer"]]
 
@@ -790,18 +773,15 @@ Injecting the dependency by the setter method just needs a change of syntax:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <!-- ... -->
-                <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-            </parameters>
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer">
                 <!-- ... -->
                 </service>
-                <service id="newsletter_manager" class="%newsletter_manager.class%">
+
+                <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                     <call method="setMailer">
                         <argument type="service" id="my_mailer" />
                     </call>
@@ -815,15 +795,10 @@ Injecting the dependency by the setter method just needs a change of syntax:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter(
-            'newsletter_manager.class',
-            'Acme\HelloBundle\Newsletter\NewsletterManager'
-        );
-
         $container->setDefinition('my_mailer', ...);
+
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%'
+            'Acme\HelloBundle\Newsletter\NewsletterManager'
         ))->addMethodCall('setMailer', array(
             new Reference('my_mailer'),
         ));
@@ -838,9 +813,6 @@ Injecting the dependency by the setter method just needs a change of syntax:
 
 Injecting the Request
 ~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.4
-    The ``request_stack`` service was introduced in Symfony 2.4.
 
 As of Symfony 2.4, instead of injecting the ``request`` service, you should
 inject the ``request_stack`` service and access the ``Request`` by calling
@@ -947,12 +919,9 @@ it exists and do nothing if it doesn't:
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-
         services:
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@?my_mailer"]
 
     .. code-block:: xml
@@ -961,13 +930,15 @@ it exists and do nothing if it doesn't:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer">
                 <!-- ... -->
                 </service>
-                <service id="newsletter_manager" class="%newsletter_manager.class%">
+
+                <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                     <argument type="service" id="my_mailer" on-invalid="ignore" />
                 </service>
             </services>
@@ -980,15 +951,10 @@ it exists and do nothing if it doesn't:
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        // ...
-        $container->setParameter(
-            'newsletter_manager.class',
-            'Acme\HelloBundle\Newsletter\NewsletterManager'
-        );
-
         $container->setDefinition('my_mailer', ...);
+
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%',
+            'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(
                 new Reference(
                     'my_mailer',
@@ -1012,7 +978,7 @@ Core Symfony and Third-Party Bundle Services
 Since Symfony and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
 services. To keep things simple, Symfony by default does not require that
-controllers be defined as services. Furthermore, Symfony injects the entire
+controllers must be defined as services. Furthermore, Symfony injects the entire
 service container into your controller. For example, to handle the storage of
 information on a user's session, Symfony provides a ``session`` service,
 which you can access inside a standard controller as follows::
@@ -1065,7 +1031,7 @@ Configuring the service container is easy:
         # src/Acme/HelloBundle/Resources/config/services.yml
         services:
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:     Acme\HelloBundle\Newsletter\NewsletterManager
                 arguments: ["@mailer", "@templating"]
 
     .. code-block:: xml
@@ -1074,9 +1040,10 @@ Configuring the service container is easy:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <service id="newsletter_manager" class="%newsletter_manager.class%">
+            <service id="newsletter_manager" class="Acme\HelloBundle\Newsletter\NewsletterManager">
                 <argument type="service" id="mailer"/>
                 <argument type="service" id="templating"/>
             </service>
@@ -1086,7 +1053,7 @@ Configuring the service container is easy:
 
         // src/Acme/HelloBundle/Resources/config/services.php
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%',
+            'Acme\HelloBundle\Newsletter\NewsletterManager',
             array(
                 new Reference('mailer'),
                 new Reference('templating'),
@@ -1123,6 +1090,7 @@ to be used for a specific purpose. Take the following example:
         services:
             foo.twig.extension:
                 class: Acme\HelloBundle\Extension\FooExtension
+                public: false
                 tags:
                     -  { name: twig.extension }
 
@@ -1132,11 +1100,13 @@ to be used for a specific purpose. Take the following example:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <service
                 id="foo.twig.extension"
-                class="Acme\HelloBundle\Extension\FooExtension">
+                class="Acme\HelloBundle\Extension\FooExtension"
+                public="false">
 
                 <tag name="twig.extension" />
             </service>
@@ -1148,6 +1118,7 @@ to be used for a specific purpose. Take the following example:
         use Symfony\Component\DependencyInjection\Definition;
 
         $definition = new Definition('Acme\HelloBundle\Extension\FooExtension');
+        $definition->setPublic(false);
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 
@@ -1178,7 +1149,7 @@ console. To show all services and the class for each service, run:
 .. versionadded:: 2.6
     Prior to Symfony 2.6, this command was called ``container:debug``.
 
-By default only public services are shown, but you can also view private services:
+By default, only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 

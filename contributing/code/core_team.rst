@@ -37,33 +37,42 @@ Active Core Members
 
 * **Project Leader**:
 
-  * **Fabien Potencier** (:leader:`fabpot`).
+  * **Fabien Potencier** (`fabpot`_).
 
 * **Mergers** (``@symfony/mergers`` on GitHub):
 
-  * **Bernhard Schussek** (:merger:`webmozart`) can merge into the Form_,
+  * **Bernhard Schussek** (`webmozart`_) can merge into the Form_,
     Validator_, Icu_, Intl_, Locale_, OptionsResolver_ and PropertyAccess_
     components;
 
-  * **Tobias Schultze** (:merger:`Tobion`) can merge into the Routing_
-    component;
+  * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
+    OptionsResolver_ and PropertyAccess_ components;
 
-  * **Romain Neutron** (:merger:`romainneutron`) can merge into the
+  * **Romain Neutron** (`romainneutron`_) can merge into the
     Process_ component;
 
-  * **Nicolas Grekas** (:merger:`nicolas-grekas`) can merge into the Debug_
+  * **Nicolas Grekas** (`nicolas-grekas`_) can merge into the Debug_
     component, the VarDumper_ component and the DebugBundle_;
 
-  * **Christophe Coevoet** (:merger:`stof`) can merge into the BrowserKit_,
+  * **Christophe Coevoet** (`stof`_) can merge into the BrowserKit_,
     Config_, Console_, DependencyInjection_, DomCrawler_, EventDispatcher_,
     HttpFoundation_, HttpKernel_, Serializer_, Stopwatch_, DoctrineBridge_,
-    MonologBridge_, and TwigBridge_ components.
+    MonologBridge_, and TwigBridge_ components;
+
+  * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
+    component;
+
+  * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
+    component;
+
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
-  * **Jakub Zalas** (:decider:`jakzal`);
-  * **Jordi Boggiano** (:decider:`seldaek`);
-  * **Lukas Kahwe Smith** (:decider:`lsmith77`).
+  * **Jordi Boggiano** (`seldaek`_);
+  * **Lukas Kahwe Smith** (`lsmith77`_);
+  * **Ryan Weaver** (`weaverryan`_);
+  * **Christian Flothmann** (`xabbuh`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,11 +117,10 @@ Pull Request Merging Policy
 
 A pull request **can be merged** if:
 
-* Enough time was given for peer reviews (a few minutes for typos or minor
-  changes, at least 2 days for "regular" pull requests, and 4 days for pull
-  requests with "a significant impact");
+* It is a minor change [1]_;
 
-* It is a minor change [1]_, regardless of the number of votes;
+* Enough time was given for peer reviews (at least 2 days for "regular"
+  pull requests, and 4 days for pull requests with "a significant impact");
 
 * At least the component's **Merger** or two other Core members voted ``+1``
   and no Core member voted ``-1``.
@@ -161,8 +169,22 @@ discretion of the **Project Leader**.
 .. _PropertyAccess: https://github.com/symfony/PropertyAccess
 .. _Routing: https://github.com/symfony/Routing
 .. _Serializer: https://github.com/symfony/Serializer
+.. _Translation: https://github.com/symfony/Translation
 .. _Stopwatch: https://github.com/symfony/Stopwatch
 .. _TwigBridge: https://github.com/symfony/TwigBridge
 .. _Validator: https://github.com/symfony/Validator
 .. _VarDumper: https://github.com/symfony/var-dumper
 .. _DebugBundle: https://github.com/symfony/debug-bundle
+.. _`fabpot`: https://github.com/fabpot/
+.. _`webmozart`: https://github.com/webmozart/
+.. _`Tobion`: https://github.com/Tobion/
+.. _`romainneutron`: https://github.com/romainneutron/
+.. _`nicolas-grekas`: https://github.com/nicolas-grekas/
+.. _`stof`: https://github.com/stof/
+.. _`dunglas`: https://github.com/dunglas/
+.. _`jakzal`: https://github.com/jakzal/
+.. _`Seldaek`: https://github.com/Seldaek/
+.. _`lsmith77`: https://github.com/lsmith77/
+.. _`weaverryan`: https://github.com/weaverryan/
+.. _`aitboudad`: https://github.com/aitboudad/
+.. _`xabbuh`: https://github.com/xabbuh/

@@ -51,8 +51,8 @@ user sees on the form (e.g. ``Male``).
 .. code-block:: php
 
     $builder->add('gender', 'choice', array(
-        'choices'   => array('m' => 'Male', 'f' => 'Female'),
-        'required'  => false,
+        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+        'required' => false,
     ));
 
 By setting ``multiple`` to true, you can allow the user to choose multiple
@@ -62,12 +62,12 @@ of checkboxes depending on the ``expanded`` option:
 .. code-block:: php
 
     $builder->add('availability', 'choice', array(
-        'choices'   => array(
+        'choices' => array(
             'morning'   => 'Morning',
             'afternoon' => 'Afternoon',
             'evening'   => 'Evening',
         ),
-        'multiple'  => true,
+        'multiple' => true,
     ));
 
 You can also use the ``choice_list`` option, which takes an object that can
@@ -90,7 +90,7 @@ by this field. The ``choices`` option is an array, where the array key
 is the item value and the array value is the item's label::
 
     $builder->add('gender', 'choice', array(
-        'choices' => array('m' => 'Male', 'f' => 'Female')
+        'choices' => array('m' => 'Male', 'f' => 'Female'),
     ));
 
 .. tip::
@@ -192,9 +192,9 @@ Field Variables
 +------------------------+--------------+-------------------------------------------------------------------+
 | Variable               | Type         | Usage                                                             |
 +========================+==============+===================================================================+
-| multiple               | ``Boolean``  | The value of the `multiple`_ option.                              |
+| multiple               | ``boolean``  | The value of the `multiple`_ option.                              |
 +------------------------+--------------+-------------------------------------------------------------------+
-| expanded               | ``Boolean``  | The value of the `expanded`_ option.                              |
+| expanded               | ``boolean``  | The value of the `expanded`_ option.                              |
 +------------------------+--------------+-------------------------------------------------------------------+
 | preferred_choices      | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
 |                        |              | choices which should be presented to the user with priority.      |
@@ -210,7 +210,7 @@ Field Variables
 | is_selected            | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
 |                        |              | and returns whether the choice is in the selected value(s).       |
 +------------------------+--------------+-------------------------------------------------------------------+
-| placeholder_in_choices | ``Boolean``  | Whether the empty value is in the choice list.                    |
+| placeholder_in_choices | ``boolean``  | Whether the empty value is in the choice list.                    |
 +------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::

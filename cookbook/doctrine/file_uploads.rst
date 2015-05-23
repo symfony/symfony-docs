@@ -23,8 +23,8 @@ Basic Setup
 
 First, create a simple Doctrine entity class to work with::
 
-    // src/Acme/DemoBundle/Entity/Document.php
-    namespace Acme\DemoBundle\Entity;
+    // src/AppBundle/Entity/Document.php
+    namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -152,19 +152,10 @@ rules::
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\Document:
-            properties:
-                file:
-                    - File:
-                        maxSize: 6000000
-
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Entity/Document.php
-        namespace Acme\DemoBundle\Entity;
+        // src/AppBundle/Entity/Document.php
+        namespace AppBundle\Entity;
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -179,10 +170,19 @@ rules::
             // ...
         }
 
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\Document:
+            properties:
+                file:
+                    - File:
+                        maxSize: 6000000
+
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.yml -->
-        <class name="Acme\DemoBundle\Entity\Document">
+        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <class name="AppBundle\Entity\Document">
             <property name="file">
                 <constraint name="File">
                     <option name="maxSize">6000000</option>
@@ -192,7 +192,7 @@ rules::
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Entity/Document.php
+        // src/AppBundle/Entity/Document.php
         namespace Acme\DemoBundle\Entity;
 
         // ...
@@ -220,7 +220,7 @@ rules::
 The following controller shows you how to handle the entire process::
 
     // ...
-    use Acme\DemoBundle\Entity\Document;
+    use AppBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Symfony\Component\HttpFoundation\Request;
     // ...
@@ -244,7 +244,7 @@ The following controller shows you how to handle the entire process::
             $em->persist($document);
             $em->flush();
 
-            return $this->redirect($this->generateUrl(...));
+            return $this->redirectToRoute(...);
         }
 
         return array('form' => $form->createView());
@@ -267,7 +267,7 @@ in a moment to handle the file upload::
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect(...);
+        return $this->redirectToRoute(...);
     }
 
 The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
@@ -432,7 +432,7 @@ call to ``$document->upload()`` should be removed from the controller::
         $em->persist($document);
         $em->flush();
 
-        return $this->redirect(...);
+        return $this->redirectToRoute(...);
     }
 
 .. note::

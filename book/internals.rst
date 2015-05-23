@@ -40,8 +40,8 @@ variables:
 * The :class:`Symfony\\Component\\HttpFoundation\\Response` class abstracts
   some PHP functions like ``header()``, ``setcookie()``, and ``echo``;
 
-* The :class:`Symfony\\Component\\HttpFoundation\\Session` class and
-  :class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface`
+* The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class and
+  :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`
   interface abstract session management ``session_*()`` functions.
 
 .. note::
@@ -55,7 +55,7 @@ On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
 component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
 on top of the Request and Response classes to standardize the way requests are
 handled. It also provides extension points and tools that makes it the ideal
-starting point to create a Web framework without too much overhead.
+starting point to create a web framework without too much overhead.
 
 It also optionally adds configurability and extensibility, thanks to the
 DependencyInjection component and a powerful plugin system (bundles).
@@ -177,12 +177,12 @@ Event):
 #. Listeners of the ``kernel.terminate`` event can perform tasks after the
    Response has been served.
 
-If an Exception is thrown during processing, the ``kernel.exception`` is
-notified and listeners are given a chance to convert the Exception to a
+If an exception is thrown during processing, the ``kernel.exception`` is
+notified and listeners are given a chance to convert the exception into a
 Response. If that works, the ``kernel.response`` event is notified; if not, the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for
+If you don't want exceptions to be caught (for embedded requests for
 instance), disable the ``kernel.exception`` event by passing ``false`` as the
 third argument to the ``handle()`` method.
 
@@ -208,26 +208,22 @@ processing must only occur on the master request).
 Events
 ~~~~~~
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
-  or ``HttpKernelInterface::SUB_REQUEST``);
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
+    Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` or
+    ``HttpKernelInterface::SUB_REQUEST``).
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-  - checks if it is a master request;
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+    Checks if it is a master request.
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
-  - returns the Kernel handling the request;
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
+    Returns the Kernel handling the request.
 
-* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
-  - returns the current ``Request`` being handled.
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
+    Returns the current ``Request`` being handled.
 
 ``isMasterRequest()``
 .....................
@@ -245,8 +241,8 @@ add the following code at the beginning of your listener method::
 
 .. tip::
 
-    If you are not yet familiar with the Symfony EventDispatcher, read the
-    :doc:`EventDispatcher component documentation </components/event_dispatcher/introduction>`
+    If you are not yet familiar with the Symfony EventDispatcher component,
+    read :doc:`its documentation </components/event_dispatcher/introduction>`
     section first.
 
 .. index::
@@ -354,18 +350,18 @@ The purpose of this event is to allow other systems to modify or replace the
 
 The FrameworkBundle registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`:
-  collects data for the current request;
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`
+    Collects data for the current request.
 
-* :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`:
-  injects the Web Debug Toolbar;
+:class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`
+    Injects the web debug toolbar.
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`: fixes the
-  Response ``Content-Type`` based on the request format;
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`
+    Fixes the Response ``Content-Type`` based on the request format.
 
-* :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`: adds a
-  ``Surrogate-Control`` HTTP header when the Response needs to be parsed for
-  ESI tags.
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`
+    Adds a ``Surrogate-Control`` HTTP header when the Response needs to be parsed
+    for ESI tags.
 
 .. seealso::
 
@@ -379,7 +375,7 @@ The FrameworkBundle registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-The purpose of this event is to to handle tasks that should be performed after
+The purpose of this event is to handle tasks that should be performed after
 the request has been handled but that do not need to modify the response.
 Event listeners for the ``kernel.finish_request`` event are called in both
 successful and exception cases.
@@ -416,7 +412,7 @@ forwards the ``Request`` to a given Controller (the value of the
 ``class::method`` notation).
 
 A listener on this event can create and set a ``Response`` object, create
-and set a new ``Exception`` object, or do nothing::
+and set a new ``Exception`` object or do nothing::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -456,8 +452,10 @@ and set a new ``Exception`` object, or do nothing::
 .. index::
    single: EventDispatcher
 
-The EventDispatcher
--------------------
+.. _the-eventdispatcher:
+
+The EventDispatcher Component
+-----------------------------
 
 The EventDispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
@@ -478,7 +476,7 @@ enhance performance; use it in the production environment to explore problems
 after the fact.
 
 You rarely have to deal with the profiler directly as Symfony provides
-visualizer tools like the Web Debug Toolbar and the Web Profiler. If you use
+visualizer tools like the web debug toolbar and the web profiler. If you use
 the Symfony Standard Edition, the profiler, the web debug toolbar, and the
 web profiler are all already configured with sensible settings.
 
@@ -504,7 +502,7 @@ bottom of all pages. It displays a good summary of the profiling data that
 gives you instant access to a lot of useful information when something does
 not work as expected.
 
-If the summary provided by the Web Debug Toolbar is not enough, click on the
+If the summary provided by the web debug toolbar is not enough, click on the
 token link (a string made of 13 random characters) to access the Web Profiler.
 
 .. note::
@@ -555,7 +553,8 @@ method to access tokens based on some criteria::
     $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, '', '');
 
     // get the latest 10 tokens for requests that happened between 2 and 4 days ago
-    $tokens = $container->get('profiler')->find('', '', 10, '4 days ago', '2 days ago');
+    $tokens = $container->get('profiler')
+        ->find('', '', 10, '4 days ago', '2 days ago');
 
 If you want to manipulate profiling data on a different machine than the one
 where the information were generated, use the
@@ -599,9 +598,12 @@ the configuration for the development environment:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/webprofiler
+                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- load the profiler -->
             <framework:config>
@@ -661,7 +663,9 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
         use Symfony\Component\Routing\RouteCollection;
 
-        $profiler = $loader->import('@WebProfilerBundle/Resources/config/routing/profiler.xml');
+        $profiler = $loader->import(
+            '@WebProfilerBundle/Resources/config/routing/profiler.xml'
+        );
         $profiler->addPrefix('/_profiler');
 
         $collection = new RouteCollection();

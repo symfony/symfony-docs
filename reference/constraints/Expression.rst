@@ -1,9 +1,6 @@
 Expression
 ==========
 
-.. versionadded:: 2.4
-    The Expression constraint was introduced in Symfony 2.4.
-
 This constraint allows you to use an :ref:`expression <component-expression-language-examples>`
 for more complex, dynamic validation. See `Basic Usage`_ for an example.
 See :doc:`/reference/constraints/Callback` for a different constraint that
@@ -14,6 +11,7 @@ gives you similar flexibility.
 +----------------+-----------------------------------------------------------------------------------------------+
 | Options        | - :ref:`expression <reference-constraint-expression-option>`                                  |
 |                | - `message`_                                                                                  |
+|                | - `payload`_                                                                                  |
 +----------------+-----------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Expression`                               |
 +----------------+-----------------------------------------------------------------------------------------------+
@@ -258,3 +256,5 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 The default message supplied when the expression evaluates to false.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

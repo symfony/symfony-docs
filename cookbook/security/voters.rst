@@ -37,8 +37,8 @@ and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
-    // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
-    namespace Acme\DemoBundle\Security\Authorization\Voter;
+    // src/AppBundle/Security/Authorization/Voter/ClientIpVoter.php
+    namespace AppBundle\Security\Authorization\Voter;
 
     use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -105,9 +105,9 @@ and tag it as a ``security.voter``:
         # src/Acme/AcmeBundle/Resources/config/services.yml
         services:
             security.access.blacklist_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments:  ["@request_stack", [123.123.123.123, 171.171.171.171]]
-                public:     false
+                class:     AppBundle\Security\Authorization\Voter\ClientIpVoter
+                arguments: ["@request_stack", [123.123.123.123, 171.171.171.171]]
+                public:    false
                 tags:
                     - { name: security.voter }
 
@@ -115,7 +115,7 @@ and tag it as a ``security.voter``:
 
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
+                 class="AppBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="request_stack" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
@@ -131,7 +131,7 @@ and tag it as a ``security.voter``:
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
+            'AppBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
                 new Reference('request_stack'),
                 array('123.123.123.123', '171.171.171.171'),
@@ -196,6 +196,36 @@ application configuration file with the following code.
 
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
+
+Note that the voters are only called, if any access is actually checked. So 
+you need at least something like 
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            access_control:
+                - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <access-control>
+               <rule path="^/" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+            </access-control>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.xml
+        $container->loadFromExtension('security', array(
+            'access_control' => array(
+               array('path' => '^/', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
+            ),
+         ));
 
 .. seealso::
 

@@ -4,15 +4,16 @@ Iban
 .. versionadded:: 2.3
     The Iban constraint was introduced in Symfony 2.3.
 
-This constraint is used to ensure that a bank account number has the proper format of
-an `International Bank Account Number (IBAN)`_. IBAN is an internationally agreed means
-of identifying bank accounts across national borders with a reduced risk of propagating
-transcription errors.
+This constraint is used to ensure that a bank account number has the proper
+format of an `International Bank Account Number (IBAN)`_. IBAN is an
+internationally agreed means of identifying bank accounts across national
+borders with a reduced risk of propagating transcription errors.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Iban`             |
 +----------------+-----------------------------------------------------------------------+
@@ -27,15 +28,6 @@ will contain an International Bank Account Number.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
-        Acme\SubscriptionBundle\Entity\Transaction:
-            properties:
-                bankAccountNumber:
-                    - Iban:
-                        message: This is not a valid International Bank Account Number (IBAN).
-
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
@@ -46,10 +38,21 @@ will contain an International Bank Account Number.
         class Transaction
         {
             /**
-             * @Assert\Iban(message = "This is not a valid International Bank Account Number (IBAN).")
+             * @Assert\Iban(
+             *     message="This is not a valid International Bank Account Number (IBAN)."
+             * )
              */
             protected $bankAccountNumber;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
+        Acme\SubscriptionBundle\Entity\Transaction:
+            properties:
+                bankAccountNumber:
+                    - Iban:
+                        message: This is not a valid International Bank Account Number (IBAN).
 
     .. code-block:: xml
 
@@ -62,7 +65,9 @@ will contain an International Bank Account Number.
             <class name="Acme\SubscriptionBundle\Entity\Transaction">
                 <property name="bankAccountNumber">
                     <constraint name="Iban">
-                        <option name="message">This is not a valid International Bank Account Number (IBAN).</option>
+                        <option name="message">
+                            This is not a valid International Bank Account Number (IBAN).
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -97,5 +102,7 @@ message
 **type**: ``string`` **default**: ``This is not a valid International Bank Account Number (IBAN).``
 
 The default message supplied when the value does not pass the Iban check.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Bank Account Number (IBAN)`: http://en.wikipedia.org/wiki/International_Bank_Account_Number

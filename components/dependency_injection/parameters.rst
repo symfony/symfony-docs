@@ -140,52 +140,6 @@ rather than being tied up and hidden with the service definition:
 If you were using this elsewhere as well, then you would only need to change
 the parameter value in one place if needed.
 
-You can also use the parameters in the service definition, for example,
-making the class of a service a parameter:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        parameters:
-            mailer.transport: sendmail
-            mailer.class: Mailer
-
-        services:
-            mailer:
-                class:     "%mailer.class%"
-                arguments: ["%mailer.transport%"]
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="mailer.transport">sendmail</parameter>
-                <parameter key="mailer.class">Mailer</parameter>
-            </parameters>
-
-            <services>
-                <service id="mailer" class="%mailer.class%">
-                    <argument>%mailer.transport%</argument>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->setParameter('mailer.transport', 'sendmail');
-        $container->setParameter('mailer.class', 'Mailer');
-
-        $container
-            ->register('mailer', '%mailer.class%')
-            ->addArgument('%mailer.transport%');
-
 .. note::
 
     The percent sign inside a parameter or argument, as part of the string, must

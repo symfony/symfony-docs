@@ -239,7 +239,7 @@ Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
 
 A Save Handler Proxy is basically a wrapper around a Save Handler that was
-introduced to support seamlessly the migration from PHP 5.3 to PHP 5.4+. It
+introduced to seamlessly support the migration from PHP 5.3 to PHP 5.4+. It
 further creates an extension point from where custom logic can be added that
 works independently of which handler is being wrapped inside.
 

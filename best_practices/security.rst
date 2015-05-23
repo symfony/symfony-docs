@@ -6,7 +6,8 @@ Authentication and Firewalls (i.e. Getting the User's Credentials)
 
 You can configure Symfony to authenticate your users using any method you
 want and to load user information from any source. This is a complex topic,
-but the `Security Cookbook Section`_ has a lot of information about this.
+but the :doc:`Security Cookbook Section </cookbook/security/index>` has a
+lot of information about this.
 
 Regardless of your needs, authentication is configured in ``security.yml``,
 primarily under the ``firewalls`` key.
@@ -42,6 +43,7 @@ which uses a login form to load users from the database:
 
 .. code-block:: yaml
 
+    # app/config/security.yml
     security:
         encoders:
             AppBundle\Entity\User: bcrypt
@@ -72,15 +74,16 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in `security.yml`_, the :ref:`@Security annotation <best-practices-security-annotation>`
-and using :ref:`isGranted <best-practices-directy-isGranted>` on the ``security.context``
+configuration in :doc:`security.yml </reference/configuration/security>`, the
+:ref:`@Security annotation <best-practices-security-annotation>` and using
+:ref:`isGranted <best-practices-directly-isGranted>` on the ``security.authorization_checker``
 service directly.
 
 .. best-practice::
 
     * For protecting broad URL patterns, use ``access_control``;
     * Whenever possible, use the ``@Security`` annotation;
-    * Check security directly on the ``security.context`` service whenever
+    * Check security directly on the ``security.authorization_checker`` service whenever
       you have a more complex situation.
 
 There are also different ways to centralize your authorization logic, like
@@ -204,7 +207,9 @@ Now you can reuse this method both in the template and in the security expressio
         <a href=""> ... </a>
     {% endif %}
 
-.. _best-practices-directy-isGranted:
+.. _best-practices-directly-isGranted:
+.. _checking-permissions-without-security:
+.. _manually-checking-permissions:
 
 Checking Permissions without @Security
 --------------------------------------
@@ -215,6 +220,10 @@ access to the a ``post`` variable. If you don't use this, or have some other
 more advanced use-case, you can always do the same security check in PHP:
 
 .. code-block:: php
+
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    // ...
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -229,7 +238,7 @@ more advanced use-case, you can always do the same security check in PHP:
         }
 
         if (!$post->isAuthor($this->getUser())) {
-            throw $this->createAccessDeniedException();
+            throw new AccessDeniedException();
         }
 
         // ...
@@ -240,8 +249,8 @@ Security Voters
 
 If your security logic is complex and can't be centralized into a method
 like ``isAuthor()``, you should leverage custom voters. These are an order
-of magnitude easier than `ACL's`_ and will give you the flexibility you need
-in almost all cases.
+of magnitude easier than :doc:`ACLs </cookbook/security/acl>` and will give
+you the flexibility you need in almost all cases.
 
 First, create a voter class. The following example shows a voter that implements
 the same ``getAuthorEmail`` logic you used above:
@@ -313,10 +322,14 @@ Now, you can use the voter with the ``@Security`` annotation:
         // ...
     }
 
-You can also use this directly with the ``security.context`` service, or
+You can also use this directly with the ``security.authorization_checker`` service or
 via the even easier shortcut in a controller:
 
 .. code-block:: php
+
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+    // ...
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -325,39 +338,34 @@ via the even easier shortcut in a controller:
     {
         $post = // query for the post ...
 
-        if (!$this->get('security.context')->isGranted('edit', $post)) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        // or without the shortcut:
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
     }
 
 Learn More
 ----------
 
 The `FOSUserBundle`_, developed by the Symfony community, adds support for a
-database-backed user system in Symfony2. It also handles common tasks like
+database-backed user system in Symfony. It also handles common tasks like
 user registration and forgotten password functionality.
 
-Enable the `Remember Me feature`_ to allow your users to stay logged in for
-a long period of time.
+Enable the :doc:`Remember Me feature </cookbook/security/remember_me>` to
+allow your users to stay logged in for a long period of time.
 
 When providing customer support, sometimes it's necessary to access the application
 as some *other* user so that you can reproduce the problem. Symfony provides
-the ability to `impersonate users`_.
+the ability to :doc:`impersonate users </cookbook/security/impersonating_user>`.
 
 If your company uses a user login method not supported by Symfony, you can
-develop `your own user provider`_ and `your own authentication provider`_.
+develop :doc:`your own user provider </cookbook/security/custom_provider>` and
+:doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
 
-.. _`Security Cookbook Section`: http://symfony.com/doc/current/cookbook/security/index.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
-.. _`security.yml`: http://symfony.com/doc/current/reference/configuration/security.html
-.. _`security voter`: http://symfony.com/doc/current/cookbook/security/voters_data_permission.html
-.. _`Acces Control List`: http://symfony.com/doc/current/cookbook/security/acl.html
-.. _`ACL's`: http://symfony.com/doc/current/cookbook/security/acl.html
 .. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _`Remember Me feature`: http://symfony.com/doc/current/cookbook/security/remember_me.html
-.. _`impersonate users`: http://symfony.com/doc/current/cookbook/security/impersonating_user.html
-.. _`your own user provider`: http://symfony.com/doc/current/cookbook/security/custom_provider.html
-.. _`your own authentication provider`: http://symfony.com/doc/current/cookbook/security/custom_authentication_provider.html

@@ -50,6 +50,12 @@ which Encoders and Normalizer are going to be available::
 
     $serializer = new Serializer($normalizers, $encoders);
 
+There are several normalizers available, e.g. the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` or
+the :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`.
+To read more about them, refer to the `Normalizers`_ section of this page. All
+the examples shown below use the ``GetSetMethodNormalizer``.
+
 Serializing an Object
 ---------------------
 
@@ -153,14 +159,14 @@ of the ``Person`` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data,'Acme\Person','xml');
+    $person = $serializer->deserialize($data, 'Acme\Person', 'xml');
 
 In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
 needs three parameters:
 
-1. The information to be decoded
-2. The name of the class this information will be decoded to
-3. The encoder used to convert that information into an array
+#. The information to be decoded
+#. The name of the class this information will be decoded to
+#. The encoder used to convert that information into an array
 
 Using Camelized Method Names for Underscored Attributes
 -------------------------------------------------------
@@ -224,7 +230,7 @@ When serializing, you can set a callback to format a specific object property::
         return $dateTime instanceof \DateTime
             ? $dateTime->format(\DateTime::ISO8601)
             : '';
-    }
+    };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
 
@@ -237,6 +243,28 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
+Normalizers
+-----------
+
+There are several types of normalizers available:
+
+:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
+    This normalizer reads the content of the class by calling the "getters"
+    (public methods starting with "get"). It will denormalize data by calling
+    the constructor and the "setters" (public methods starting with "set").
+
+    Objects are serialized to a map of property names (method name stripped of
+    the "get" prefix and converted to lower case) to property values.
+
+:class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
+    This normalizer directly reads and writes public properties as well as
+    **private and protected** properties. Objects are normalized to a map of
+    property names to property values.
+
+.. versionadded:: 2.6 The
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
+    class was introduced in Symfony 2.6.
 
 Handling Circular References
 ----------------------------
@@ -310,7 +338,7 @@ when such a case is encountered::
     $org->setName('Les-Tilleuls.coop');
     $org->setMembers(array($member));
 
-    $member->setOrganization($kevin);
+    $member->setOrganization($org);
 
     echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
 
@@ -330,8 +358,8 @@ having unique identifiers::
     });
 
     $serializer = new Serializer(array($normalizer), array($encoder));
-    dump($serializer->serialize($org, 'json'));
-    // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"]}
+    echo $serializer->serialize($org, 'json');
+    // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
 JMSSerializer
 -------------

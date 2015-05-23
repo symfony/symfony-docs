@@ -13,8 +13,9 @@ for your end users.
 Using Jpegoptim
 ---------------
 
-`Jpegoptim`_ is a utility for optimizing JPEG files. To use it with Assetic,
-add the following to the Assetic config:
+`Jpegoptim`_ is a utility for optimizing JPEG files. To use it with Assetic, make
+sure to have it already installed on your system and then, configure its location
+using the ``bin`` option of the ``jpegoptim`` filter:
 
 .. configuration-block::
 
@@ -46,18 +47,13 @@ add the following to the Assetic config:
             ),
         ));
 
-.. note::
-
-    Notice that to use jpegoptim, you must have it already installed on your
-    system. The ``bin`` option points to the location of the compiled binary.
-
 It can now be used from a template:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% image '@AcmeFooBundle/Resources/public/images/example.jpg'
+        {% image '@AppBundle/Resources/public/images/example.jpg'
             filter='jpegoptim' output='/images/example.jpg' %}
             <img src="{{ asset_url }}" alt="Example"/>
         {% endimage %}
@@ -65,7 +61,7 @@ It can now be used from a template:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->image(
-            array('@AcmeFooBundle/Resources/public/images/example.jpg'),
+            array('@AppBundle/Resources/public/images/example.jpg'),
             array('jpegoptim')
         ) as $url): ?>
             <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
@@ -74,9 +70,9 @@ It can now be used from a template:
 Removing all EXIF Data
 ~~~~~~~~~~~~~~~~~~~~~~
 
-By default, running this filter only removes some of the meta information
-stored in the file. Any EXIF data and comments are not removed, but you can
-remove these by using the ``strip_all`` option:
+By default, the ``jpegoptim`` filter removes some of the meta information stored
+in the image. To remove all EXIF data and comments, set the ``strip_all`` option
+to ``true``:
 
 .. configuration-block::
 
@@ -111,13 +107,13 @@ remove these by using the ``strip_all`` option:
             ),
         ));
 
-Lowering maximum Quality
+Lowering Maximum Quality
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The quality level of the JPEG is not affected by default. You can gain
-further file size reductions by setting the max quality setting lower than
-the current level of the images. This will of course be at the expense of
-image quality:
+By default, the ``jpegoptim`` filter doesn't alter the quality level of the JPEG
+image. Use the ``max`` option to configure the maximum quality setting (in a
+scale of ``0`` to ``100``). The reduction in the image file size will of course
+be at the expense of its quality:
 
 .. configuration-block::
 
@@ -157,7 +153,7 @@ Shorter Syntax: Twig Function
 
 If you're using Twig, it's possible to achieve all of this with a shorter
 syntax by enabling and using a special Twig function. Start by adding the
-following config:
+following configuration:
 
 .. configuration-block::
 
@@ -204,9 +200,10 @@ The Twig template can now be changed to the following:
 
 .. code-block:: html+jinja
 
-    <img src="{{ jpegoptim('@AcmeFooBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
+    <img src="{{ jpegoptim('@AppBundle/Resources/public/images/example.jpg') }}" alt="Example"/>
 
-You can specify the output directory in the config in the following way:
+You can also specify the output directory for images in the Assetic configuration
+file:
 
 .. configuration-block::
 

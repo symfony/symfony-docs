@@ -34,9 +34,9 @@ the library on the `Packagist.org`_ site.
 
 Now that you know the package name, you can install it via Composer:
 
-   .. code-block:: bash
+.. code-block:: bash
 
-       $ php composer.phar require friendsofsymfony/user-bundle
+    $ composer require friendsofsymfony/user-bundle
 
 This will choose the best version for your project, add it to ``composer.json``
 and download the library into the ``vendor/`` directory. If you need a specific
@@ -111,7 +111,7 @@ Other Setup
 At this point, check the ``README`` file of your brand new bundle to see
 what to do next. Have fun!
 
-.. _their documentation: http://getcomposer.org/doc/00-intro.md
+.. _their documentation: https://getcomposer.org/doc/00-intro.md
 .. _Packagist.org:       https://packagist.org
 .. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _KnpBundles.com:      http://knpbundles.com/

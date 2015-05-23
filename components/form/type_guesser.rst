@@ -46,7 +46,7 @@ Start by creating the class and these methods. Next, you'll learn how to fill ea
 
     use Symfony\Component\Form\FormTypeGuesserInterface;
 
-    class PhpdocTypeGuesser implements FormTypeGuesserInterface
+    class PHPDocTypeGuesser implements FormTypeGuesserInterface
     {
         public function guessType($class, $property)
         {
@@ -92,7 +92,7 @@ With this knowledge, you can easily implement the ``guessType`` method of the
     use Symfony\Component\Form\Guess\Guess;
     use Symfony\Component\Form\Guess\TypeGuess;
 
-    class PhpdocTypeGuesser implements FormTypeGuesserInterface
+    class PHPDocTypeGuesser implements FormTypeGuesserInterface
     {
         public function guessType($class, $property)
         {
@@ -186,6 +186,6 @@ The last thing you need to do is registering your custom type guesser by using
 
 .. note::
 
-    When you use the Symfony framework, you need to register your type guesser
+    When you use the Symfony Framework, you need to register your type guesser
     and tag it with ``form.type_guesser``. For more information see
     :ref:`the tag reference <reference-dic-type_guesser>`.

@@ -13,10 +13,12 @@ your form. For example::
     {
         $blog = ...;
 
-        // $blog is passed in as the data, so the empty_data option is not needed
+        // $blog is passed in as the data, so the empty_data
+        // option is not needed
         $form = $this->createForm(new BlogType(), $blog);
 
-        // no data is passed in, so empty_data is used to get the "starting data"
+        // no data is passed in, so empty_data is
+        // used to get the "starting data"
         $form = $this->createForm(new BlogType());
     }
 
@@ -34,11 +36,11 @@ One reason you might use this option is if you want to use a constructor
 that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
-    // src/Acme/DemoBundle/Form/Type/BlogType.php
+    // src/AppBundle/Form/Type/BlogType.php
 
     // ...
     use Symfony\Component\Form\AbstractType;
-    use Acme\DemoBundle\Entity\Blog;
+    use AppBundle\Entity\Blog;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class BlogType extends AbstractType

@@ -7,9 +7,9 @@ The HttpKernel Component
 ========================
 
     The HttpKernel component provides a structured process for converting
-    a ``Request`` into a ``Response`` by making use of the EventDispatcher.
-    It's flexible enough to create a full-stack framework (Symfony), a micro-framework
-    (Silex) or an advanced CMS system (Drupal).
+    a ``Request`` into a ``Response`` by making use of the EventDispatcher
+    component. It's flexible enough to create a full-stack framework (Symfony),
+    a micro-framework (Silex) or an advanced CMS system (Drupal).
 
 Installation
 ------------
@@ -79,10 +79,11 @@ and talks about how one specific implementation of the HttpKernel - the Symfony
 Framework - works.
 
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
-is really simple, and involves creating an :doc:`EventDispatcher </components/event_dispatcher/introduction>`
-and a :ref:`controller resolver <component-http-kernel-resolve-controller>`
-(explained below). To complete your working kernel, you'll add more event
-listeners to the events discussed below::
+is really simple and involves creating an
+:doc:`event dispatcher </components/event_dispatcher/introduction>` and a
+:ref:`controller resolver <component-http-kernel-resolve-controller>` (explained
+below). To complete your working kernel, you'll add more event listeners
+to the events discussed below::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\HttpKernel;
@@ -166,6 +167,11 @@ Overall, the purpose of the ``kernel.request`` event is either to create and
 return a ``Response`` directly, or to add information to the ``Request``
 (e.g. setting the locale or setting some other information on the ``Request``
 attributes).
+
+.. note::
+
+    When setting a response for the ``kernel.request`` event, the propagation
+    is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.request`` in the Symfony Framework
 
@@ -391,6 +397,11 @@ At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
 return a ``Response``.
 
+.. note::
+
+    When setting a response for the ``kernel.view`` event, the propagation
+    is stopped. This means listeners with lower priority won't be executed.
+
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
@@ -485,10 +496,9 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the SwiftmailerBundle with Symfony and use ``memory``
-    spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
-    is activated, which actually delivers any emails that you scheduled to
-    send during the request.
+    If you use the SwiftmailerBundle with Symfony and use ``memory`` spooling,
+    then the `EmailSenderListener`_ is activated, which actually delivers
+    any emails that you scheduled to send during the request.
 
 .. _component-http-kernel-kernel-exception:
 
@@ -521,6 +531,11 @@ creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
+
+.. note::
+
+    When setting a response for the ``kernel.exception`` event, the propagation
+    is stopped. This means listeners with lower priority won't be executed.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
@@ -665,10 +680,6 @@ argument as follows::
     $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST);
     // do something with this response
 
-.. versionadded:: 2.4
-    The ``isMasterRequest()`` method was introduced in Symfony 2.4.
-    Prior, the ``getRequestType()`` method must be used.
-
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
 listeners (e.g. security) may only act upon the master request. Each listener
@@ -699,3 +710,4 @@ look like this::
 .. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`@ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Template`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
+.. _`EmailSenderListener`: https://github.com/symfony/SwiftmailerBundle/blob/master/EventListener/EmailSenderListener.php

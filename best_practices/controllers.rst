@@ -13,8 +13,8 @@ into a service.
 
 .. best-practice::
 
-    Make your controller extend the ``FrameworkBundle`` base Controller and
-    use annotations to configure routing, caching and security whenever possible.
+    Make your controller extend the FrameworkBundle base controller and use
+    annotations to configure routing, caching and security whenever possible.
 
 Coupling the controllers to the underlying framework allows you to leverage
 all of its features and increases your productivity.
@@ -76,19 +76,14 @@ Template Configuration
     Don't use the ``@Template()`` annotation to configure the template used by
     the controller.
 
-The ``@Template`` annotation is useful, but also involves some magic. For
-that reason, we don't recommend using it.
+The ``@Template`` annotation is useful, but also involves some magic. We
+don't think its benefit is worth the magic, and so recommend against using
+it.
 
 Most of the time, ``@Template`` is used without any parameters, which makes
 it more difficult to know which template is being rendered. It also makes
 it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
-
-Lastly, the ``@Template`` annotation uses a ``TemplateListener`` class that hooks
-into the ``kernel.view`` event dispatched by the framework. This listener introduces
-a measurable performance impact. In the sample blog application, rendering the
-homepage took 5 milliseconds using the ``$this->render()`` method and 26 milliseconds
-using the ``@Template`` annotation.
 
 How the Controller Looks
 ------------------------
@@ -110,8 +105,9 @@ for the homepage of our app:
          */
         public function indexAction()
         {
-            $em = $this->getDoctrine()->getManager();
-            $posts = $em->getRepository('App:Post')->findLatest();
+            $posts = $this->getDoctrine()
+                ->getRepository('AppBundle:Post')
+                ->findLatest();
 
             return $this->render('default/index.html.twig', array(
                 'posts' => $posts
@@ -136,6 +132,9 @@ For example:
 
 .. code-block:: php
 
+    use AppBundle\Entity\Post;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
     /**
      * @Route("/{id}", name="admin_post_show")
      */
@@ -144,7 +143,7 @@ For example:
         $deleteForm = $this->createDeleteForm($post);
 
         return $this->render('admin/post/show.html.twig', array(
-            'post'      => $post,
+            'post'        => $post,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -186,8 +185,10 @@ flexible:
 
 .. code-block:: php
 
+    use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+    use Symfony\Component\HttpFoundation\Request;
 
     /**
      * @Route("/comment/{postSlug}/new", name = "comment_new")
@@ -206,7 +207,7 @@ Pre and Post Hooks
 ------------------
 
 If you need to execute some code before or after the execution of your controllers,
-you can use the EventDispatcher component to `set up before/after filters`_.
+you can use the EventDispatcher component to
+:doc:`set up before and after filters </cookbook/event_dispatcher/before_after_filters>`.
 
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`set up before/after filters`: http://symfony.com/doc/current/cookbook/event_dispatcher/before_after_filters.html

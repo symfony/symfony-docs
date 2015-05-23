@@ -9,7 +9,7 @@ languages - like `Twig`_ - were created to make templating even better.
 
     Use Twig templating format for your templates.
 
-Generally speaking, PHP templates are much more verbose than in Twig because
+Generally speaking, PHP templates are much more verbose than Twig templates because
 they lack native support for lots of modern features needed by templates,
 like inheritance, automatic escaping and named arguments for filters and
 functions.
@@ -50,6 +50,10 @@ Templates Stored inside Bundles                    Templates Stored in ``app/``
 Another advantage is that centralizing your templates simplifies the work
 of your designers. They don't need to look for templates in lots of directories
 scattered through lots of bundles.
+
+.. best-practice::
+
+    Use lowercased snake_case for directory and template names.
 
 Twig Extensions
 ---------------
@@ -153,12 +157,9 @@ name is irrelevant because you never use it in your own code):
         app.twig.app_extension:
             class:     AppBundle\Twig\AppExtension
             arguments: ["@markdown"]
+            public:    false
             tags:
                 - { name: twig.extension }
 
-
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/
-.. _`Twig global variables`: http://symfony.com/doc/master/cookbook/templating/global_variables.html
-.. _`override error pages`: http://symfony.com/doc/current/cookbook/controller/error_pages.html
-.. _`render a template without using a controller`: http://symfony.com/doc/current/cookbook/templating/render_without_controller.html

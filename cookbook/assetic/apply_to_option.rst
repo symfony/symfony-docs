@@ -9,7 +9,7 @@ as you'll see here, files that have a specific extension. To show you how
 to handle each option, suppose that you want to use Assetic's CoffeeScript
 filter, which compiles CoffeeScript files into JavaScript.
 
-The main configuration is just the paths to coffee, node and node_modules.
+The main configuration is just the paths to ``coffee``, ``node`` and ``node_modules``.
 An example configuration might look like this:
 
 .. configuration-block::
@@ -59,17 +59,17 @@ templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee' filter='coffee' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/example.coffee'),
+            array('@AppBundle/Resources/public/js/example.coffee'),
             array('coffee')
         ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
 This is all that's needed to compile this CoffeeScript file and serve it
@@ -84,26 +84,25 @@ You can also combine multiple CoffeeScript files into a single output file:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-                       '@AcmeFooBundle/Resources/public/js/another.coffee'
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                       '@AppBundle/Resources/public/js/another.coffee'
             filter='coffee' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
             array(
-                '@AcmeFooBundle/Resources/public/js/example.coffee',
-                '@AcmeFooBundle/Resources/public/js/another.coffee',
+                '@AppBundle/Resources/public/js/example.coffee',
+                '@AppBundle/Resources/public/js/another.coffee',
             ),
             array('coffee')
         ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>
 
-Both the files will now be served up as a single file compiled into regular
-JavaScript.
+Both files will now be served up as a single file compiled into regular JavaScript.
 
 .. _cookbook-assetic-apply-to:
 
@@ -117,10 +116,10 @@ since they will ultimately all be served as JavaScript. Unfortunately just
 adding the JavaScript files to the files to be combined as above will not
 work as the regular JavaScript files will not survive the CoffeeScript compilation.
 
-This problem can be avoided by using the ``apply_to`` option in the config,
-which allows you to specify that a filter should always be applied to particular
-file extensions. In this case you can specify that the ``coffee`` filter is
-applied to all ``.coffee`` files:
+This problem can be avoided by using the ``apply_to`` option, which allows you
+to specify which filter should always be applied to particular file extensions.
+In this case you can specify that the ``coffee`` filter is applied to all
+``.coffee`` files:
 
 .. configuration-block::
 
@@ -161,29 +160,29 @@ applied to all ``.coffee`` files:
             ),
         ));
 
-With this, you no longer need to specify the ``coffee`` filter in the template.
-You can also list regular JavaScript files, all of which will be combined
-and rendered as a single JavaScript file (with only the ``.coffee`` files
-being run through the CoffeeScript filter):
+With this option, you no longer need to specify the ``coffee`` filter in the
+template. You can also list regular JavaScript files, all of which will be
+combined and rendered as a single JavaScript file (with only the ``.coffee``
+files being run through the CoffeeScript filter):
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-                       '@AcmeFooBundle/Resources/public/js/another.coffee'
-                       '@AcmeFooBundle/Resources/public/js/regular.js' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                       '@AppBundle/Resources/public/js/another.coffee'
+                       '@AppBundle/Resources/public/js/regular.js' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
             array(
-                '@AcmeFooBundle/Resources/public/js/example.coffee',
-                '@AcmeFooBundle/Resources/public/js/another.coffee',
-                '@AcmeFooBundle/Resources/public/js/regular.js',
+                '@AppBundle/Resources/public/js/example.coffee',
+                '@AppBundle/Resources/public/js/another.coffee',
+                '@AppBundle/Resources/public/js/regular.js',
             )
         ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach ?>

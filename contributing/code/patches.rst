@@ -15,7 +15,7 @@ software:
 
 * Git;
 * PHP version 5.3.3 or above;
-* PHPUnit 3.6.4 or above.
+* `PHPUnit`_ 4.2 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -105,9 +105,13 @@ Choose the right Branch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Before working on a patch, you must determine on which branch you need to
-work. The branch should be based on the ``master`` branch if you want to add a
-new feature. But if you want to fix a bug, use the oldest but still maintained
-version of Symfony where the bug happens (like ``2.3``).
+work:
+
+* ``2.3``, if you are fixing a bug for an existing feature (you may have
+  to choose a higher branch if the feature you are fixing was introduced
+  in a later version);
+* ``2.7``, if you are adding a new feature which is backward compatible;
+* ``master``, if you are adding a new and backward incompatible feature.
 
 .. note::
 
@@ -411,3 +415,4 @@ messages of all the commits. When you are finished, execute the push command.
 .. _`fabbot`:                              http://fabbot.io
 .. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
+.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html

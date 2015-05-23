@@ -246,7 +246,7 @@ great, your user can't actually add any new tags yet.
 .. caution::
 
     In this entry, you embed only one collection, but you are not limited
-    to this. You can also embed nested collection as many level down as you
+    to this. You can also embed nested collection as many levels down as you
     like. But if you use Xdebug in your development setup, you may receive
     a ``Maximum function nesting level of '100' reached, aborting!`` error.
     This is due to the ``xdebug.max_nesting_level`` PHP setting, which defaults
@@ -459,12 +459,12 @@ is added to the ``Task`` class by calling the ``addTag`` method. Before this
 change, they were added internally by the form by calling ``$task->getTags()->add($tag)``.
 That was just fine, but forcing the use of the "adder" method makes handling
 these new ``Tag`` objects easier (especially if you're using Doctrine, which
-we talk about next!).
+you will learn about next!).
 
 .. caution::
 
-    You have to create **both** ``addTag`` and ``removeTag`` methods, 
-    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``. 
+    You have to create **both** ``addTag`` and ``removeTag`` methods,
+    otherwise the form will still use ``setTag`` even if ``by_reference`` is ``false``.
     You'll learn more about the ``removeTag`` method later in this article.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
@@ -681,7 +681,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
 
             if (!$task) {
-                throw $this->createNotFoundException('No task found for is '.$id);
+                throw $this->createNotFoundException('No task found for id '.$id);
             }
 
             $originalTags = new ArrayCollection();
@@ -717,7 +717,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 $em->flush();
 
                 // redirect back to some edit page
-                return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
+                return $this->redirectToRoute('task_edit', array('id' => $id));
             }
 
             // render some form template

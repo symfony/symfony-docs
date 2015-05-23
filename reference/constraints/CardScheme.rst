@@ -1,15 +1,16 @@
 CardScheme
 ==========
 
-This constraint ensures that a credit card number is valid for a given credit card
-company. It can be used to validate the number before trying to initiate a payment
-through a payment gateway.
+This constraint ensures that a credit card number is valid for a given credit
+card company. It can be used to validate the number before trying to initiate
+a payment through a payment gateway.
 
 +----------------+--------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `schemes`_                                                             |
 |                | - `message`_                                                             |
+|                | - `payload`_                                                             |
 +----------------+--------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\CardScheme`          |
 +----------------+--------------------------------------------------------------------------+
@@ -23,6 +24,24 @@ To use the ``CardScheme`` validator, simply apply it to a property or method
 on an object that will contain a credit card number.
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Acme/SubscriptionBundle/Entity/Transaction.php
+        namespace Acme\SubscriptionBundle\Entity\Transaction;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            /**
+             * @Assert\CardScheme(
+             *     schemes={"VISA"},
+             *     message="Your credit card number is invalid."
+             * )
+             */
+            protected $cardNumber;
+        }
 
     .. code-block:: yaml
 
@@ -53,21 +72,6 @@ on an object that will contain a credit card number.
                 </property>
             </class>
         </constraint-mapping>
-
-    .. code-block:: php-annotations
-
-        // src/Acme/SubscriptionBundle/Entity/Transaction.php
-        namespace Acme\SubscriptionBundle\Entity\Transaction;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\CardScheme(schemes = {"VISA"}, message = "Your credit card number is invalid.")
-             */
-            protected $cardNumber;
-        }
 
     .. code-block:: php
 
@@ -100,9 +104,9 @@ schemes
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 
-This option is required and represents the name of the number scheme used to
-validate the credit card number, it can either be a string or an array. Valid
-values are:
+This option is required and represents the name of the number scheme used
+to validate the credit card number, it can either be a string or an array.
+Valid values are:
 
 * ``AMEX``
 * ``CHINA_UNIONPAY``
@@ -115,7 +119,8 @@ values are:
 * ``MASTERCARD``
 * ``VISA``
 
-For more information about the used schemes, see `Wikipedia: Issuer identification number (IIN)`_.
+For more information about the used schemes, see
+`Wikipedia: Issuer identification number (IIN)`_.
 
 message
 ~~~~~~~
@@ -123,5 +128,7 @@ message
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Wikipedia: Issuer identification number (IIN)`: http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29

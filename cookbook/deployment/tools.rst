@@ -8,9 +8,9 @@ How to Deploy a Symfony Application
 
 .. note::
 
-    Deploying can be a complex and varied task depending on your setup and needs.
-    This entry doesn't try to explain everything, but rather offers the most
-    common requirements and ideas for deployment.
+    Deploying can be a complex and varied task depending on the setup and the
+    requirements of your application. This article is not a step-by-step guide,
+    but is a general list of the most common requirements and ideas for deployment.
 
 .. _symfony2-deployment-basics:
 
@@ -19,26 +19,27 @@ Symfony Deployment Basics
 
 The typical steps taken while deploying a Symfony application include:
 
-#. Upload your modified code to the live server;
-#. Update your vendor dependencies (typically done via Composer, and may
-   be done before uploading);
+#. Upload your code to the production server;
+#. Install your vendor dependencies (typically done via Composer and may be done
+   before uploading);
 #. Running database migrations or similar tasks to update any changed data structures;
-#. Clearing (and perhaps more importantly, warming up) your cache.
+#. Clearing (and optionally, warming up) your cache.
 
-A deployment may also include other things, such as:
+A deployment may also include other tasks, such as:
 
-* Tagging a particular version of your code as a release in your source control repository;
+* Tagging a particular version of your code as a release in your source control
+  repository;
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available to ensure code and/or server stability;
-* Removal of any unnecessary files from ``web`` to keep your production environment clean;
+* Removal of any unnecessary files from the ``web/`` directory to keep your
+  production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
 How to Deploy a Symfony Application
 -----------------------------------
 
-There are several ways you can deploy a Symfony application.
-
-Start with a few basic deployment strategies and build up from there.
+There are several ways you can deploy a Symfony application. Start with a few
+basic deployment strategies and build up from there.
 
 Basic File Transfer
 ~~~~~~~~~~~~~~~~~~~
@@ -62,12 +63,39 @@ manually taking other steps (see `Common Post-Deployment Tasks`_).
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are also high-quality tools to help ease the pain of deployment. There
-are even a few tools which have been specifically tailored to the requirements of
-Symfony, and which take special care to ensure that everything before, during,
-and after a deployment has gone correctly.
+There are also tools to help ease the pain of deployment. Some of them have been
+specifically tailored to the requirements of Symfony.
 
-See `The Tools`_ for a list of tools that can help with deployment.
+`Capifony`_
+    This Ruby-based tool provides a specialized set of tools on top of
+    `Capistrano`_, tailored specifically to Symfony projects.
+
+`sf2debpkg`_
+    Helps you build a native Debian package for your Symfony project.
+
+`Magallanes`_
+    This Capistrano-like deployment tool is built in PHP, and may be easier
+    for PHP developers to extend for their needs.
+
+`Fabric`_
+    This Python-based library provides a basic suite of operations for executing
+    local or remote shell commands and uploading/downloading files.
+
+Bundles
+    There are some `bundles that add deployment features`_ directly into your
+    Symfony console.
+
+Basic scripting
+    You can of course use shell, `Ant`_ or any other build tool to script
+    the deploying of your project.
+
+Platform as a Service Providers
+    The Symfony Cookbook includes detailed articles for some of the most well-known
+    Platform as a Service (PaaS) providers:
+
+    * :doc:`Microsoft Azure </cookbook/deployment/azure-website>`
+    * :doc:`Heroku </cookbook/deployment/heroku>`
+    * :doc:`Platform.sh </cookbook/deployment/platformsh>`
 
 Common Post-Deployment Tasks
 ----------------------------
@@ -87,12 +115,11 @@ Check if your server meets the requirements by running:
 B) Configure your ``app/config/parameters.yml`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This file should be customized on each system. The method you use to
-deploy your source code should *not* deploy this file. Instead, you should
-set it up manually (or via some build process) on your server(s).
+This file should *not* be deployed, but managed through the automatic utilities
+provided by Symfony.
 
-C) Update your Vendors
-~~~~~~~~~~~~~~~~~~~~~~
+C) Install/Update your Vendors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Your vendors can be updated before transferring your source code (i.e.
 update the ``vendor/`` directory, then transfer that with your source
@@ -101,14 +128,13 @@ as you normally do:
 
 .. code-block:: bash
 
-    $ php composer.phar install --no-dev --optimize-autoloader
+    $ composer install --no-dev --optimize-autoloader
 
 .. tip::
 
-    The ``--optimize-autoloader`` flag makes Composer's autoloader more
-    performant by building a "class map". The ``--no-dev`` flag
-    ensures that development packages are not installed in the production
-    environment.
+    The ``--optimize-autoloader`` flag improves Composer's autoloader performance
+    significantly by building a "class map". The ``--no-dev`` flag ensures that
+    development packages are not installed in the production environment.
 
 .. caution::
 
@@ -142,7 +168,7 @@ setup:
 
 * Running any database migrations
 * Clearing your APC cache
-* Running ``assets:install`` (taken care of already in ``composer.phar install``)
+* Running ``assets:install`` (already taken care of in ``composer install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
 * ...
@@ -152,7 +178,7 @@ Application Lifecycle: Continuous Integration, QA, etc
 
 While this entry covers the technical details of deploying, the full lifecycle
 of taking code from development up to production may have a lot more steps
-(think deploying to staging, QA, running tests, etc).
+(think deploying to staging, QA (Quality Assurance), running tests, etc).
 
 The use of staging, testing, QA, continuous integration, database migrations
 and the capability to roll back in case of failure are all strongly advised. There
@@ -163,51 +189,12 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-The Tools
----------
-
-`Capifony`_:
-
-    This tool provides a specialized set of tools on top of Capistrano, tailored
-    specifically to symfony and Symfony projects.
-
-`sf2debpkg`_:
-
-    This tool helps you build a native Debian package for your Symfony project.
-
-`Magallanes`_:
-
-    This Capistrano-like deployment tool is built in PHP, and may be easier
-    for PHP developers to extend for their needs.
-
-Bundles:
-
-    There are many `bundles that add deployment features`_ directly into your
-    Symfony console.
-
-Basic scripting:
-
-    You can of course use shell, `Ant`_, or any other build tool to script
-    the deploying of your project.
-
-Platform as a Service Providers:
-
-    PaaS is a relatively new way to deploy your application. Typically a PaaS
-    will use a single configuration file in your project's root directory to
-    determine how to build an environment on the fly that supports your software.
-    One provider with confirmed Symfony support is `PagodaBox`_.
-
-.. tip::
-
-    Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony
-    (on freenode) for more information.
-
 .. _`Capifony`: http://capifony.org/
+.. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
-.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
-.. _`PagodaBox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile
+.. _`Fabric`: http://www.fabfile.org/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
+.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
-.. _`Symfony IRC channel`: http://webchat.freenode.net/?channels=symfony
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/

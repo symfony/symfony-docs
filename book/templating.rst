@@ -77,15 +77,18 @@ to web designers and, in several ways, more powerful than PHP templates:
 
 Twig defines three types of special syntax:
 
-* ``{{ ... }}``: "Says something": prints a variable or the result of an
-  expression to the template;
+``{{ ... }}``
+    "Says something": prints a variable or the result of an expression to the
+    template.
 
-* ``{% ... %}``: "Does something": a **tag** that controls the logic of the
-  template; it is used to execute statements such as for-loops for example.
+``{% ... %}``
+    "Does something": a **tag** that controls the logic of the template; it is
+    used to execute statements such as for-loops for example.
 
-* ``{# ... #}``: "Comment something": it's the equivalent of the PHP
-  ``/* comment */`` syntax. It's used to add single or multi-line comments.
-  The content of the comments isn't included in the rendered pages.
+``{# ... #}``
+    "Comment something": it's the equivalent of the PHP ``/* comment */`` syntax.
+    It's used to add single or multi-line comments. The content of the comments
+    isn't included in the rendered pages.
 
 Twig also contains **filters**, which modify content before being rendered.
 The following makes the ``title`` variable all uppercase before rendering
@@ -132,10 +135,10 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
-    sandboxing, automatic and contextual output escaping, and the inclusion of
-    custom functions and filters that only affect templates. Twig contains
-    little features that make writing templates easier and more concise. Take
-    the following example, which combines a loop with a logical ``if``
+    sandboxing, automatic HTML escaping, manual contextual output escaping, 
+    and the inclusion of custom functions and filters that only affect templates.
+    Twig contains little features that make writing templates easier and more concise.
+    Take the following example, which combines a loop with a logical ``if``
     statement:
 
     .. code-block:: html+jinja
@@ -260,7 +263,7 @@ A child template might look like this:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Blog/index.html.twig #}
+        {# app/Resources/views/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
 
         {% block title %}My cool blog posts{% endblock %}
@@ -274,7 +277,7 @@ A child template might look like this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Blog/index.html.php -->
+        <!-- app/Resources/views/blog/index.html.php -->
         <?php $view->extend('base.html.php') ?>
 
         <?php $view['slots']->set('title', 'My cool blog posts') ?>
@@ -376,22 +379,23 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-* ``app/Resources/views/``: The applications ``views`` directory can contain
-  application-wide base templates (i.e. your application's layouts and
-  templates of the application bundle) as well as templates that override
-  third party bundle templates (see :ref:`overriding-bundle-templates`);
+``app/Resources/views/``
+    The applications ``views`` directory can contain application-wide base templates
+    (i.e. your application's layouts and templates of the application bundle) as
+    well as templates that override third party bundle templates
+    (see :ref:`overriding-bundle-templates`).
 
-* ``path/to/bundle/Resources/views/``: Each third party bundle houses its
-  templates in its ``Resources/views/`` directory (and subdirectories). When you
-  plan to share your bundle, you should put the templates in the bundle instead
-  of the ``app/`` directory.
+``path/to/bundle/Resources/views/``
+    Each third party bundle houses its templates in its ``Resources/views/``
+    directory (and subdirectories). When you plan to share your bundle, you should
+    put the templates in the bundle instead of the ``app/`` directory.
 
 Most of the templates you'll use live in the ``app/Resources/views/``
 directory. The path you'll use will be relative to this directory. For example,
 to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 ``base.html.twig`` path and to render/extend
-``app/Resources/views/Blog/index.html.twig``, you'll use the
-``Blog/index.html.twig`` path.
+``app/Resources/views/blog/index.html.twig``, you'll use the
+``blog/index.html.twig`` path.
 
 .. _template-referencing-in-bundle:
 
@@ -399,15 +403,15 @@ Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony uses a **bundle**:**directory**:**filename** string syntax for
-templates that live inside a bundle. This allows for several different types of
+templates that live inside a bundle. This allows for several types of
 templates, each which lives in a specific location:
 
 * ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
   template for a specific page. The three parts of the string, each separated
   by a colon (``:``), mean the following:
 
-  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
-    ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
+  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the AcmeBlogBundle
+    (e.g. ``src/Acme/BlogBundle``);
 
   * ``Blog``: (*directory*) indicates that the template lives inside the
     ``Blog`` subdirectory of ``Resources/views``;
@@ -415,18 +419,18 @@ templates, each which lives in a specific location:
   * ``index.html.twig``: (*filename*) the actual name of the file is
     ``index.html.twig``.
 
-  Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
+  Assuming that the AcmeBlogBundle lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
 * ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
-  that's specific to the ``AcmeBlogBundle``. Since the middle, "directory",
-  portion is missing (e.g. ``Blog``), the template lives at
-  ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
-  Yes, there are 2 colons in the middle of the string when the "controller"
-  subdirectory part is missing.
+  that's specific to the AcmeBlogBundle. Since the middle, "directory", portion
+  is missing (e.g. ``Blog``), the template lives at
+  ``Resources/views/layout.html.twig`` inside AcmeBlogBundle. Yes, there are 2
+  colons in the middle of the string when the "controller" subdirectory part is
+  missing.
 
 In the :ref:`overriding-bundle-templates` section, you'll find out how each
-template living inside the ``AcmeBlogBundle``, for example, can be overridden
+template living inside the AcmeBlogBundle, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
@@ -444,9 +448,9 @@ Every template name also has two extensions that specify the *format* and
 ========================  ======  ======
 Filename                  Format  Engine
 ========================  ======  ======
-``Blog/index.html.twig``  HTML    Twig
-``Blog/index.html.php``   HTML    PHP
-``Blog/index.css.twig``   CSS     Twig
+``blog/index.html.twig``  HTML    Twig
+``blog/index.html.php``   HTML    PHP
+``blog/index.css.twig``   CSS     Twig
 ========================  ======  ======
 
 By default, any Symfony template can be written in either Twig or PHP, and
@@ -495,7 +499,7 @@ Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You'll often want to include the same template or code fragment on several
-different pages. For example, in an application with "news articles", the
+pages. For example, in an application with "news articles", the
 template code displaying an article might be used on the article detail page,
 on a page displaying the most popular articles, or in a list of the latest
 articles.
@@ -509,7 +513,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Article/articleDetails.html.twig #}
+        {# app/Resources/views/article/article_details.html.twig #}
         <h2>{{ article.title }}</h2>
         <h3 class="byline">by {{ article.authorName }}</h3>
 
@@ -519,7 +523,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Article/articleDetails.html.php -->
+        <!-- app/Resources/views/article/article_details.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
@@ -533,20 +537,20 @@ Including this template from any other template is simple:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Article/list.html.twig #}
+        {# app/Resources/views/article/list.html.twig #}
         {% extends 'layout.html.twig' %}
 
         {% block body %}
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {{ include('Article/articleDetails.html.twig', { 'article': article }) }}
+                {{ include('article/article_details.html.twig', { 'article': article }) }}
             {% endfor %}
         {% endblock %}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/Article/list.html.php -->
+        <!-- app/Resources/article/list.html.php -->
         <?php $view->extend('layout.html.php') ?>
 
         <?php $view['slots']->start('body') ?>
@@ -554,17 +558,17 @@ Including this template from any other template is simple:
 
             <?php foreach ($articles as $article): ?>
                 <?php echo $view->render(
-                    'Article/articleDetails.html.php',
+                    'Article/article_details.html.php',
                     array('article' => $article)
                 ) ?>
             <?php endforeach ?>
         <?php $view['slots']->stop() ?>
 
 The template is included using the ``{{ include() }}`` function. Notice that the
-template name follows the same typical convention. The ``articleDetails.html.twig``
+template name follows the same typical convention. The ``article_details.html.twig``
 template uses an ``article`` variable, which we pass to it. In this case,
 you could avoid doing this entirely, as all of the variables available in
-``list.html.twig`` are also available in ``articleDetails.html.twig`` (unless
+``list.html.twig`` are also available in ``article_details.html.twig`` (unless
 you set `with_context`_ to false).
 
 .. tip::
@@ -604,7 +608,7 @@ articles::
             $articles = ...;
 
             return $this->render(
-                'Article/recentList.html.twig',
+                'article/recent_list.html.twig',
                 array('articles' => $articles)
             );
         }
@@ -616,7 +620,7 @@ The ``recentList`` template is perfectly straightforward:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Article/recentList.html.twig #}
+        {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
             <a href="/article/{{ article.slug }}">
                 {{ article.title }}
@@ -625,7 +629,7 @@ The ``recentList`` template is perfectly straightforward:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Article/recentList.html.php -->
+        <!-- app/Resources/views/article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
@@ -793,7 +797,7 @@ any global default template that is defined):
     .. code-block:: jinja
 
         {{ render_hinclude(controller('...'),  {
-            'default': 'Default/content.html.twig'
+            'default': 'default/content.html.twig'
         }) }}
 
     .. code-block:: php
@@ -802,7 +806,7 @@ any global default template that is defined):
             new ControllerReference('...'),
             array(
                 'renderer' => 'hinclude',
-                'default' => 'Default/content.html.twig',
+                'default' => 'default/content.html.twig',
             )
         ) ?>
 
@@ -938,7 +942,7 @@ correctly:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/Article/recentList.html.twig #}
+        {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
             <a href="{{ path('article_show', {'slug': article.slug}) }}">
                 {{ article.title }}
@@ -947,7 +951,7 @@ correctly:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Article/recentList.html.php -->
+        <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles in $article): ?>
             <a href="<?php echo $view['router']->generate('article_show', array(
                 'slug' => $article->getSlug(),
@@ -1031,9 +1035,14 @@ argument (or the ``version`` argument) to the desired version:
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            false,
+            '3.0'
+        ) ?>" alt="Symfony!" />
 
-If you dont give a version or pass ``null``, the default package version
+If you don't give a version or pass ``null``, the default package version
 (from :ref:`ref-framework-assets-version`) will be used. If you pass ``false``,
 versioned URL will be deactivated for this asset.
 
@@ -1051,7 +1060,11 @@ If you need absolute URLs for assets, you can set the third argument (or the
 
     .. code-block:: html+php
 
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>" alt="Symfony!" />
+        <img src="<?php echo $view['assets']->getUrl(
+            'images/logo.png',
+            null,
+            true
+        ) ?>" alt="Symfony!" />
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts
@@ -1078,43 +1091,76 @@ one called ``stylesheets`` inside the ``head`` tag and another called ``javascri
 just above the closing ``body`` tag. These blocks will contain all of the
 stylesheets and JavaScripts that you'll need throughout your site:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/base.html.twig #}
-    <html>
-        <head>
-            {# ... #}
+    .. code-block:: html+jinja
 
-            {% block stylesheets %}
-                <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
-            {% endblock %}
-        </head>
-        <body>
-            {# ... #}
+        {# app/Resources/views/base.html.twig #}
+        <html>
+            <head>
+                {# ... #}
 
-            {% block javascripts %}
-                <script src="{{ asset('js/main.js') }}"></script>
-            {% endblock %}
-        </body>
-    </html>
+                {% block stylesheets %}
+                    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+                {% endblock %}
+            </head>
+            <body>
+                {# ... #}
+
+                {% block javascripts %}
+                    <script src="{{ asset('js/main.js') }}"></script>
+                {% endblock %}
+            </body>
+        </html>
+
+    .. code-block:: php
+
+        // app/Resources/views/base.html.php
+        <html>
+            <head>
+                <?php ... ?>
+
+                <?php $view['slots']->start('stylesheets') ?>
+                    <link href="<?php echo $view['assets']->getUrl('css/main.css') ?>" rel="stylesheet" />
+                <?php $view['slots']->stop() ?>
+            </head>
+            <body>
+                <?php ... ?>
+
+                <?php $view['slots']->start('javascripts') ?>
+                    <script src="<?php echo $view['assets']->getUrl('js/main.js') ?>"></script>
+                <?php $view['slots']->stop() ?>
+            </body>
+        </html>
 
 That's easy enough! But what if you need to include an extra stylesheet or
 JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# app/Resources/views/Contact/contact.html.twig #}
-    {% extends 'base.html.twig' %}
+    .. code-block:: html+jinja
 
-    {% block stylesheets %}
-        {{ parent() }}
+        {# app/Resources/views/contact/contact.html.twig #}
+        {% extends 'base.html.twig' %}
 
-        <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
-    {% endblock %}
+        {% block stylesheets %}
+            {{ parent() }}
 
-    {# ... #}
+            <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
+        {% endblock %}
+
+        {# ... #}
+
+    .. code-block:: php
+
+        // app/Resources/views/contact/contact.html.twig
+        <?php $view->extend('base.html.php') ?>
+
+        <?php $view['slots']->start('stylesheets') ?>
+            <link href="<?php echo $view['assets']->getUrl('css/contact.css') ?>" rel="stylesheet" />
+        <?php $view['slots']->stop() ?>
 
 In the child template, you simply override the ``stylesheets`` block and
 put your new stylesheet tag inside of that block. Of course, since you want
@@ -1143,12 +1189,18 @@ is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
 instance which will give you access to some application specific variables
 automatically:
 
-* ``app.security`` - The security context.
-* ``app.user`` - The current user object.
-* ``app.request`` - The request object.
-* ``app.session`` - The session object.
-* ``app.environment`` - The current environment (dev, prod, etc).
-* ``app.debug`` - True if in debug mode. False otherwise.
+``app.security``
+    The security context.
+``app.user``
+    The current user object.
+``app.request``
+    The request object.
+``app.session``
+    The session object.
+``app.environment``
+    The current environment (dev, prod, etc).
+``app.debug``
+    True if in debug mode. False otherwise.
 
 .. configuration-block::
 
@@ -1168,6 +1220,12 @@ automatically:
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif ?>
 
+.. versionadded:: 2.6
+    The global ``app.security`` variable (or the ``$app->getSecurity()``
+    method in PHP templates) is deprecated as of Symfony 2.6. Use ``app.user`` 
+    (``$app->getUser()``) and ``is_granted()`` (``$view['security']->isGranted()``)
+    instead.
+
 .. tip::
 
     You can add your own global template variables. See the cookbook example
@@ -1184,14 +1242,14 @@ This special object is responsible for rendering templates and returning
 their content. When you render a template in a controller, for example,
 you're actually using the templating engine service. For example::
 
-    return $this->render('Article/index.html.twig');
+    return $this->render('article/index.html.twig');
 
 is equivalent to::
 
     use Symfony\Component\HttpFoundation\Response;
 
     $engine = $this->container->get('templating');
-    $content = $engine->render('Article/index.html.twig');
+    $content = $engine->render('article/index.html.twig');
 
     return $response = new Response($content);
 
@@ -1260,10 +1318,10 @@ bundles (see `KnpBundles.com`_) for a large number of different features.
 Once you use a third-party bundle, you'll likely need to override and customize
 one or more of its templates.
 
-Suppose you've installed the imaginary open-source ``AcmeBlogBundle`` in your
+Suppose you've installed the imaginary open-source AcmeBlogBundle in your
 project. And while you're really happy with everything, you want to override
 the blog "list" page to customize the markup specifically for your application.
-By digging into the ``Blog`` controller of the ``AcmeBlogBundle``, you find the
+By digging into the ``Blog`` controller of the AcmeBlogBundle, you find the
 following::
 
     public function indexAction()
@@ -1294,7 +1352,7 @@ to create it). You're now free to customize the template.
     cache (``php app/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
-template in ``AcmeBlogBundle`` inherits from a base template called
+template in AcmeBlogBundle inherits from a base template called
 ``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony will look in
 the following two places for the template:
 
@@ -1325,7 +1383,7 @@ subdirectory.
 Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the Symfony framework itself is just a bundle, core templates can be
+Since the Symfony Framework itself is just a bundle, core templates can be
 overridden in the same way. For example, the core TwigBundle contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the
@@ -1347,12 +1405,12 @@ covered:
   template is called ``base.html.twig``;
 
 * Create a template for each "section" of your site. For example, the blog
-  functionality would have a template called ``Blog/layout.html.twig`` that
+  functionality would have a template called ``blog/layout.html.twig`` that
   contains only blog section-specific elements;
 
   .. code-block:: html+jinja
 
-      {# app/Resources/views/Blog/layout.html.twig #}
+      {# app/Resources/views/blog/layout.html.twig #}
       {% extends 'base.html.twig' %}
 
       {% block body %}
@@ -1363,12 +1421,12 @@ covered:
 
 * Create individual templates for each page and make each extend the appropriate
   section template. For example, the "index" page would be called something
-  close to ``Blog/index.html.twig`` and list the actual blog posts.
+  close to ``blog/index.html.twig`` and list the actual blog posts.
 
   .. code-block:: html+jinja
 
-      {# app/Resources/views/Blog/index.html.twig #}
-      {% extends 'Blog/layout.html.twig' %}
+      {# app/Resources/views/blog/index.html.twig #}
+      {% extends 'blog/layout.html.twig' %}
 
       {% block content %}
           {% for entry in blog_entries %}
@@ -1377,7 +1435,7 @@ covered:
           {% endfor %}
       {% endblock %}
 
-Notice that this template extends the section template (``Blog/layout.html.twig``)
+Notice that this template extends the section template (``blog/layout.html.twig``)
 which in turn extends the base application layout (``base.html.twig``). This is
 the common three-level inheritance model.
 
@@ -1519,7 +1577,7 @@ The same mechanism can be used in Twig templates thanks to ``dump`` function:
 
 .. code-block:: html+jinja
 
-    {# app/Resources/views/Article/recentList.html.twig #}
+    {# app/Resources/views/article/recent_list.html.twig #}
     {{ dump(articles) }}
 
     {% for article in articles %}
@@ -1541,7 +1599,7 @@ console command:
 .. code-block:: bash
 
     # You can check by filename:
-    $ php app/console twig:lint app/Resources/views/Article/recentList.html.twig
+    $ php app/console twig:lint app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
     $ php app/console twig:lint app/Resources/views
@@ -1555,11 +1613,11 @@ Templates are a generic way to render content in *any* format. And while in
 most cases you'll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.
 
-For example, the same "resource" is often rendered in several different formats.
+For example, the same "resource" is often rendered in several formats.
 To render an article index page in XML, simply include the format in the
 template name:
 
-* *XML template name*: ``Article/index.xml.twig``
+* *XML template name*: ``article/index.xml.twig``
 * *XML template filename*: ``index.xml.twig``
 
 In reality, this is nothing more than a naming convention and the template
@@ -1573,7 +1631,7 @@ pattern is to do the following::
     {
         $format = $request->getRequestFormat();
 
-        return $this->render('Blog/index.'.$format.'.twig');
+        return $this->render('article/index.'.$format.'.twig');
     }
 
 The ``getRequestFormat`` on the ``Request`` object defaults to ``html``,
@@ -1613,7 +1671,7 @@ their use is not mandatory. The ``Response`` object returned by a controller
 can be created with or without the use of a template::
 
     // creates a Response object whose content is the rendered template
-    $response = $this->render('Article/index.html.twig');
+    $response = $this->render('article/index.html.twig');
 
     // creates a Response object whose content is simple text
     $response = new Response('response content');

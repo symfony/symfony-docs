@@ -134,8 +134,8 @@ is thrown if an unknown option is passed::
         'usernme' => 'johndoe',
     ));
 
-    // UndefinedOptionsException: The option "usernme" does not exist. Known
-    // options are: "host", "password", "port", "username"
+    // UndefinedOptionsException: The option "usernme" does not exist.
+    // Known options are: "host", "password", "port", "username"
 
 The rest of your code can access the values of the options without boilerplate
 code::
@@ -354,17 +354,16 @@ is thrown::
         'host' => 25,
     ));
 
-    // InvalidOptionsException: The option "host" with value "25" is expected to
-    // be of type "string"
+    // InvalidOptionsException: The option "host" with value "25" is
+    // expected to be of type "string"
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
 
 .. versionadded:: 2.6
-    Before Symfony 2.6, `setAllowedTypes()` and `addAllowedTypes()` expected
-    the values to be given as an array mapping option names to allowed types::
-
-        $resolver->setAllowedTypes(array('port' => array('null', 'int')));
+    Before Symfony 2.6, ``setAllowedTypes()`` and ``addAllowedTypes()`` expected
+    the values to be given as an array mapping option names to allowed types:
+    ``$resolver->setAllowedTypes(array('port' => array('null', 'int')));``
 
 Value Validation
 ~~~~~~~~~~~~~~~~
@@ -396,8 +395,8 @@ is thrown::
         'transport' => 'send-mail',
     ));
 
-    // InvalidOptionsException: The option "transport" has the value "send-mail",
-    // but is expected to be one of "sendmail", "mail", "smtp"
+    // InvalidOptionsException: The option "transport" has the value
+    // "send-mail", but is expected to be one of "sendmail", "mail", "smtp"
 
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
@@ -413,12 +412,9 @@ In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\Option
 to add additional allowed values without erasing the ones already set.
 
 .. versionadded:: 2.6
-    Before Symfony 2.6, `setAllowedValues()` and `addAllowedValues()` expected
+    Before Symfony 2.6, ``setAllowedValues()`` and ``addAllowedValues()`` expected
     the values to be given as an array mapping option names to allowed values:
-
-    .. code-block:: php
-
-        $resolver->setAllowedValues(array('transport' => array('sendmail', 'mail', 'smtp')));
+    ``$resolver->setAllowedValues(array('transport' => array('sendmail', 'mail', 'smtp')));``
 
 Option Normalization
 ~~~~~~~~~~~~~~~~~~~~
@@ -427,7 +423,7 @@ Sometimes, option values need to be normalized before you can use them. For
 instance, assume that the ``host`` should always start with ``http://``. To do
 that, you can write normalizers. Normalizers are executed after validating an
 option. You can configure a normalizer by calling
-:method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizer`::
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`::
 
     // ...
     class Mailer
@@ -449,9 +445,9 @@ option. You can configure a normalizer by calling
     }
 
 .. versionadded:: 2.6
-    The method :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizer`
+    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizer`
     was introduced in Symfony 2.6. Before, you had to use
-    :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setNormalizers`.
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setNormalizers`.
 
 The normalizer receives the actual ``$value`` and returns the normalized form.
 You see that the closure also takes an ``$options`` parameter. This is useful
@@ -588,9 +584,9 @@ comes from the default::
     }
 
 .. versionadded:: 2.6
-    The method :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setDefined`
+    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefined`
     was introduced in Symfony 2.6. Before, you had to use
-    :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::setOptional`.
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setOptional`.
 
 You can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDefined`
 to define an option without setting a default value. Then the option will only
@@ -644,8 +640,8 @@ options in one go::
     }
 
 .. versionadded:: 2.6
-    The method :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::isDefined`
-    and :method:`Symfony\\Components\\OptionsResolver\\OptionsResolver::getDefinedOptions`
+    The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isDefined`
+    and :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getDefinedOptions`
     were introduced in Symfony 2.6.
 
 The methods :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isDefined`

@@ -1,14 +1,15 @@
 Luhn
 ====
 
-This constraint is used to ensure that a credit card number passes the `Luhn algorithm`_.
-It is useful as a first step to validating a credit card: before communicating with a
-payment gateway.
+This constraint is used to ensure that a credit card number passes the
+`Luhn algorithm`_. It is useful as a first step to validating a credit
+card: before communicating with a payment gateway.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`             |
 +----------------+-----------------------------------------------------------------------+
@@ -22,15 +23,6 @@ To use the Luhn validator, simply apply it to a property on an object that
 will contain a credit card number.
 
 .. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
-        Acme\SubscriptionBundle\Entity\Transaction:
-            properties:
-                cardNumber:
-                    - Luhn:
-                        message: Please check your credit card number.
 
     .. code-block:: php-annotations
 
@@ -46,6 +38,15 @@ will contain a credit card number.
              */
             protected $cardNumber;
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/SubscriptionBundle/Resources/config/validation.yml
+        Acme\SubscriptionBundle\Entity\Transaction:
+            properties:
+                cardNumber:
+                    - Luhn:
+                        message: Please check your credit card number.
 
     .. code-block:: xml
 
@@ -93,5 +94,7 @@ message
 **type**: ``string`` **default**: ``Invalid card number.``
 
 The default message supplied when the value does not pass the Luhn check.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Luhn algorithm`: http://en.wikipedia.org/wiki/Luhn_algorithm

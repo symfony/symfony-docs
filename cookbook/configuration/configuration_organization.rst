@@ -23,7 +23,7 @@ class::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+            $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
         }
     }
 
@@ -101,7 +101,7 @@ method::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load(__DIR__.'/config/'.$this->getEnvironment().'/config.yml');
+            $loader->load($this->getRootDir().'/config/'.$this->getEnvironment().'/config.yml');
         }
     }
 
@@ -127,8 +127,10 @@ needed for the ``app/config/dev/config.yml`` file:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="../common/config.xml" />
@@ -197,7 +199,7 @@ make Symfony aware of the new file organization::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load(__DIR__.'/config/environments/'.$this->getEnvironment().'.yml');
+            $loader->load($this->getRootDir().'/config/environments/'.$this->getEnvironment().'.yml');
         }
     }
 
@@ -237,8 +239,10 @@ format (``.yml``, ``.xml``, ``.php``, ``.ini``):
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="parameters.yml" />
@@ -299,8 +303,10 @@ any other configuration file:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="parameters.yml" />
@@ -340,8 +346,10 @@ doesn't exist:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="parameters.yml" />

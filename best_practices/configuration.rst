@@ -6,6 +6,8 @@ and security credentials) and different environments (development, production).
 That's why Symfony recommends that you split the application configuration into
 three parts.
 
+.. _config-parameters.yml:
+
 Infrastructure-Related Configuration
 ------------------------------------
 
@@ -39,6 +41,8 @@ These options aren't defined inside the ``app/config/config.yml`` file because
 they have nothing to do with the application's behavior. In other words, your
 application doesn't care about the location of your database or the credentials
 to access to it, as long as the database is correctly configured.
+
+.. _best-practices-canonical-parameters:
 
 Canonical Parameters
 ~~~~~~~~~~~~~~~~~~~~
@@ -74,9 +78,9 @@ add an extra layer of configuration that's not needed because you don't need
 or want these configuration values to change on each server.
 
 The configuration options defined in the ``config.yml`` file usually vary from
-one `execution environment`_ to another. That's why Symfony already includes
-``app/config/config_dev.yml`` and ``app/config/config_prod.yml`` files so
-that you can override specific values for each environment.
+one :doc:`environment </cookbook/configuration/environments>` to another. That's
+why Symfony already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
+files so that you can override specific values for each environment.
 
 Constants vs Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,8 +103,8 @@ to control the number of posts to display on the blog homepage:
     parameters:
         homepage.num_items: 10
 
-If you ask yourself when the last time was that you changed the value of
-*any* option like this, odds are that you *never* have. Creating a configuration
+If you've done something like this in the past, it's likely that you've in fact
+*never* actually needed to change that value. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
 You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity:
@@ -122,7 +126,7 @@ everywhere in your application. When using parameters, they are only available
 from places with access to the Symfony container.
 
 Constants can be used for example in your Twig templates thanks to the
-``constant()`` function:
+`constant() function`_:
 
 .. code-block:: html+jinja
 
@@ -158,10 +162,10 @@ Semantic Configuration: Don't Do It
 
     Don't define a semantic dependency injection configuration for your bundles.
 
-As explained in `How to Expose a semantic Configuration for a Bundle`_ article,
-Symfony bundles have two choices on how to handle configuration: normal service
-configuration through the ``services.yml`` file and semantic configuration
-through a special ``*Extension`` class.
+As explained in :doc:`/cookbook/bundles/extension` article, Symfony bundles
+have two choices on how to handle configuration: normal service configuration
+through the ``services.yml`` file and semantic configuration through a special
+``*Extension`` class.
 
 Although semantic configuration is much more powerful and provides nice features
 such as configuration validation, the amount of work needed to define that
@@ -174,10 +178,7 @@ Moving Sensitive Options Outside of Symfony Entirely
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
 through environment variables. Learn how to do it in the following article:
-`How to Set external Parameters in the Service Container`_
+:doc:`/cookbook/configuration/external_parameters`
 
 .. _`feature toggles`: http://en.wikipedia.org/wiki/Feature_toggle
-.. _`execution environment`: http://symfony.com/doc/current/cookbook/configuration/environments.html
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
-.. _`How to Expose a semantic Configuration for a Bundle`: http://symfony.com/doc/current/cookbook/bundles/extension.html
-.. _`How to Set external Parameters in the Service Container`: http://symfony.com/doc/current/cookbook/configuration/external_parameters.html

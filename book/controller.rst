@@ -4,8 +4,8 @@
 Controller
 ==========
 
-A controller is a PHP function you create that takes information from the
-HTTP request and constructs and returns an HTTP response (as a Symfony
+A controller is a PHP callable you create that takes information from the
+HTTP request and creates and returns an HTTP response (as a Symfony
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
@@ -34,7 +34,7 @@ common examples:
   for the homepage of the site.
 
 * *Controller B* reads the ``slug`` parameter from the request to load a
-  blog entry from the database and create a ``Response`` object displaying
+  blog entry from the database and creates a ``Response`` object displaying
   that blog. If the ``slug`` can't be found in the database, it creates and
   returns a ``Response`` object with a 404 status code.
 
@@ -116,7 +116,7 @@ Controllers are also called *actions*.
 
 This controller is pretty straightforward:
 
-* *line 4*: Symfony takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony takes advantage of PHP's namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which the controller must return.
 
@@ -201,7 +201,7 @@ to the controller:
 
         return $collection;
 
-Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/app_dev.php/hello/ryan``
+Now, you can go to ``/hello/ryan`` (e.g. ``http://localhost:8000/hello/ryan``
 if you're using the :doc:`built-in web server </cookbook/web_server/built_in>`)
 and Symfony will execute the ``HelloController::indexAction()`` controller
 and pass in ``ryan`` for the ``$name`` variable. Creating a "page" means
@@ -228,9 +228,9 @@ Simple, right?
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You already know that the route points to the ``HelloController::indexAction()`` method
-that lives inside ``AppBundle``. What's more interesting is the argument
-that is passed to that method::
+You already know that the route points to the
+``HelloController::indexAction()`` method that lives inside AppBundle. What's
+more interesting is the argument that is passed to that method::
 
     // src/AppBundle/Controller/HelloController.php
     // ...
@@ -429,35 +429,47 @@ A great way to see the core functionality in action is to look in the
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::redirect`
-method::
+If you want to redirect the user to another page, use the ``redirectToRoute()`` method::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'));
+        return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is equivalent to using redirect() and generateUrl() together:
+        // return $this->redirect($this->generateUrl('homepage'), 301);
     }
 
-The ``generateUrl()`` method is just a helper function that generates the URL
-for a given route. For more information, see the :doc:`Routing </book/routing>`
-chapter.
+.. versionadded:: 2.6
+    The ``redirectToRoute()`` method was added in Symfony 2.6. Previously (and still now), you
+    could use ``redirect()`` and ``generateUrl()`` together for this (see the example above).
 
-By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
-perform a 301 (permanent) redirect, modify the second argument::
+Or, if you want to redirect externally, just use ``redirect()`` and pass it the URL::
 
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('homepage'), 301);
+        return $this->redirect('http://symfony.com/doc');
+    }
+
+By default, the ``redirectToRoute()`` method performs a 302 (temporary) redirect. To
+perform a 301 (permanent) redirect, modify the third argument::
+
+    public function indexAction()
+    {
+        return $this->redirectToRoute('homepage', array(), 301);
     }
 
 .. tip::
 
-    The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to::
+    The ``redirectToRoute()`` method is simply a shortcut that creates a
+    ``Response`` object that specializes in redirecting the user. It's
+    equivalent to::
 
         use Symfony\Component\HttpFoundation\RedirectResponse;
 
-        return new RedirectResponse($this->generateUrl('homepage'));
+        public function indexAction()
+        {
+            return new RedirectResponse($this->generateUrl('homepage'));
+        }
 
 .. index::
    single: Controller; Rendering templates
@@ -471,14 +483,16 @@ If you're serving HTML, you'll want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
-    // renders app/Resources/views/Hello/index.html.twig
-    return $this->render('Hello/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/index.html.twig
+    return $this->render('hello/index.html.twig', array('name' => $name));
 
 You can also put templates in deeper sub-directories. Just try to avoid creating
 unnecessarily deep structures::
 
-    // renders app/Resources/views/Hello/Greetings/index.html.twig
-    return $this->render('Hello/Greetings/index.html.twig', array('name' => $name));
+    // renders app/Resources/views/hello/greetings/index.html.twig
+    return $this->render('hello/greetings/index.html.twig', array(
+        'name' => $name
+    ));
 
 The Symfony templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.
@@ -513,7 +527,7 @@ via the ``get()`` method. Here are several common services you might need::
 
     $mailer = $this->get('mailer');
 
-What other services exist? You can list all services, use the ``debug:container``
+What other services exist? To list all services, use the ``debug:container``
 console command:
 
 .. code-block:: bash
@@ -559,7 +573,7 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using ``app_dev.php`` - 
+error page is shown to the developer (i.e. when you're using ``app_dev.php`` -
 see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see the
@@ -623,12 +637,14 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'notice',
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl(...));
+            // $this->addFlash is equivalent to $this->get('session')->getFlashBag()->add
+
+            return $this->redirectToRoute(...);
         }
 
         return $this->render(...);
@@ -638,8 +654,8 @@ After processing the request, the controller sets a ``notice`` flash message
 in the session and then redirects. The name (``notice``) isn't significant -
 it's just something you invent and reference next.
 
-In the template of the next page (or even better, in your base layout template),
-the following code will render the ``notice`` message:
+In the template of the next action, the following code could be used to render
+the ``notice`` message:
 
 .. configuration-block::
 
@@ -682,9 +698,6 @@ content that's sent back to the client::
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
-
-.. versionadded:: 2.4
-    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 The ``headers`` property is a :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`
 object and has some nice methods for getting and setting the headers. The
@@ -774,8 +787,8 @@ object that's returned from *that* controller::
 Notice that the ``forward()`` method uses a special string representation
 of the controller (see :ref:`controller-string-syntax`). In this case, the
 target controller function will be ``SomethingController::fancyAction()``
-inside the ``AppBundle``. The array passed to the method becomes the arguments
-on the resulting controller. This same idea is used when embedding controllers
+inside the AppBundle. The array passed to the method becomes the arguments on
+the resulting controller. This same idea is used when embedding controllers
 into templates (see :ref:`templating-embedding-controller`). The target
 controller method would look something like this::
 
