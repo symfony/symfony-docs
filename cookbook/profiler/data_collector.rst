@@ -4,7 +4,7 @@
 How to Create a custom Data Collector
 =====================================
 
-The Symfony :ref:`Profiler <internals-profiler>` delegates data collecting to
+:doc:`The Symfony Profiler </cookbook/profiler/index>` delegates data collecting to
 data collectors. Symfony comes bundled with a few of them, but you can easily
 create your own.
 

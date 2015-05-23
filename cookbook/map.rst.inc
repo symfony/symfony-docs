@@ -123,6 +123,7 @@
   * :doc:`/cookbook/profiler/data_collector`
   * :doc:`/cookbook/profiler/matchers`
   * :doc:`/cookbook/profiler/storage`
+  * :doc:`/cookbook/profiler/profiling_data`
 
 * :doc:`/cookbook/request/index`
 
