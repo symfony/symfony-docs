@@ -61,7 +61,10 @@ value and then a User object is created::
         {
             if (!$userProvider instanceof ApiKeyUserProvider) {
                 throw new \InvalidArgumentException(
-                    '$userProvider must be an instance of "ApiKeyUserProvider".'
+                    sprintf(
+                        'The user provider must be an instance of ApiKeyUserProvider (%s was given).',
+                        get_class($userProvider)
+                    )
                 );
             }
 
@@ -510,7 +513,10 @@ to see if the stored token has a valid User object that can be used::
         {
             if (!$userProvider instanceof ApiKeyUserProvider) {
                 throw new \InvalidArgumentException(
-                    '$userProvider must be an instance of "ApiKeyUserProvider".'
+                    sprintf(
+                        'The user provider must be an instance of ApiKeyUserProvider (%s was given).',
+                        get_class($userProvider)
+                    )
                 );
             }
 
