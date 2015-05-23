@@ -1,6 +1,11 @@
 Symfony Framework Events
 ========================
 
+When the Symfony Framework (or anything using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`)
+handles a request, a few core events are dispatched so that you can add listeners
+throughout the process. These are called the "kernel events". For a larger
+explanation, see :doc:`/components/http_kernel/introduction`.
+
 Kernel Events
 -------------
 
@@ -25,17 +30,8 @@ each event has access to the following information:
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
-The goal of this event is to either return a ``Response`` object immediately
-or setup variables so that a Controller can be called after the event. Any
-listener can return a ``Response`` object via the ``setResponse()`` method on
-the event. In this case, all other listeners won't be called.
-
-This event is used by the FrameworkBundle to populate the ``_controller``
-``Request`` attribute, via the
-:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`.
-RequestListener uses a :class:`Symfony\\Component\\Routing\\RouterInterface`
-object to match the ``Request`` and determine the Controller name (stored in the
-``_controller`` ``Request`` attribute).
+This event is dispatched very early in Symfony, before the controller is
+determined.
 
 .. seealso::
 
@@ -219,7 +215,7 @@ and set a new ``Exception`` object, or do nothing::
     response won't work. If you want to overwrite the status code (which you
     should not without a good reason), set the ``X-Status-Code`` header::
 
-        return new Response(
+        $response = Response(
             'Error',
             404 // ignored,
             array('X-Status-Code' => 200)
