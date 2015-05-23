@@ -27,28 +27,31 @@ Error pages for the production environment can be customized in different ways
 depending on your needs:
 
 #. If you just want to change the contents and styles of the error pages to match
-   the rest of your application, :ref:`override default error templates <use-default-exception-controller>`.
+   the rest of your application, :ref:`override default error templates <use-default-exception-controller>`;
 
 #. If you also want to tweak the logic used by Symfony to generate error pages,
-   :ref:`override the default exception controller <custom-exception-controller>`.
+   :ref:`override the default exception controller <custom-exception-controller>`;
 
 #. If you need total control of exception handling to execute your own logic
    :ref:`use the kernel.exception event <use-kernel-exception-event>`.
 
 .. _use-default-exception-controller:
+.. _using-the-default-exceptioncontroller:
 
 Overriding the Default Error Templates
 --------------------------------------
 
-By default, when an exception occurs, the ``showAction()`` method of the
+By default, the ``showAction()`` method of the
 :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` is called
-thanks to an event listener configured by the TwigBundle.
+whenever an exception occurs, thanks to an event listener configured by the TwigBundle.
 
 Then, the controller selects one of the templates defined in the
 ``Resources/views/Exception`` directory of the TwigBundle to render the error
 page. If you browse that directory (usually located in
 ``vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle``) you'll find a lot of
-templates defined for different types of errors and content formats.
+templates defined for different types of errors and content formats
+(``error.*.twig`` templates are used in the production environment whereas
+``exception.*.twig`` templates are used in the development environment).
 
 .. _cookbook-error-pages-by-status-code:
 
@@ -96,10 +99,10 @@ store the HTTP status code and message respectively.
 
 .. tip::
 
-    If your application defines custom exceptions and they implement the
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
-    the ``status_code`` variable will contain the value returned by the
-    ``getStatusCode()`` method. Otherwise, the ``status_code`` variable will be ``500``.
+    You can customize the status code by implementing
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`
+    and its required ``getStatusCode()`` method. Otherwise, the ``status_code``
+    will default to ``500``.
 
 .. note::
 
