@@ -115,6 +115,10 @@ min
 This required option is the "min" length value. Validation will fail if
 the given value's length is **less** than this min value.
 
+It is important to notice that NULL values and empty strings are considered 
+valid no matter if the constraint required a minimum length. Validators are 
+triggered only if the value is not blank.
+
 max
 ~~~
 
