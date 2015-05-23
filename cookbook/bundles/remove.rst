@@ -62,8 +62,11 @@ the configuration files.
 
 The AcmeDemoBundle doesn't have configuration. However, the bundle is
 used in the configuration for the ``app/config/security.yml`` file. You can
-use it as a boilerplate for your own security, but you **can** also remove
-everything: it doesn't matter to Symfony if you remove it or not.
+delete the ``firewall`` entries ``login`` and ``secured_area`` and the entire 
+``access_control``and ``role_hierarchy`` sections (or replace them with
+``access_control: ~`` and ``role_hierarchy: ~``).
+Keep in mind when using the ``SecurityBundle```you have to have at least one
+element in ``provider``, ``encoder``, ``firewall`` defined.
 
 3. Remove the Bundle from the Filesystem
 ----------------------------------------
