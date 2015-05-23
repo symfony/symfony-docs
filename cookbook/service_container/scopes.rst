@@ -110,6 +110,8 @@ There are two solutions to the scope problem:
 
 Each scenario is detailed in the following sections.
 
+.. _using-synchronized-service:
+
 .. note::
 
     Prior to Symfony 2.7, there was another alternative based on ``synchronized``
