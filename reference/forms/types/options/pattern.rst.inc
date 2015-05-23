@@ -3,8 +3,8 @@ pattern
 
 **type**: ``string`` **default**: ``null``
 
-This adds an HTML5 ``pattern`` attribute to restrict the field input by a
-given regular expression.
+This adds an HTML5 ``pattern`` attribute to restrict the field input by
+a given regular expression.
 
 .. caution::
 

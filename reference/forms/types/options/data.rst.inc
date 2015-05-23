@@ -5,8 +5,8 @@ data
 
 When you create a form, each field initially displays the value of the
 corresponding property of the form's domain object (if an object is bound
-to the form). If you want to override the initial value for the form or just
-an individual field, you can set it in the data option::
+to the form). If you want to override the initial value for the form or
+just an individual field, you can set it in the data option::
 
     $builder->add('token', 'hidden', array(
         'data' => 'abcdef',
@@ -14,6 +14,6 @@ an individual field, you can set it in the data option::
 
 .. note::
 
-    The default values for form fields are taken directly from the
-    underlying data structure (e.g. an entity or an array).
-    The ``data`` option overrides this default value.
+    The default values for form fields are taken directly from the underlying
+    data structure (e.g. an entity or an array). The ``data`` option overrides
+    this default value.

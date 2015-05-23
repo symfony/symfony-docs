@@ -7,7 +7,7 @@ birthday Field Type
 A :doc:`date </reference/forms/types/date>` field that specializes in handling
 birthdate data.
 
-Can be rendered as a single text box, three text boxes (month, day, and year),
+Can be rendered as a single text box, three text boxes (month, day and year),
 or three select boxes.
 
 This type is essentially the same as the :doc:`date </reference/forms/types/date>`
@@ -22,7 +22,7 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Overridden options   | - `years`_                                                                    |
 +----------------------+-------------------------------------------------------------------------------+
-| Inherited options    | from  the :doc:`date </reference/forms/types/date>` type:                     |
+| Inherited options    | from the :doc:`date </reference/forms/types/date>` type:                      |
 |                      |                                                                               |
 |                      | - `days`_                                                                     |
 |                      | - `empty_value`_                                                              |
@@ -62,7 +62,8 @@ relevant when the ``widget`` option is set to ``choice``.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`date </reference/forms/types/date>` type:
+These options inherit from the :doc:`date </reference/forms/types/date>`
+type:
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
@@ -80,7 +81,8 @@ These options inherit from the :doc:`date </reference/forms/types/date>` type:
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
