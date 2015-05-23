@@ -20,7 +20,7 @@ this token is available in the ``X-Debug-Token`` HTTP header of the response.
 Using this token, you can access the profile of any past response thanks to the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::loadProfile` method::
 
-    $token = $request->headers->get('X-Debug-Token');
+    $token = $response->headers->get('X-Debug-Token');
     $profile = $container->get('profiler')->loadProfile($token);
 
 .. tip::

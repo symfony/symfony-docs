@@ -1,6 +1,11 @@
 Symfony Framework Events
 ========================
 
+When the Symfony Framework (or anything using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`)
+handles a request, a few core events are dispatched so that you can add listeners
+throughout the process. These are called the "kernel events". For a larger
+explanation, see :doc:`/reference/http_kernel/introduction`.
+
 Kernel Events
 -------------
 
@@ -20,22 +25,13 @@ each event has access to the following information:
 
 .. _kernel-core-request:
 
-``kernel.request``
-~~~~~~~~~~~~~~~~~~
+kernel.request
+~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
-The goal of this event is to either return a ``Response`` object immediately
-or setup variables so that a Controller can be called after the event. Any
-listener can return a ``Response`` object via the ``setResponse()`` method on
-the event. In this case, all other listeners won't be called.
-
-This event is used by the FrameworkBundle to populate the ``_controller``
-``Request`` attribute, via the
-:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`.
-RequestListener uses a :class:`Symfony\\Component\\Routing\\RouterInterface`
-object to match the ``Request`` and determine the Controller name (stored in the
-``_controller`` ``Request`` attribute).
+This event is dispatched very early in Symfony, before the controller is
+determined.
 
 .. seealso::
 
@@ -54,7 +50,7 @@ Listener Class Name                                                            P
 :class:`Symfony\\Component\\Security\\Http\\Firewall`                          8
 =============================================================================  ========
 
-``kernel.controller``
+kernel.controller
 ~~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
@@ -84,8 +80,8 @@ Listener Class Name                                                             
 :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`  0
 ==============================================================================  ========
 
-``kernel.view``
-~~~~~~~~~~~~~~~
+kernel.view
+~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
@@ -114,8 +110,8 @@ method::
 
     Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
 
-``kernel.response``
-~~~~~~~~~~~~~~~~~~~
+kernel.response
+~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
@@ -162,8 +158,8 @@ Listener Class Name                                                             
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`     -1024
 ===================================================================================  ========
 
-``kernel.terminate``
-~~~~~~~~~~~~~~~~~~~~
+kernel.terminate
+~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
 
@@ -185,8 +181,8 @@ Listener Class Name                                                        Prior
 
 .. _kernel-kernel.exception:
 
-``kernel.exception``
-~~~~~~~~~~~~~~~~~~~~
+kernel.exception
+~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
@@ -219,7 +215,7 @@ and set a new ``Exception`` object, or do nothing::
     response won't work. If you want to overwrite the status code (which you
     should not without a good reason), set the ``X-Status-Code`` header::
 
-        return new Response(
+        $response = Response(
             'Error',
             404 // ignored,
             array('X-Status-Code' => 200)
