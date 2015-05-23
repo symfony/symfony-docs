@@ -301,7 +301,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
 
     .. code-block:: bash
 
-        $ heroku buildpack:set https://github.com/ddollar/heroku-buildpack-multi.git
+        $ heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git
 
     Next, add a ``.buildpacks`` file to your project, listing the buildpacks you need:
 
