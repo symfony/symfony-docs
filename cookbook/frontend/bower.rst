@@ -19,7 +19,7 @@ then run:
 
     $ npm install -g bower
 
-After this command succeeded, run ``bower`` in your terminal to find out if
+After this command has finished, run ``bower`` in your terminal to find out if
 it's installed correctly.
 
 .. tip::
@@ -42,6 +42,12 @@ create a ``.bowerrc`` file with a new destination (like ``web/assets/vendor``):
     {
         "directory": "web/assets/vendor/"
     }
+
+.. tip::
+
+    If you're using a front-end build system like `Gulp`_ or `Grunt`_, then
+    you can set the directory to whatever you want. Typically, you'll use
+    these tools to ultimately move all assets into the ``web/`` directory.
 
 An Example: Installing Bootstrap
 --------------------------------
@@ -110,8 +116,31 @@ template like normal CSS/JS:
 Great job! Your site is now using Bootstrap. You can now easily upgrade
 bootstrap to the latest version and manage other front-end dependencies too.
 
+Should I Git Ignore or Commit Bower Assets?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Currently, you should probably *commit* the assets downloaded by Bower instead
+of adding the directory (e.g. ``web/assets/vendor``) to your ``.gitignore``
+file:
+
+.. code-block:: bash
+
+    $ git add web/assets/vendor
+
+Why? Unlike Composer, Bower currently does not have a "lock" feature, which
+means that there's no guarantee that running ``bower install`` on a different
+server will give you the *exact* assets that you have on other machines.
+For more details, read the article `Checking in front-end dependencies`_.
+
+But, it's very possible that Bower will add a lock feature in the future
+(e.g. `bower/bower#1748`_).
+
 .. _Bower: http://bower.io
 .. _`Node.js`: https://nodejs.org
 .. _BowerPHP: http://bowerphp.org/
 .. _`Bower documentation`: http://bower.io/
 .. _Bootstrap: http://getbootstrap.com/
+.. _Gulp: http://gulpjs.com/
+.. _Grunt: http://gruntjs.com/
+.. _`Checking in front-end dependencies`: http://addyosmani.com/blog/checking-in-front-end-dependencies/
+.. _`bower/bower#1748`: https://github.com/bower/bower/pull/1748
