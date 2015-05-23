@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-01-10T18:40:08Z
+
+You will also have to update `/contributing/code/patches.rst`, `/cookbook/bundles/best_practices.rst`, `/cookbook/deployment/azure-website.rst` and `/reference/configuration/framework.rst`
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-01-10T19:35:01Z
+
+Thank you for the hint @xabbuh. I have changed the commit, but I'm not sure about the changes I made in `/cookbook/bundles/best_practices.rst` and `reference/configuration/framework.rst` since it's more about the Validation API as the PHP version.
+
+---------------------------------------------------------------------------
+
+by xelaris at 2015-03-29T21:51:13Z
+
+I have rebased and removed the change in `reference/requirements.rst` since it was fixed in #4952 in the meantime. I also replaced `.. note::` by `.. caution::` as suggested by @WouterJ. I'm still not sure about the Validation API related changes. Please let me know if I should change something.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-22T15:47:01Z
+
+I think this one is ready
