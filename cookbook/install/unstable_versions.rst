@@ -57,6 +57,10 @@ If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constr
 by ``"2.7.0-beta1"`` to install a specific beta number or ``2.7.*@beta`` to get
 the most recent beta version.
 
+After upgrading the Symfony version, read the :doc:`Symfony Upgrading Guide </cookbook/upgrade/index>`
+to learn how you should proceed to update your application's code in case the new
+Symfony version has deprecated some of its features.
+
 .. tip::
 
     If you use Git to manage the project's code, it's a good practice to create
