@@ -8,6 +8,7 @@
     types
     parameters
     definitions
+    synthetic_services
     compilation
     tags
     factories
