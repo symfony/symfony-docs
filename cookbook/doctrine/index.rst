@@ -14,4 +14,5 @@ Doctrine
     resolve_target_entity
     mapping_model_classes
     registration_form
+    pdo_session_storage
     console
