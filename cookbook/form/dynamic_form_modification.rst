@@ -632,7 +632,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+jinja
 
-        {# src/AppBundle/Resources/views/Meetup/create.html.twig #}
+        {# app/Resources/views/Meetup/create.html.twig #}
         {{ form_start(form) }}
             {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
             {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
@@ -667,7 +667,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Meetup/create.html.php -->
+        <!-- app/Resources/views/Meetup/create.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
             <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->
