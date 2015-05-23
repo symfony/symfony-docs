@@ -12,17 +12,17 @@ You may have the need to execute some function that is only available in a
 console command. Usually, you should refactor the command and move some logic
 into a service that can be reused in the controller. However, when the command
 is part of a third-party library, you wouldn't want to modify or duplicate
-their code, but want to directly execute the command instead.
+their code. Instead, you can execute the command directly.
 
 .. caution::
 
     In comparison with a direct call from the console, calling a command from
     a controller has a slight performance impact because of the request stack
-    overhead. This way of calling a command is only useful for small tasks.
+    overhead.
 
-An example of this is sending the emails that Swift Mailer spooled earlier
-:doc:`using the swiftmailer:spool:send command </cookbook/email/spool>`. Symfony
-allows you to directly execute a registered command inside your controller::
+Imagine you want to send spooled Swift Mailer messages by
+:doc:`using the swiftmailer:spool:send command </cookbook/email/spool>`.
+Run this command from inside your controller via::
 
     // src/AppBundle/Controller/SpoolController.php
     namespace AppBundle\Controller;
@@ -30,7 +30,8 @@ allows you to directly execute a registered command inside your controller::
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Console\Input\ArrayInput;
-    use Symfony\Component\Console\Output\StreamOutput;
+    use Symfony\Component\Console\Output\BufferedOutput;
+    use Symfony\Component\HttpFoundation\Response;
 
     class SpoolController extends Controller
     {
@@ -44,28 +45,39 @@ allows you to directly execute a registered command inside your controller::
                'command' => 'swiftmailer:spool:send',
                '--message-limit' => $messages,
             ));
-            $output = new StreamOutput(tmpfile(), StreamOutput::VERBOSITY_NORMAL);
+            // our use NullOutput() if you don't need the outpu
+            $output = new BufferedOutput();
             $application->run($input, $output);
 
-            rewind($output->getStream());
-            $content = stream_get_contents($output->getStream());
-            fclose($output->getStream());
+            // return the output
+            $content = $output->fetch();
 
-            return $content;
+            return new Response($content);
         }
     }
 
 Showing Colorized Command Output
 --------------------------------
 
-By telling the ``StreamOutput`` it is decorated via the third parameter,
+By telling the ``BufferedOutput`` it is decorated via the second parameter,
 it will return the Ansi color-coded content. The `SensioLabs AnsiToHtml converter`_
-can be required using ``Composer`` and helps you getting colorful HTML::
+can be used to convert this to colorful HTML.
+
+First, require the package:
+
+.. code-block:: bash
+
+    $ composer require sensiolabs/ansi-to-html
+
+Now, use it in your controller::
 
     // src/AppBundle/Controller/SpoolController.php
     namespace AppBundle\Controller;
 
     use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
+    use Symfony\Component\Console\Output\BufferedOutput;
+    use Symfony\Component\Console\Output\OutputInterface;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     class SpoolController extends Controller
@@ -73,9 +85,17 @@ can be required using ``Composer`` and helps you getting colorful HTML::
         public function sendSpoolAction($messages = 10)
         {
             // ...
+            $output = new BufferedOutput(
+                OutputInterface::VERBOSITY_NORMAL,
+                true // true for decorated
+            );
+            // ...
 
+            // return the output
             $converter = new AnsiToHtmlConverter();
-            return $converter->convert($content);
+            $content = $output->fetch();
+
+            return new Response($converter->convert($content));
         }
     }
 
