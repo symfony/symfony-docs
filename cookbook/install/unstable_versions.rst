@@ -1,10 +1,5 @@
-How to Install and Use an Unstable Symfony Version
-==================================================
-
-Symfony releases two new minor versions (2.5, 2.6, 2.7, etc.) per year, one in
-May and one in November (:doc:`see releases detail </contributing/community/releases>`).
-Testing the new Symfony versions in your projects as soon as possible is important
-to ensure that they will keep working after upgrading to the new version.
+How to Install or Upgrade to the Latest, Unreleased Symfony Version
+===================================================================
 
 In this article, you'll learn how to install and use new Symfony versions before
 they are released as stable versions.
@@ -14,7 +9,7 @@ Creating a New Project Based on an Unstable Symfony Version
 
 Suppose that Symfony 2.7 version hasn't been released yet and you want to create
 a new project to test its features. First, :doc:`install the Composer </cookbook/composer>`
-package manager. Then, open a command console, enter your projects directory and
+package manager. Then, open a command console, enter your project's directory and
 execute the following command:
 
 .. code-block:: bash
@@ -35,9 +30,8 @@ option:
 Upgrading your Project to an Unstable Symfony Version
 -----------------------------------------------------
 
-Instead of creating a new empty project, in this section you'll update an existing
-Symfony application to an unstable framework version. Suppose again that Symfony
-2.7 version hasn't been released yet and you want to test it in your project.
+Suppose again that Symfony 2.7 hasn't been released yet and you want to upgrade
+an existing application to test that your project works with it.
 
 First, open the ``composer.json`` file located in the root directory of your
 project. Then, edit the value of the version defined for the ``symfony/symfony``
@@ -52,8 +46,8 @@ dependency as follows:
         }
     }
 
-Then, open a command console, enter your project directory and execute the following
-command to update your project dependencies:
+Finally, open a command console, enter your project directory and execute the
+following command to update your project dependencies:
 
 .. code-block:: bash
 
