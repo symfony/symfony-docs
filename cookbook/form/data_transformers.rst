@@ -113,7 +113,7 @@ Using the Transformer
 
 As seen above our transformer requires an instance of an object manager. While for most
 use-cases using the default manager is fine we will let you pick the manager by it's name.
-In order to achieve this we will add a factory:
+In order to achieve this we will add a factory::
 
     // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformerFactory.php
     namespace Acme\TaskBundle\Form\DataTransformer;
