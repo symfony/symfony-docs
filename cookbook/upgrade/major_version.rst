@@ -31,10 +31,12 @@ old API will still work, while the new feature is used internally. This BC
 layer is then marked as *deprecated*, indicating that it will be
 removed/changed in the future.
 
-The major version is the only time all existing BC layers are removed. The last
-minor version before a new major version (i.e. 2.7 is the last minor version of
-the 2 releases, 3.0 is the next version) will trigger deprecation notices when a
-BC layer is used.
+The major version is the only time all existing BC layers are removed. However,
+if you make sure you've fixed all deprecated usages in the last version of the
+previous major version, you should be able to upgrade to the new major version
+without problems. To help you with this, the last minor releases will trigger
+deprecated notices. For example, 2.7 and 2.8 trigger deprecated notices and if
+you do not have any notice while using 2.8, you can savely upgrade to 3.0.
 
 When visiting your application in the
 :doc:`dev environment </cookbook/configuration/environments>` in your browser,

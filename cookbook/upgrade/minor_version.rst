@@ -45,7 +45,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. _`upgrade-minor-symfony-code`:
 
-2) Updating Your Code to Work with the new Version
+2) Updating your Code to Work with the new Version
 --------------------------------------------------
 
 In theory, you should be done! However, you *may* need to make a few changes

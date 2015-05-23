@@ -8,7 +8,7 @@ this safely by running:
 
 .. caution::
 
-    Beware, if you have some bad `version constraints`_ in your
+    Beware, if you have some unspecific `version constraints`_ in your
     ``composer.json`` (e.g. ``dev-master``), this could upgrade some
     non-Symfony libraries to new versions that contain backwards-compatibility
     breaking changes.
