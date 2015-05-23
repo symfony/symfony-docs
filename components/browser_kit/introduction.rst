@@ -80,6 +80,9 @@ Select a link with the crawler and pass it to the click method to click on the l
 Submiting Forms
 ~~~~~~~~~~~~~~~
 
+You can submit forms with the submit method which takes a form object.
+You can get the form object by using the crawler to select the button and running the form method.
+
 .. code-block:: php
 
     use ACME\Client;
@@ -101,6 +104,39 @@ Cookies
 
 History
 -------
+
+The client stores all your request allowing you to go back and forward in your history.
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    // make a real request to an external site
+    $client = new Client();
+    $home_crawler = $client->request('GET', 'http://symfony.com');
+
+    // select and click on a link
+    $doc_link = $crawler->selectLink('Documentation')->link();
+    $doc_crawler = $client->click($link);
+
+    // go back to home page
+    $home_crawler = $client->back();
+
+    // go forward to documentation page
+    $doc_crawler = $client->forward();
+
+You can restart the clients history with the restart method. This will also clear out the CookieJar.
+
+.. code-block:: php
+
+    use ACME\Client;
+
+    // make a real request to an external site
+    $client = new Client();
+    $home_crawler = $client->request('GET', 'http://symfony.com');
+
+    // restart history
+    $client->restart();
 
 Insulated Request
 -----------------
