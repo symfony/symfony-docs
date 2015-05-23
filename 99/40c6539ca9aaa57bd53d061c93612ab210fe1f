@@ -1,0 +1,101 @@
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-08T18:39:59Z
+
+good job overall :+1: @WouterJ , looking forward to Gulp and the other articles
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-08T20:06:20Z
+
+Thanks @cordoval and @javiereguiluz! I've applied almost all of your comments
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-04-08T20:09:34Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by Rvanlaak at 2015-04-10T07:13:31Z
+
+:+1:
+
+Another helpfull note to ease the dependency deployment process would be to add the `bower install` command to the `composer.json` file scripts section:
+
+```json
+    "scripts": {
+        "post-install-cmd": [
+            "bower install"
+        ],
+        "post-update-cmd": [
+            "bower install"
+        ]
+    },
+```
+
+---------------------------------------------------------------------------
+
+by Zeichen32 at 2015-04-13T19:56:49Z
+
+There is also a very nice composer plugin, which does not require bower or npm to receive assets:
+https://github.com/francoispluchino/composer-asset-plugin
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-04-13T20:55:10Z
+
+Thanks for your comment @Zeichen32! However, I hate using Composer for anything other than PHP packages. So if anything, I wouldn't write something that recommends that :) The main point of all these different package managers is because they have another repository backend.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2015-04-13T21:00:26Z
+
+@Zeichen32 thanks for your proposal. Don't worry about @WouterJ's comment. I think he's right, because this article about Bower uses "pure JavaScript stuff". However, soon there will be another article (see #5166) which will use "pure PHP stuff". I'll gladly add a note about the project you mention that allows us to not touch JavaScript for anything!
+
+---------------------------------------------------------------------------
+
+by Zeichen32 at 2015-04-13T21:44:13Z
+
+@javiereguiluz You're right, i did not notice the other article. :wink:
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-03T22:08:44Z
+
+@WouterJ I like the initiative!
+
+---------------------------------------------------------------------------
+
+by aitboudad at 2015-05-11T17:37:11Z
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T08:34:27Z
+
+Thanks @weaverryan for your review. I've updated the article.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-05-23T09:55:11Z
+
+one of the things I have noticed lately is the move out of bower to npm. I don't think bower should be recommended anymore since unless you lock via sha1's this will could just be as unstable for things on production. npm however has shrinkwrap which will ensure things get locked rightly. So I would say to add a note about this to really address things the right way. The situation in the js world is as if there were two composers. One with more right to claim package management already in this case npm. Of course you need to install node for both anyways so I wonder what is the point of using bower.
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T09:57:11Z
+
+Npm is created for Node.js development, with all kind of extra features for Node.js. Bower on the other hand is written in Node.js, but created specifically for managing front-end packages, with all kind of features that are related to this.
+
+Npm for instance downloads the complete package, including all build files, source, etc. Bower will only install things that are really needed, like the dist files. This means that when using npm, you also need to create a build script to only move the needed dist files to the web/assets/ directory.
+
+I'm a big -1 on recommending npm instead of bower.
+
+---------------------------------------------------------------------------
+
+by cordoval at 2015-05-23T09:59:52Z
+
+I would agree with you were it not the case that npm is already installed. It is imo like recommending a wrong practice [to install more stuff than needed]. I have also seen lots of packages migrating to the right npm package managing, though not all. Also there is a PR in bower trying to do the lock which is not merged so big disadvantage. And you are bypassing the stability that a lock feature begs for which is desired to make the frontend truly stable for production. Otherwise everytime you run bower install you could be getting new stuff even on production. But your choice :older_man:
