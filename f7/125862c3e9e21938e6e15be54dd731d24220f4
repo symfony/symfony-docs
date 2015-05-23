@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T16:01:49Z
+
+Literlas in the titles do work, but you can't reference them using `:ref:` or ``` ``_ ``` (but you can reference them in the url using `#kernel-request`)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2015-05-23T16:14:48Z
+
+Thanks @WouterJ - I re-added the literals. Look good otherwise?
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-05-23T16:18:47Z
+
+apart from the typo (causing the build failure), perfect!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2015-05-23T16:25:50Z
+
+:+1:
