@@ -267,10 +267,10 @@ in) is correct, you can use::
         $user->getSalt()
     );
 
-Events
-------
+Authentication Events
+---------------------
 
-The security component provides 4 related events:
+The security component provides 4 related authentication events:
 
 ===============================  ================================================  =========================================================================
 Name                             Event Constant                                    Argument Passed to the Listener
@@ -281,8 +281,8 @@ security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``          
 security.switch_user             ``SecurityEvents::SWITCH_USER``                   :class:`Symfony\Component\Security\Http\Event\SwitchUserEvent`
 ===============================  ================================================  =========================================================================
 
-Authentication Events
-~~~~~~~~~~~~~~~~~~~~~
+Authentication Success and Failure Events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a provider authenticates the user, a ``security.authentication.success``
 event is dispatched.  Likewise, when no providers authenticate the user,
