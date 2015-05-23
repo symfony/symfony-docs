@@ -66,7 +66,7 @@ delete the ``firewall`` entries ``login`` and ``secured_area`` and the entire
 ``access_control``and ``role_hierarchy`` sections (or replace them with
 ``access_control: ~`` and ``role_hierarchy: ~``).
 Keep in mind when using the ``SecurityBundle```you have to have at least one
-element in ``provider``, ``encoder``, ``firewall`` defined.
+element in ``provider``, ``encoder`` and ``firewall`` defined.
 
 3. Remove the Bundle from the Filesystem
 ----------------------------------------
