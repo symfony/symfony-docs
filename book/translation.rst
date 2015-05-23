@@ -12,11 +12,11 @@ wrapping each with a function capable of translating the text (or "message")
 into the language of the user::
 
     // text will *always* print out in English
-    echo 'Hello World';
+    dump('Hello World');
 
     // text can be translated into the end-user's language or
     // default to English
-    echo $translator->trans('Hello World');
+    dump($translator->trans('Hello World'));
 
 .. note::
 

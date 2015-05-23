@@ -641,7 +641,7 @@ part of the listener's processing logic::
     {
         public function myEventListener(Event $event)
         {
-            echo $event->getName();
+            // ... do something with the event name
         }
     }
 

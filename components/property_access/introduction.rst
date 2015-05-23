@@ -45,8 +45,8 @@ method. This is done using the index notation that is used in PHP::
         'first_name' => 'Wouter',
     );
 
-    echo $accessor->getValue($person, '[first_name]'); // 'Wouter'
-    echo $accessor->getValue($person, '[age]'); // null
+    dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
+    dump($accessor->getValue($person, '[age]')); // null
 
 As you can see, the method will return ``null`` if the index does not exists.
 
@@ -62,8 +62,8 @@ You can also use multi dimensional arrays::
         )
     );
 
-    echo $accessor->getValue($persons, '[0][first_name]'); // 'Wouter'
-    echo $accessor->getValue($persons, '[1][first_name]'); // 'Ryan'
+    dump($accessor->getValue($persons, '[0][first_name]')); // 'Wouter'
+    dump($accessor->getValue($persons, '[1][first_name]')); // 'Ryan'
 
 Reading from Objects
 --------------------
@@ -80,13 +80,13 @@ To read from properties, use the "dot" notation::
     $person = new Person();
     $person->firstName = 'Wouter';
 
-    echo $accessor->getValue($person, 'firstName'); // 'Wouter'
+    dump($accessor->getValue($person, 'firstName')); // 'Wouter'
 
     $child = new Person();
     $child->firstName = 'Bar';
     $person->children = array($child);
 
-    echo $accessor->getValue($person, 'children[0].firstName'); // 'Bar'
+    dump($accessor->getValue($person, 'children[0].firstName')); // 'Bar'
 
 .. caution::
 
@@ -116,7 +116,7 @@ property name (``first_name`` becomes ``FirstName``) and prefixes it with
 
     $person = new Person();
 
-    echo $accessor->getValue($person, 'first_name'); // 'Wouter'
+    dump($accessor->getValue($person, 'first_name')); // 'Wouter'
 
 Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
@@ -145,10 +145,10 @@ getters, this means that you can do something like this::
     $person = new Person();
 
     if ($accessor->getValue($person, 'author')) {
-        echo 'He is an author';
+        dump('He is an author');
     }
     if ($accessor->getValue($person, 'children')) {
-        echo 'He has children';
+        dump('He has children');
     }
 
 This will produce: ``He is an author``
@@ -173,7 +173,7 @@ The ``getValue`` method can also use the magic ``__get`` method::
 
     $person = new Person();
 
-    echo $accessor->getValue($person, 'Wouter'); // array(...)
+    dump($accessor->getValue($person, 'Wouter')); // array(...)
 
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -209,7 +209,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    echo $accessor->getValue($person, 'wouter'); // array(...)
+    dump($accessor->getValue($person, 'wouter')); // array(...)
 
 .. versionadded:: 2.3
     The use of magic ``__call()`` method was introduced in Symfony 2.3.
@@ -233,9 +233,9 @@ method::
 
     $accessor->setValue($person, '[first_name]', 'Wouter');
 
-    echo $accessor->getValue($person, '[first_name]'); // 'Wouter'
+    dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
     // or
-    // echo $person['first_name']; // 'Wouter'
+    // dump($person['first_name']); // 'Wouter'
 
 Writing to Objects
 ------------------
@@ -269,9 +269,9 @@ can use setters, the magic ``__set`` method or properties to set values::
     $accessor->setValue($person, 'lastName', 'de Jong');
     $accessor->setValue($person, 'children', array(new Person()));
 
-    echo $person->firstName; // 'Wouter'
-    echo $person->getLastName(); // 'de Jong'
-    echo $person->children; // array(Person());
+    dump($person->firstName); // 'Wouter'
+    dump($person->getLastName()); // 'de Jong'
+    dump($person->children); // array(Person());
 
 You can also use ``__call`` to set values but you need to enable the feature,
 see `Enable other Features`_.
@@ -307,7 +307,7 @@ see `Enable other Features`_.
 
     $accessor->setValue($person, 'wouter', array(...));
 
-    echo $person->getWouter(); // array(...)
+    dump($person->getWouter()); // array(...)
 
 Checking Property Paths
 -----------------------
@@ -372,7 +372,7 @@ You can also mix objects and arrays::
     $accessor->setValue($person, 'children[0].firstName', 'Wouter');
     // equal to $person->getChildren()[0]->firstName = 'Wouter'
 
-    echo 'Hello '.$accessor->getValue($person, 'children[0].firstName'); // 'Wouter'
+    dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
 
 Enable other Features
