@@ -265,6 +265,18 @@ Great! Now, if you go to ``/admin``, you'll see the HTTP Basic popup:
 .. image:: /images/book/security_http_basic_popup.png
    :align: center
 
+.. caution::
+
+    The ``http_basic`` firewall is only recommended while prototyping applications
+    or when the application is exclusively accessed through secure transports, such
+    as HTTPS. The reason is that browsers include user credentials in each request
+    without applying any hashing mechanism, just a plain base64 encoding.
+
+    Instead, consider using the ``http_digest`` firewall, which is almost identical
+    to ``http_basic`` but where user credentials are encoded and hashed before
+    including them in the request. Read
+    :ref:`HTTP-Digest Authentication reference <reference-security-http-digest>`.
+
 But who can you login as? Where do users come from?
 
 .. _book-security-form-login:
@@ -480,7 +492,7 @@ else, you'll want to encode their passwords. The best algorithm to use is
                 <encoder class="Symfony\Component\Security\Core\User\User"
                     algorithm="bcrypt"
                     cost="12" />
-                
+
                 <!-- ... -->
             </config>
         </srv:container>
